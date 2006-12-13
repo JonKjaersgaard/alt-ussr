@@ -3,6 +3,8 @@
  */
 package ussr.model;
 
+import java.util.List;
+
 import ussr.physics.PhysicsModule;
 
 /**
@@ -23,5 +25,9 @@ public class Module extends Entity {
      * The physics model for the module
      */
     private PhysicsModule physics;
-    
+ 
+    /**
+     * Connectors for the module
+     */
+    private List<Connector> connectors;
 }
