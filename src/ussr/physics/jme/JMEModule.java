@@ -34,7 +34,7 @@ public class JMEModule implements PhysicsModule {
     public class ModuleCollisionAction implements InputActionInterface {
 
         public void performAction(InputActionEvent evt) {
-            if(!world.connectorsAreActive) return;
+            if(!world.getConnectorsAreActive()) return;
             ContactInfo contactInfo = ( (ContactInfo) evt.getTriggerData() );
             String g1 = contactInfo.getGeometry1().getName();
             String g2 = contactInfo.getGeometry2().getName();

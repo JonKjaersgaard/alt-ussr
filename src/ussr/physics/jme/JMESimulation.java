@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +14,9 @@ import ussr.description.GeometryDescription;
 import ussr.description.VectorDescription;
 import ussr.description.WorldDescription;
 import ussr.model.Robot;
+import ussr.physics.PhysicsSimulation;
 import ussr.sandbox.StickyBot;
+import ussr.util.Pair;
 
 import com.jme.bounding.BoundingBox;
 import com.jme.input.InputHandler;
@@ -39,13 +42,11 @@ import com.jmex.physics.util.SimplePhysicsGame;
 /**
  * @author ups
  */
-public class JMESimulation extends SimplePhysicsGame {
+public class JMESimulation extends SimplePhysicsGame implements PhysicsSimulation {
 
     public Map<String, DynamicPhysicsNode> connectorRegistry = new HashMap<String, DynamicPhysicsNode>();
     public Set<Joint> dynamicJoints = new HashSet<Joint>();
-    public boolean connectorsAreActive = false;
-    public long lastConnectorToggleTime = -1;
-    private int numberOfModules;
+    private boolean connectorsAreActive = false;
     private Robot robot;
     private WorldDescription worldDescription;
 
@@ -92,45 +93,36 @@ public class JMESimulation extends SimplePhysicsGame {
         input.addAction( resetAction, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_R, InputHandler.AXIS_NONE, false );
         resetAction.performAction( null );
 
-        // Global connector activation toggle 
-        InputAction toggleAction = new InputAction() {
-            public void performAction( InputActionEvent evt ) {
-                if(System.currentTimeMillis()-lastConnectorToggleTime<1000) return;
-                lastConnectorToggleTime = System.currentTimeMillis();
-                connectorsAreActive = !connectorsAreActive;
-                if(connectorsAreActive) System.out.println("Connectors are now active");
-                else System.out.println("Connectors are now inactive");
-            }
-        };
-        input.addAction( toggleAction, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_Z, InputHandler.AXIS_NONE, false );
-
-        MouseInput.get().setCursorVisible( true );
+        // Add any external input handlers
+        doAddInputHandlers();
+        
+         MouseInput.get().setCursorVisible( true );
         new PhysicsPicker( input, rootNode, getPhysicsSpace() );
     }
 
     private int obstacleCounter = 0;
-    private DynamicPhysicsNode createBox() {
-        Box meshBox3 = new Box( "obstacle#"+(obstacleCounter++), new Vector3f(), 2, 2, 2 );
-        meshBox3.setModelBound( new BoundingBox() );
-        meshBox3.updateModelBound();
-        final DynamicPhysicsNode dynamicNode3 = getPhysicsSpace().createDynamicNode();
-        dynamicNode3.attachChild( meshBox3 );
-        dynamicNode3.generatePhysicsGeometry();
-        rootNode.attachChild( dynamicNode3 );
-        dynamicNode3.computeMass();
-        return dynamicNode3;
+    private synchronized DynamicPhysicsNode createBox() {
+        Box meshBox = new Box( "obstacle#"+(obstacleCounter++), new Vector3f(), 2, 2, 2 );
+        meshBox.setModelBound( new BoundingBox() );
+        meshBox.updateModelBound();
+        final DynamicPhysicsNode boxNode = getPhysicsSpace().createDynamicNode();
+        boxNode.attachChild( meshBox );
+        boxNode.generatePhysicsGeometry();
+        rootNode.attachChild( boxNode );
+        boxNode.computeMass();
+        return boxNode;
     }
 
     private StaticPhysicsNode createPlane(int size) {
-        final StaticPhysicsNode staticNode = getPhysicsSpace().createStaticNode();
-        TriMesh trimesh = new Box( "plane", new Vector3f(), size, 0.5f, size );
-        staticNode.attachChild( trimesh );
-        trimesh.setModelBound( new BoundingBox() );
-        trimesh.updateModelBound();
-        staticNode.getLocalTranslation().set( 0, -5, 0 );
-        rootNode.attachChild( staticNode );
-        staticNode.generatePhysicsGeometry();
-        return staticNode;
+        final StaticPhysicsNode planeNode = getPhysicsSpace().createStaticNode();
+        TriMesh planeBox = new Box( "plane", new Vector3f(), size, 0.5f, size );
+        planeNode.attachChild( planeBox );
+        planeBox.setModelBound( new BoundingBox() );
+        planeBox.updateModelBound();
+        planeNode.getLocalTranslation().set( 0, -5, 0 );
+        rootNode.attachChild( planeNode );
+        planeNode.generatePhysicsGeometry();
+        return planeNode;
     }
 
     @Override
@@ -145,10 +137,6 @@ public class JMESimulation extends SimplePhysicsGame {
         return input;
     }
 
-    public void setNumberOfModules(int nModules) {
-        this.numberOfModules = nModules;
-    }
-
     public void setRobot(Robot bot) {
         this.robot = bot;
     }
@@ -157,10 +145,40 @@ public class JMESimulation extends SimplePhysicsGame {
         this.worldDescription = world;        
     }
 
-  
- }
+    private List<Pair<String,PhysicsSimulation.Handler>> inputHandlers = new LinkedList<Pair<String,PhysicsSimulation.Handler>>();
+    public synchronized void addInputHandler(String keyName, final PhysicsSimulation.Handler handler) {
+        if(inputHandlers==null) throw new Error("Input handlers cannot be added after simulation has been started");
+        inputHandlers.add(new Pair<String,PhysicsSimulation.Handler>(keyName,handler));
+    }
 
-/*
- * $log$
- */
+    private synchronized void doAddInputHandlers() {
+        assert inputHandlers != null;
+        for(Pair <String,PhysicsSimulation.Handler> entry: inputHandlers) {
+            final String keyName = entry.fst();
+            final PhysicsSimulation.Handler handler = entry.snd();            
+            InputAction action = new InputAction() {
+                public void performAction( InputActionEvent evt ) {
+                    handler.handle();
+                }
+            };
+            input.addAction( action, InputHandler.DEVICE_KEYBOARD, JMEKeyTranslator.translate(keyName), InputHandler.AXIS_NONE, false );
+        }
+        inputHandlers = null;
+    }
+
+    /**
+     * @return the connectorsAreActive
+     */
+    public boolean getConnectorsAreActive() {
+        return connectorsAreActive;
+    }
+
+    /**
+     * @param connectorsAreActive the connectorsAreActive to set
+     */
+    public void setConnectorsAreActive(boolean connectorsAreActive) {
+        this.connectorsAreActive = connectorsAreActive;
+    }
+
+ }
 
