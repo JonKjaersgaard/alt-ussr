@@ -3,9 +3,11 @@
  */
 package ussr.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ussr.physics.PhysicsModule;
+import ussr.physics.jme.JMEModule;
 
 /**
  * @author ups
@@ -29,5 +31,30 @@ public class Module extends Entity {
     /**
      * Connectors for the module
      */
-    private List<Connector> connectors;
+    private List<Connector> connectors = new ArrayList<Connector>();
+    
+    public Module(PhysicsModule module) {
+        physics = module;
+    }
+
+    public void addConnector(Connector connector) {
+        connectors.add(connector);
+    }
+    
+    public void setController(Controller controller) {
+        this.controller = controller;
+        controller.setModule(this);
+    }
+
+    public synchronized void eventNotify() {
+        if(controller!=null) this.notify();
+    }
+
+    public List<Connector> getConnectors() {
+        return connectors;
+    }
+
+    public Controller getController() {
+        return controller;
+    }
 }

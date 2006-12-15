@@ -10,5 +10,6 @@ package ussr.model;
  * 
  */
 public interface Controller {
-
+    public void activate();
+    public void setModule(Module module);
 }

@@ -1,14 +1,16 @@
 /**
+ * Uniform Simulator for Self-reconfigurable (modular) Robots
  * 
+ * (C) 2006 University of Southern Denmark
  */
 package ussr.description;
 
 /**
  * @author ups
  *
- * TODO Write a nice and user-friendly comment here
+ * Common interface for geometry descriptions
  * 
  */
-public class GeometryDescription {
+public interface GeometryDescription {
 
 }

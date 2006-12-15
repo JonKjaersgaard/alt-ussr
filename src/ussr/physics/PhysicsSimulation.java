@@ -17,7 +17,4 @@ public interface PhysicsSimulation {
     
     public void start();
     
-    // Temporary hack
-    public boolean getConnectorsAreActive();
-    public void setConnectorsAreActive(boolean connectorsAreActive);
 }

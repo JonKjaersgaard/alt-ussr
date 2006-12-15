@@ -4,4 +4,5 @@ import ussr.description.RobotDescription;
 
 public interface Robot {
     public RobotDescription getDescription();
+    public Controller createController();
 }

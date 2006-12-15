@@ -14,6 +14,7 @@ import ussr.description.GeometryDescription;
 import ussr.description.VectorDescription;
 import ussr.description.WorldDescription;
 import ussr.model.Robot;
+import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
 import ussr.sandbox.StickyBot;
 import ussr.util.Pair;
@@ -44,9 +45,8 @@ import com.jmex.physics.util.SimplePhysicsGame;
  */
 public class JMESimulation extends SimplePhysicsGame implements PhysicsSimulation {
 
-    public Map<String, DynamicPhysicsNode> connectorRegistry = new HashMap<String, DynamicPhysicsNode>();
+    public Map<String, JMEConnector> connectorRegistry = new HashMap<String, JMEConnector>();
     public Set<Joint> dynamicJoints = new HashSet<Joint>();
-    private boolean connectorsAreActive = false;
     private Robot robot;
     private WorldDescription worldDescription;
 
@@ -54,15 +54,23 @@ public class JMESimulation extends SimplePhysicsGame implements PhysicsSimulatio
         // Create underlying plane
         final StaticPhysicsNode staticPlane = createPlane(worldDescription.getPlaneSize());
         
-        // Create obstacle box
+        // Create obstacle boxes
         final List<DynamicPhysicsNode> obstacleBoxes = new ArrayList<DynamicPhysicsNode>();
         for(int i=0; i<worldDescription.getObstacles().size();i++)
             obstacleBoxes.add(createBox());
 
-        // Create module
+        // Create modules
         final List<JMEModule> modules = new ArrayList<JMEModule>();
-        for(int i=0; i<worldDescription.getNumberOfModules(); i++)
-            modules.add(new JMEModule(this,robot,"module#"+Integer.toString(i)));
+        for(int i=0; i<worldDescription.getNumberOfModules(); i++) {
+            final JMEModule physicsModule = new JMEModule(this,robot,"module#"+Integer.toString(i));
+            modules.add(physicsModule);
+            new Thread() {
+                public void run() {
+                    physicsModule.getModel().getController().activate();
+                    PhysicsLogger.log("Warning: unexpected controller exit");
+                }
+            }.start();
+        }
         
         showPhysics = true;
 
@@ -73,6 +81,7 @@ public class JMESimulation extends SimplePhysicsGame implements PhysicsSimulatio
                 dynamicJoints = new HashSet<Joint>();
                 int offset = 5;
                 for(JMEModule m: modules) {
+                    m.reset();
                     for(DynamicPhysicsNode dynamicNode: m.getNodes()) {
                         dynamicNode.getLocalTranslation().set( 0, offset, 0 );
                         dynamicNode.getLocalRotation().set( 0, 0, 0, 1 );
@@ -164,20 +173,6 @@ public class JMESimulation extends SimplePhysicsGame implements PhysicsSimulatio
             input.addAction( action, InputHandler.DEVICE_KEYBOARD, JMEKeyTranslator.translate(keyName), InputHandler.AXIS_NONE, false );
         }
         inputHandlers = null;
-    }
-
-    /**
-     * @return the connectorsAreActive
-     */
-    public boolean getConnectorsAreActive() {
-        return connectorsAreActive;
-    }
-
-    /**
-     * @param connectorsAreActive the connectorsAreActive to set
-     */
-    public void setConnectorsAreActive(boolean connectorsAreActive) {
-        this.connectorsAreActive = connectorsAreActive;
     }
 
  }

@@ -19,6 +19,7 @@ import ussr.description.GeometryDescription;
 import ussr.description.RobotDescription;
 import ussr.description.SphereShape;
 import ussr.description.VectorDescription;
+import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.model.Robot;
 import ussr.physics.PhysicsModule;
@@ -29,32 +30,37 @@ public class JMEModule implements PhysicsModule {
      */
     private Module model;
     
+    /**
+     * The world in which this module is being simulated
+     */
     private JMESimulation world;
 
-    public class ModuleCollisionAction implements InputActionInterface {
-
-        public void performAction(InputActionEvent evt) {
-            if(!world.getConnectorsAreActive()) return;
-            ContactInfo contactInfo = ( (ContactInfo) evt.getTriggerData() );
-            String g1 = contactInfo.getGeometry1().getName();
-            String g2 = contactInfo.getGeometry2().getName();
-            if(world.connectorRegistry.containsKey(g1) && world.connectorRegistry.containsKey(g2)) {
-                Joint join = world.getPhysicsSpace().createJoint();
-                join.attach(world.connectorRegistry.get(g1),world.connectorRegistry.get(g2));
-                world.dynamicJoints.add(join);
-            }
-        }
-
-    }
-
+    /**
+     * The complete set of dynamic nodes representing this module
+     */
     private List<DynamicPhysicsNode> dynamicNodes = new ArrayList<DynamicPhysicsNode>();
+
+    /**
+     * The connectors associated with this module
+     */
+    private List<JMEConnector> connectors = new ArrayList<JMEConnector>();
+    
+    /**
+     * 
+     * @param world
+     * @param robot
+     * @param name
+     */
     public JMEModule(JMESimulation world, Robot robot, String name) {
         this.world = world;
+        this.model = new Module(this);
+        this.model.setController(robot.createController());
         RobotDescription selfDesc = robot.getDescription();
         // Create central module node
         DynamicPhysicsNode moduleNode = world.getPhysicsSpace().createDynamicNode();
         dynamicNodes.add(moduleNode);
         // Create visual appearance
+        assert selfDesc.getModuleGeometry().size()==1; // Only tested with size 1 geometry
         for(GeometryDescription element: selfDesc.getModuleGeometry())
             JMEDescriptionHelper.createShape(moduleNode, name, element);
         // Finalize
@@ -62,37 +68,16 @@ public class JMEModule implements PhysicsModule {
         world.getRootNode().attachChild( moduleNode );
         moduleNode.computeMass();
         // Create connectors
-        for(VectorDescription p: selfDesc.getConnectorPosition())
-            addConnector(new Vector3f(p.getX(), p.getY(), p.getZ()),moduleNode,name,selfDesc.getConnectorGeometry());
+        for(VectorDescription p: selfDesc.getConnectorPositions()) {
+            Vector3f position = new Vector3f(p.getX(), p.getY(), p.getZ());
+            List<GeometryDescription> geometry = selfDesc.getConnectorGeometry();
+            float maxDistance = selfDesc.getMaxConnectionDistance();
+            JMEConnector connector = new JMEConnector(position,moduleNode,name,geometry,world,this,maxDistance);
+            model.addConnector(new Connector(connector));
+            connectors.add(connector);
+        }
     }
     
-    private void addConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, List<GeometryDescription> geometry) {
-        // Create connector node
-        DynamicPhysicsNode connector = world.getPhysicsSpace().createDynamicNode();
-        dynamicNodes.add(connector);
-        // Create visual appearance
-        for(GeometryDescription element: geometry) {
-            TriMesh mesh = JMEDescriptionHelper.createShape(connector, baseName+position.toString(), element);
-            world.connectorRegistry.put(mesh.getName(),connector);
-            mesh.getLocalTranslation().set( mesh.getLocalTranslation().add(position) );
-            mesh.setModelBound( new BoundingSphere() );
-            mesh.updateModelBound();
-            connector.attachChild( mesh );
-        }
-        // Finalize
-        connector.generatePhysicsGeometry();
-        world.getRootNode().attachChild( connector );
-        connector.computeMass();
-        // Joint
-        Joint connect = world.getPhysicsSpace().createJoint();
-        connect.attach(moduleNode, connector);
-        // Collision handler
-        final SyntheticButton collisionEventHandler = connector.getCollisionEventHandler();
-        world.getInput().addAction( new ModuleCollisionAction(),
-                collisionEventHandler.getDeviceName(), collisionEventHandler.getIndex(),
-                InputHandler.AXIS_NONE, false );
-    }
-
     /**
      * @return the dynamicNode
      */
@@ -100,5 +85,16 @@ public class JMEModule implements PhysicsModule {
         return dynamicNodes;
     }
 
-    
+    public void reset() {
+        for(JMEConnector connector: connectors)
+            connector.reset();
+    }
+
+    public void changeNotify() {
+        model.eventNotify();        
+    }
+
+    public Module getModel() {
+        return model;
+    }
 }

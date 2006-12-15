@@ -16,6 +16,7 @@ import com.jme.util.LoggingSystem;
 public class StickyBotSimulation {
     
     private static long lastConnectorToggleTime = -1;
+    private static boolean connectorsAreActive;
 
     public static void main( String[] args ) {
         System.out.println("java.library.path="+System.getProperty("java.library.path"));
@@ -30,8 +31,8 @@ public class StickyBotSimulation {
             public void handle() {
                 if(System.currentTimeMillis()-lastConnectorToggleTime<1000) return;
                 lastConnectorToggleTime = System.currentTimeMillis();
-                simulation.setConnectorsAreActive(!simulation.getConnectorsAreActive());
-                if(simulation.getConnectorsAreActive()) System.out.println("Connectors are now active");
+                setConnectorsAreActive(!getConnectorsAreActive());
+                if(getConnectorsAreActive()) System.out.println("Connectors are now active");
                 else System.out.println("Connectors are now inactive");
             }
         });
@@ -50,5 +51,20 @@ public class StickyBotSimulation {
         });
         return world;
     }
+
+    /**
+     * @return the connectorsAreActive
+     */
+    public static boolean getConnectorsAreActive() {
+        return connectorsAreActive;
+    }
+
+    /**
+     * @param connectorsAreActive the connectorsAreActive to set
+     */
+    public static void setConnectorsAreActive(boolean active) {
+        connectorsAreActive = active;
+    }
+
 
 }
