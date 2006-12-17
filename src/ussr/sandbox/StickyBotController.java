@@ -1,5 +1,7 @@
 /**
+ * Uniform Simulator for Self-reconfigurable (modular) Robots
  * 
+ * (C) 2006 University of Southern Denmark
  */
 package ussr.sandbox;
 
@@ -9,17 +11,17 @@ import ussr.model.Connector;
 import ussr.model.ControllerImpl;
 
 /**
+ * A simple controller for the Sticky Bot, controlling connector stickiness based on
+ * user-controlled state stored in the main simulator
+ * 
  * @author ups
  *
- * TODO Write a nice and user-friendly comment here
- * 
  */
 public class StickyBotController extends ControllerImpl {
 
-    /* (non-Javadoc)
+    /**
      * @see ussr.model.ControllerImpl#activate()
      */
-    @Override
     public void activate() {
         while(true) {
             this.waitForEvent();
