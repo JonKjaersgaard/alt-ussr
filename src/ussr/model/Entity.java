@@ -1,5 +1,7 @@
 /**
+ * Uniform Simulator for Self-reconfigurable (modular) Robots
  * 
+ * (C) 2006 University of Southern Denmark
  */
 package ussr.model;
 
@@ -7,10 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Abstract class defining common behavior for entities in the simulator, namely
+ * the ability to have properties (strings with a key-value structure) defined on
+ * the entity.
+ * 
  * @author ups
  *
- * Abstract class defining common behavior for entities in the simulator
- * 
  */
 public abstract class Entity {
 

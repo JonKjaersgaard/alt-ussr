@@ -1,31 +1,47 @@
 /**
  * 
  */
+/**
+ * Uniform Simulator for Self-reconfigurable (modular) Robots
+ * 
+ * (C) 2006 University of Southern Denmark
+ */
 package ussr.model;
 
 /**
+ * Abstract class providing a default implementation of the Controller interface.
+ * The class maintain a reference to the module and provides a convenience "wait
+ * for an event to be signalled on the module" method.
+ * 
  * @author ups
  *
- * TODO Write a nice and user-friendly comment here
- * 
  */
 public abstract class ControllerImpl implements Controller {
 
+    /**
+     * Reference to the module controlled by this controller 
+     */
     protected Module module;
     
-    /* (non-Javadoc)
+    /** 
      * @see ussr.model.Controller#activate()
      */
     public abstract void activate();
 
-    /* (non-Javadoc)
+    /** 
      * @see ussr.model.Controller#setModule(ussr.model.Module)
      */
     public void setModule(Module module) {
         this.module = module;
     }
 
-    public void waitForEvent() {
+    /**
+     * Wait for an event to be signalled on the module object, using Java's built-in
+     * notify operation.
+     * @see java.lang.Object#notify()
+     * @see ussr.model.Module#eventNotify()
+     */
+    protected void waitForEvent() {
         synchronized(module) {
             try {
                 module.wait();

@@ -1,5 +1,6 @@
 package ussr.physics.jme;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.jme.bounding.BoundingSphere;
@@ -18,7 +19,7 @@ import ussr.model.Connector;
 import ussr.physics.PhysicsConnector;
 import ussr.physics.PhysicsLogger;
 
-public class JMEConnector implements PhysicsConnector {
+public class JMEStickyConnector implements JMEConnector {
     /**
      * The abstract connector represented by this jme entity
      */
@@ -26,11 +27,11 @@ public class JMEConnector implements PhysicsConnector {
     private DynamicPhysicsNode node;
     private JMESimulation world;
     private JMEConnector connectedConnector = null;
-    private JMEConnector lastProximityConnector = null;
+    private JMEStickyConnector lastProximityConnector = null;
     private JMEModule module;
     private float maxConnectDistance;
 
-    public JMEConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, List<GeometryDescription> geometry,JMESimulation world, JMEModule module, float maxConnectionDistance) {
+    public JMEStickyConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, List<GeometryDescription> geometry,JMESimulation world, JMEModule module, float maxConnectionDistance) {
         this.world = world;
         this.module = module;
         this.maxConnectDistance = maxConnectionDistance;
@@ -62,6 +63,9 @@ public class JMEConnector implements PhysicsConnector {
         this.node = connector;
     }
     
+    /* (non-Javadoc)
+     * @see ussr.physics.jme.JMEConnector#getNode()
+     */
     public DynamicPhysicsNode getNode() { return node; }
     
     public class ModuleCollisionAction implements InputActionInterface {
@@ -72,8 +76,8 @@ public class JMEConnector implements PhysicsConnector {
             String g1 = contactInfo.getGeometry1().getName();
             String g2 = contactInfo.getGeometry2().getName();
             if(world.connectorRegistry.containsKey(g1) && world.connectorRegistry.containsKey(g2)) {
-                JMEConnector c1 = world.connectorRegistry.get(g1); 
-                JMEConnector c2 = world.connectorRegistry.get(g2);
+                JMEStickyConnector c1 = (JMEStickyConnector)world.connectorRegistry.get(g1); 
+                JMEStickyConnector c2 = (JMEStickyConnector)world.connectorRegistry.get(g2);
                 c1.setProximityConnector(c2);
                 c2.setProximityConnector(c1);
                 c1.module.changeNotify();
@@ -85,30 +89,42 @@ public class JMEConnector implements PhysicsConnector {
 
     }
 
-    private void setProximityConnector(JMEConnector other) {
+    private void setProximityConnector(JMEStickyConnector other) {
         this.lastProximityConnector=other;
     }
 
-    public boolean hasProximateConnector() {
+    /* (non-Javadoc)
+     * @see ussr.physics.jme.JMEConnector#otherConnectorAvailable()
+     */
+    public boolean otherConnectorAvailable() {
         return this.lastProximityConnector!=null;
     }
     
-    public synchronized Connector getProximateConnector() {
+    /* (non-Javadoc)
+     * @see ussr.physics.jme.JMEConnector#getAvailableConnectors()
+     */
+    public synchronized List<Connector> getAvailableConnectors() {
         if(this.lastProximityConnector==null) return null;
         if(node.getLocalTranslation().distance(lastProximityConnector.node.getLocalTranslation())>maxConnectDistance) {
             lastProximityConnector = null;
             return null;
         }
-        return this.lastProximityConnector.model;
+        return Arrays.asList(new Connector[] { this.lastProximityConnector.model });
     }
     
+    /* (non-Javadoc)
+     * @see ussr.physics.jme.JMEConnector#isConnected()
+     */
     public synchronized boolean isConnected() {
         return connectedConnector!=null;
     }
 
+    /* (non-Javadoc)
+     * @see ussr.physics.jme.JMEConnector#connectTo(ussr.physics.PhysicsConnector)
+     */
     public synchronized void connectTo(PhysicsConnector otherConnector) {
-        if(!(otherConnector instanceof JMEConnector)) throw new Error("Mixed connector types not supported: "+otherConnector);
-        JMEConnector other = (JMEConnector)otherConnector;
+        if(!(otherConnector instanceof JMEStickyConnector)) throw new Error("Mixed connector types not supported: "+otherConnector);
+        JMEStickyConnector other = (JMEStickyConnector)otherConnector;
         if(this.isConnected()||other.isConnected()) { 
             PhysicsLogger.logNonCritical("Attempted connecting two connectors of which at least one was already connected.");
             return;
@@ -120,14 +136,23 @@ public class JMEConnector implements PhysicsConnector {
         other.connectedConnector = this;
     }
 
+    /* (non-Javadoc)
+     * @see ussr.physics.jme.JMEConnector#reset()
+     */
     public void reset() {
         connectedConnector = null;        
     }
     
+    /* (non-Javadoc)
+     * @see ussr.physics.jme.JMEConnector#toString()
+     */
     public String toString() {
         return "JMEConnector<"+node.hashCode()+">";
     }
 
+    /* (non-Javadoc)
+     * @see ussr.physics.jme.JMEConnector#setModel(ussr.model.Connector)
+     */
     public void setModel(Connector connector) {
         this.model = connector;        
     }

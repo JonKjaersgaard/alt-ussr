@@ -3,6 +3,8 @@
  */
 package ussr.physics;
 
+import java.util.List;
+
 import ussr.model.Connector;
 
 /**
@@ -13,8 +15,8 @@ import ussr.model.Connector;
  */
 public interface PhysicsConnector {
 
-    public boolean hasProximateConnector();
-    public Connector getProximateConnector();
+    public boolean otherConnectorAvailable();
+    public List<Connector> getAvailableConnectors();
     public boolean isConnected();
     public void connectTo(PhysicsConnector other);
     public void setModel(Connector connector);

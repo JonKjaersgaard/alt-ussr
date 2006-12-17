@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author ups
- *
  * Common superclass for descriptions.  Defines ability to tag elements with
  * with textual labels.
  * 
+ * @author ups
+ *
  */
 public abstract class Description {
 

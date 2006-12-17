@@ -11,11 +11,11 @@ import java.util.List;
 
 /**
  * 
- * @author ups
- *
  * A description of the geometry of a complete robot module, including the shape
  * of the core, the shape of a connector, and the positions of the connectors and
  * their range.
+ *
+ * @author ups
  *
  */
 

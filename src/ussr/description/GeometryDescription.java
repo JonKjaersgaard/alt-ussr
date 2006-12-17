@@ -6,10 +6,10 @@
 package ussr.description;
 
 /**
- * @author ups
- *
  * Common interface for geometry descriptions
  * 
+ * @author ups
+ *
  */
 public interface GeometryDescription {
 

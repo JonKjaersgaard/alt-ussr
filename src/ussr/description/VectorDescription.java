@@ -6,11 +6,11 @@
 package ussr.description;
 
 /**
- * @author ups
- *
  * A description of a vector.  Can be used for describing relative positions within
  * a robot.
  * 
+ * @author ups
+ *
  */
 public class VectorDescription extends Description {
     

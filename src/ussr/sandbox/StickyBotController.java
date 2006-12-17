@@ -3,6 +3,8 @@
  */
 package ussr.sandbox;
 
+import java.util.List;
+
 import ussr.model.Connector;
 import ussr.model.ControllerImpl;
 
@@ -23,9 +25,11 @@ public class StickyBotController extends ControllerImpl {
             this.waitForEvent();
             if(!StickyBotSimulation.getConnectorsAreActive()) continue; 
             for(Connector connector: module.getConnectors()) {
-                Connector proximate = connector.getProximateConnector();
-                if(proximate==null||connector.isConnected()) continue;
-                connector.connectTo(proximate);
+                List<Connector> proximates = connector.getAvailableConnectors();
+                for(Connector proximate: proximates) {
+                    if(proximate==null||connector.isConnected()) continue;
+                    connector.connectTo(proximate);
+                }
             }
         }
     }

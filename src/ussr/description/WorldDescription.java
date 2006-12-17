@@ -10,12 +10,12 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author ups
- *
  * The description of a world in which a number of robot modules can be placed for
  * the simulation.  Defines the number of modules, the size of the underlying plane,
  * and the position of each obstacle (note: obstacles currently have a fixed geometry)
  * 
+ * @author ups
+ *
  */
 public class WorldDescription extends Description {
 
