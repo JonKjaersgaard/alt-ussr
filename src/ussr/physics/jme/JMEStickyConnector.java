@@ -97,7 +97,7 @@ public class JMEStickyConnector implements JMEConnector {
     /* (non-Javadoc)
      * @see ussr.physics.jme.JMEConnector#otherConnectorAvailable()
      */
-    public boolean otherConnectorAvailable() {
+    public boolean hasProximateConnector() {
         return this.lastProximityConnector!=null;
     }
     
@@ -123,18 +123,21 @@ public class JMEStickyConnector implements JMEConnector {
     /* (non-Javadoc)
      * @see ussr.physics.jme.JMEConnector#connectTo(ussr.physics.PhysicsConnector)
      */
-    public synchronized void connectTo(PhysicsConnector otherConnector) {
-        if(!(otherConnector instanceof JMEStickyConnector)) throw new Error("Mixed connector types not supported: "+otherConnector);
-        JMEStickyConnector other = (JMEStickyConnector)otherConnector;
+    public synchronized boolean connect() {
+        if(this.lastProximityConnector==null 
+                || node.getLocalTranslation().distance(this.lastProximityConnector.node.getLocalTranslation())>maxConnectDistance)
+            return false;
+        JMEStickyConnector other = this.lastProximityConnector;
         if(this.isConnected()||other.isConnected()) { 
             PhysicsLogger.logNonCritical("Attempted connecting two connectors of which at least one was already connected.");
-            return;
+            return false;
         }
         Joint join = world.getPhysicsSpace().createJoint();
         join.attach(this.getNode(),other.getNode());
         world.dynamicJoints.add(join);
         this.connectedConnector = other;
         other.connectedConnector = this;
+        return true;
     }
 
     /* (non-Javadoc)

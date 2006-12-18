@@ -11,13 +11,11 @@ public interface JMEConnector extends PhysicsConnector {
 
     public DynamicPhysicsNode getNode();
 
-    public boolean otherConnectorAvailable();
-
-    public List<Connector> getAvailableConnectors();
+    public boolean hasProximateConnector();
 
     public boolean isConnected();
 
-    public void connectTo(PhysicsConnector otherConnector);
+    public boolean connect();
 
     public void reset();
 

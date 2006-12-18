@@ -1,5 +1,6 @@
 package ussr.physics.jme;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,5 +97,10 @@ public class JMEModule implements PhysicsModule {
 
     public Module getModel() {
         return model;
+    }
+
+    public void setColor(Color color) {
+        for(DynamicPhysicsNode node: dynamicNodes)
+            node.setRenderState(world.color2jme(color));
     }
 }

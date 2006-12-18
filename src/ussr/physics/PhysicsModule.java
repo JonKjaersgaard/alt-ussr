@@ -5,6 +5,8 @@
  */
 package ussr.physics;
 
+import java.awt.Color;
+
 import ussr.model.Module;
 
 /**
@@ -32,4 +34,6 @@ public interface PhysicsModule {
      * @return the model module of this physics module
      */
     public Module getModel();
+
+    public void setColor(Color color);
 }

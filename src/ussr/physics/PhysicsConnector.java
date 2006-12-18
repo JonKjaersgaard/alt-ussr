@@ -20,15 +20,8 @@ public interface PhysicsConnector {
      * Return true if is there is a connector available for interaction, false otherwise
      * @return whether there is another connector available for interaction
      */
-    public boolean otherConnectorAvailable();
+    public boolean hasProximateConnector();
 
-    /**
-     * Return the connectors that have been detected as available for interaction, null if no connectors
-     * were detected
-     * @return the available connectors, null if there is no available connector
-     */
-    public List<Connector> getAvailableConnectors();
-    
     /**
      * Returns true if this connector is connected to another connector, false otherwise
      * @return whether the connector is connected
@@ -40,7 +33,7 @@ public interface PhysicsConnector {
      * proximity
      * @param other the connector to connect to
      */
-    public void connectTo(PhysicsConnector other);
+    public boolean connect();
     
     /**
      * Set the model-level connector representing this connector simulation 

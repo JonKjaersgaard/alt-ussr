@@ -1,5 +1,6 @@
 package ussr.physics.jme;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,9 +28,12 @@ import com.jme.input.action.InputAction;
 import com.jme.input.action.InputActionEvent;
 import com.jme.math.FastMath;
 import com.jme.math.Vector3f;
+import com.jme.renderer.ColorRGBA;
 import com.jme.scene.Node;
 import com.jme.scene.TriMesh;
 import com.jme.scene.shape.Box;
+import com.jme.scene.state.MaterialState;
+import com.jme.scene.state.RenderState;
 import com.jme.util.LoggingSystem;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
@@ -173,6 +177,17 @@ public class JMESimulation extends SimplePhysicsGame implements PhysicsSimulatio
             input.addAction( action, InputHandler.DEVICE_KEYBOARD, JMEKeyTranslator.translate(keyName), InputHandler.AXIS_NONE, false );
         }
         inputHandlers = null;
+    }
+
+    public RenderState color2jme(Color color) {
+        float red = ((float)color.getRed())/255.0f;
+        float green = ((float)color.getGreen())/255.0f;
+        float blue = ((float)color.getBlue())/255.0f;
+        float alpha = ((float)color.getAlpha())/255.0f;
+        ColorRGBA jmecolor = new ColorRGBA(red,green,blue,alpha);
+        final MaterialState materialState = display.getRenderer().createMaterialState();
+        materialState.setDiffuse( jmecolor );
+        return materialState;
     }
 
  }
