@@ -1,6 +1,7 @@
 package ussr.physics.jme;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.jme.bounding.BoundingSphere;
@@ -104,10 +105,10 @@ public class JMEStickyConnector implements JMEConnector {
      * @see ussr.physics.jme.JMEConnector#getAvailableConnectors()
      */
     public synchronized List<Connector> getAvailableConnectors() {
-        if(this.lastProximityConnector==null) return null;
+        if(this.lastProximityConnector==null) return Collections.emptyList();
         if(node.getLocalTranslation().distance(lastProximityConnector.node.getLocalTranslation())>maxConnectDistance) {
             lastProximityConnector = null;
-            return null;
+            return Collections.emptyList();
         }
         return Arrays.asList(new Connector[] { this.lastProximityConnector.model });
     }

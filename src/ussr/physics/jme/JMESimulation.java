@@ -16,7 +16,7 @@ import ussr.description.WorldDescription;
 import ussr.model.Robot;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
-import ussr.sandbox.StickyBot;
+import ussr.sandbox.stickybot.StickyBot;
 import ussr.util.Pair;
 
 import com.jme.bounding.BoundingBox;

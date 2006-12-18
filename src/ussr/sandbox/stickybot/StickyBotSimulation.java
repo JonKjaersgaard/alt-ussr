@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.sandbox;
+package ussr.sandbox.stickybot;
 
 import java.util.logging.Level;
 
