@@ -37,17 +37,8 @@ public class Connector extends Entity {
      * Return true if is there is a connector available for interaction, false otherwise
      * @return whether there is another connector available for interaction
      */
-    public boolean otherConnectorAvailable() {
-        return physics.otherConnectorAvailable();
-    }
-    
-    /**
-     * Return the connectors that have been detected as available for interaction, null if no connectors
-     * were detected
-     * @return the available connectors, null if there is no available connector
-     */
-    public List<Connector> getAvailableConnectors() {
-        return physics.getAvailableConnectors();
+    public boolean hasProximateConnector() {
+        return physics.hasProximateConnector();
     }
     
     /**
@@ -63,8 +54,8 @@ public class Connector extends Entity {
      * proximity
      * @param other the connector to connect to
      */
-    public void connectTo(Connector other) {
-        physics.connectTo(other.physics);
+    public boolean connect() {
+        return physics.connect();
     }
     
     /**
@@ -73,4 +64,5 @@ public class Connector extends Entity {
     public String toString() {
         return "Connector<"+physics+">";
     }
+
 }
