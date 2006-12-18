@@ -5,6 +5,7 @@
  */
 package ussr.sandbox.stickybot;
 
+import java.awt.Color;
 import java.util.List;
 
 import ussr.model.Connector;
@@ -19,18 +20,19 @@ import ussr.model.ControllerImpl;
  */
 public class StickyBotController extends ControllerImpl {
 
+    private int nConnections = 0;
+    
     /**
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
+        if(module.getID()%2==0) module.setColor(Color.RED);
         while(true) {
             this.waitForEvent();
-            if(!StickyBotSimulation.getConnectorsAreActive()) continue; 
+            if(!StickyBotSimulation.getConnectorsAreActive()||nConnections>=2) continue;
             for(Connector connector: module.getConnectors()) {
-                List<Connector> proximates = connector.getAvailableConnectors();
-                for(Connector proximate: proximates) {
-                    if(proximate==null||connector.isConnected()) continue;
-                    connector.connectTo(proximate);
+                if(!connector.isConnected()&&connector.hasProximateConnector()) {
+                    if(connector.connect()) nConnections++;
                 }
             }
         }
