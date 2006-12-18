@@ -5,6 +5,7 @@
  */
 package ussr.model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,11 @@ public class Module extends Entity {
      * Connectors for the module
      */
     private List<Connector> connectors = new ArrayList<Connector>();
+
+    /**
+     * Globally unique ID for this module
+     */
+    private int uniqueID;
     
     /**
      * Construct a module representing the physics module passed as an argument
@@ -41,8 +47,18 @@ public class Module extends Entity {
      */
     public Module(PhysicsModule module) {
         physics = module;
+        synchronized(this) {
+            uniqueID = idCounter++;
+        }
     }
 
+    /**
+     * Get the globally unique ID of the module
+     */
+    public int getID() {
+        return uniqueID;
+    }
+    
     /**
      * Add a connector to the module
      * @param connector the connector to add to the module
@@ -83,5 +99,14 @@ public class Module extends Entity {
      */
     public Controller getController() {
         return controller;
+    }
+
+    /**
+     * Counter for assigning globally unique IDs to modules
+     */
+    private static int idCounter = 0;
+
+    public void setColor(Color color) {
+        physics.setColor(color);        
     }
 }
