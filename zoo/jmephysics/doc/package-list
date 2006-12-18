@@ -1,0 +1,6 @@
+com.jmex.physics
+com.jmex.physics.contact
+com.jmex.physics.geometry
+com.jmex.physics.material
+com.jmex.physics.util
+com.jmex.physics.util.binarymodules
