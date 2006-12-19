@@ -29,16 +29,12 @@ public class ATRON implements Robot {
      */
     public RobotDescription getDescription() {
         RobotDescription description = new RobotDescription();
-        description.setModuleGeometry(new GeometryDescription[] { new SphereShape(2f, new VectorDescription( -0.5f, 0.0f, 0.0f)), 
-        														  new SphereShape(2f, new VectorDescription( +0.5f, 0.0f, 0.0f)) }); 
+        description.setModuleGeometry(new GeometryDescription[] { new SphereShape(0.113f, new VectorDescription( -0.0025f, 0.0f, 0.0f)), 
+        														  new SphereShape(0.115f, new VectorDescription( +0.0025f, 0.0f, 0.0f)) }); 
         description.setConnectorGeometry(new GeometryDescription[] { new SphereShape(1) });
         description.setConnectorPositions(new VectorDescription[] {
-            new VectorDescription(-2.0f, 0.0f, 0),
-            new VectorDescription(2.0f, 0.0f, 0),
-            new VectorDescription(0.0f, 2.0f, 0),
-            new VectorDescription(0.0f, -2.0f, 0),
-            new VectorDescription(0.0f, 0.0f, -2.0f),
-            new VectorDescription(0.0f, 0f, 2.0f) });
+                new VectorDescription( (float) (0.114f*Math.sin( 45 )), (float) (0.114f*Math.cos(45)), 0f)
+        });
         description.setMaxConnectionDistance(6);
         return description;
     }

@@ -5,10 +5,12 @@
  */
 package ussr.sandbox.atron;
 
+import java.awt.Color;
 import java.util.List;
 
 import ussr.model.Connector;
 import ussr.model.ControllerImpl;
+import ussr.sandbox.stickybot.StickyBotSimulation;
 
 /**
  * A simple controller for the Sticky Bot, controlling connector stickiness based on
@@ -19,18 +21,21 @@ import ussr.model.ControllerImpl;
  */
 public class ATRONController extends ControllerImpl {
 
+	private int nConnections = 0;
+	   
+	
     /**
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
+
+        if(module.getID()%2==0) module.setColor(Color.RED);
         while(true) {
             this.waitForEvent();
-            if(!ATRONSimulation.getConnectorsAreActive()) continue; 
+            if(!StickyBotSimulation.getConnectorsAreActive()||nConnections>=2) continue;
             for(Connector connector: module.getConnectors()) {
-                List<Connector> proximates = connector.getAvailableConnectors();
-                for(Connector proximate: proximates) {
-                    if(proximate==null||connector.isConnected()) continue;
-                    connector.connectTo(proximate);
+                if(!connector.isConnected()&&connector.hasProximateConnector()) {
+                    if(connector.connect()) nConnections++;
                 }
             }
         }
