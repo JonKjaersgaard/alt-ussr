@@ -20,7 +20,9 @@ import java.util.List;
  */
 
 public class RobotDescription extends Description {
-
+	public static final int STICKY_CONNECTOR = 0;
+	public static final int ATRON_CONNECTOR = 1;
+	
     /**
      * The geometric shapes that constitute the core of the module
      */
@@ -36,6 +38,8 @@ public class RobotDescription extends Description {
      * of the core
      */
     private List<VectorDescription> connectorPositions = Collections.emptyList();
+    
+    private int connectorType = STICKY_CONNECTOR;
     
     /**
      * The maximal radius from the center of a connector to the center of another connector
@@ -103,6 +107,15 @@ public class RobotDescription extends Description {
         this.connectorPositions = Arrays.asList(descriptions);        
     }
 
+    public int getConnectorType() {
+    	return this.connectorType;
+    }
+    
+    public void setConnectorType( int connectorType ) {
+    	this.connectorType=connectorType;
+    }
+
+    
     /**
      * Set the max connection distance: The maximal radius from the center of a connector to the center of another connector
      * where the connectors can reach each other (e.g., connect)

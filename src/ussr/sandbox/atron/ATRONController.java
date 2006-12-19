@@ -13,7 +13,7 @@ import ussr.model.ControllerImpl;
 import ussr.sandbox.stickybot.StickyBotSimulation;
 
 /**
- * A simple controller for the Sticky Bot, controlling connector stickiness based on
+ * A simple controller for the ATRON, controlling connector stickiness based on
  * user-controlled state stored in the main simulator
  * 
  * @author ups
@@ -32,7 +32,7 @@ public class ATRONController extends ControllerImpl {
         if(module.getID()%2==0) module.setColor(Color.RED);
         while(true) {
             this.waitForEvent();
-            if(!StickyBotSimulation.getConnectorsAreActive()||nConnections>=2) continue;
+            if(!ATRONSimulation.getConnectorsAreActive()||nConnections>=2) continue;
             for(Connector connector: module.getConnectors()) {
                 if(!connector.isConnected()&&connector.hasProximateConnector()) {
                     if(connector.connect()) nConnections++;

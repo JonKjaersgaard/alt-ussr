@@ -29,12 +29,24 @@ public class ATRON implements Robot {
      */
     public RobotDescription getDescription() {
         RobotDescription description = new RobotDescription();
-        description.setModuleGeometry(new GeometryDescription[] { new SphereShape(0.113f, new VectorDescription( -0.0025f, 0.0f, 0.0f)), 
-        														  new SphereShape(0.115f, new VectorDescription( +0.0025f, 0.0f, 0.0f)) }); 
-        description.setConnectorGeometry(new GeometryDescription[] { new SphereShape(1) });
+        description.setModuleGeometry(new GeometryDescription[] { new SphereShape(1.13f, new VectorDescription( 0.0f, 0.0f, -0.025f)), 
+        														  new SphereShape(1.15f, new VectorDescription( 0.0f, 0.0f, 0.025f)) }); 
+        description.setConnectorGeometry(new GeometryDescription[] { new SphereShape(0.1f) });
+        float zpos = (float) (1.14f*Math.sin( 45 ));
+        float xypos = (float) (1.14f*Math.cos( 45 )); 
+        	
+        
         description.setConnectorPositions(new VectorDescription[] {
-                new VectorDescription( (float) (0.114f*Math.sin( 45 )), (float) (0.114f*Math.cos(45)), 0f)
+                new VectorDescription( xypos, xypos, zpos ),
+                new VectorDescription( xypos, -xypos, zpos ),
+                new VectorDescription( -xypos, xypos, zpos ),
+                new VectorDescription( -xypos, -xypos, zpos ),
+                new VectorDescription( xypos, xypos, -zpos ),
+                new VectorDescription( xypos, -xypos, -zpos ),
+                new VectorDescription( -xypos, xypos, -zpos ),
+                new VectorDescription( -xypos, -xypos, -zpos ),
         });
+        description.setConnectorType( RobotDescription.ATRON_CONNECTOR );
         description.setMaxConnectionDistance(6);
         return description;
     }

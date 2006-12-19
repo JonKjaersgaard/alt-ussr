@@ -73,7 +73,17 @@ public class JMEModule implements PhysicsModule {
             Vector3f position = new Vector3f(p.getX(), p.getY(), p.getZ());
             List<GeometryDescription> geometry = selfDesc.getConnectorGeometry();
             float maxDistance = selfDesc.getMaxConnectionDistance();
-            JMEConnector connector = new JMEStickyConnector(position,moduleNode,name,geometry,world,this,maxDistance);
+            JMEConnector connector = null;
+            switch( selfDesc.getConnectorType() ) {
+            case RobotDescription.STICKY_CONNECTOR:
+                    connector = new JMEStickyConnector(position,moduleNode,name,geometry,world,this,maxDistance);
+            		break;
+            case RobotDescription.ATRON_CONNECTOR:
+                    connector = new JMEATRONConnector(position,moduleNode,name,geometry,world,this,maxDistance);
+            		break;
+            	default:
+            		
+            }
             model.addConnector(new Connector(connector));
             connectors.add(connector);
         }
