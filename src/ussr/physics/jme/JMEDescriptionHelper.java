@@ -8,6 +8,7 @@ import java.util.List;
 
 import ussr.description.GeometryDescription;
 import ussr.description.SphereShape;
+import ussr.description.VectorDescription;
 
 import com.jme.bounding.BoundingSphere;
 import com.jme.scene.TriMesh;
@@ -29,10 +30,11 @@ public class JMEDescriptionHelper {
         if(!(element instanceof SphereShape)) 
             throw new Error("Only sphere geometries supported for now"); 
         Sphere meshSphere = new Sphere( name, 9, 9, ((SphereShape)element).getRadius()); 
+        VectorDescription translation = ((SphereShape)element).getTranslation();
+        meshSphere.getLocalTranslation().set( translation.getX(), translation.getY(), translation.getZ() );
         meshSphere.setModelBound( new BoundingSphere() );
         meshSphere.updateModelBound();
         moduleNode.attachChild( meshSphere );
         return meshSphere;
     }
-
 }
