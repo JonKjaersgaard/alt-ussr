@@ -69,8 +69,8 @@ public class StickyBotSimulation {
      */
     private static WorldDescription createWorld() {
         WorldDescription world = new WorldDescription();
-        world.setNumberOfModules(7);
-        world.setPlaneSize(25);
+        world.setNumberOfModules(12);
+        world.setPlaneSize(40);
         world.setObstacles(new VectorDescription[] {
                 new VectorDescription(0,-2.5f,0),
                 new VectorDescription(5,-1.5f,2)

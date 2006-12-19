@@ -8,6 +8,9 @@ package ussr.sandbox.stickybot;
 import java.awt.Color;
 import java.util.List;
 
+import ussr.comm.Packet;
+import ussr.comm.Receiver;
+import ussr.comm.Transmitter;
 import ussr.model.Connector;
 import ussr.model.ControllerImpl;
 
@@ -19,20 +22,26 @@ import ussr.model.ControllerImpl;
  *
  */
 public class StickyBotController extends ControllerImpl {
-
-    private int nConnections = 0;
     
+    private static int c = 0;
+    private static synchronized int getc() { return c++; } 
+
     /**
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
-        if(module.getID()%2==0) module.setColor(Color.RED);
+        Transmitter transmitter = module.getTransmitters().get(0);
+        Receiver receiver = module.getReceivers().get(0);
         while(true) {
             this.waitForEvent();
-            if(!StickyBotSimulation.getConnectorsAreActive()||nConnections>=2) continue;
+            if(receiver.hasData()) {
+                Packet data = receiver.getData();
+                if(data.get(0)==87) module.setColor(Color.RED);
+            }
+            if(!StickyBotSimulation.getConnectorsAreActive()) continue;
             for(Connector connector: module.getConnectors()) {
                 if(!connector.isConnected()&&connector.hasProximateConnector()) {
-                    if(connector.connect()) nConnections++;
+                    if(connector.connect()) transmitter.send(new Packet(87));
                 }
             }
         }

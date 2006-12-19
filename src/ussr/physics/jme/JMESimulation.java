@@ -11,9 +11,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
+import ussr.comm.Packet;
+import ussr.comm.Receiver;
+import ussr.comm.TransmissionType;
 import ussr.description.GeometryDescription;
 import ussr.description.VectorDescription;
 import ussr.description.WorldDescription;
+import ussr.model.Entity;
+import ussr.model.Module;
 import ussr.model.Robot;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
@@ -53,6 +58,7 @@ public class JMESimulation extends SimplePhysicsGame implements PhysicsSimulatio
     public Set<Joint> dynamicJoints = new HashSet<Joint>();
     private Robot robot;
     private WorldDescription worldDescription;
+    private List<JMEModule> modules = new ArrayList<JMEModule>();
 
     protected void simpleInitGame() {
         // Create underlying plane
@@ -64,7 +70,6 @@ public class JMESimulation extends SimplePhysicsGame implements PhysicsSimulatio
             obstacleBoxes.add(createBox());
 
         // Create modules
-        final List<JMEModule> modules = new ArrayList<JMEModule>();
         for(int i=0; i<worldDescription.getNumberOfModules(); i++) {
             final JMEModule physicsModule = new JMEModule(this,robot,"module#"+Integer.toString(i));
             modules.add(physicsModule);
@@ -188,6 +193,18 @@ public class JMESimulation extends SimplePhysicsGame implements PhysicsSimulatio
         final MaterialState materialState = display.getRenderer().createMaterialState();
         materialState.setDiffuse( jmecolor );
         return materialState;
+    }
+
+    public void sendMessage(TransmissionType type, Entity emitter, float range, Packet data) {
+        if(!(emitter instanceof Module)||type!=TransmissionType.RADIO) throw new Error("not supported yet");
+        DynamicPhysicsNode source = ((JMEModule)((Module)emitter).getPhysics()).getModuleNode();
+        for(JMEModule target: modules) {
+            if(source.getLocalTranslation().distance(target.getModuleNode().getLocalTranslation())<range)
+                for(Receiver receiver: target.getModel().getReceivers())
+                    if(receiver.isCompatible(type)) {
+                        receiver.receive(data);
+                    }
+        }
     }
 
  }

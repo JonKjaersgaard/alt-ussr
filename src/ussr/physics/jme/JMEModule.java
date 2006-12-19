@@ -17,13 +17,16 @@ import com.jmex.physics.Joint;
 import com.jmex.physics.contact.ContactInfo;
 
 import ussr.description.GeometryDescription;
+import ussr.description.ReceivingDevice;
 import ussr.description.RobotDescription;
 import ussr.description.SphereShape;
+import ussr.description.TransmissionDevice;
 import ussr.description.VectorDescription;
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.model.Robot;
 import ussr.physics.PhysicsModule;
+import ussr.physics.PhysicsSimulation;
 
 public class JMEModule implements PhysicsModule {
     /**
@@ -46,6 +49,8 @@ public class JMEModule implements PhysicsModule {
      */
     private List<JMEConnector> connectors = new ArrayList<JMEConnector>();
     
+    private DynamicPhysicsNode moduleNode;
+    
     /**
      * 
      * @param world
@@ -58,7 +63,7 @@ public class JMEModule implements PhysicsModule {
         this.model.setController(robot.createController());
         RobotDescription selfDesc = robot.getDescription();
         // Create central module node
-        DynamicPhysicsNode moduleNode = world.getPhysicsSpace().createDynamicNode();
+        moduleNode = world.getPhysicsSpace().createDynamicNode();
         dynamicNodes.add(moduleNode);
         // Create visual appearance
         assert selfDesc.getModuleGeometry().size()==1; // Only tested with size 1 geometry
@@ -87,6 +92,12 @@ public class JMEModule implements PhysicsModule {
             model.addConnector(new Connector(connector));
             connectors.add(connector);
         }
+        // Create communicators
+        for(TransmissionDevice transmitter: selfDesc.getTransmitters())
+            model.addTransmissionDevice(JMEDescriptionHelper.createTransmitter(model,transmitter));
+        // Create communicators
+        for(ReceivingDevice receiver: selfDesc.getReceivers())
+            model.addReceivingDevice(JMEDescriptionHelper.createReceiver(model, receiver));
     }
     
     /**
@@ -110,7 +121,17 @@ public class JMEModule implements PhysicsModule {
     }
 
     public void setColor(Color color) {
-        for(DynamicPhysicsNode node: dynamicNodes)
+        for(DynamicPhysicsNode node: dynamicNodes) {
             node.setRenderState(world.color2jme(color));
+            node.updateRenderState();
+        }
+    }
+
+    public PhysicsSimulation getSimulation() {
+        return world;
+    }
+    
+    public DynamicPhysicsNode getModuleNode() {
+        return moduleNode;
     }
 }

@@ -7,6 +7,7 @@ package ussr.model;
 
 import java.util.List;
 import ussr.physics.PhysicsConnector;
+import ussr.physics.PhysicsEntity;
 
 /**
  * 
@@ -64,5 +65,8 @@ public class Connector extends Entity {
     public String toString() {
         return "Connector<"+physics+">";
     }
-
+    
+    public PhysicsEntity getPhysics() {
+        return physics;
+    }
 }

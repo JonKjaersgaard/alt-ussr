@@ -98,7 +98,8 @@ public class JMEStickyConnector implements JMEConnector {
      * @see ussr.physics.jme.JMEConnector#otherConnectorAvailable()
      */
     public boolean hasProximateConnector() {
-        return this.lastProximityConnector!=null;
+        return this.lastProximityConnector!=null 
+            && node.getLocalTranslation().distance(this.lastProximityConnector.node.getLocalTranslation())<maxConnectDistance;
     }
     
     /* (non-Javadoc)
@@ -124,9 +125,7 @@ public class JMEStickyConnector implements JMEConnector {
      * @see ussr.physics.jme.JMEConnector#connectTo(ussr.physics.PhysicsConnector)
      */
     public synchronized boolean connect() {
-        if(this.lastProximityConnector==null 
-                || node.getLocalTranslation().distance(this.lastProximityConnector.node.getLocalTranslation())>maxConnectDistance)
-            return false;
+        if(!hasProximateConnector()) return false;
         JMEStickyConnector other = this.lastProximityConnector;
         if(this.isConnected()||other.isConnected()) { 
             PhysicsLogger.logNonCritical("Attempted connecting two connectors of which at least one was already connected.");

@@ -6,9 +6,16 @@ package ussr.physics.jme;
 import java.awt.Color;
 import java.util.List;
 
+import ussr.comm.GenericReceiver;
+import ussr.comm.GenericTransmitter;
+import ussr.comm.Receiver;
+import ussr.comm.Transmitter;
 import ussr.description.GeometryDescription;
+import ussr.description.ReceivingDevice;
 import ussr.description.SphereShape;
+import ussr.description.TransmissionDevice;
 import ussr.description.VectorDescription;
+import ussr.model.Module;
 
 import com.jme.bounding.BoundingSphere;
 import com.jme.scene.TriMesh;
@@ -37,4 +44,13 @@ public class JMEDescriptionHelper {
         moduleNode.attachChild( meshSphere );
         return meshSphere;
     }
+
+    public static Transmitter createTransmitter(Module module, TransmissionDevice transmitter) {
+        return new GenericTransmitter(module, transmitter.getType(),transmitter.getRange());
+    }
+
+    public static Receiver createReceiver(Module module, ReceivingDevice receiver) {
+        return new GenericReceiver(module, receiver.getType(), receiver.getBufferSize());
+    }
+
 }

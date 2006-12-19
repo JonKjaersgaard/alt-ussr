@@ -5,7 +5,11 @@
  */
 package ussr.physics;
 
+import ussr.comm.Packet;
+import ussr.comm.TransmissionType;
 import ussr.description.WorldDescription;
+import ussr.model.Entity;
+import ussr.model.Module;
 import ussr.model.Robot;
 
 /**
@@ -57,5 +61,7 @@ public interface PhysicsSimulation {
      * Start the simulation
      */
     public void start();
+
+    public void sendMessage(TransmissionType type, Entity emitter, float range, Packet data);
     
 }

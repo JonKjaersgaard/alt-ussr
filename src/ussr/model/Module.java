@@ -9,7 +9,11 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import ussr.comm.Receiver;
+import ussr.comm.Transmitter;
+import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsModule;
+import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEModule;
 
 /**
@@ -40,6 +44,13 @@ public class Module extends Entity {
      * Globally unique ID for this module
      */
     private int uniqueID;
+
+    /**
+     * Transmitters for the module
+     */
+    private List<Transmitter> transmitters = new ArrayList<Transmitter>();
+
+    private List<Receiver> receivers = new ArrayList<Receiver>();
     
     /**
      * Construct a module representing the physics module passed as an argument
@@ -65,6 +76,14 @@ public class Module extends Entity {
      */
     public void addConnector(Connector connector) {
         connectors.add(connector);
+    }
+    
+    /**
+     * Add a transmitter to the module
+     * @param transmitter the transmitter to add to the module
+     */
+    public void addTransmitter(Transmitter transmitter) {
+        transmitters.add(transmitter);
     }
     
     /**
@@ -108,5 +127,29 @@ public class Module extends Entity {
 
     public void setColor(Color color) {
         physics.setColor(color);        
+    }
+
+    public List<Transmitter> getTransmitters() {
+        return transmitters;
+    }
+
+    public void addTransmissionDevice(Transmitter transmitter) {
+        transmitters.add(transmitter);        
+    }
+
+    public void addReceivingDevice(Receiver receiver) {
+        receivers.add(receiver);
+    }
+    
+    public PhysicsSimulation getSimulation() {
+        return physics.getSimulation();
+    }
+    
+    public PhysicsEntity getPhysics() {
+        return physics;
+    }
+
+    public List<Receiver> getReceivers() {
+        return receivers;
     }
 }

@@ -14,7 +14,7 @@ import ussr.model.Connector;
  * @author ups
  *
  */
-public interface PhysicsConnector {
+public interface PhysicsConnector extends PhysicsEntity {
 
     /**
      * Return true if is there is a connector available for interaction, false otherwise

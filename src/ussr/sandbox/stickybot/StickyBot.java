@@ -5,9 +5,12 @@
  */
 package ussr.sandbox.stickybot;
 
+import ussr.comm.TransmissionType;
 import ussr.description.GeometryDescription;
+import ussr.description.ReceivingDevice;
 import ussr.description.RobotDescription;
 import ussr.description.SphereShape;
+import ussr.description.TransmissionDevice;
 import ussr.description.VectorDescription;
 import ussr.model.Controller;
 import ussr.model.ControllerImpl;
@@ -35,7 +38,9 @@ public class StickyBot implements Robot {
             new VectorDescription(0.0f, -2.0f, 0),
             new VectorDescription(0.0f, 0.0f, -2.0f),
             new VectorDescription(0.0f, 0f, 2.0f) });
-        description.setMaxConnectionDistance(6);
+        description.setMaxConnectionDistance(5);
+        description.setTransmitters(new TransmissionDevice[] { new TransmissionDevice(TransmissionType.RADIO,15) });
+        description.setReceivers(new ReceivingDevice[] { new ReceivingDevice(TransmissionType.RADIO,10) });
         return description;
     }
 

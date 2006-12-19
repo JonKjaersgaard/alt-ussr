@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import ussr.comm.Transmitter;
+
 /**
  * 
  * A description of the geometry of a complete robot module, including the shape
@@ -46,6 +48,9 @@ public class RobotDescription extends Description {
      * where the connectors can reach each other (e.g., connect)
      */
     private float maxConnectionDistance = 0;
+
+    private List<TransmissionDevice> transmitters = Collections.emptyList();
+    private List<ReceivingDevice> receivers = Collections.emptyList();
  
     /**
      * Get the module geometry: the geometric shapes that constitute the core of the module
@@ -123,6 +128,22 @@ public class RobotDescription extends Description {
      */
     public void setMaxConnectionDistance(float limit) {
         maxConnectionDistance = limit;
+    }
+
+    public void setTransmitters(TransmissionDevice[] transmitters) {
+        this.transmitters = Arrays.asList(transmitters);
+    }
+
+    public void setReceivers(ReceivingDevice[] transmitters) {
+        this.receivers = Arrays.asList(transmitters);
+    }
+
+    public List<TransmissionDevice> getTransmitters() {
+        return this.transmitters;
+    }
+
+    public List<ReceivingDevice> getReceivers() {
+        return this.receivers;
     }
 
 }

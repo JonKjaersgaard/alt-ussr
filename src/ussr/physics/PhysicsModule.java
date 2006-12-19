@@ -15,7 +15,7 @@ import ussr.model.Module;
  * @author ups
  *
  */
-public interface PhysicsModule {
+public interface PhysicsModule extends PhysicsEntity {
     
     /**
      * Reset the physics of the module, including velocity/acceleration, rotation, and
@@ -36,4 +36,6 @@ public interface PhysicsModule {
     public Module getModel();
 
     public void setColor(Color color);
+    
+    public PhysicsSimulation getSimulation();
 }

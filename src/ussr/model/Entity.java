@@ -8,6 +8,8 @@ package ussr.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import ussr.physics.PhysicsEntity;
+
 /**
  * Abstract class defining common behavior for entities in the simulator, namely
  * the ability to have properties (strings with a key-value structure) defined on
@@ -42,4 +44,6 @@ public abstract class Entity {
         if(properties==null) properties = new HashMap<String,String>();
         properties.put(key, value);
     }
+    
+    abstract PhysicsEntity getPhysics();
 }
