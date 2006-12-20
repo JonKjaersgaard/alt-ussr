@@ -15,12 +15,12 @@ import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
 import com.jmex.physics.contact.ContactInfo;
 
-import ussr.description.GeometryDescription;
 import ussr.model.Connector;
 import ussr.physics.PhysicsConnector;
 import ussr.physics.PhysicsLogger;
+import ussr.robotbuildingblocks.GeometryDescription;
 
-public class JMEStickyConnector implements JMEConnector {
+public class JMEMechanicalConnector implements JMEConnector {
     /**
      * The abstract connector represented by this jme entity
      */
@@ -28,17 +28,17 @@ public class JMEStickyConnector implements JMEConnector {
     private DynamicPhysicsNode node;
     private JMESimulation world;
     private JMEConnector connectedConnector = null;
-    private JMEStickyConnector lastProximityConnector = null;
-    private JMEModule module;
+    private JMEMechanicalConnector lastProximityConnector = null;
+    private JMEModuleComponent module;
     private float maxConnectDistance;
 
-    public JMEStickyConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, List<GeometryDescription> geometry,JMESimulation world, JMEModule module, float maxConnectionDistance) {
+    public JMEMechanicalConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, List<GeometryDescription> geometry,JMESimulation world, JMEModuleComponent component, float maxConnectionDistance) {
         this.world = world;
-        this.module = module;
+        this.module = component;
         this.maxConnectDistance = maxConnectionDistance;
         // Create connector node
         DynamicPhysicsNode connector = world.getPhysicsSpace().createDynamicNode();
-        module.getNodes().add(connector);
+        component.getNodes().add(connector);
         // Create visual appearance
         assert geometry.size()==1; // Only tested with size 1 geometry
         for(GeometryDescription element: geometry) {
@@ -77,8 +77,8 @@ public class JMEStickyConnector implements JMEConnector {
             String g1 = contactInfo.getGeometry1().getName();
             String g2 = contactInfo.getGeometry2().getName();
             if(world.connectorRegistry.containsKey(g1) && world.connectorRegistry.containsKey(g2)) {
-                JMEStickyConnector c1 = (JMEStickyConnector)world.connectorRegistry.get(g1); 
-                JMEStickyConnector c2 = (JMEStickyConnector)world.connectorRegistry.get(g2);
+                JMEMechanicalConnector c1 = (JMEMechanicalConnector)world.connectorRegistry.get(g1); 
+                JMEMechanicalConnector c2 = (JMEMechanicalConnector)world.connectorRegistry.get(g2);
                 c1.setProximityConnector(c2);
                 c2.setProximityConnector(c1);
                 c1.module.changeNotify();
@@ -90,7 +90,7 @@ public class JMEStickyConnector implements JMEConnector {
 
     }
 
-    private void setProximityConnector(JMEStickyConnector other) {
+    private void setProximityConnector(JMEMechanicalConnector other) {
         this.lastProximityConnector=other;
     }
 
@@ -98,8 +98,7 @@ public class JMEStickyConnector implements JMEConnector {
      * @see ussr.physics.jme.JMEConnector#otherConnectorAvailable()
      */
     public boolean hasProximateConnector() {
-        return this.lastProximityConnector!=null 
-            && node.getLocalTranslation().distance(this.lastProximityConnector.node.getLocalTranslation())<maxConnectDistance;
+        return this.lastProximityConnector!=null;
     }
     
     /* (non-Javadoc)
@@ -125,8 +124,10 @@ public class JMEStickyConnector implements JMEConnector {
      * @see ussr.physics.jme.JMEConnector#connectTo(ussr.physics.PhysicsConnector)
      */
     public synchronized boolean connect() {
-        if(!hasProximateConnector()) return false;
-        JMEStickyConnector other = this.lastProximityConnector;
+        if(this.lastProximityConnector==null 
+                || node.getLocalTranslation().distance(this.lastProximityConnector.node.getLocalTranslation())>maxConnectDistance)
+            return false;
+        JMEMechanicalConnector other = this.lastProximityConnector;
         if(this.isConnected()||other.isConnected()) { 
             PhysicsLogger.logNonCritical("Attempted connecting two connectors of which at least one was already connected.");
             return false;

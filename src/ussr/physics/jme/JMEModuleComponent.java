@@ -16,19 +16,20 @@ import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
 import com.jmex.physics.contact.ContactInfo;
 
-import ussr.description.GeometryDescription;
-import ussr.description.ReceivingDevice;
-import ussr.description.RobotDescription;
-import ussr.description.SphereShape;
-import ussr.description.TransmissionDevice;
-import ussr.description.VectorDescription;
 import ussr.model.Connector;
 import ussr.model.Module;
-import ussr.model.Robot;
-import ussr.physics.PhysicsModule;
+import ussr.physics.PhysicsModuleComponent;
 import ussr.physics.PhysicsSimulation;
+import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.ReceivingDevice;
+import ussr.robotbuildingblocks.Robot;
+import ussr.robotbuildingblocks.RobotDescription;
+import ussr.robotbuildingblocks.SphereShape;
+import ussr.robotbuildingblocks.TransmissionDevice;
+import ussr.robotbuildingblocks.VectorDescription;
+import ussr.robotbuildingblocks.RobotDescription.ConnectorType;
 
-public class JMEModule implements PhysicsModule {
+public class JMEModuleComponent implements PhysicsModuleComponent {
     /**
      * The abstract module represented by the jme entity  
      */
@@ -55,20 +56,19 @@ public class JMEModule implements PhysicsModule {
      * 
      * @param world
      * @param robot
+     * @param element 
      * @param name
      */
-    public JMEModule(JMESimulation world, Robot robot, String name) {
+    public JMEModuleComponent(JMESimulation world, Robot robot, GeometryDescription element, String name, Module module) {
         this.world = world;
-        this.model = new Module(this);
-        this.model.setController(robot.createController());
+        this.model = module;
         RobotDescription selfDesc = robot.getDescription();
         // Create central module node
         moduleNode = world.getPhysicsSpace().createDynamicNode();
         dynamicNodes.add(moduleNode);
+        if(element.getColor()!=null) this.setColor(element.getColor());
         // Create visual appearance
-        assert selfDesc.getModuleGeometry().size()==1; // Only tested with size 1 geometry
-        for(GeometryDescription element: selfDesc.getModuleGeometry())
-            JMEDescriptionHelper.createShape(moduleNode, name, element);
+        JMEDescriptionHelper.createShape(moduleNode, name, element);
         // Finalize
         moduleNode.generatePhysicsGeometry();
         world.getRootNode().attachChild( moduleNode );
@@ -79,16 +79,7 @@ public class JMEModule implements PhysicsModule {
             List<GeometryDescription> geometry = selfDesc.getConnectorGeometry();
             float maxDistance = selfDesc.getMaxConnectionDistance();
             JMEConnector connector = null;
-            switch( selfDesc.getConnectorType() ) {
-            case RobotDescription.STICKY_CONNECTOR:
-                    connector = new JMEStickyConnector(position,moduleNode,name,geometry,world,this,maxDistance);
-            		break;
-            case RobotDescription.ATRON_CONNECTOR:
-                    connector = new JMEATRONConnector(position,moduleNode,name,geometry,world,this,maxDistance);
-            		break;
-            	default:
-            		
-            }
+            connector = createConnector(world, name, position, geometry, maxDistance, selfDesc.getConnectorType());
             model.addConnector(new Connector(connector));
             connectors.add(connector);
         }
@@ -98,6 +89,25 @@ public class JMEModule implements PhysicsModule {
         // Create communicators
         for(ReceivingDevice receiver: selfDesc.getReceivers())
             model.addReceivingDevice(JMEDescriptionHelper.createReceiver(model, receiver));
+    }
+
+    /**
+     * @param world
+     * @param name
+     * @param position
+     * @param geometry
+     * @param maxDistance
+     * @param type 
+     * @return
+     */
+    private JMEConnector createConnector(JMESimulation world, String name, Vector3f position, List<GeometryDescription> geometry, float maxDistance, ConnectorType type) {
+        JMEConnector connector;
+        if(type==ConnectorType.MAGNETIC_CONNECTOR)
+            connector = new JMEMagneticConnector(position,moduleNode,name,geometry,world,this,maxDistance);
+        else if(type==ConnectorType.MECHANICAL_CONNECTOR)
+            connector = new JMEMechanicalConnector(position,moduleNode,name,geometry,world,this,maxDistance);
+        else throw new Error("Unknown connector type");
+        return connector;
     }
     
     /**

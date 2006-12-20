@@ -3,18 +3,19 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.sandbox.atron;
+package ussr.samples;
 
 import java.util.logging.Level;
 
-import ussr.description.GeometryDescription;
-import ussr.description.SphereShape;
-import ussr.description.VectorDescription;
-import ussr.description.WorldDescription;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMESimulation;
+import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.Robot;
+import ussr.robotbuildingblocks.SphereShape;
+import ussr.robotbuildingblocks.VectorDescription;
+import ussr.robotbuildingblocks.WorldDescription;
 
 import com.jme.math.Vector3f;
 import com.jme.util.LoggingSystem;
@@ -26,7 +27,7 @@ import com.jme.util.LoggingSystem;
  * @author ups
  *
  */
-public class ATRONSimulation {
+public abstract class GenericSimulation {
     
     /**
      * Last time user toggle activeness of connectors, help to avoid multiple re-activations
@@ -38,11 +39,13 @@ public class ATRONSimulation {
      */
     private static boolean connectorsAreActive;
 
-    public static void main( String[] args ) {
+    protected abstract Robot getRobot();
+    
+    public void runSimulation( String[] args ) {
         //System.out.println("java.library.path="+System.getProperty("java.library.path"));
         PhysicsLogger.setDefaultLoggingLevel();
         final PhysicsSimulation simulation = PhysicsFactory.createSimulator();
-        simulation.setRobot(new ATRON());
+        simulation.setRobot(getRobot());
         simulation.setWorld(createWorld());
 
         // Global connector activation toggle 

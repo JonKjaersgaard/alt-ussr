@@ -15,12 +15,12 @@ import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
 import com.jmex.physics.contact.ContactInfo;
 
-import ussr.description.GeometryDescription;
 import ussr.model.Connector;
 import ussr.physics.PhysicsConnector;
 import ussr.physics.PhysicsLogger;
+import ussr.robotbuildingblocks.GeometryDescription;
 
-public class JMEATRONConnector implements JMEConnector {
+public class JMEMagneticConnector implements JMEConnector {
     /**
      * The abstract connector represented by this jme entity
      */
@@ -28,11 +28,11 @@ public class JMEATRONConnector implements JMEConnector {
     private DynamicPhysicsNode node;
     private JMESimulation world;
     private JMEConnector connectedConnector = null;
-    private JMEATRONConnector lastProximityConnector = null;
-    private JMEModule module;
+    private JMEMagneticConnector lastProximityConnector = null;
+    private JMEModuleComponent module;
     private float maxConnectDistance;
 
-    public JMEATRONConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, List<GeometryDescription> geometry,JMESimulation world, JMEModule module, float maxConnectionDistance) {
+    public JMEMagneticConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, List<GeometryDescription> geometry,JMESimulation world, JMEModuleComponent module, float maxConnectionDistance) {
         this.world = world;
         this.module = module;
         this.maxConnectDistance = maxConnectionDistance;
@@ -77,8 +77,8 @@ public class JMEATRONConnector implements JMEConnector {
             String g1 = contactInfo.getGeometry1().getName();
             String g2 = contactInfo.getGeometry2().getName();
             if(world.connectorRegistry.containsKey(g1) && world.connectorRegistry.containsKey(g2)) {
-                JMEATRONConnector c1 = (JMEATRONConnector)world.connectorRegistry.get(g1); 
-                JMEATRONConnector c2 = (JMEATRONConnector)world.connectorRegistry.get(g2);
+                JMEMagneticConnector c1 = (JMEMagneticConnector)world.connectorRegistry.get(g1); 
+                JMEMagneticConnector c2 = (JMEMagneticConnector)world.connectorRegistry.get(g2);
                 c1.setProximityConnector(c2);
                 c2.setProximityConnector(c1);
                 c1.module.changeNotify();
@@ -90,7 +90,7 @@ public class JMEATRONConnector implements JMEConnector {
 
     }
 
-    private void setProximityConnector(JMEATRONConnector other) {
+    private void setProximityConnector(JMEMagneticConnector other) {
         this.lastProximityConnector=other;
     }
 
@@ -98,7 +98,8 @@ public class JMEATRONConnector implements JMEConnector {
      * @see ussr.physics.jme.JMEConnector#otherConnectorAvailable()
      */
     public boolean hasProximateConnector() {
-        return this.lastProximityConnector!=null;
+        return this.lastProximityConnector!=null 
+            && node.getLocalTranslation().distance(this.lastProximityConnector.node.getLocalTranslation())<maxConnectDistance;
     }
     
     /* (non-Javadoc)
@@ -124,10 +125,8 @@ public class JMEATRONConnector implements JMEConnector {
      * @see ussr.physics.jme.JMEConnector#connectTo(ussr.physics.PhysicsConnector)
      */
     public synchronized boolean connect() {
-        if(this.lastProximityConnector==null 
-                || node.getLocalTranslation().distance(this.lastProximityConnector.node.getLocalTranslation())>maxConnectDistance)
-            return false;
-        JMEATRONConnector other = this.lastProximityConnector;
+        if(!hasProximateConnector()) return false;
+        JMEMagneticConnector other = this.lastProximityConnector;
         if(this.isConnected()||other.isConnected()) { 
             PhysicsLogger.logNonCritical("Attempted connecting two connectors of which at least one was already connected.");
             return false;

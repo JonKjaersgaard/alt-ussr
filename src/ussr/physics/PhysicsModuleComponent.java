@@ -6,6 +6,7 @@
 package ussr.physics;
 
 import java.awt.Color;
+import java.util.List;
 
 import ussr.model.Module;
 
@@ -15,7 +16,7 @@ import ussr.model.Module;
  * @author ups
  *
  */
-public interface PhysicsModule extends PhysicsEntity {
+public interface PhysicsModuleComponent extends PhysicsEntity {
     
     /**
      * Reset the physics of the module, including velocity/acceleration, rotation, and
@@ -38,4 +39,5 @@ public interface PhysicsModule extends PhysicsEntity {
     public void setColor(Color color);
     
     public PhysicsSimulation getSimulation();
+
 }

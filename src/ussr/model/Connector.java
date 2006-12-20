@@ -5,6 +5,7 @@
  */
 package ussr.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import ussr.physics.PhysicsConnector;
 import ussr.physics.PhysicsEntity;
@@ -66,7 +67,9 @@ public class Connector extends Entity {
         return "Connector<"+physics+">";
     }
     
-    public PhysicsEntity getPhysics() {
-        return physics;
+    public List<? extends PhysicsEntity> getPhysics() {
+        ArrayList<PhysicsEntity> result = new ArrayList<PhysicsEntity>();
+        result.add(physics);
+        return result;
     }
 }

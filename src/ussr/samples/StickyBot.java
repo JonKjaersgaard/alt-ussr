@@ -3,18 +3,18 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.sandbox.stickybot;
+package ussr.samples;
 
 import ussr.comm.TransmissionType;
-import ussr.description.GeometryDescription;
-import ussr.description.ReceivingDevice;
-import ussr.description.RobotDescription;
-import ussr.description.SphereShape;
-import ussr.description.TransmissionDevice;
-import ussr.description.VectorDescription;
 import ussr.model.Controller;
 import ussr.model.ControllerImpl;
-import ussr.model.Robot;
+import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.ReceivingDevice;
+import ussr.robotbuildingblocks.Robot;
+import ussr.robotbuildingblocks.RobotDescription;
+import ussr.robotbuildingblocks.SphereShape;
+import ussr.robotbuildingblocks.TransmissionDevice;
+import ussr.robotbuildingblocks.VectorDescription;
 
 /**
  * A small round robot with connectors at N/S/E/W/U/D; connectors can stick to each
@@ -25,7 +25,7 @@ import ussr.model.Robot;
 public class StickyBot implements Robot {
     
     /**
-     * @see ussr.model.Robot#getDescription()
+     * @see ussr.robotbuildingblocks.Robot#getDescription()
      */
     public RobotDescription getDescription() {
         RobotDescription description = new RobotDescription();
@@ -38,6 +38,7 @@ public class StickyBot implements Robot {
             new VectorDescription(0.0f, -2.0f, 0),
             new VectorDescription(0.0f, 0.0f, -2.0f),
             new VectorDescription(0.0f, 0f, 2.0f) });
+        description.setConnectorType( RobotDescription.ConnectorType.MAGNETIC_CONNECTOR);
         description.setMaxConnectionDistance(5);
         description.setTransmitters(new TransmissionDevice[] { new TransmissionDevice(TransmissionType.RADIO,15) });
         description.setReceivers(new ReceivingDevice[] { new ReceivingDevice(TransmissionType.RADIO,10) });
@@ -45,10 +46,10 @@ public class StickyBot implements Robot {
     }
 
     /**
-     * @see ussr.model.Robot#createController()
+     * @see ussr.robotbuildingblocks.Robot#createController()
      */
     public Controller createController() {
-        return new StickyBotController();
+        return new StickyBotController1();
     }
     
 }

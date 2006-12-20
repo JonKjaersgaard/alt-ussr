@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.description;
+package ussr.robotbuildingblocks;
 
 /**
  * A description of a vector.  Can be used for describing relative positions within

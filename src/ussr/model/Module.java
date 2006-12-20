@@ -7,14 +7,15 @@ package ussr.model;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
 import ussr.physics.PhysicsEntity;
-import ussr.physics.PhysicsModule;
+import ussr.physics.PhysicsModuleComponent;
 import ussr.physics.PhysicsSimulation;
-import ussr.physics.jme.JMEModule;
 
 /**
  * A module is the basic unit from which the modular robot is built.  Specifically,
@@ -33,7 +34,7 @@ public class Module extends Entity {
     /**
      * The physics model for the module
      */
-    private PhysicsModule physics;
+    private List<PhysicsModuleComponent> physics = new ArrayList<PhysicsModuleComponent>();
  
     /**
      * Connectors for the module
@@ -53,14 +54,20 @@ public class Module extends Entity {
     private List<Receiver> receivers = new ArrayList<Receiver>();
     
     /**
-     * Construct a module representing the physics module passed as an argument
-     * @param module the physics module represented by this module
+     * Construct a module 
      */
-    public Module(PhysicsModule module) {
-        physics = module;
+    public Module() {
         synchronized(this) {
             uniqueID = idCounter++;
         }
+    }
+
+    /**
+     * Set the physics for the module
+     * @param components the physics components represented by this module
+     */
+    public void setPhysics(List<PhysicsModuleComponent> components) {
+        physics = components;
     }
 
     /**
@@ -126,7 +133,7 @@ public class Module extends Entity {
     private static int idCounter = 0;
 
     public void setColor(Color color) {
-        physics.setColor(color);        
+        for(PhysicsModuleComponent module: physics) module.setColor(color);        
     }
 
     public List<Transmitter> getTransmitters() {
@@ -142,14 +149,18 @@ public class Module extends Entity {
     }
     
     public PhysicsSimulation getSimulation() {
-        return physics.getSimulation();
+        return physics.get(0).getSimulation(); // All modules are in the same simulation
     }
     
-    public PhysicsEntity getPhysics() {
+    public List<? extends PhysicsEntity> getPhysics() {
         return physics;
     }
 
     public List<Receiver> getReceivers() {
         return receivers;
+    }
+
+    public void addComponent(PhysicsModuleComponent physicsModule) {
+        physics.add(physicsModule);        
     }
 }

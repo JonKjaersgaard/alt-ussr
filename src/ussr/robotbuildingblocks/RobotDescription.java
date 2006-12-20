@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.description;
+package ussr.robotbuildingblocks;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,8 +22,12 @@ import ussr.comm.Transmitter;
  */
 
 public class RobotDescription extends Description {
-	public static final int STICKY_CONNECTOR = 0;
-	public static final int ATRON_CONNECTOR = 1;
+    
+    public static enum ConnectorType {
+        MAGNETIC_CONNECTOR,
+        MECHANICAL_CONNECTOR,
+        NONE
+    }
 	
     /**
      * The geometric shapes that constitute the core of the module
@@ -41,7 +45,7 @@ public class RobotDescription extends Description {
      */
     private List<VectorDescription> connectorPositions = Collections.emptyList();
     
-    private int connectorType = STICKY_CONNECTOR;
+    private ConnectorType connectorType = ConnectorType.NONE;
     
     /**
      * The maximal radius from the center of a connector to the center of another connector
@@ -112,11 +116,11 @@ public class RobotDescription extends Description {
         this.connectorPositions = Arrays.asList(descriptions);        
     }
 
-    public int getConnectorType() {
+    public ConnectorType getConnectorType() {
     	return this.connectorType;
     }
     
-    public void setConnectorType( int connectorType ) {
+    public void setConnectorType( ConnectorType connectorType ) {
     	this.connectorType=connectorType;
     }
 

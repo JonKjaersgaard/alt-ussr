@@ -3,9 +3,9 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.model;
+package ussr.robotbuildingblocks;
 
-import ussr.description.RobotDescription;
+import ussr.model.Controller;
 
 /**
  * An abstract description of what a robot is: a description of the hardware and an

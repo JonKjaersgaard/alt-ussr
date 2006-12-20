@@ -10,12 +10,12 @@ import ussr.comm.GenericReceiver;
 import ussr.comm.GenericTransmitter;
 import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
-import ussr.description.GeometryDescription;
-import ussr.description.ReceivingDevice;
-import ussr.description.SphereShape;
-import ussr.description.TransmissionDevice;
-import ussr.description.VectorDescription;
 import ussr.model.Module;
+import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.ReceivingDevice;
+import ussr.robotbuildingblocks.SphereShape;
+import ussr.robotbuildingblocks.TransmissionDevice;
+import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jme.bounding.BoundingSphere;
 import com.jme.scene.TriMesh;

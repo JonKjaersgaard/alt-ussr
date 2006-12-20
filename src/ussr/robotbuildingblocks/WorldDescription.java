@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.description;
+package ussr.robotbuildingblocks;
 
 import java.util.Arrays;
 import java.util.Collections;

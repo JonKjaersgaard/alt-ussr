@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.sandbox.stickybot;
+package ussr.samples;
 
 import java.awt.Color;
 import java.util.List;
@@ -21,7 +21,7 @@ import ussr.model.ControllerImpl;
  * @author ups
  *
  */
-public class StickyBotController extends ControllerImpl {
+public class StickyBotController1 extends ControllerImpl {
     
     private static int c = 0;
     private static synchronized int getc() { return c++; } 
@@ -38,7 +38,7 @@ public class StickyBotController extends ControllerImpl {
                 Packet data = receiver.getData();
                 if(data.get(0)==87) module.setColor(Color.RED);
             }
-            if(!StickyBotSimulation.getConnectorsAreActive()) continue;
+            if(!GenericSimulation.getConnectorsAreActive()) continue;
             for(Connector connector: module.getConnectors()) {
                 if(!connector.isConnected()&&connector.hasProximateConnector()) {
                     if(connector.connect()) transmitter.send(new Packet(87));

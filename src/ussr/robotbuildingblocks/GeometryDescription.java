@@ -3,7 +3,9 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.description;
+package ussr.robotbuildingblocks;
+
+import java.awt.Color;
 
 /**
  * Common interface for geometry descriptions
@@ -12,5 +14,6 @@ package ussr.description;
  *
  */
 public interface GeometryDescription {
-
+    public void setColor(Color color);
+    public Color getColor();
 }

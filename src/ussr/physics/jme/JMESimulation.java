@@ -14,15 +14,17 @@ import java.util.logging.Level;
 import ussr.comm.Packet;
 import ussr.comm.Receiver;
 import ussr.comm.TransmissionType;
-import ussr.description.GeometryDescription;
-import ussr.description.VectorDescription;
-import ussr.description.WorldDescription;
 import ussr.model.Entity;
 import ussr.model.Module;
-import ussr.model.Robot;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
-import ussr.sandbox.stickybot.StickyBot;
+import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.Robot;
+import ussr.robotbuildingblocks.RobotDescription;
+import ussr.robotbuildingblocks.VectorDescription;
+import ussr.robotbuildingblocks.WorldDescription;
+import ussr.samples.ATRON;
+import ussr.samples.StickyBot;
 import ussr.util.Pair;
 
 import com.jme.bounding.BoundingBox;
@@ -83,7 +85,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     public Set<Joint> dynamicJoints = new HashSet<Joint>();
     private Robot robot;
     private WorldDescription worldDescription;
-    private List<JMEModule> modules = new ArrayList<JMEModule>();
+    private List<JMEModuleComponent> modules = new ArrayList<JMEModuleComponent>();
     
     protected float physicsSimulationStepSize=0.01f;
     private PhysicsSpace physicsSpace;
@@ -199,11 +201,17 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
 
         // Create modules
         for(int i=0; i<worldDescription.getNumberOfModules(); i++) {
-            final JMEModule physicsModule = new JMEModule(this,robot,"module#"+Integer.toString(i));
-            modules.add(physicsModule);
+            final Module module = new Module();
+            module.setController(robot.createController());
+            int j=0;
+            for(GeometryDescription geometry: robot.getDescription().getModuleGeometry()) {
+                JMEModuleComponent physicsModule = new JMEModuleComponent(this,robot,geometry,"module#"+Integer.toString(i)+"."+(j++),module);
+                module.addComponent(physicsModule);
+                modules.add(physicsModule);
+            }
             new Thread() {
                 public void run() {
-                    physicsModule.getModel().getController().activate();
+                    module.getController().activate();
                     PhysicsLogger.log("Warning: unexpected controller exit");
                 }
             }.start();
@@ -217,7 +225,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
                 for(Joint j: dynamicJoints) j.detach();
                 dynamicJoints = new HashSet<Joint>();
                 int offset = 5;
-                for(JMEModule m: modules) {
+                for(JMEModuleComponent m: modules) {
                     m.reset();
                     for(DynamicPhysicsNode dynamicNode: m.getNodes()) {
                         dynamicNode.getLocalTranslation().set( 0, offset, 0 );
@@ -622,13 +630,15 @@ public RenderState color2jme(Color color) {
 
     public void sendMessage(TransmissionType type, Entity emitter, float range, Packet data) {
         if(!(emitter instanceof Module)||type!=TransmissionType.RADIO) throw new Error("not supported yet");
-        DynamicPhysicsNode source = ((JMEModule)((Module)emitter).getPhysics()).getModuleNode();
-        for(JMEModule target: modules) {
-            if(source.getLocalTranslation().distance(target.getModuleNode().getLocalTranslation())<range)
-                for(Receiver receiver: target.getModel().getReceivers())
-                    if(receiver.isCompatible(type)) {
-                        receiver.receive(data);
-                    }
+        for(Object component: ((Module)emitter).getPhysics()) {
+            DynamicPhysicsNode source = ((JMEModuleComponent)component).getModuleNode();
+            for(JMEModuleComponent target: modules) {
+                if(source.getLocalTranslation().distance(target.getModuleNode().getLocalTranslation())<range)
+                    for(Receiver receiver: target.getModel().getReceivers())
+                        if(receiver.isCompatible(type)) {
+                            receiver.receive(data);
+                        }
+            }
         }
     }
     

@@ -6,6 +6,7 @@
 package ussr.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ussr.physics.PhysicsEntity;
@@ -45,5 +46,5 @@ public abstract class Entity {
         properties.put(key, value);
     }
     
-    abstract PhysicsEntity getPhysics();
+    abstract List<? extends PhysicsEntity> getPhysics();
 }

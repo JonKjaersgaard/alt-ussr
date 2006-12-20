@@ -3,7 +3,9 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.description;
+package ussr.robotbuildingblocks;
+
+import java.awt.Color;
 
 /**
  * A description of a sphere geometry, currently only includes a radius.
@@ -23,6 +25,11 @@ public class SphereShape extends Description implements GeometryDescription {
     * local translation of the sphere 
     */    
     private VectorDescription translation;
+    
+    /**
+     * Color of the sphere
+     */
+    private Color color;
     
     /**
      * Create a description of a sphere geometry, passing the radius of the
@@ -53,4 +60,13 @@ public class SphereShape extends Description implements GeometryDescription {
      */
     public float getRadius() { return radius; }
     public VectorDescription getTranslation() { return translation; }
+
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+    
+    public Color getColor() {
+        return color;
+    }
 }

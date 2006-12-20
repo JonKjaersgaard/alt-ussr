@@ -3,14 +3,13 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.sandbox.atron;
+package ussr.samples;
 
 import java.awt.Color;
 import java.util.List;
 
 import ussr.model.Connector;
 import ussr.model.ControllerImpl;
-import ussr.sandbox.stickybot.StickyBotSimulation;
 
 /**
  * A simple controller for the ATRON, controlling connector stickiness based on
@@ -19,7 +18,7 @@ import ussr.sandbox.stickybot.StickyBotSimulation;
  * @author ups
  *
  */
-public class ATRONController extends ControllerImpl {
+public class ATRONSampleController1 extends ControllerImpl {
 
 	private int nConnections = 0;
 	   
@@ -32,7 +31,7 @@ public class ATRONController extends ControllerImpl {
         if(module.getID()%2==0) module.setColor(Color.RED);
         while(true) {
             this.waitForEvent();
-            if(!ATRONSimulation.getConnectorsAreActive()||nConnections>=2) continue;
+            if(!ATRONSimulation1.getConnectorsAreActive()||nConnections>=2) continue;
             for(Connector connector: module.getConnectors()) {
                 if(!connector.isConnected()&&connector.hasProximateConnector()) {
                     if(connector.connect()) nConnections++;

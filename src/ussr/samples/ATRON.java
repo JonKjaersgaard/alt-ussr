@@ -3,18 +3,19 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.sandbox.atron;
+package ussr.samples;
+
+import java.awt.Color;
 
 import javax.vecmath.Vector3f;
 
-import ussr.description.GeometryDescription;
-import ussr.description.RobotDescription;
-import ussr.description.SphereShape;
-import ussr.description.VectorDescription;
 import ussr.model.Controller;
 import ussr.model.ControllerImpl;
-import ussr.model.Robot;
-import ussr.description.SphereShape;
+import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.Robot;
+import ussr.robotbuildingblocks.RobotDescription;
+import ussr.robotbuildingblocks.SphereShape;
+import ussr.robotbuildingblocks.VectorDescription;
 
 /**
  * A small round robot with connectors at N/S/E/W/U/D; connectors can stick to each
@@ -22,15 +23,17 @@ import ussr.description.SphereShape;
  * 
  * @author ups
  */
-public class ATRON implements Robot {
+public abstract class ATRON implements Robot {
     
     /**
-     * @see ussr.model.Robot#getDescription()
+     * @see ussr.robotbuildingblocks.Robot#getDescription()
      */
     public RobotDescription getDescription() {
         RobotDescription description = new RobotDescription();
-        description.setModuleGeometry(new GeometryDescription[] { new SphereShape(1.13f, new VectorDescription( 0.0f, 0.0f, -0.025f)), 
-        														  new SphereShape(1.15f, new VectorDescription( 0.0f, 0.0f, 0.025f)) }); 
+        SphereShape hemi1 = new SphereShape(1.13f, new VectorDescription( 0.0f, 0.0f, -0.025f));
+        SphereShape hemi2 = new SphereShape(1.15f, new VectorDescription( 0.0f, 0.0f, 0.025f));
+        hemi2.setColor(Color.RED);
+        description.setModuleGeometry(new GeometryDescription[] { hemi1, hemi2 }); 
         description.setConnectorGeometry(new GeometryDescription[] { new SphereShape(0.1f) });
         float zpos = (float) (1.14f*Math.sin( 45 ));
         float xypos = (float) (1.14f*Math.cos( 45 )); 
@@ -46,16 +49,10 @@ public class ATRON implements Robot {
                 new VectorDescription( -xypos, xypos, -zpos ),
                 new VectorDescription( -xypos, -xypos, -zpos ),
         });
-        description.setConnectorType( RobotDescription.ATRON_CONNECTOR );
+        description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR );
         description.setMaxConnectionDistance(6);
         return description;
     }
 
-    /**
-     * @see ussr.model.Robot#createController()
-     */
-    public Controller createController() {
-        return new ATRONController();
-    }
     
 }

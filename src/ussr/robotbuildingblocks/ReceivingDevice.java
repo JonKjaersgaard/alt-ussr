@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ussr.description;
+package ussr.robotbuildingblocks;
 
 import ussr.comm.TransmissionType;
 

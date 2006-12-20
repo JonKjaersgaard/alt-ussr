@@ -7,10 +7,10 @@ package ussr.physics;
 
 import ussr.comm.Packet;
 import ussr.comm.TransmissionType;
-import ussr.description.WorldDescription;
 import ussr.model.Entity;
 import ussr.model.Module;
-import ussr.model.Robot;
+import ussr.robotbuildingblocks.Robot;
+import ussr.robotbuildingblocks.WorldDescription;
 
 /**
  * A physics simulation, defined independently of the underlying physics engine.  Instances
