@@ -29,6 +29,12 @@ public class RobotDescription extends Description {
         NONE
     }
 	
+    public static enum PhysicsCompositionStructure {
+        COMPONENT,
+        MODULE,
+        STRUCTURE
+    }
+    
     /**
      * The geometric shapes that constitute the core of the module
      */
@@ -46,6 +52,7 @@ public class RobotDescription extends Description {
     private List<VectorDescription> connectorPositions = Collections.emptyList();
     
     private ConnectorType connectorType = ConnectorType.NONE;
+    private PhysicsCompositionStructure structure = PhysicsCompositionStructure.MODULE;
     
     /**
      * The maximal radius from the center of a connector to the center of another connector
@@ -148,6 +155,20 @@ public class RobotDescription extends Description {
 
     public List<ReceivingDevice> getReceivers() {
         return this.receivers;
+    }
+
+    /**
+     * @return the structure
+     */
+    public PhysicsCompositionStructure getStructure() {
+        return structure;
+    }
+
+    /**
+     * @param structure the structure to set
+     */
+    public void setStructure(PhysicsCompositionStructure structure) {
+        this.structure = structure;
     }
 
 }

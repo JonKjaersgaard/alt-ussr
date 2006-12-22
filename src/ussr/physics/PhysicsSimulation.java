@@ -63,5 +63,7 @@ public interface PhysicsSimulation {
     public void start();
 
     public void sendMessage(TransmissionType type, Entity emitter, float range, Packet data);
+
+    public void setPause(boolean startPaused);
     
 }

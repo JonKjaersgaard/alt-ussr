@@ -19,6 +19,66 @@ import java.util.List;
  */
 public class WorldDescription extends Description {
 
+    public static class Connection {
+
+        public Connection(String module1, int connector1, String module2, int connector2) {
+            // TODO Auto-generated constructor stub
+        }
+
+    }
+
+    public static class ModulePosition {
+        private String name;
+        private VectorDescription position;
+        private RotationDescription rotation;
+
+        /**
+         * @param name
+         * @param position
+         * @param rotation_EW
+         */
+        public ModulePosition(String name, VectorDescription position, RotationDescription rotation) {
+            this.name = name;
+            this.position = position;
+            this.rotation = rotation;
+        }
+
+        /**
+         * @return the position
+         */
+        public VectorDescription getPosition() {
+            return position;
+        }
+
+        /**
+         * @param position the position to set
+         */
+        public void setPosition(VectorDescription position) {
+            this.position = position;
+        }
+
+        /**
+         * @return the rotation
+         */
+        public RotationDescription getRotation() {
+            return rotation;
+        }
+
+        /**
+         * @param rotation the rotation to set
+         */
+        public void setRotation(RotationDescription rotation) {
+            this.rotation = rotation;
+        }
+
+        /**
+         * @return the name
+         */
+        public String getName() {
+            return name;
+        }
+    }
+    
     /**
      * Number of modules in the simulation
      */
@@ -34,12 +94,17 @@ public class WorldDescription extends Description {
      */
     private List<VectorDescription> obstacles = Collections.emptyList();
     
+    private List<ModulePosition> modules = Collections.emptyList(); 
+    
     /**
      * Get the number of modules initially placed in the simulation
      * @return number of initial modules
      */
     public int getNumberOfModules() {
-        return numberOfModules;
+        if(modules.size()>0)
+            return modules.size();
+        else
+            return numberOfModules;
     }
     
     /**
@@ -81,5 +146,24 @@ public class WorldDescription extends Description {
    public void setObstacles(VectorDescription[] descriptions) {
         this.obstacles = Arrays.asList(descriptions);        
     }
+
+   /**
+    * @return the modules
+    */
+   public List<ModulePosition> getModulePositions() {
+       return modules;
+   }
+
+   /**
+    * @param modules the modules to set
+    */
+   public void setModulePositions(ModulePosition[] modules) {
+       this.modules = Arrays.asList(modules);
+   }
+
+public void setModuleConnections(Connection[] connections) {
+    // TODO Auto-generated method stub
+    
+}
 
 }

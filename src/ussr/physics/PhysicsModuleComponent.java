@@ -36,7 +36,7 @@ public interface PhysicsModuleComponent extends PhysicsEntity {
      */
     public Module getModel();
 
-    public void setColor(Color color);
+    public void setModuleColor(Color color);
     
     public PhysicsSimulation getSimulation();
 

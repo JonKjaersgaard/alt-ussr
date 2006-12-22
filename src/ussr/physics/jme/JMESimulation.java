@@ -16,6 +16,7 @@ import ussr.comm.Receiver;
 import ussr.comm.TransmissionType;
 import ussr.model.Entity;
 import ussr.model.Module;
+import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
 import ussr.robotbuildingblocks.GeometryDescription;
@@ -85,7 +86,8 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     public Set<Joint> dynamicJoints = new HashSet<Joint>();
     private Robot robot;
     private WorldDescription worldDescription;
-    private List<JMEModuleComponent> modules = new ArrayList<JMEModuleComponent>();
+    private List<JMEModuleComponent> moduleComponents = new ArrayList<JMEModuleComponent>();
+    private List<Module> modules = new ArrayList<Module>();
     
     protected float physicsSimulationStepSize=0.01f;
     private PhysicsSpace physicsSpace;
@@ -203,11 +205,14 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
         for(int i=0; i<worldDescription.getNumberOfModules(); i++) {
             final Module module = new Module();
             module.setController(robot.createController());
+            modules.add(module);
+            // Create central module node
+            DynamicPhysicsNode moduleNode = this.getPhysicsSpace().createDynamicNode();
             int j=0;
             for(GeometryDescription geometry: robot.getDescription().getModuleGeometry()) {
-                JMEModuleComponent physicsModule = new JMEModuleComponent(this,robot,geometry,"module#"+Integer.toString(i)+"."+(j++),module);
+                JMEModuleComponent physicsModule = new JMEModuleComponent(this,robot,geometry,"module#"+Integer.toString(i)+"."+(j++),module,moduleNode);
                 module.addComponent(physicsModule);
-                modules.add(physicsModule);
+                moduleComponents.add(physicsModule);
             }
             new Thread() {
                 public void run() {
@@ -224,16 +229,10 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
             public void performAction( InputActionEvent evt ) {
                 for(Joint j: dynamicJoints) j.detach();
                 dynamicJoints = new HashSet<Joint>();
-                int offset = 5;
-                for(JMEModuleComponent m: modules) {
-                    m.reset();
-                    for(DynamicPhysicsNode dynamicNode: m.getNodes()) {
-                        dynamicNode.getLocalTranslation().set( 0, offset, 0 );
-                        dynamicNode.getLocalRotation().set( 0, 0, 0, 1 );
-                        dynamicNode.clearDynamics();
-                    }
-                    offset += 5;
-               }
+                if(worldDescription.getModulePositions().size()>0)
+                    placeModules();
+                else
+                    generateModuleStackPlacement();
 
                 Iterator<VectorDescription> positions = worldDescription.getObstacles().iterator();
                 for(DynamicPhysicsNode box: obstacleBoxes) {
@@ -632,7 +631,7 @@ public RenderState color2jme(Color color) {
         if(!(emitter instanceof Module)||type!=TransmissionType.RADIO) throw new Error("not supported yet");
         for(Object component: ((Module)emitter).getPhysics()) {
             DynamicPhysicsNode source = ((JMEModuleComponent)component).getModuleNode();
-            for(JMEModuleComponent target: modules) {
+            for(JMEModuleComponent target: moduleComponents) {
                 if(source.getLocalTranslation().distance(target.getModuleNode().getLocalTranslation())<range)
                     for(Receiver receiver: target.getModel().getReceivers())
                         if(receiver.isCompatible(type)) {
@@ -804,5 +803,49 @@ public RenderState color2jme(Color color) {
 	        //do nothing
 	    }
 
+
+        /**
+         * 
+         */
+        private void generateModuleStackPlacement() {
+            int offset = 5;
+            for(JMEModuleComponent m: moduleComponents) {
+                m.reset();
+                for(DynamicPhysicsNode dynamicNode: m.getNodes()) {
+                    dynamicNode.getLocalTranslation().set( 0, offset, 0 );
+                    dynamicNode.getLocalRotation().set( 0, 0, 0, 1 );
+                    dynamicNode.clearDynamics();
+                }
+                offset += 5;
+            }
+        }
+
+        /**
+         * 
+         */
+        private void placeModules() {
+            Iterator<WorldDescription.ModulePosition> positions = this.worldDescription.getModulePositions().iterator();
+            for(Module module: modules) {
+                WorldDescription.ModulePosition p = positions.next();
+                List<? extends PhysicsEntity> components = module.getPhysics();
+                // Reset each component
+                for(PhysicsEntity pe: components)
+                    ((JMEModuleComponent)pe).reset();
+                // Reset physics node (HARDCODED: assumes one physics node per module!!!)
+                JMEModuleComponent c1 = (JMEModuleComponent)components.get(0);
+                if(components.size()>1) {
+                    if(c1.getModuleNode()!=((JMEModuleComponent)components.get(1)).getModuleNode())
+                        throw new Error("not supported yet");
+                }
+                DynamicPhysicsNode node = c1.getModuleNode();
+                node.getLocalTranslation().set(p.getPosition().getX(), p.getPosition().getY(), p.getPosition().getZ());
+                node.setLocalRotation(p.getRotation().getRotation());
+                node.clearDynamics();
+            }
+        }
+
+        public void setPause(boolean pause) {
+            this.pause = pause;
+        }
  }
 

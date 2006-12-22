@@ -58,17 +58,18 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
      * @param robot
      * @param element 
      * @param name
+     * @param dynamicNode 
      */
-    public JMEModuleComponent(JMESimulation world, Robot robot, GeometryDescription element, String name, Module module) {
+    public JMEModuleComponent(JMESimulation world, Robot robot, GeometryDescription element, String name, Module module, DynamicPhysicsNode dynamicNode) {
         this.world = world;
         this.model = module;
         RobotDescription selfDesc = robot.getDescription();
-        // Create central module node
-        moduleNode = world.getPhysicsSpace().createDynamicNode();
+        // Setup dynamic physics node
+        moduleNode = dynamicNode;
         dynamicNodes.add(moduleNode);
-        if(element.getColor()!=null) this.setColor(element.getColor());
         // Create visual appearance
-        JMEDescriptionHelper.createShape(moduleNode, name, element);
+        TriMesh shape = JMEDescriptionHelper.createShape(moduleNode, name, element);
+        JMEDescriptionHelper.setColor(world,shape,element.getColor());
         // Finalize
         moduleNode.generatePhysicsGeometry();
         world.getRootNode().attachChild( moduleNode );
@@ -76,10 +77,7 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         // Create connectors
         for(VectorDescription p: selfDesc.getConnectorPositions()) {
             Vector3f position = new Vector3f(p.getX(), p.getY(), p.getZ());
-            List<GeometryDescription> geometry = selfDesc.getConnectorGeometry();
-            float maxDistance = selfDesc.getMaxConnectionDistance();
-            JMEConnector connector = null;
-            connector = createConnector(world, name, position, geometry, maxDistance, selfDesc.getConnectorType());
+            JMEConnector connector = connector = createConnector(world, name, position, selfDesc);
             model.addConnector(new Connector(connector));
             connectors.add(connector);
         }
@@ -95,17 +93,18 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
      * @param world
      * @param name
      * @param position
-     * @param geometry
+     * @param selfDesc
      * @param maxDistance
      * @param type 
      * @return
      */
-    private JMEConnector createConnector(JMESimulation world, String name, Vector3f position, List<GeometryDescription> geometry, float maxDistance, ConnectorType type) {
+    private JMEConnector createConnector(JMESimulation world, String name, Vector3f position, RobotDescription selfDesc) {
         JMEConnector connector;
+        ConnectorType type = selfDesc.getConnectorType();
         if(type==ConnectorType.MAGNETIC_CONNECTOR)
-            connector = new JMEMagneticConnector(position,moduleNode,name,geometry,world,this,maxDistance);
+            connector = new JMEMagneticConnector(position,moduleNode,name,world,this,selfDesc);
         else if(type==ConnectorType.MECHANICAL_CONNECTOR)
-            connector = new JMEMechanicalConnector(position,moduleNode,name,geometry,world,this,maxDistance);
+            connector = new JMEMechanicalConnector(position,moduleNode,name,world,this,selfDesc);
         else throw new Error("Unknown connector type");
         return connector;
     }
@@ -130,11 +129,9 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         return model;
     }
 
-    public void setColor(Color color) {
-        for(DynamicPhysicsNode node: dynamicNodes) {
-            node.setRenderState(world.color2jme(color));
-            node.updateRenderState();
-        }
+    public void setModuleColor(Color color) {
+        for(DynamicPhysicsNode node: dynamicNodes)
+            JMEDescriptionHelper.setColor(world, node, color);
     }
 
     public PhysicsSimulation getSimulation() {

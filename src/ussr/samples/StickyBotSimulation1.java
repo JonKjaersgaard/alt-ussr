@@ -31,7 +31,7 @@ import com.jme.util.LoggingSystem;
 public class StickyBotSimulation1 extends GenericSimulation {
     
     public static void main( String[] args ) {
-        new StickyBotSimulation1().runSimulation(args);
+        new StickyBotSimulation1().runSimulation(null,false);
     }
 
     @Override

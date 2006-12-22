@@ -41,12 +41,14 @@ public abstract class GenericSimulation {
 
     protected abstract Robot getRobot();
     
-    public void runSimulation( String[] args ) {
+    public void runSimulation(WorldDescription world, boolean startPaused) {
         //System.out.println("java.library.path="+System.getProperty("java.library.path"));
         PhysicsLogger.setDefaultLoggingLevel();
         final PhysicsSimulation simulation = PhysicsFactory.createSimulator();
         simulation.setRobot(getRobot());
-        simulation.setWorld(createWorld());
+        if(world==null) world = createWorld();
+        simulation.setWorld(world);
+        simulation.setPause(startPaused);
 
         // Global connector activation toggle 
         simulation.addInputHandler("Z", new PhysicsSimulation.Handler() {

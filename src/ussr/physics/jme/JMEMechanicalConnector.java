@@ -19,6 +19,7 @@ import ussr.model.Connector;
 import ussr.physics.PhysicsConnector;
 import ussr.physics.PhysicsLogger;
 import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.RobotDescription;
 
 public class JMEMechanicalConnector implements JMEConnector {
     /**
@@ -32,35 +33,28 @@ public class JMEMechanicalConnector implements JMEConnector {
     private JMEModuleComponent module;
     private float maxConnectDistance;
 
-    public JMEMechanicalConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, List<GeometryDescription> geometry,JMESimulation world, JMEModuleComponent component, float maxConnectionDistance) {
+    public JMEMechanicalConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, RobotDescription selfDesc) {
+        List<GeometryDescription> geometry = selfDesc.getConnectorGeometry();
         this.world = world;
         this.module = component;
-        this.maxConnectDistance = maxConnectionDistance;
+        this.maxConnectDistance = selfDesc.getMaxConnectionDistance();
         // Create connector node
-        DynamicPhysicsNode connector = world.getPhysicsSpace().createDynamicNode();
-        component.getNodes().add(connector);
+        DynamicPhysicsNode connector = moduleNode;
         // Create visual appearance
         assert geometry.size()==1; // Only tested with size 1 geometry
         for(GeometryDescription element: geometry) {
             TriMesh mesh = JMEDescriptionHelper.createShape(connector, baseName+position.toString(), element);
-            world.connectorRegistry.put(mesh.getName(),this);
+            //world.connectorRegistry.put(mesh.getName(),this);
             mesh.getLocalTranslation().set( mesh.getLocalTranslation().add(position) );
-            mesh.setModelBound( new BoundingSphere() );
-            mesh.updateModelBound();
+            //mesh.setModelBound( new BoundingSphere() );
+            //mesh.updateModelBound();
             connector.attachChild( mesh );
+            JMEDescriptionHelper.setColor(world, mesh, element.getColor());
         }
         // Finalize
         connector.generatePhysicsGeometry();
         world.getRootNode().attachChild( connector );
         connector.computeMass();
-        // Joint
-        Joint connect = world.getPhysicsSpace().createJoint();
-        connect.attach(moduleNode, connector);
-        // Collision handler
-        final SyntheticButton collisionEventHandler = connector.getCollisionEventHandler();
-        world.getInput().addAction( new ModuleCollisionAction(),
-                collisionEventHandler.getDeviceName(), collisionEventHandler.getIndex(),
-                InputHandler.AXIS_NONE, false );
         this.node = connector;
     }
     

@@ -133,7 +133,7 @@ public class Module extends Entity {
     private static int idCounter = 0;
 
     public void setColor(Color color) {
-        for(PhysicsModuleComponent module: physics) module.setColor(color);        
+        for(PhysicsModuleComponent module: physics) module.setModuleColor(color);        
     }
 
     public List<Transmitter> getTransmitters() {

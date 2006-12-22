@@ -19,6 +19,7 @@ import ussr.model.Connector;
 import ussr.physics.PhysicsConnector;
 import ussr.physics.PhysicsLogger;
 import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.RobotDescription;
 
 public class JMEMagneticConnector implements JMEConnector {
     /**
@@ -32,7 +33,9 @@ public class JMEMagneticConnector implements JMEConnector {
     private JMEModuleComponent module;
     private float maxConnectDistance;
 
-    public JMEMagneticConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, List<GeometryDescription> geometry,JMESimulation world, JMEModuleComponent module, float maxConnectionDistance) {
+    public JMEMagneticConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent module, RobotDescription selfDesc) {
+        List<GeometryDescription> geometry = selfDesc.getConnectorGeometry();
+        float maxConnectionDistance = selfDesc.getMaxConnectionDistance();
         this.world = world;
         this.module = module;
         this.maxConnectDistance = maxConnectionDistance;

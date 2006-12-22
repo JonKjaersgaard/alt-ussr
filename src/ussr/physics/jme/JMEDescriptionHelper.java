@@ -18,6 +18,7 @@ import ussr.robotbuildingblocks.TransmissionDevice;
 import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jme.bounding.BoundingSphere;
+import com.jme.scene.SceneElement;
 import com.jme.scene.TriMesh;
 import com.jme.scene.shape.Sphere;
 import com.jme.scene.state.MaterialState;
@@ -51,6 +52,12 @@ public class JMEDescriptionHelper {
 
     public static Receiver createReceiver(Module module, ReceivingDevice receiver) {
         return new GenericReceiver(module, receiver.getType(), receiver.getBufferSize());
+    }
+
+    public static void setColor(JMESimulation world, SceneElement object, Color color) {
+        if(color==null) return;
+        object.setRenderState(world.color2jme(color));
+        object.updateRenderState();
     }
 
 }

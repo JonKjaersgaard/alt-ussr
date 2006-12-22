@@ -30,11 +30,13 @@ public abstract class ATRON implements Robot {
      */
     public RobotDescription getDescription() {
         RobotDescription description = new RobotDescription();
-        SphereShape hemi1 = new SphereShape(1.13f, new VectorDescription( 0.0f, 0.0f, -0.025f));
-        SphereShape hemi2 = new SphereShape(1.15f, new VectorDescription( 0.0f, 0.0f, 0.025f));
+        SphereShape hemi1 = new SphereShape(1.13f, new VectorDescription( 0.0f, 0.0f, -0.125f));
+        SphereShape hemi2 = new SphereShape(1.15f, new VectorDescription( 0.0f, 0.0f, 0.125f));
         hemi2.setColor(Color.RED);
         description.setModuleGeometry(new GeometryDescription[] { hemi1, hemi2 }); 
-        description.setConnectorGeometry(new GeometryDescription[] { new SphereShape(0.1f) });
+        SphereShape connector = new SphereShape(0.1f);
+        connector.setColor(Color.GREEN);
+        description.setConnectorGeometry(new GeometryDescription[] { connector });
         float zpos = (float) (1.14f*Math.sin( 45 ));
         float xypos = (float) (1.14f*Math.cos( 45 )); 
         	
