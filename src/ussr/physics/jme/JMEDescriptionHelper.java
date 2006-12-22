@@ -19,6 +19,7 @@ import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jme.bounding.BoundingSphere;
 import com.jme.scene.SceneElement;
+import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
 import com.jme.scene.shape.Sphere;
 import com.jme.scene.state.MaterialState;
@@ -58,6 +59,19 @@ public class JMEDescriptionHelper {
         if(color==null) return;
         object.setRenderState(world.color2jme(color));
         object.updateRenderState();
+    }
+
+    public static Spatial cloneElement(TriMesh element) {
+        if(!(element instanceof Sphere)) throw new Error("not supported");
+        Sphere oldSphere = (Sphere)element;
+        Sphere meshSphere = new Sphere( oldSphere.getName(), 9, 9, oldSphere.radius);
+        meshSphere.setLocalTranslation(oldSphere.getLocalTranslation());
+        meshSphere.setLocalRotation(oldSphere.getLocalRotation());
+        RenderState state = oldSphere.getRenderState(RenderState.RS_MATERIAL);
+        if(state!=null) meshSphere.setRenderState(state);
+        meshSphere.setModelBound( new BoundingSphere() );
+        meshSphere.updateModelBound();
+       return meshSphere;
     }
 
 }

@@ -162,4 +162,8 @@ public class JMEMagneticConnector implements JMEConnector {
     public void setModel(Connector connector) {
         this.model = connector;        
     }
+
+    public void disconnect() {
+        throw new Error("not implemented");        
+    }
 }

@@ -20,9 +20,40 @@ import java.util.List;
 public class WorldDescription extends Description {
 
     public static class Connection {
-
+        private String module1, module2;
+        private int connector1, connector2;
+        
         public Connection(String module1, int connector1, String module2, int connector2) {
-            // TODO Auto-generated constructor stub
+            this.module1 = module1; this.module2 = module2;
+            this.connector1 = connector1; this.connector2 = connector2;
+        }
+
+        /**
+         * @return the connector1
+         */
+        public int getConnector1() {
+            return connector1;
+        }
+
+        /**
+         * @return the connector2
+         */
+        public int getConnector2() {
+            return connector2;
+        }
+
+        /**
+         * @return the module1
+         */
+        public String getModule1() {
+            return module1;
+        }
+
+        /**
+         * @return the module2
+         */
+        public String getModule2() {
+            return module2;
         }
 
     }
@@ -96,6 +127,8 @@ public class WorldDescription extends Description {
     
     private List<ModulePosition> modules = Collections.emptyList(); 
     
+    private List<Connection> connections = Collections.emptyList();
+    
     /**
      * Get the number of modules initially placed in the simulation
      * @return number of initial modules
@@ -161,9 +194,12 @@ public class WorldDescription extends Description {
        this.modules = Arrays.asList(modules);
    }
 
-public void setModuleConnections(Connection[] connections) {
-    // TODO Auto-generated method stub
-    
-}
+   public void setModuleConnections(Connection[] connections) {
+       this.connections = Arrays.asList(connections);
+   }
+   
+   public List<Connection> getConnections() {
+       return connections;
+   }
 
 }

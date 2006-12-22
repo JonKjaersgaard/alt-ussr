@@ -72,4 +72,8 @@ public class Connector extends Entity {
         result.add(physics);
         return result;
     }
+
+    public void disconnect() {
+        physics.disconnect();
+    }
 }

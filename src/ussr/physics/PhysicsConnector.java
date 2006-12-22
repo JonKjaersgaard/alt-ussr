@@ -40,5 +40,7 @@ public interface PhysicsConnector extends PhysicsEntity {
      * @param connector the connector model to associate with this connector
      */
     public void setModel(Connector connector);
+
+    public void disconnect();
   
 }

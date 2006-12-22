@@ -1,5 +1,6 @@
 package ussr.physics.jme;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -9,6 +10,7 @@ import com.jme.input.InputHandler;
 import com.jme.input.action.InputActionEvent;
 import com.jme.input.action.InputActionInterface;
 import com.jme.input.util.SyntheticButton;
+import com.jme.math.Matrix3f;
 import com.jme.math.Vector3f;
 import com.jme.scene.TriMesh;
 import com.jmex.physics.DynamicPhysicsNode;
@@ -49,6 +51,8 @@ public class JMEMechanicalConnector implements JMEConnector {
             //mesh.setModelBound( new BoundingSphere() );
             //mesh.updateModelBound();
             connector.attachChild( mesh );
+            component.getComponentGeometries().add(mesh);
+            world.associateGeometry(connector, mesh);
             JMEDescriptionHelper.setColor(world, mesh, element.getColor());
         }
         // Finalize
@@ -63,30 +67,6 @@ public class JMEMechanicalConnector implements JMEConnector {
      */
     public DynamicPhysicsNode getNode() { return node; }
     
-    public class ModuleCollisionAction implements InputActionInterface {
-
-        public void performAction(InputActionEvent evt) {
-            //if(!world.getConnectorsAreActive()) return;
-            ContactInfo contactInfo = ( (ContactInfo) evt.getTriggerData() );
-            String g1 = contactInfo.getGeometry1().getName();
-            String g2 = contactInfo.getGeometry2().getName();
-            if(world.connectorRegistry.containsKey(g1) && world.connectorRegistry.containsKey(g2)) {
-                JMEMechanicalConnector c1 = (JMEMechanicalConnector)world.connectorRegistry.get(g1); 
-                JMEMechanicalConnector c2 = (JMEMechanicalConnector)world.connectorRegistry.get(g2);
-                c1.setProximityConnector(c2);
-                c2.setProximityConnector(c1);
-                c1.module.changeNotify();
-                c2.module.changeNotify();
-                //if(c1.isConnected()||c2.isConnected()) return;
-                //c1.connectTo(c2);
-            }
-        }
-
-    }
-
-    private void setProximityConnector(JMEMechanicalConnector other) {
-        this.lastProximityConnector=other;
-    }
 
     /* (non-Javadoc)
      * @see ussr.physics.jme.JMEConnector#otherConnectorAvailable()
@@ -153,5 +133,43 @@ public class JMEMechanicalConnector implements JMEConnector {
      */
     public void setModel(Connector connector) {
         this.model = connector;        
+    }
+
+    public void connectTo(JMEMechanicalConnector jc2) {
+        world.getRootNode().unlockMeshes();
+        DynamicPhysicsNode adopter = jc2.getNode();
+        Vector3f nodeDistance = adopter.getLocalTranslation().subtract(this.node.getLocalTranslation());
+        Matrix3f adopterRotation = adopter.getLocalRotation().toRotationMatrix();
+        Matrix3f localRotation = node.getLocalRotation().toRotationMatrix();
+        Matrix3f nodeRotation = localRotation.invert().mult(adopterRotation);
+        for(TriMesh element: world.getNodeGeometries(this.node)) {
+            adopter.attachChild(element);
+            element.setLocalTranslation(element.getLocalTranslation().add(nodeDistance));
+            element.setLocalRotation(nodeRotation.mult(element.getLocalRotation().toRotationMatrix()));
+            //element.setModelBound( new BoundingSphere() );
+            //element.updateModelBound();
+        }
+        adopter.generatePhysicsGeometry();
+        adopter.computeMass();
+        this.connectedConnector = jc2;
+        jc2.connectedConnector = this;
+    }
+    
+    public void disconnect() {
+        PhysicsLogger.log("WARNING: broken method");
+        node.unlockMeshes();
+        node.unlockBounds();
+        if(connectedConnector==null) return;
+        DynamicPhysicsNode newNode = world.getPhysicsSpace().createDynamicNode();
+        newNode.setLocalTranslation(node.getLocalTranslation());
+        newNode.setLocalRotation(node.getLocalRotation());
+        for(TriMesh element: module.getComponentGeometries()) {
+            element.removeFromParent();
+            newNode.attachChild(JMEDescriptionHelper.cloneElement(element));
+        }
+        newNode.generatePhysicsGeometry();
+        newNode.computeMass();
+        world.getRootNode().attachChild(newNode);
+        node.updateModelBound();
     }
 }

@@ -20,22 +20,20 @@ import ussr.model.ControllerImpl;
  */
 public class ATRONSampleController1 extends ControllerImpl {
 
-	private int nConnections = 0;
-	   
-	
     /**
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
 
-        if(module.getID()%2==0) module.setColor(Color.RED);
         while(true) {
-            this.waitForEvent();
-            if(!ATRONSimulation1.getConnectorsAreActive()||nConnections>=2) continue;
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new Error("unexpected");
+            }
+            if(!ATRONSimulation1.getConnectorsAreActive())
             for(Connector connector: module.getConnectors()) {
-                if(!connector.isConnected()&&connector.hasProximateConnector()) {
-                    if(connector.connect()) nConnections++;
-                }
+                connector.disconnect();
             }
         }
     }

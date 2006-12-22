@@ -2,6 +2,7 @@ package ussr.physics.jme;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,6 +15,7 @@ import java.util.logging.Level;
 import ussr.comm.Packet;
 import ussr.comm.Receiver;
 import ussr.comm.TransmissionType;
+import ussr.model.Connector;
 import ussr.model.Entity;
 import ussr.model.Module;
 import ussr.physics.PhysicsEntity;
@@ -88,6 +90,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     private WorldDescription worldDescription;
     private List<JMEModuleComponent> moduleComponents = new ArrayList<JMEModuleComponent>();
     private List<Module> modules = new ArrayList<Module>();
+    private Map<DynamicPhysicsNode,Set<TriMesh>> geometryMap = new HashMap<DynamicPhysicsNode,Set<TriMesh>>();
     
     protected float physicsSimulationStepSize=0.01f;
     private PhysicsSpace physicsSpace;
@@ -825,8 +828,11 @@ public RenderState color2jme(Color color) {
          */
         private void placeModules() {
             Iterator<WorldDescription.ModulePosition> positions = this.worldDescription.getModulePositions().iterator();
+            Map<String,Module> registry = new HashMap<String,Module>();
             for(Module module: modules) {
                 WorldDescription.ModulePosition p = positions.next();
+                module.setProperty("name", p.getName());
+                registry.put(p.getName(), module);
                 List<? extends PhysicsEntity> components = module.getPhysics();
                 // Reset each component
                 for(PhysicsEntity pe: components)
@@ -842,10 +848,44 @@ public RenderState color2jme(Color color) {
                 node.setLocalRotation(p.getRotation().getRotation());
                 node.clearDynamics();
             }
+            // The following only works for mechanical connectors
+            if(robot.getDescription().getConnectorType()!=RobotDescription.ConnectorType.MECHANICAL_CONNECTOR) {
+                if(this.worldDescription.getConnections().size()>0) PhysicsLogger.log("Warning: connector initialization ignored");
+                return;
+            }
+            // HARDCODED: assumes one physics per connector
+            for(WorldDescription.Connection connection: this.worldDescription.getConnections()) {
+                Module m1 = registry.get(connection.getModule1());
+                Module m2 = registry.get(connection.getModule2());
+                int c1i = connection.getConnector1();
+                int c2i = connection.getConnector2();
+                Connector c1 = m1.getConnectors().get(c1i);
+                Connector c2 = m2.getConnectors().get(c2i);
+                JMEMechanicalConnector jc1 = (JMEMechanicalConnector)c1.getPhysics().get(0);
+                JMEMechanicalConnector jc2 = (JMEMechanicalConnector)c2.getPhysics().get(0);
+                jc1.connectTo(jc2);
+            }
         }
 
         public void setPause(boolean pause) {
             this.pause = pause;
+        }
+
+
+        public synchronized void associateGeometry(DynamicPhysicsNode moduleNode, TriMesh shape) {
+            Set<TriMesh> associated = geometryMap.get(moduleNode);
+            if(associated==null) {
+                associated = new HashSet<TriMesh>();
+                geometryMap.put(moduleNode, associated);
+            }
+            associated.add(shape);
+        }
+
+
+        public Set<TriMesh> getNodeGeometries(DynamicPhysicsNode node) {
+            Set<TriMesh> result = geometryMap.get(node);
+            if(result!=null) return result;
+            return Collections.emptySet();
         }
  }
 

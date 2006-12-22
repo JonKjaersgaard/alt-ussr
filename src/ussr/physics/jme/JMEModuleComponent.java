@@ -51,7 +51,8 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
     private List<JMEConnector> connectors = new ArrayList<JMEConnector>();
     
     private DynamicPhysicsNode moduleNode;
-    
+    private List<TriMesh> geometries = new ArrayList<TriMesh>();
+
     /**
      * 
      * @param world
@@ -69,6 +70,8 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         dynamicNodes.add(moduleNode);
         // Create visual appearance
         TriMesh shape = JMEDescriptionHelper.createShape(moduleNode, name, element);
+        geometries.add(shape);
+        world.associateGeometry(moduleNode,shape);
         JMEDescriptionHelper.setColor(world,shape,element.getColor());
         // Finalize
         moduleNode.generatePhysicsGeometry();
@@ -77,7 +80,7 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         // Create connectors
         for(VectorDescription p: selfDesc.getConnectorPositions()) {
             Vector3f position = new Vector3f(p.getX(), p.getY(), p.getZ());
-            JMEConnector connector = connector = createConnector(world, name, position, selfDesc);
+            JMEConnector connector = createConnector(world, name, position, selfDesc);
             model.addConnector(new Connector(connector));
             connectors.add(connector);
         }
@@ -140,5 +143,13 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
     
     public DynamicPhysicsNode getModuleNode() {
         return moduleNode;
+    }
+
+    public List<TriMesh> getComponentGeometries() {
+        return geometries;
+    }
+
+    public List<TriMesh> getModuleGeometries() {
+        throw new Error("not implemented");
     }
 }
