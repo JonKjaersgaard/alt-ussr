@@ -31,6 +31,7 @@ import com.jme.util.LoggingSystem;
 public class ATRONSimulation1 extends GenericSimulation {
     
     public static void main( String[] args ) {
+        setConnectorsAreActive(true);
         WorldDescription world = new WorldDescription();
         world.setPlaneSize(42);
         float quart = (float)(0.5*Math.PI);

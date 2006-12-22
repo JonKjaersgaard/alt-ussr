@@ -37,7 +37,7 @@ public abstract class GenericSimulation {
     /**
      * Property indicating whether connectors should be active or not
      */
-    private static boolean connectorsAreActive = true;
+    private static boolean connectorsAreActive = false;
 
     protected abstract Robot getRobot();
     
