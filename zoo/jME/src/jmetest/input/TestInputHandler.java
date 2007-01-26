@@ -38,6 +38,7 @@ import com.jme.app.SimpleGame;
 import com.jme.image.Texture;
 import com.jme.input.AbsoluteMouse;
 import com.jme.input.InputHandler;
+import com.jme.input.InputHandlerDevice;
 import com.jme.input.InputSystem;
 import com.jme.input.KeyInput;
 import com.jme.input.action.InputAction;
@@ -93,6 +94,11 @@ public class TestInputHandler extends SimpleGame {
         cursor.registerWithInputHandler( input );
         rootNode.attachChild( cursor );
 
+        System.out.println( "Found devices:" );
+        for ( InputHandlerDevice device : InputHandler.getDevices() ) {
+            System.out.println( device );
+        }
+
         //create an action to shown button activity
         InputAction buttonAction = new InputAction() {
             public void performAction( InputActionEvent evt ) {
@@ -122,16 +128,35 @@ public class TestInputHandler extends SimpleGame {
         //define a new axis from two keys
         TwoButtonAxis twoButtonAxis = new TwoButtonAxis( "left_right" );
         input.addAction( twoButtonAxis.getDecreaseAction(), InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_A,
-                InputHandler.AXIS_NONE,  true );
+                InputHandler.AXIS_NONE, true );
         input.addAction( twoButtonAxis.getIncreaseAction(), InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_D,
-                InputHandler.AXIS_NONE,  true );
+                InputHandler.AXIS_NONE, true );
         //register some action with the new axis
         input.addAction( axisAction, twoButtonAxis.getDeviceName(), InputHandler.BUTTON_NONE,
                 twoButtonAxis.getIndex(), false );
 
+        // a subhandler that can be disabled
+        final InputHandler subHandler = new InputHandler();
+        input.addToAttachedHandlers( subHandler );
+        subHandler.addAction( new InputAction() {
+            public void performAction( InputActionEvent evt ) {
+                System.out.println( "sub-handler: " + evt.getTriggerCharacter() );
+            }
+        }, InputHandler.DEVICE_ALL, InputHandler.BUTTON_ALL, InputHandler.AXIS_ALL, false );
+        subHandler.setEnabled( false );
+        // action to (de)activate subHandler
+        input.addAction( new InputAction() {
+            public void performAction( InputActionEvent evt ) {
+                if ( evt.getTriggerPressed() )
+                subHandler.setEnabled( !subHandler.isEnabled() );
+            }
+        }, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_SPACE,
+                InputHandler.AXIS_NONE, false );
+
         //register it with all devices and all axes of these
         input.addAction( axisAction, InputHandler.DEVICE_ALL, InputHandler.BUTTON_NONE, InputHandler.AXIS_ALL, false );
 
+        // example for deferring invocation to jME thread
         JMEAction jmeAction = new JMEAction( "test", input ) {
             public void performAction( InputActionEvent evt ) {
                 // this gets invoked in the jME update method
@@ -144,6 +169,8 @@ public class TestInputHandler extends SimpleGame {
 
     protected void cleanup() {
         super.cleanup();
-        input.clearActions(); //not needed as application exits anyway - just to test if it does not throw exceptions
+        if ( input != null ) {
+            input.clearActions(); //not needed as application exits anyway - just to test if it does not throw exceptions
+        }
     }
 }

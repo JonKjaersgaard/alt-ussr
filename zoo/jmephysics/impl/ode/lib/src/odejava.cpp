@@ -24,6 +24,9 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * --
+ * Modified by Irrisor.
  */
 
 #include <jni.h>
@@ -225,12 +228,6 @@ static void nearCallback2 (void *data, dGeomID o1, dGeomID o2) {
     dBodyID b1 = dGeomGetBody(o1);
     dBodyID b2 = dGeomGetBody(o2);
 
-    // ignore if both o1 and o2 are plain Geoms (not bodies)
-    if (!b1 && !b2) return;
-
-    // ignore if the two bodies are connected by a joint
-    if (b1 && b2 && dAreConnectedExcluding (b1,b2,dJointTypeContact)) return;
-    
     // Get number of possible contact points into callbackContactGeoms array
     int ncp = dCollide(
       o1,o2,maxCallbackContactGeoms,&callbackContactGeoms[0],sizeof(dContactGeom)
@@ -299,7 +296,7 @@ JNIEXPORT jint JNICALL Java_org_odejava_collision_JavaCollision_spaceCollide
 // Collide space/geom into space/geom with nearCallback function.
 // returns number of contacts
 JNIEXPORT jint JNICALL Java_org_odejava_collision_JavaCollision_spaceCollide2
-(JNIEnv *env, jobject obj, jint jarg1, jint jarg2) {
+(JNIEnv *env, jobject obj, jlong jarg1, jlong jarg2) {
 
   contactBufCursor = 0;
 
@@ -307,7 +304,7 @@ JNIEXPORT jint JNICALL Java_org_odejava_collision_JavaCollision_spaceCollide2
   //greatestContactGeomsSize = 0;
   // Collide, updates stepContactsSize and stepContacts
 
-  dSpaceCollide2 ((dGeomID) jarg1,(dGeomID) jarg2,0,&nearCallback2);
+  dSpaceCollide2 (*(dGeomID *)jarg1,*(dGeomID *)jarg2,0,&nearCallback2);
 
   // debug
   //fprintf(
@@ -500,7 +497,7 @@ JNIEXPORT jlong JNICALL Java_org_odejava_Odejava_getNativeAddr
         // power pc seems to issues casting pointers to long and back again (maybe due to byte order?)
         return (jlong)(**(jint **)&swigCPtr);
 #else
-	void* id = (*(void* *)swigCPtr);
+	void* id = *((void* *)swigCPtr);
 	return (jlong) id;
 #endif
 }

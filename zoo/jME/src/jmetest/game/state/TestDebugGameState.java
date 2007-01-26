@@ -33,6 +33,7 @@ package jmetest.game.state;
 
 import com.jme.math.Vector3f;
 import com.jme.scene.shape.Box;
+import com.jme.system.*;
 import com.jmex.game.StandardGame;
 import com.jmex.game.state.DebugGameState;
 import com.jmex.game.state.GameStateManager;
@@ -52,8 +53,8 @@ public class TestDebugGameState {
         gameState.setActive(true);	// Activate it
         
         Box box = new Box("TestBox", new Vector3f(), 1.0f, 1.0f, 1.0f);		// Create a Box
-        box.setRandomColors();	// Set random colors on it
-        box.updateRenderState();	// Update the render state so the colors appear (the game is already running, so this must always be done)
         gameState.getRootNode().attachChild(box);	// Attach the box to rootNode in DebugGameState
+        box.setRandomColors();		// Set random colors on it - it will only be visible if the lights are off though
+        box.updateRenderState();	// Update the render state so the colors appear (the game is already running, so this must always be done)
     }
 }

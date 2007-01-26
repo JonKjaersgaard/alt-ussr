@@ -32,8 +32,6 @@
 package com.jmex.editors.swing.controls;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.util.List;
 
 import javax.swing.*;
 
@@ -42,74 +40,37 @@ import com.jme.input.controls.*;
 /**
  * @author Matthew D. Hicks
  */
-public class GameControlContainer {
+public class ControlField extends JTextField {
 	private static final long serialVersionUID = 1L;
 
-	private ControlConfigurationPanel ccp;
 	private GameControl control;
-	private JLabel label;
-	private BindingField[] bindings;
+	private Binding binding;
 	
-	public GameControlContainer(ControlConfigurationPanel ccp, GameControl control, int bindings) {
-		this.ccp = ccp;
+	public ControlField(GameControl control, Binding binding) {
 		this.control = control;
-		this.bindings = new BindingField[bindings];
+		setPreferredSize(new Dimension(75, 20));
+		setEditable(false);
+		setBinding(binding);
 	}
 	
-	public ControlConfigurationPanel getControlCongigurationPanel() {
-		return ccp;
+	public Binding getBinding() {
+		return binding;
 	}
 	
-	public void addMouseListener(MouseListener listener) {
-		for (BindingField field : bindings) {
-			field.addMouseListener(listener);
-		}
+	public void setBinding(Binding binding) {
+		this.binding = binding;
+		updateText();
 	}
 	
-	public void init(JComponent container, GridBagConstraints constraints) {
-		GridBagLayout layout = (GridBagLayout)container.getLayout();
-		
-		label = new JLabel(control.getName() + ": ");
-		label.setFont(new Font("Arial", Font.BOLD, 12));
-		constraints.gridwidth = 1;
-		constraints.anchor = GridBagConstraints.EAST;
-		constraints.insets = new Insets(5, 5, 5, 5);
-		layout.setConstraints(label, constraints);
-		container.add(label);
-		
-		List<Binding> bList = control.getBindings();
-		for (int i = 0; i < bindings.length; i++) {
-			Binding b;
-			if (i >= bList.size()) {
-				b = null;
-			} else {
-				b = bList.get(i);
-			}
-			bindings[i] = new BindingField(this, b);
-			
-			if (i == bindings.length - 1) {
-				constraints.gridwidth = GridBagConstraints.REMAINDER;
-			}
-			layout.setConstraints(bindings[i], constraints);
-			container.add(bindings[i]);
-		}
-	}
-	
-	public void update() {
-		label.setText(control.getName() + ": ");
-		List<Binding> bList = control.getBindings();
-		for (int i = 0; i < bindings.length; i++) {
-			Binding b;
-			if (i >= bList.size()) {
-				b = null;
-			} else {
-				b = bList.get(i);
-			}
-			bindings[i].setBinding(b);
-		}
-	}
-	
-	public GameControl getGameControl() {
+	public GameControl getControl() {
 		return control;
+	}
+	
+	protected void updateText() {
+		if (binding == null) {
+			setText("");
+		} else {
+			setText(binding.getName());
+		}
 	}
 }

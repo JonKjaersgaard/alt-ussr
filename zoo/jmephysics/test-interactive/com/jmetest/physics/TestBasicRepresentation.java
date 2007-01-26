@@ -1,23 +1,50 @@
-/*Copyright*/
+/*
+ * Copyright (c) 2005-2006 jME Physics 2
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of 'jME Physics 2' nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 package com.jmetest.physics;
 
 import java.util.logging.Level;
 
 import com.jme.input.InputHandler;
 import com.jme.input.KeyInput;
+import com.jme.input.MouseInput;
 import com.jme.input.action.InputAction;
 import com.jme.input.action.InputActionEvent;
 import com.jme.input.util.SyntheticButton;
 import com.jme.math.Vector3f;
-import com.jme.scene.TriMesh;
-import com.jme.scene.shape.Box;
-import com.jme.scene.shape.Sphere;
 import com.jme.util.LoggingSystem;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.PhysicsCollisionGeometry;
 import com.jmex.physics.StaticPhysicsNode;
 import com.jmex.physics.contact.ContactInfo;
-import com.jmex.physics.geometry.PhysicsMesh;
 import com.jmex.physics.geometry.PhysicsSphere;
 import com.jmex.physics.util.SimplePhysicsGame;
 
@@ -28,40 +55,20 @@ public class TestBasicRepresentation extends SimplePhysicsGame {
     protected void simpleInitGame() {
 //        rootNode.getLocalRotation().fromAngleNormalAxis( -0.1f, new Vector3f( 0, 0, 1 ) );
 
-        boolean useTriMesh = false;
-
         final StaticPhysicsNode staticNode = getPhysicsSpace().createStaticNode();
-        final PhysicsCollisionGeometry floorGeom;
-        if ( !useTriMesh ) {
-            floorGeom = staticNode.createBox( "box physics" );
-            staticNode.setLocalScale( new Vector3f( 30, 1, 30 ) );
-        }
-        else {
-            TriMesh trimesh = new Box( "trimesh", new Vector3f(), 15, 0.5f, 15 );
-            PhysicsMesh mesh = staticNode.createMesh( "mesh" );
-            mesh.copyFrom( trimesh );
-            floorGeom = mesh;
-            staticNode.attachChild( trimesh );
-        }
+        final PhysicsCollisionGeometry floorGeom = staticNode.createBox( "box physics" );
+        staticNode.setLocalScale( new Vector3f( 30, 1, 30 ) );
 
         staticNode.getLocalTranslation().set( 0, -5, 0 );
 //        staticNode.getLocalScale().multLocal( 1.2f );
         rootNode.attachChild( staticNode );
 
         final DynamicPhysicsNode dynamicNode = getPhysicsSpace().createDynamicNode();
-        if ( !useTriMesh ) {
-            PhysicsSphere sphere = dynamicNode.createSphere( "sphere physics" );
-            sphere.setLocalScale( 2 );
-            sphere.getLocalTranslation().set( -1, 0, 0 );
-        }
-        else {
-            Sphere meshSphere = new Sphere( "meshsphere", 10, 10, 2 );
-            PhysicsMesh sphere = dynamicNode.createMesh( "sphere mesh" );
-            sphere.getLocalTranslation().set( -1, 0, 0 );
-            meshSphere.getLocalTranslation().set( -1, 0, 0 );
-            sphere.copyFrom( meshSphere );
-            dynamicNode.attachChild( meshSphere );
-        }
+
+        PhysicsSphere sphere = dynamicNode.createSphere( "sphere physics" );
+        sphere.setLocalScale( 2 );
+        sphere.getLocalTranslation().set( -1, 0, 0 );
+
         final PhysicsSphere sphere2 = dynamicNode.createSphere( "sphere physics" );
         sphere2.getLocalTranslation().set( 0.3f, 0, 0 );
         dynamicNode.detachChild( sphere2 );
@@ -71,16 +78,8 @@ public class TestBasicRepresentation extends SimplePhysicsGame {
 //        dynamicNode.setCenterOfMass( new Vector3f( -1, 0, 0 ) );
 
         final DynamicPhysicsNode dynamicNode3 = getPhysicsSpace().createDynamicNode();
-        if ( !useTriMesh ) {
-            PhysicsSphere sphere3 = dynamicNode3.createSphere( "sphere physics" );
-            sphere3.setLocalScale( 2 );
-        }
-        else {
-            Sphere meshSphere3 = new Sphere( "meshsphere", 10, 10, 2 );
-            PhysicsMesh sphere3 = dynamicNode3.createMesh( "sphere mesh" );
-            sphere3.copyFrom( meshSphere3 );
-            dynamicNode3.attachChild( meshSphere3 );
-        }
+        PhysicsSphere sphere3 = dynamicNode3.createSphere( "sphere physics" );
+        sphere3.setLocalScale( 2 );
 
         rootNode.attachChild( dynamicNode3 );
         dynamicNode3.computeMass();
@@ -116,8 +115,7 @@ public class TestBasicRepresentation extends SimplePhysicsGame {
             public void performAction( InputActionEvent evt ) {
                 if ( sphere2.getParent() != null ) {
                     dynamicNode.detachChild( sphere2 );
-                }
-                else {
+                } else {
                     dynamicNode.attachChild( sphere2 );
                 }
             }
@@ -140,6 +138,9 @@ public class TestBasicRepresentation extends SimplePhysicsGame {
                 }
             }
         }, collisionEventHandler.getDeviceName(), collisionEventHandler.getIndex(), InputHandler.AXIS_NONE, false );
+
+        cameraInputHandler.setEnabled( false );
+        MouseInput.get().setCursorVisible( true );
     }
 
     public static void main( String[] args ) {

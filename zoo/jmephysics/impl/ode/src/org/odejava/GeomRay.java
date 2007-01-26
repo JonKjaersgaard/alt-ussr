@@ -133,4 +133,7 @@ public class GeomRay extends Geom {
     }
 
 
+    public void setLength( float length ) {
+        Ode.dGeomRaySetLength( geomId, length );
+    }
 }

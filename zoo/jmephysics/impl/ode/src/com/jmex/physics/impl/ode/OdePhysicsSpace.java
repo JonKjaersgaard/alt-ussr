@@ -1,3 +1,35 @@
+/*
+ * Copyright (c) 2005-2006 jME Physics 2
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of 'jME Physics 2' nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 package com.jmex.physics.impl.ode;
 
 import java.util.ArrayList;
@@ -25,15 +57,19 @@ import com.jmex.physics.geometry.PhysicsBox;
 import com.jmex.physics.geometry.PhysicsCapsule;
 import com.jmex.physics.geometry.PhysicsCylinder;
 import com.jmex.physics.geometry.PhysicsMesh;
+import com.jmex.physics.geometry.PhysicsRay;
 import com.jmex.physics.geometry.PhysicsSphere;
 import com.jmex.physics.impl.ode.geometry.OdeBox;
 import com.jmex.physics.impl.ode.geometry.OdeCapsule;
 import com.jmex.physics.impl.ode.geometry.OdeCylinder;
+import com.jmex.physics.impl.ode.geometry.OdeGeometry;
 import com.jmex.physics.impl.ode.geometry.OdeMesh;
+import com.jmex.physics.impl.ode.geometry.OdeRay;
 import com.jmex.physics.impl.ode.geometry.OdeSphere;
 import com.jmex.physics.impl.ode.joints.OdeJoint;
 import org.odejava.Body;
 import org.odejava.Geom;
+import org.odejava.GeomRay;
 import org.odejava.HashSpace;
 import org.odejava.Odejava;
 import org.odejava.Space;
@@ -105,8 +141,7 @@ public class OdePhysicsSpace extends PhysicsSpace {
                 secondary.y = -normal.x * primary.z;
                 secondary.z = normal.x * primary.y;
             }
-        }
-        else {
+        } else {
             // choose p in x-y plane
             float a = normal.x * normal.x + normal.y * normal.y;
             float k = FastMath.invSqrt( a );
@@ -190,11 +225,11 @@ public class OdePhysicsSpace extends PhysicsSpace {
 
     @Override
     protected void addJoint( Joint joint ) {
-    		if ( !joint.isActive() ) {
-    			OdeJoint odeJoint = (OdeJoint) joint;
-    			super.addJoint( joint );
-    			joints.add( odeJoint );
-    		}
+        if ( !joint.isActive() ) {
+            OdeJoint odeJoint = (OdeJoint) joint;
+            super.addJoint( joint );
+            joints.add( odeJoint );
+        }
     }
 
     @Override
@@ -307,6 +342,7 @@ public class OdePhysicsSpace extends PhysicsSpace {
 
         // use collisions
         collision = new JavaCollision( world );
+        collision.setMaxContactGeomsPerNearcallback( 50 );
 
         // create the DirectBuffer
         odeContact = new Contact( collision.getContactLongBuffer(), collision.getContactFloatBuffer() );
@@ -425,8 +461,7 @@ public class OdePhysicsSpace extends PhysicsSpace {
             store.divideLocal( spat.getParent().getWorldScale() );
             inverseWorldRotation.set( spat.getParent().getWorldRotation() ).inverseLocal()
                     .multLocal( store );
-        }
-        else {
+        } else {
             store.set( worldTranslation );
         }
     }
@@ -445,8 +480,7 @@ public class OdePhysicsSpace extends PhysicsSpace {
         if ( spat.getParent() != null ) {
             inverseWorldRotation.set( spat.getParent().getWorldRotation() ).inverseLocal().mult(
                     worldRotation, tmpQuat );
-        }
-        else {
+        } else {
             tmpQuat.set( worldRotation );
         }
     }
@@ -533,8 +567,7 @@ public class OdePhysicsSpace extends PhysicsSpace {
             if ( updateRate > 0 ) {
                 elapsedTime -= updateRate;
                 timeSinceStartOfUpdate += updateRate;
-            }
-            else {
+            } else {
                 elapsedTime = 0;
                 break;
             }
@@ -543,8 +576,7 @@ public class OdePhysicsSpace extends PhysicsSpace {
         if ( updated ) {
             if ( this.sizeOfUpdateCallbacks() == 0 ) {
                 updateScene();
-            }
-            else {
+            } else {
                 // call update callbacks
 //                for ( int i = this.sizeOfUpdateCallbacks() - 1; i >= 0; i-- ) {
 //                    PhysicsUpdateCallback updateCallback = this.getFromUpdateCallbacks( i );
@@ -556,12 +588,19 @@ public class OdePhysicsSpace extends PhysicsSpace {
         }
     }
 
+    public void pick( PhysicsCollisionGeometry geometry ) {
+        OdeGeometry odeGeometry = (OdeGeometry) geometry;
+        collision.collide2( space.getId().getSwigCPtr(), odeGeometry.getOdeGeom().getId().getSwigCPtr() );
+
+        iterateContacts( false );
+    }
+
     private void computeTimeStep() {
         // collide objects in a given space
         collision.collide( space );
 
         // read and modify contact information
-        iterateContacts();
+        iterateContacts( true );
 
         // apply the contact information for the collisions
         collision.applyContacts();
@@ -574,11 +613,9 @@ public class OdePhysicsSpace extends PhysicsSpace {
         // See what step function to use and then step through the world.
         if ( stepFunction == SF_STEP_QUICK ) {
             world.quickStep();
-        }
-        else if ( stepFunction == SF_STEP_FAST ) {
+        } else if ( stepFunction == SF_STEP_FAST ) {
             world.stepFast();
-        }
-        else if ( stepFunction == SF_STEP_SIMULATION ) {
+        } else if ( stepFunction == SF_STEP_SIMULATION ) {
             world.step();
         }
     }
@@ -598,8 +635,10 @@ public class OdePhysicsSpace extends PhysicsSpace {
     /**
      * Loop through the collisions that have occured and set the contact
      * information. Eg. Bounce factor.
+     *
+     * @param applyContacts false to do event handling only
      */
-    private void iterateContacts() {
+    private void iterateContacts( boolean applyContacts ) {
         PhysicsNode previous1 = null;
         PhysicsNode previous2 = null;
         for ( int i = 0; i < collision.getContactCount(); i++ ) {
@@ -616,79 +655,82 @@ public class OdePhysicsSpace extends PhysicsSpace {
             PhysicsNode obj2 = geom2.getPhysicsObject();
 
             {
+                // don't let rays generate contact points in ode but generate events
+                boolean applyThisContact = applyContacts && !(geom1 instanceof GeomRay) && !(geom2 instanceof GeomRay);
                 contact.clear();
-                adjustContact( contact );
+                if ( applyThisContact ) {
+                    adjustContact( contact );
+                }
 
                 if ( contact.isIgnored() ) {
                     odeContact.ignoreContact();
-                }
-                else {
-                    int mode = Ode.dContactApprox1;
-                    odeContact.setMode( mode );
+                } else {
+                    if ( !applyThisContact ) {
+                        // don't apply contact points in but generate events 
+                        odeContact.ignoreContact();
+                    } else {
+                        int mode = Ode.dContactApprox1;
+                        odeContact.setMode( mode );
 
-                    if ( !Float.isNaN( contact.getMu() ) ) {
-                        odeContact.setMu( contact.getMu() );
-                    }
-                    else {
-                        odeContact.setMu( 100 );
+                        if ( !Float.isNaN( contact.getMu() ) ) {
+                            odeContact.setMu( contact.getMu() );
+                        } else {
+                            odeContact.setMu( 100 );
+                        }
+
+                        if ( !Float.isNaN( contact.getBounce() ) ) {
+                            mode |= Ode.dContactBounce;
+                            odeContact.setMode( mode );
+                            odeContact.setBounce( contact.getBounce() );
+                        }
+                        if ( !Float.isNaN( contact.getMinimumBounceVelocity() ) ) {
+                            odeContact.setBounceVel( contact.getMinimumBounceVelocity() );
+                        } else {
+                            odeContact.setBounceVel( 1f );
+                        }
+                        if ( !Float.isNaN( contact.getMuOrthogonal() ) ) {
+                            mode |= Ode.dContactMu2;
+                            odeContact.setMode( mode );
+                            odeContact.setMu2( contact.getMuOrthogonal() );
+                        }
+                        Vector3f fdir = contact.getFrictionDirection( tmp2 );
+                        if ( !Float.isNaN( fdir.x ) && !Float.isNaN( fdir.y ) && !Float.isNaN( fdir.z ) ) {
+                            mode |= Ode.dContactFDir1;
+                            odeContact.setFdir1( fdir );
+                        }
+                        Vector2f surfaceMotion = contact.getSurfaceMotion( tmpVec2 );
+                        if ( !Float.isNaN( surfaceMotion.x ) && surfaceMotion.x != 0 ) {
+                            mode |= Ode.dContactMotion1;
+                            odeContact.setMode( mode );
+                            odeContact.setMotion1( surfaceMotion.x );
+                        }
+                        if ( !Float.isNaN( surfaceMotion.y ) && surfaceMotion.y != 0 ) {
+                            mode |= Ode.dContactMotion2;
+                            odeContact.setMode( mode );
+                            odeContact.setMotion2( surfaceMotion.y );
+                        }
+                        Vector2f slip = contact.getSlip( tmpVec2 );
+                        if ( !Float.isNaN( slip.x ) ) {
+                            mode |= Ode.dContactSlip1;
+                            odeContact.setMode( mode );
+                            odeContact.setSlip1( slip.x );
+                        }
+                        if ( !Float.isNaN( slip.y ) ) {
+                            mode |= Ode.dContactSlip2;
+                            odeContact.setMode( mode );
+                            odeContact.setSlip2( slip.y );
+                        }
                     }
 
-                    if ( !Float.isNaN( contact.getBounce() ) ) {
-                        mode |= Ode.dContactBounce;
-                        odeContact.setMode( mode );
-                        odeContact.setBounce( contact.getBounce() );
-                    }
-                    if ( !Float.isNaN( contact.getMinimumBounceVelocity() ) ) {
-                        odeContact.setBounceVel( contact.getMinimumBounceVelocity() );
-                    }
-                    else {
-                        odeContact.setBounceVel( 1f );
-                    }
-                    if ( !Float.isNaN( contact.getMuOrthogonal() ) ) {
-                        mode |= Ode.dContactMu2;
-                        odeContact.setMode( mode );
-                        odeContact.setMu2( contact.getMuOrthogonal() );
-                    }
-                    Vector3f fdir = contact.getFrictionDirection( tmp2 );
-                    if ( !Float.isNaN( fdir.x ) && !Float.isNaN( fdir.y ) && !Float.isNaN( fdir.z ) ) {
-                        mode |= Ode.dContactFDir1;
-                        odeContact.setFdir1( fdir );
-                    }
-                    Vector2f surfaceMotion = contact.getSurfaceMotion( tmpVec2 );
-                    if ( !Float.isNaN( surfaceMotion.x ) && surfaceMotion.x != 0 ) {
-                        mode |= Ode.dContactMotion1;
-                        odeContact.setMode( mode );
-                        odeContact.setMotion1( surfaceMotion.x );
-                    }
-                    if ( !Float.isNaN( surfaceMotion.y ) && surfaceMotion.y != 0 ) {
-                        mode |= Ode.dContactMotion2;
-                        odeContact.setMode( mode );
-                        odeContact.setMotion2( surfaceMotion.y );
-                    }
-                    Vector2f slip = contact.getSlip( tmpVec2 );
-                    if ( !Float.isNaN( slip.x ) ) {
-                        mode |= Ode.dContactSlip1;
-                        odeContact.setMode( mode );
-                        odeContact.setSlip1( slip.x );
-                    }
-                    if ( !Float.isNaN( slip.y ) ) {
-                        mode |= Ode.dContactSlip2;
-                        odeContact.setMode( mode );
-                        odeContact.setSlip1( slip.y );
-                    }
-
-                    // disctinct by equals() not by name
-                    if ( ( !obj1.equals( previous1 ) && !obj2.equals( previous2 ) )
-                            || ( !( obj1.equals( previous1 ) ) && obj2.equals( previous2 ) )
-                            || ( obj1.equals( previous1 ) && !( obj2.equals( previous2 ) ) ) ) {
+                    if ( ( obj1 != previous1 ) || ( obj2 != previous2 ) ) {
                         // compute collision velocity (must be done before
                         // returning contact)
                         Vector3f actualBounceVel = tmpBounceVel.set( 0, 0, 0 );
-                        if ( !obj1.isStatic() ) {
+                        if ( obj1 != null && !obj1.isStatic() ) {
                             actualBounceVel.subtractLocal( ( (DynamicPhysicsNode) obj1 )
                                     .getLinearVelocity( tmp1 ) );
                         }
-                        if ( !obj2.isStatic() ) {
+                        if ( obj2 != null && !obj2.isStatic() ) {
                             actualBounceVel.addLocal( ( (DynamicPhysicsNode) obj2 )
                                     .getLinearVelocity( tmp1 ) );
                         }
@@ -858,12 +900,10 @@ public class OdePhysicsSpace extends PhysicsSpace {
 
         if ( stepFunction == SF_STEP_FAST ) {
             LoggingSystem.getLogger().log( Level.INFO, "Setting the Physics Solver to use StepFast" );
-        }
-        else if ( stepFunction == SF_STEP_QUICK ) {
+        } else if ( stepFunction == SF_STEP_QUICK ) {
             LoggingSystem.getLogger()
                     .log( Level.INFO, "Setting the Physics Solver to use StepQuick" );
-        }
-        else {
+        } else {
             LoggingSystem.getLogger().log( Level.INFO,
                     "Setting the Physics Solver to use Simulation" );
         }
@@ -895,7 +935,9 @@ public class OdePhysicsSpace extends PhysicsSpace {
     protected PhysicsBox createBox( String name, PhysicsNode node ) {
         OdeBox geometry = new OdeBox( node );
         geometry.setName( name );
-        node.attachChild( geometry );
+        if ( node != null ) {
+            node.attachChild( geometry );
+        }
         return geometry;
     }
 
@@ -903,7 +945,9 @@ public class OdePhysicsSpace extends PhysicsSpace {
     protected PhysicsSphere createSphere( String name, PhysicsNode node ) {
         OdeSphere geometry = new OdeSphere( node );
         geometry.setName( name );
-        node.attachChild( geometry );
+        if ( node != null ) {
+            node.attachChild( geometry );
+        }
         return geometry;
     }
 
@@ -911,7 +955,9 @@ public class OdePhysicsSpace extends PhysicsSpace {
     public PhysicsCylinder createCylinder( String name, PhysicsNode node ) {
         OdeCylinder geometry = new OdeCylinder( node );
         geometry.setName( name );
-        node.attachChild( geometry );
+        if ( node != null ) {
+            node.attachChild( geometry );
+        }
         return geometry;
     }
 
@@ -919,7 +965,9 @@ public class OdePhysicsSpace extends PhysicsSpace {
     public PhysicsCapsule createCapsule( String name, PhysicsNode node ) {
         OdeCapsule geometry = new OdeCapsule( node );
         geometry.setName( name );
-        node.attachChild( geometry );
+        if ( node != null ) {
+            node.attachChild( geometry );
+        }
         return geometry;
     }
 
@@ -927,7 +975,19 @@ public class OdePhysicsSpace extends PhysicsSpace {
     public PhysicsMesh createMesh( String name, PhysicsNode node ) {
         OdeMesh geometry = new OdeMesh( node );
         geometry.setName( name );
-        node.attachChild( geometry );
+        if ( node != null ) {
+            node.attachChild( geometry );
+        }
+        return geometry;
+    }
+
+    @Override
+    public PhysicsRay createRay( String name, PhysicsNode node ) {
+        OdeRay geometry = new OdeRay( node );
+        geometry.setName( name );
+        if ( node != null ) {
+            node.attachChild( geometry );
+        }
         return geometry;
     }
 }

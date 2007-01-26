@@ -1,0 +1,2 @@
+This jME Physics 2 implementation uses JOODE revision 241.
+Only change is in class Body: the field 'mass' was made non-final. 

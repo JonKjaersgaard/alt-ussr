@@ -29,52 +29,43 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jmex.editors.swing.controls;
-
-import java.awt.*;
-
-import javax.swing.*;
+package com.jme.input.controls.controller;
 
 import com.jme.input.controls.*;
+import com.jme.scene.*;
 
 /**
+ * ActionController allows you to assign a GameControlAction implementation
+ * to occur when a control is pressed or released.
+ * 
  * @author Matthew D. Hicks
  */
-public class BindingField extends JTextField {
+public class ActionController extends Controller {
 	private static final long serialVersionUID = 1L;
 
-	private GameControlContainer c;
-	private Binding binding;
+	private GameControl control;
+	private GameControlAction action;
 	
-	public BindingField(GameControlContainer c, Binding binding) {
-		setPreferredSize(new Dimension(75, 20));
-		this.c = c;
-		setEditable(false);
-		setBinding(binding);
+	private boolean lastStatus;
+	private float lastTime;
+	
+	public ActionController(GameControl control, GameControlAction action) {
+		this.control = control;
+		this.action = action;
 	}
 	
-	public GameControlContainer getGameControlContainer() {
-		return c;
-	}
-	
-	public Binding getBinding() {
-		return binding;
-	}
-	
-	public void setBinding(Binding binding) {
-		this.binding = binding;
-		updateText();
-	}
-	
-	private void updateText() {
-		if (binding == null) {
-			setText("");
-		} else {
-			setText(binding.getName());
+	public void update(float time) {
+		lastTime += time;
+		if (control.getValue() > 0.0f) {
+			if (!lastStatus) {
+				action.pressed(control, lastTime);
+				lastStatus = true;
+				lastTime = 0.0f;
+			}
+		} else if (lastStatus) {
+			action.released(control, lastTime);
+			lastStatus = false;
+			lastTime = 0.0f;
 		}
-	}
-	
-	public void promptForInput() {
-		getGameControlContainer().getControlCongigurationPanel().getControlListener().prompt(this);
 	}
 }

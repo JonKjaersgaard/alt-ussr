@@ -61,7 +61,7 @@ public class JoystickAxisBinding implements Binding {
 		float value = joystick.getAxisValue(axis);
         if ((value < 0.0f) && (!reverse)) return 0.0f;
         if ((value > 0.0f) && (reverse)) return 0.0f;
-        return value;
+        return Math.abs(value);
 	}
 	
 	private void loadJoystick() {

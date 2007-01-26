@@ -34,7 +34,7 @@ package com.jme.input.controls;
 import java.io.*;
 import java.util.*;
 
-import com.jme.system.*;
+import com.jme.input.controls.binding.*;
 
 /**
  * @author Matthew D. Hicks
@@ -43,16 +43,15 @@ public class GameControl implements Serializable {
 	private static final long serialVersionUID = 6266549836236136920L;
 
 	private String name;
+	private GameControlManager manager;
     private List<Binding> bindings;
+    private boolean enabled;
 
-    public GameControl(String name) {
-        this(name, null);
-    }
-
-    public GameControl(String name, Binding binding) {
-        this.name = name;
+    protected GameControl(String name, GameControlManager manager) {
+    	this.name = name;
+    	this.manager = manager;
         bindings = new LinkedList<Binding>();
-        addBinding(binding);
+        enabled = true;
     }
 
     public List<Binding> getBindings() {
@@ -92,17 +91,14 @@ public class GameControl implements Serializable {
     	}
     	return false;
     }
-
+    
     public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    	return name;
     }
     
     public float getValue() {
     	float value = 0.0f;
+    	if (!isEnabled()) return value;				// Always return 0.0f if disabled - this also returns false when the manager is disabled
     	for (Binding binding : bindings) {
     		if (binding.getValue() > value) {
     			value = binding.getValue();
@@ -110,32 +106,24 @@ public class GameControl implements Serializable {
     	}
     	return value;
     }
-
-    public static final void save(List<GameControl> controls, GameSettings settings) {
-    	settings.setObject("GameControls", controls);
+    
+    public boolean hasTrueAxis() {
+    	for (Binding binding : bindings) {
+    		if (binding instanceof JoystickAxisBinding) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
     
-    @SuppressWarnings("unchecked")
-	public static final List<GameControl> load(GameSettings settings) {
-    	return (List<GameControl>)settings.getObject("GameControls", null);
+    public void setEnabled(boolean enabled) {
+    	this.enabled = enabled;
     }
-
-    public static final void replaceBindings(List<GameControl> originals, List<GameControl> replacements) {
-		for (GameControl replacement : replacements) {
-			for (GameControl original : originals) {
-				if (original.getName().equals(replacement.getName())) {
-					original.clearBindings();
-					for (Binding binding : replacement.getBindings()) {
-						original.addBinding(binding);
-					}
-				}
-			}
-		}
-	}
     
-    public static final void clearBindings(List<GameControl> controls) {
-		for (GameControl original : controls) {
-			original.clearBindings();
-		}
+    public boolean isEnabled() {
+    	if (manager.isEnabled()) {
+    		return enabled;
+    	}
+    	return false;
     }
 }

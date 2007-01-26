@@ -67,7 +67,7 @@ public class JavaCollision extends Collision {
 
     // Collide space/geom into space/geom with nearCallback function.
     // returns dContact pointers back to Java where they can be modified
-    private native int spaceCollide2( int spaceGeomAddr1, int spaceGeomAddr2 );
+//    TODO: private native int spaceCollide2( long spaceGeomAddr1, long spaceGeomAddr2 );
 
     // Adds all contact joints to contact jointgroup.
     // Call this after spaceCollide call if you are not creating contact joints
@@ -167,7 +167,7 @@ public class JavaCollision extends Collision {
      * @param o1
      * @param o2
      */
-    public void collide2( int o1, int o2 ) {
+    public void collide2( long o1, long o2 ) {
         if ( deleted ) {
             return;
         }
@@ -183,7 +183,8 @@ public class JavaCollision extends Collision {
 
         // Collide objects, generates all contacts
         //FIX ME: space ids should be SwigPTR instead
-        spaceCollide2( o1, o2 );
+        //TODO: spaceCollide2( o1, o2 );
+        throw new UnsupportedOperationException( "need to recompile natives first");
     }
 
 

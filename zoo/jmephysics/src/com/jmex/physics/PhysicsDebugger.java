@@ -1,8 +1,41 @@
+/*
+ * Copyright (c) 2005-2006 jME Physics 2
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of 'jME Physics 2' nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 package com.jmex.physics;
 
 import com.jme.math.Vector3f;
 import com.jme.renderer.ColorRGBA;
 import com.jme.renderer.Renderer;
+import com.jme.scene.Geometry;
 import com.jme.scene.Line;
 import com.jme.scene.Node;
 import com.jme.scene.Spatial;
@@ -33,18 +66,38 @@ public class PhysicsDebugger {
      */
     public static void drawPhysics( PhysicsSpace space, Renderer renderer ) {
         for ( PhysicsNode physicsNode : space.getNodes() ) {
-            physicsNode.drawDebugInfo( renderer );
+            drawPhysics( physicsNode, renderer );
         }
         for ( Joint joint : space.getJoints() ) {
             drawJoint( joint, renderer );
         }
     }
 
+    /**
+     * Draw all info available for the physics node.
+     *
+     * @param physicsNode    what to draw info for
+     * @param renderer          where to draw
+     */
+    public static void drawPhysics( PhysicsNode physicsNode, Renderer renderer ) {
+        physicsNode.drawDebugInfo( renderer );
+    }
+
+    /**
+     * Draw all info available for the physics geometry.
+     *
+     * @param physicsCollisionGeometry    what to draw info for
+     * @param renderer          where to draw
+     */
+    public static void drawPhysics( PhysicsCollisionGeometry physicsCollisionGeometry, Renderer renderer ) {
+        physicsCollisionGeometry.drawDebugShape( physicsCollisionGeometry.getPhysicsNode(), renderer );
+    }
+
     private static void drawJoint( Joint joint, Renderer renderer ) {
-        DynamicPhysicsNode node1;
-        DynamicPhysicsNode node2;
         Vector3f center = tmp2;
         joint.getAnchor( center );
+        DynamicPhysicsNode node1;
+        DynamicPhysicsNode node2;
         switch ( joint.getNodes().size() ) {
             case 1:
                 node1 = joint.getNodes().get( 0 );
@@ -103,6 +156,7 @@ public class PhysicsDebugger {
     /**
      * Draw all info available for the specified PhysicsNode.
      *
+     * @param physicsNode what to draw
      * @param renderer where to draw
      */
     static void drawCollisionGeometry( PhysicsNode physicsNode, Renderer renderer ) {
@@ -161,7 +215,7 @@ public class PhysicsDebugger {
                                        Renderer renderer, float approximateVisualSize ) {
         PhysicsNode physicsNode = geometry.getPhysicsNode();
         applyStates( renderer );
-        if ( physicsNode.isActive() ) {
+        if ( physicsNode == null || physicsNode.isActive() ) {
             if ( debugShape != null ) {
                 setColor( debugShape, COLOR_ACTIVE );
             }
@@ -175,17 +229,19 @@ public class PhysicsDebugger {
             line.setDefaultColor( COLOR_INACTIVE );
         }
 
-        // draw line from geometry to center of node
-        Vector3f center = physicsNode.getWorldTranslation();
-        lineFrom( center );
-        lineTo( geometryPivot );
-        line.draw( renderer );
+        if ( physicsNode != null ) {
+            // draw line from geometry to center of node
+            Vector3f center = physicsNode.getWorldTranslation();
+            lineFrom( center );
+            lineTo( geometryPivot );
+            line.draw( renderer );
 
-        // cross at center
-        line.setDefaultColor( COLOR_CENTER );
-        line.setLineWidth( 3 );
-        float length = Math.max( tmp.set( center ).subtractLocal( geometryPivot ).length(), approximateVisualSize );
-        drawCross( center, length, renderer );
+            // cross at center
+            line.setDefaultColor( COLOR_CENTER );
+            line.setLineWidth( 3 );
+            float length = Math.max( tmp.set( center ).subtractLocal( geometryPivot ).length(), approximateVisualSize );
+            drawCross( center, length, renderer );
+        }
 
         boundsWireState.apply(); // to clear line width
         if ( debugShape != null ) {
@@ -207,10 +263,11 @@ public class PhysicsDebugger {
     }
 
     private static void setColor( Spatial debugShape, ColorRGBA color ) {
-        if ( debugShape instanceof TriMesh ) {
-            ( (TriMesh) debugShape ).setDefaultColor( color );
-        }
-        else if ( debugShape instanceof Node ) {
+        if ( debugShape instanceof Geometry ) {
+            Geometry triMesh = (Geometry) debugShape;
+            triMesh.setDefaultColor( color );
+            triMesh.setColorBuffer( 0, null );
+        } else if ( debugShape instanceof Node ) {
             Node node = (Node) debugShape;
             for ( int i = node.getQuantity() - 1; i >= 0; i-- ) {
                 Spatial child = node.getChild( i );
@@ -265,7 +322,7 @@ public class PhysicsDebugger {
         BufferUtils.setInBuffer( from, line.getVertexBuffer( 0 ), 0 );
     }
 
-    public static void setupDebugGeom( TriMesh debugShape ) {
+    public static void setupDebugGeom( Geometry debugShape ) {
         debugShape.setRenderQueueMode( Renderer.QUEUE_SKIP );
         debugShape.setColorBuffer( 0, null );
         debugShape.setLightCombineMode( LightState.OFF );

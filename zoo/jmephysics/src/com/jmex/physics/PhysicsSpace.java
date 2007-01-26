@@ -1,3 +1,35 @@
+/*
+ * Copyright (c) 2005-2006 jME Physics 2
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ *  * Neither the name of 'jME Physics 2' nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 package com.jmex.physics;
 
 import java.lang.reflect.Constructor;
@@ -17,10 +49,20 @@ import com.jmex.physics.geometry.PhysicsBox;
 import com.jmex.physics.geometry.PhysicsCapsule;
 import com.jmex.physics.geometry.PhysicsCylinder;
 import com.jmex.physics.geometry.PhysicsMesh;
+import com.jmex.physics.geometry.PhysicsRay;
 import com.jmex.physics.geometry.PhysicsSphere;
 import com.jmex.physics.material.Material;
 import com.jmex.physics.material.MaterialContactCallback;
-import com.jmex.physics.util.binarymodules.*;
+import com.jmex.physics.util.binarymodules.BinaryDynamicPhysicsNodeModule;
+import com.jmex.physics.util.binarymodules.BinaryJointModule;
+import com.jmex.physics.util.binarymodules.BinaryPhysicsBoxModule;
+import com.jmex.physics.util.binarymodules.BinaryPhysicsCapsuleModule;
+import com.jmex.physics.util.binarymodules.BinaryPhysicsCylinderModule;
+import com.jmex.physics.util.binarymodules.BinaryPhysicsMeshModule;
+import com.jmex.physics.util.binarymodules.BinaryPhysicsSphereModule;
+import com.jmex.physics.util.binarymodules.BinaryRotationalJointAxisModule;
+import com.jmex.physics.util.binarymodules.BinaryStaticPhysicsNodeModule;
+import com.jmex.physics.util.binarymodules.BinaryTranslationalJointAxisModule;
 
 /**
  * PhysicsSpace is the central class of the jME Physics API. {@link PhysicsNode}s from the same space can interact
@@ -179,6 +221,8 @@ public abstract class PhysicsSpace {
      */
     public abstract void delete();
 
+    public abstract void pick( PhysicsCollisionGeometry geometry );
+
     /**
      * Interface for subclasses to register a factory for them.
      */
@@ -220,7 +264,10 @@ public abstract class PhysicsSpace {
      * List of known implementation factory class names. Used by {@link #create} to find a factory if no factory was set
      * yet. The specified class should have a parameterless constructor and implement {@link Factory}.
      */
-    private static String[] knownImplementations = {"com.jmex.physics.impl.ode.OdePhysicsSpace$OdeFactory"};
+    private static String[] knownImplementations = {
+            "com.jmex.physics.impl.ode.OdePhysicsSpace$OdeFactory",
+            "com.jmex.physics.impl.joode.JoodePhysicsSpace$JoodeFactory"
+    };
 
     /**
      * Create an implementation specific instance of PhysicsSpace.
@@ -311,13 +358,17 @@ public abstract class PhysicsSpace {
      * geometry creation for different PhysicsNodes - is overridden in this case.
      *
      * @param name name of the Spatial
-     * @param node
+     * @param node physics node which becomes parent of the geometry, null allowed if implementation supports geoms without a parent
      * @return a new physics sphere
      * @see PhysicsCollisionGeometry
      * @see com.jmex.physics.geometry.PhysicsSphere
      */
     protected PhysicsSphere createSphere( String name, PhysicsNode node ) {
-        throw new UnsupportedOperationException( "Neither PhysicsSpace not PhysicsNode implementation does handle this geometry!" );
+        throw errorNoGeometry();
+    }
+
+    private UnsupportedOperationException errorNoGeometry() {
+        return new UnsupportedOperationException( "Neither PhysicsSpace nor PhysicsNode implementation does handle this geometry!" );
     }
 
     /**
@@ -325,13 +376,13 @@ public abstract class PhysicsSpace {
      * geometry creation for different PhysicsNodes.
      *
      * @param name name of the Spatial
-     * @param node
+     * @param node physics node which becomes parent of the geometry, null allowed if implementation supports geoms without a parent
      * @return a new physics box
      * @see PhysicsCollisionGeometry
      * @see com.jmex.physics.geometry.PhysicsBox
      */
     protected PhysicsBox createBox( String name, PhysicsNode node ) {
-        throw new UnsupportedOperationException( "Neither PhysicsSpace not PhysicsNode implementation does handle this geometry!" );
+        throw errorNoGeometry();
     }
 
     /**
@@ -339,13 +390,13 @@ public abstract class PhysicsSpace {
      * geometry creation for different PhysicsNodes.
      *
      * @param name name of the Spatial
-     * @param node
+     * @param node physics node which becomes parent of the geometry, null allowed if implementation supports geoms without a parent
      * @return a new physics cylinder
      * @see PhysicsCollisionGeometry
-     * @see com.jmex.physics.geometry.PhysicsBox
+     * @see com.jmex.physics.geometry.PhysicsCylinder
      */
     public PhysicsCylinder createCylinder( String name, PhysicsNode node ) {
-        throw new UnsupportedOperationException( "Neither PhysicsSpace not PhysicsNode implementation does handle this geometry!" );
+        throw errorNoGeometry();
     }
 
     /**
@@ -353,13 +404,13 @@ public abstract class PhysicsSpace {
      * geometry creation for different PhysicsNodes.
      *
      * @param name name of the Spatial
-     * @param node
+     * @param node physics node which becomes parent of the geometry, null allowed if implementation supports geoms without a parent
      * @return a new physics capsule
      * @see PhysicsCollisionGeometry
-     * @see com.jmex.physics.geometry.PhysicsBox
+     * @see com.jmex.physics.geometry.PhysicsCapsule
      */
     public PhysicsCapsule createCapsule( String name, PhysicsNode node ) {
-        throw new UnsupportedOperationException( "Neither PhysicsSpace not PhysicsNode implementation does handle this geometry!" );
+        throw errorNoGeometry();
     }
 
     /**
@@ -367,13 +418,26 @@ public abstract class PhysicsSpace {
      * geometry creation for different PhysicsNodes.
      *
      * @param name name of the Spatial
-     * @param node
+     * @param node physics node which becomes parent of the geometry, null allowed if implementation supports geoms without a parent
      * @return a new physics mesh
      * @see PhysicsCollisionGeometry
-     * @see com.jmex.physics.geometry.PhysicsBox
+     * @see com.jmex.physics.geometry.PhysicsMesh
      */
     public PhysicsMesh createMesh( String name, PhysicsNode node ) {
-        throw new UnsupportedOperationException( "Neither PhysicsSpace not PhysicsNode implementation does handle this geometry!" );
+        throw errorNoGeometry();
+    }
+    /**
+     * Create a physics ray. This is a convenience method for physics implementations which don't need different
+     * geometry creation for different PhysicsNodes.
+     *
+     * @param name name of the Spatial
+     * @param node physics node which becomes parent of the geometry, null allowed if implementation supports geoms without a parent
+     * @return a new physics mesh
+     * @see PhysicsCollisionGeometry
+     * @see com.jmex.physics.geometry.PhysicsRay
+     */
+    public PhysicsRay createRay( String name, PhysicsNode node ) {
+        throw errorNoGeometry();
     }
 
     /**
