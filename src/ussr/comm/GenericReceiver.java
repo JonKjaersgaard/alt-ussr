@@ -19,7 +19,7 @@ import ussr.physics.PhysicsLogger;
 public class GenericReceiver implements Receiver {
     private Module module;
     private TransmissionType type;
-    private Packet[] queue;
+    private Packet[] queue; 
     private int read_position, write_position;
     
     public GenericReceiver(Module _module, TransmissionType _type, int buffer_size) {

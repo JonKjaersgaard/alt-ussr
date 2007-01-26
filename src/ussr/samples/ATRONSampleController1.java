@@ -31,11 +31,29 @@ public class ATRONSampleController1 extends ControllerImpl {
             } catch (InterruptedException e) {
                 throw new Error("unexpected");
             }
-            if(!ATRONSimulation1.getConnectorsAreActive())
-            for(Connector connector: module.getConnectors()) {
-                connector.disconnect();
+            if(!ATRONSimulation1.getConnectorsAreActive()) {
+	            for(Connector connector: module.getConnectors()) {
+	                connector.disconnect();
+	            }
             }
+            //module.setColor(Color.blue);
+          //  module.getConnectors().get(0).setColor(Color.red);
+            rotate(1);
         }
     }
-
+    float t=0;
+    public void rotate(int dir) {
+    	
+    	module.getActuators().get(0).activate((float)Math.sin(t));
+    	t=t+0.01f;
+    	
+    }
+    public boolean isOtherConnectorNearby(int connector) {
+    	if(module.getConnectors().get(connector).isConnected()) {
+    		return true;
+    	}
+    	else  {
+    		return false;
+    	}
+    }
 }

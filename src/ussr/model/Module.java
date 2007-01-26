@@ -40,6 +40,12 @@ public class Module extends Entity {
      * Connectors for the module
      */
     private List<Connector> connectors = new ArrayList<Connector>();
+    
+    /**
+     * Actuators for the module
+     */
+    private List<Actuator> actuators = new ArrayList<Actuator>();
+    
 
     /**
      * Globally unique ID for this module
@@ -86,6 +92,15 @@ public class Module extends Entity {
     }
     
     /**
+     * Add a actuator to the module
+     * @param actuator to add to the module
+     */
+    public void addActuator(Actuator actuator) {
+        actuators.add(actuator);
+    }
+    
+    
+    /**
      * Add a transmitter to the module
      * @param transmitter the transmitter to add to the module
      */
@@ -118,7 +133,15 @@ public class Module extends Entity {
     public List<Connector> getConnectors() {
         return connectors;
     }
-
+    
+    /**
+     * Get the connectors associated with the module
+     * @return the connectors associated with the module
+     */
+    public List<Actuator> getActuators() {
+        return actuators;
+    }
+    
     /**
      * Get the controller associated with the module
      * @return the controller associated with the module
@@ -133,7 +156,7 @@ public class Module extends Entity {
     private static int idCounter = 0;
 
     public void setColor(Color color) {
-        for(PhysicsModuleComponent module: physics) module.setModuleColor(color);        
+        for(PhysicsModuleComponent module: physics) module.setModuleColor(color);
     }
 
     public List<Transmitter> getTransmitters() {

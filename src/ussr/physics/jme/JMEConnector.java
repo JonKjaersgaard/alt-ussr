@@ -1,6 +1,6 @@
 package ussr.physics.jme;
 
-import java.util.List;
+import java.awt.Color;
 
 import ussr.model.Connector;
 import ussr.physics.PhysicsConnector;
@@ -22,5 +22,7 @@ public interface JMEConnector extends PhysicsConnector {
     public String toString();
 
     public void setModel(Connector connector);
+    
+    public void setConnectorColor(Color color);
 
 }

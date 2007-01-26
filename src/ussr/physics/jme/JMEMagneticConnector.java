@@ -1,5 +1,6 @@
 package ussr.physics.jme;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -166,4 +167,9 @@ public class JMEMagneticConnector implements JMEConnector {
     public void disconnect() {
         throw new Error("not implemented");        
     }
+
+	public void setConnectorColor(Color color) {
+		// TODO Auto-generated method stub
+		
+	}
 }

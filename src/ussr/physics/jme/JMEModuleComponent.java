@@ -4,18 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jme.bounding.BoundingSphere;
-import com.jme.input.InputHandler;
-import com.jme.input.action.InputActionEvent;
-import com.jme.input.action.InputActionInterface;
-import com.jme.input.util.SyntheticButton;
-import com.jme.math.Vector3f;
-import com.jme.scene.TriMesh;
-import com.jme.scene.shape.Sphere;
-import com.jmex.physics.DynamicPhysicsNode;
-import com.jmex.physics.Joint;
-import com.jmex.physics.contact.ContactInfo;
-
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.PhysicsModuleComponent;
@@ -24,10 +12,14 @@ import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.ReceivingDevice;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RobotDescription;
-import ussr.robotbuildingblocks.SphereShape;
 import ussr.robotbuildingblocks.TransmissionDevice;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.RobotDescription.ConnectorType;
+
+import com.jme.math.Vector3f;
+import com.jme.scene.Spatial;
+import com.jme.scene.TriMesh;
+import com.jmex.physics.DynamicPhysicsNode;
 
 public class JMEModuleComponent implements PhysicsModuleComponent {
     /**
@@ -74,7 +66,7 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         world.associateGeometry(moduleNode,shape);
         JMEDescriptionHelper.setColor(world,shape,element.getColor());
         // Finalize
-        moduleNode.generatePhysicsGeometry();
+        moduleNode.generatePhysicsGeometry(true);
         world.getRootNode().attachChild( moduleNode );
         moduleNode.computeMass();
         // Create connectors
@@ -133,8 +125,11 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
     }
 
     public void setModuleColor(Color color) {
-        for(DynamicPhysicsNode node: dynamicNodes)
-            JMEDescriptionHelper.setColor(world, node, color);
+        for(DynamicPhysicsNode node: dynamicNodes) {
+        	for(Spatial child:  node.getChildren()) {
+        		JMEDescriptionHelper.setColor(world, child, color);        	
+        	}
+        }
     }
 
     public PhysicsSimulation getSimulation() {

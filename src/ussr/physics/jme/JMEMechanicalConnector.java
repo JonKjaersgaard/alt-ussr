@@ -1,27 +1,21 @@
 package ussr.physics.jme;
 
-import java.util.ArrayList;
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.jme.bounding.BoundingSphere;
-import com.jme.input.InputHandler;
-import com.jme.input.action.InputActionEvent;
-import com.jme.input.action.InputActionInterface;
-import com.jme.input.util.SyntheticButton;
-import com.jme.math.Matrix3f;
-import com.jme.math.Vector3f;
-import com.jme.scene.TriMesh;
-import com.jmex.physics.DynamicPhysicsNode;
-import com.jmex.physics.Joint;
-import com.jmex.physics.contact.ContactInfo;
-
 import ussr.model.Connector;
-import ussr.physics.PhysicsConnector;
 import ussr.physics.PhysicsLogger;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.RobotDescription;
+
+import com.jme.math.Matrix3f;
+import com.jme.math.Vector3f;
+import com.jme.scene.Spatial;
+import com.jme.scene.TriMesh;
+import com.jmex.physics.DynamicPhysicsNode;
+import com.jmex.physics.Joint;
 
 public class JMEMechanicalConnector implements JMEConnector {
     /**
@@ -34,6 +28,7 @@ public class JMEMechanicalConnector implements JMEConnector {
     private JMEMechanicalConnector lastProximityConnector = null;
     private JMEModuleComponent module;
     private float maxConnectDistance;
+    private TriMesh mesh;
 
     public JMEMechanicalConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, RobotDescription selfDesc) {
         List<GeometryDescription> geometry = selfDesc.getConnectorGeometry();
@@ -45,7 +40,8 @@ public class JMEMechanicalConnector implements JMEConnector {
         // Create visual appearance
         assert geometry.size()==1; // Only tested with size 1 geometry
         for(GeometryDescription element: geometry) {
-            TriMesh mesh = JMEDescriptionHelper.createShape(connector, baseName+position.toString(), element);
+        	//System.out.println("creating connector "+(baseName+position.toString()));
+        	mesh = JMEDescriptionHelper.createShape(connector, baseName+position.toString(), element);
             //world.connectorRegistry.put(mesh.getName(),this);
             mesh.getLocalTranslation().set( mesh.getLocalTranslation().add(position) );
             //mesh.setModelBound( new BoundingSphere() );
@@ -56,7 +52,7 @@ public class JMEMechanicalConnector implements JMEConnector {
             JMEDescriptionHelper.setColor(world, mesh, element.getColor());
         }
         // Finalize
-        connector.generatePhysicsGeometry();
+        //connector.generatePhysicsGeometry(true); //dont let connectors collide - too slow!
         world.getRootNode().attachChild( connector );
         connector.computeMass();
         this.node = connector;
@@ -134,8 +130,9 @@ public class JMEMechanicalConnector implements JMEConnector {
     public void setModel(Connector connector) {
         this.model = connector;        
     }
-
+	
     public void connectTo(JMEMechanicalConnector jc2) {
+    	System.out.println("Connecter me "+toString()+"to "+jc2.toString());
         world.getRootNode().unlockMeshes();
         DynamicPhysicsNode adopter = jc2.getNode();
         Vector3f nodeDistance = adopter.getLocalTranslation().subtract(this.node.getLocalTranslation());
@@ -146,6 +143,8 @@ public class JMEMechanicalConnector implements JMEConnector {
             adopter.attachChild(element);
             element.setLocalTranslation(element.getLocalTranslation().add(nodeDistance));
             element.setLocalRotation(nodeRotation.mult(element.getLocalRotation().toRotationMatrix()));
+            //JMEDescriptionHelper.setColor(world, element, Color.CYAN);
+            
             //element.setModelBound( new BoundingSphere() );
             //element.updateModelBound();
         }
@@ -172,4 +171,15 @@ public class JMEMechanicalConnector implements JMEConnector {
         world.getRootNode().attachChild(newNode);
         node.updateModelBound();
     }
+
+	public void setConnectorColor(Color color) {
+//		JMEDescriptionHelper.setColor(world, mesh, color);
+		/*System.out.println("Setting color for children");
+    	for(Spatial child:  node.getChildren()) {
+    		System.out.println("Here "+child);
+    		JMEDescriptionHelper.setColor(world, child, color);        	
+    	}
+    	System.out.println("Done setting color for children");*/
+		
+	}
 }

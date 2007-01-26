@@ -40,7 +40,7 @@ public class SphereShape extends Description implements GeometryDescription {
     public SphereShape(float radius, VectorDescription translation) { 
 		this.radius = radius; 
 		this.translation = translation;
-}
+    }
 
     
     public SphereShape(float radius) { 

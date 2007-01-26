@@ -5,10 +5,12 @@
  */
 package ussr.model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import ussr.physics.PhysicsConnector;
 import ussr.physics.PhysicsEntity;
+import ussr.physics.PhysicsModuleComponent;
 
 /**
  * 
@@ -76,4 +78,8 @@ public class Connector extends Entity {
     public void disconnect() {
         physics.disconnect();
     }
+
+	public void setColor(Color color) {
+		physics.setConnectorColor(color);
+	}
 }
