@@ -170,5 +170,4 @@ public class RobotDescription extends Description {
     public void setStructure(PhysicsCompositionStructure structure) {
         this.structure = structure;
     }
-
 }

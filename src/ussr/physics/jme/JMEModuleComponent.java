@@ -16,6 +16,7 @@ import ussr.robotbuildingblocks.TransmissionDevice;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.RobotDescription.ConnectorType;
 
+import com.jme.bounding.BoundingSphere;
 import com.jme.math.Vector3f;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
@@ -68,7 +69,12 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         // Finalize
         moduleNode.generatePhysicsGeometry(true);
         world.getRootNode().attachChild( moduleNode );
+        
         moduleNode.computeMass();
+        /*moduleNode.setModelBound(new BoundingSphere(0.1f,new Vector3f()));
+        moduleNode.updateModelBound();
+        moduleNode.updateWorldBound();
+        moduleNode.updateRenderState();*/
         // Create connectors
         for(VectorDescription p: selfDesc.getConnectorPositions()) {
             Vector3f position = new Vector3f(p.getX(), p.getY(), p.getZ());

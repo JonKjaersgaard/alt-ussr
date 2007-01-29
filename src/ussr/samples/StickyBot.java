@@ -28,18 +28,19 @@ public class StickyBot implements Robot {
      * @see ussr.robotbuildingblocks.Robot#getDescription()
      */
     public RobotDescription getDescription() {
+    	float scale = 0.1f;
         RobotDescription description = new RobotDescription();
-        description.setModuleGeometry(new GeometryDescription[] { new SphereShape(2) }); 
-        description.setConnectorGeometry(new GeometryDescription[] { new SphereShape(1) });
+        description.setModuleGeometry(new GeometryDescription[] { new SphereShape(scale*2) }); 
+        description.setConnectorGeometry(new GeometryDescription[] { new SphereShape(scale*1) });
         description.setConnectorPositions(new VectorDescription[] {
-            new VectorDescription(-2.0f, 0.0f, 0),
-            new VectorDescription(2.0f, 0.0f, 0),
-            new VectorDescription(0.0f, 2.0f, 0),
-            new VectorDescription(0.0f, -2.0f, 0),
-            new VectorDescription(0.0f, 0.0f, -2.0f),
-            new VectorDescription(0.0f, 0f, 2.0f) });
+            new VectorDescription(-2.0f*scale, 0.0f*scale, 0*scale),
+            new VectorDescription(2.0f*scale, 0.0f*scale, 0*scale),
+            new VectorDescription(0.0f*scale, 2.0f*scale, 0*scale),
+            new VectorDescription(0.0f*scale, -2.0f*scale, 0*scale),
+            new VectorDescription(0.0f*scale, 0.0f*scale, -2.0f*scale),
+            new VectorDescription(0.0f*scale, 0f*scale, 2.0f*scale) });
         description.setConnectorType( RobotDescription.ConnectorType.MAGNETIC_CONNECTOR);
-        description.setMaxConnectionDistance(5);
+        description.setMaxConnectionDistance(scale*5);
         description.setTransmitters(new TransmissionDevice[] { new TransmissionDevice(TransmissionType.RADIO,15) });
         description.setReceivers(new ReceivingDevice[] { new ReceivingDevice(TransmissionType.RADIO,10) });
         return description;

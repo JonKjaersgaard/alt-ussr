@@ -26,26 +26,28 @@ public class ATRONSampleController1 extends ControllerImpl {
     public void activate() {
 
         while(true) {
-            try {
+        	try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 throw new Error("unexpected");
             }
-            if(!ATRONSimulation1.getConnectorsAreActive()) {
-	            for(Connector connector: module.getConnectors()) {
-	                connector.disconnect();
+        	if(!module.getSimulation().isPaused()) {
+	            if(!ATRONSimulation1.getConnectorsAreActive()) {
+		            for(Connector connector: module.getConnectors()) {
+		                connector.disconnect();
+		            }
 	            }
-            }
-            //module.setColor(Color.blue);
-          //  module.getConnectors().get(0).setColor(Color.red);
-            rotate(1);
+	            //module.setColor(Color.blue);
+	          //  module.getConnectors().get(0).setColor(Color.red);
+	            rotate(1);
+        	}
         }
     }
     float t=0;
     public void rotate(int dir) {
-    	
-    	module.getActuators().get(0).activate((float)Math.sin(t));
-    	t=t+0.01f;
+    	module.getActuators().get(0).activate((float)(Math.sin(t)+1)/2f);
+    	t=t+0.00001f;
+    	//System.out.println("follow = "+(float)(Math.sin(t)+1)/2f);
     	
     }
     public boolean isOtherConnectorNearby(int connector) {

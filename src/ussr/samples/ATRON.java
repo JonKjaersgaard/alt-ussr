@@ -47,15 +47,15 @@ public abstract class ATRON implements Robot {
         float xypos = (float) (1.14f*Math.cos( 45 ));*/
         float unit = (float) (0.045f/Math.sqrt(2)); //4.5cm from center of mass to connector
         description.setConnectorPositions(new VectorDescription[] { //hvad er nord og syd - hvad er 1-7?
-      /*  		new VectorDescription(  unit,  unit, -unit ), //north connector 0
+        		/*new VectorDescription(  unit,  unit, -unit ), //north connector 0
         		new VectorDescription( -unit,  unit, -unit ), //north connector 1
         		new VectorDescription( -unit, -unit, -unit ), //north connector 2
-        		new VectorDescription(  unit, -unit, -unit ), //north connector 3
+        		new VectorDescription(  unit, -unit, -unit ), //north connector 3*/
         		new VectorDescription(  unit,  unit,  unit ), //south connector 4
         		new VectorDescription( -unit,  unit,  unit ), //south connector 5
         		new VectorDescription( -unit, -unit,  unit ), //south connector 6
         		new VectorDescription(  unit, -unit,  unit ), //south connector 7
-        		*/
+        		
         		
         		
         		

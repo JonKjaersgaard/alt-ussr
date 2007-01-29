@@ -115,7 +115,7 @@ public class Module extends Entity {
      */
     public void setController(Controller controller) {
         this.controller = controller;
-        controller.setModule(this);
+        if(controller!=null) controller.setModule(this);
     }
 
     /**

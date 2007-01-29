@@ -61,7 +61,7 @@ public class JMEDescriptionHelper {
         	moduleNode.attachChild(shape);
         	moduleNode.setModelBound(new BoundingSphere());
         	moduleNode.updateModelBound();
-        	moduleNode.generatePhysicsGeometry(true);
+        	moduleNode.generatePhysicsGeometry();
         }
         else throw new Error("Only sphere and atron geometries supported for now");
         
@@ -117,6 +117,9 @@ public class JMEDescriptionHelper {
 		return atronMesh;
 	}
     public static void loadAtronModel(float radius) {
+//		atronModel = new Sphere("", 10, 10, 0.11f);
+//		return;
+
 		try {
 			MaxToJme C1 = new MaxToJme();
 			ByteArrayOutputStream BO = new ByteArrayOutputStream();

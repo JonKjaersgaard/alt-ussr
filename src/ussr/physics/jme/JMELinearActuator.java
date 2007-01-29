@@ -25,7 +25,7 @@ public class JMELinearActuator implements PhysicsActuator {
 //    private JMEModuleComponent module;
     private Joint joint;
     private String name;
-    private float epsilon = 0.1f;
+    private float epsilon = 0.001f;
 	private float maxVelocity = 0.01f;
 	private JointAxis axis;
 	
@@ -54,14 +54,14 @@ public class JMELinearActuator implements PhysicsActuator {
      */
     public void attach(DynamicPhysicsNode d1, DynamicPhysicsNode d2) {
     	node1=d1; node2=d2;
-    	node1.setAffectedByGravity(false);
-    	node2.setAffectedByGravity(false);
+    	//node1.setAffectedByGravity(true);
+    	//node2.setAffectedByGravity(true);
     	if(joint==null)  {
     		joint = world.getPhysicsSpace().createJoint();
     		joint.attach(node1,node2);
     		axis = joint.createTranslationalAxis();
     		axis.setDirection(new Vector3f(-1,0,0));
-    		setControlParameters(1f,0.05f,0f,0.11f); //default parameters
+    		setControlParameters(0.1f,0.05f,0f,0.11f); //default parameters
     	}
     }
     
@@ -70,7 +70,7 @@ public class JMELinearActuator implements PhysicsActuator {
      * @return encoder value in percent
      */
     public float getEncoderValue() {
-    	return (axis.getPositionMaximum()-axis.getPosition())/(axis.getPositionMaximum()-axis.getPositionMinimum());
+    	return 1f-(axis.getPositionMaximum()-axis.getPosition())/(axis.getPositionMaximum()-axis.getPositionMinimum());
     }
 
 	/**
@@ -80,17 +80,17 @@ public class JMELinearActuator implements PhysicsActuator {
 	public boolean activate(float goal) { 
 		float error = goal-getEncoderValue();
 		if(error>epsilon) {
-			axis.setDesiredVelocity(-maxVelocity);
+			axis.setDesiredVelocity(maxVelocity);
 		}
 		else if(error<-epsilon) {
-			axis.setDesiredVelocity(maxVelocity);
+			axis.setDesiredVelocity(-maxVelocity);
 		}
 		else {
 			axis.setDesiredVelocity(0);
-			System.out.println("Already There pos = "+getEncoderValue()+" error = "+error);
+			//System.out.println("Already There pos = "+getEncoderValue()+" error = "+error);
 		}
 		//System.out.println("acc = "+joint.getAxes().get(0).getAvailableAcceleration());
-		System.out.println("pos = "+joint.getAxes().get(0).getPosition()+" error "+error);
+		//System.out.println("goal = "+goal+" pos = "+getEncoderValue()+" error "+error);
 		return false;
 	}
 

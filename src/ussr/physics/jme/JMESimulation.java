@@ -232,8 +232,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
             else {
             	//create ATRON
             	if(robot.getDescription().getModuleGeometry().size()!=2) throw new RuntimeException("Not an ATRON");
-            	if(!(robot.getDescription().getModuleGeometry().get(0) instanceof AtronShape)) throw new RuntimeException("Not an ATRON");
-
+				if(!(robot.getDescription().getModuleGeometry().get(0) instanceof AtronShape)) throw new RuntimeException("Not an ATRON");
             	AtronShape northShape = (AtronShape) robot.getDescription().getModuleGeometry().get(0);
             	AtronShape southShape = (AtronShape) robot.getDescription().getModuleGeometry().get(1);
             	
@@ -473,6 +472,12 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
      */
     @Override
     protected final void update( float interpolation ) {
+    	/*if(true) {
+    		timer.update();
+    		System.out.println("Frame Rate = "+(int) timer.getFrameRate());
+    		//System.
+    		return;
+    	}*/
         // disable input as we want it to be updated _after_ physics
         // in your application derived from BaseGame you can simply make the call to InputHandler.update later
         // in your game loop instead of this disabling and reenabling
@@ -1036,9 +1041,9 @@ public RenderState color2jme(Color color) {
 		                node.getLocalTranslation().set(p.getPosition().getX(), p.getPosition().getY(), p.getPosition().getZ());
 		                node.setLocalRotation(p.getRotation().getRotation());
 		                node.clearDynamics();
-		                Vector3f centerOfMass = new Vector3f();
+		                /*Vector3f centerOfMass = new Vector3f();
 		                node.getCenterOfMass(centerOfMass);
-	                    System.out.println("position of masse = "+centerOfMass+" for half an ATRON");		                
+	                    System.out.println("position of masse = "+centerOfMass+" for half an ATRON");*/		                
                 	}
                 }
             }
@@ -1065,6 +1070,9 @@ public RenderState color2jme(Color color) {
 
         public void setPause(boolean pause) {
             this.pause = pause;
+        }
+        public boolean isPaused() {
+            return pause;
         }
 
 

@@ -5,6 +5,7 @@
  */
 package ussr.robotbuildingblocks;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -186,7 +187,10 @@ public class WorldDescription extends Description {
    public List<ModulePosition> getModulePositions() {
        return modules;
    }
-
+   public void setModulePositions(ArrayList<ModulePosition> pos) {
+	   this.modules = pos;
+   }
+   
    /**
     * @param modules the modules to set
     */
@@ -201,5 +205,4 @@ public class WorldDescription extends Description {
    public List<Connection> getConnections() {
        return connections;
    }
-
 }
