@@ -219,7 +219,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
             final Module module = new Module();
             module.setController(robot.createController());
             modules.add(module);
-            if(false) {
+            if(robot.getDescription().getModuleGeometry().size()==1) {
 	            // Create central module node
 	            DynamicPhysicsNode moduleNode = this.getPhysicsSpace().createDynamicNode();            
 	            int j=0;
@@ -317,6 +317,8 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
  
                 initGame();
 
+                readWorldParameters();
+
                 // main loop
                 while (!finished && !display.isClosing()) {
                 	
@@ -348,7 +350,15 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
             display.reset();
         quit();
     }
+
+    private static final float FAROUT_DISTANCE = 50f;
     
+    private void readWorldParameters() {
+        if(worldDescription.getCameraPosition()==WorldDescription.CameraPosition.FAROUT) {
+            cam.setLocation(cam.getLocation().add(0, 0, FAROUT_DISTANCE));
+        }
+    }
+
     protected void assignKeys()
     {       
     	/** Assign key P to action "toggle_pause". */

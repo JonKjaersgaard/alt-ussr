@@ -40,6 +40,12 @@ public abstract class GenericSimulation {
     private static boolean connectorsAreActive = false;
 
     protected abstract Robot getRobot();
+
+    /**
+     * Adapt description of simulation world, hook method that subclasses can override
+     * @param world the world description to adapt
+     */
+    protected void adaptWorldToSimulationHook(WorldDescription world) { ; }
     
     public void runSimulation(WorldDescription world, boolean startPaused) {
         //System.out.println("java.library.path="+System.getProperty("java.library.path"));
@@ -47,6 +53,7 @@ public abstract class GenericSimulation {
         final PhysicsSimulation simulation = PhysicsFactory.createSimulator();
         simulation.setRobot(getRobot());
         if(world==null) world = createWorld();
+        adaptWorldToSimulationHook(world);
         simulation.setWorld(world);
         simulation.setPause(startPaused);
 
@@ -74,8 +81,8 @@ public abstract class GenericSimulation {
      */
     private static WorldDescription createWorld() {
         WorldDescription world = new WorldDescription();
-        world.setNumberOfModules(7);
-        world.setPlaneSize(25);
+        world.setNumberOfModules(10);
+        world.setPlaneSize(250);
         world.setObstacles(new VectorDescription[] {
                 new VectorDescription(0,-2.5f,0),
                 new VectorDescription(5,-1.5f,2)
