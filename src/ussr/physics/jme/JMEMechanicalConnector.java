@@ -94,20 +94,7 @@ public class JMEMechanicalConnector implements JMEConnector {
      * @see ussr.physics.jme.JMEConnector#connectTo(ussr.physics.PhysicsConnector)
      */
     public synchronized boolean connect() {
-        if(this.lastProximityConnector==null 
-                || node.getLocalTranslation().distance(this.lastProximityConnector.node.getLocalTranslation())>maxConnectDistance)
-            return false;
-        JMEMechanicalConnector other = this.lastProximityConnector;
-        if(this.isConnected()||other.isConnected()) { 
-            PhysicsLogger.logNonCritical("Attempted connecting two connectors of which at least one was already connected.");
-            return false;
-        }
-        Joint join = world.getPhysicsSpace().createJoint();
-        join.attach(this.getNode(),other.getNode());
-        world.dynamicJoints.add(join);
-        this.connectedConnector = other;
-        other.connectedConnector = this;
-        return true;
+        throw new Error("Should not call connect() on mechanical connector");
     }
 
     /* (non-Javadoc)
