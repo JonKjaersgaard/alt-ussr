@@ -20,6 +20,10 @@ import java.util.List;
  */
 public class WorldDescription extends Description {
 
+    public static enum CameraPosition {
+        DEFAULT, FAROUT;
+    }
+    
     public static class Connection {
         private String module1, module2;
         private int connector1, connector2;
@@ -131,6 +135,11 @@ public class WorldDescription extends Description {
     private List<Connection> connections = Collections.emptyList();
     
     /**
+     * The initial position of the camera
+     */
+    private CameraPosition cameraPosition = CameraPosition.DEFAULT;
+    
+    /**
      * Get the number of modules initially placed in the simulation
      * @return number of initial modules
      */
@@ -205,4 +214,12 @@ public class WorldDescription extends Description {
    public List<Connection> getConnections() {
        return connections;
    }
+   public void setCameraPosition(CameraPosition position) {
+       cameraPosition = position;
+   }
+   
+   public CameraPosition getCameraPosition() {
+       return cameraPosition;
+   }
+
 }
