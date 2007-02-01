@@ -46,6 +46,6 @@ public class StickyBotSimulation1 extends GenericSimulation {
 
    @Override
    protected void adaptWorldToSimulationHook(WorldDescription world) {
-     //  world.setCameraPosition(WorldDescription.CameraPosition.FAROUT);
+       world.setCameraPosition(WorldDescription.CameraPosition.FAROUT);
    }
 }

@@ -28,7 +28,7 @@ public class StickyBot implements Robot {
      * @see ussr.robotbuildingblocks.Robot#getDescription()
      */
     public RobotDescription getDescription() {
-    	float scale = 0.1f;
+    	float scale = 1f;
         RobotDescription description = new RobotDescription();
         description.setModuleGeometry(new GeometryDescription[] { new SphereShape(scale*2) }); 
         description.setConnectorGeometry(new GeometryDescription[] { new SphereShape(scale*1) });

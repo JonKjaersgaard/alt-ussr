@@ -398,9 +398,9 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     private static final float FAROUT_DISTANCE = 50f;
     
     private void readWorldParameters() {
-    /*    if(worldDescription.getCameraPosition()==WorldDescription.CameraPosition.FAROUT) {
+        if(worldDescription.getCameraPosition()==WorldDescription.CameraPosition.FAROUT) {
             cam.setLocation(cam.getLocation().add(0, 0, FAROUT_DISTANCE));
-        }*/
+        }
     }
 
     protected void assignKeys()
