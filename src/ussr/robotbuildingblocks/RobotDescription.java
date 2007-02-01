@@ -170,4 +170,16 @@ public class RobotDescription extends Description {
     public void setStructure(PhysicsCompositionStructure structure) {
         this.structure = structure;
     }
+
+    private String type;
+    /**
+     * Type of robot
+     * @return
+     */
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 }

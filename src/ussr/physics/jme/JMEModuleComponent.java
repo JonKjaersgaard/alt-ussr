@@ -67,8 +67,9 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         world.associateGeometry(moduleNode,shape);
         JMEDescriptionHelper.setColor(world,shape,element.getColor());
         // Finalize
-        moduleNode.generatePhysicsGeometry(true);
-        world.getRootNode().attachChild( moduleNode );
+       	moduleNode.generatePhysicsGeometry(element.getAccurateCollisionDetection());
+
+       	world.getRootNode().attachChild( moduleNode );
         
         moduleNode.computeMass();
         /*moduleNode.setModelBound(new BoundingSphere(0.1f,new Vector3f()));

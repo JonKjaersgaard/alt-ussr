@@ -26,6 +26,8 @@ import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
 import ussr.robotbuildingblocks.AtronShape;
+import ussr.robotbuildingblocks.ConeShape;
+import ussr.robotbuildingblocks.CylinderShape;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RobotDescription;
@@ -230,38 +232,81 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
 	            }
             }
             else {
-            	//create ATRON
-            	if(robot.getDescription().getModuleGeometry().size()!=2) throw new RuntimeException("Not an ATRON");
-				if(!(robot.getDescription().getModuleGeometry().get(0) instanceof AtronShape)) throw new RuntimeException("Not an ATRON");
-            	AtronShape northShape = (AtronShape) robot.getDescription().getModuleGeometry().get(0);
-            	AtronShape southShape = (AtronShape) robot.getDescription().getModuleGeometry().get(1);
-            	
-           	   	DynamicPhysicsNode northNode = this.getPhysicsSpace().createDynamicNode();
-           	   	DynamicPhysicsNode southNode = this.getPhysicsSpace().createDynamicNode();
-           	   	
-	            JMEModuleComponent northComponent = new JMEModuleComponent(this,robot,northShape,"module#"+Integer.toString(i)+".north",module,northNode);
-	            JMEModuleComponent southComponent = new JMEModuleComponent(this,robot,southShape,"module#"+Integer.toString(i)+".south",module,southNode);
-	            
-	            
-	            
-                module.addComponent(northComponent);
-                module.addComponent(southComponent); //hvad skal håndteres ved fx placering af moduler?
+            	if(robot.getDescription().getType()=="ATRON") {
+	            	//create ATRON
+	            	if(robot.getDescription().getModuleGeometry().size()!=2) throw new RuntimeException("Not an ATRON");
+					
+	            	AtronShape northShape = (AtronShape) robot.getDescription().getModuleGeometry().get(0);
+	            	AtronShape southShape = (AtronShape) robot.getDescription().getModuleGeometry().get(1);
+	            	
+	           	   	DynamicPhysicsNode northNode = this.getPhysicsSpace().createDynamicNode();
+	           	   	DynamicPhysicsNode southNode = this.getPhysicsSpace().createDynamicNode();
+	           	   	
+		            JMEModuleComponent northComponent = new JMEModuleComponent(this,robot,northShape,"module#"+Integer.toString(i)+".north",module,northNode);
+		            JMEModuleComponent southComponent = new JMEModuleComponent(this,robot,southShape,"module#"+Integer.toString(i)+".south",module,southNode);
+		            
+		            
+		            
+	                module.addComponent(northComponent);
+	                module.addComponent(southComponent); //hvad skal håndteres ved fx placering af moduler?
+	
+	                //indsæt Actuator her istedet for
+	                //JMERotationalActuator centerActuator = new JMERotationalActuator(this,"center");
+	                JMELinearActuator centerActuator = new JMELinearActuator(this,"center");
+	                
+	                module.addActuator(new Actuator(centerActuator));
+	                
+	                centerActuator.attach(northNode,southNode);
+	                //centerActuator.setControlParameters(100, 0.2f, 0, 0); //100N, 0.2 rotations/s, no rotational limits
+	                
+	                /*Joint centerJoint = getPhysicsSpace().createJoint();
+	                centerJoint.createRotationalAxis();
+	                centerJoint.attach(northNode,southNode);*/
+	                
+	                moduleComponents.add(northComponent);
+	                moduleComponents.add(southComponent);
+            	}
+            	else if(robot.getDescription().getType()=="OdinMuscle") {
+	            	//create OdinMuscle
+            		System.out.println("Creating Odin Muscle");
+					
+	            	CylinderShape externalCylinderShape = (CylinderShape) robot.getDescription().getModuleGeometry().get(0);
+	            	CylinderShape internalCylinderShape = (CylinderShape) robot.getDescription().getModuleGeometry().get(1);
+	            	ConeShape externalConeShape = (ConeShape) robot.getDescription().getModuleGeometry().get(2);
+	            	ConeShape internalConeShape = (ConeShape) robot.getDescription().getModuleGeometry().get(3);
+	            	
+	           	   	DynamicPhysicsNode externalNode = this.getPhysicsSpace().createDynamicNode();
+	           	   	DynamicPhysicsNode internalNode = this.getPhysicsSpace().createDynamicNode();
+	           	   	
+		            JMEModuleComponent externalComponent = new JMEModuleComponent(this,robot,externalCylinderShape,"module#"+Integer.toString(i)+".north",module,externalNode);
+		            JMEModuleComponent externalCone = new JMEModuleComponent(this,robot,externalConeShape,"module#"+Integer.toString(i)+".north",module,externalNode);
 
-                //indsæt Actuator her istedet for
-                //JMERotationalActuator centerActuator = new JMERotationalActuator(this,"center");
-                JMELinearActuator centerActuator = new JMELinearActuator(this,"center");
-                
-                module.addActuator(new Actuator(centerActuator));
-                
-                centerActuator.attach(northNode,southNode);
-                //centerActuator.setControlParameters(100, 0.2f, 0, 0); //100N, 0.2 rotations/s, no rotational limits
-                
-                /*Joint centerJoint = getPhysicsSpace().createJoint();
-                centerJoint.createRotationalAxis();
-                centerJoint.attach(northNode,southNode);*/
-                
-                moduleComponents.add(northComponent);
-                moduleComponents.add(southComponent);
+		            JMEModuleComponent internalComponent = new JMEModuleComponent(this,robot,internalCylinderShape,"module#"+Integer.toString(i)+".south",module,internalNode);
+		            JMEModuleComponent internalCone = new JMEModuleComponent(this,robot,internalConeShape,"module#"+Integer.toString(i)+".south",module,internalNode);
+		            
+	                module.addComponent(externalComponent);
+	                module.addComponent(externalCone);
+	                module.addComponent(internalComponent); 
+	                module.addComponent(internalCone); 
+	                
+	
+	                //indsæt Actuator her istedet for
+	                //JMERotationalActuator centerActuator = new JMERotationalActuator(this,"center");
+	                JMELinearActuator centerActuator = new JMELinearActuator(this,"center");
+	                
+	                module.addActuator(new Actuator(centerActuator));
+	                
+	                centerActuator.attach(externalNode,internalNode);
+	                centerActuator.setControlParameters(0.01f,0.05f,0f,0.06f); //odin muscle parametre
+	                //centerActuator.setControlParameters(100, 0.2f, 0, 0); //100N, 0.2 rotations/s, no rotational limits
+	                
+	                /*Joint centerJoint = getPhysicsSpace().createJoint();
+	                centerJoint.createRotationalAxis();
+	                centerJoint.attach(northNode,southNode);*/
+	                
+	                moduleComponents.add(externalComponent);
+	                moduleComponents.add(internalComponent);
+            	}
                 
                 
             }
@@ -353,9 +398,9 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     private static final float FAROUT_DISTANCE = 50f;
     
     private void readWorldParameters() {
-        if(worldDescription.getCameraPosition()==WorldDescription.CameraPosition.FAROUT) {
+    /*    if(worldDescription.getCameraPosition()==WorldDescription.CameraPosition.FAROUT) {
             cam.setLocation(cam.getLocation().add(0, 0, FAROUT_DISTANCE));
-        }
+        }*/
     }
 
     protected void assignKeys()

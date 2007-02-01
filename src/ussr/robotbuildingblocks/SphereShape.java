@@ -26,6 +26,11 @@ public class SphereShape extends Description implements GeometryDescription {
     */    
     private VectorDescription translation;
     
+    /** 
+     * local rotation of the sphere 
+     */    
+    private RotationDescription rotation;
+    
     /**
      * Color of the sphere
      */
@@ -40,17 +45,24 @@ public class SphereShape extends Description implements GeometryDescription {
     public SphereShape(float radius, VectorDescription translation) { 
 		this.radius = radius; 
 		this.translation = translation;
+		this.rotation = new RotationDescription(0f,0f,0f);
     }
-
+    public SphereShape(float radius, VectorDescription translation, RotationDescription rotation) { 
+		this.radius = radius; 
+		this.translation = translation;
+		this.rotation = rotation;
+    }
     
     public SphereShape(float radius) { 
     	this.radius = radius; 
     	this.translation = new VectorDescription(0f,0f,0f);
+    	this.rotation = new RotationDescription(0f,0f,0f);
     }
 
     public SphereShape( VectorDescription translation ) { 
     	this.translation = translation;
     	this.radius = 1;
+    	this.rotation = new RotationDescription(0f,0f,0f);
     }
 
     
@@ -60,6 +72,7 @@ public class SphereShape extends Description implements GeometryDescription {
      */
     public float getRadius() { return radius; }
     public VectorDescription getTranslation() { return translation; }
+    public RotationDescription getRotation() { return rotation; }
 
 
     public void setColor(Color color) {
@@ -69,4 +82,20 @@ public class SphereShape extends Description implements GeometryDescription {
     public Color getColor() {
         return color;
     }
+
+
+    private boolean accurateCD = false;
+    /**
+     * get wether or not to use accurate triangle based collision detection
+     */
+	public boolean getAccurateCollisionDetection() {
+		return accurateCD;
+	}
+
+	/**
+     * set wether or not to use accurate triangle based collision detection
+     */
+	public void setAccurateCollisionDetection(boolean accurateCD) {
+		this.accurateCD = accurateCD;
+	}
 }

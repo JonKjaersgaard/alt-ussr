@@ -9,7 +9,7 @@ import java.awt.Color;
 
 
 /**
- * A description of a sphere geometry, currently only includes a radius.
+ * A description of a atron half geometry, currently only includes a radius.
  * TODO: add position and perhaps also other properties
  * 
  * @author ups
@@ -23,15 +23,27 @@ public class AtronShape extends Description implements GeometryDescription {
     private float radius;
     private boolean north;
     
+    /** 
+     * local translation of the atron half 
+     */    
+     private VectorDescription translation;
+     
+     /** 
+      * local rotation of the atron half 
+      */    
+     private RotationDescription rotation;
+    
     /**
      * Create a description of a sphere geometry, passing the radius of the
      * sphere as a parameter (no other parameters supported currently)
      * @param radius the radius of the sphere
      * @param north 
      */
-    public AtronShape(float radius, boolean north) { 
+    public AtronShape(float radius, boolean north, VectorDescription translation, RotationDescription rotation) { 
     	this.radius = radius; 
     	setNorth(north); 
+    	this.translation = translation;
+		this.rotation = rotation;
     }
     
     /**
@@ -57,4 +69,21 @@ public class AtronShape extends Description implements GeometryDescription {
     public boolean isNorth() {
     	return north;
     }
+    public VectorDescription getTranslation() { return translation; }
+    public RotationDescription getRotation() { return rotation; }
+    
+    private boolean accurateCD = false;
+    /**
+     * get wether or not to use accurate triangle based collision detection
+     */
+	public boolean getAccurateCollisionDetection() {
+		return accurateCD;
+	}
+
+	/**
+     * set wether or not to use accurate triangle based collision detection
+     */
+	public void setAccurateCollisionDetection(boolean accurateCD) {
+		this.accurateCD = accurateCD;
+	}
 }

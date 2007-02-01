@@ -16,4 +16,8 @@ import java.awt.Color;
 public interface GeometryDescription {
     public void setColor(Color color);
     public Color getColor();
+	public boolean getAccurateCollisionDetection();
+	public void setAccurateCollisionDetection(boolean accurateCD);
+	public VectorDescription getTranslation();
+	public RotationDescription getRotation();
 }

@@ -61,6 +61,7 @@ public class JMELinearActuator implements PhysicsActuator {
     		joint.attach(node1,node2);
     		axis = joint.createTranslationalAxis();
     		axis.setDirection(new Vector3f(-1,0,0));
+    		axis.setDesiredVelocity(0);
     		setControlParameters(0.1f,0.05f,0f,0.11f); //default parameters
     	}
     }
@@ -77,18 +78,14 @@ public class JMELinearActuator implements PhysicsActuator {
 	 * Make the actuator rotate towards a goal [0-1] percent of fully expanded 
 	 * @see ussr.model.PhysicsActuator#activate(float)
 	 */
-	public boolean activate(float goal) { 
+	public boolean activate(float goal) {
+		if(Float.isNaN(axis.getPosition())) {
+			//System.out.println("Actuator is not yet setup!");
+			return false;
+		}
 		float error = goal-getEncoderValue();
-		if(error>epsilon) {
-			axis.setDesiredVelocity(maxVelocity);
-		}
-		else if(error<-epsilon) {
-			axis.setDesiredVelocity(-maxVelocity);
-		}
-		else {
-			axis.setDesiredVelocity(0);
-			//System.out.println("Already There pos = "+getEncoderValue()+" error = "+error);
-		}
+		//System.out.println("error = "+error+" goal="+goal);
+		axis.setDesiredVelocity(maxVelocity*error);
 		//System.out.println("acc = "+joint.getAxes().get(0).getAvailableAcceleration());
 		//System.out.println("goal = "+goal+" pos = "+getEncoderValue()+" error "+error);
 		return false;

@@ -16,20 +16,25 @@ import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
 import ussr.model.Module;
 import ussr.robotbuildingblocks.AtronShape;
+import ussr.robotbuildingblocks.ConeShape;
+import ussr.robotbuildingblocks.CylinderShape;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.ReceivingDevice;
+import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.SphereShape;
 import ussr.robotbuildingblocks.TransmissionDevice;
 import ussr.robotbuildingblocks.VectorDescription;
 
+import com.jme.bounding.BoundingBox;
 import com.jme.bounding.BoundingSphere;
 import com.jme.math.Matrix3f;
-import com.jme.math.Vector3f;
 import com.jme.scene.Node;
 import com.jme.scene.SceneElement;
 import com.jme.scene.SharedMesh;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
+import com.jme.scene.shape.Cone;
+import com.jme.scene.shape.Cylinder;
 import com.jme.scene.shape.Sphere;
 import com.jme.scene.state.RenderState;
 import com.jme.util.export.binary.BinaryImporter;
@@ -44,27 +49,39 @@ import com.jmex.physics.DynamicPhysicsNode;
  */
 public class JMEDescriptionHelper {
 
-    public static TriMesh createShape(DynamicPhysicsNode moduleNode, String name,GeometryDescription element) {
+    public static TriMesh createShape(DynamicPhysicsNode moduleNode, String name, GeometryDescription element) {
     	TriMesh shape = null;
         if(element instanceof SphereShape) {
-        	Sphere meshSphere = new Sphere( name, 9, 9, ((SphereShape)element).getRadius()); 
-        	VectorDescription translation = ((SphereShape)element).getTranslation();
-        	meshSphere.getLocalTranslation().set( translation.getX(), translation.getY(), translation.getZ() );
-        	meshSphere.setModelBound( new BoundingSphere() );
-        	meshSphere.updateModelBound();
-        	shape = meshSphere;
-        	moduleNode.attachChild(shape);
+        	shape = new Sphere( name, 9, 9, ((SphereShape)element).getRadius()); 
+        	//VectorDescription translation = ((SphereShape)element).getTranslation();
+        	//shape.getLocalTranslation().set( translation.getX(), translation.getY(), translation.getZ() );
+        	shape.setModelBound( new BoundingSphere() );
         }
         else if(element instanceof AtronShape) {
         	AtronShape half = (AtronShape) element;
         	shape = constructAtronModel(name, half);
-        	moduleNode.attachChild(shape);
         	moduleNode.setModelBound(new BoundingSphere());
-        	moduleNode.updateModelBound();
-        	moduleNode.generatePhysicsGeometry();
+        }
+        else if(element instanceof ConeShape) {
+        	shape = new Cone(name,8, 8, ((ConeShape)element).getRadius(),((ConeShape)element).getHeight(),true); 
+        	shape.setModelBound( new BoundingBox() );
+        }
+        else if(element instanceof CylinderShape) {
+        	shape = new Cylinder(name, 8, 8, ((CylinderShape)element).getRadius(),((CylinderShape)element).getHeight(),true); 
+        //	VectorDescription translation = ((CylinderShape)element).getTranslation();
+        //	shape.getLocalTranslation().set( translation.getX(), translation.getY(), translation.getZ() );
+        	shape.setModelBound( new BoundingBox() );
         }
         else throw new Error("Only sphere and atron geometries supported for now");
         
+        VectorDescription translation = element.getTranslation();
+    	shape.getLocalTranslation().set( translation.getX(), translation.getY(), translation.getZ() );
+    	
+    	RotationDescription rotation = element.getRotation();
+    	shape.getLocalRotation().set(rotation.getRotation());
+    	
+        shape.updateModelBound();
+    	moduleNode.attachChild(shape);
         return shape;
     }
     
@@ -102,15 +119,15 @@ public class JMEDescriptionHelper {
 		Matrix3f rotMat = new Matrix3f(); //rotate north 180 degree
 		if(half.isNorth()) {
 			//atronMesh.setLocalTranslation(new Vector3f(0,0,-0.01f));
-			rotMat = new Matrix3f(1, 0, 0, 0, -1, 0, 0, 0, -1); //rotate north 180 degree
+			//rotMat = new Matrix3f(1, 0, 0, 0, -1, 0, 0, 0, -1); //rotate north 180 degree
 		}
 		else {
 			//atronMesh.setLocalTranslation(new Vector3f(0,0,0.01f));
 		}
 		//rotate both 45 degree
-		rotMat = rotMat.mult(new Matrix3f(0.707107f, 0.707107f, 0.f, -0.707107f, 0.707107f, 0.f, 0.f, 0.f, 1.f));
+		//rotMat = rotMat.mult(new Matrix3f(0.707107f, 0.707107f, 0.f, -0.707107f, 0.707107f, 0.f, 0.f, 0.f, 1.f));
 		
-		atronMesh.setLocalRotation(rotMat);
+		//atronMesh.setLocalRotation(rotMat);
 		
 		//TriMesh atron = new TriMesh("Atron Node");
 		//connectors? - special atron nodes with connectors?
