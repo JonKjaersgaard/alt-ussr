@@ -52,4 +52,8 @@ public class VectorDescription extends Description {
     public float getZ() {
         return z;
     }
+
+	public float distance(VectorDescription p) {
+		return (float)Math.sqrt((p.x-x)*(p.x-x)+(p.y-y)*(p.y-y)+(p.z-z)*(p.z-z));
+	}
 }

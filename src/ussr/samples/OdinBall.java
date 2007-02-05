@@ -16,33 +16,33 @@ public class OdinBall extends Odin {
 	public RobotDescription getDescription() {
 		RobotDescription description = new RobotDescription();
 		description.setType("OdinBall");
-        SphereShape ball = new SphereShape(0.05f); 
+        SphereShape ball = new SphereShape(0.025f); 
         ball.setColor(Color.RED);
 	    description.setModuleGeometry(new GeometryDescription[] {ball});
 
 	    SphereShape connector = new SphereShape(0.005f);
         connector.setColor(Color.WHITE);
         description.setConnectorGeometry(new GeometryDescription[] { connector });
-        float unit = (float) (0.045f/Math.sqrt(2)); 
-        description.setConnectorPositions(new VectorDescription[] { //hvad er nord og syd - hvad er 1-7?
-        		new VectorDescription(-0.031819806f, -0.031819806f, 0.0f),
-        		new VectorDescription(-0.031819806f, 0.0f, -0.031819806f),
-        		new VectorDescription(-0.031819806f, 0.0f, 0.031819806f),
-        		new VectorDescription(-0.031819806f, 0.031819806f, 0.0f),
-        		new VectorDescription(0.0f, -0.031819806f, -0.031819806f),
-        		new VectorDescription(0.0f, -0.031819806f, 0.031819806f),
-        		new VectorDescription(0.0f, 0.031819806f, -0.031819806f),
-        		new VectorDescription(0.0f, 0.031819806f, 0.031819806f),
-        		new VectorDescription(0.031819806f, -0.031819806f, 0.0f),
-        		new VectorDescription(0.031819806f, 0.0f, -0.031819806f),
-        		new VectorDescription(0.031819806f, 0.0f, 0.031819806f),
-        		new VectorDescription(0.031819806f, 0.031819806f, 0.0f),
+        float unit = (float) (0.025f/Math.sqrt(2)); 
+        description.setConnectorPositions(new VectorDescription[] { //hvordan skal de tælles?
+        		new VectorDescription(-1*unit, -1*unit, 0*unit),
+        		new VectorDescription(-1*unit, 0*unit, -1*unit),
+        		new VectorDescription(-1*unit, 0*unit, 1*unit),
+        		new VectorDescription(-1*unit, 1*unit, 0*unit),
+        		new VectorDescription(0*unit, -1*unit, -1*unit),
+        		new VectorDescription(0*unit, -1*unit, 1*unit),
+        		new VectorDescription(0*unit, 1*unit, -1*unit),
+        		new VectorDescription(0*unit, 1*unit, 1*unit),
+        		new VectorDescription(1*unit, -1*unit, 0*unit),
+        		new VectorDescription(1*unit, 0*unit, -1*unit),
+        		new VectorDescription(1*unit, 0*unit, 1*unit),
+        		new VectorDescription(1*unit, 1*unit, 0*unit),
         });
         description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR );
         //description.setMaxConnectionDistance(6);
         return description;
 	}
 	public Controller createController() {
-		return new OdinSampleController1();
+		return new OdinSampleController1("OdinBall");
 	}
 }

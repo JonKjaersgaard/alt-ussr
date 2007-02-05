@@ -40,7 +40,7 @@ public class OdinMuscle extends Odin {
 	    SphereShape connector = new SphereShape(0.005f);
         connector.setColor(Color.WHITE);
         description.setConnectorGeometry(new GeometryDescription[] { connector });
-        float unit = (float) (0.045f/Math.sqrt(2)); 
+        float unit = (float) (0.06f/2+0.035f); 
         description.setConnectorPositions(new VectorDescription[] { //hvad er nord og syd - hvad er 1-7?
         		new VectorDescription(-unit, 0, 0),
         		new VectorDescription(unit, 0, 0),
@@ -50,6 +50,6 @@ public class OdinMuscle extends Odin {
         return description;
 	}
 	public Controller createController() {
-		return new OdinSampleController1();
+		return new OdinSampleController1("OdinMuscle");
 	}
 }

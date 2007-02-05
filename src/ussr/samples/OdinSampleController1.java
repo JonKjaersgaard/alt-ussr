@@ -17,12 +17,20 @@ import ussr.model.ControllerImpl;
  */
 public class OdinSampleController1 extends ControllerImpl {
 
-    /**
+	String type;
+    public OdinSampleController1(String type) {
+    	this.type =type; 
+	}
+	/**
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
-
-        while(true) {
+    	if(type=="OdinMuscle") muscleControl();
+    	if(type=="OdinBall") ballControl();
+        
+	}
+    public void muscleControl() {
+    	while(true) {
         	try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -30,7 +38,17 @@ public class OdinSampleController1 extends ControllerImpl {
             }
             rotate(1);
         }
-	}
+    }
+    public void ballControl() {
+    	while(true) {
+        	try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                throw new Error("unexpected");
+            }
+    	}
+    }
+    
 	float t=0;
 	public void rotate(int dir) {
 		module.getActuators().get(0).activate((float)(Math.sin(t)+1)/2f);

@@ -33,12 +33,19 @@ public interface PhysicsSimulation {
     public void addInputHandler(String keyName, Handler handler);
 
     /**
-     * Define the robot to be used in this simulation, including visual appearance,
+     * Define the robots to be used in this simulation, including visual appearance,
      * physical characteristics, and controller functionality.
-     * @param bot the description of the robot used in this simulation
+     * @param bot the one description of the robot used in this simulation
      */
     public void setRobot(Robot bot);
 
+    /**
+     * Define the robots to be used in this simulation, including visual appearance,
+     * physical characteristics, and controller functionality.
+     * @param bot the description of one or more robots used in this simulation
+     */
+    public void setRobot(Robot bot, String type);
+    
     /**
      * Define the world in which the robots are simulation, including starting configuration
      * of the robot and physical obstacles.

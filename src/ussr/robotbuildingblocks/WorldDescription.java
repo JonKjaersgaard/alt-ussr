@@ -65,6 +65,7 @@ public class WorldDescription extends Description {
 
     public static class ModulePosition {
         private String name;
+        private String type;
         private VectorDescription position;
         private RotationDescription rotation;
 
@@ -75,10 +76,24 @@ public class WorldDescription extends Description {
          */
         public ModulePosition(String name, VectorDescription position, RotationDescription rotation) {
             this.name = name;
+            this.type = "default";
             this.position = position;
             this.rotation = rotation;
         }
-
+        /**
+         * 
+         * @param name name of module
+         * @param type type of module linke "atron", "odin", etc
+         * @param position position of module in the world
+         * @param rotation rotation of module in the world
+         */
+        public ModulePosition(String name, String type, VectorDescription position, RotationDescription rotation) {
+            this.name = name;
+            this.type = type;
+            this.position = position;
+            this.rotation = rotation;
+        }
+        
         /**
          * @return the position
          */
@@ -112,6 +127,12 @@ public class WorldDescription extends Description {
          */
         public String getName() {
             return name;
+        }
+        /**
+         * @return the type
+         */
+        public String getType() {
+            return type;
         }
     }
     

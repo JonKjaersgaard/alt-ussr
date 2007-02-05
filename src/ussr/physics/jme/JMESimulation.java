@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -92,7 +93,8 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
 
     public Map<String, JMEConnector> connectorRegistry = new HashMap<String, JMEConnector>();
     public Set<Joint> dynamicJoints = new HashSet<Joint>();
-    private Robot robot;
+    //private Robot robot;
+    Hashtable<String,Robot> robots = new Hashtable<String,Robot>();
     private WorldDescription worldDescription;
     private List<JMEModuleComponent> moduleComponents = new ArrayList<JMEModuleComponent>();
     private List<Module> modules = new ArrayList<Module>();
@@ -215,10 +217,11 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
         for(int i=0; i<worldDescription.getObstacles().size();i++)
             obstacleBoxes.add(createBox());
         
-
         // Create modules
         for(int i=0; i<worldDescription.getNumberOfModules(); i++) {
             final Module module = new Module();
+            String robotType = (worldDescription.getModulePositions().size()>0)?worldDescription.getModulePositions().get(i).getType():"default";
+            Robot robot = robots.get(robotType);
             module.setController(robot.createController());
             modules.add(module);
             if(robot.getDescription().getModuleGeometry().size()==1) {
@@ -718,10 +721,12 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
         return input;
     }
 
-    public void setRobot(Robot bot) {
-        this.robot = bot;
+    public void setRobot(Robot bot) { //remove this method?
+    	robots.put("default",bot);
     }
-
+    public void setRobot(Robot bot, String type) {
+		robots.put(type, bot);
+	}
     public void setWorld(WorldDescription world) {
         this.worldDescription = world;        
     }
@@ -1092,11 +1097,12 @@ public RenderState color2jme(Color color) {
                 	}
                 }
             }
+            //String robotType = worldDescription.getModulePositions().get(0).getType();
+//            if(robots.get("default").getDescription().getConnectorType()!=RobotDescription.ConnectorType.MECHANICAL_CONNECTOR) {
+//                if(this.worldDescription.getConnections().size()>0) PhysicsLogger.log("Warning: connector initialization ignored");
+//                return;
+//            }
             // The following only works for mechanical connectors
-            if(robot.getDescription().getConnectorType()!=RobotDescription.ConnectorType.MECHANICAL_CONNECTOR) {
-                if(this.worldDescription.getConnections().size()>0) PhysicsLogger.log("Warning: connector initialization ignored");
-                return;
-            }
             // HARDCODED: assumes one physics per connector
             for(WorldDescription.Connection connection: this.worldDescription.getConnections()) {
                 Module m1 = registry.get(connection.getModule1());
@@ -1105,11 +1111,17 @@ public RenderState color2jme(Color color) {
                 int c2i = connection.getConnector2();
                 Connector c1 = m1.getConnectors().get(c1i);
                 Connector c2 = m2.getConnectors().get(c2i);
-                JMEMechanicalConnector jc1 = (JMEMechanicalConnector)c1.getPhysics().get(0);
-                JMEMechanicalConnector jc2 = (JMEMechanicalConnector)c2.getPhysics().get(0);
-                jc1.connectTo(jc2);
-                jc1.setConnectorColor(Color.cyan);
-                jc2.setConnectorColor(Color.cyan);
+                if((c1.getPhysics().get(0) instanceof JMEMechanicalConnector)&&(c2.getPhysics().get(0) instanceof JMEMechanicalConnector)) {
+                	JMEMechanicalConnector jc1 = (JMEMechanicalConnector)c1.getPhysics().get(0);
+                    JMEMechanicalConnector jc2 = (JMEMechanicalConnector)c2.getPhysics().get(0);
+                    jc1.connectTo(jc2);
+                    jc1.setConnectorColor(Color.cyan);
+                    jc2.setConnectorColor(Color.cyan);
+                	
+                }
+                else {
+                	PhysicsLogger.log("Warning: connector initialization ignored");
+                }
             }
         }
 
