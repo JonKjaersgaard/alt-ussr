@@ -16,7 +16,6 @@ import ussr.robotbuildingblocks.TransmissionDevice;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.RobotDescription.ConnectorType;
 
-import com.jme.bounding.BoundingSphere;
 import com.jme.math.Vector3f;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
@@ -32,6 +31,8 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
      * The world in which this module is being simulated
      */
     private JMESimulation world;
+    
+    private RobotDescription selfDesc;
 
     /**
      * The complete set of dynamic nodes representing this module
@@ -57,7 +58,7 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
     public JMEModuleComponent(JMESimulation world, Robot robot, GeometryDescription element, String name, Module module, DynamicPhysicsNode dynamicNode) {
         this.world = world;
         this.model = module;
-        RobotDescription selfDesc = robot.getDescription();
+        this.selfDesc = robot.getDescription();
         // Setup dynamic physics node
         moduleNode = dynamicNode;
         dynamicNodes.add(moduleNode);
@@ -66,16 +67,13 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         geometries.add(shape);
         world.associateGeometry(moduleNode,shape);
         JMEDescriptionHelper.setColor(world,shape,element.getColor());
-        // Finalize
-       	moduleNode.generatePhysicsGeometry(element.getAccurateCollisionDetection());
 
-       	world.getRootNode().attachChild( moduleNode );
+        // Finalize
+   		moduleNode.generatePhysicsGeometry(element.getAccurateCollisionDetection());
+   		moduleNode.computeMass(); //do we always want to do that?
+   		world.getRootNode().attachChild( moduleNode );       
         
-        moduleNode.computeMass();
-        /*moduleNode.setModelBound(new BoundingSphere(0.1f,new Vector3f()));
-        moduleNode.updateModelBound();
-        moduleNode.updateWorldBound();
-        moduleNode.updateRenderState();*/
+        
         // Create connectors
         for(VectorDescription p: selfDesc.getConnectorPositions()) {
             Vector3f position = new Vector3f(p.getX(), p.getY(), p.getZ());
@@ -89,8 +87,13 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         // Create communicators
         for(ReceivingDevice receiver: selfDesc.getReceivers())
             model.addReceivingDevice(JMEDescriptionHelper.createReceiver(model, receiver));
+            
     }
-
+    public void addConnector(String name,Vector3f position) {
+    	 JMEConnector connector = createConnector(world, name, position, selfDesc);
+         model.addConnector(new Connector(connector));
+         connectors.add(connector);
+    }
     /**
      * @param world
      * @param name

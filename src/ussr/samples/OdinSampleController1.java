@@ -5,7 +5,9 @@
  */
 package ussr.samples;
 
-import ussr.model.Connector;
+import java.util.Random;
+
+import sun.awt.windows.ThemeReader;
 import ussr.model.ControllerImpl;
 
 /**
@@ -16,27 +18,25 @@ import ussr.model.ControllerImpl;
  *
  */
 public class OdinSampleController1 extends ControllerImpl {
-
+	static Random rand = new Random(System.currentTimeMillis());
 	String type;
+    float timeOffset=0;
     public OdinSampleController1(String type) {
-    	this.type =type; 
-	}
+    	this.type =type;
+    	timeOffset = 100*rand.nextFloat();
+    }
 	/**
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
     	if(type=="OdinMuscle") muscleControl();
     	if(type=="OdinBall") ballControl();
-        
 	}
     public void muscleControl() {
     	while(true) {
-        	try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                throw new Error("unexpected");
-            }
-            rotate(1);
+    		float time = module.getSimulation().getTime()+timeOffset;
+			actuate((float)(Math.sin(time)+1)/2f);
+			Thread.yield();
         }
     }
     public void ballControl() {
@@ -48,11 +48,7 @@ public class OdinSampleController1 extends ControllerImpl {
             }
     	}
     }
-    
-	float t=0;
-	public void rotate(int dir) {
-		module.getActuators().get(0).activate((float)(Math.sin(t)+1)/2f);
-		t=t+0.1f;
-		//System.out.println("follow = "+(float)(Math.sin(t)+1)/2f);
+	public void actuate(float pos) {
+		module.getActuators().get(0).activate(pos);
 	}
 }

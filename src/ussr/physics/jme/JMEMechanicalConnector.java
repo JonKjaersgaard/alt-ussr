@@ -10,12 +10,11 @@ import ussr.physics.PhysicsLogger;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.RobotDescription;
 
-import com.jme.math.Matrix3f;
 import com.jme.math.Vector3f;
-import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
+import com.jmex.physics.RotationalJointAxis;
 
 public class JMEMechanicalConnector implements JMEConnector {
     /**
@@ -44,8 +43,14 @@ public class JMEMechanicalConnector implements JMEConnector {
         	mesh = JMEDescriptionHelper.createShape(connector, baseName+position.toString(), element);
             //world.connectorRegistry.put(mesh.getName(),this);
             mesh.getLocalTranslation().set( mesh.getLocalTranslation().add(position) );
+            
+            //mesh.getLocalTranslation().
+            //Quaternion q = module.getModuleNode().getLocalRotation();
+            //System.out.println("rotation="+component.getComponentGeometries().get(0).getLocalRotation());
+            //mesh.getLocalRotation().set();
             //mesh.setModelBound( new BoundingSphere() );
             //mesh.updateModelBound();
+            
             connector.attachChild( mesh );
             component.getComponentGeometries().add(mesh);
             world.associateGeometry(connector, mesh);
@@ -54,7 +59,7 @@ public class JMEMechanicalConnector implements JMEConnector {
         // Finalize
         //connector.generatePhysicsGeometry(true); //dont let connectors collide - too slow!
         world.getRootNode().attachChild( connector );
-        connector.computeMass();
+        //connector.computeMass();
         this.node = connector;
     }
     
@@ -117,9 +122,9 @@ public class JMEMechanicalConnector implements JMEConnector {
     public void setModel(Connector connector) {
         this.model = connector;        
     }
-	
+    private Joint connection;
     public void connectTo(JMEMechanicalConnector jc2) {
-    	System.out.println("Connecter me "+toString()+"to "+jc2.toString());
+    	/*System.out.println("Connecter me "+toString()+"to "+jc2.toString());
         world.getRootNode().unlockMeshes();
         DynamicPhysicsNode adopter = jc2.getNode();
         Vector3f nodeDistance = adopter.getLocalTranslation().subtract(this.node.getLocalTranslation());
@@ -136,9 +141,34 @@ public class JMEMechanicalConnector implements JMEConnector {
             //element.updateModelBound();
         }
         adopter.generatePhysicsGeometry();
-        adopter.computeMass();
-        this.connectedConnector = jc2;
-        jc2.connectedConnector = this;
+        adopter.computeMass();*/
+    	if(this.connectedConnector==null&& jc2.connectedConnector==null) {
+	    	connection = world.getPhysicsSpace().createJoint();
+	    	connection.attach(getNode(),jc2.getNode());
+	    	connection.setAnchor(node.getLocalRotation().mult(mesh.getLocalTranslation()));
+	    	
+	    	//RotationalJointAxis xAxis = connection.createRotationalAxis(); //xAxis.setDirection(new Vector3f(1,0,0));
+	    	//RotationalJointAxis yAxis = connection.createRotationalAxis(); //yAxis.setDirection(new Vector3f(0,1,0));
+	    	//RotationalJointAxis zAxis = connection.createRotationalAxis(); //zAxis.setDirection(new Vector3f(0,0,1));
+	    	//xAxis.setAvailableAcceleration(1000);
+	    	//yAxis.setAvailableAcceleration(1000);
+	    	//zAxis.setAvailableAcceleration(1000);
+	    	
+	    	//xAxis.setPositionMaximum(0); yAxis.setPositionMinimum(0);
+	    	//yAxis.setPositionMaximum(0); yAxis.setPositionMinimum(0);
+	    	//zAxis.setPositionMaximum(0); zAxis.setPositionMinimum(0);
+	    	
+	    	/*xAxis.setPositionMaximum((float)Math.PI/6); yAxis.setPositionMinimum((float)-Math.PI/6);
+	    	yAxis.setPositionMaximum((float)Math.PI/6); yAxis.setPositionMinimum((float)-Math.PI/6);
+	    	zAxis.setPositionMaximum((float)Math.PI/6); zAxis.setPositionMinimum((float)-Math.PI/6);*/
+	    	
+	    	//joint.setSpring(100000, 10);
+	        this.connectedConnector = jc2;
+	        jc2.connectedConnector = this;
+    	}
+    	else {
+    		System.out.println("Already connected");
+    	}
     }
     
     public void disconnect() {
@@ -168,5 +198,13 @@ public class JMEMechanicalConnector implements JMEConnector {
     	}
     	System.out.println("Done setting color for children");*/
 		
+	}
+	/**
+	 * Position relative to module
+	 * @return position
+	 */
+	public Vector3f getPos() {
+		Vector3f pos = node.getLocalRotation().mult(mesh.getLocalTranslation()).add(node.getLocalTranslation());
+		return pos;
 	}
 }

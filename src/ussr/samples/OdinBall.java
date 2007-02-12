@@ -20,7 +20,7 @@ public class OdinBall extends Odin {
         ball.setColor(Color.RED);
 	    description.setModuleGeometry(new GeometryDescription[] {ball});
 
-	    SphereShape connector = new SphereShape(0.005f);
+	    SphereShape connector = new SphereShape(0.001f);
         connector.setColor(Color.WHITE);
         description.setConnectorGeometry(new GeometryDescription[] { connector });
         float unit = (float) (0.025f/Math.sqrt(2)); 

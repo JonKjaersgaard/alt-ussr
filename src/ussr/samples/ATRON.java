@@ -7,6 +7,7 @@ package ussr.samples;
 
 import java.awt.Color;
 
+import ussr.model.Controller;
 import ussr.robotbuildingblocks.AtronShape;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.Robot;
@@ -55,14 +56,11 @@ public abstract class ATRON implements Robot {
         		/*new VectorDescription(  unit,  unit, -unit ), //north connector 0
         		new VectorDescription( -unit,  unit, -unit ), //north connector 1
         		new VectorDescription( -unit, -unit, -unit ), //north connector 2
-        		new VectorDescription(  unit, -unit, -unit ), //north connector 3*/
+        		new VectorDescription(  unit, -unit, -unit ), //north connector 3
         		new VectorDescription(  unit,  unit,  unit ), //south connector 4
         		new VectorDescription( -unit,  unit,  unit ), //south connector 5
         		new VectorDescription( -unit, -unit,  unit ), //south connector 6
-        		new VectorDescription(  unit, -unit,  unit ), //south connector 7
-        		
-        		
-        		
+        		new VectorDescription(  unit, -unit,  unit ), //south connector 7*/
         		
                 /*new VectorDescription( xypos, xypos, zpos ),
                 new VectorDescription( xypos, -xypos, zpos ),
@@ -77,6 +75,4 @@ public abstract class ATRON implements Robot {
         description.setMaxConnectionDistance(6);
         return description;
     }
-
-    
 }

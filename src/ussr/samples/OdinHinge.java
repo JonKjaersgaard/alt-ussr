@@ -11,14 +11,14 @@ import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.SphereShape;
 import ussr.robotbuildingblocks.VectorDescription;
 
-public class OdinMuscle extends Odin {
+public class OdinHinge extends Odin {
 
 	/**
 	 * A contractive rod with a connector in each end
 	 */
 	public RobotDescription getDescription() {
 		RobotDescription description = new RobotDescription();
-		description.setType("OdinMuscle");
+		description.setType("OdinHinge");
 		float pi = (float)Math.PI;
         CylinderShape cylinderExternal = new CylinderShape(0.035f/2f,0.06f,new VectorDescription(0,0,0), new RotationDescription(0,-pi/2,0));
         CylinderShape cylinderInternal = new CylinderShape(0.032f/2f,0.06f,new VectorDescription(0,0,0), new RotationDescription(0,-pi/2,0));

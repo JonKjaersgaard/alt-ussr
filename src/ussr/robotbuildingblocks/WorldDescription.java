@@ -34,6 +34,14 @@ public class WorldDescription extends Description {
         }
 
         /**
+         * Connection constructur - search for a possible connection 
+         */
+        public Connection(String module1, String module2) {
+        	this.module1 = module1; this.module2 = module2;
+        	this.connector1 = -1; this.connector2 = -1;
+		}
+
+		/**
          * @return the connector1
          */
         public int getConnector1() {
@@ -217,7 +225,7 @@ public class WorldDescription extends Description {
    public List<ModulePosition> getModulePositions() {
        return modules;
    }
-   public void setModulePositions(ArrayList<ModulePosition> pos) {
+   public void setModulePositions(List<ModulePosition> pos) {
 	   this.modules = pos;
    }
    
@@ -230,6 +238,9 @@ public class WorldDescription extends Description {
 
    public void setModuleConnections(Connection[] connections) {
        this.connections = Arrays.asList(connections);
+   }
+   public void setModuleConnections(List<Connection> connections) {
+       this.connections = connections;
    }
    
    public List<Connection> getConnections() {

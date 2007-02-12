@@ -1,7 +1,9 @@
 package ussr.physics.jme;
 
 import java.awt.Color;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,6 +25,7 @@ import ussr.model.Actuator;
 import ussr.model.Connector;
 import ussr.model.Entity;
 import ussr.model.Module;
+import ussr.model.PhysicsActuator;
 import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
@@ -31,7 +34,6 @@ import ussr.robotbuildingblocks.ConeShape;
 import ussr.robotbuildingblocks.CylinderShape;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.util.Pair;
@@ -50,6 +52,7 @@ import com.jme.input.action.InputAction;
 import com.jme.input.action.InputActionEvent;
 import com.jme.input.joystick.JoystickInput;
 import com.jme.light.PointLight;
+import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.renderer.Camera;
 import com.jme.renderer.ColorRGBA;
@@ -77,9 +80,11 @@ import com.jme.util.geom.Debugger;
 import com.jmex.awt.input.AWTMouseInput;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
+import com.jmex.physics.JointAxis;
 import com.jmex.physics.PhysicsDebugger;
 import com.jmex.physics.PhysicsSpace;
 import com.jmex.physics.StaticPhysicsNode;
+import com.jmex.physics.impl.ode.OdePhysicsSpace;
 import com.jmex.physics.material.Material;
 import com.jmex.physics.util.PhysicsPicker;
 import com.jmex.terrain.TerrainBlock;
@@ -100,7 +105,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     private List<Module> modules = new ArrayList<Module>();
     private Map<DynamicPhysicsNode,Set<TriMesh>> geometryMap = new HashMap<DynamicPhysicsNode,Set<TriMesh>>();
     
-    protected float physicsSimulationStepSize=0.01f;
+    protected float physicsSimulationStepSize=0.005f;
     private PhysicsSpace physicsSpace;
     protected InputHandler cameraInputHandler;
    
@@ -204,6 +209,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     protected  TerrainBlock tb;
     
     protected boolean pause;
+    protected boolean grapFrames=false;
     
     protected void simpleInitGame() {
         // Create underlying plane or terrain
@@ -224,7 +230,125 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
             Robot robot = robots.get(robotType);
             module.setController(robot.createController());
             modules.add(module);
-            if(robot.getDescription().getModuleGeometry().size()==1) {
+        	if(robot.getDescription().getType()=="ATRON") {
+	           	//create ATRON
+        		if(robot.getDescription().getModuleGeometry().size()!=2) throw new RuntimeException("Not an ATRON");
+            	AtronShape northShape = (AtronShape) robot.getDescription().getModuleGeometry().get(0);
+            	AtronShape southShape = (AtronShape) robot.getDescription().getModuleGeometry().get(1);
+            	
+            	
+            	DynamicPhysicsNode northNode = getPhysicsSpace().createDynamicNode();
+	            JMEModuleComponent northComponent = new JMEModuleComponent(this,robot,northShape,"module#"+Integer.toString(i)+".north",module,northNode);
+	            northNode.setName("AtronNorth");
+
+	            
+	            DynamicPhysicsNode southNode = getPhysicsSpace().createDynamicNode();
+	            JMEModuleComponent southComponent = new JMEModuleComponent(this,robot,southShape,"module#"+Integer.toString(i)+".south",module,southNode);
+	            southNode.setName("AtronSouth");
+	            
+	            float unit = (float) (0.045f/Math.sqrt(2)); //4.5cm from center of mass to connector
+	            northComponent.addConnector("Connector 0", new Vector3f(  unit,  unit, -unit));
+	            northComponent.addConnector("Connector 1", new Vector3f( -unit,  unit, -unit ));
+	            northComponent.addConnector("Connector 2", new Vector3f( -unit, -unit, -unit ));
+	            northComponent.addConnector("Connector 3", new Vector3f(  unit, -unit, -unit ));
+	            
+	            southComponent.addConnector("Connector 4", new Vector3f(  unit,  unit,  unit ));
+	            southComponent.addConnector("Connector 5", new Vector3f( -unit,  unit,  unit ));
+	            southComponent.addConnector("Connector 6", new Vector3f( -unit, -unit,  unit ));
+	            southComponent.addConnector("Connector 7", new Vector3f(  unit, -unit,  unit ));
+	            
+                module.addComponent(northComponent);
+                module.addComponent(southComponent); //hvad skal håndteres ved fx placering af moduler?
+                
+                moduleComponents.add(northComponent);
+                moduleComponents.add(southComponent);
+                northNode.setMass(0.400f); //800 grams in total
+                southNode.setMass(0.400f);
+                
+                JMERotationalActuator centerActuator = new JMERotationalActuator(this,"center");
+                module.addActuator(new Actuator(centerActuator));
+                centerActuator.attach(southNode,northNode);
+                centerActuator.setControlParameters(100, 0.5f, 0, 0); //100N, 0.2 m/s or rad/s?, no rotational limits
+                centerActuator.setDirection(0, 0, 1);
+                centerActuator.activate(10);
+                
+
+/*                DynamicPhysicsNode atronTest1 = getPhysicsSpace().createDynamicNode();
+                rootNode.attachChild( atronTest1 );
+                TriMesh atronTest1Mesh = JMEDescriptionHelper.createShape(atronTest1, "", northShape);
+                atronTest1.generatePhysicsGeometry();
+                atronTest1.getLocalTranslation().addLocal( 0, 0.3f, 0 );
+                atronTest1.setMass(0.01f);
+                atronTest1.setAffectedByGravity(false);
+                JMEDescriptionHelper.setColor(this,atronTest1Mesh,Color.RED);
+                
+                
+                DynamicPhysicsNode armLimb1 = getPhysicsSpace().createDynamicNode();
+                rootNode.attachChild( armLimb1 );
+                TriMesh atronTest2Mesh = JMEDescriptionHelper.createShape(armLimb1, "", southShape);
+                armLimb1.generatePhysicsGeometry();
+                armLimb1.getLocalTranslation().addLocal(0, 0.3f, 0);
+                armLimb1.setMass(0.01f);
+                armLimb1.setAffectedByGravity(false);
+                JMEDescriptionHelper.setColor(this,atronTest2Mesh,Color.BLUE);
+                
+
+                JMERotationalActuator testActuator = new JMERotationalActuator(this,"center");
+                testActuator.attach(armLimb1,atronTest1);
+                testActuator.setDirection(0, 0, 1);
+                testActuator.activate(10);*/
+                
+        	}
+        	else if(robot.getDescription().getType()=="OdinMuscle") {
+            	//create OdinMuscle
+            	CylinderShape externalCylinderShape = (CylinderShape) robot.getDescription().getModuleGeometry().get(0);
+            	CylinderShape internalCylinderShape = (CylinderShape) robot.getDescription().getModuleGeometry().get(1);
+            	ConeShape externalConeShape = (ConeShape) robot.getDescription().getModuleGeometry().get(2);
+            	ConeShape internalConeShape = (ConeShape) robot.getDescription().getModuleGeometry().get(3);
+            	
+           	   	DynamicPhysicsNode externalNode = this.getPhysicsSpace().createDynamicNode();
+           	   	DynamicPhysicsNode internalNode = this.getPhysicsSpace().createDynamicNode();
+           	   	
+	            JMEModuleComponent externalComponent = new JMEModuleComponent(this,robot,externalCylinderShape,"module#"+Integer.toString(i)+".north",module,externalNode);
+	            JMEModuleComponent externalCone = new JMEModuleComponent(this,robot,externalConeShape,"module#"+Integer.toString(i)+".north",module,externalNode);
+
+	            JMEModuleComponent internalComponent = new JMEModuleComponent(this,robot,internalCylinderShape,"module#"+Integer.toString(i)+".south",module,internalNode);
+	            JMEModuleComponent internalCone = new JMEModuleComponent(this,robot,internalConeShape,"module#"+Integer.toString(i)+".south",module,internalNode);
+	           
+	            float unit = 0.06f/2f+0.035f; 
+	            externalComponent.addConnector("Connector 1", new Vector3f(-unit, 0, 0));
+	            internalComponent.addConnector("Connector 2", new Vector3f(unit, 0, 0));
+	            
+	            
+	            
+	            
+                module.addComponent(externalComponent);
+                module.addComponent(externalCone);
+                module.addComponent(internalComponent); 
+                module.addComponent(internalCone);
+                
+
+                JMELinearActuator centerActuator = new JMELinearActuator(this,"center");
+                module.addActuator(new Actuator(centerActuator));
+                centerActuator.attach(externalNode,internalNode);
+                centerActuator.setControlParameters(9.82f,0.06f/0.25f,0f,0.06f); //odin muscle parametre - way too fast!
+                
+                moduleComponents.add(externalComponent);
+                moduleComponents.add(internalComponent);
+                externalNode.setMass(0.025f); //50 grams in total?
+                internalNode.setMass(0.025f);
+	        }
+			else if(robot.getDescription().getType()=="OdinBall") {
+	            DynamicPhysicsNode moduleNode = this.getPhysicsSpace().createDynamicNode();            
+	            int j=0;
+	            for(GeometryDescription geometry: robot.getDescription().getModuleGeometry()) {
+	                JMEModuleComponent physicsModule = new JMEModuleComponent(this,robot,geometry,"module#"+Integer.toString(i)+"."+(j++),module,moduleNode);
+	                module.addComponent(physicsModule);
+	                moduleComponents.add(physicsModule);
+	            }
+	            moduleNode.setMass(0.020f); //20 grams?
+	        }
+	    	else if(robot.getDescription().getModuleGeometry().size()==1) {
 	            // Create central module node
 	            DynamicPhysicsNode moduleNode = this.getPhysicsSpace().createDynamicNode();            
 	            int j=0;
@@ -233,92 +357,16 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
 	                module.addComponent(physicsModule);
 	                moduleComponents.add(physicsModule);
 	            }
-            }
-            else {
-            	if(robot.getDescription().getType()=="ATRON") {
-	            	//create ATRON
-	            	if(robot.getDescription().getModuleGeometry().size()!=2) throw new RuntimeException("Not an ATRON");
-					
-	            	AtronShape northShape = (AtronShape) robot.getDescription().getModuleGeometry().get(0);
-	            	AtronShape southShape = (AtronShape) robot.getDescription().getModuleGeometry().get(1);
-	            	
-	           	   	DynamicPhysicsNode northNode = this.getPhysicsSpace().createDynamicNode();
-	           	   	DynamicPhysicsNode southNode = this.getPhysicsSpace().createDynamicNode();
-	           	   	
-		            JMEModuleComponent northComponent = new JMEModuleComponent(this,robot,northShape,"module#"+Integer.toString(i)+".north",module,northNode);
-		            JMEModuleComponent southComponent = new JMEModuleComponent(this,robot,southShape,"module#"+Integer.toString(i)+".south",module,southNode);
-		            
-		            
-		            
-	                module.addComponent(northComponent);
-	                module.addComponent(southComponent); //hvad skal håndteres ved fx placering af moduler?
-	
-	                //indsæt Actuator her istedet for
-	                //JMERotationalActuator centerActuator = new JMERotationalActuator(this,"center");
-	                JMELinearActuator centerActuator = new JMELinearActuator(this,"center");
-	                
-	                module.addActuator(new Actuator(centerActuator));
-	                
-	                centerActuator.attach(northNode,southNode);
-	                //centerActuator.setControlParameters(100, 0.2f, 0, 0); //100N, 0.2 rotations/s, no rotational limits
-	                
-	                /*Joint centerJoint = getPhysicsSpace().createJoint();
-	                centerJoint.createRotationalAxis();
-	                centerJoint.attach(northNode,southNode);*/
-	                
-	                moduleComponents.add(northComponent);
-	                moduleComponents.add(southComponent);
-            	}
-            	else if(robot.getDescription().getType()=="OdinMuscle") {
-	            	//create OdinMuscle
-            		System.out.println("Creating Odin Muscle");
-					
-	            	CylinderShape externalCylinderShape = (CylinderShape) robot.getDescription().getModuleGeometry().get(0);
-	            	CylinderShape internalCylinderShape = (CylinderShape) robot.getDescription().getModuleGeometry().get(1);
-	            	ConeShape externalConeShape = (ConeShape) robot.getDescription().getModuleGeometry().get(2);
-	            	ConeShape internalConeShape = (ConeShape) robot.getDescription().getModuleGeometry().get(3);
-	            	
-	           	   	DynamicPhysicsNode externalNode = this.getPhysicsSpace().createDynamicNode();
-	           	   	DynamicPhysicsNode internalNode = this.getPhysicsSpace().createDynamicNode();
-	           	   	
-		            JMEModuleComponent externalComponent = new JMEModuleComponent(this,robot,externalCylinderShape,"module#"+Integer.toString(i)+".north",module,externalNode);
-		            JMEModuleComponent externalCone = new JMEModuleComponent(this,robot,externalConeShape,"module#"+Integer.toString(i)+".north",module,externalNode);
-
-		            JMEModuleComponent internalComponent = new JMEModuleComponent(this,robot,internalCylinderShape,"module#"+Integer.toString(i)+".south",module,internalNode);
-		            JMEModuleComponent internalCone = new JMEModuleComponent(this,robot,internalConeShape,"module#"+Integer.toString(i)+".south",module,internalNode);
-		            
-	                module.addComponent(externalComponent);
-	                module.addComponent(externalCone);
-	                module.addComponent(internalComponent); 
-	                module.addComponent(internalCone); 
-	                
-	
-	                //indsæt Actuator her istedet for
-	                //JMERotationalActuator centerActuator = new JMERotationalActuator(this,"center");
-	                JMELinearActuator centerActuator = new JMELinearActuator(this,"center");
-	                
-	                module.addActuator(new Actuator(centerActuator));
-	                
-	                centerActuator.attach(externalNode,internalNode);
-	                centerActuator.setControlParameters(0.01f,0.05f,0f,0.06f); //odin muscle parametre
-	                //centerActuator.setControlParameters(100, 0.2f, 0, 0); //100N, 0.2 rotations/s, no rotational limits
-	                
-	                /*Joint centerJoint = getPhysicsSpace().createJoint();
-	                centerJoint.createRotationalAxis();
-	                centerJoint.attach(northNode,southNode);*/
-	                
-	                moduleComponents.add(externalComponent);
-	                moduleComponents.add(internalComponent);
-            	}
-                
-                
-            }
-            new Thread() {
-                public void run() {
-                    module.getController().activate();
-                    PhysicsLogger.log("Warning: unexpected controller exit");
-                }
-            }.start();
+	    	}
+	    	else {
+	    		throw new RuntimeException("Module type can not be constructed");
+	    	}
+	        new Thread() {
+	            public void run() {
+	                module.getController().activate();
+	                PhysicsLogger.log("Warning: unexpected controller exit");
+	            }
+	        }.start();
         }
         
         //showPhysics = true;
@@ -332,7 +380,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
                     placeModules();
                 else
                     generateModuleStackPlacement();
-
+                
                 Iterator<VectorDescription> positions = worldDescription.getObstacles().iterator();
                 for(DynamicPhysicsNode box: obstacleBoxes) {
                     VectorDescription p = positions.next();
@@ -349,9 +397,9 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
         doAddInputHandlers();
         
          MouseInput.get().setCursorVisible( true );
-        new PhysicsPicker( input, rootNode, getPhysicsSpace() );
+         new PhysicsPicker( input, rootNode, getPhysicsSpace() );
     }
-
+    long mainLoopCounter=0;
     public final void start() {
         LoggingSystem.getLogger().log(Level.INFO, "Application started.");
         try {
@@ -368,22 +416,19 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
 
                 // main loop
                 while (!finished && !display.isClosing()) {
-                	
-                    // handle input events prior to updating the scene
-                    // - some applications may want to put this into update of
-                    // the game state
-                        InputSystem.update();
-
-                    // update game state, do not use interpolation parameter
-                    update(-1.0f);
-
-                    // render, do not use interpolation parameter
-                   
-                    	render(-1.0f);
-                        // swap buffers
-                        display.getRenderer().displayBackBuffer();
-  
-                    Thread.yield();
+                    if ( !pause ) { 
+                    	physicsStep(); // 1 call to = 32ms (one example setup)
+                    }
+                    if(mainLoopCounter%1==0) { // 1 call to = 16ms (same example setup)
+                    	InputSystem.update();
+                    	update(-1.0f);
+	                	render(-1.0f);
+	                    display.getRenderer().displayBackBuffer();// swap buffers
+	                    if(grapFrames) {
+	                    	grapFrame();
+	                    }
+                    }
+                    mainLoopCounter++;
                 }
             }
         } catch (Throwable t) {
@@ -397,7 +442,13 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
             display.reset();
         quit();
     }
-
+    /**
+     * Get the time (physical) in seconds since the simulation started
+     */
+    public float getTime() {
+		return physicsSteps*physicsSimulationStepSize;
+	}
+    
     private static final float FAROUT_DISTANCE = 50f;
     
     private void readWorldParameters() {
@@ -411,6 +462,9 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     	/** Assign key P to action "toggle_pause". */
         KeyBindingManager.getKeyBindingManager().set( "toggle_pause",
                 KeyInput.KEY_P );
+        /** Assign key P to action "toggle_pause". */
+        KeyBindingManager.getKeyBindingManager().set( "toggle_frame_grapping",
+                KeyInput.KEY_G );
         /** Assign key T to action "toggle_wire". */
         KeyBindingManager.getKeyBindingManager().set( "toggle_wire",
                 KeyInput.KEY_T );
@@ -440,6 +494,10 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     
     protected void handleKeys()
     {        /** If toggle_pause is a valid command (via key p), change pause. */
+        if ( KeyBindingManager.getKeyBindingManager().isValidCommand(
+                "toggle_frame_grapping", false ) ) {
+            grapFrames = !grapFrames;
+        }
         if ( KeyBindingManager.getKeyBindingManager().isValidCommand(
                 "toggle_pause", false ) ) {
             pause = !pause;
@@ -520,12 +578,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
      */
     @Override
     protected final void update( float interpolation ) {
-    	/*if(true) {
-    		timer.update();
-    		System.out.println("Frame Rate = "+(int) timer.getFrameRate());
-    		//System.
-    		return;
-    	}*/
+    	
         // disable input as we want it to be updated _after_ physics
         // in your application derived from BaseGame you can simply make the call to InputHandler.update later
         // in your game loop instead of this disabling and reenabling
@@ -542,25 +595,23 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
         GameTaskQueueManager.getManager().getQueue(GameTaskQueue.UPDATE).execute();
         
         updateBuffer.setLength( 0 );
-        updateBuffer.append( "FPS: " ).append( (int) timer.getFrameRate() ).append(
-                " - " );
-        updateBuffer.append( display.getRenderer().getStatistics( tempBuffer ) );
+        updateBuffer.append( "FPS: " ).append( (int) timer.getFrameRate() ).append(" - " );
+        updateBuffer.append( display.getRenderer().getStatistics( tempBuffer ) ).append(" - " );;
+        updateBuffer.append( "TS: " ).append( (int) physicsSteps );
         /** Send the fps to our fps bar at the bottom. */
         fps.print( updateBuffer );
 
         handleKeys();
-
-        if ( !pause ) {
-       		getPhysicsSpace().update(physicsSimulationStepSize);
-        }
-
         input.update(tpf);
-
-        //if ( !pause ) 
-        {
-            cameraInputHandler.setEnabled( MouseInput.get().isButtonDown( 1 ) );
-            rootNode.updateGeometricState(tpf, true );
-        }
+        
+        cameraInputHandler.setEnabled( MouseInput.get().isButtonDown( 1 ) );
+        rootNode.updateGeometricState(tpf, true );
+        
+    }
+    private long physicsSteps = 0;
+    private final void physicsStep() {
+    	getPhysicsSpace().update(physicsSimulationStepSize);
+    	physicsSteps++;
     }
 
     protected void cameraPerspective() {
@@ -599,7 +650,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
         planeNode.getLocalTranslation().set( 0, -1f, 0 );
         rootNode.attachChild( planeNode );
         planeNode.generatePhysicsGeometry();
-        planeNode.setMaterial(Material.WOOD);
+        planeNode.setMaterial(Material.DEFAULT);
         
         Texture tex = TextureManager.loadTexture(JMESimulation.class.getClassLoader().getResource("myGrass2.jpg"),Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
         tex.setWrap(Texture.WM_WRAP_S_WRAP_T);
@@ -612,7 +663,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     /**
 	 * build the height map and terrain block.
 	 */
-	private StaticPhysicsNode createTerrain(int size) {
+	private StaticPhysicsNode createTerrain(int size) { //change to hillhweightmap - looks better
 		// Generate a random terrain data
 //		 Generate a random terrain data
 		MidPointHeightMap heightMap = new MidPointHeightMap(64, 1f);
@@ -834,8 +885,10 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
         
         /** Get a high resolution timer for FPS updates. */
         timer = Timer.getTimer();
-
         setPhysicsSpace( PhysicsSpace.create() );
+        ((OdePhysicsSpace) getPhysicsSpace()).setStepSize(physicsSimulationStepSize);
+        ((OdePhysicsSpace) getPhysicsSpace()).setStepFunction(OdePhysicsSpace.SF_STEP_FAST); //or OdePhysicsSpace.SF_STEP_QUICK  
+        
 
         input.addAction( new InputAction() {
             public void performAction( InputActionEvent evt ) {
@@ -844,7 +897,24 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
                 }
             }
         }, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_V, InputHandler.AXIS_NONE, false );
-		
+        
+        input.addAction( new InputAction() {
+            public void performAction( InputActionEvent evt ) {
+                if ( evt.getTriggerPressed() ) {
+                    pause = true; 
+                    physicsStep();
+                }
+            }
+        }, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_T, InputHandler.AXIS_NONE, false );
+        
+        input.addAction( new InputAction() {
+            public void performAction( InputActionEvent evt ) {
+                if ( evt.getTriggerPressed() ) {
+                	grapFrame();
+                }
+            }
+        }, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_F, InputHandler.AXIS_NONE, false );
+        
          input.addAction( new InputAction() {
 		    public void performAction( InputActionEvent evt ) {
 		    	if(evt.getTriggerName()=="Wheel") {
@@ -854,6 +924,20 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
 		}, InputHandler.DEVICE_MOUSE, AWTMouseInput.WHEEL_AMP, InputHandler.AXIS_ALL,false);
          
 	 }
+    private long frameCount=0;
+    protected void grapFrame() {
+    	if(frameCount==0) { //delete content of and create frame directory
+    		File dir = new File("frames");
+    		if(dir.isDirectory()) {
+    			dir.renameTo(new File("frames"+System.currentTimeMillis()));
+    		}
+    		dir.mkdir();
+    	}
+    	display.getRenderer().takeScreenShot("frames/frame"+frameCount);
+    	frameCount++;
+	}
+
+	
     
 public RenderState color2jme(Color color) {
         float red = ((float)color.getRed())/255.0f;
@@ -921,7 +1005,7 @@ public RenderState color2jme(Color color) {
 	        GameTaskQueueManager.getManager().getQueue(GameTaskQueue.RENDER).execute();
 
 	        preRender();
-
+	        
 	        /** Draw the rootNode and all its children. */
 	        r.draw( rootNode );
 
@@ -1089,12 +1173,12 @@ public RenderState color2jme(Color color) {
                 	for(PhysicsEntity c1: components) { //works if CAD ATRON
 	                	DynamicPhysicsNode node = ((JMEModuleComponent)c1).getModuleNode();
 		                node.getLocalTranslation().set(p.getPosition().getX(), p.getPosition().getY(), p.getPosition().getZ());
-		                node.setLocalRotation(p.getRotation().getRotation());
-		                node.clearDynamics();
-		                /*Vector3f centerOfMass = new Vector3f();
-		                node.getCenterOfMass(centerOfMass);
-	                    System.out.println("position of masse = "+centerOfMass+" for half an ATRON");*/		                
+		                node.setLocalRotation(new Quaternion(p.getRotation().getRotation()));
+	                	node.clearDynamics();
                 	}
+                }
+                for(Actuator actuator:  module.getActuators()) { 
+                	((PhysicsActuator)actuator.getPhysics().get(0)).reset();
                 }
             }
             //String robotType = worldDescription.getModulePositions().get(0).getType();
@@ -1107,25 +1191,72 @@ public RenderState color2jme(Color color) {
             for(WorldDescription.Connection connection: this.worldDescription.getConnections()) {
                 Module m1 = registry.get(connection.getModule1());
                 Module m2 = registry.get(connection.getModule2());
+                if(m1.getID()==m2.getID()) {
+                	throw new RuntimeException("Module("+m1.getID()+") can not connect to itself("+m2.getID()+")");
+                }
                 int c1i = connection.getConnector1();
                 int c2i = connection.getConnector2();
-                Connector c1 = m1.getConnectors().get(c1i);
-                Connector c2 = m2.getConnectors().get(c2i);
-                if((c1.getPhysics().get(0) instanceof JMEMechanicalConnector)&&(c2.getPhysics().get(0) instanceof JMEMechanicalConnector)) {
-                	JMEMechanicalConnector jc1 = (JMEMechanicalConnector)c1.getPhysics().get(0);
-                    JMEMechanicalConnector jc2 = (JMEMechanicalConnector)c2.getPhysics().get(0);
-                    jc1.connectTo(jc2);
-                    jc1.setConnectorColor(Color.cyan);
-                    jc2.setConnectorColor(Color.cyan);
-                	
+                if(c1i==-1||c2i==-1) {
+                	c1i = findBestConnection(m1,m2);
+                	c2i = findBestConnection(m2,m1);
                 }
-                else {
-                	PhysicsLogger.log("Warning: connector initialization ignored");
+                if(c1i!=-1||c2i!=-1) {
+	                Connector c1 = m1.getConnectors().get(c1i);
+	                Connector c2 = m2.getConnectors().get(c2i);
+	                if((c1.getPhysics().get(0) instanceof JMEMechanicalConnector)&&(c2.getPhysics().get(0) instanceof JMEMechanicalConnector)) {
+	                	JMEMechanicalConnector jc1 = (JMEMechanicalConnector)c1.getPhysics().get(0);
+	                    JMEMechanicalConnector jc2 = (JMEMechanicalConnector)c2.getPhysics().get(0);
+	                    jc1.connectTo(jc2);
+	                    jc1.setConnectorColor(Color.cyan);
+	                    jc2.setConnectorColor(Color.cyan);
+	                	
+	                }
+	                else {
+	                	PhysicsLogger.log("Warning: connector initialization ignored");
+	                }
                 }
             }
         }
 
-        public void setPause(boolean pause) {
+        private int findBestConnection(Module m1, Module m2) {
+        	ArrayList<Vector3f> m1Cpos = connectorPos(m1);
+        	ArrayList<Vector3f> m2Cpos = connectorPos(m2);
+        //	System.out.println("Finding connections from module "+m1.getID()+" to module "+m2.getID());
+        //	System.out.println("M1 Pos = "+((JMEModuleComponent)m1.getPhysics().get(0)).getModuleNode().getLocalTranslation());
+        //	System.out.println("M2 Pos = "+((JMEModuleComponent)m2.getPhysics().get(0)).getModuleNode().getLocalTranslation());
+        //	System.out.println("Module dist = "+(((JMEModuleComponent)m1.getPhysics().get(0)).getModuleNode().getLocalTranslation()).distance(((JMEModuleComponent)m2.getPhysics().get(0)).getModuleNode().getLocalTranslation()));
+        	int connector = -1;
+        	for(int i=0;i<m1Cpos.size();i++) {
+        		for(int j=0;j<m2Cpos.size();j++) {
+            		float d = m1Cpos.get(i).distance(m2Cpos.get(j));
+            		if(d<0.005) {
+            			//System.out.println("dist from "+i+" to "+j+" is "+d);
+            			connector = i;
+            		}
+            		
+            	}
+        	}
+        	return connector;
+		}
+
+		private ArrayList<Vector3f> connectorPos(Module m) {
+			Vector3f mPos = ((JMEModuleComponent)m.getPhysics().get(0)).getModuleNode().getLocalTranslation();
+			//System.out.println("Module "+m.getID()+" at ("+mPos.x+", "+mPos.y+", "+mPos.z+") has the following connectors");
+			ArrayList<Vector3f> cPos = new ArrayList<Vector3f>();
+			int index =0;
+			for(Connector c: m.getConnectors()) {
+				Vector3f absCpos = new Vector3f();
+				Vector3f cpos = ((JMEMechanicalConnector)c.getPhysics().get(0)).getPos();
+				//absCpos = absCpos.add(mPos);
+				absCpos = absCpos.add(cpos);
+				//System.out.println(" "+index+" at ("+absCpos.x+", "+absCpos.y+", "+absCpos.z+")");
+				cPos.add(absCpos);
+				index++;
+    		}
+			return cPos;
+		}
+
+		public void setPause(boolean pause) {
             this.pause = pause;
         }
         public boolean isPaused() {

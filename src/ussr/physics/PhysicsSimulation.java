@@ -74,5 +74,7 @@ public interface PhysicsSimulation {
     public void setPause(boolean startPaused);
     
     public boolean isPaused();
+
+	public float getTime();
     
 }

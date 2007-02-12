@@ -56,4 +56,14 @@ public class VectorDescription extends Description {
 	public float distance(VectorDescription p) {
 		return (float)Math.sqrt((p.x-x)*(p.x-x)+(p.y-y)*(p.y-y)+(p.z-z)*(p.z-z));
 	}
+
+	public void add(float dx, float dy, float dz) {
+		this.x += dx; this.y += dy; this.z += dz;
+	}
+	public void sub(float dx, float dy, float dz) {
+		this.x -= dx; this.y -= dy; this.z -= dz;
+	}
+	public void mult(float dx, float dy, float dz) {
+		this.x *= dx; this.y *= dy; this.z *= dz;
+	}
 }

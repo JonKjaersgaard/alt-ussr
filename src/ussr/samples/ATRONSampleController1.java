@@ -10,6 +10,7 @@ import java.util.List;
 
 import ussr.model.Connector;
 import ussr.model.ControllerImpl;
+import ussr.physics.jme.JMEModuleComponent;
 
 /**
  * A simple controller for the ATRON, controlling connector stickiness based on
@@ -24,31 +25,22 @@ public class ATRONSampleController1 extends ControllerImpl {
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
-
         while(true) {
-        	try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                throw new Error("unexpected");
-            }
         	if(!module.getSimulation().isPaused()) {
-	            if(!ATRONSimulation1.getConnectorsAreActive()) {
-		            for(Connector connector: module.getConnectors()) {
-		                connector.disconnect();
-		            }
-	            }
-	            //module.setColor(Color.blue);
-	          //  module.getConnectors().get(0).setColor(Color.red);
-	            rotate(1);
+        		String name = module.getProperty("name");
+    			float time = module.getSimulation().getTime();
+        		//rotate((float)(Math.sin(time)+1)/2f);
+    			if(name=="wheel1") rotate(1);
+    			if(name=="wheel2") rotate(-1);
+    			if(name=="wheel3") rotate(1);
+    			if(name=="wheel4") rotate(-1);
         	}
+        	Thread.yield();
         }
     }
     float t=0;
-    public void rotate(int dir) {
-    	module.getActuators().get(0).activate((float)(Math.sin(t)+1)/2f);
-    	t=t+0.00001f;
-    	//System.out.println("follow = "+(float)(Math.sin(t)+1)/2f);
-    	
+    public void rotate(float pos) {
+    	module.getActuators().get(0).activate(pos);
     }
     public boolean isOtherConnectorNearby(int connector) {
     	if(module.getConnectors().get(connector).isConnected()) {

@@ -19,4 +19,6 @@ public interface PhysicsActuator extends PhysicsEntity {
 
 	void disactivate();
 
+	void reset();
+
 }

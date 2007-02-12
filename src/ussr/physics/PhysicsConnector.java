@@ -45,5 +45,6 @@ public interface PhysicsConnector extends PhysicsEntity {
     public void disconnect();
 
 	public void setConnectorColor(Color color);
-  
+	
+	
 }

@@ -164,7 +164,7 @@ public class Body implements Placeable {
 
         // Create body
         bodyId = Ode.dBodyCreate( worldId );
-
+        
         // if (geom != null) {
         // Set geom for this body
         // setGeom(geom);

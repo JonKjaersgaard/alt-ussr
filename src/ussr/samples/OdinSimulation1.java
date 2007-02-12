@@ -14,6 +14,7 @@ import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
+import ussr.robotbuildingblocks.WorldDescription.Connection;
 import ussr.robotbuildingblocks.WorldDescription.ModulePosition;
 
 /**
@@ -52,10 +53,13 @@ public class OdinSimulation1 extends GenericSimulation {
         ArrayList<WorldDescription.ModulePosition> modulePos = new ArrayList<WorldDescription.ModulePosition>();
         //printConnectorPos();
         int index=0;
-        int nBalls = 5;
-        for(int x=-2;x<2;x++) {
-        	for(int y=-0;y<1;y++) {
-        		for(int z=-2;z<2;z++) {
+        //int nBalls=2, xMax=1, yMax=2,zMax=2;
+        //int nBalls=3, xMax=3, yMax=2,zMax=2;
+        int nBalls=4, xMax=3, yMax=2,zMax=2;
+        //int nBalls=8, xMax=3, yMax=2,zMax=2;
+        for(int x=0;x<xMax;x++) {
+        	for(int y=0;y<yMax;y++) {
+        		for(int z=0;z<zMax;z++) {
         			if((x+y+z)%2==0) {
         				VectorDescription pos = new VectorDescription(x*unit,y*unit,z*unit);
         				if(index<nBalls) {
@@ -72,22 +76,34 @@ public class OdinSimulation1 extends GenericSimulation {
         			VectorDescription pos = posFromBalls(ballPos.get(i),ballPos.get(j));
         			RotationDescription rot = rotFromBalls(ballPos.get(i),ballPos.get(j));
         			modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinMuscle", pos, rot));
+        			index++;
         			//System.out.println("Ball "+i+" and ball "+j+" are neighbors");
         		}
         	}
         }
-        
-
+        ArrayList<Connection> connections = allConnections(ballPos,modulePos);
+        world.setModuleConnections(connections);
         modulePos.addAll(ballPos);
         world.setModulePositions(modulePos);
         System.out.println("#Modules Placed = "+modulePos.size());
-        world.setModuleConnections(new WorldDescription.Connection[] {
+        /*world.setModuleConnections(new WorldDescription.Connection[] {
               //  new WorldDescription.Connection("leftleg",4,"middle",6)
                 //,new WorldDescription.Connection("rightleg",2,"middle",4)
-        });
+        });*/
         return world;
     }
-    private static VectorDescription posFromBalls(ModulePosition p1, ModulePosition p2) {
+    private static ArrayList<Connection> allConnections(ArrayList<ModulePosition> ballPos, ArrayList<ModulePosition> modulePos) {
+    	ArrayList<Connection> connections = new ArrayList<Connection>();
+    	for(int i=0;i<ballPos.size();i++) {
+    		for(int j=0;j<modulePos.size();j++) {
+    			if(isConnectable(ballPos.get(i), modulePos.get(j))) {
+    				connections.add(new Connection(ballPos.get(i).getName(),modulePos.get(j).getName()));
+    			}
+    		}
+    	}
+		return connections;
+	}
+	private static VectorDescription posFromBalls(ModulePosition p1, ModulePosition p2) {
     	VectorDescription pos = new VectorDescription((p1.getPosition().getX()+p2.getPosition().getX())/2,(p1.getPosition().getY()+p2.getPosition().getY())/2,(p1.getPosition().getZ()+p2.getPosition().getZ())/2);
 		return pos;
 	}
@@ -98,15 +114,19 @@ public class OdinSimulation1 extends GenericSimulation {
 		float x2 = p2.getPosition().getX();
 		float y2 = p2.getPosition().getY();
 		float z2 = p2.getPosition().getZ();
-		if(x1-x2<0&&z1-z2<0) {
-			return new RotationDescription(0,-pi/4,0);
-		}
-		if(x1-x2<0&&z1-z2>0) {
-			return new RotationDescription(0,pi/4,0);
-		}
+		if(x1-x2<0&&z1-z2<0) return new RotationDescription(0,-pi/4,0);
+		else if(x1-x2<0&&z1-z2>0) return new RotationDescription(0,pi/4,0);
+		else if(x1-x2<0&&y1-y2<0) return new RotationDescription(0,0,pi/4);
+		else if(x1-x2<0&&y1-y2>0) return new RotationDescription(0,0,-pi/4);
+		else if(y1-y2<0&&z1-z2<0) return new RotationDescription(0,pi/4,-pi/2);
+		else if(y1-y2<0&&z1-z2>0) return new RotationDescription(0,-pi/4,-pi/2);
 		System.out.println("("+(x1-x2)+","+(y1-y2)+","+(z1-z2)+")");
     	return new RotationDescription(0,0,0);
 	}
+	public static boolean isConnectable(ModulePosition ball, ModulePosition module) {
+    	float dist = ball.getPosition().distance(module.getPosition());
+    	return dist==(float)Math.sqrt(2*unit*unit)/2;
+    }
 	public static boolean isNeighorBalls(ModulePosition ball1, ModulePosition ball2) {
     	float dist = ball1.getPosition().distance(ball2.getPosition());
     	return dist==(float)Math.sqrt(2*unit*unit);

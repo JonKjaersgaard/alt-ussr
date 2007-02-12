@@ -292,6 +292,7 @@ public class OdeJoint extends Joint {
                     jointFixed.setFixed();
                 }
             }
+            //System.out.println("Joint is "+ode.getClass()+" between "+body1+" and "+body2);
         }
     }
 
@@ -334,6 +335,7 @@ public class OdeJoint extends Joint {
         nodes.add( (DynamicPhysicsNodeImpl) leftNode );
         nodes.add( (DynamicPhysicsNodeImpl) rightNode );
         attach( true );
+       // System.out.println(leftNode+" attached to "+rightNode);
     }
 
     @Override

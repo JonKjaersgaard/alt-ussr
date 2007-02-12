@@ -27,7 +27,6 @@ import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jme.bounding.BoundingBox;
 import com.jme.bounding.BoundingSphere;
-import com.jme.math.Matrix3f;
 import com.jme.scene.Node;
 import com.jme.scene.SceneElement;
 import com.jme.scene.SharedMesh;
@@ -53,24 +52,24 @@ public class JMEDescriptionHelper {
     	TriMesh shape = null;
         if(element instanceof SphereShape) {
         	shape = new Sphere( name, 9, 9, ((SphereShape)element).getRadius()); 
-        	//VectorDescription translation = ((SphereShape)element).getTranslation();
-        	//shape.getLocalTranslation().set( translation.getX(), translation.getY(), translation.getZ() );
         	shape.setModelBound( new BoundingSphere() );
         }
         else if(element instanceof AtronShape) {
         	AtronShape half = (AtronShape) element;
         	shape = constructAtronModel(name, half);
-        	moduleNode.setModelBound(new BoundingSphere());
+        	shape.setModelBound(new BoundingSphere());
+        //	shape = moduleNode.createBox(name);
+        	/*shape = new Sphere( name, 9, 9, 0.025f); 
+        	if(((AtronShape) element).isNorth()) shape.setLocalTranslation(new Vector3f(0.0f,0,0.1f));
+        	shape.setModelBound( new BoundingSphere() );*/
         }
         else if(element instanceof ConeShape) {
         	shape = new Cone(name,8, 8, ((ConeShape)element).getRadius(),((ConeShape)element).getHeight(),true); 
-        	shape.setModelBound( new BoundingBox() );
+        	shape.setModelBound( new BoundingSphere() );
         }
         else if(element instanceof CylinderShape) {
         	shape = new Cylinder(name, 8, 8, ((CylinderShape)element).getRadius(),((CylinderShape)element).getHeight(),true); 
-        //	VectorDescription translation = ((CylinderShape)element).getTranslation();
-        //	shape.getLocalTranslation().set( translation.getX(), translation.getY(), translation.getZ() );
-        	shape.setModelBound( new BoundingBox() );
+        	shape.setModelBound(new BoundingBox()); //BoundingBox makes the simulation "unstable?"
         }
         else throw new Error("Only sphere and atron geometries supported for now");
         
@@ -78,8 +77,8 @@ public class JMEDescriptionHelper {
     	shape.getLocalTranslation().set( translation.getX(), translation.getY(), translation.getZ() );
     	
     	RotationDescription rotation = element.getRotation();
-    	shape.getLocalRotation().set(rotation.getRotation());
-    	
+    	//shape.getLocalRotation().set(rotation.getRotation());
+    	shape.setLocalRotation(rotation.getRotation());
         shape.updateModelBound();
     	moduleNode.attachChild(shape);
         return shape;
@@ -116,12 +115,14 @@ public class JMEDescriptionHelper {
 	private static TriMesh constructAtronModel(String name, AtronShape half) {
 		if(atronModel==null) loadAtronModel(half.getRadius());
 		SharedMesh atronMesh = new SharedMesh(name,atronModel);
-		Matrix3f rotMat = new Matrix3f(); //rotate north 180 degree
+		//Matrix3f rotMat = new Matrix3f(); //rotate north 180 degree
 		if(half.isNorth()) {
+			
 			//atronMesh.setLocalTranslation(new Vector3f(0,0,-0.01f));
 			//rotMat = new Matrix3f(1, 0, 0, 0, -1, 0, 0, 0, -1); //rotate north 180 degree
 		}
 		else {
+			atronMesh.setLocalScale(0.95f*atronMesh.getLocalScale().x);
 			//atronMesh.setLocalTranslation(new Vector3f(0,0,0.01f));
 		}
 		//rotate both 45 degree

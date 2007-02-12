@@ -54,18 +54,26 @@ public class JMELinearActuator implements PhysicsActuator {
      */
     public void attach(DynamicPhysicsNode d1, DynamicPhysicsNode d2) {
     	node1=d1; node2=d2;
+    	node1.setAffectedByGravity(false);
+    	node2.setAffectedByGravity(false);
     	//node1.setAffectedByGravity(true);
     	//node2.setAffectedByGravity(true);
     	if(joint==null)  {
     		joint = world.getPhysicsSpace().createJoint();
     		joint.attach(node1,node2);
     		axis = joint.createTranslationalAxis();
-    		axis.setDirection(new Vector3f(-1,0,0));
-    		axis.setDesiredVelocity(0);
+    		//axis.setDirection(new Vector3f(-1,0,0));
+    		//axis.setDesiredVelocity(0);
+    		reset();
     		setControlParameters(0.1f,0.05f,0f,0.11f); //default parameters
     	}
     }
-    
+    public void reset() {
+    	disactivate();
+    	Vector3f[] axes = new Vector3f[]{new Vector3f(),new Vector3f(),new Vector3f()};
+    	node1.getLocalRotation().toAxes(axes);
+    	axis.setDirection(axes[0].mult(-1));	
+	}
     /**
      * encoder value in percent
      * @return encoder value in percent
@@ -87,16 +95,17 @@ public class JMELinearActuator implements PhysicsActuator {
 		//System.out.println("error = "+error+" goal="+goal);
 		axis.setDesiredVelocity(maxVelocity*error);
 		//System.out.println("acc = "+joint.getAxes().get(0).getAvailableAcceleration());
-		//System.out.println("goal = "+goal+" pos = "+getEncoderValue()+" error "+error);
+		//if(tempCounter%5000==0)System.out.println("{"+goal+","+getEncoderValue()+"},");
+		tempCounter++;
 		return false;
 	}
-
+	long tempCounter=0;
 	/** 
 	 * Relax the linear actuator - can this be done always?
 	 * @see ussr.model.PhysicsActuator#disactivate()
 	 */
 	public void disactivate() {
-		// TODO Auto-generated method stub
+		axis.setDesiredVelocity(0);
 	}
 
 	/* (non-Javadoc)
@@ -117,5 +126,4 @@ public class JMELinearActuator implements PhysicsActuator {
 	public String toString() {
 		return "JMELinearActuator: "+name;
 	}
-
 }

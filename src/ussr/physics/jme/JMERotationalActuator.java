@@ -10,6 +10,9 @@ import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
 import com.jmex.physics.JointAxis;
+import com.jmex.physics.impl.ode.DynamicPhysicsNodeImpl;
+import com.jmex.physics.impl.ode.OdePhysicsSpace;
+import com.jmex.physics.impl.ode.joints.OdeJoint;
 
 
 /**
@@ -18,17 +21,14 @@ import com.jmex.physics.JointAxis;
  */
 public class JMERotationalActuator implements PhysicsActuator {
 
-	private Actuator model;
     private DynamicPhysicsNode node1;
     private DynamicPhysicsNode node2;
     private JMESimulation world;
-    private JMEModuleComponent module;
-    private Joint joint;
+    private OdeJoint joint;
     private String name;
-    private float epsilon = 0.01f;
 	private float maxVelocity = 0.01f;
 	private JointAxis axis;
-    
+	
     public JMERotationalActuator(JMESimulation world, String baseName) {
         this.world = world;
         this.name = baseName;
@@ -44,8 +44,14 @@ public class JMERotationalActuator implements PhysicsActuator {
     	if(joint==null) throw new RuntimeException("You must attach dynamics nodes first");
     	this.maxVelocity = maxVelocity;
     	axis.setAvailableAcceleration(maxAcceleration);
-    	axis.setPositionMaximum(upperLimit);
-    	axis.setPositionMinimum(lowerLimit);
+    	if(upperLimit==lowerLimit) {
+    		axis.setPositionMaximum((float) Math.PI);
+    		axis.setPositionMinimum((float)-Math.PI);
+    	}
+    	else {
+    		axis.setPositionMaximum(upperLimit);
+    		axis.setPositionMinimum(lowerLimit);
+    	}
     }
     /**
      * Attach the linear acutator between two DynamicPhysicsNode 
@@ -54,16 +60,35 @@ public class JMERotationalActuator implements PhysicsActuator {
      */
     public void attach(DynamicPhysicsNode d1, DynamicPhysicsNode d2) {
     	node1=d1; node2=d2;
-    	node1.setAffectedByGravity(false);
-    	node2.setAffectedByGravity(false);
+    	//node1.setAffectedByGravity(false);
+    	//node2.setAffectedByGravity(false);
     	if(joint==null)  {
-    		joint = world.getPhysicsSpace().createJoint();
+    		joint = (OdeJoint)((OdePhysicsSpace)world.getPhysicsSpace()).createJoint();
+    		
+    		axis = joint.createRotationalAxis();
     		joint.attach(node1,node2);
-    		axis = joint.createTranslationalAxis();
-    		axis.setDirection(new Vector3f(-1,0,0));
-    		setControlParameters(0.1f,0.05f,-1f,1f); //default parameters
+//    		node.getLocalRotation().mult(mesh.getLocalTranslation()).add(node.getLocalTranslation());
+    		//joint.createRotationalAxis().setDirection(new Vector3f(0,1,0));
+    		//joint.createRotationalAxis().setDirection(new Vector3f(0,0,1));
+    		
+    		//axis.setDirection(d1.getLocalRotation().inverse().mult(new Vector3f(0,1,0)));
+    		axis.setDirection(new Vector3f(1,0,0));
+    		disactivate();
+    		setControlParameters(9.82f,1f,-(float)Math.PI,(float)Math.PI); //default parameters
+    		
+    		//Joint testJoint = world.getPhysicsSpace().createJoint();
+    		//testJoint.attach(node2);
     	}
     }
+    public void setDirection(float x,float y, float z) {
+    	axis.setDirection(new Vector3f(x,y,z));
+    }
+    public void reset() {
+    	disactivate();
+    	Vector3f[] axes = new Vector3f[]{new Vector3f(),new Vector3f(),new Vector3f()};
+    	node1.getLocalRotation().toAxes(axes);
+    	axis.setDirection(axes[2].mult(-1));	
+	}
     /**
      * encoder value in percent
      * @return encoder value in percent
@@ -76,31 +101,23 @@ public class JMERotationalActuator implements PhysicsActuator {
 	 * Make the actuator rotate towards a goal [0-1] percent of fully expanded 
 	 * @see ussr.model.PhysicsActuator#activate(float)
 	 */
-	public boolean activate(float goal) { 
+	public boolean activate(float goal) {
+		if(Float.isNaN(getEncoderValue())||Float.isInfinite(getEncoderValue())) {
+			//System.out.println("Actuator is not yet setup!");
+			return false;
+		}
 		float error = goal-getEncoderValue();
-		/*if(error>epsilon) {
-			axis.setDesiredVelocity(maxVelocity);
-		}
-		else if(error<-epsilon) {
-			axis.setDesiredVelocity(-maxVelocity);
-		}
-		else {
-			axis.setDesiredVelocity(0);
-			//System.out.println("Already There pos = "+getEncoderValue()+" error = "+error);
-		}*/
-		axis.setDesiredVelocity(-maxVelocity);
-		//System.out.println("acc = "+joint.getAxes().get(0).getAvailableAcceleration());
-		System.out.println("Velocity = "+axis.getVelocity());
-		System.out.println("pos = "+getEncoderValue()+" error "+error);
-		return false;
+		if(goal>0) axis.setDesiredVelocity(maxVelocity);
+		else axis.setDesiredVelocity(-maxVelocity);
+		return true;
 	}
-
-	/** (non-Javadoc)
+	long tempCounter=0;
+	/** 
+	 * Relax the linear actuator - can this be done always?
 	 * @see ussr.model.PhysicsActuator#disactivate()
 	 */
 	public void disactivate() {
-		// TODO Auto-generated method stub
-
+		axis.setDesiredVelocity(0);
 	}
 
 	/* (non-Javadoc)
@@ -118,5 +135,7 @@ public class JMERotationalActuator implements PhysicsActuator {
 		// TODO Auto-generated method stub
 
 	}
-
+	public String toString() {
+		return "JMELinearActuator: "+name;
+	}
 }
