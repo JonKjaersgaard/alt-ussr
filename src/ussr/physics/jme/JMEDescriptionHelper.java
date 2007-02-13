@@ -27,6 +27,7 @@ import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jme.bounding.BoundingBox;
 import com.jme.bounding.BoundingSphere;
+import com.jme.math.Vector3f;
 import com.jme.scene.Node;
 import com.jme.scene.SceneElement;
 import com.jme.scene.SharedMesh;
@@ -115,29 +116,10 @@ public class JMEDescriptionHelper {
 	private static TriMesh constructAtronModel(String name, AtronShape half) {
 		if(atronModel==null) loadAtronModel(half.getRadius());
 		SharedMesh atronMesh = new SharedMesh(name,atronModel);
-		//Matrix3f rotMat = new Matrix3f(); //rotate north 180 degree
-		if(half.isNorth()) {
-			
-			//atronMesh.setLocalTranslation(new Vector3f(0,0,-0.01f));
-			//rotMat = new Matrix3f(1, 0, 0, 0, -1, 0, 0, 0, -1); //rotate north 180 degree
-		}
-		else {
-			atronMesh.setLocalScale(0.95f*atronMesh.getLocalScale().x);
-			//atronMesh.setLocalTranslation(new Vector3f(0,0,0.01f));
-		}
-		//rotate both 45 degree
-		//rotMat = rotMat.mult(new Matrix3f(0.707107f, 0.707107f, 0.f, -0.707107f, 0.707107f, 0.f, 0.f, 0.f, 1.f));
-		
-		//atronMesh.setLocalRotation(rotMat);
-		
-		//TriMesh atron = new TriMesh("Atron Node");
-		//connectors? - special atron nodes with connectors?
+		if(!half.isNorth()) atronMesh.setLocalScale(0.95f*atronMesh.getLocalScale().x);
 		return atronMesh;
 	}
     public static void loadAtronModel(float radius) {
-//		atronModel = new Sphere("", 10, 10, 0.11f);
-//		return;
-
 		try {
 			MaxToJme C1 = new MaxToJme();
 			ByteArrayOutputStream BO = new ByteArrayOutputStream();

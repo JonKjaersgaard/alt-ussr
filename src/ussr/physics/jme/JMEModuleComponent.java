@@ -20,6 +20,8 @@ import com.jme.math.Vector3f;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
 import com.jmex.physics.DynamicPhysicsNode;
+import com.jmex.physics.geometry.PhysicsCapsule;
+import com.jmex.physics.geometry.PhysicsMesh;
 
 public class JMEModuleComponent implements PhysicsModuleComponent {
     /**
@@ -69,6 +71,12 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         JMEDescriptionHelper.setColor(world,shape,element.getColor());
 
         // Finalize
+        
+        //PhysicsCapsule cap = moduleNode.createCapsule(""); //erstat med denne form for collision geometrier
+        //cap.setLocalScale(new Vector3f(0.060f,1,0f));
+        //PhysicsMesh mesh = moduleNode.createMesh("");
+        //mesh.copyFrom(triMesh);
+
    		moduleNode.generatePhysicsGeometry(element.getAccurateCollisionDetection());
    		moduleNode.computeMass(); //do we always want to do that?
    		world.getRootNode().attachChild( moduleNode );       

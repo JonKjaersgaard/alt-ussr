@@ -21,4 +21,6 @@ public interface PhysicsActuator extends PhysicsEntity {
 
 	void reset();
 
+	float getEncoderValue();
+
 }

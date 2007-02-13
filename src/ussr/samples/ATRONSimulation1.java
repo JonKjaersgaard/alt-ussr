@@ -44,6 +44,7 @@ public class ATRONSimulation1 extends GenericSimulation {
         ArrayList<WorldDescription.ModulePosition> modulePos;
         //modulePos = buildAsLattice(5,2,4,1);
         modulePos = buildCar();
+        //modulePos = buildSnake(8);
         
         world.setModulePositions(modulePos);
         
@@ -63,7 +64,21 @@ public class ATRONSimulation1 extends GenericSimulation {
         });*/
         new ATRONSimulation1().runSimulation(world,true);
     }
-    private static ArrayList<ModulePosition> buildCar() {
+    private static ArrayList<ModulePosition> buildSnake(int length) {
+    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
+    	int x=0,y=0,z=0;
+    	for(int i=0;i<length;i++) {
+    		if(i%2==0) {
+    			mPos.add(new WorldDescription.ModulePosition("snake "+i, new VectorDescription(x*unit,y*unit,z*unit), rotation_EW));
+    		}
+    		else {
+    			mPos.add(new WorldDescription.ModulePosition("snake "+i, new VectorDescription(x*unit,y*unit,z*unit), rotation_NS));
+    		}
+    		x++;z++;
+    	}
+		return mPos;
+	}
+	private static ArrayList<ModulePosition> buildCar() {
     	float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
     	mPos.add(new WorldDescription.ModulePosition("driver", new VectorDescription(2*0*unit,0*unit-Yoffset,0*unit), rotation_EW));

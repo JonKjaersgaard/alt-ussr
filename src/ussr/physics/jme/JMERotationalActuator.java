@@ -28,7 +28,7 @@ public class JMERotationalActuator implements PhysicsActuator {
     private String name;
 	private float maxVelocity = 0.01f;
 	private JointAxis axis;
-	
+	private boolean active = false;
     public JMERotationalActuator(JMESimulation world, String baseName) {
         this.world = world;
         this.name = baseName;
@@ -98,25 +98,40 @@ public class JMERotationalActuator implements PhysicsActuator {
     }
 
 	/**
-	 * Make the actuator rotate towards a goal [0-1] percent of fully expanded 
+	 * Make the actuator rotate towards a goal [0-1] percent 
+	 * If -1 or +1 is given the actuator raotates full speed in the
+	 * corresponding direction  
 	 * @see ussr.model.PhysicsActuator#activate(float)
 	 */
 	public boolean activate(float goal) {
+		active = true;
 		if(Float.isNaN(getEncoderValue())||Float.isInfinite(getEncoderValue())) {
 			//System.out.println("Actuator is not yet setup!");
 			return false;
 		}
-		float error = goal-getEncoderValue();
-		if(goal>0) axis.setDesiredVelocity(maxVelocity);
-		else axis.setDesiredVelocity(-maxVelocity);
+		if(goal==-1) axis.setDesiredVelocity(-maxVelocity); 
+		else if(goal==1) axis.setDesiredVelocity(maxVelocity);
+		else { //go for position
+			float error = goal-getEncoderValue();
+			if(Math.abs(error)<0.01) {
+				disactivate(); //at goal stop
+				//System.out.println("Goal Reached "+getEncoderValue());
+			}
+			else if(Math.abs(error)<0.5) { //go clockwise direction
+				axis.setDesiredVelocity(maxVelocity*error/Math.abs(error));
+			}
+			else { //go counterclockwise direction
+				axis.setDesiredVelocity(-maxVelocity*error/Math.abs(error));
+			}
+		}
 		return true;
 	}
-	long tempCounter=0;
 	/** 
 	 * Relax the linear actuator - can this be done always?
 	 * @see ussr.model.PhysicsActuator#disactivate()
 	 */
 	public void disactivate() {
+		active = false;
 		axis.setDesiredVelocity(0);
 	}
 
@@ -124,8 +139,7 @@ public class JMERotationalActuator implements PhysicsActuator {
 	 * @see ussr.model.PhysicsActuator#isActive()
 	 */
 	public boolean isActive() {
-		// TODO Auto-generated method stub
-		return false;
+		return active;
 	}
 
 	/* (non-Javadoc)

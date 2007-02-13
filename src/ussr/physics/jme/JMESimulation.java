@@ -85,6 +85,7 @@ import com.jmex.physics.PhysicsDebugger;
 import com.jmex.physics.PhysicsSpace;
 import com.jmex.physics.StaticPhysicsNode;
 import com.jmex.physics.impl.ode.OdePhysicsSpace;
+import com.jmex.physics.impl.ode.geometry.OdeMesh;
 import com.jmex.physics.material.Material;
 import com.jmex.physics.util.PhysicsPicker;
 import com.jmex.terrain.TerrainBlock;
@@ -105,7 +106,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     private List<Module> modules = new ArrayList<Module>();
     private Map<DynamicPhysicsNode,Set<TriMesh>> geometryMap = new HashMap<DynamicPhysicsNode,Set<TriMesh>>();
     
-    protected float physicsSimulationStepSize=0.005f;
+    protected float physicsSimulationStepSize=0.01f;
     private PhysicsSpace physicsSpace;
     protected InputHandler cameraInputHandler;
    
@@ -262,16 +263,20 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
                 
                 moduleComponents.add(northComponent);
                 moduleComponents.add(southComponent);
+                northNode.setMaterial(Material.CONCRETE);
+                southNode.setMaterial(Material.CONCRETE);
                 northNode.setMass(0.400f); //800 grams in total
                 southNode.setMass(0.400f);
                 
                 JMERotationalActuator centerActuator = new JMERotationalActuator(this,"center");
                 module.addActuator(new Actuator(centerActuator));
                 centerActuator.attach(southNode,northNode);
-                centerActuator.setControlParameters(100, 0.5f, 0, 0); //100N, 0.2 m/s or rad/s?, no rotational limits
+                centerActuator.setControlParameters(500, 2f, 0, 0); //100N, 0.2 m/s or rad/s?, no rotational limits
                 centerActuator.setDirection(0, 0, 1);
                 centerActuator.activate(10);
                 
+                System.out.println("center c ="+centerActuator.getEncoderValue());
+                System.out.println("Connector mass = "+southComponent.getNodes().get(0).getChildren().get(1).getClass()+" "+southNode.getMass());
 
 /*                DynamicPhysicsNode atronTest1 = getPhysicsSpace().createDynamicNode();
                 rootNode.attachChild( atronTest1 );
@@ -1260,7 +1265,7 @@ public RenderState color2jme(Color color) {
             this.pause = pause;
         }
         public boolean isPaused() {
-            return pause;
+            return pause||physicsSteps==0; //dont run controller in timestep 0 since ODE is not yet correctly setup (ugly hack?)
         }
 
 

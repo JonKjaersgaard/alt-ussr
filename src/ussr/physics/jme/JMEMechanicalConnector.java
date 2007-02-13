@@ -122,8 +122,8 @@ public class JMEMechanicalConnector implements JMEConnector {
     public void setModel(Connector connector) {
         this.model = connector;        
     }
-    private Joint connection;
-    public void connectTo(JMEMechanicalConnector jc2) {
+    private volatile Joint connection=null;
+    public synchronized void connectTo(JMEMechanicalConnector jc2) {
     	/*System.out.println("Connecter me "+toString()+"to "+jc2.toString());
         world.getRootNode().unlockMeshes();
         DynamicPhysicsNode adopter = jc2.getNode();
@@ -143,10 +143,12 @@ public class JMEMechanicalConnector implements JMEConnector {
         adopter.generatePhysicsGeometry();
         adopter.computeMass();*/
     	if(this.connectedConnector==null&& jc2.connectedConnector==null) {
-	    	connection = world.getPhysicsSpace().createJoint();
+    		if(connection==null) connection = world.getPhysicsSpace().createJoint();
+    		else connection.reset();
 	    	connection.attach(getNode(),jc2.getNode());
 	    	connection.setAnchor(node.getLocalRotation().mult(mesh.getLocalTranslation()));
-	    	
+	    	connection.setActive(true);
+	    	jc2.connection = connection;
 	    	//RotationalJointAxis xAxis = connection.createRotationalAxis(); //xAxis.setDirection(new Vector3f(1,0,0));
 	    	//RotationalJointAxis yAxis = connection.createRotationalAxis(); //yAxis.setDirection(new Vector3f(0,1,0));
 	    	//RotationalJointAxis zAxis = connection.createRotationalAxis(); //zAxis.setDirection(new Vector3f(0,0,1));
@@ -165,14 +167,28 @@ public class JMEMechanicalConnector implements JMEConnector {
 	    	//joint.setSpring(100000, 10);
 	        this.connectedConnector = jc2;
 	        jc2.connectedConnector = this;
+	        System.out.println("Connected");
     	}
     	else {
     		System.out.println("Already connected");
     	}
     }
     
-    public void disconnect() {
-        PhysicsLogger.log("WARNING: broken method");
+    public synchronized void disconnect() {
+    	//what about timing?
+    	if(isConnected()) {
+	    	if(this.connectedConnector!=null) this.connectedConnector = null;
+	    	if(this.connection!=null) {
+	    		if(connection.isActive())	{ 
+	    			connection.setActive(false);
+	    			connection.detach();
+	    			System.out.println("disconnected");
+	    		} 
+	    	}
+    	}
+    	
+        
+       /* PhysicsLogger.log("WARNING: broken method");
         node.unlockMeshes();
         node.unlockBounds();
         if(connectedConnector==null) return;
@@ -186,7 +202,7 @@ public class JMEMechanicalConnector implements JMEConnector {
         newNode.generatePhysicsGeometry();
         newNode.computeMass();
         world.getRootNode().attachChild(newNode);
-        node.updateModelBound();
+        node.updateModelBound();*/
     }
 
 	public void setConnectorColor(Color color) {

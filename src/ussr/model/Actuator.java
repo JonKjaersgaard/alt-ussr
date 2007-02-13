@@ -66,4 +66,8 @@ public class Actuator extends Entity {
         result.add(physics);
         return result;
     }
+
+	public float getEncoderValue() {
+		return physics.getEncoderValue();
+	}
 }
