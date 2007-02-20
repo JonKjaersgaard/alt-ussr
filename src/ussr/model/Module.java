@@ -46,6 +46,10 @@ public class Module extends Entity {
      */
     private List<Actuator> actuators = new ArrayList<Actuator>();
     
+    /**
+     * Sensors for the module
+     */
+    private List<Sensor> sensors = new ArrayList<Sensor>();
 
     /**
      * Globally unique ID for this module
@@ -98,6 +102,13 @@ public class Module extends Entity {
     public void addActuator(Actuator actuator) {
         actuators.add(actuator);
     }
+    /**
+     * Add a sensor to the module
+     * @param sensor to add to the module
+     */
+    public void addSensor(Sensor sensor) {
+        sensors.add(sensor);
+    }
     
     
     /**
@@ -135,13 +146,20 @@ public class Module extends Entity {
     }
     
     /**
-     * Get the connectors associated with the module
-     * @return the connectors associated with the module
+     * Get the actuators associated with the module
+     * @return the actuators associated with the module
      */
     public List<Actuator> getActuators() {
         return actuators;
     }
-    
+    /**
+     * Get the sensors associated with the module
+     * @return the sensors associated with the module
+     */
+	public List<Sensor> getSensors() {
+		return sensors;
+	}
+	
     /**
      * Get the controller associated with the module
      * @return the controller associated with the module

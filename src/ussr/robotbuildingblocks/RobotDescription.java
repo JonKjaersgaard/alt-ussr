@@ -25,7 +25,8 @@ public class RobotDescription extends Description {
     
     public static enum ConnectorType {
         MAGNETIC_CONNECTOR,
-        MECHANICAL_CONNECTOR,
+        MECHANICAL_CONNECTOR_RIGID,
+        MECHANICAL_CONNECTOR_BALL_SOCKET,
         NONE
     }
 	

@@ -3,7 +3,6 @@ package ussr.physics.jme;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,6 +25,7 @@ import ussr.model.Connector;
 import ussr.model.Entity;
 import ussr.model.Module;
 import ussr.model.PhysicsActuator;
+import ussr.model.Sensor;
 import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
@@ -80,12 +80,10 @@ import com.jme.util.geom.Debugger;
 import com.jmex.awt.input.AWTMouseInput;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
-import com.jmex.physics.JointAxis;
 import com.jmex.physics.PhysicsDebugger;
 import com.jmex.physics.PhysicsSpace;
 import com.jmex.physics.StaticPhysicsNode;
 import com.jmex.physics.impl.ode.OdePhysicsSpace;
-import com.jmex.physics.impl.ode.geometry.OdeMesh;
 import com.jmex.physics.material.Material;
 import com.jmex.physics.util.PhysicsPicker;
 import com.jmex.terrain.TerrainBlock;
@@ -325,8 +323,6 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
 	            internalComponent.addConnector("Connector 2", new Vector3f(unit, 0, 0));
 	            
 	            
-	            
-	            
                 module.addComponent(externalComponent);
                 module.addComponent(externalCone);
                 module.addComponent(internalComponent); 
@@ -336,7 +332,16 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
                 JMELinearActuator centerActuator = new JMELinearActuator(this,"center");
                 module.addActuator(new Actuator(centerActuator));
                 centerActuator.attach(externalNode,internalNode);
-                centerActuator.setControlParameters(9.82f,0.06f/0.25f,0f,0.06f); //odin muscle parametre - way too fast!
+                //centerActuator.setControlParameters(9.82f,0.06f/0.25f,0f,0.06f); //odin muscle parametre - way too fast!
+                centerActuator.setControlParameters(0.5f*9.82f,0.06f,0f,0.06f); //odin muscle parametre - way too fast!
+                
+                JMETiltSensor tiltX = new JMETiltSensor(this,"tiltX",'x',externalNode);
+                JMETiltSensor tiltY = new JMETiltSensor(this,"tiltY",'y',externalNode);
+                JMETiltSensor tiltZ = new JMETiltSensor(this,"tiltZ",'z',externalNode);
+                module.addSensor(new Sensor(tiltX));
+                module.addSensor(new Sensor(tiltY)); 
+                module.addSensor(new Sensor(tiltZ)); 
+                
                 
                 moduleComponents.add(externalComponent);
                 moduleComponents.add(internalComponent);
@@ -424,7 +429,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
                     if ( !pause ) { 
                     	physicsStep(); // 1 call to = 32ms (one example setup)
                     }
-                    if(mainLoopCounter%1==0) { // 1 call to = 16ms (same example setup)
+                    if(mainLoopCounter%5==0) { // 1 call to = 16ms (same example setup)
                     	InputSystem.update();
                     	update(-1.0f);
 	                	render(-1.0f);
@@ -601,7 +606,9 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
         
         updateBuffer.setLength( 0 );
         updateBuffer.append( "FPS: " ).append( (int) timer.getFrameRate() ).append(" - " );
-        updateBuffer.append( display.getRenderer().getStatistics( tempBuffer ) ).append(" - " );;
+        //updateBuffer.append( display.getRenderer().getStatistics( tempBuffer ) ).append(" - " );;
+        String timeStr= Float.toString(getTime());
+        updateBuffer.append( "RT: " ).append( timeStr.subSequence(0, timeStr.indexOf('.')+2) ).append(" sec - " );
         updateBuffer.append( "TS: " ).append( (int) physicsSteps );
         /** Send the fps to our fps bar at the bottom. */
         fps.print( updateBuffer );
@@ -1086,6 +1093,8 @@ public RenderState color2jme(Color color) {
 	        fps = Text.createDefaultTextLabel( "FPS label" );
 	        fps.setCullMode( SceneElement.CULL_NEVER );
 	        fps.setTextureCombineMode( TextureState.REPLACE );
+	        //fps.setLocalScale(0.9f);
+	        
 
 	        // Finally, a stand alone node (not attached to root on purpose)
 	        fpsNode = new Node( "FPS node" );

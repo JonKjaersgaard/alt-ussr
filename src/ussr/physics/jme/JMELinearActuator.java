@@ -16,7 +16,7 @@ import com.jmex.physics.JointAxis;
  * @author david
  *
  */
-public class JMELinearActuator implements PhysicsActuator {
+public class JMELinearActuator implements JMEActuator {
 
 //	private Actuator model;
     private DynamicPhysicsNode node1;

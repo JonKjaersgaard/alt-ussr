@@ -50,4 +50,10 @@ public abstract class ControllerImpl implements Controller {
             }
         }
     }
+    protected void delay(long ms) {
+    	float stopTime = module.getSimulation().getTime()+ms/1000f;
+    	while(stopTime>module.getSimulation().getTime()) {
+    		Thread.yield();
+    	}
+	}
 }

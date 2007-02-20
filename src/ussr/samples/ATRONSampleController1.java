@@ -46,12 +46,7 @@ public class ATRONSampleController1 extends ControllerImpl {
         	Thread.yield();
         }
     }
-    private void delay(long ms) {
-    	float stopTime = module.getSimulation().getTime()+ms/1000f;
-    	while(stopTime>module.getSimulation().getTime()) {
-    		Thread.yield();
-    	}
-	}
+
 	private boolean isRotating() {
     	return module.getActuators().get(0).isActive();
 	}

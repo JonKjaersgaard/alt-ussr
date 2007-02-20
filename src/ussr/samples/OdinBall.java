@@ -8,7 +8,7 @@ import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.SphereShape;
 import ussr.robotbuildingblocks.VectorDescription;
 
-public class OdinBall extends Odin {
+public abstract class OdinBall extends Odin {
 
 	/**
 	 * A passive ball with 12 connectors in a ccp lattice
@@ -38,11 +38,8 @@ public class OdinBall extends Odin {
         		new VectorDescription(1*unit, 0*unit, 1*unit),
         		new VectorDescription(1*unit, 1*unit, 0*unit),
         });
-        description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR );
+        description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR_BALL_SOCKET );
         //description.setMaxConnectionDistance(6);
         return description;
-	}
-	public Controller createController() {
-		return new OdinSampleController1("OdinBall");
 	}
 }

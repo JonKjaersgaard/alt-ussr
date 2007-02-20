@@ -16,18 +16,18 @@ import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
 import com.jmex.physics.RotationalJointAxis;
 
-public class JMEMechanicalConnector implements JMEConnector {
+public abstract class JMEMechanicalConnector implements JMEConnector {
     /**
      * The abstract connector represented by this jme entity
      */
-    private Connector model;
-    private DynamicPhysicsNode node;
-    private JMESimulation world;
-    private JMEConnector connectedConnector = null;
-    private JMEMechanicalConnector lastProximityConnector = null;
-    private JMEModuleComponent module;
-    private float maxConnectDistance;
-    private TriMesh mesh;
+	protected Connector model;
+    protected DynamicPhysicsNode node;
+    protected JMESimulation world;
+    protected JMEConnector connectedConnector = null;
+    protected JMEMechanicalConnector lastProximityConnector = null;
+    protected JMEModuleComponent module;
+    protected float maxConnectDistance;
+    protected TriMesh mesh;
 
     public JMEMechanicalConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, RobotDescription selfDesc) {
         List<GeometryDescription> geometry = selfDesc.getConnectorGeometry();
@@ -149,22 +149,7 @@ public class JMEMechanicalConnector implements JMEConnector {
 	    	connection.setAnchor(node.getLocalRotation().mult(mesh.getLocalTranslation()));
 	    	connection.setActive(true);
 	    	jc2.connection = connection;
-	    	//RotationalJointAxis xAxis = connection.createRotationalAxis(); //xAxis.setDirection(new Vector3f(1,0,0));
-	    	//RotationalJointAxis yAxis = connection.createRotationalAxis(); //yAxis.setDirection(new Vector3f(0,1,0));
-	    	//RotationalJointAxis zAxis = connection.createRotationalAxis(); //zAxis.setDirection(new Vector3f(0,0,1));
-	    	//xAxis.setAvailableAcceleration(1000);
-	    	//yAxis.setAvailableAcceleration(1000);
-	    	//zAxis.setAvailableAcceleration(1000);
-	    	
-	    	//xAxis.setPositionMaximum(0); yAxis.setPositionMinimum(0);
-	    	//yAxis.setPositionMaximum(0); yAxis.setPositionMinimum(0);
-	    	//zAxis.setPositionMaximum(0); zAxis.setPositionMinimum(0);
-	    	
-	    	/*xAxis.setPositionMaximum((float)Math.PI/6); yAxis.setPositionMinimum((float)-Math.PI/6);
-	    	yAxis.setPositionMaximum((float)Math.PI/6); yAxis.setPositionMinimum((float)-Math.PI/6);
-	    	zAxis.setPositionMaximum((float)Math.PI/6); zAxis.setPositionMinimum((float)-Math.PI/6);*/
-	    	
-	    	//joint.setSpring(100000, 10);
+	    	addAxis(connection);
 	        this.connectedConnector = jc2;
 	        jc2.connectedConnector = this;
 	        System.out.println("Connected");
@@ -173,7 +158,7 @@ public class JMEMechanicalConnector implements JMEConnector {
     		System.out.println("Already connected");
     	}
     }
-    
+    protected abstract void addAxis(Joint connection);
     public synchronized void disconnect() {
     	//what about timing?
     	if(isConnected()) {

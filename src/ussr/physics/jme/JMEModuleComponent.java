@@ -116,8 +116,10 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         ConnectorType type = selfDesc.getConnectorType();
         if(type==ConnectorType.MAGNETIC_CONNECTOR)
             connector = new JMEMagneticConnector(position,moduleNode,name,world,this,selfDesc);
-        else if(type==ConnectorType.MECHANICAL_CONNECTOR)
-            connector = new JMEMechanicalConnector(position,moduleNode,name,world,this,selfDesc);
+        else if(type==ConnectorType.MECHANICAL_CONNECTOR_RIGID)
+            connector = new JMERigidMechanicalConnector(position,moduleNode,name,world,this,selfDesc);
+        else if(type==ConnectorType.MECHANICAL_CONNECTOR_BALL_SOCKET)
+            connector = new JMEBallSocketConnector(position,moduleNode,name,world,this,selfDesc);
         else throw new Error("Unknown connector type");
         return connector;
     }

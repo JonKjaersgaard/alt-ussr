@@ -71,7 +71,7 @@ public abstract class ATRON implements Robot {
                 new VectorDescription( -xypos, xypos, -zpos ),
                 new VectorDescription( -xypos, -xypos, -zpos ),*/
         });
-        description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR );
+        description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR_RIGID );
         description.setMaxConnectionDistance(6);
         return description;
     }

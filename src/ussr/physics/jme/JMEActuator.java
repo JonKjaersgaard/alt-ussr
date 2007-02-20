@@ -14,6 +14,4 @@ import com.jmex.physics.DynamicPhysicsNode;
  */
 public interface JMEActuator extends PhysicsActuator {
 
-	    public DynamicPhysicsNode getNode();
-
 }

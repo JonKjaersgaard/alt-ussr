@@ -11,7 +11,7 @@ import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.SphereShape;
 import ussr.robotbuildingblocks.VectorDescription;
 
-public class OdinMuscle extends Odin {
+public abstract class OdinMuscle extends Odin {
 
 	/**
 	 * A contractive rod with a connector in each end
@@ -45,11 +45,8 @@ public class OdinMuscle extends Odin {
         		//new VectorDescription(-unit, 0, 0),
         		//new VectorDescription(unit, 0, 0),
         });
-        description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR );
+        description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR_BALL_SOCKET );
         //description.setMaxConnectionDistance(6);
         return description;
-	}
-	public Controller createController() {
-		return new OdinSampleController1("OdinMuscle");
 	}
 }
