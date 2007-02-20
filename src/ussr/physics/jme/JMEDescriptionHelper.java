@@ -7,7 +7,9 @@ import java.awt.Color;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 import ussr.comm.GenericReceiver;
@@ -27,7 +29,6 @@ import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jme.bounding.BoundingBox;
 import com.jme.bounding.BoundingSphere;
-import com.jme.math.Vector3f;
 import com.jme.scene.Node;
 import com.jme.scene.SceneElement;
 import com.jme.scene.SharedMesh;
@@ -123,8 +124,10 @@ public class JMEDescriptionHelper {
 		try {
 			MaxToJme C1 = new MaxToJme();
 			ByteArrayOutputStream BO = new ByteArrayOutputStream();
-			URL maxFile = JMEDescriptionHelper.class.getClassLoader().getResource("ATRON.3DS");
-			C1.convert(new BufferedInputStream(maxFile.openStream()),BO);
+			InputStream maxStream = new FileInputStream("resources/ATRON.3DS");
+			//URL maxFile = JMEDescriptionHelper.class.getClassLoader().getResource("ATRON.3DS");
+			//C1.convert(new BufferedInputStream(maxFile.openStream()),BO);
+			C1.convert(new BufferedInputStream(maxStream),BO);
 			Node atronNode = (Node)BinaryImporter.getInstance().load(new ByteArrayInputStream(BO.toByteArray()));
 			atronModel = (TriMesh)(((Node)atronNode.getChild(0)).getChild(0));
 			atronModel.setLocalScale(0.092f*radius);

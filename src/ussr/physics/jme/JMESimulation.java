@@ -664,7 +664,8 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
         planeNode.generatePhysicsGeometry();
         planeNode.setMaterial(Material.DEFAULT);
         
-        Texture tex = TextureManager.loadTexture(JMESimulation.class.getClassLoader().getResource("myGrass2.jpg"),Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
+        //Texture tex = TextureManager.loadTexture(JMESimulation.class.getClassLoader().getResource("myGrass2.jpg"),Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
+        Texture tex = TextureManager.loadTexture("resources/myGrass2.jpg",Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
         tex.setWrap(Texture.WM_WRAP_S_WRAP_T);
         tex.setScale(new Vector3f(10f,10f,0f));
         TextureState ts = display.getRenderer().createTextureState();
@@ -690,12 +691,9 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
 		// generate a terrain texture with 3 textures
 		ProceduralTextureGenerator pt = new ProceduralTextureGenerator(
 				heightMap);
-		pt.addTexture(new ImageIcon(Lesson3.class.getClassLoader()
-				.getResource("grassb.png")), -255, 0, 255);
-		pt.addTexture(new ImageIcon(Lesson3.class.getClassLoader()
-				.getResource("dirt.jpg")), 0, 128, 255);
-		pt.addTexture(new ImageIcon(Lesson3.class.getClassLoader()
-				.getResource("highest.jpg")), 128, 255,
+		pt.addTexture(new ImageIcon("resources/grassb.png"), -255, 0, 255);
+		pt.addTexture(new ImageIcon("resources/dirt.jpg"), 0, 128, 255);
+		pt.addTexture(new ImageIcon("resources/highest.jpg"), 128, 255,
 				384);
 		pt.createTexture(32);
 		
@@ -728,38 +726,13 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
      */
 	private StaticPhysicsNode createSky() {
 		Skybox skybox = new Skybox("skybox", 100, 100, 100);
- 
-        Texture north = TextureManager.loadTexture(
-            JMESimulation.class.getClassLoader().getResource(
-            "jmetest/data/texture/north.jpg"),
-            Texture.MM_LINEAR,
-            Texture.FM_LINEAR);
-        Texture south = TextureManager.loadTexture(
-        		JMESimulation.class.getClassLoader().getResource(
-            "jmetest/data/texture/south.jpg"),
-            Texture.MM_LINEAR,
-            Texture.FM_LINEAR);
-        Texture east = TextureManager.loadTexture(
- 
-        		JMESimulation.class.getClassLoader().getResource(
-            "jmetest/data/texture/east.jpg"),
-            Texture.MM_LINEAR,
-            Texture.FM_LINEAR);
-        Texture west = TextureManager.loadTexture(
-        		JMESimulation.class.getClassLoader().getResource(
-            "jmetest/data/texture/west.jpg"),
-            Texture.MM_LINEAR,
-            Texture.FM_LINEAR);
-        Texture up = TextureManager.loadTexture(
-        		JMESimulation.class.getClassLoader().getResource(
-            "jmetest/data/texture/top.jpg"),
-            Texture.MM_LINEAR,
-            Texture.FM_LINEAR);
-        Texture down = TextureManager.loadTexture(
-        		JMESimulation.class.getClassLoader().getResource(
-            "jmetest/data/texture/bottom.jpg"),
-            Texture.MM_LINEAR,
-            Texture.FM_LINEAR);
+ 		
+		Texture north = TextureManager.loadTexture("resources/north.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
+        Texture south = TextureManager.loadTexture("resources/south.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
+        Texture east = TextureManager.loadTexture("resources/east.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
+        Texture west = TextureManager.loadTexture("resources/west.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
+        Texture up = TextureManager.loadTexture("resources/top.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
+        Texture down = TextureManager.loadTexture("resources/bottom.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
  
         skybox.setTexture(Skybox.NORTH, north);
         skybox.setTexture(Skybox.WEST, west);
