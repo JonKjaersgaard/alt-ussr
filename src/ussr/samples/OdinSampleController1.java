@@ -7,7 +7,6 @@ package ussr.samples;
 
 import java.util.Random;
 
-import sun.awt.windows.ThemeReader;
 import ussr.model.ControllerImpl;
 
 /**
