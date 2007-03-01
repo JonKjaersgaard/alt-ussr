@@ -38,6 +38,10 @@ public class ATRONSimulation1 extends GenericSimulation {
 	private static RotationDescription rotation_EW = new RotationDescription(new VectorDescription(eigth,0,0),new VectorDescription(0,quart,0));
 	
     public static void main( String[] args ) {
+        new ATRONSimulation1().main();
+    }
+
+    public void main() {
         setConnectorsAreActive(true);
         WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
@@ -62,8 +66,9 @@ public class ATRONSimulation1 extends GenericSimulation {
               //  new WorldDescription.Connection("leftleg",4,"middle",6)
                 //,new WorldDescription.Connection("rightleg",2,"middle",4)
         });*/
-        new ATRONSimulation1().runSimulation(world,true);
+        this.runSimulation(world,true);
     }
+
     private static ArrayList<ModulePosition> buildSnake(int length) {
     	float Yoffset = 0.4f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
