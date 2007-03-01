@@ -44,8 +44,8 @@ public class ATRONSimulation1 extends GenericSimulation {
         world.setPlaneSize(5);
         ArrayList<WorldDescription.ModulePosition> modulePos;
         //modulePos = buildAsLattice(5,2,4,1);
-        //modulePos = buildCar();
-        modulePos = buildSnake(9);
+        modulePos = buildCar();
+        //modulePos = buildSnake(9);
         
         world.setModulePositions(modulePos);
         
@@ -86,8 +86,8 @@ public class ATRONSimulation1 extends GenericSimulation {
     	float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
     	mPos.add(new WorldDescription.ModulePosition("driver", new VectorDescription(2*0*unit,0*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new WorldDescription.ModulePosition("axes1", new VectorDescription(1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
-    	mPos.add(new WorldDescription.ModulePosition("axes2", new VectorDescription(-1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
+    	mPos.add(new WorldDescription.ModulePosition("anaxle", new VectorDescription(1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
+    	mPos.add(new WorldDescription.ModulePosition("onemoreaxle", new VectorDescription(-1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
     	mPos.add(new WorldDescription.ModulePosition("wheel1", new VectorDescription(-1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
     	mPos.add(new WorldDescription.ModulePosition("wheel2", new VectorDescription(-1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
     	mPos.add(new WorldDescription.ModulePosition("wheel3", new VectorDescription(1*unit,-2*unit-Yoffset,1*unit), rotation_SN));

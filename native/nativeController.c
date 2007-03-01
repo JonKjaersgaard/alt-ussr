@@ -1,6 +1,9 @@
 #include "nativeController.h"
 #include "ussr.h"
 
+#include <stdarg.h>
+#include <stdio.h>
+
 JNIEXPORT void JNICALL Java_ussr_samples_ATRONNativeController_activate(JNIEnv *jniENV, jobject self) {
   USSREnv env;
   env.jnienv = jniENV;
@@ -8,7 +11,11 @@ JNIEXPORT void JNICALL Java_ussr_samples_ATRONNativeController_activate(JNIEnv *
   activate(&env);
 }
 
-/* Helper methods */
+#define READ_USSR_ENV(jni_var,self_var) \
+  JNIEnv *jni_var = (JNIEnv*)env->jnienv; \
+  jobject self_var = (jobject)env->controller;
+
+/* Internal helper methods */
 
 static void reportError(JNIEnv *jniEnv, char *error) {
   fprintf(stderr, "Error: %s\n", error);
@@ -26,30 +33,41 @@ static jobject getModule(JNIEnv *jniEnv, jobject self) {
   return (*jniEnv)->GetObjectField(jniEnv, self, module_fid);	
 }
 
-static jobject getSimulator(JNIEnv *jniEnv, jobject self) {
-  jobject module = getModule(jniEnv, self);
-  jclass moduleClass = (*jniEnv)->GetObjectClass(jniEnv,module);
-  jmethodID getSimulation_mid = (*jniEnv)->GetMethodID(jniEnv, moduleClass, "getSimulation", "()Lussr/physics/PhysicsSimulation");
-  jobject simulator;
-  if (getSimulation_mid == NULL) {
-    reportError(jniEnv,"Failed to locate getSimulation method in module class");
+/* API helper methods */
+
+void ussr_call_void_controller_method(USSREnv *env, char *name, char *signature, ...) {
+  READ_USSR_ENV(jniEnv,self);
+  va_list parameters;
+  /* Find method ID */
+  jclass controllerClass = (*jniEnv)->GetObjectClass(jniEnv, self);
+  jmethodID mid = (*jniEnv)->GetMethodID(jniEnv, controllerClass, name, signature);
+  if (mid == NULL) {
+    reportError(jniEnv,"Failed to locate method in controller class");
   }
-  simulator = (*jniEnv)->CallObjectMethod(jniEnv, module, getSimulation_mid);
-  return simulator;
+  /* Find parameters */
+  va_start(parameters, signature);
+  /* Call Java method */
+  (*jniEnv)->CallVoidMethodV(jniEnv, self, mid, parameters);
+}
+
+int ussr_call_int_controller_method(USSREnv *env, char *name, char *signature, ...) {
+  READ_USSR_ENV(jniEnv,self);
+  va_list parameters;
+  /* Find method ID */
+  jclass controllerClass = (*jniEnv)->GetObjectClass(jniEnv, self);
+  jmethodID mid = (*jniEnv)->GetMethodID(jniEnv, controllerClass, name, signature);
+  if (mid == NULL) {
+    reportError(jniEnv,"Failed to locate method in controller class");
+  }
+  /* Find parameters */
+  va_start(parameters, signature);
+  /* Call Java method */
+  int result = (*jniEnv)->CallIntMethodV(jniEnv, self, mid, parameters);
+  return result;
 }
 
 /* Simulator API */
 
-#define READ_USSR_ENV(jni_var,self_var) \
-  JNIEnv *jni_var = (JNIEnv*)env->jnienv; \
-  jobject self_var = (jobject)env->controller;
-
 void controllerIterationSimulatorHook(USSREnv *env) {
-  READ_USSR_ENV(jniEnv,self);
-  jobject simulator = getSimulator(jniEnv,self);
-  
-}
-
-int getRole(USSREnv *env) {
-  return 0;
+  ussr_call_void_controller_method(env, "iterationSimulatorHook", "()V");
 }

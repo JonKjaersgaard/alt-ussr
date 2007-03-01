@@ -97,4 +97,15 @@ public abstract class ATRONController extends ControllerImpl {
     	}
     }
 
+    public int getRole() {
+        //quick hack mehtod
+        String name = module.getProperty("name");
+        if(name==null) return -1;
+        if(name.contains("snake")) throw new RuntimeException("Can not select role for this module: not a snake");
+        for(int i=100;i>=0;i--) {
+            if(name.contains(Integer.toString(i))) return i;
+        }
+        return -1;
+    }
+
 }

@@ -22,10 +22,6 @@ void controllerIterationSimulatorHook(USSREnv *env);  // Thread.yield(), if(paus
 
 #  endif /* USSR */
 
-/* Shared simulator and module API */
-
-int getRole(USSRONLY(USSREnv *env));
-
 /* Main controller function */
 
 extern void activate(USSRONLY(USSREnv *env));

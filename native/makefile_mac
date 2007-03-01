@@ -9,7 +9,7 @@ CFLAGS=-fPIC -DUSSR -I$(JAVAINCLUDE)
 CC=gcc
 
 all: nativeController.jnilib
-	cp nativeController.jnilib ../lib/$(CONTROLLER).jnilib
+	cp nativeController.jnilib ../lib/lib$(CONTROLLER).jnilib
 nativeController.h: ../bin/ussr/samples/ATRONNativeController.class
 	javah -jni -classpath ../bin -o nativeController.h ussr.samples.ATRONNativeController
 nativeController.jnilib: nativeController.h $(BIN)
