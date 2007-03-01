@@ -7,13 +7,17 @@ package ussr.samples;
 
 import java.awt.Color;
 
+import ussr.comm.TransmissionType;
 import ussr.model.Controller;
 import ussr.robotbuildingblocks.AtronShape;
+import ussr.robotbuildingblocks.ConeShape;
 import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.ReceivingDevice;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.SphereShape;
+import ussr.robotbuildingblocks.TransmissionDevice;
 import ussr.robotbuildingblocks.VectorDescription;
 
 /**
@@ -46,33 +50,21 @@ public abstract class ATRON implements Robot {
   	        description.setModuleGeometry(new GeometryDescription[] {hemi1, hemi2});
   	        //put center actuator here!- but how?
         }
-        SphereShape connector = new SphereShape(0.005f);
+        //SphereShape connector = new SphereShape(0.005f);
+//        ConeShape connector = new ConeShape(0.005f,0.005f);
+        ConeShape connector = new ConeShape(0.005f,0.05f);
         connector.setColor(Color.WHITE);
         description.setConnectorGeometry(new GeometryDescription[] { connector });
         /*float zpos = (float) (1.14f*Math.sin( 45 ));
         float xypos = (float) (1.14f*Math.cos( 45 ));*/
         float unit = (float) (0.045f/Math.sqrt(2)); //4.5cm from center of mass to connector
-        description.setConnectorPositions(new VectorDescription[] { //hvad er nord og syd - hvad er 1-7?
-        		/*new VectorDescription(  unit,  unit, -unit ), //north connector 0
-        		new VectorDescription( -unit,  unit, -unit ), //north connector 1
-        		new VectorDescription( -unit, -unit, -unit ), //north connector 2
-        		new VectorDescription(  unit, -unit, -unit ), //north connector 3
-        		new VectorDescription(  unit,  unit,  unit ), //south connector 4
-        		new VectorDescription( -unit,  unit,  unit ), //south connector 5
-        		new VectorDescription( -unit, -unit,  unit ), //south connector 6
-        		new VectorDescription(  unit, -unit,  unit ), //south connector 7*/
-        		
-                /*new VectorDescription( xypos, xypos, zpos ),
-                new VectorDescription( xypos, -xypos, zpos ),
-                new VectorDescription( -xypos, xypos, zpos ),
-                new VectorDescription( -xypos, -xypos, zpos ),
-                new VectorDescription( xypos, xypos, -zpos ),
-                new VectorDescription( xypos, -xypos, -zpos ),
-                new VectorDescription( -xypos, xypos, -zpos ),
-                new VectorDescription( -xypos, -xypos, -zpos ),*/
-        });
+        description.setConnectorPositions(new VectorDescription[] {});
+        
+    //    description.setTransmitters(new TransmissionDevice[] { new TransmissionDevice(TransmissionType.IR,0.1f) });
+    //    description.setReceivers(new ReceivingDevice[] { new ReceivingDevice(TransmissionType.IR,10) });
+        
         description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR_RIGID );
-        description.setMaxConnectionDistance(6);
+        description.setMaxConnectionDistance(0.03f);
         return description;
     }
 }
