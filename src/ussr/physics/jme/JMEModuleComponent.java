@@ -12,10 +12,12 @@ import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.ReceivingDevice;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RobotDescription;
+import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.TransmissionDevice;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.RobotDescription.ConnectorType;
 
+import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
@@ -89,18 +91,36 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
             model.addConnector(new Connector(connector));
             connectors.add(connector);
         }
+        //TODO change this way of creating communication sometimes we can it to be at a connector
         // Create communicators
         for(TransmissionDevice transmitter: selfDesc.getTransmitters())
-            model.addTransmissionDevice(JMEDescriptionHelper.createTransmitter(model,transmitter));
+            model.addTransmissionDevice(JMEDescriptionHelper.createTransmitter(model, model,transmitter));
         // Create communicators
         for(ReceivingDevice receiver: selfDesc.getReceivers())
-            model.addReceivingDevice(JMEDescriptionHelper.createReceiver(model, receiver));
+            model.addReceivingDevice(JMEDescriptionHelper.createReceiver(model, model, receiver));
             
     }
-    public void addConnector(String name,Vector3f position) {
+	public void addConnector(String name, Vector3f position, Color color, Quaternion rotation) {
+		addConnector(name, position, color);
+		getConnector(name).setRotation(rotation);
+	}
+	public void addConnector(String name, Vector3f position, Color color) {
+		addConnector(name, position);
+		getConnector(name).setConnectorColor(color);
+	}
+    public void addConnector(String name, Vector3f position) {
     	 JMEConnector connector = createConnector(world, name, position, selfDesc);
          model.addConnector(new Connector(connector));
          connectors.add(connector);
+    }
+    public JMEConnector getConnector(int index) {
+        return connectors.get(index);
+    }
+    public JMEConnector getConnector(String name) {
+    	for(JMEConnector c: connectors)	{
+    		if(c.getName().equals(name)) return c;
+    	}
+    	return null;
     }
     /**
      * @param world
@@ -167,4 +187,11 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
     public List<TriMesh> getModuleGeometries() {
         throw new Error("not implemented");
     }
+	public VectorDescription getPosition() {
+		Vector3f p = moduleNode.getWorldTranslation(); //TODO not testet
+		return new VectorDescription(p.x,p.y,p.z);
+	}
+	public RotationDescription getRotation() {
+		return new RotationDescription(moduleNode.getWorldRotation()); //TODO not testet
+	}
 }

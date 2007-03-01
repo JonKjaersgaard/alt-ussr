@@ -8,9 +8,6 @@ package ussr.samples;
 import java.util.ArrayList;
 
 import ussr.model.Controller;
-import ussr.physics.PhysicsFactory;
-import ussr.physics.PhysicsLogger;
-import ussr.physics.PhysicsSimulation;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
@@ -70,7 +67,8 @@ public class ATRONSimulation1 extends GenericSimulation {
     }
 
     private static ArrayList<ModulePosition> buildSnake(int length) {
-    	float Yoffset = 0.4f;
+    	//float Yoffset = 0.4f;
+    	float Yoffset = 0.0f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
     	int x=0,y=0,z=0;
     	for(int i=0;i<length;i++) {

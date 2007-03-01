@@ -16,13 +16,9 @@ import java.util.logging.Level;
 
 import javax.swing.ImageIcon;
 
-import jmetest.flagrushtut.Lesson3;
-import ussr.comm.Packet;
-import ussr.comm.Receiver;
 import ussr.comm.TransmissionType;
 import ussr.model.Actuator;
 import ussr.model.Connector;
-import ussr.model.Entity;
 import ussr.model.Module;
 import ussr.model.PhysicsActuator;
 import ussr.model.Sensor;
@@ -33,7 +29,9 @@ import ussr.robotbuildingblocks.AtronShape;
 import ussr.robotbuildingblocks.ConeShape;
 import ussr.robotbuildingblocks.CylinderShape;
 import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.ReceivingDevice;
 import ussr.robotbuildingblocks.Robot;
+import ussr.robotbuildingblocks.TransmissionDevice;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.util.Pair;
@@ -44,7 +42,6 @@ import com.jme.bounding.BoundingBox;
 import com.jme.image.Texture;
 import com.jme.input.FirstPersonHandler;
 import com.jme.input.InputHandler;
-import com.jme.input.InputSystem;
 import com.jme.input.KeyBindingManager;
 import com.jme.input.KeyInput;
 import com.jme.input.MouseInput;
@@ -105,6 +102,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     private Map<DynamicPhysicsNode,Set<TriMesh>> geometryMap = new HashMap<DynamicPhysicsNode,Set<TriMesh>>();
     
     protected float physicsSimulationStepSize=0.01f;
+    protected float gravity =0;//-9.82f;
     private PhysicsSpace physicsSpace;
     protected InputHandler cameraInputHandler;
    
@@ -216,6 +214,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     	//final StaticPhysicsNode staticPlane = createTerrain(worldDescription.getPlaneSize()); //david
         
         createSky();
+        setGravity(gravity);
 
         // Create obstacle boxes
         final List<DynamicPhysicsNode> obstacleBoxes = new ArrayList<DynamicPhysicsNode>();
@@ -244,21 +243,29 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
 	            DynamicPhysicsNode southNode = getPhysicsSpace().createDynamicNode();
 	            JMEModuleComponent southComponent = new JMEModuleComponent(this,robot,southShape,"module#"+Integer.toString(i)+".south",module,southNode);
 	            southNode.setName("AtronSouth");
-	            
+	            float pi = (float)Math.PI;
 	            float unit = (float) (0.045f/Math.sqrt(2)); //4.5cm from center of mass to connector
-	            northComponent.addConnector("Connector 0", new Vector3f(  unit,  unit, -unit));
-	            northComponent.addConnector("Connector 1", new Vector3f( -unit,  unit, -unit ));
-	            northComponent.addConnector("Connector 2", new Vector3f( -unit, -unit, -unit ));
-	            northComponent.addConnector("Connector 3", new Vector3f(  unit, -unit, -unit ));
 	            
-	            southComponent.addConnector("Connector 4", new Vector3f(  unit,  unit,  unit ));
-	            southComponent.addConnector("Connector 5", new Vector3f( -unit,  unit,  unit ));
-	            southComponent.addConnector("Connector 6", new Vector3f( -unit, -unit,  unit ));
-	            southComponent.addConnector("Connector 7", new Vector3f(  unit, -unit,  unit ));
+	            northComponent.addConnector("Connector 0", new Vector3f(  unit,  unit, -unit),Color.PINK,new Quaternion(new float[]{0,-pi/4,pi/4}));  //male
+	            northComponent.addConnector("Connector 1", new Vector3f( -unit,  unit, -unit ),Color.white,new Quaternion(new float[]{0,pi/4,-pi/4})); //female
+	            northComponent.addConnector("Connector 2", new Vector3f( -unit, -unit, -unit ),Color.PINK, new Quaternion(new float[]{0,pi/4,pi/4})); //male 
+	            northComponent.addConnector("Connector 3", new Vector3f(  unit, -unit, -unit ),Color.white, new Quaternion(new float[]{0,-pi/4,-pi/4})); //...
+	            
+	            southComponent.addConnector("Connector 4", new Vector3f(  unit,  unit,  unit ),Color.PINK,new Quaternion(new float[]{pi,pi/4,pi/4}));
+	            southComponent.addConnector("Connector 5", new Vector3f( -unit,  unit,  unit ),Color.white, new Quaternion(new float[]{pi,-pi/4,-pi/4}));
+	            southComponent.addConnector("Connector 6", new Vector3f( -unit, -unit,  unit ),Color.PINK, new Quaternion(new float[]{pi,-pi/4,pi/4}));
+	            southComponent.addConnector("Connector 7", new Vector3f(  unit, -unit,  unit ),Color.white, new Quaternion(new float[]{pi,pi/4,-pi/4}));
 	            
                 module.addComponent(northComponent);
                 module.addComponent(southComponent); //hvad skal håndteres ved fx placering af moduler?
                 
+                TransmissionDevice atronTrans = new TransmissionDevice(TransmissionType.IR,0.05f);
+	            ReceivingDevice atronRec = new ReceivingDevice(TransmissionType.IR,10);
+	            for(int channel=0;channel<8;channel++) {
+	            	module.addTransmissionDevice(JMEDescriptionHelper.createTransmitter(module, module.getConnectors().get(channel),atronTrans));
+	            	module.addReceivingDevice(JMEDescriptionHelper.createReceiver(module, module.getConnectors().get(channel),atronRec));
+	            }
+
                 moduleComponents.add(northComponent);
                 moduleComponents.add(southComponent);
                 northNode.setMaterial(Material.CONCRETE);
@@ -273,8 +280,8 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
                 centerActuator.setDirection(0, 0, 1);
                 centerActuator.activate(10);
                 
-                System.out.println("center c ="+centerActuator.getEncoderValue());
-                System.out.println("Connector mass = "+southComponent.getNodes().get(0).getChildren().get(1).getClass()+" "+southNode.getMass());
+                //System.out.println("center c ="+centerActuator.getEncoderValue());
+                //System.out.println("Connector mass = "+southComponent.getNodes().get(0).getChildren().get(1).getClass()+" "+southNode.getMass());
 
 /*                DynamicPhysicsNode atronTest1 = getPhysicsSpace().createDynamicNode();
                 rootNode.attachChild( atronTest1 );
@@ -429,8 +436,9 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
                     if ( !pause ) { 
                     	physicsStep(); // 1 call to = 32ms (one example setup)
                     }
+                    KeyInput.get().update();
                     if(mainLoopCounter%5==0) { // 1 call to = 16ms (same example setup)
-                    	InputSystem.update();
+                    	MouseInput.get().update(); //InputSystem.update();
                     	update(-1.0f);
 	                	render(-1.0f);
 	                    display.getRenderer().displayBackBuffer();// swap buffers
@@ -886,11 +894,12 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
         input.addAction( new InputAction() {
             public void performAction( InputActionEvent evt ) {
                 if ( evt.getTriggerPressed() ) {
-                    pause = true; 
+                    pause = false; 
                     physicsStep();
+                    pause = true;
                 }
             }
-        }, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_T, InputHandler.AXIS_NONE, false );
+        }, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_SPACE, InputHandler.AXIS_NONE, true );
         
         input.addAction( new InputAction() {
             public void performAction( InputActionEvent evt ) {
@@ -935,20 +944,50 @@ public RenderState color2jme(Color color) {
         return materialState;
     }
 
-    public void sendMessage(TransmissionType type, Entity emitter, float range, Packet data) {
-        if(!(emitter instanceof Module)||type!=TransmissionType.RADIO) throw new Error("not supported yet");
-        for(Object component: ((Module)emitter).getPhysics()) {
-            DynamicPhysicsNode source = ((JMEModuleComponent)component).getModuleNode();
-            for(JMEModuleComponent target: moduleComponents) {
-                if(source.getLocalTranslation().distance(target.getModuleNode().getLocalTranslation())<range)
-                    for(Receiver receiver: target.getModel().getReceivers())
-                        if(receiver.isCompatible(type)) {
-                            receiver.receive(data);
-                        }
-            }
+    /*public void sendMessage(TransmissionType type, Entity emitter, float range, Packet data) {
+        if((emitter instanceof Module)&&type==TransmissionType.RADIO) {
+        	//TODO this method has some problems if same module consist of several modulecomponents
+	        for(Object component: ((Module)emitter).getPhysics()) { 
+	            DynamicPhysicsNode source = ((JMEModuleComponent)component).getModuleNode();
+	            for(JMEModuleComponent target: moduleComponents) {
+	                if(source.getLocalTranslation().distance(target.getModuleNode().getLocalTranslation())<range) {
+	               		for(Receiver receiver: target.getModel().getReceivers())
+	               			if(receiver.isCompatible(type)) {
+	               				receiver.receive(data);
+	           			}
+	                }
+	            }
+	        }
         }
-    }
-    
+        if((emitter instanceof Connector)&&type==TransmissionType.IR) {
+        	System.out.println();
+        }
+        else {
+        	throw new Error("not supported yet");	
+        }
+    }*/
+/*	public void sendMessage(TransmissionDevice transmitter, Packet packet) {
+		if((emitter instanceof Module)&&type==TransmissionType.RADIO) {
+	    	//TODO this method has some problems if same module consist of several modulecomponents
+	        for(Object component: ((Module)emitter).getPhysics()) { 
+	            DynamicPhysicsNode source = ((JMEModuleComponent)component).getModuleNode();
+	            for(JMEModuleComponent target: moduleComponents) {
+	                if(source.getLocalTranslation().distance(target.getModuleNode().getLocalTranslation())<range) {
+	               		for(Receiver receiver: target.getModel().getReceivers())
+	               			if(receiver.isCompatible(type)) {
+	               				receiver.receive(data);
+	           			}
+	                }
+	            }
+	        }
+	    }
+	    if((emitter instanceof Connector)&&type==TransmissionType.IR) {
+	    	System.out.println();
+	    }
+	    else {
+	    	throw new Error("not supported yet");	
+	    }
+	}*/
     /**
      * @return the physics space for this simple game
      */
@@ -1266,5 +1305,11 @@ public RenderState color2jme(Color color) {
             if(result!=null) return result;
             return Collections.emptySet();
         }
+        public List<Module> getModules() {
+        	return modules;
+        }
+		public void setGravity(float g) {
+			getPhysicsSpace().setDirectionalGravity(new Vector3f(0,g,0));			
+		}
  }
 

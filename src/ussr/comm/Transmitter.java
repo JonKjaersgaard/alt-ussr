@@ -3,6 +3,8 @@
  */
 package ussr.comm;
 
+import ussr.physics.PhysicsEntity;
+
 /**
  * @author ups
  *
@@ -11,6 +13,8 @@ package ussr.comm;
  */
 public interface Transmitter {
 
-    void send(Packet packet);
-
+	public void send(Packet packet);
+	public boolean canSendTo(Receiver receiver);
+    public PhysicsEntity getHardware();
+    public TransmissionType getType();
 }

@@ -17,6 +17,9 @@ public class RotationDescription {
     public RotationDescription(float x, float y, float z) {
         rotation.fromAngles(x, y, z);
     }
+    public RotationDescription(Quaternion q) {
+        rotation.set(q);
+    }
     public RotationDescription(VectorDescription v1, VectorDescription v2) {
         rotation.fromAngles(v1.getX(),v1.getY(),v1.getZ());
         Matrix3f v1m = rotation.toRotationMatrix();
@@ -25,12 +28,15 @@ public class RotationDescription {
         v1m.multLocal(q2.toRotationMatrix());
         rotation.fromRotationMatrix(v1m);
     }
-
     /**
      * @return the angle
      */
     public Quaternion getRotation() {
         return rotation;
     }
-
+    public String toString() {
+    	float[] angles = new float[3];
+    	rotation.toAngles(angles);
+    	return "("+angles[0]+", "+angles[1]+", "+angles[2]+")";
+    }
 }

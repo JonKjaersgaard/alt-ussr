@@ -1,7 +1,10 @@
 package ussr.physics.jme;
 
+import ussr.model.Connector;
+import ussr.model.Module;
 import ussr.robotbuildingblocks.RobotDescription;
 
+import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
@@ -14,4 +17,6 @@ public class JMERigidMechanicalConnector extends JMEMechanicalConnector {
 	protected void addAxis(Joint connection) {
 		//joint is rigid do not add axis
 	}
+
+	
 }

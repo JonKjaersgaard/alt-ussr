@@ -10,6 +10,7 @@ import com.jme.input.InputHandler;
 import com.jme.input.action.InputActionEvent;
 import com.jme.input.action.InputActionInterface;
 import com.jme.input.util.SyntheticButton;
+import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.scene.TriMesh;
 import com.jmex.physics.DynamicPhysicsNode;
@@ -21,6 +22,8 @@ import ussr.physics.PhysicsConnector;
 import ussr.physics.PhysicsLogger;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.RobotDescription;
+import ussr.robotbuildingblocks.RotationDescription;
+import ussr.robotbuildingblocks.VectorDescription;
 
 public class JMEMagneticConnector implements JMEConnector {
     /**
@@ -33,12 +36,15 @@ public class JMEMagneticConnector implements JMEConnector {
     private JMEMagneticConnector lastProximityConnector = null;
     private JMEModuleComponent module;
     private float maxConnectDistance;
+    protected String name;
+    protected TriMesh mesh;
 
     public JMEMagneticConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent module, RobotDescription selfDesc) {
         List<GeometryDescription> geometry = selfDesc.getConnectorGeometry();
         float maxConnectionDistance = selfDesc.getMaxConnectionDistance();
         this.world = world;
         this.module = module;
+        this.name = baseName;
         this.maxConnectDistance = maxConnectionDistance;
         // Create connector node
         DynamicPhysicsNode connector = world.getPhysicsSpace().createDynamicNode();
@@ -46,7 +52,7 @@ public class JMEMagneticConnector implements JMEConnector {
         // Create visual appearance
         assert geometry.size()==1; // Only tested with size 1 geometry
         for(GeometryDescription element: geometry) {
-            TriMesh mesh = JMEDescriptionHelper.createShape(connector, baseName+position.toString(), element);
+            mesh = JMEDescriptionHelper.createShape(connector, baseName+position.toString(), element);
             world.connectorRegistry.put(mesh.getName(),this);
             mesh.getLocalTranslation().set( mesh.getLocalTranslation().add(position) );
             mesh.setModelBound( new BoundingSphere() );
@@ -172,4 +178,48 @@ public class JMEMagneticConnector implements JMEConnector {
 		// TODO Auto-generated method stub
 		
 	}
+	public String getName() {
+		return name;
+	}
+
+	public void update() {
+		throw new RuntimeException("Not implemented yet");		
+	}
+	/**
+	 * Position in world relative to module
+	 * @return position
+	 */
+	public Vector3f getPos() {
+		Vector3f pos = node.getLocalRotation().mult(mesh.getLocalTranslation()).add(node.getLocalTranslation());
+		return pos;
+	}
+
+	/**
+	 * Orientation relative to module
+	 * @return orientation
+	 */
+	public Quaternion getRot() {
+		Quaternion ori = mesh.getLocalRotation(); //TODO: not tested yet
+		return ori;
+	}
+
+	/**
+	 * Position in the world (global)  
+	 * @return position
+	 */
+	public VectorDescription getPosition() {
+		Vector3f p = getPos();
+		return new VectorDescription(p.x,p.y,p.z); //TODO: not tested yet
+	}
+	/**
+	 * Orientation in the world (global)  
+	 * @return orientation
+	 */
+	public RotationDescription getRotation() {
+		return new RotationDescription(mesh.getWorldRotation());//TODO: not tested yet
+	}
+	public void setRotation(Quaternion rot) {
+		mesh.getLocalRotation().set(new Quaternion(rot));
+	}
+
 }

@@ -10,12 +10,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
-import ussr.comm.GenericReceiver;
-import ussr.comm.GenericTransmitter;
+import ussr.comm.IRReceiver;
+import ussr.comm.RadioReceiver;
 import ussr.comm.Receiver;
+import ussr.comm.TransmissionType;
 import ussr.comm.Transmitter;
+import ussr.model.Entity;
 import ussr.model.Module;
 import ussr.robotbuildingblocks.AtronShape;
 import ussr.robotbuildingblocks.ConeShape;
@@ -29,6 +30,7 @@ import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jme.bounding.BoundingBox;
 import com.jme.bounding.BoundingSphere;
+import com.jme.math.Quaternion;
 import com.jme.scene.Node;
 import com.jme.scene.SceneElement;
 import com.jme.scene.SharedMesh;
@@ -66,7 +68,7 @@ public class JMEDescriptionHelper {
         	shape.setModelBound( new BoundingSphere() );*/
         }
         else if(element instanceof ConeShape) {
-        	shape = new Cone(name,8, 8, ((ConeShape)element).getRadius(),((ConeShape)element).getHeight(),true); 
+        	shape = new Cone(name,8, 8, ((ConeShape)element).getRadius(),((ConeShape)element).getHeight(),true);
         	shape.setModelBound( new BoundingSphere() );
         }
         else if(element instanceof CylinderShape) {
@@ -80,20 +82,37 @@ public class JMEDescriptionHelper {
     	
     	RotationDescription rotation = element.getRotation();
     	//shape.getLocalRotation().set(rotation.getRotation());
-    	shape.setLocalRotation(rotation.getRotation());
+    	shape.setLocalRotation(new Quaternion(rotation.getRotation()));
         shape.updateModelBound();
     	moduleNode.attachChild(shape);
         return shape;
     }
     
-    public static Transmitter createTransmitter(Module module, TransmissionDevice transmitter) {
-        return new GenericTransmitter(module, transmitter.getType(),transmitter.getRange());
+    public static Transmitter createTransmitter(Module module, Entity hardware, TransmissionDevice transmitter) {
+    	if(transmitter.getType()==TransmissionType.RADIO) {
+    		return new RadioTransmitter(module,hardware,transmitter.getType(),transmitter.getRange());
+    	}
+    	else if(transmitter.getType()==TransmissionType.IR) {
+    		return new IRTransmitter(module,hardware,transmitter.getType(),transmitter.getRange());
+    	}
+    	else {
+    		throw new RuntimeException("Transmission device type not recognized "+transmitter.getType()); 
+    	}
+        //return new GenericTransmitter(module, transmitter.getType(),transmitter.getRange());
     }
 
-    public static Receiver createReceiver(Module module, ReceivingDevice receiver) {
-        return new GenericReceiver(module, receiver.getType(), receiver.getBufferSize());
+    public static Receiver createReceiver(Module module, Entity hardware, ReceivingDevice receiver) {
+    	if(receiver.getType()==TransmissionType.RADIO) {
+    		return new RadioReceiver(module,hardware,receiver);
+    	}
+    	else if(receiver.getType()==TransmissionType.IR) {
+    		return new IRReceiver(module,hardware,receiver);
+    	}
+    	else {
+    		throw new RuntimeException("Receiver device type not recognized "+receiver.getType()); 
+    	}
     }
-
+    
     public static void setColor(JMESimulation world, SceneElement object, Color color) {
         if(color==null) return;
         object.setRenderState(world.color2jme(color));

@@ -7,7 +7,11 @@ package ussr.physics;
 
 import java.awt.Color;
 
+import com.jme.math.Quaternion;
+
 import ussr.model.Connector;
+import ussr.robotbuildingblocks.RotationDescription;
+import ussr.robotbuildingblocks.VectorDescription;
 
 /**
  * A simulated physical connector, useable independently of the underlying physics engine.
@@ -45,6 +49,14 @@ public interface PhysicsConnector extends PhysicsEntity {
     public void disconnect();
 
 	public void setConnectorColor(Color color);
+	
+	/**
+     * Update it this connector has another connector near enough to connect to
+     *
+     */
+    public void update();
+    
+    public void setRotation(Quaternion rot);
 	
 	
 }

@@ -1,5 +1,7 @@
 package ussr.comm;
 
+import ussr.physics.PhysicsEntity;
+
 public interface Receiver {
 
     /**
@@ -15,4 +17,10 @@ public interface Receiver {
     public boolean hasData();
     
     public Packet getData();
+    
+    public boolean canReceiveFrom(Transmitter transmitter);
+    
+    public PhysicsEntity getHardware();
+    
+    public TransmissionType getType();
 }

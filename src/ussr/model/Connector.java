@@ -42,6 +42,7 @@ public class Connector extends Entity {
      * @return whether there is another connector available for interaction
      */
     public boolean hasProximateConnector() {
+    	physics.update();
         return physics.hasProximateConnector();
     }
     

@@ -46,5 +46,5 @@ public abstract class Entity {
         properties.put(key, value);
     }
     
-    abstract List<? extends PhysicsEntity> getPhysics();
+    public abstract List<? extends PhysicsEntity> getPhysics();
 }

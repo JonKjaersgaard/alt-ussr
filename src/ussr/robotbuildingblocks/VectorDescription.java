@@ -66,4 +66,7 @@ public class VectorDescription extends Description {
 	public void mult(float dx, float dy, float dz) {
 		this.x *= dx; this.y *= dy; this.z *= dz;
 	}
+	public String toString() {
+		return "("+x+", "+y+", "+z+")";
+	}
 }

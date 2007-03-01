@@ -5,6 +5,8 @@ package ussr.physics.jme;
 
 import ussr.model.Actuator;
 import ussr.model.PhysicsActuator;
+import ussr.robotbuildingblocks.RotationDescription;
+import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;
@@ -125,5 +127,13 @@ public class JMELinearActuator implements JMEActuator {
 	}
 	public String toString() {
 		return "JMELinearActuator: "+name;
+	}
+	public VectorDescription getPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public RotationDescription getRotation() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

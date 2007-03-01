@@ -1,6 +1,8 @@
 package ussr.physics.jme;
 
 import ussr.model.Sensor;
+import ussr.robotbuildingblocks.RotationDescription;
+import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jmex.physics.DynamicPhysicsNode;
 
@@ -30,5 +32,12 @@ public class JMETiltSensor implements JMESensor {
 	}
 	public String getName() {
 		return name;
+	}
+	public VectorDescription getPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public RotationDescription getRotation() {
+		return null;//new RotationDescription(node.getWorldRotation());
 	}
 }

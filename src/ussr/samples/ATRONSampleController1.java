@@ -45,11 +45,45 @@ public class ATRONSampleController1 extends ATRONController {
 
 	private void snakeControl() {
 		//oscillate(3.0f); //ossilate in 10 sek
+		//muscleControl();
 		//delay(1000);
 //		System.out.println(module.getProperty("name")+" start to self-reconfigure");
-		snakeToWalker();
+		//snakeToWalker();
 		//broadCastMessage();
-		while(true) delay(1000);
+		testCommunication();
+	//	while(true) delay(1000);
+	}
+	private void testCommunication() {
+		for(int i=0;i<8;i++) {
+			module.getTransmitters().get(i).send(new Packet(new byte[]{(byte)module.getID(),(byte)i}));
+			Thread.yield();
+		}
+		int recCounter =0;
+		while(true) {
+			for(int i=0;i<8;i++) {
+	    		 Receiver receiver = module.getReceivers().get(i);
+		         if(receiver.hasData()) {
+		        	 Packet data = receiver.getData();
+		             
+		             System.out.println(module.getID()+": Message recieved at channel "+i+" from "+data.get(0)+" send through channel "+data.get(1));
+		             recCounter++;
+		             if(recCounter==1) module.setColor(Color.YELLOW);
+		             if(recCounter==2) module.setColor(Color.GREEN);
+		             if(recCounter>2) module.setColor(Color.RED);
+		         }
+			}
+			Thread.yield();
+	     }
+	}
+
+	private void muscleControl() {
+		while(true) {
+			rotateContinuous(1);
+			delay(1500);
+			rotateContinuous(-1);
+			delay(1500);
+			//Thread.yield();
+		}
 	}
 	private int getRole() {
 		//quick hack mehtod

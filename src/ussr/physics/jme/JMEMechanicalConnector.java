@@ -6,15 +6,17 @@ import java.util.Collections;
 import java.util.List;
 
 import ussr.model.Connector;
-import ussr.physics.PhysicsLogger;
+import ussr.model.Module;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.RobotDescription;
+import ussr.robotbuildingblocks.RotationDescription;
+import ussr.robotbuildingblocks.VectorDescription;
 
+import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.scene.TriMesh;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
-import com.jmex.physics.RotationalJointAxis;
 
 public abstract class JMEMechanicalConnector implements JMEConnector {
     /**
@@ -28,11 +30,14 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
     protected JMEModuleComponent module;
     protected float maxConnectDistance;
     protected TriMesh mesh;
+    protected String name;
+    protected float lastUpdateTime = -1;
 
     public JMEMechanicalConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, RobotDescription selfDesc) {
         List<GeometryDescription> geometry = selfDesc.getConnectorGeometry();
         this.world = world;
         this.module = component;
+        this.name = baseName;
         this.maxConnectDistance = selfDesc.getMaxConnectionDistance();
         // Create connector node
         DynamicPhysicsNode connector = moduleNode;
@@ -42,7 +47,8 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
         	//System.out.println("creating connector "+(baseName+position.toString()));
         	mesh = JMEDescriptionHelper.createShape(connector, baseName+position.toString(), element);
             //world.connectorRegistry.put(mesh.getName(),this);
-            mesh.getLocalTranslation().set( mesh.getLocalTranslation().add(position) );
+            mesh.getLocalTranslation().set( mesh.getLocalTranslation().add(new Vector3f(position)) );
+            //mesh.getLocalRotation().
             
             //mesh.getLocalTranslation().
             //Quaternion q = module.getModuleNode().getLocalRotation();
@@ -58,7 +64,7 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
         }
         // Finalize
         //connector.generatePhysicsGeometry(true); //dont let connectors collide - too slow!
-        world.getRootNode().attachChild( connector );
+        //world.getRootNode().attachChild( connector );
         //connector.computeMass();
         this.node = connector;
     }
@@ -87,6 +93,31 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
         }
         return Arrays.asList(new Connector[] { this.lastProximityConnector.model });
     }
+    /*
+     * Update it this connector has another connector near enurght to connect to
+     *
+     */
+    public synchronized void update() {
+    	if(world.getTime()!=lastUpdateTime) {
+    		lastProximityConnector=null;
+    		Vector3f myPos = getPos();
+    		JMEMechanicalConnector other;
+    		for(Module m: world.getModules()) {
+    			if(module.getModel().getID()!=m.getID())
+    			for(Connector c: m.getConnectors()) {
+    				other = (JMEMechanicalConnector)c.getPhysics().get(0);
+    				if(myPos.distance(other.getPos())<maxConnectDistance) {
+    					lastProximityConnector = (JMEMechanicalConnector)c.getPhysics().get(0);
+    					setConnectorColor(Color.ORANGE);
+    					System.out.println("Found one: "+this+" "+lastProximityConnector+" max Dist"+maxConnectDistance);
+    					System.out.println("dist?= "+myPos.distance(other.getPos()));
+    				}
+    					
+    			}
+    		}
+    		lastUpdateTime = world.getTime();
+    	}
+    }
     
     /* (non-Javadoc)
      * @see ussr.physics.jme.JMEConnector#isConnected()
@@ -99,7 +130,14 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
      * @see ussr.physics.jme.JMEConnector#connectTo(ussr.physics.PhysicsConnector)
      */
     public synchronized boolean connect() {
-        throw new Error("Should not call connect() on mechanical connector");
+        //throw new Error("Should not call connect() on mechanical connector");
+    	if(hasProximateConnector()) {
+    		connectTo(lastProximityConnector);
+    		lastProximityConnector.setConnectorColor(Color.CYAN);
+    		setConnectorColor(Color.CYAN);
+    		return true;
+    	}
+    	else return false;
     }
 
     /* (non-Javadoc)
@@ -152,7 +190,7 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
 	    	addAxis(connection);
 	        this.connectedConnector = jc2;
 	        jc2.connectedConnector = this;
-	        System.out.println("Connected");
+//	        System.out.println("Connected");
     	}
     	else {
     		System.out.println("Already connected");
@@ -191,7 +229,7 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
     }
 
 	public void setConnectorColor(Color color) {
-//		JMEDescriptionHelper.setColor(world, mesh, color);
+		JMEDescriptionHelper.setColor(world, mesh, color);
 		/*System.out.println("Setting color for children");
     	for(Spatial child:  node.getChildren()) {
     		System.out.println("Here "+child);
@@ -207,5 +245,37 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
 	public Vector3f getPos() {
 		Vector3f pos = node.getLocalRotation().mult(mesh.getLocalTranslation()).add(node.getLocalTranslation());
 		return pos;
+	}
+	public String getName() {
+		return name;
+	}
+	/**
+	 * Orientation relative to module
+	 * @return orientation
+	 */
+	public Quaternion getRot() {
+		Quaternion ori = mesh.getLocalRotation(); //TODO: not tested yet
+		return ori;
+	}
+	/**
+	 * Set the rotation realtive to the module
+	 */
+	public void setRotation(Quaternion rot) {
+		mesh.getLocalRotation().set(new Quaternion(rot));
+	}
+	/**
+	 * Position in the world (global)  
+	 * @return position
+	 */
+	public VectorDescription getPosition() {
+		Vector3f p = getPos();
+		return new VectorDescription(p.x,p.y,p.z); //TODO: not tested yet
+	}
+	/**
+	 * Orientation in the world (global)  
+	 * @return orientation
+	 */
+	public RotationDescription getRotation() {
+		return new RotationDescription(mesh.getWorldRotation());//TODO: not tested yet
 	}
 }

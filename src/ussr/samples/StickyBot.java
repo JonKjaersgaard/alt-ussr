@@ -7,7 +7,6 @@ package ussr.samples;
 
 import ussr.comm.TransmissionType;
 import ussr.model.Controller;
-import ussr.model.ControllerImpl;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.ReceivingDevice;
 import ussr.robotbuildingblocks.Robot;

@@ -5,9 +5,8 @@
  */
 package ussr.physics;
 
-import ussr.comm.Packet;
-import ussr.comm.TransmissionType;
-import ussr.model.Entity;
+import java.util.List;
+
 import ussr.model.Module;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.WorldDescription;
@@ -69,12 +68,19 @@ public interface PhysicsSimulation {
      */
     public void start();
 
-    public void sendMessage(TransmissionType type, Entity emitter, float range, Packet data);
+    //public void sendMessage(TransmissionType type, Entity emitter, float range, Packet data);
+    //public void sendMessage(TransmissionDevice transmitter, Packet packet);
 
+    public List<Module> getModules();
+    
     public void setPause(boolean startPaused);
     
     public boolean isPaused();
 
 	public float getTime();
+
+	public void setGravity(float g);
+
+	
     
 }

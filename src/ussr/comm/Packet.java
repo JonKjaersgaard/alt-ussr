@@ -3,6 +3,8 @@
  */
 package ussr.comm;
 
+import java.util.Arrays;
+
 /**
  * @author ups
  *
@@ -15,6 +17,11 @@ public class Packet {
 
     public Packet(int data) {
         payload = new byte[] { (byte)data };
+    }
+    public Packet(byte[] data) {
+    	byte[] dataCopy= new byte[data.length];
+    	for(int i=0;i<data.length;i++) dataCopy[i] = data[i];
+        payload = dataCopy;
     }
 
     public byte get(int i) {

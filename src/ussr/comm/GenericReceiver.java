@@ -3,11 +3,9 @@
  */
 package ussr.comm;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
+import ussr.model.Entity;
 import ussr.model.Module;
+import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsLogger;
 
 /**
@@ -16,26 +14,33 @@ import ussr.physics.PhysicsLogger;
  * TODO Write a nice and user-friendly comment here
  * 
  */
-public class GenericReceiver implements Receiver {
-    private Module module;
-    private TransmissionType type;
-    private Packet[] queue; 
-    private int read_position, write_position;
+public abstract class GenericReceiver implements Receiver {
+    protected Module module;
+    protected Entity hardware;
+    protected TransmissionType type;
+    protected Packet[] queue; 
+    protected int read_position, write_position;
+    protected int packageCounter = 0; //for debougging
     
-    public GenericReceiver(Module _module, TransmissionType _type, int buffer_size) {
-        this.module = _module; this.type = _type;
+    public GenericReceiver(Module _module, Entity _hardware, TransmissionType _type, int buffer_size) {
+        this.module = _module; this.type = _type; this.hardware = _hardware;
         queue = new Packet[buffer_size];
         read_position = write_position = 0;
     }
+    
 
-    public boolean isCompatible(TransmissionType other) {
+	public boolean isCompatible(TransmissionType other) {
         return this.type == other;
     }
-
+    public PhysicsEntity getHardware() {
+		return hardware.getPhysics().get(0);
+	}
+    
     public synchronized void receive(Packet data) {
+    	packageCounter++;
         queue[write_position] = data;
         write_position = (write_position+1)%queue.length;
-        if(write_position==read_position) PhysicsLogger.log("comm buffer overrun");
+        if(write_position==read_position) PhysicsLogger.log("comm buffer overrun: "+packageCounter+" "+write_position);
         module.eventNotify();
     }
 
@@ -49,5 +54,7 @@ public class GenericReceiver implements Receiver {
     public boolean hasData() {
         return read_position!=write_position;
     }
-    
+    public TransmissionType getType() {
+		return type;
+	}
 }
