@@ -9,11 +9,11 @@ CFLAGS=-fPIC -DUSSR $(JAVAINCLUDE)
 CC=gcc
 
 all: nativeController.dll
-	copy nativeController.dll ..\lib\lib$(CONTROLLER).dll
+	copy nativeController.dll ..\lib\$(CONTROLLER).dll
 nativeController.h: ../bin/ussr/samples/ATRONNativeController.class
 	javah -jni -classpath ../bin -o nativeController.h ussr.samples.ATRONNativeController
 nativeController.dll: nativeController.h $(BIN)
-	gcc -dynamiclib -framework JavaVM -fPIC -o nativeController.dll nativeController.o $(CONTROLLER).o $(API).o
+	gcc -shared --enable-stdcall-fixup -o nativeController.dll nativeController.o $(CONTROLLER).o $(API).o nativeController.def
 clean:
 	rm -f .depends nativeController.dll nativeController.h $(BIN)
 .depends: nativeController.h
