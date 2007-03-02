@@ -4,8 +4,8 @@ API=atron
 
 SRC=nativeController.c $(API).c $(CONTROLLER).c
 BIN=$(SRC:.c=.o)
-JAVAINCLUDE=/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Headers
-CFLAGS=-fPIC -DUSSR -I$(JAVAINCLUDE)
+JAVAINCLUDE=-I/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Headers
+CFLAGS=-fPIC -DUSSR $(JAVAINCLUDE)
 CC=gcc
 
 all: nativeController.jnilib
@@ -17,5 +17,5 @@ nativeController.jnilib: nativeController.h $(BIN)
 clean:
 	rm -f .depends nativeController.jnilib nativeController.h $(BIN)
 .depends: nativeController.h
-	gcc -I$(JAVAINCLUDE) -M $(SRC) > .depends
+	gcc $(JAVAINCLUDE) -M $(SRC) > .depends
 include .depends

@@ -1,8 +1,31 @@
+# Customizable variables: name of controller and api files (both excluding extension)
+CONTROLLER=controller1
+API=atron
+
+SRC=nativeController.c $(API).c $(CONTROLLER).c
+BIN=$(SRC:.c=.o)
+JAVAINCLUDE=-I"C:\Program Files\Java\jdk1.5.0_02\include" -I"C:\Program Files\Java\jdk1.5.0_02\include\win32"
+CFLAGS=-fPIC -DUSSR $(JAVAINCLUDE)
+CC=gcc
+
 all: nativeController.dll
-	copy nativeController.dll ..\lib
-nativeController.h: ../bin/ussr/samples/ATRONSampleController1.class
-	javah -jni -classpath ../bin ussr.samples.ATRONSampleController1
-nativeController.o: nativeController.c nativeController.h
-	gcc -I"C:\Program Files\Java\jdk1.5.0_02\include" -I "C:\Program Files\Java\jdk1.5.0_02\include\win32" -c nativeController.c -o nativeController.o
-nativeController.dll: nativeController.o
-	gcc -shared --enable-stdcall-fixup -o nativeController.dll nativeController.o nativeController.def
+	copy nativeController.dll ..\lib\lib$(CONTROLLER).dll
+nativeController.h: ../bin/ussr/samples/ATRONNativeController.class
+	javah -jni -classpath ../bin -o nativeController.h ussr.samples.ATRONNativeController
+nativeController.dll: nativeController.h $(BIN)
+	gcc -dynamiclib -framework JavaVM -fPIC -o nativeController.dll nativeController.o $(CONTROLLER).o $(API).o
+clean:
+	rm -f .depends nativeController.dll nativeController.h $(BIN)
+.depends: nativeController.h
+	gcc $(JAVAINCLUDE) -M $(SRC) > .depends
+include .depends
+
+
+#all: nativeController.dll
+#	copy nativeController.dll ..\lib
+#nativeController.h: ../bin/ussr/samples/ATRONSampleController1.class
+#	javah -jni -classpath ../bin ussr.samples.ATRONSampleController1
+#nativeController.o: nativeController.c nativeController.h
+#	gcc  -c nativeController.c -o nativeController.o
+#nativeController.dll: nativeController.o
+#	gcc -shared --enable-stdcall-fixup -o nativeController.dll nativeController.o nativeController.def

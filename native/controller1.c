@@ -1,21 +1,10 @@
 #include "ussr.h"
 #include "atron.h"
 
-#include <stdio.h>
-
 #define ROLE_WHEEL1 1
 #define ROLE_WHEEL2 2
 #define ROLE_WHEEL3 3
 #define ROLE_WHEEL4 4
-
-void old_activate(USSREnv *env) {
-  printf("Native controller running\n");
-  controllerIterationSimulatorHook(env);
-  printf("Native controller continuing!\n");
-  int role = getRole(USSRONLY(env));
-  printf(" role=%d\n", role);
-  printf("Native controller done.\n");
-}
 
 void activate(USSREnv *env) { 
   while(1) {
