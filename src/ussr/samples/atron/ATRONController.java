@@ -1,5 +1,6 @@
 package ussr.samples.atron;
 
+import ussr.comm.Packet;
 import ussr.model.ControllerImpl;
 
 public abstract class ATRONController extends ControllerImpl {
@@ -96,5 +97,12 @@ public abstract class ATRONController extends ControllerImpl {
     		return false;
     	}
     }
-
+    protected byte sendMessage(byte[] message, byte messageSize, byte connector) 
+	{
+		if(isOtherConnectorNearby(connector)&&connector<8) {
+			module.getTransmitters().get(connector).send(new Packet(message));
+			return 1;
+		}
+		return 0;
+	}
 }

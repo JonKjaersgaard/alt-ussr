@@ -19,7 +19,7 @@ import ussr.samples.GenericSimulation;
  * @author ups
  *
  */
-public class ATRONSampleController1 extends ATRONController {
+public class ATRONSnakeController1 extends ATRONController {
 
 	private int[] roleOfConnector = {-1,-1,-1,-1,-1,-1,-1,-1};
     /**
@@ -28,14 +28,7 @@ public class ATRONSampleController1 extends ATRONController {
     public void activate() {
         while(true) {
         	if(!module.getSimulation().isPaused()) {
-        		String name = module.getProperty("name");
-    			float time = module.getSimulation().getTime();
-        		//rotate((float)(Math.sin(time)+1)/2f);
-    			if(name=="wheel1") rotateContinuous(1);
-    			if(name=="wheel2") rotateContinuous(-1);
-    			if(name=="wheel3") rotateContinuous(1);
-    			if(name=="wheel4") rotateContinuous(-1);
-    			if(name.contains("snake")) snakeControl();
+        		snakeControl();
     			if(!GenericSimulation.getConnectorsAreActive()) {
     				disconnectAll();
     			}
