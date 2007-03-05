@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package samples.odin;
+package ussr.samples.odin;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package samples.atron;
+package ussr.samples.atron;
 
 import ussr.model.ControllerImpl;
 

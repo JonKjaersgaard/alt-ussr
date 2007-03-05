@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package samples.atron;
+package ussr.samples.atron;
 
 import java.util.ArrayList;
 

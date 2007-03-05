@@ -1,7 +1,7 @@
 /**
  * 
  */
-package samples.atron;
+package ussr.samples.atron;
 
 import ussr.model.Controller;
 import ussr.robotbuildingblocks.Robot;

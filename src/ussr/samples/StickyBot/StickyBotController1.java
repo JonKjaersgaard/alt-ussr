@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package samples.StickyBot;
+package ussr.samples.StickyBot;
 
 import java.awt.Color;
 import java.util.List;
