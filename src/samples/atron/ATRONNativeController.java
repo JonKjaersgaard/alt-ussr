@@ -3,7 +3,6 @@
  */
 package samples.atron;
 
-import ussr.samples.ATRONController;
 
 /**
  * @author ups

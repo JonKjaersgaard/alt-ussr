@@ -27,4 +27,7 @@ public class Packet {
     public byte get(int i) {
         return payload[i];
     }
+    public byte[] getData() {
+        return payload;
+    }
 }

@@ -102,7 +102,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     private Map<DynamicPhysicsNode,Set<TriMesh>> geometryMap = new HashMap<DynamicPhysicsNode,Set<TriMesh>>();
     
     protected float physicsSimulationStepSize=0.01f;
-    protected float gravity =0;//-9.82f;
+    protected float gravity =-9.82f;
     private PhysicsSpace physicsSpace;
     protected InputHandler cameraInputHandler;
    

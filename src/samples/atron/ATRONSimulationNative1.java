@@ -5,7 +5,6 @@ package samples.atron;
 
 import ussr.model.Controller;
 import ussr.robotbuildingblocks.Robot;
-import ussr.samples.ATRONSimulation1;
 
 /**
  * @author ups
