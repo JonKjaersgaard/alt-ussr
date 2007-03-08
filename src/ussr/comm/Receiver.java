@@ -18,6 +18,8 @@ public interface Receiver {
     
     public Packet getData();
     
+    public int size();
+    
     public boolean canReceiveFrom(Transmitter transmitter);
     
     public PhysicsEntity getHardware();

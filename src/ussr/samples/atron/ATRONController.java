@@ -24,20 +24,27 @@ public abstract class ATRONController extends ControllerImpl {
     }
 
     protected void rotate(int dir) {
-        	float goalRot = 0;
-        	
-        	if(getRotation()==0) goalRot = ((dir>0)?1:3);
-        	else if(getRotation()==1) goalRot = ((dir>0)?2:0);
-        	else if(getRotation()==2) goalRot = ((dir>0)?3:1);
-        	else if(getRotation()==3) goalRot = ((dir>0)?0:2);
-        	
-    //    	System.out.println("RotPos "+getRotation()+" go for "+goalRot/4f);
-        	module.getActuators().get(0).activate(goalRot/4f);
-        	while(isRotating()) {
-        		module.getActuators().get(0).activate(goalRot/4f);
-        		Thread.yield();
-        	}
+    	float goalRot = 0;
+    	
+    	if(getRotation()==0) goalRot = ((dir>0)?1:3);
+    	else if(getRotation()==1) goalRot = ((dir>0)?2:0);
+    	else if(getRotation()==2) goalRot = ((dir>0)?3:1);
+    	else if(getRotation()==3) goalRot = ((dir>0)?0:2);
+    	
+//    	System.out.println("RotPos "+getRotation()+" go for "+goalRot/4f);
+    	module.getActuators().get(0).activate(goalRot/4f);
+    	while(isRotating()) {
+    		module.getActuators().get(0).activate(goalRot/4f);
+    		Thread.yield();
     	}
+	}
+    protected void rotateToDegree(float rad) {
+    	module.getActuators().get(0).activate((float)(rad/(Math.PI*2)));
+	}
+    protected float getAngularPosition() {
+    	return (float)(module.getActuators().get(0).getEncoderValue()*Math.PI*2);
+    }
+    
 
     protected void disconnectAll() {
     	for(int i=0;i<8;i++) {
@@ -84,6 +91,12 @@ public abstract class ATRONController extends ControllerImpl {
 
     protected void rotateContinuous(float dir) {
     	module.getActuators().get(0).activate(dir);
+    }
+    protected void centerBrake() {
+    	module.getActuators().get(0).disactivate();
+    }
+    protected void centerStop() {
+    	centerBrake(); //TODO implement the difference
     }
 
     protected boolean isOtherConnectorNearby(int connector) {

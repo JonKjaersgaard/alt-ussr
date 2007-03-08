@@ -38,42 +38,15 @@ public class ATRONSnakeController1 extends ATRONController {
     }
 
 	private void snakeControl() {
-		oscillate(3.0f); //ossilate in 10 sek
+		//oscillate(300.0f); //ossilate in 10 sek
 		//muscleControl();
 		//delay(1000);
 //		System.out.println(module.getProperty("name")+" start to self-reconfigure");
-		//snakeToWalker();
+		snakeToWalker();
 		//broadCastMessage();
 		//testCommunication();
 	//	while(true) delay(1000);
 	}
-	
-	private void testCommunication() {
-		for(int i=0;i<8;i++) {
-			if(isOtherConnectorNearby(i)) {
-				byte[] message = new byte[]{(byte)module.getID(),(byte)i};
-				sendMessage(message, (byte)message.length,(byte)i);
-			}
-			Thread.yield();
-		}
-		int recCounter =0;
-		while(true) {
-			for(int i=0;i<8;i++) {
-	    		 Receiver receiver = module.getReceivers().get(i);
-		         if(receiver.hasData()) {
-		        	 Packet data = receiver.getData();
-		             
-		             System.out.println(module.getID()+": Message recieved at channel "+i+" from "+data.get(0)+" send through channel "+data.get(1));
-		             recCounter++;
-		             if(recCounter==1) module.setColor(Color.YELLOW);
-		             if(recCounter==2) module.setColor(Color.GREEN);
-		             if(recCounter>2) module.setColor(Color.RED);
-		         }
-			}
-			Thread.yield();
-	     }
-	}
-
 	private void muscleControl() {
 		while(true) {
 			rotateContinuous(1);
@@ -128,6 +101,7 @@ public class ATRONSnakeController1 extends ATRONController {
 		}
 	}
 	private boolean disconnectFromRole(int role) {
+	//	refreshRoleOfConnector();
 		for(int i=0;i<8;i++) {
 			if(roleOfConnector(i)==role) {
 				if(canDisconnect(i)) {
@@ -138,6 +112,8 @@ public class ATRONSnakeController1 extends ATRONController {
 		}
 		return false;
 	}
+	
+
 	private void broadCastMessage() {
 		 Transmitter transmitter = module.getTransmitters().get(0);
 		 transmitter.send(new Packet(module.getID()));
@@ -168,28 +144,41 @@ public class ATRONSnakeController1 extends ATRONController {
 	private void oscillate(float sec) {
 		float startTime = module.getSimulation().getTime();
 		while(module.getSimulation().getTime()<(sec+startTime)) {
-			//simpleOssilateIteration();
 			CPGOssilateIteration();
-			delay(100);
+			delay(50);
+			//if(module.getID()==1) {
+			//	System.out.println(module.getID()+" at "+module.getSimulation().getTime());
+			//}
 		}
-	}
-	private void simpleOssilateIteration() {
-		rotate(1); //blocking rotate
-		rotate(-1);		
 	}
 	float E 		= 1;
 	float tau 	= (float)(1/(2*Math.PI*0.01));
-	float phaseDiff = 0;
+	float phaseDiff = (float)(0.3*2*Math.PI);
 	float alpha 	= 1;
-	float offset	= 0;
+	float offset	= 0.5f;
 	float strengt =0.5f;
 	float v=0.1f,x=0,S=0;
 	
 	private void CPGOssilateIteration() {
+		float lastTime = module.getSimulation().getTime();
 		receiveCPGupdate();
 		updateCPG();
 		sendCPGupdate();
+		CPGRotate();
+		if((module.getSimulation().getTime()-lastTime)>(75f/1000)) 
+			System.out.println(module.getID()+"I am beeing starved "+(module.getSimulation().getTime()-lastTime));
+	
 	}
+	private void CPGRotate() {
+		float percent = (x)/4+offset;
+		float angle = (float)(percent*Math.PI*2);
+		rotateToDegree(angle);
+		if(module.getID()==1) {
+			//System.out.println("Test");
+			//System.out.println(module.getID()+"("+module.getSimulation().getTime()+"):  angle = ("+360*getAngularPosition()/(Math.PI*2)+", "+360*angle/(Math.PI*2)+")");
+		}
+	}
+
 	void updateCPG() {
 		float vNext = v+(-alpha*v*((x*x+v*v-E)/E)-x+S)/tau;
 		float xNext = x+v/tau;
@@ -197,32 +186,27 @@ public class ATRONSnakeController1 extends ATRONController {
 		S=0;
 	}
 	void receiveCPGupdate() {
-		for(int i=4;i<8;i++) {
+		for(int i=0;i<8;i++) {
 			Receiver receiver = module.getReceivers().get(i);
+			//if(receiver.size()!=0) System.out.println(module.getID()+": receiver.size() = "+receiver.size());
 			while(receiver.hasData()) {
 				Packet packet = receiver.getData();
 				float[] data = toFloatArray(packet.getData());
 				float x1= data[0];
 				float v1= data[1];
-				//System.out.println(module.getID()+": CPG update("+x1+", "+v1+") reveived from "+i);
+			//	System.out.println(module.getID()+": CPG update("+x1+", "+v1+") reveived from "+i);
 				S += strengt*((sin(phaseDiff)*x1+cos(phaseDiff)*v1)/(sqrt(x1*x1+v1*v1))-v/(sqrt(x*x+v*v)));
 				//System.out.println(module.getID()+": Message recieved at channel "+i+" from "+data.get(0)+" send through channel "+data.get(1));
 			}
-			Thread.yield();
 		}
+		//Thread.yield();
 	}
-	
-	private float sqrt(float val) {
-		return (float)Math.sqrt(val);
-	}
-
 	void sendCPGupdate() {
 		byte[] data = toByteArray(new float[]{x,v});
 		for(int i=0;i<4;i++) {
 			if(isOtherConnectorNearby(i)) {
 				sendMessage(data, (byte)2, (byte)i);
 				//System.out.println(module.getID()+": CPG update ("+x+", "+v+") send to "+i);
-				//System.out.println("{"+x+","+v+"},");
 			}
 		}
 	}
@@ -246,11 +230,13 @@ public class ATRONSnakeController1 extends ATRONController {
 		}
 		return floats;
 	}
-	
 	float sin(float angle) {
 		return (float)Math.sin(angle);
 	}
 	float cos(float angle) {
 		return (float)Math.cos(angle);
+	}
+	private float sqrt(float val) {
+		return (float)Math.sqrt(val);
 	}
 }

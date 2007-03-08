@@ -7,17 +7,13 @@ package ussr.samples.atron;
 
 import java.awt.Color;
 
-import ussr.comm.TransmissionType;
-import ussr.model.Controller;
 import ussr.robotbuildingblocks.AtronShape;
 import ussr.robotbuildingblocks.ConeShape;
 import ussr.robotbuildingblocks.GeometryDescription;
-import ussr.robotbuildingblocks.ReceivingDevice;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.SphereShape;
-import ussr.robotbuildingblocks.TransmissionDevice;
 import ussr.robotbuildingblocks.VectorDescription;
 
 /**

@@ -50,6 +50,7 @@ import com.jme.input.action.InputActionEvent;
 import com.jme.input.joystick.JoystickInput;
 import com.jme.light.PointLight;
 import com.jme.math.Quaternion;
+import com.jme.math.Vector2f;
 import com.jme.math.Vector3f;
 import com.jme.renderer.Camera;
 import com.jme.renderer.ColorRGBA;
@@ -80,6 +81,8 @@ import com.jmex.physics.Joint;
 import com.jmex.physics.PhysicsDebugger;
 import com.jmex.physics.PhysicsSpace;
 import com.jmex.physics.StaticPhysicsNode;
+import com.jmex.physics.contact.ContactHandlingDetails;
+import com.jmex.physics.contact.MutableContactInfo;
 import com.jmex.physics.impl.ode.OdePhysicsSpace;
 import com.jmex.physics.material.Material;
 import com.jmex.physics.util.PhysicsPicker;
@@ -268,17 +271,28 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
 
                 moduleComponents.add(northComponent);
                 moduleComponents.add(southComponent);
-                northNode.setMaterial(Material.CONCRETE);
-                southNode.setMaterial(Material.CONCRETE);
+                northNode.setMaterial(Material.IRON);
+                southNode.setMaterial(Material.IRON);
                 northNode.setMass(0.400f); //800 grams in total
                 southNode.setMass(0.400f);
+                MutableContactInfo contactDetails = new MutableContactInfo();
+                contactDetails.setBounce( 0.01f );
+                contactDetails.setMu( 0.1f );
+                contactDetails.setSlip(new Vector2f(0.01f,0.01f));
+                
+                southNode.getMaterial().putContactHandlingDetails(staticPlane.getMaterial(), contactDetails);
+                northNode.getMaterial().putContactHandlingDetails(staticPlane.getMaterial(), contactDetails);
                 
                 JMERotationalActuator centerActuator = new JMERotationalActuator(this,"center");
                 module.addActuator(new Actuator(centerActuator));
                 centerActuator.attach(southNode,northNode);
-                centerActuator.setControlParameters(500, 2f, 0, 0); //100N, 0.2 m/s or rad/s?, no rotational limits
+                //centerActuator.setControlParameters(500, 2f, 0, 0); //Extreme ATRON
+                centerActuator.setControlParameters(2, (float)(2*Math.PI/6), 0, 0); //100N, 2*pi/6 rad/s, no rotational limits
                 centerActuator.setDirection(0, 0, 1);
                 centerActuator.activate(10);
+                
+                ContactHandlingDetails con = staticPlane.getMaterial().getContactHandlingDetails(southNode.getMaterial());
+                System.out.println("ATRON vs Plane bounce = "+con.getBounce()+" friction ="+con.getMu());
                 
                 //System.out.println("center c ="+centerActuator.getEncoderValue());
                 //System.out.println("Connector mass = "+southComponent.getNodes().get(0).getChildren().get(1).getClass()+" "+southNode.getMass());
@@ -447,6 +461,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
 	                    }
                     }
                     mainLoopCounter++;
+                    Thread.yield();
                 }
             }
         } catch (Throwable t) {
@@ -670,7 +685,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
         planeNode.getLocalTranslation().set( 0, -1f, 0 );
         rootNode.attachChild( planeNode );
         planeNode.generatePhysicsGeometry();
-        planeNode.setMaterial(Material.DEFAULT);
+        planeNode.setMaterial(Material.WOOD);
         
         //Texture tex = TextureManager.loadTexture(JMESimulation.class.getClassLoader().getResource("myGrass2.jpg"),Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
         Texture tex = TextureManager.loadTexture("resources/myGrass2.jpg",Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
@@ -1309,7 +1324,8 @@ public RenderState color2jme(Color color) {
         	return modules;
         }
 		public void setGravity(float g) {
-			getPhysicsSpace().setDirectionalGravity(new Vector3f(0,g,0));			
+			gravity = g;
+			getPhysicsSpace().setDirectionalGravity(new Vector3f(0,gravity,0));			
 		}
  }
 

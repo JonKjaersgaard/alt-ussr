@@ -62,6 +62,7 @@ public class JMEDescriptionHelper {
         	AtronShape half = (AtronShape) element;
         	shape = constructAtronModel(name, half);
         	shape.setModelBound(new BoundingSphere());
+      	
         //	shape = moduleNode.createBox(name);
         	/*shape = new Sphere( name, 9, 9, 0.025f); 
         	if(((AtronShape) element).isNorth()) shape.setLocalTranslation(new Vector3f(0.0f,0,0.1f));

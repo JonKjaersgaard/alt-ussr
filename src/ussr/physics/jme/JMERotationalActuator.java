@@ -117,7 +117,6 @@ public class JMERotationalActuator implements PhysicsActuator {
 			float error = goal-getEncoderValue();
 			if(Math.abs(error)<0.01) {
 				disactivate(); //at goal stop
-				//System.out.println("Goal Reached "+getEncoderValue());
 			}
 			else if(Math.abs(error)<0.5) { //go clockwise direction
 				axis.setDesiredVelocity(maxVelocity*error/Math.abs(error));

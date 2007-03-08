@@ -22,8 +22,7 @@ import com.jme.math.Vector3f;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
 import com.jmex.physics.DynamicPhysicsNode;
-import com.jmex.physics.geometry.PhysicsCapsule;
-import com.jmex.physics.geometry.PhysicsMesh;
+import com.jmex.physics.material.Material;
 
 public class JMEModuleComponent implements PhysicsModuleComponent {
     /**

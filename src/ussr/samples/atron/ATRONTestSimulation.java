@@ -8,30 +8,30 @@ import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.robotbuildingblocks.WorldDescription.ModulePosition;
 
-public class ATRONSnakeSimulation extends GenericATRONSimulation {
+public class ATRONTestSimulation extends GenericATRONSimulation {
 	
 	
 	public static void main( String[] args ) {
-        new ATRONSnakeSimulation().main();
+        new ATRONTestSimulation().main();
     }
 	
 	protected Robot getRobot() {
         return new ATRON() {
             public Controller createController() {
-                return new ATRONSnakeController1();
+                return new ATRONTestController1();
             }
         };
     }
 	private static ArrayList<ModulePosition> buildSnake(int length) {
-    	float Yoffset = 0.4f;
+    	float Yoffset = 0.0f; //0.4f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
     	int x=0,y=0,z=0;
     	for(int i=0;i<length;i++) {
     		if(i%2==0) {
-    			mPos.add(new WorldDescription.ModulePosition("snake "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_EW));
+    			mPos.add(new WorldDescription.ModulePosition("test "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_EW));
     		}
     		else {
-    			mPos.add(new WorldDescription.ModulePosition("snake "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_NS));
+    			mPos.add(new WorldDescription.ModulePosition("test "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_NS));
     		}
     		x++;z++;
     	}
@@ -39,6 +39,6 @@ public class ATRONSnakeSimulation extends GenericATRONSimulation {
 	}
 
 	protected ArrayList<ModulePosition> buildRobot() {
-		return buildSnake(9);
+		return buildSnake(1);
 	}
 }

@@ -40,17 +40,22 @@ public abstract class GenericReceiver implements Receiver {
     	packageCounter++;
         queue[write_position] = data;
         write_position = (write_position+1)%queue.length;
-        if(write_position==read_position) PhysicsLogger.log("comm buffer overrun: "+packageCounter+" "+write_position);
+        //if(write_position==read_position) PhysicsLogger.log("comm buffer overrun ");
+        if(write_position==read_position) System.out.println("ERROR: comm buffer overrun");
         module.eventNotify();
     }
-
+    
     public synchronized Packet getData() {
         if(!hasData()) throw new Error("empty comm buffer");
         Packet data = queue[read_position];
         read_position = (read_position+1)%queue.length;
         return data;
     }
-
+    public int size() {
+    	int diff = read_position-write_position;
+    	if(diff>0) return queue.length-diff;
+    	else return  -1*diff; 
+    }
     public boolean hasData() {
         return read_position!=write_position;
     }
