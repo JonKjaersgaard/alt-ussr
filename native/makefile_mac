@@ -10,8 +10,8 @@ CC=gcc
 
 all: nativeController.jnilib
 	cp nativeController.jnilib ../lib/lib$(CONTROLLER).jnilib
-nativeController.h: ../bin/ussr/samples/ATRONNativeController.class
-	javah -jni -classpath ../bin -o nativeController.h ussr.samples.ATRONNativeController
+nativeController.h: ../bin/ussr/samples/atron/ATRONNativeController.class
+	javah -jni -classpath ../bin -o nativeController.h ussr.samples.atron.ATRONNativeController
 nativeController.jnilib: nativeController.h $(BIN)
 	gcc -dynamiclib -framework JavaVM -fPIC -o nativeController.jnilib nativeController.o $(CONTROLLER).o $(API).o
 clean:

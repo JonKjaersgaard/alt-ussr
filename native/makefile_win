@@ -10,8 +10,8 @@ CC=gcc
 
 all: nativeController.dll
 	copy nativeController.dll ..\lib\$(CONTROLLER).dll
-nativeController.h: ../bin/ussr/samples/ATRONNativeController.class
-	javah -jni -classpath ../bin -o nativeController.h ussr.samples.ATRONNativeController
+nativeController.h: ../bin/ussr/samples/atron/ATRONNativeController.class
+	javah -jni -classpath ../bin -o nativeController.h ussr.samples.atron.ATRONNativeController
 nativeController.dll: nativeController.h $(BIN)
 	gcc -shared --enable-stdcall-fixup -o nativeController.dll nativeController.o $(CONTROLLER).o $(API).o nativeController.def
 clean:

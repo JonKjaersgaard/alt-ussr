@@ -4,7 +4,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-JNIEXPORT void JNICALL Java_ussr_samples_ATRONNativeController_activate(JNIEnv *jniENV, jobject self) {
+JNIEXPORT void JNICALL Java_ussr_samples_atron_ATRONNativeController_activate(JNIEnv *jniENV, jobject self) {
   USSREnv env;
   env.jnienv = jniENV;
   env.controller = self;
@@ -17,18 +17,20 @@ JNIEXPORT void JNICALL Java_ussr_samples_ATRONNativeController_activate(JNIEnv *
 
 /* Internal helper methods */
 
-static void reportError(JNIEnv *jniEnv, char *error) {
-  fprintf(stderr, "Error: %s\n", error);
+static void reportError(JNIEnv *jniEnv, char *error, char *name, char *type) {
+  fprintf(stderr, "Error: %s (%s of type %s)\n", error, name, type);
 }
 
+#define MODULE_FIELD_NAME "module"
+#define MODULE_FIELD_TYPE "Lussr/module/Controller;"
 static jobject getModule(JNIEnv *jniEnv, jobject self) {
   jfieldID module_fid; /* store the field ID */
   /* Get a reference to the controllers class */
   jclass controllerClass = (*jniEnv)->GetObjectClass(jniEnv, self);
   /* Look for the instance field module in controllerClass */
-  module_fid = (*jniEnv)->GetFieldID(jniEnv, controllerClass, "module", "Lussr/module/Controller;");
+  module_fid = (*jniEnv)->GetFieldID(jniEnv, controllerClass, MODULE_FIELD_NAME, MODULE_FIELD_TYPE);
   if (module_fid == NULL)
-    reportError(jniEnv,"Failed to locate module field in controller class");
+    reportError(jniEnv,"Failed to locate module field in controller class",MODULE_FIELD_NAME, MODULE_FIELD_TYPE);
   /* Read the instance field module */
   return (*jniEnv)->GetObjectField(jniEnv, self, module_fid);	
 }
@@ -42,7 +44,7 @@ void ussr_call_void_controller_method(USSREnv *env, char *name, char *signature,
   jclass controllerClass = (*jniEnv)->GetObjectClass(jniEnv, self);
   jmethodID mid = (*jniEnv)->GetMethodID(jniEnv, controllerClass, name, signature);
   if (mid == NULL) {
-    reportError(jniEnv,"Failed to locate method in controller class");
+    reportError(jniEnv,"Failed to locate method in controller class", name, signature);
   }
   /* Find parameters */
   va_start(parameters, signature);
@@ -57,7 +59,7 @@ int ussr_call_int_controller_method(USSREnv *env, char *name, char *signature, .
   jclass controllerClass = (*jniEnv)->GetObjectClass(jniEnv, self);
   jmethodID mid = (*jniEnv)->GetMethodID(jniEnv, controllerClass, name, signature);
   if (mid == NULL) {
-    reportError(jniEnv,"Failed to locate method in controller class");
+    reportError(jniEnv,"Failed to locate method in controller class", name, signature);
   }
   /* Find parameters */
   va_start(parameters, signature);

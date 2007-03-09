@@ -30,4 +30,12 @@ public class ATRONNativeController extends ATRONController {
         do { Thread.yield(); } while(module.getSimulation().isPaused());
     }
 
+    //quick hack mehtod
+    private int getRole() {
+        String name = module.getProperty("name");
+        for(int i=100;i>=0;i--) {
+            if(name.contains(Integer.toString(i))) return i;
+        }
+        return -1;
+    }
 }

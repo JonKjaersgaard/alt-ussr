@@ -26,8 +26,8 @@ public class ATRONCarSimulation extends GenericATRONSimulation {
     	float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
     	mPos.add(new WorldDescription.ModulePosition("driver", new VectorDescription(2*0*unit,0*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new WorldDescription.ModulePosition("axes1", new VectorDescription(1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
-    	mPos.add(new WorldDescription.ModulePosition("axes2", new VectorDescription(-1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
+    	mPos.add(new WorldDescription.ModulePosition("axleOne", new VectorDescription(1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
+    	mPos.add(new WorldDescription.ModulePosition("axleTwo", new VectorDescription(-1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
     	mPos.add(new WorldDescription.ModulePosition("wheel1", new VectorDescription(-1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
     	mPos.add(new WorldDescription.ModulePosition("wheel2", new VectorDescription(-1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
     	mPos.add(new WorldDescription.ModulePosition("wheel3", new VectorDescription(1*unit,-2*unit-Yoffset,1*unit), rotation_SN));

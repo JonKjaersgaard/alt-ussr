@@ -12,7 +12,7 @@ import ussr.robotbuildingblocks.Robot;
  * TODO Write a nice and user-friendly comment here
  * 
  */
-public class ATRONSimulationNative1 extends ATRONSimulation1 {
+public class ATRONSimulationNative1 extends ATRONCarSimulation {
     public static void main(String argv[]) {
         new ATRONSimulationNative1().main();
     }
