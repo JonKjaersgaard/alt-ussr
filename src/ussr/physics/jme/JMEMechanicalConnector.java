@@ -22,16 +22,16 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
     /**
      * The abstract connector represented by this jme entity
      */
-	protected Connector model;
-    protected DynamicPhysicsNode node;
-    protected JMESimulation world;
-    protected JMEConnector connectedConnector = null;
-    protected JMEMechanicalConnector lastProximityConnector = null;
-    protected JMEModuleComponent module;
-    protected float maxConnectDistance;
-    protected TriMesh mesh;
-    protected String name;
-    protected float lastUpdateTime = -1;
+	protected volatile Connector model;
+    protected volatile DynamicPhysicsNode node;
+    protected volatile JMESimulation world;
+    protected volatile JMEConnector connectedConnector = null;
+    protected volatile JMEMechanicalConnector lastProximityConnector = null;
+    protected volatile JMEModuleComponent module;
+    protected volatile float maxConnectDistance;
+    protected volatile TriMesh mesh;
+    protected volatile String name;
+    protected volatile float lastUpdateTime = -1;
 
     public JMEMechanicalConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, RobotDescription selfDesc) {
         List<GeometryDescription> geometry = selfDesc.getConnectorGeometry();
@@ -109,8 +109,8 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
     				if(myPos.distance(other.getPos())<maxConnectDistance) {
     					lastProximityConnector = (JMEMechanicalConnector)c.getPhysics().get(0);
     					setConnectorColor(Color.ORANGE);
-    					System.out.println("Found one: "+this+" "+lastProximityConnector+" max Dist"+maxConnectDistance);
-    					System.out.println("dist?= "+myPos.distance(other.getPos()));
+    					//System.out.println("Found one: "+this+" "+lastProximityConnector+" max Dist"+maxConnectDistance);
+    					//System.out.println("dist?= "+myPos.distance(other.getPos()));
     				}
     					
     			}
@@ -131,19 +131,23 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
      */
     public synchronized boolean connect() {
         //throw new Error("Should not call connect() on mechanical connector");
-    	if(hasProximateConnector()) {
-    		connectTo(lastProximityConnector);
-    		lastProximityConnector.setConnectorColor(Color.CYAN);
-    		setConnectorColor(Color.CYAN);
-    		return true;
+    	synchronized (JMESimulation.physicsLock) {
+	    	if(hasProximateConnector()) {
+	    		connectTo(lastProximityConnector);
+	    		lastProximityConnector.setConnectorColor(Color.CYAN);
+	    		setConnectorColor(Color.CYAN);
+	    		return true;
+	    	}
+	    	else {
+	    		return false;
+	    	}
     	}
-    	else return false;
     }
 
     /* (non-Javadoc)
      * @see ussr.physics.jme.JMEConnector#reset()
      */
-    public void reset() {
+    public synchronized void reset() {
         connectedConnector = null;        
     }
     
@@ -160,10 +164,10 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
     public void setModel(Connector connector) {
         this.model = connector;        
     }
+    
     private volatile Joint connection=null;
     public synchronized void connectTo(JMEMechanicalConnector jc2) {
-    	/*System.out.println("Connecter me "+toString()+"to "+jc2.toString());
-        world.getRootNode().unlockMeshes();
+       /* world.getRootNode().unlockMeshes();
         DynamicPhysicsNode adopter = jc2.getNode();
         Vector3f nodeDistance = adopter.getLocalTranslation().subtract(this.node.getLocalTranslation());
         Matrix3f adopterRotation = adopter.getLocalRotation().toRotationMatrix();
@@ -180,34 +184,51 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
         }
         adopter.generatePhysicsGeometry();
         adopter.computeMass();*/
-    	if(this.connectedConnector==null&& jc2.connectedConnector==null) {
+    	if(!isConnected()&&!jc2.isConnected()) {
+    		//connection=null;
     		if(connection==null) connection = world.getPhysicsSpace().createJoint();
     		else connection.reset();
+    	//	System.out.println(module.getModel().getID()+": Connecting now !"+mesh.getLocks()+" "+node.getLocks());
+    	//	System.out.println(module.getModel().getID()+": Other connection!"+jc2.mesh.getLocks()+" "+jc2.getNode().getLocks());
+    	//	System.out.println(module.getModel().getID()+": connection "+connection.getNodes());
 	    	connection.attach(getNode(),jc2.getNode());
+	    //	System.out.println(module.getModel().getID()+": mid connecting01");
 	    	connection.setAnchor(node.getLocalRotation().mult(mesh.getLocalTranslation()));
 	    	connection.setActive(true);
-	    	jc2.connection = connection;
+	   // 	System.out.println(module.getModel().getID()+": mid connecting1");
+	    	jc2.setConnection(connection);
+	    	//jc2.connection = connection;
 	    	addAxis(connection);
-	        this.connectedConnector = jc2;
-	        jc2.connectedConnector = this;
+	    	setConnectedConnector(jc2);
+	        jc2.setConnectedConnector(this);
 //	        System.out.println("Connected");
+	  //      System.out.println(module.getModel().getID()+": After connecting !"+mesh.getLocks()+" "+node.getLocks());
     	}
     	else {
     		System.out.println("Already connected");
     	}
     }
-    protected abstract void addAxis(Joint connection);
+    private synchronized void setConnectedConnector(JMEMechanicalConnector c) {
+    	connectedConnector=c;
+	}
+
+	protected synchronized void setConnection(Joint c) {
+		connection = c;
+	}
+
+	protected abstract void addAxis(Joint connection);
     public synchronized void disconnect() {
     	//what about timing?
     	if(isConnected()) {
-	    	if(this.connectedConnector!=null) this.connectedConnector = null;
-	    	if(this.connection!=null) {
-	    		if(connection.isActive())	{ 
-	    			connection.setActive(false);
-	    			connection.detach();
-	    			System.out.println("disconnected");
-	    		} 
-	    	}
+    		synchronized (JMESimulation.physicsLock) {
+		    	if(this.connectedConnector!=null) this.connectedConnector = null;
+		    	if(this.connection!=null) {
+		    		if(connection.isActive())	{ 
+		    			connection.setActive(false);
+		    			connection.detach();
+		    		} 
+		    	}
+    		}
     	}
     	
         

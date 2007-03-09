@@ -14,7 +14,7 @@ public class JMERigidMechanicalConnector extends JMEMechanicalConnector {
 	public JMERigidMechanicalConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, RobotDescription selfDesc) {
 		super(position, moduleNode, baseName, world, component, selfDesc);
 	}
-	protected void addAxis(Joint connection) {
+	protected synchronized void addAxis(Joint connection) {
 		//joint is rigid do not add axis
 	}
 

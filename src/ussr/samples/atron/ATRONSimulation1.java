@@ -132,7 +132,7 @@ public class ATRONSimulation1 extends GenericSimulation {
     	for(int i=0;i<modulePos.size();i++) {
     		for(int j=i+1;j<modulePos.size();j++) {
     			if(isConnectable(modulePos.get(i), modulePos.get(j))) {
-    				System.out.println("Found connection from module "+modulePos.get(i).getName()+" to "+modulePos.get(j).getName());
+    				//System.out.println("Found connection from module "+modulePos.get(i).getName()+" to "+modulePos.get(j).getName());
     				connections.add(new Connection(modulePos.get(i).getName(),modulePos.get(j).getName()));
     			}
     		}

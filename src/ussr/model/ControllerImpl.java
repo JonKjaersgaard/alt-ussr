@@ -8,6 +8,8 @@
  */
 package ussr.model;
 
+import ussr.comm.Receiver;
+
 /**
  * Abstract class providing a default implementation of the Controller interface.
  * The class maintain a reference to the module and provides a convenience "wait
@@ -32,7 +34,7 @@ public abstract class ControllerImpl implements Controller {
      * @see ussr.model.Controller#setModule(ussr.model.Module)
      */
     public void setModule(Module module) {
-        this.module = module;
+    	this.module = module;
     }
 
     /**

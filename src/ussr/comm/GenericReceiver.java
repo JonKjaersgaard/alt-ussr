@@ -3,10 +3,11 @@
  */
 package ussr.comm;
 
+import java.util.ArrayList;
+
 import ussr.model.Entity;
 import ussr.model.Module;
 import ussr.physics.PhysicsEntity;
-import ussr.physics.PhysicsLogger;
 
 /**
  * @author ups
@@ -20,6 +21,7 @@ public abstract class GenericReceiver implements Receiver {
     protected TransmissionType type;
     protected Packet[] queue; 
     protected int read_position, write_position;
+    private ArrayList<PacketReceivedObserver> packetReceivedObservers = new ArrayList<PacketReceivedObserver>();
     protected int packageCounter = 0; //for debougging
     
     public GenericReceiver(Module _module, Entity _hardware, TransmissionType _type, int buffer_size) {
@@ -43,6 +45,8 @@ public abstract class GenericReceiver implements Receiver {
         //if(write_position==read_position) PhysicsLogger.log("comm buffer overrun ");
         if(write_position==read_position) System.out.println("ERROR: comm buffer overrun");
         module.eventNotify();
+        for(PacketReceivedObserver pro: packetReceivedObservers)
+        	pro.packetReceived(this);
     }
     
     public synchronized Packet getData() {
@@ -62,4 +66,10 @@ public abstract class GenericReceiver implements Receiver {
     public TransmissionType getType() {
 		return type;
 	}
+    public void addPacketReceivedObserver(PacketReceivedObserver pro) {
+		packetReceivedObservers.add(pro);
+    }
+    public void removePacketReceivedObserver(PacketReceivedObserver pro) {
+		packetReceivedObservers.remove(pro);
+    }
 }

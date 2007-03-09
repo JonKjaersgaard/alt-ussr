@@ -108,7 +108,9 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     protected float gravity =-9.82f;
     private PhysicsSpace physicsSpace;
     protected InputHandler cameraInputHandler;
-   
+    
+    static class Lock extends Object {}
+    static public Lock physicsLock = new Lock(); //should be used every time physics space is changed 
    
     /**
      * The camera that we see through.
@@ -229,8 +231,6 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
             final Module module = new Module();
             String robotType = (worldDescription.getModulePositions().size()>0)?worldDescription.getModulePositions().get(i).getType():"default";
             Robot robot = robots.get(robotType);
-            module.setController(robot.createController());
-            modules.add(module);
         	if(robot.getDescription().getType()=="ATRON") {
 	           	//create ATRON
         		if(robot.getDescription().getModuleGeometry().size()!=2) throw new RuntimeException("Not an ATRON");
@@ -249,14 +249,14 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
 	            float pi = (float)Math.PI;
 	            float unit = (float) (0.045f/Math.sqrt(2)); //4.5cm from center of mass to connector
 	            
-	            northComponent.addConnector("Connector 0", new Vector3f(  unit,  unit, -unit),Color.PINK,new Quaternion(new float[]{0,-pi/4,pi/4}));  //male
+	            northComponent.addConnector("Connector 0", new Vector3f(  unit,  unit, -unit),Color.black,new Quaternion(new float[]{0,-pi/4,pi/4}));  //male
 	            northComponent.addConnector("Connector 1", new Vector3f( -unit,  unit, -unit ),Color.white,new Quaternion(new float[]{0,pi/4,-pi/4})); //female
-	            northComponent.addConnector("Connector 2", new Vector3f( -unit, -unit, -unit ),Color.PINK, new Quaternion(new float[]{0,pi/4,pi/4})); //male 
+	            northComponent.addConnector("Connector 2", new Vector3f( -unit, -unit, -unit ),Color.black, new Quaternion(new float[]{0,pi/4,pi/4})); //male 
 	            northComponent.addConnector("Connector 3", new Vector3f(  unit, -unit, -unit ),Color.white, new Quaternion(new float[]{0,-pi/4,-pi/4})); //...
 	            
-	            southComponent.addConnector("Connector 4", new Vector3f(  unit,  unit,  unit ),Color.PINK,new Quaternion(new float[]{pi,pi/4,pi/4}));
+	            southComponent.addConnector("Connector 4", new Vector3f(  unit,  unit,  unit ),Color.black,new Quaternion(new float[]{pi,pi/4,pi/4}));
 	            southComponent.addConnector("Connector 5", new Vector3f( -unit,  unit,  unit ),Color.white, new Quaternion(new float[]{pi,-pi/4,-pi/4}));
-	            southComponent.addConnector("Connector 6", new Vector3f( -unit, -unit,  unit ),Color.PINK, new Quaternion(new float[]{pi,-pi/4,pi/4}));
+	            southComponent.addConnector("Connector 6", new Vector3f( -unit, -unit,  unit ),Color.black, new Quaternion(new float[]{pi,-pi/4,pi/4}));
 	            southComponent.addConnector("Connector 7", new Vector3f(  unit, -unit,  unit ),Color.white, new Quaternion(new float[]{pi,pi/4,-pi/4}));
 	            
                 module.addComponent(northComponent);
@@ -268,7 +268,7 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
 	            	module.addTransmissionDevice(JMEDescriptionHelper.createTransmitter(module, module.getConnectors().get(channel),atronTrans));
 	            	module.addReceivingDevice(JMEDescriptionHelper.createReceiver(module, module.getConnectors().get(channel),atronRec));
 	            }
-
+	            
                 moduleComponents.add(northComponent);
                 moduleComponents.add(southComponent);
                 northNode.setMaterial(Material.IRON);
@@ -286,13 +286,13 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
                 JMERotationalActuator centerActuator = new JMERotationalActuator(this,"center");
                 module.addActuator(new Actuator(centerActuator));
                 centerActuator.attach(southNode,northNode);
-                //centerActuator.setControlParameters(500, 2f, 0, 0); //Extreme ATRON
-                centerActuator.setControlParameters(2, (float)(2*Math.PI/6), 0, 0); //100N, 2*pi/6 rad/s, no rotational limits
+                centerActuator.setControlParameters(500, 2f, 0, 0); //Extreme super ATRON
+               // centerActuator.setControlParameters(2, (float)(2*Math.PI/6), 0, 0); //100N, 2*pi/6 rad/s, no rotational limits
                 centerActuator.setDirection(0, 0, 1);
                 centerActuator.activate(10);
                 
                 ContactHandlingDetails con = staticPlane.getMaterial().getContactHandlingDetails(southNode.getMaterial());
-                System.out.println("ATRON vs Plane bounce = "+con.getBounce()+" friction ="+con.getMu());
+                //System.out.println("ATRON vs Plane bounce = "+con.getBounce()+" friction ="+con.getMu());
                 
                 //System.out.println("center c ="+centerActuator.getEncoderValue());
                 //System.out.println("Connector mass = "+southComponent.getNodes().get(0).getChildren().get(1).getClass()+" "+southNode.getMass());
@@ -392,6 +392,9 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
 	    	else {
 	    		throw new RuntimeException("Module type can not be constructed");
 	    	}
+        	module.setController(robot.createController());
+            modules.add(module);
+        	
 	        new Thread() {
 	            public void run() {
 	                module.getController().activate();
@@ -645,8 +648,10 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
     }
     private long physicsSteps = 0;
     private final void physicsStep() {
-    	getPhysicsSpace().update(physicsSimulationStepSize);
-    	physicsSteps++;
+    	synchronized(physicsLock) {
+	    	getPhysicsSpace().update(physicsSimulationStepSize);
+	    	physicsSteps++;
+    	}
     }
 
     protected void cameraPerspective() {

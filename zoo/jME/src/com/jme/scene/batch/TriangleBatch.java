@@ -327,6 +327,8 @@ public class TriangleBatch extends GeomBatch implements Serializable, Savable {
             if (getCollisionTree() == null) {
                 updateCollisionTree(true);
             }
+            //System.out.println(" "+getCollisionTree().bounds.transform(parentGeom.getWorldRotation(), parentGeom.getWorldTranslation(), parentGeom.getWorldScale(),
+             //       getCollisionTree().worldBounds));
             getCollisionTree().bounds.transform(
                     parentGeom.getWorldRotation(), parentGeom.getWorldTranslation(), parentGeom.getWorldScale(),
                     getCollisionTree().worldBounds);

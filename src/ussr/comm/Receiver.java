@@ -25,4 +25,8 @@ public interface Receiver {
     public PhysicsEntity getHardware();
     
     public TransmissionType getType();
+    
+    public void addPacketReceivedObserver(PacketReceivedObserver pro);
+    
+    public void removePacketReceivedObserver(PacketReceivedObserver pro);
 }

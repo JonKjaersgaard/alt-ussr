@@ -30,7 +30,7 @@ public abstract class GenericATRONSimulation extends GenericSimulation {
 	protected static float eigth = (float)(0.25*Math.PI);
 	
 	protected static float unit = 0.08f;//8 cm between two lattice positions on physical atrons
-	protected static RotationDescription rotation_NS = new RotationDescription(0,0,eigth);
+	protected static RotationDescription rotation_NS = new RotationDescription(0,0,eigth+quart);//(0,0,eigth);
 	protected static RotationDescription rotation_SN = new RotationDescription(0,half,eigth);
 	protected static RotationDescription rotation_UD = new RotationDescription(quart,eigth,0);
 	protected static RotationDescription rotation_EW = new RotationDescription(new VectorDescription(eigth,0,0),new VectorDescription(0,quart,0));

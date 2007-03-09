@@ -1,14 +1,22 @@
 package ussr.samples.atron;
 
 import ussr.comm.Packet;
+import ussr.comm.PacketReceivedObserver;
+import ussr.comm.Receiver;
 import ussr.model.ControllerImpl;
+import ussr.model.Module;
 
-public abstract class ATRONController extends ControllerImpl {
+public abstract class ATRONController extends ControllerImpl implements PacketReceivedObserver {
 
     public ATRONController() {
         super();
     }
-
+    public void setModule(Module module) {
+    	super.setModule(module);
+        for(Receiver r: module.getReceivers()) { 
+         	r.addPacketReceivedObserver(this); //packetReceived(..) will be called when a packet is received
+        }
+    }
     protected boolean isRotating() {
     	return module.getActuators().get(0).isActive();
     }
@@ -74,7 +82,7 @@ public abstract class ATRONController extends ControllerImpl {
     }
 
     protected boolean isMale(int i) {
-    	return i%2==0;
+    	return (i%2)==0;
     }
 
     protected void connect(int i) {
@@ -96,7 +104,7 @@ public abstract class ATRONController extends ControllerImpl {
     	module.getActuators().get(0).disactivate();
     }
     protected void centerStop() {
-    	centerBrake(); //TODO implement the difference
+    	centerBrake(); //TODO implement the difference from center brake
     }
 
     protected boolean isOtherConnectorNearby(int connector) {
@@ -118,4 +126,22 @@ public abstract class ATRONController extends ControllerImpl {
 		}
 		return 0;
 	}
+    public void packetReceived(Receiver device) {
+    	for(int i=0;i<8;i++) {
+    		if(module.getReceivers().get(i).equals(device)) {
+    			byte[] data = device.getData().getData();
+    			handleMessage(data,data.length,i);
+    			return;
+    		}
+    	}
+    }
+    /**
+     * Controllers should generally overwrite this method to receieve messages 
+     * @param message
+     * @param messageSize
+     * @param channel
+     */
+    public void handleMessage(byte[] message, int messageSize, int channel) {
+    	System.out.println("Message recieved please overwrite this method");
+    }
 }
