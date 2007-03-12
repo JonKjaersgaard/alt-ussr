@@ -15,6 +15,14 @@ extern "C" {
 JNIEXPORT void JNICALL Java_ussr_samples_atron_ATRONNativeController_activate
   (JNIEnv *, jobject);
 
+/*
+ * Class:     ussr_samples_atron_ATRONNativeController
+ * Method:    nativeHandleMessage
+ * Signature: ([BII)V
+ */
+JNIEXPORT void JNICALL Java_ussr_samples_atron_ATRONNativeController_nativeHandleMessage
+  (JNIEnv *, jobject, jbyteArray, jint, jint);
+
 #ifdef __cplusplus
 }
 #endif

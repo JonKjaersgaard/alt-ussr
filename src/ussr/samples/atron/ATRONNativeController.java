@@ -38,4 +38,11 @@ public class ATRONNativeController extends ATRONController {
         }
         return -1;
     }
+    
+    public synchronized void handleMessage(byte[] message, int messageSize, int channel) {
+        this.nativeHandleMessage(message, messageSize, channel);
+    }
+
+    private native void nativeHandleMessage(byte[] message, int messageSize, int channel);
+
 }

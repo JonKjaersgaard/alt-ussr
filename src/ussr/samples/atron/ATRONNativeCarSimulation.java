@@ -12,16 +12,16 @@ import ussr.robotbuildingblocks.Robot;
  * TODO Write a nice and user-friendly comment here
  * 
  */
-public class ATRONSimulationNative1 extends ATRONCarSimulation {
+public class ATRONNativeCarSimulation extends ATRONCarSimulation {
     public static void main(String argv[]) {
-        new ATRONSimulationNative1().main();
+        new ATRONNativeCarSimulation().main();
     }
     
     @Override
     protected Robot getRobot() {
         return new ATRON() {
             public Controller createController() {
-                return new ATRONNativeController("controller1");
+                return new ATRONNativeController("carController");
             }
         };
     }
