@@ -33,6 +33,9 @@ public class JMETiltSensor implements JMESensor {
 	public String getName() {
 		return name;
 	}
+    public String toString() {
+        return "sensor_"+name+"<"+axes+">";
+    }
 	public VectorDescription getPosition() {
 		// TODO Auto-generated method stub
 		return null;

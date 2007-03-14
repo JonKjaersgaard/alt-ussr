@@ -294,6 +294,13 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
                 ContactHandlingDetails con = staticPlane.getMaterial().getContactHandlingDetails(southNode.getMaterial());
                 //System.out.println("ATRON vs Plane bounce = "+con.getBounce()+" friction ="+con.getMu());
                 
+                // Tilt sensors
+                JMETiltSensor xsensor = new JMETiltSensor(this, "xsensor", 'x', northNode);
+                JMETiltSensor ysensor = new JMETiltSensor(this, "ysensor", 'y', northNode);
+                JMETiltSensor zsensor = new JMETiltSensor(this, "zsensor", 'z', northNode);
+                module.addSensor(new Sensor(xsensor));
+                module.addSensor(new Sensor(ysensor));
+                module.addSensor(new Sensor(zsensor));
                 //System.out.println("center c ="+centerActuator.getEncoderValue());
                 //System.out.println("Connector mass = "+southComponent.getNodes().get(0).getChildren().get(1).getClass()+" "+southNode.getMass());
 
