@@ -31,6 +31,7 @@ import ussr.robotbuildingblocks.CylinderShape;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.ReceivingDevice;
 import ussr.robotbuildingblocks.Robot;
+import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.TransmissionDevice;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
@@ -294,10 +295,10 @@ public class JMESimulation extends AbstractGame implements PhysicsSimulation {
                 ContactHandlingDetails con = staticPlane.getMaterial().getContactHandlingDetails(southNode.getMaterial());
                 //System.out.println("ATRON vs Plane bounce = "+con.getBounce()+" friction ="+con.getMu());
                 
-                // Tilt sensors
-                JMETiltSensor xsensor = new JMETiltSensor(this, "xsensor", 'x', northNode);
-                JMETiltSensor ysensor = new JMETiltSensor(this, "ysensor", 'y', northNode);
-                JMETiltSensor zsensor = new JMETiltSensor(this, "zsensor", 'z', northNode);
+                // Tilt sensors - NOTE: rotation is probably not correct, but is meant to be inverse of connector rotation
+                JMETiltSensor xsensor = new JMETiltSensor(this, "xsensor", 'x', northNode, new RotationDescription(0,-pi,-pi/4));
+                JMETiltSensor ysensor = new JMETiltSensor(this, "ysensor", 'y', northNode, new RotationDescription(0,-pi,-pi/4));
+                JMETiltSensor zsensor = new JMETiltSensor(this, "zsensor", 'z', northNode, new RotationDescription(0,-pi,-pi/4));
                 module.addSensor(new Sensor(xsensor));
                 module.addSensor(new Sensor(ysensor));
                 module.addSensor(new Sensor(zsensor));
