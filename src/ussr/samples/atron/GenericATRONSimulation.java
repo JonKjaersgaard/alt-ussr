@@ -38,14 +38,15 @@ public abstract class GenericATRONSimulation extends GenericSimulation {
     public void main() {
         setConnectorsAreActive(true);
         WorldDescription world = new WorldDescription();
-        world.setPlaneSize(5);
+        world.setPlaneSize(10);
         ArrayList<WorldDescription.ModulePosition> modulePos;
         modulePos = buildRobot();
         world.setModulePositions(modulePos);
         
         ArrayList<Connection> connections = allConnections(modulePos);
         world.setModuleConnections(connections);
-        
+
+        this.changeWorldHook(world);
         
         /*world.setModulePositions(new WorldDescription.ModulePosition[] {
         new WorldDescription.ModulePosition("leftleg",new VectorDescription(0,0,0), rotation_EW),
@@ -60,7 +61,10 @@ public abstract class GenericATRONSimulation extends GenericSimulation {
         this.runSimulation(world,true);
     }
     
-	private static ArrayList<Connection> allConnections(ArrayList<ModulePosition> modulePos) {
+	protected void changeWorldHook(WorldDescription world) {
+    }
+
+    private static ArrayList<Connection> allConnections(ArrayList<ModulePosition> modulePos) {
     	ArrayList<Connection> connections = new ArrayList<Connection>();
     	System.out.println("modulePos.size()"+modulePos.size());
     	for(int i=0;i<modulePos.size();i++) {
