@@ -8,7 +8,7 @@ import ussr.physics.PhysicsConnector;
 import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;
 
-public interface JMEConnector extends PhysicsConnector {
+public interface JMEConnector extends PhysicsConnector, JMEPhysicsEntity {
 
     public DynamicPhysicsNode getNode();
 

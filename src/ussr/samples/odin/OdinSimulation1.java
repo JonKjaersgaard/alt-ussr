@@ -38,12 +38,12 @@ public class OdinSimulation1 extends GenericSimulation {
         
         simulation.setRobot(new OdinMuscle(){
         	public Controller createController() {
-        		return new OdinSampleController2("OdinMuscle");
+        		return new OdinSampleController1("OdinMuscle");
         	}},"OdinMuscle");
         
         simulation.setRobot(new OdinBall(){
         	public Controller createController() {
-        		return new OdinSampleController2("OdinBall");
+        		return new OdinSampleController1("OdinBall");
         	}},"OdinBall");
         
         if(world==null) world = createWorld();
@@ -64,11 +64,12 @@ public class OdinSimulation1 extends GenericSimulation {
         ArrayList<WorldDescription.ModulePosition> modulePos = new ArrayList<WorldDescription.ModulePosition>();
         //printConnectorPos();
         int index=0;
-        int nBalls=0,xMax=0, yMax=0,zMax=0; modulePos.add(new WorldDescription.ModulePosition("0","OdinMuscle", new VectorDescription(0,0,0), new RotationDescription(0,0,0)));
+        //int nBalls=0,xMax=0, yMax=0,zMax=0; modulePos.add(new WorldDescription.ModulePosition("0","OdinMuscle", new VectorDescription(0,0,0), new RotationDescription(0,0,0)));
         //int nBalls=2, xMax=1, yMax=2,zMax=2;
-        //int nBalls=3, xMax=3, yMax=2,zMax=2;
-        //int nBalls=4, xMax=3, yMax=2,zMax=2;
-        //int nBalls=8, xMax=3, yMax=2,zMax=2;
+        int nBalls=3, xMax=3, yMax=2,zMax=2;
+       // int nBalls=4, xMax=3, yMax=2,zMax=2;
+       //int nBalls=8, xMax=3, yMax=2,zMax=2;
+       //int nBalls=14, xMax=3, yMax=3,zMax=3;
         //int nBalls=20, xMax=4, yMax=4,zMax=4;
         for(int x=0;x<xMax;x++) {
         	for(int y=0;y<yMax;y++) {

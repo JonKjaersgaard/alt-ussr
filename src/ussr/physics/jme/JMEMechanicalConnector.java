@@ -7,6 +7,7 @@ import java.util.List;
 
 import ussr.model.Connector;
 import ussr.model.Module;
+import ussr.physics.PhysicsQuaternionHolder;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.RotationDescription;
@@ -45,7 +46,7 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
         assert geometry.size()==1; // Only tested with size 1 geometry
         for(GeometryDescription element: geometry) {
         	//System.out.println("creating connector "+(baseName+position.toString()));
-        	mesh = JMEDescriptionHelper.createShape(connector, baseName+position.toString(), element);
+        	mesh = JMEGeometryHelper.createShape(connector, baseName+position.toString(), element);
             //world.connectorRegistry.put(mesh.getName(),this);
             mesh.getLocalTranslation().set( mesh.getLocalTranslation().add(new Vector3f(position)) );
             //mesh.getLocalRotation().
@@ -60,7 +61,7 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
             connector.attachChild( mesh );
             component.getComponentGeometries().add(mesh);
             world.associateGeometry(connector, mesh);
-            JMEDescriptionHelper.setColor(world, mesh, element.getColor());
+            world.getHelper().setColor(mesh, element.getColor());
         }
         // Finalize
         //connector.generatePhysicsGeometry(true); //dont let connectors collide - too slow!
@@ -208,7 +209,7 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
     		System.out.println("Already connected");
     	}
     }
-    private synchronized void setConnectedConnector(JMEMechanicalConnector c) {
+    protected synchronized void setConnectedConnector(JMEMechanicalConnector c) {
     	connectedConnector=c;
 	}
 
@@ -221,6 +222,7 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
     	//what about timing?
     	if(isConnected()) {
     		synchronized (JMESimulation.physicsLock) {
+    			((JMEMechanicalConnector)this.connectedConnector).setConnectedConnector(null);
 		    	if(this.connectedConnector!=null) this.connectedConnector = null;
 		    	if(this.connection!=null) {
 		    		if(connection.isActive())	{ 
@@ -250,7 +252,7 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
     }
 
 	public void setConnectorColor(Color color) {
-		JMEDescriptionHelper.setColor(world, mesh, color);
+		world.getHelper().setColor(mesh, color);
 		/*System.out.println("Setting color for children");
     	for(Spatial child:  node.getChildren()) {
     		System.out.println("Here "+child);
@@ -281,8 +283,8 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
 	/**
 	 * Set the rotation realtive to the module
 	 */
-	public void setRotation(Quaternion rot) {
-		mesh.getLocalRotation().set(new Quaternion(rot));
+	public void setRotation(PhysicsQuaternionHolder rot) {
+		mesh.getLocalRotation().set(new Quaternion((Quaternion)rot.get()));
 	}
 	/**
 	 * Position in the world (global)  

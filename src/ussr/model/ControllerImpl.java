@@ -37,6 +37,10 @@ public abstract class ControllerImpl implements Controller {
     	this.module = module;
     }
 
+    public Module getModule() {
+    	return module;
+    }
+    
     /**
      * Wait for an event to be signalled on the module object, using Java's built-in
      * notify operation.
@@ -55,7 +59,12 @@ public abstract class ControllerImpl implements Controller {
     protected void delay(long ms) {
     	float stopTime = module.getSimulation().getTime()+ms/1000f;
     	while(stopTime>module.getSimulation().getTime()) {
-    		Thread.yield();
+    		ussrYield();
     	}
+	}
+    
+    public void ussrYield() {
+    	while(module.getSimulation().isPaused()) Thread.yield();
+    	module.getSimulation().waitForPhysicsStep(false);	
 	}
 }

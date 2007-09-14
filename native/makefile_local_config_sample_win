@@ -1,0 +1,3 @@
+BASEDIR=c:/Docume~1/ups/workspace/ussr
+BASEDIRWIN=c:\Docume~1\ups\workspace\ussr
+include $(BASEDIR)/native/base/makefile_win

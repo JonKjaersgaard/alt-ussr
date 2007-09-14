@@ -1,0 +1,2 @@
+BASEDIR=/Users/ups/eclipse_workspace/ussr
+include $(BASEDIR)/native/base/makefile_mac

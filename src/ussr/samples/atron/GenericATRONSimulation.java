@@ -33,8 +33,12 @@ public abstract class GenericATRONSimulation extends GenericSimulation {
 	protected static RotationDescription rotation_NS = new RotationDescription(0,0,eigth+quart);//(0,0,eigth);
 	protected static RotationDescription rotation_SN = new RotationDescription(0,half,eigth);
 	protected static RotationDescription rotation_UD = new RotationDescription(quart,eigth,0);
+	protected static RotationDescription rotation_DU = new RotationDescription(-quart,-eigth,0);
 	protected static RotationDescription rotation_EW = new RotationDescription(new VectorDescription(eigth,0,0),new VectorDescription(0,quart,0));
+	protected static RotationDescription rotation_WE = new RotationDescription(new VectorDescription(-eigth,0,0),new VectorDescription(0,-quart,0));
 
+    protected float connection_acceptance_range = 0.001f;
+    
     public void main() {
         setConnectorsAreActive(true);
         WorldDescription world = new WorldDescription();
@@ -64,7 +68,7 @@ public abstract class GenericATRONSimulation extends GenericSimulation {
 	protected void changeWorldHook(WorldDescription world) {
     }
 
-    private static ArrayList<Connection> allConnections(ArrayList<ModulePosition> modulePos) {
+    private ArrayList<Connection> allConnections(ArrayList<ModulePosition> modulePos) {
     	ArrayList<Connection> connections = new ArrayList<Connection>();
     	System.out.println("modulePos.size()"+modulePos.size());
     	for(int i=0;i<modulePos.size();i++) {
@@ -77,9 +81,9 @@ public abstract class GenericATRONSimulation extends GenericSimulation {
     	}
 		return connections;
 	}
-	public static boolean isConnectable(ModulePosition m1, ModulePosition m2) {
+	public boolean isConnectable(ModulePosition m1, ModulePosition m2) {
     	float dist = m1.getPosition().distance(m2.getPosition());
-    	return Math.abs(dist-0.11313708f)<0.001;
+    	return Math.abs(dist-0.11313708f)<connection_acceptance_range;
     }
     @Override
     protected abstract Robot getRobot(); 

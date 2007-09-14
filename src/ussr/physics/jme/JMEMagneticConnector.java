@@ -20,6 +20,7 @@ import com.jmex.physics.contact.ContactInfo;
 import ussr.model.Connector;
 import ussr.physics.PhysicsConnector;
 import ussr.physics.PhysicsLogger;
+import ussr.physics.PhysicsQuaternionHolder;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.RotationDescription;
@@ -52,7 +53,7 @@ public class JMEMagneticConnector implements JMEConnector {
         // Create visual appearance
         assert geometry.size()==1; // Only tested with size 1 geometry
         for(GeometryDescription element: geometry) {
-            mesh = JMEDescriptionHelper.createShape(connector, baseName+position.toString(), element);
+            mesh = JMEGeometryHelper.createShape(connector, baseName+position.toString(), element);
             world.connectorRegistry.put(mesh.getName(),this);
             mesh.getLocalTranslation().set( mesh.getLocalTranslation().add(position) );
             mesh.setModelBound( new BoundingSphere() );
@@ -218,8 +219,8 @@ public class JMEMagneticConnector implements JMEConnector {
 	public RotationDescription getRotation() {
 		return new RotationDescription(mesh.getWorldRotation());//TODO: not tested yet
 	}
-	public void setRotation(Quaternion rot) {
-		mesh.getLocalRotation().set(new Quaternion(rot));
+	public void setRotation(PhysicsQuaternionHolder rot) {
+		mesh.getLocalRotation().set(new Quaternion((Quaternion)rot.get()));
 	}
 
 }

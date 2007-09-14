@@ -31,6 +31,7 @@ public class JMERotationalActuator implements PhysicsActuator {
 	private float maxVelocity = 0.01f;
 	private JointAxis axis;
 	private boolean active = false;
+	private boolean unlimitedRotation=false;
     public JMERotationalActuator(JMESimulation world, String baseName) {
         this.world = world;
         this.name = baseName;
@@ -49,10 +50,15 @@ public class JMERotationalActuator implements PhysicsActuator {
     	if(upperLimit==lowerLimit) {
     		axis.setPositionMaximum((float) Math.PI);
     		axis.setPositionMinimum((float)-Math.PI);
+    		unlimitedRotation = true;
     	}
     	else {
     		axis.setPositionMaximum(upperLimit);
     		axis.setPositionMinimum(lowerLimit);
+    		float pi = (float)Math.PI;
+    		
+    		if(upperLimit==pi&&lowerLimit==-pi) unlimitedRotation = true;
+    		else unlimitedRotation = false;
     	}
     }
     /**
@@ -62,34 +68,33 @@ public class JMERotationalActuator implements PhysicsActuator {
      */
     public void attach(DynamicPhysicsNode d1, DynamicPhysicsNode d2) {
     	node1=d1; node2=d2;
-    	//node1.setAffectedByGravity(false);
-    	//node2.setAffectedByGravity(false);
     	if(joint==null)  {
     		joint = (OdeJoint)((OdePhysicsSpace)world.getPhysicsSpace()).createJoint();
     		
     		axis = joint.createRotationalAxis();
-    		joint.attach(node1,node2);
-//    		node.getLocalRotation().mult(mesh.getLocalTranslation()).add(node.getLocalTranslation());
-    		//joint.createRotationalAxis().setDirection(new Vector3f(0,1,0));
-    		//joint.createRotationalAxis().setDirection(new Vector3f(0,0,1));
     		
-    		//axis.setDirection(d1.getLocalRotation().inverse().mult(new Vector3f(0,1,0)));
+    		joint.attach(node1,node2);
+    		joint.setAnchor(d1.getLocalRotation().mult(d2.getLocalTranslation()));
+    		
     		axis.setDirection(new Vector3f(1,0,0));
     		disactivate();
     		setControlParameters(9.82f,1f,-(float)Math.PI,(float)Math.PI); //default parameters
-    		
-    		//Joint testJoint = world.getPhysicsSpace().createJoint();
-    		//testJoint.attach(node2);
     	}
     }
+    
+    
     public void setDirection(float x,float y, float z) {
     	axis.setDirection(new Vector3f(x,y,z));
     }
+    
     public void reset() {
     	disactivate();
-    	Vector3f[] axes = new Vector3f[]{new Vector3f(),new Vector3f(),new Vector3f()};
+    	//TODO this method has not been full debugged check if problems with actuators rotatation 
+    	Vector3f newAxis = node1.getLocalRotation().toRotationMatrix().mult(axis.getDirection(null).mult(-1));
+    	axis.setDirection(newAxis);
+    	/*Vector3f[] axes = new Vector3f[]{new Vector3f(),new Vector3f(),new Vector3f()};
     	node1.getLocalRotation().toAxes(axes);
-    	axis.setDirection(axes[2].mult(-1));	
+    	axis.setDirection(axes[2].mult(-1));*/
 	}
     /**
      * encoder value in percent
@@ -111,14 +116,15 @@ public class JMERotationalActuator implements PhysicsActuator {
 			//System.out.println("Actuator is not yet setup!");
 			return false;
 		}
-		if(goal==-1) axis.setDesiredVelocity(-maxVelocity); 
-		else if(goal==1) axis.setDesiredVelocity(maxVelocity);
+		if(goal==-1 && unlimitedRotation) axis.setDesiredVelocity(-maxVelocity); 
+		else if(goal==1  && unlimitedRotation) axis.setDesiredVelocity(maxVelocity);
 		else { //go for position
 			float error = goal-getEncoderValue();
+			//System.out.println("goal = "+goal+" current = "+getEncoderValue()+" error = "+error);
 			if(Math.abs(error)<0.01) {
 				disactivate(); //at goal stop
 			}
-			else if(Math.abs(error)<0.5) { //go clockwise direction
+			else if(Math.abs(error)<0.5 ) { //go clockwise direction
 				axis.setDesiredVelocity(maxVelocity*error/Math.abs(error));
 			}
 			else { //go counterclockwise direction

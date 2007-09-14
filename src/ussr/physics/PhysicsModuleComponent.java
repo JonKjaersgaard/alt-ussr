@@ -40,4 +40,6 @@ public interface PhysicsModuleComponent extends PhysicsEntity {
     
     public PhysicsSimulation getSimulation();
 
+    public PhysicsSimulationHelper getSimulationHelper();
+
 }

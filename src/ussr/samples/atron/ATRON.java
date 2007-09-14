@@ -24,12 +24,16 @@ import ussr.robotbuildingblocks.VectorDescription;
  */
 public abstract class ATRON implements Robot {
     
+    protected boolean zuper = false, smooth = false; // Different variants
+
+    public void setSuper() { zuper = true; }
+    
     /**
      * @see ussr.robotbuildingblocks.Robot#getDescription()
      */
     public RobotDescription getDescription() {
         RobotDescription description = new RobotDescription();
-        description.setType("ATRON");
+        description.setType("ATRON"+(zuper ? " super" : "")+(smooth ? " smooth" : ""));
         if(false) {
 	        SphereShape hemi1 = new SphereShape(1.13f, new VectorDescription( 0.0f, 0.0f, -0.125f)); 
 	        SphereShape hemi2 = new SphereShape(1.15f, new VectorDescription( 0.0f, 0.0f, 0.125f)); 
@@ -38,11 +42,11 @@ public abstract class ATRON implements Robot {
         }
         else {
         	float pi = (float)Math.PI;
-  	        AtronShape hemi1 = new AtronShape(0.9f, true, new VectorDescription(0f,0f,-0.001f),new RotationDescription(0,pi,pi/4)); //north
-  	        AtronShape hemi2 = new AtronShape(1f, false, new VectorDescription(0f,0f,0.001f),new RotationDescription(0,0f,pi/4)); //south
-  	        hemi1.setColor(Color.blue); hemi2.setColor(Color.RED);
-  	        hemi1.setAccurateCollisionDetection(true);
-  	        hemi2.setAccurateCollisionDetection(true);
+  	        AtronShape hemi1 = new AtronShape(smooth ? 0.5f : 0.9f, true, new VectorDescription(0f,0f,-0.001f),new RotationDescription(0,pi,pi/4)); //north
+  	        AtronShape hemi2 = new AtronShape(smooth ? 0.5f : 1.0f, false, new VectorDescription(0f,0f,0.001f),new RotationDescription(0,0f,pi/4)); //south
+        	hemi1.setColor(smooth ? Color.magenta : Color.blue); hemi2.setColor(Color.RED);
+  	        hemi1.setAccurateCollisionDetection(false);
+  	        hemi2.setAccurateCollisionDetection(false); //true for self-reconfiguration
   	        description.setModuleGeometry(new GeometryDescription[] {hemi1, hemi2});
   	        //put center actuator here!- but how?
         }
@@ -63,4 +67,9 @@ public abstract class ATRON implements Robot {
         description.setMaxConnectionDistance(0.03f);
         return description;
     }
+
+    public void setSmooth() {
+        smooth = true;
+    }
+
 }

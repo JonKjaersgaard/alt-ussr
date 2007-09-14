@@ -1,0 +1,26 @@
+# OS-specific variables
+JAVAINCLUDE=-I"C:\Program Files\Java\jdk1.5.0_02\include" -I"C:\Program Files\Java\jdk1.5.0_02\include\win32"
+ALLINCLUDE=$(JAVAINCLUDE) -I$(BASEDIR)/native/include
+CFLAGS=-fPIC -DUSSR $(JAVAINCLUDE) $(ALLINCLUDE) -Wall -pedantic
+LDFLAGS=-shared --enable-stdcall-fixup
+
+# General variables
+NATIVECONTROLLER=$(BASEDIR)/native/base/nativeController.c
+APIFILE=$(BASEDIR)/native/base/$(API).c
+SRC=$(NATIVECONTROLLER) $(APIFILE) $(CONTROLLER).c $(FILES)
+BIN=$(SRC:.c=.o)
+CC=gcc
+
+all: nativeController.dll
+	copy nativeController.dll $(BASEDIRWIN)\lib\$(CONTROLLER).dll
+$(BASEDIR)/native/include/nativeController.h: $(BASEDIR)/bin/ussr/model/NativeController.class
+	javah -jni -classpath $(BASEDIR)/bin -o $(BASEDIR)/native/include/nativeController.h ussr.model.NativeController
+nativeController.dll: $(BASEDIR)/native/include/nativeController.h $(BIN)
+	gcc $(LDFLAGS) -o nativeController.dll $(BIN) $(BASEDIR)/native/base/$(API)_native_controller.def
+clean:
+	rm -f .depends nativeController.dll $(BIN)
+cleanh:
+	rm -f $(BASEDIR)/include/nativeController.h
+.depends: $(BASEDIR)/native/include/nativeController.h
+	gcc -DUSSR $(ALLINCLUDE) -M $(SRC) > .depends
+include .depends

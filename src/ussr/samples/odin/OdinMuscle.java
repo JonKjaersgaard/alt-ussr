@@ -45,7 +45,7 @@ public abstract class OdinMuscle extends Odin {
         		//new VectorDescription(-unit, 0, 0),
         		//new VectorDescription(unit, 0, 0),
         });
-        description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR_BALL_SOCKET );
+        description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR_BALL_SOCKET); 
         //description.setMaxConnectionDistance(6);
         return description;
 	}

@@ -9,8 +9,10 @@ import ussr.model.Sensor;
 
 public abstract class ATRONController extends ControllerImpl implements PacketReceivedObserver {
 
+	boolean blocking;
     public ATRONController() {
         super();
+        setBlocking(true);
     }
     public void setModule(Module module) {
     	super.setModule(module);
@@ -18,44 +20,70 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
          	r.addPacketReceivedObserver(this); //packetReceived(..) will be called when a packet is received
         }
     }
-    protected boolean isRotating() {
+    public boolean isRotating() {
     	return module.getActuators().get(0).isActive();
     }
+    public void setBlocking(boolean blocking) {
+    	this.blocking = blocking;
+    }
 
-    protected int getRotation() {
+    public int getJointPosition() {
     	float encVal = module.getActuators().get(0).getEncoderValue();
-    	if(Math.abs(encVal-0.50)<0.125f) return 0;
-    	if(Math.abs(encVal-0.75)<0.125f) return 1;
-    	if(Math.abs(encVal-0)<0.125f || Math.abs(encVal-1)<0.125f) return 2;
-    	if(Math.abs(encVal-0.25)<0.125f) return 3;
+    	if(Math.abs(encVal-0.50)<=0.125f) return 0;
+    	if(Math.abs(encVal-0.75)<=0.125f) return 1;
+    	if(Math.abs(encVal-0)<=0.125f || Math.abs(encVal-1)<0.125f) return 2;
+    	if(Math.abs(encVal-0.25)<=0.125f) return 3;
     	System.err.println("No ATRON rotation defined should not happend "+encVal);
     	return 0;
     }
 
-    protected void rotate(int dir) {
+    public void rotate(int dir) {
     	float goalRot = 0;
     	
-    	if(getRotation()==0) goalRot = ((dir>0)?1:3);
-    	else if(getRotation()==1) goalRot = ((dir>0)?2:0);
-    	else if(getRotation()==2) goalRot = ((dir>0)?3:1);
-    	else if(getRotation()==3) goalRot = ((dir>0)?0:2);
+    	if(getJointPosition()==0) goalRot = ((dir>0)?1:3);
+    	else if(getJointPosition()==1) goalRot = ((dir>0)?2:0);
+    	else if(getJointPosition()==2) goalRot = ((dir>0)?3:1);
+    	else if(getJointPosition()==3) goalRot = ((dir>0)?0:2);
     	
-//    	System.out.println("RotPos "+getRotation()+" go for "+goalRot/4f);
+    	System.out.println("RotPos "+getAngularPosition()+" go for "+goalRot/4f);
     	module.getActuators().get(0).activate(goalRot/4f);
-    	while(isRotating()) {
+    	while(isRotating()&&blocking) {
     		module.getActuators().get(0).activate(goalRot/4f);
     		Thread.yield();
     	}
 	}
-    protected void rotateToDegree(float rad) {
-    	module.getActuators().get(0).activate((float)(rad/(Math.PI*2)));
+    
+    public void rotateDegrees(int degrees) {
+        float rad = (float)(degrees/360.0*2*Math.PI);
+        float current = this.getAngularPosition();
+        do {
+            this.rotateToDegree(current+rad);
+            Thread.yield();
+        } while(isRotating()&&blocking);
+    }
+
+    public void rotateToDegreeInDegrees(int degrees) {
+        float rad = (float)(degrees/360.0*2*Math.PI);
+        this.rotateToDegree(rad);
+    }
+    
+    public void rotateToDegree(float rad) {
+        float goal = (float)(rad/(Math.PI*2));
+        do {
+            module.getActuators().get(0).activate(goal);
+            Thread.yield();
+        } while(isRotating()&&blocking);
 	}
-    protected float getAngularPosition() {
+    public float getAngularPosition() {
     	return (float)(module.getActuators().get(0).getEncoderValue()*Math.PI*2);
     }
     
+    public int getAngularPositionDegrees() {
+        return (int)(module.getActuators().get(0).getEncoderValue()*360);
+    }
+    
 
-    protected void disconnectAll() {
+    public void disconnectAll() {
     	for(int i=0;i<8;i++) {
     		if(isConnected(i)) {
     			disconnect(i);
@@ -63,7 +91,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     	}
     }
 
-    protected void connectAll() {
+    public void connectAll() {
     	for(int i=0;i<8;i++) {
     		if(isOtherConnectorNearby(i)) {
     			System.out.println(module.getID()+" Other connector at connector "+i);
@@ -74,41 +102,39 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     	}
     }
 
-    protected boolean canConnect(int i) {
+    public boolean canConnect(int i) {
     	return isOtherConnectorNearby(i)&&isMale(i)&&!isConnected(i);
     }
 
-    protected boolean canDisconnect(int i) {
+    public boolean canDisconnect(int i) {
     	return isMale(i)&&isConnected(i);
     }
 
-    protected boolean isMale(int i) {
+    public boolean isMale(int i) {
     	return (i%2)==0;
     }
 
-    protected void connect(int i) {
+    public void connect(int i) {
     	module.getConnectors().get(i).connect();
     }
 
-    protected void disconnect(int i) {
+    public void disconnect(int i) {
     	module.getConnectors().get(i).disconnect();
     }
 
-    protected boolean isConnected(int i) {
+    public boolean isConnected(int i) {
     	return module.getConnectors().get(i).isConnected();
     }
-
-    protected void rotateContinuous(float dir) {
+    public void rotateContinuous(float dir) {
     	module.getActuators().get(0).activate(dir);
     }
-    protected void centerBrake() {
+    public void centerBrake() {
     	module.getActuators().get(0).disactivate();
     }
-    protected void centerStop() {
+    public void centerStop() {
     	centerBrake(); //TODO implement the difference from center brake
     }
-
-    protected boolean isOtherConnectorNearby(int connector) {
+    public boolean isOtherConnectorNearby(int connector) {
     	if(module.getConnectors().get(connector).isConnected()) {
     		return true;
     	}
@@ -119,7 +145,12 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     		return false;
     	}
     }
-    protected byte sendMessage(byte[] message, byte messageSize, byte connector) 
+    
+    public boolean isObjectNearby(int connector) {
+        return module.getSensors().get(connector).readValue()>0.1;
+    }
+    
+    public byte sendMessage(byte[] message, byte messageSize, byte connector) 
 	{
 		if(isOtherConnectorNearby(connector)&&connector<8) {
 			module.getTransmitters().get(connector).send(new Packet(message));

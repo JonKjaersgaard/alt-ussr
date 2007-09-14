@@ -39,4 +39,7 @@ public class RotationDescription {
     	rotation.toAngles(angles);
     	return "("+angles[0]+", "+angles[1]+", "+angles[2]+")";
     }
+	public void setRotation(Quaternion rot) {
+		rotation.set(rot);
+	}
 }

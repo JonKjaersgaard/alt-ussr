@@ -12,4 +12,5 @@ import ussr.physics.PhysicsEntity;
 public interface PhysicsSensor extends PhysicsEntity {
 	void setModel(Sensor sensor);
 	float readValue();
+    String getName();
 }

@@ -30,20 +30,20 @@ public class JMETiltSensor implements JMESensor {
 
     public float readValue() {
         Quaternion q = rotation.getRotation();
-        float angles[] = new float[3]; q.toAngles(angles);
         Vector3f allAxes[] = new Vector3f[3];
-        node.getLocalRotation().toAxes(allAxes);
-        Vector3f vector; int index; float offset;
+        Quaternion qq = new Quaternion();
+        qq.fromRotationMatrix(node.getLocalRotation().toRotationMatrix().mult(rotation.getRotation().toRotationMatrix()));
+        qq.toAxes(allAxes);
+        Vector3f vector; int index; 
         switch(axes) {
         case 'x': index = 0; break;
         case 'y': index = 1; break;
         case 'z': index = 2; break;
         default: throw new Error("Axis wrong in tilt sensor "+axes); 
         }
-        vector = allAxes[index]; offset = angles[index];
+        vector = allAxes[index];
         Vector3f g = new Vector3f(0,-1,0);
-        // Adding offset is probably not the way to do it, does not appear to work
-        return vector.angleBetween(g)+offset;
+        return vector.angleBetween(g);
 	}
 
 	public void setModel(Sensor model) {

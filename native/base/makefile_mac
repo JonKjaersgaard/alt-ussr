@@ -1,0 +1,26 @@
+# OS-specific variables
+JAVAINCLUDE=-I/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Headers
+ALLINCLUDE=$(JAVAINCLUDE) -I$(BASEDIR)/native/include
+CFLAGS=-fPIC -DUSSR $(JAVAINCLUDE) $(ALLINCLUDE) -Wall -pedantic
+LDFLAGS=-dynamiclib -framework JavaVM -fPIC
+
+# General variables
+NATIVECONTROLLER=$(BASEDIR)/native/base/nativeController.c
+APIFILE=$(BASEDIR)/native/base/$(API).c
+SRC=$(NATIVECONTROLLER) $(APIFILE) $(CONTROLLER).c $(FILES)
+BIN=$(SRC:.c=.o)
+CC=gcc
+
+all: nativeController.jnilib
+	cp nativeController.jnilib $(BASEDIR)/lib/lib$(CONTROLLER).jnilib
+$(BASEDIR)/native/include/nativeController.h: $(BASEDIR)/bin/ussr/samples/atron/natives/ATRONNativeController.class
+	javah -jni -classpath $(BASEDIR)/bin -o $(BASEDIR)/native/include/nativeController.h ussr.samples.atron.natives.ATRONNativeController
+nativeController.jnilib: $(BASEDIR)/native/include/nativeController.h $(BIN)
+	gcc $(LDFLAGS) -o nativeController.jnilib $(BIN)
+clean:
+	rm -f .depends nativeController.jnilib $(BIN)
+cleanh:
+	rm -f $(BASEDIR)/include/nativeController.h
+.depends: $(BASEDIR)/native/include/nativeController.h
+	gcc -DUSSR $(ALLINCLUDE) -M $(SRC) > .depends
+include .depends

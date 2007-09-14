@@ -18,7 +18,8 @@ public class ATRONSnakeSimulation extends GenericATRONSimulation {
 	protected Robot getRobot() {
         return new ATRON() {
             public Controller createController() {
-                return new ATRONSnakeController1();
+                //return new ATRONSnakeController1();
+            	return new ATRONSnakeController2();
             }
         };
     }
@@ -39,6 +40,6 @@ public class ATRONSnakeSimulation extends GenericATRONSimulation {
 	}
 
 	protected ArrayList<ModulePosition> buildRobot() {
-		return buildSnake(9);
+		return buildSnake(4);
 	}
 }

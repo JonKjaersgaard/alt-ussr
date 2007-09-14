@@ -1,5 +1,0 @@
-# Customizable variables: name of controller and api files (both excluding extension)
-CONTROLLER=snakeController
-API=atron
-
-include makefile_mac

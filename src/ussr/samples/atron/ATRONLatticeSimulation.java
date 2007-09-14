@@ -23,7 +23,26 @@ public class ATRONLatticeSimulation extends GenericATRONSimulation {
             }
         };
     }
-	private static ArrayList<ModulePosition> buildAsLattice(int nModules, int xMax, int yMax, int zMax) {
+	public interface Namer {
+	    public String name(int number, VectorDescription pos, RotationDescription rot);
+    }
+    public interface ModuleSelector {
+        String select(String name, int index, VectorDescription pos, RotationDescription rot);
+    }
+    protected ArrayList<ModulePosition> buildAsLattice(int nModules, int xMax, int yMax, int zMax) {
+        return this.buildAsNamedLattice(nModules, xMax, yMax, zMax, new Namer() {
+            public String name(int number, VectorDescription pos, RotationDescription rot) {
+                return Integer.toString(number);
+            }
+                
+        }, new ModuleSelector() {
+            public String select(String name, int index, VectorDescription pos, RotationDescription rot) {
+                return null;
+            }
+        }, unit);
+    }
+    
+    protected ArrayList<ModulePosition> buildAsNamedLattice(int nModules, int xMax, int yMax, int zMax, Namer namer, ModuleSelector selector, float placement_unit) {
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
         int index=0;
         for(int x=0;x<xMax;x++) {
@@ -32,22 +51,31 @@ public class ATRONLatticeSimulation extends GenericATRONSimulation {
         			VectorDescription pos = null;
         			RotationDescription rot = rotation_NS;
         			if(y%2==0&&z%2==0) {
-        				pos = new VectorDescription(2*x*unit,y*unit,z*unit);
+        				pos = new VectorDescription(2*x*placement_unit,y*placement_unit,z*placement_unit);
         				rot = rotation_EW;
         			}
 	        		else if(y%2==0&&z%2==1)  {
-	        			pos = new VectorDescription(2*x*unit+unit,y*unit,z*unit);
+	        			pos = new VectorDescription(2*x*placement_unit+placement_unit,y*placement_unit,z*placement_unit);
 	        			rot = rotation_NS;
 	        		}
 	        		else if(y%2==1&&z%2==0) {
-	        			pos = new VectorDescription(2*x*unit+unit,y*unit,z*unit);
+	        			pos = new VectorDescription(2*x*placement_unit+placement_unit,y*placement_unit,z*placement_unit);
 	        			rot = rotation_UD;
 	        		}
 	        		else if(y%2==1&&z%2==1) {
-	        			pos = new VectorDescription(2*x*unit,y*unit,z*unit);
+	        			pos = new VectorDescription(2*x*placement_unit,y*placement_unit,z*placement_unit);
 	        			rot = rotation_NS;
 	        		}
-	        		if(index<nModules) mPos.add(new WorldDescription.ModulePosition(Integer.toString(index), pos, rot));
+	        		if(index<nModules) {
+                        String name = namer.name(index,pos,rot);
+                        String robotNameMaybe = selector.select(name,index,pos,rot);
+                        WorldDescription.ModulePosition mpos;
+                        if(robotNameMaybe==null)
+                            mpos = new WorldDescription.ModulePosition(name, pos, rot);
+                        else
+                            mpos = new WorldDescription.ModulePosition(name, robotNameMaybe, pos, rot);
+                        mPos.add(mpos);
+                    }
 	        		index++;
         		}
         	}
@@ -55,6 +83,6 @@ public class ATRONLatticeSimulation extends GenericATRONSimulation {
         return mPos;
 	}
 	protected ArrayList<ModulePosition> buildRobot() {
-		return  buildAsLattice(5,2,4,1);
+		return  buildAsLattice(20,20,40,10);
 	}
 }

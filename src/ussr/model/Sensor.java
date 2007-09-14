@@ -48,4 +48,6 @@ public class Sensor extends Entity {
         result.add(physics);
         return result;
     }
+    
+    public String getName() { return physics.getName(); } 
 }

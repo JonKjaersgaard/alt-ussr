@@ -8,5 +8,5 @@ package ussr.comm;
  */
 
 public enum TransmissionType {
-    RADIO, IR
+    RADIO, IR, WIRE_MALE, WIRE_FEMALE, WIRE_UNISEX
 }

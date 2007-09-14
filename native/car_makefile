@@ -1,5 +1,0 @@
-# Customizable variables: name of controller and api files (both excluding extension)
-CONTROLLER=carController
-API=atron
-
-include makefile_mac

@@ -31,4 +31,6 @@ public interface Controller {
      * @param module the hardware to associate with the controller
      */
     public void setModule(Module module);
+
+	public Module getModule();
 }

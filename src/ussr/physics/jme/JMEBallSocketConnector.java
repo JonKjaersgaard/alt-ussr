@@ -15,7 +15,8 @@ public class JMEBallSocketConnector extends JMEMechanicalConnector {
 
 	public JMEBallSocketConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, RobotDescription selfDesc) {
 		super(position, moduleNode, baseName, world, component, selfDesc);
-		springHandler = new SpringHandler(moduleNode,5000,100,0.09f);
+		springHandler = new SpringHandler(moduleNode,50000,5000,0.09f);
+		//springHandler = new SpringHandler(moduleNode,0,0,0.09f);
 	}
 	private RotationalJointAxis xAxis,yAxis,zAxis;
 	private SpringHandler springHandler;
@@ -45,8 +46,10 @@ public class JMEBallSocketConnector extends JMEMechanicalConnector {
 		float springConstant, restLength, dampConstant;
 		public SpringHandler(DynamicPhysicsNode node1, float springConstant, float dampConstant, float restLength) {
 			this.node1 = node1;
+			this.dampConstant = dampConstant;
 			this.springConstant = springConstant;
 			this.restLength = restLength;
+			oldDist = restLength;
 		}
 		public void setNode2(DynamicPhysicsNode node2) {
 			this.node2 = node2;
@@ -55,12 +58,21 @@ public class JMEBallSocketConnector extends JMEMechanicalConnector {
 		Vector3f temp1;
 		Vector3f temp2;
 		public void beforeStep(PhysicsSpace space, float time) {
+			//TODO:make damping of spring work 
 			if(node1!=null&&node2!=null) {
 				float dist =node1.getLocalTranslation().distance(node2.getLocalTranslation());
-				float force = springConstant*(restLength-dist)-0*dampConstant*Math.abs(dist-oldDist);
+				float springForce = (float)(springConstant*(restLength-dist));
+				if(restLength-dist>0.001f) springForce=20;
+				if(restLength-dist<-0.001f) springForce=-20;
+				if(springForce>100) springForce = 100;
+				if(springForce<-100) springForce = -100;
+				//float dampForce = -dampConstant*Math.abs(dist-oldDist);
+				float dampForce = -dampConstant*(dist-oldDist);
+				//if(Math.abs(springForce)>10) System.out.println("Spring force = "+springForce+" Damp Force = "+dampForce);
+				float force = springForce+dampForce;
 				node1.addForce(node1.getLocalTranslation().subtract(node2.getLocalTranslation()).mult(force));
 				node2.addForce(node2.getLocalTranslation().subtract(node1.getLocalTranslation()).mult(force));
-				dist = oldDist;
+				oldDist = dist;
 			}
 		}
 	}

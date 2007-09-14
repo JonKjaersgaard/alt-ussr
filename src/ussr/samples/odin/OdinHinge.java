@@ -2,7 +2,6 @@ package ussr.samples.odin;
 
 import java.awt.Color;
 
-import ussr.model.Controller;
 import ussr.robotbuildingblocks.ConeShape;
 import ussr.robotbuildingblocks.CylinderShape;
 import ussr.robotbuildingblocks.GeometryDescription;
@@ -11,7 +10,7 @@ import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.SphereShape;
 import ussr.robotbuildingblocks.VectorDescription;
 
-public class OdinHinge extends Odin {
+public abstract class OdinHinge extends Odin {
 
 	/**
 	 * A contractive rod with a connector in each end
@@ -20,22 +19,25 @@ public class OdinHinge extends Odin {
 		RobotDescription description = new RobotDescription();
 		description.setType("OdinHinge");
 		float pi = (float)Math.PI;
-        CylinderShape cylinderExternal = new CylinderShape(0.035f/2f,0.06f,new VectorDescription(0,0,0), new RotationDescription(0,-pi/2,0));
-        CylinderShape cylinderInternal = new CylinderShape(0.032f/2f,0.06f,new VectorDescription(0,0,0), new RotationDescription(0,-pi/2,0));
+        CylinderShape cylinderNorth = new CylinderShape(0.035f/2f,0.06f/2f,new VectorDescription(-0.06f/4f,0,0), new RotationDescription(0,-pi/2,0));
+        CylinderShape cylinderSouth = new CylinderShape(0.035f/2f,0.06f/2f,new VectorDescription(0.06f/4f,0,0), new RotationDescription(0,-pi/2,0));
+        SphereShape center = new SphereShape(0.030f/2f,new VectorDescription(0,0,0), new RotationDescription(pi/2,-pi/2,0));
         ConeShape coneCap1 = new ConeShape(0.035f/2f,0.035f, new VectorDescription(-0.03f-0.035f/2f,0,0), new RotationDescription(pi,-pi/2,0));
         ConeShape coneCap2 = new ConeShape(0.032f/2f,0.035f, new VectorDescription(0.03f+0.035f/2f,0,0), new RotationDescription(0,-pi/2,0));
         
-        cylinderExternal.setColor(Color.RED);
-        cylinderInternal.setColor(Color.BLUE);
-        coneCap1.setColor(Color.RED);
-        coneCap2.setColor(Color.BLUE);
+        cylinderNorth.setColor(Color.WHITE);
+        cylinderSouth.setColor(Color.WHITE);
+        center.setColor(Color.RED);
+        coneCap1.setColor(Color.WHITE);
+        coneCap2.setColor(Color.WHITE);
         
-        cylinderExternal.setAccurateCollisionDetection(false);
-        cylinderInternal.setAccurateCollisionDetection(false);
+        cylinderNorth.setAccurateCollisionDetection(false);
+        cylinderSouth.setAccurateCollisionDetection(false);
+        center.setAccurateCollisionDetection(false);
         coneCap1.setAccurateCollisionDetection(false);
         coneCap2.setAccurateCollisionDetection(false);
         
-	    description.setModuleGeometry(new GeometryDescription[] {cylinderExternal,cylinderInternal,coneCap1,coneCap2});
+	    description.setModuleGeometry(new GeometryDescription[] {cylinderNorth,cylinderSouth,center,coneCap1,coneCap2});
 
 	    SphereShape connector = new SphereShape(0.001f);
         connector.setColor(Color.WHITE);
@@ -48,8 +50,5 @@ public class OdinHinge extends Odin {
         description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR_BALL_SOCKET );
         //description.setMaxConnectionDistance(6);
         return description;
-	}
-	public Controller createController() {
-		return new OdinSampleController1("OdinMuscle");
 	}
 }

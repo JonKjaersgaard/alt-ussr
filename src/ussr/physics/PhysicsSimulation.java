@@ -67,13 +67,13 @@ public interface PhysicsSimulation {
      * Start the simulation
      */
     public void start();
-
-    //public void sendMessage(TransmissionType type, Entity emitter, float range, Packet data);
-    //public void sendMessage(TransmissionDevice transmitter, Packet packet);
+    /**
+     * Stop the simulation
+     *
+     */
+    public void stop();
 
     public List<Module> getModules();
-    
-    public void setPause(boolean startPaused);
     
     public boolean isPaused();
 
@@ -81,6 +81,12 @@ public interface PhysicsSimulation {
 
 	public void setGravity(float g);
 
-	
-    
+	public void waitForPhysicsStep(boolean notify);
+
+	public void subscribePhysicsTimestep(PhysicsObserver observer);
+
+    public void setPause(boolean startPaused);
+
+    public PhysicsSimulationHelper getHelper();
+
 }

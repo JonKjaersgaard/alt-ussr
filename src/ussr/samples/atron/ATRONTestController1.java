@@ -7,7 +7,7 @@ package ussr.samples.atron;
 
 import java.awt.Color;
 
-import sun.rmi.runtime.GetThreadPoolAction;
+//import sun.rmi.runtime.GetThreadPoolAction;
 import ussr.comm.Packet;
 import ussr.comm.Receiver;
 import ussr.comm.Transmitter;

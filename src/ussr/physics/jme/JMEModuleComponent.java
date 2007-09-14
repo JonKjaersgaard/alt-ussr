@@ -7,7 +7,9 @@ import java.util.List;
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.PhysicsModuleComponent;
+import ussr.physics.PhysicsQuaternionHolder;
 import ussr.physics.PhysicsSimulation;
+import ussr.physics.PhysicsSimulationHelper;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.ReceivingDevice;
 import ussr.robotbuildingblocks.Robot;
@@ -66,10 +68,10 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         moduleNode = dynamicNode;
         dynamicNodes.add(moduleNode);
         // Create visual appearance
-        TriMesh shape = JMEDescriptionHelper.createShape(moduleNode, name, element);
+        TriMesh shape = JMEGeometryHelper.createShape(moduleNode, name, element);
         geometries.add(shape);
         world.associateGeometry(moduleNode,shape);
-        JMEDescriptionHelper.setColor(world,shape,element.getColor());
+        world.getHelper().setColor(shape,element.getColor());
 
         // Finalize
         
@@ -93,15 +95,15 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         //TODO change this way of creating communication sometimes we can it to be at a connector
         // Create communicators
         for(TransmissionDevice transmitter: selfDesc.getTransmitters())
-            model.addTransmissionDevice(JMEDescriptionHelper.createTransmitter(model, model,transmitter));
+            model.addTransmissionDevice(JMEGeometryHelper.createTransmitter(model, model,transmitter));
         // Create communicators
         for(ReceivingDevice receiver: selfDesc.getReceivers())
-            model.addReceivingDevice(JMEDescriptionHelper.createReceiver(model, model, receiver));
+            model.addReceivingDevice(JMEGeometryHelper.createReceiver(model, model, receiver));
             
     }
 	public void addConnector(String name, Vector3f position, Color color, Quaternion rotation) {
 		addConnector(name, position, color);
-		getConnector(name).setRotation(rotation);
+		getConnector(name).setRotation(new PhysicsQuaternionHolder(rotation));
 	}
 	public void addConnector(String name, Vector3f position, Color color) {
 		addConnector(name, position);
@@ -109,7 +111,9 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
 	}
     public void addConnector(String name, Vector3f position) {
     	 JMEConnector connector = createConnector(world, name, position, selfDesc);
-         model.addConnector(new Connector(connector));
+         Connector c = new Connector(connector);
+         model.addConnector(c);
+         c.setProperty("name", name);
          connectors.add(connector);
     }
     public JMEConnector getConnector(int index) {
@@ -166,7 +170,7 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
     public void setModuleColor(Color color) {
         for(DynamicPhysicsNode node: dynamicNodes) {
         	for(Spatial child:  node.getChildren()) {
-        		JMEDescriptionHelper.setColor(world, child, color);        	
+        		world.getHelper().setColor(child, color);        	
         	}
         }
     }
@@ -193,4 +197,7 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
 	public RotationDescription getRotation() {
 		return new RotationDescription(moduleNode.getWorldRotation()); //TODO not testet
 	}
+    public PhysicsSimulationHelper getSimulationHelper() {
+        return this.getSimulation().getHelper();
+    }
 }

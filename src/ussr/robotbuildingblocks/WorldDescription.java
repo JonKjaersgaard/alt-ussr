@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.jme.math.Quaternion;
+
 /**
  * The description of a world in which a number of robot modules can be placed for
  * the simulation.  Defines the number of modules, the size of the underlying plane,
@@ -144,6 +146,35 @@ public class WorldDescription extends Description {
         }
     }
     
+    public static class BoxDescription {
+        private VectorDescription position, size;
+        private RotationDescription rotation;
+        private boolean isStatic, isHeavy;
+        private float mass;
+        public BoxDescription(VectorDescription position, VectorDescription size, RotationDescription rotation, float mass, boolean isStatic, boolean isHeavy) {
+        	this.position = position; this.size = size; this.isStatic = isStatic;
+            this.rotation = rotation; this.isHeavy = isHeavy; this.mass = mass;
+        }
+        public BoxDescription(VectorDescription position, VectorDescription size, RotationDescription rotation, boolean isStatic) {
+        	this.position = position; this.size = size; this.isStatic = isStatic;
+            this.rotation = rotation; this.isHeavy = false; this.mass = 1;
+        }
+        public BoxDescription(VectorDescription position, VectorDescription size, RotationDescription rotation, float mass) {
+        	this.position = position; this.size = size; this.isStatic = false;
+            this.rotation = rotation; this.isHeavy = false; this.mass = mass;
+        }
+        public BoxDescription(VectorDescription position, VectorDescription size, boolean isHeavy) {
+            this.position = position; this.size = size; this.isHeavy = isHeavy;
+            this.rotation = new RotationDescription(new Quaternion()); this.isStatic = false;
+        }
+        public VectorDescription getPosition() { return position; }
+        public VectorDescription getSize() { return size; }
+        public RotationDescription getRotation() { return rotation; }
+        public float getMass() { return mass; }
+        public boolean getIsStatic() { return isStatic; }
+        public boolean getIsHeavy() { return isHeavy; }
+    }
+    
     /**
      * Number of modules in the simulation
      */
@@ -157,11 +188,13 @@ public class WorldDescription extends Description {
     /**
      * The position of each obstacle (and implicigtly the number of obstacles)
      */
-    private List<VectorDescription> obstacles = Collections.emptyList();
+    private List<VectorDescription> smallObstacles = Collections.emptyList();
     
     private List<ModulePosition> modules = Collections.emptyList(); 
     
     private List<Connection> connections = Collections.emptyList();
+    
+    private List<BoxDescription> bigObstacles = Collections.emptyList();
     
     /**
      * The initial position of the camera
@@ -192,7 +225,7 @@ public class WorldDescription extends Description {
      * @return the obstacle positions
      */
     public List<VectorDescription> getObstacles() {
-        return obstacles;
+        return smallObstacles;
     }
     
     /**
@@ -216,7 +249,7 @@ public class WorldDescription extends Description {
     * @param descriptions the obstacle positions
     */
    public void setObstacles(VectorDescription[] descriptions) {
-        this.obstacles = Arrays.asList(descriptions);        
+        this.smallObstacles = Arrays.asList(descriptions);  
     }
 
    /**
@@ -252,6 +285,20 @@ public class WorldDescription extends Description {
    
    public CameraPosition getCameraPosition() {
        return cameraPosition;
+   }
+
+   /**
+    * @return the bigObstacles
+    */
+   public List<BoxDescription> getBigObstacles() {
+       return bigObstacles;
+   }
+
+   /**
+    * @param bigObstacles the bigObstacles to set
+    */
+   public void setBigObstacles(BoxDescription[] bigObstacles) {
+       this.bigObstacles = Arrays.asList(bigObstacles);
    }
 
 }

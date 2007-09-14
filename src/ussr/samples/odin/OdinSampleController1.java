@@ -7,6 +7,7 @@ package ussr.samples.odin;
 
 import java.util.Random;
 
+import ussr.home.davidc.onlineLearning.tools.RNN;
 import ussr.model.ControllerImpl;
 
 /**
@@ -15,10 +16,12 @@ import ussr.model.ControllerImpl;
  * @author david
  *
  */
-public class OdinSampleController1 extends ControllerImpl {
+public class OdinSampleController1 extends OdinController {
+	
 	static Random rand = new Random(System.currentTimeMillis());
-	String type;
     float timeOffset=0;
+    byte[] msg = {0};
+    int color = 0;
     public OdinSampleController1(String type) {
     	this.type =type;
     	timeOffset = 100*rand.nextFloat();
@@ -33,10 +36,20 @@ public class OdinSampleController1 extends ControllerImpl {
     	if(type=="OdinBall") ballControl();
 	}
     public void muscleControl() {
+    	float lastTime = module.getSimulation().getTime();
     	while(true) {
     		float time = module.getSimulation().getTime()+timeOffset;
-			actuate((float)(Math.sin(time)+1)/2f);
-			Thread.yield();
+    		actuate((float)(Math.sin(time)+1)/2f);
+			module.getSimulation().waitForPhysicsStep(false);
+			if((lastTime+1)<module.getSimulation().getTime()) {
+				if(color==0) msg[0] = 'r';
+				if(color==1) msg[0] = 'g';
+				if(color==2) msg[0] = 'b';
+				color=(color+1)%3;
+				sendMessage(msg, (byte)msg.length,(byte)0);
+		    	sendMessage(msg, (byte)msg.length,(byte)1);
+		    	lastTime = module.getSimulation().getTime();
+			}
         }
     }
     public void ballControl() {
@@ -48,8 +61,9 @@ public class OdinSampleController1 extends ControllerImpl {
             }
     	}
     }
-	public void actuate(float pos) {
-		module.getActuators().get(0).activate(pos);
-		//System.out.println(" "+module.getConnectors().get(0).getPhysics().get(0));
-	}
+    public void handleMessage(byte[] message, int messageSize, int channel) {
+   		if(message[0]=='r') setColor(1, 0, 0);
+   		if(message[0]=='g') setColor(0, 1, 0);
+   		if(message[0]=='b') setColor(0, 0, 1);
+    }
 }

@@ -16,6 +16,7 @@ import ussr.comm.Transmitter;
 import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsModuleComponent;
 import ussr.physics.PhysicsSimulation;
+import ussr.physics.PhysicsSimulationHelper;
 
 /**
  * A module is the basic unit from which the modular robot is built.  Specifically,
@@ -191,6 +192,10 @@ public class Module extends Entity {
     
     public PhysicsSimulation getSimulation() {
         return physics.get(0).getSimulation(); // All modules are in the same simulation
+    }
+    
+    public PhysicsSimulationHelper getSimulationHelper() {
+        return physics.get(0).getSimulationHelper();
     }
     
     public List<? extends PhysicsEntity> getPhysics() {
