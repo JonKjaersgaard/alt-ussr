@@ -22,6 +22,7 @@ import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsSimulationHelper;
+import ussr.physics.PhysicsParameters;
 import ussr.physics.jme.robots.JMEModuleFactory;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
@@ -59,7 +60,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     private Map<DynamicPhysicsNode,Set<TriMesh>> geometryMap = new HashMap<DynamicPhysicsNode,Set<TriMesh>>();
     private ArrayList<Thread> moduleThreads = new ArrayList<Thread>();
     
-    protected float gravity =-9.82f;
+    protected float gravity; // Set from ussr.physics.SimulationParameters
     static class Lock extends Object {}
     static public Lock physicsLock = new Lock(); //should be used every time physics space is changed 
    
@@ -76,12 +77,15 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     private JMEFactoryHelper factory;
 
     public JMESimulation(JMEModuleFactory[] factories) {
+        PhysicsParameters parameters = PhysicsParameters.get();
+        this.gravity = parameters.getGravity();
+        this.physicsSimulationStepSize = parameters.getPhysicsSimulationStepSize();
         factory = new JMEFactoryHelper(this,factories);
     }
     
     protected void simpleInitGame() {
         // Create underlying plane or terrain
-        setStaticPlane(helper.createPlane(worldDescription.getPlaneSize()));
+        setStaticPlane(helper.createPlane(worldDescription.getPlaneSize(),worldDescription.getPlaneTexture()));
     	//final StaticPhysicsNode staticPlane = createTerrain(worldDescription.getPlaneSize()); //david
         
         createSky();
@@ -197,6 +201,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 // main loop
                 long startTime = System.currentTimeMillis();
                 while (!finished && !getDisplay().isClosing()) {
+                    //if(!pause) Thread.sleep(100);
                 	boolean physicsStep = false;
                     if ( !pause ||singleStep ) {
                     	physicsCallBack();
@@ -280,7 +285,6 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                     ((JMEModuleComponent)pe).reset();
                 	for(PhysicsEntity c1: components) { //works if CAD ATRON
 	                	DynamicPhysicsNode node = ((JMEModuleComponent)c1).getModuleNode();
-	                	System.out.println("node.getName()="+node.getName());
 		                node.getLocalTranslation().set(p.getPosition().getX(), p.getPosition().getY(), p.getPosition().getZ());
 		                node.setLocalRotation(new Quaternion(p.getRotation().getRotation()));
 	                	node.clearDynamics();
@@ -306,7 +310,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 if(c1i!=-1||c2i!=-1) {
 	                Connector c1 = m1.getConnectors().get(c1i);
 	                Connector c2 = m2.getConnectors().get(c2i);
-                    //System.out.println("Connecting "+m1.getProperty("name")+"<"+c1i+":"+c1.getProperty("name")+"> to "+m2.getProperty("name")+"<"+c2i+":"+c2.getProperty("name")+">");
+                    PhysicsLogger.displayInfo("Connecting "+m1.getProperty("name")+"<"+c1i+":"+c1.getProperty("name")+"> to "+m2.getProperty("name")+"<"+c2i+":"+c2.getProperty("name")+">");
 	                if((c1.getPhysics().get(0) instanceof JMEMechanicalConnector)&&(c2.getPhysics().get(0) instanceof JMEMechanicalConnector)) {
 	                	JMEMechanicalConnector jc1 = (JMEMechanicalConnector)c1.getPhysics().get(0);
 	                    JMEMechanicalConnector jc2 = (JMEMechanicalConnector)c2.getPhysics().get(0);

@@ -136,4 +136,7 @@ public class JMELinearActuator implements JMEActuator {
 		// TODO Auto-generated method stub
 		return null;
 	}
+    public void poke() {
+
+    }
 }

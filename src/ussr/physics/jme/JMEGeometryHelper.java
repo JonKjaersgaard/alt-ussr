@@ -29,6 +29,7 @@ import ussr.model.Module;
 import ussr.physics.PhysicsQuaternionHolder;
 import ussr.physics.PhysicsSimulationHelper;
 import ussr.physics.PhysicsVectorHolder;
+import ussr.physics.PhysicsParameters;
 import ussr.robotbuildingblocks.AtronShape;
 import ussr.robotbuildingblocks.BoxShape;
 import ussr.robotbuildingblocks.ConeShape;
@@ -39,6 +40,7 @@ import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.SphereShape;
 import ussr.robotbuildingblocks.TransmissionDevice;
 import ussr.robotbuildingblocks.VectorDescription;
+import ussr.robotbuildingblocks.WorldDescription;
 
 import com.jme.bounding.BoundingBox;
 import com.jme.bounding.BoundingSphere;
@@ -261,7 +263,7 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
         return boxNode;
     }
 
-    public StaticPhysicsNode createPlane(int size) {
+    public StaticPhysicsNode createPlane(int size, WorldDescription.TextureDescription texture) {
         final StaticPhysicsNode planeNode = simulation.getPhysicsSpace().createStaticNode();
         TriMesh planeBox = new Box( "plane", new Vector3f(), size, 0.5f, size );
         planeNode.attachChild( planeBox );
@@ -270,26 +272,24 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
         planeNode.getLocalTranslation().set( 0, -1f, 0 );
         simulation.rootNode.attachChild( planeNode );
         planeNode.generatePhysicsGeometry();
-        planeNode.setMaterial(Material.RUBBER);
-        //Texture tex = TextureManager.loadTexture(JMESimulation.class.getClassLoader().getResource("myGrass2.jpg"),Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
-        Texture tex;
-        boolean grass = false;
-        if(grass) {
-        	tex = TextureManager.loadTexture("resources/myGrass2.jpg",Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
-        	tex.setWrap(Texture.WM_WRAP_S_WRAP_T);
-            tex.setScale(new Vector3f(100f,100f,0f));
-        }
-        else {
-        	tex = TextureManager.loadTexture("resources/grid2.jpg",Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
-        	tex.setWrap(Texture.WM_WRAP_S_WRAP_T);
-            tex.setScale(new Vector3f(50f*size,50f*size,0f));
-        }
+        planeNode.setMaterial(description2material(PhysicsParameters.get().getPlaneMaterial()));
+        Texture tex = TextureManager.loadTexture(texture.getFileName(),Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
+        tex.setWrap(Texture.WM_WRAP_S_WRAP_T);
+        VectorDescription texScale = texture.getScale(size);
+        tex.setScale(new Vector3f(texScale.getX(),texScale.getY(),texScale.getZ()));
         tex.setApply(Texture.AM_REPLACE);
         TextureState ts = simulation.getDisplay().getRenderer().createTextureState();
         ts.setTexture(tex, 0);
         planeNode.setRenderState(ts);
        
         return planeNode;
+    }
+
+    private Material description2material(PhysicsParameters.Material planeMaterial) {
+        if(planeMaterial==PhysicsParameters.Material.RUBBER)
+            return Material.RUBBER;
+        else
+            throw new Error("Unknown material "+planeMaterial+", please add more cases");
     }
 
     /**

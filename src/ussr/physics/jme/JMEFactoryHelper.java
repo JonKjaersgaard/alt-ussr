@@ -26,6 +26,7 @@ public class JMEFactoryHelper {
         }
     }
     public void createModule(int module_id, final Module module, Robot robot, String module_name) {
+        if(robot.getDescription()==null) throw new Error("Internal error: robot description is null, robot type "+robot);
         String module_type = robot.getDescription().getType();
         JMEModuleFactory factory = null;
         // Find a matching factory

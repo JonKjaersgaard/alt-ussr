@@ -70,4 +70,8 @@ public class Actuator extends Entity {
 	public float getEncoderValue() {
 		return physics.getEncoderValue();
 	}
+
+    public void poke() {
+        physics.poke();
+    }
 }

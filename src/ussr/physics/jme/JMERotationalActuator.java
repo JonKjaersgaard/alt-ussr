@@ -5,6 +5,7 @@ package ussr.physics.jme;
 
 import ussr.model.Actuator;
 import ussr.model.PhysicsActuator;
+import ussr.physics.PhysicsLogger;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 
@@ -113,7 +114,7 @@ public class JMERotationalActuator implements PhysicsActuator {
 	public boolean activate(float goal) {
 		active = true;
 		if(Float.isNaN(getEncoderValue())||Float.isInfinite(getEncoderValue())) {
-			//System.out.println("Actuator is not yet setup!");
+			PhysicsLogger.log("Actuator is not yet setup!");
 			return false;
 		}
 		if(goal==-1 && unlimitedRotation) axis.setDesiredVelocity(-maxVelocity); 
@@ -167,4 +168,7 @@ public class JMERotationalActuator implements PhysicsActuator {
 		// TODO Auto-generated method stub
 		return null;
 	}
+    public void poke() {
+        joint.setSpring(1E20f, 1E20f);
+    }
 }

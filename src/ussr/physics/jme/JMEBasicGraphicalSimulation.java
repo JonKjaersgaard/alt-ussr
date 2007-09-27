@@ -140,7 +140,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
      */
     protected Timer timer;
     protected long physicsSteps = 0;
-    protected float physicsSimulationStepSize = 0.005f;
+    protected float physicsSimulationStepSize; // Set from ussr.physics.SimulationParameters = 0.005f; // 0.001f  // 0.0005f; //0.001f; // 
     protected boolean pause;
     protected boolean singleStep = false;
     int tip_plane_axis = 1;

@@ -7,6 +7,7 @@ package ussr.samples.atron;
 
 import java.awt.Color;
 
+import ussr.physics.PhysicsParameters;
 import ussr.robotbuildingblocks.AtronShape;
 import ussr.robotbuildingblocks.ConeShape;
 import ussr.robotbuildingblocks.GeometryDescription;
@@ -25,6 +26,7 @@ import ussr.robotbuildingblocks.VectorDescription;
 public abstract class ATRON implements Robot {
     
     protected boolean zuper = false, smooth = false; // Different variants
+    private PhysicsParameters parameters;
 
     public void setSuper() { zuper = true; }
     
@@ -45,8 +47,9 @@ public abstract class ATRON implements Robot {
   	        AtronShape hemi1 = new AtronShape(smooth ? 0.5f : 0.9f, true, new VectorDescription(0f,0f,-0.001f),new RotationDescription(0,pi,pi/4)); //north
   	        AtronShape hemi2 = new AtronShape(smooth ? 0.5f : 1.0f, false, new VectorDescription(0f,0f,0.001f),new RotationDescription(0,0f,pi/4)); //south
         	hemi1.setColor(smooth ? Color.magenta : Color.blue); hemi2.setColor(Color.RED);
-  	        hemi1.setAccurateCollisionDetection(false);
-  	        hemi2.setAccurateCollisionDetection(false); //true for self-reconfiguration
+        	boolean accurate = PhysicsParameters.get().getRealisticCollision();
+  	        hemi1.setAccurateCollisionDetection(accurate);
+  	        hemi2.setAccurateCollisionDetection(accurate); //true for self-reconfiguration
   	        description.setModuleGeometry(new GeometryDescription[] {hemi1, hemi2});
   	        //put center actuator here!- but how?
         }

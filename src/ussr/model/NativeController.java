@@ -76,6 +76,8 @@ public class NativeController implements Controller {
             }
         }
         do { Thread.yield(); } while(controller.getModule().getSimulation().isPaused());
+        while(controller.getModule().getSimulation().isPaused()) Thread.yield();
+        controller.getModule().getSimulation().waitForPhysicsStep(false);   
     }
 
     //quick hack mehtod

@@ -189,6 +189,7 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
     		//connection=null;
     		if(connection==null) connection = world.getPhysicsSpace().createJoint();
     		else connection.reset();
+    		connection.setSpring(1E20f, 1E20f);
     	//	System.out.println(module.getModel().getID()+": Connecting now !"+mesh.getLocks()+" "+node.getLocks());
     	//	System.out.println(module.getModel().getID()+": Other connection!"+jc2.mesh.getLocks()+" "+jc2.getNode().getLocks());
     	//	System.out.println(module.getModel().getID()+": connection "+connection.getNodes());
@@ -222,12 +223,14 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
     	//what about timing?
     	if(isConnected()) {
     		synchronized (JMESimulation.physicsLock) {
+    		    ((JMEMechanicalConnector)this.connectedConnector).resetColor();
     			((JMEMechanicalConnector)this.connectedConnector).setConnectedConnector(null);
 		    	if(this.connectedConnector!=null) this.connectedConnector = null;
 		    	if(this.connection!=null) {
 		    		if(connection.isActive())	{ 
 		    			connection.setActive(false);
 		    			connection.detach();
+		    			this.resetColor();
 		    		} 
 		    	}
     		}
@@ -251,7 +254,13 @@ public abstract class JMEMechanicalConnector implements JMEConnector {
         node.updateModelBound();*/
     }
 
-	public void setConnectorColor(Color color) {
+    public void resetColor() {
+        setConnectorColor(initialColor);
+    }
+    
+    private Color initialColor = null;
+    public void setConnectorColor(Color color) {
+        if(initialColor==null) initialColor = color;
 		world.getHelper().setColor(mesh, color);
 		/*System.out.println("Setting color for children");
     	for(Spatial child:  node.getChildren()) {

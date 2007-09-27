@@ -26,6 +26,21 @@ public class WorldDescription extends Description {
         DEFAULT, FAROUT;
     }
     
+    public interface TextureDescription {
+        public String getFileName();
+        public VectorDescription getScale(int size);
+    }
+    
+    public static final TextureDescription GRASS_TEXTURE = new TextureDescription() {
+        public String getFileName() { return "resources/myGrass2.jpg"; }
+        public VectorDescription getScale(int size) { return new VectorDescription(100f,100f,0f); }
+    };
+    
+    public static final TextureDescription GRID_TEXTURE = new TextureDescription() {
+        public String getFileName() { return "resources/grid2.jpg"; }
+        public VectorDescription getScale(int size) { return new VectorDescription(50f*size,50f*size,0f); }
+    };
+    
     public static class Connection {
         private String module1, module2;
         private int connector1, connector2;
@@ -186,6 +201,11 @@ public class WorldDescription extends Description {
     private int planeSize = 0;
     
     /**
+     * The texture of the plane
+     */
+    private TextureDescription planeTexture = GRASS_TEXTURE;
+    
+    /**
      * The position of each obstacle (and implicigtly the number of obstacles)
      */
     private List<VectorDescription> smallObstacles = Collections.emptyList();
@@ -300,5 +320,19 @@ public class WorldDescription extends Description {
    public void setBigObstacles(BoxDescription[] bigObstacles) {
        this.bigObstacles = Arrays.asList(bigObstacles);
    }
+
+/**
+ * @return the planeTexture
+ */
+public TextureDescription getPlaneTexture() {
+    return planeTexture;
+}
+
+/**
+ * @param planeTexture the planeTexture to set
+ */
+public void setPlaneTexture(TextureDescription planeTexture) {
+    this.planeTexture = planeTexture;
+}
 
 }

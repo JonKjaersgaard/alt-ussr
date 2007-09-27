@@ -23,4 +23,6 @@ public interface PhysicsActuator extends PhysicsEntity {
 
 	float getEncoderValue();
 
+    void poke();
+
 }

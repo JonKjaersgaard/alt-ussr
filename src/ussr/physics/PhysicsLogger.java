@@ -18,6 +18,8 @@ import com.jme.util.LoggingSystem;
  *
  */
 public class PhysicsLogger {
+    private static boolean displayInfo = false;
+    
 
     /**
      * Log an issue that may be of critical importance
@@ -40,6 +42,14 @@ public class PhysicsLogger {
      */
     public static void setDefaultLoggingLevel() {
         LoggingSystem.getLogger().setLevel( Level.WARNING );
+    }
+
+    public static void displayInfo(String string) {
+        if(displayInfo) System.out.println("INFO: "+string);
+    }
+    
+    public static void setDisplayInfo(boolean display) {
+        displayInfo = display;
     }
 
 }

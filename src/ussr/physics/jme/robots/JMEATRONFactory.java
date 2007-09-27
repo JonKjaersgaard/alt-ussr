@@ -75,7 +75,7 @@ public class JMEATRONFactory implements JMEModuleFactory {
         
         simulation.getModuleComponents().add(northComponent);
         simulation.getModuleComponents().add(southComponent);
-        if(robot.getDescription().getType().contains("smooth")) {
+        if(true||robot.getDescription().getType().contains("smooth")) {
             northNode.setMaterial(Material.ICE); // A bit more smooth
             southNode.setMaterial(Material.ICE);
         } else {
@@ -95,10 +95,11 @@ public class JMEATRONFactory implements JMEModuleFactory {
         JMERotationalActuator centerActuator = new JMERotationalActuator(simulation,"center");
         module.addActuator(new Actuator(centerActuator));
         centerActuator.attach(southNode,northNode);
-        if(robot.getDescription().getType().contains("super"))
+        /*if(robot.getDescription().getType().contains("super"))
             centerActuator.setControlParameters(500f, 2f, 0, 0); //Extreme super ATRON
         else
             centerActuator.setControlParameters(0.2f, 1f, 0, 0); //Relaxed super ATRON
+            */
         
         centerActuator.setControlParameters(500f, 4f, 0, 0); //Extreme super ATRON
         //northNode.setMaterial(Material.ICE); // A bit more smooth
