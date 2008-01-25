@@ -18,24 +18,24 @@ import ussr.robotbuildingblocks.SphereShape;
 import ussr.robotbuildingblocks.VectorDescription;
 
 /**
- * A small round robot with connectors at N/S/E/W/U/D; connectors can stick to each
- * other when close, in this case stickiness is globally controlled by the user.  
- * 
- * @author ups
+ * The ATRON modular self-reconfigurable robot
+ *   
+ * @author Modular Robots @ÊMMMI
  */
 public abstract class ATRON implements Robot {
     
-    protected boolean zuper = false, smooth = false; // Different variants
+    protected boolean zuper = false, smooth = false, realistic =false, rubberRing = false;// Different variants
     private PhysicsParameters parameters;
 
     public void setSuper() { zuper = true; }
+    public void setRealistic() { realistic = true; }
     
     /**
      * @see ussr.robotbuildingblocks.Robot#getDescription()
      */
     public RobotDescription getDescription() {
         RobotDescription description = new RobotDescription();
-        description.setType("ATRON"+(zuper ? " super" : "")+(smooth ? " smooth" : ""));
+        description.setType("ATRON"+(zuper ? " super" : "")+(realistic ? " realistic" : "")+(smooth ? " smooth" : "")+(rubberRing ? " rubberRing" : ""));
         if(false) {
 	        SphereShape hemi1 = new SphereShape(1.13f, new VectorDescription( 0.0f, 0.0f, -0.125f)); 
 	        SphereShape hemi2 = new SphereShape(1.15f, new VectorDescription( 0.0f, 0.0f, 0.125f)); 
@@ -44,8 +44,10 @@ public abstract class ATRON implements Robot {
         }
         else {
         	float pi = (float)Math.PI;
-  	        AtronShape hemi1 = new AtronShape(smooth ? 0.5f : 0.9f, true, new VectorDescription(0f,0f,-0.001f),new RotationDescription(0,pi,pi/4)); //north
-  	        AtronShape hemi2 = new AtronShape(smooth ? 0.5f : 1.0f, false, new VectorDescription(0f,0f,0.001f),new RotationDescription(0,0f,pi/4)); //south
+        	AtronShape hemi1, hemi2;
+        	hemi1 = new AtronShape(smooth ? 0.5f : 0.935f, true, new VectorDescription(0f,0f,-0.00f),new RotationDescription(0,pi,pi/4)); //north
+  	        hemi2 = new AtronShape(smooth ? 0.5f : 0.935f, false, new VectorDescription(0f,0f,0.00f),new RotationDescription(0,0f,pi/4)); //south
+        	
         	hemi1.setColor(smooth ? Color.magenta : Color.blue); hemi2.setColor(Color.RED);
         	boolean accurate = PhysicsParameters.get().getRealisticCollision();
   	        hemi1.setAccurateCollisionDetection(accurate);
@@ -55,12 +57,13 @@ public abstract class ATRON implements Robot {
         }
         //SphereShape connector = new SphereShape(0.005f);
 //        ConeShape connector = new ConeShape(0.005f,0.005f);
-        ConeShape connector = new ConeShape(0.005f,0.05f);
+        ConeShape connector = new ConeShape(2.5f*0.005f,0.05f);
         connector.setColor(Color.WHITE);
         description.setConnectorGeometry(new GeometryDescription[] { connector });
+        
         /*float zpos = (float) (1.14f*Math.sin( 45 ));
         float xypos = (float) (1.14f*Math.cos( 45 ));*/
-        float unit = (float) (0.045f/Math.sqrt(2)); //4.5cm from center of mass to connector
+       // float unit = (float) (0.045f/Math.sqrt(2)); //4.5cm from center of mass to connector
         description.setConnectorPositions(new VectorDescription[] {});
         
     //    description.setTransmitters(new TransmissionDevice[] { new TransmissionDevice(TransmissionType.IR,0.1f) });
@@ -74,5 +77,7 @@ public abstract class ATRON implements Robot {
     public void setSmooth() {
         smooth = true;
     }
-
+    public void setRubberRing() {
+    	rubberRing = true;
+    }
 }

@@ -3,9 +3,11 @@
 
 #include <stdio.h>
 
+#ifdef USSR
 int initialize(USSREnv *env) { return 0; }
+#endif
 
-void activate(USSREnv *env) {
+void activate(USSRONLY(USSREnv *env)) {
   unsigned char send_buf[3];
   int i;
   send_buf[0] = 'A'; send_buf[1] = 'b'; send_buf[2] = 'e';

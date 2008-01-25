@@ -15,10 +15,9 @@ import ussr.comm.Transmitter;
 import ussr.samples.GenericSimulation;
 
 /**
- * A simple controller for the ATRON, controlling connector stickiness based on
- * user-controlled state stored in the main simulator
+ * A controller for an ATRON snake robot
  * 
- * @author ups
+ * @author Modular Robots @ MMMI
  *
  */
 public class ATRONSnakeController2 extends ATRONController {

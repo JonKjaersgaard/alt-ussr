@@ -7,10 +7,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author ups
- *
- * TODO Write a nice and user-friendly comment here
+ * A controller with a native implementation, bridged to a controller implementing
+ * the NativeControllerProvider interface.
  * 
+ * @author Modular Robots @ MMMI
  */
 public class NativeController implements Controller {
 
@@ -19,7 +19,7 @@ public class NativeController implements Controller {
     protected Object eventLock;
     private final static int sleepThreshold = 100;
     private int idleLevel = 0;
-    private static Set libraryRegistry = new HashSet();
+    private static Set<String> libraryRegistry = new HashSet<String>();
     private Controller controller;
     private final int initializationContext;
 
@@ -67,9 +67,7 @@ public class NativeController implements Controller {
             eventLock = new Object();
             synchronized(eventLock) {
                 try {
-                    //System.out.println("* Module "+this.getRole()+" sleeping");
                     eventLock.wait();
-                    //System.out.println("* Module "+this.getRole()+" woke up");
                 } catch(InterruptedException exn) {
                     throw new Error("Error: interrupted while waiting");
                 }

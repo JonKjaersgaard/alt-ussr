@@ -13,7 +13,7 @@ import ussr.model.Module;
 /**
  * A simulated physical module, useable independently of the underlying physics engine.
  * 
- * @author ups
+ * @author Modular Robots @ MMMI
  *
  */
 public interface PhysicsModuleComponent extends PhysicsEntity {
@@ -36,10 +36,30 @@ public interface PhysicsModuleComponent extends PhysicsEntity {
      */
     public Module getModel();
 
-    public void setModuleColor(Color color);
+    /**
+     * Set the color of the module component
+     * @param color the color to assign to the module component
+     */
+    public void setModuleComponentColor(Color color);
     
+    /**
+     * Get the color of the module component
+     * @return the color this physics component
+     */
+    public Color getModuleComponentColor();
+    
+    /**
+     * Obtain a reference to the physics simulation in which this module is located
+     * @return the physics simulation of this module
+     * @see #getSimulationHelper()
+     */
     public PhysicsSimulation getSimulation();
 
+    /**
+     * Obtain a reference to the helper (utility class) for the simulation in which
+     * the module is being simulated
+     * @return the helper for the simulation of the module
+     */
     public PhysicsSimulationHelper getSimulationHelper();
 
 }

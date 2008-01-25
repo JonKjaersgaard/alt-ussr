@@ -5,6 +5,10 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="ussr/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="zoo/jmephysics/tutorial"/>
+	<classpathentry kind="src" path="home/mirko"/>
+	<classpathentry kind="src" path="home/davidc"/>
+	<classpathentry kind="src" path="home/ups"/>
 	<classpathentry kind="src" path="zoo/jmephysics/impl/ode/src"/>
 	<classpathentry kind="src" path="zoo/jME/src">
 		<attributes>
@@ -16,7 +20,7 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="ussr/zoo/jmephysics/impl/ode/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="tutorial"/>
+	<classpathentry kind="src" path="home/lamik06"/>
 	<classpathentry kind="lib" path="zoo/jME/lib/native-mac.jar"/>
 	<classpathentry kind="lib" path="zoo/jME/lib/lwjgl.jar"/>
 	<classpathentry kind="lib" path="zoo/jME/lib/lwjgl_util.jar"/>

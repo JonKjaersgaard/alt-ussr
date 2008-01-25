@@ -1,0 +1,33 @@
+HOWTO: basic introduction to working with the simulator 
+
+Javadoc documentation is available in the doc subdirectory.
+
+(1) Running a simulation
+
+Run a simulation main class such as ussr.samples.atron.ATRONCarSimulation
+
+- To pause/unpause the simulation, use 'P'
+- To move around in the simulation, hold down the right mouse button while using
+  A/S/D/W as arrow keys.  Use the mouse wheel to move up/down.
+
+(2) Adding a new simulation
+
+Use an existing template as an example; a simulation must specify what robot to
+use (including the controller), module positions, and can use changeWorldHook
+like in ATRONCarSimulation to e.g. add obstacles.
+
+(3) Adding a new robot
+
+To add a new robot type, create an appropriate package to contain the robot 
+description (example: see ussr.samples.atron.ATRON).  The robot description can
+use elements from the package ussr.robotbuildingclocks.  Concretely,
+the physics-engine-independent configuration of a robot is done using the classes
+in ussr.robotbuildingblocks: the building blocks are interpreted by a module factory
+to create physically simulated modules.  If the user of the robot does not need to
+be able to do any configuration, the description geometry can simple be e.g. a sphere
+or some dummy geometry.  The type name in the robot description is used to identify
+what module factory to use to instantiate the robot for the specific physics engine. 
+
+The physics engine representation of a module (the central element) is implemented 
+as a module factory in the package ussr.physics.jme.robots.  The module factory
+uses components defined in the package ussr.physics.jme to build a module.

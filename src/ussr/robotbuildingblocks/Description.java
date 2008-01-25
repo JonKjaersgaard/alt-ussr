@@ -14,7 +14,7 @@ import java.util.Set;
  * Common superclass for descriptions.  Defines ability to tag elements with
  * with textual labels.
  * 
- * @author ups
+ * @author Modular Robots @ MMMI
  *
  */
 public abstract class Description {

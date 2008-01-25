@@ -33,7 +33,7 @@ public interface PhysicsConnector extends PhysicsEntity {
      * proximity
      * @param other the connector to connect to
      */
-    public boolean connect();
+    public void connect();
     
     /**
      * Set the model-level connector representing this connector simulation 
@@ -42,6 +42,8 @@ public interface PhysicsConnector extends PhysicsEntity {
     public void setModel(Connector connector);
 
     public void disconnect();
+    
+    public boolean isDisconnected();
 
 	public void setConnectorColor(Color color);
 	

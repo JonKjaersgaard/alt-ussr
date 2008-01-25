@@ -9,7 +9,7 @@ import ussr.physics.PhysicsEntity;
  * 
  * An abstract sensor for a modular robot: can sense a value
  *  
- * @author david
+ * @author Modular Robots @ MMMI
  *
  */
 public class Sensor extends Entity {
@@ -49,5 +49,9 @@ public class Sensor extends Entity {
         return result;
     }
     
-    public String getName() { return physics.getName(); } 
+    public String getName() { return physics.getName(); }
+    
+	public void reset() {
+		physics.reset();		
+	} 
 }

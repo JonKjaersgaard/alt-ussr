@@ -46,6 +46,7 @@ public class Actuator extends Entity {
     public boolean activate(float goalValue) {
         return physics.activate(goalValue);
     }
+    
     /**
      * Stop the actuator
      *
@@ -67,11 +68,15 @@ public class Actuator extends Entity {
         return result;
     }
 
+    /**
+     * Get the encoder value of this actuator
+     * @return the encode value
+     */
 	public float getEncoderValue() {
 		return physics.getEncoderValue();
 	}
 
-    public void poke() {
-        physics.poke();
-    }
+	public void reset() {
+		physics.reset();
+	}
 }

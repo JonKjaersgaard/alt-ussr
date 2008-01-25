@@ -7,20 +7,20 @@ import java.util.ArrayList;
 
 import ussr.model.Controller;
 import ussr.physics.PhysicsSimulation;
+import ussr.robotbuildingblocks.BoxDescription;
+import ussr.robotbuildingblocks.ModulePosition;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
-import ussr.robotbuildingblocks.WorldDescription.ModulePosition;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONController;
 import ussr.samples.atron.ATRONLatticeSimulation;
 
 /**
- * @author ups
- *
- * TODO Write a nice and user-friendly comment here
+ * A simulation of an ATRON conveyor belt that moves a box
  * 
+ * @author Modular Robots @ MMMI
  */
 public class ConveyorSimulation extends ATRONLatticeSimulation {
 
@@ -122,19 +122,19 @@ public class ConveyorSimulation extends ATRONLatticeSimulation {
             }
         },unit);
         if(false) {
-            positions.add(new WorldDescription.ModulePosition("shoulder", new VectorDescription(3*unit,1*unit,2*unit), rotation_UD));
-            positions.add(new WorldDescription.ModulePosition("elbow", new VectorDescription(2*unit,2*unit,2*unit), rotation_EW));
-            positions.add(new WorldDescription.ModulePosition("hand", new VectorDescription(3*unit,3*unit,2*unit), rotation_UD));
-            positions.add(new WorldDescription.ModulePosition("finger99", new VectorDescription(4*unit,4*unit,2*unit), rotation_EW));
+            positions.add(new ModulePosition("shoulder", new VectorDescription(3*unit,1*unit,2*unit), rotation_UD));
+            positions.add(new ModulePosition("elbow", new VectorDescription(2*unit,2*unit,2*unit), rotation_EW));
+            positions.add(new ModulePosition("hand", new VectorDescription(3*unit,3*unit,2*unit), rotation_UD));
+            positions.add(new ModulePosition("finger99", new VectorDescription(4*unit,4*unit,2*unit), rotation_EW));
         }
         return positions;
     }
 
     protected void changeWorldHook(WorldDescription world) {
-        WorldDescription.BoxDescription[] boxes = new WorldDescription.BoxDescription[3];
-        boxes[0] = new WorldDescription.BoxDescription(new VectorDescription(0.3f,-0.3f,-0.01f),new VectorDescription(0.6f,0.22f,0.2f),true);
-        boxes[1] = new WorldDescription.BoxDescription(new VectorDescription(0.3f,-0.3f,0.5f),new VectorDescription(0.6f,0.22f,0.2f),true);
-        boxes[2] = new WorldDescription.BoxDescription(new VectorDescription(0.45f,0.07f,0.25f),new VectorDescription(0.3f,0.01f,0.1f),false);
+        BoxDescription[] boxes = new BoxDescription[3];
+        boxes[0] = new BoxDescription(new VectorDescription(0.3f,-0.3f,-0.01f),new VectorDescription(0.6f,0.22f,0.2f),true);
+        boxes[1] = new BoxDescription(new VectorDescription(0.3f,-0.3f,0.5f),new VectorDescription(0.6f,0.22f,0.2f),true);
+        boxes[2] = new BoxDescription(new VectorDescription(0.45f,0.07f,0.25f),new VectorDescription(0.3f,0.01f,0.1f),false);
         world.setBigObstacles(boxes);
     }
 

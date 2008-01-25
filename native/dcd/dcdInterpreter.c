@@ -39,20 +39,8 @@ void execute_command(USSRONLYC(USSREnv *env) unsigned char command, unsigned cha
     rotateDegrees(USSRONLYC(env) 10*(signed char)argument);
     break;
   case CMD_ROTATE_TO:
-#ifdef USSR
-    if(getRole(env)<1000) {
-      int r = getRole(env);
-      if(!cache_initialized) {
-	cache_initialized = 1;
-	bzero(module_rotation_cache,1000*sizeof(int));
-      }
-      if(module_rotation_cache[r]!=argument) {
-	module_rotation_cache[r] = argument;
-	USSRDEBUG(TRACE_ACTUATION,printf("<%d>(%d) Actuate: ROTATE_TO(%d) = rotateToDegree(%d)\n", env->context, getRole(env), argument, 10*(signed char)argument));
-      }
-    }
-#endif
-    rotateToDegree(USSRONLYC(env) GLOBAL(env,neutral_joint_position)+10*(signed char)argument);
+    USSRDEBUG(TRACE_ACTUATION,printf("<%d>(%d) Actuate: ROTATE_TO(%d) = rotateToDegree(%d)\n", env->context, getRole(env), argument, 10*(signed char)argument));
+    rotateToDegree(USSRONLYC(env) 10*(signed char)argument);
     break;
   default:
     USSRDEBUG(TRACE_COMMANDS,printf("Got command %d (mx=%d), role=%d\n", command, MAX_N_GENERIC_COMMANDS,GLOBAL(env,role)));
@@ -221,7 +209,7 @@ void migrate_continue(USSRONLYC(USSREnv *env) InterpreterContext *context, unsig
   unsigned char channel;
   for(channel=0; channel<8; channel++)
     if(channel!=except) {
-      USSRDEBUG(TRACE_MIGRATION,printf("  <%6d> (Migrate continue on channel %d)\n", env->context, channel));
+      USSRDEBUG(TRACE_MIGRATION,printf("  <%6d> (Considering migrate continue on channel %d)\n", env->context, channel));
       sendProgramMaybe(USSRONLYC(env) context, channel, program, program_size);
     }
 }
@@ -229,6 +217,7 @@ void migrate_continue(USSRONLYC(USSREnv *env) InterpreterContext *context, unsig
 void set_role_notify(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char role) {
   unsigned char channel;
   GLOBAL(env,role)=role;
+  USSRDEBUG(TRACE_EVENTS,printf("set role notify: module <%d>(%d) set to %d\n", env->context, getRole(env), role));
   for(channel=0; channel<8; channel++)
     notifyRoleChange(USSRONLYC(env) context, channel, role);
 }
@@ -509,7 +498,7 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
       break;
     case INS_SLEEP:
       USSRDEBUG(TRACE_EVENTS|TRACE_INTERPRET,printf("INS_SLEEP\n"));
-      delay(1000);
+      delay(USSRONLYC(env) 1000);
       break;
     case INS_SLEEP_ROTATIONS:
       USSRDEBUG(TRACE_EVENTS|TRACE_INTERPRET,printf("INS_SLEEP_ROTATIONS %d\n", program[pc]));

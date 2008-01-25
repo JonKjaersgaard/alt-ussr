@@ -10,10 +10,11 @@ import ussr.model.Module;
 import ussr.physics.PhysicsEntity;
 
 /**
- * @author ups
- *
- * TODO Write a nice and user-friendly comment here
+ * An abstract implementation of the <tt>Receiver</tt> interface. Provides a receiver device
+ * for a module associated with a specific simulated hardware, using a specific type of transmission
+ * and with a given buffer size.
  * 
+ * @author Modular Robots @ MMMI
  */
 public abstract class GenericReceiver implements Receiver {
     protected Module module;
@@ -44,8 +45,8 @@ public abstract class GenericReceiver implements Receiver {
         write_position = (write_position+1)%queue.length;
         //if(write_position==read_position) PhysicsLogger.log("comm buffer overrun ");
         if(write_position==read_position) System.out.println("ERROR: comm buffer overrun");
-        module.eventNotify();
-        for(PacketReceivedObserver pro: packetReceivedObservers)
+      //  module.eventNotify();
+        for(PacketReceivedObserver pro: packetReceivedObservers) //TODO do not do this here (can block communicating neighbor module)
         	pro.packetReceived(this);
     }
     

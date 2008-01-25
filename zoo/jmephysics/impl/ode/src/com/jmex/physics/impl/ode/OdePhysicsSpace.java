@@ -93,7 +93,7 @@ public class OdePhysicsSpace extends PhysicsSpace {
         public Vector3f getContactPosition( Vector3f store ) {
             if ( store == null ) {
                 store = new Vector3f();
-            }
+            } 
             return odeContact.getPosition( store );
         }
 
@@ -339,7 +339,6 @@ public class OdePhysicsSpace extends PhysicsSpace {
 
         // Set the default step function.
         stepFunction = SF_STEP_QUICK; //TODO: make this selectable in interface? 
-
         // use collisions
         collision = new JavaCollision( world );
         collision.setMaxContactGeomsPerNearcallback( 50 );
@@ -534,7 +533,6 @@ public class OdePhysicsSpace extends PhysicsSpace {
 //        contactInfos.clear();
 
         boolean updated = false;
-
         while ( elapsedTime >= updateRate ) {
             if ( !updated ) {
                 for ( OdeJoint joint : joints ) {

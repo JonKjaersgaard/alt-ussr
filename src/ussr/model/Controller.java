@@ -11,7 +11,7 @@ package ussr.model;
  * in its own thread.
  *
  * @see ussr.model.ControllerImpl
- * @author ups
+ * @author Modular Robots @ MMMI
  *
  */
 public interface Controller {
@@ -32,5 +32,9 @@ public interface Controller {
      */
     public void setModule(Module module);
 
+    /**
+     * Get the module associated with the controller
+     * @return the representation of the module hardware
+     */
 	public Module getModule();
 }

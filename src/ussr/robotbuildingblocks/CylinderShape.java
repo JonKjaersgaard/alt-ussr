@@ -8,10 +8,9 @@ package ussr.robotbuildingblocks;
 import java.awt.Color;
 
 /**
- * A description of a cylinder geometry, currently only includes a radius.
- * TODO: add position and perhaps also other properties
+ * A description of a cylinder geometry for use in building a robot
  * 
- * @author david
+ * @author Modular Robots @ MMMI
  *
  */
 public class CylinderShape extends Description implements GeometryDescription {
@@ -35,14 +34,16 @@ public class CylinderShape extends Description implements GeometryDescription {
      */    
     private RotationDescription rotation;
     /**
-     * Color of the sphere
+     * Color of the cylinder
      */
     private Color color;
 	
     
     /**
      * Create a description of a cylinder geometry
-     * @param radius the radius of the sphere
+     * @param radius the radius of the cylinder
+     * @param height the height of the cylinder
+     * @param translation the local translation of the cylinder 
      */
 
     public CylinderShape(float radius, float height, VectorDescription translation) { 

@@ -8,8 +8,8 @@ package ussr.physics;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.robots.JMEATRONFactory;
 import ussr.physics.jme.robots.JMEMTRANFactory;
-import ussr.physics.jme.robots.JMEModuleFactory;
 import ussr.physics.jme.robots.JMEOdinFactory;
+import ussr.physics.jme.robots.JMEWhiteFactory;
 
 /**
  * An factory for creating implementation-level objects used by higher-level parts of the
@@ -26,6 +26,6 @@ public class PhysicsFactory {
      * @return a new physics simulation
      */
     public static PhysicsSimulation createSimulator() {
-        return new JMESimulation(new JMEModuleFactory[] { new JMEATRONFactory(), new JMEOdinFactory(), new JMEMTRANFactory()}); // hard-coded for now, should change
+        return new JMESimulation(new ModuleFactory[] { new JMEATRONFactory(), new JMEOdinFactory(), new JMEMTRANFactory(), new JMEWhiteFactory()}); // hard-coded for now, should change
     }
 }

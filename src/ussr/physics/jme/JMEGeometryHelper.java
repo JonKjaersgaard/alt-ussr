@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -26,10 +27,11 @@ import ussr.comm.WiredTransmitter;
 import ussr.model.Connector;
 import ussr.model.Entity;
 import ussr.model.Module;
+import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsQuaternionHolder;
 import ussr.physics.PhysicsSimulationHelper;
 import ussr.physics.PhysicsVectorHolder;
-import ussr.physics.PhysicsParameters;
+import ussr.physics.jme.connectors.JMEMechanicalConnector;
 import ussr.robotbuildingblocks.AtronShape;
 import ussr.robotbuildingblocks.BoxShape;
 import ussr.robotbuildingblocks.ConeShape;
@@ -41,26 +43,29 @@ import ussr.robotbuildingblocks.SphereShape;
 import ussr.robotbuildingblocks.TransmissionDevice;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
+import ussr.robotbuildingblocks.WorldDescription.TextureDescription;
 
 import com.jme.bounding.BoundingBox;
 import com.jme.bounding.BoundingSphere;
 import com.jme.image.Texture;
 import com.jme.math.Quaternion;
+import com.jme.math.Triangle;
 import com.jme.math.Vector3f;
+import com.jme.renderer.ColorRGBA;
 import com.jme.scene.Node;
 import com.jme.scene.SceneElement;
-import com.jme.scene.SharedMesh;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
 import com.jme.scene.shape.Box;
 import com.jme.scene.shape.Cone;
 import com.jme.scene.shape.Cylinder;
 import com.jme.scene.shape.Sphere;
-import com.jme.scene.state.ColorMaskState;
+import com.jme.scene.state.MaterialState;
 import com.jme.scene.state.RenderState;
 import com.jme.scene.state.TextureState;
 import com.jme.util.TextureManager;
 import com.jme.util.export.binary.BinaryImporter;
+import com.jme.util.geom.BufferUtils;
 import com.jmex.model.XMLparser.Converters.MaxToJme;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.PhysicsNode;
@@ -71,13 +76,16 @@ import com.jmex.terrain.util.MidPointHeightMap;
 import com.jmex.terrain.util.ProceduralTextureGenerator;
 
 /**
- * @author ups
- *
- * TODO Write a nice and user-friendly comment here
+ * Helper class used by various JME classes to perform geometry-related operations.
  * 
+ * @author Modular Robots @ MMMI
  */
 public class JMEGeometryHelper implements PhysicsSimulationHelper {
 
+    /**
+     * The ATRON CAD model
+     */
+    private static TriMesh atronModel;
     private JMESimulation simulation;
     private int obstacleCounter = 0;
     public JMEGeometryHelper(JMESimulation simulation) {
@@ -95,7 +103,10 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
         	AtronShape half = (AtronShape) element;
         	shape = constructAtronModel(name, half);
         	shape.setModelBound(new BoundingSphere());
-      	
+    		shape.getBatch(0).setIsCollidable(true);
+    		shape.setIsCollidable(true);
+    		
+        	//shape.setIsCollidable(false);      	
         //	shape = moduleNode.createBox(name);
         	/*shape = new Sphere( name, 9, 9, 0.025f); 
         	if(((AtronShape) element).isNorth()) shape.setLocalTranslation(new Vector3f(0.0f,0,0.1f));
@@ -166,7 +177,12 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
     public void setColor(SceneElement object, Color color) {
         if(color==null) return;
         object.setRenderState(simulation.color2jme(color));
+        
         object.updateRenderState();
+    }
+    public Color getColor(Object element) {
+        ColorRGBA color = ((MaterialState)((SceneElement)element).getRenderState(RenderState.RS_MATERIAL)).getDiffuse();
+        return new Color(color.r,color.g,color.b);
     }
 
     public static Spatial cloneElement(TriMesh element) {
@@ -182,11 +198,15 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
        return meshSphere;
     }
 	
-    static TriMesh atronModel;
 	private synchronized static TriMesh constructAtronModel(String name, AtronShape half) {
 		if(atronModel==null) loadAtronModel(half.getRadius());
-		SharedMesh atronMesh = new SharedMesh(name,atronModel);
-		if(!half.isNorth()) atronMesh.setLocalScale(0.95f*atronMesh.getLocalScale().x);
+		//SharedMesh atronMesh = new SharedMesh(name,atronModel,true);
+		TriMesh atronMesh = new TriMesh(atronModel.getName(),atronModel.getVertexBuffer(0),atronModel.getNormalBuffer(0),atronModel.getColorBuffer(0),atronModel.getTextureBuffer(0,0),atronModel.getIndexBuffer(0));
+		atronMesh.setLocalScale(half.getRadius()*atronModel.getLocalScale().x);
+		atronMesh.setName("ATRON Mesh");
+		atronMesh.setIsCollidable(true);
+		//atronMesh.getBatch(0).setIsCollidable(true);
+		
         // UPS: hack to make conveyor belt work
         if(name.startsWith("--")) atronMesh.setLocalScale(0.95f*atronMesh.getLocalScale().x);
 		return atronMesh;
@@ -195,21 +215,52 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
 		try {
 			MaxToJme C1 = new MaxToJme();
 			ByteArrayOutputStream BO = new ByteArrayOutputStream();
-			InputStream maxStream = new FileInputStream("resources/ATRON.3DS");
-			//URL maxFile = JMEDescriptionHelper.class.getClassLoader().getResource("ATRON.3DS");
-			//C1.convert(new BufferedInputStream(maxFile.openStream()),BO);
+			String[] fileNames = {"ATRON.3DS","simpleATRON.3ds","mediumATRON.3ds","goodATRON.3ds"};
+			InputStream maxStream = new FileInputStream("resources/"+fileNames[2]);
 			C1.convert(new BufferedInputStream(maxStream),BO);
 			Node atronNode = (Node)BinaryImporter.getInstance().load(new ByteArrayInputStream(BO.toByteArray()));
-			atronModel = (TriMesh)(((Node)atronNode.getChild(0)).getChild(0));
-			atronModel.setLocalScale(0.092f*radius);
-
-			System.out.println("CAD Model loaded - nTriangles = "+atronNode.getTriangleCount());
+			System.out.println("ATRON CAD Model loaded - nTriangles = "+atronNode.getVertexCount());
+			atronModel = (TriMesh) getTriMesh(atronNode);
+			Triangle[] ts = atronModel.getMeshAsTriangles(0, null);
+			Vector3f[] normals = new Vector3f[ts.length];
+			for(int i=0;i<ts.length;i++) {
+				ts[i].calculateNormal();
+				normals[i] = ts[i].getNormal();
+			}
+			FloatBuffer ns = BufferUtils.createFloatBuffer(normals);
+			atronModel.getBatch(0).setNormalBuffer(ns);
+			atronModel.setLocalScale(0.012f*radius);
+			//atronModel.setLocalScale(0.092f*radius); //for "ATRON.3DS"
+			atronModel.setName("ATRON CAD Model");
+			/*Quaternion rotation =new Quaternion(new float[]{0f,0f,(float)(Math.PI/4)});
+			atronModel.setLocalRotation(rotation);
+			atronModel.updateModelBound();*/
+	        
+			
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
     }
 
-    public ArrayList<Vector3f> connectorPos(Module m) {
+    private static TriMesh getTriMesh(Spatial spatial) {
+    	//System.out.println("N children "+((Node)spatial).getChildren().size());
+    	if(spatial instanceof Node) {
+    		for(Spatial s: ((Node)spatial).getChildren()) {
+        		if(s instanceof TriMesh) {
+        			return (TriMesh) s;
+        		}
+        		else {
+        			TriMesh mesh = getTriMesh(s);
+        			if(mesh!=null) return mesh;
+        		}
+        	}
+    	}
+    	else if(spatial instanceof TriMesh) return (TriMesh)spatial;
+    	return null;
+//		return (((Node)atronNode.getChild(0)).getChild(0));;
+	}
+
+	public ArrayList<Vector3f> connectorPos(Module m) {
     	Vector3f mPos = (Vector3f)getModulePos(m).get();
     	//System.out.println("Module "+m.getID()+" at ("+mPos.x+", "+mPos.y+", "+mPos.z+") has the following connectors");
     	ArrayList<Vector3f> cPos = new ArrayList<Vector3f>();
@@ -280,48 +331,69 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
         tex.setApply(Texture.AM_REPLACE);
         TextureState ts = simulation.getDisplay().getRenderer().createTextureState();
         ts.setTexture(tex, 0);
+
         planeNode.setRenderState(ts);
        
         return planeNode;
     }
 
     private Material description2material(PhysicsParameters.Material planeMaterial) {
-        if(planeMaterial==PhysicsParameters.Material.RUBBER)
-            return Material.RUBBER;
-        else
-            throw new Error("Unknown material "+planeMaterial+", please add more cases");
+        if(planeMaterial==PhysicsParameters.Material.RUBBER) return Material.RUBBER;
+        if(planeMaterial==PhysicsParameters.Material.ICE) return Material.ICE;
+        if(planeMaterial==PhysicsParameters.Material.WOOD) return Material.WOOD;
+        if(planeMaterial==PhysicsParameters.Material.CONCRETE) return Material.CONCRETE;
+        if(planeMaterial==PhysicsParameters.Material.GLASS) return Material.GLASS;
+        if(planeMaterial==PhysicsParameters.Material.IRON) return Material.IRON;
+        if(planeMaterial==PhysicsParameters.Material.GRANITE) return Material.GRANITE;
+        if(planeMaterial==PhysicsParameters.Material.DEFAULT) return Material.DEFAULT;
+        else throw new Error("Unknown material "+planeMaterial+", please add more cases");
     }
 
     /**
     	 * build the height map and terrain block.
+     * @param textureDescription 
     	 */
-    	public StaticPhysicsNode createTerrain(int size) { //change to hillhweightmap - looks better
+    	public StaticPhysicsNode createTerrain(int size, TextureDescription textureDescription) { //change to hillhweightmap - looks better
     		// Generate a random terrain data
     //		 Generate a random terrain data
-    		MidPointHeightMap heightMap = new MidPointHeightMap(64, 1f);
+    		int powerSize = 64;
+    		if(powerSize!=size) System.out.println("Requested terrain place size "+size+" converted to "+powerSize);
+    		MidPointHeightMap heightMap = new MidPointHeightMap(powerSize, 0.01f);
     		// Scale the data
-    		Vector3f terrainScale = new Vector3f(1, 0.03f, 1);
+    		Vector3f terrainScale = new Vector3f(1, 0.003f, 1);
     		// create a terrainblock
     		simulation.tb = new TerrainBlock("Terrain", heightMap.getSize(), terrainScale,
-    				heightMap.getHeightMap(), new Vector3f(-32, -10, -32), false);
+    				heightMap.getHeightMap(), new Vector3f(-32, -1, -32), false);
     		simulation.tb.setModelBound(new BoundingBox());
     		simulation.tb.updateModelBound();
      
-    		// generate a terrain texture with 3 textures
-    		ProceduralTextureGenerator pt = new ProceduralTextureGenerator(
-    				heightMap);
-    		pt.addTexture(new ImageIcon("resources/grassb.png"), -255, 0, 255);
-    		pt.addTexture(new ImageIcon("resources/dirt.jpg"), 0, 128, 255);
-    		pt.addTexture(new ImageIcon("resources/highest.jpg"), 128, 255,
-    				384);
-    		pt.createTexture(32);
     		
     		// assign the texture to the terrain
     		TextureState ts = simulation.getDisplay().getRenderer().createTextureState();
     		ts.setEnabled(true);
-    		Texture t1 = TextureManager.loadTexture(pt.getImageIcon().getImage(),
-    				Texture.MM_LINEAR_LINEAR, Texture.FM_LINEAR, true);
-    		ts.setTexture(t1, 0);
+    		if(false) {
+    			// generate a terrain texture with 3 textures
+        		ProceduralTextureGenerator pt = new ProceduralTextureGenerator(
+        				heightMap);
+        		pt.addTexture(new ImageIcon("resources/grassb.png"), -255, 0, 255);
+        		pt.addTexture(new ImageIcon("resources/dirt.jpg"), 0, 128, 255);
+        		pt.addTexture(new ImageIcon("resources/highest.jpg"), 128, 255,
+        				384);
+        		pt.createTexture(32);
+	    		Texture t1 = TextureManager.loadTexture(pt.getImageIcon().getImage(),
+	    				Texture.MM_LINEAR_LINEAR, Texture.FM_LINEAR, true);
+	    		ts.setTexture(t1, 0);
+    		}
+    		else {
+    			Texture tex = TextureManager.loadTexture(textureDescription.getFileName(),Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
+            	tex.setWrap(Texture.WM_WRAP_S_WRAP_T);
+                VectorDescription texScale = textureDescription.getScale(size);
+                tex.setScale(new Vector3f(texScale.getX(),texScale.getY(),texScale.getZ()));
+                //tex.setScale(new Vector3f(50f*powerSize/4,50f*powerSize/4,0f));
+                tex.setApply(Texture.AM_REPLACE);
+                ts.setTexture(tex, 0);
+           }
+                		
     		simulation.tb.setRenderState(ts);
     		
     		final StaticPhysicsNode terrainNode = simulation.getPhysicsSpace().createStaticNode();
@@ -371,6 +443,4 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
              offset += 5;
          }
      }
-
-
 }

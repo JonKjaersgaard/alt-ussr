@@ -6,8 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 
+import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
+import ussr.physics.SimulationGadget;
 import ussr.physics.PhysicsSimulation.Handler;
+import ussr.robotbuildingblocks.WorldDescription;
 import ussr.util.Pair;
 
 import com.jme.app.AbstractGame;
@@ -31,6 +34,7 @@ import com.jme.scene.Node;
 import com.jme.scene.SceneElement;
 import com.jme.scene.Skybox;
 import com.jme.scene.Text;
+import com.jme.scene.state.AlphaState;
 import com.jme.scene.state.LightState;
 import com.jme.scene.state.MaterialState;
 import com.jme.scene.state.RenderState;
@@ -52,6 +56,12 @@ import com.jmex.physics.StaticPhysicsNode;
 import com.jmex.physics.impl.ode.OdePhysicsSpace;
 import com.jmex.terrain.TerrainBlock;
 
+/**
+ * The basic graphical and user interface elements of a simulation.  Declares certain
+ * field that are used in JMESimulation to define the behavior of the physical simulation.
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
     protected static final Color[] obstacleColors = { Color.GRAY,
@@ -139,8 +149,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
      * High resolution timer for jME.
      */
     protected Timer timer;
-    protected long physicsSteps = 0;
-    protected float physicsSimulationStepSize; // Set from ussr.physics.SimulationParameters = 0.005f; // 0.001f  // 0.0005f; //0.001f; // 
     protected boolean pause;
     protected boolean singleStep = false;
     int tip_plane_axis = 1;
@@ -178,6 +186,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
                 KeyInput.KEY_F3 );
         KeyBindingManager.getKeyBindingManager().set("mem_report",
                 KeyInput.KEY_R); 
+        KeyBindingManager.getKeyBindingManager().set("display_debug_shell", KeyInput.KEY_U);
     }
     protected void handleKeys() {        /** If toggle_pause is a valid command (via key p), change pause. */
         if ( KeyBindingManager.getKeyBindingManager().isValidCommand(
@@ -254,18 +263,26 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
                 false ) ) {
             finish();
         }
+        
+        if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_debug_shell", false)) {
+            DebugShell.activate(this);
+        }
     }
     protected void cameraPerspective() {
-        cam.setFrustumPerspective( 45.0f, (float) display.getWidth()
+        if(cam!=null) {
+        	cam.setFrustumPerspective( 45.0f, (float) display.getWidth()
                 / (float) display.getHeight(), 0.01f, 1000 );
-        cam.setParallelProjection( false );
-        cam.update();
+        	cam.setParallelProjection( false );
+        	cam.update();
+        }
     }
     protected void cameraParallel() {
-        cam.setParallelProjection( true );
-        float aspect = (float) display.getWidth() / display.getHeight();
-        cam.setFrustum( -100, 1000, -50 * aspect, 50 * aspect, -50, 50 );
-        cam.update();
+    	if(cam!=null) {
+	        cam.setParallelProjection( true );
+	        float aspect = (float) display.getWidth() / display.getHeight();
+	        cam.setFrustum( -100, 1000, -50 * aspect, 50 * aspect, -50, 50 );
+	        cam.update();
+    	}
     }
     public synchronized void addInputHandler(String keyName, final PhysicsSimulation.Handler handler) {
         if(inputHandlers==null) throw new Error("Input handlers cannot be added after simulation has been started");
@@ -302,10 +319,25 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         float green = ((float)color.getGreen())/255.0f;
         float blue = ((float)color.getBlue())/255.0f;
         float alpha = ((float)color.getAlpha())/255.0f;
+     
         ColorRGBA jmecolor = new ColorRGBA(red,green,blue,alpha);
         final MaterialState materialState = display.getRenderer().createMaterialState();
         materialState.setDiffuse( jmecolor );
+        materialState.setAmbient(jmecolor );
+        //materialState.setShininess(0);
+        //materialState.setEmissive(jmecolor);
+        
         return materialState;
+        
+       /* AlphaState astate = display.getRenderer().createAlphaState();
+        astate.setBlendEnabled(true);					
+        astate.setSrcFunction(AlphaState.SB_SRC_ALPHA);	
+        astate.setDstFunction(AlphaState.DB_ONE);		
+        astate.setTestEnabled(true);					
+        astate.setTestFunction(AlphaState.TF_GREATER);	
+        astate.setEnabled(true);
+        return astate; 
+        */
     }
     protected void updateInput() {
         // don't input here but after physics update
@@ -367,7 +399,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
     	
         /** Create rootNode */
         rootNode = new Node( "rootNode" );
-    
+        
         /**
          * Create a wirestate to toggle on and off. Starts disabled with default
          * width of 1 pixel.
@@ -377,7 +409,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         wireState.setEnabled( false );
         rootNode.setRenderState( wireState );
         
-    
+        
         /**
          * Create a ZBuffer to display pixels closest to the camera above
          * farther ones.
@@ -387,7 +419,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         buf.setFunction( ZBufferState.CF_LEQUAL );
         rootNode.setRenderState( buf );
         
-    
+        
         // Then our font Text object.
         /** This is what will actually have the text at the bottom. */
         fps = Text.createDefaultTextLabel( "FPS label" );
@@ -402,7 +434,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         fpsNode.setRenderState( fps.getRenderState( RenderState.RS_TEXTURE ) );
         fpsNode.attachChild( fps );
         fpsNode.setCullMode( SceneElement.CULL_NEVER );
-    
+        
         // ---- LIGHTS
         /** Set up a basic, default light. */
         PointLight light = new PointLight();
@@ -416,7 +448,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         lightState.setEnabled( true );
         lightState.attach( light );
         rootNode.setRenderState( lightState );
-    
+        
         /** Let derived classes initialize. */
         simpleInitGame();
     
@@ -461,7 +493,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         //updateBuffer.append( display.getRenderer().getStatistics( tempBuffer ) ).append(" - " );;
         String timeStr= Float.toString(getTime());
         updateBuffer.append( "RT: " ).append( timeStr.subSequence(0, timeStr.indexOf('.')+2) ).append(" sec - " );
-        updateBuffer.append( "TS: " ).append( (int) physicsSteps );
+        updateBuffer.append( "TS: " ).append( (int) getPhysicsSteps() );
         /** Send the fps to our fps bar at the bottom. */
         fps.print( updateBuffer );
     
@@ -476,18 +508,23 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
      * Get the time (physical) in seconds since the simulation started
      */
     public float getTime() {
-    	return physicsSteps*physicsSimulationStepSize;
+    	//System.out.println(physicsSimulationStepSize+" "+PhysicsParameters.get().getPhysicsSimulationStepSize());
+    	return getPhysicsSteps()*PhysicsParameters.get().getPhysicsSimulationStepSize();
     }
+    
+    public abstract long getPhysicsSteps();
+    public abstract float getPhysicsSimulationStepSize();
+
     /**
      * buildSkyBox creates a new skybox object with all the proper textures. The
      * textures used are the standard skybox textures from all the tests.
      *
      */
-    protected StaticPhysicsNode createSky() {
+    protected StaticPhysicsNode createSky(WorldDescription world) {
     	Skybox skybox = new Skybox("skybox", 100, 100, 100);
     
     	Texture north,south,east,west,up,down;
-    	boolean clouds=false;
+    	boolean clouds=world.hasBackgroundScenery();
     	if(clouds) {
 	    	north = TextureManager.loadTexture("resources/north.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
 	        south = TextureManager.loadTexture("resources/south.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
@@ -518,9 +555,8 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         return null;
     }
     protected void initSystem() {
-    
+    	
         LoggingSystem.getLogger().log( Level.INFO, getVersion());
-        
          try {
             /**
              * Get a DisplaySystem acording to the renderer selected in the
@@ -557,6 +593,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         /** Set a black background. */
         display.getRenderer().setBackgroundColor( ColorRGBA.lightGray );
     
+        
         /** Set up how our camera sees. */
         cameraPerspective();
         Vector3f loc = new Vector3f( 0.0f, 0.0f, 2.0f );
@@ -585,7 +622,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         
         
         assignKeys();
-    
+        
         /** Create a basic input controller. */
         cameraInputHandler = new FirstPersonHandler( cam, 1f, 1 );
         input = new InputHandler();
@@ -599,8 +636,8 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         /** Get a high resolution timer for FPS updates. */
         timer = Timer.getTimer();
         setPhysicsSpace( PhysicsSpace.create() );
-        ((OdePhysicsSpace) getPhysicsSpace()).setStepSize(physicsSimulationStepSize);
-        ((OdePhysicsSpace) getPhysicsSpace()).setStepFunction(OdePhysicsSpace.SF_STEP_FAST); //or OdePhysicsSpace.SF_STEP_QUICK  
+        ((OdePhysicsSpace) getPhysicsSpace()).setStepSize(PhysicsParameters.get().getPhysicsSimulationStepSize());
+        ((OdePhysicsSpace) getPhysicsSpace()).setStepFunction(OdePhysicsSpace.SF_STEP_QUICK); //OdePhysicsSpace.SF_STEP_FAST or OdePhysicsSpace.SF_STEP_QUICK  or OdePhysicsSpace.SF_STEP_SIMULATION  
         
     
         input.addAction( new InputAction() {
@@ -622,6 +659,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
                 }
             }
         }, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_SPACE, InputHandler.AXIS_NONE, false );
+       
         input.addAction( new InputAction() {
             public void performAction( InputActionEvent evt ) {
                 if ( evt.getTriggerPressed() ) {
@@ -721,7 +759,9 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         JoystickInput.destroyIfInitalized();
     }
     protected void quit() {
-        System.exit( 0 );
+        //System.exit( 0 );
+    	//getPhysicsSpace().delete();
+        
     }
     protected void reinit() {
         //do nothing
@@ -731,7 +771,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         return input;
     }
     public boolean isPaused() {
-        return pause||physicsSteps==0; //dont run controller in timestep 0 since ODE is not yet correctly setup (ugly hack?)
+        return pause||getPhysicsSteps()==0; //dont run controller in timestep 0 since ODE is not yet correctly setup (ugly hack?)
     }
     public void setPause(boolean pause) {
         this.pause = pause;
@@ -746,4 +786,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         return staticPlane;
     }
 
+    public void addGadget(SimulationGadget gadget) {
+        DebugShell.addGadget(gadget);
+    }
 }

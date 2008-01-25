@@ -6,40 +6,81 @@
 package ussr.samples.atron;
 
 import java.awt.Color;
+import java.util.List;
 
-//import sun.rmi.runtime.GetThreadPoolAction;
 import ussr.comm.Packet;
 import ussr.comm.Receiver;
-import ussr.comm.Transmitter;
-import ussr.samples.GenericSimulation;
+import ussr.physics.PhysicsParameters;
 
 /**
- * A simple controller for the ATRON, controlling connector stickiness based on
- * user-controlled state stored in the main simulator
+ * A sample controller for the ATRON
  * 
- * @author ups
+ * @author Modular Robots @ MMMI
  *
  */
 public class ATRONTestController1 extends ATRONController {
-	
-    /**
+	String testType;
+    public ATRONTestController1(String testType) {
+		this.testType=testType;
+	}
+
+	/**
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
         while(true) {
         	if(!module.getSimulation().isPaused()) {
-        		//delay(30000);
-        		String name = module.getProperty("name");
-    			//if(name=="test 1") {
-    				//testFullRotation();
-    			//}
+        		ussrYield();
+    			if(testType.equals("velocityTest")) {
+    				testFullRotation();
+    			}
+    			else if(testType.equals("torqueTest")) {
+    				testTorque();
+    			}
+    			else if(testType.equals("torqueHoldTest")) {
+    				testTorqueHold();
+    			}
     			//testCommunication(5);
-    			//}
-    			//if(name=="test 2") rotateContinuous(-1);
         	}
-        	Thread.yield();
+        	ussrYield();
         }
     }
+    private void testTorque() {
+    	if(module.getID()==0) {
+    		float startTime = module.getSimulation().getTime();
+    		rotate(-1);	
+    		rotate(-1);
+    		rotate(-1);
+    		rotate(-1);
+    		System.out.println("One full double lift rotation took "+(module.getSimulation().getTime()-startTime)+" sec");
+    	}
+    	else {
+    		home();
+    	}
+	}
+    private void testTorqueHold() {
+    	List<Color> colors = module.getColorList();
+    	PhysicsParameters.get().setMaintainRotationalJointPositions(true);
+    	if(module.getID()==0) {
+    		while(true) {
+	    		module.setColorList(colors);
+	    		System.out.println();
+	    		System.out.println("Starting to rotate -1");
+	    		float startTime = module.getSimulation().getTime();
+	    		rotate(-1);
+	    		module.setColor(Color.MAGENTA);
+	    		System.out.println();
+	    		System.out.println("90 degree double lift rotation took "+(module.getSimulation().getTime()-startTime)+" sec");
+	    		System.out.println("Delay");
+	    		delay(10000);
+	    		
+    		}
+    	}
+    	else {
+    		home();
+    		while(true) ussrYield();
+    	}
+	}
     
     private void testFullRotation() {
     	float startTime = module.getSimulation().getTime();

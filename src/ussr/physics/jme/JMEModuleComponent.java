@@ -10,6 +10,12 @@ import ussr.physics.PhysicsModuleComponent;
 import ussr.physics.PhysicsQuaternionHolder;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsSimulationHelper;
+import ussr.physics.jme.actuators.JMEActuator;
+import ussr.physics.jme.connectors.JMEBallSocketConnector;
+import ussr.physics.jme.connectors.JMEConnector;
+import ussr.physics.jme.connectors.JMEHingeMechanicalConnector;
+import ussr.physics.jme.connectors.JMEMagneticConnector;
+import ussr.physics.jme.connectors.JMERigidMechanicalConnector;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.ReceivingDevice;
 import ussr.robotbuildingblocks.Robot;
@@ -24,7 +30,6 @@ import com.jme.math.Vector3f;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
 import com.jmex.physics.DynamicPhysicsNode;
-import com.jmex.physics.material.Material;
 
 public class JMEModuleComponent implements PhysicsModuleComponent {
     /**
@@ -79,10 +84,11 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         //cap.setLocalScale(new Vector3f(0.060f,1,0f));
         //PhysicsMesh mesh = moduleNode.createMesh("");
         //mesh.copyFrom(triMesh);
-
+        moduleNode.setIsCollidable(true);
+        //moduleNode.generatePhysicsGeometry(false);
    		moduleNode.generatePhysicsGeometry(element.getAccurateCollisionDetection());
    		moduleNode.computeMass(); //do we always want to do that?
-   		world.getRootNode().attachChild( moduleNode );       
+   		world.getRootNode().attachChild( moduleNode );   
         
         
         // Create connectors
@@ -141,6 +147,8 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
             connector = new JMEMagneticConnector(position,moduleNode,name,world,this,selfDesc);
         else if(type==ConnectorType.MECHANICAL_CONNECTOR_RIGID)
             connector = new JMERigidMechanicalConnector(position,moduleNode,name,world,this,selfDesc);
+        else if(type==ConnectorType.MECHANICAL_CONNECTOR_HINGE)
+        	connector = new JMEHingeMechanicalConnector(position,moduleNode,name,world,this,selfDesc); 
         else if(type==ConnectorType.MECHANICAL_CONNECTOR_BALL_SOCKET)
             connector = new JMEBallSocketConnector(position,moduleNode,name,world,this,selfDesc);
         else throw new Error("Unknown connector type");
@@ -167,12 +175,15 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         return model;
     }
 
-    public void setModuleColor(Color color) {
+    public void setModuleComponentColor(Color color) {
         for(DynamicPhysicsNode node: dynamicNodes) {
         	for(Spatial child:  node.getChildren()) {
-        		world.getHelper().setColor(child, color);        	
+        		world.getHelper().setColor(child, color);
         	}
         }
+    }
+    public Color getModuleComponentColor() {
+    	return world.getHelper().getColor(dynamicNodes.get(0).getChild(0));
     }
 
     public PhysicsSimulation getSimulation() {
@@ -191,13 +202,24 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         throw new Error("not implemented");
     }
 	public VectorDescription getPosition() {
-		Vector3f p = moduleNode.getWorldTranslation(); //TODO not testet
+		Vector3f p = moduleNode.getLocalTranslation(); //TODO not testet
 		return new VectorDescription(p.x,p.y,p.z);
 	}
 	public RotationDescription getRotation() {
-		return new RotationDescription(moduleNode.getWorldRotation()); //TODO not testet
+		return new RotationDescription(moduleNode.getLocalRotation()); //TODO not testet
 	}
     public PhysicsSimulationHelper getSimulationHelper() {
         return this.getSimulation().getHelper();
     }
+	public void setPosition(VectorDescription p) {
+		getModuleNode().getLocalTranslation().set(p.getX(), p.getY(), p.getZ());
+		getModuleNode().updateWorldVectors();
+	}
+	public void setRotation(RotationDescription p) {
+        getModuleNode().setLocalRotation(new Quaternion(p.getRotation()));
+	}
+	public void clearDynamics() {
+		getModuleNode().clearDynamics();
+		
+	}
 }

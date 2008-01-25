@@ -5,8 +5,8 @@
  */
 package ussr.robotbuildingblocks;
 /**
- * A description of a cone geometry
- * @author david
+ * A description of a cone geometry for use in building a robot
+ * @author Modular Robots @ MMMI
  *
  */
 public class ConeShape extends CylinderShape {

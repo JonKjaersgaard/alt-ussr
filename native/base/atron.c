@@ -4,6 +4,7 @@
 #include <nativeController.h>
 
 #include <stdlib.h>
+#include <stdio.h>
 
 void rotate(USSREnv *env, int direction) {
   ussr_call_void_controller_method(env, "rotate", "(I)V", direction);
@@ -49,6 +50,33 @@ unsigned char isObjectNearby(USSREnv *env, unsigned char connector) {
   return ussr_call_int_controller_method(env, "isObjectNearby", "(I)Z", (int)connector);
 }
 
+char disconnect(USSRONLYC(USSREnv *env) unsigned char connector) {
+  ussr_call_void_controller_method(env, "disconnect", "(I)V", (int)connector);
+  return 0; /* NO_ERROR, TODO: return the value returned by the API */
+}
+
+char _connect(USSRONLYC(USSREnv *env) unsigned char connector) {
+  ussr_call_void_controller_method(env, "connect", "(I)V", (int)connector);
+  return 0; /* NO_ERROR, TODO: return the value returned by the API */
+}
+
+char isConnected(USSRONLYC(USSREnv *env) unsigned char connector) {
+  return ussr_call_int_controller_method(env, "isConnected", "(I)Z", (int)connector);
+}
+
+char isDisconnected(USSRONLYC(USSREnv *env) unsigned char connector) {
+  return ussr_call_int_controller_method(env, "isDisconnected", "(I)Z", (int)connector);
+}
+
+char isRotating(USSRONLY(USSREnv *env)) {
+  return ussr_call_int_controller_method(env, "isRotating", "()Z");
+}
+
+char setNorthIOPort(USSRONLYC(USSREnv *env) unsigned char ledbits) {
+  printf("[NIOP on %d = %d]", getRole(USSRONLY(env)),  ledbits); fflush(stdout);
+  return 0; /* TODO: simulate LEDs */
+}
+
 char sendMessage(USSREnv *env, unsigned char *message, unsigned char messageSize, unsigned char connector) {
   jbyteArray array = ussr_charArray2byteArray(env, message, messageSize);
   char result = ussr_call_byte_controller_method(env, "sendMessage", "([BBB)B", array, messageSize, connector);
@@ -66,10 +94,16 @@ void JNICALL Java_ussr_samples_atron_natives_ATRONNativeController_nativeHandleM
   handleMessage(&env, buffer, messageSize, channel);
 }
 
-void delay(int amount) {
-#ifdef WIN32
-  fprintf(stderr,"Warning: cannot sleep\n");
-#else
-  sleep(amount/100);
-#endif
+void delay(USSRONLYC(USSREnv *env) int amount) {
+  printf("<delay(%d)>", amount);
+  ussr_call_void_controller_method(env, "delay_internal", "(I)V", amount);
 }
+
+void setup(USSREnv *env) {
+  ussr_call_void_controller_method(env, "setup", "()V");
+}
+
+void home(USSREnv *env) {
+  ussr_call_void_controller_method(env, "home", "()V");
+}
+

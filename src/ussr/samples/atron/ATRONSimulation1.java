@@ -6,21 +6,23 @@
 package ussr.samples.atron;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import ussr.model.Controller;
+import ussr.physics.PhysicsParameters;
+import ussr.robotbuildingblocks.ModuleConnection;
+import ussr.robotbuildingblocks.ModulePosition;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
-import ussr.robotbuildingblocks.WorldDescription.Connection;
-import ussr.robotbuildingblocks.WorldDescription.ModulePosition;
 import ussr.samples.GenericSimulation;
 
 /**
- * A simple simulation with the sticky bot, using the key "Z" to globally toggle stickiness
- * of the connectors.
+ * A sample ATRON simulation
  * 
- * @author ups
+ * @author Modular Robots @ MMMI
  *
  */
 public class ATRONSimulation1 extends GenericSimulation {
@@ -40,30 +42,20 @@ public class ATRONSimulation1 extends GenericSimulation {
     }
 
     public void main() {
+        PhysicsParameters.get().setPhysicsSimulationStepSize(0.001f);
         setConnectorsAreActive(true);
         WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
-        ArrayList<WorldDescription.ModulePosition> modulePos;
+        List<ModulePosition> modulePos;
         //modulePos = buildAsLattice(5,2,4,1);
         modulePos = buildCar();
        // modulePos = buildSnake(2);
-        
+        // modulePos = Arrays.asList(new WorldDescription.ModulePosition[] { new WorldDescription.ModulePosition("hermit", new VectorDescription(2*0*unit,0*unit,0*unit), rotation_EW) });
         world.setModulePositions(modulePos);
         
-        ArrayList<Connection> connections = allConnections(modulePos);
+        ArrayList<ModuleConnection> connections = allConnections(modulePos);
         world.setModuleConnections(connections);
         
-        
-        /*world.setModulePositions(new WorldDescription.ModulePosition[] {
-        new WorldDescription.ModulePosition("leftleg",new VectorDescription(0,0,0), rotation_EW),
-        new WorldDescription.ModulePosition("middle",new VectorDescription(unit,unit,0), rotation_UD),
-        new WorldDescription.ModulePosition("rightleg",new VectorDescription(2*unit,2*unit,0), rotation_EW),
-        new WorldDescription.ModulePosition("rightleg",new VectorDescription(4*unit,2*unit,0), rotation_EW),
- 		});*/
-        /*world.setModuleConnections(new WorldDescription.Connection[] {
-              //  new WorldDescription.Connection("leftleg",4,"middle",6)
-                //,new WorldDescription.Connection("rightleg",2,"middle",4)
-        });*/
         this.runSimulation(world,true);
     }
 
@@ -74,10 +66,10 @@ public class ATRONSimulation1 extends GenericSimulation {
     	int x=0,y=0,z=0;
     	for(int i=0;i<length;i++) {
     		if(i%2==0) {
-    			mPos.add(new WorldDescription.ModulePosition("snake "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_EW));
+    			mPos.add(new ModulePosition("snake "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_EW));
     		}
     		else {
-    			mPos.add(new WorldDescription.ModulePosition("snake "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_NS));
+    			mPos.add(new ModulePosition("snake "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_NS));
     		}
     		x++;z++;
     	}
@@ -86,13 +78,13 @@ public class ATRONSimulation1 extends GenericSimulation {
 	private static ArrayList<ModulePosition> buildCar() {
     	float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new WorldDescription.ModulePosition("driver", new VectorDescription(2*0*unit,0*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new WorldDescription.ModulePosition("axes1", new VectorDescription(1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
-    	mPos.add(new WorldDescription.ModulePosition("axes2", new VectorDescription(-1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
-    	mPos.add(new WorldDescription.ModulePosition("wheel1", new VectorDescription(-1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
-    	mPos.add(new WorldDescription.ModulePosition("wheel2", new VectorDescription(-1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new WorldDescription.ModulePosition("wheel3", new VectorDescription(1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
-    	mPos.add(new WorldDescription.ModulePosition("wheel4", new VectorDescription(1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
+    	mPos.add(new ModulePosition("driver", new VectorDescription(2*0*unit,0*unit-Yoffset,0*unit), rotation_EW));
+    	mPos.add(new ModulePosition("axes1", new VectorDescription(1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
+    	mPos.add(new ModulePosition("axes2", new VectorDescription(-1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
+    	mPos.add(new ModulePosition("wheel1", new VectorDescription(-1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
+    	mPos.add(new ModulePosition("wheel2", new VectorDescription(-1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
+    	mPos.add(new ModulePosition("wheel3", new VectorDescription(1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
+    	mPos.add(new ModulePosition("wheel4", new VectorDescription(1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
         return mPos;
 	}
     private static ArrayList<ModulePosition> buildAsLattice(int nModules, int xMax, int yMax, int zMax) {
@@ -119,21 +111,21 @@ public class ATRONSimulation1 extends GenericSimulation {
 	        			pos = new VectorDescription(2*x*unit,y*unit,z*unit);
 	        			rot = rotation_NS;
 	        		}
-	        		if(index<nModules) mPos.add(new WorldDescription.ModulePosition(Integer.toString(index), pos, rot));
+	        		if(index<nModules) mPos.add(new ModulePosition(Integer.toString(index), pos, rot));
 	        		index++;
         		}
         	}
         }
         return mPos;
 	}
-	private static ArrayList<Connection> allConnections(ArrayList<ModulePosition> modulePos) {
-    	ArrayList<Connection> connections = new ArrayList<Connection>();
+	private static ArrayList<ModuleConnection> allConnections(List<ModulePosition> modulePos) {
+    	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
     	System.out.println("modulePos.size()"+modulePos.size());
     	for(int i=0;i<modulePos.size();i++) {
     		for(int j=i+1;j<modulePos.size();j++) {
     			if(isConnectable(modulePos.get(i), modulePos.get(j))) {
     				//System.out.println("Found connection from module "+modulePos.get(i).getName()+" to "+modulePos.get(j).getName());
-    				connections.add(new Connection(modulePos.get(i).getName(),modulePos.get(j).getName()));
+    				connections.add(new ModuleConnection(modulePos.get(i).getName(),modulePos.get(j).getName()));
     			}
     		}
     	}

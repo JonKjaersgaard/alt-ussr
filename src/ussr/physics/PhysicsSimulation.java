@@ -32,9 +32,9 @@ public interface PhysicsSimulation {
     public void addInputHandler(String keyName, Handler handler);
 
     /**
-     * Define the robots to be used in this simulation, including visual appearance,
+     * Define the default robot to be used in this simulation, including visual appearance,
      * physical characteristics, and controller functionality.
-     * @param bot the one description of the robot used in this simulation
+     * @param bot the one description of the default robot used in this simulation
      */
     public void setRobot(Robot bot);
 
@@ -54,7 +54,7 @@ public interface PhysicsSimulation {
 
     /**
      * An ultra-simple user-input handler
-     * @author ups
+     * @author Modular Robots @ MMMI
      */
     public static interface Handler {
         /**
@@ -73,20 +73,73 @@ public interface PhysicsSimulation {
      */
     public void stop();
 
+    /**
+     * Get a list containing all the modules currently present in the simulation
+     * @return the modules in the simulation
+     */
     public List<Module> getModules();
     
+    /**
+     * Test whether the simulation is currently paused
+     * @return true is the simulation is paused, false otherwise
+     */
     public boolean isPaused();
+    
+    /**
+     * Test whether the simulation has been stopped
+     * @return true if the simulation has been stopped, false otherwise
+     */
+    public boolean isStopped();
 
+    /**
+     * Get the current simulation time
+     * @return the simulation time
+     */
 	public float getTime();
 
+	/**
+	 * Directly set the gravity being used in the simulation.  The preferred way of setting
+	 * the gravity for a simulation is to use {@link PhysicsParameters#setGravity(float)}
+	 * @param g the gravity
+	 * @see PhysicsParameters#setGravity(float)
+	 */
 	public void setGravity(float g);
 
+	/**
+	 * Wait for the physics step to complete by blocking the thread.  If notification is
+	 * requested, all other threads waiting on the simulation object are notified (awakened)
+	 * @param notify whether to notify other threads or not
+	 */
 	public void waitForPhysicsStep(boolean notify);
 
+	/**
+	 * Subscribe to the simulation steps, meaning that the observer is notified each time a
+	 * physics step has been simulated (e.g., at the end of the physics step)
+	 * @param observer the observer to register for future events
+	 * @see PhysicsObserver#physicsTimeStepHook(PhysicsSimulation)
+	 */
 	public void subscribePhysicsTimestep(PhysicsObserver observer);
+	
+	public void unsubscribePhysicsTimestep(PhysicsObserver observer);
 
-    public void setPause(boolean startPaused);
+	/**
+	 * Set whether the simulation is paused
+	 * @param paused true if the simulation should be paused, false otherwise
+	 */
+	public void setPause(boolean paused);
 
+	/**
+	 * Obtain a reference to the simulation helper, which contains various utility
+	 * methods that work on the simulation
+	 * @return a reference to the simulation helper object for this simulation
+	 * @see PhysicsSimulationHelper
+	 */
     public PhysicsSimulationHelper getHelper();
 
+    /**
+     * Add a simulation gadget to this simulation (a plugin that modifies the user
+     * interface to cater to a specific simulation).
+     * @param gadget The gadget to add
+     */
+    public void addGadget(SimulationGadget gadget);
 }

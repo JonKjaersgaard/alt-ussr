@@ -17,13 +17,19 @@ import ussr.model.Actuator;
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.model.PhysicsActuator;
+import ussr.physics.ModuleFactory;
 import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
+import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsSimulationHelper;
-import ussr.physics.PhysicsParameters;
-import ussr.physics.jme.robots.JMEModuleFactory;
+import ussr.physics.jme.connectors.JMEBasicConnector;
+import ussr.physics.jme.connectors.JMEConnector;
+import ussr.physics.jme.connectors.JMEMechanicalConnector;
+import ussr.robotbuildingblocks.BoxDescription;
+import ussr.robotbuildingblocks.ModuleConnection;
+import ussr.robotbuildingblocks.ModulePosition;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
@@ -46,53 +52,53 @@ import com.jmex.physics.impl.ode.OdePhysicsSpace;
 import com.jmex.physics.util.PhysicsPicker;
 
 /**
- * @author ups
+ * The physical simulation: initialization and main loop, references to all simulated entities. 
+ * 
+ * @author Modular Robots @ MMMI
  */
 public class JMESimulation extends JMEBasicGraphicalSimulation implements PhysicsSimulation {
 
     public Map<String, JMEConnector> connectorRegistry = new HashMap<String, JMEConnector>();
     public Set<Joint> dynamicJoints = new HashSet<Joint>();
-    //private Robot robot;
     Hashtable<String,Robot> robots = new Hashtable<String,Robot>();
-    private WorldDescription worldDescription;
+    public WorldDescription worldDescription;
     private List<JMEModuleComponent> moduleComponents = new ArrayList<JMEModuleComponent>();
     private List<Module> modules = new ArrayList<Module>();
     private Map<DynamicPhysicsNode,Set<TriMesh>> geometryMap = new HashMap<DynamicPhysicsNode,Set<TriMesh>>();
     private ArrayList<Thread> moduleThreads = new ArrayList<Thread>();
     
+    protected long physicsSteps = 0;
+    protected float physicsSimulationStepSize; // Set from ussr.physics.SimulationParameters = 0.005f; // 0.001f  // 0.0005f; //0.001f; // 
     protected float gravity; // Set from ussr.physics.SimulationParameters
     static class Lock extends Object {}
     static public Lock physicsLock = new Lock(); //should be used every time physics space is changed 
    
     protected List<PhysicsNode> obstacleBoxes;
-    
-    List<PhysicsNode> getObstacles() { return obstacleBoxes; }
-    
     private JMEGeometryHelper helper = new JMEGeometryHelper(this);
+    private JMEFactoryHelper factory;    
+    private long mainLoopCounter=0;
+    private static final float FAROUT_DISTANCE = 50f;
+    private ArrayList<PhysicsObserver> physicsObservers = new ArrayList<PhysicsObserver>();
     
-    public PhysicsSimulationHelper getHelper() {
-        return helper;
-    }
-
-    private JMEFactoryHelper factory;
-
-    public JMESimulation(JMEModuleFactory[] factories) {
+    public JMESimulation(ModuleFactory[] factories) {
         PhysicsParameters parameters = PhysicsParameters.get();
         this.gravity = parameters.getGravity();
-        this.physicsSimulationStepSize = parameters.getPhysicsSimulationStepSize();
+       // this.physicsSimulationStepSize = parameters.getPhysicsSimulationStepSize();
         factory = new JMEFactoryHelper(this,factories);
     }
     
     protected void simpleInitGame() {
         // Create underlying plane or terrain
-        setStaticPlane(helper.createPlane(worldDescription.getPlaneSize(),worldDescription.getPlaneTexture()));
-    	//final StaticPhysicsNode staticPlane = createTerrain(worldDescription.getPlaneSize()); //david
+        if(worldDescription.theWorldIsFlat())
+          setStaticPlane(helper.createPlane(worldDescription.getPlaneSize(),worldDescription.getPlaneTexture()));
+        else
+    	  setStaticPlane(helper.createTerrain(worldDescription.getPlaneSize(), worldDescription.getPlaneTexture()));
+    	
         
-        createSky();
+        createSky(worldDescription);
         setGravity(gravity);
 
-        setPhysicsErrorParameters(10E-5f, 0.8f); 
-        
+        setPhysicsErrorParameters(PhysicsParameters.get().getConstraintForceMix(), PhysicsParameters.get().getErrorReductionParameter()); 
         
 		
         // Create obstacle boxes
@@ -113,8 +119,9 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             final Module module = new Module();
             String robotType = (worldDescription.getModulePositions().size()>0)?worldDescription.getModulePositions().get(i).getType():"default";
             Robot robot = robots.get(robotType);
-            WorldDescription.ModulePosition position = worldDescription.getModulePositions().get(i);
+            ModulePosition position = worldDescription.getModulePositions().get(i);
             String module_name = position.getName();
+            System.out.println("Creating "+robotType);
         	factory.createModule(i, module, robot, module_name);
         	module.setController(robot.createController());
             modules.add(module);
@@ -122,7 +129,9 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             Thread moduleThread = new Thread() {
 	            public void run() {
 	                module.getController().activate();
-	                PhysicsLogger.log("Warning: unexpected controller exit");
+	                if(!isStopped()) {
+	                	PhysicsLogger.log("Warning: unexpected controller exit");
+	                }
 	            }
 	        };
 	        //moduleThread.setPriority(Thread.NORM_PRIORITY-1);
@@ -150,7 +159,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 	combinedPosList.add(elm);
                 	combinedRotList.add(new RotationDescription(new Quaternion()));                	
                 }
-                for(WorldDescription.BoxDescription elm: worldDescription.getBigObstacles()) {
+                for(BoxDescription elm: worldDescription.getBigObstacles()) {
                 	combinedPosList.add(elm.getPosition());
                 	combinedRotList.add(elm.getRotation());
                 }
@@ -176,13 +185,11 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
          new PhysicsPicker( input, rootNode, getPhysicsSpace() );
     }
 
-
     private void setPhysicsErrorParameters(float cfm, float erp) {
     	((OdePhysicsSpace)getPhysicsSpace()).getODEJavaWorld().setConstraintForceMix(cfm); //default = 10E-5f, typical = [10E-9, 1]
 		((OdePhysicsSpace)getPhysicsSpace()).getODEJavaWorld().setErrorReductionParameter(erp); //default = 0.2, typical = [0.1,0.8]
 	}
 
-	long mainLoopCounter=0;
     public final void start() {
         LoggingSystem.getLogger().log(Level.INFO, "Application started.");
         
@@ -191,11 +198,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 
             if (!finished) {
                 initSystem();
-
                 assertDisplayCreated();
- 
-                initGame();
-
+        		initGame();
                 readWorldParameters();
 
                 // main loop
@@ -211,41 +215,46 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                     	//System.out.println(getTime()+" : "+(System.currentTimeMillis()-startTime)/1000.0);
                     }
                     
-                    KeyInput.get().update();
-                    if(mainLoopCounter%5==0 ||singleStep) { // 1 call to = 16ms (same example setup)
-                    	MouseInput.get().update(); //InputSystem.update();
-                    	update(-1.0f);
-	                	render(-1.0f);
-	                    getDisplay().getRenderer().displayBackBuffer();// swap buffers
+               
+            	   KeyInput.get().update();
+            	   if(mainLoopCounter%5==0 ||singleStep) { // 1 call to = 16ms (same example setup)
+            		   MouseInput.get().update(); //InputSystem.update();
+                		update(-1.0f);
+                		render(-1.0f);
+                		getDisplay().getRenderer().displayBackBuffer();// swap buffers
+                	
 	                    if(grapFrames) {
 	                    	grapFrame();
 	                    }
                     }
-                    mainLoopCounter++;
-                    Thread.yield();
-                    if(singleStep&&physicsStep) singleStep = false;
+                   mainLoopCounter++;
+                   Thread.yield();
+                   if(singleStep&&physicsStep) singleStep = false;
                 }
             }
         } catch (Throwable t) {
             t.printStackTrace();
         }
-
+        stop();
         cleanup();
         LoggingSystem.getLogger().log(Level.INFO, "Application ending.");
 
        
         if (getDisplay() != null)
             getDisplay().reset();
-        //display.close();
-        
+        display.close();
+        waitForPhysicsStep(true);
        	quit();
     }
+    
     public void stop() {
     	finished = true;
     }
-
-	private static final float FAROUT_DISTANCE = 50f;
     
+	public boolean isStopped() {
+		return finished;
+	}
+	
     private void readWorldParameters() {
         if(worldDescription.getCameraPosition()==WorldDescription.CameraPosition.FAROUT) {
             cam.setLocation(cam.getLocation().add(0, 0, FAROUT_DISTANCE));
@@ -254,12 +263,28 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 
     private final void physicsStep() {
     	synchronized(physicsLock) {
-    		getPhysicsSpace().update(physicsSimulationStepSize);
+    		getPhysicsSpace().update(PhysicsParameters.get().getPhysicsSimulationStepSize());
 	    	physicsSteps++;
+	    	addWorldEffects(); //e.g. damping
     	}
     }
 
-    public void setRobot(Robot bot) { //remove this method?
+    /*
+     * To add 'hacked' world effects like damping which can make the simulation a lot more realistic but 
+     * which fundamentally is not modeled correctly 
+     */
+    private void addWorldEffects() {
+    	float linVelDamp = PhysicsParameters.get().getWorldDampingLinearVelocity();
+    	float angVelDamp = PhysicsParameters.get().getWorldDampingAngularVelocity();
+    	if(linVelDamp!=0.0f||angVelDamp!=0.0f) {
+    		for(JMEModuleComponent components: getModuleComponents()) {
+    			if(angVelDamp!=0.0f) components.getModuleNode().setAngularVelocity(components.getModuleNode().getAngularVelocity(null).multLocal(angVelDamp));
+    			if(linVelDamp!=0.0f) components.getModuleNode().setLinearVelocity(components.getModuleNode().getLinearVelocity(null).multLocal(linVelDamp));
+            }
+    	}
+	}
+
+	public void setRobot(Robot bot) {
     	robots.put("default",bot);
     }
     public void setRobot(Robot bot, String type) {
@@ -269,125 +294,152 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         this.worldDescription = world;        
     }
 
-        /**
-         * 
-         */
-        private void placeModules() {
-            Iterator<WorldDescription.ModulePosition> positions = this.worldDescription.getModulePositions().iterator();
-            Map<String,Module> registry = new HashMap<String,Module>();
-            for(Module module: modules) {
-                WorldDescription.ModulePosition p = positions.next();
-                module.setProperty("name", p.getName());
-                registry.put(p.getName(), module);
-                List<? extends PhysicsEntity> components = module.getPhysics();
-                // Reset each component
-                for(PhysicsEntity pe: components)
-                    ((JMEModuleComponent)pe).reset();
-                	for(PhysicsEntity c1: components) { //works if CAD ATRON
-	                	DynamicPhysicsNode node = ((JMEModuleComponent)c1).getModuleNode();
-		                node.getLocalTranslation().set(p.getPosition().getX(), p.getPosition().getY(), p.getPosition().getZ());
-		                node.setLocalRotation(new Quaternion(p.getRotation().getRotation()));
-	                	node.clearDynamics();
-                	}
-                for(Actuator actuator:  module.getActuators()) { 
-                	((PhysicsActuator)actuator.getPhysics().get(0)).reset();
+    /**
+     * 
+     */
+    public void placeModules() {
+        Iterator<ModulePosition> positions = this.worldDescription.getModulePositions().iterator();
+        Map<String,Module> registry = new HashMap<String,Module>();
+        for(Module module: modules) {
+            ModulePosition p = positions.next();
+            module.setProperty("name", p.getName());
+            registry.put(p.getName(), module);
+            //module.reset();
+            module.setPosition(p.getPosition());
+            module.setRotation(p.getRotation());
+            module.clearDynamics();
+            module.reset();
+            
+            /*List<? extends PhysicsEntity> components = module.getPhysics();
+            // Reset each component
+            for(PhysicsEntity pe: components)
+                ((JMEModuleComponent)pe).reset();
+            
+            for(PhysicsEntity c1: components) { //works if CAD ATRON
+                DynamicPhysicsNode node = ((JMEModuleComponent)c1).getModuleNode();
+                node.getLocalTranslation().set(p.getPosition().getX(), p.getPosition().getY(), p.getPosition().getZ());
+                node.setLocalRotation(new Quaternion(p.getRotation().getRotation()));
+                node.clearDynamics();
+            }*/
+            /*for(Actuator actuator:  module.getActuators()) { 
+                ((PhysicsActuator)actuator.getPhysics().get(0)).reset();
+            }*/
+        }
+        // The following only works for mechanical connectors
+        // HARDCODED: assumes one physics per connector
+        for(ModuleConnection connection: this.worldDescription.getConnections()) {
+            Module m1 = registry.get(connection.getModule1());
+            Module m2 = registry.get(connection.getModule2());
+            if(m1.getID()==m2.getID()) {
+                throw new RuntimeException("Module("+m1.getID()+") can not connect to itself("+m2.getID()+")");
+            }
+            int c1i = connection.getConnector1();
+            int c2i = connection.getConnector2();
+            if(c1i==-1||c2i==-1) {
+                c1i = helper.findBestConnection(m1,m2);
+                c2i = helper.findBestConnection(m2,m1);
+            }
+            if(c1i!=-1||c2i!=-1) {
+                Connector c1 = m1.getConnectors().get(c1i);
+                Connector c2 = m2.getConnectors().get(c2i);
+                PhysicsLogger.displayInfo("Connecting "+m1.getProperty("name")+"<"+c1i+":"+c1.getProperty("name")+"> to "+m2.getProperty("name")+"<"+c2i+":"+c2.getProperty("name")+">");
+                if((c1.getPhysics().get(0) instanceof JMEBasicConnector)&&(c2.getPhysics().get(0) instanceof JMEBasicConnector)) {
+                    JMEBasicConnector jc1 = (JMEBasicConnector)c1.getPhysics().get(0);
+                    JMEBasicConnector jc2 = (JMEBasicConnector)c2.getPhysics().get(0);
+                    if(jc1.canConnectTo(jc2))
+                    	jc1.connectTo(jc2);
+                    else if(jc2.canConnectTo(jc1)) {
+                    	jc2.connectTo(jc1);
+                    }
+                    else {
+                    	System.err.println("Unable to connect connector "+c1i+" on module "+m1.getID()+" to connector "+c2i+" on module "+m2.getID());
+                    }
+                }
+                else {
+                    PhysicsLogger.log("Warning: connector initialization ignored");
                 }
             }
-            // The following only works for mechanical connectors
-            // HARDCODED: assumes one physics per connector
-            for(WorldDescription.Connection connection: this.worldDescription.getConnections()) {
-                Module m1 = registry.get(connection.getModule1());
-                Module m2 = registry.get(connection.getModule2());
-                if(m1.getID()==m2.getID()) {
-                	throw new RuntimeException("Module("+m1.getID()+") can not connect to itself("+m2.getID()+")");
+        }
+    }
+
+    public synchronized void associateGeometry(DynamicPhysicsNode moduleNode, TriMesh shape) {
+        Set<TriMesh> associated = geometryMap.get(moduleNode);
+        if(associated==null) {
+            associated = new HashSet<TriMesh>();
+            geometryMap.put(moduleNode, associated);
+        }
+        associated.add(shape);
+    }
+
+    public Set<TriMesh> getNodeGeometries(DynamicPhysicsNode node) {
+        Set<TriMesh> result = geometryMap.get(node);
+        if(result!=null) return result;
+        return Collections.emptySet();
+    }
+    
+    public List<Module> getModules() {
+        return modules;
+    }
+    
+    public void setGravity(float g) {
+        gravity = g;
+        getPhysicsSpace().setDirectionalGravity(new Vector3f(0,gravity,0));			
+    }
+
+    public synchronized void waitForPhysicsStep(boolean notify) {
+        if(notify) {
+            notifyAll();
+        }
+        else { //modules wait here
+            try {
+                wait();
+                if(finished) {
+                 //   System.out.println("I should stop now "+this);
                 }
-                int c1i = connection.getConnector1();
-                int c2i = connection.getConnector2();
-                if(c1i==-1||c2i==-1) {
-                	c1i = helper.findBestConnection(m1,m2);
-                	c2i = helper.findBestConnection(m2,m1);
-                }
-                if(c1i!=-1||c2i!=-1) {
-	                Connector c1 = m1.getConnectors().get(c1i);
-	                Connector c2 = m2.getConnectors().get(c2i);
-                    PhysicsLogger.displayInfo("Connecting "+m1.getProperty("name")+"<"+c1i+":"+c1.getProperty("name")+"> to "+m2.getProperty("name")+"<"+c2i+":"+c2.getProperty("name")+">");
-	                if((c1.getPhysics().get(0) instanceof JMEMechanicalConnector)&&(c2.getPhysics().get(0) instanceof JMEMechanicalConnector)) {
-	                	JMEMechanicalConnector jc1 = (JMEMechanicalConnector)c1.getPhysics().get(0);
-	                    JMEMechanicalConnector jc2 = (JMEMechanicalConnector)c2.getPhysics().get(0);
-	                    jc1.connectTo(jc2);
-	                    jc1.setConnectorColor(Color.cyan);
-	                    jc2.setConnectorColor(Color.cyan);
-	                	
-	                }
-	                else {
-	                	PhysicsLogger.log("Warning: connector initialization ignored");
-	                }
-                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
+    }
 
-        public synchronized void associateGeometry(DynamicPhysicsNode moduleNode, TriMesh shape) {
-            Set<TriMesh> associated = geometryMap.get(moduleNode);
-            if(associated==null) {
-                associated = new HashSet<TriMesh>();
-                geometryMap.put(moduleNode, associated);
-            }
-            associated.add(shape);
+    public synchronized void subscribePhysicsTimestep(PhysicsObserver observer) {
+    	if(physicsObservers.contains(observer)) throw new RuntimeException();// System.err.println("Warning - same observer added twize");;
+        physicsObservers.add(observer);
+    }
+    
+    public synchronized void unsubscribePhysicsTimestep(PhysicsObserver observer) {
+        physicsObservers.remove(observer);
+    }
+
+    private void physicsCallBack() {
+    	int maxCallBacks = physicsObservers.size();
+        for(int i=0;(i<maxCallBacks)&&(i<physicsObservers.size());i++) {
+        	PhysicsObserver observer = physicsObservers.get(i); 
+            observer.physicsTimeStepHook(this);
         }
+    }
+
+    public DisplaySystem getDisplay() {
+        return display;
+    }
+
+    public void setModuleComponents(List<JMEModuleComponent> moduleComponents) {
+        this.moduleComponents = moduleComponents;
+    }
+
+    public List<JMEModuleComponent> getModuleComponents() {
+        return moduleComponents;
+    }
+    public List<PhysicsNode> getObstacles() { return obstacleBoxes; }
+
+    public PhysicsSimulationHelper getHelper() {
+        return helper;
+    }
+
+    public long getPhysicsSteps() { return physicsSteps; }
+
+    public float getPhysicsSimulationStepSize() { return physicsSimulationStepSize; }
 
 
-        public Set<TriMesh> getNodeGeometries(DynamicPhysicsNode node) {
-            Set<TriMesh> result = geometryMap.get(node);
-            if(result!=null) return result;
-            return Collections.emptySet();
-        }
-        public List<Module> getModules() {
-        	return modules;
-        }
-		public void setGravity(float g) {
-			gravity = g;
-			getPhysicsSpace().setDirectionalGravity(new Vector3f(0,gravity,0));			
-		}
-
-		public synchronized void waitForPhysicsStep(boolean notify) {
-        	if(notify) {
-        		notifyAll();
-        	}
-        	else {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-        	}
-		}
-		
-		
-		private ArrayList<PhysicsObserver> physicsObservers = new ArrayList<PhysicsObserver>();
-		public void subscribePhysicsTimestep(PhysicsObserver observer) {
-			physicsObservers.add(observer);
-		}
-		
-		private void physicsCallBack() {
-			for(PhysicsObserver observer:physicsObservers) {
-				observer.physicsTimeStepHook(this);
-			}
-		}
-
-        public DisplaySystem getDisplay() {
-            return display;
-        }
-
-        public void setModuleComponents(List<JMEModuleComponent> moduleComponents) {
-            this.moduleComponents = moduleComponents;
-        }
-
-        public List<JMEModuleComponent> getModuleComponents() {
-            return moduleComponents;
-        }
-
-		
-
-		
- }
+}
 

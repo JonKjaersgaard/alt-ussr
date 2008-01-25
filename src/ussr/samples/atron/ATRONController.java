@@ -1,5 +1,7 @@
 package ussr.samples.atron;
 
+import java.awt.Color;
+
 import ussr.comm.Packet;
 import ussr.comm.PacketReceivedObserver;
 import ussr.comm.Receiver;
@@ -11,6 +13,11 @@ import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsParameters;
 
+/**
+ * Controller class that provides the ATRON API
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public abstract class ATRONController extends ControllerImpl implements PacketReceivedObserver, PhysicsObserver {
 
     float targetPos, currentPos, zeroPos;
@@ -95,7 +102,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         // physics actuator that updates at each time step
     	(new Thread() {
     	    public void run() { 
-                System.out.print("(locking actuator on "+this.getName()+")"); System.out.flush();
+                System.out.print("(locking actuator on "+this.getName()+" to maintain "+maintain+") "); System.out.flush();
     	        while(locked) {
     	           module.getActuators().get(0).activate(maintain);
                    ussrYield();
@@ -142,7 +149,10 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
                 System.out.print("(unlocking actuator on "+this.getName()+")"); System.out.flush();
             }
         }).start();
-
+    }
+    public float getTime() {
+    	//TODO local version of this instead of global and syncronized
+    	return getModule().getSimulation().getTime();
     }
     public float getAngularPosition() {
     	return (float)(module.getActuators().get(0).getEncoderValue()*Math.PI*2);
@@ -173,10 +183,12 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     }
 
     public boolean canConnect(int i) {
+    	if(isConnected(i)&&!module.getConnectors().get(i).hasProximateConnector()) System.out.println("Inconsistant connector state detected!");
     	return isOtherConnectorNearby(i)&&isMale(i)&&!isConnected(i);
     }
 
-    public boolean canDisconnect(int i) {
+	public boolean canDisconnect(int i) {
+		if(isConnected(i)&&!module.getConnectors().get(i).hasProximateConnector()) System.out.println("Inconsistant connector state detected!");
     	return isMale(i)&&isConnected(i);
     }
 
@@ -214,11 +226,11 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     		return true;
     	}
     	if(module.getConnectors().get(connector).hasProximateConnector()) {
-    		return true;
+    		if(module.getTransmitters().get(connector).withinRangeCount()!=0) {
+    			return true;
+    		}
     	}
-    	else  {
-    		return false;
-    	}
+   		return false;
     }
     
     public boolean isObjectNearby(int connector) {

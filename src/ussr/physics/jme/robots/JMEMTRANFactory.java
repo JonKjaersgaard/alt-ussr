@@ -1,16 +1,17 @@
 package ussr.physics.jme.robots;
 
+import java.awt.Color;
+
 import ussr.model.Actuator;
 import ussr.model.Module;
-import ussr.model.Sensor;
+import ussr.physics.ModuleFactory;
+import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEModuleComponent;
-import ussr.physics.jme.JMERotationalActuator;
 import ussr.physics.jme.JMESimulation;
-import ussr.physics.jme.JMETiltSensor;
+import ussr.physics.jme.actuators.JMERotationalActuator;
 import ussr.robotbuildingblocks.BoxShape;
 import ussr.robotbuildingblocks.CylinderShape;
 import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RotationDescription;
 
 import com.jme.math.Vector2f;
 import com.jme.math.Vector3f;
@@ -19,7 +20,13 @@ import com.jmex.physics.contact.ContactHandlingDetails;
 import com.jmex.physics.contact.MutableContactInfo;
 import com.jmex.physics.material.Material;
 
-public class JMEMTRANFactory implements JMEModuleFactory {
+/**
+ * Factory for creating MTRAN modules
+ * 
+ * @author Modular Robots @ MMMI
+ *
+ */
+public class JMEMTRANFactory implements ModuleFactory {
     private JMESimulation simulation;
     
     public void createModule(int module_id, Module module, Robot robot, String module_name) {
@@ -45,7 +52,6 @@ public class JMEMTRANFactory implements JMEModuleFactory {
         JMEModuleComponent southCylinderComponent = new JMEModuleComponent(simulation,robot,southCylinder,module_name+"module#"+Integer.toString(module_id)+".south",module,southNode);
         JMEModuleComponent southBoxComponent = new JMEModuleComponent(simulation,robot,southBox,module_name+"_module#"+Integer.toString(module_id)+".south",module,southNode);
         southNode.setName("MTRANSouth");
-        
         DynamicPhysicsNode centerNode = simulation.getPhysicsSpace().createDynamicNode();
         centerNode.setName("MTRANCenter");
         
@@ -128,14 +134,18 @@ public class JMEMTRANFactory implements JMEModuleFactory {
         module.addSensor(new Sensor(ysensor));
         module.addSensor(new Sensor(zsensor));
         */
+        
+       //northCylinderComponent.setModuleComponentColor(Color.red);
+        
+        //northBoxComponent.setModuleComponentColor(Color.red);
     }
 
     public String getModulePrefix() {
         return "MTRAN";
     }
 
-    public void setSimulation(JMESimulation simulation) {
-        this.simulation = simulation;
+    public void setSimulation(PhysicsSimulation simulation) {
+        this.simulation = (JMESimulation)simulation;
     }
 
 }

@@ -5,26 +5,19 @@
  */
 package ussr.samples;
 
-import java.util.logging.Level;
-
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
-import ussr.physics.jme.JMESimulation;
-import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.SphereShape;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 
-import com.jme.math.Vector3f;
-import com.jme.util.LoggingSystem;
-
 /**
- * A simple simulation with the sticky bot, using the key "Z" to globally toggle stickiness
- * of the connectors.
+ * An abstract simulation implementation that sets up the necessary objects
+ * before starting the simulation.  Hook methods are provided for customization.
  * 
- * @author ups
+ * 
+ * @author Modular Robots @ MMMI
  *
  */
 public abstract class GenericSimulation {

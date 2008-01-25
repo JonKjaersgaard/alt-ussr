@@ -3,12 +3,16 @@ package ussr.samples.atron;
 import java.util.ArrayList;
 
 import ussr.model.Controller;
+import ussr.robotbuildingblocks.ModulePosition;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
-import ussr.robotbuildingblocks.WorldDescription;
-import ussr.robotbuildingblocks.WorldDescription.ModulePosition;
 
+/**
+ * Simulation that allows an ATRON lattice of any size to be constructed 
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public class ATRONLatticeSimulation extends GenericATRONSimulation {
 	
 	
@@ -32,7 +36,7 @@ public class ATRONLatticeSimulation extends GenericATRONSimulation {
     protected ArrayList<ModulePosition> buildAsLattice(int nModules, int xMax, int yMax, int zMax) {
         return this.buildAsNamedLattice(nModules, xMax, yMax, zMax, new Namer() {
             public String name(int number, VectorDescription pos, RotationDescription rot) {
-                return Integer.toString(number);
+                return "module"+Integer.toString(number);
             }
                 
         }, new ModuleSelector() {
@@ -69,11 +73,11 @@ public class ATRONLatticeSimulation extends GenericATRONSimulation {
 	        		if(index<nModules) {
                         String name = namer.name(index,pos,rot);
                         String robotNameMaybe = selector.select(name,index,pos,rot);
-                        WorldDescription.ModulePosition mpos;
+                        ModulePosition mpos;
                         if(robotNameMaybe==null)
-                            mpos = new WorldDescription.ModulePosition(name, pos, rot);
+                            mpos = new ModulePosition(name, pos, rot);
                         else
-                            mpos = new WorldDescription.ModulePosition(name, robotNameMaybe, pos, rot);
+                            mpos = new ModulePosition(name, robotNameMaybe, pos, rot);
                         mPos.add(mpos);
                     }
 	        		index++;

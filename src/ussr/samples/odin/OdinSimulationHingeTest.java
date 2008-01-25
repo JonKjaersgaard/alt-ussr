@@ -12,12 +12,12 @@ import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
+import ussr.robotbuildingblocks.ModuleConnection;
+import ussr.robotbuildingblocks.ModulePosition;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
-import ussr.robotbuildingblocks.WorldDescription.Connection;
-import ussr.robotbuildingblocks.WorldDescription.ModulePosition;
 import ussr.samples.GenericSimulation;
 
 import com.jme.math.Quaternion;
@@ -83,15 +83,15 @@ public class OdinSimulationHingeTest extends GenericSimulation {
     private static WorldDescription createWorld() {
     	WorldDescription world = new WorldDescription();
         world.setPlaneSize(3);
-        ArrayList<WorldDescription.ModulePosition> ballPos = new ArrayList<WorldDescription.ModulePosition>();
-        ArrayList<WorldDescription.ModulePosition> modulePos = new ArrayList<WorldDescription.ModulePosition>();
+        ArrayList<ModulePosition> ballPos = new ArrayList<ModulePosition>();
+        ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
         int index=0;
         int nBalls=6, xMax=6;
         
         for(int x=0;x<xMax;x++) {
         	VectorDescription pos = new VectorDescription(x*unit,-0.48f,x*unit);
         	if(index<nBalls) {
-       			ballPos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
+       			ballPos.add(new ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
         	}
     	    index++;
         }
@@ -105,12 +105,12 @@ public class OdinSimulationHingeTest extends GenericSimulation {
         				q.fromAngles(pi/2, 0, 0);
         				rot.setRotation(rot.getRotation().mult(q));
         			}
-        			modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinHinge", pos, rot));
+        			modulePos.add(new ModulePosition(Integer.toString(index),"OdinHinge", pos, rot));
         			index++;
         		}
         	}
         }
-        ArrayList<Connection> connections = allConnections(ballPos,modulePos);
+        ArrayList<ModuleConnection> connections = allConnections(ballPos,modulePos);
         System.out.println("#connection found = "+connections.size());
         world.setModuleConnections(connections);
         System.out.println("#Balls Placed  = "+ballPos.size());
@@ -121,12 +121,12 @@ public class OdinSimulationHingeTest extends GenericSimulation {
 		System.out.println("#Total         = "+modulePos.size());
 		return world;
     }
-    private static ArrayList<Connection> allConnections(ArrayList<ModulePosition> ballPos, ArrayList<ModulePosition> modulePos) {
-    	ArrayList<Connection> connections = new ArrayList<Connection>();
+    private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> ballPos, ArrayList<ModulePosition> modulePos) {
+    	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
     	for(int i=0;i<ballPos.size();i++) {
     		for(int j=0;j<modulePos.size();j++) {
     			if(isConnectable(ballPos.get(i), modulePos.get(j))) {
-    				connections.add(new Connection(ballPos.get(i).getName(),modulePos.get(j).getName()));
+    				connections.add(new ModuleConnection(ballPos.get(i).getName(),modulePos.get(j).getName()));
     			}
     		}
     	}

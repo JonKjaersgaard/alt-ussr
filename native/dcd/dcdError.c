@@ -12,17 +12,17 @@ void report_error(USSRONLYC(USSREnv *env) char error_number, unsigned char argum
 #else 
   while(1) {
     setNorthIOPort(error_number);
-    delay(250);
+    delay(USSRONLYC(env) 250);
     setNorthIOPort(0);
-    delay(100);
+    delay(USSRONLYC(env) 100);
     setNorthIOPort(error_number);
-    delay(250);
+    delay(USSRONLYC(env) 250);
     setNorthIOPort(0);
-    delay(100);
+    delay(USSRONLYC(env) 100);
     setNorthIOPort(argument);
-    delay(250);
+    delay(USSRONLYC(env) 250);
     setNorthIOPort(0);
-    delay(100);
+    delay(USSRONLYC(env) 100);
   }
 #endif /* USSR */
 }

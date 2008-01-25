@@ -7,8 +7,6 @@ package ussr.model;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import ussr.comm.Receiver;
@@ -17,11 +15,14 @@ import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsModuleComponent;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsSimulationHelper;
+import ussr.robotbuildingblocks.RotationDescription;
+import ussr.robotbuildingblocks.VectorDescription;
 
 /**
  * A module is the basic unit from which the modular robot is built.  Specifically,
  * each module is associated with a controller, and is thus the unit of autonomous
- * behavior.
+ * behavior.  This class represents an abstraction of a module that is physics engine
+ * independent.
  * 
  * @author ups
  *
@@ -58,10 +59,13 @@ public class Module extends Entity {
     private int uniqueID;
 
     /**
-     * Transmitters for the module
+     * Communication transmitters for the module
      */
     private List<Transmitter> transmitters = new ArrayList<Transmitter>();
 
+    /**
+     * Communication receivers for the module
+     */
     private List<Receiver> receivers = new ArrayList<Receiver>();
     
     /**
@@ -174,22 +178,73 @@ public class Module extends Entity {
      */
     private static int idCounter = 0;
 
+    /**
+     * Set the color of the module by assigning the color to every physics component of the module
+     * @param color the color to assign to the module
+     */
     public void setColor(Color color) {
-        for(PhysicsModuleComponent module: physics) module.setModuleColor(color);
+        for(PhysicsModuleComponent module: physics) module.setModuleComponentColor(color);
     }
 
+    /**
+     * Set the color of a physics component of the module
+     * @param color the color to assign to the physics component
+     */
+    public void setColor(Color color, int index) {
+    	physics.get(index).setModuleComponentColor(color);
+    }
+    
+    /**
+     * Get the color of the module as a list of the color of its physics components
+     * @return a list of colors
+     */
+    public List<Color> getColorList() {
+    	List<Color> colors = new ArrayList<Color>();
+        for(PhysicsModuleComponent component: physics) {
+        	colors.add(component.getModuleComponentColor());
+        }
+        return colors;
+    }
+    /**
+     * Set a list of color as the color of the modules physics components
+     * @param colors list of colors
+     */
+    public void setColorList(List<Color> colors) {
+    	int index = 0;
+    	for(PhysicsModuleComponent component: physics) {
+        	component.setModuleComponentColor(colors.get(index));
+        	index++;
+        }
+    }
+
+    /**
+     * Obtain a list of communication transmitters in the module
+     * @return communication transmitters in the module
+     */
     public List<Transmitter> getTransmitters() {
         return transmitters;
     }
 
+    /**
+     * Add a communication transmitter to the module
+     * @param transmitter the transmitter to add
+     */
     public void addTransmissionDevice(Transmitter transmitter) {
         transmitters.add(transmitter);        
     }
 
+    /**
+     * Add a communication receiver to the module
+     * @param receiver the receiver to add
+     */
     public void addReceivingDevice(Receiver receiver) {
         receivers.add(receiver);
     }
     
+    /**
+     * Obtain a reference to the physics simulation in which the module is situated 
+     * @return the physics simulation of the module
+     */
     public PhysicsSimulation getSimulation() {
         return physics.get(0).getSimulation(); // All modules are in the same simulation
     }
@@ -209,4 +264,44 @@ public class Module extends Entity {
     public void addComponent(PhysicsModuleComponent physicsModule) {
         physics.add(physicsModule);        
     }
+
+	public PhysicsModuleComponent getComponent(int index) {
+		return physics.get(index);
+	}
+
+	public void reset() {
+		List<? extends PhysicsEntity> components = getPhysics();
+		for(PhysicsEntity pe: components)
+            pe.reset();
+		
+		for(Connector c: getConnectors())
+            c.reset();
+		
+		for(Actuator a: getActuators())
+            a.reset();
+		
+		for(Sensor s: getSensors())
+            s.reset();
+	}
+
+	public void setPosition(VectorDescription position) {
+		List<? extends PhysicsEntity> components = getPhysics();
+		for(PhysicsEntity c1: components) {
+			c1.setPosition(position);
+        }
+	}
+	
+	public void setRotation(RotationDescription rotation) {
+		List<? extends PhysicsEntity> components = getPhysics();
+		for(PhysicsEntity c1: components) {
+			c1.setRotation(rotation);
+        }
+	}
+
+	public void clearDynamics() {
+		List<? extends PhysicsEntity> components = getPhysics();
+		for(PhysicsEntity c1: components) {
+			c1.clearDynamics();
+        }
+	}
 }

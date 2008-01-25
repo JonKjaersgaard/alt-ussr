@@ -4,11 +4,16 @@ import java.util.ArrayList;
 /* Essentially a stripped down car */
 
 import ussr.model.Controller;
+import ussr.robotbuildingblocks.ModulePosition;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
-import ussr.robotbuildingblocks.WorldDescription.ModulePosition;
 
+/**
+ * A simulation for a two-wheeler ATRON robot
+ * @author Modular Robots @ MMMI
+ *
+ */
 public class ATRONSimpleVehicleSimulation extends GenericATRONSimulation {
 	
 	public static enum ObstacleType { NONE, LINE, CIRCLE }
@@ -33,9 +38,9 @@ public class ATRONSimpleVehicleSimulation extends GenericATRONSimulation {
     	//mPos.add(new WorldDescription.ModulePosition("driver0", new VectorDescription(2*0*unit,0*unit-Yoffset,0*unit), rotation_EW));
     	//mPos.add(new WorldDescription.ModulePosition("FrontAxle", new VectorDescription(1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
     	//mPos.add(new WorldDescription.ModulePosition("RearAxle", new VectorDescription(-1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
-    	mPos.add(new WorldDescription.ModulePosition("driver0", new VectorDescription(-2*unit,-2*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new WorldDescription.ModulePosition("RearRightWheel", new VectorDescription(-1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
-    	mPos.add(new WorldDescription.ModulePosition("RearLeftWheel", new VectorDescription(-1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
+    	mPos.add(new ModulePosition("driver0", new VectorDescription(-2*unit,-2*unit-Yoffset,0*unit), rotation_EW));
+    	mPos.add(new ModulePosition("RearRightWheel", new VectorDescription(-1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
+    	mPos.add(new ModulePosition("RearLeftWheel", new VectorDescription(-1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
     	//mPos.add(new WorldDescription.ModulePosition("FrontRightWheel", new VectorDescription(1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
     	//mPos.add(new WorldDescription.ModulePosition("FrontLeftWheel", new VectorDescription(1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
         return mPos;

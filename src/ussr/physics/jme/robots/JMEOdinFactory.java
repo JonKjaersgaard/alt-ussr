@@ -8,12 +8,14 @@ import ussr.comm.TransmissionType;
 import ussr.model.Actuator;
 import ussr.model.Module;
 import ussr.model.Sensor;
+import ussr.physics.ModuleFactory;
+import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEGeometryHelper;
-import ussr.physics.jme.JMELinearActuator;
 import ussr.physics.jme.JMEModuleComponent;
-import ussr.physics.jme.JMERotationalActuator;
 import ussr.physics.jme.JMESimulation;
-import ussr.physics.jme.JMETiltSensor;
+import ussr.physics.jme.actuators.JMELinearActuator;
+import ussr.physics.jme.actuators.JMERotationalActuator;
+import ussr.physics.jme.sensors.JMETiltSensor;
 import ussr.robotbuildingblocks.ConeShape;
 import ussr.robotbuildingblocks.CylinderShape;
 import ussr.robotbuildingblocks.GeometryDescription;
@@ -21,7 +23,14 @@ import ussr.robotbuildingblocks.ReceivingDevice;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.TransmissionDevice;
 
-public class JMEOdinFactory implements JMEModuleFactory {
+/**
+ * Factory for creating ODIN modules; the robot argument is used to designate the specific
+ * module to create.
+ * 
+ * @author Modular Robots @ MMMI
+ *
+ */
+public class JMEOdinFactory implements ModuleFactory {
     private JMESimulation simulation;
     
     public void createModule(int module_id, Module module, Robot robot, String module_name) {
@@ -296,8 +305,8 @@ public class JMEOdinFactory implements JMEModuleFactory {
         externalNode.setMass(0.025f); //50 grams in total?
         internalNode.setMass(0.025f);
     }
-    public void setSimulation(JMESimulation simulation) {
-        this.simulation = simulation;
+    public void setSimulation(PhysicsSimulation simulation) {
+        this.simulation = (JMESimulation)simulation;
     }
 
 }

@@ -124,10 +124,10 @@ public class PhysicsPicker {
     private final Vector3f pickedWorldOffset = new Vector3f();
 
     private void attach( DynamicPhysicsNode node ) {
+    	System.out.println("Clicked on "+node.getName());
         DisplaySystem.getDisplaySystem().getScreenCoordinates( node.getWorldTranslation(), pickedScreenPos );
         DisplaySystem.getDisplaySystem().getWorldCoordinates( mousePosition, pickedScreenPos.z, pickedWorldOffset );
         pickedWorldOffset.subtractLocal( node.getWorldTranslation() );
-
         picked = node;
         myNode.getLocalTranslation().set( node.getWorldTranslation() );
         myNode.setActive( true );

@@ -14,7 +14,7 @@ import com.jme.util.LoggingSystem;
  * 
  * TODO: extend with a concept of a logging level
  * 
- * @author ups
+ * @author Modular Robots @ MMMI
  *
  */
 public class PhysicsLogger {
@@ -44,10 +44,19 @@ public class PhysicsLogger {
         LoggingSystem.getLogger().setLevel( Level.WARNING );
     }
 
+    /**
+     * Display information (not errors) about the running simulation 
+     * @param string the information to display
+     */
     public static void displayInfo(String string) {
         if(displayInfo) System.out.println("INFO: "+string);
     }
     
+    /**
+     * Select whether or not to display information about the running simulation
+     * @param display true if information should be displayed, false otherwise
+     * @see #displayInfo
+     */
     public static void setDisplayInfo(boolean display) {
         displayInfo = display;
     }

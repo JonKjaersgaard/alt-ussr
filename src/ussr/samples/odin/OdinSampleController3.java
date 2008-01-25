@@ -5,13 +5,10 @@
  */
 package ussr.samples.odin;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.Random;
-import java.util.zip.ZipInputStream;
 
-import ussr.home.davidc.onlineLearning.tools.RNN;
-import ussr.home.davidc.onlineLearning.tools.RNNPSOTrainer;
+import onlineLearning.tools.RNN;
+import onlineLearning.tools.RNNPSOTrainer;
 
 import com.jme.math.Vector3f;
 

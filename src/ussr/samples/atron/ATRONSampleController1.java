@@ -13,10 +13,9 @@ import ussr.comm.Transmitter;
 import ussr.samples.GenericSimulation;
 
 /**
- * A simple controller for the ATRON, controlling connector stickiness based on
- * user-controlled state stored in the main simulator
+ * A sample controller for the ATRON
  * 
- * @author ups
+ * @author Modular Robots @ MMMI
  *
  */
 public class ATRONSampleController1 extends ATRONController {
@@ -31,6 +30,7 @@ public class ATRONSampleController1 extends ATRONController {
         		String name = module.getProperty("name");
     			float time = module.getSimulation().getTime();
         		//rotate((float)(Math.sin(time)+1)/2f);
+    			if(name=="hermit") this.rotateToDegreeInDegrees(45);
     			if(name=="wheel1") rotateContinuous(1);
     			if(name=="wheel2") rotateContinuous(-1);
     			if(name=="wheel3") rotateContinuous(1);

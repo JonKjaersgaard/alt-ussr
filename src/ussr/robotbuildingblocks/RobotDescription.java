@@ -17,19 +17,34 @@ import ussr.comm.Transmitter;
  * of the core, the shape of a connector, and the positions of the connectors and
  * their range.
  *
- * @author ups
+ * @author Modular Robots @ MMMI
  *
  */
 
 public class RobotDescription extends Description {
     
+    /**
+     * The connector type used on the robot
+     * 
+     * TODO: support multiple connector types if the need every arises
+     * 
+     * @author Modular Robots @ MMMI
+     */
     public static enum ConnectorType {
         MAGNETIC_CONNECTOR,
         MECHANICAL_CONNECTOR_RIGID,
+        MECHANICAL_CONNECTOR_HINGE,
         MECHANICAL_CONNECTOR_BALL_SOCKET,
         NONE
     }
 	
+    /**
+     * Abstract description of how the robot is assembled
+     * 
+     * TODO: not currently used, remove?
+     * 
+     * @author Modular Robots @ MMMI
+     */
     public static enum PhysicsCompositionStructure {
         COMPONENT,
         MODULE,

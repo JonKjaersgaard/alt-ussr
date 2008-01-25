@@ -46,6 +46,7 @@ public class Connector extends Entity {
         return physics.hasProximateConnector();
     }
     
+  
     /**
      * Returns true if this connector is connected to another connector, false otherwise
      * @return whether the connector is connected
@@ -59,8 +60,8 @@ public class Connector extends Entity {
      * proximity
      * @param other the connector to connect to
      */
-    public boolean connect() {
-        return physics.connect();
+    public void connect() {
+        physics.connect();
     }
     
     /**
@@ -82,5 +83,9 @@ public class Connector extends Entity {
 
 	public void setColor(Color color) {
 		physics.setConnectorColor(color);
+	}
+	
+	public void reset() {
+		physics.reset();
 	}
 }

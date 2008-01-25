@@ -8,8 +8,6 @@
  */
 package ussr.model;
 
-import ussr.comm.Receiver;
-
 /**
  * Abstract class providing a default implementation of the Controller interface.
  * The class maintain a reference to the module and provides a convenience "wait
@@ -18,12 +16,21 @@ import ussr.comm.Receiver;
  * @author ups
  *
  */
+
 public abstract class ControllerImpl implements Controller {
 
     /**
      * Reference to the module controlled by this controller 
      */
     protected Module module;
+    
+    
+    /**
+     * Reference to the remoteControllerConnection  
+     */
+    protected RemoteControllerConnection remoteControllerConnection;
+    
+    
     
     /** 
      * @see ussr.model.Controller#activate()
@@ -56,15 +63,27 @@ public abstract class ControllerImpl implements Controller {
             }
         }
     }
+    
+    /**
+     * Wait for a given amount of time, in terms of the simulation.  Yields the
+     * current thread of control using {@link #ussrYield()} while busy-waiting.
+     * @param ms amount of time to wait, in simulation milliseconds
+     */
     protected void delay(long ms) {
     	float stopTime = module.getSimulation().getTime()+ms/1000f;
     	while(stopTime>module.getSimulation().getTime()) {
     		ussrYield();
     	}
 	}
-    
+
+    /**
+     * Yield the control to some other thread, or pause if the simulation is paused.
+     * Yielding is done by waiting for the simulator to take a physics step.
+     */
     public void ussrYield() {
     	while(module.getSimulation().isPaused()) Thread.yield();
     	module.getSimulation().waitForPhysicsStep(false);	
 	}
+
+
 }

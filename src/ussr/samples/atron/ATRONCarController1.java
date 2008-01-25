@@ -19,10 +19,9 @@ import ussr.physics.jme.JMEModuleComponent;
 import ussr.samples.GenericSimulation;
 
 /**
- * A simple controller for the ATRON, controlling connector stickiness based on
- * user-controlled state stored in the main simulator
+ * A simple controller for an ATRON car that reports data from the proximity sensors
  * 
- * @author ups
+ * @author Modular Robots @ MMMI
  *
  */
 public class ATRONCarController1 extends ATRONController {
@@ -31,6 +30,7 @@ public class ATRONCarController1 extends ATRONController {
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
+    	ussrYield();
         byte lastew = -127, lastns = -127;
         byte dir = 1;
         float lastProx = Float.NEGATIVE_INFINITY;
@@ -38,14 +38,16 @@ public class ATRONCarController1 extends ATRONController {
         while(true) {
         	if(!module.getSimulation().isPaused()) {
         		String name = module.getProperty("name");
-    			if(name=="wheel1") rotateContinuous(dir);
-    			if(name=="wheel2") rotateContinuous(-dir);
-    			if(name=="wheel3") rotateContinuous(dir);
-    			if(name=="wheel4") rotateContinuous(-dir);
-                if(name=="axleOne5" && firstTime) {
+        		if(firstTime) {
                     firstTime = false;
-                    this.rotateDegrees(10);
-                }
+        		    if(name=="wheel1") rotateContinuous(dir);
+        		    if(name=="wheel2") rotateContinuous(-dir);
+        		    if(name=="wheel3") rotateContinuous(dir);
+        		    if(name=="wheel4") rotateContinuous(-dir);
+        		    if(name=="axleOne5" && firstTime) {
+        		        this.rotateDegrees(10);
+        		    }
+        		}
     			if(!GenericSimulation.getConnectorsAreActive()) {
     				disconnectAll();
     			}
@@ -70,7 +72,7 @@ public class ATRONCarController1 extends ATRONController {
                     lastns = this.getTiltX();
                 }*/
         	}
-        	Thread.yield();
+        	ussrYield();
         }
     }
 }

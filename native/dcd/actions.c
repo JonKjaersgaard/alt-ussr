@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 #ifdef USSR
-int vm_trace_flags = TRACE_ACTUATION|TRACE_EVENTS;
+int vm_trace_flags = 0; /*TRACE_ACTUATION|TRACE_CACHE|TRACE_EVENTS|TRACE_MIGRATION|TRACE_COMMANDS;*/
 #endif
 
 #define SIZE_program_findWheels 24
@@ -211,19 +211,21 @@ static void arm_action(USSRONLY(USSREnv *env)) {
   printf("################################\n");
   printf("##ARM ACTION DCD CONTROLLER ###\n");
   printf("################################\n");
-  delay(100);
+  delay(USSRONLYC(env) 100);
   USSRONLY(printf("*** Sending programs\n"));
   for(channel=0; channel<8; channel++) {
     sendProgramMaybe(USSRONLYC(env) &context, channel, program_findArm, SIZE_program_findArm);
   }
   USSRONLY(printf("*** Waiting\n"));
-  delay(500);
+  delay(USSRONLYC(env) 500);
   USSRONLY(printf("*** Sending commands (would be better to schedule...)\n"));
   context.program_id++;
   for(channel=0; channel<8; channel++) {
     sendCommandMaybe(USSRONLYC(env) &context, channel, ROLE_FINGER, CMD_ROTATE_COUNTERCLOCKWISE, 0, 0, context.program_id);
   }
 }
+
+#define WAITTIME 1000
 
 /* Currently assumes phy_ch==vir_ch for starting module */
 static void car_action(USSRONLY(USSREnv *env)) {
@@ -232,14 +234,14 @@ static void car_action(USSRONLY(USSREnv *env)) {
   printf("################################\n");
   printf("## CAR ACTION DCD CONTROLLER ###\n");
   printf("################################\n");
-  delay(100);
+  delay(USSRONLYC(env) WAITTIME);
   /* Discover wheels */
   USSRONLY(printf("*** Sending wheel discovery programs\n"));
   for(channel=0; channel<8; channel++) {
     sendProgramMaybe(USSRONLYC(env) &context, channel, program_findWheels, SIZE_program_findWheels);
   }
   USSRONLY(printf("*** Waiting\n"));
-  delay(100);
+  delay(USSRONLYC(env) WAITTIME);
   /* Install left stop commands */
   USSRONLY(printf("*** Sending left stop command install programs\n"));
   context.program_id++;
@@ -247,7 +249,7 @@ static void car_action(USSRONLY(USSREnv *env)) {
     sendProgramMaybe(USSRONLYC(env) &context, channel, program_installStopLeft, SIZE_program_installStopLeft);
   }
   USSRONLY(printf("*** Waiting\n"));
-  delay(100);
+  delay(USSRONLYC(env) WAITTIME);
   /* Install right stop commands */
   USSRONLY(printf("*** Sending right stop command install programs\n"));
   context.program_id++;
@@ -255,7 +257,7 @@ static void car_action(USSRONLY(USSREnv *env)) {
     sendProgramMaybe(USSRONLYC(env) &context, channel, program_installStopRight, SIZE_program_installStopRight);
   }
   USSRONLY(printf("*** Waiting\n"));
-  delay(100);
+  delay(USSRONLYC(env) WAITTIME);
   /* Discover axles */
   USSRONLY(printf("*** Sending axle discovery programs\n"));
   context.program_id++;
@@ -263,7 +265,7 @@ static void car_action(USSRONLY(USSREnv *env)) {
     sendProgramMaybe(USSRONLYC(env) &context, channel, program_findAxles, SIZE_program_findAxles);
   }
   USSRONLY(printf("*** Waiting\n"));
-  delay(100);
+  delay(USSRONLYC(env) WAITTIME);
   /* Make axles behave nicely */
   USSRONLY(printf("*** Sending axle behaviors\n"));
   context.program_id++;
@@ -271,7 +273,7 @@ static void car_action(USSRONLY(USSREnv *env)) {
     sendProgramMaybe(USSRONLYC(env) &context, channel, program_axleBehavior, SIZE_program_axleBehavior);
   }
   USSRONLY(printf("*** Waiting\n"));
-  delay(100);
+  delay(USSRONLYC(env) WAITTIME);
   /* Make wheels turn */
   USSRONLY(printf("*** Sending drive commands (would be better to schedule...)\n"));
   context.program_id++;
@@ -284,7 +286,7 @@ static void car_action(USSRONLY(USSREnv *env)) {
   }
   /* Install event handlers */
   USSRONLY(printf("*** Waiting\n"));
-  delay(100);
+  delay(USSRONLYC(env) WAITTIME);
   USSRONLY(printf("*** Sending event handlers\n"));
   context.program_id++;
   for(channel=0; channel<8; channel++) {

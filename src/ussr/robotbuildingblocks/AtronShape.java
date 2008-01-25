@@ -9,10 +9,11 @@ import java.awt.Color;
 
 
 /**
- * A description of a atron half geometry, currently only includes a radius.
- * TODO: add position and perhaps also other properties
+ * A description of an ATRON half geometry, currently only includes a radius.
  * 
- * @author ups
+ * TODO: Generalize into a CAD model?
+ * 
+ * @author Modualar Robots @ MMMI
  *
  */
 public class AtronShape extends Description implements GeometryDescription {
@@ -21,6 +22,10 @@ public class AtronShape extends Description implements GeometryDescription {
      * The radius of the sphere
      */
     private float radius;
+    
+    /**
+     * Flag indicating what hemisphere the shape is modelling
+     */
     private boolean north;
     
     /** 
@@ -33,11 +38,22 @@ public class AtronShape extends Description implements GeometryDescription {
       */    
      private RotationDescription rotation;
     
-    /**
-     * Create a description of a sphere geometry, passing the radius of the
-     * sphere as a parameter (no other parameters supported currently)
+     /**
+      * Color of atron
+      */
+     private Color color;
+
+     /**
+      * Accurate collision detection or not
+      */
+     private boolean accurateCD = false;
+
+     /**
+     * Create a description of an ATRON hemisphere
      * @param radius the radius of the sphere
-     * @param north 
+     * @param north true if this is the northern hemisphere
+     * @param translation the position
+     * @param rotation the rotation
      */
     public AtronShape(float radius, boolean north, VectorDescription translation, RotationDescription rotation) { 
     	this.radius = radius; 
@@ -47,15 +63,11 @@ public class AtronShape extends Description implements GeometryDescription {
     }
     
     /**
-     * Get the radius of the sphere geometry
+     * Get the radius of the geometry
      * @return the radius
      */
     public float getRadius() { return radius; }
     
-    /**
-     * Color of atron
-     */
-    private Color color;
     public void setColor(Color color) {
         this.color = color;
     }
@@ -63,25 +75,35 @@ public class AtronShape extends Description implements GeometryDescription {
     public Color getColor() {
         return color;
     }
+    
+    /**
+     * Set what hemisphere this shape is modelling
+     * @param north true if northern hemisphere, false if southern
+     */
     public void setNorth(boolean north) {
     	this.north = north;
     }
+    
+    /**
+     * Get what hemispshere this shape is modelling
+     * @return true if northen hemisphere, false if southern
+     */
     public boolean isNorth() {
     	return north;
     }
+    
     public VectorDescription getTranslation() { return translation; }
     public RotationDescription getRotation() { return rotation; }
     
-    private boolean accurateCD = false;
     /**
-     * get wether or not to use accurate triangle based collision detection
+     * Get whether or not to use accurate triangle based collision detection
      */
 	public boolean getAccurateCollisionDetection() {
 		return accurateCD;
 	}
 
 	/**
-     * set wether or not to use accurate triangle based collision detection
+     * Set whether or not to use accurate triangle based collision detection
      */
 	public void setAccurateCollisionDetection(boolean accurateCD) {
 		this.accurateCD = accurateCD;

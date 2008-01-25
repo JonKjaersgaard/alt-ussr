@@ -5,11 +5,15 @@
  */
 package ussr.robotbuildingblocks;
 
+import com.jme.math.Vector3f;
+
 /**
- * A description of a vector.  Can be used for describing relative positions within
+ * A physics-engine independent description of a vector.  Can be used for describing relative positions within
  * a robot.
  * 
- * @author ups
+ * TODO: make it physics engine independent :-)
+ * 
+ * @author Modular Robots @ MMMI
  *
  */
 public class VectorDescription extends Description {
@@ -27,6 +31,10 @@ public class VectorDescription extends Description {
      */
     public VectorDescription(float x, float y, float z) {
         this.x = x; this.y = y; this.z = z;
+    }
+    
+    public VectorDescription(Vector3f pos) {
+    	this.x = pos.x; this.y = pos.y; this.z = pos.z;
     }
     
     /**
@@ -68,5 +76,9 @@ public class VectorDescription extends Description {
 	}
 	public String toString() {
 		return "("+x+", "+y+", "+z+")";
+	}
+
+	public void set(float x, float y, float z) {
+		this.x = x; this.y = y; this.z = z;	
 	}
 }

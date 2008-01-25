@@ -8,10 +8,9 @@ package ussr.robotbuildingblocks;
 import java.awt.Color;
 
 /**
- * A description of a sphere geometry, currently only includes a radius.
- * TODO: add position and perhaps also other properties
+ * A description of a sphere geometry, for building a robot
  * 
- * @author ups
+ * @author Modular Robots @ MMMI
  *
  */
 public class SphereShape extends Description implements GeometryDescription {
@@ -36,6 +35,8 @@ public class SphereShape extends Description implements GeometryDescription {
      */
     private Color color;
     
+    private boolean accurateCD = false;
+
     /**
      * Create a description of a sphere geometry, passing the radius of the
      * sphere as a parameter (no other parameters supported currently)
@@ -83,8 +84,6 @@ public class SphereShape extends Description implements GeometryDescription {
         return color;
     }
 
-
-    private boolean accurateCD = false;
     /**
      * get wether or not to use accurate triangle based collision detection
      */

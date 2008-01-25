@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import ussr.model.Controller;
+import ussr.robotbuildingblocks.ModulePosition;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
-import ussr.robotbuildingblocks.WorldDescription;
-import ussr.robotbuildingblocks.WorldDescription.ModulePosition;
 
+/**
+ * A sample simulation based on the ATRON robot
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public class ATRONRoleSimulation extends GenericATRONSimulation {
 	
 	
@@ -51,7 +55,7 @@ public class ATRONRoleSimulation extends GenericATRONSimulation {
     			rot = rotation_NS;
     		}
 			if(pos!=null&&(index==0||isConnectable(new ModulePosition("",pos,rot),mPos)&&empty(pos,mPos))) {
-	        	mPos.add(new WorldDescription.ModulePosition(Integer.toString(index), pos, rot));
+	        	mPos.add(new ModulePosition(Integer.toString(index), pos, rot));
 	    		index++;
 			}
         }

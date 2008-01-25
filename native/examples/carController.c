@@ -7,10 +7,11 @@
 #define ROLE_WHEEL3 3
 #define ROLE_WHEEL4 4
 
-//int initialize(USSREnv *env) { return 0; }
+#ifdef USSR
 int initialize(USSREnv *env) {return 0;}
+#endif
 
-void activate(USSREnv *env) {
+void activate(USSRONLY(USSREnv *env)) {
   int role;
   while(1) {
     controllerIterationSimulatorHook(USSRONLY(env),0); /* Thread.yield(), if(paused) wait, kør Java kode vha. hook eller lignende */

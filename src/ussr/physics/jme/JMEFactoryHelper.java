@@ -6,20 +6,26 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import ussr.model.Module;
+import ussr.physics.ModuleFactory;
 import ussr.physics.PhysicsLogger;
-import ussr.physics.jme.robots.JMEModuleFactory;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.Robot;
 
 import com.jmex.physics.DynamicPhysicsNode;
 
+/**
+ * Helper class for JMESimulation, responsible for creating modules in the simulation
+ * using the module factories.
+ * 
+ * @author Modular Robots @ MMMI 
+ */
 public class JMEFactoryHelper {
     private JMESimulation simulation;
-    private Map<String,JMEModuleFactory> factories;
+    private Map<String,ModuleFactory> factories;
     
-    public JMEFactoryHelper(JMESimulation simulation, JMEModuleFactory[] factories_list) {
+    public JMEFactoryHelper(JMESimulation simulation, ModuleFactory[] factories_list) {
         this.simulation = simulation;
-        factories = new HashMap<String,JMEModuleFactory>();
+        factories = new HashMap<String,ModuleFactory>();
         for(int i=0; i<factories_list.length; i++) {
             factories.put(factories_list[i].getModulePrefix(),factories_list[i]);
             factories_list[i].setSimulation(simulation);
@@ -28,7 +34,7 @@ public class JMEFactoryHelper {
     public void createModule(int module_id, final Module module, Robot robot, String module_name) {
         if(robot.getDescription()==null) throw new Error("Internal error: robot description is null, robot type "+robot);
         String module_type = robot.getDescription().getType();
-        JMEModuleFactory factory = null;
+        ModuleFactory factory = null;
         // Find a matching factory
         for(String prefix: factories.keySet())
             if(module_type.startsWith(prefix)) {

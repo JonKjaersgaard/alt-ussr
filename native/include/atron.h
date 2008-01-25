@@ -19,8 +19,15 @@ unsigned char getJointPosition(USSRONLY(USSREnv *env));
 void centerBrake(USSRONLY(USSREnv *env));
 void centerStop(USSRONLY(USSREnv *env));
 unsigned char isObjectNearby(USSRONLYC(USSREnv *env) unsigned char connector);
-
-void delay(int amount);
+void setup(USSRONLY(USSREnv *env));
+void home(USSRONLY(USSREnv *env));
+char disconnect(USSRONLYC(USSREnv *env) unsigned char connector);
+char isConnected(USSRONLYC(USSREnv *env) unsigned char connector);
+char isDisconnected(USSRONLYC(USSREnv *env) unsigned char connector);
+char isRotating(USSRONLY(USSREnv *env));
+char setNorthIOPort(USSRONLYC(USSREnv *env) unsigned char ledbits);
+char _connect(USSRONLYC(USSREnv *env) unsigned char connector);
+void delay(USSRONLYC(USSREnv *env) int amount);
 
 #else
 

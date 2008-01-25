@@ -44,7 +44,31 @@ public abstract class Entity {
     public synchronized void setProperty(String key, String value) {
         if(properties==null) properties = new HashMap<String,String>();
         properties.put(key, value);
+        synchronized(properties) {
+        	properties.notifyAll();
+        }
     }
     
+    /**
+     * Wait (by blocking the thread) for a given property to be set on this entity 
+     * @param name the name of the property to wait for
+     */
+    public void waitForPropertyToExist(String name) {
+    	synchronized(this) {
+    		if(properties==null) properties = new HashMap<String,String>();
+    	}
+    	synchronized(properties) {
+    		try {
+    			while(properties.get(name)==null) properties.wait();
+    		} catch(InterruptedException exn) {
+    			throw new Error("Unexpected interruption");
+    		}
+    	}
+    }
+    
+    /**
+     * Get the physics entities representing this entity
+     * @return the physics entities
+     */
     public abstract List<? extends PhysicsEntity> getPhysics();
 }

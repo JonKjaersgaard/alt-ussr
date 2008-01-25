@@ -12,12 +12,12 @@ import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsSimulation;
+import ussr.robotbuildingblocks.ModuleConnection;
+import ussr.robotbuildingblocks.ModulePosition;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
-import ussr.robotbuildingblocks.WorldDescription.Connection;
-import ussr.robotbuildingblocks.WorldDescription.ModulePosition;
 import ussr.samples.GenericSimulation;
 
 /**
@@ -27,11 +27,11 @@ import ussr.samples.GenericSimulation;
  *
  */
 public abstract class MTRANSimulation extends GenericSimulation implements PhysicsObserver {
-	private static float unit = (float)Math.sqrt((0.18f*0.18f)/2);
+	private static float unit = 0.04f;//(float)Math.sqrt((0.18f*0.18f)/2);
 	private static float pi = (float)Math.PI;
     public static PhysicsSimulation simulation;
     
-    private static ArrayList<WorldDescription.ModulePosition> modulePos = new ArrayList<WorldDescription.ModulePosition>();
+    private static ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
     private static int constructIndex=0;
     private static boolean printContrutionProgram = true;
     
@@ -51,7 +51,8 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
         simulation.start();
     }
 	protected void changeWorldHook(WorldDescription world) {
-		
+		world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+		world.setHasBackgroundScenery(false);
     }
 	/**
      * Create a world description for our simulation
@@ -61,7 +62,7 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
     	WorldDescription world = new WorldDescription();
         world.setPlaneSize(100);
         constructRobot();
-		ArrayList<Connection> connections = allConnections(modulePos);
+		ArrayList<ModuleConnection> connections = allConnections(modulePos);
 		System.out.println("#connection found = "+connections.size());
 		world.setModuleConnections(connections);
 		System.out.println("#Module Placed = "+modulePos.size());
@@ -71,20 +72,22 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
     }
 	private static void constructRobot() {
 		addModule(0,0,0);
+		//addModule(1,0,0);
+		
     }
     private static void addModule(int x, int y, int z) {
     	VectorDescription pos = new VectorDescription(x*unit,y*unit-0.47f,z*unit);
     	//RotationDescription rot = rotFromBalls(ballPos.get(i),ballPos.get(j));
-    	modulePos.add(new WorldDescription.ModulePosition(Integer.toString(constructIndex),"MTRAN", pos, new RotationDescription(0,0,0)));
+    	modulePos.add(new ModulePosition(Integer.toString(constructIndex),"MTRAN", pos, new RotationDescription(pi,0,0)));
     	if(printContrutionProgram) System.out.println("addBall("+x+", "+y+", "+z+");");
     	constructIndex++;
 	}
-	private static ArrayList<Connection> allConnections(ArrayList<ModulePosition> modulePos) {
-    	ArrayList<Connection> connections = new ArrayList<Connection>();
+	private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
+    	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
     	for(int i=0;i<modulePos.size();i++) {
     		for(int j=0;j<modulePos.size();j++) {
     			if(false&&isConnectable(modulePos.get(i), modulePos.get(j))) {
-    				connections.add(new Connection(modulePos.get(i).getName(),modulePos.get(j).getName()));
+    				connections.add(new ModuleConnection(modulePos.get(i).getName(),modulePos.get(j).getName()));
     			}
     		}
     	}

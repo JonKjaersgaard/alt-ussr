@@ -1,10 +1,9 @@
 package ussr.comm;
 
 /**
- * @author ups
- *
- * TODO Write a nice and user-friendly comment here
+ * A type of transmission supported by a given transmission device.
  * 
+ * @author Modular Robots @ MMMI
  */
 
 public enum TransmissionType {

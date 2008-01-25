@@ -6,23 +6,55 @@ package ussr.model;
 import ussr.physics.PhysicsEntity;
 
 /**
- * @author david
- *
+ * A physics engine representation of an actuator: can actuate two module components 
+ * relative to each other. Has sensors to sense its state, and embeds its own
+ * controller.
+ * 
+ * @author Modular Robots @ MMMI
  */
 public interface PhysicsActuator extends PhysicsEntity {
 
-	void setModel(Actuator actuator);
+    /**
+     * Set the abstract actuator representation for this physics entity
+     * @param actuator the actuator to associate with this physics entity
+     */
+    void setModel(Actuator actuator);
 
+    /**
+     * Returns true if this actuator is active
+     * @return whether the actuator is active (actuating)
+     */
 	boolean isActive();
 
+    /**
+     * Activate this actuator - to go for a particular goal value
+     * 
+     * @return whether the actuator were activated
+     */
 	boolean activate(float goalValue);
 
+	/**
+     * Set the threshold for the precision of the actuator
+     * Note that too low a threshold will case the actuator newer to converge 
+     * 
+     * @param maxError the error threshold
+     */
+	void setErrorThreshold(float maxError);
+    /**
+     * Stop the actuator
+     *
+     */
 	void disactivate();
 
+	/**
+	 * Reset the simulated actuator to its initial configuration 
+	 */
 	void reset();
 
+    /**
+     * Get the encoder value of this actuator
+     * @return the encode value
+     */
 	float getEncoderValue();
-
-    void poke();
 
 }

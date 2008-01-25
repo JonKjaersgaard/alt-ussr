@@ -34,6 +34,7 @@
 #define TRACE_INTERPRET        64
 #define TRACE_WARNINGS        128
 #define TRACE_ACTUATION       256
+#define TRACE_CACHE           512
 
 #define USSRDEBUG(flags,command) if(vm_trace_flags&(flags)) command
 

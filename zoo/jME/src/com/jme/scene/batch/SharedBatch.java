@@ -90,6 +90,7 @@ public class SharedBatch extends TriangleBatch {
     
     public SharedBatch(TriangleBatch target) {
         this();
+       
         if((target.getType() & SceneElement.SHAREDBATCH) != 0) {
             setTarget(((SharedBatch)target).getTarget());
         } else {
@@ -459,6 +460,7 @@ public class SharedBatch extends TriangleBatch {
 	}
 
     public void updateCollisionTree(boolean doSort) {
+    	System.out.println("Nu går det galt "+updatesCollisionTree+" for "+toString());
         if (updatesCollisionTree)
             target.updateCollisionTree(doSort);
     }

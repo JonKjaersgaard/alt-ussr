@@ -11,12 +11,12 @@ import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
+import ussr.robotbuildingblocks.ModuleConnection;
+import ussr.robotbuildingblocks.ModulePosition;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
-import ussr.robotbuildingblocks.WorldDescription.Connection;
-import ussr.robotbuildingblocks.WorldDescription.ModulePosition;
 import ussr.samples.GenericSimulation;
 
 /**
@@ -60,8 +60,8 @@ public class OdinSimulation1 extends GenericSimulation {
     private static WorldDescription createWorld() {
     	WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
-        ArrayList<WorldDescription.ModulePosition> ballPos = new ArrayList<WorldDescription.ModulePosition>();
-        ArrayList<WorldDescription.ModulePosition> modulePos = new ArrayList<WorldDescription.ModulePosition>();
+        ArrayList<ModulePosition> ballPos = new ArrayList<ModulePosition>();
+        ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
         //printConnectorPos();
         int index=0;
         //int nBalls=0,xMax=0, yMax=0,zMax=0; modulePos.add(new WorldDescription.ModulePosition("0","OdinMuscle", new VectorDescription(0,0,0), new RotationDescription(0,0,0)));
@@ -77,7 +77,7 @@ public class OdinSimulation1 extends GenericSimulation {
         			if((x+y+z)%2==0) {
         				VectorDescription pos = new VectorDescription(x*unit,y*unit,z*unit);
         				if(index<nBalls) {
-       						ballPos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
+       						ballPos.add(new ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
         				}
     	        		index++;
         			}
@@ -89,13 +89,13 @@ public class OdinSimulation1 extends GenericSimulation {
         		if(isNeighorBalls(ballPos.get(i),ballPos.get(j))) {
         			VectorDescription pos = posFromBalls(ballPos.get(i),ballPos.get(j));
         			RotationDescription rot = rotFromBalls(ballPos.get(i),ballPos.get(j));
-        			modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinMuscle", pos, rot));
+        			modulePos.add(new ModulePosition(Integer.toString(index),"OdinMuscle", pos, rot));
         			index++;
         			//System.out.println("Ball "+i+" and ball "+j+" are neighbors");
         		}
         	}
         }
-        ArrayList<Connection> connections = allConnections(ballPos,modulePos);
+        ArrayList<ModuleConnection> connections = allConnections(ballPos,modulePos);
         world.setModuleConnections(connections);
         System.out.println("#Balls Placed  = "+ballPos.size());
         System.out.println("#Module Placed = "+modulePos.size());
@@ -108,12 +108,12 @@ public class OdinSimulation1 extends GenericSimulation {
         });*/
         return world;
     }
-    private static ArrayList<Connection> allConnections(ArrayList<ModulePosition> ballPos, ArrayList<ModulePosition> modulePos) {
-    	ArrayList<Connection> connections = new ArrayList<Connection>();
+    private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> ballPos, ArrayList<ModulePosition> modulePos) {
+    	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
     	for(int i=0;i<ballPos.size();i++) {
     		for(int j=0;j<modulePos.size();j++) {
     			if(isConnectable(ballPos.get(i), modulePos.get(j))) {
-    				connections.add(new Connection(ballPos.get(i).getName(),modulePos.get(j).getName()));
+    				connections.add(new ModuleConnection(ballPos.get(i).getName(),modulePos.get(j).getName()));
     			}
     		}
     	}

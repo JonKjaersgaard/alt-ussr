@@ -275,6 +275,16 @@ unsigned char store_program(USSRONLYC(USSREnv *env) ProgramPacket *packet, unsig
   return 0;
 }
 
+#define DCD_PERFECT_CACHE
+#ifdef DCD_PERFECT_CACHE
+#ifndef USSR
+#error "Perfect cache configuration is only available for the simulator"
+#endif
+#include <ussr_internal.h>
+unsigned char fresh_message(USSRONLYC(USSREnv *env) Packet *packet) {
+  return ussr_call_int_controller_method(env, "dcd_perfect_cache", "(IIIII)I", (int)packet->id, (int)packet->x, (int)packet->y, (int)packet->z, (int)packet->r);
+}
+#else
 static inline unsigned char inrange(unsigned char value, unsigned char min, unsigned char max) {
   if(min<max)
     return value>=min && value<max;
@@ -286,7 +296,7 @@ unsigned char fresh_message(USSRONLYC(USSREnv *env) Packet *packet) {
   MessageCache *cache; int index;
   cache = GLOBAL(env,message_cache);
   int limit = GLOBAL(env,message_cache_size);
-  if(packet->x==0 && packet->y==0 && packet->z==0) { USSRDEBUG(TRACE_NETWORK,printf("<X1:packet from this module>")); return 0; }; /* Packet was sent from this module */
+  if(packet->x==0 && packet->y==0 && packet->z==0) { USSRDEBUG(TRACE_CACHE,printf("<%d,X1:packet from this module>\n",env->context)); return 0; }; /* Packet was sent from this module */
   for(index=0; index<limit; index++)
     if(packet->x==cache[index].x && packet->y==cache[index].y && packet->z==cache[index].z && packet->r==cache[index].r) { /* hit */
       while(inrange(packet->id,cache[index].min_id+MESSAGE_CACHE_WINDOW_SIZE,cache[index].min_id+MESSAGE_CACHE_WINDOW_SIZE+MESSAGE_CACHE_FUTURE_SIZE)) {
@@ -295,12 +305,12 @@ unsigned char fresh_message(USSRONLYC(USSREnv *env) Packet *packet) {
 	cache[index].min_id += 1;
       }
       if(inrange(packet->id,cache[index].min_id,cache[index].min_id+MESSAGE_CACHE_WINDOW_SIZE)) {
-	if((1<<packet->id) & cache[index].seen_id) { USSRDEBUG(TRACE_NETWORK,printf("<X2:message seen before>")); return 0; };/* Message we've seen before */
+	if((1<<packet->id) & cache[index].seen_id) { USSRDEBUG(TRACE_CACHE,printf("<%d@%d,X2:message seen before>\n",env->context,index)); return 0; };/* Message we've seen before */
 	cache[index].seen_id |= 1<<packet->id;
-	USSRDEBUG(TRACE_NETWORK,printf("<X3:fresh message known origin>"));
+	USSRDEBUG(TRACE_CACHE,printf("<%d@%d,X3:fresh message known origin>\n",env->context,index));
 	return 1; /* Fresh message from known origin */
       } else {
-	USSRDEBUG(TRACE_NETWORK,printf("<X4:old message>"));
+	USSRDEBUG(TRACE_CACHE,printf("<%d@%d,X4:old message %d: (%d,%d,%d)@%d:min=%d,seen=%d>\n",env->context,index,packet->id,packet->x,packet->y,packet->z,packet->r,cache[index].min_id,cache[index].seen_id));
 	return 0; /* Old message */
       }
     }
@@ -314,9 +324,10 @@ unsigned char fresh_message(USSRONLYC(USSREnv *env) Packet *packet) {
   cache[index].z = packet->z;
   cache[index].r = packet->r;
   cache[index].seen_id = 1<<packet->id;
-  USSRDEBUG(TRACE_NETWORK,printf("<X5:fresh message unknown origin>"));
+  USSRDEBUG(TRACE_CACHE,printf("<%d@%d,X5:fresh message unknown origin>\n",env->context,index));
   return 1;
 }
+#endif
 
 static int checksum(unsigned char *bytes, int max) {
   int sum = 0, index = 0;

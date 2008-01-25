@@ -13,12 +13,12 @@ import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsSimulation;
+import ussr.robotbuildingblocks.ModuleConnection;
+import ussr.robotbuildingblocks.ModulePosition;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
-import ussr.robotbuildingblocks.WorldDescription.Connection;
-import ussr.robotbuildingblocks.WorldDescription.ModulePosition;
 import ussr.samples.GenericSimulation;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONCarController1;
@@ -130,8 +130,8 @@ public class OdinSimulation3 extends GenericSimulation implements PhysicsObserve
     private static WorldDescription createWorld() {
     	WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
-        ArrayList<WorldDescription.ModulePosition> ballPos = new ArrayList<WorldDescription.ModulePosition>();
-        ArrayList<WorldDescription.ModulePosition> modulePos = new ArrayList<WorldDescription.ModulePosition>();
+        ArrayList<ModulePosition> ballPos = new ArrayList<ModulePosition>();
+        ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
         //printConnectorPos();
         int index=0;
         //int nBalls=0,xMax=0, yMax=0,zMax=0; modulePos.add(new WorldDescription.ModulePosition("0","OdinMuscle", new VectorDescription(0,0,0), new RotationDescription(0,0,0)));
@@ -148,7 +148,7 @@ public class OdinSimulation3 extends GenericSimulation implements PhysicsObserve
         			if((x+y+z)%2==0) {
         				VectorDescription pos = new VectorDescription(x*unit,y*unit-0.48f,z*unit);
         				if(index<nBalls) {
-       						ballPos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
+       						ballPos.add(new ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
         				}
     	        		index++;
         			}
@@ -166,7 +166,7 @@ public class OdinSimulation3 extends GenericSimulation implements PhysicsObserve
         				rot.setRotation(rot.getRotation().mult(q));
         				
         			}
-        			modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinHinge", pos, rot));
+        			modulePos.add(new ModulePosition(Integer.toString(index),"OdinHinge", pos, rot));
         			//if(index%2==0) modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinMuscle", pos, rot));
         			//if(index%2==0) modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinBattery", pos, rot));
         			//else modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinWheel", pos, rot));
@@ -175,7 +175,7 @@ public class OdinSimulation3 extends GenericSimulation implements PhysicsObserve
         		}
         	}
         }
-       ArrayList<Connection> connections = allConnections(ballPos,modulePos);
+       ArrayList<ModuleConnection> connections = allConnections(ballPos,modulePos);
        System.out.println("#connection found = "+connections.size());
        world.setModuleConnections(connections);
         System.out.println("#Balls Placed  = "+ballPos.size());
@@ -205,12 +205,12 @@ public class OdinSimulation3 extends GenericSimulation implements PhysicsObserve
         });*/
         return world;
     }
-    private static ArrayList<Connection> allConnections(ArrayList<ModulePosition> ballPos, ArrayList<ModulePosition> modulePos) {
-    	ArrayList<Connection> connections = new ArrayList<Connection>();
+    private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> ballPos, ArrayList<ModulePosition> modulePos) {
+    	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
     	for(int i=0;i<ballPos.size();i++) {
     		for(int j=0;j<modulePos.size();j++) {
     			if(isConnectable(ballPos.get(i), modulePos.get(j))) {
-    				connections.add(new Connection(ballPos.get(i).getName(),modulePos.get(j).getName()));
+    				connections.add(new ModuleConnection(ballPos.get(i).getName(),modulePos.get(j).getName()));
     			}
     		}
     	}

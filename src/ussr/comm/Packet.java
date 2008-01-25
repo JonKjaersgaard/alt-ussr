@@ -6,10 +6,9 @@ package ussr.comm;
 import java.util.Arrays;
 
 /**
- * @author ups
- *
- * TODO Write a nice and user-friendly comment here
+ * A simulated packet, can be transmitted using all types of transmission
  * 
+ * @author Modular Robots @ MMMI
  */
 public class Packet {
     
@@ -23,7 +22,9 @@ public class Packet {
     	for(int i=0;i<data.length;i++) dataCopy[i] = data[i];
         payload = dataCopy;
     }
-
+    public int getByteSize() {
+        return payload.length; 
+    }
     public byte get(int i) {
         return payload[i];
     }

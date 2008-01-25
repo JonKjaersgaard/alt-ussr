@@ -121,12 +121,13 @@ public class OdeJoint extends Joint {
         if ( ode == null || ode instanceof JointBall || ode instanceof JointFixed ) {
             //        float r = 2.0f * dampingCoefficient *
             //                FastMath.sqrt( sprungMass * springConstant );
+        	
             if ( !Float.isNaN( springConstant ) && !Float.isNaN( dampingCoefficient ) ) {
                 float r = dampingCoefficient;
                 float hk = getSpace().getODEJavaWorld().getStepSize() * springConstant;
-
                 setERP( hk / ( hk + r ) );
                 setCFM( 1.0f / ( hk + r ) );
+                
             }
             else {
                 setERP( Float.NaN );
@@ -164,7 +165,7 @@ public class OdeJoint extends Joint {
 
     private void applyCFM() {
         if ( ode != null ) {
-            if ( !Float.isNaN( cfm ) ) {
+        	if ( !Float.isNaN( cfm ) ) {
                 ode.setParam( OdeConstants.dParamCFM, cfm );
             }
             else {

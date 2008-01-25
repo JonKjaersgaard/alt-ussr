@@ -59,7 +59,8 @@ public class RotationalOdeJointAxis extends RotationalJointAxis implements OdeJo
     @Override
     public float getVelocity() {
         if ( delegate != null ) {
-            return delegate.getPosition();
+        	//FIXME JME bug fixed by david c - try upgrading
+            return delegate.getVelocity();
         }
         else {
             return Float.NaN;

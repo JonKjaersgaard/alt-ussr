@@ -24,6 +24,6 @@ public class MTRANSampleSimulation1 extends MTRANSimulation {
 	}
 
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
-		simulation.setGravity(0.0f);
+		//simulation.setGravity(0.0f);
 	}
 }

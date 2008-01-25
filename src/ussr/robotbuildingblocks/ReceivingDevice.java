@@ -6,10 +6,9 @@ package ussr.robotbuildingblocks;
 import ussr.comm.TransmissionType;
 
 /**
- * @author ups
- *
- * TODO Write a nice and user-friendly comment here
+ * Abstract description of a receiving device
  * 
+ * @author Modular Robots @ MMMI
  */
 public class ReceivingDevice extends Description {
 

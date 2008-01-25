@@ -7,9 +7,6 @@ package ussr.samples.odin;
 
 import java.util.Random;
 
-import ussr.home.davidc.onlineLearning.tools.RNN;
-import ussr.model.ControllerImpl;
-
 /**
  * A simple controller for the ODIN robot, ossilates OdinMuscles with a random start state 
  * 

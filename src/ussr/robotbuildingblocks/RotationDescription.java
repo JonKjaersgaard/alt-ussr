@@ -7,10 +7,11 @@ import com.jme.math.Matrix3f;
 import com.jme.math.Quaternion;
 
 /**
- * @author ups
- *
- * TODO Write a nice and user-friendly comment here
+ * A physics-engine independent representation of a rotation
  * 
+ * TODO: make it physics engine independent :-)
+ * 
+ * @author Modular Robots @ MMMI
  */
 public class RotationDescription {
     private Quaternion rotation = new Quaternion();

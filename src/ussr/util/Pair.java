@@ -7,7 +7,7 @@ package ussr.util;
 
 /**
  * A genericly typed pair with constructor and methods for accessing first and second 
- * projects (elements)
+ * projections (elements)
  * 
  * @author ups
  */

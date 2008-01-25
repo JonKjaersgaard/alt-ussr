@@ -5,6 +5,15 @@ import ussr.model.Module;
 import ussr.physics.PhysicsEntity;
 import ussr.robotbuildingblocks.VectorDescription;
 
+/**
+ * A wired transmitter, is always assumed to be in range once connected.  The current
+ * implementation however simply tests for the range (?)
+ * 
+ * TODO: Implement proper wired connections
+ * 
+ * @author Modular Robots @ MMMI
+ *
+ */
 public class WiredTransmitter extends GenericTransmitter {
 
 	public WiredTransmitter(Module _module, Entity _hardware, TransmissionType _type, float _range) {

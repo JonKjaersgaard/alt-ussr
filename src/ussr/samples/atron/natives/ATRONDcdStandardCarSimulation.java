@@ -5,6 +5,7 @@ package ussr.samples.atron.natives;
 
 import ussr.model.Controller;
 import ussr.robotbuildingblocks.Robot;
+import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONCarSimulation;
 
@@ -17,6 +18,12 @@ import ussr.samples.atron.ATRONCarSimulation;
 public class ATRONDcdStandardCarSimulation extends ATRONCarSimulation {
     public static void main(String argv[]) {
         new ATRONDcdStandardCarSimulation().main();
+    }
+    
+    protected void changeWorldHook(WorldDescription world) {
+        super.changeWorldHook(world);
+        //world.setFlatWorld(false);
+        //world.setPlaneTexture(WorldDescription.MARS_TEXTURE);
     }
     
     @Override
