@@ -3,6 +3,7 @@ package ussr.samples.atron.natives;
 import java.util.ArrayList;
 
 import ussr.model.Controller;
+import ussr.physics.PhysicsParameters;
 import ussr.robotbuildingblocks.ModulePosition;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.VectorDescription;
@@ -16,15 +17,6 @@ public class ATRONDcdLongCarSimulation extends ATRONNativeCarSimulation {
         simulation.main();
     }
 
-    @Override
-    protected Robot getRobot() {
-        return new ATRON() {
-            public Controller createController() {
-                return new ATRONNativeController("dcdController");
-            }
-        };
-    }
-    
     static VectorDescription pos(float x, float y, float z) {
         final float Yoffset = 0.25f;
         return new VectorDescription(x*unit, y*unit-Yoffset, z*unit);

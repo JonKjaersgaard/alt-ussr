@@ -29,12 +29,15 @@ public class ATRONCarSimulation extends GenericATRONSimulation {
 	
 	protected Robot getRobot() {
 
-        return new ATRON() {
+        ATRON robot = new ATRON() {
             public Controller createController() {
                 return new ATRONCarController1();
             }
         };
+        robot.setGentle();
+        return robot;
     }
+	
 	protected ArrayList<ModulePosition> buildCar() {
     	float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();

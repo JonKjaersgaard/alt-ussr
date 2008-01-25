@@ -15,14 +15,14 @@ public class ATRONDcdWideCarSimulation extends ATRONNativeCarSimulation {
         new ATRONDcdWideCarSimulation().main();
     }
 
-    @Override
+    /*@Override
     protected Robot getRobot() {
         return new ATRON() {
             public Controller createController() {
                 return new ATRONNativeController("dcdController");
             }
         };
-    }
+    }*/
     
     protected void simulationHook(PhysicsSimulation simulation) {
         ATRON zuper = new ATRON() {
@@ -63,9 +63,9 @@ public class ATRONDcdWideCarSimulation extends ATRONNativeCarSimulation {
         mPos.add(new ModulePosition("wheel34", pos(1,-2,5), rotation_SN));
         mPos.add(new ModulePosition("wheel35", pos(-3,-2,3), rotation_NS));
         mPos.add(new ModulePosition("wheel36", pos(-3,-2,5), rotation_SN));
-        mPos.add(new ModulePosition("connectOne21", "ATRON:type=super", pos(-1,0,1), rotation_SN));
-        mPos.add(new ModulePosition("connectTwo22", "ATRON:type=super", pos(-1,0,3), rotation_NS));
-        mPos.add(new ModulePosition("connectThree23", "ATRON:type=super", pos(0,0,2), rotation_EW));
+        mPos.add(new ModulePosition("connectOne21", "ATRON super", pos(-1,0,1), rotation_SN));
+        mPos.add(new ModulePosition("connectTwo22", "ATRON super", pos(-1,0,3), rotation_NS));
+        mPos.add(new ModulePosition("connectThree23", "ATRON super", pos(0,0,2), rotation_EW));
         return mPos;
     }
 

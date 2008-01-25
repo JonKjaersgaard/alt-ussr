@@ -31,6 +31,7 @@ public class ATRONCarController1 extends ATRONController {
      */
     public void activate() {
     	ussrYield();
+    	this.delay(1000); /* rotateContinuous seem to fail sometimes if we do not wait at first */
         byte lastew = -127, lastns = -127;
         byte dir = 1;
         float lastProx = Float.NEGATIVE_INFINITY;

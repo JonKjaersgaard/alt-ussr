@@ -22,14 +22,14 @@ public class DcdTwoCarSimulation extends ATRONNativeCarSimulation {
         //world.setPlaneTexture(WorldDescription.MARS_TEXTURE);
     }
 
-    @Override
+/*    @Override
     protected Robot getRobot() {
         return new ATRON() {
             public Controller createController() {
                 return new ATRONNativeController("dcdController");
             }
         };
-    }
+    }*/
     
     protected void simulationHook(PhysicsSimulation simulation) {
         ATRON zuper = new ATRON() {
