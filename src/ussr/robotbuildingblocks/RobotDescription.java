@@ -74,7 +74,7 @@ public class RobotDescription extends Description {
      * The maximal radius from the center of a connector to the center of another connector
      * where the connectors can reach each other (e.g., connect)
      */
-    private float maxConnectionDistance = 0;
+    private float maxConnectionDistance = 0.01f;
 
     private List<TransmissionDevice> transmitters = Collections.emptyList();
     private List<ReceivingDevice> receivers = Collections.emptyList();
