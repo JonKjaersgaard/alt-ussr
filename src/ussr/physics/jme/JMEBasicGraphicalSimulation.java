@@ -563,7 +563,14 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
              * startup box.
              */
             display = DisplaySystem.getDisplaySystem( properties.getRenderer() );
-            LoggingSystem.getLogger().log( Level.INFO, "Running on: "+display.getAdapter()+"\nDriver version: "+display.getDriverVersion());
+            try {
+                String displayInfo = display.getAdapter();
+                LoggingSystem.getLogger().log( Level.INFO, "Running on: "+displayInfo+"\nDriver version: "+display.getDriverVersion());
+            } catch(UnsatisfiedLinkError e) { 
+                System.err.println("Unable to link native libraries, path = "+System.getProperty("java.library.path"));
+                e.printStackTrace();
+                throw new Error("Unable to link native libraries");
+            }
             
             display.setMinDepthBits( depthBits );
             display.setMinStencilBits( stencilBits );
