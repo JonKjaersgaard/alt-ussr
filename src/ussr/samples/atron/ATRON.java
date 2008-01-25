@@ -24,18 +24,19 @@ import ussr.robotbuildingblocks.VectorDescription;
  */
 public abstract class ATRON implements Robot {
     
-    protected boolean zuper = false, smooth = false, realistic =false, rubberRing = false;// Different variants
+    protected boolean zuper = false, smooth = false, realistic =false, rubberRing = false, gentle = false;// Different variants
     private PhysicsParameters parameters;
 
     public void setSuper() { zuper = true; }
     public void setRealistic() { realistic = true; }
+    public void setGentle() { gentle = true; }
     
     /**
      * @see ussr.robotbuildingblocks.Robot#getDescription()
      */
     public RobotDescription getDescription() {
         RobotDescription description = new RobotDescription();
-        description.setType("ATRON"+(zuper ? " super" : "")+(realistic ? " realistic" : "")+(smooth ? " smooth" : "")+(rubberRing ? " rubberRing" : ""));
+        description.setType("ATRON"+(zuper ? " super" : "")+(realistic ? " realistic" : "")+(smooth ? " smooth" : "")+(rubberRing ? " rubberRing" : "")+(gentle ? " gentle" : ""));
         if(false) {
 	        SphereShape hemi1 = new SphereShape(1.13f, new VectorDescription( 0.0f, 0.0f, -0.125f)); 
 	        SphereShape hemi2 = new SphereShape(1.15f, new VectorDescription( 0.0f, 0.0f, 0.125f)); 
