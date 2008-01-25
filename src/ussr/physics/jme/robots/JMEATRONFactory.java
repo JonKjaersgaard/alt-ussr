@@ -56,7 +56,7 @@ public class JMEATRONFactory implements ModuleFactory {
         setMaterials(module, robot,module_name);
         setName(module, module_name);
         addConnectors(module);
-        addCommunication(module);
+        addCommunication(module, robot);
         addProximitySensors(module);
         addCenterActuator(module, robot);
         addTiltSensors(module,northComponent.getModuleNode());
@@ -129,16 +129,19 @@ public class JMEATRONFactory implements ModuleFactory {
         DynamicPhysicsNode northNode = ((JMEModuleComponent) module.getComponent(0)).getModuleNode();
         DynamicPhysicsNode southNode = ((JMEModuleComponent) module.getComponent(1)).getModuleNode();
         centerActuator.attach(southNode,northNode);
+        float stepSize = PhysicsParameters.get().getPhysicsSimulationStepSize();//is this a hack or not?
+        float velocity = 0.01f/stepSize*6.28f/6;
         if(robot.getDescription().getType().contains("super")) {
             centerActuator.setControlParameters(500f, 2f, 0, 0); //Extreme super ATRON
         }
         else if(robot.getDescription().getType().contains("realistic")) {
-        	float stepSize = PhysicsParameters.get().getPhysicsSimulationStepSize();//is this a hack or not?
         	//TODO does this hack ("0.01f/stepSize*") indicate some underlying problem?
-            centerActuator.setControlParameters(3f, 0.01f/stepSize*6.28f/6, 0, 0); //realistic: 6 seconds for one rotation, maxacceleration=2 just able to lift two, no friction= can exploit momentum - problem?
+            centerActuator.setControlParameters(3f, velocity, 0, 0); //realistic: 6 seconds for one rotation, maxacceleration=2 just able to lift two, no friction= can exploit momentum - problem?
             centerActuator.setMaxStopAcceleration(15f); //TODO no validated?
         }
-        else {
+        else if(robot.getDescription().getType().contains("gentle")) {
+            centerActuator.setControlParameters(1f, velocity, 0, 0); //Extreme super ATRON            
+        } else {
         	centerActuator.setControlParameters(500f, 4f, 0, 0); //Extreme super ATRON
         }
         centerActuator.setErrorThreshold(0.001f);
@@ -171,14 +174,16 @@ public class JMEATRONFactory implements ModuleFactory {
     	if(Math.abs((node.getMass()-mass))>mass/100) setMassHelper(mass, node, limit-1); //why oh why is this nesseary???
 	}
 
-	private void addCommunication(Module module) {
+	private void addCommunication(Module module, Robot robot) {
     	TransmissionDevice atronTrans = new TransmissionDevice(TransmissionType.IR,0.05f);
         ReceivingDevice atronRec = new ReceivingDevice(TransmissionType.IR,10);
         for(int channel=0;channel<8;channel++) {
             module.addTransmissionDevice(JMEGeometryHelper.createTransmitter(module, module.getConnectors().get(channel),atronTrans)); //use connector hardware for communication!
             module.addReceivingDevice(JMEGeometryHelper.createReceiver(module, module.getConnectors().get(channel),atronRec));
-            module.getTransmitters().get(channel).setMaxBaud(19200);
-            module.getTransmitters().get(channel).setMaxBufferSize(128);
+            if(!robot.getDescription().getType().contains("gentle")) {
+                module.getTransmitters().get(channel).setMaxBaud(19200);
+                module.getTransmitters().get(channel).setMaxBufferSize(128);
+            }
         }		
         
 	}
