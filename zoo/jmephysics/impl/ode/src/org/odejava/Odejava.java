@@ -85,14 +85,26 @@ public class Odejava {
             System.loadLibrary( "odejava" );
 
         } catch ( UnsatisfiedLinkError e ) {
+        	loadFailed = true;
+        	
             try {
-                System.loadLibrary( "odejava64" );
-
+            	System.loadLibrary( "linuxodejava" );
+            	loadFailed=false;
             } catch ( UnsatisfiedLinkError e2 ) {
-                LoggingSystem.getLogger().log( Level.SEVERE, "Native code library (32 and 64 bit library) failed to load: " + e, e );
-                loadFailed = true;
+            	//LoggingSystem.getLogger().log( Level.SEVERE, "Native code library (32 and 64 bit library) failed to load: " + e, e );
+            	loadFailed = true;
             }
-            loadFailed = true;
+            
+            if (loadFailed == true) { 
+        		try {
+                	System.loadLibrary( "odejava64" );
+                	loadFailed=false;
+        		} catch ( UnsatisfiedLinkError e2 ) {
+            		LoggingSystem.getLogger().log( Level.SEVERE, "Native code library (32 and 64 bit library) failed to load: " + e, e );
+                	loadFailed = true;
+            	}
+        	}
+            
         }
 //            LoggingSystem.getLogger().log( Level.INFO, "Ode native version " + Ode.ODEJAVA_VERSION );
     }
