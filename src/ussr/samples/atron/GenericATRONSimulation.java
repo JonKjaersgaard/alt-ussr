@@ -42,6 +42,7 @@ public abstract class GenericATRONSimulation extends GenericSimulation {
     protected float connection_acceptance_range = 0.001f;
     
     public void main() {
+        this.setupPhysicsHook();
         setConnectorsAreActive(true);
         WorldDescription world = new WorldDescription();
         world.setPlaneSize(100);
@@ -68,7 +69,9 @@ public abstract class GenericATRONSimulation extends GenericSimulation {
         this.runSimulation(world,startPaused);
     }
     
-	protected void changeWorldHook(WorldDescription world) {
+    protected void setupPhysicsHook() { ; }
+    
+    protected void changeWorldHook(WorldDescription world) {
     }
 
     private ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
