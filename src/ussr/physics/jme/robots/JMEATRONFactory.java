@@ -180,10 +180,8 @@ public class JMEATRONFactory implements ModuleFactory {
         for(int channel=0;channel<8;channel++) {
             module.addTransmissionDevice(JMEGeometryHelper.createTransmitter(module, module.getConnectors().get(channel),atronTrans)); //use connector hardware for communication!
             module.addReceivingDevice(JMEGeometryHelper.createReceiver(module, module.getConnectors().get(channel),atronRec));
-            if(!robot.getDescription().getType().contains("gentle")) {
-                module.getTransmitters().get(channel).setMaxBaud(19200);
-                module.getTransmitters().get(channel).setMaxBufferSize(128);
-            }
+            module.getTransmitters().get(channel).setMaxBaud(19200);
+            module.getTransmitters().get(channel).setMaxBufferSize(128);
         }		
         
 	}
