@@ -138,6 +138,7 @@ public abstract class GenericTransmitter implements Transmitter {
 			if(p!=null) {
 				if(sendIfTime(p,timeStepsSinceLastSend)) {
 					packets.removeFirst();
+					currentBytes-=p.getByteSize();
 					timeStepsSinceLastSend=0;
 				}
 				else {
