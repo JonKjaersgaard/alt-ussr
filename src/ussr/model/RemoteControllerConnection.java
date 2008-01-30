@@ -19,21 +19,33 @@ public class RemoteControllerConnection {
 	protected Socket client = null;
 	public PrintWriter out = null;
 	public BufferedReader in = null;
-
-	public void openServerSocket(Module module){
+	private String[] name;
+	
+	public void openServerSocketPortInHex(Module module){
     	int port = 0;
-    	String name[] = module.getProperty("name").split(":");
+    	name = module.getProperty("name").split(":");
+    	port = Integer.parseInt(name[1].trim(),16); // converts hex string to int
+    	openServerSocket(port);
+	}
 
+	public void openServerSocketPortInDec(Module module){
+    	int port = 0;
+    	name = module.getProperty("name").split(":");
+    	port = Integer.parseInt(name[1]); 
+    	openServerSocket(port);
+	}
+
+	
+	private void openServerSocket(int portInDecimal){
     	try{
-    		port = Integer.parseInt(name[1].trim(),16); // converts hex string to int
-    		server = new ServerSocket(port);
+    		server = new ServerSocket(portInDecimal);
 	    } catch (IOException e) {
-	    	System.out.println("Could not listen on port: " + port);
+	    	System.out.println("Could not listen on port: " + portInDecimal);
 	    	System.exit(-1);
 	    }
 
 	    try{
-	    	System.out.println("Module: " + name[0]+" -> TCP/IP socket server waiting for client to connect @ port: " + port);
+	    	System.out.println("Module: " + name[0]+" -> TCP/IP socket server waiting for client to connect @ port: " + portInDecimal);
 
 	    	client = server.accept();
 	    } catch (IOException e) {
