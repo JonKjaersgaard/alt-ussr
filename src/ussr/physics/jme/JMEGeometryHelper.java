@@ -94,9 +94,13 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
 
     public static TriMesh createShape(DynamicPhysicsNode moduleNode, String name, GeometryDescription element) {
     	TriMesh shape = null;
-    	int resolutionfactor = 5;
+    	int resolutionfactor = PhysicsParameters.get().getResolutionFactor();
         if(element instanceof SphereShape) {
-        	shape = new Sphere( name, resolutionfactor*9, resolutionfactor*9, ((SphereShape)element).getRadius()); 
+            try {
+                shape = new Sphere( name, resolutionfactor*9, resolutionfactor*9, ((SphereShape)element).getRadius());
+            } catch(OutOfMemoryError error) {
+                throw new Error("Out of memory while creating sphere, adjust resolution factor in PhysicsParameters");
+            }
         	shape.setModelBound( new BoundingSphere() );
         }
         else if(element instanceof AtronShape) {
@@ -216,7 +220,7 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
 			MaxToJme C1 = new MaxToJme();
 			ByteArrayOutputStream BO = new ByteArrayOutputStream();
 			String[] fileNames = {"ATRON.3DS","simpleATRON.3ds","mediumATRON.3ds","goodATRON.3ds"};
-			InputStream maxStream = new FileInputStream("resources/"+fileNames[2]);
+			InputStream maxStream = new FileInputStream(JMEBasicGraphicalSimulation.setupPath("resources/"+fileNames[2]));
 			C1.convert(new BufferedInputStream(maxStream),BO);
 			Node atronNode = (Node)BinaryImporter.getInstance().load(new ByteArrayInputStream(BO.toByteArray()));
 			System.out.println("ATRON CAD Model loaded - nTriangles = "+atronNode.getVertexCount());
@@ -324,7 +328,7 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
         simulation.rootNode.attachChild( planeNode );
         planeNode.generatePhysicsGeometry();
         planeNode.setMaterial(description2material(PhysicsParameters.get().getPlaneMaterial()));
-        Texture tex = TextureManager.loadTexture(texture.getFileName(),Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
+        Texture tex = TextureManager.loadTexture(JMEBasicGraphicalSimulation.setupPath(texture.getFileName()),Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
         tex.setWrap(Texture.WM_WRAP_S_WRAP_T);
         VectorDescription texScale = texture.getScale(size);
         tex.setScale(new Vector3f(texScale.getX(),texScale.getY(),texScale.getZ()));
