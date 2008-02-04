@@ -22,8 +22,10 @@ import ussr.robotbuildingblocks.WorldDescription;
  */
 public class EightToCarSimulationJ extends GenericATRONSimulation {
 
-    private static final boolean USE_BLOCKING_ROTATE = true;
-    
+    public static final boolean USE_BLOCKING_ROTATE = true;
+    public static final boolean CORRECT_CAR_WHEELS = true;
+    public static final boolean VERIFY_OPERATIONS = false;
+
     public static void main(String argv[]) {
         new EightToCarSimulationJ().main();
     }
@@ -58,8 +60,13 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
         mPos.add(new ModulePosition("#1", new VectorDescription(1*unit,0*unit-Yoffset,1*unit), rotation_EW));
         mPos.add(new ModulePosition("#2", new VectorDescription(1*unit,0*unit-Yoffset,-1*unit), rotation_EW));
         mPos.add(new ModulePosition("#3", new VectorDescription(2*unit,0*unit-Yoffset,0*unit), rotation_NS_1));
-        mPos.add(new ModulePosition("#4", new VectorDescription(3*unit,0*unit-Yoffset,1*unit), rotation_EW));
-        mPos.add(new ModulePosition("#5", new VectorDescription(3*unit,0*unit-Yoffset,-1*unit), rotation_EW));
+        if(CORRECT_CAR_WHEELS) {
+            mPos.add(new ModulePosition("#4", new VectorDescription(3*unit,0*unit-Yoffset,1*unit), rotation_WE));
+            mPos.add(new ModulePosition("#5", new VectorDescription(3*unit,0*unit-Yoffset,-1*unit), rotation_WE));
+        } else {
+            mPos.add(new ModulePosition("#4", new VectorDescription(3*unit,0*unit-Yoffset,1*unit), rotation_EW));
+            mPos.add(new ModulePosition("#5", new VectorDescription(3*unit,0*unit-Yoffset,-1*unit), rotation_EW));
+        }
         mPos.add(new ModulePosition("#6", new VectorDescription(4*unit,0*unit-Yoffset,0*unit), rotation_NS_1));
         return mPos;
     }
@@ -70,8 +77,19 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
         int moduleTranslator[] = new int[7];
         int message[] = new int[3];
         boolean eight2car_active = true;
+        byte lastConnectorTry = 0;
+        int retries = 0;
 
         private void sendMessage(int[] message, int size, int channel) {
+            if(VERIFY_OPERATIONS && !this.isConnected(channel)) { 
+                System.out.println("WARNING: module "+this.getMyID()+" unable to deliver on "+channel); System.out.flush(); 
+                if(retries++==8) throw new Error("Unable to deliver message");
+                byte newChannel = (byte)((channel+lastConnectorTry)%8);
+                newChannel++;
+            }
+            int state = message[1];
+            int moduleNumber = message[2];
+            System.out.println("Module "+getMyID()+" setting module "+moduleNumber+" to state "+state+" through channel "+channel);
             byte[] bmsg = new byte[message.length];
             for(int i=0;i<message.length;i++)
                 bmsg[i] = (byte)message[i];
@@ -110,7 +128,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                 switch(token[0])
                 {
                 case 0:
-                    disconnect(0);
+                    disconnect_module(0,2);
                     while (!isDisconnected(0)) super.ussrYield();
                     token[0]=1;
                     break;
@@ -131,7 +149,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     setNorthIOPort(0);
                     break;
                 case 3:
-                    disconnect(4);
+                    disconnect_module(4,4);
                     while (!isDisconnected(4)) super.ussrYield();
                     token[0]=4;
                     break;
@@ -153,7 +171,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=7;
                     message[2]=moduleTranslator[6];
-                    sendMessage(message,3,5);
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?3:5);
                     token[0]=-1;
                     setNorthIOPort(0);
                     break;
@@ -166,21 +184,21 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     setNorthIOPort(0);
                     break;
                 case 8:
-                    doRotate(1);
+                    doRotate(CORRECT_CAR_WHEELS?-1:1);
                     //while (!isRotating());
                     //while (isRotating());
                     token[0]=9;
                     break;
                 case 9:
-                    connect(0);
-                    while (!isConnected(0)) super.ussrYield();
+                    connect_module(CORRECT_CAR_WHEELS?6:0,3);
+                    while (!isConnected(CORRECT_CAR_WHEELS?6:0)) super.ussrYield();
                     token[0]=10;
                     break;
                 case 10:
                     message[0]=0;
                     message[1]=11;
                     message[2]=moduleTranslator[3];
-                    sendMessage(message,3,0);
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?6:0);
                     token[0]=-1;
                     setNorthIOPort(0);
                     break;
@@ -218,12 +236,12 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=16;
                     message[2]=moduleTranslator[6];
-                    sendMessage(message,3,5);
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?3:5);
                     token[0]=-1;
                     setNorthIOPort(0);
                     break;
                 case 16:
-                    disconnect(2);
+                    disconnect_module(2,5);
                     while (!isDisconnected(2)) super.ussrYield();
                     token[0]=17;
                     break;
@@ -245,7 +263,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=20;
                     message[2]=moduleTranslator[6];
-                    sendMessage(message,3,7);
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?1:7);
                     token[0]=-1;
                     setNorthIOPort(0);
                     break;
@@ -267,7 +285,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=23;
                     message[2]=moduleTranslator[3];
-                    sendMessage(message,3,0);
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?6:0);
                     token[0]=-1;
                     setNorthIOPort(0);
                     break;
@@ -288,7 +306,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     setNorthIOPort(0);
                     break;
                 case 25:
-                    connect(0);
+                    connect_module(0,6);
                     while (!isConnected(0)) super.ussrYield();
                     token[0]=26;
                     break;
@@ -301,7 +319,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     setNorthIOPort(0);
                     break;
                 case 27:
-                    disconnect(6);
+                    disconnect_module(6,4);
                     while (!isDisconnected(6)) super.ussrYield();
                     token[0]=28;
                     break;
@@ -372,15 +390,15 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     setNorthIOPort(0);
                     break;
                 case 37:
-                    connect(0);
-                    while (!isConnected(0)) super.ussrYield();
+                    connect_module(CORRECT_CAR_WHEELS?4:0,6);
+                    while (!isConnected(CORRECT_CAR_WHEELS?4:0)) super.ussrYield();
                     token[0]=38;
                     break;
                 case 38:
                     message[0]=0;
                     message[1]=39;
                     message[2]=moduleTranslator[3];
-                    sendMessage(message,3,1);
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?7:1);
                     token[0]=-1;
                     setNorthIOPort(0);
                     break;
@@ -393,7 +411,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     setNorthIOPort(0);
                     break;
                 case 40:
-                    connect(4);
+                    connect_module(4,6);
                     while (!isConnected(4)) super.ussrYield();
                     token[0]=41;
                     break;
@@ -414,7 +432,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     setNorthIOPort(0);
                     break;
                 case 43:
-                    connect(4);
+                    connect_module(4,4);
                     while (!isConnected(4)) super.ussrYield();
                     token[0]=44;
                     break;
@@ -427,15 +445,15 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     setNorthIOPort(0);
                     break;
                 case 45:
-                    disconnect(0);
-                    while (!isDisconnected(0)) super.ussrYield();
+                    disconnect_module(CORRECT_CAR_WHEELS?6:0,3);
+                    while (!isDisconnected(CORRECT_CAR_WHEELS?6:0)) super.ussrYield();
                     token[0]=46;
                     break;
                 case 46:
                     message[0]=0;
                     message[1]=47;
                     message[2]=moduleTranslator[1];
-                    sendMessage(message,3,1);
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?5:1);
                     token[0]=-1;
                     setNorthIOPort(0);
                     break;
@@ -448,7 +466,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     setNorthIOPort(0);
                     break;
                 case 48:
-                    disconnect(6);
+                    disconnect_module(6,1);
                     while (!isDisconnected(6)) super.ussrYield();
                     token[0]=49;
                     break;
@@ -464,7 +482,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=51;
                     message[2]=moduleTranslator[6];
-                    sendMessage(message,3,0);
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?4:0);
                     token[0]=-1;
                     setNorthIOPort(0);
                     break;
@@ -518,7 +536,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=58;
                     message[2]=moduleTranslator[3];
-                    sendMessage(message,3,1);
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?7:1);
                     token[0]=-1;
                     setNorthIOPort(0);
                     break;
@@ -540,7 +558,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=61;
                     message[2]=moduleTranslator[6];
-                    sendMessage(message,3,0);
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?4:0);
                     token[0]=-1;
                     setNorthIOPort(0);
                     break;
@@ -561,7 +579,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     setNorthIOPort(0);
                     break;
                 case 63:
-                    connect(6);
+                    connect_module(6,3);
                     while (!isConnected(6)) super.ussrYield();
                     token[0]=64;
                     break;
@@ -574,12 +592,12 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     setNorthIOPort(0);
                     break;
                 case 65:
-                    disconnect(0);
+                    disconnect_module(0,5);
                     while (!isDisconnected(0)) super.ussrYield();
                     token[0]=66;
                     break;
                 case 66:
-                    disconnect(2);
+                    disconnect_module(2,2);
                     while (!isDisconnected(2)) super.ussrYield();
                     token[0]=67;
                     break;
@@ -605,6 +623,34 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
             }
         }
         
+        byte other_id;
+        
+        private void connect_module(int i, int module_id) {
+            this.connect(i);
+            if(!VERIFY_OPERATIONS) return;
+            get_module_id_at(i);
+            if(!(module_id==other_id)) throw new Error("foo");
+            System.out.println("Module "+this.getMyID()+" connected to connector "+i+" to module "+other_id);
+        }
+
+        private void disconnect_module(int i, int module_id) {
+            if(VERIFY_OPERATIONS) {
+                get_module_id_at(i);
+                if(!(module_id==other_id)) throw new Error("bar");
+                System.out.println("Module "+this.getMyID()+" disconnecting connector "+i+" to module "+other_id);
+            }
+            this.disconnect(i);
+        }
+
+        private void get_module_id_at(int i) {
+            other_id = -1;
+            byte[] message = new byte[] { 0, 0, 88 };
+            while(other_id==-1) {
+                super.sendMessage(message, (byte)3, (byte)i);
+                super.delay(1000);
+            }
+        }
+
         private void doRotate(int i) {
             this.rotate(i);
             if(!USE_BLOCKING_ROTATE) {
@@ -625,12 +671,17 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                 setNorthIOPort(incoming[0]+0xF0);
             } else if(incoming[2]==87) {
                 stopEightToCar(incoming,messageSize,channel);
-            } 
-
-            else if(!canHandleMessage(incoming,messageSize,channel)) {
-            	System.out.println("ERROR?");
+            } else if(incoming[2]==88) {
+                if(!VERIFY_OPERATIONS) throw new Error("Illegal packet 88");
+                byte[] response = new byte[] { 0, (byte)this.getMyID(), 89 };
+                super.sendMessage(response, (byte)3, (byte)channel);
+            } else if(incoming[2]==89) {
+                if(!VERIFY_OPERATIONS) throw new Error("Illegal packet 89");
+                this.other_id = incoming[1];
+            } else if(!canHandleMessage(incoming,messageSize,channel)) {
+            	System.out.println("ERROR?"); System.out.flush();
                 //super.sendMessage(incoming,(byte)messageSize,(byte)channel);
-            }
+            } 
 
         }
 
