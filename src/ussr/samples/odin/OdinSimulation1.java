@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
+import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.robotbuildingblocks.ModuleConnection;
 import ussr.robotbuildingblocks.ModulePosition;
@@ -35,6 +36,7 @@ public class OdinSimulation1 extends GenericSimulation {
     public void runSimulation(WorldDescription world, boolean startPaused) {
         PhysicsLogger.setDefaultLoggingLevel();
         final PhysicsSimulation simulation = PhysicsFactory.createSimulator();
+        PhysicsParameters.get().setResolutionFactor(2); // Needed for large Odin structures 
         
         simulation.setRobot(new OdinMuscle(){
         	public Controller createController() {
@@ -66,11 +68,12 @@ public class OdinSimulation1 extends GenericSimulation {
         int index=0;
         //int nBalls=0,xMax=0, yMax=0,zMax=0; modulePos.add(new WorldDescription.ModulePosition("0","OdinMuscle", new VectorDescription(0,0,0), new RotationDescription(0,0,0)));
         //int nBalls=2, xMax=1, yMax=2,zMax=2;
-        int nBalls=3, xMax=3, yMax=2,zMax=2;
+       // int nBalls=3, xMax=3, yMax=2,zMax=2;
        // int nBalls=4, xMax=3, yMax=2,zMax=2;
        //int nBalls=8, xMax=3, yMax=2,zMax=2;
        //int nBalls=14, xMax=3, yMax=3,zMax=3;
-        //int nBalls=20, xMax=4, yMax=4,zMax=4;
+        int nBalls=20, xMax=4, yMax=4,zMax=4;
+        //int nBalls=80, xMax=5, yMax=5,zMax=5; // Max on Ulrik's machine
         for(int x=0;x<xMax;x++) {
         	for(int y=0;y<yMax;y++) {
         		for(int z=0;z<zMax;z++) {
