@@ -515,6 +515,15 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
     public abstract long getPhysicsSteps();
     public abstract float getPhysicsSimulationStepSize();
 
+    private static String resourcePathPrefix = "";
+    public static void setResourcePathPrefix(String prefix) {
+        resourcePathPrefix = prefix;
+    }
+    
+    public static String setupPath(String path) {
+        return resourcePathPrefix+path;
+    }
+    
     /**
      * buildSkyBox creates a new skybox object with all the proper textures. The
      * textures used are the standard skybox textures from all the tests.
@@ -526,20 +535,20 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
     	Texture north,south,east,west,up,down;
     	boolean clouds=world.hasBackgroundScenery();
     	if(clouds) {
-	    	north = TextureManager.loadTexture("resources/north.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
-	        south = TextureManager.loadTexture("resources/south.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
-	        east = TextureManager.loadTexture("resources/east.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
-	        west = TextureManager.loadTexture("resources/west.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
-	        up = TextureManager.loadTexture("resources/top.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
-	        down = TextureManager.loadTexture("resources/bottom.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
+	    	north = TextureManager.loadTexture(setupPath("resources/north.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
+	        south = TextureManager.loadTexture(setupPath("resources/south.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
+	        east = TextureManager.loadTexture(setupPath("resources/east.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
+	        west = TextureManager.loadTexture(setupPath("resources/west.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
+	        up = TextureManager.loadTexture(setupPath("resources/top.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
+	        down = TextureManager.loadTexture(setupPath("resources/bottom.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
     	}
     	else {
-    		north = TextureManager.loadTexture("resources/white.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
-            south = TextureManager.loadTexture("resources/white.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
-            east = TextureManager.loadTexture("resources/white.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
-            west = TextureManager.loadTexture("resources/white.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
-            up = TextureManager.loadTexture("resources/white.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
-            down = TextureManager.loadTexture("resources/white.jpg",Texture.MM_LINEAR,Texture.FM_LINEAR);
+    		north = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
+            south = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
+            east = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
+            west = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
+            up = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
+            down = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
     	}
     	
         skybox.setTexture(Skybox.NORTH, north);
