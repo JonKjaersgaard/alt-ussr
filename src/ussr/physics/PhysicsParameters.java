@@ -32,6 +32,7 @@ public class PhysicsParameters {
     private float errorReductionParameter = 0.8f;
     private float worldDampingLinearVelocity = 0.0f;
     private float worldDampingAngularVelocity = 0.0f;
+    private int resolutionFactor = 5;
     
     
     public float getWorldDampingLinearVelocity() {
@@ -163,5 +164,11 @@ public class PhysicsParameters {
      */
     public void setErrorReductionParameter(float errorReductionParameter) {
         this.errorReductionParameter = errorReductionParameter;
+    }
+    public int getResolutionFactor() {
+        return resolutionFactor  ;
+    }
+    public void setResolutionFactor(int resolutionFactor) {
+        this.resolutionFactor = resolutionFactor;
     }
 }
