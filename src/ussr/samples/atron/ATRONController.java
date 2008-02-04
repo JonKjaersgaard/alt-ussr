@@ -102,12 +102,12 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         // physics actuator that updates at each time step
     	(new Thread() {
     	    public void run() { 
-                System.out.print("(locking actuator on "+this.getName()+" to maintain "+maintain+") "); System.out.flush();
+    	        PhysicsLogger.logNonCritical("(locking actuator on "+this.getName()+" to maintain "+maintain+") ");
     	        while(locked) {
     	           module.getActuators().get(0).activate(maintain);
                    ussrYield();
     	       }
-                System.out.print("(unlocking actuator on "+this.getName()+")"); System.out.flush();
+    	        PhysicsLogger.logNonCritical("(unlocking actuator on "+this.getName()+")");
     	    }
     	}).start();
 	}
@@ -141,12 +141,12 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         // physics actuator that updates at each time step
         (new Thread() {
             public void run() { 
-                System.out.print("(locking actuator on "+this.getName()+")"); System.out.flush();
+                PhysicsLogger.logNonCritical("(locking actuator on "+this.getName()+")");
                 while(locked) {
                    module.getActuators().get(0).activate(maintain);
                    ussrYield();
                }
-                System.out.print("(unlocking actuator on "+this.getName()+")"); System.out.flush();
+                PhysicsLogger.logNonCritical("(unlocking actuator on "+this.getName()+")"); System.out.flush();
             }
         }).start();
     }
