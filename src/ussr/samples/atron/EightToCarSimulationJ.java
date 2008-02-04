@@ -25,11 +25,6 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
     private static final boolean USE_BLOCKING_ROTATE = true;
     
     public static void main(String argv[]) {
-        PhysicsLogger.setDisplayInfo(true);
-        PhysicsParameters.get().setMaintainRotationalJointPositions(true);
-        PhysicsParameters.get().setRealisticCollision(true);
-        PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f); // before: 0.0005f
-        PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
         new EightToCarSimulationJ().main();
     }
 
@@ -42,40 +37,39 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
         };
     }
 
+    @Override
+    protected void setupPhysicsHook() {
+        PhysicsLogger.setDisplayInfo(true);
+        PhysicsParameters.get().setMaintainRotationalJointPositions(true);
+        PhysicsParameters.get().setRealisticCollision(true);
+        PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f); // before: 0.0005f
+        PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
+    }
+    
     protected void changeWorldHook(WorldDescription world) {
         world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
         world.setHasBackgroundScenery(false);
     }
 
-    protected void simulationHook(PhysicsSimulation simulation) {
-        ATRON zuper = new ATRON() {
-            public Controller createController() {
-                return new EightController();
-            }
-        };
-        //zuper.setSuper();
-        zuper.setRealistic();
-        simulation.setRobot(zuper, "ATRON");
-    }
-
     protected ArrayList<ModulePosition> buildRobot() {
         float Yoffset = 0.25f+2*unit;
         ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-        mPos.add(new ModulePosition("#0", "ATRON", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_NS_1));
-        mPos.add(new ModulePosition("#1", "ATRON", new VectorDescription(1*unit,0*unit-Yoffset,1*unit), rotation_EW));
-        mPos.add(new ModulePosition("#2", "ATRON", new VectorDescription(1*unit,0*unit-Yoffset,-1*unit), rotation_EW));
-        mPos.add(new ModulePosition("#3", "ATRON", new VectorDescription(2*unit,0*unit-Yoffset,0*unit), rotation_NS_1));
-        mPos.add(new ModulePosition("#4", "ATRON", new VectorDescription(3*unit,0*unit-Yoffset,1*unit), rotation_EW));
-        mPos.add(new ModulePosition("#5", "ATRON", new VectorDescription(3*unit,0*unit-Yoffset,-1*unit), rotation_EW));
-        mPos.add(new ModulePosition("#6", "ATRON", new VectorDescription(4*unit,0*unit-Yoffset,0*unit), rotation_NS_1));
+        mPos.add(new ModulePosition("#0", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_NS_1));
+        mPos.add(new ModulePosition("#1", new VectorDescription(1*unit,0*unit-Yoffset,1*unit), rotation_EW));
+        mPos.add(new ModulePosition("#2", new VectorDescription(1*unit,0*unit-Yoffset,-1*unit), rotation_EW));
+        mPos.add(new ModulePosition("#3", new VectorDescription(2*unit,0*unit-Yoffset,0*unit), rotation_NS_1));
+        mPos.add(new ModulePosition("#4", new VectorDescription(3*unit,0*unit-Yoffset,1*unit), rotation_EW));
+        mPos.add(new ModulePosition("#5", new VectorDescription(3*unit,0*unit-Yoffset,-1*unit), rotation_EW));
+        mPos.add(new ModulePosition("#6", new VectorDescription(4*unit,0*unit-Yoffset,0*unit), rotation_NS_1));
         return mPos;
     }
 
-    private class EightController extends ATRONController {
+    protected class EightController extends ATRONController {
 
         int token[] = new int[1];
         int moduleTranslator[] = new int[7];
         int message[] = new int[3];
+        boolean eight2car_active = true;
 
         private void sendMessage(int[] message, int size, int channel) {
             byte[] bmsg = new byte[message.length];
@@ -90,16 +84,25 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
         public void activate() {
             this.ussrYield();
             if(USE_BLOCKING_ROTATE) this.setBlocking(true);
+            this.delay(10);
+            setup();
+            home();
+            this.activate_before_eight2car();
+            this.activate_eight2car();
+            this.activate_after_eight2car();
+        }
+        
+        public void activate_before_eight2car() { ; }
+        public void activate_after_eight2car() { ; }
+
+        public void activate_eight2car() {
             int i;
             for (i=0;i<1;i++)
                 token[i]=255;
             for(i=0;i<7;i++)
                 moduleTranslator[i] = i;
-            this.delay(10);
-            setup();
-            home();
             if(getMyID()==0) token[0] = 0;
-            while(true)
+            while(eight2car_active)
             {
                 super.ussrYield();
                 if(token[0]!=255 && token[0]!=-1)
@@ -596,6 +599,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     break;
                 case 69:
                     token[0]=-1;
+                    stopEightToCar(new byte[] { 0, 0, 87 }, 3, -1);
                     break;
                 }
             }
@@ -609,7 +613,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
             }
         }
 
-        private int getMyID() {
+        protected int getMyID() {
             String id = this.getName().substring(1);
             return Integer.parseInt(id);
         }
@@ -619,13 +623,26 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
             {
                 token[incoming[0]]=incoming[1];
                 setNorthIOPort(incoming[0]+0xF0);
-            }
-            else
-            {
+            } else if(incoming[2]==87) {
+                stopEightToCar(incoming,messageSize,channel);
+            } 
+
+            else if(!canHandleMessage(incoming,messageSize,channel)) {
             	System.out.println("ERROR?");
                 //super.sendMessage(incoming,(byte)messageSize,(byte)channel);
             }
 
         }
+
+        private void stopEightToCar(byte[] incoming, int messageSize, int channel) {
+            this.eight2car_active = false;
+            for(int c=0; c<8; c++)
+                if(c!=channel && this.isConnected(c)) this.sendMessage(incoming, (byte)messageSize, (byte)c);
+        }
+
+        protected boolean canHandleMessage(byte[] incoming, int messageSize, int channel) {
+            return false;
+        }
     }
+
 }
