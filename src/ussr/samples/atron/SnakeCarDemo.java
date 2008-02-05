@@ -29,7 +29,7 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
     protected class CarStuffController extends EightController {
 
         volatile private int state = 0;
-        int snake_counter = 10;
+        int snake_counter = 1;// 10
 
         @Override
         public void activate_before_eight2car() {
@@ -114,11 +114,62 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
 
         @Override
         public void activate_after_eight2car() {
-            switch(this.getMyID()) {
-            case 5: this.rotateContinuous(0.1f); break;
-            case 2: this.rotateContinuous(-0.1f); break;
-            case 3: this.rotateContinuous(0.1f); break;
-            case 4: this.rotateContinuous(-0.1f); break;
+            // First execute "getup" operation
+            int id = this.getMyID();
+            if(id==0) 
+                this.state = 1;
+            else
+                this.state = 0;
+            control: while(true) {
+                delay(10000);
+                super.ussrYield();
+                if(state!=0) System.out.println("@ Post-controller "+id+" in state "+state);
+                switch(state) {
+                case 1: /* module 0 */
+                    this.rotate(1);
+                    this.rotate(1);
+                    delay(20000);
+                    nextState(2,6);
+                    break;
+                case 2: /* module 6 */
+                    this.rotateDegrees(45);
+                    nextState(3,0);
+                    break;
+                case 3: /* module 0 */
+                    for(int i=0; i<4; i++) {
+                        this.rotateDegrees(20);
+                        delay(1000);
+                    }
+                    nextState(4,1);
+                    break;
+                case 4: /* module 1 */
+                    this.rotateDegrees(20);
+                    nextState(5,0);
+                    break;
+                case 5: /* module 0 */
+                    for(int i=0; i<5; i++) {
+                        this.rotateDegrees(20);
+                        delay(1000);
+                    }
+                    nextState(6,6);
+                    break;
+                case 6: /* module 6 */
+                    this.rotateDegrees(-45);
+                    nextState(10,ALL_MODULES);
+                    break;
+                case 10:
+                    delay(5000);
+                    break control;
+                default:
+                    state = 0;
+                }
+            }
+            // Then start driving 
+            switch(id) {
+            case 5: this.rotateContinuous(1f); break;
+            case 2: this.rotateContinuous(-1f); break;
+            case 3: this.rotateContinuous(1f); break;
+            case 4: this.rotateContinuous(-1f); break;
             }
         }
 
