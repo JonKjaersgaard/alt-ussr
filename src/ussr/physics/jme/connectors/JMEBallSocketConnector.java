@@ -38,6 +38,7 @@ public class JMEBallSocketConnector extends JMEMechanicalConnector {
 		super.disconnect();
 	}
 	public boolean canConnectTo(JMEConnector connector) {
+		System.out.println(maxConnectDistance);
 		if(getPos().distance(connector.getPos())>maxConnectDistance)
 			return false;
 		return true;

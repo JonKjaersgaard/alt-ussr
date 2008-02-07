@@ -145,7 +145,7 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
     	if(!connectedConnectors.equals(proximateConnectors)&&!connecting) {
     		connecting = true;
     		if(!proximateConnectors.isEmpty())
-    			System.out.println("Dist before connect = "+getPos().distance(proximateConnectors.get(0).getPos()));
+    			//System.out.println("Dist before connect = "+getPos().distance(proximateConnectors.get(0).getPos()));
     		
     		new AlignAndConnectManager(timeToConnect);
     	}

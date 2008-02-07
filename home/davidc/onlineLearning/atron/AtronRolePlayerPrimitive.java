@@ -8,6 +8,7 @@ import onlineLearning.RolePlayer;
 public class AtronRolePlayerPrimitive implements RolePlayer  {
 	float periodeTime = AtronSkillSimulation.periodeTime;
 	private int homePos = 180;
+	private int safeHomePos = 180;
 	AtronSkillController controller;
 	enum AtronRoles  {stop,clockwise,counter_clockwise};
 	public AtronRolePlayerPrimitive(AtronSkillController controller) {
@@ -33,7 +34,9 @@ public class AtronRolePlayerPrimitive implements RolePlayer  {
 			//TODO somethings wrong => deadlock? also try to count messages
 		}
 		if(roles.getRoleCount()>1) {
-			playHomePosRole(roles.getRole(1));
+			//playHomePosRole(roles.getRole(1));
+			if(controller.getDebugID()<4) playHomePosRole(1);
+			else playHomePosRole(3);
 		}
 		if(roles.getRoleCount()>5) {
 			for(int connector=0;connector<8;connector+=2) {
@@ -66,7 +69,7 @@ public class AtronRolePlayerPrimitive implements RolePlayer  {
 					controller.getConnectorProxy().safeDisconnect(connector);
 					lastDisconnectTryTime[connector] = controller.getTime();
 					disconnectcounter++;
-					System.out.println("Disconnect trials "+disconnectcounter);
+					//System.out.println("Disconnect trials "+disconnectcounter);
 				}
 			}
 		}
@@ -98,10 +101,12 @@ public class AtronRolePlayerPrimitive implements RolePlayer  {
 		playHomePosRole(role);
 	}
 	private void playHomePosRole(int homePosRole) {
+		int previousHomePos = homePos;
 		if(homePosRole==0) homePos = 180;
 		if(homePosRole==1) homePos = 270;
 		if(homePosRole==2) homePos = 0;
 		if(homePosRole==3) homePos = 90;
+		if(homePos!=previousHomePos) safeHomePos = previousHomePos;
 		stop();
 	}
 	
@@ -136,7 +141,8 @@ public class AtronRolePlayerPrimitive implements RolePlayer  {
 		}		
 	}
 	private void stop() {
-		controller.rotateToDegree((float)(homePos*2*Math.PI/360.0));
+		controller.getCenterProxy().safeToDegreeRotate((float)(homePos*2*Math.PI/360.0),(float)(safeHomePos*2*Math.PI/360.0));
+		//controller.rotateToDegree((float)(homePos*2*Math.PI/360.0));
 	}
 	float startTime=0;
 	private void rotate(int dir) {

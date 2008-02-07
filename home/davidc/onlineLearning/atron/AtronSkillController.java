@@ -32,7 +32,8 @@ public class AtronSkillController extends ATRONController implements SkillContro
     RolePlayer rolePlayer;
     MotionRewardSystem rewardSystem; 
     MotionController motionController;
-    private AtronConnectorProxy connectorProxy;  
+    private AtronConnectorProxy connectorProxy;
+    private AtronCenterProxy centerProxy;
     static Random rand = new Random();
     
     public AtronSkillController() {
@@ -44,6 +45,7 @@ public class AtronSkillController extends ATRONController implements SkillContro
     	motionController = new MotionController(MotionSkills.ESCAPE);
     	learner = new SkillLearner(rolePlayer, rewardSystem, nSkills);
     	connectorProxy = new AtronConnectorProxy(this);
+    	centerProxy = new AtronCenterProxy(this);
     	setBlocking(false);
     }
     public void activate() {
@@ -97,6 +99,9 @@ public class AtronSkillController extends ATRONController implements SkillContro
     public AtronConnectorProxy getConnectorProxy() {
 		return connectorProxy;
 	}
+    public AtronCenterProxy getCenterProxy() {
+		return centerProxy;
+	}
 
     static int msgCount = 0;
     public void handleMessage(byte[] message, int messageSize, int channel) {
@@ -104,7 +109,7 @@ public class AtronSkillController extends ATRONController implements SkillContro
     	if(message[0]=='d') {
     		connectorProxy.recieveDisconnectMsg(message[1], message[2], message[3], (byte)channel);
     	}
-    	if(msgCount%10==0) System.out.println("We have now handled "+msgCount+" messages");
+    	//if(msgCount%10==0) System.out.println("We have now handled "+msgCount+" messages");
     	//if(getDebugID()==0) System.out.println("Message "+printMessage(message, messageSize, channel));
     }
 	private String printMessage(byte[] message, int messageSize, int channel) {

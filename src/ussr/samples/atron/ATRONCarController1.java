@@ -36,7 +36,9 @@ public class ATRONCarController1 extends ATRONController {
         byte dir = 1;
         float lastProx = Float.NEGATIVE_INFINITY;
         boolean firstTime = true;
+        delay(2000);
         while(true) {
+        	
         	if(!module.getSimulation().isPaused()) {
         		String name = module.getProperty("name");
         		if(firstTime) {

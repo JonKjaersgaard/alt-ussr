@@ -7,7 +7,7 @@ import ussr.samples.atron.ATRONController;
 
 public class AtronConnectorProxy {
     private boolean[] disconnectingSemaphore  = new boolean[8];
-    private boolean safeDisconnectDebug = true; 
+    private boolean safeDisconnectDebug = false; 
     private ATRONController controller;
     public AtronConnectorProxy(ATRONController controller) {
     	this.controller = controller;
@@ -31,7 +31,7 @@ public class AtronConnectorProxy {
     		boolean done = false;
     		while(!tom.isTimeout() &&!done) { //timeout after 300 ms
     			if(isSafeToDisconnect(connector)) {
-    				System.out.println(getID()+"("+getTime()+"): It is safe to disconnect");
+    				if(safeDisconnectDebug) System.out.println(getID()+"("+getTime()+"): It is safe to disconnect");
     				controller.disconnect(connector);
     				TimeOutManager tom2 = new TimeOutManager(5.0f, controller);
     				while(!controller.isDisconnected(connector)) {

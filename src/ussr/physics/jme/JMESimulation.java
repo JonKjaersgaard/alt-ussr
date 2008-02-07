@@ -121,7 +121,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             Robot robot = robots.get(robotType);
             ModulePosition position = worldDescription.getModulePositions().get(i);
             String module_name = position.getName();
-            System.out.println("Creating "+robotType);
+            //System.out.println("Creating "+robotType);
         	factory.createModule(i, module, robot, module_name);
         	module.setController(robot.createController());
             modules.add(module);

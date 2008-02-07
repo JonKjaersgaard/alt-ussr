@@ -76,7 +76,7 @@ public abstract class GenericATRONSimulation extends GenericSimulation {
 
     private ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
     	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
-    	System.out.println("modulePos.size()"+modulePos.size());
+    	//System.out.println("modulePos.size()"+modulePos.size());
     	for(int i=0;i<modulePos.size();i++) {
     		for(int j=i+1;j<modulePos.size();j++) {
     			if(isConnectable(modulePos.get(i), modulePos.get(j))) {

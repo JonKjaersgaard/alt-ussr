@@ -96,7 +96,7 @@ public class SkillLearner {
     			controller.ussrYield();
     			if(controller.isStopped()) return;
     		}
-    		System.out.println(controller.getDebugID()+" is alive at "+controller.getTime()+"!");
+    		//System.out.println(controller.getDebugID()+" is alive at "+controller.getTime()+"!");
     		float reward = updateSkills(currentSkill, myRole, controller.getTime()-startTime);
     		logReward(reward, currentSkill, controller);
     		logSkills(controller);

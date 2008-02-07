@@ -16,8 +16,8 @@ import ussr.robotbuildingblocks.WorldDescription;
  * @author Modular Robots @ MMMI
  */
 public class ATRONTestSimulation extends GenericATRONSimulation {
-	String testType = "velocityTest";
-	//String testType = "torqueTest"; //double lift test
+	//String testType = "velocityTest";
+	String testType = "torqueTest"; //double lift test
 	//String testType = "torqueHoldTest"; //double lift and hold test
 	
 	
