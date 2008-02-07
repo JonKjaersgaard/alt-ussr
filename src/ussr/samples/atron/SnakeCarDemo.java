@@ -1,7 +1,9 @@
 package ussr.samples.atron;
 
 import ussr.model.Controller;
+import ussr.robotbuildingblocks.BoxDescription;
 import ussr.robotbuildingblocks.Robot;
+import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.atron.EightToCarSimulationJ.EightController;
@@ -12,27 +14,31 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
         new SnakeCarDemo().main();
     }
 
-    private static final int N_CIRCLE_OBSTACLES = 16;
+    private static final int N_CIRCLE_OBSTACLES = 64;
+    private static final int N_CIRCLE_LAYERS = 1;
     private static final float CIRCLE_OBSTACLE_RADIUS = 0.5f;
     private static final float OBSTACLE_Y = -0.4f;
     private static final float OBSTACLE_Y_INC = 0.15f;
+    private static final float OBSTACLE_SIZE = 0.02f;
     protected void changeWorldHook(WorldDescription world) {
         // Override settings from superclass
         System.out.println("Generating circle obstacles");
-        VectorDescription[] obstacles = new VectorDescription[N_CIRCLE_OBSTACLES*2];
+        BoxDescription[] obstacles = new BoxDescription[N_CIRCLE_OBSTACLES*N_CIRCLE_LAYERS];
         int index = 0;
         float y = OBSTACLE_Y;
-        for(int layers=0; layers<2; layers++) {
+        VectorDescription size = new VectorDescription(OBSTACLE_SIZE,OBSTACLE_SIZE,OBSTACLE_SIZE);
+        for(int layers=0; layers<N_CIRCLE_LAYERS; layers++) {
             for(int i=0; i<N_CIRCLE_OBSTACLES; i++) {
-                obstacles[index++] = new VectorDescription(
+                VectorDescription position = new VectorDescription(
                         ((float)(CIRCLE_OBSTACLE_RADIUS*Math.cos(((double)i)/N_CIRCLE_OBSTACLES*Math.PI*2+y))),
                         y,
                         ((float)(CIRCLE_OBSTACLE_RADIUS*Math.sin(((double)i)/N_CIRCLE_OBSTACLES*Math.PI*2+y)))
                 );
+                obstacles[index++] = new BoxDescription(position,size,new RotationDescription(),100f); 
             }
             y+=OBSTACLE_Y_INC;
         }
-        world.setObstacles(obstacles);
+        world.setBigObstacles(obstacles);
     }
     @Override
     protected Robot getRobot() {
@@ -49,7 +55,7 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
     protected class CarStuffController extends EightController {
 
         volatile private int state = 0;
-        int snake_counter = 5;
+        int snake_counter = 7;
 
         @Override
         public void activate_before_eight2car() {
@@ -205,7 +211,7 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
         }
 
         private void reportTilt() {
-            System.out.println("["+this.getTiltX()+","+this.getTiltY()+","+this.getTiltZ()+"]");
+            System.out.println("Tilt sensor in module 0: ["+this.getTiltX()+","+this.getTiltY()+","+this.getTiltZ()+"]");
         }
         
         private void nextState(int nextState, int module_id) {
