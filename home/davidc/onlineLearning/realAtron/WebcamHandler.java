@@ -40,7 +40,7 @@ import javax.swing.JComponent;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGEncodeParam;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
-public class SwingCapture extends Panel implements ActionListener 
+public class WebcamHandler extends Panel implements ActionListener 
 {
   public static Player player = null;
   public CaptureDeviceInfo di = null;
@@ -57,7 +57,7 @@ public class SwingCapture extends Panel implements ActionListener
   static int dim2 = 550;
   
   
-  public SwingCapture() 
+  public WebcamHandler() 
   {
     setLayout(new BorderLayout());
     setSize(dim0,dim2);
@@ -100,7 +100,7 @@ public class SwingCapture extends Panel implements ActionListener
   public static void main(String[] args) 
   {
     Frame f = new Frame("SwingCapture");
-    SwingCapture cf = new SwingCapture();
+    WebcamHandler cf = new WebcamHandler();
     
     f.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent e) {
@@ -169,10 +169,19 @@ public class SwingCapture extends Panel implements ActionListener
 	  BufferedImage bImage = toBufferedImage(img);
 	  threasHold(bImage);
 	  ArrayList<Blob> blobs = BlobDetector.detectBlobs(bImage);
-	  findATRONBlob(bImage,blobs);
+	  int index = findATRONBlob(bImage,blobs);
+	  drawDotOnBlob(blobs.get(index),bImage);
+	  Pixel p = blobs.get(index).getCenterOfMassPixel();
+	  System.out.println("ATRON at ("+p.x+", "+p.y+") with size "+blobs.get(index).getPixelCount());
 	  imgpanel.setImage(bImage.getScaledInstance(dim0, dim1, 24));
   }
-  private void findATRONBlob(BufferedImage bImage, ArrayList<Blob> blobs) {
+  private void drawDotOnBlob(Blob blob,BufferedImage bImage) {
+	  Pixel p = blob.getCenterOfMassPixel();
+	  Graphics2D graphics = bImage.createGraphics();
+	  graphics.setColor(Color.RED);
+	  graphics.fillOval(p.x, p.y, 3, 3);
+  }
+  private int findATRONBlob(BufferedImage bImage, ArrayList<Blob> blobs) {
 	  int biggestBlobIndex = 0;
 	  int biggestBlobSize = 0;
 	  for(int i=0;i<blobs.size();i++) {
@@ -181,12 +190,9 @@ public class SwingCapture extends Panel implements ActionListener
 			  biggestBlobSize=blobs.get(i).getPixelCount();
 		  }
 	  }
-	  Pixel p = blobs.get(biggestBlobIndex).getCenterOfMassPixel();
-	  Graphics2D graphics = bImage.createGraphics();
-	  graphics.setColor(Color.RED);
-	  graphics.fillOval(p.x, p.y, 3, 3);
-	  System.out.println("ATRON at ("+p.x+", "+p.y+") with size "+blobs.get(biggestBlobIndex).getPixelCount());
-	  
+	  if(biggestBlobSize<100||biggestBlobSize>1000) 
+		  System.out.println("ATRON blob has streange size "+biggestBlobSize);
+	  return biggestBlobIndex;
   
   }
 
