@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.samples.odin;
+package communication.local;
 
 import java.util.Random;
 

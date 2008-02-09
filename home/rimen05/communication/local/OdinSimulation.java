@@ -82,7 +82,8 @@ public class OdinSimulation extends GenericSimulation {
        // int nBalls=4, xMax=3, yMax=2,zMax=2;
        //int nBalls=8, xMax=3, yMax=2,zMax=2;
        //int nBalls=14, xMax=3, yMax=3,zMax=3;
-        int nBalls=4, xMax=4, yMax=4,zMax=4;
+        int nBalls=4, xMax=2, yMax=2,zMax=2; //With this parameters I form a tetahedron.
+        //Number of balls and maximum distance between them over each axis - 1?
         //int nBalls=80, xMax=5, yMax=5,zMax=5; // Max on Ulrik's machine
         for(int x=0;x<xMax;x++) {
         	for(int y=0;y<yMax;y++) {
@@ -99,9 +100,9 @@ public class OdinSimulation extends GenericSimulation {
         }
         for(int i=0;i<ballPos.size();i++) {
         	for(int j=i+1;j<ballPos.size();j++) {
-        		if(isNeighorBalls(ballPos.get(i),ballPos.get(j))) {
-        			VectorDescription pos = posFromBalls(ballPos.get(i),ballPos.get(j));
-        			RotationDescription rot = rotFromBalls(ballPos.get(i),ballPos.get(j));
+        		if(isNeighborBalls(ballPos.get(i),ballPos.get(j))) {
+        			VectorDescription pos = posFromBalls(ballPos.get(i),ballPos.get(j));//Get position for the link.
+        			RotationDescription rot = rotFromBalls(ballPos.get(i),ballPos.get(j));//Get rotation for the link.
         			modulePos.add(new ModulePosition(Integer.toString(index),"OdinMuscle", pos, rot));
         			index++;
         			//System.out.println("Ball "+i+" and ball "+j+" are neighbors");
@@ -161,7 +162,7 @@ public class OdinSimulation extends GenericSimulation {
     	return dist==(float)Math.sqrt(2*unit*unit)/2;
     }
 	
-	public static boolean isNeighorBalls(ModulePosition ball1, ModulePosition ball2) {
+	public static boolean isNeighborBalls(ModulePosition ball1, ModulePosition ball2) {
     	float dist = ball1.getPosition().distance(ball2.getPosition());
     	return dist==(float)Math.sqrt(2*unit*unit);
     }
