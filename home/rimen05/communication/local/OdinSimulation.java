@@ -24,7 +24,7 @@ import ussr.samples.odin.OdinBall;
 import ussr.samples.odin.OdinSampleController1;
 
 /**
- * Odin simulation of local communication
+ * simulation of local communication for Odin
  * 
  * @author franco
  *
@@ -34,8 +34,11 @@ public class OdinSimulation extends GenericSimulation {
 	private static float pi = (float)Math.PI;
 	
     public static void main( String[] args ) {
+    	//Here we call an overwritten method.
     	new OdinSimulation().runSimulation(null,true);
     }
+    
+    //Here the abstract method is overwritten.
     public void runSimulation(WorldDescription world, boolean startPaused) {
         PhysicsLogger.setDefaultLoggingLevel();
         final PhysicsSimulation simulation = PhysicsFactory.createSimulator();
@@ -51,6 +54,7 @@ public class OdinSimulation extends GenericSimulation {
         		return new OdinSampleController1("OdinBall");
         	}},"OdinBall");
         
+        //Here we call an overwritten method.
         if(world==null) world = createWorld();
         simulation.setWorld(world);
         simulation.setPause(startPaused);
@@ -58,13 +62,16 @@ public class OdinSimulation extends GenericSimulation {
         // Start
         simulation.start();
     }
+    
     /**
      * Create a world description for our simulation
      * @return the world description
      */
+    //Here the abstract method is overwritten.
     private static WorldDescription createWorld() {
     	WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
+        //Generic's
         ArrayList<ModulePosition> ballPos = new ArrayList<ModulePosition>();
         ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
         //printConnectorPos();
@@ -75,12 +82,12 @@ public class OdinSimulation extends GenericSimulation {
        // int nBalls=4, xMax=3, yMax=2,zMax=2;
        //int nBalls=8, xMax=3, yMax=2,zMax=2;
        //int nBalls=14, xMax=3, yMax=3,zMax=3;
-        int nBalls=20, xMax=4, yMax=4,zMax=4;
+        int nBalls=4, xMax=4, yMax=4,zMax=4;
         //int nBalls=80, xMax=5, yMax=5,zMax=5; // Max on Ulrik's machine
         for(int x=0;x<xMax;x++) {
         	for(int y=0;y<yMax;y++) {
         		for(int z=0;z<zMax;z++) {
-        			if((x+y+z)%2==0) {
+        			if((x+y+z)%2==0) { //This should be lattice related.
         				VectorDescription pos = new VectorDescription(x*unit,y*unit,z*unit);
         				if(index<nBalls) {
        						ballPos.add(new ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
@@ -114,6 +121,7 @@ public class OdinSimulation extends GenericSimulation {
         });*/
         return world;
     }
+    
     private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> ballPos, ArrayList<ModulePosition> modulePos) {
     	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
     	for(int i=0;i<ballPos.size();i++) {
@@ -125,10 +133,12 @@ public class OdinSimulation extends GenericSimulation {
     	}
 		return connections;
 	}
+    
 	private static VectorDescription posFromBalls(ModulePosition p1, ModulePosition p2) {
     	VectorDescription pos = new VectorDescription((p1.getPosition().getX()+p2.getPosition().getX())/2,(p1.getPosition().getY()+p2.getPosition().getY())/2,(p1.getPosition().getZ()+p2.getPosition().getZ())/2);
 		return pos;
 	}
+	
 	private static RotationDescription rotFromBalls(ModulePosition p1, ModulePosition p2) {
 		float x1 = p1.getPosition().getX();
 		float y1 = p1.getPosition().getY();
@@ -145,14 +155,17 @@ public class OdinSimulation extends GenericSimulation {
 		System.out.println("("+(x1-x2)+","+(y1-y2)+","+(z1-z2)+")");
     	return new RotationDescription(0,0,0);
 	}
+	
 	public static boolean isConnectable(ModulePosition ball, ModulePosition module) {
     	float dist = ball.getPosition().distance(module.getPosition());
     	return dist==(float)Math.sqrt(2*unit*unit)/2;
     }
+	
 	public static boolean isNeighorBalls(ModulePosition ball1, ModulePosition ball2) {
     	float dist = ball1.getPosition().distance(ball2.getPosition());
     	return dist==(float)Math.sqrt(2*unit*unit);
     }
+	
     public static void printConnectorPos() {
     	for(int x=-2;x<2;x++) {
         	for(int y=-2;y<2;y++) {
@@ -164,6 +177,7 @@ public class OdinSimulation extends GenericSimulation {
         	}
         }
     }
+    
    // protected Robot getRobot() {
    //     return new OdinMuscle();
    // }

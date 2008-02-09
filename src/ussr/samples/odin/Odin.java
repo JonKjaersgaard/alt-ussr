@@ -10,7 +10,7 @@ import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RobotDescription;
 
 /**
- * the heteregenious reconfigurable modular robot odin   
+ * the heterogeneous reconfigurable modular robot Odin   
  * 
  * @author david
  */
