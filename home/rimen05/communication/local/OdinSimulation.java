@@ -6,8 +6,11 @@
 package communication.local;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import ussr.model.Controller;
+import ussr.model.Module;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
@@ -46,12 +49,12 @@ public class OdinSimulation extends GenericSimulation {
         
         simulation.setRobot(new OdinMuscle(){
         	public Controller createController() {
-        		return new OdinController("OdinMuscle");
+        		return new OdinController("OdinMuscle",false);
         	}},"OdinMuscle");
         
         simulation.setRobot(new OdinBall(){
         	public Controller createController() {
-        		return new OdinController("OdinBall");
+        		return new OdinController("OdinBall",false);
         	}},"OdinBall");
         
         //Here we call another overwritten method.
@@ -59,6 +62,12 @@ public class OdinSimulation extends GenericSimulation {
         simulation.setWorld(world);
         simulation.setPause(startPaused);
 
+        //Here I have to set one and just one module with color white.
+    	/*List<Module> modules = simulation.getModules();
+    	Random rand = new Random();
+        int pos = rand.nextInt(modules.size());
+        int id = (modules.get(pos)).getID();*/
+        
         // Start
         simulation.start();
     }
@@ -81,8 +90,8 @@ public class OdinSimulation extends GenericSimulation {
        // int nBalls=3, xMax=3, yMax=2,zMax=2;
        // int nBalls=4, xMax=3, yMax=2,zMax=2;
        //int nBalls=8, xMax=3, yMax=2,zMax=2;
-       //int nBalls=14, xMax=3, yMax=3,zMax=3;
-        int nBalls=4, xMax=2, yMax=2,zMax=2; //With this parameters I form a tetahedron.
+        int nBalls=14, xMax=3, yMax=3,zMax=3;
+        //int nBalls=4, xMax=2, yMax=2,zMax=2; //With this parameters I form a tetrahedron.
         //Number of balls and maximum distance between them over each axis - 1?
         //int nBalls=80, xMax=5, yMax=5,zMax=5; // Max on Ulrik's machine
         for(int x=0;x<xMax;x++) {
@@ -121,7 +130,7 @@ public class OdinSimulation extends GenericSimulation {
         /*world.setModuleConnections(new WorldDescription.Connection[] {
               //  new WorldDescription.Connection("leftleg",4,"middle",6)
                 //,new WorldDescription.Connection("rightleg",2,"middle",4)
-        });*/
+        });*/       
         return world;
     }
     
