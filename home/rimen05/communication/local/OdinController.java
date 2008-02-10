@@ -10,19 +10,25 @@ import java.util.Random;
 /**
  * A simple controller for the ODIN robot, oscillates OdinMuscles with a random start state 
  * 
- * @author david
+ * @author david (franco's mods)
  *
  */
-public class OdinSampleController1 extends OdinController {
+public class OdinController extends ussr.samples.odin.OdinController {
 	
 	static Random rand = new Random(System.currentTimeMillis());
     float timeOffset=0;
     byte[] msg = {0};
     int color = 0;
-    public OdinSampleController1(String type) {
+    
+    /**
+     * Constructor.
+     * @param type
+     */
+    public OdinController(String type) {
     	this.type =type;
     	timeOffset = 100*rand.nextFloat();
     }
+    
 	/**
      * @see ussr.model.ControllerImpl#activate()
      */

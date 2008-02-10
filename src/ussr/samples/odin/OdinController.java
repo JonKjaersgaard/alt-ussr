@@ -124,7 +124,7 @@ public abstract class OdinController extends ControllerImpl implements PacketRec
     	}
     }
     /**
-     * Controllers should generally overwrite this method to receieve messages 
+     * Controllers should generally overwrite this method to receive messages 
      * @param message
      * @param messageSize
      * @param channel
@@ -132,6 +132,7 @@ public abstract class OdinController extends ControllerImpl implements PacketRec
     public void handleMessage(byte[] message, int messageSize, int channel) {
     	System.out.println("Message recieved please overwrite this method");
     }
+    
     private byte read(String name) {
         for(Sensor sensor: module.getSensors()) {
             if(name.equals(sensor.getName())) {

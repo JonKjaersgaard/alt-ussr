@@ -26,7 +26,7 @@ import ussr.samples.odin.OdinSampleController1;
 /**
  * simulation of local communication for Odin
  * 
- * @author franco
+ * @author david (franco's mods)
  *
  */
 public class OdinSimulation extends GenericSimulation {
