@@ -49,24 +49,20 @@ public class OdinSimulation extends GenericSimulation {
         
         simulation.setRobot(new OdinMuscle(){
         	public Controller createController() {
-        		return new OdinController("OdinMuscle",false);
+        		return new OdinController("OdinMuscle");
+        		//Here it is created a constructor and
+        		//and defined a function.
         	}},"OdinMuscle");
         
         simulation.setRobot(new OdinBall(){
         	public Controller createController() {
-        		return new OdinController("OdinBall",false);
+        		return new OdinController("OdinBall");
         	}},"OdinBall");
         
         //Here we call another overwritten method.
         if(world==null) world = createWorld();
         simulation.setWorld(world);
         simulation.setPause(startPaused);
-
-        //Here I have to set one and just one module with color white.
-    	/*List<Module> modules = simulation.getModules();
-    	Random rand = new Random();
-        int pos = rand.nextInt(modules.size());
-        int id = (modules.get(pos)).getID();*/
         
         // Start
         simulation.start();

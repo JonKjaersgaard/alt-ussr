@@ -20,9 +20,11 @@ import ussr.model.Module;
 public class OdinController extends ussr.samples.odin.OdinController {
 	
 	static Random rand = new Random(System.currentTimeMillis());
+    static int id = -1; //store the module's id for origin of local comm. 
     float timeOffset=0;
     byte[] msg = {0};
     int color = 0;
+    //We can also access modules, which is protected.
     
     //These members control the diffusion process.
     float pe = 0.1f; //pe from 0 to 1;
@@ -31,22 +33,15 @@ public class OdinController extends ussr.samples.odin.OdinController {
      * Constructor.
      * @param type
      */
-    public OdinController(String type, boolean origin) {
+    public OdinController(String type) {
     	this.type = type;
     	timeOffset = 100*rand.nextFloat();
     	//I use it to set a traffic that makes difficult the information diffusion.
     	if(type == "OdinMuscle"){
-    		if(origin){
-    			color = 3;
-    			//If color == 3 (white) the module is
-    			//the origin of local communication.
-    		}
-    		else{ //Here embed the probability...
-    			if(rand.nextInt((int)(1/pe))==0){
-    				color = 1;
-        			//If color == 1 (green) the module is
-    				//set to increase communication traffic.
-    			}
+    		if(rand.nextInt((int)(1/pe))==0){
+    			color = 1;
+        		//If color == 1 (green) the module is
+    			//set to increase communication traffic.
     		}
     	}
     }
@@ -58,8 +53,33 @@ public class OdinController extends ussr.samples.odin.OdinController {
     	while(module.getSimulation().isPaused()) Thread.yield();
     	delay(1000);
     	
+    	//These should be done once.
+    	if(id == -1){
+            //Here I have to set one and just one module with color white.
+        	List<Module> modules = module.getSimulation().getModules();
+        	boolean idNotAssigned = true;
+        	int pos = 0;
+        	while(idNotAssigned){
+                pos = rand.nextInt(modules.size());
+                OdinController controller = (OdinController)(modules.get(pos)).getController(); 
+                if(controller.type=="OdinMuscle"){
+                	id = modules.get(pos).getID();
+                	idNotAssigned = false;
+                	//System.out.println("id = "+id);
+                }
+        	}
+
+    	}
     	
-    	
+		if(module.getID()==id){
+			color = 3;
+			//If color == 3 (white) the module is
+			//the origin of local communication.
+		}
+		
+		//System.out.println("id = "+id);
+		//System.out.println("size = "+module.getSimulation().getModules().size());
+		
     	if(type=="OdinMuscle") muscleControl();
     	if(type=="OdinBall") ballControl();
 	}
@@ -129,9 +149,15 @@ public class OdinController extends ussr.samples.odin.OdinController {
     	//Here I have to check the message connector and diffuse the information.
     	//float lastTime = module.getSimulation().getTime();
     	//if((lastTime+5)<module.getSimulation().getTime()){
-    		if(message[0]=='g' && color!=1){
+    		/*if(message[0]=='g' && color!=1){
         		color = 1;
         		setColor(0, 1, 0);
+        		//if(channel == 0) sendMessage(message, (byte)messageSize,(byte)1);
+        		//if(channel == 1) sendMessage(message, (byte)messageSize,(byte)0);
+        	}*/
+    		if(message[0]=='w' && color!=3){
+        		color = 3;
+        		//setColor(1, 1, 1);
         		//if(channel == 0) sendMessage(message, (byte)messageSize,(byte)1);
         		//if(channel == 1) sendMessage(message, (byte)messageSize,(byte)0);
         	}
