@@ -21,7 +21,7 @@ import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.GenericSimulation;
 import ussr.samples.odin.OdinMuscle;
 import ussr.samples.odin.OdinBall;
-import ussr.samples.odin.OdinSampleController1;
+//import ussr.samples.odin.OdinSampleController1;
 
 /**
  * simulation of local communication for Odin
@@ -46,15 +46,15 @@ public class OdinSimulation extends GenericSimulation {
         
         simulation.setRobot(new OdinMuscle(){
         	public Controller createController() {
-        		return new OdinSampleController1("OdinMuscle");
+        		return new OdinController("OdinMuscle");
         	}},"OdinMuscle");
         
         simulation.setRobot(new OdinBall(){
         	public Controller createController() {
-        		return new OdinSampleController1("OdinBall");
+        		return new OdinController("OdinBall");
         	}},"OdinBall");
         
-        //Here we call an overwritten method.
+        //Here we call another overwritten method.
         if(world==null) world = createWorld();
         simulation.setWorld(world);
         simulation.setPause(startPaused);
@@ -113,7 +113,9 @@ public class OdinSimulation extends GenericSimulation {
         world.setModuleConnections(connections);
         System.out.println("#Balls Placed  = "+ballPos.size());
         System.out.println("#Module Placed = "+modulePos.size());
+        //Watch out...
         modulePos.addAll(ballPos);
+        //I set the positions of links and balls...
         world.setModulePositions(modulePos);
         System.out.println("#Total         = "+modulePos.size());
         /*world.setModuleConnections(new WorldDescription.Connection[] {
