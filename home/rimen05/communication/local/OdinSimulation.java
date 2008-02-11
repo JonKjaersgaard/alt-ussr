@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.jme.math.Quaternion;
+
 import ussr.model.Controller;
 import ussr.model.Module;
 import ussr.physics.PhysicsFactory;
@@ -68,12 +70,92 @@ public class OdinSimulation extends GenericSimulation {
         simulation.start();
     }
     
+    private static WorldDescription createWorld() {
+    	WorldDescription world = new WorldDescription();
+        world.setPlaneSize(5);
+        ArrayList<ModulePosition> ballPos = new ArrayList<ModulePosition>();
+        ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
+        //printConnectorPos();
+        int index=0;
+        //int nBalls=0,xMax=0, yMax=0,zMax=0; modulePos.add(new WorldDescription.ModulePosition("0","OdinMuscle", new VectorDescription(0,0,0), new RotationDescription(0,0,0)));
+        //int nBalls=2, xMax=1, yMax=2,zMax=2;
+        //int nBalls=3, xMax=3, yMax=2,zMax=2;
+        //int nBalls=5, xMax=5, yMax=5,zMax=5;
+        int nBalls=4, xMax=3, yMax=2,zMax=2;
+        //int nBalls=10, xMax=3, yMax=2,zMax=3;
+        //int nBalls=7, xMax=4, yMax=2,zMax=8;
+       //int nBalls=20, xMax=4, yMax=4,zMax=4;
+        for(int x=0;x<xMax;x++) {
+        	for(int y=0;y<yMax;y++) {
+        		for(int z=0;z<zMax;z++) {
+        			if((x+y+z)%2==0) {
+        				VectorDescription pos = new VectorDescription(x*unit,y*unit-0.48f,z*unit);
+        				if(index<nBalls) {
+       						ballPos.add(new ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
+        				}
+    	        		index++;
+        			}
+        		}
+        	}
+        }
+        for(int i=0;i<ballPos.size();i++) {
+        	for(int j=i+1;j<ballPos.size();j++) {
+        		if(isNeighborBalls(ballPos.get(i),ballPos.get(j))) {
+        			VectorDescription pos = posFromBalls(ballPos.get(i),ballPos.get(j));
+        			RotationDescription rot = rotFromBalls(ballPos.get(i),ballPos.get(j));
+        			if(index%2==0) {
+        				Quaternion q = new Quaternion();
+        				q.fromAngles(pi/2, 0, 0);
+        				rot.setRotation(rot.getRotation().mult(q));
+        				
+        			}
+        			//modulePos.add(new ModulePosition(Integer.toString(index),"OdinHinge", pos, rot));
+        			modulePos.add(new ModulePosition(Integer.toString(index),"OdinMuscle", pos, rot));
+        			//if(index%2==0) modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinMuscle", pos, rot));
+        			//if(index%2==0) modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinBattery", pos, rot));
+        			//else modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinWheel", pos, rot));
+        			index++;
+        			//System.out.println("Ball "+i+" and ball "+j+" are neighbors");
+        		}
+        	}
+        }
+       ArrayList<ModuleConnection> connections = allConnections(ballPos,modulePos);
+       System.out.println("#connection found = "+connections.size());
+       world.setModuleConnections(connections);
+        System.out.println("#Balls Placed  = "+ballPos.size());
+        System.out.println("#Module Placed = "+modulePos.size());
+        
+        /*
+        float half = (float)(Math.PI);
+    	float quart = (float)(0.5*Math.PI);
+    	float eigth = (float)(0.25*Math.PI);
+    	
+    	float unit = 0.08f;//8 cm between two lattice positions on physical atrons
+    	RotationDescription rotation_NS = new RotationDescription(0,0,eigth+quart);//(0,0,eigth);
+    	RotationDescription rotation_SN = new RotationDescription(0,half,eigth);
+    	RotationDescription rotation_UD = new RotationDescription(quart,eigth,0);
+    	RotationDescription rotation_EW = new RotationDescription(new VectorDescription(eigth,0,0),new VectorDescription(0,quart,0));
+    	
+    	float Yoffset = 0.25f-0.5f;
+        
+        modulePos.add(new WorldDescription.ModulePosition("wheel4", "ATRON", new VectorDescription(1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));*/
+        
+       modulePos.addAll(ballPos);
+        world.setModulePositions(modulePos);
+        System.out.println("#Total         = "+modulePos.size());
+        /*world.setModuleConnections(new WorldDescription.Connection[] {
+              //  new WorldDescription.Connection("leftleg",4,"middle",6)
+                //,new WorldDescription.Connection("rightleg",2,"middle",4)
+        });*/
+        return world;
+    }
+    
     /**
      * Create a world description for our simulation
      * @return the world description
      */
     //Here the abstract method is overwritten.
-    private static WorldDescription createWorld() {
+    /*private static WorldDescription createWorld() {
     	WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
         //Generic's
@@ -86,10 +168,11 @@ public class OdinSimulation extends GenericSimulation {
        // int nBalls=3, xMax=3, yMax=2,zMax=2;
        // int nBalls=4, xMax=3, yMax=2,zMax=2;
        //int nBalls=8, xMax=3, yMax=2,zMax=2;
-        int nBalls=14, xMax=3, yMax=3,zMax=3;
+        //int nBalls=14, xMax=3, yMax=3,zMax=3;
         //int nBalls=4, xMax=2, yMax=2,zMax=2; //With this parameters I form a tetrahedron.
         //Number of balls and maximum distance between them over each axis - 1?
         //int nBalls=80, xMax=5, yMax=5,zMax=5; // Max on Ulrik's machine
+        int nBalls=20, xMax=8, yMax=8,zMax=1;
         for(int x=0;x<xMax;x++) {
         	for(int y=0;y<yMax;y++) {
         		for(int z=0;z<zMax;z++) {
@@ -122,13 +205,9 @@ public class OdinSimulation extends GenericSimulation {
         modulePos.addAll(ballPos);
         //I set the positions of links and balls...
         world.setModulePositions(modulePos);
-        System.out.println("#Total         = "+modulePos.size());
-        /*world.setModuleConnections(new WorldDescription.Connection[] {
-              //  new WorldDescription.Connection("leftleg",4,"middle",6)
-                //,new WorldDescription.Connection("rightleg",2,"middle",4)
-        });*/       
+        System.out.println("#Total         = "+modulePos.size());     
         return world;
-    }
+    }*/
     
     private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> ballPos, ArrayList<ModulePosition> modulePos) {
     	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();

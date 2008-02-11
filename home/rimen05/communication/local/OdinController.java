@@ -12,7 +12,7 @@ import ussr.model.Module;
 
 /**
  * A simple controller for the ODIN robot, oscillates OdinMuscles with a random start
- * state. 
+ * state. The modules are links and joints.
  * 
  * @author david (franco's mods)
  *
@@ -20,17 +20,21 @@ import ussr.model.Module;
 public class OdinController extends ussr.samples.odin.OdinController {
 	
 	static Random rand = new Random(System.currentTimeMillis());
-    static int id = -1; //store the module's id for origin of local comm. 
+
     float timeOffset=0;
     byte[] msg = {0};
     int color = 0;
-    //We can also access modules, which is protected.
-    
-    //These members control the diffusion process.
     float pe = 0.1f; //pe from 0 to 1;
+    static int id = -1; //store the module's id for origin of local communication.
+    int channelOut = -1;
+    //We can also access modules, which is protected.
         
     /**
-     * Constructor.
+     * Constructor. In this constructor I decide if the module have
+     * color=1 (green), which are the modules that send information
+     * to their neighbours without propagating it (just to establish
+     * a communication traffic).
+     * 
      * @param type
      */
     public OdinController(String type) {
@@ -47,6 +51,9 @@ public class OdinController extends ussr.samples.odin.OdinController {
     }
     
 	/**
+	 * In this method I create one muscle module with color=3 (white) which
+	 * is suppose to begin the information diffusion process.
+	 * 
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
@@ -85,11 +92,7 @@ public class OdinController extends ussr.samples.odin.OdinController {
 	}
     
     /**
-     * Right now, this method is sending messages every 5 seconds,
-     * but I should send messages just when determined by a reception
-     * of message or when I set it on the simulation.
-     * 
-     * Now, this method just oscillates the modules.
+     * This method propagates the information.
      */
     public void muscleControl() {
     	float lastTime = module.getSimulation().getTime();
@@ -98,44 +101,46 @@ public class OdinController extends ussr.samples.odin.OdinController {
     		//float time = module.getSimulation().getTime()+timeOffset;
     		//actuate((float)(Math.sin(time)+1)/2f);
 			module.getSimulation().waitForPhysicsStep(false);
+			
 			if((lastTime+5)<module.getSimulation().getTime()){
+				
+				switch(color){
+			    case 1:
+			    	setColor(0,1,0);//paint green
+			    	msg[0] = 'g';
+			    	doDif = true;
+			    	break;
+			    case 3://The origin of the comm and Imods are here.
+			    	setColor(1,1,1);//paint white
+			    	msg[0] = 'w';
+			    	doDif = true;
+			    	break;
+			    }
+				
 				if(doDif){
-					//Then I have to do it selective..
+					/*if(channelOut==-1 && color==3){
+						sendMessage(msg, (byte)msg.length,(byte)0);
+						sendMessage(msg, (byte)msg.length,(byte)1);
+					}
+					
+					if(channelOut==1){
+						sendMessage(msg, (byte)msg.length,(byte)0);
+					}*/
+					//I have to do it selectively...
 					sendMessage(msg, (byte)msg.length,(byte)0);
 					sendMessage(msg, (byte)msg.length,(byte)1);
 				}
-				if(color==1){
-					setColor(0, 1, 0); //paint green
-					msg[0] = 'g';
-					doDif = true;
-					color = 0;
-				}
-				if(color==3){
-					setColor(1,1,1); //paint white
-					msg[0] = 'w';
-					doDif = true;
-					color = 0;
-				}
 				lastTime = module.getSimulation().getTime();
+				
 			}
-			/*if((lastTime+5)<module.getSimulation().getTime()) {
-				if(color==0) msg[0] = 'r';
-				if(color==1) msg[0] = 'g';
-				if(color==2) msg[0] = 'b';
-				color=(color+1)%3;
-				//I send the message through connector 0...
-				sendMessage(msg, (byte)msg.length,(byte)0);
-				//I send the message through connector 1...
-		    	//sendMessage(msg, (byte)msg.length,(byte)1);
-		    	lastTime = module.getSimulation().getTime();
-			}*/
         }
     }
     
     public void ballControl() {
     	while(true) {
         	try {
-                Thread.sleep(10000);
+                //Thread.sleep(10000);
+        		Thread.sleep(10000);
             } catch (InterruptedException e) {
                 throw new Error("unexpected");
             }
@@ -156,15 +161,11 @@ public class OdinController extends ussr.samples.odin.OdinController {
         		//if(channel == 1) sendMessage(message, (byte)messageSize,(byte)0);
         	}*/
     		if(message[0]=='w' && color!=3){
+    			//Local communication received.
         		color = 3;
-        		//setColor(1, 1, 1);
-        		//if(channel == 0) sendMessage(message, (byte)messageSize,(byte)1);
-        		//if(channel == 1) sendMessage(message, (byte)messageSize,(byte)0);
+        		if(channel == 0) channelOut=1;
+        		else channelOut=0;
         	}
-    	//}
-    	
-   		//if(message[0]=='r') setColor(1, 0, 0);
-   		//if(message[0]=='g') setColor(0, 1, 0);
-   		//if(message[0]=='b') setColor(0, 0, 1);
+    	//}	
     }
 }
