@@ -70,9 +70,17 @@ public class OdinSimulation extends GenericSimulation {
         simulation.start();
     }
     
+    /**
+     * Create a world description for our simulation
+     * @return the world description
+     */
+    //Here the abstract method is overwritten. 
     private static WorldDescription createWorld() {
     	WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
+        //
+        world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+        //
         ArrayList<ModulePosition> ballPos = new ArrayList<ModulePosition>();
         ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
         //printConnectorPos();
@@ -81,15 +89,21 @@ public class OdinSimulation extends GenericSimulation {
         //int nBalls=2, xMax=1, yMax=2,zMax=2;
         //int nBalls=3, xMax=3, yMax=2,zMax=2;
         //int nBalls=5, xMax=5, yMax=5,zMax=5;
-        int nBalls=4, xMax=3, yMax=2,zMax=2;
+        //int nBalls=4, xMax=3, yMax=2,zMax=2;
         //int nBalls=10, xMax=3, yMax=2,zMax=3;
         //int nBalls=7, xMax=4, yMax=2,zMax=8;
-       //int nBalls=20, xMax=4, yMax=4,zMax=4;
+        //int nBalls=20, xMax=4, yMax=4,zMax=4;
+        
+        
+        int nBalls=100, xMax=10, yMax=1,zMax=10; //Plane
+        //int nBalls=40, xMax=4, yMax=3,zMax=4; //Cube
+        
         for(int x=0;x<xMax;x++) {
         	for(int y=0;y<yMax;y++) {
         		for(int z=0;z<zMax;z++) {
         			if((x+y+z)%2==0) {
-        				VectorDescription pos = new VectorDescription(x*unit,y*unit-0.48f,z*unit);
+        				//VectorDescription pos = new VectorDescription(x*unit,y*unit-0.48f,z*unit);
+        				VectorDescription pos = new VectorDescription(x*unit,y*unit-0.47f,z*unit);
         				if(index<nBalls) {
        						ballPos.add(new ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
         				}
@@ -149,66 +163,7 @@ public class OdinSimulation extends GenericSimulation {
         });*/
         return world;
     }
-    
-    /**
-     * Create a world description for our simulation
-     * @return the world description
-     */
-    //Here the abstract method is overwritten.
-    /*private static WorldDescription createWorld() {
-    	WorldDescription world = new WorldDescription();
-        world.setPlaneSize(5);
-        //Generic's
-        ArrayList<ModulePosition> ballPos = new ArrayList<ModulePosition>();
-        ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
-        //printConnectorPos();
-        int index=0;
-        //int nBalls=0,xMax=0, yMax=0,zMax=0; modulePos.add(new WorldDescription.ModulePosition("0","OdinMuscle", new VectorDescription(0,0,0), new RotationDescription(0,0,0)));
-        //int nBalls=2, xMax=1, yMax=2,zMax=2;
-       // int nBalls=3, xMax=3, yMax=2,zMax=2;
-       // int nBalls=4, xMax=3, yMax=2,zMax=2;
-       //int nBalls=8, xMax=3, yMax=2,zMax=2;
-        //int nBalls=14, xMax=3, yMax=3,zMax=3;
-        //int nBalls=4, xMax=2, yMax=2,zMax=2; //With this parameters I form a tetrahedron.
-        //Number of balls and maximum distance between them over each axis - 1?
-        //int nBalls=80, xMax=5, yMax=5,zMax=5; // Max on Ulrik's machine
-        int nBalls=20, xMax=8, yMax=8,zMax=1;
-        for(int x=0;x<xMax;x++) {
-        	for(int y=0;y<yMax;y++) {
-        		for(int z=0;z<zMax;z++) {
-        			if((x+y+z)%2==0) { //This should be lattice related.
-        				VectorDescription pos = new VectorDescription(x*unit,y*unit,z*unit);
-        				if(index<nBalls) {
-       						ballPos.add(new ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
-        				}
-    	        		index++;
-        			}
-        		}
-        	}
-        }
-        for(int i=0;i<ballPos.size();i++) {
-        	for(int j=i+1;j<ballPos.size();j++) {
-        		if(isNeighborBalls(ballPos.get(i),ballPos.get(j))) {
-        			VectorDescription pos = posFromBalls(ballPos.get(i),ballPos.get(j));//Get position for the link.
-        			RotationDescription rot = rotFromBalls(ballPos.get(i),ballPos.get(j));//Get rotation for the link.
-        			modulePos.add(new ModulePosition(Integer.toString(index),"OdinMuscle", pos, rot));
-        			index++;
-        			//System.out.println("Ball "+i+" and ball "+j+" are neighbors");
-        		}
-        	}
-        }
-        ArrayList<ModuleConnection> connections = allConnections(ballPos,modulePos);
-        world.setModuleConnections(connections);
-        System.out.println("#Balls Placed  = "+ballPos.size());
-        System.out.println("#Module Placed = "+modulePos.size());
-        //Watch out...
-        modulePos.addAll(ballPos);
-        //I set the positions of links and balls...
-        world.setModulePositions(modulePos);
-        System.out.println("#Total         = "+modulePos.size());     
-        return world;
-    }*/
-    
+       
     private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> ballPos, ArrayList<ModulePosition> modulePos) {
     	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
     	for(int i=0;i<ballPos.size();i++) {
@@ -245,11 +200,13 @@ public class OdinSimulation extends GenericSimulation {
 	
 	public static boolean isConnectable(ModulePosition ball, ModulePosition module) {
     	float dist = ball.getPosition().distance(module.getPosition());
+    	if(dist-Math.abs(Math.sqrt(2*unit*unit))/2<0.0000001) return true;
     	return dist==(float)Math.sqrt(2*unit*unit)/2;
     }
 	
 	public static boolean isNeighborBalls(ModulePosition ball1, ModulePosition ball2) {
     	float dist = ball1.getPosition().distance(ball2.getPosition());
+    	if(dist-Math.abs(Math.sqrt(2*unit*unit))<0.0000001) return true;
     	return dist==(float)Math.sqrt(2*unit*unit);
     }
 	

@@ -102,36 +102,36 @@ public class OdinController extends ussr.samples.odin.OdinController {
     		//actuate((float)(Math.sin(time)+1)/2f);
 			module.getSimulation().waitForPhysicsStep(false);
 			
-			if((lastTime+5)<module.getSimulation().getTime()){
+			if((lastTime+0.5)<module.getSimulation().getTime()){
 				
 				switch(color){
 			    case 1:
-			    	setColor(0,1,0);//paint green
+			    	//setColor(0,1,0);//paint green
 			    	msg[0] = 'g';
 			    	doDif = true;
 			    	break;
 			    case 3://The origin of the comm and Imods are here.
-			    	setColor(1,1,1);//paint white
-			    	msg[0] = 'w';
+			    	setColor(0.5f,0.5f,1);//paint white
+			    	msg[0] = 'l';
 			    	doDif = true;
 			    	break;
 			    }
 				
 				if(doDif){
-					/*if(channelOut==-1 && color==3){
-						sendMessage(msg, (byte)msg.length,(byte)0);
-						sendMessage(msg, (byte)msg.length,(byte)1);
+					if(channelOut==-1){
+						if(color==3){
+							sendMessage(msg, (byte)msg.length,(byte)0);
+							sendMessage(msg, (byte)msg.length,(byte)1);
+						}
 					}
-					
-					if(channelOut==1){
-						sendMessage(msg, (byte)msg.length,(byte)0);
-					}*/
+					else{
+						sendMessage(msg, (byte)msg.length,(byte)channelOut);
+					}
 					//I have to do it selectively...
-					sendMessage(msg, (byte)msg.length,(byte)0);
-					sendMessage(msg, (byte)msg.length,(byte)1);
+					//sendMessage(msg, (byte)msg.length,(byte)0);
+					//sendMessage(msg, (byte)msg.length,(byte)1);
 				}
 				lastTime = module.getSimulation().getTime();
-				
 			}
         }
     }
@@ -160,7 +160,7 @@ public class OdinController extends ussr.samples.odin.OdinController {
         		//if(channel == 0) sendMessage(message, (byte)messageSize,(byte)1);
         		//if(channel == 1) sendMessage(message, (byte)messageSize,(byte)0);
         	}*/
-    		if(message[0]=='w' && color!=3){
+    		if(message[0]=='l' && color!=3){
     			//Local communication received.
         		color = 3;
         		if(channel == 0) channelOut=1;
