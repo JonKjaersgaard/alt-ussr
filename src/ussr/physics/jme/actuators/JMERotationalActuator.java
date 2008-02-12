@@ -136,8 +136,12 @@ public class JMERotationalActuator implements PhysicsActuator {
 			PhysicsLogger.log("Actuator is not yet setup!");
 			return false;
 		}
-		if(goal==-1 && unlimitedRotation) axis.setDesiredVelocity(-maxVelocity); 
-		else if(goal==1  && unlimitedRotation) axis.setDesiredVelocity(maxVelocity);
+		if(goal==-1) {
+			axis.setDesiredVelocity(-maxVelocity);
+		}
+		else if(goal==1) {
+			axis.setDesiredVelocity(maxVelocity);
+		}
 		else { //go for position
 			float error = goal-getEncoderValue();
 			//System.out.println("goal = "+goal+" current = "+getEncoderValue()+" error = "+error);
@@ -145,6 +149,7 @@ public class JMERotationalActuator implements PhysicsActuator {
 				disactivate(); //at goal stop
 			}
 			else {
+				//TODO bug MTRAN does not work with this controller - why?
 				float output = Math.abs(controller.getOutput(goal, getEncoderValue()));
 				output = (Math.abs(error)<0.5?1:-1)*(error>0?1:-1)*(output>1?1:output);
 				float desiredVel =  maxVelocity*output;
