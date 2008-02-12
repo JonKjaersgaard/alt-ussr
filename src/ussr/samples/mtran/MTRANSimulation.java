@@ -11,6 +11,7 @@ import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
+import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.robotbuildingblocks.ModuleConnection;
 import ussr.robotbuildingblocks.ModulePosition;
@@ -27,7 +28,7 @@ import ussr.samples.GenericSimulation;
  *
  */
 public abstract class MTRANSimulation extends GenericSimulation implements PhysicsObserver {
-	private static float unit = 0.04f;//(float)Math.sqrt((0.18f*0.18f)/2);
+	private static float unit = 0.21f;//(float)Math.sqrt((0.18f*0.18f)/2);
 	private static float pi = (float)Math.PI;
     public static PhysicsSimulation simulation;
     
@@ -46,13 +47,15 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
         this.changeWorldHook(world);
         simulation.setWorld(world);
         simulation.setPause(startPaused);
-        
         simulation.subscribePhysicsTimestep(this);
+        
         simulation.start();
     }
 	protected void changeWorldHook(WorldDescription world) {
 		world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
 		world.setHasBackgroundScenery(false);
+		PhysicsParameters.get().setPhysicsSimulationStepSize(0.005f);
+		PhysicsParameters.get().setWorldDampingLinearVelocity(0.9f);
     }
 	/**
      * Create a world description for our simulation
@@ -70,34 +73,54 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
 		System.out.println("#Total         = "+modulePos.size());
 		return world;
     }
+    public static final RotationDescription ORI1 = new RotationDescription(pi,0,0);
+    public static final RotationDescription ORI2 = new RotationDescription(-pi/2,0,0);
+    public static final RotationDescription ORI3 = new RotationDescription(pi,0,pi/2);
 	private static void constructRobot() {
-		addModule(0,0,0);
-		//addModule(1,0,0);
+		addModule(0,0,0,ORI2);
+		addModule(2,0,0,ORI2);
+		addModule(4,0,0,ORI2);
+		addModule(6,0,0,ORI2);
+		addModule(8,0,0,ORI2);
+		addModule(10,0,0,ORI2);
+		addModule(12,0,0,ORI2);
+		addModule(14,0,0,ORI2);
+		
+		//addModule(-4,0,0,ORI3);
+		/*addModule(2,0,0);
+		addModule(4,0,0);
+		addModule(6,0,0);
+		
+		addModule(1,0,2);
+		addModule(3,0,2);
+		addModule(5,0,2);
+		addModule(7,0,2);*/
+
 		
     }
-    private static void addModule(int x, int y, int z) {
-    	VectorDescription pos = new VectorDescription(x*unit,y*unit-0.47f,z*unit);
+    private static void addModule(int x, int y, int z, RotationDescription ori) {
+    	VectorDescription pos = new VectorDescription(x*unit/2,y*unit/2-0.43f,z*unit/2);
     	//RotationDescription rot = rotFromBalls(ballPos.get(i),ballPos.get(j));
-    	modulePos.add(new ModulePosition(Integer.toString(constructIndex),"MTRAN", pos, new RotationDescription(pi,0,0)));
+    	modulePos.add(new ModulePosition(Integer.toString(constructIndex),"MTRAN", pos, ori));
     	if(printContrutionProgram) System.out.println("addBall("+x+", "+y+", "+z+");");
     	constructIndex++;
 	}
-	private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
+    private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
     	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
+    	//System.out.println("modulePos.size()"+modulePos.size());
     	for(int i=0;i<modulePos.size();i++) {
-    		for(int j=0;j<modulePos.size();j++) {
-    			if(false&&isConnectable(modulePos.get(i), modulePos.get(j))) {
+    		for(int j=i+1;j<modulePos.size();j++) {
+    			if(isConnectable(modulePos.get(i), modulePos.get(j))) {
+    				System.out.println("Found connection from module "+modulePos.get(i).getName()+" to "+modulePos.get(j).getName());
     				connections.add(new ModuleConnection(modulePos.get(i).getName(),modulePos.get(j).getName()));
     			}
     		}
     	}
 		return connections;
 	}
-
-	public static boolean isConnectable(ModulePosition ball, ModulePosition module) {
-    	float dist = ball.getPosition().distance(module.getPosition());
-    	if(dist-Math.abs(Math.sqrt(2*unit*unit))/2<0.0000001) return true;
-    	return dist==(float)Math.sqrt(2*unit*unit)/2;
+	public static boolean isConnectable(ModulePosition m1, ModulePosition m2) {
+    	float dist = m1.getPosition().distance(m2.getPosition());
+    	return Math.abs(dist-unit)<0.01f;
     }
 
     public static void printConnectorPos() {

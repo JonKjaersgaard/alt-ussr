@@ -39,8 +39,8 @@ public abstract class MTRANController extends ControllerImpl implements PacketRe
             ussrYield();
         } while(isRotating(actuator)&&blocking);
 	}
-    public float getAngularPosition(int actuator) {
-    	return (float)(module.getActuators().get(actuator).getEncoderValue()*Math.PI*2);
+    public float getEncoderPosition(int actuator) {
+    	return (float)(module.getActuators().get(actuator).getEncoderValue());
     }
     
     public int getAngularPositionDegrees(int actuator) {
