@@ -57,6 +57,7 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
     private DynamicPhysicsNode moduleNode;
     private List<TriMesh> geometries = new ArrayList<TriMesh>();
 
+    
     /**
      * 
      * @param world
@@ -78,16 +79,10 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         world.associateGeometry(moduleNode,shape);
         world.getHelper().setColor(shape,element.getColor());
 
-        // Finalize
-        
-        //PhysicsCapsule cap = moduleNode.createCapsule(""); //erstat med denne form for collision geometrier
-        //cap.setLocalScale(new Vector3f(0.060f,1,0f));
-        //PhysicsMesh mesh = moduleNode.createMesh("");
-        //mesh.copyFrom(triMesh);
         moduleNode.setIsCollidable(true);
-        //moduleNode.generatePhysicsGeometry(false);
-   		moduleNode.generatePhysicsGeometry(element.getAccurateCollisionDetection());
-   		moduleNode.computeMass(); //do we always want to do that?
+        moduleNode.generatePhysicsGeometry(element.getAccurateCollisionDetection());
+   		//moduleNode.computeMass(); //do we always want to do that?
+   		
    		world.getRootNode().attachChild( moduleNode );   
         
         
@@ -211,12 +206,35 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
     public PhysicsSimulationHelper getSimulationHelper() {
         return this.getSimulation().getHelper();
     }
+    
+    Quaternion localRotation = new Quaternion();
+    Vector3f localPosition = new Vector3f();
+    /**
+     * Local means relative to module position
+     * 
+     */
+    public void setLocalPosition(Vector3f p) {
+    	localPosition = p;
+    }
+    public VectorDescription getLocalPosition() {
+    	return new VectorDescription(localPosition);
+    }
+    public void setLocalRotation(Quaternion q) {
+    	localRotation = q;
+    }
+    public RotationDescription getLocalRotation() {
+    	return new RotationDescription(localRotation);
+    }
 	public void setPosition(VectorDescription p) {
+		//getModuleNode().getLocalTranslation().set(p.getX(), p.getY(), p.getZ());
 		getModuleNode().getLocalTranslation().set(p.getX(), p.getY(), p.getZ());
+		getModuleNode().getLocalTranslation().addLocal(localPosition);
+		//moduleNode.setMass(0.2f); //FIXME problem med at sætte masse (ikke her men i factory)
+		System.out.println("Mass now:"+ moduleNode.getMass());
 		getModuleNode().updateWorldVectors();
 	}
 	public void setRotation(RotationDescription p) {
-        getModuleNode().setLocalRotation(new Quaternion(p.getRotation()));
+        getModuleNode().setLocalRotation(new Quaternion(p.getRotation().mult(localRotation)));
 	}
 	public void clearDynamics() {
 		getModuleNode().clearDynamics();
