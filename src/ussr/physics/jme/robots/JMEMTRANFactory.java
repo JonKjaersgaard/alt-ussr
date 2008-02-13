@@ -47,11 +47,11 @@ public class JMEMTRANFactory implements ModuleFactory {
         if(robot.getDescription().getModuleGeometry().size()!=5) throw new RuntimeException("Not an MTRAN");
         createModuleComponents(module, robot, module_id, module_name);
         
+        setMaterials(module, robot,module_name);
         setMass(0.2f,northNode);
         setMass(0.2f,southNode);
         setMass(0.05f,southNode);
         
-        setMaterials(module, robot,module_name);
         setName(module, module_name);
         addActuators(module, northNode, southNode, centerNode);
         
@@ -170,9 +170,10 @@ public class JMEMTRANFactory implements ModuleFactory {
 
 	// Note: calling setMass multiple times is sometimes required, but this
 	// can lead to a stack overflow, hence we have imposed an arbitrary limit...
-	private static final int MAX_FIXED_POINT_MASS = 10;
+	private static final int MAX_FIXED_POINT_MASS = 20;
 	private void setMass(float mass, DynamicPhysicsNode node) {
-	    setMassHelper(mass,node,MAX_FIXED_POINT_MASS);
+	    node.setMass(mass);
+	    //setMassHelper(mass,node,MAX_FIXED_POINT_MASS);
 	}
 	private void setMassHelper(float mass, DynamicPhysicsNode node, int limit) {
 	    if(limit==0) {
