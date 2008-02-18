@@ -29,7 +29,7 @@ public abstract class MTRAN implements Robot {
         description.setType("MTRAN");
         
     	float pi = (float)Math.PI;
-    	float unit = 0.05f;
+    	float unit = 0.065f/2f;
     	//CylinderShape hemi1a = new CylinderShape(unit,2*unit*0.99f,new VectorDescription(-unit,0,0), new RotationDescription(pi/2,-pi/2,0));
         //CylinderShape hemi2a = new CylinderShape(unit,2*unit*0.99f,new VectorDescription(unit,0,0), new RotationDescription(pi/2,-pi/2,0));
     	
@@ -58,7 +58,7 @@ public abstract class MTRAN implements Robot {
         
         description.setModuleGeometry(new GeometryDescription[] {hemi1a, hemi2a,hemi1b, hemi2b,center});
 
-        ConeShape connector = new ConeShape(0.01f,0.1f);
+        ConeShape connector = new ConeShape(0.0025f,0.025f);
         connector.setColor(Color.WHITE);
         description.setConnectorGeometry(new GeometryDescription[] { connector });
         description.setConnectorPositions(new VectorDescription[] {});
