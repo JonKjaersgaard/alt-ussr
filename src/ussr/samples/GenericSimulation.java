@@ -31,7 +31,12 @@ public abstract class GenericSimulation {
      * Property indicating whether connectors should be active or not
      */
     private static boolean connectorsAreActive = false;
-
+    
+    /**
+     * Property indicating whether actuators should be active or not
+     */
+    private static boolean actuatorsAreActive = true;
+    
     protected abstract Robot getRobot();
     protected static PhysicsSimulation simulation;
 
@@ -109,5 +114,13 @@ public abstract class GenericSimulation {
         connectorsAreActive = active;
     }
 
+    public static void setActuatorsAreActive(boolean active) {
+        actuatorsAreActive = true;
+    }
+    
+    public static boolean getActuatorsAreActive() {
+        return actuatorsAreActive;
+    }
+    
 
 }
