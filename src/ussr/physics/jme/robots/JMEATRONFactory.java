@@ -164,7 +164,9 @@ public class JMEATRONFactory implements ModuleFactory {
 	// can lead to a stack overflow, hence we have imposed an arbitrary limit...
 	private static final int MAX_FIXED_POINT_MASS = 10;
 	private void setMass(float mass, DynamicPhysicsNode node) {
-	    setMassHelper(mass,node,MAX_FIXED_POINT_MASS);
+	    //setMassHelper(mass,node,MAX_FIXED_POINT_MASS);
+		node.setMass(mass);
+		//System.out.println("Mass now:"+ node.getMass());
 	}
 	private void setMassHelper(float mass, DynamicPhysicsNode node, int limit) {
 	    if(limit==0) return;
