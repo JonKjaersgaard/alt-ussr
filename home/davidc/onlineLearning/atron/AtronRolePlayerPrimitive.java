@@ -18,19 +18,24 @@ public class AtronRolePlayerPrimitive implements RolePlayer  {
 		return AtronRoles.values().length;
 	} 
 	public void playRole(Role roles) {
-		/*if(controller.getDebugID()==0) role=2;
+		int role=0;
+		if(controller.getDebugID()==0) role=1;
 		if(controller.getDebugID()==1) role=2;
-		if(controller.getDebugID()==2) role=1;
+		if(controller.getDebugID()==2) role=2;
 		if(controller.getDebugID()==3) role=1;
-		if(controller.getDebugID()==4) role=2;
+		
+		if(controller.getDebugID()==4) role=1;
 		if(controller.getDebugID()==5) role=2;
-		if(controller.getDebugID()==6) role=1;
-		if(controller.getDebugID()==7) role=0;*/
+		if(controller.getDebugID()==6) role=2;
+		if(controller.getDebugID()==7) role=1;
+		
+
 		//System.out.println("if(controller.getDebugID()=="+controller.getDebugID()+") role="+role+";");
 		//System.out.println("Role count = "+roles.getRoleCount());
 		
 		if(roles.getRoleCount()>0) {
-			//playCenterRole(roles.getRole(0));
+			playCenterRole(roles.getRole(0));
+		//	playCenterRole(role);
 			//TODO somethings wrong => deadlock? also try to count messages
 		}
 		if(roles.getRoleCount()>1) {
@@ -119,7 +124,7 @@ public class AtronRolePlayerPrimitive implements RolePlayer  {
 			case 2: rotate(-1); break;
 			default: break;
 		}
-		colorFromRole(centerRole);
+		//colorFromRole(centerRole);
 	}
 	private void testFullRotation(int dir) {
     	float startTime = controller.getTime();

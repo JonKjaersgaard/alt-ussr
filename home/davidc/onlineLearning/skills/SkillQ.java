@@ -9,7 +9,7 @@ import onlineLearning.Role;
 public class SkillQ implements Skill {
 	
 	enum RoleSelectionStragegy  {HARDMAX, EPSILON_GREEDY, EPSILON_FIRST, EPSILON_DECREASING, SOFTMAX, RANDOM};
-	static RoleSelectionStragegy selectionStrategy =  RoleSelectionStragegy.RANDOM;
+	static RoleSelectionStragegy selectionStrategy =  RoleSelectionStragegy.EPSILON_GREEDY;
 	
 	enum RewardEstimationStragegy  {LAST, MAX, EMA, MEDIAN};
 	static RewardEstimationStragegy estimationStrategy =  RewardEstimationStragegy.EMA;

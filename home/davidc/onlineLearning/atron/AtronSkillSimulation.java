@@ -18,9 +18,9 @@ public abstract class AtronSkillSimulation extends GenericATRONSimulation {
 
     /*USER PARAMETERS START*/
 	protected static enum ATRONRobots {NONE, ONE, TWOWHEELER, CRAWLER1, CRAWLER2,CAR, SNAKE2, SNAKE3, SNAKE4, SNAKE7, WALKER1, WALKER2, WALKER3, WALKER4, WALKER5,LOOP4, LOOP7, LOOP8};
-	protected static ATRONRobots robotType =  ATRONRobots.WALKER3;
+	protected static ATRONRobots robotType =  ATRONRobots.WALKER1;
 	protected static int nRobots =  1;
-	static boolean loadSkillsFromFile = false;
+	static boolean loadSkillsFromFile = true;
 	static boolean startPaused = false;
 	static boolean realistic = true;
 	static boolean realisticCollision = true;
