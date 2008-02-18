@@ -152,7 +152,7 @@ public class ATRONNetworkController extends ATRONController implements IATRONSPO
 		setDataSend("0");
 	}
 
-	@Override
+	// @Override // Not JDK 1.5 compliant
 	public void controllerYield() {
 		// TODO Auto-generated method stub
 		
@@ -187,7 +187,7 @@ public class ATRONNetworkController extends ATRONController implements IATRONSPO
 		return 0;
 	}
 
-	@Override
+	// @Override // Not JDK 1.5 compliant
 	public byte sendRadioMessage(byte[] message, int destination) {
 		// TODO Auto-generated method stub
 		return 0;
