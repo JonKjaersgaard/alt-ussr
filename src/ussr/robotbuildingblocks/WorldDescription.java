@@ -97,6 +97,11 @@ public class WorldDescription extends Description {
     private boolean hasBackgroundScenery = true;
 
     /**
+     * Light or heavy obstacles?
+     */
+    private boolean heavyObstacles = true;
+    
+    /**
      * Get the number of modules initially placed in the simulation
      * @return number of initial modules
      */
@@ -224,5 +229,19 @@ public class WorldDescription extends Description {
 
     public void setHasBackgroundScenery(boolean hasClouds) {
         this.hasBackgroundScenery = hasClouds;
+    }
+
+    /**
+     * @return the heavyObstacles
+     */
+    public boolean hasHeavyObstacles() {
+        return heavyObstacles;
+    }
+
+    /**
+     * @param heavyObstacles the heavyObstacles to set
+     */
+    public void setHeavyObstacles(boolean heavyObstacles) {
+        this.heavyObstacles = heavyObstacles;
     }
 }
