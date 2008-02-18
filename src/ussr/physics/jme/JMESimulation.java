@@ -11,6 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 
 import ussr.model.Actuator;
@@ -78,7 +80,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     private JMEFactoryHelper factory;    
     private long mainLoopCounter=0;
     private static final float FAROUT_DISTANCE = 50f;
-    private ArrayList<PhysicsObserver> physicsObservers = new ArrayList<PhysicsObserver>();
+    private List<PhysicsObserver> physicsObservers = new CopyOnWriteArrayList();
     
     public JMESimulation(ModuleFactory[] factories) {
         PhysicsParameters parameters = PhysicsParameters.get();
@@ -103,8 +105,9 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 		
         // Create obstacle boxes
         obstacleBoxes = new ArrayList<PhysicsNode>();
+        float obstacleMass = worldDescription.hasHeavyObstacles() ? 100 : 0;
         for(int i=0; i<worldDescription.getObstacles().size();i++)
-            obstacleBoxes.add(helper.createBox(0.05f,0.05f,0.05f,0,false)); //compute mass from size
+            obstacleBoxes.add(helper.createBox(0.05f,0.05f,0.05f,obstacleMass,false)); //compute mass from size
         for(int i=0; i<worldDescription.getBigObstacles().size();i++) {
             VectorDescription size = worldDescription.getBigObstacles().get(i).getSize();
             boolean isHeavy = worldDescription.getBigObstacles().get(i).getIsHeavy();
@@ -119,6 +122,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             final Module module = new Module();
             String robotType = (worldDescription.getModulePositions().size()>0)?worldDescription.getModulePositions().get(i).getType():"default";
             Robot robot = robots.get(robotType);
+            if(robot==null) throw new Error("No definition for robot "+robotType);
             ModulePosition position = worldDescription.getModulePositions().get(i);
             String module_name = position.getName();
             //System.out.println("Creating "+robotType);
@@ -402,21 +406,26 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         }
     }
 
-    public synchronized void subscribePhysicsTimestep(PhysicsObserver observer) {
-    	if(physicsObservers.contains(observer)) throw new RuntimeException();// System.err.println("Warning - same observer added twize");;
-        physicsObservers.add(observer);
+    public void subscribePhysicsTimestep(PhysicsObserver observer) {
+        synchronized(physicsObservers) {
+            if(observer==null) throw new Error("Null observer added");
+            if(physicsObservers.contains(observer)) throw new Error("Duplicate");// System.err.println("Warning - same observer added twize");;
+            physicsObservers.add(observer);
+        }
     }
     
-    public synchronized void unsubscribePhysicsTimestep(PhysicsObserver observer) {
-        physicsObservers.remove(observer);
+    public void unsubscribePhysicsTimestep(PhysicsObserver observer) {
+        synchronized(physicsObservers) {
+            physicsObservers.remove(observer);
+        }
     }
 
     private void physicsCallBack() {
-    	int maxCallBacks = physicsObservers.size();
-        for(int i=0;(i<maxCallBacks)&&(i<physicsObservers.size());i++) {
-        	PhysicsObserver observer = physicsObservers.get(i); 
+        // physicsObservers is guaranteed to copy on write, so we can safely iterate
+        final List<PhysicsObserver> observers = physicsObservers;
+        // Now iterate through the list
+        for(PhysicsObserver observer: observers)
             observer.physicsTimeStepHook(this);
-        }
     }
 
     public DisplaySystem getDisplay() {
@@ -439,7 +448,6 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     public long getPhysicsSteps() { return physicsSteps; }
 
     public float getPhysicsSimulationStepSize() { return physicsSimulationStepSize; }
-
 
 }
 
