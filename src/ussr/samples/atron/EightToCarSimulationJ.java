@@ -123,8 +123,10 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
             while(eight2car_active)
             {
                 super.ussrYield();
-                if(token[0]!=255 && token[0]!=-1)
+                if(token[0]!=255 && token[0]!=-1) {
                     System.out.println("Module "+this.getName()+" in state "+token[0]);
+                    //delay(500);
+                }
                 switch(token[0])
                 {
                 case 0:

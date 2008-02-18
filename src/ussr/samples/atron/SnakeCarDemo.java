@@ -21,6 +21,8 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
     private static final float OBSTACLE_Y_INC = 0.15f;
     private static final float OBSTACLE_SIZE = 0.02f;
     protected void changeWorldHook(WorldDescription world) {
+        world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+        world.setHasBackgroundScenery(false);
         // Override settings from superclass
         System.out.println("Generating circle obstacles");
         BoxDescription[] obstacles = new BoxDescription[N_CIRCLE_OBSTACLES*N_CIRCLE_LAYERS];
@@ -55,7 +57,7 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
     protected class CarStuffController extends EightController {
 
         volatile private int state = 0;
-        int snake_counter = 7;
+        int snake_counter = 4;
 
         @Override
         public void activate_before_eight2car() {
