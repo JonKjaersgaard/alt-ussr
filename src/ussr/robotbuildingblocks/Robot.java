@@ -15,6 +15,11 @@ import ussr.model.Controller;
  *
  */
 public interface Robot {
+    public Robot NO_DEFAULT = new Robot() {
+        public Controller createController() { throw new Error("No default robot definition provided"); }
+        public RobotDescription getDescription() { throw new Error("No default robot definition provided"); }
+    };
+    
     /**
      * Get a description of the hardware (physical characteristics) of the robot
      * @return a description of the robot hardware
