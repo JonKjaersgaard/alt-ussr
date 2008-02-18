@@ -40,6 +40,7 @@ public class ATRONCarController1 extends ATRONController {
         while(true) {
         	
         	if(!module.getSimulation().isPaused()) {
+                if(!GenericSimulation.getActuatorsAreActive()) { ussrYield(); firstTime = true; continue; }
         		String name = module.getProperty("name");
         		if(firstTime) {
                     firstTime = false;
