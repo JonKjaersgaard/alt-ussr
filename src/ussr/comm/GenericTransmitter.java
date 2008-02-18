@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import ussr.model.Entity;
 import ussr.model.Module;
 import ussr.physics.PhysicsEntity;
+import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
@@ -153,7 +154,7 @@ public abstract class GenericTransmitter implements Transmitter {
 			float byteCapacity = maxBytePerTimeStep*timeStepsSinceLastSend;
 			if(byteCapacity>p.getByteSize()||maxBytePerTimeStep==Float.POSITIVE_INFINITY) {
 				if(!send(p)) {
-					System.err.println(module.getID()+": Trying to send a package but no one is there to receive it... removing it from buffer");
+				    PhysicsLogger.logNonCritical(module.getID()+": Trying to send a package but no one is there to receive it... removing it from buffer");
 				}
 				return true;
 			}
