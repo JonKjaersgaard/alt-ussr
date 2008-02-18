@@ -11,7 +11,7 @@ import onlineLearning.utils.DataLogger;
 public class SkillLearner {
 	
 	static enum LearningStrategy {PSO, Q, RANDOM, TIMETABLE,ROLETABLE};
-    LearningStrategy learningStrategy = LearningStrategy.ROLETABLE;
+    LearningStrategy learningStrategy = LearningStrategy.Q;
     
     static int nParticles = 5;
     static boolean parallelLearning = false;
