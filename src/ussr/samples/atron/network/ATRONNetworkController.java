@@ -13,9 +13,11 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import atron.IATRONSPOTController;
+import ussr.samples.atron.ATRONController;
+import ussr.samples.atron.spot.IATRONSPOTController;
 
-public class ATRONNetworkController implements IATRONSPOTController {
+
+public class ATRONNetworkController extends ATRONController implements IATRONSPOTController {
 	protected byte dir = 0;
 	private byte rot = 0;
 	private static Socket socket;
@@ -145,12 +147,6 @@ public class ATRONNetworkController implements IATRONSPOTController {
 	}
   
 
-	private void rotateToDegreeInDegrees(int i) {
-		// TODO Auto-generated method stub
-	
-	}
-
-
 	public void centerStop() {
 		// TODO Auto-generated method stub
 		setDataSend("0");
@@ -195,6 +191,12 @@ public class ATRONNetworkController implements IATRONSPOTController {
 	public byte sendRadioMessage(byte[] message, int destination) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public void activate() {
+		// TODO Auto-generated method stub
+		
 	}
 
 
