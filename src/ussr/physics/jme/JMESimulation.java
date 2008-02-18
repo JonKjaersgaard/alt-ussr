@@ -1,6 +1,5 @@
 package ussr.physics.jme;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,12 +14,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 
-import ussr.model.Actuator;
 import ussr.model.Connector;
 import ussr.model.Module;
-import ussr.model.PhysicsActuator;
 import ussr.physics.ModuleFactory;
-import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
@@ -28,7 +24,6 @@ import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsSimulationHelper;
 import ussr.physics.jme.connectors.JMEBasicConnector;
 import ussr.physics.jme.connectors.JMEConnector;
-import ussr.physics.jme.connectors.JMEMechanicalConnector;
 import ussr.robotbuildingblocks.BoxDescription;
 import ussr.robotbuildingblocks.ModuleConnection;
 import ussr.robotbuildingblocks.ModulePosition;
@@ -44,6 +39,7 @@ import com.jme.input.action.InputAction;
 import com.jme.input.action.InputActionEvent;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
+import com.jme.scene.Node;
 import com.jme.scene.TriMesh;
 import com.jme.system.DisplaySystem;
 import com.jme.util.LoggingSystem;
@@ -311,6 +307,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             //module.reset();
             module.setPosition(p.getPosition());
             module.setRotation(p.getRotation());
+           // module.move();
             module.clearDynamics();
             module.reset();
             

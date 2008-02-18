@@ -226,15 +226,12 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
     	return new RotationDescription(localRotation);
     }
 	public void setPosition(VectorDescription p) {
-		//getModuleNode().getLocalTranslation().set(p.getX(), p.getY(), p.getZ());
-		getModuleNode().getLocalTranslation().set(p.getX(), p.getY(), p.getZ());
-		getModuleNode().getLocalTranslation().addLocal(localPosition);
-		//moduleNode.setMass(0.2f); //FIXME problem med at sætte masse (ikke her men i factory)
-		System.out.println("Mass now:"+ moduleNode.getMass());
+		getModuleNode().getLocalTranslation().set(p.getX(), p.getY(), p.getZ()).addLocal(localPosition);
 		getModuleNode().updateWorldVectors();
 	}
 	public void setRotation(RotationDescription p) {
         getModuleNode().setLocalRotation(new Quaternion(p.getRotation().mult(localRotation)));
+        getModuleNode().updateWorldVectors();
 	}
 	public void clearDynamics() {
 		getModuleNode().clearDynamics();
