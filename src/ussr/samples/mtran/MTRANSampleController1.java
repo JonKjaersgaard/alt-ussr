@@ -27,9 +27,10 @@ public class MTRANSampleController1 extends MTRANController {
      */
     public void activate() {
     	while(module.getSimulation().isPaused()) ussrYield();
+    	ussrYield();
     	System.out.println("MTRAN RUNNING "+module.getID());
     	while(true) {
-    		double goal0 = Math.sin(3*module.getSimulation().getTime()+module.getID());
+    		double goal0 = 0.5f*Math.sin(3*module.getSimulation().getTime()+module.getID()+0.5f);
     		double cur0 =  2*(getEncoderPosition(0)-0.5);
     		if(cur0>goal0) {
     			rotate(-1, 0);
@@ -37,7 +38,7 @@ public class MTRANSampleController1 extends MTRANController {
     			rotate(1, 0);
     		}
     		
-    		double goal1 = -Math.sin(3*module.getSimulation().getTime()+module.getID()+0.5f);
+    		double goal1 = -0.5f*Math.sin(3*module.getSimulation().getTime()+module.getID());
     		double cur1 =  2*(getEncoderPosition(1)-0.5);
     		if(cur1>goal1) {
     			rotate(-1, 1);

@@ -84,7 +84,7 @@ public class JMEMTRANFactory implements ModuleFactory {
         JMEModuleComponent northCylinderComponent = new JMEModuleComponent(simulation,robot,northCylinder,module_name+"_module#"+Integer.toString(module_id)+".north",module,northNode);
         JMEModuleComponent northBoxComponent = new JMEModuleComponent(simulation,robot,northBox,module_name+"_module#"+Integer.toString(module_id)+".north",module,northNode);
         northNode.setName("MTRANNorth");
-        Vector3f localNorthPos = new Vector3f(-0.070f/2,0,0);
+        Vector3f localNorthPos = new Vector3f(-0.075f/2,0,0);
         northNode.getLocalTranslation().set( northNode.getLocalTranslation().add(localNorthPos) );
         northCylinderComponent.setLocalPosition(localNorthPos);
         northBoxComponent.setLocalPosition(localNorthPos);
@@ -93,7 +93,7 @@ public class JMEMTRANFactory implements ModuleFactory {
         JMEModuleComponent southCylinderComponent = new JMEModuleComponent(simulation,robot,southCylinder,module_name+"module#"+Integer.toString(module_id)+".south",module,southNode);
         JMEModuleComponent southBoxComponent = new JMEModuleComponent(simulation,robot,southBox,module_name+"_module#"+Integer.toString(module_id)+".south",module,southNode);
         southNode.setName("MTRANSouth");
-        Vector3f localSouthPos = new Vector3f(0.070f/2,0,0);
+        Vector3f localSouthPos = new Vector3f(0.075f/2,0,0);
         southNode.getLocalTranslation().set( southNode.getLocalTranslation().add(localSouthPos) );
         southCylinderComponent.setLocalPosition(localSouthPos);
         southBoxComponent.setLocalPosition(localSouthPos);
@@ -146,14 +146,14 @@ public class JMEMTRANFactory implements ModuleFactory {
 		JMERotationalActuator northActuator = new JMERotationalActuator(simulation,"north");
         module.addActuator(new Actuator(northActuator));
         northActuator.attach(centerNode,northNode);
-        northActuator.setControlParameters(10f, 2f, -pi/2, pi/2);
+        northActuator.setControlParameters(20, 2f, -pi/2, pi/2);
         northActuator.setPIDParameters(10f, 0, 0);
         northActuator.setDirection(0, 1, 0);
         
         JMERotationalActuator southActuator = new JMERotationalActuator(simulation,"south");
         module.addActuator(new Actuator(southActuator));
         southActuator.attach(centerNode,southNode);
-        southActuator.setControlParameters(10f, 2f, -pi/2, pi/2);
+        southActuator.setControlParameters(20f, 2f, -pi/2, pi/2);
         southActuator.setPIDParameters(10f, 0, 0);
         southActuator.setDirection(0, 1, 0);
 	}
@@ -173,6 +173,7 @@ public class JMEMTRANFactory implements ModuleFactory {
 	private static final int MAX_FIXED_POINT_MASS = 20;
 	private void setMass(float mass, DynamicPhysicsNode node) {
 	    node.setMass(mass);
+	   // System.err.println("Mass set to: "+node.getMass() );
 	    //setMassHelper(mass,node,MAX_FIXED_POINT_MASS);
 	}
 	private void setMassHelper(float mass, DynamicPhysicsNode node, int limit) {

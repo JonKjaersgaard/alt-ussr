@@ -53,12 +53,13 @@ public class MultiRobotSimulation extends GenericSimulation {
     protected float atron_connection_acceptance_range = 0.001f;
     
     // M-TRAN constants
-    private static float unit = 0.065f*2+0.005f;//(float)Math.sqrt((0.18f*0.18f)/2);
+    private static float unit =  0.065f*2+0.01f;//(float)Math.sqrt((0.18f*0.18f)/2);
     
     public static void main( String[] args ) {
         GenericSimulation.setConnectorsAreActive(true);
         MultiRobotSimulation simulation = new MultiRobotSimulation();
         //PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
+        //PhysicsParameters.get().setWorldDampingLinearVelocity(0.9f);
         PhysicsParameters.get().setRealisticCollision(true);
         //PhysicsParameters.get().setPhysicsSimulationStepSize(0.001f);
         simulation.runSimulation(null,true);

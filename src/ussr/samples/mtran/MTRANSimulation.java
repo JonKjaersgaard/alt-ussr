@@ -28,7 +28,7 @@ import ussr.samples.GenericSimulation;
  *
  */
 public abstract class MTRANSimulation extends GenericSimulation implements PhysicsObserver {
-	private static float unit = 0.065f*2+0.005f;
+	private static float unit = 0.065f*2+0.01f;
 	private static float pi = (float)Math.PI;
     public static PhysicsSimulation simulation;
     
@@ -48,7 +48,6 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
         simulation.setWorld(world);
         simulation.setPause(startPaused);
         simulation.subscribePhysicsTimestep(this);
-        
         simulation.start();
     }
 	protected void changeWorldHook(WorldDescription world) {
