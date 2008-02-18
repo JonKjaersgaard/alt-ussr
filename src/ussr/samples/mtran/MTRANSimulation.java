@@ -87,14 +87,6 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
 		addModule(14,0,0,ORI2);
 		
 		//addModule(-4,0,0,ORI3);
-		/*addModule(2,0,0);
-		addModule(4,0,0);
-		addModule(6,0,0);
-		
-		addModule(1,0,2);
-		addModule(3,0,2);
-		addModule(5,0,2);
-		addModule(7,0,2);*/
 
 		
     }
