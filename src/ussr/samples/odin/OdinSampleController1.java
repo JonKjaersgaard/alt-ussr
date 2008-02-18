@@ -7,6 +7,8 @@ package ussr.samples.odin;
 
 import java.util.Random;
 
+import ussr.samples.GenericSimulation;
+
 /**
  * A simple controller for the ODIN robot, oscillates OdinMuscles with a random start state 
  * 
@@ -35,6 +37,7 @@ public class OdinSampleController1 extends OdinController {
     public void muscleControl() {
     	float lastTime = module.getSimulation().getTime();
     	while(true) {
+            if(!GenericSimulation.getActuatorsAreActive()) { ussrYield(); continue; }
     		float time = module.getSimulation().getTime()+timeOffset;
     		actuate((float)(Math.sin(time)+1)/2f);
 			module.getSimulation().waitForPhysicsStep(false);
