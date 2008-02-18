@@ -7,6 +7,8 @@ package ussr.samples.mtran;
 
 import java.util.Random;
 
+import ussr.samples.GenericSimulation;
+
 /**
  * A simple controller for the ODIN robot, ossilates OdinMuscles with a random start state 
  * 
@@ -29,6 +31,8 @@ public class MTRANSampleController1 extends MTRANController {
     	while(module.getSimulation().isPaused()) ussrYield();
     	System.out.println("MTRAN RUNNING "+module.getID());
     	while(true) {
+            ussrYield();
+            if(!GenericSimulation.getActuatorsAreActive()) continue;
     		double goal0 = Math.sin(4*module.getSimulation().getTime()+module.getID());
     		double cur0 =  2*(getEncoderPosition(0)-0.5);
     		//System.out.println(goal+" "+cur);
@@ -59,7 +63,6 @@ public class MTRANSampleController1 extends MTRANController {
     			//rotate(1, 0);
     		}*/
     		
-    		ussrYield();
     	/*	rotate(-1, 0);rotate(-1, 1);delay(1000);
     		rotate(-1, 0);rotate(1, 1);delay(1000);
     		rotate(1, 0);rotate(1, 1);delay(1000);
