@@ -29,6 +29,9 @@ public class RotationDescription {
         v1m.multLocal(q2.toRotationMatrix());
         rotation.fromRotationMatrix(v1m);
     }
+    public RotationDescription() {
+        this(new Quaternion());
+    }
     /**
      * @return the angle
      */
