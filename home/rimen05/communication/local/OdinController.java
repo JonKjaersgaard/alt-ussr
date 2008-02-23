@@ -23,36 +23,28 @@ public class OdinController extends ussr.samples.odin.OdinController {
 
     float timeOffset=0;
     byte[] msg = {0};
-    int color = 0;
+    public int color = 0;
     float pe = 0.1f; //pe from 0 to 1;
-    static int id = -1; //store the module's id for origin of local communication.
+    static boolean idDone = false;
+    static boolean peDone = false;
+    //static int id = -1; //stores the one propagating module id.
     int channelOut = -1;
-    //We can also access modules, which is protected.
+    //We can also access modules, which is a protected attribute of a parent class.
         
     /**
-     * Constructor. In this constructor I decide if the module have
-     * color=1 (green), which are the modules that send information
-     * to their neighbours without propagating it (just to establish
-     * a communication traffic).
+     * Constructor.
      * 
      * @param type
      */
     public OdinController(String type) {
     	this.type = type;
     	timeOffset = 100*rand.nextFloat();
-    	//I use it to set a traffic that makes difficult the information diffusion.
-    	if(type == "OdinMuscle"){
-    		if(rand.nextInt((int)(1/pe))==0){
-    			color = 1;
-        		//If color == 1 (green) the module is
-    			//set to increase communication traffic.
-    		}
-    	}
     }
     
 	/**
 	 * In this method I create one muscle module with color=3 (white) which
 	 * is suppose to begin the information diffusion process.
+	 * Apparently, this method is called when we start the simulation.
 	 * 
      * @see ussr.model.ControllerImpl#activate()
      */
@@ -60,32 +52,52 @@ public class OdinController extends ussr.samples.odin.OdinController {
     	while(module.getSimulation().isPaused()) Thread.yield();
     	delay(1000);
     	
-    	//These should be done once.
-    	if(id == -1){
-            //Here I have to set one and just one module with color white.
+    	//This process is done until I have selected the one propagating module.
+    	//Only in the activation of the first module.
+    	if(!idDone){
         	List<Module> modules = module.getSimulation().getModules();
-        	boolean idNotAssigned = true;
         	int pos = 0;
-        	while(idNotAssigned){
+        	while(!idDone){
                 pos = rand.nextInt(modules.size());
                 OdinController controller = (OdinController)(modules.get(pos)).getController(); 
                 if(controller.type=="OdinMuscle"){
-                	id = modules.get(pos).getID();
-                	idNotAssigned = false;
+                	//id = modules.get(pos).getID();
+                	controller.color = 1;//purple
+                	idDone = true;
                 	//System.out.println("id = "+id);
                 }
         	}
 
     	}
     	
-		if(module.getID()==id){
-			color = 3;
-			//If color == 3 (white) the module is
-			//the origin of local communication.
-		}
-		
-		//System.out.println("id = "+id);
-		//System.out.println("size = "+module.getSimulation().getModules().size());
+    	//This process is done until we have selected X out of Xt modules (so that X/Xt == pe).
+    	//Only in the activation of the first module.
+    	if(!peDone){
+            //Here I have to set one and just one module with colour purple.
+        	List<Module> modules = module.getSimulation().getModules();
+        	int counter = 0;
+        	for(int i=0; i<modules.size(); i++){
+        		OdinController controller = (OdinController)(modules.get(i)).getController(); 
+                if(controller.type=="OdinMuscle"){
+                	counter++;
+                }
+        	}
+        	int x = ((int)(pe*(counter)));
+        	counter = 0;
+        	int pos = 0;
+        	while(!peDone){
+                pos = rand.nextInt(modules.size());
+                OdinController controller = (OdinController)(modules.get(pos)).getController(); 
+                if((controller.type=="OdinMuscle") && (color!=1)){
+                	controller.color = 2;//green
+                	counter++;
+                	if(counter == x){
+                		peDone = true;
+                	}
+                }
+        	}
+
+    	}
 		
     	if(type=="OdinMuscle") muscleControl();
     	if(type=="OdinBall") ballControl();
@@ -105,31 +117,29 @@ public class OdinController extends ussr.samples.odin.OdinController {
 			if((lastTime+0.5)<module.getSimulation().getTime()){
 				
 				switch(color){
-			    case 1:
-			    	//setColor(0,1,0);//paint green
-			    	msg[0] = 'g';
-			    	doDif = true;
-			    	break;
-			    case 3://The origin of the comm and Imods are here.
-			    	setColor(0.5f,0.5f,1);//paint white
-			    	msg[0] = 'l';
-			    	doDif = true;
-			    	break;
+				  case 1://The origin of the comm and Imods are here.
+			    	  setColor(0.5f,0.5f,1);//paint purple
+			    	  msg[0] = 'p';
+			    	  doDif = true;
+			    	  break;
+			      case 2:
+			    	  setColor(0,1,0);//paint green
+			    	  msg[0] = 'g';
+			    	  doDif = true;
+			    	  break;
 			    }
 				
 				if(doDif){
 					if(channelOut==-1){
-						if(color==3){
+						if(color==1){//means, the one propagating module.
 							sendMessage(msg, (byte)msg.length,(byte)0);
 							sendMessage(msg, (byte)msg.length,(byte)1);
 						}
+						//no modules with channelOut==-1 propagate.
 					}
 					else{
 						sendMessage(msg, (byte)msg.length,(byte)channelOut);
 					}
-					//I have to do it selectively...
-					//sendMessage(msg, (byte)msg.length,(byte)0);
-					//sendMessage(msg, (byte)msg.length,(byte)1);
 				}
 				lastTime = module.getSimulation().getTime();
 			}
@@ -160,9 +170,9 @@ public class OdinController extends ussr.samples.odin.OdinController {
         		//if(channel == 0) sendMessage(message, (byte)messageSize,(byte)1);
         		//if(channel == 1) sendMessage(message, (byte)messageSize,(byte)0);
         	}*/
-    		if(message[0]=='l' && color!=3){
-    			//Local communication received.
-        		color = 3;
+    		if(message[0]=='p' && color!=1){
+    			//Local communication received by a not informed module (Nmod).
+        		color = 1;
         		if(channel == 0) channelOut=1;
         		else channelOut=0;
         	}
