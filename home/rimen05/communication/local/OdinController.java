@@ -22,14 +22,19 @@ public class OdinController extends ussr.samples.odin.OdinController {
 	static Random rand = new Random(System.currentTimeMillis());
 
     float timeOffset=0;
-    byte[] msg = {0};
+    public byte[] msg = {0};
     public int color = 0;
-    float pe = 0.1f; //pe from 0 to 1;
+    /*BEGIN TO BE SET*/
+    static float pe = 0.1f; //0 to 1, modules sending information out.
+    static float nep = 0.8f; //0 to 1, modules the information is transmitted to.
+    /*END TO BE SET*/
+    static int ne = 0;
     static boolean idDone = false;
     static boolean peDone = false;
-    //static int id = -1; //stores the one propagating module id.
+    static boolean txDone = false;
     int channelOut = -1;
     //We can also access modules, which is a protected attribute of a parent class.
+    static int Imod = 0;
         
     /**
      * Constructor.
@@ -63,6 +68,9 @@ public class OdinController extends ussr.samples.odin.OdinController {
                 if(controller.type=="OdinMuscle"){
                 	//id = modules.get(pos).getID();
                 	controller.color = 1;//purple
+                	controller.setColor(0.5f,0.5f,1);//paint purple
+			    	controller.msg[0] = 'p';
+			    	Imod++;
                 	idDone = true;
                 	//System.out.println("id = "+id);
                 }
@@ -82,6 +90,7 @@ public class OdinController extends ussr.samples.odin.OdinController {
                 	counter++;
                 }
         	}
+        	ne = ((int)(nep*counter));
         	int x = ((int)(pe*(counter)));
         	counter = 0;
         	int pos = 0;
@@ -90,6 +99,8 @@ public class OdinController extends ussr.samples.odin.OdinController {
                 OdinController controller = (OdinController)(modules.get(pos)).getController(); 
                 if((controller.type=="OdinMuscle") && (color!=1)){
                 	controller.color = 2;//green
+                	controller.setColor(0,1,0);
+                	controller.msg[0] = 'g';
                 	counter++;
                 	if(counter == x){
                 		peDone = true;
@@ -108,7 +119,6 @@ public class OdinController extends ussr.samples.odin.OdinController {
      */
     public void muscleControl() {
     	float lastTime = module.getSimulation().getTime();
-    	boolean doDif = false;
     	while(true) {
     		//float time = module.getSimulation().getTime()+timeOffset;
     		//actuate((float)(Math.sin(time)+1)/2f);
@@ -116,31 +126,25 @@ public class OdinController extends ussr.samples.odin.OdinController {
 			
 			if((lastTime+0.5)<module.getSimulation().getTime()){
 				
-				switch(color){
-				  case 1://The origin of the comm and Imods are here.
-			    	  setColor(0.5f,0.5f,1);//paint purple
-			    	  msg[0] = 'p';
-			    	  doDif = true;
-			    	  break;
-			      case 2:
-			    	  setColor(0,1,0);//paint green
-			    	  msg[0] = 'g';
-			    	  doDif = true;
-			    	  break;
-			    }
+				if(Imod>=ne && !txDone){
+					System.out.println("Information Transmitted!!!");
+					System.out.println("Time = XXX");
+					txDone = true;
+				}
 				
-				if(doDif){
-					if(channelOut==-1){
-						if(color==1){//means, the one propagating module.
-							sendMessage(msg, (byte)msg.length,(byte)0);
-							sendMessage(msg, (byte)msg.length,(byte)1);
-						}
-						//no modules with channelOut==-1 propagate.
-					}
-					else{
-						sendMessage(msg, (byte)msg.length,(byte)channelOut);
+				if(channelOut==-1){
+					if(color==1){//propagating module
+						sendMessage(msg, (byte)msg.length,(byte)0);
+						sendMessage(msg, (byte)msg.length,(byte)1);
 					}
 				}
+				else{
+					sendMessage(msg, (byte)msg.length,(byte)channelOut);
+					//if no collision -> isSent==true;
+					//Here I have to embed the probability pe?
+					//should I send just with that probability?
+				}
+					
 				lastTime = module.getSimulation().getTime();
 			}
         }
@@ -162,20 +166,14 @@ public class OdinController extends ussr.samples.odin.OdinController {
      */
     public void handleMessage(byte[] message, int messageSize, int channel) {
     	//Here I have to check the message connector and diffuse the information.
-    	//float lastTime = module.getSimulation().getTime();
-    	//if((lastTime+5)<module.getSimulation().getTime()){
-    		/*if(message[0]=='g' && color!=1){
-        		color = 1;
-        		setColor(0, 1, 0);
-        		//if(channel == 0) sendMessage(message, (byte)messageSize,(byte)1);
-        		//if(channel == 1) sendMessage(message, (byte)messageSize,(byte)0);
-        	}*/
-    		if(message[0]=='p' && color!=1){
-    			//Local communication received by a not informed module (Nmod).
-        		color = 1;
-        		if(channel == 0) channelOut=1;
-        		else channelOut=0;
-        	}
-    	//}	
+    	if(message[0]=='p' && color!=1){
+    		//Local communication received by a not informed module (Nmod).
+    		color = 1;
+    		setColor(0.5f,0.5f,1);//paint purple
+    		msg[0] = 'p';
+    		if(channel == 0) channelOut=1;
+    		else channelOut=0;
+    		Imod++;
+    	}
     }
 }
