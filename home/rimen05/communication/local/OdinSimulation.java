@@ -137,7 +137,7 @@ public class OdinSimulation extends GenericSimulation {
        System.out.println("#connection found = "+connections.size());
        world.setModuleConnections(connections);
         System.out.println("#Balls Placed  = "+ballPos.size());
-        System.out.println("#Module Placed = "+modulePos.size());
+        System.out.println("#Modules Placed = "+modulePos.size());
         
         /*
         float half = (float)(Math.PI);
@@ -154,13 +154,10 @@ public class OdinSimulation extends GenericSimulation {
         
         modulePos.add(new WorldDescription.ModulePosition("wheel4", "ATRON", new VectorDescription(1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));*/
         
-       modulePos.addAll(ballPos);
+        modulePos.addAll(ballPos);
         world.setModulePositions(modulePos);
         System.out.println("#Total         = "+modulePos.size());
-        /*world.setModuleConnections(new WorldDescription.Connection[] {
-              //  new WorldDescription.Connection("leftleg",4,"middle",6)
-                //,new WorldDescription.Connection("rightleg",2,"middle",4)
-        });*/
+        System.out.println("#Balls per Module (avg)= "+(((float)connections.size())/((float)ballPos.size())));
         return world;
     }
        
