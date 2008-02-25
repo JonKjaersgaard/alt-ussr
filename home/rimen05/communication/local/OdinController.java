@@ -43,7 +43,7 @@ public class OdinController extends ussr.samples.odin.OdinController {
     int[] counters;
     int time = 0;
     List<Color> lastColors;
-    float commInterval = 0.2f;
+    float commInterval = 10f;
     float blinkInterval = commInterval/2;
     //We can also access modules, which is a protected attribute of a parent class.
     
@@ -67,10 +67,12 @@ public class OdinController extends ussr.samples.odin.OdinController {
     	delay(1000);
     	
     	//This process is done until I have selected the one propagating module.
-    	//Only in the activation of the first module.
+    	//Only in the activation of the first module. Watch out, many modules are
+    	//activated at the same time...
     	if(!idDone){
         	List<Module> modules = module.getSimulation().getModules();
         	int pos = 0;
+        	int counter = 0;
         	while(!idDone){
                 pos = rand.nextInt(modules.size());
                 OdinController controller = (OdinController)(modules.get(pos)).getController(); 
@@ -81,19 +83,18 @@ public class OdinController extends ussr.samples.odin.OdinController {
 			    	Imod++;
 			    	id = controller.getModule().getID();
                 	idDone = true;
-                	
-                	for(int i=0; i<modules.size(); i++){
-                		controller = (OdinController)(modules.get(i)).getController(); 
-                        if(controller.type=="OdinMuscle"){
-                        	nt++;
-                        }
-                	}
-                	ne = ((int)(pne*nt));
-                	System.out.println("ne = "+ne);
-                	System.out.println("simulation");
                 }
         	}
-
+        	for(int i=0; i<modules.size(); i++){
+        		OdinController controller = (OdinController)(modules.get(i)).getController(); 
+                if(controller.type=="OdinMuscle"){
+                	counter++;
+                }
+        	}
+        	ne = ((int)(pne*counter));
+        	nt = counter;
+        	System.out.println("ne = "+ne);
+        	System.out.println("simulation");
     	}
     	
     	if(type=="OdinMuscle"){
