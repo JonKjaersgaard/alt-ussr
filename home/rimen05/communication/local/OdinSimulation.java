@@ -6,13 +6,10 @@
 package communication.local;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import com.jme.math.Quaternion;
 
 import ussr.model.Controller;
-import ussr.model.Module;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
@@ -26,7 +23,7 @@ import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.GenericSimulation;
 import ussr.samples.odin.OdinMuscle;
 import ussr.samples.odin.OdinBall;
-//import ussr.samples.odin.OdinSampleController1;
+
 
 /**
  * simulation of local communication for Odin
@@ -95,8 +92,8 @@ public class OdinSimulation extends GenericSimulation {
         //int nBalls=20, xMax=4, yMax=4,zMax=4;
         
         
-        //int nBalls=100, xMax=10, yMax=1,zMax=10; //Plane
-        int nBalls=40, xMax=4, yMax=3,zMax=4; //Cube
+        int nBalls=100, xMax=10, yMax=1,zMax=10; //Plane
+        //int nBalls=40, xMax=4, yMax=3,zMax=4; //Cube
         
         for(int x=0;x<xMax;x++) {
         	for(int y=0;y<yMax;y++) {

@@ -27,7 +27,7 @@ public class OdinController extends ussr.samples.odin.OdinController {
     public byte[] msg = {'n'};//non-informed module (default)
     public int color = 0;
     /*BEGIN TO BE SET*/
-    static float pe = 0.1f; //0 to 1, modules sending information out.
+    static float pe = 0.2f; //0 to 1, modules sending information out.
     static float pne = 0.8f; //0 to 1, modules the information is transmitted to.
     /*END TO BE SET*/
     static int ne = 0;
@@ -154,6 +154,7 @@ public class OdinController extends ussr.samples.odin.OdinController {
 					System.out.println("Information Transmitted!!!");
 					System.out.println("Time = "+time);
 					txDone = true;
+					//module.getSimulation().stop();
 				}
 				
 				for(int x=0; x<channels.length; x++){
@@ -174,7 +175,6 @@ public class OdinController extends ussr.samples.odin.OdinController {
 					for(int x=0; x<channels.length; x++){
 						sendMessage(msg, (byte)msg.length,(byte)x);
 					}
-					//lastColors = module.getColorList();
 					setColor(0,1,0);//blink green
 				}
 				
