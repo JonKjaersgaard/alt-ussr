@@ -54,20 +54,20 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
     }
 
     protected ArrayList<ModulePosition> buildRobot() {
-        float Yoffset = 0.25f+2*unit;
+        float Yoffset = 0.25f+2*ATRON.UNIT;
         ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-        mPos.add(new ModulePosition("#0", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_NS_1));
-        mPos.add(new ModulePosition("#1", new VectorDescription(1*unit,0*unit-Yoffset,1*unit), rotation_EW));
-        mPos.add(new ModulePosition("#2", new VectorDescription(1*unit,0*unit-Yoffset,-1*unit), rotation_EW));
-        mPos.add(new ModulePosition("#3", new VectorDescription(2*unit,0*unit-Yoffset,0*unit), rotation_NS_1));
+        mPos.add(new ModulePosition("#0", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_NS_BROKEN));
+        mPos.add(new ModulePosition("#1", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_EW));
+        mPos.add(new ModulePosition("#2", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_EW));
+        mPos.add(new ModulePosition("#3", new VectorDescription(2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_NS_BROKEN));
         if(CORRECT_CAR_WHEELS) {
-            mPos.add(new ModulePosition("#4", new VectorDescription(3*unit,0*unit-Yoffset,1*unit), rotation_WE));
-            mPos.add(new ModulePosition("#5", new VectorDescription(3*unit,0*unit-Yoffset,-1*unit), rotation_WE));
+            mPos.add(new ModulePosition("#4", new VectorDescription(3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_WE));
+            mPos.add(new ModulePosition("#5", new VectorDescription(3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_WE));
         } else {
-            mPos.add(new ModulePosition("#4", new VectorDescription(3*unit,0*unit-Yoffset,1*unit), rotation_EW));
-            mPos.add(new ModulePosition("#5", new VectorDescription(3*unit,0*unit-Yoffset,-1*unit), rotation_EW));
+            mPos.add(new ModulePosition("#4", new VectorDescription(3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_EW));
+            mPos.add(new ModulePosition("#5", new VectorDescription(3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_EW));
         }
-        mPos.add(new ModulePosition("#6", new VectorDescription(4*unit,0*unit-Yoffset,0*unit), rotation_NS_1));
+        mPos.add(new ModulePosition("#6", new VectorDescription(4*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_NS_BROKEN));
         return mPos;
     }
 

@@ -34,10 +34,10 @@ public class ATRONSnakeSimulation extends GenericATRONSimulation {
     	int x=0,y=0,z=0;
     	for(int i=0;i<length;i++) {
     		if(i%2==0) {
-    			mPos.add(new ModulePosition("snake "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_EW));
+    			mPos.add(new ModulePosition("snake "+i, new VectorDescription(x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT), ATRON.ROTATION_EW));
     		}
     		else {
-    			mPos.add(new ModulePosition("snake "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_NS));
+    			mPos.add(new ModulePosition("snake "+i, new VectorDescription(x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT), ATRON.ROTATION_NS));
     		}
     		x++;z++;
     	}

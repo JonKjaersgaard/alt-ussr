@@ -43,7 +43,7 @@ public class ATRONLatticeSimulation extends GenericATRONSimulation {
             public String select(String name, int index, VectorDescription pos, RotationDescription rot) {
                 return null;
             }
-        }, unit);
+        }, ATRON.UNIT);
     }
     
     protected ArrayList<ModulePosition> buildAsNamedLattice(int nModules, int xMax, int yMax, int zMax, Namer namer, ModuleSelector selector, float placement_unit) {
@@ -53,22 +53,22 @@ public class ATRONLatticeSimulation extends GenericATRONSimulation {
         	for(int y=0;y<yMax;y++) {
         		for(int z=0;z<zMax;z++) {
         			VectorDescription pos = null;
-        			RotationDescription rot = rotation_NS;
+        			RotationDescription rot = ATRON.ROTATION_NS;
         			if(y%2==0&&z%2==0) {
         				pos = new VectorDescription(2*x*placement_unit,y*placement_unit,z*placement_unit);
-        				rot = rotation_EW;
+        				rot = ATRON.ROTATION_EW;
         			}
 	        		else if(y%2==0&&z%2==1)  {
 	        			pos = new VectorDescription(2*x*placement_unit+placement_unit,y*placement_unit,z*placement_unit);
-	        			rot = rotation_NS;
+	        			rot = ATRON.ROTATION_NS;
 	        		}
 	        		else if(y%2==1&&z%2==0) {
 	        			pos = new VectorDescription(2*x*placement_unit+placement_unit,y*placement_unit,z*placement_unit);
-	        			rot = rotation_UD;
+	        			rot = ATRON.ROTATION_UD;
 	        		}
 	        		else if(y%2==1&&z%2==1) {
 	        			pos = new VectorDescription(2*x*placement_unit,y*placement_unit,z*placement_unit);
-	        			rot = rotation_NS;
+	        			rot = ATRON.ROTATION_NS;
 	        		}
 	        		if(index<nModules) {
                         String name = namer.name(index,pos,rot);

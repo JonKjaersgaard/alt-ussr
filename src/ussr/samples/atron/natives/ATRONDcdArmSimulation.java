@@ -36,10 +36,10 @@ public class ATRONDcdArmSimulation extends ATRONLatticeSimulation {
     protected ArrayList<ModulePosition> buildRobot() {
         ArrayList<ModulePosition> positions = buildAsLattice(100,3,1,5);
 //        ArrayList<ModulePosition> positions = buildAsLattice(10,2,1,3);
-        positions.add(new ModulePosition("shoulder", new VectorDescription(3*unit,1*unit,2*unit), rotation_UD));
-        positions.add(new ModulePosition("elbow", new VectorDescription(2*unit,2*unit,2*unit), rotation_EW));
-        positions.add(new ModulePosition("hand", new VectorDescription(3*unit,3*unit,2*unit), rotation_UD));
-        positions.add(new ModulePosition("finger99", new VectorDescription(4*unit,4*unit,2*unit), rotation_EW));
+        positions.add(new ModulePosition("shoulder", new VectorDescription(3*ATRON.UNIT,1*ATRON.UNIT,2*ATRON.UNIT), ATRON.ROTATION_UD));
+        positions.add(new ModulePosition("elbow", new VectorDescription(2*ATRON.UNIT,2*ATRON.UNIT,2*ATRON.UNIT), ATRON.ROTATION_EW));
+        positions.add(new ModulePosition("hand", new VectorDescription(3*ATRON.UNIT,3*ATRON.UNIT,2*ATRON.UNIT), ATRON.ROTATION_UD));
+        positions.add(new ModulePosition("finger99", new VectorDescription(4*ATRON.UNIT,4*ATRON.UNIT,2*ATRON.UNIT), ATRON.ROTATION_EW));
         return positions;
     }
     

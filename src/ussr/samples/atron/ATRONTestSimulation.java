@@ -48,10 +48,10 @@ public class ATRONTestSimulation extends GenericATRONSimulation {
     	int x=0,y=0,z=0;
     	for(int i=0;i<length;i++) {
     		if(i%2==0) {
-    			mPos.add(new ModulePosition("test "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_EW));
+    			mPos.add(new ModulePosition("test "+i, new VectorDescription(x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT), ATRON.ROTATION_EW));
     		}
     		else {
-    			mPos.add(new ModulePosition("test "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_NS));
+    			mPos.add(new ModulePosition("test "+i, new VectorDescription(x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT), ATRON.ROTATION_NS));
     		}
     		x++;z++;
     	}
@@ -63,35 +63,35 @@ public class ATRONTestSimulation extends GenericATRONSimulation {
     	int x=0,y=0,z=0;
     	for(int i=0;i<3;i++) {
     		if(i%2==0) {
-    			mPos.add(new ModulePosition("test "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_EW));
+    			mPos.add(new ModulePosition("test "+i, new VectorDescription(x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT), ATRON.ROTATION_EW));
     		}
     		else {
-    			mPos.add(new ModulePosition("test "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_NS));
+    			mPos.add(new ModulePosition("test "+i, new VectorDescription(x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT), ATRON.ROTATION_NS));
     		}
     		x++;z++;
     	}
-    	mPos.add(new ModulePosition("base0", new VectorDescription(-1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
+    	mPos.add(new ModulePosition("base0", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_UD));
     	int index =0;
     	for(x=-4;x<0;x++) {
         	for(y=-2;y<=-2;y++) {
         		for(z=-2;z<=2;z++) {
         			VectorDescription pos = null;
-        			RotationDescription rot = rotation_NS;
+        			RotationDescription rot = ATRON.ROTATION_NS;
         			if(Math.abs(y)%2==0&&Math.abs(z)%2==0) {
-        				pos = new VectorDescription(2*x*unit,y*unit-Yoffset,z*unit);
-        				rot = rotation_EW;
+        				pos = new VectorDescription(2*x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT);
+        				rot = ATRON.ROTATION_EW;
         			}
 	        		else if(Math.abs(y)%2==0&&Math.abs(z)%2==1)  {
-	        			pos = new VectorDescription(2*x*unit+unit,y*unit-Yoffset,z*unit);
-	        			rot = rotation_NS;
+	        			pos = new VectorDescription(2*x*ATRON.UNIT+ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT);
+	        			rot = ATRON.ROTATION_NS;
 	        		}
 	        		else if(Math.abs(y)%2==1&&Math.abs(z)%2==0) {
-	        			pos = new VectorDescription(2*x*unit+unit,y*unit-Yoffset,z*unit);
-	        			rot = rotation_UD;
+	        			pos = new VectorDescription(2*x*ATRON.UNIT+ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT);
+	        			rot = ATRON.ROTATION_UD;
 	        		}
 	        		else if(Math.abs(y)%2==1&&Math.abs(z)%2==1) {
-	        			pos = new VectorDescription(2*x*unit,y*unit-Yoffset,z*unit);
-	        			rot = rotation_NS;
+	        			pos = new VectorDescription(2*x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT);
+	        			rot = ATRON.ROTATION_NS;
 	        		}
                     ModulePosition mpos;
                     mpos = new ModulePosition(index+"", pos, rot);

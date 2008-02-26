@@ -24,6 +24,23 @@ import ussr.robotbuildingblocks.VectorDescription;
  */
 public abstract class ATRON implements Robot {
     
+    /**
+     *  Distance between two lattice positions on physical atrons (8cm) 
+     */
+    public static final float UNIT = 0.08f;
+
+    private static final float eigth = (float)(0.25*Math.PI);
+    private static final float quart = (float)(0.5*Math.PI);
+    private static final float half = (float)(Math.PI);
+
+    public static final RotationDescription ROTATION_WE = new RotationDescription(new VectorDescription(-eigth,0,0),new VectorDescription(0,-quart,0));
+    public static final RotationDescription ROTATION_EW = new RotationDescription(new VectorDescription(eigth,0,0),new VectorDescription(0,quart,0));
+    public static final RotationDescription ROTATION_DU = new RotationDescription(-quart,eigth,0);
+    public static final RotationDescription ROTATION_UD = new RotationDescription(quart,eigth+quart,0);
+    public static final RotationDescription ROTATION_SN = new RotationDescription(0,half,eigth);
+    public static final RotationDescription ROTATION_NS_BROKEN = new RotationDescription(0,0,eigth+3*quart);
+    public static final RotationDescription ROTATION_NS = new RotationDescription(0,0,eigth+quart);
+
     protected boolean zuper = false, smooth = false, realistic =false, rubberRing = false, gentle = false;// Different variants
     private PhysicsParameters parameters;
 

@@ -38,9 +38,9 @@ public class ATRONSimpleVehicleSimulation extends GenericATRONSimulation {
     	//mPos.add(new WorldDescription.ModulePosition("driver0", new VectorDescription(2*0*unit,0*unit-Yoffset,0*unit), rotation_EW));
     	//mPos.add(new WorldDescription.ModulePosition("FrontAxle", new VectorDescription(1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
     	//mPos.add(new WorldDescription.ModulePosition("RearAxle", new VectorDescription(-1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
-    	mPos.add(new ModulePosition("driver0", new VectorDescription(-2*unit,-2*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new ModulePosition("RearRightWheel", new VectorDescription(-1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
-    	mPos.add(new ModulePosition("RearLeftWheel", new VectorDescription(-1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
+    	mPos.add(new ModulePosition("driver0", new VectorDescription(-2*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("RearRightWheel", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("RearLeftWheel", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
     	//mPos.add(new WorldDescription.ModulePosition("FrontRightWheel", new VectorDescription(1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
     	//mPos.add(new WorldDescription.ModulePosition("FrontLeftWheel", new VectorDescription(1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
         return mPos;

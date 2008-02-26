@@ -12,8 +12,6 @@ import ussr.robotbuildingblocks.ModuleConnection;
 import ussr.robotbuildingblocks.ModulePosition;
 import ussr.physics.PhysicsParameters;
 import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.GenericSimulation;
 
@@ -26,20 +24,8 @@ import ussr.samples.GenericSimulation;
  */
 public abstract class GenericATRONSimulation extends GenericSimulation {
 	
-	protected static float half = (float)(Math.PI);
-	protected static float quart = (float)(0.5*Math.PI);
-	protected static float eigth = (float)(0.25*Math.PI);
 	public static boolean startPaused = true;
-	protected static float unit = 0.08f;//8 cm between two lattice positions on physical atrons
-	protected static RotationDescription rotation_NS = new RotationDescription(0,0,eigth+quart);//(0,0,eigth);
-    protected static RotationDescription rotation_NS_1 = new RotationDescription(0,0,eigth+3*quart);//(0,0,eigth);
-	protected static RotationDescription rotation_SN = new RotationDescription(0,half,eigth);
-	protected static RotationDescription rotation_UD = new RotationDescription(quart,eigth+quart,0);
-	protected static RotationDescription rotation_DU = new RotationDescription(-quart,eigth,0);
-	protected static RotationDescription rotation_EW = new RotationDescription(new VectorDescription(eigth,0,0),new VectorDescription(0,quart,0));
-	protected static RotationDescription rotation_WE = new RotationDescription(new VectorDescription(-eigth,0,0),new VectorDescription(0,-quart,0));
-
-    protected float connection_acceptance_range = 0.001f;
+	protected float connection_acceptance_range = 0.001f;
     
     public void main() {
         this.setupPhysicsHook();

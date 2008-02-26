@@ -25,19 +25,19 @@ public class ATRONDcdCyclicCarSimulation extends ATRONNativeCarSimulation {
     
     static VectorDescription pos(float x, float y, float z) {
         final float Yoffset = 0.25f;
-        return new VectorDescription(x*unit, y*unit-Yoffset, z*unit);
+        return new VectorDescription(x*ATRON.UNIT, y*ATRON.UNIT-Yoffset, z*ATRON.UNIT);
     }
     
     protected ArrayList<ModulePosition> buildCar() {
         ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-        mPos.add(new ModulePosition("driver0", pos(0,0,0), rotation_EW));
-        mPos.add(new ModulePosition("axleOne", pos(1,-1,0), rotation_UD));
-        mPos.add(new ModulePosition("axleTwo", pos(-1,-1,0), rotation_UD));
-        mPos.add(new ModulePosition("wheel1", pos(-1,-2,1), rotation_SN));
-        mPos.add(new ModulePosition("wheel2", pos(-1,-2,-1), rotation_NS));
-        mPos.add(new ModulePosition("wheel3", pos(1,-2,1), rotation_SN));
-        mPos.add(new ModulePosition("wheel4", pos(1,-2,-1), rotation_NS));
-        mPos.add(new ModulePosition("spareTyre", pos(-1,0,1), rotation_SN));
+        mPos.add(new ModulePosition("driver0", pos(0,0,0), ATRON.ROTATION_EW));
+        mPos.add(new ModulePosition("axleOne", pos(1,-1,0), ATRON.ROTATION_UD));
+        mPos.add(new ModulePosition("axleTwo", pos(-1,-1,0), ATRON.ROTATION_UD));
+        mPos.add(new ModulePosition("wheel1", pos(-1,-2,1), ATRON.ROTATION_SN));
+        mPos.add(new ModulePosition("wheel2", pos(-1,-2,-1), ATRON.ROTATION_NS));
+        mPos.add(new ModulePosition("wheel3", pos(1,-2,1), ATRON.ROTATION_SN));
+        mPos.add(new ModulePosition("wheel4", pos(1,-2,-1), ATRON.ROTATION_NS));
+        mPos.add(new ModulePosition("spareTyre", pos(-1,0,1), ATRON.ROTATION_SN));
         return mPos;
     }
 

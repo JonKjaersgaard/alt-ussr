@@ -37,22 +37,22 @@ public class ATRONRoleSimulation extends GenericATRONSimulation {
         	int y = (index==0)?0:rand.nextInt()%10;
         	int z = (index==0)?0:rand.nextInt()%10;
         	VectorDescription pos = null;
-			RotationDescription rot = rotation_NS;
+			RotationDescription rot = ATRON.ROTATION_NS;
 			if(y%2==0&&z%2==0) {
-				pos = new VectorDescription(2*x*unit,y*unit,z*unit);
-				rot = rotation_EW;
+				pos = new VectorDescription(2*x*ATRON.UNIT,y*ATRON.UNIT,z*ATRON.UNIT);
+				rot = ATRON.ROTATION_EW;
 			}
     		else if(y%2==0&&z%2==1)  {
-    			pos = new VectorDescription(2*x*unit+unit,y*unit,z*unit);
-    			rot = rotation_NS;
+    			pos = new VectorDescription(2*x*ATRON.UNIT+ATRON.UNIT,y*ATRON.UNIT,z*ATRON.UNIT);
+    			rot = ATRON.ROTATION_NS;
     		}
     		else if(y%2==1&&z%2==0) {
-    			pos = new VectorDescription(2*x*unit+unit,y*unit,z*unit);
-    			rot = rotation_UD;
+    			pos = new VectorDescription(2*x*ATRON.UNIT+ATRON.UNIT,y*ATRON.UNIT,z*ATRON.UNIT);
+    			rot = ATRON.ROTATION_UD;
     		}
     		else if(y%2==1&&z%2==1) {
-    			pos = new VectorDescription(2*x*unit,y*unit,z*unit);
-    			rot = rotation_NS;
+    			pos = new VectorDescription(2*x*ATRON.UNIT,y*ATRON.UNIT,z*ATRON.UNIT);
+    			rot = ATRON.ROTATION_NS;
     		}
 			if(pos!=null&&(index==0||isConnectable(new ModulePosition("",pos,rot),mPos)&&empty(pos,mPos))) {
 	        	mPos.add(new ModulePosition(Integer.toString(index), pos, rot));
