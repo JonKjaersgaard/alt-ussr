@@ -76,11 +76,14 @@ public class WorldDescription extends Description {
     private boolean flatWorld = true;
 
     /**
+     * The position of each module, if zero automatic placement is assumed
+     */
+    private List<ModulePosition> modules = Collections.emptyList(); 
+
+    /**
      * The position of each obstacle (and implicigtly the number of obstacles)
      */
     private List<VectorDescription> smallObstacles = Collections.emptyList();
-
-    private List<ModulePosition> modules = Collections.emptyList(); 
 
     private List<ModuleConnection> connections = Collections.emptyList();
 
@@ -243,5 +246,17 @@ public class WorldDescription extends Description {
      */
     public void setHeavyObstacles(boolean heavyObstacles) {
         this.heavyObstacles = heavyObstacles;
+    }
+
+    /**
+     * Generate a random placement for module #i (since the number of modules
+     * exceeded the number of supplied module position)
+     * @param i the number of the module to place randomly
+     * @return a <tt>ModulePosition</tt> indicating the placement of the module
+     * @throws <tt>java.lang.Error</tt> unless the method has been overridden with a simulation-specific
+     * implementation in a subclass
+     */
+    public ModulePosition placeModule(int i) {
+        throw new Error("Random module placement not specified for simulation");
     }
 }
