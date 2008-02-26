@@ -432,19 +432,4 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
     	return connector;
     }
      
-     /** 
-      * 
-      */
-     public void generateModuleStackPlacement() {
-         int offset = 5;
-         for(JMEModuleComponent m: simulation.getModuleComponents()) {
-             m.reset();
-             for(DynamicPhysicsNode dynamicNode: m.getNodes()) {
-                 dynamicNode.getLocalTranslation().set( 0, offset, 0 );
-                 dynamicNode.getLocalRotation().set( 0, 0, 0, 1 );
-                 dynamicNode.clearDynamics();
-             }
-             offset += 5;
-         }
-     }
 }

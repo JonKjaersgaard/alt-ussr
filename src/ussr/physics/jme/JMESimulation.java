@@ -116,10 +116,17 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         // Create modules
         for(int i=0; i<worldDescription.getNumberOfModules(); i++) {
             final Module module = new Module();
-            String robotType = (worldDescription.getModulePositions().size()>0)?worldDescription.getModulePositions().get(i).getType():"default";
+            String robotType;
+            ModulePosition position;
+            if(worldDescription.getModulePositions().size()>i) {
+                robotType = worldDescription.getModulePositions().get(i).getType();
+                position = worldDescription.getModulePositions().get(i);
+            } else {
+                robotType = "default";
+                position = worldDescription.placeModule(i);
+            }
             Robot robot = robots.get(robotType);
             if(robot==null) throw new Error("No definition for robot "+robotType);
-            ModulePosition position = worldDescription.getModulePositions().get(i);
             String module_name = position.getName();
             //System.out.println("Creating "+robotType);
         	factory.createModule(i, module, robot, module_name);
@@ -150,7 +157,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 if(worldDescription.getModulePositions().size()>0)
                     placeModules();
                 else
-                    helper.generateModuleStackPlacement();
+                    throw new Error("Module placement broken for random placement");
                 
                 List<VectorDescription> combinedPosList = new LinkedList<VectorDescription>();
                 List<RotationDescription> combinedRotList = new LinkedList<RotationDescription>();
