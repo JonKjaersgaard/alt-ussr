@@ -1,0 +1,30 @@
+Internal MMMI instructions for getting USSR up an running from the SVN server
+-----------------------------------------------------------------------------
+
+Note: this document assumes that Eclipse is being used to check out and compile USSR.
+USSR should run on Windows, Linux and Mac OS X.
+
+(1) Install eclipse (eclipse.org)
+
+(2) Install the SVN plugin (subclipse.tigris.org): see the SVN site for instructions
+
+(3) Import the project directly from SVN:
+    Choose "Window -> Open Perspective -> Other...", pick "SVN Repository Exploring"
+    Click the tiny "SVN+" button top right of the "SVN Repository" window
+    Enter the appropriate URL (https://www.mip.sdu.dk/ussr)
+    Type SVN username and password when appropriate, click "Accept permanently" for the certificate
+    (The ussr repository should now be visisble in the "SVN Repository" window)
+    Left-click once on the small triangle to see the "ussr" directory inside the repository
+    Right-click on the ussr directory that appeared, pick "Checkout..."
+    Pick "Check out as project in the workspace" and click "Finish"
+    (Wait for a long time)
+
+(4) USSR should now be installed on your machine.
+    Note that there may be compilation errors in the source directories starting with "home"
+    as these are being used for experiments and are now always in a stable state.
+    To try a basic simulation, open the directory "src" (topmost folder), navigate to the
+    package "ussr.samples.atron", right-click on the class "ATRONCarSimulation", and choose
+    "Run As -> Java Application" (ignore the dialog box about errors in the project if it pops
+    up, so long as the errors come from the "home" source folders).  Once the graphical window
+    showing the simulation pops up, press "P" to unpause the simulation and see the ATRON car
+    drive towards the box obstacles.
