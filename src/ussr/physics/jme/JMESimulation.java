@@ -14,6 +14,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 
+import ussr.model.ActBasedController;
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.ModuleFactory;
@@ -76,7 +77,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     private JMEFactoryHelper factory;    
     private long mainLoopCounter=0;
     private static final float FAROUT_DISTANCE = 50f;
-    private List<PhysicsObserver> physicsObservers = new CopyOnWriteArrayList();
+    private List<PhysicsObserver> physicsObservers = new CopyOnWriteArrayList<PhysicsObserver>();
+    private List<ActBasedController> actControllers = Collections.synchronizedList(new ArrayList<ActBasedController>());
     
     public JMESimulation(ModuleFactory[] factories) {
         PhysicsParameters parameters = PhysicsParameters.get();
@@ -133,18 +135,37 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         	module.setController(robot.createController());
             modules.add(module);
         	
-            Thread moduleThread = new Thread() {
-	            public void run() {
-	                module.getController().activate();
-	                if(!isStopped()) {
-	                	PhysicsLogger.log("Warning: unexpected controller exit");
-	                }
-	            }
-	        };
-	        //moduleThread.setPriority(Thread.NORM_PRIORITY-1);
-	        
-	        moduleThreads.add(moduleThread);
-	        moduleThread.start();
+            if(module.getController() instanceof ActBasedController)
+                actControllers.add((ActBasedController)module.getController());
+            else {
+                Thread moduleThread = new Thread() {
+                    public void run() {
+                        module.getController().activate();
+                        if(!isStopped()) {
+                            PhysicsLogger.log("Warning: unexpected controller exit");
+                        }
+                    }
+                };
+                //moduleThread.setPriority(Thread.NORM_PRIORITY-1);
+
+                moduleThreads.add(moduleThread);
+                moduleThread.start();
+            }
+        }
+
+        if(actControllers.size()>0) {
+            System.out.println("Creating act-based control for: "+actControllers.size());
+            Thread actThread = new Thread() {
+                public void run() {
+                    for(ActBasedController controller: actControllers)
+                        controller.initializationActStep();
+                    while(true)
+                        for(ActBasedController controller: actControllers)
+                            controller.singleActStep();
+                }
+            };
+            moduleThreads.add(actThread);
+            actThread.start();
         }
         
         //showPhysics = true;
