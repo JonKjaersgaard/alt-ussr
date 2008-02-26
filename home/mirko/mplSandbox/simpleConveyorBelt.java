@@ -11,10 +11,11 @@ import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.atron.ATRON;
+import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.atron.ATRONController;
-import ussr.samples.atron.ATRONLatticeSimulation;
+import ussr.samples.atron.GenericATRONSimulation;
 
-public class simpleConveyorBelt extends ATRONLatticeSimulation {
+public class simpleConveyorBelt extends GenericATRONSimulation {
 
     public static void main(String argv[]) {
     	simpleConveyorBelt main = new simpleConveyorBelt();
@@ -87,7 +88,7 @@ public class simpleConveyorBelt extends ATRONLatticeSimulation {
 
 
     protected ArrayList<ModulePosition> buildRobot() {
-        ArrayList<ModulePosition> positions = buildAsNamedLattice(100,6,1,7, new Namer() {
+        ArrayList<ModulePosition> positions = new ATRONBuilder().buildAsNamedLattice(100,6,1,7, new ATRONBuilder.Namer() {
             //private boolean everyOther = false;
             private int count = 0;
             public String name(int number, VectorDescription pos, RotationDescription rot) {
@@ -103,7 +104,7 @@ public class simpleConveyorBelt extends ATRONLatticeSimulation {
                 } else
                     return "--plain"+number;
             }
-        }, new ModuleSelector() {
+        }, new ATRONBuilder.ModuleSelector() {
             public String select(String name, int index, VectorDescription pos, RotationDescription rot) {
                 if(!name.startsWith("conveyor")) {
                     if(Math.abs(pos.getZ())<0.02 || Math.abs(pos.getZ())>0.4)
@@ -112,12 +113,12 @@ public class simpleConveyorBelt extends ATRONLatticeSimulation {
                 }
                 return null;
             }
-        },unit);
+        },ATRON.UNIT);
         if(false) {
-            positions.add(new ModulePosition("shoulder", new VectorDescription(3*unit,1*unit,2*unit), rotation_UD));
-            positions.add(new ModulePosition("elbow", new VectorDescription(2*unit,2*unit,2*unit), rotation_EW));
-            positions.add(new ModulePosition("hand", new VectorDescription(3*unit,3*unit,2*unit), rotation_UD));
-            positions.add(new ModulePosition("finger99", new VectorDescription(4*unit,4*unit,2*unit), rotation_EW));
+            positions.add(new ModulePosition("shoulder", new VectorDescription(3*ATRON.UNIT,1*ATRON.UNIT,2*ATRON.UNIT), ATRON.ROTATION_UD));
+            positions.add(new ModulePosition("elbow", new VectorDescription(2*ATRON.UNIT,2*ATRON.UNIT,2*ATRON.UNIT), ATRON.ROTATION_EW));
+            positions.add(new ModulePosition("hand", new VectorDescription(3*ATRON.UNIT,3*ATRON.UNIT,2*ATRON.UNIT), ATRON.ROTATION_UD));
+            positions.add(new ModulePosition("finger99", new VectorDescription(4*ATRON.UNIT,4*ATRON.UNIT,2*ATRON.UNIT), ATRON.ROTATION_EW));
         }
         return positions;
     }

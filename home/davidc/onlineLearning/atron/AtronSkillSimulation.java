@@ -61,185 +61,185 @@ public abstract class AtronSkillSimulation extends GenericATRONSimulation {
     	rubberRing = true;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
     	//mPos.add(new ModulePosition("axle", new VectorDescription(1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
-    	mPos.add(new ModulePosition("axle["+id+"]", new VectorDescription(0*unit+offset.getX(),-2*unit-Yoffset+offset.getY(),0*unit+offset.getZ()), rotation_EW));
-    	mPos.add(new ModulePosition("wheel1["+id+"]", new VectorDescription(1*unit+offset.getX(),-2*unit-Yoffset+offset.getY(),1*unit+offset.getZ()), rotation_SN));
-    	mPos.add(new ModulePosition("wheel2["+id+"]", new VectorDescription(1*unit+offset.getX(),-2*unit-Yoffset+offset.getY(),-1*unit+offset.getZ()), rotation_NS));
+    	mPos.add(new ModulePosition("axle["+id+"]", new VectorDescription(0*ATRON.UNIT+offset.getX(),-2*ATRON.UNIT-Yoffset+offset.getY(),0*ATRON.UNIT+offset.getZ()), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("wheel1["+id+"]", new VectorDescription(1*ATRON.UNIT+offset.getX(),-2*ATRON.UNIT-Yoffset+offset.getY(),1*ATRON.UNIT+offset.getZ()), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("wheel2["+id+"]", new VectorDescription(1*ATRON.UNIT+offset.getX(),-2*ATRON.UNIT-Yoffset+offset.getY(),-1*ATRON.UNIT+offset.getZ()), ATRON.ROTATION_NS));
         return mPos;
 	}
 	protected ArrayList<ModulePosition> buildCar(String id) {
     	float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("driver0["+id+"]", new VectorDescription(2*0*unit,0*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new ModulePosition("axleOne5["+id+"]", new VectorDescription(1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
-    	mPos.add(new ModulePosition("axleTwo6["+id+"]", new VectorDescription(-1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
-    	mPos.add(new ModulePosition("wheel1["+id+"]", new VectorDescription(-1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
-    	mPos.add(new ModulePosition("wheel2["+id+"]", new VectorDescription(-1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("wheel3["+id+"]", new VectorDescription(1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
-    	mPos.add(new ModulePosition("wheel4["+id+"]", new VectorDescription(1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
+    	mPos.add(new ModulePosition("driver0["+id+"]", new VectorDescription(2*0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("axleOne5["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_UD));
+    	mPos.add(new ModulePosition("axleTwo6["+id+"]", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_UD));
+    	mPos.add(new ModulePosition("wheel1["+id+"]", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("wheel2["+id+"]", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("wheel3["+id+"]", new VectorDescription(1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("wheel4["+id+"]", new VectorDescription(1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
         return mPos;
 	}
 	protected ArrayList<ModulePosition> buildLoop4(String id) {
     	float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("x1["+id+"]", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new ModulePosition("x2["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("x3["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,1*unit), rotation_SN));
-    	mPos.add(new ModulePosition("x4["+id+"]", new VectorDescription(2*unit,0*unit-Yoffset,0*unit), rotation_WE));
+    	mPos.add(new ModulePosition("x1["+id+"]", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("x2["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("x3["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("x4["+id+"]", new VectorDescription(2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_WE));
         return mPos;
 	}
 	protected ArrayList<ModulePosition> buildLoop7(String id) {
     	float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("x1["+id+"]", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new ModulePosition("x2["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("x3["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,1*unit), rotation_SN));
-    	mPos.add(new ModulePosition("x4["+id+"]", new VectorDescription(2*unit,0*unit-Yoffset,0*unit), rotation_WE));
+    	mPos.add(new ModulePosition("x1["+id+"]", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("x2["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("x3["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("x4["+id+"]", new VectorDescription(2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_WE));
     	
-    	mPos.add(new ModulePosition("x5["+id+"]", new VectorDescription(3*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("x6["+id+"]", new VectorDescription(3*unit,0*unit-Yoffset,1*unit), rotation_SN));
-    	mPos.add(new ModulePosition("x7["+id+"]", new VectorDescription(4*unit,0*unit-Yoffset,0*unit), rotation_WE));
+    	mPos.add(new ModulePosition("x5["+id+"]", new VectorDescription(3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("x6["+id+"]", new VectorDescription(3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("x7["+id+"]", new VectorDescription(4*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_WE));
         return mPos;
 	}
 	protected ArrayList<ModulePosition> buildLoop8(String id) {
     	float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("x1["+id+"]", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new ModulePosition("x2["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("x3["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,1*unit), rotation_SN));
-    	mPos.add(new ModulePosition("x4["+id+"]", new VectorDescription(2*unit,0*unit-Yoffset,0*unit), rotation_WE));
+    	mPos.add(new ModulePosition("x1["+id+"]", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("x2["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("x3["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("x4["+id+"]", new VectorDescription(2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_WE));
     	
-    	mPos.add(new ModulePosition("y1["+id+"]", new VectorDescription(2*unit,0*unit-Yoffset,2*unit), rotation_EW));
-    	mPos.add(new ModulePosition("y2["+id+"]", new VectorDescription(3*unit,0*unit-Yoffset,1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("y3["+id+"]", new VectorDescription(3*unit,0*unit-Yoffset,3*unit), rotation_SN));
-    	mPos.add(new ModulePosition("y4["+id+"]", new VectorDescription(4*unit,0*unit-Yoffset,2*unit), rotation_WE));
+    	mPos.add(new ModulePosition("y1["+id+"]", new VectorDescription(2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("y2["+id+"]", new VectorDescription(3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("y3["+id+"]", new VectorDescription(3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,3*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("y4["+id+"]", new VectorDescription(4*ATRON.UNIT,0*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_WE));
         return mPos;
 	}	
 	protected ArrayList<ModulePosition> buildWalker1(String id) {
     	float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("x1["+id+"]", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new ModulePosition("x2["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("x3["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,1*unit), rotation_SN));
-    	mPos.add(new ModulePosition("x4["+id+"]", new VectorDescription(2*unit,0*unit-Yoffset,0*unit), rotation_WE));
+    	mPos.add(new ModulePosition("x1["+id+"]", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("x2["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("x3["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("x4["+id+"]", new VectorDescription(2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_WE));
     	
-    	mPos.add(new ModulePosition("y1["+id+"]", new VectorDescription(-1*unit,-1*unit-Yoffset,0*unit), rotation_DU));
-    	mPos.add(new ModulePosition("y2["+id+"]", new VectorDescription(1*unit,-1*unit-Yoffset,-2*unit), rotation_DU));
-    	mPos.add(new ModulePosition("y3["+id+"]", new VectorDescription(1*unit,-1*unit-Yoffset,2*unit), rotation_DU));
-    	mPos.add(new ModulePosition("y4["+id+"]", new VectorDescription(3*unit,-1*unit-Yoffset,0*unit), rotation_DU));
+    	mPos.add(new ModulePosition("y1["+id+"]", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("y2["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("y3["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("y4["+id+"]", new VectorDescription(3*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_DU));
         return mPos;
 	}
 	protected ArrayList<ModulePosition> buildWalker2(String id) {
     	float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("x1["+id+"]", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new ModulePosition("x2["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("x3["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,1*unit), rotation_SN));
-    	mPos.add(new ModulePosition("x4["+id+"]", new VectorDescription(2*unit,0*unit-Yoffset,0*unit), rotation_WE));
+    	mPos.add(new ModulePosition("x1["+id+"]", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("x2["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("x3["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("x4["+id+"]", new VectorDescription(2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_WE));
     	
-    	mPos.add(new ModulePosition("y1["+id+"]", new VectorDescription(-1*unit,-1*unit-Yoffset,0*unit), rotation_DU));
-    	mPos.add(new ModulePosition("y2["+id+"]", new VectorDescription(1*unit,-1*unit-Yoffset,-2*unit), rotation_DU));
-    	mPos.add(new ModulePosition("y3["+id+"]", new VectorDescription(1*unit,-1*unit-Yoffset,2*unit), rotation_DU));
-    	mPos.add(new ModulePosition("y4["+id+"]", new VectorDescription(3*unit,-1*unit-Yoffset,0*unit), rotation_DU));
+    	mPos.add(new ModulePosition("y1["+id+"]", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("y2["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("y3["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("y4["+id+"]", new VectorDescription(3*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_DU));
     	
-    	mPos.add(new ModulePosition("z1["+id+"]", new VectorDescription(-2*unit,-2*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new ModulePosition("z2["+id+"]", new VectorDescription(1*unit,-2*unit-Yoffset,-3*unit), rotation_NS));
-    	mPos.add(new ModulePosition("z3["+id+"]", new VectorDescription(1*unit,-2*unit-Yoffset,3*unit), rotation_SN));
-    	mPos.add(new ModulePosition("z4["+id+"]", new VectorDescription(4*unit,-2*unit-Yoffset,0*unit), rotation_WE));
+    	mPos.add(new ModulePosition("z1["+id+"]", new VectorDescription(-2*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("z2["+id+"]", new VectorDescription(1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,-3*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("z3["+id+"]", new VectorDescription(1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,3*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("z4["+id+"]", new VectorDescription(4*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_WE));
         return mPos;
 	}
 	protected ArrayList<ModulePosition> buildWalker3(String id) {
 		float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("Spline["+id+"]", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_EW));
+    	mPos.add(new ModulePosition("Spline["+id+"]", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
     	
-    	mPos.add(new ModulePosition("fa1["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("fa2["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,1*unit), rotation_SN));
+    	mPos.add(new ModulePosition("fa1["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("fa2["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
 
-    	mPos.add(new ModulePosition("fl1["+id+"]", new VectorDescription(1*unit,-1*unit-Yoffset,-2*unit), rotation_DU));
-    	mPos.add(new ModulePosition("fl2["+id+"]", new VectorDescription(1*unit,-1*unit-Yoffset,2*unit), rotation_DU));
+    	mPos.add(new ModulePosition("fl1["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("fl2["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));
 
-    	mPos.add(new ModulePosition("ba1["+id+"]", new VectorDescription(-1*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("ba2["+id+"]", new VectorDescription(-1*unit,0*unit-Yoffset,1*unit), rotation_SN));
+    	mPos.add(new ModulePosition("ba1["+id+"]", new VectorDescription(-1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("ba2["+id+"]", new VectorDescription(-1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
 
-    	mPos.add(new ModulePosition("bl1["+id+"]", new VectorDescription(-1*unit,-1*unit-Yoffset,-2*unit), rotation_DU));
-    	mPos.add(new ModulePosition("bl2["+id+"]", new VectorDescription(-1*unit,-1*unit-Yoffset,2*unit), rotation_DU));
+    	mPos.add(new ModulePosition("bl1["+id+"]", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("bl2["+id+"]", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));
         return mPos;
 	}
 	
 	protected ArrayList<ModulePosition> buildWalker4(String id) {
 		float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("spline1["+id+"]", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new ModulePosition("spline2["+id+"]", new VectorDescription(-2*unit,0*unit-Yoffset,0*unit), rotation_EW));
+    	mPos.add(new ModulePosition("spline1["+id+"]", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("spline2["+id+"]", new VectorDescription(-2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
     	
-    	mPos.add(new ModulePosition("fa1["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("fa2["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,1*unit), rotation_SN));
+    	mPos.add(new ModulePosition("fa1["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("fa2["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
 
-    	mPos.add(new ModulePosition("fl1["+id+"]", new VectorDescription(1*unit,-1*unit-Yoffset,-2*unit), rotation_DU));
-    	mPos.add(new ModulePosition("fl2["+id+"]", new VectorDescription(1*unit,-1*unit-Yoffset,2*unit), rotation_DU));
+    	mPos.add(new ModulePosition("fl1["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("fl2["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));
 
-    	mPos.add(new ModulePosition("ma1["+id+"]", new VectorDescription(-1*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("ma2["+id+"]", new VectorDescription(-1*unit,0*unit-Yoffset,1*unit), rotation_SN));
+    	mPos.add(new ModulePosition("ma1["+id+"]", new VectorDescription(-1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("ma2["+id+"]", new VectorDescription(-1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
 
-    	mPos.add(new ModulePosition("ml1["+id+"]", new VectorDescription(-1*unit,-1*unit-Yoffset,-2*unit), rotation_DU));
-    	mPos.add(new ModulePosition("ml2["+id+"]", new VectorDescription(-1*unit,-1*unit-Yoffset,2*unit), rotation_DU));
+    	mPos.add(new ModulePosition("ml1["+id+"]", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("ml2["+id+"]", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));
 
-    	mPos.add(new ModulePosition("ba1["+id+"]", new VectorDescription(-3*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("ba2["+id+"]", new VectorDescription(-3*unit,0*unit-Yoffset,1*unit), rotation_SN));
+    	mPos.add(new ModulePosition("ba1["+id+"]", new VectorDescription(-3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("ba2["+id+"]", new VectorDescription(-3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
 
-    	mPos.add(new ModulePosition("bl1["+id+"]", new VectorDescription(-3*unit,-1*unit-Yoffset,-2*unit), rotation_DU));
-    	mPos.add(new ModulePosition("bl2["+id+"]", new VectorDescription(-3*unit,-1*unit-Yoffset,2*unit), rotation_DU));
+    	mPos.add(new ModulePosition("bl1["+id+"]", new VectorDescription(-3*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("bl2["+id+"]", new VectorDescription(-3*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));
         return mPos;
 	}
 	protected ArrayList<ModulePosition> buildWalker5(String id) {
 		float Yoffset = 0.35f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("spline1["+id+"]", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new ModulePosition("spline2["+id+"]", new VectorDescription(-2*unit,0*unit-Yoffset,0*unit), rotation_EW));
+    	mPos.add(new ModulePosition("spline1["+id+"]", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("spline2["+id+"]", new VectorDescription(-2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
     	
-    	mPos.add(new ModulePosition("fa1["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("fa2["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,1*unit), rotation_SN));
+    	mPos.add(new ModulePosition("fa1["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("fa2["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
 
-    	mPos.add(new ModulePosition("fl1["+id+"]", new VectorDescription(1*unit,-1*unit-Yoffset,-2*unit), rotation_DU));
-    	mPos.add(new ModulePosition("fl2["+id+"]", new VectorDescription(1*unit,-1*unit-Yoffset,2*unit), rotation_DU));
+    	mPos.add(new ModulePosition("fl1["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("fl2["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));
 
-    	mPos.add(new ModulePosition("ma1["+id+"]", new VectorDescription(-1*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("ma2["+id+"]", new VectorDescription(-1*unit,0*unit-Yoffset,1*unit), rotation_SN));
+    	mPos.add(new ModulePosition("ma1["+id+"]", new VectorDescription(-1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("ma2["+id+"]", new VectorDescription(-1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
 
     	//mPos.add(new ModulePosition("ml1["+id+"]", new VectorDescription(-1*unit,-1*unit-Yoffset,-2*unit), rotation_DU));
     	//mPos.add(new ModulePosition("ml2["+id+"]", new VectorDescription(-1*unit,-1*unit-Yoffset,2*unit), rotation_DU));
 
-    	mPos.add(new ModulePosition("ba1["+id+"]", new VectorDescription(-3*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("ba2["+id+"]", new VectorDescription(-3*unit,0*unit-Yoffset,1*unit), rotation_SN));
+    	mPos.add(new ModulePosition("ba1["+id+"]", new VectorDescription(-3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("ba2["+id+"]", new VectorDescription(-3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
 
-    	mPos.add(new ModulePosition("bl1["+id+"]", new VectorDescription(-3*unit,-1*unit-Yoffset,-2*unit), rotation_DU));
-    	mPos.add(new ModulePosition("bl2["+id+"]", new VectorDescription(-3*unit,-1*unit-Yoffset,2*unit), rotation_DU));
+    	mPos.add(new ModulePosition("bl1["+id+"]", new VectorDescription(-3*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("bl2["+id+"]", new VectorDescription(-3*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));
         return mPos;
 	}
 	protected ArrayList<ModulePosition> buildCrawler1(String id) {
 		float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("Spline["+id+"]", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_EW));
+    	mPos.add(new ModulePosition("Spline["+id+"]", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
     	
-    	mPos.add(new ModulePosition("fa1["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("fa2["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,1*unit), rotation_SN));
+    	mPos.add(new ModulePosition("fa1["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("fa2["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
 
-    	mPos.add(new ModulePosition("fl1["+id+"]", new VectorDescription(1*unit,-1*unit-Yoffset,-2*unit), rotation_DU));
-    	mPos.add(new ModulePosition("fl2["+id+"]", new VectorDescription(1*unit,1*unit-Yoffset,2*unit), rotation_DU));
+    	mPos.add(new ModulePosition("fl1["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("fl2["+id+"]", new VectorDescription(1*ATRON.UNIT,1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));
         return mPos;
 	}
 	protected ArrayList<ModulePosition> buildCrawler2(String id) {
 		float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("Spline["+id+"]", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_EW));
+    	mPos.add(new ModulePosition("Spline["+id+"]", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
     	
-    	mPos.add(new ModulePosition("fa1["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("fa2["+id+"]", new VectorDescription(1*unit,0*unit-Yoffset,1*unit), rotation_SN));
+    	mPos.add(new ModulePosition("fa1["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("fa2["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
 
-    	mPos.add(new ModulePosition("fl1["+id+"]", new VectorDescription(1*unit,-1*unit-Yoffset,-2*unit), rotation_DU));
-    	mPos.add(new ModulePosition("fl2["+id+"]", new VectorDescription(1*unit,1*unit-Yoffset,2*unit), rotation_DU));
+    	mPos.add(new ModulePosition("fl1["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("fl2["+id+"]", new VectorDescription(1*ATRON.UNIT,1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));
     	
-    	mPos.add(new ModulePosition("Tail1["+id+"]", new VectorDescription(-1*unit,-1*unit-Yoffset,0*unit), rotation_DU));
+    	mPos.add(new ModulePosition("Tail1["+id+"]", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_DU));
     	//mPos.add(new ModulePosition("Tail["+id+"]", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_EW));
         return mPos;
 	}
@@ -249,10 +249,10 @@ public abstract class AtronSkillSimulation extends GenericATRONSimulation {
     	int x=0,y=0,z=0;
     	for(int i=0;i<length;i++) {
     		if(i%2==0) {
-    			mPos.add(new ModulePosition("snake "+i+"["+id+"]", new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_EW));
+    			mPos.add(new ModulePosition("snake "+i+"["+id+"]", new VectorDescription(x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT), ATRON.ROTATION_EW));
     		}
     		else {
-    			mPos.add(new ModulePosition("snake "+i+"["+id+"]", new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_NS));
+    			mPos.add(new ModulePosition("snake "+i+"["+id+"]", new VectorDescription(x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT), ATRON.ROTATION_NS));
     		}
     		x++;z++;
     	}

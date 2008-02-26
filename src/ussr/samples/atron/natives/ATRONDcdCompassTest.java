@@ -11,9 +11,10 @@ import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.samples.atron.ATRON;
+import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.atron.ATRONController;
-import ussr.samples.atron.ATRONLatticeSimulation;
-import ussr.samples.atron.ATRONLatticeSimulation.ModuleSelector;
+import ussr.samples.atron.GenericATRONSimulation;
+import ussr.samples.atron.ATRONBuilder.ModuleSelector;
 
 /**
  * @author ups
@@ -21,7 +22,7 @@ import ussr.samples.atron.ATRONLatticeSimulation.ModuleSelector;
  * TODO Write a nice and user-friendly comment here
  * 
  */
-public class ATRONDcdCompassTest extends ATRONLatticeSimulation {
+public class ATRONDcdCompassTest extends GenericATRONSimulation {
 
     public static void main(String argv[]) {
         new ATRONDcdCompassTest().main();
@@ -36,7 +37,7 @@ public class ATRONDcdCompassTest extends ATRONLatticeSimulation {
     }
 
     protected ArrayList<ModulePosition> buildRobot() {
-        ArrayList<ModulePosition> positions = buildAsNamedLattice(100,3,1,5, new Namer() {
+        ArrayList<ModulePosition> positions = new ATRONBuilder().buildAsNamedLattice(100,3,1,5, new ATRONBuilder.Namer() {
             public String name(int number, VectorDescription pos, RotationDescription rot) {
                 if(rot.equals(ATRON.ROTATION_NS))
                     return "NS_1";
@@ -48,7 +49,7 @@ public class ATRONDcdCompassTest extends ATRONLatticeSimulation {
                     return "SN_3";
                 else throw new Error("Unrecognized rotation: "+rot);
             }
-        },new ModuleSelector() {
+        },new ATRONBuilder.ModuleSelector() {
             public String select(String name, int index, VectorDescription pos, RotationDescription rot) {
                 return null;
             }

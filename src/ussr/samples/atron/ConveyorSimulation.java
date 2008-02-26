@@ -15,14 +15,13 @@ import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONController;
-import ussr.samples.atron.ATRONLatticeSimulation;
 
 /**
  * A simulation of an ATRON conveyor belt that moves a box
  * 
  * @author Modular Robots @ MMMI
  */
-public class ConveyorSimulation extends ATRONLatticeSimulation {
+public class ConveyorSimulation extends GenericATRONSimulation {
 
     public static void main(String argv[]) {
         ConveyorSimulation main = new ConveyorSimulation();
@@ -95,7 +94,7 @@ public class ConveyorSimulation extends ATRONLatticeSimulation {
 
 
     protected ArrayList<ModulePosition> buildRobot() {
-        ArrayList<ModulePosition> positions = buildAsNamedLattice(100,6,1,7, new Namer() {
+        ArrayList<ModulePosition> positions = new ATRONBuilder().buildAsNamedLattice(100,6,1,7, new ATRONBuilder.Namer() {
             //private boolean everyOther = false;
             private int count = 0;
             public String name(int number, VectorDescription pos, RotationDescription rot) {
@@ -111,7 +110,7 @@ public class ConveyorSimulation extends ATRONLatticeSimulation {
                 } else
                     return "--plain"+number;
             }
-        }, new ModuleSelector() {
+        }, new ATRONBuilder.ModuleSelector() {
             public String select(String name, int index, VectorDescription pos, RotationDescription rot) {
                 if(!name.startsWith("conveyor")) {
                     if(Math.abs(pos.getZ())<0.02 || Math.abs(pos.getZ())>0.4)

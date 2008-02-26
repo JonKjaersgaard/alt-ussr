@@ -10,8 +10,9 @@ import ussr.robotbuildingblocks.ModulePosition;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.samples.atron.ATRON;
+import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.atron.ATRONController;
-import ussr.samples.atron.ATRONLatticeSimulation;
+import ussr.samples.atron.GenericATRONSimulation;
 
 /**
  * @author ups
@@ -19,7 +20,7 @@ import ussr.samples.atron.ATRONLatticeSimulation;
  * TODO Write a nice and user-friendly comment here
  * 
  */
-public class ATRONDcdArmSimulation extends ATRONLatticeSimulation {
+public class ATRONDcdArmSimulation extends GenericATRONSimulation {
 
     public static void main(String argv[]) {
         new ATRONDcdArmSimulation().main();
@@ -34,8 +35,7 @@ public class ATRONDcdArmSimulation extends ATRONLatticeSimulation {
     }
 
     protected ArrayList<ModulePosition> buildRobot() {
-        ArrayList<ModulePosition> positions = buildAsLattice(100,3,1,5);
-//        ArrayList<ModulePosition> positions = buildAsLattice(10,2,1,3);
+        ArrayList<ModulePosition> positions = new ATRONBuilder().buildAsLattice(100,3,1,5);
         positions.add(new ModulePosition("shoulder", new VectorDescription(3*ATRON.UNIT,1*ATRON.UNIT,2*ATRON.UNIT), ATRON.ROTATION_UD));
         positions.add(new ModulePosition("elbow", new VectorDescription(2*ATRON.UNIT,2*ATRON.UNIT,2*ATRON.UNIT), ATRON.ROTATION_EW));
         positions.add(new ModulePosition("hand", new VectorDescription(3*ATRON.UNIT,3*ATRON.UNIT,2*ATRON.UNIT), ATRON.ROTATION_UD));
