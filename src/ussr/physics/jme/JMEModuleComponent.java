@@ -31,6 +31,13 @@ import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
 import com.jmex.physics.DynamicPhysicsNode;
 
+/**
+ * The JME implementation of a module component: a fixed physics element that can be attached to
+ * other module components using actuators to form a complete module.
+ * 
+ * @author Modular Robots @ MMMI
+ *
+ */
 public class JMEModuleComponent implements PhysicsModuleComponent {
     /**
      * The abstract module represented by the jme entity  
