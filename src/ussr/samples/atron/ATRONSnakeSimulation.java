@@ -28,23 +28,8 @@ public class ATRONSnakeSimulation extends GenericATRONSimulation {
             }
         };
     }
-	private static ArrayList<ModulePosition> buildSnake(int length) {
-    	float Yoffset = 0.4f;
-    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	int x=0,y=0,z=0;
-    	for(int i=0;i<length;i++) {
-    		if(i%2==0) {
-    			mPos.add(new ModulePosition("snake "+i, new VectorDescription(x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT), ATRON.ROTATION_EW));
-    		}
-    		else {
-    			mPos.add(new ModulePosition("snake "+i, new VectorDescription(x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT), ATRON.ROTATION_NS));
-    		}
-    		x++;z++;
-    	}
-		return mPos;
-	}
 
 	protected ArrayList<ModulePosition> buildRobot() {
-		return buildSnake(4);
+		return new ATRONBuilder().buildSnake(4);
 	}
 }

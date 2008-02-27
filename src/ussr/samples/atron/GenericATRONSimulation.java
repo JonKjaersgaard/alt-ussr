@@ -25,7 +25,6 @@ import ussr.samples.GenericSimulation;
 public abstract class GenericATRONSimulation extends GenericSimulation {
 	
 	public static boolean startPaused = true;
-	protected float connection_acceptance_range = 0.001f;
     
     public void main() {
         this.setupPhysicsHook();
@@ -37,49 +36,20 @@ public abstract class GenericATRONSimulation extends GenericSimulation {
         modulePos = buildRobot();
         world.setModulePositions(modulePos);
         
-        ArrayList<ModuleConnection> connections = allConnections(modulePos);
+        ArrayList<ModuleConnection> connections = new ATRONBuilder().allConnections(modulePos);
         world.setModuleConnections(connections);
 
         this.changeWorldHook(world);
         
-        /*world.setModulePositions(new WorldDescription.ModulePosition[] {
-        new WorldDescription.ModulePosition("leftleg",new VectorDescription(0,0,0), rotation_EW),
-        new WorldDescription.ModulePosition("middle",new VectorDescription(unit,unit,0), rotation_UD),
-        new WorldDescription.ModulePosition("rightleg",new VectorDescription(2*unit,2*unit,0), rotation_EW),
-        new WorldDescription.ModulePosition("rightleg",new VectorDescription(4*unit,2*unit,0), rotation_EW),
- 		});*/
-        /*world.setModuleConnections(new WorldDescription.Connection[] {
-              //  new WorldDescription.Connection("leftleg",4,"middle",6)
-                //,new WorldDescription.Connection("rightleg",2,"middle",4)
-        });*/
         this.runSimulation(world,startPaused);
     }
     
     protected void setupPhysicsHook() { ; }
     
-    protected void changeWorldHook(WorldDescription world) {
-    }
+    protected void changeWorldHook(WorldDescription world) { ; }
 
-    private ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
-    	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
-    	//System.out.println("modulePos.size()"+modulePos.size());
-    	for(int i=0;i<modulePos.size();i++) {
-    		for(int j=i+1;j<modulePos.size();j++) {
-    			if(isConnectable(modulePos.get(i), modulePos.get(j))) {
-    				System.out.println("Found connection from module "+modulePos.get(i).getName()+" to "+modulePos.get(j).getName());
-    				connections.add(new ModuleConnection(modulePos.get(i).getName(),modulePos.get(j).getName()));
-    			}
-    		}
-    	}
-		return connections;
-	}
-	public boolean isConnectable(ModulePosition m1, ModulePosition m2) {
-    	float dist = m1.getPosition().distance(m2.getPosition());
-    	return Math.abs(dist-0.11313708f)<connection_acceptance_range;
-    }
-    @Override
     protected abstract Robot getRobot(); 
+
     protected abstract ArrayList<ModulePosition> buildRobot();
  
-
 }

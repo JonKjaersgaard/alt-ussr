@@ -28,17 +28,9 @@ public class ATRONSimpleVehicleSimulation extends GenericATRONSimulation {
             }
         };
     }
-	protected ArrayList<ModulePosition> buildCar() {
-    	float Yoffset = 0.25f;
-    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("driver0", new VectorDescription(-2*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
-    	mPos.add(new ModulePosition("RearRightWheel", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
-    	mPos.add(new ModulePosition("RearLeftWheel", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
-        return mPos;
-	}
 
 	protected ArrayList<ModulePosition> buildRobot() {
-		return buildCar();
+		return new ATRONBuilder().buildCar(2, new VectorDescription(0,-0.25f,0));
 	}
     
     protected void changeWorldHook(WorldDescription world) {

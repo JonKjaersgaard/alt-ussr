@@ -32,11 +32,9 @@ public class ATRONCarController1 extends ATRONController {
     public void activate() {
     	ussrYield();
     	this.delay(1000); /* rotateContinuous seem to fail sometimes if we do not wait at first */
-        byte lastew = -127, lastns = -127;
         byte dir = 1;
-        float lastProx = Float.NEGATIVE_INFINITY;
+        float lastProx = Float.NEGATIVE_INFINITY; /* for printing out proximity data */
         boolean firstTime = true;
-        delay(2000);
         while(true) {
         	
         	if(!module.getSimulation().isPaused()) {
@@ -52,9 +50,7 @@ public class ATRONCarController1 extends ATRONController {
         		        this.rotateDegrees(10);
         		    }
         		}
-    			if(!GenericSimulation.getConnectorsAreActive()) {
-    				disconnectAll();
-    			}
+
                 float max_prox = Float.NEGATIVE_INFINITY;
                 for(Sensor s: module.getSensors()) {
                     if(s.getName().startsWith("Proximity")) {
@@ -66,15 +62,7 @@ public class ATRONCarController1 extends ATRONController {
                     System.out.println("Proximity "+name+" max = "+max_prox);
                     lastProx = max_prox; 
                 }
-                //if(name.startsWith("wheel") && this.getTiltX()>5) dir = -1;
-                //if(name.startsWith("wheel") && this.getTiltX()<-5) dir = 1;
-        		/*if(name.startsWith("axle")&&(Math.abs(this.getTiltY()-lastew)>1)) {
-        		    System.out.println("axle tilty="+this.getTiltY());
-                    lastew = this.getTiltY();
-                } else if(name.startsWith("wheel")&&(Math.abs(this.getTiltX()-lastns)>1)) {
-                    System.out.println("wheel tiltx="+this.getTiltX());
-                    lastns = this.getTiltX();
-                }*/
+
         	}
         	ussrYield();
         }

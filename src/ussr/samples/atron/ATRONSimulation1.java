@@ -27,16 +27,6 @@ import ussr.samples.GenericSimulation;
  */
 public class ATRONSimulation1 extends GenericSimulation {
 	
-	private static float half = (float)(Math.PI);
-	private static float quart = (float)(0.5*Math.PI);
-	private static float eigth = (float)(0.25*Math.PI);
-	
-	private static float unit = 0.08f;//8 cm between two lattice positions on physical atrons
-	private static RotationDescription rotation_NS = new RotationDescription(0,0,eigth);
-	private static RotationDescription rotation_SN = new RotationDescription(0,half,eigth);
-	private static RotationDescription rotation_UD = new RotationDescription(quart,eigth,0);
-	private static RotationDescription rotation_EW = new RotationDescription(new VectorDescription(eigth,0,0),new VectorDescription(0,quart,0));
-	
     public static void main( String[] args ) {
         new ATRONSimulation1().main();
     }
@@ -47,94 +37,19 @@ public class ATRONSimulation1 extends GenericSimulation {
         WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
         List<ModulePosition> modulePos;
+        ATRONBuilder builder = new ATRONBuilder(); 
         //modulePos = buildAsLattice(5,2,4,1);
-        modulePos = buildCar();
+        modulePos = builder.buildCar(4, new VectorDescription(0,-0.25f,0));
        // modulePos = buildSnake(2);
         // modulePos = Arrays.asList(new WorldDescription.ModulePosition[] { new WorldDescription.ModulePosition("hermit", new VectorDescription(2*0*unit,0*unit,0*unit), rotation_EW) });
         world.setModulePositions(modulePos);
         
-        ArrayList<ModuleConnection> connections = allConnections(modulePos);
+        ArrayList<ModuleConnection> connections = builder.allConnections();
         world.setModuleConnections(connections);
         
         this.runSimulation(world,true);
     }
 
-    private static ArrayList<ModulePosition> buildSnake(int length) {
-    	//float Yoffset = 0.4f;
-    	float Yoffset = 0.0f;
-    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	int x=0,y=0,z=0;
-    	for(int i=0;i<length;i++) {
-    		if(i%2==0) {
-    			mPos.add(new ModulePosition("snake "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_EW));
-    		}
-    		else {
-    			mPos.add(new ModulePosition("snake "+i, new VectorDescription(x*unit,y*unit-Yoffset,z*unit), rotation_NS));
-    		}
-    		x++;z++;
-    	}
-		return mPos;
-	}
-	private static ArrayList<ModulePosition> buildCar() {
-    	float Yoffset = 0.25f;
-    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("driver", new VectorDescription(2*0*unit,0*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new ModulePosition("axes1", new VectorDescription(1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
-    	mPos.add(new ModulePosition("axes2", new VectorDescription(-1*unit,-1*unit-Yoffset,0*unit), rotation_UD));
-    	mPos.add(new ModulePosition("wheel1", new VectorDescription(-1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
-    	mPos.add(new ModulePosition("wheel2", new VectorDescription(-1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new ModulePosition("wheel3", new VectorDescription(1*unit,-2*unit-Yoffset,1*unit), rotation_SN));
-    	mPos.add(new ModulePosition("wheel4", new VectorDescription(1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
-        return mPos;
-	}
-    private static ArrayList<ModulePosition> buildAsLattice(int nModules, int xMax, int yMax, int zMax) {
-    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-        int index=0;
-        for(int x=0;x<xMax;x++) {
-        	for(int y=0;y<yMax;y++) {
-        		for(int z=0;z<zMax;z++) {
-        			VectorDescription pos = null;
-        			RotationDescription rot = rotation_NS;
-        			if(y%2==0&&z%2==0) {
-        				pos = new VectorDescription(2*x*unit,y*unit,z*unit);
-        				rot = rotation_EW;
-        			}
-	        		else if(y%2==0&&z%2==1)  {
-	        			pos = new VectorDescription(2*x*unit+unit,y*unit,z*unit);
-	        			rot = rotation_NS;
-	        		}
-	        		else if(y%2==1&&z%2==0) {
-	        			pos = new VectorDescription(2*x*unit+unit,y*unit,z*unit);
-	        			rot = rotation_UD;
-	        		}
-	        		else if(y%2==1&&z%2==1) {
-	        			pos = new VectorDescription(2*x*unit,y*unit,z*unit);
-	        			rot = rotation_NS;
-	        		}
-	        		if(index<nModules) mPos.add(new ModulePosition(Integer.toString(index), pos, rot));
-	        		index++;
-        		}
-        	}
-        }
-        return mPos;
-	}
-	private static ArrayList<ModuleConnection> allConnections(List<ModulePosition> modulePos) {
-    	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
-    	//System.out.println("modulePos.size()"+modulePos.size());
-    	for(int i=0;i<modulePos.size();i++) {
-    		for(int j=i+1;j<modulePos.size();j++) {
-    			if(isConnectable(modulePos.get(i), modulePos.get(j))) {
-    				//System.out.println("Found connection from module "+modulePos.get(i).getName()+" to "+modulePos.get(j).getName());
-    				connections.add(new ModuleConnection(modulePos.get(i).getName(),modulePos.get(j).getName()));
-    			}
-    		}
-    	}
-		return connections;
-	}
-	public static boolean isConnectable(ModulePosition m1, ModulePosition m2) {
-    	float dist = m1.getPosition().distance(m2.getPosition());
-    	return Math.abs(dist-0.11313708f)<0.001;
-    }
     @Override
     protected Robot getRobot() {
         return new ATRON() {

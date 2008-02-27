@@ -100,10 +100,6 @@ public class ATRONTestSimulation extends GenericATRONSimulation {
         		}
         	}
         }
-    	/*mPos.add(new WorldDescription.ModulePosition("base1", new VectorDescription(0*unit,-2*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new WorldDescription.ModulePosition("base2", new VectorDescription(-2*unit,-2*unit-Yoffset,0*unit), rotation_EW));
-    	mPos.add(new WorldDescription.ModulePosition("base3", new VectorDescription(-1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));
-    	mPos.add(new WorldDescription.ModulePosition("base4", new VectorDescription(-1*unit,-2*unit-Yoffset,1*unit), rotation_NS));*/
 		return mPos;
 	}
 
