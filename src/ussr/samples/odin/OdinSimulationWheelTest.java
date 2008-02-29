@@ -85,7 +85,8 @@ public class OdinSimulationWheelTest extends GenericSimulation {
         world.setPlaneSize(1);
         OdinBuilder builder = new OdinBuilder();
         int nBalls=3, xMax=3, yMax=2,zMax=2;
-        world.setModulePositions(builder.buildWheelBlob(nBalls, xMax, yMax, zMax));
+        VectorDescription offset = new VectorDescription(0,-0.46f,0);
+        world.setModulePositions(builder.buildWheelBlob(offset, nBalls, xMax, yMax, zMax));
         world.setModuleConnections(builder.allConnections());
         builder.report(System.out);
         return world;

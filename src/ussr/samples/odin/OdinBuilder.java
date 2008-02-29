@@ -137,13 +137,13 @@ public class OdinBuilder {
     }
     
     public ArrayList<ModulePosition> buildHingeBlob(int nBalls, int xMax, int yMax, int zMax) {
-        return buildWhateverBlob(nBalls,xMax,yMax,zMax,new ModuleDesignator() {
+        return buildWhateverBlob(new VectorDescription(), nBalls,xMax,yMax,zMax,new ModuleDesignator() {
             public String selectModule(int index) { return "OdinHinge"; }
         });
     }
     
-    public ArrayList<ModulePosition> buildWheelBlob(int nBalls, int xMax, int yMax, int zMax) {
-        return buildWhateverBlob(nBalls,xMax,yMax,zMax,new ModuleDesignator() {
+    public ArrayList<ModulePosition> buildWheelBlob(VectorDescription offset, int nBalls, int xMax, int yMax, int zMax) {
+        return buildWhateverBlob(offset,nBalls,xMax,yMax,zMax,new ModuleDesignator() {
             public String selectModule(int index) {
                 if(index%2==0) return "OdinBattery";
                 else return "OdinWheel";
@@ -152,7 +152,7 @@ public class OdinBuilder {
     }
     
     public ArrayList<ModulePosition> buildMuscleBlob(int nBalls, int xMax, int yMax, int zMax) {
-        return buildWhateverBlob(nBalls,xMax,yMax,zMax,new ModuleDesignator() {
+        return buildWhateverBlob(new VectorDescription(), nBalls,xMax,yMax,zMax,new ModuleDesignator() {
             public String selectModule(int index) {
                 if(index%2==0) return "OdinMuscle";
                 else return null;
@@ -160,13 +160,13 @@ public class OdinBuilder {
         });
     }
     
-    public ArrayList<ModulePosition> buildWhateverBlob(int nBalls, int xMax, int yMax, int zMax, ModuleDesignator designator) {
+    public ArrayList<ModulePosition> buildWhateverBlob(VectorDescription offset, int nBalls, int xMax, int yMax, int zMax, ModuleDesignator designator) {
         int index=0;
         for(int x=0;x<xMax;x++) {
             for(int y=0;y<yMax;y++) {
                 for(int z=0;z<zMax;z++) {
                     if((x+y+z)%2==0) {
-                        VectorDescription pos = new VectorDescription(x*unit,y*unit-0.48f,z*unit);
+                        VectorDescription pos = new VectorDescription(x*unit,y*unit,z*unit).add(offset);;
                         if(index<nBalls) {
                             ballPos.add(new ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
                         }
