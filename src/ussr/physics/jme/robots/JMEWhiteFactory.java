@@ -86,9 +86,10 @@ public class JMEWhiteFactory implements ModuleFactory {
 	}
 
 	private void setMass(float mass, DynamicPhysicsNode node) {
-		float density = mass*1f/node.getMass();
+	    node.setMass(mass);
+	    /*float density = mass*1f/node.getMass();
     	node.getMaterial().setDensity(density);
-    	node.computeMass();
+    	node.computeMass();*/
     	if(Math.abs((node.getMass()-mass))>mass/100) setMass(mass, node); //why oh why is this nesseary???
 	}
 
