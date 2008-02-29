@@ -65,6 +65,5 @@ public class OdinSampleController2 extends ControllerImpl {
     }
 	public void actuate(float pos) {
 		module.getActuators().get(0).activate(pos);
-		//System.out.println(" "+module.getConnectors().get(0).getPhysics().get(0));
 	}
 }

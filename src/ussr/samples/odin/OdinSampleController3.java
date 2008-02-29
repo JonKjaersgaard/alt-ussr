@@ -245,4 +245,7 @@ public class OdinSampleController3 extends OdinController {
     		return new RNN(nInput,nHidden,nOutput,nConnection);
     	}
     }
+    public static void setRoboReward(float v) {
+        roboReward = v;
+    }
 }

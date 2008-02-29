@@ -83,42 +83,10 @@ public class OdinSimulationHingeTest extends GenericSimulation {
     private static WorldDescription createWorld() {
     	WorldDescription world = new WorldDescription();
         world.setPlaneSize(3);
-        ArrayList<ModulePosition> ballPos = new ArrayList<ModulePosition>();
-        ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
-        int index=0;
-        int nBalls=6, xMax=6;
-        
-        for(int x=0;x<xMax;x++) {
-        	VectorDescription pos = new VectorDescription(x*unit,-0.48f,x*unit);
-        	if(index<nBalls) {
-       			ballPos.add(new ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
-        	}
-    	    index++;
-        }
-        for(int i=0;i<ballPos.size();i++) {
-        	for(int j=i+1;j<ballPos.size();j++) {
-        		if(isNeighorBalls(ballPos.get(i),ballPos.get(j))) {
-        			VectorDescription pos = posFromBalls(ballPos.get(i),ballPos.get(j));
-        			RotationDescription rot = rotFromBalls(ballPos.get(i),ballPos.get(j));
-        			if(index%2==0) {	//rotate every other module 
-        				Quaternion q = new Quaternion();
-        				q.fromAngles(pi/2, 0, 0);
-        				rot.setRotation(rot.getRotation().mult(q));
-        			}
-        			modulePos.add(new ModulePosition(Integer.toString(index),"OdinHinge", pos, rot));
-        			index++;
-        		}
-        	}
-        }
-        ArrayList<ModuleConnection> connections = allConnections(ballPos,modulePos);
-        System.out.println("#connection found = "+connections.size());
-        world.setModuleConnections(connections);
-        System.out.println("#Balls Placed  = "+ballPos.size());
-        System.out.println("#Module Placed = "+modulePos.size());
-
-		modulePos.addAll(ballPos);
-		world.setModulePositions(modulePos);
-		System.out.println("#Total         = "+modulePos.size());
+        OdinBuilder builder = new OdinBuilder();
+		world.setModulePositions(builder.buildHingePyramid());
+		world.setModuleConnections(builder.allConnections());
+		System.out.println("#Total         = "+builder.getModulePositions().size());
 		return world;
     }
     private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> ballPos, ArrayList<ModulePosition> modulePos) {

@@ -60,9 +60,10 @@ public class OdinActBasedController extends OdinController implements ActBasedCo
    		if(message[0]=='g') setColor(0, 1, 0);
    		if(message[0]=='b') setColor(0, 0, 1);
     }
-    public void singleActStep() {
+    public boolean singleActStep() {
         if(type=="OdinMuscle") muscleControl();
         if(type=="OdinBall") ballControl();
+        return true;
     }
     private float lastTime;
     public void initializationActStep() {
