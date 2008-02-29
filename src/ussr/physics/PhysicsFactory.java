@@ -5,11 +5,15 @@
  */
 package ussr.physics;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.robots.JMEATRONFactory;
 import ussr.physics.jme.robots.JMEMTRANFactory;
 import ussr.physics.jme.robots.JMEOdinFactory;
-import ussr.physics.jme.robots.JMEWhiteFactory;
+import ussr.samples.white.JMEWhiteFactory;
 
 /**
  * An factory for creating implementation-level objects used by higher-level parts of the
@@ -21,11 +25,19 @@ import ussr.physics.jme.robots.JMEWhiteFactory;
  * 
  */
 public class PhysicsFactory {
+    private static final ModuleFactory[] INITIAL_FACTORIES = new ModuleFactory[] { new JMEATRONFactory(), new JMEOdinFactory(), new JMEMTRANFactory() };
+    
+    private static ArrayList<ModuleFactory> factories = new ArrayList<ModuleFactory>(Arrays.asList(INITIAL_FACTORIES));
+
+    public synchronized static void addFactory(ModuleFactory factory) {
+        factories.add(factory);
+    }
+    
     /**
      * Create a new physics simulation
      * @return a new physics simulation
      */
     public static PhysicsSimulation createSimulator() {
-        return new JMESimulation(new ModuleFactory[] { new JMEATRONFactory(), new JMEOdinFactory(), new JMEMTRANFactory(), new JMEWhiteFactory()}); // hard-coded for now, should change
+        return new JMESimulation(factories.toArray(INITIAL_FACTORIES));
     }
 }

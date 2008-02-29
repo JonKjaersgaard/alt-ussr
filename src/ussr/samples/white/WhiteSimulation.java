@@ -38,6 +38,7 @@ public abstract class WhiteSimulation extends GenericSimulation implements Physi
     
 	public void runSimulation(WorldDescription world, boolean startPaused) {
         PhysicsLogger.setDefaultLoggingLevel();
+        PhysicsFactory.addFactory(new JMEWhiteFactory());
         simulation = PhysicsFactory.createSimulator();
         simulation.setRobot(new White(){
         	public Controller createController() {

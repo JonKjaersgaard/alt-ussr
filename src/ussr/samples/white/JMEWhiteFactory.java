@@ -1,4 +1,4 @@
-package ussr.physics.jme.robots;
+package ussr.samples.white;
 
 import java.awt.Color;
 
