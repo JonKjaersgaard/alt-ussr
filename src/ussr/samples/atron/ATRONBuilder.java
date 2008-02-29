@@ -61,11 +61,42 @@ public class ATRONBuilder {
             mPos.add(new ModulePosition("wheel2", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT+Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
             mPos.add(new ModulePosition("wheel3", new VectorDescription(1*ATRON.UNIT,-2*ATRON.UNIT+Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
             mPos.add(new ModulePosition("wheel4", new VectorDescription(1*ATRON.UNIT,-2*ATRON.UNIT+Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+        } else if(numberOfWheels==6) {
+            mPos.add(new ModulePosition("driver0", aPos(0,0,0,position), ATRON.ROTATION_EW));
+            mPos.add(new ModulePosition("driverExtra10", aPos(-2,0,0,position), ATRON.ROTATION_EW));
+            mPos.add(new ModulePosition("axleOne11", aPos(1,-1,0,position), ATRON.ROTATION_UD));
+            mPos.add(new ModulePosition("axleTwo12", aPos(-1,-1,0,position), ATRON.ROTATION_UD));
+            mPos.add(new ModulePosition("axleThree13", aPos(-3,-1,0,position), ATRON.ROTATION_UD));
+            mPos.add(new ModulePosition("--wheel1", aPos(-1,-2,1,position), ATRON.ROTATION_SN));
+            mPos.add(new ModulePosition("--wheel2", aPos(-1,-2,-1,position), ATRON.ROTATION_NS));
+            mPos.add(new ModulePosition("--wheel3", aPos(1,-2,1,position), ATRON.ROTATION_SN));
+            mPos.add(new ModulePosition("--wheel4", aPos(1,-2,-1,position), ATRON.ROTATION_NS));
+            mPos.add(new ModulePosition("--wheel5", aPos(-3,-2,1,position), ATRON.ROTATION_SN));
+            mPos.add(new ModulePosition("--wheel6", aPos(-3,-2,-1,position), ATRON.ROTATION_NS));
         } else
             throw new Error("Not implemented yet");
         return mPos;
     }
 
+    public ArrayList<ModulePosition> buildCyclicCar(VectorDescription position) {
+        mPos.add(new ModulePosition("driver0", aPos(0,0,0,position), ATRON.ROTATION_EW));
+        mPos.add(new ModulePosition("axleOne", aPos(1,-1,0,position), ATRON.ROTATION_UD));
+        mPos.add(new ModulePosition("axleTwo", aPos(-1,-1,0,position), ATRON.ROTATION_UD));
+        mPos.add(new ModulePosition("wheel1", aPos(-1,-2,1,position), ATRON.ROTATION_SN));
+        mPos.add(new ModulePosition("wheel2", aPos(-1,-2,-1,position), ATRON.ROTATION_NS));
+        mPos.add(new ModulePosition("wheel3", aPos(1,-2,1,position), ATRON.ROTATION_SN));
+        mPos.add(new ModulePosition("wheel4", aPos(1,-2,-1,position), ATRON.ROTATION_NS));
+        mPos.add(new ModulePosition("spareTyre", aPos(-1,0,1,position), ATRON.ROTATION_SN));
+        return mPos;
+    }
+    
+    private static VectorDescription aPos(float x, float y, float z, VectorDescription offset) {
+        final float Xoffset = offset.getX();
+        final float Yoffset = offset.getY();
+        final float Zoffset = offset.getZ();
+        return new VectorDescription(x*ATRON.UNIT+Xoffset, y*ATRON.UNIT+Yoffset, z*ATRON.UNIT+Zoffset);
+    }
+    
     public ArrayList<ModulePosition> buildAsLattice(int nModules, int xMax, int yMax, int zMax) {
         return this.buildAsNamedLattice(nModules, xMax, yMax, zMax, new Namer() {
             public String name(int number, VectorDescription pos, RotationDescription rot) {
@@ -183,7 +214,36 @@ public class ATRONBuilder {
         }*/
         return false;
     }
-    
+
+    public ArrayList<ModulePosition> buildWideCar(VectorDescription position) {
+        mPos.add(new ModulePosition("driver0", aPos(0,0,0,position), ATRON.ROTATION_EW));
+        mPos.add(new ModulePosition("driver91", aPos(-2,0,0,position), ATRON.ROTATION_EW));
+        mPos.add(new ModulePosition("driverExtra92", aPos(0,0,4,position), ATRON.ROTATION_EW));
+        mPos.add(new ModulePosition("driverExtra93", aPos(-2,0,4,position), ATRON.ROTATION_EW));
+        mPos.add(new ModulePosition("axleOne11", aPos(1,-1,0,position), ATRON.ROTATION_UD));
+        mPos.add(new ModulePosition("axleTwo12", aPos(-1,-1,0,position), ATRON.ROTATION_UD));
+        mPos.add(new ModulePosition("axleThree13", aPos(-3,-1,0,position), ATRON.ROTATION_UD));
+        mPos.add(new ModulePosition("axleFour14", aPos(1,-1,4,position), ATRON.ROTATION_UD));
+        mPos.add(new ModulePosition("axleFive15", aPos(-1,-1,4,position), ATRON.ROTATION_UD));
+        mPos.add(new ModulePosition("axleSix16", aPos(-3,-1,4,position), ATRON.ROTATION_UD));
+        mPos.add(new ModulePosition("wheel1", aPos(-1,-2,1,position), ATRON.ROTATION_SN));
+        mPos.add(new ModulePosition("wheel2", aPos(-1,-2,-1,position), ATRON.ROTATION_NS));
+        mPos.add(new ModulePosition("wheel3", aPos(1,-2,1,position), ATRON.ROTATION_SN));
+        mPos.add(new ModulePosition("wheel4", aPos(1,-2,-1,position), ATRON.ROTATION_NS));
+        mPos.add(new ModulePosition("wheel5", aPos(-3,-2,1,position), ATRON.ROTATION_SN));
+        mPos.add(new ModulePosition("wheel6", aPos(-3,-2,-1,position), ATRON.ROTATION_NS));
+        mPos.add(new ModulePosition("wheel31", aPos(-1,-2,3,position), ATRON.ROTATION_NS));
+        mPos.add(new ModulePosition("wheel32", aPos(-1,-2,5,position), ATRON.ROTATION_SN));
+        mPos.add(new ModulePosition("wheel33", aPos(1,-2,3,position), ATRON.ROTATION_NS));
+        mPos.add(new ModulePosition("wheel34", aPos(1,-2,5,position), ATRON.ROTATION_SN));
+        mPos.add(new ModulePosition("wheel35", aPos(-3,-2,3,position), ATRON.ROTATION_NS));
+        mPos.add(new ModulePosition("wheel36", aPos(-3,-2,5,position), ATRON.ROTATION_SN));
+        mPos.add(new ModulePosition("connectOne21", "ATRON super", aPos(-1,0,1,position), ATRON.ROTATION_SN));
+        mPos.add(new ModulePosition("connectTwo22", "ATRON super", aPos(-1,0,3,position), ATRON.ROTATION_NS));
+        mPos.add(new ModulePosition("connectThree23", "ATRON super", aPos(0,0,2,position), ATRON.ROTATION_EW));
+        return mPos;
+    }
+
     /*world.setModulePositions(new WorldDescription.ModulePosition[] {
     new WorldDescription.ModulePosition("leftleg",new VectorDescription(0,0,0), rotation_EW),
     new WorldDescription.ModulePosition("middle",new VectorDescription(unit,unit,0), rotation_UD),

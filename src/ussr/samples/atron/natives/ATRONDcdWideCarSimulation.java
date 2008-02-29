@@ -8,6 +8,7 @@ import ussr.robotbuildingblocks.ModulePosition;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.samples.atron.ATRON;
+import ussr.samples.atron.ATRONBuilder;
 
 public class ATRONDcdWideCarSimulation extends ATRONNativeCarSimulation {
     
@@ -40,33 +41,7 @@ public class ATRONDcdWideCarSimulation extends ATRONNativeCarSimulation {
     }
     
     protected ArrayList<ModulePosition> buildCar() {
-        ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-        mPos.add(new ModulePosition("driver0", pos(0,0,0), ATRON.ROTATION_EW));
-        mPos.add(new ModulePosition("driver91", pos(-2,0,0), ATRON.ROTATION_EW));
-        mPos.add(new ModulePosition("driverExtra92", pos(0,0,4), ATRON.ROTATION_EW));
-        mPos.add(new ModulePosition("driverExtra93", pos(-2,0,4), ATRON.ROTATION_EW));
-        mPos.add(new ModulePosition("axleOne11", pos(1,-1,0), ATRON.ROTATION_UD));
-        mPos.add(new ModulePosition("axleTwo12", pos(-1,-1,0), ATRON.ROTATION_UD));
-        mPos.add(new ModulePosition("axleThree13", pos(-3,-1,0), ATRON.ROTATION_UD));
-        mPos.add(new ModulePosition("axleFour14", pos(1,-1,4), ATRON.ROTATION_UD));
-        mPos.add(new ModulePosition("axleFive15", pos(-1,-1,4), ATRON.ROTATION_UD));
-        mPos.add(new ModulePosition("axleSix16", pos(-3,-1,4), ATRON.ROTATION_UD));
-        mPos.add(new ModulePosition("wheel1", pos(-1,-2,1), ATRON.ROTATION_SN));
-        mPos.add(new ModulePosition("wheel2", pos(-1,-2,-1), ATRON.ROTATION_NS));
-        mPos.add(new ModulePosition("wheel3", pos(1,-2,1), ATRON.ROTATION_SN));
-        mPos.add(new ModulePosition("wheel4", pos(1,-2,-1), ATRON.ROTATION_NS));
-        mPos.add(new ModulePosition("wheel5", pos(-3,-2,1), ATRON.ROTATION_SN));
-        mPos.add(new ModulePosition("wheel6", pos(-3,-2,-1), ATRON.ROTATION_NS));
-        mPos.add(new ModulePosition("wheel31", pos(-1,-2,3), ATRON.ROTATION_NS));
-        mPos.add(new ModulePosition("wheel32", pos(-1,-2,5), ATRON.ROTATION_SN));
-        mPos.add(new ModulePosition("wheel33", pos(1,-2,3), ATRON.ROTATION_NS));
-        mPos.add(new ModulePosition("wheel34", pos(1,-2,5), ATRON.ROTATION_SN));
-        mPos.add(new ModulePosition("wheel35", pos(-3,-2,3), ATRON.ROTATION_NS));
-        mPos.add(new ModulePosition("wheel36", pos(-3,-2,5), ATRON.ROTATION_SN));
-        mPos.add(new ModulePosition("connectOne21", "ATRON super", pos(-1,0,1), ATRON.ROTATION_SN));
-        mPos.add(new ModulePosition("connectTwo22", "ATRON super", pos(-1,0,3), ATRON.ROTATION_NS));
-        mPos.add(new ModulePosition("connectThree23", "ATRON super", pos(0,0,2), ATRON.ROTATION_EW));
-        return mPos;
+        return new ATRONBuilder().buildWideCar(new VectorDescription(0,-0.25f,0));
     }
 
 }

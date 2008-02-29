@@ -6,6 +6,7 @@ package ussr.samples.atron.natives;
 import ussr.model.Controller;
 import ussr.physics.PhysicsParameters;
 import ussr.robotbuildingblocks.Robot;
+import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONCarSimulation;
 
@@ -25,6 +26,7 @@ public class ATRONNativeCarSimulation extends ATRONCarSimulation {
         PhysicsParameters.get().setRealisticCollision(true);
         PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f); // before: 0.0005f
         PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
+        this.obstacleType = ObstacleGenerator.ObstacleType.LINE;
         super.main();
     }
     
