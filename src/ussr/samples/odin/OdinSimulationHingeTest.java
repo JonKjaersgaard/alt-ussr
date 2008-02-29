@@ -89,59 +89,8 @@ public class OdinSimulationHingeTest extends GenericSimulation {
 		System.out.println("#Total         = "+builder.getModulePositions().size());
 		return world;
     }
-    private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> ballPos, ArrayList<ModulePosition> modulePos) {
-    	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
-    	for(int i=0;i<ballPos.size();i++) {
-    		for(int j=0;j<modulePos.size();j++) {
-    			if(isConnectable(ballPos.get(i), modulePos.get(j))) {
-    				connections.add(new ModuleConnection(ballPos.get(i).getName(),modulePos.get(j).getName()));
-    			}
-    		}
-    	}
-		return connections;
-	}
-	private static VectorDescription posFromBalls(ModulePosition p1, ModulePosition p2) {
-    	VectorDescription pos = new VectorDescription((p1.getPosition().getX()+p2.getPosition().getX())/2,(p1.getPosition().getY()+p2.getPosition().getY())/2,(p1.getPosition().getZ()+p2.getPosition().getZ())/2);
-		return pos;
-	}
-	private static RotationDescription rotFromBalls(ModulePosition p1, ModulePosition p2) {
-		float x1 = p1.getPosition().getX();
-		float y1 = p1.getPosition().getY();
-		float z1 = p1.getPosition().getZ();
-		float x2 = p2.getPosition().getX();
-		float y2 = p2.getPosition().getY();
-		float z2 = p2.getPosition().getZ();
-		if(x1-x2<0&&z1-z2<0) return new RotationDescription(0,-pi/4,0);
-		else if(x1-x2<0&&z1-z2>0) return new RotationDescription(0,pi/4,0);
-		else if(x1-x2<0&&y1-y2<0) return new RotationDescription(0,0,pi/4);
-		else if(x1-x2<0&&y1-y2>0) return new RotationDescription(0,0,-pi/4);
-		else if(y1-y2<0&&z1-z2<0) return new RotationDescription(0,pi/4,-pi/2);
-		else if(y1-y2<0&&z1-z2>0) return new RotationDescription(0,-pi/4,-pi/2);
-		System.out.println("("+(x1-x2)+","+(y1-y2)+","+(z1-z2)+")");
-    	return new RotationDescription(0,0,0);
-	}
-	public static boolean isConnectable(ModulePosition ball, ModulePosition module) {
-    	float dist = ball.getPosition().distance(module.getPosition());
-    	if(dist-Math.abs(Math.sqrt(2*unit*unit))/2<0.0000001) return true;
-    	return dist==(float)Math.sqrt(2*unit*unit)/2;
-    }
-	public static boolean isNeighorBalls(ModulePosition ball1, ModulePosition ball2) {
-    	float dist = ball1.getPosition().distance(ball2.getPosition());
-    	if(dist-Math.abs(Math.sqrt(2*unit*unit))<0.0000001) return true;
-    	return dist==(float)Math.sqrt(2*unit*unit);
-    }
-    public static void printConnectorPos() {
-    	for(int x=-2;x<2;x++) {
-        	for(int y=-2;y<2;y++) {
-        		for(int z=-2;z<2;z++) {
-        			if((x+y+z)%2==0&&(x*x+y*y+z*z)<3&&!(x==0&&y==0&&z==0)) {
-        				System.out.println("new VectorDescription("+x+"*unit, "+y+"*unit, "+z+"*unit),");
-        			}
-        		}
-        	}
-        }
-    }
-	protected Robot getRobot() {
-		return null;
+    
+  	protected Robot getRobot() {
+		return Robot.NO_DEFAULT;
 	}
 }
