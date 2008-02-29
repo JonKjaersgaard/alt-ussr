@@ -19,8 +19,7 @@ public class OdinBuilder {
     private static final float unit = (float)Math.sqrt((0.18f*0.18f)/2);
     private static final float pi = (float)Math.PI;
 
-    @Deprecated
-    public ArrayList<ModulePosition> buildSpecificBlob(int nBalls, int xMax, int yMax, int zMax) {
+    public ArrayList<ModulePosition> buildDenseBlob(int nBalls, int xMax, int yMax, int zMax) {
         int index=0;
         for(int x=0;x<xMax;x++) {
             for(int y=0;y<yMax;y++) {

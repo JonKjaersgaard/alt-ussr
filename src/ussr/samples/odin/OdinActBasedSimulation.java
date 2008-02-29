@@ -73,7 +73,7 @@ public class OdinActBasedSimulation extends GenericSimulation {
        //int nBalls=14, xMax=3, yMax=3,zMax=3;
         //int nBalls=20, xMax=4, yMax=4,zMax=4;
         int nBalls=250, xMax=8, yMax=8,zMax=8; // Runs on Ulrik's machine but structure falls apart; nBalls=300 causes some weird overflow
-        ArrayList<ModulePosition> modulePos = builder.buildSpecificBlob(nBalls,xMax,yMax,zMax);
+        ArrayList<ModulePosition> modulePos = builder.buildDenseBlob(nBalls,xMax,yMax,zMax);
         world.setModulePositions(modulePos);
         world.setModuleConnections(builder.allConnections());
         builder.report(System.out);

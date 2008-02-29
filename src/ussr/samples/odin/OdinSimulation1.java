@@ -73,7 +73,7 @@ public class OdinSimulation1 extends GenericSimulation {
        //int nBalls=14, xMax=3, yMax=3,zMax=3;
         int nBalls=20, xMax=4, yMax=4,zMax=4;
         //int nBalls=80, xMax=5, yMax=5,zMax=5; // Max on Ulrik's machine
-        ArrayList<ModulePosition> modulePos = builder.buildSpecificBlob(nBalls,xMax,yMax,zMax);
+        ArrayList<ModulePosition> modulePos = builder.buildDenseBlob(nBalls,xMax,yMax,zMax);
         world.setModulePositions(modulePos);
         world.setModuleConnections(builder.allConnections());
         System.out.println("#Total         = "+modulePos.size());
