@@ -4,7 +4,7 @@ package ussr.samples.atron;
  * 
  * @author Modular Robots @ MMMI
  */
-public interface IATRONController {
+public interface IATRONAPI {
 
 	public abstract void home();
 

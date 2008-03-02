@@ -1,12 +1,12 @@
 package onlineLearning.atron;
 
-import ussr.samples.atron.ATRONController;
+import ussr.samples.atron.IATRONAPI;
 
 public class TimeOutManager {
 	float startTime,duration;
-	ATRONController controller;
+	IATRONAPI controller;
 	
-	public TimeOutManager(float duration, ATRONController controller) {
+	public TimeOutManager(float duration, IATRONAPI controller) {
 		this.controller = controller;
 		this.duration = duration;
 		reset();

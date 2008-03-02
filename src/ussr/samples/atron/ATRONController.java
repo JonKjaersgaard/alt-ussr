@@ -18,7 +18,7 @@ import ussr.physics.PhysicsParameters;
  * 
  * @author Modular Robots @ MMMI
  */
-public abstract class ATRONController extends ControllerImpl implements PacketReceivedObserver, PhysicsObserver, IATRONController {
+public abstract class ATRONController extends ControllerImpl implements PacketReceivedObserver, PhysicsObserver, IATRONAPI {
 
     float targetPos, currentPos, zeroPos;
 	private boolean blocking;
