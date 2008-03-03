@@ -100,7 +100,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
 
         @Override
         public void activate() {
-            this.ussrYield();
+            this.controlYield();
             if(USE_BLOCKING_ROTATE) this.setBlocking(true);
             this.delay(10);
             setup();
@@ -122,7 +122,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
             if(getMyID()==0) token[0] = 0;
             while(eight2car_active)
             {
-                super.ussrYield();
+                super.controlYield();
                 if(token[0]!=255 && token[0]!=-1) {
                     System.out.println("Module "+this.getName()+" in state "+token[0]);
                     //delay(500);
@@ -131,7 +131,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                 {
                 case 0:
                     disconnect_module(0,2);
-                    while (!isDisconnected(0)) super.ussrYield();
+                    while (!isDisconnected(0)) super.controlYield();
                     token[0]=1;
                     break;
                 case 1:
@@ -152,7 +152,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     break;
                 case 3:
                     disconnect_module(4,4);
-                    while (!isDisconnected(4)) super.ussrYield();
+                    while (!isDisconnected(4)) super.controlYield();
                     token[0]=4;
                     break;
                 case 4:
@@ -193,7 +193,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     break;
                 case 9:
                     connect_module(CORRECT_CAR_WHEELS?6:0,3);
-                    while (!isConnected(CORRECT_CAR_WHEELS?6:0)) super.ussrYield();
+                    while (!isConnected(CORRECT_CAR_WHEELS?6:0)) super.controlYield();
                     token[0]=10;
                     break;
                 case 10:
@@ -244,7 +244,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     break;
                 case 16:
                     disconnect_module(2,5);
-                    while (!isDisconnected(2)) super.ussrYield();
+                    while (!isDisconnected(2)) super.controlYield();
                     token[0]=17;
                     break;
                 case 17:
@@ -309,7 +309,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     break;
                 case 25:
                     connect_module(0,6);
-                    while (!isConnected(0)) super.ussrYield();
+                    while (!isConnected(0)) super.controlYield();
                     token[0]=26;
                     break;
                 case 26:
@@ -322,7 +322,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     break;
                 case 27:
                     disconnect_module(6,4);
-                    while (!isDisconnected(6)) super.ussrYield();
+                    while (!isDisconnected(6)) super.controlYield();
                     token[0]=28;
                     break;
                 case 28:
@@ -393,7 +393,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     break;
                 case 37:
                     connect_module(CORRECT_CAR_WHEELS?4:0,6);
-                    while (!isConnected(CORRECT_CAR_WHEELS?4:0)) super.ussrYield();
+                    while (!isConnected(CORRECT_CAR_WHEELS?4:0)) super.controlYield();
                     token[0]=38;
                     break;
                 case 38:
@@ -414,7 +414,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     break;
                 case 40:
                     connect_module(4,6);
-                    while (!isConnected(4)) super.ussrYield();
+                    while (!isConnected(4)) super.controlYield();
                     token[0]=41;
                     break;
                 case 41:
@@ -435,7 +435,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     break;
                 case 43:
                     connect_module(4,4);
-                    while (!isConnected(4)) super.ussrYield();
+                    while (!isConnected(4)) super.controlYield();
                     token[0]=44;
                     break;
                 case 44:
@@ -448,7 +448,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     break;
                 case 45:
                     disconnect_module(CORRECT_CAR_WHEELS?6:0,3);
-                    while (!isDisconnected(CORRECT_CAR_WHEELS?6:0)) super.ussrYield();
+                    while (!isDisconnected(CORRECT_CAR_WHEELS?6:0)) super.controlYield();
                     token[0]=46;
                     break;
                 case 46:
@@ -469,7 +469,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     break;
                 case 48:
                     disconnect_module(6,1);
-                    while (!isDisconnected(6)) super.ussrYield();
+                    while (!isDisconnected(6)) super.controlYield();
                     token[0]=49;
                     break;
                 case 49:
@@ -582,7 +582,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     break;
                 case 63:
                     connect_module(6,3);
-                    while (!isConnected(6)) super.ussrYield();
+                    while (!isConnected(6)) super.controlYield();
                     token[0]=64;
                     break;
                 case 64:
@@ -595,12 +595,12 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
                     break;
                 case 65:
                     disconnect_module(0,5);
-                    while (!isDisconnected(0)) super.ussrYield();
+                    while (!isDisconnected(0)) super.controlYield();
                     token[0]=66;
                     break;
                 case 66:
                     disconnect_module(2,2);
-                    while (!isDisconnected(2)) super.ussrYield();
+                    while (!isDisconnected(2)) super.controlYield();
                     token[0]=67;
                     break;
                 case 67:
@@ -656,8 +656,8 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
         private void doRotate(int i) {
             this.rotate(i);
             if(!USE_BLOCKING_ROTATE) {
-                while (!isRotating()) super.ussrYield();
-                while (isRotating()) super.ussrYield();
+                while (!isRotating()) super.controlYield();
+                while (isRotating()) super.controlYield();
             }
         }
 

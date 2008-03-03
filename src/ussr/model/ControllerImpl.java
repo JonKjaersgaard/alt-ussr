@@ -66,13 +66,13 @@ public abstract class ControllerImpl implements Controller {
     
     /**
      * Wait for a given amount of time, in terms of the simulation.  Yields the
-     * current thread of control using {@link #ussrYield()} while busy-waiting.
+     * current thread of control using {@link #controlYield()} while busy-waiting.
      * @param ms amount of time to wait, in simulation milliseconds
      */
     protected void delay(long ms) {
     	float stopTime = module.getSimulation().getTime()+ms/1000f;
     	while(stopTime>module.getSimulation().getTime()) {
-    		ussrYield();
+    		controlYield();
     	}
 	}
 
@@ -80,7 +80,7 @@ public abstract class ControllerImpl implements Controller {
      * Yield the control to some other thread, or pause if the simulation is paused.
      * Yielding is done by waiting for the simulator to take a physics step.
      */
-    public void ussrYield() {
+    public void controlYield() {
     	while(module.getSimulation().isPaused()) Thread.yield();
     	module.getSimulation().waitForPhysicsStep(false);	
 	}

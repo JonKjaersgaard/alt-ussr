@@ -110,7 +110,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     	module.getActuators().get(0).activate(goalRot/4f);
     	while(isRotating()&&blocking) {
     		module.getActuators().get(0).activate(goalRot/4f);
-    		ussrYield();
+    		controlYield();
     	}
     	PhysicsLogger.logNonCritical("["+getName()+"] Rotation done pos = "+module.getActuators().get(0).getEncoderValue());
     	final float maintain = goalRot/4f;
@@ -123,7 +123,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     	        PhysicsLogger.logNonCritical("(locking actuator on "+this.getName()+" to maintain "+maintain+") ");
     	        while(locked) {
     	           module.getActuators().get(0).activate(maintain);
-                   ussrYield();
+                   controlYield();
     	       }
     	        PhysicsLogger.logNonCritical("(unlocking actuator on "+this.getName()+")");
     	    }
@@ -159,7 +159,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         float goal = (float)(rad/(Math.PI*2));
         do {
             module.getActuators().get(0).activate(goal);
-            ussrYield();
+            controlYield();
         } while(isRotating()&&blocking);
         final float maintain = goal;
         if(!PhysicsParameters.get().getMaintainRotationalJointPositions()) return;
@@ -171,7 +171,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
                 PhysicsLogger.logNonCritical("(locking actuator on "+this.getName()+")");
                 while(locked) {
                    module.getActuators().get(0).activate(maintain);
-                   ussrYield();
+                   controlYield();
                }
                 PhysicsLogger.logNonCritical("(unlocking actuator on "+this.getName()+")"); System.out.flush();
             }

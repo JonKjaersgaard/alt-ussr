@@ -1,7 +1,7 @@
 package onlineLearning;
 
 public interface SkillController {
-	public void ussrYield();
+	public void controlYield();
 	public boolean isStopped();
 
 	public void delay(int i);

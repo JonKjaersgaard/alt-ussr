@@ -36,7 +36,7 @@ public class OdinSkillController extends OdinController implements SkillControll
     }
     
     public void activate() {
-    	ussrYield();
+    	controlYield();
     	delay(2000);
     	learner.init(this,evalPeriode);
     	learner.startLearning(this ,evalPeriode); 

@@ -77,5 +77,7 @@ public interface IATRONAPI {
 	public abstract byte getTiltY();
 
 	public abstract byte getTiltZ();
+	
+	public abstract void controlYield();
 
 }

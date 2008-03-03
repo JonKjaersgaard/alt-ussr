@@ -30,7 +30,7 @@ public class ATRONTestController1 extends ATRONController {
     public void activate() {
         while(true) {
         	if(!module.getSimulation().isPaused()) {
-        		ussrYield();
+        		controlYield();
     			if(testType.equals("velocityTest")) {
     				testFullRotation();
     			}
@@ -42,7 +42,7 @@ public class ATRONTestController1 extends ATRONController {
     			}
     			//testCommunication(5);
         	}
-        	ussrYield();
+        	controlYield();
         }
     }
     private void testTorque() {
@@ -78,7 +78,7 @@ public class ATRONTestController1 extends ATRONController {
     	}
     	else {
     		home();
-    		while(true) ussrYield();
+    		while(true) controlYield();
     	}
 	}
     

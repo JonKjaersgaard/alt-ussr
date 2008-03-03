@@ -36,7 +36,7 @@ public abstract class MTRANController extends ControllerImpl implements PacketRe
     public void rotateTo(float goal, int actuator) {
         do {
             module.getActuators().get(actuator).activate(goal);
-            ussrYield();
+            controlYield();
         } while(isRotating(actuator)&&blocking);
 	}
     public float getEncoderPosition(int actuator) {

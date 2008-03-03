@@ -30,7 +30,7 @@ public class ATRONCarController1 extends ATRONController {
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
-    	ussrYield();
+    	controlYield();
     	this.delay(1000); /* rotateContinuous seem to fail sometimes if we do not wait at first */
         byte dir = 1;
         float lastProx = Float.NEGATIVE_INFINITY; /* for printing out proximity data */
@@ -38,7 +38,7 @@ public class ATRONCarController1 extends ATRONController {
         while(true) {
         	
         	if(!module.getSimulation().isPaused()) {
-                if(!GenericSimulation.getActuatorsAreActive()) { ussrYield(); firstTime = true; continue; }
+                if(!GenericSimulation.getActuatorsAreActive()) { controlYield(); firstTime = true; continue; }
         		String name = module.getProperty("name");
         		if(firstTime) {
                     firstTime = false;
@@ -64,7 +64,7 @@ public class ATRONCarController1 extends ATRONController {
                 }
 
         	}
-        	ussrYield();
+        	controlYield();
         }
     }
 }

@@ -26,8 +26,8 @@ public class MTRANSampleController1 extends MTRANController {
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
-    	while(module.getSimulation().isPaused()) ussrYield();
-    	ussrYield();
+    	while(module.getSimulation().isPaused()) controlYield();
+    	controlYield();
     	System.out.println("MTRAN RUNNING "+module.getID());
     	while(true) {
     		double goal0 = 0.5f*Math.sin(3*module.getSimulation().getTime()+module.getID()+0.5f);
@@ -45,7 +45,7 @@ public class MTRANSampleController1 extends MTRANController {
     		}else {
     			rotate(1, 1);
     		}
-    		ussrYield();
+    		controlYield();
     	}
 	}
     

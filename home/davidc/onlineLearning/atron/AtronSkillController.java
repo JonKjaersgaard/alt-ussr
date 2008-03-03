@@ -49,7 +49,7 @@ public class AtronSkillController extends ATRONController implements SkillContro
     	setBlocking(false);
     }
     public void activate() {
-    	ussrYield();
+    	controlYield();
     	init();
     	learner.init(this,evalPeriode); 
     	learner.startLearning(this ,evalPeriode);
@@ -83,7 +83,7 @@ public class AtronSkillController extends ATRONController implements SkillContro
     	CharSequence id = name.subSequence(name.indexOf("[")+1, name.indexOf("]"));
     	return Integer.parseInt(id.toString());
     }
-    public void ussrYield() {
+    public void controlYield() {
     	while(module.getSimulation().isPaused()) Thread.yield();
     	if(!isStopped()) module.getSimulation().waitForPhysicsStep(false);
 	}

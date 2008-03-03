@@ -33,7 +33,7 @@ public class MetaController extends ATRONController {
 
     @Override
     public void activate() {
-        while(module.getSimulation().isPaused()) super.ussrYield();
+        while(module.getSimulation().isPaused()) super.controlYield();
         System.out.println(showNeighbors());
         String moduleDesc = module.getProperty("name").split("/")[1];
         String modulePos = moduleDesc.split(":")[0];
@@ -46,7 +46,7 @@ public class MetaController extends ATRONController {
         module.setProperty(META_GROUP, moduleGroup);
         this.setMetaGroup(Integer.parseInt(moduleGroup));
         float t1 = module.getSimulation().getTime();
-        while(module.getSimulation().getTime()-t1 < 1) super.ussrYield();
+        while(module.getSimulation().getTime()-t1 < 1) super.controlYield();
         //
         if(this.getMetaPosition()==Meta2DSimulation.MetaPosition_NORTH && this.getMetaGroup() == 1) {
             this.handle_MSG_SetActiveProgram(-1,0,0);
