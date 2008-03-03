@@ -37,6 +37,10 @@ public class VectorDescription extends Description {
     	this.x = pos.x; this.y = pos.y; this.z = pos.z;
     }
     
+    public VectorDescription() {
+        this.x = this.y = this.z = 0;
+    }
+    
     /**
      * Get the x-coordinate
      * @return x-coordinate
@@ -81,4 +85,9 @@ public class VectorDescription extends Description {
 	public void set(float x, float y, float z) {
 		this.x = x; this.y = y; this.z = z;	
 	}
+
+    public VectorDescription add(VectorDescription offset) {
+        this.add(offset.x, offset.y, offset.z);
+        return this;
+    }
 }
