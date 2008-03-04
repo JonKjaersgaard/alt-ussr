@@ -11,7 +11,7 @@ USSR should run on Windows, Linux and Mac OS X.
 (3) Import the project directly from SVN:
     Choose "Window -> Open Perspective -> Other...", pick "SVN Repository Exploring"
     Click the tiny "SVN+" button top right of the "SVN Repository" window
-    Enter the appropriate URL (https://www.mip.sdu.dk/ussr)
+    Enter the appropriate URL (https://svn.mip.sdu.dk/ussr)
     Type SVN username and password when appropriate, click "Accept permanently" for the certificate
     (The ussr repository should now be visisble in the "SVN Repository" window)
     Left-click once on the small triangle to see the "ussr" directory inside the repository
