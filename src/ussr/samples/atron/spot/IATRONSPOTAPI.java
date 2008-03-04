@@ -5,8 +5,7 @@ import ussr.samples.atron.*;
  * @author lamik06@student.sdu.dk
  *
  */
-public interface IATRONSPOTController extends IATRONAPI  {
-	public void controllerYield();
+public interface IATRONSPOTAPI extends IATRONAPI  {
 	public byte sendRadioMessage(byte[] message, int destination);
 	
 }

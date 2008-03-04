@@ -14,10 +14,10 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import ussr.samples.atron.ATRONController;
-import ussr.samples.atron.spot.IATRONSPOTController;
+import ussr.samples.atron.spot.IATRONSPOTAPI;
 
 
-public class ATRONNetworkController extends ATRONController implements IATRONSPOTController {
+public class ATRONNetworkController extends ATRONController implements IATRONSPOTAPI {
 	protected byte dir = 0;
 	private byte rot = 0;
 	private static Socket socket;
@@ -150,12 +150,6 @@ public class ATRONNetworkController extends ATRONController implements IATRONSPO
 	public void centerStop() {
 		// TODO Auto-generated method stub
 		setDataSend("0");
-	}
-
-	// @Override // Not JDK 1.5 compliant
-	public void controllerYield() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

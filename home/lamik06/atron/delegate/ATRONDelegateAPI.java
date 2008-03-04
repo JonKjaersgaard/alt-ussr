@@ -1,11 +1,30 @@
 package atron.delegate;
-//import ussr.model.Module;
+
+import java.util.List;
+import ussr.model.Module;
+import ussr.model.Sensor;
 import ussr.samples.atron.ATRONController;
+import ussr.samples.atron.spot.IATRONSPOTAPI;
 
 
-public abstract class ATRONDelegateAPI extends ATRONController {
-//	public void activate() {
-//		// TODO Auto-generated method stub
-//		
-//	}
+public class ATRONDelegateAPI extends ATRONController implements IATRONSPOTAPI{
+
+	public ATRONDelegateAPI(Module module){
+		setModule(module);
+	}
+	
+	public void activate() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public byte sendRadioMessage(byte[] message, int destination) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	public List<Sensor> getSensors() {
+		// TODO Auto-generated method stub
+		return module.getSensors();
+	}
 }
