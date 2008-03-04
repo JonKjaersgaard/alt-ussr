@@ -18,15 +18,15 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
-public class Main extends JFrame implements MouseWheelListener {
+public class MouseVelocityHandler extends JFrame implements MouseWheelListener {
 
     public static final boolean SCROLL_WHEEL = false;
     
     public static void main(String arg[]) {
-        new Main();
+        new MouseVelocityHandler();
     }
     
-    public Main() {
+    public MouseVelocityHandler() {
         super("Mouseometer");
         this.add(new JLabel("Place mouse here for scroll wheel"));
         this.pack();
