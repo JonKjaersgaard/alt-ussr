@@ -7,20 +7,15 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Panel;
-import java.awt.Transparency;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.media.Buffer;
 import javax.media.CaptureDeviceInfo;
@@ -33,7 +28,6 @@ import javax.media.control.FormatControl;
 import javax.media.control.FrameGrabbingControl;
 import javax.media.format.VideoFormat;
 import javax.media.util.BufferToImage;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 
@@ -74,8 +68,14 @@ public class ATRONTrackerGUI extends Panel implements ActionListener
     
     String str1 = "vfw:Logitech USB Video Camera:0";
     String str2 = "vfw:Microsoft WDM Image Capture (Win32):0";
+    Vector v = CaptureDeviceManager.getDeviceList(null);
+    for(int i=0;i<v.size();i++) {
+    	CaptureDeviceInfo cInfo = (CaptureDeviceInfo)v.get(i);
+    	System.out.println(i+" : "+ cInfo.toString());
+    }
     di = CaptureDeviceManager.getDevice(str2);
     ml = di.getLocator();
+    
     try 
     {
       player = Manager.createRealizedPlayer(ml);
