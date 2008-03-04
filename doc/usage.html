@@ -12,19 +12,44 @@ your own.
 
 <h2>Running a simulation.</h2>
 
-To run a simulation main class such as <tt>ussr.samples.atron.ATRONCarSimulation</tt>
+To run a simulation main class such as <a href="api/ussr/samples/atron/ATRONCarSimulation.html">ussr.samples.atron.ATRONCarSimulation</a>, right-click on the class and choose <tt>Run As...Java Application</tt>.  The basic key controls are as follows:
 
 <ul>
-<li>To pause/unpause the simulation, use 'P'</li>
+<li>To pause/unpause the simulation use <strong>P</strong>, to proceed step-by-step use <strong>SPACE</strong></li>
 <li>To move around in the simulation, hold down the right mouse button while using
-  A/S/D/W as arrow keys.  Use the mouse wheel to move up/down.</li>
+  <strong>A</strong>/<strong>S</strong>/<strong>D</strong>/<strong>W</strong> as arrow keys.  Use the mouse wheel to move up/down.</li>
+<li>To interactively apply a force to an object, click on it and drag the mouse.</li>
+<li>To stop the simulation, use the eclipse "stop" button on the console.</li>
 </ul>
+
+Numerous other key combinations also control various aspects of the simulation:
+
+<ul>
+<li>Tipping the default plane on which simulation takes place: select tipping in X/Y/Z direction with <strong>1</strong>/<strong>2</strong>/<strong>3</strong>, use <strong>4</strong>/<strong>5</strong> to tip one and the other way.</li>
+<li>Toggle mouse wheel scroll: <strong>COMMA</strong> (useful if using the scroll wheel when clicking on a simulated object).</li>
+<li>Camera positioning: print camera location with <strong>C</strong>.</li>
+<li>Frame grabbing: take screenshot with <strong>F1</strong> (defaults
+to <tt>SimpleGameScreenShot.png</tt> in the <tt>ussr</tt> directory,
+overwrites the same file), toggle frame grabbing with <strong>G</strong> (frames
+grabbed from the current simulation will be put in
+the <tt>ussr/frames</tt> directory (frames from previous simulations
+will be found under <tt>ussr/frames<i>TIME</i></tt>
+where <tt><i>TIME</i></tt> is the time expressed in milliseconds when
+the simulation was grabbed), grab frame with <strong>F</strong> (the same of taking a
+screenshot, except it will appear under the /ussr/frames directory as
+if continuously grabbing them, and you can take more than one during
+the same simulation without making them overwrite each other).
+<li>Display: toggle show physics with <strong>V</strong>, toggle wireframe with <strong>T</strong>, toggle lights with <strong>L</strong>, toggle bounds with <strong>B</strong>, toggle axes normal to surfaces with <strong>N</strong>, select parallel projection with <strong>F2</strong>, set depth with <strong>F3</strong>.
+</li>
+<li>Print a mem report on the console <strong>and</strong> reset the simulation: <strong>R</strong></li>
+</ul>
+
 
 <h2>Adding a new simulation.</h2>
 
 Use an existing template as an example; a simulation must specify what robot to
-use (including the controller), module positions, and can use <tt>changeWorldHook</tt>
-like in <tt>ATRONCarSimulation</tt> to e.g. add obstacles.
+use (including the controller), module positions, and can use <a href="api/ussr/samples/atron/GenericATRONSimulation.html#changeWorldHook(ussr.robotbuildingblocks.WorldDescription)">changeWorldHook</a>
+like in <a href="api/ussr/samples/atron/ATRONCarSimulation.html">ATRONCarSimulation</a> to e.g. add obstacles.
 
 </body>
 </html>
