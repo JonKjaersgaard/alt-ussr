@@ -47,9 +47,104 @@ the same simulation without making them overwrite each other).
 
 <h2>Adding a new simulation.</h2>
 
-Use an existing template as an example; a simulation must specify what robot to
-use (including the controller), module positions, and can use <a href="api/ussr/samples/atron/GenericATRONSimulation.html#changeWorldHook(ussr.robotbuildingblocks.WorldDescription)">changeWorldHook</a>
-like in <a href="api/ussr/samples/atron/ATRONCarSimulation.html">ATRONCarSimulation</a> to e.g. add obstacles.
+USSR provides a number of abstract classses to use as templates for
+creating simulations.  The sample simulations are all subclasses of
+<a href="api/ussr/samples/GenericSimulation.html">ussr.samples.GenericSimulation</a>
+which again is subclassed
+for <a href="api/ussr/samples/atron/GenericATRONSimulation.html">ATRON</a>.
+Basically a simulation just has to create an instance
+of <a href="api/ussr/physics/PhysicsSimulation.html">ussr.physics.PhysicsSimulation</a>
+which is done by calling
+<a href="api/ussr/physics/PhysicsFactory.html#createSimulator()">ussr.physics.PhysicsFactory.createSimulator()</a>
+and providing an instance of
+<a href="api/ussr/robotbuildingblocks/WorldDescription.html">ussr.robotbuildingblocks.WorldDescription</a>
+which describes both the robot to use, the initial configuration of
+the robot, and the world in which the robot will be simulated.  Tuning
+of various low-level physics parameters is done using 
+<a href="api/ussr/physics/PhysicsParameters.html">ussr.physics.PhysicsParameters</a>.
+
+<p>The controller for a robot is specified on a per-module-type
+  basis.  Thus, for ATRON there typically will be a single controller,
+  whereas each type of Odin module will have its own controller.  Two
+  ATRON modules with different controllers are considered to be
+  different kinds of modules by the simulator and hence have to be
+  added separately.  Controllers have to implement the interface 
+<a href="api/ussr/model/Controller.html">ussr.model.Controller</a>,
+which has a default implementation provided by the abstract class 
+<a href="api/ussr/model/ControllerImpl.html">ussr.model.ControllerImpl</a>.
+When using <tt>ControllerImpl</tt> the programmer only has to
+implement the <tt>activate</tt> method which defines the behavior of
+the controller.  Specific hints on implementing controllers can be
+found below.
+
+<p>Specific hints on creating a simulation for the ATRON and Odin
+  robots can be found below.  In general, it is a good idea to use one of the existing
+  simulations for
+<a href="api/ussr/samples/atron/package-summary.html">ATRON</a>, 
+<a href="api/ussr/samples/odin/package-summary.html">Odin</a>, or
+<a href="api/ussr/samples/mtran/package-summary.html">M-TRAN</a> as a
+basis for your simulation.  Independently of the robot type, the
+overall setup of the simulation is controlled through
+the <a href="api/ussr/robotbuildingblocks/WorldDescription.html">world
+description</a>.  There is a helper class for adding obstacles to the
+simulation: <a href="api/ussr/samples/ObstacleGenerator.html">ussr.samples.ObstacleGenerator</a>.
+
+
+<h3>Adding an ATRON simulation</h3>
+
+<p>For the ATRON, write a new simulation by making a subclass
+of <a href="api/ussr/samples/atron/GenericATRONSimulation.html">ussr.samples.GenericATRONSimulation</a>.
+As a simple example, take a look
+  at <a href="api/ussr/samples/atron/ATRONCarSimulation.html">ussr.samples.atron.ATRONCarSimulation</a>.
+  In your simulation class, use the method
+<a href="api/ussr/samples/atron/GenericATRONSimulation.html#changeWorldHook(ussr.robotbuildingblocks.WorldDescription)">changeWorldHook</a>
+to add modules to the simulation (i.e. the world descripton) and
+optionally add obstacles.  There is a predefined helper
+class for generating typical module and obstacle configurations, namely
+<a href="api/ussr/samples/atron/ATRONBuilder.html">ussr.samples.atron.ATRONBuilder</a>
+which contains methods for building a variety of different robots.  Either
+use the robot building routines directly or use them as a basis for building your own
+robot.
+
+<p>Controllers for an ATRON module should subclass the specific controller class
+<a href="api/ussr/samples/atron/ATRONController.html">ussr.samples.atron.ATRONController</a>
+which provides an implementation of the ATRON API.  See below for
+instructions on programming an ATRON controller.
+
+<h3>Adding an Odin simulation</h3>
+
+<p>For the Odin, simply write a new simulation by making a subclass of 
+<a href="api/ussr/samples/GenericSimulation.html">ussr.samples.GenericSimulation</a>
+that sets up the world description.  Apart from obstacles, the
+specific Odin modules that are needed have to be added along with
+their controller implementations.
+
+<p>Controllers for an Odin module should subclass the specific controller class
+<a href="api/ussr/samples/odin/OdinController.html">ussr.samples.odin.OdinController</a>
+which provides a few basic facilities for controlling Odin modules (as
+there is not yet a real API for the physical modules, the API is preliminary).
+
+<h2>Programming a controller.</h2>
+
+Controllers typically subclass a specific controller class that
+implments the
+interface <a href="api/ussr/model/Controller.html">ussr.model.Controller</a>.
+The controller subclass may then provide methods specific to the
+module type being controlled.  Independently of the robot type, USSR
+provides an API for controlling all aspects of the module, provided by
+the
+package <a href="api/ussr/model/package-summary.html">ussr.model</a>
+which for example provides the
+class <a href="api/ussr/model/Module.html">Module</a> that serves as an
+abstract representation of the hardware the controller is running on.
+
+<p>A controller typically performs various setup operations and then
+  enters an infinite loop that uses the API to perform operations on
+  the module.  A controller should call the <tt>ControllerImpl</tt>
+  method <a href="api/ussr/model/ControllerImpl.html#ussrYield()">ussrYield()</a>
+  regularly to ensure fairness between different controllers, prevent
+  starvation of the physics simulation, and enable controllers to be
+  paused if the simulated world is paused.
 
 </body>
 </html>
