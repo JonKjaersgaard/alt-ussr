@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dcd.highlevel.ByteCodeSequence.AddressSpec;
 import dcd.highlevel.ast.Block;
 import dcd.highlevel.ast.ConstantDef;
 import dcd.highlevel.ast.Exp;
@@ -17,6 +18,7 @@ import dcd.highlevel.ast.Statement;
 import dcd.highlevel.ast.program.*;
 
 public class ByteCodeCompiler implements Visitor {
+    
     private ByteCodeSequence result = new ByteCodeSequence();
     private Role role;
     private Map<String,Block> blockMap = new HashMap<String,Block>();
@@ -30,13 +32,17 @@ public class ByteCodeCompiler implements Visitor {
     public ByteCodeSequence compileCodeBlock(Block block) {
         for(Statement statement: block.getStatements())
             statement.visit(this);
-        //result.add(ByteCode.INS_TERMINATE());
+        boolean addedBlocks = false;
         for(String label: blockMap.keySet()) {
             Block local = blockMap.get(label);
             result.addLabel(label);
+            result.setBlockStart();
             for(Statement statement: local.getStatements())
                 statement.visit(this);
+            result.addLabel(label+"_END");
+            addedBlocks = true;
         }
+        if(addedBlocks) result.add(ByteCode.NOP());
         return result;
     }
 
@@ -73,8 +79,9 @@ public class ByteCodeCompiler implements Visitor {
     private int blockCounter = 0;
     public void visitPrimOp(PrimOp primop) {
         int blockArgIndex = -1;
+        String label = null;
         if(primop.hasBlockArgument()) {
-            String label = "_block_"+(blockCounter++);
+            label = "_block_"+(blockCounter++);
             this.addBlockArgument(label,primop.getBlockArgument());
             primop.setBlockResidualAddress(label);
         }
@@ -82,23 +89,40 @@ public class ByteCodeCompiler implements Visitor {
         String name = "INS_"+mapNameMaybe(primop.getName(),primop.needsMapping(),arguments);
         String[] residual = new String[arguments.length];
         for(int i=0; i<arguments.length; i++) {
-            Exp arg = arguments[i];
-            if(arg instanceof Label) {
-                residual[i] = ((Label)arg).getLabel();
-                blockArgIndex = i;
-            } else if(arg instanceof ConstantRef)
-                residual[i] = role.getConstant(((ConstantRef)arg).getName()).getValue().residualize();
-            else if(arg instanceof Literal)
-                residual[i] = ((Literal)arg).residualize();
-            else
-                throw new Error("Primop argument not supported: "+arg);
+            blockArgIndex = arg2residual(blockArgIndex, arguments[i], residual, i);
         }
         ByteCode bc;
         if(blockArgIndex==-1)
             bc = new ByteCode(name,arguments.length+1,residual);
-        else
-            bc = new ByteCode(name,arguments.length+1,residual,new int[] { blockArgIndex });
+        else {
+            final int finalIndex = blockArgIndex;
+            final String finalLabel = label;
+            bc = new ByteCode(name,arguments.length+1,residual,new int[] { finalIndex }) {
+                public void patch(Map<String, AddressSpec> table) {
+                    int start = this.getTargetAddresses()[0];
+                    Integer end = table.get(finalLabel+"_END").getReal();
+                    if(end==null) throw new Error("Ending label for "+finalLabel+" not found in "+table);
+                    this.getArguments()[finalIndex+1] = new Integer(end-start).toString()+" /*"+end+"-"+start+"*/";
+                }
+            };
+        }
         result.add(bc);
+    }
+
+    private int arg2residual(int blockArgIndex, Exp arg, String[] residual, int i) {
+        if(arg instanceof Label) {
+            residual[i] = ((Label)arg).getLabel();
+            blockArgIndex = i;
+        } else if(arg instanceof ConstantRef)
+            residual[i] = role.getConstant(((ConstantRef)arg).getName()).getValue().residualize();
+        else if(arg instanceof Literal)
+            residual[i] = ((Literal)arg).residualize();
+        else if(arg instanceof Negate) {
+            blockArgIndex = arg2residual(blockArgIndex, ((Negate)arg).getExp(), residual, i);
+            residual[i] = residual[i].startsWith("-") ? residual[i].substring(1) : "-"+residual[i]; // textual negate
+        } else
+            throw new Error("Primop argument not supported: "+arg);
+        return blockArgIndex;
     }
 
     private String mapNameMaybe(String name, boolean needsMapping, Exp[] arguments) {
@@ -107,23 +131,34 @@ public class ByteCodeCompiler implements Visitor {
             if(!(arguments[0] instanceof Predefined)) return name;
             String operation = ((Predefined)arguments[0]).getName();
             if(operation.equals("TURN_CONTINUOUSLY")) {
-                int direction;
-                if(arguments[1] instanceof Numeric)
-                    direction = ((Numeric)arguments[1]).getValue();
-                else if(arguments[1] instanceof ConstantRef)
-                    direction = ((Numeric)role.getConstant(((ConstantRef)arguments[1]).getName()).getValue()).getValue();
-                else throw new Error("Unknown argument type to "+operation+":"+arguments[1]);
+                int direction = arg2dir(arguments[1], operation);
                 if(direction==1) {
-                    arguments[0] = new Predefined("TURN_CLOCKWISE");
+                    arguments[0] = new Predefined("CMD_ROTATE_CLOCKWISE");
                     return name;
                 } else {
-                    arguments[0] = new Predefined("TURN_COUNTERCLOCKWISE");
+                    arguments[0] = new Predefined("CMD_ROTATE_COUNTERCLOCKWISE");
                     arguments[1] = new Numeric(1);
                     return name;
                 }
             }
+            // Default case: add "CMD" as prefix to command name
+            Predefined command = (Predefined)arguments[0];
+            arguments[0] = new Predefined("CMD_"+command.getName());
+            return name;
         }
         throw new Error("Mapping not implemented for "+name);
+    }
+
+    private int arg2dir(Exp argument, String operation) {
+        int direction;
+        if(argument instanceof Numeric)
+            direction = ((Numeric)argument).getValue();
+        else if(argument instanceof ConstantRef)
+            direction = ((Numeric)role.getConstant(((ConstantRef)argument).getName()).getValue()).getValue();
+        else if(argument instanceof Negate)
+            direction = -arg2dir(((Negate)argument).getExp(),operation);
+        else throw new Error("Unknown argument type to "+operation+":"+argument);
+        return direction;
     }
 
     public void visitBinExp(BinExp exp) {
@@ -190,9 +225,9 @@ public class ByteCodeCompiler implements Visitor {
         exp.getExpression().visit(this);
     }
 
-    public void visitCommand(Command command) {
+    public void visitSendCommand(SendCommand command) {
         int methodIndex = vtableResolver.getMethodIndex(command.getRole(), command.getMethod())+128;
-        result.add(new ByteCode("INS_COMMAND",3,new String[] { "ROLE_"+command.getRole(), Integer.toString(methodIndex) }));
+        result.add(new ByteCode("INS_SEND_COMMAND",4,new String[] { "ROLE_"+command.getRole(), Integer.toString(methodIndex), command.getArgument().residualize() }));
     }
 
     public void visitPredefined(Predefined predefined) {
@@ -202,10 +237,10 @@ public class ByteCodeCompiler implements Visitor {
     }
 
     public void visitAssumeRole(AssumeRole assume) {
-        result.add(new ByteCode("SET_ROLE_NOTIFY",2,new String[] { "ROLE_"+assume.getRole() }));
+        result.add(new ByteCode("INS_SET_ROLE_NOTIFY",2,new String[] { "ROLE_"+assume.getRole() }));
         for(Statement statement: assume.getBehavior().getStatements())
             statement.visit(this);
-        result.add(new ByteCode("SET_ROLE_NOTIFY",2,new String[] { "ROLE_"+role.getName().getName() }));
+        result.add(new ByteCode("INS_SET_ROLE_NOTIFY",2,new String[] { "ROLE_"+role.getName().getName() }));
     }
 
     public void visitUnaryExp(UnaryExp exp) {
@@ -216,6 +251,11 @@ public class ByteCodeCompiler implements Visitor {
     public void visitBlock(Block block) {
         for(Statement statement: block.getStatements())
             statement.visit(this);
+    }
+
+    public void visitNegate(Negate negativeConstant) {
+        negativeConstant.getExp().visit(this);
+        result.add(new ByteCode("INS_NEGATE",1,new String[] { }));
     }
 
 

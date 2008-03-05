@@ -2,10 +2,11 @@ package dcd.highlevel.ast;
 
 import dcd.highlevel.ast.program.Literal;
 import dcd.highlevel.ast.program.Numeric;
+import dcd.highlevel.ast.program.Predefined;
 
 public class ConstantDef extends Member {
-    public static final Numeric EVENT_HANDLER_5 = new Numeric(5);
-    public static final Literal EVENT_HANDLER_3 = new Numeric(3);
+    public static final Predefined EVENT_HANDLER_5 = new Predefined("EVENT_PROXIMITY_5");
+    public static final Predefined EVENT_HANDLER_3 = new Predefined("EVENT_PROXIMITY_3");
     
     private final Name name;
     private final Literal value;

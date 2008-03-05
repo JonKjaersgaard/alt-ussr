@@ -1,5 +1,7 @@
 package dcd.highlevel.ast.program;
 
+import java.util.List;
+
 import dcd.highlevel.CFileGenerator;
 import dcd.highlevel.Visitor;
 import dcd.highlevel.ast.Block;
@@ -9,6 +11,7 @@ import dcd.highlevel.ast.Statement;
 
 public class PrimOp extends Statement {
     public static final PrimOp MIGRATE_CONTINUE = new PrimOp("MIGRATE_CONTINUE");
+    public static final PrimOp DEBUG = new PrimOp("ACTIVATE_DEBUG");
     private String name;
     private Exp arguments[];
     private Block blockArgument;
@@ -67,6 +70,8 @@ public class PrimOp extends Statement {
         for(int i=0; i<arguments.length; i++)
             if(arguments[i]==null) {
                 arguments[i] = new Label(label);
+                if(i+1==arguments.length || !(arguments[i+1]==Numeric.NaN)) 
+                    throw new Error("Malformed block argument: must be followed by size");
                 return;
             }
         throw new Error("Empty slot for block argument not found in "+this);
@@ -77,11 +82,11 @@ public class PrimOp extends Statement {
 
     public static PrimOp HANDLE_EVENT(Exp vector, Block block) {
         block.addStatement(PrimOp.TERMINATE());
-        return new PrimOp("HANDLE_EVENT",new Exp[] { vector, null }, block); 
+        return new PrimOp("HANDLE_EVENT",new Exp[] { vector, null, Numeric.NaN }, block); 
     }
 
     public static PrimOp TERMINATE() {
-        return new PrimOp("TERMINATE");
+        return new PrimOp("END_TERMINATE");
     }
 
     @Override
@@ -94,7 +99,7 @@ public class PrimOp extends Statement {
             body.addStatement(PrimOp.END_REPEAT());
         else
             body.addStatement(PrimOp.TERMINATE());
-        return new PrimOp("INSTALL_COMMAND",new Exp[] { new Predefined("ROLE_"+roleName.getName()), new Numeric(methodIndex), null, new Numeric(body.getStatements().size()) }, body);
+        return new PrimOp("INSTALL_COMMAND",new Exp[] { new Predefined("ROLE_"+roleName.getName()), new Numeric(methodIndex), null, Numeric.NaN }, body);
     }
 
     private static PrimOp END_REPEAT() {
@@ -107,11 +112,11 @@ public class PrimOp extends Statement {
         return new PrimOp(name,fresh,blockArgument==null ? null : blockArgument.duplicate(),needsMapping);
     }
 
-    public static Statement EVAL_COMMAND(int index, Numeric argument) {
+    public static Statement EVAL_COMMAND(int index, Exp argument) {
         return new PrimOp("EVAL_COMMAND", new Exp[] { new Numeric(index), argument });
     }
 
-    public static Statement EVAL_NAMED_COMMAND(String name, ConstantRef ref) {
-        return new PrimOp("EVAL_COMMAND", new Exp[] { new Predefined(name), ref },null,true);
+    public static Statement EVAL_NAMED_COMMAND(String name, Exp argument) {
+        return new PrimOp("EVAL_COMMAND", new Exp[] { new Predefined(name), argument },null,true);
     }
 }

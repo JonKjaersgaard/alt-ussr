@@ -5,7 +5,7 @@ import dcd.highlevel.ast.Exp;
 
 public class BinExp extends Exp {
     public static BinExp EQUALS(Exp left, Exp right) { return new BinExp("==","EQUALS",left,right); }
-    public static BinExp GREATER(Exp left, Exp right) { return new BinExp(">","EQUALS",left,right); }
+    public static BinExp GREATER(Exp left, Exp right) { return new BinExp(">","GREATER",left,right); }
     
     private String syntax, name;
     private Exp left, right;

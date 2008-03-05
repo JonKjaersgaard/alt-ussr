@@ -1,8 +1,11 @@
 package dcd.highlevel.ast.program;
 
 import dcd.highlevel.Visitor;
+import dcd.highlevel.ast.Exp;
 
 public class Numeric extends Literal {
+    public static final Numeric NaN = new Numeric(Integer.MIN_VALUE);
+    
     private final int value;
     public Numeric(int value) {
         this.value = value;

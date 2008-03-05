@@ -14,37 +14,60 @@ import java.util.Map;
 import java.util.Set;
 
 public class ByteCodeSequence {
+
+    public static class AddressSpec {
+        private int real, virtual;
+        public AddressSpec(int real, int virtual) {
+            this.real = real; this.virtual = virtual;
+        }
+        public int getReal() { return real; }
+        public int getVirtual() { return virtual; }
+    }
+    
     private List<ByteCode> bytecodes = new LinkedList<ByteCode>();
     private Set<String> pendingLabels = new HashSet<String>();
+    private boolean blockStart = false;
+    
     public int getSize() { 
         int result = 0;
         for(ByteCode code: bytecodes) result += code.getSize();
         return result;
     }
     public void resolveGoto() {
-        if(!pendingLabels.isEmpty()) throw new Error("Not all labels flushed");
-        Map<String,Integer> table = new HashMap<String,Integer>();
-        int position = 0;
+        if(!pendingLabels.isEmpty()) throw new Error("Not all labels flushed: "+pendingLabels);
+        Map<String,AddressSpec> table = new HashMap<String,AddressSpec>();
+        int realPosition = 0, virtualPosition = 0;
         for(ByteCode bytecode: bytecodes) {
+            if(bytecode.isBlockStart()) virtualPosition = 0;
             if(!bytecode.getLabels().isEmpty()) {
                 for(String label: bytecode.getLabels())
-                    table.put(label,position);
+                    table.put(label,new AddressSpec(realPosition,virtualPosition));
             }
-            bytecode.setAddress(position);
-            position += bytecode.getSize();
+            bytecode.setAddress(realPosition,virtualPosition);
+            realPosition += bytecode.getSize();
+            virtualPosition += bytecode.getSize();
         }
         for(ByteCode bytecode: bytecodes)
             if(bytecode.hasTarget()) bytecode.updatePositions(table);
+        for(ByteCode bytecode: bytecodes)
+            bytecode.patch(table);
     }
     public void peepHoleOptimize() {
         int position = 0;
         loop: while(position<bytecodes.size()) {
             for(Pattern pattern: patterns)
-                if(pattern.matchAndTransform(bytecodes, position)) continue loop;
+                if(pattern.matchAndTransform(bytecodes, position)) {
+                    position = 0;
+                    continue loop;
+                }
             position++;
         }
     }
     public void add(ByteCode bytecode) {
+        if(blockStart) {
+            bytecode.setAsBlockStart();
+            blockStart = false;
+        }
         if(!pendingLabels.isEmpty()) {
             bytecode.setLabel(pendingLabels);
             pendingLabels = new HashSet<String>();
@@ -76,6 +99,7 @@ public class ByteCodeSequence {
             if(fpat.length+position>=instructions.size()) return false;
             ByteCode slice[] = new ByteCode[fpat.length];
             Set<String> labels = new HashSet<String>();
+            boolean isBlockStart = instructions.get(position).isBlockStart();
             for(int i=0; i<fpat.length; i++) {
                 if(!instructions.get(position+i).is(fpat[i])) return false;
                 slice[i] = instructions.get(position+i);
@@ -85,6 +109,7 @@ public class ByteCodeSequence {
             for(int i=0; i<fpat.length; i++) instructions.remove(position);
             ByteCode result[] = rule.apply(slice);
             result[0].setLabel(labels);
+            if(isBlockStart) result[0].setAsBlockStart();
             for(int i=result.length-1; i>=0; i--) instructions.add(position, result[i]);
             return true;
         }
@@ -127,11 +152,24 @@ public class ByteCodeSequence {
                     }
                 }),
         new Pattern(
-                new String[] { ByteCode.CONNECTED, ByteCode.SIZEOF },
+                new String[] { ByteCode.CONNECTED_DIR, ByteCode.SIZEOF },
                 new Rule() { ByteCode[] apply(ByteCode in[]) {
-                    return new ByteCode[] { ByteCode.MK_INS_CONNECTED_SIZEOF(in[0].getArguments()[0]) };
-                }
-        })
+                    return new ByteCode[] { ByteCode.MK_INS_CONNECTED_DIR_SIZEOF(in[0].getArguments()[0]) };
+                }}),
+        new Pattern(
+                new String[] { "INS_COORD_", "MK_INS_CONSTANT", "INS_GREATER" },
+                new Rule() {
+                    ByteCode[] apply(ByteCode[] in) {
+                        ByteCode major;
+                        if(in[0].getMemomic().equals("INS_COORD_Y")) major = ByteCode.MK_INS_COORD_any_any("Y","GREATER");
+                        else throw new Error("Not supported: "+in[0].getMemomic());
+                        return new ByteCode[] { in[1], major };
+                    }
+                })
     };
-    private static final List<Pattern> patterns = Arrays.asList(PEEP_HOLE_PATTERNS); 
+    private static final List<Pattern> patterns = Arrays.asList(PEEP_HOLE_PATTERNS);
+
+    public void setBlockStart() {
+        blockStart  = true;
+    } 
 }

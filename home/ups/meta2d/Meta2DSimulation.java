@@ -25,14 +25,14 @@ import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.atron.ATRON;
-import ussr.samples.atron.ATRONLatticeSimulation;
+import ussr.samples.atron.GenericATRONSimulation;
 
 /**
  * A simulation of an ATRON 2D meta modules
  * 
  * @author Modular Robots @ MMMI
  */
-public class Meta2DSimulation extends ATRONLatticeSimulation {
+public class Meta2DSimulation extends GenericATRONSimulation {
 
     public static final int MetaPosition_UNKNOWN = 0;
     public static final int MetaPosition_NORTH = 1;
@@ -94,19 +94,19 @@ public class Meta2DSimulation extends ATRONLatticeSimulation {
     protected ArrayList<ModulePosition> buildRobot() {
         ArrayList<ModulePosition> positions = new ArrayList<ModulePosition>();
         buildMeta(positions, "meta", 1, 0, -0.25f, 0);
-        buildMeta(positions, "foo", 2, 2*unit, -0.25f, 2*unit);
-        buildMeta(positions, "bar", 3, 4*unit, -0.25f, 4*unit);
-        buildMeta(positions, "baz", 4, 4*unit, -0.25f, 0*unit);
-        buildMeta(positions, "fisk", 5, 2*unit, -0.25f, -2*unit);
-        buildMeta(positions, "hest", 6, 0*unit, -0.25f, 4*unit);
+        buildMeta(positions, "foo", 2, 2*ATRON.UNIT, -0.25f, 2*ATRON.UNIT);
+        buildMeta(positions, "bar", 3, 4*ATRON.UNIT, -0.25f, 4*ATRON.UNIT);
+        buildMeta(positions, "baz", 4, 4*ATRON.UNIT, -0.25f, 0*ATRON.UNIT);
+        buildMeta(positions, "fisk", 5, 2*ATRON.UNIT, -0.25f, -2*ATRON.UNIT);
+        buildMeta(positions, "hest", 6, 0*ATRON.UNIT, -0.25f, 4*ATRON.UNIT);
         return positions;
     }
 
     private void buildMeta(ArrayList<ModulePosition> positions, String prefix, int group, float Xoffset, float Yoffset, float Zoffset) {
-        positions.add(new ModulePosition(prefix+"/E:"+group, new VectorDescription(-1*unit+Xoffset,-2*unit+Yoffset,1*unit+Zoffset), rotation_SN));
-        positions.add(new ModulePosition(prefix+"/S:"+group, new VectorDescription(0+Xoffset,-2*unit+Yoffset,0+Zoffset), rotation_EW));
-        positions.add(new ModulePosition(prefix+"/W:"+group, new VectorDescription(1*unit+Xoffset,-2*unit+Yoffset,1*unit+Zoffset), rotation_NS));
-        positions.add(new ModulePosition(prefix+"/N:"+group, new VectorDescription(0*unit+Xoffset,-2*unit+Yoffset,2*unit+Zoffset), rotation_WE));
+        positions.add(new ModulePosition(prefix+"/E:"+group, new VectorDescription(-1*ATRON.UNIT+Xoffset,-2*ATRON.UNIT+Yoffset,1*ATRON.UNIT+Zoffset), ATRON.ROTATION_SN));
+        positions.add(new ModulePosition(prefix+"/S:"+group, new VectorDescription(0+Xoffset,-2*ATRON.UNIT+Yoffset,0+Zoffset), ATRON.ROTATION_EW));
+        positions.add(new ModulePosition(prefix+"/W:"+group, new VectorDescription(1*ATRON.UNIT+Xoffset,-2*ATRON.UNIT+Yoffset,1*ATRON.UNIT+Zoffset), ATRON.ROTATION_NS));
+        positions.add(new ModulePosition(prefix+"/N:"+group, new VectorDescription(0*ATRON.UNIT+Xoffset,-2*ATRON.UNIT+Yoffset,2*ATRON.UNIT+Zoffset), ATRON.ROTATION_WE));
     }
 
     protected void changeWorldHook(WorldDescription world) {

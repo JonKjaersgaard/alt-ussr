@@ -58,8 +58,8 @@ public class CFileGenerator {
         }
     }
 
-    private void generateCodeBlock(PrintWriter writer, Role role, String name, Block checkInvariant, boolean roleInvariant) {
-        ByteCodeSequence compiled = new ByteCodeCompiler(role,resolver).compileCodeBlock(checkInvariant);
+    private void generateCodeBlock(PrintWriter writer, Role role, String name, Block source, boolean roleInvariant) {
+        ByteCodeSequence compiled = new ByteCodeCompiler(role,resolver).compileCodeBlock(source);
         compiled.peepHoleOptimize();
         compiled.resolveGoto();
         String programName = "RDCD_"+name;
@@ -79,7 +79,13 @@ public class CFileGenerator {
 
     private Block generateCheckInvariant(Role role) {
         Statement cascade = generateInvariantCascade(role,role.getInvariants().iterator());
-        return new Block(new ArrayList<Statement>(Arrays.asList(new Statement[] { cascade, PrimOp.MIGRATE_CONTINUE })));
+        return annotize(role,new Block(new ArrayList<Statement>(Arrays.asList(new Statement[] { cascade, PrimOp.MIGRATE_CONTINUE }))));
+    }
+    
+    private Block annotize(Role role, Block body) {
+        if(!role.hasModifier(Modifier.DEBUG)) return body;
+        Block wrapper = new Block(new ArrayList<Statement>(Arrays.asList(new Statement[] { PrimOp.DEBUG, body })));
+        return wrapper;
     }
 
     private Statement generateInvariantCascade(Role role, Iterator<Invariant> invariants) {

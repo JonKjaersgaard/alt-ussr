@@ -9,8 +9,8 @@ import dcd.highlevel.ast.Statement;
 public class SelfFunction extends Function {
 
     public static final SelfFunction CENTER_POSITION = new SelfFunction("CENTER_POSITION");
-    public static final SelfFunction TOTAL_CONNECTED = new SelfFunction("CONNECTED");
-    public static final SelfFunction Y = new SelfFunction("Y");
+    public static final SelfFunction TOTAL_CONNECTED = new SelfFunction("CONNECTED_SIZEOF");
+    public static final SelfFunction Y = new SelfFunction("COORD_Y");
 
     public SelfFunction(String name) {
         super(name);
@@ -29,7 +29,7 @@ public class SelfFunction extends Function {
     }
 
     public static SelfFunction CONNECTED(Exp argument) {
-        return new SelfFunction("CONNECTED",argument,true);
+        return new SelfFunction("CONNECTED_DIR",argument,true);
     }
     @Override
     public void visit(Visitor visitor) {
@@ -37,7 +37,7 @@ public class SelfFunction extends Function {
     }
 
     public static SelfFunction DISABLE_EVENT(ConstantRef ref) {
-        return new SelfFunction("DISABLE_EVENT",ref);
+        return new SelfFunction("DISABLE_EVENT",ref,true);
     }
 
     public static SelfFunction TURN_CONTINUOUSLY(Exp exp) {
@@ -49,11 +49,11 @@ public class SelfFunction extends Function {
     }
 
     public static Exp SLEEP_WHILE_TURNING(Exp exp) {
-        return new SelfFunction("SLEEP_WHILE_TURNING",exp);
+        return new SelfFunction("SLEEP_ROTATIONS",exp,true);
     }
 
     public static Exp ENABLE_EVENT(ConstantRef ref) {
-        return new SelfFunction("ENABLE_EVENT",ref);
+        return new SelfFunction("ENABLE_EVENT",ref,true);
     }
     
     public static Exp TURN_TOWARDS(Literal lit) {

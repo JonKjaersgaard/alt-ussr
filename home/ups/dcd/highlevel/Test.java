@@ -35,16 +35,16 @@ public class Test {
                                             PrimOp.HANDLE_EVENT(new ConstantRef("event_handler"),
                                                     new Block(new Statement[] {
                                                         new SingleExp(SelfFunction.DISABLE_EVENT(new ConstantRef("event_handler"))),
-                                                        new Command("Wheel","stop")
+                                                        new SendCommand("Wheel","stop", new Numeric(0))
                                                     })),
                                             new Nop()),
                                     PrimOp.EVAL_NAMED_COMMAND("TURN_CONTINUOUSLY", new ConstantRef("turn_direction"))
                             })),
                             new Method(Modifier.COMMAND,new Name("stop"),new Block(new Statement[] {
                                     new AssumeRole("Reverse",new Block(new Statement[] {
-                                            new SingleExp(SelfFunction.TURN_CONTINUOUSLY(UnaryExp.NEGATE(new ConstantRef("turn_direction")))),
+                                            PrimOp.EVAL_NAMED_COMMAND("TURN_CONTINUOUSLY",new Negate(new ConstantRef("turn_direction"))),
                                             new SingleExp(SelfFunction.SLEEP_WHILE_TURNING(new Numeric(3))),
-                                            new SingleExp(SelfFunction.TURN_CONTINUOUSLY(new ConstantRef("turn_direction"))),
+                                            PrimOp.EVAL_NAMED_COMMAND("TURN_CONTINUOUSLY",new ConstantRef("turn_direction")),
                                             new SingleExp(SelfFunction.ENABLE_EVENT(new ConstantRef("event_handler")))
                                     }))
                             }))
@@ -96,9 +96,9 @@ public class Test {
                                              BinExp.GREATER(Function.SIZEOF(SelfFunction.CONNECTED_ROLE(Direction.DOWN, "Reverse")),new Numeric(0)),
                                              new Conditional(
                                                      BinExp.GREATER(SelfFunction.Y, new Numeric(0)),
-                                                     new SingleExp(SelfFunction.TURN_TOWARDS(new Numeric(20))),
-                                                     new SingleExp(SelfFunction.TURN_TOWARDS(new Numeric(16)))),
-                                             new SingleExp(SelfFunction.TURN_TOWARDS(new Numeric(18))))
+                                                     PrimOp.EVAL_NAMED_COMMAND("ROTATE_TO", new Numeric(20)),
+                                                     PrimOp.EVAL_NAMED_COMMAND("ROTATE_TO", new Numeric(16))),
+                                             PrimOp.EVAL_NAMED_COMMAND("ROTATE_TO", new Numeric(18)))
                              }))
                          }
                          )

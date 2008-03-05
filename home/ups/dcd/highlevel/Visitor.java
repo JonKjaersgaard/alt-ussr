@@ -17,9 +17,10 @@ public interface Visitor {
     public void visitBinExp(BinExp exp);
     public void visitNop(Nop nop);
     public void visitSingleExp(SingleExp exp);
-    public void visitCommand(Command command);
+    public void visitSendCommand(SendCommand command);
     public void visitPredefined(Predefined predefined);
     public void visitAssumeRole(AssumeRole role);
     public void visitUnaryExp(UnaryExp exp);
     public void visitBlock(Block block);
+    public void visitNegate(Negate negativeConstant);
 }
