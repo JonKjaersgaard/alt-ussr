@@ -29,6 +29,7 @@ import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
+import com.jme.scene.shape.Sphere;
 import com.jmex.physics.DynamicPhysicsNode;
 
 /**
@@ -94,11 +95,10 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         
         
         // Create connectors
+   		int counter = 0;
         for(VectorDescription p: selfDesc.getConnectorPositions()) {
             Vector3f position = new Vector3f(p.getX(), p.getY(), p.getZ());
-            JMEConnector connector = createConnector(world, name, position, selfDesc);
-            model.addConnector(new Connector(connector));
-            connectors.add(connector);
+            this.addConnector("Connector "+(counter++), position, Color.BLACK, new Quaternion());
         }
         //TODO change this way of creating communication sometimes we can it to be at a connector
         // Create communicators

@@ -12,6 +12,7 @@ import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.Robot;
 
 import com.jmex.physics.DynamicPhysicsNode;
+import com.jmex.physics.material.Material;
 
 /**
  * Helper class for JMESimulation, responsible for creating modules in the simulation
@@ -55,7 +56,9 @@ public class JMEFactoryHelper {
                     JMEModuleComponent physicsModule = new JMEModuleComponent(simulation,robot,geometry,"module#"+Integer.toString(module_id)+"."+(j++),module,moduleNode);
                     module.addComponent(physicsModule);
                     simulation.getModuleComponents().add(physicsModule);
-                }                
+                }
+                moduleNode.setMaterial(Material.GRANITE);
+                moduleNode.computeMass();
             } else {
                 throw new RuntimeException("Module type can not be constructed");
             }

@@ -15,6 +15,7 @@ import com.jme.math.Vector3f;
 import com.jme.scene.TriMesh;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
+import com.jmex.physics.RotationalJointAxis;
 import com.jmex.physics.contact.ContactInfo;
 
 import ussr.model.Connector;
@@ -29,8 +30,51 @@ import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 
+public class JMEMagneticConnector extends JMEMechanicalConnector {
+    private RotationalJointAxis xAxis,yAxis,zAxis;
+
+    public JMEMagneticConnector(Vector3f position,
+            DynamicPhysicsNode moduleNode, String baseName,
+            JMESimulation world, JMEModuleComponent component,
+            RobotDescription selfDesc) {
+        super(position, moduleNode, baseName, world, component, selfDesc);
+        System.out.println("Created magnetic connector at "+position+" geom "+selfDesc.getConnectorGeometry());
+    }
+
+    @Override
+    protected void addAxis(Joint connection) {
+        xAxis = connection.createRotationalAxis(); xAxis.setDirection(new Vector3f(1,0,0));
+        yAxis = connection.createRotationalAxis(); yAxis.setDirection(new Vector3f(0,0,1));
+        yAxis.setRelativeToSecondObject(true);
+    }
+
+    @Override
+    public boolean canConnectNow(JMEConnector connector) {
+        if(getPos().distance(connector.getPos())>maxConnectDistance)
+            return false;
+        return true;
+    }
+
+    @Override
+    public boolean canConnectTo(JMEConnector connector) {
+        if(!canConnectTo(connector)) return false;
+        return true;
+    }
+
+    @Override
+    public boolean canDisconnectFrom(JMEConnector connector) {
+        return true;
+    }
+ 
+    @Override
+    protected void updateColor() {
+        connectorGeometry.setConnectorVisibility(true);
+        connectorGeometry.resetColor();
+    }
+}
+
 //FIXME this class is a mess and no longer updated rewrite completely to have a support magnetic connectors
-public class JMEMagneticConnector implements JMEConnector {
+class XJMEMagneticConnector implements JMEConnector {
     /**
      * The abstract connector represented by this jme entity
      */
@@ -38,13 +82,13 @@ public class JMEMagneticConnector implements JMEConnector {
     private DynamicPhysicsNode node;
     private JMESimulation world;
     private JMEConnector connectedConnector = null;
-    private JMEMagneticConnector lastProximityConnector = null;
+    private XJMEMagneticConnector lastProximityConnector = null;
     private JMEModuleComponent module;
     private float maxConnectDistance;
     protected String name;
     protected TriMesh mesh;
 
-    public JMEMagneticConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent module, RobotDescription selfDesc) {
+    public XJMEMagneticConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent module, RobotDescription selfDesc) {
         List<GeometryDescription> geometry = selfDesc.getConnectorGeometry();
         float maxConnectionDistance = selfDesc.getMaxConnectionDistance();
         this.world = world;
@@ -87,8 +131,8 @@ public class JMEMagneticConnector implements JMEConnector {
             String g1 = contactInfo.getGeometry1().getName();
             String g2 = contactInfo.getGeometry2().getName();
             if(world.connectorRegistry.containsKey(g1) && world.connectorRegistry.containsKey(g2)) {
-                JMEMagneticConnector c1 = (JMEMagneticConnector)world.connectorRegistry.get(g1); 
-                JMEMagneticConnector c2 = (JMEMagneticConnector)world.connectorRegistry.get(g2);
+                XJMEMagneticConnector c1 = (XJMEMagneticConnector)world.connectorRegistry.get(g1); 
+                XJMEMagneticConnector c2 = (XJMEMagneticConnector)world.connectorRegistry.get(g2);
                 c1.setProximityConnector(c2);
                 c2.setProximityConnector(c1);
                 c1.module.changeNotify();
@@ -100,7 +144,7 @@ public class JMEMagneticConnector implements JMEConnector {
 
     }
 
-    private void setProximityConnector(JMEMagneticConnector other) {
+    private void setProximityConnector(XJMEMagneticConnector other) {
         this.lastProximityConnector=other;
     }
 
@@ -140,7 +184,7 @@ public class JMEMagneticConnector implements JMEConnector {
      */
     public synchronized void connect() {
         if(!hasProximateConnector()) return;
-        JMEMagneticConnector other = this.lastProximityConnector;
+        XJMEMagneticConnector other = this.lastProximityConnector;
         if(this.isConnected()||other.isConnected()) { 
             PhysicsLogger.logNonCritical("Attempted connecting two connectors of which at least one was already connected.");
             return;
@@ -237,7 +281,7 @@ public class JMEMagneticConnector implements JMEConnector {
 	}
 
 	public void setPosition(VectorDescription position) {
-		// TODO Auto-generated method stub
+	    System.out.println("SETPOSITION");
 		
 	}
 	 public void clearDynamics() {
