@@ -53,16 +53,12 @@ public abstract class JMEMechanicalConnector extends JMEBasicConnector  {
     	}
 	}
     
-    private void updateColor() {
+    protected void updateColor() {
     	if(isConnected()) {
     		connectorGeometry.setConnectorVisibility(true);
     		connectorGeometry.resetColor();
     	}
     	else connectorGeometry.setConnectorVisibility(false); 
-    	//else if(hasProximateConnector()) setConnectorColor(Color.ORANGE);
-    	//else resetColor();
-    	
-	
     }
     
     public void disconnectFrom(JMEConnector connector) {
