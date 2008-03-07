@@ -17,8 +17,7 @@ public abstract class OdinMuscle extends Odin {
 	 * A contractive rod with a connector in each end
 	 */
 	public RobotDescription getDescription() {
-		RobotDescription description = new RobotDescription();
-		description.setType("OdinMuscle");
+		RobotDescription description = new RobotDescription("OdinMuscle");
 		float pi = (float)Math.PI;
         CylinderShape cylinderExternal = new CylinderShape(0.035f/2f,0.06f,new VectorDescription(0,0,0), new RotationDescription(0,-pi/2,0));
         CylinderShape cylinderInternal = new CylinderShape(0.032f/2f,0.06f,new VectorDescription(0,0,0), new RotationDescription(0,-pi/2,0));

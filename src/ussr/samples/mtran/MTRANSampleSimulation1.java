@@ -7,6 +7,7 @@ package ussr.samples.mtran;
 
 import ussr.model.Controller;
 import ussr.physics.PhysicsSimulation;
+import ussr.robotbuildingblocks.WorldDescription;
 
 /**
  * Simple MTRAN simulation
@@ -23,6 +24,12 @@ public class MTRANSampleSimulation1 extends MTRANSimulation {
 		return new MTRANSampleController1("MTRAN");
 	}
 
+	@Override
+	public void changeWorldHook(WorldDescription world) {
+        world.setHasBackgroundScenery(false);
+        world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+	}
+	
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
 		//simulation.setGravity(0.0f);
 	}

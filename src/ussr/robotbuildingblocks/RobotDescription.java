@@ -79,6 +79,10 @@ public class RobotDescription extends Description {
     private List<TransmissionDevice> transmitters = Collections.emptyList();
     private List<ReceivingDevice> receivers = Collections.emptyList();
  
+    public RobotDescription(String type) {
+        this.type = type;
+    }
+    
     /**
      * Get the module geometry: the geometric shapes that constitute the core of the module
      * @return the core geometry shapes
@@ -194,8 +198,5 @@ public class RobotDescription extends Description {
      */
 	public String getType() {
 		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
 	}
 }

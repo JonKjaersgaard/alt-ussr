@@ -25,8 +25,7 @@ public abstract class MTRAN implements Robot {
      * @see ussr.robotbuildingblocks.Robot#getDescription()
      */
     public RobotDescription getDescription() {
-        RobotDescription description = new RobotDescription();
-        description.setType("MTRAN");
+        RobotDescription description = new RobotDescription("MTRAN");
         
     	float pi = (float)Math.PI;
     	float unit = 0.065f/2f;

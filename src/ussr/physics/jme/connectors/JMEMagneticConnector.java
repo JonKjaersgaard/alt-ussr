@@ -32,13 +32,11 @@ import ussr.robotbuildingblocks.VectorDescription;
 
 public class JMEMagneticConnector extends JMEMechanicalConnector {
     private RotationalJointAxis xAxis,yAxis,zAxis;
+    private boolean isActive = false;
 
-    public JMEMagneticConnector(Vector3f position,
-            DynamicPhysicsNode moduleNode, String baseName,
-            JMESimulation world, JMEModuleComponent component,
-            RobotDescription selfDesc) {
+    public JMEMagneticConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName,
+            JMESimulation world, JMEModuleComponent component, RobotDescription selfDesc) {
         super(position, moduleNode, baseName, world, component, selfDesc);
-        System.out.println("Created magnetic connector at "+position+" geom "+selfDesc.getConnectorGeometry());
     }
 
     @Override
@@ -57,7 +55,7 @@ public class JMEMagneticConnector extends JMEMechanicalConnector {
 
     @Override
     public boolean canConnectTo(JMEConnector connector) {
-        if(!canConnectTo(connector)) return false;
+        if(!canConnectNow(connector)) return false;
         return true;
     }
 
@@ -71,250 +69,26 @@ public class JMEMagneticConnector extends JMEMechanicalConnector {
         connectorGeometry.setConnectorVisibility(true);
         connectorGeometry.resetColor();
     }
-}
-
-//FIXME this class is a mess and no longer updated rewrite completely to have a support magnetic connectors
-class XJMEMagneticConnector implements JMEConnector {
-    /**
-     * The abstract connector represented by this jme entity
-     */
-    private Connector model;
-    private DynamicPhysicsNode node;
-    private JMESimulation world;
-    private JMEConnector connectedConnector = null;
-    private XJMEMagneticConnector lastProximityConnector = null;
-    private JMEModuleComponent module;
-    private float maxConnectDistance;
-    protected String name;
-    protected TriMesh mesh;
-
-    public XJMEMagneticConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent module, RobotDescription selfDesc) {
-        List<GeometryDescription> geometry = selfDesc.getConnectorGeometry();
-        float maxConnectionDistance = selfDesc.getMaxConnectionDistance();
-        this.world = world;
-        this.module = module;
-        this.name = baseName;
-        this.maxConnectDistance = maxConnectionDistance;
-        // Create connector node
-        DynamicPhysicsNode connector = world.getPhysicsSpace().createDynamicNode();
-        module.getNodes().add(connector);
-        // Create visual appearance
-        assert geometry.size()==1; // Only tested with size 1 geometry
-        for(GeometryDescription element: geometry) {
-            mesh = JMEGeometryHelper.createShape(connector, baseName+position.toString(), element);
-            world.connectorRegistry.put(mesh.getName(),this);
-            mesh.getLocalTranslation().set( mesh.getLocalTranslation().add(position) );
-            mesh.setModelBound( new BoundingSphere() );
-            mesh.updateModelBound();
-            connector.attachChild( mesh );
-        }
-        // Finalize
-        connector.generatePhysicsGeometry();
-        world.getRootNode().attachChild( connector );
-        connector.computeMass();
-        // Joint
-        Joint connect = world.getPhysicsSpace().createJoint();
-        connect.attach(moduleNode, connector);
-        // Collision handler
-        final SyntheticButton collisionEventHandler = connector.getCollisionEventHandler();
-        world.getInput().addAction( new ModuleCollisionAction(),
-                collisionEventHandler.getDeviceName(), collisionEventHandler.getIndex(),
-                InputHandler.AXIS_NONE, false );
-        this.node = connector;
+    
+    @Override
+    protected void updateHook() {
+        if((!isActive) || isConnected()) return;
+        if(this.proximateConnectors.size()>0)
+            this.connectTo(proximateConnectors.get(0));
     }
     
-    public class ModuleCollisionAction implements InputActionInterface {
-
-        public void performAction(InputActionEvent evt) {
-            //if(!world.getConnectorsAreActive()) return;
-            ContactInfo contactInfo = ( (ContactInfo) evt.getTriggerData() );
-            String g1 = contactInfo.getGeometry1().getName();
-            String g2 = contactInfo.getGeometry2().getName();
-            if(world.connectorRegistry.containsKey(g1) && world.connectorRegistry.containsKey(g2)) {
-                XJMEMagneticConnector c1 = (XJMEMagneticConnector)world.connectorRegistry.get(g1); 
-                XJMEMagneticConnector c2 = (XJMEMagneticConnector)world.connectorRegistry.get(g2);
-                c1.setProximityConnector(c2);
-                c2.setProximityConnector(c1);
-                c1.module.changeNotify();
-                c2.module.changeNotify();
-                //if(c1.isConnected()||c2.isConnected()) return;
-                //c1.connectTo(c2);
-            }
-        }
-
+    public void setIsActive(boolean active) {
+        this.isActive = active;
+        if((!active) && this.isConnected()) this.disconnect();
     }
 
-    private void setProximityConnector(XJMEMagneticConnector other) {
-        this.lastProximityConnector=other;
-    }
-
-    /* (non-Javadoc)
-     * @see ussr.physics.jme.JMEConnector#otherConnectorAvailable()
-     */
-    public boolean hasProximateConnector() {
-        return this.lastProximityConnector!=null 
-            && node.getLocalTranslation().distance(this.lastProximityConnector.node.getLocalTranslation())<maxConnectDistance;
+    @Override
+    protected void handleProximateConnectorsOverflow() {
+        // Ignore, it's OK to have many proximate connectors for this one
     }
     
-    /* (non-Javadoc)
-     * @see ussr.physics.jme.JMEConnector#getAvailableConnectors()
-     */
-    public synchronized List<Connector> getAvailableConnectors() {
-        if(this.lastProximityConnector==null) return Collections.emptyList();
-        if(node.getLocalTranslation().distance(lastProximityConnector.node.getLocalTranslation())>maxConnectDistance) {
-            lastProximityConnector = null;
-            return Collections.emptyList();
-        }
-        return Arrays.asList(new Connector[] { this.lastProximityConnector.model });
+    @Override
+    protected void handleConnectedConnectorsOverflow() {
+        this.disconnect();
     }
-    
-    /* (non-Javadoc)
-     * @see ussr.physics.jme.JMEConnector#isConnected()
-     */
-    public synchronized boolean isConnected() {
-        return connectedConnector!=null;
-    }
-	public boolean isDisconnected() {
-		return !isConnected();
-	}
-
-
-    /* (non-Javadoc)
-     * @see ussr.physics.jme.JMEConnector#connectTo(ussr.physics.PhysicsConnector)
-     */
-    public synchronized void connect() {
-        if(!hasProximateConnector()) return;
-        XJMEMagneticConnector other = this.lastProximityConnector;
-        if(this.isConnected()||other.isConnected()) { 
-            PhysicsLogger.logNonCritical("Attempted connecting two connectors of which at least one was already connected.");
-            return;
-        }
-        Joint join = world.getPhysicsSpace().createJoint();
-        join.attach(this.getNode(),other.getNode());
-        world.dynamicJoints.add(join);
-        this.connectedConnector = other;
-        other.connectedConnector = this;
-      
-    }
-
-    /* (non-Javadoc)
-     * @see ussr.physics.jme.JMEConnector#reset()
-     */
-    public void reset() {
-        connectedConnector = null;        
-    }
-    
-    /* (non-Javadoc)
-     * @see ussr.physics.jme.JMEConnector#toString()
-     */
-    public String toString() {
-        return "JMEConnector<"+node.hashCode()+">";
-    }
-
-    /* (non-Javadoc)
-     * @see ussr.physics.jme.JMEConnector#setModel(ussr.model.Connector)
-     */
-    public void setModel(Connector connector) {
-        this.model = connector;        
-    }
-    
-    /* (non-Javadoc)
-     * @see ussr.physics.jme.JMEConnector#getModel(ussr.model.Connector)
-     */
-    public Connector getModel() {
-    	return this.model;        
-    }
-
-    public void disconnect() {
-        throw new Error("not implemented");        
-    }
-
-	public void setConnectorColor(Color color) {
-		// TODO Auto-generated method stub
-		
-	}
-	public String getName() {
-		return name;
-	}
-
-	public void update() {
-		throw new RuntimeException("Not implemented yet");		
-	}
-	/**
-	 * Position in world relative to module
-	 * @return position
-	 */
-	public Vector3f getPos() {
-		Vector3f pos = node.getLocalRotation().mult(mesh.getLocalTranslation()).add(node.getLocalTranslation());
-		return pos;
-	}
-
-	/**
-	 * Orientation relative to module
-	 * @return orientation
-	 */
-	public Quaternion getRot() {
-		Quaternion ori = mesh.getLocalRotation(); //TODO: not tested yet
-		return ori;
-	}
-
-	/**
-	 * Position in the world (global)  
-	 * @return position
-	 */
-	public VectorDescription getPosition() {
-		Vector3f p = getPos();
-		return new VectorDescription(p.x,p.y,p.z); //TODO: not tested yet
-	}
-	/**
-	 * Orientation in the world (global)  
-	 * @return orientation
-	 */
-	public RotationDescription getRotation() {
-		return new RotationDescription(mesh.getWorldRotation());//TODO: not tested yet
-	}
-	public void setRotation(PhysicsQuaternionHolder rot) {
-		mesh.getLocalRotation().set(new Quaternion((Quaternion)rot.get()));
-	}
-	public DynamicPhysicsNode getNode() {
-		return node;
-	}
-
-	public void setPosition(VectorDescription position) {
-	    System.out.println("SETPOSITION");
-		
-	}
-	 public void clearDynamics() {
-		getNode().clearDynamics();
-	}
-
-	public void setRotation(RotationDescription rotation) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Vector3f getPosRel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public JMEConnectorGeometry getConnectorGeometry() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public JMEConnectorAligner getConnectorAligner() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setTimeToConnect(float time) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setTimeToDisconnect(float time) {
-		// TODO Auto-generated method stub
-		
-	}
 }

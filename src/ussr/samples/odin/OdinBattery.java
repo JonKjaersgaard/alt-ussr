@@ -16,8 +16,7 @@ public abstract class OdinBattery extends Odin {
 	 * A contractive rod with a connector in each end
 	 */
 	public RobotDescription getDescription() {
-		RobotDescription description = new RobotDescription();
-		description.setType("OdinBattery");
+		RobotDescription description = new RobotDescription("OdinBattery");
 		float pi = (float)Math.PI;
         CylinderShape cylinder = new CylinderShape(0.035f/2f,0.06f,new VectorDescription(0,0,0), new RotationDescription(0,-pi/2,0));
         ConeShape coneCap1 = new ConeShape(0.035f/2f,0.035f, new VectorDescription(-0.03f-0.035f/2f,0,0), new RotationDescription(pi,-pi/2,0));

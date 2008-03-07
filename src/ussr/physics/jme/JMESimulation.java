@@ -160,8 +160,10 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                     for(ActBasedController controller: actControllers)
                         controller.initializationActStep();
                     while(true)
-                        for(ActBasedController controller: actControllers)
-                            controller.singleActStep();
+                        for(Iterator<ActBasedController> iterator = actControllers.iterator(); iterator.hasNext(); ) {
+                            boolean reschedule = iterator.next().singleActStep();
+                            if(!reschedule) iterator.remove();
+                        }
                 }
             };
             moduleThreads.add(actThread);

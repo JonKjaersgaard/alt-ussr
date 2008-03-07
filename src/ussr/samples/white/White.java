@@ -27,8 +27,7 @@ public abstract class White implements Robot {
 	
     public RobotDescription getDescription() {
     	float unit =0.1f;
-    	RobotDescription description = new RobotDescription();
-        description.setType("White");
+    	RobotDescription description = new RobotDescription("White");
     	BoxShape module = new BoxShape(new VectorDescription(unit,unit,unit), new VectorDescription(0,0,0), new RotationDescription(0,0,0));
     	module.setColor(Color.RED);
         module.setAccurateCollisionDetection(false);

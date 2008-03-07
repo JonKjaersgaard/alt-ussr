@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import ussr.model.Module;
 import ussr.physics.ModuleFactory;
+import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.Robot;
@@ -36,33 +37,16 @@ public class JMEFactoryHelper {
         if(robot==null) throw new Error("Robot specification object is null");
         if(robot.getDescription()==null) throw new Error("Robot description object is null, robot type "+robot);
         String module_type = robot.getDescription().getType();
-        if(module_type!=null) {
-            ModuleFactory factory = null;
-            // Find a matching factory
-            for(String prefix: factories.keySet())
-                if(module_type.startsWith(prefix)) {
-                    factory = factories.get(prefix);
-                    factory.createModule(module_id, module, robot, module_name);
-                    return;
-                }
-        } else {
-            // Fallback: create generic module geometry based on description
-            if(robot.getDescription().getModuleGeometry().size()==1) {
-                PhysicsLogger.log("Warning: creating default robot for module type "+module_type);
-                // Create central module node
-                DynamicPhysicsNode moduleNode = simulation.getPhysicsSpace().createDynamicNode();            
-                int j=0;
-                for(GeometryDescription geometry: robot.getDescription().getModuleGeometry()) {
-                    JMEModuleComponent physicsModule = new JMEModuleComponent(simulation,robot,geometry,"module#"+Integer.toString(module_id)+"."+(j++),module,moduleNode);
-                    module.addComponent(physicsModule);
-                    simulation.getModuleComponents().add(physicsModule);
-                }
-                moduleNode.setMaterial(Material.GRANITE);
-                moduleNode.computeMass();
-            } else {
-                throw new RuntimeException("Module type can not be constructed");
+        if(module_type==null) throw new Error("Module type is null");
+        ModuleFactory factory;
+        // Find a matching factory
+        for(String prefix: factories.keySet())
+            if(module_type.startsWith(prefix)) {
+                factory = factories.get(prefix);
+                factory.createModule(module_id, module, robot, module_name);
+                return;
             }
-        }
+        throw new Error("No factory found for robot type "+module_type+", registered factories: "+PhysicsFactory.display());
     }
 
 }

@@ -16,8 +16,7 @@ public abstract class OdinWheel extends Odin {
 	 * A contractive rod with a connector in each end
 	 */
 	public RobotDescription getDescription() {
-		RobotDescription description = new RobotDescription();
-		description.setType("OdinWheel");
+		RobotDescription description = new RobotDescription("OdinWheel");
 		float pi = (float)Math.PI;
         CylinderShape cylinder = new CylinderShape(0.035f/2f,0.06f,new VectorDescription(0,0,0), new RotationDescription(0,-pi/2,0));
         SphereShape wheel = new SphereShape(0.035f,new VectorDescription(0,0,0), new RotationDescription(pi/2,-pi/2,0));

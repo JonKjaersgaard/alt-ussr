@@ -11,6 +11,7 @@ import java.util.List;
 
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.robots.JMEATRONFactory;
+import ussr.physics.jme.robots.JMEDefaultFactory;
 import ussr.physics.jme.robots.JMEMTRANFactory;
 import ussr.physics.jme.robots.JMEOdinFactory;
 import ussr.samples.white.JMEWhiteFactory;
@@ -39,5 +40,19 @@ public class PhysicsFactory {
      */
     public static PhysicsSimulation createSimulator() {
         return new JMESimulation(factories.toArray(INITIAL_FACTORIES));
+    }
+
+    public static void addDefaultFactory(String robotPrefix) {
+        addFactory(new JMEDefaultFactory(robotPrefix));
+    }
+    
+    public static String display() {
+        StringBuffer result = new StringBuffer(PhysicsFactory.class.getName().toString()+"[ ");
+        for(ModuleFactory factory: factories) {
+            result.append(factory.getModulePrefix());
+            result.append("* ");
+        }
+        result.append(']');
+        return result.toString();
     }
 }

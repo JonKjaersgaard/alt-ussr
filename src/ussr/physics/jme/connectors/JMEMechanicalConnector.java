@@ -37,7 +37,13 @@ public abstract class JMEMechanicalConnector extends JMEBasicConnector  {
     	updateProximiteConnectors(maxConnectDistance);
     	updateConnectorsIntegrity();
 		updateColor();
+		updateHook();
     }
+    
+    /**
+     * Override to provide a per-physics timestep update functionality in the connector 
+     */
+    protected void updateHook() { }
 
     private void updateConnectorsIntegrity() {
     	for(JMEConnector c: connectedConnectors) {
@@ -46,12 +52,20 @@ public abstract class JMEMechanicalConnector extends JMEBasicConnector  {
     		}
     	}
     	if(proximateConnectors.size()>1) {
-    		System.err.println(module.toString()+": This module has "+proximateConnectors.size()+" neighbors at connector! "+this);
+    	    handleProximateConnectorsOverflow();
     	}
     	if(connectedConnectors.size()>1) {
-    		System.err.println(module.toString()+": This module is connected to "+connectedConnectors.size()+" neighbors at connector! "+this);
+    	    handleConnectedConnectorsOverflow();
     	}
 	}
+    
+    protected void handleConnectedConnectorsOverflow() {
+        System.err.println(module.toString()+": This module is connected to "+connectedConnectors.size()+" neighbors at connector! "+this);
+    }
+
+    protected void handleProximateConnectorsOverflow() {
+        System.err.println(module.toString()+": This module has "+proximateConnectors.size()+" neighbors at connector! "+this);
+    }
     
     protected void updateColor() {
     	if(isConnected()) {

@@ -14,8 +14,7 @@ public abstract class OdinBall extends Odin {
 	 * A passive ball with 12 connectors in a ccp lattice
 	 */
 	public RobotDescription getDescription() {
-		RobotDescription description = new RobotDescription();
-		description.setType("OdinBall");
+		RobotDescription description = new RobotDescription("OdinBall");
         SphereShape ball = new SphereShape(0.025f); 
         ball.setColor(Color.RED);
 	    description.setModuleGeometry(new GeometryDescription[] {ball});

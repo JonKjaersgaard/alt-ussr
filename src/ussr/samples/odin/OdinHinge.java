@@ -16,8 +16,7 @@ public abstract class OdinHinge extends Odin {
 	 * A contractive rod with a connector in each end
 	 */
 	public RobotDescription getDescription() {
-		RobotDescription description = new RobotDescription();
-		description.setType("OdinHinge");
+		RobotDescription description = new RobotDescription("OdinHinge");
 		float pi = (float)Math.PI;
         CylinderShape cylinderNorth = new CylinderShape(0.035f/2f,0.06f/2f,new VectorDescription(-0.06f/4f,0,0), new RotationDescription(0,-pi/2,0));
         CylinderShape cylinderSouth = new CylinderShape(0.035f/2f,0.06f/2f,new VectorDescription(0.06f/4f,0,0), new RotationDescription(0,-pi/2,0));
