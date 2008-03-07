@@ -12,12 +12,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
 import ussr.samples.atron.ATRONController;
-import ussr.samples.atron.spot.IATRONSPOTAPI;
 
 
-public class ATRONNetworkController extends ATRONController implements IATRONSPOTAPI {
+public class ATRONNetworkController extends ATRONController {
 	protected byte dir = 0;
 	private byte rot = 0;
 	private static Socket socket;

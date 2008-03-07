@@ -1,10 +1,11 @@
 package atron.delegate;
 
 import java.util.List;
+
+import atron.spot.IATRONSPOTAPI;
 import ussr.model.Module;
 import ussr.model.Sensor;
 import ussr.samples.atron.ATRONController;
-import ussr.samples.atron.spot.IATRONSPOTAPI;
 
 
 public class ATRONDelegateAPI extends ATRONController implements IATRONSPOTAPI{

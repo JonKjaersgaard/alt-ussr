@@ -1,4 +1,6 @@
-package atron.delegate;
+package atron.delegate.controllerLoop;
+
+import atron.delegate.ATRONDelegateAPI;
 
 public interface IDelegateControllerLoop {
 

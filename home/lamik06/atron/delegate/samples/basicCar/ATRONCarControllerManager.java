@@ -5,19 +5,27 @@
  */
 package atron.delegate.samples.basicCar;
 
+import java.util.List;
+
 import atron.delegate.ATRONDelegateAPI;
+import atron.spot.ATRONSPOTController;
+import atron.spot.IATRONSPOTAPI;
 import ussr.samples.GenericSimulation;
+import ussr.samples.atron.ATRONController;
 import ussr.model.ControllerImpl;
+import ussr.model.Sensor;
 
 
 /**
  * Delegation controller modified version of:
  * A simple controller for an ATRON car that reports data from the proximity sensors
  * 
+ * This class enables the use of multiple "controllerLoop()"'s;
+ * 
  * @author Lamik06 
  *
  */
-public class ATRONCarController1Delegate extends ControllerImpl {
+public class ATRONCarControllerManager extends ATRONSPOTController {
 
     /**
      * @see ussr.model.ControllerImpl#activate()
@@ -27,23 +35,21 @@ public class ATRONCarController1Delegate extends ControllerImpl {
 
 	
 	
-	ATRONDelegateAPI aTRONAPI;
-	ATRONCarControllerLoopDelegate aTRONControllerLoop;
+//	ATRONDelegateAPI aTRONAPI;
+	ATRONCarControllerLoop aTRONControllerLoop;
 	public void activate() {
-		aTRONAPI = new ATRONDelegateAPI(getModule());
-		aTRONControllerLoop = new ATRONCarControllerLoopDelegate(aTRONAPI);
+//		aTRONAPI = new ATRONDelegateAPI(getModule());
+		aTRONControllerLoop = new ATRONCarControllerLoop((IATRONSPOTAPI)this);
 		controlYield();
     	this.delay(1000); /* rotateContinuous seem to fail sometimes if we do not wait at first */
  
         while(true) {
-        	
-        	if(!module.getSimulation().isPaused()) {
-                if(!GenericSimulation.getActuatorsAreActive()) { controlYield(); continue; }
-                aTRONControllerLoop.controllerLoop();
-        	}
+            if(!GenericSimulation.getActuatorsAreActive()) { controlYield(); continue; }
+            aTRONControllerLoop.controllerLoop();
         	controlYield();
         }
     }
+
 
 
 }

@@ -2,15 +2,16 @@ package atron.delegate.samples.basicCar;
 
 import ussr.model.Sensor;
 import atron.delegate.ATRONDelegateAPI;
-import atron.delegate.DelegateControllerLoopImpl;
+import atron.delegate.controllerLoop.DelegateControllerLoopImpl;
+import atron.spot.IATRONSPOTAPI;
 
-public class ATRONCarControllerLoopDelegate extends DelegateControllerLoopImpl{
+public class ATRONCarControllerLoop extends DelegateControllerLoopImpl{
     byte dir = 1;
     float lastProx = Float.NEGATIVE_INFINITY; /* for printing out proximity data */
     boolean firstTime = true;
     
-	ATRONCarControllerLoopDelegate(ATRONDelegateAPI atronDelegateAPI) {
-		super(atronDelegateAPI);
+	ATRONCarControllerLoop(IATRONSPOTAPI iatronspotapi) {
+		super(iatronspotapi);
 	}
 
 	public void controllerLoop() {
@@ -45,6 +46,12 @@ public class ATRONCarControllerLoopDelegate extends DelegateControllerLoopImpl{
 	}
 
 	public void handleWireLessCommunication(byte[] wlanMessage) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setATRONDelegateAPI(ATRONDelegateAPI atronDelegateAPI) {
 		// TODO Auto-generated method stub
 		
 	}
