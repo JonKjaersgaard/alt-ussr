@@ -26,7 +26,7 @@ import ussr.samples.odin.OdinBall;
 
 
 /**
- * simulation of local communication for Odin
+ * Simulation of local communication for Odin
  * 
  * @author david (franco's mods)
  *
@@ -92,8 +92,8 @@ public class OdinSimulation extends GenericSimulation {
         //int nBalls=20, xMax=4, yMax=4,zMax=4;
         
         
-        int nBalls=100, xMax=10, yMax=1,zMax=10; //Plane
-        //int nBalls=40, xMax=4, yMax=3,zMax=4; //Cube
+        //int nBalls=100, xMax=10, yMax=1,zMax=10; //Plane
+        int nBalls=40, xMax=4, yMax=3,zMax=4; //Cube
         
         for(int x=0;x<xMax;x++) {
         	for(int y=0;y<yMax;y++) {
@@ -154,7 +154,7 @@ public class OdinSimulation extends GenericSimulation {
         modulePos.addAll(ballPos);
         world.setModulePositions(modulePos);
         System.out.println("#Total         = "+modulePos.size());
-        System.out.println("#Balls per Module (avg)= "+(((float)connections.size())/((float)ballPos.size())));
+        System.out.println("#Modules per Ball (avg)= "+(((float)connections.size())/((float)ballPos.size())));
         return world;
     }
        

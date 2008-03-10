@@ -27,7 +27,7 @@ public class OdinController extends ussr.samples.odin.OdinController {
     public byte[] msg = {'n'};//non-informed module (default)
     public int color = 0;
     /*BEGIN TO BE SET*/
-    static float pe = 0.1f; //0 to 1, modules sending information out.
+    static float pe = 0.5f; //0.1-0.2-0.5, modules sending information out.
     static float pne = 1.0f; //0 to 1, modules the information is transmitted to.
     /*END TO BE SET*/
     static int ne = 0;
@@ -43,8 +43,8 @@ public class OdinController extends ussr.samples.odin.OdinController {
     int[] counters;
     int time = 0;
     List<Color> lastColors;
-    float commInterval = 10f;
-    float blinkInterval = commInterval/2;
+    static float commInterval = 0.05f;
+    static float blinkInterval = 0.5f*commInterval;
     //We can also access modules, which is a protected attribute of a parent class.
     
     /**
@@ -54,7 +54,7 @@ public class OdinController extends ussr.samples.odin.OdinController {
      */
     public OdinController(String type) {
     	this.type = type;
-    	timeOffset = 100*rand.nextFloat();
+    	timeOffset = commInterval*rand.nextFloat();
     }
     
 	/**
@@ -143,12 +143,14 @@ public class OdinController extends ussr.samples.odin.OdinController {
      * This method propagates the information.
      */
     public void muscleControl() {
+    	//float lastTime = module.getSimulation().getTime()+timeOffset;
     	float lastTime = module.getSimulation().getTime();
     	while(true) {
 			module.getSimulation().waitForPhysicsStep(false);
 			
 			if((lastTime+commInterval)<module.getSimulation().getTime()){
 				
+				//Check if we transmitted already...
 				if(module.getID()==id && !txDone){
 					System.out.print("{"+time+","+((float)Imod/(float)nt)+"},");
 					time++;
@@ -159,6 +161,35 @@ public class OdinController extends ussr.samples.odin.OdinController {
 					}
 				}
 				
+				//Propagate info...
+				if(color==1){//informed module
+					if(rand.nextInt(10)==0
+							|| rand.nextInt(10)==1
+							|| rand.nextInt(10)==2
+							|| rand.nextInt(10)==3
+							|| rand.nextInt(10)==4
+							|| rand.nextInt(10)==5
+							|| rand.nextInt(10)==6
+							|| rand.nextInt(10)==7
+							|| rand.nextInt(10)==8
+							){//0.9 probability of transmission (to complete)...
+					//if(rand.nextInt(2)==0){
+						for(int x=0; x<channels.length; x++){
+							sendMessage(msg, (byte)msg.length,(byte)x);
+						}
+						setColor(0,1,0);//blink green
+					}
+				}
+				else{//non-informed module
+					if(rand.nextInt(e)==0){//probability of information output (pe)
+						for(int x=0; x<channels.length; x++){
+							sendMessage(msg, (byte)msg.length,(byte)x);
+						}
+						setColor(0,1,0);//blink green
+					}
+				}	
+				
+				//Check if information received by a non-informed module
 				for(int x=0; x<channels.length; x++){
 					if(counters[x]==1 && channels[x]=='i' && color!=1){
 						//information received by a non-informed module
@@ -171,13 +202,6 @@ public class OdinController extends ussr.samples.odin.OdinController {
 					}
 					channels[x] = 'n';
 					counters[x] = 0;
-				}
-				
-				if(rand.nextInt(e)==0){//probability of information output (pe)
-					for(int x=0; x<channels.length; x++){
-						sendMessage(msg, (byte)msg.length,(byte)x);
-					}
-					setColor(0,1,0);//blink green
 				}
 				
 				lastTime = module.getSimulation().getTime();
