@@ -92,8 +92,8 @@ public class OdinSimulation extends GenericSimulation {
         //int nBalls=20, xMax=4, yMax=4,zMax=4;
         
         
-        //int nBalls=100, xMax=10, yMax=1,zMax=10; //Plane
-        int nBalls=40, xMax=4, yMax=3,zMax=4; //Cube
+        int nBalls=100, xMax=10, yMax=1,zMax=10; //Plane
+        //int nBalls=40, xMax=4, yMax=3,zMax=4; //Cube
         
         for(int x=0;x<xMax;x++) {
         	for(int y=0;y<yMax;y++) {
@@ -130,9 +130,9 @@ public class OdinSimulation extends GenericSimulation {
         		}
         	}
         }
-       ArrayList<ModuleConnection> connections = allConnections(ballPos,modulePos);
-       System.out.println("#connection found = "+connections.size());
-       world.setModuleConnections(connections);
+        ArrayList<ModuleConnection> connections = allConnections(ballPos,modulePos);
+        System.out.println("#connection found = "+connections.size());
+        world.setModuleConnections(connections);
         System.out.println("#Balls Placed  = "+ballPos.size());
         System.out.println("#Modules Placed = "+modulePos.size());
         
