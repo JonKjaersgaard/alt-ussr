@@ -1,4 +1,4 @@
-package ussr.samples.atron;
+package ussr.samples.atron.simulations;
 
 import java.util.ArrayList;
 /* Essentially a stripped down car */
@@ -9,6 +9,9 @@ import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.ObstacleGenerator;
+import ussr.samples.atron.ATRON;
+import ussr.samples.atron.ATRONBuilder;
+import ussr.samples.atron.GenericATRONSimulation;
 
 /**
  * A simulation for a two-wheeler ATRON robot

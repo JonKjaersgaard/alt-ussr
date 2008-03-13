@@ -8,8 +8,8 @@ import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.atron.ATRON;
-import ussr.samples.atron.ATRONCarSimulation;
 import ussr.samples.atron.GenericATRONSimulation;
+import ussr.samples.atron.simulations.ATRONCarSimulation;
 import ussr.robotbuildingblocks.ModulePosition;
 
 

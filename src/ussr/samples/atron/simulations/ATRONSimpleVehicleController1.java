@@ -3,7 +3,9 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.samples.atron;
+package ussr.samples.atron.simulations;
+
+import ussr.samples.atron.ATRONController;
 
 /**
  * A controller for a two-wheeler ATRON robot

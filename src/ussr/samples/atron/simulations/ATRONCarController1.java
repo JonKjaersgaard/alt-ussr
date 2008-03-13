@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.samples.atron;
+package ussr.samples.atron.simulations;
 
 import java.awt.Color;
 import java.util.List;
@@ -17,6 +17,7 @@ import ussr.comm.Transmitter;
 import ussr.model.Sensor;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.samples.GenericSimulation;
+import ussr.samples.atron.ATRONController;
 
 /**
  * A simple controller for an ATRON car that reports data from the proximity sensors

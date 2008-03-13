@@ -8,7 +8,7 @@ import ussr.physics.PhysicsParameters;
 import ussr.robotbuildingblocks.Robot;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
-import ussr.samples.atron.ATRONCarSimulation;
+import ussr.samples.atron.simulations.ATRONCarSimulation;
 
 /**
  * @author ups

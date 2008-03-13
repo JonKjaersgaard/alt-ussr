@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ussr.samples.atron;
+package ussr.samples.atron.simulations;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,11 @@ import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.atron.ATRON;
+import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.atron.ATRONController;
+import ussr.samples.atron.GenericATRONSimulation;
+import ussr.samples.atron.ATRONBuilder.ModuleSelector;
+import ussr.samples.atron.ATRONBuilder.Namer;
 
 /**
  * A simulation of an ATRON conveyor belt that moves a box

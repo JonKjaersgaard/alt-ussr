@@ -1,4 +1,4 @@
-package ussr.samples.atron;
+package ussr.samples.atron.simulations;
 
 import ussr.model.Controller;
 import ussr.robotbuildingblocks.BoxDescription;
@@ -7,7 +7,7 @@ import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.ObstacleGenerator;
-import ussr.samples.atron.EightToCarSimulationJ.EightController;
+import ussr.samples.atron.ATRON;
 
 public class SnakeCarDemo extends EightToCarSimulationJ {
 

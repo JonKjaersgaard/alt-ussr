@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.samples.atron;
+package ussr.samples.atron.simulations;
 
 import java.awt.Color;
 
@@ -11,6 +11,7 @@ import ussr.comm.Packet;
 import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
 import ussr.samples.GenericSimulation;
+import ussr.samples.atron.ATRONController;
 
 /**
  * A sample controller for the ATRON

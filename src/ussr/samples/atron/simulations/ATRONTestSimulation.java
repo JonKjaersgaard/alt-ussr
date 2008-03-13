@@ -1,4 +1,4 @@
-package ussr.samples.atron;
+package ussr.samples.atron.simulations;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,8 @@ import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
+import ussr.samples.atron.ATRON;
+import ussr.samples.atron.GenericATRONSimulation;
 
 /**
  * A sample ATRON simulation

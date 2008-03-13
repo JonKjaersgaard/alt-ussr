@@ -6,7 +6,7 @@ package ussr.samples.atron.natives;
 import ussr.model.Controller;
 import ussr.robotbuildingblocks.Robot;
 import ussr.samples.atron.ATRON;
-import ussr.samples.atron.ATRONSnakeSimulation;
+import ussr.samples.atron.simulations.ATRONSnakeSimulation;
 
 /**
  * @author ups

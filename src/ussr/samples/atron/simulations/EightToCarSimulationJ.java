@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ussr.samples.atron;
+package ussr.samples.atron.simulations;
 
 import java.util.ArrayList;
 
@@ -13,6 +13,9 @@ import ussr.robotbuildingblocks.ModulePosition;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
+import ussr.samples.atron.ATRON;
+import ussr.samples.atron.ATRONController;
+import ussr.samples.atron.GenericATRONSimulation;
 
 /**
  * @author ups
