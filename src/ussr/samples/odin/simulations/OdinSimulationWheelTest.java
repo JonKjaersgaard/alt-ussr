@@ -21,7 +21,7 @@ import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.GenericSimulation;
 import ussr.samples.atron.ATRON;
-import ussr.samples.atron.ATRONCarController1;
+import ussr.samples.atron.simulations.ATRONCarController1;
 import ussr.samples.odin.OdinBuilder;
 import ussr.samples.odin.modules.OdinBall;
 import ussr.samples.odin.modules.OdinBattery;
