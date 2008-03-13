@@ -19,13 +19,13 @@ import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.GenericSimulation;
-import ussr.samples.odin.OdinBall;
-import ussr.samples.odin.OdinBallController;
-import ussr.samples.odin.OdinBattery;
-import ussr.samples.odin.OdinHinge;
-import ussr.samples.odin.OdinMuscle;
-import ussr.samples.odin.OdinSpring;
-import ussr.samples.odin.OdinWheel;
+import ussr.samples.odin.modules.OdinBall;
+import ussr.samples.odin.modules.OdinBattery;
+import ussr.samples.odin.modules.OdinHinge;
+import ussr.samples.odin.modules.OdinMuscle;
+import ussr.samples.odin.modules.OdinSpring;
+import ussr.samples.odin.modules.OdinWheel;
+import ussr.samples.odin.simulations.OdinBallController;
 
 /**
  * Simple Odin simulation test setup
