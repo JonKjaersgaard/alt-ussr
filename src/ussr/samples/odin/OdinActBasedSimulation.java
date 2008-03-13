@@ -19,6 +19,8 @@ import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.GenericSimulation;
+import ussr.samples.odin.modules.OdinBall;
+import ussr.samples.odin.modules.OdinMuscle;
 
 /**
  * Simple Odin simulation test setup

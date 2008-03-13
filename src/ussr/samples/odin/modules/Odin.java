@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.samples.odin;
+package ussr.samples.odin.modules;
 
 import ussr.model.Controller;
 import ussr.robotbuildingblocks.Robot;

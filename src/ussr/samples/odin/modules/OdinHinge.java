@@ -1,4 +1,4 @@
-package ussr.samples.odin;
+package ussr.samples.odin.modules;
 
 import java.awt.Color;
 

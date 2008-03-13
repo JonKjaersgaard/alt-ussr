@@ -22,6 +22,11 @@ import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.GenericSimulation;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONCarController1;
+import ussr.samples.odin.modules.OdinBall;
+import ussr.samples.odin.modules.OdinBattery;
+import ussr.samples.odin.modules.OdinHinge;
+import ussr.samples.odin.modules.OdinMuscle;
+import ussr.samples.odin.modules.OdinWheel;
 
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
