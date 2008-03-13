@@ -50,7 +50,6 @@ public class ATRONCarControllerLoop extends DelegateControllerLoopImpl{
 		
 	}
 
-	@Override
 	public void setATRONDelegateAPI(ATRONDelegateAPI atronDelegateAPI) {
 		// TODO Auto-generated method stub
 		
