@@ -33,7 +33,7 @@ public class AtronCenterProxy {
 				safeRad = -1;
 				controller.getModule().setColor(Color.WHITE);
 			}
-			controller.controlYield();
+			controller.yield();
 		    counter++;
 		}
     	// if(counter!=0) System.out.println(getID()+": at right position after "+counter+" steps");

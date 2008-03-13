@@ -29,7 +29,7 @@ public class DisconnectForeigners extends Statement {
             for(int c=0;c<8;c++) {
                 if(actuatingConnectors.get(c) && !metaController.isConnected(c)) actuatingConnectors.clear(c);
             }
-            metaController.controlYield();
+            metaController.yield();
         }
         return true;
     }

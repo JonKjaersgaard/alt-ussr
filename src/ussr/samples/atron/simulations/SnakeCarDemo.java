@@ -60,7 +60,7 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
             int id = this.getMyID();
             if(id==3) this.state = 1;
             while(true) {
-                super.controlYield();
+                super.yield();
                 if(state!=0) System.out.println("@ Pre-controller "+id+" in state "+state);
                 switch(state) {
                 case 1: /* module 3 */
@@ -147,7 +147,7 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
                 this.state = 0;
             control: while(true) {
                 delay(10000);
-                super.controlYield();
+                super.yield();
                 if(state!=0) System.out.println("@ Post-controller "+id+" in state "+state);
                 switch(state) {
                 case 1: /* module 0 */
@@ -205,7 +205,7 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
             }
             delay(500000);
             this.centerStop();
-            while(true) this.controlYield();
+            while(true) this.yield();
         }
 
         private void reportTilt() {

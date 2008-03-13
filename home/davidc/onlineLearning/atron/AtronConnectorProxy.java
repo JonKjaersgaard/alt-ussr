@@ -35,14 +35,14 @@ public class AtronConnectorProxy {
     				controller.disconnect(connector);
     				TimeOutManager tom2 = new TimeOutManager(5.0f, controller);
     				while(!controller.isDisconnected(connector)) {
-    					controller.controlYield();
+    					controller.yield();
     					if(tom2.isTimeout()) {
     						System.out.println(getID()+": deadlock detected while disconnecting");
     					}
     				}
     				done = true;
     			}
-    			controller.controlYield();
+    			controller.yield();
     		}
     		if(safeDisconnectDebug) controller.getModule().setColorList(colors);
     		setDisconnectingSemaphore(connector, false);
@@ -113,7 +113,7 @@ public class AtronConnectorProxy {
 			controller.connect(connector);
 			TimeOutManager tom = new TimeOutManager(5.0f, controller);
 			while(!controller.isConnected(connector)&&!tom.isTimeout()) {
-				controller.controlYield();
+				controller.yield();
 			}
 		}
 	}

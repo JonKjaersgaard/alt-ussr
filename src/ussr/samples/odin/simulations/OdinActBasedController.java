@@ -36,7 +36,7 @@ public class OdinActBasedController extends OdinController implements ActBasedCo
         while(true) singleActStep();
 	}
     public void muscleControl() {
-        if(!GenericSimulation.getActuatorsAreActive()) { controlYield(); return; }
+        if(!GenericSimulation.getActuatorsAreActive()) { yield(); return; }
         float time = module.getSimulation().getTime()+timeOffset;
         actuate((float)(Math.sin(time)+1)/2f);
         module.getSimulation().waitForPhysicsStep(false);

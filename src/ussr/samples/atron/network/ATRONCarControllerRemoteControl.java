@@ -141,7 +141,7 @@ public class ATRONCarControllerRemoteControl extends ATRONController {
     }
     private void controllerYield() {
 		// TODO Auto-generated method stub
-    	controlYield();
+    	yield();
 		
 	}
 	public void handleMessage(byte[] message, int messageSize, int channel) {

@@ -28,7 +28,7 @@ public class WhiteSampleController1 extends WhiteController {
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
-    	while(module.getSimulation().isPaused()) controlYield();
+    	while(module.getSimulation().isPaused()) yield();
     	//alternativeHook();
     		
     	while(true) { //put control here
@@ -60,7 +60,7 @@ public class WhiteSampleController1 extends WhiteController {
     			//System.out.println(getDebugID()+": I have "+countConnections()+" connections and "+countNearbyConnections()+" nearby");
     			delay(1000);
     		}
-    		controlYield(); //must use in main loop
+    		yield(); //must use in main loop
     	}
     }
     private void alternativeHook() {
@@ -90,7 +90,7 @@ public class WhiteSampleController1 extends WhiteController {
     			//System.out.println(getDebugID()+": I have "+countConnections()+" connections and "+countNearbyConnections()+" nearby");
     			delay(1000);
     		}
-    		controlYield(); //must use in main loop
+    		yield(); //must use in main loop
     	}
 	}
 	private int countConnections() {

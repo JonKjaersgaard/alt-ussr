@@ -224,6 +224,6 @@ public interface IATRONAPI {
 	 * Yield control to another module.  Should be called regularly to ensure fair scheduling in the
 	 * simulation.
 	 */
-	public void controlYield();
+	public void yield();
 
 }

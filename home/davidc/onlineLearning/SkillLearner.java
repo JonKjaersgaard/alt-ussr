@@ -93,7 +93,7 @@ public class SkillLearner {
     			if(skills[currentSkill].isContinuous()) myRole = skills[currentSkill].getRole();
     			controller.controlHook();
     			rolePlayer.playRole(myRole);
-    			controller.controlYield();
+    			controller.yield();
     			if(controller.isStopped()) return;
     		}
     		//System.out.println(controller.getDebugID()+" is alive at "+controller.getTime()+"!");

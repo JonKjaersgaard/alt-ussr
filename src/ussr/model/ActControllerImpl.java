@@ -22,7 +22,7 @@ public abstract class ActControllerImpl extends ControllerImpl implements ActBas
     @Override
     public void activate() {
         this.initializationActStep();
-        while(this.singleActStep()) controlYield();
+        while(this.singleActStep()) yield();
     }
 
 }

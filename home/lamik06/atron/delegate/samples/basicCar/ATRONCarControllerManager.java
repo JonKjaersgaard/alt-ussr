@@ -40,13 +40,13 @@ public class ATRONCarControllerManager extends ATRONSPOTController {
 	public void activate() {
 //		aTRONAPI = new ATRONDelegateAPI(getModule());
 		aTRONControllerLoop = new ATRONCarControllerLoop((IATRONSPOTAPI)this);
-		controlYield();
+		yield();
     	this.delay(1000); /* rotateContinuous seem to fail sometimes if we do not wait at first */
  
         while(true) {
-            if(!GenericSimulation.getActuatorsAreActive()) { controlYield(); continue; }
+            if(!GenericSimulation.getActuatorsAreActive()) { yield(); continue; }
             aTRONControllerLoop.controllerLoop();
-        	controlYield();
+        	yield();
         }
     }
 
