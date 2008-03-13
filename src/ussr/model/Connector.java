@@ -8,6 +8,8 @@ package ussr.model;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import ussr.physics.ConnectorBehaviorHandler;
 import ussr.physics.PhysicsConnector;
 import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsModuleComponent;
@@ -87,5 +89,14 @@ public class Connector extends Entity {
 	
 	public void reset() {
 		physics.reset();
+	}
+	
+    /**
+     * Set the connector behavior handler for this connector
+     * @see ussr.physics.ConnectorBehaviorHandler
+     * @param handler the connector behavior handler
+     */
+	public void setConnectorBehaviorHandler(ConnectorBehaviorHandler handler) {
+	    physics.setConnectorBehaviorHandler(handler);
 	}
 }

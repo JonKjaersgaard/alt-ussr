@@ -54,6 +54,13 @@ public interface PhysicsConnector extends PhysicsEntity {
     public void update();
     
     public void setRotation(PhysicsQuaternionHolder rot);
+
+    /**
+     * Set the connector behavior handler for this connector
+     * @see ussr.physics.ConnectorBehaviorHandler
+     * @param handler the connector behavior handler
+     */
+    public void setConnectorBehaviorHandler(ConnectorBehaviorHandler handler);
 	
 	
 }

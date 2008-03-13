@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import ussr.physics.PhysicsEntity;
+import ussr.robotbuildingblocks.Description;
 
 /**
  * Abstract class defining common behavior for entities in the simulator, namely
@@ -71,4 +72,13 @@ public abstract class Entity {
      * @return the physics entities
      */
     public abstract List<? extends PhysicsEntity> getPhysics();
+    
+    /**
+     * Read the labels stored in a description object, store each label as a property with key
+     * label:name and the name as a value
+     */
+    public void readLabels(Description description) {
+        for(String label: description.getLabels())
+            this.setProperty("label:"+label, label);
+    }
 }
