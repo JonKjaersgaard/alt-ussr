@@ -1,4 +1,4 @@
-package ussr.samples.atron.natives.dcd;
+package dcd.ussr.samples.atron.natives.dcd;
 
 import java.util.ArrayList;
 

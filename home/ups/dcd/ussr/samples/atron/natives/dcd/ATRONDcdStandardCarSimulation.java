@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ussr.samples.atron.natives.dcd;
+package dcd.ussr.samples.atron.natives.dcd;
 
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
