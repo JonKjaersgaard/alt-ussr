@@ -16,14 +16,16 @@ import ussr.physics.jme.connectors.JMEConnector;
 import ussr.physics.jme.connectors.JMEHingeMechanicalConnector;
 import ussr.physics.jme.connectors.JMEMagneticConnector;
 import ussr.physics.jme.connectors.JMERigidMechanicalConnector;
+import ussr.robotbuildingblocks.ConnectorDescription;
 import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.ModuleComponentDescription;
 import ussr.robotbuildingblocks.ReceivingDevice;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.TransmissionDevice;
 import ussr.robotbuildingblocks.VectorDescription;
-import ussr.robotbuildingblocks.RobotDescription.ConnectorType;
+import ussr.robotbuildingblocks.ConnectorDescription.Type;
 
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
@@ -74,7 +76,7 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
      * @param name
      * @param dynamicNode 
      */
-    public JMEModuleComponent(JMESimulation world, Robot robot, GeometryDescription element, String name, Module module, DynamicPhysicsNode dynamicNode) {
+    public JMEModuleComponent(JMESimulation world, Robot robot, ModuleComponentDescription description, String name, Module module, DynamicPhysicsNode dynamicNode) {
         this.world = world;
         this.model = module;
         this.selfDesc = robot.getDescription();
@@ -82,23 +84,24 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         moduleNode = dynamicNode;
         dynamicNodes.add(moduleNode);
         // Create visual appearance
-        TriMesh shape = JMEGeometryHelper.createShape(moduleNode, name, element);
-        geometries.add(shape);
-        world.associateGeometry(moduleNode,shape);
-        world.getHelper().setColor(shape,element.getColor());
-
-        moduleNode.setIsCollidable(true);
-        moduleNode.generatePhysicsGeometry(element.getAccurateCollisionDetection());
-   		//moduleNode.computeMass(); //do we always want to do that?
-   		
+        for(GeometryDescription geometry: description.getGeometry()) {
+            TriMesh shape = JMEGeometryHelper.createShape(moduleNode, name, geometry);
+            geometries.add(shape);
+            world.associateGeometry(moduleNode,shape);
+            world.getHelper().setColor(shape,geometry.getColor());
+            moduleNode.setIsCollidable(true);
+            moduleNode.generatePhysicsGeometry(geometry.getAccurateCollisionDetection());
+        }
+        // Attach to the world
    		world.getRootNode().attachChild( moduleNode );   
-        
         
         // Create connectors
    		int counter = 0;
-        for(VectorDescription p: selfDesc.getConnectorPositions()) {
+        for(ConnectorDescription cd: description.getConnectors()) {
+            VectorDescription p = cd.getPosition();
             Vector3f position = new Vector3f(p.getX(), p.getY(), p.getZ());
-            this.addConnector("Connector "+(counter++), position, Color.BLACK, new Quaternion());
+            String cname = cd.getName()==null ? "Connector "+(counter++) : cd.getName(); 
+            this.addConnector(cname, position, cd, cd.getRotation().getRotation());
         }
         //TODO change this way of creating communication sometimes we can it to be at a connector
         // Create communicators
@@ -109,19 +112,17 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
             model.addReceivingDevice(JMEGeometryHelper.createReceiver(model, model, receiver));
             
     }
-	public void addConnector(String name, Vector3f position, Color color, Quaternion rotation) {
-		addConnector(name, position, color);
+	public void addConnector(String name, Vector3f position, ConnectorDescription description, Quaternion rotation) {
+		addConnector(name, position, description);
 		getConnector(name).setRotation(new PhysicsQuaternionHolder(rotation));
 	}
-	public void addConnector(String name, Vector3f position, Color color) {
-		addConnector(name, position);
-		getConnector(name).setConnectorColor(color);
-	}
-    public void addConnector(String name, Vector3f position) {
-    	 JMEConnector connector = createConnector(world, name, position, selfDesc);
+
+	public void addConnector(String name, Vector3f position, ConnectorDescription description) {
+    	 JMEConnector connector = createConnector(world, name, position, description);
          Connector c = new Connector(connector);
          model.addConnector(c);
          c.setProperty("name", name);
+         c.readLabels(description);
          connectors.add(connector);
     }
     public JMEConnector getConnector(int index) {
@@ -138,21 +139,22 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
      * @param name
      * @param position
      * @param selfDesc
+     * @param connectorDescription 
      * @param maxDistance
      * @param type 
      * @return
      */
-    private JMEConnector createConnector(JMESimulation world, String name, Vector3f position, RobotDescription selfDesc) {
+    private JMEConnector createConnector(JMESimulation world, String name, Vector3f position, ConnectorDescription description) {
         JMEConnector connector;
-        ConnectorType type = selfDesc.getConnectorType();
-        if(type==ConnectorType.MAGNETIC_CONNECTOR)
-            connector = new JMEMagneticConnector(position,moduleNode,name,world,this,selfDesc);
-        else if(type==ConnectorType.MECHANICAL_CONNECTOR_RIGID)
-            connector = new JMERigidMechanicalConnector(position,moduleNode,name,world,this,selfDesc);
-        else if(type==ConnectorType.MECHANICAL_CONNECTOR_HINGE)
-        	connector = new JMEHingeMechanicalConnector(position,moduleNode,name,world,this,selfDesc); 
-        else if(type==ConnectorType.MECHANICAL_CONNECTOR_BALL_SOCKET)
-            connector = new JMEBallSocketConnector(position,moduleNode,name,world,this,selfDesc);
+        ConnectorDescription.Type type = description.getType();
+        if(type==ConnectorDescription.Type.MAGNETIC_CONNECTOR)
+            connector = new JMEMagneticConnector(position,moduleNode,name,world,this,description);
+        else if(type==ConnectorDescription.Type.MECHANICAL_CONNECTOR_RIGID)
+            connector = new JMERigidMechanicalConnector(position,moduleNode,name,world,this,description);
+        else if(type==ConnectorDescription.Type.MECHANICAL_CONNECTOR_HINGE)
+        	connector = new JMEHingeMechanicalConnector(position,moduleNode,name,world,this,description); 
+        else if(type==ConnectorDescription.Type.MECHANICAL_CONNECTOR_BALL_SOCKET)
+            connector = new JMEBallSocketConnector(position,moduleNode,name,world,this,description);
         else throw new Error("Unknown connector type");
         return connector;
     }

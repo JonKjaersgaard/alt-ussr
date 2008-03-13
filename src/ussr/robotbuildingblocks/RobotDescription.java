@@ -7,7 +7,9 @@ package ussr.robotbuildingblocks;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ussr.comm.Transmitter;
 
@@ -24,21 +26,6 @@ import ussr.comm.Transmitter;
 public class RobotDescription extends Description {
     
     /**
-     * The connector type used on the robot
-     * 
-     * TODO: support multiple connector types if the need every arises
-     * 
-     * @author Modular Robots @ MMMI
-     */
-    public static enum ConnectorType {
-        MAGNETIC_CONNECTOR,
-        MECHANICAL_CONNECTOR_RIGID,
-        MECHANICAL_CONNECTOR_HINGE,
-        MECHANICAL_CONNECTOR_BALL_SOCKET,
-        NONE
-    }
-	
-    /**
      * Abstract description of how the robot is assembled
      * 
      * TODO: not currently used, remove?
@@ -54,28 +41,10 @@ public class RobotDescription extends Description {
     /**
      * The geometric shapes that constitute the core of the module
      */
-    private List<GeometryDescription> moduleGeometryDescription = Collections.emptyList();
+    private List<ModuleComponentDescription> moduleComponentDescription = Collections.emptyList();
     
-    /**
-     * The geometric shapes that constitute a single connector
-     */
-    private List<GeometryDescription> connectorGeometryDescription = Collections.emptyList();
-    
-    /**
-     * The positions of the connectors (and implicitly their number) relative to the center
-     * of the core
-     */
-    private List<VectorDescription> connectorPositions = Collections.emptyList();
-    
-    private ConnectorType connectorType = ConnectorType.NONE;
     private PhysicsCompositionStructure structure = PhysicsCompositionStructure.MODULE;
     
-    /**
-     * The maximal radius from the center of a connector to the center of another connector
-     * where the connectors can reach each other (e.g., connect)
-     */
-    private float maxConnectionDistance = 0.01f;
-
     private List<TransmissionDevice> transmitters = Collections.emptyList();
     private List<ReceivingDevice> receivers = Collections.emptyList();
  
@@ -87,78 +56,16 @@ public class RobotDescription extends Description {
      * Get the module geometry: the geometric shapes that constitute the core of the module
      * @return the core geometry shapes
      */
-    public List<GeometryDescription> getModuleGeometry() {
-        return moduleGeometryDescription;
+    public List<ModuleComponentDescription> getModuleComponents() {
+        return moduleComponentDescription;
     }
     
-    /**
-     * Get the connector geometry: the geometric shapes that constitute a single connector
-     * @return the connector geometry shapes
-     */
-    public List<GeometryDescription> getConnectorGeometry() {
-        return connectorGeometryDescription;
-    }
-    
-    /**
-     * Get the connector positions: the positions of the connectors (and implicitly their number) relative to the center
-     * of the core
-     * @return the connector positions
-     */
-    public List<VectorDescription> getConnectorPositions() {
-        return connectorPositions;
-    }
-    
-    /**
-     * Get the max connection distance: The maximal radius from the center of a connector to the center of another connector
-     * where the connectors can reach each other (e.g., connect)
-     * @return the max connection distance
-     */
-    public float getMaxConnectionDistance() {
-        return maxConnectionDistance;
-    }
-
     /**
      * Set the module geometry: the geometric shapes that constitute the core of the module
      * @param descriptions the core geometry shapes
      */
-    public void setModuleGeometry(GeometryDescription[] descriptions) {
-        this.moduleGeometryDescription = Arrays.asList(descriptions);        
-    }
-
-    /**
-     * Get the connector geometry: the geometric shapes that constitute a single connector
-     * @param descriptions the connector geometry shapes
-     */
-    public void setConnectorGeometry(GeometryDescription[] descriptions) {
-        this.connectorGeometryDescription = Arrays.asList(descriptions);
-        
-    }
-
-    /**
-     * Get the connector positions: the positions of the connectors (and implicitly their number) relative to the center
-     * of the core
-     * @param descriptions the connector positions
-     */
-    public void setConnectorPositions(VectorDescription[] descriptions) {
-        this.connectorPositions = Arrays.asList(descriptions);        
-    }
-
-    public ConnectorType getConnectorType() {
-    	return this.connectorType;
-    }
-    
-    public void setConnectorType( ConnectorType connectorType ) {
-    	this.connectorType=connectorType;
-    }
-
-    
-    /**
-     * Set the max connection distance: The maximal radius from the center of a connector to the center of another connector
-     * where the connectors can reach each other (e.g., connect)
-     * @param the max connection distance
-     */
-    public void setMaxConnectionDistance(float limit) {
-        maxConnectionDistance = limit;
+    public void setModuleComponents(ModuleComponentDescription[] descriptions) {
+        this.moduleComponentDescription = Arrays.asList(descriptions);        
     }
 
     public void setTransmitters(TransmissionDevice[] transmitters) {

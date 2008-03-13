@@ -16,7 +16,7 @@ import java.awt.Color;
  * @author Modualar Robots @ MMMI
  *
  */
-public class AtronShape extends Description implements GeometryDescription {
+public class AtronShape extends GeometryDescriptionImpl {
     
     /**
      * The radius of the sphere

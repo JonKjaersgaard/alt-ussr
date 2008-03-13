@@ -4,8 +4,10 @@ import java.awt.Color;
 
 import ussr.model.Controller;
 import ussr.robotbuildingblocks.ConeShape;
+import ussr.robotbuildingblocks.ConnectorDescription;
 import ussr.robotbuildingblocks.CylinderShape;
 import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.ModuleComponentDescription;
 import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.SphereShape;
@@ -18,7 +20,7 @@ public abstract class OdinMuscle extends Odin {
 	 */
 	public RobotDescription getDescription() {
 		RobotDescription description = new RobotDescription("OdinMuscle");
-		float pi = (float)Math.PI;
+		final float pi = (float)Math.PI;
         CylinderShape cylinderExternal = new CylinderShape(0.035f/2f,0.06f,new VectorDescription(0,0,0), new RotationDescription(0,-pi/2,0));
         CylinderShape cylinderInternal = new CylinderShape(0.032f/2f,0.06f,new VectorDescription(0,0,0), new RotationDescription(0,-pi/2,0));
         ConeShape coneCap1 = new ConeShape(0.035f/2f,0.035f, new VectorDescription(-0.03f-0.035f/2f,0,0), new RotationDescription(pi,-pi/2,0));
@@ -34,18 +36,20 @@ public abstract class OdinMuscle extends Odin {
         coneCap1.setAccurateCollisionDetection(false);
         coneCap2.setAccurateCollisionDetection(false);
         
-	    description.setModuleGeometry(new GeometryDescription[] {cylinderExternal,cylinderInternal,coneCap1,coneCap2});
+        ModuleComponentDescription externalComponent = new ModuleComponentDescription(new GeometryDescription[] {cylinderExternal,coneCap1});
+        ModuleComponentDescription internalComponent = new ModuleComponentDescription(new GeometryDescription[] {cylinderInternal,coneCap2});
 
+        ConnectorDescription.Common common = new ConnectorDescription.Common();
 	    SphereShape connector = new SphereShape(0.001f);
         connector.setColor(Color.WHITE);
-        description.setConnectorGeometry(new GeometryDescription[] { connector });
+        common.setGeometry(new GeometryDescription[] { connector });
+        common.setType( ConnectorDescription.Type.MECHANICAL_CONNECTOR_BALL_SOCKET); 
         float unit = (float) (0.06f/2+0.035f); 
-        description.setConnectorPositions(new VectorDescription[] {
-        		//new VectorDescription(-unit, 0, 0),
-        		//new VectorDescription(unit, 0, 0),
-        });
-        description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR_BALL_SOCKET); 
+        externalComponent.setConnectors(new ConnectorDescription[] { new ConnectorDescription(common,new VectorDescription(-unit, 0, 0)) });
+        internalComponent.setConnectors(new ConnectorDescription[] { new ConnectorDescription(common,new VectorDescription(unit, 0, 0)) });
         //description.setMaxConnectionDistance(6);
+        
+        description.setModuleComponents(new ModuleComponentDescription[] { externalComponent, internalComponent });
         return description;
 	}
 }

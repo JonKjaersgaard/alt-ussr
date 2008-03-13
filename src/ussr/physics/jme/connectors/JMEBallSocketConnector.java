@@ -4,6 +4,7 @@ import org.odejava.World;
 
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
+import ussr.robotbuildingblocks.ConnectorDescription;
 import ussr.robotbuildingblocks.RobotDescription;
 
 import com.jme.math.Vector3f;
@@ -15,8 +16,8 @@ import com.jmex.physics.RotationalJointAxis;
 
 public class JMEBallSocketConnector extends JMEMechanicalConnector {
 
-	public JMEBallSocketConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, RobotDescription selfDesc) {
-		super(position, moduleNode, baseName, world, component, selfDesc);
+	public JMEBallSocketConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, ConnectorDescription description) {
+		super(position, moduleNode, baseName, world, component, description);
 		springHandler = new SpringHandler(moduleNode,50000,5000,0.09f);
 		//springHandler = new SpringHandler(moduleNode,0,0,0.09f);
 	}

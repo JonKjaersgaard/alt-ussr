@@ -13,7 +13,7 @@ import java.awt.Color;
  * @author Modular Robots @ MMMI
  *
  */
-public class CylinderShape extends Description implements GeometryDescription {
+public class CylinderShape extends GeometryDescriptionImpl {
     
     /**
      * The radius of the cylinder

@@ -6,6 +6,7 @@ import java.util.List;
 import ussr.physics.jme.JMEGeometryHelper;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
+import ussr.robotbuildingblocks.ConnectorDescription;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.RobotDescription;
 
@@ -22,11 +23,11 @@ public class JMEConnectorGeometry {
 	private volatile JMESimulation world;
 	private Vector3f localPosition;
 	
-	public JMEConnectorGeometry(Vector3f position, DynamicPhysicsNode node, JMESimulation world, JMEModuleComponent component, RobotDescription selfDesc) {
+	public JMEConnectorGeometry(Vector3f position, DynamicPhysicsNode node, JMESimulation world, JMEModuleComponent component, ConnectorDescription description) {
 		this.world= world;
 		this.localPosition = position;
 		// Create visual appearance
-        List<GeometryDescription> geometry = selfDesc.getConnectorGeometry();
+        List<GeometryDescription> geometry = description.getGeometry();
         assert geometry.size()==1; // Only tested with size 1 geometry
         for(GeometryDescription element: geometry) {
         	mesh = JMEGeometryHelper.createShape(node, "Mechanical Connector Mesh", element);

@@ -13,7 +13,7 @@ import java.awt.Color;
  * @author Modular Robots @ MMMI
  *
  */
-public class SphereShape extends Description implements GeometryDescription {
+public class SphereShape extends GeometryDescriptionImpl {
     
     /**
      * The radius of the sphere

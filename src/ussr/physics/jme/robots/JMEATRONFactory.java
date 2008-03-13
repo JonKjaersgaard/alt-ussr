@@ -18,6 +18,7 @@ import ussr.physics.jme.connectors.JMEMechanicalConnector;
 import ussr.physics.jme.sensors.JMEProximitySensor;
 import ussr.physics.jme.sensors.JMETiltSensor;
 import ussr.robotbuildingblocks.AtronShape;
+import ussr.robotbuildingblocks.ModuleComponentDescription;
 import ussr.robotbuildingblocks.ReceivingDevice;
 import ussr.robotbuildingblocks.Robot;
 import ussr.robotbuildingblocks.RotationDescription;
@@ -44,7 +45,7 @@ public class JMEATRONFactory implements ModuleFactory {
     public void createModule(int module_id, Module module, Robot robot, String module_name) {
         if(!robot.getDescription().getType().startsWith("ATRON")) throw new Error("Illegal module type: "+robot.getDescription().getType());
         
-        if(robot.getDescription().getModuleGeometry().size()!=2) throw new RuntimeException("Not an ATRON");
+        if(robot.getDescription().getModuleComponents().size()!=2) throw new RuntimeException("Not an ATRON");
         
         createModuleComponents(module, robot, module_id, module_name);
         
@@ -55,7 +56,7 @@ public class JMEATRONFactory implements ModuleFactory {
         setMass(0.4f,southComponent.getModuleNode());
         setMaterials(module, robot,module_name);
         setName(module, module_name);
-        addConnectors(module);
+        updateConnectors(module);
         addCommunication(module, robot);
         addProximitySensors(module);
         addCenterActuator(module, robot);
@@ -71,16 +72,18 @@ public class JMEATRONFactory implements ModuleFactory {
 	}
 
 	private void createModuleComponents(Module module, Robot robot, int module_id, String module_name) {
-        AtronShape northShape = (AtronShape) robot.getDescription().getModuleGeometry().get(0);
-        AtronShape southShape = (AtronShape) robot.getDescription().getModuleGeometry().get(1);
+	    ModuleComponentDescription northDescription = robot.getDescription().getModuleComponents().get(0);
+	    ModuleComponentDescription southDescription = robot.getDescription().getModuleComponents().get(1);
+        //AtronShape northShape = (AtronShape) northDescription.getGeometry();
+	    //AtronShape southShape = (AtronShape) southDescription.getGeometry();
         
         
         DynamicPhysicsNode northNode = simulation.getPhysicsSpace().createDynamicNode();
-        JMEModuleComponent northComponent = new JMEModuleComponent(simulation,robot,northShape,module_name+"_module#"+Integer.toString(module_id)+".north",module,northNode);
+        JMEModuleComponent northComponent = new JMEModuleComponent(simulation,robot,northDescription,module_name+"_module#"+Integer.toString(module_id)+".north",module,northNode);
         northNode.setName("AtronNorth");
 
         DynamicPhysicsNode southNode = simulation.getPhysicsSpace().createDynamicNode();
-        JMEModuleComponent southComponent = new JMEModuleComponent(simulation,robot,southShape,module_name+"module#"+Integer.toString(module_id)+".south",module,southNode);
+        JMEModuleComponent southComponent = new JMEModuleComponent(simulation,robot,southDescription,module_name+"module#"+Integer.toString(module_id)+".south",module,southNode);
         southNode.setName("AtronSouth");
 
         module.addComponent(northComponent);
@@ -199,39 +202,25 @@ public class JMEATRONFactory implements ModuleFactory {
         }
 	}
 
-	private void addConnectors(Module module) {
-        //float unit = (float) (0.045f/Math.sqrt(2)); //4.5cm from center of mass to connector
-		float unit = (float)0.0282843;// 0.0388909;//0.033137f;//0.033137f = 2.9 	507498E-7 //why this value?
+	private void updateConnectors(Module module) {
         float maxAlignmentForce = 10;
         float maxAlignmentDistance = 0.02f;
         float epsilonAlignmentDistance = 0.01f;
-        Color[] colors = new Color[]{Color.black,Color.white,Color.black,Color.white};
-        float h=(float)Math.sqrt(2);
-        Vector3f[] northPos = new Vector3f[]{new Vector3f(unit,unit,-h*unit),new Vector3f( -unit,  unit, -h*unit ),new Vector3f( -unit, -unit, -h*unit ),new Vector3f(  unit, -unit, -h*unit )};
-        Quaternion[] northRot = new Quaternion[]{new Quaternion(new float[]{0,-pi/4,pi/4}),new Quaternion(new float[]{0,pi/4,-pi/4}),new Quaternion(new float[]{0,pi/4,pi/4}),new Quaternion(new float[]{0,-pi/4,-pi/4})};
         JMEModuleComponent northComponent =  (JMEModuleComponent) module.getComponent(0);
         Vector3f[] northAlignPos1 = new Vector3f[]{new Vector3f(0.0377124f,0.0377124f,-0.0266667f),new Vector3f(-0.0377124f,0.0377124f,-0.0266667f),new Vector3f(-0.0377124f,-0.0377124f,-0.0266667f),new Vector3f(0.0377124f,-0.0377124f,-0.0266667f)};
         Vector3f[] northAlignPos2 = new Vector3f[]{new Vector3f(0.0226274f,0.0226274f,-0.048f),new Vector3f(-0.0226274f,0.0226274f,-0.048f),new Vector3f(-0.0226274f,-0.0226274f,-0.048f),new Vector3f(0.0226274f,-0.0226274f,-0.048f)};
         for(int i=0;i<4;i++) {
-        	northComponent.addConnector("Connector "+i,northPos[i],colors[i],northRot[i]);
-        	//northComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(northPos[i], 1, (i%2+1), maxAlignmentForce);
-        	//moduleComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(cPos[i].add(new Vector3f(0,-unit,0)), 2, 0, 0.1f);
         	northComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(northAlignPos1[i], 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance);
         	northComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(northAlignPos2[i], 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance);
         }
         setConnectorProperties(northComponent);
-        
-        
-        Vector3f[] southPos = new Vector3f[]{new Vector3f(unit,unit,h*unit),new Vector3f(-unit,unit,h*unit),new Vector3f(-unit,-unit,h*unit),new Vector3f(unit,-unit,h*unit)};
-        Quaternion[] southRot = new Quaternion[]{new Quaternion(new float[]{pi,pi/4,pi/4}),new Quaternion(new float[]{pi,-pi/4,-pi/4}),new Quaternion(new float[]{pi,-pi/4,pi/4}),new Quaternion(new float[]{pi,pi/4,-pi/4})};
+       
         JMEModuleComponent southComponent =  (JMEModuleComponent) module.getComponent(1);
         Vector3f[] southAlignPos1 = new Vector3f[]{new Vector3f(0.0377124f,0.0377124f,0.0266667f),new Vector3f(-0.0377124f,0.0377124f,0.0266667f),new Vector3f(-0.0377124f,-0.0377124f,0.0266667f),new Vector3f(0.0377124f,-0.0377124f,0.0266667f)};
         Vector3f[] southAlignPos2 = new Vector3f[]{new Vector3f(0.0226274f,0.0226274f,0.048f),new Vector3f(-0.0226274f,0.0226274f,0.048f),new Vector3f(-0.0226274f,-0.0226274f,0.048f),new Vector3f(0.0226274f,-0.0226274f,0.048f)};
         for(int i=0;i<4;i++) {
-        	southComponent.addConnector("Connector "+(i+4),southPos[i],colors[i],southRot[i]);
         	southComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(southAlignPos1[i], 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance, epsilonAlignmentDistance);
         	southComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(southAlignPos2[i], 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance);
-        	//moduleComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(cPos[i].add(new Vector3f(0,-unit,0)), 2, 0, 0.1f);
         }
         setConnectorProperties(southComponent);
         

@@ -19,12 +19,14 @@ import com.jmex.physics.RotationalJointAxis;
 import com.jmex.physics.contact.ContactInfo;
 
 import ussr.model.Connector;
+import ussr.physics.ConnectorBehaviorHandler;
 import ussr.physics.PhysicsConnector;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsQuaternionHolder;
 import ussr.physics.jme.JMEGeometryHelper;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
+import ussr.robotbuildingblocks.ConnectorDescription;
 import ussr.robotbuildingblocks.GeometryDescription;
 import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.RotationDescription;
@@ -33,10 +35,18 @@ import ussr.robotbuildingblocks.VectorDescription;
 public class JMEMagneticConnector extends JMEMechanicalConnector {
     private RotationalJointAxis xAxis,yAxis,zAxis;
     private boolean isActive = false;
+    
+    /**
+     * The connector behavior handler is used to decide whether to automatically connector to proximate
+     * connectors.  Initialized with null object that provides connect-always behavior. 
+     */
+    private ConnectorBehaviorHandler handler = new ConnectorBehaviorHandler() {
+        public boolean connectToProximateConnector(Connector target, Connector proximate) { return true; }
+    };
 
     public JMEMagneticConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName,
-            JMESimulation world, JMEModuleComponent component, RobotDescription selfDesc) {
-        super(position, moduleNode, baseName, world, component, selfDesc);
+            JMESimulation world, JMEModuleComponent component, ConnectorDescription description) {
+        super(position, moduleNode, baseName, world, component, description);
     }
 
     @Override
@@ -73,8 +83,12 @@ public class JMEMagneticConnector extends JMEMechanicalConnector {
     @Override
     protected void updateHook() {
         if((!isActive) || isConnected()) return;
-        if(this.proximateConnectors.size()>0)
-            this.connectTo(proximateConnectors.get(0));
+        if(this.proximateConnectors.size()>0) {
+            for(JMEConnector other: proximateConnectors) {
+                if(!handler.connectToProximateConnector(this.getModel(), other.getModel())) continue;
+                this.connectTo(other);
+            }
+        }
     }
     
     public void setIsActive(boolean active) {
@@ -90,5 +104,10 @@ public class JMEMagneticConnector extends JMEMechanicalConnector {
     @Override
     protected void handleConnectedConnectorsOverflow() {
         this.disconnect();
+    }
+
+    @Override
+    public void setConnectorBehaviorHandler(ConnectorBehaviorHandler handler) {
+        this.handler  = handler;
     }
 }

@@ -10,6 +10,7 @@ import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.ModuleComponentDescription;
 import ussr.robotbuildingblocks.Robot;
 
 public class JMEDefaultFactory implements ModuleFactory {
@@ -22,12 +23,12 @@ public class JMEDefaultFactory implements ModuleFactory {
     }
     
     public void createModule(int module_id, Module module, Robot robot, String module_name) {
-        if(robot.getDescription().getModuleGeometry().size()==1) {
+        if(robot.getDescription().getModuleComponents().size()==1) {
             // Create central module node
             DynamicPhysicsNode moduleNode = simulation.getPhysicsSpace().createDynamicNode();            
             int j=0;
-            for(GeometryDescription geometry: robot.getDescription().getModuleGeometry()) {
-                JMEModuleComponent physicsModule = new JMEModuleComponent(simulation,robot,geometry,"module#"+Integer.toString(module_id)+"."+(j++),module,moduleNode);
+            for(ModuleComponentDescription component: robot.getDescription().getModuleComponents()) {
+                JMEModuleComponent physicsModule = new JMEModuleComponent(simulation,robot,component,"module#"+Integer.toString(module_id)+"."+(j++),module,moduleNode);
                 module.addComponent(physicsModule);
                 simulation.getModuleComponents().add(physicsModule);
             }

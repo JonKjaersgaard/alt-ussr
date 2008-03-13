@@ -3,8 +3,10 @@ package ussr.samples.odin;
 import java.awt.Color;
 
 import ussr.robotbuildingblocks.ConeShape;
+import ussr.robotbuildingblocks.ConnectorDescription;
 import ussr.robotbuildingblocks.CylinderShape;
 import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.ModuleComponentDescription;
 import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.SphereShape;
@@ -17,7 +19,7 @@ public abstract class OdinHinge extends Odin {
 	 */
 	public RobotDescription getDescription() {
 		RobotDescription description = new RobotDescription("OdinHinge");
-		float pi = (float)Math.PI;
+		final float pi = (float)Math.PI;
         CylinderShape cylinderNorth = new CylinderShape(0.035f/2f,0.06f/2f,new VectorDescription(-0.06f/4f,0,0), new RotationDescription(0,-pi/2,0));
         CylinderShape cylinderSouth = new CylinderShape(0.035f/2f,0.06f/2f,new VectorDescription(0.06f/4f,0,0), new RotationDescription(0,-pi/2,0));
         SphereShape center = new SphereShape(0.030f/2f,new VectorDescription(0,0,0), new RotationDescription(pi/2,-pi/2,0));
@@ -36,18 +38,18 @@ public abstract class OdinHinge extends Odin {
         coneCap1.setAccurateCollisionDetection(false);
         coneCap2.setAccurateCollisionDetection(false);
         
-	    description.setModuleGeometry(new GeometryDescription[] {cylinderNorth,cylinderSouth,center,coneCap1,coneCap2});
-
+        ModuleComponentDescription northComponent = new ModuleComponentDescription(new GeometryDescription[] {cylinderNorth,center,coneCap1});
+        ModuleComponentDescription southComponent = new ModuleComponentDescription(new GeometryDescription[] {cylinderSouth,coneCap2});
+        ConnectorDescription.Common common = new ConnectorDescription.Common();
 	    SphereShape connector = new SphereShape(0.001f);
         connector.setColor(Color.WHITE);
-        description.setConnectorGeometry(new GeometryDescription[] { connector });
-        float unit = (float) (0.06f/2+0.035f); 
-        description.setConnectorPositions(new VectorDescription[] {
-        		//new VectorDescription(-unit, 0, 0),
-        		//new VectorDescription(unit, 0, 0),
-        });
-        description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR_BALL_SOCKET );
-        description.setMaxConnectionDistance(6);
+        common.setGeometry(new GeometryDescription[] { connector });
+        common.setType( ConnectorDescription.Type.MECHANICAL_CONNECTOR_BALL_SOCKET );
+        common.setMaxConnectionDistance(6);
+        final float unit = 0.06f/2+0.035f; 
+        northComponent.setConnectors(new ConnectorDescription[] { new ConnectorDescription(common,new VectorDescription(-unit, 0, 0)) });
+        southComponent.setConnectors(new ConnectorDescription[] { new ConnectorDescription(common,new VectorDescription(unit, 0, 0)) });
+        description.setModuleComponents(new ModuleComponentDescription[] { northComponent, southComponent });
         return description;
 	}
 }

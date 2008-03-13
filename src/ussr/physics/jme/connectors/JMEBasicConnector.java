@@ -5,11 +5,13 @@ import java.util.ArrayList;
 
 import ussr.model.Connector;
 import ussr.model.Module;
+import ussr.physics.ConnectorBehaviorHandler;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsQuaternionHolder;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
+import ussr.robotbuildingblocks.ConnectorDescription;
 import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
@@ -35,12 +37,12 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
     protected volatile float timeToConnect = 0;
     protected volatile float timeToDisconnect = 0;
 	
-    public JMEBasicConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, RobotDescription selfDesc) {
+    public JMEBasicConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, ConnectorDescription description) {
     	this.world = world;
         this.module = component;
         this.name = baseName;
         this.node = moduleNode;
-        this.connectorGeometry = new JMEConnectorGeometry(position, node, world, component, selfDesc);
+        this.connectorGeometry = new JMEConnectorGeometry(position, node, world, component, description);
         this.connectorAligner =  new JMEConnectorAligner(this, world, component);
     	world.subscribePhysicsTimestep(this);
     }
@@ -361,4 +363,8 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
     
     public abstract boolean canDisconnectFrom(JMEConnector connector);
     public abstract void disconnectFrom(JMEConnector connector);
+    
+    public void setConnectorBehaviorHandler(ConnectorBehaviorHandler handler) {
+        throw new Error("Setting connection behavior handler not supported for connectors of type "+this.getClass().getName());
+    }
 }

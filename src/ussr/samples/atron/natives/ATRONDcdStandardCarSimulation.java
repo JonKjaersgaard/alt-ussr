@@ -26,12 +26,14 @@ public class ATRONDcdStandardCarSimulation extends ATRONCarSimulation {
         //world.setPlaneTexture(WorldDescription.MARS_TEXTURE);
     }
     
-    /*@Override
+    @Override
     protected Robot getRobot() {
-        return new ATRON() {
+        ATRON atron = new ATRON() {
             public Controller createController() {
                 return new ATRONNativeController("dcdController");
             }
         };
-    }*/
+        atron.setGentle();
+        return atron;
+    }
 }

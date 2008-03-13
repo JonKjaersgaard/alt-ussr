@@ -3,8 +3,10 @@ package ussr.samples.odin;
 import java.awt.Color;
 
 import ussr.robotbuildingblocks.ConeShape;
+import ussr.robotbuildingblocks.ConnectorDescription;
 import ussr.robotbuildingblocks.CylinderShape;
 import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.ModuleComponentDescription;
 import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.SphereShape;
@@ -31,18 +33,19 @@ public abstract class OdinBattery extends Odin {
         coneCap1.setAccurateCollisionDetection(false);
         coneCap2.setAccurateCollisionDetection(false);
         
-	    description.setModuleGeometry(new GeometryDescription[] {cylinder,coneCap1,coneCap2});
-
+        ModuleComponentDescription component = new ModuleComponentDescription(new GeometryDescription[] {cylinder,coneCap1,coneCap2});
+        ConnectorDescription.Common common = new ConnectorDescription.Common();
+        common.setType( ConnectorDescription.Type.MECHANICAL_CONNECTOR_BALL_SOCKET );
 	    SphereShape connector = new SphereShape(0.001f);
         connector.setColor(Color.WHITE);
-        description.setConnectorGeometry(new GeometryDescription[] { connector });
-        float unit = (float) (0.06f/2+0.035f); 
-        description.setConnectorPositions(new VectorDescription[] {
-        		//new VectorDescription(-unit, 0, 0),
-        		//new VectorDescription(unit, 0, 0),
+        common.setGeometry(new GeometryDescription[] { connector });
+        final float unit = 0.06f/2f+0.035f; 
+        component.setConnectors(new ConnectorDescription[] {
+        		new ConnectorDescription(common, new VectorDescription(-unit, 0, 0)),
+        		new ConnectorDescription(common, new VectorDescription(unit, 0, 0))
         });
-        description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR_BALL_SOCKET );
-        //description.setMaxConnectionDistance(6);
+        description.setModuleComponents(new ModuleComponentDescription[] { component });
+        
         return description;
 	}
 }

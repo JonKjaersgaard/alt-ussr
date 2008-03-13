@@ -2,6 +2,7 @@ package ussr.physics.jme.connectors;
 
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
+import ussr.robotbuildingblocks.ConnectorDescription;
 import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 
@@ -16,8 +17,8 @@ public class JMEHingeMechanicalConnector extends JMEMechanicalConnector {
 	private float upperLimit = Float.POSITIVE_INFINITY;
 	private float alignmentForce = 0.1f;
 	
-	public JMEHingeMechanicalConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, RobotDescription selfDesc) {
-		super(position, moduleNode, baseName, world, component, selfDesc);
+	public JMEHingeMechanicalConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, ConnectorDescription description) {
+		super(position, moduleNode, baseName, world, component, description);
 	}
 	protected synchronized void addAxis(Joint connection) {
 		axis = connection.createRotationalAxis(); 

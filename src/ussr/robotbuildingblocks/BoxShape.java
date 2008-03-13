@@ -13,7 +13,7 @@ import java.awt.Color;
  * @author Modular Robots @ MMMI
  *
  */
-public class BoxShape extends Description implements GeometryDescription {
+public class BoxShape extends GeometryDescriptionImpl {
     /** 
     * local translation of the box
     */    

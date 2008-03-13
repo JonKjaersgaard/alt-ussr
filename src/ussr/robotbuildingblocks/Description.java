@@ -6,6 +6,7 @@
 package ussr.robotbuildingblocks;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +18,7 @@ import java.util.Set;
  * @author Modular Robots @ MMMI
  *
  */
-public abstract class Description {
+public abstract class Description implements Cloneable {
 
     /**
      * Labels associated with this element
@@ -45,5 +46,9 @@ public abstract class Description {
     public void addLabels(String[] _labels) {
         List<String> strings = Arrays.asList(_labels);
         labels.addAll(strings);
+    }
+
+    public Set<String> getLabels() {
+        return Collections.unmodifiableSet(labels);
     }
 }

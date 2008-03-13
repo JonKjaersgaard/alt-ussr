@@ -3,7 +3,9 @@ package ussr.samples.odin;
 import java.awt.Color;
 
 import ussr.model.Controller;
+import ussr.robotbuildingblocks.ConnectorDescription;
 import ussr.robotbuildingblocks.GeometryDescription;
+import ussr.robotbuildingblocks.ModuleComponentDescription;
 import ussr.robotbuildingblocks.RobotDescription;
 import ussr.robotbuildingblocks.SphereShape;
 import ussr.robotbuildingblocks.VectorDescription;
@@ -17,28 +19,29 @@ public abstract class OdinBall extends Odin {
 		RobotDescription description = new RobotDescription("OdinBall");
         SphereShape ball = new SphereShape(0.025f); 
         ball.setColor(Color.RED);
-	    description.setModuleGeometry(new GeometryDescription[] {ball});
-
+        ModuleComponentDescription moduleComponent = new ModuleComponentDescription(ball);
+        ConnectorDescription.Common common = new ConnectorDescription.Common();
 	    SphereShape connector = new SphereShape(0.001f);
         connector.setColor(Color.WHITE);
-        description.setConnectorGeometry(new GeometryDescription[] { connector });
-        float unit = (float) (0.025f/Math.sqrt(2)); 
-        description.setConnectorPositions(new VectorDescription[] { //hvordan skal de tælles?
-        		new VectorDescription(-1*unit, -1*unit, 0*unit),
-        		new VectorDescription(-1*unit, 0*unit, -1*unit),
-        		new VectorDescription(-1*unit, 0*unit, 1*unit),
-        		new VectorDescription(-1*unit, 1*unit, 0*unit),
-        		new VectorDescription(0*unit, -1*unit, -1*unit),
-        		new VectorDescription(0*unit, -1*unit, 1*unit),
-        		new VectorDescription(0*unit, 1*unit, -1*unit),
-        		new VectorDescription(0*unit, 1*unit, 1*unit),
-        		new VectorDescription(1*unit, -1*unit, 0*unit),
-        		new VectorDescription(1*unit, 0*unit, -1*unit),
-        		new VectorDescription(1*unit, 0*unit, 1*unit),
-        		new VectorDescription(1*unit, 1*unit, 0*unit),
+        common.setGeometry(new GeometryDescription[] { connector });
+        common.setType( ConnectorDescription.Type.MECHANICAL_CONNECTOR_BALL_SOCKET );
+        final float unit = (float) (0.025f/Math.sqrt(2)); 
+        moduleComponent.setConnectors(new ConnectorDescription[] { //hvordan skal de tælles?
+        		new ConnectorDescription(common,new VectorDescription(-1*unit, -1*unit, 0*unit)),
+        		new ConnectorDescription(common,new VectorDescription(-1*unit, 0*unit, -1*unit)),
+        		new ConnectorDescription(common,new VectorDescription(-1*unit, 0*unit, 1*unit)),
+        		new ConnectorDescription(common,new VectorDescription(-1*unit, 1*unit, 0*unit)),
+        		new ConnectorDescription(common,new VectorDescription(0*unit, -1*unit, -1*unit)),
+        		new ConnectorDescription(common,new VectorDescription(0*unit, -1*unit, 1*unit)),
+        		new ConnectorDescription(common,new VectorDescription(0*unit, 1*unit, -1*unit)),
+        		new ConnectorDescription(common,new VectorDescription(0*unit, 1*unit, 1*unit)),
+        		new ConnectorDescription(common,new VectorDescription(1*unit, -1*unit, 0*unit)),
+        		new ConnectorDescription(common,new VectorDescription(1*unit, 0*unit, -1*unit)),
+        		new ConnectorDescription(common,new VectorDescription(1*unit, 0*unit, 1*unit)),
+        		new ConnectorDescription(common,new VectorDescription(1*unit, 1*unit, 0*unit))
         });
-        description.setConnectorType( RobotDescription.ConnectorType.MECHANICAL_CONNECTOR_BALL_SOCKET );
         //description.setMaxConnectionDistance(6);
+        description.setModuleComponents(new ModuleComponentDescription[] { moduleComponent} );
         return description;
 	}
 }

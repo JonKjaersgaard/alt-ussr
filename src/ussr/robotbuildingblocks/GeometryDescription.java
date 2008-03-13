@@ -32,4 +32,11 @@ public interface GeometryDescription {
 	public void setAccurateCollisionDetection(boolean accurateCD);
 	public VectorDescription getTranslation();
 	public RotationDescription getRotation();
+	
+	/**
+	 * Get a copy of this object (using clone())
+	 * @return a copy of this object
+	 */
+    public GeometryDescription copy();
+	
 }

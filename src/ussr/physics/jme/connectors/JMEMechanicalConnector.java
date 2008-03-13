@@ -2,6 +2,7 @@ package ussr.physics.jme.connectors;
 
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
+import ussr.robotbuildingblocks.ConnectorDescription;
 import ussr.robotbuildingblocks.RobotDescription;
 
 import com.jme.math.Vector3f;
@@ -21,10 +22,10 @@ public abstract class JMEMechanicalConnector extends JMEBasicConnector  {
     protected volatile float maxConnectDistance;
     
 
-    public JMEMechanicalConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, RobotDescription selfDesc) {
-    	super(position, moduleNode, baseName, world, component, selfDesc);
+    public JMEMechanicalConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, ConnectorDescription description) {
+    	super(position, moduleNode, baseName, world, component, description);
     	super.setUpdateFrequency(1f/0.3f); //every 300ms
-    	this.maxConnectDistance = selfDesc.getMaxConnectionDistance();
+    	this.maxConnectDistance = description.getMaxConnectionDistance();
     }
 
     /*
