@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 #ifdef USSR
-int vm_trace_flags = 0; /*TRACE_ACTUATION|TRACE_CACHE|TRACE_EVENTS|TRACE_MIGRATION|TRACE_COMMANDS;*/
+int vm_trace_flags = /*TRACE_BEHAVIOR|*/ TRACE_EVENTS|TRACE_MIGRATION|TRACE_NETWORK; /*|TRACE_ACTUATION|TRACE_COMMANDS;*/
 #endif
 
 #define SIZE_program_findWheels 24
@@ -25,6 +25,28 @@ unsigned char program_findWheels[SIZE_program_findWheels] = {
   INS_SET_ROLE_NOTIFY, ROLE_RIGHT_WHEEL,
   INS_GOTO, 22,
   INS_SET_ROLE_NOTIFY, ROLE_LEFT_WHEEL,
+  INS_END_TERMINATE,
+  INS_MIGRATE_CONTINUE
+};
+
+#define SIZE_program_findWheels_START 30
+#define ROLE_program_findWheels ROLE_ANY
+unsigned char program_findWheels_START[SIZE_program_findWheels_START] = {
+  INS_CENTER_POSITION_EW,
+  INS_IF_FALSE_GOTO, 29,
+  INS_CONNECTED_SIZEOF,
+  INS_EQUALS_1,
+  INS_IF_FALSE_GOTO, 29,
+  INS_CONNECTED_DIR_SIZEOF, ARG_UP,
+  INS_EQUALS_1,
+  INS_IF_FALSE_GOTO, 29,
+  INS_CONNECTED_DIR_SIZEOF, ARG_EAST,
+  INS_IF_FALSE_GOTO, 23,
+  INS_SET_ROLE_NOTIFY, ROLE_RIGHT_WHEEL,
+  INS_EVAL_COMMAND, CMD_ROTATE_CLOCKWISE, 1,
+  INS_GOTO, 28,
+  INS_SET_ROLE_NOTIFY, ROLE_LEFT_WHEEL,  /* 20->23 */
+  INS_EVAL_COMMAND, CMD_ROTATE_COUNTERCLOCKWISE, 1,
   INS_END_TERMINATE,
   INS_MIGRATE_CONTINUE
 };
@@ -283,7 +305,7 @@ static void car_action(USSRONLY(USSREnv *env)) {
   context.program_id++;
   for(channel=0; channel<8; channel++) {
     sendCommandMaybe(USSRONLYC(env) &context, channel, ROLE_LEFT_WHEEL, CMD_ROTATE_COUNTERCLOCKWISE, 1, 0, context.program_id);
-  }
+    }
   /* Install event handlers */
   USSRONLY(printf("*** Waiting\n"));
   delay(USSRONLYC(env) WAITTIME);
@@ -299,8 +321,16 @@ static void car_action(USSRONLY(USSREnv *env)) {
   USSRONLY(printf("*** Done\n"));
 }
 
+#define ROLE_Wheel ROLE_WHEEL
+#define ROLE_RightWheel ROLE_RIGHT_WHEEL
+#define ROLE_LeftWheel ROLE_LEFT_WHEEL
+#define ROLE_Axle ROLE_AXLE
+#define ROLE_Reverse ROLE_REVERSE
+#include "/Users/ups/eclipse_workspace/ussr/home/ups/action_gen.c"
+
 void dcd_activate(USSRONLYC(USSREnv *env) int role) {
   //if(role==0) arm_action(USSRONLY(env));
   if(role==0) car_action(USSRONLY(env));
+  //if(role==0) dcd_action(USSRONLY(env));
   //if(role==0) test_action_2(USSRONLY(env));
 }

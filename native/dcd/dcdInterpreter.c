@@ -192,6 +192,9 @@ unsigned char deprecated_compute_connected_dir(USSRONLYC(USSREnv *env) Interpret
     case ARG_EAST:
       for(index=0; index<4; index++) if(isOtherConnectorNearby(USSRONLYC(env) virtual2physical(USSRONLYC(env) context, index))) total++;
       return total;
+    case ARG_WEST:
+      for(index=4; index<8; index++) if(isOtherConnectorNearby(USSRONLYC(env) virtual2physical(USSRONLYC(env) context, index))) total++;
+      return total;
     case ARG_DOWN:
       return compute_2_dir(USSRONLYC(env) context, dir, 2,6);
     default:
@@ -337,8 +340,9 @@ void sleep_rotations(USSRONLYC(USSREnv *env) unsigned char rotations) {
 unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char *program, unsigned char program_size, unsigned char pc, char *stack, unsigned char sp) {
   int instruction_counter = 0;
   unsigned char role = getRole(USSRONLY(env));
+  int interpreter_debug_flags = 0;
   while(pc<program_size) {
-    USSRDEBUG(TRACE_INTERPRET,printf("  <%6d,%2d> %2d(%2d) [%3d %3d %3d %3d %3d]: ", env->context, role, pc, sp, stack[0], stack[1], stack[2], stack[3], stack[4]));
+    USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("  <%6d,%2d> %2d(%2d) [%3d %3d %3d %3d %3d]: ", env->context, role, pc, sp, stack[0], stack[1], stack[2], stack[3], stack[4]));
     if(instruction_counter++>MAX_INSTRUCTION_COUNT) {
       report_error(USSRONLYC(env) INTERPRETER_INSTRUCTION_COUNT_EXCEEDED,pc);
       return 0;
@@ -349,19 +353,31 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
     }
     switch(program[pc++]) {
     case INS_CENTER_POSITION_EW:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_CENTER_POSITION_EW\n"));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_CENTER_POSITION_EW\n"));
       stack_push(USSRONLYC(env) stack,&sp,context->mod_rotation==ARG_EAST_WEST);
       break;
     case INS_CENTER_POSITION_NS:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_CENTER_POSITION_NS\n")); 
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_CENTER_POSITION_NS\n")); 
       stack_push(USSRONLYC(env) stack,&sp,context->mod_rotation==ARG_NORTH_SOUTH);
       break;
     case INS_CENTER_POSITION_UD:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_CENTER_POSITION_UD\n")); 
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_CENTER_POSITION_UD\n")); 
       stack_push(USSRONLYC(env) stack,&sp,context->mod_rotation==ARG_UP_DOWN);
       break;
+    case INS_CONNECTED:
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_CONNECTED\n"));
+      {
+	signed char channel;
+	unsigned char result = 0;
+	for(channel=7; channel>=0; channel--) {
+	  if(isOtherConnectorNearby(USSRONLYC(env) channel)) result |= 1;
+	  result <<= 1;
+	}
+	stack_push(USSRONLYC(env) stack,&sp,result);
+      }
+      break;
     case INS_CONNECTED_SIZEOF:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_CONNECTED_SIZEOF\n"));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_CONNECTED_SIZEOF\n"));
       {
 	unsigned char channel, total = 0;
 	for(channel=0; channel<8; channel++)
@@ -369,124 +385,145 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
 	stack_push(USSRONLYC(env) stack,&sp,total);
       }
       break;
+    case INS_SIZEOF:
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_SIZEOF\n"));
+      {
+	unsigned char tos = stack_pop(USSRONLYC(env) stack,&sp);
+	unsigned char result = 0;
+	char i;
+	for(i=0; i<8; i++) {
+	  if(tos&1) result++;
+	  tos >>= 1;
+	}
+	stack_push(USSRONLYC(env) stack,&sp,result);
+      }
+      break;
+    case INS_GREATER:
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_GREATER\n"));
+      {
+	signed char tos = stack_pop(USSRONLYC(env) stack,&sp);
+	signed char sos = stack_pop(USSRONLYC(env) stack,&sp);
+	stack_push(USSRONLYC(env) stack,&sp,sos>tos);
+      }
+      break;
     case INS_EQUALS_0:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_EQUALS_0\n"));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_EQUALS_0\n"));
       {
 	char tos = stack_pop(USSRONLYC(env) stack,&sp);
 	stack_push(USSRONLYC(env) stack,&sp,tos==0);
       }
       break;
     case INS_EQUALS_1:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_EQUALS_1\n"));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_EQUALS_1\n"));
       {
 	char tos = stack_pop(USSRONLYC(env) stack,&sp);
 	stack_push(USSRONLYC(env) stack,&sp,tos==1);
       }
       break;
     case INS_CONNECTED_DIR_SIZEOF:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_CONNECTED_DIR_SIZEOF "));
-      USSRDEBUG(TRACE_INTERPRET,print_arg(program,pc,1));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_CONNECTED_DIR_SIZEOF "));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,print_arg(program,pc,1));
       {
 	unsigned char dir = program[pc++];
 	stack_push(USSRONLYC(env) stack,&sp,count_bits(deprecated_compute_connected_dir(USSRONLYC(env) context, dir)));
       }
       break;
     case INS_CONNECTED_DOWN_ROLE:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_CONNECTED_DOWN_ROLE %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_CONNECTED_DOWN_ROLE %d\n", program[pc]));
       {
 	unsigned char role = program[pc++];
 #ifdef VERBOSE_DEBUGGING
 	unsigned char c;
-	USSRDEBUG(TRACE_EVENTS,printf("<%d> Looking for %d in [ ", env->context, role));
-	for(c=0; c<8; c++) USSRDEBUG(TRACE_EVENTS,printf("%d ", GLOBAL(env,neighbor_role_cache[c])));
-	USSRDEBUG(TRACE_EVENTS,printf("\n"));
+	USSRDEBUG2(interpreter_debug_flags,TRACE_EVENTS,printf("<%d> Looking for %d in [ ", env->context, role));
+	for(c=0; c<8; c++) USSRDEBUG2(interpreter_debug_flags,TRACE_EVENTS,printf("%d ", GLOBAL(env,neighbor_role_cache[c])));
+	USSRDEBUG2(interpreter_debug_flags,TRACE_EVENTS,printf("\n"));
 #endif
 	stack_push(USSRONLYC(env) stack, &sp, check_neighbor_role(USSRONLYC(env) context, ARG_DOWN, role));
       }
       break;
     case INS_HAS_ROLE:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_HAS_ROLE %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_HAS_ROLE %d\n", program[pc]));
       stack_push(USSRONLYC(env) stack, &sp, check_role_instanceof(GLOBAL(env,role), program[pc++]));
       break;
     case INS_END_TERMINATE:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_END_TERMINATE\n"));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_END_TERMINATE\n"));
       return 0;
     case INS_END_REPEAT:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_END_REPEAT\n"));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET|TRACE_BEHAVIOR,printf("INS_END_REPEAT\n"));
       return 1;
     case INS_IF_FALSE_GOTO:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_IF_FALSE_GOTO %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_IF_FALSE_GOTO %d\n", program[pc]));
       if(!stack_pop(USSRONLYC(env) stack,&sp))
 	pc = program[pc];
       else
 	pc++;
       break;
     case INS_IF_TRUE_GOTO:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_IF_TRUE_GOTO %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_IF_TRUE_GOTO %d\n", program[pc]));
       if(stack_pop(USSRONLYC(env) stack,&sp))
 	pc = program[pc];
       else
 	pc++;
       break;
     case INS_GOTO:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_GOTO %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_GOTO %d\n", program[pc]));
       pc = program[pc];
       break;
     case INS_SET_ROLE_NOTIFY:
-      USSRDEBUG(TRACE_EVENTS|TRACE_INTERPRET,printf("INS_SET_ROLE_NOTIFY %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_EVENTS|TRACE_INTERPRET,printf("INS_SET_ROLE_NOTIFY %d\n", program[pc]));
       set_role_notify(USSRONLYC(env) context, program[pc++]);
       break;
     case INS_MIGRATE_CONTINUE:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_MIGRATE_CONTINUE\n"));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_MIGRATE_CONTINUE\n"));
       migrate_continue(USSRONLYC(env) context, program, program_size);
       return 0;
     case INS_EVAL_COMMAND:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_EVAL_COMMAND %d %d\n", program[pc], program[pc+1]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_EVAL_COMMAND %d %d\n", program[pc], program[pc+1]));
       execute_command(USSRONLYC(env) program[pc], program[pc+1]);
       pc+=2;
       break;
     case INS_NOP:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_NOP\n")); break;
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_NOP\n")); break;
     case INS_COORD_Y_GREATER:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_COORD_Y_GREATER %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_COORD_Y_GREATER %d\n", program[pc]));
       stack_push(USSRONLYC(env) stack, &sp, context->mod_y > stack_pop(USSRONLYC(env) stack, &sp));
       break;
     case INS_COORD_Y_LESSER:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_COORD_Y_LESSER %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_COORD_Y_LESSER %d\n", program[pc]));
       stack_push(USSRONLYC(env) stack, &sp, context->mod_y < stack_pop(USSRONLYC(env) stack, &sp));
       break;
     case INS_COORD_X_GREATER:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_COORD_X_GREATER %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_COORD_X_GREATER %d\n", program[pc]));
       stack_push(USSRONLYC(env) stack, &sp, context->mod_x > stack_pop(USSRONLYC(env) stack, &sp));
       break;
     case INS_COORD_X_LESSER:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_COORD_X_LESSER %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_COORD_X_LESSER %d\n", program[pc]));
       stack_push(USSRONLYC(env) stack, &sp, context->mod_x < stack_pop(USSRONLYC(env) stack, &sp));
       break;
     case INS_HANDLE_EVENT:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_HANDLE_EVENT %d %d %d\n", program[pc], program[pc+1], program[pc+2]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_HANDLE_EVENT %d %d %d\n", program[pc], program[pc+1], program[pc+2]));
       install_event_handler(USSRONLYC(env) context, program, program[pc], program[pc+1], program[pc+2]);
       pc+=3;
       break;
     case INS_INSTALL_COMMAND:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_INSTALL_COMMAND %d %d %d %d\n", program[pc], program[pc+1], program[pc+2], program[pc+3]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_INSTALL_COMMAND %d %d %d %d\n", program[pc], program[pc+1], program[pc+2], program[pc+3]));
       install_command(USSRONLYC(env) context, program, program[pc], program[pc+1], program[pc+2], program[pc+3]);
       pc+=4;
       break;
     case INS_CLEAR_EVENT:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_CLEAR_EVENT %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_CLEAR_EVENT %d\n", program[pc]));
       clear_event_handler(USSRONLYC(env) program[pc++]);
       break;
     case INS_DISABLE_EVENT:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_DISABLE_EVENT %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_DISABLE_EVENT %d\n", program[pc]));
       disable_event_handler(USSRONLYC(env) program[pc++]);
       break;
     case INS_ENABLE_EVENT:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_ENABLE_EVENT %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_ENABLE_EVENT %d\n", program[pc]));
       enable_event_handler(USSRONLYC(env) program[pc++]);
       break;
     case INS_SEND_COMMAND:
-      USSRDEBUG(TRACE_INTERPRET,printf("INS_SEND_COMMAND %d %d %d (pc=%d)\n", program[pc], program[pc+1], program[pc+2], pc));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_SEND_COMMAND %d %d %d (pc=%d)\n", program[pc], program[pc+1], program[pc+2], pc));
       {
 	unsigned char channel;
 	for(channel=0; channel<8; channel++)
@@ -497,24 +534,28 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
       pc+=3;
       break;
     case INS_SLEEP:
-      USSRDEBUG(TRACE_EVENTS|TRACE_INTERPRET,printf("INS_SLEEP\n"));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_EVENTS|TRACE_INTERPRET,printf("INS_SLEEP\n"));
       delay(USSRONLYC(env) 1000);
       break;
     case INS_SLEEP_ROTATIONS:
-      USSRDEBUG(TRACE_EVENTS|TRACE_INTERPRET,printf("INS_SLEEP_ROTATIONS %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_EVENTS|TRACE_INTERPRET,printf("INS_SLEEP_ROTATIONS %d\n", program[pc]));
       sleep_rotations(USSRONLYC(env) program[pc]);
       pc++;
       break;
     case INS_CLEAR_COMMAND_QUEUE:
-      USSRDEBUG(TRACE_EVENTS|TRACE_TASKS,printf("INS_CLEAR_COMMAND_QUEUE %d\n", program[pc]));
+      USSRDEBUG2(interpreter_debug_flags,TRACE_EVENTS|TRACE_TASKS,printf("INS_CLEAR_COMMAND_QUEUE %d\n", program[pc]));
       clear_command_queue(USSRONLYC(env) program[pc]);
       pc++;
+      break;
+    case INS_ACTIVATE_DEBUG:
+      interpreter_debug_flags |= TRACE_INTERPRET;
+      printf("### Activated debug: %d\n", interpreter_debug_flags);
       break;
     default:
       {
 	unsigned char instruction = program[pc-1];
 	if(instruction>127) {
-	  USSRDEBUG(TRACE_INTERPRET,printf("INS_PUSHC %d\n", instruction^128));
+	  USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_PUSHC %d\n", instruction^128));
 	  stack_push(USSRONLYC(env) stack, &sp, instruction^128);
 	} else {
 	  USSRONLY(fprintf(stderr,"  Offending instruction: %d\n", instruction));
@@ -525,7 +566,7 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
     }
     fflush(stdout);
   }
-  USSRONLY(fprintf(stderr,"<%d>(%d) Warning: pc exceeded program size, pc=%d\n", env->context, getRole(env), pc));
+  USSRONLY(fprintf(stderr,"<%d>(%d) Warning: pc exceeded program size, pc=%d, max=%d\n", env->context, getRole(env), pc, program_size));
   return 0;
 }
   

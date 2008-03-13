@@ -69,6 +69,9 @@
 /* (unorganized) */
 #define INS_IF_TRUE_GOTO         47
 #define INS_SLEEP_ROTATIONS      48
+#define INS_SIZEOF               49
+#define INS_NEGATE               50
+#define INS_ACTIVATE_DEBUG       51
 #define INS_NOP                 127
 
 /* MSB reserved for constant-push operations */

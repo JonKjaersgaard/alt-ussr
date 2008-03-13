@@ -35,8 +35,10 @@
 #define TRACE_WARNINGS        128
 #define TRACE_ACTUATION       256
 #define TRACE_CACHE           512
+#define TRACE_BEHAVIOR       1024
 
-#define USSRDEBUG(flags,command) if(vm_trace_flags&(flags)) command
+#define USSRDEBUG(flags,command) { if(vm_trace_flags&(flags)) command; fflush(stdout); }
+#define USSRDEBUG2(local_trace_flags,flags,command) { if((vm_trace_flags|local_trace_flags)&(flags)) command; fflush(stdout); }
 
 extern void report_error(USSRONLYC(USSREnv *env) char error_number, unsigned char argument);
 #ifdef USSR

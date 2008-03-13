@@ -155,6 +155,7 @@ unsigned char checkForEvents(USSRONLY(USSREnv *env)) {
     if(hv[vector]!=VECTOR_NONE && !(hv[vector]&VECTOR_DISABLED_FLAG)) {
       activityFlag = 1;
       channel = vector-EVENT_PROXIMITY_0;
+      printf("<%d>",channel); fflush(stdout);
       if(isObjectNearby(USSRONLYC(env) channel)) {
 	StoredProgram *program = GLOBAL(env,global_program_store)+hv[vector];
 	USSRDEBUG(TRACE_EVENTS,printf("<%d>(%d) Handling vector %d\n", env->context, getRole(env), vector));
