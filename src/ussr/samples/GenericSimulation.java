@@ -5,12 +5,12 @@
  */
 package ussr.samples;
 
+import ussr.description.Robot;
+import ussr.description.VectorDescription;
+import ussr.description.WorldDescription;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.VectorDescription;
-import ussr.robotbuildingblocks.WorldDescription;
 
 /**
  * An abstract simulation implementation that sets up the necessary objects

@@ -7,6 +7,13 @@ import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.material.Material;
 
 import ussr.comm.TransmissionType;
+import ussr.description.ConeShape;
+import ussr.description.CylinderShape;
+import ussr.description.GeometryDescription;
+import ussr.description.ModuleComponentDescription;
+import ussr.description.ReceivingDevice;
+import ussr.description.Robot;
+import ussr.description.TransmissionDevice;
 import ussr.model.Actuator;
 import ussr.model.Module;
 import ussr.model.Sensor;
@@ -18,13 +25,6 @@ import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.actuators.JMELinearActuator;
 import ussr.physics.jme.actuators.JMERotationalActuator;
 import ussr.physics.jme.sensors.JMETiltSensor;
-import ussr.robotbuildingblocks.ConeShape;
-import ussr.robotbuildingblocks.CylinderShape;
-import ussr.robotbuildingblocks.GeometryDescription;
-import ussr.robotbuildingblocks.ModuleComponentDescription;
-import ussr.robotbuildingblocks.ReceivingDevice;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.TransmissionDevice;
 
 /**
  * Factory for creating ODIN modules; the robot argument is used to designate the specific

@@ -1,9 +1,9 @@
 package ussr.physics.jme.sensors;
 
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
 import ussr.model.Sensor;
 import ussr.physics.jme.JMESimulation;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;

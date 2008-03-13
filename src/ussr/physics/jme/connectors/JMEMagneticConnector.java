@@ -18,6 +18,11 @@ import com.jmex.physics.Joint;
 import com.jmex.physics.RotationalJointAxis;
 import com.jmex.physics.contact.ContactInfo;
 
+import ussr.description.ConnectorDescription;
+import ussr.description.GeometryDescription;
+import ussr.description.RobotDescription;
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
 import ussr.model.Connector;
 import ussr.physics.ConnectorBehaviorHandler;
 import ussr.physics.PhysicsConnector;
@@ -26,11 +31,6 @@ import ussr.physics.PhysicsQuaternionHolder;
 import ussr.physics.jme.JMEGeometryHelper;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
-import ussr.robotbuildingblocks.ConnectorDescription;
-import ussr.robotbuildingblocks.GeometryDescription;
-import ussr.robotbuildingblocks.RobotDescription;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
 
 public class JMEMagneticConnector extends JMEMechanicalConnector {
     private RotationalJointAxis xAxis,yAxis,zAxis;

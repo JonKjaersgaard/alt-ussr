@@ -5,9 +5,9 @@
  */
 package ussr.samples.odin.modules;
 
+import ussr.description.Robot;
+import ussr.description.RobotDescription;
 import ussr.model.Controller;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RobotDescription;
 
 /**
  * the heterogeneous reconfigurable modular robot Odin   

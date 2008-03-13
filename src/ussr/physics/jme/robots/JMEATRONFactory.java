@@ -3,6 +3,12 @@ package ussr.physics.jme.robots;
 import java.awt.Color;
 
 import ussr.comm.TransmissionType;
+import ussr.description.AtronShape;
+import ussr.description.ModuleComponentDescription;
+import ussr.description.ReceivingDevice;
+import ussr.description.Robot;
+import ussr.description.RotationDescription;
+import ussr.description.TransmissionDevice;
 import ussr.model.Actuator;
 import ussr.model.Module;
 import ussr.model.Sensor;
@@ -17,12 +23,6 @@ import ussr.physics.jme.connectors.JMEConnector;
 import ussr.physics.jme.connectors.JMEMechanicalConnector;
 import ussr.physics.jme.sensors.JMEProximitySensor;
 import ussr.physics.jme.sensors.JMETiltSensor;
-import ussr.robotbuildingblocks.AtronShape;
-import ussr.robotbuildingblocks.ModuleComponentDescription;
-import ussr.robotbuildingblocks.ReceivingDevice;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.TransmissionDevice;
 
 import com.jme.math.Quaternion;
 import com.jme.math.Vector2f;

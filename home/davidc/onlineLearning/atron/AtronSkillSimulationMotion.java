@@ -1,10 +1,10 @@
 package onlineLearning.atron;
 import onlineLearning.SkillFileManager;
 import onlineLearning.skills.SkillQ;
+import ussr.description.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsSimulation;
-import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.atron.GenericATRONSimulation;
 public class AtronSkillSimulationMotion extends AtronSkillSimulation implements PhysicsObserver {
 	float oldDist = 0;  

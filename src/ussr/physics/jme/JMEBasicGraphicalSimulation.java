@@ -6,11 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 
+import ussr.description.WorldDescription;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.SimulationGadget;
 import ussr.physics.PhysicsSimulation.Handler;
-import ussr.robotbuildingblocks.WorldDescription;
 import ussr.util.Pair;
 
 import com.jme.app.AbstractGame;

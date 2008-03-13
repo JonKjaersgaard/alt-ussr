@@ -7,17 +7,17 @@ package onlineLearning.odin;
 
 import java.util.ArrayList;
 
+import ussr.description.ModuleConnection;
+import ussr.description.ModulePosition;
+import ussr.description.Robot;
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
+import ussr.description.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsSimulation;
-import ussr.robotbuildingblocks.ModuleConnection;
-import ussr.robotbuildingblocks.ModulePosition;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
-import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.GenericSimulation;
 import ussr.samples.odin.modules.OdinBall;
 import ussr.samples.odin.modules.OdinBattery;

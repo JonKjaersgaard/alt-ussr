@@ -15,15 +15,15 @@ import meta2d.statements.RemapRoles;
 import meta2d.statements.Rotate;
 import meta2d.statements.Terminate;
 
+import ussr.description.BoxDescription;
+import ussr.description.ModulePosition;
+import ussr.description.Robot;
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
+import ussr.description.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
-import ussr.robotbuildingblocks.BoxDescription;
-import ussr.robotbuildingblocks.ModulePosition;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
-import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.GenericATRONSimulation;
 

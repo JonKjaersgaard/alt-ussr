@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ussr.description.Description;
 import ussr.physics.PhysicsEntity;
-import ussr.robotbuildingblocks.Description;
 
 /**
  * Abstract class defining common behavior for entities in the simulator, namely

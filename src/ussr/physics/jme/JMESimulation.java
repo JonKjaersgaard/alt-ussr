@@ -14,6 +14,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 
+import ussr.description.BoxDescription;
+import ussr.description.ModuleConnection;
+import ussr.description.ModulePosition;
+import ussr.description.Robot;
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
+import ussr.description.WorldDescription;
 import ussr.model.ActBasedController;
 import ussr.model.Connector;
 import ussr.model.Module;
@@ -25,13 +32,6 @@ import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsSimulationHelper;
 import ussr.physics.jme.connectors.JMEBasicConnector;
 import ussr.physics.jme.connectors.JMEConnector;
-import ussr.robotbuildingblocks.BoxDescription;
-import ussr.robotbuildingblocks.ModuleConnection;
-import ussr.robotbuildingblocks.ModulePosition;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
-import ussr.robotbuildingblocks.WorldDescription;
 
 import com.jme.input.InputHandler;
 import com.jme.input.KeyInput;

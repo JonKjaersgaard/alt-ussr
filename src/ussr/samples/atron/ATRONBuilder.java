@@ -3,10 +3,10 @@ package ussr.samples.atron;
 import java.util.ArrayList;
 import java.util.Random;
 
-import ussr.robotbuildingblocks.ModuleConnection;
-import ussr.robotbuildingblocks.ModulePosition;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
+import ussr.description.ModuleConnection;
+import ussr.description.ModulePosition;
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
 
 public class ATRONBuilder {
 

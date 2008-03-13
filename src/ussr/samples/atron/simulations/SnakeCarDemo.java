@@ -1,11 +1,11 @@
 package ussr.samples.atron.simulations;
 
+import ussr.description.BoxDescription;
+import ussr.description.Robot;
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
+import ussr.description.WorldDescription;
 import ussr.model.Controller;
-import ussr.robotbuildingblocks.BoxDescription;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
-import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 

@@ -8,16 +8,16 @@ package ussr.samples.stickybot;
 import java.awt.Color;
 
 import ussr.comm.TransmissionType;
+import ussr.description.ConnectorDescription;
+import ussr.description.GeometryDescription;
+import ussr.description.ModuleComponentDescription;
+import ussr.description.ReceivingDevice;
+import ussr.description.Robot;
+import ussr.description.RobotDescription;
+import ussr.description.SphereShape;
+import ussr.description.TransmissionDevice;
+import ussr.description.VectorDescription;
 import ussr.model.Controller;
-import ussr.robotbuildingblocks.ConnectorDescription;
-import ussr.robotbuildingblocks.GeometryDescription;
-import ussr.robotbuildingblocks.ModuleComponentDescription;
-import ussr.robotbuildingblocks.ReceivingDevice;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RobotDescription;
-import ussr.robotbuildingblocks.SphereShape;
-import ussr.robotbuildingblocks.TransmissionDevice;
-import ussr.robotbuildingblocks.VectorDescription;
 
 /**
  * A small round robot with connectors at N/S/E/W/U/D; connectors can stick to each
@@ -30,7 +30,7 @@ public class StickyBot implements Robot {
     public static final float SCALE = 0.1f; 
     
     /**
-     * @see ussr.robotbuildingblocks.Robot#getDescription()
+     * @see ussr.description.Robot#getDescription()
      */
     public RobotDescription getDescription() {
         RobotDescription description = new RobotDescription("Sticky");
@@ -54,7 +54,7 @@ public class StickyBot implements Robot {
     }
 
     /**
-     * @see ussr.robotbuildingblocks.Robot#createController()
+     * @see ussr.description.Robot#createController()
      */
     public Controller createController() {
         return new StickyBotController1();

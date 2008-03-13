@@ -11,23 +11,23 @@ import java.awt.Color;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
+import ussr.description.BoxShape;
+import ussr.description.ConeShape;
+import ussr.description.ConnectorDescription;
+import ussr.description.CylinderShape;
+import ussr.description.GeometryDescription;
+import ussr.description.ModuleComponentDescription;
+import ussr.description.Robot;
+import ussr.description.RobotDescription;
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
 import ussr.physics.PhysicsParameters;
-import ussr.robotbuildingblocks.BoxShape;
-import ussr.robotbuildingblocks.ConeShape;
-import ussr.robotbuildingblocks.ConnectorDescription;
-import ussr.robotbuildingblocks.CylinderShape;
-import ussr.robotbuildingblocks.GeometryDescription;
-import ussr.robotbuildingblocks.ModuleComponentDescription;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RobotDescription;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
 
 
 public abstract class MTRAN implements Robot {
     
     /**
-     * @see ussr.robotbuildingblocks.Robot#getDescription()
+     * @see ussr.description.Robot#getDescription()
      */
     public RobotDescription getDescription() {
         RobotDescription description = new RobotDescription("MTRAN");

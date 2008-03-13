@@ -3,13 +3,13 @@
  */
 package ussr.physics.jme.actuators;
 
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
 import ussr.model.Actuator;
 import ussr.model.PhysicsActuator;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.jme.JMESimulation;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;

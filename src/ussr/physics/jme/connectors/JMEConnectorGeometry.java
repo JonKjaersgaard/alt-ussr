@@ -3,12 +3,12 @@ package ussr.physics.jme.connectors;
 import java.awt.Color;
 import java.util.List;
 
+import ussr.description.ConnectorDescription;
+import ussr.description.GeometryDescription;
+import ussr.description.RobotDescription;
 import ussr.physics.jme.JMEGeometryHelper;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
-import ussr.robotbuildingblocks.ConnectorDescription;
-import ussr.robotbuildingblocks.GeometryDescription;
-import ussr.robotbuildingblocks.RobotDescription;
 
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;

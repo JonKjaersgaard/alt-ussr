@@ -3,8 +3,8 @@
  */
 package ussr.samples.atron.natives;
 
+import ussr.description.Robot;
 import ussr.model.Controller;
-import ussr.robotbuildingblocks.Robot;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.simulations.ATRONSnakeSimulation;
 

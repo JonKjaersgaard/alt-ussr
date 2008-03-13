@@ -10,17 +10,17 @@ import java.awt.Color;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
+import ussr.description.AtronShape;
+import ussr.description.ConeShape;
+import ussr.description.ConnectorDescription;
+import ussr.description.GeometryDescription;
+import ussr.description.ModuleComponentDescription;
+import ussr.description.Robot;
+import ussr.description.RobotDescription;
+import ussr.description.RotationDescription;
+import ussr.description.SphereShape;
+import ussr.description.VectorDescription;
 import ussr.physics.PhysicsParameters;
-import ussr.robotbuildingblocks.AtronShape;
-import ussr.robotbuildingblocks.ConeShape;
-import ussr.robotbuildingblocks.ConnectorDescription;
-import ussr.robotbuildingblocks.GeometryDescription;
-import ussr.robotbuildingblocks.ModuleComponentDescription;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RobotDescription;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.SphereShape;
-import ussr.robotbuildingblocks.VectorDescription;
 
 /**
  * The ATRON modular self-reconfigurable robot
@@ -54,7 +54,7 @@ public abstract class ATRON implements Robot {
     public void setGentle() { gentle = true; }
     
     /**
-     * @see ussr.robotbuildingblocks.Robot#getDescription()
+     * @see ussr.description.Robot#getDescription()
      */
     public RobotDescription getDescription() {
         String type = "ATRON"+(zuper ? " super" : "")+(realistic ? " realistic" : "")+(smooth ? " smooth" : "")+(rubberRing ? " rubberRing" : "")+(gentle ? " gentle" : "");

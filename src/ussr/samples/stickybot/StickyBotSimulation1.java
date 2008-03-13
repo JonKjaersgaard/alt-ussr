@@ -10,19 +10,19 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 
+import ussr.description.GeometryDescription;
+import ussr.description.ModulePosition;
+import ussr.description.Robot;
+import ussr.description.RotationDescription;
+import ussr.description.SphereShape;
+import ussr.description.VectorDescription;
+import ussr.description.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.robots.JMEDefaultFactory;
-import ussr.robotbuildingblocks.GeometryDescription;
-import ussr.robotbuildingblocks.ModulePosition;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.SphereShape;
-import ussr.robotbuildingblocks.VectorDescription;
-import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.GenericSimulation;
 import ussr.physics.PhysicsParameters;
 

@@ -7,9 +7,9 @@ package ussr.physics;
 
 import java.util.List;
 
+import ussr.description.Robot;
+import ussr.description.WorldDescription;
 import ussr.model.Module;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.WorldDescription;
 
 /**
  * A physics simulation, defined independently of the underlying physics engine.  Instances

@@ -3,11 +3,11 @@ package ussr.samples.atron.simulations;
 import java.util.ArrayList;
 /* Essentially a stripped down car */
 
+import ussr.description.ModulePosition;
+import ussr.description.Robot;
+import ussr.description.VectorDescription;
+import ussr.description.WorldDescription;
 import ussr.model.Controller;
-import ussr.robotbuildingblocks.ModulePosition;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.VectorDescription;
-import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONBuilder;

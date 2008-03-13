@@ -2,12 +2,12 @@ package ussr.samples.atron.natives;
 
 import java.util.ArrayList;
 
+import ussr.description.ModulePosition;
+import ussr.description.Robot;
+import ussr.description.VectorDescription;
+import ussr.description.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsSimulation;
-import ussr.robotbuildingblocks.ModulePosition;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.VectorDescription;
-import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.atron.ATRON;
 
 public class DcdTwoCarSimulation extends ATRONNativeCarSimulation {

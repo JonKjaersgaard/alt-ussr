@@ -1,8 +1,8 @@
 package ussr.comm;
 
+import ussr.description.ReceivingDevice;
 import ussr.model.Entity;
 import ussr.model.Module;
-import ussr.robotbuildingblocks.ReceivingDevice;
 
 /**
  * A wired receiver, is always assumed to be in range once connected.  The current

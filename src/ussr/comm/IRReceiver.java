@@ -1,12 +1,12 @@
 package ussr.comm;
 
+import ussr.description.ReceivingDevice;
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
 import ussr.model.Entity;
 import ussr.model.Module;
 import ussr.physics.PhysicsConnector;
 import ussr.physics.PhysicsEntity;
-import ussr.robotbuildingblocks.ReceivingDevice;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
 
 /**
  * An infrared receiver, which in currently means that it has a spreading angle of 30 degrees.

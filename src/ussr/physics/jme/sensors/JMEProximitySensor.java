@@ -3,12 +3,12 @@
  */
 package ussr.physics.jme.sensors;
 
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
 import ussr.model.Entity;
 import ussr.model.PhysicsSensor;
 import ussr.model.Sensor;
 import ussr.physics.jme.JMESimulation;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.PhysicsNode;

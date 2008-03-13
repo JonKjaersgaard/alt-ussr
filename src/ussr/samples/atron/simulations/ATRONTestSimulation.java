@@ -2,14 +2,14 @@ package ussr.samples.atron.simulations;
 
 import java.util.ArrayList;
 
+import ussr.description.ModulePosition;
+import ussr.description.Robot;
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
+import ussr.description.WorldDescription;
 import ussr.model.Controller;
-import ussr.robotbuildingblocks.ModulePosition;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsParameters.Material;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
-import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.GenericATRONSimulation;
 

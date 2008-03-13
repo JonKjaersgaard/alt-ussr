@@ -2,10 +2,10 @@ package ussr.comm;
 
 import java.awt.Color;
 
+import ussr.description.VectorDescription;
 import ussr.model.Entity;
 import ussr.model.Module;
 import ussr.physics.PhysicsEntity;
-import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;

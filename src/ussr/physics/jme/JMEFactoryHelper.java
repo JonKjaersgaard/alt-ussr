@@ -5,12 +5,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import ussr.description.GeometryDescription;
+import ussr.description.Robot;
 import ussr.model.Module;
 import ussr.physics.ModuleFactory;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
-import ussr.robotbuildingblocks.GeometryDescription;
-import ussr.robotbuildingblocks.Robot;
 
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.material.Material;

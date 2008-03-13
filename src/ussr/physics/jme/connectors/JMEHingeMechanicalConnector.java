@@ -1,10 +1,10 @@
 package ussr.physics.jme.connectors;
 
+import ussr.description.ConnectorDescription;
+import ussr.description.RobotDescription;
+import ussr.description.VectorDescription;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
-import ussr.robotbuildingblocks.ConnectorDescription;
-import ussr.robotbuildingblocks.RobotDescription;
-import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;

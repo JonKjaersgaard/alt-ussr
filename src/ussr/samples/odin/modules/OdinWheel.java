@@ -2,15 +2,15 @@ package ussr.samples.odin.modules;
 
 import java.awt.Color;
 
-import ussr.robotbuildingblocks.ConeShape;
-import ussr.robotbuildingblocks.ConnectorDescription;
-import ussr.robotbuildingblocks.CylinderShape;
-import ussr.robotbuildingblocks.GeometryDescription;
-import ussr.robotbuildingblocks.ModuleComponentDescription;
-import ussr.robotbuildingblocks.RobotDescription;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.SphereShape;
-import ussr.robotbuildingblocks.VectorDescription;
+import ussr.description.ConeShape;
+import ussr.description.ConnectorDescription;
+import ussr.description.CylinderShape;
+import ussr.description.GeometryDescription;
+import ussr.description.ModuleComponentDescription;
+import ussr.description.RobotDescription;
+import ussr.description.RotationDescription;
+import ussr.description.SphereShape;
+import ussr.description.VectorDescription;
 
 public abstract class OdinWheel extends Odin {
 

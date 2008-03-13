@@ -5,9 +5,9 @@
  */
 package ussr.samples.mtran;
 
+import ussr.description.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsSimulation;
-import ussr.robotbuildingblocks.WorldDescription;
 
 /**
  * Simple MTRAN simulation

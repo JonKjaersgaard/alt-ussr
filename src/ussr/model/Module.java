@@ -11,12 +11,12 @@ import java.util.List;
 
 import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
 import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsModuleComponent;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsSimulationHelper;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
 
 /**
  * A module is the basic unit from which the modular robot is built.  Specifically,

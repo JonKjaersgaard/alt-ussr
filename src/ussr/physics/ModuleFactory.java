@@ -1,7 +1,7 @@
 package ussr.physics;
 
+import ussr.description.Robot;
 import ussr.model.Module;
-import ussr.robotbuildingblocks.Robot;
 
 /**
  * A module factory creates robot modules in a simulation instance.  The factory is called

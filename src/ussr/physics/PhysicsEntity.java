@@ -1,7 +1,7 @@
 package ussr.physics;
 
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
 
 /**
  * Abstract interface for any kind of physics entity, allowing physicsal attributes

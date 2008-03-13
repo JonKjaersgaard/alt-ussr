@@ -3,6 +3,10 @@ package ussr.physics.jme.connectors;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import ussr.description.ConnectorDescription;
+import ussr.description.RobotDescription;
+import ussr.description.RotationDescription;
+import ussr.description.VectorDescription;
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.ConnectorBehaviorHandler;
@@ -11,10 +15,6 @@ import ussr.physics.PhysicsQuaternionHolder;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
-import ussr.robotbuildingblocks.ConnectorDescription;
-import ussr.robotbuildingblocks.RobotDescription;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;

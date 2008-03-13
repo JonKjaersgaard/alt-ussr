@@ -3,15 +3,15 @@ package ussr.physics.jme.robots;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.material.Material;
 
+import ussr.description.GeometryDescription;
+import ussr.description.ModuleComponentDescription;
+import ussr.description.Robot;
 import ussr.model.Module;
 import ussr.physics.ModuleFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
-import ussr.robotbuildingblocks.GeometryDescription;
-import ussr.robotbuildingblocks.ModuleComponentDescription;
-import ussr.robotbuildingblocks.Robot;
 
 public class JMEDefaultFactory implements ModuleFactory {
 

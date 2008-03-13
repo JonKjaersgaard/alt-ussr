@@ -3,9 +3,9 @@
  */
 package ussr.samples.atron.natives;
 
+import ussr.description.Robot;
 import ussr.model.Controller;
 import ussr.physics.PhysicsParameters;
-import ussr.robotbuildingblocks.Robot;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.simulations.ATRONCarSimulation;

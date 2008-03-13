@@ -2,6 +2,7 @@ package ussr.comm;
 
 import java.util.LinkedList;
 
+import ussr.description.TransmissionDevice;
 import ussr.model.Entity;
 import ussr.model.Module;
 import ussr.physics.PhysicsEntity;
@@ -9,7 +10,6 @@ import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
-import ussr.robotbuildingblocks.TransmissionDevice;
 
 /**
  * An abstract implementation of the <tt>Transmitter</tt> interface.  Provides a transmission device

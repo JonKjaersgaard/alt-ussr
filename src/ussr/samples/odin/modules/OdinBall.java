@@ -2,13 +2,13 @@ package ussr.samples.odin.modules;
 
 import java.awt.Color;
 
+import ussr.description.ConnectorDescription;
+import ussr.description.GeometryDescription;
+import ussr.description.ModuleComponentDescription;
+import ussr.description.RobotDescription;
+import ussr.description.SphereShape;
+import ussr.description.VectorDescription;
 import ussr.model.Controller;
-import ussr.robotbuildingblocks.ConnectorDescription;
-import ussr.robotbuildingblocks.GeometryDescription;
-import ussr.robotbuildingblocks.ModuleComponentDescription;
-import ussr.robotbuildingblocks.RobotDescription;
-import ussr.robotbuildingblocks.SphereShape;
-import ussr.robotbuildingblocks.VectorDescription;
 
 public abstract class OdinBall extends Odin {
 

@@ -3,6 +3,11 @@ package ussr.samples.white;
 import java.awt.Color;
 
 import ussr.comm.TransmissionType;
+import ussr.description.BoxShape;
+import ussr.description.ReceivingDevice;
+import ussr.description.Robot;
+import ussr.description.RotationDescription;
+import ussr.description.TransmissionDevice;
 import ussr.model.Module;
 import ussr.model.Sensor;
 import ussr.physics.ModuleFactory;
@@ -13,11 +18,6 @@ import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.connectors.JMEConnector;
 import ussr.physics.jme.connectors.JMEConnectorAligner;
 import ussr.physics.jme.sensors.JMETiltSensor;
-import ussr.robotbuildingblocks.BoxShape;
-import ussr.robotbuildingblocks.ReceivingDevice;
-import ussr.robotbuildingblocks.Robot;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.TransmissionDevice;
 
 import com.jme.math.Quaternion;
 import com.jme.math.Vector2f;

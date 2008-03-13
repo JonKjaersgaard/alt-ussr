@@ -3,15 +3,15 @@ package ussr.physics.jme.connectors;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import ussr.description.BoxShape;
+import ussr.description.CylinderShape;
+import ussr.description.GeometryDescription;
+import ussr.description.RotationDescription;
+import ussr.description.SphereShape;
+import ussr.description.VectorDescription;
 import ussr.physics.jme.JMEGeometryHelper;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
-import ussr.robotbuildingblocks.BoxShape;
-import ussr.robotbuildingblocks.CylinderShape;
-import ussr.robotbuildingblocks.GeometryDescription;
-import ussr.robotbuildingblocks.RotationDescription;
-import ussr.robotbuildingblocks.SphereShape;
-import ussr.robotbuildingblocks.VectorDescription;
 
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;

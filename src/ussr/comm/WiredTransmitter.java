@@ -1,9 +1,9 @@
 package ussr.comm;
 
+import ussr.description.VectorDescription;
 import ussr.model.Entity;
 import ussr.model.Module;
 import ussr.physics.PhysicsEntity;
-import ussr.robotbuildingblocks.VectorDescription;
 
 /**
  * A wired transmitter, is always assumed to be in range once connected.  The current
