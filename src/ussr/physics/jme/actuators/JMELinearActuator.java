@@ -3,8 +3,8 @@
  */
 package ussr.physics.jme.actuators;
 
-import ussr.description.RotationDescription;
-import ussr.description.VectorDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
 import ussr.model.Actuator;
 import ussr.model.PhysicsActuator;
 import ussr.physics.jme.JMESimulation;

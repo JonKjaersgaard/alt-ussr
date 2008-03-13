@@ -11,16 +11,16 @@ import java.awt.Color;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
-import ussr.description.BoxShape;
-import ussr.description.ConeShape;
-import ussr.description.ConnectorDescription;
-import ussr.description.CylinderShape;
-import ussr.description.GeometryDescription;
-import ussr.description.ModuleComponentDescription;
 import ussr.description.Robot;
-import ussr.description.RobotDescription;
-import ussr.description.RotationDescription;
-import ussr.description.VectorDescription;
+import ussr.description.geometry.BoxShape;
+import ussr.description.geometry.ConeShape;
+import ussr.description.geometry.CylinderShape;
+import ussr.description.geometry.GeometryDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.robot.ConnectorDescription;
+import ussr.description.robot.ModuleComponentDescription;
+import ussr.description.robot.RobotDescription;
 
 
 public abstract class White implements Robot {

@@ -3,10 +3,10 @@ package ussr.samples.atron.simulations;
 import java.util.ArrayList;
 import java.util.Random;
 
-import ussr.description.ModulePosition;
 import ussr.description.Robot;
-import ussr.description.RotationDescription;
-import ussr.description.VectorDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModulePosition;
 import ussr.model.Controller;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONBuilder;

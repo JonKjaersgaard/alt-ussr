@@ -8,12 +8,12 @@ package ussr.samples.odin.simulations;
 import java.util.ArrayList;
 import java.util.Random;
 
-import ussr.description.ModuleConnection;
-import ussr.description.ModulePosition;
 import ussr.description.Robot;
-import ussr.description.RotationDescription;
-import ussr.description.VectorDescription;
-import ussr.description.WorldDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModuleConnection;
+import ussr.description.setup.ModulePosition;
+import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;

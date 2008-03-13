@@ -1,7 +1,9 @@
 /**
  * 
  */
-package ussr.description;
+package ussr.description.geometry;
+
+import ussr.description.Description;
 
 /**
  * @author ups

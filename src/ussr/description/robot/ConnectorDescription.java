@@ -1,12 +1,17 @@
 /**
  * 
  */
-package ussr.description;
+package ussr.description.robot;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import ussr.description.Description;
+import ussr.description.geometry.GeometryDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
 
 /**
  * Description of a single connector, relative to the module component on which it is to be mounted 

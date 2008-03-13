@@ -3,9 +3,10 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.description;
+package ussr.description.geometry;
 
 import java.awt.Color;
+
 
 /**
  * Common interface for geometry descriptions (that can be used for building a robot)

@@ -3,8 +3,8 @@
  */
 package ussr.physics.jme.sensors;
 
-import ussr.description.RotationDescription;
-import ussr.description.VectorDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
 import ussr.model.Entity;
 import ussr.model.PhysicsSensor;
 import ussr.model.Sensor;

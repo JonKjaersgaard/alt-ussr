@@ -6,7 +6,7 @@
 package ussr.samples.odin.modules;
 
 import ussr.description.Robot;
-import ussr.description.RobotDescription;
+import ussr.description.robot.RobotDescription;
 import ussr.model.Controller;
 
 /**

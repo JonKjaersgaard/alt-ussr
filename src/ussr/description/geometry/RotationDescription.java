@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ussr.description;
+package ussr.description.geometry;
 
 import com.jme.math.Matrix3f;
 import com.jme.math.Quaternion;

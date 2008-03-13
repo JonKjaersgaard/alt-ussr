@@ -1,7 +1,7 @@
 package onlineLearning.atron;
 import onlineLearning.SkillFileManager;
 import onlineLearning.skills.SkillQ;
-import ussr.description.WorldDescription;
+import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsSimulation;

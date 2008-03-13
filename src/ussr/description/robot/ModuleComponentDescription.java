@@ -1,11 +1,14 @@
 /**
  * 
  */
-package ussr.description;
+package ussr.description.robot;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import ussr.description.Description;
+import ussr.description.geometry.GeometryDescription;
 
 /**
  * @author ups

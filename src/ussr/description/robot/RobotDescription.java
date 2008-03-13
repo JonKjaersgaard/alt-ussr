@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.description;
+package ussr.description.robot;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import ussr.comm.Transmitter;
+import ussr.description.Description;
 
 /**
  * 

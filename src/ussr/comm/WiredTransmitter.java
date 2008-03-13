@@ -1,6 +1,6 @@
 package ussr.comm;
 
-import ussr.description.VectorDescription;
+import ussr.description.geometry.VectorDescription;
 import ussr.model.Entity;
 import ussr.model.Module;
 import ussr.physics.PhysicsEntity;

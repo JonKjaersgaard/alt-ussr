@@ -3,10 +3,10 @@ package ussr.physics.jme.connectors;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import ussr.description.ConnectorDescription;
-import ussr.description.RobotDescription;
-import ussr.description.RotationDescription;
-import ussr.description.VectorDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.robot.ConnectorDescription;
+import ussr.description.robot.RobotDescription;
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.ConnectorBehaviorHandler;

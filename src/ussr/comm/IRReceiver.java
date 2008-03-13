@@ -1,8 +1,8 @@
 package ussr.comm;
 
-import ussr.description.ReceivingDevice;
-import ussr.description.RotationDescription;
-import ussr.description.VectorDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.robot.ReceivingDevice;
 import ussr.model.Entity;
 import ussr.model.Module;
 import ussr.physics.PhysicsConnector;

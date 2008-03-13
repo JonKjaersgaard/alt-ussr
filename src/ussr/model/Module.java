@@ -11,8 +11,8 @@ import java.util.List;
 
 import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
-import ussr.description.RotationDescription;
-import ussr.description.VectorDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
 import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsModuleComponent;
 import ussr.physics.PhysicsSimulation;

@@ -5,6 +5,7 @@
  */
 package ussr.description;
 
+import ussr.description.robot.RobotDescription;
 import ussr.model.Controller;
 
 /**

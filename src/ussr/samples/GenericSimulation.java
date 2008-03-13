@@ -6,8 +6,8 @@
 package ussr.samples;
 
 import ussr.description.Robot;
-import ussr.description.VectorDescription;
-import ussr.description.WorldDescription;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;

@@ -2,12 +2,12 @@ package mplSandbox;
 
 import java.util.ArrayList;
 
-import ussr.description.BoxDescription;
-import ussr.description.ModulePosition;
 import ussr.description.Robot;
-import ussr.description.RotationDescription;
-import ussr.description.VectorDescription;
-import ussr.description.WorldDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.BoxDescription;
+import ussr.description.setup.ModulePosition;
+import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsSimulation;
 import ussr.samples.atron.ATRON;

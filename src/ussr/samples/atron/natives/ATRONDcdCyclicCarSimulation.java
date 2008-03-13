@@ -2,9 +2,9 @@ package ussr.samples.atron.natives;
 
 import java.util.ArrayList;
 
-import ussr.description.ModulePosition;
 import ussr.description.Robot;
-import ussr.description.VectorDescription;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModulePosition;
 import ussr.model.Controller;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONBuilder;

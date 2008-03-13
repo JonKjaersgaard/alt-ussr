@@ -3,7 +3,9 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.description;
+package ussr.description.geometry;
+
+import ussr.description.Description;
 
 import com.jme.math.Vector3f;
 

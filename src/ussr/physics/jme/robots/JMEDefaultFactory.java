@@ -3,9 +3,9 @@ package ussr.physics.jme.robots;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.material.Material;
 
-import ussr.description.GeometryDescription;
-import ussr.description.ModuleComponentDescription;
 import ussr.description.Robot;
+import ussr.description.geometry.GeometryDescription;
+import ussr.description.robot.ModuleComponentDescription;
 import ussr.model.Module;
 import ussr.physics.ModuleFactory;
 import ussr.physics.PhysicsLogger;

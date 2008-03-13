@@ -2,7 +2,7 @@ package ussr.comm;
 
 import java.util.LinkedList;
 
-import ussr.description.TransmissionDevice;
+import ussr.description.robot.TransmissionDevice;
 import ussr.model.Entity;
 import ussr.model.Module;
 import ussr.physics.PhysicsEntity;

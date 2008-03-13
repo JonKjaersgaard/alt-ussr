@@ -3,11 +3,11 @@ package ussr.samples.white;
 import java.awt.Color;
 
 import ussr.comm.TransmissionType;
-import ussr.description.BoxShape;
-import ussr.description.ReceivingDevice;
 import ussr.description.Robot;
-import ussr.description.RotationDescription;
-import ussr.description.TransmissionDevice;
+import ussr.description.geometry.BoxShape;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.robot.ReceivingDevice;
+import ussr.description.robot.TransmissionDevice;
 import ussr.model.Module;
 import ussr.model.Sensor;
 import ussr.physics.ModuleFactory;

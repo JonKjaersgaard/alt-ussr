@@ -1,4 +1,4 @@
-package ussr.description;
+package ussr.description.setup;
 
 /**
  * A connection between two modules

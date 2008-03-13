@@ -6,11 +6,11 @@ import java.util.List;
 
 import com.jme.math.Quaternion;
 
-import ussr.description.ModuleConnection;
-import ussr.description.ModulePosition;
-import ussr.description.RotationDescription;
-import ussr.description.VectorDescription;
-import ussr.description.WorldDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModuleConnection;
+import ussr.description.setup.ModulePosition;
+import ussr.description.setup.WorldDescription;
 
 public class OdinBuilder {
     private ArrayList<ModulePosition> ballPos = new ArrayList<ModulePosition>();

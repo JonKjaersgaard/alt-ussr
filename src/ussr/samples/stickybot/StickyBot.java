@@ -8,15 +8,15 @@ package ussr.samples.stickybot;
 import java.awt.Color;
 
 import ussr.comm.TransmissionType;
-import ussr.description.ConnectorDescription;
-import ussr.description.GeometryDescription;
-import ussr.description.ModuleComponentDescription;
-import ussr.description.ReceivingDevice;
 import ussr.description.Robot;
-import ussr.description.RobotDescription;
-import ussr.description.SphereShape;
-import ussr.description.TransmissionDevice;
-import ussr.description.VectorDescription;
+import ussr.description.geometry.GeometryDescription;
+import ussr.description.geometry.SphereShape;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.robot.ConnectorDescription;
+import ussr.description.robot.ModuleComponentDescription;
+import ussr.description.robot.ReceivingDevice;
+import ussr.description.robot.RobotDescription;
+import ussr.description.robot.TransmissionDevice;
 import ussr.model.Controller;
 
 /**

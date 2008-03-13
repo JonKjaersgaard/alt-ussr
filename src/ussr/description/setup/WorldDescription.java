@@ -3,12 +3,15 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.description;
+package ussr.description.setup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import ussr.description.Description;
+import ussr.description.geometry.VectorDescription;
 
 
 /**

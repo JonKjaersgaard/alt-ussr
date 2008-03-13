@@ -3,9 +3,9 @@ package ussr.physics.jme.connectors;
 import java.awt.Color;
 import java.util.List;
 
-import ussr.description.ConnectorDescription;
-import ussr.description.GeometryDescription;
-import ussr.description.RobotDescription;
+import ussr.description.geometry.GeometryDescription;
+import ussr.description.robot.ConnectorDescription;
+import ussr.description.robot.RobotDescription;
 import ussr.physics.jme.JMEGeometryHelper;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;

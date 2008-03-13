@@ -18,11 +18,11 @@ import com.jmex.physics.Joint;
 import com.jmex.physics.RotationalJointAxis;
 import com.jmex.physics.contact.ContactInfo;
 
-import ussr.description.ConnectorDescription;
-import ussr.description.GeometryDescription;
-import ussr.description.RobotDescription;
-import ussr.description.RotationDescription;
-import ussr.description.VectorDescription;
+import ussr.description.geometry.GeometryDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.robot.ConnectorDescription;
+import ussr.description.robot.RobotDescription;
 import ussr.model.Connector;
 import ussr.physics.ConnectorBehaviorHandler;
 import ussr.physics.PhysicsConnector;

@@ -1,7 +1,7 @@
 package onlineLearning.odin;
 import onlineLearning.SkillFileManager;
 import onlineLearning.locomoton.MotionRewardSystem;
-import ussr.description.WorldDescription;
+import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsSimulation;
 

@@ -10,16 +10,16 @@ import java.awt.Color;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
-import ussr.description.AtronShape;
-import ussr.description.ConeShape;
-import ussr.description.ConnectorDescription;
-import ussr.description.GeometryDescription;
-import ussr.description.ModuleComponentDescription;
 import ussr.description.Robot;
-import ussr.description.RobotDescription;
-import ussr.description.RotationDescription;
-import ussr.description.SphereShape;
-import ussr.description.VectorDescription;
+import ussr.description.geometry.AtronShape;
+import ussr.description.geometry.ConeShape;
+import ussr.description.geometry.GeometryDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.SphereShape;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.robot.ConnectorDescription;
+import ussr.description.robot.ModuleComponentDescription;
+import ussr.description.robot.RobotDescription;
 import ussr.physics.PhysicsParameters;
 
 /**

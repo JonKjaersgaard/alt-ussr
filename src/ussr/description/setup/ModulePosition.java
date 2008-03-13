@@ -1,10 +1,13 @@
 /**
  * 
  */
-package ussr.description;
+package ussr.description.setup;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
 
 /**
  * Global starting position of a module and annotations for the module

@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.description;
+package ussr.description.geometry;
 /**
  * A description of a cone geometry for use in building a robot
  * @author Modular Robots @ MMMI

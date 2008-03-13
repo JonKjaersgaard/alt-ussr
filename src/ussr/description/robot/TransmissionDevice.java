@@ -1,9 +1,10 @@
 /**
  * 
  */
-package ussr.description;
+package ussr.description.robot;
 
 import ussr.comm.TransmissionType;
+import ussr.description.Description;
 
 /**
  * Abstract description of a transmission device

@@ -3,9 +3,10 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.description;
+package ussr.description.geometry;
 
 import java.awt.Color;
+
 
 /**
  * A description of a sphere geometry, for building a robot

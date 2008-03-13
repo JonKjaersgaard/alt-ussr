@@ -1,6 +1,6 @@
 package ussr.comm;
 
-import ussr.description.ReceivingDevice;
+import ussr.description.robot.ReceivingDevice;
 import ussr.model.Entity;
 import ussr.model.Module;
 

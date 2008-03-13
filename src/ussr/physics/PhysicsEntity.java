@@ -1,7 +1,7 @@
 package ussr.physics;
 
-import ussr.description.RotationDescription;
-import ussr.description.VectorDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
 
 /**
  * Abstract interface for any kind of physics entity, allowing physicsal attributes

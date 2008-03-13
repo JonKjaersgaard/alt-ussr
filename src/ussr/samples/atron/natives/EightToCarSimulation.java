@@ -5,10 +5,10 @@ package ussr.samples.atron.natives;
 
 import java.util.ArrayList;
 
-import ussr.description.ModulePosition;
 import ussr.description.Robot;
-import ussr.description.VectorDescription;
-import ussr.description.WorldDescription;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModulePosition;
+import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsSimulation;

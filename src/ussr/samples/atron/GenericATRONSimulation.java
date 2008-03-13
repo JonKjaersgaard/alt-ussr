@@ -7,10 +7,10 @@ package ussr.samples.atron;
 
 import java.util.ArrayList;
 
-import ussr.description.ModuleConnection;
-import ussr.description.ModulePosition;
 import ussr.description.Robot;
-import ussr.description.WorldDescription;
+import ussr.description.setup.ModuleConnection;
+import ussr.description.setup.ModulePosition;
+import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsParameters;
 import ussr.samples.GenericSimulation;

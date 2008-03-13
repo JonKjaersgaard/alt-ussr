@@ -3,12 +3,12 @@ package ussr.physics.jme.robots;
 import java.awt.Color;
 
 import ussr.comm.TransmissionType;
-import ussr.description.AtronShape;
-import ussr.description.ModuleComponentDescription;
-import ussr.description.ReceivingDevice;
 import ussr.description.Robot;
-import ussr.description.RotationDescription;
-import ussr.description.TransmissionDevice;
+import ussr.description.geometry.AtronShape;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.robot.ModuleComponentDescription;
+import ussr.description.robot.ReceivingDevice;
+import ussr.description.robot.TransmissionDevice;
 import ussr.model.Actuator;
 import ussr.model.Module;
 import ussr.model.Sensor;

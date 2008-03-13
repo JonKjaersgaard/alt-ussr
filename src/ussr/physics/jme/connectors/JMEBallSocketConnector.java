@@ -2,8 +2,8 @@ package ussr.physics.jme.connectors;
 
 import org.odejava.World;
 
-import ussr.description.ConnectorDescription;
-import ussr.description.RobotDescription;
+import ussr.description.robot.ConnectorDescription;
+import ussr.description.robot.RobotDescription;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 

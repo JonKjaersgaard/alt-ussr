@@ -3,10 +3,10 @@ package onlineLearning.atron;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import ussr.description.ModulePosition;
 import ussr.description.Robot;
-import ussr.description.VectorDescription;
-import ussr.description.WorldDescription;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModulePosition;
+import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsParameters.Material;

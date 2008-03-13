@@ -3,10 +3,10 @@
  */
 package ussr.samples;
 
-import ussr.description.BoxDescription;
-import ussr.description.RotationDescription;
-import ussr.description.VectorDescription;
-import ussr.description.WorldDescription;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.BoxDescription;
+import ussr.description.setup.WorldDescription;
 
 /**
  * Utility class for inserting obstacles into a WorldDescription object

@@ -1,7 +1,10 @@
 /**
  * 
  */
-package ussr.description;
+package ussr.description.setup;
+
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
 
 import com.jme.math.Quaternion;
 

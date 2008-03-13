@@ -8,7 +8,7 @@ package ussr.physics;
 import java.util.List;
 
 import ussr.description.Robot;
-import ussr.description.WorldDescription;
+import ussr.description.setup.WorldDescription;
 import ussr.model.Module;
 
 /**
