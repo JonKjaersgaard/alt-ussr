@@ -3,7 +3,7 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.samples.odin;
+package ussr.samples.odin.simulations;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,6 +19,7 @@ import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.GenericSimulation;
+import ussr.samples.odin.OdinBuilder;
 import ussr.samples.odin.modules.OdinBall;
 import ussr.samples.odin.modules.OdinBattery;
 import ussr.samples.odin.modules.OdinHinge;

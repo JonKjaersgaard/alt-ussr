@@ -3,15 +3,14 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.samples.odin;
+package ussr.samples.odin.simulations;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
-import ussr.physics.PhysicsObserver;
+import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.robotbuildingblocks.ModuleConnection;
 import ussr.robotbuildingblocks.ModulePosition;
@@ -20,65 +19,42 @@ import ussr.robotbuildingblocks.RotationDescription;
 import ussr.robotbuildingblocks.VectorDescription;
 import ussr.robotbuildingblocks.WorldDescription;
 import ussr.samples.GenericSimulation;
-import ussr.samples.atron.ATRON;
-import ussr.samples.atron.ATRONCarController1;
+import ussr.samples.odin.OdinActBasedController;
+import ussr.samples.odin.OdinBuilder;
 import ussr.samples.odin.modules.OdinBall;
-import ussr.samples.odin.modules.OdinBattery;
-import ussr.samples.odin.modules.OdinHinge;
 import ussr.samples.odin.modules.OdinMuscle;
-import ussr.samples.odin.modules.OdinWheel;
-
-import com.jme.math.Quaternion;
-import com.jme.math.Vector3f;
 
 /**
  * Simple Odin simulation test setup
  * 
- * @author david
+ * @author Modular Robots @ MMMI
  *
  */
-public class OdinSimulationWheelTest extends GenericSimulation {
-	private static float[] gene = new float[1];
+public class OdinActBasedSimulation extends GenericSimulation {
 	
     public static void main( String[] args ) {
-    	Random rand = new Random();
-    	for(int i=0;i<1;i++) {
-    		gene[0]  = rand.nextFloat();
-	    	OdinSimulationWheelTest simulation = new OdinSimulationWheelTest();
-	    	simulation.runSimulation(null,true,gene);
-    	}
+    	new OdinActBasedSimulation().runSimulation(null,true);
     }
-    
-	public void runSimulation(WorldDescription world, boolean startPaused, final float[] gene) {
+    public void runSimulation(WorldDescription world, boolean startPaused) {
         PhysicsLogger.setDefaultLoggingLevel();
         final PhysicsSimulation simulation = PhysicsFactory.createSimulator();
+        PhysicsParameters.get().setResolutionFactor(1); // Needed for *really* large Odin structures 
         
         simulation.setRobot(new OdinMuscle(){
         	public Controller createController() {
-        		return new OdinSampleWheelController("OdinMuscle", gene);
+        		return new OdinActBasedController("OdinMuscle");
         	}},"OdinMuscle");
-        simulation.setRobot(new OdinWheel(){
-        	public Controller createController() {
-        		return new OdinSampleWheelController("OdinWheel", gene);
-        	}},"OdinWheel");
-        simulation.setRobot(new OdinHinge(){
-        	public Controller createController() {
-        		return new OdinSampleWheelController("OdinHinge", gene);
-        	}},"OdinHinge");
-        
-        simulation.setRobot(new OdinBattery(){
-        	public Controller createController() {
-        		return new OdinSampleWheelController("OdinBattery", gene);
-        	}},"OdinBattery");
         
         simulation.setRobot(new OdinBall(){
         	public Controller createController() {
-        		return new OdinSampleWheelController("OdinBall", gene);
+        		return new OdinActBasedController("OdinBall");
         	}},"OdinBall");
         
         if(world==null) world = createWorld();
         simulation.setWorld(world);
         simulation.setPause(startPaused);
+
+        // Start
         simulation.start();
     }
     /**
@@ -87,15 +63,28 @@ public class OdinSimulationWheelTest extends GenericSimulation {
      */
     private static WorldDescription createWorld() {
     	WorldDescription world = new WorldDescription();
-        world.setPlaneSize(1);
+        world.setPlaneSize(5);
+        world.setHasBackgroundScenery(false);
+        world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
         OdinBuilder builder = new OdinBuilder();
-        int nBalls=3, xMax=3, yMax=2,zMax=2;
-        VectorDescription offset = new VectorDescription(0,-0.46f,0);
-        world.setModulePositions(builder.buildWheelBlob(offset, nBalls, xMax, yMax, zMax));
+        //printConnectorPos();
+        int index=0;
+        //int nBalls=0,xMax=0, yMax=0,zMax=0; modulePos.add(new WorldDescription.ModulePosition("0","OdinMuscle", new VectorDescription(0,0,0), new RotationDescription(0,0,0)));
+        //int nBalls=2, xMax=1, yMax=2,zMax=2;
+       // int nBalls=3, xMax=3, yMax=2,zMax=2;
+       // int nBalls=4, xMax=3, yMax=2,zMax=2;
+       //int nBalls=8, xMax=3, yMax=2,zMax=2;
+       //int nBalls=14, xMax=3, yMax=3,zMax=3;
+        //int nBalls=20, xMax=4, yMax=4,zMax=4;
+        int nBalls=250, xMax=8, yMax=8,zMax=8; // Runs on Ulrik's machine but structure falls apart; nBalls=300 causes some weird overflow
+        ArrayList<ModulePosition> modulePos = builder.buildDenseBlob(nBalls,xMax,yMax,zMax);
+        world.setModulePositions(modulePos);
         world.setModuleConnections(builder.allConnections());
         builder.report(System.out);
         return world;
     }
+
+	@Override
 	protected Robot getRobot() {
 		return Robot.NO_DEFAULT;
 	}

@@ -3,7 +3,9 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.samples.odin;
+package ussr.samples.odin.simulations;
+
+import ussr.samples.odin.OdinController;
 
 
 /**

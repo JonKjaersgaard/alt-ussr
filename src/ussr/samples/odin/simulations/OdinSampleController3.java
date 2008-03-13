@@ -3,12 +3,13 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.samples.odin;
+package ussr.samples.odin.simulations;
 
 import java.util.Random;
 
 import onlineLearning.tools.RNN;
 import onlineLearning.tools.RNNPSOTrainer;
+import ussr.samples.odin.OdinController;
 
 import com.jme.math.Vector3f;
 
