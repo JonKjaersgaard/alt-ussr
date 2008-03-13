@@ -12,7 +12,7 @@ your own.
 
 <h2>Running a simulation.</h2>
 
-To run a simulation main class such as <a href="api/ussr/samples/atron/ATRONCarSimulation.html">ussr.samples.atron.ATRONCarSimulation</a>, right-click on the class and choose <tt>Run As...Java Application</tt>.  The basic key controls are as follows:
+To run a simulation main class such as <a href="api/ussr/samples/atron/simulations/ATRONCarSimulation.html">ussr.samples.atron.simulations.ATRONCarSimulation</a>, right-click on the class and choose <tt>Run As...Java Application</tt>.  The basic key controls are as follows:
 
 <ul>
 <li>To pause/unpause the simulation use <strong>P</strong>, to proceed step-by-step use <strong>SPACE</strong></li>
@@ -57,7 +57,7 @@ of <a href="api/ussr/physics/PhysicsSimulation.html">ussr.physics.PhysicsSimulat
 which is done by calling
 <a href="api/ussr/physics/PhysicsFactory.html#createSimulator()">ussr.physics.PhysicsFactory.createSimulator()</a>
 and providing an instance of
-<a href="api/ussr/robotbuildingblocks/WorldDescription.html">ussr.robotbuildingblocks.WorldDescription</a>
+<a href="api/ussr/description/setup/WorldDescription.html">ussr.description.WorldDescription</a>
 which describes both the robot to use, the initial configuration of
 the robot, and the world in which the robot will be simulated.  Tuning
 of various low-level physics parameters is done using 
@@ -85,19 +85,20 @@ found below.
 <a href="api/ussr/samples/mtran/package-summary.html">M-TRAN</a> as a
 basis for your simulation.  Independently of the robot type, the
 overall setup of the simulation is controlled through
-the <a href="api/ussr/robotbuildingblocks/WorldDescription.html">world
+the <a href="api/ussr/description/setup/WorldDescription.html">world
 description</a>.  There is a helper class for adding obstacles to the
 simulation: <a href="api/ussr/samples/ObstacleGenerator.html">ussr.samples.ObstacleGenerator</a>.
-
+The ATRON is currently the most developed robot in terms of functionality and examples, 
+followed by the Odin and last the M-TRAN.
 
 <h3>Adding an ATRON simulation</h3>
 
 <p>For the ATRON, write a new simulation by making a subclass
 of <a href="api/ussr/samples/atron/GenericATRONSimulation.html">ussr.samples.GenericATRONSimulation</a>.
 As a simple example, take a look
-  at <a href="api/ussr/samples/atron/ATRONCarSimulation.html">ussr.samples.atron.ATRONCarSimulation</a>.
+  at <a href="api/ussr/samples/atron/simulations/ATRONCarSimulation.html">ussr.samples.atron.simulations.ATRONCarSimulation</a>.
   In your simulation class, use the method
-<a href="api/ussr/samples/atron/GenericATRONSimulation.html#changeWorldHook(ussr.robotbuildingblocks.WorldDescription)">changeWorldHook</a>
+<a href="api/ussr/samples/atron/GenericATRONSimulation.html#changeWorldHook(ussr.description.setup.WorldDescription)">changeWorldHook</a>
 to add modules to the simulation (i.e. the world descripton) and
 optionally add obstacles.  There is a predefined helper
 class for generating typical module and obstacle configurations, namely
@@ -141,7 +142,7 @@ abstract representation of the hardware the controller is running on.
 <p>A controller typically performs various setup operations and then
   enters an infinite loop that uses the API to perform operations on
   the module.  A controller should call the <tt>ControllerImpl</tt>
-  method <a href="api/ussr/model/ControllerImpl.html#ussrYield()">ussrYield()</a>
+  method <a href="api/ussr/model/ControllerImpl.html#yield()">yield()</a>
   regularly to ensure fairness between different controllers, prevent
   starvation of the physics simulation, and enable controllers to be
   paused if the simulated world is paused.

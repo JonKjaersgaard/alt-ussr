@@ -7,24 +7,40 @@
 <h1>USSR Howto</h1>
 
 This section of the manual is a basic introduction to programming with
-the USSR simulator framework.  Note that Javadoc documentation is
-available in the <tt>doc</tt> subdirectory.
+the USSR simulator framework.  Consult the <a href="api/index.html">Javadoc</a> documentation
+for details of the API.
 
-<h2>Adding a new robot</h2>
+<h2>Adding a new robot step 1: describing the appearance</h2>
 
-To add a new robot type, create an appropriate package to contain the robot 
-description (example: see <tt>ussr.samples.atron.ATRON</tt>).  The robot description can
-use elements from the package <tt>ussr.robotbuildingclocks</tt>.  Concretely,
-the physics-engine-independent configuration of a robot is done using the classes
-in <tt>ussr.robotbuildingblocks</tt>: the building blocks are interpreted by a module factory
-to create physically simulated modules.  If the user of the robot does not need to
-be able to do any configuration, the description geometry can simple be e.g. a sphere
-or some dummy geometry.  The type name in the robot description is used to identify
-what module factory to use to instantiate the robot for the specific physics engine. 
+To add a new robot type, create an appropriate package to contain the robot
+description.  As an example of a minimal robot,
+consider <a href="api/ussr/samples/stickybot/package-summary.html">ussr.samples.stickybot</a>.  The
+robot description is based on components from the
+package <a href="api/ussr/description/robot/package-summary.html">ussr.description.robot</a> with the
+appearance described using elements from the
+package <a href="api/ussr/description/geometry/package-summary.html">ussr.description.geometry</a>.
+Concretely, the physics-engine-independent configuration of a robot is done
+using the classes in <tt>ussr.description</tt>: the building blocks are
+interpreted by a module factory to create physically simulated modules.  If the
+user of the robot does not need to be able to do any actuation or connector
+alignment, the robot can be created directly from the description, using the 
+<a href="api/ussr/physics/PhysicsFactory.html#addDefaultFactory(java.lang.String)">default
+  factory</a> (which as an argument takes the type name of the robot).  This
+should be sufficient for creating an interactive representation of the robot
+  that can actuate its connectors.  For more advanced features, a factory
+must be defined, see below.
 
-<p>The physics engine representation of a module (the central element) is implemented 
-as a module factory in the package ussr.physics.jme.robots.  The module factory
-uses components defined in the package <tt>ussr.physics.jme</tt> to build a module.
+<h2>Adding a new robot step 2: defining the details</h2>
+
+Details about a robot must be defined using a JME factory that can add to or
+modify the representation of the robot.  The default JME factories are provided
+in the
+package <a href="api/ussr/physics/jme/robots/package-summary.html">ussr.physics.jme.robots</a>, a
+fairly small example with an externally provided factory is
+the <a href="api/ussr/samples/white/package-summary.html">White</a> robot.
+The module factory
+uses components defined in the
+package <a href="api/ussr/physics/jme/package-summary.html">ussr.physics.jme</a> and its subpackages to build a module.
 
 </body>
 </html>
