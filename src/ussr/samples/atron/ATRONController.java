@@ -6,8 +6,6 @@
  */
 package ussr.samples.atron;
 
-import java.awt.Color;
-
 import ussr.comm.Packet;
 import ussr.comm.PacketReceivedObserver;
 import ussr.comm.Receiver;
@@ -16,8 +14,8 @@ import ussr.model.Module;
 import ussr.model.Sensor;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
-import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsParameters;
+import ussr.physics.PhysicsSimulation;
 
 /**
  * Controller class that provides the ATRON API
@@ -26,20 +24,27 @@ import ussr.physics.PhysicsParameters;
  */
 public abstract class ATRONController extends ControllerImpl implements PacketReceivedObserver, PhysicsObserver, IATRONAPI {
 
-    float targetPos, currentPos, zeroPos;
+    private float targetPos, currentPos, zeroPos;
 	private boolean blocking;
 	private boolean locked = false;
+
+	/**
+	 * Instantiate ATRON controller
+	 */
     public ATRONController() {
-        super();
         setBlocking(true);
     }
     
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#home()
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#home()
 	 */
     public void home() { 
         this.rotateToDegreeInDegrees(180);
     }
+    
+    /**
+     * @see ussr.samples.atron.IATRONAPI#setup()
+     */
     public void setup() {
         currentPos = targetPos = 0;
         zeroPos = module.getActuators().get(0).getEncoderValue();
@@ -47,13 +52,17 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         if(zeroPos==Float.NaN) throw new Error("Unable to read encoder");
     }
     
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#getName()
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#getName()
 	 */
     public String getName() {
         return module.getProperty("name");
     }
     
+    /**
+     * 
+     * @see ussr.model.ControllerImpl#setModule(ussr.model.Module)
+     */
     public void setModule(Module module) {
     	super.setModule(module);
         for(Receiver r: module.getReceivers()) { 
@@ -61,11 +70,17 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         }
         module.getSimulation().subscribePhysicsTimestep(this);
     }
+    
+    /**
+     * 
+     * @see ussr.physics.PhysicsObserver#physicsTimeStepHook(ussr.physics.PhysicsSimulation)
+     */
     public void physicsTimeStepHook(PhysicsSimulation simulation) {
         // If the module is supposed to be at the right position, make it stay at the right position
         if(currentPos==targetPos)
             maintainJoint(currentPos);
     }
+    
     private float readEncoderPosition() {
         return module.getActuators().get(0).getEncoderValue();//-zeroPos;
     }
@@ -75,21 +90,23 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     private void maintainJoint(float target) {
         //module.getActuators().get(0).maintain(target+zeroPos);
     }
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#isRotating()
+
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#isRotating()
 	 */
     public boolean isRotating() {
     	return module.getActuators().get(0).isActive();
     }
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#setBlocking(boolean)
+    
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#setBlocking(boolean)
 	 */
     public void setBlocking(boolean blocking) {
     	this.blocking = blocking;
     }
 
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#getJointPosition()
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#getJointPosition()
 	 */
     public int getJointPosition() {
     	float encVal = readEncoderPosition();
@@ -101,8 +118,8 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     	return 0;
     }
 
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#rotate(int)
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#rotate(int)
 	 */
     public void rotate(int dir) {
     	float goalRot = 0;
@@ -136,8 +153,8 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     	}).start();
 	}
     
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#rotateDegrees(int)
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#rotateDegrees(int)
 	 */
     public void rotateDegrees(int degrees) {
         locked = false;
@@ -149,16 +166,16 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         } while(isRotating()&&blocking);
     }
 
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#rotateToDegreeInDegrees(int)
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#rotateToDegreeInDegrees(int)
 	 */
     public void rotateToDegreeInDegrees(int degrees) {
         float rad = (float)(degrees/360.0*2*Math.PI);
         this.rotateToDegree(rad);
     }
     
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#rotateToDegree(float)
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#rotateToDegree(float)
 	 */
     public void rotateToDegree(float rad) {
         locked = false;
@@ -183,30 +200,31 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
             }
         }).start();
     }
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#getTime()
+    
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#getTime()
 	 */
     public float getTime() {
     	//TODO local version of this instead of global and syncronized
     	return getModule().getSimulation().getTime();
     }
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#getAngularPosition()
+    
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#getAngularPosition()
 	 */
     public float getAngularPosition() {
     	return (float)(module.getActuators().get(0).getEncoderValue()*Math.PI*2);
     }
     
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#getAngularPositionDegrees()
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#getAngularPositionDegrees()
 	 */
     public int getAngularPositionDegrees() {
         return (int)(module.getActuators().get(0).getEncoderValue()*360);
     }
     
-
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#disconnectAll()
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#disconnectAll()
 	 */
     public void disconnectAll() {
     	for(int i=0;i<8;i++) {
@@ -216,8 +234,8 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     	}
     }
 
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#connectAll()
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#connectAll()
 	 */
     public void connectAll() {
     	for(int i=0;i<8;i++) {
@@ -230,77 +248,82 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     	}
     }
 
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#canConnect(int)
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#canConnect(int)
 	 */
     public boolean canConnect(int i) {
     	if(isConnected(i)&&!module.getConnectors().get(i).hasProximateConnector()) System.out.println("Inconsistant connector state detected!");
     	return isOtherConnectorNearby(i)&&isMale(i)&&!isConnected(i);
     }
 
-	/* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#canDisconnect(int)
+	/**
+	 * @see ussr.samples.atron.IATRONAPI#canDisconnect(int)
 	 */
 	public boolean canDisconnect(int i) {
 		if(isConnected(i)&&!module.getConnectors().get(i).hasProximateConnector()) System.out.println("Inconsistant connector state detected!");
     	return isMale(i)&&isConnected(i);
     }
 
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#isMale(int)
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#isMale(int)
 	 */
     public boolean isMale(int i) {
     	return (i%2)==0;
     }
 
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#connect(int)
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#connect(int)
 	 */
     public void connect(int i) {
         isOtherConnectorNearby(i);
     	module.getConnectors().get(i).connect();
     }
 
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#disconnect(int)
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#disconnect(int)
 	 */
     public void disconnect(int i) {
     	module.getConnectors().get(i).disconnect();
     }
 
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#isConnected(int)
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#isConnected(int)
 	 */
     public boolean isConnected(int i) {
     	return module.getConnectors().get(i).isConnected();
     }
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#isDisconnected(int)
+    
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#isDisconnected(int)
 	 */
     public boolean isDisconnected(int i) {
         return !isConnected(i);
     }
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#rotateContinuous(float)
+    
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#rotateContinuous(float)
 	 */
     public void rotateContinuous(float dir) {
         locked = false;
     	module.getActuators().get(0).activate(dir);
     }
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#centerBrake()
+    
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#centerBrake()
 	 */
     public void centerBrake() {
     	module.getActuators().get(0).disactivate();
     }
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#centerStop()
+    
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#centerStop()
 	 */
     public void centerStop() {
     	centerBrake(); //TODO implement the difference from center brake
     }
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#isOtherConnectorNearby(int)
+    
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#isOtherConnectorNearby(int)
 	 */
     public boolean isOtherConnectorNearby(int connector) {
     	if(module.getConnectors().get(connector).isConnected()) {
@@ -314,15 +337,15 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
    		return false;
     }
     
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#isObjectNearby(int)
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#isObjectNearby(int)
 	 */
     public boolean isObjectNearby(int connector) {
         return module.getSensors().get(connector).readValue()>0.1;
     }
     
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#sendMessage(byte[], byte, byte)
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#sendMessage(byte[], byte, byte)
 	 */
     public byte sendMessage(byte[] message, byte messageSize, byte connector) 
 	{
@@ -332,6 +355,11 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 		}
 		return 0;
 	}
+    
+    /**
+     * Called when a packet is received by the module
+     * @param device the device that received an incoming packet 
+     */
     public void packetReceived(Receiver device) {
     	for(int i=0;i<8;i++) {
     		if(module.getReceivers().get(i).equals(device)) {
@@ -341,12 +369,14 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     		}
     	}
     }
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#handleMessage(byte[], int, int)
+    
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#handleMessage(byte[], int, int)
 	 */
     public void handleMessage(byte[] message, int messageSize, int channel) {
         PhysicsLogger.log("Message received but no handleMessage implemented in "+this);
     }
+    
     private byte read(String name) {
         for(Sensor sensor: module.getSensors()) {
             if(name.equals(sensor.getName())) {
@@ -357,18 +387,21 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         }
         throw new Error("Unknown sensor: "+name);
     }
+
     // Note: hard-coded to do forward-backward tilt sensoring for axles
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#getTiltX()
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#getTiltX()
 	 */
     public byte getTiltX() { return read("TiltSensor:y"); }
+
     // Note: hard-coded to do side-to-side tilt sensoring for driver and axles
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#getTiltY()
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#getTiltY()
 	 */
     public byte getTiltY() { return read("TiltSensor:x"); }
-    /* (non-Javadoc)
-	 * @see ussr.samples.atron.IATRONController#getTiltZ()
+
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#getTiltZ()
 	 */
     public byte getTiltZ() { return read("TiltSensor:z"); }
 }
