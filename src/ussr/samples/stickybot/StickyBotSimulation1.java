@@ -30,7 +30,7 @@ import com.jme.math.Vector3f;
 import com.jme.util.LoggingSystem;
 
 /**
- * A simple simulation with the sticky bot, using the key "Z" to globally toggle stickiness
+ * A simple simulation with the sticky bot
  * of the connectors.
  * 
  * @author ups

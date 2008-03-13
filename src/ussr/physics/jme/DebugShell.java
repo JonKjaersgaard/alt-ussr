@@ -16,6 +16,11 @@ import ussr.model.Module;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.SimulationGadget;
 
+/**
+ * Simulation gadget host for JME-based simulations.  Supports textual gadgets only.
+ * 
+ * @author ups
+ */
 public class DebugShell extends JPanel implements ActionListener, SimulationGadget.Host {
     protected JTextField textField;
     protected JTextArea textArea;

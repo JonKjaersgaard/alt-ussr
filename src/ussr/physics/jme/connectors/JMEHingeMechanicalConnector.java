@@ -1,8 +1,6 @@
 package ussr.physics.jme.connectors;
 
-import ussr.description.geometry.VectorDescription;
 import ussr.description.robot.ConnectorDescription;
-import ussr.description.robot.RobotDescription;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 
@@ -11,6 +9,11 @@ import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
 import com.jmex.physics.RotationalJointAxis;
 
+/**
+ * Implementation of a hinge connector
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public class JMEHingeMechanicalConnector extends JMEMechanicalConnector {
 	private RotationalJointAxis axis;
 	private float lowerLimit = Float.NEGATIVE_INFINITY;

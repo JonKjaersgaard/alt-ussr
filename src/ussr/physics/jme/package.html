@@ -1,10 +1,14 @@
 <body>
 A physics simulation implementation based on JME (JMonkeyEngine).
-Implements the interfaces defined in the <tt>ussr.physics</tt>
+Implements the interfaces defined in the {@link ussr.physics}
 package.  Provides a collection of actuators and sensors as well as
 various utility classes.  The components for building robots are
-defined in
-the <tt>ussr.physics.jme.actuators</tt>, <tt>ussr.physics.jme.connectors</tt>,
-and <tt>ussr.physics.jme.sensors</tt> packages, whereas concrete robots are
-defined in the <tt>ussr.physics.jme.robots</tt> package.
+defined in the following subpackages:
+<ul>
+<li>{@link ussr.physics.jme.actuators} Actuators for connecting module components of a single module</li>
+<li>{@link ussr.physics.jme.connectors} Connectors for connecting different modules</li>
+<li>{@link ussr.physics.jme.sensors} Sensors for mounting on module components</li> 
+</ul>
+Concrete robot factories are
+defined in the {@link ussr.physics.jme.robots} package.
 </body>

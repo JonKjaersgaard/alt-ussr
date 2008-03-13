@@ -11,10 +11,12 @@ import ussr.description.Description;
 import ussr.description.geometry.GeometryDescription;
 
 /**
+ * Description of a module component: one of the parts that makes up a complete module.
+ * Attaches to the other module components by actuators.  Connectors are attached onto
+ * module components.
+ * 
  * @author ups
  *
- * TODO Write a nice and user-friendly comment here
- * 
  */
 public class ModuleComponentDescription extends Description {
     private List<GeometryDescription> geometry;

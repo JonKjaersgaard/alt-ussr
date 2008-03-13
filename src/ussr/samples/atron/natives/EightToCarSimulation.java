@@ -19,10 +19,9 @@ import ussr.samples.atron.GenericATRONSimulation;
 import ussr.samples.atron.simulations.ATRONCarSimulation;
 
 /**
- * @author ups
- *
- * TODO Write a nice and user-friendly comment here
+ * Eight-to-car simulation using a native controller
  * 
+ * @author ups
  */
 public class EightToCarSimulation extends GenericATRONSimulation {
 

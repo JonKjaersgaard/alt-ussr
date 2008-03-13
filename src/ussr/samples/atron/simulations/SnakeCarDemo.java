@@ -9,6 +9,11 @@ import ussr.model.Controller;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 
+/**
+ * Extension of the {@link EightToCarSimulationJ} example to use snake and car modes of locomotion
+ * 
+ * @author ups
+ */
 public class SnakeCarDemo extends EightToCarSimulationJ {
 
     public static void main(String argv[]) {

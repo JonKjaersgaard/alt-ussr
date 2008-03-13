@@ -15,6 +15,11 @@ package ussr.physics;
  */
 public class PhysicsParameters {
     
+    /**
+     * Standard materials supported by the physics engine of the simulator
+     * 
+     * @author ups
+     */
     public static enum Material { RUBBER, WOOD, ICE, CONCRETE, GLASS, IRON, DEFAULT, GRANITE };
     
     // NOTE: Initialization here are DEFAULT values, do NOT edit for your own simulation

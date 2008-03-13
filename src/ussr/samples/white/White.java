@@ -22,7 +22,11 @@ import ussr.description.robot.ConnectorDescription;
 import ussr.description.robot.ModuleComponentDescription;
 import ussr.description.robot.RobotDescription;
 
-
+/**
+ * Definition of the White robot
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public abstract class White implements Robot {
     public static final float UNIT =0.1f;
     

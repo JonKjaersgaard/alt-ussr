@@ -12,6 +12,11 @@ import ussr.description.robot.ConnectorDescription;
 import ussr.description.robot.ModuleComponentDescription;
 import ussr.description.robot.RobotDescription;
 
+/**
+ * Odin wheel module
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public abstract class OdinWheel extends Odin {
 
 	/**

@@ -13,6 +13,11 @@ import ussr.description.robot.ModuleComponentDescription;
 import ussr.description.robot.RobotDescription;
 import ussr.model.Controller;
 
+/**
+ * Odin muscle module
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public abstract class OdinMuscle extends Odin {
 
 	/**

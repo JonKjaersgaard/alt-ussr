@@ -21,6 +21,11 @@ import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
 
+/**
+ * Abstract class providing basic connector functionality
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver {
 	protected volatile Connector model;
     protected volatile DynamicPhysicsNode node;

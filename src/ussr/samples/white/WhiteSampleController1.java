@@ -9,7 +9,8 @@ import java.awt.Color;
 import java.util.Random;
 
 /**
- * A simple controller for the ODIN robot, ossilates OdinMuscles with a random start state 
+ * A simple controller for the white robot, simply connects to nearby connectors and
+ * disconnects, allowing the robot to be manipulated by the mouse
  * 
  * @author david
  *

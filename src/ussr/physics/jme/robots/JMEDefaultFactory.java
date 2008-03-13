@@ -13,6 +13,13 @@ import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 
+/**
+ * Default factory that builds JME representation of a module using only the description of
+ * the robot.  This factory can thus be used to build any kind of robot, but can only include
+ * the features that can be included in the description.
+ * 
+ * @author ups
+ */
 public class JMEDefaultFactory implements ModuleFactory {
 
     private JMESimulation simulation;

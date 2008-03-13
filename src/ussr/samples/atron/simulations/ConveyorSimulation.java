@@ -37,7 +37,12 @@ public class ConveyorSimulation extends GenericATRONSimulation {
         return new ConveyorATRON();
     }
     
-    public static class ConveyorATRON extends ATRON {
+    /**
+     * Controller for the conveyor simulation
+     * 
+     * @author ups
+     */
+    private static class ConveyorATRON extends ATRON {
         public ConveyorATRON() {
             this.setSuper();
         }

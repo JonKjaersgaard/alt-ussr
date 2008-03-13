@@ -33,6 +33,11 @@ import ussr.samples.odin.simulations.OdinSimulation3;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
+/**
+ * Sample simulation showing multiple robot types in the same simulation
+ * 
+ * @author ups
+ */
 public class MultiRobotSimulation extends GenericSimulation {
     // Odin constants
     private static float odinUnit = (float)Math.sqrt((0.18f*0.18f)/2);

@@ -6,10 +6,10 @@ package ussr.description.geometry;
 import ussr.description.Description;
 
 /**
- * @author ups
- *
- * TODO Write a nice and user-friendly comment here
+ * An implementation of the <tt>GeometryDescription</tt> interface that provides the 
+ * {@link ussr.description.geometry.GeometryDescription#copy() copy} operation. 
  * 
+ * @author ups
  */
 public abstract class GeometryDescriptionImpl extends Description implements GeometryDescription, Cloneable {
     

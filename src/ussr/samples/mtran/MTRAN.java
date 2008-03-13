@@ -24,6 +24,11 @@ import ussr.description.robot.RobotDescription;
 import ussr.physics.PhysicsParameters;
 
 
+/**
+ * Preliminary implementation of the MTRAN robot
+ * 
+ * @author ups
+ */
 public abstract class MTRAN implements Robot {
     
     /**

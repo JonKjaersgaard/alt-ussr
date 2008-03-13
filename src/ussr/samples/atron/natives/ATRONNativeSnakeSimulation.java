@@ -9,10 +9,10 @@ import ussr.samples.atron.ATRON;
 import ussr.samples.atron.simulations.ATRONSnakeSimulation;
 
 /**
+ * Snake simulation using native controller
+ * 
  * @author ups
  *
- * TODO Write a nice and user-friendly comment here
- * 
  */
 public class ATRONNativeSnakeSimulation extends ATRONSnakeSimulation {
 	public static void main(String argv[]) {

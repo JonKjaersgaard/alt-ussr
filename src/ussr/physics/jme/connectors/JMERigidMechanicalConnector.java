@@ -9,6 +9,11 @@ import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
 
+/**
+ * Rigid mechanical connector
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public class JMERigidMechanicalConnector extends JMEMechanicalConnector {
 
 	public JMERigidMechanicalConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, ConnectorDescription description) {

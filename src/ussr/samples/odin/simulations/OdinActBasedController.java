@@ -3,12 +3,13 @@
  * 
  * (C) 2006 University of Southern Denmark
  */
-package ussr.samples.odin;
+package ussr.samples.odin.simulations;
 
 import java.util.Random;
 
 import ussr.model.ActBasedController;
 import ussr.samples.GenericSimulation;
+import ussr.samples.odin.OdinController;
 
 /**
  * A simple controller for the ODIN robot, oscillates OdinMuscles with a random start state 

@@ -22,7 +22,7 @@ import ussr.physics.PhysicsSimulation;
 import ussr.samples.GenericSimulation;
 
 /**
- * Simple MTRAN simulation
+ * Abstract white simulation
  * 
  * @author david
  *

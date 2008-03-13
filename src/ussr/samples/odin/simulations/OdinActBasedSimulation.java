@@ -19,7 +19,6 @@ import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.samples.GenericSimulation;
-import ussr.samples.odin.OdinActBasedController;
 import ussr.samples.odin.OdinBuilder;
 import ussr.samples.odin.modules.OdinBall;
 import ussr.samples.odin.modules.OdinMuscle;

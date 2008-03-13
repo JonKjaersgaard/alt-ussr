@@ -17,6 +17,11 @@ import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
 import com.jmex.physics.DynamicPhysicsNode;
 
+/**
+ * Connector geometry: the visual appearance of a connector
+ * 
+ * @author ups
+ */
 public class JMEConnectorGeometry {
 	private Color initialColor = null;
 	private volatile TriMesh mesh;

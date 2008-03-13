@@ -7,6 +7,7 @@ import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Actuator;
 import ussr.model.PhysicsActuator;
+import ussr.physics.PIDController;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.jme.JMESimulation;
@@ -22,6 +23,8 @@ import com.jmex.physics.impl.ode.joints.OdeJoint;
 
 
 /**
+ * Rotational actuator for the JME based simulation
+ * 
  * @author david
  *
  */

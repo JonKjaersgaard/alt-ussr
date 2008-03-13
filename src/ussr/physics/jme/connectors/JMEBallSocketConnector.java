@@ -1,9 +1,6 @@
 package ussr.physics.jme.connectors;
 
-import org.odejava.World;
-
 import ussr.description.robot.ConnectorDescription;
-import ussr.description.robot.RobotDescription;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 
@@ -14,6 +11,11 @@ import com.jmex.physics.PhysicsSpace;
 import com.jmex.physics.PhysicsUpdateCallback;
 import com.jmex.physics.RotationalJointAxis;
 
+/**
+ * Ball-socket connector implementation
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public class JMEBallSocketConnector extends JMEMechanicalConnector {
 
 	public JMEBallSocketConnector(Vector3f position, DynamicPhysicsNode moduleNode, String baseName, JMESimulation world, JMEModuleComponent component, ConnectorDescription description) {

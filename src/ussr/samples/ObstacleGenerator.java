@@ -14,6 +14,12 @@ import ussr.description.setup.WorldDescription;
  * @author ups
  */
 public class ObstacleGenerator {
+    
+    /**
+     * Simple description of obstacles to be inserted into the world 
+     *  
+     * @author ups
+     */
     public static enum ObstacleType { NONE, LINE, CIRCLE }
 
     private int numberOfCircleObstacles = 64;

@@ -1,11 +1,19 @@
 <body>
 Building blocks for constructing simulation scenarios.  Can describe module components
-in terms of their basic geometries, connections between modules, and the setup of the
-enclosing world.  The module geometries must be translated into physics engine specific
+in terms of their basic geometries, connector configurations etc.  The simulation is
+described in terms of connections between modules and the setup of the
+enclosing world.  Note that the module geometries must be translated into physics engine specific
 shapes by the corresponding module factory.
 
-TODO: Remove references to JME data types (quaternions, matrices, etc.)
+<p>The building blocks are organized into the following subpackages:
+<ul>
+<li>{@link ussr.description.geometry} Geometry shapes for describing entities in the simulation</li>
+<li>{@link ussr.description.robot} Robot building blocks</li>
+<li>{@link ussr.description.setup} Simulation world setup</li>
+</ul>
 
-@see <tt>ussr.physics.PhysicsParameters</tt> for where to set simulation parameters
-@see <tt>ussr.physics.ModuleFactory</tt> for the module factory interface 
+<p>The physics parameters of the simulation are set using {@link ussr.physics.PhysicsParameters} whereas module factories are manipulated using {@link ussr.physics.PhysicsFactory}.
+
+@see ussr.physics.PhysicsParameters PhysicsParameters
+@see ussr.physics.PhysicsFactory PhysicsFactory
 </body>

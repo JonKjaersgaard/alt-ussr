@@ -10,6 +10,11 @@ import ussr.description.robot.ModuleComponentDescription;
 import ussr.description.robot.RobotDescription;
 import ussr.model.Controller;
 
+/**
+ * Odin ball module
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public abstract class OdinBall extends Odin {
 
 	/**

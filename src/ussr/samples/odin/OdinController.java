@@ -9,6 +9,12 @@ import ussr.model.ControllerImpl;
 import ussr.model.Module;
 import ussr.model.Sensor;
 
+/**
+ * Controller implementation for the Odin robot
+ * 
+ * @author Modular Robots @ MMMI
+ *
+ */
 public abstract class OdinController extends ControllerImpl implements PacketReceivedObserver {
 	protected String type;
     public OdinController() {

@@ -18,6 +18,11 @@ import com.jme.math.Vector3f;
 import com.jme.scene.TriMesh;
 import com.jmex.physics.DynamicPhysicsNode;
 
+/**
+ * Connector aligner: applies forces to modules that are connecting to make them align
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public class JMEConnectorAligner {
 	ArrayList<AlignmentPoint> aPoints;
 	JMEConnector connector;

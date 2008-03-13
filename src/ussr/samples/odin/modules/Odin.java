@@ -10,7 +10,7 @@ import ussr.description.robot.RobotDescription;
 import ussr.model.Controller;
 
 /**
- * the heterogeneous reconfigurable modular robot Odin   
+ * Base abstract class for the heterogeneous reconfigurable modular robot Odin   
  * 
  * @author david
  */

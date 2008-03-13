@@ -9,6 +9,11 @@ import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
 
+/**
+ * Abstract class implementing mechanical connection functionality 
+ * 
+ * @author ups
+ */
 public abstract class JMEMechanicalConnector extends JMEBasicConnector  {
 	/**
      * The abstract connector represented by this JME entity

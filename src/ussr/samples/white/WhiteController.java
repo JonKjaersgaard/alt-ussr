@@ -7,6 +7,11 @@ import ussr.model.ControllerImpl;
 import ussr.model.Module;
 import ussr.model.Sensor;
 
+/**
+ * Controller for white modules
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public abstract class WhiteController extends ControllerImpl implements PacketReceivedObserver {
 
 	boolean blocking;

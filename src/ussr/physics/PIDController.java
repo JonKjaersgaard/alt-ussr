@@ -1,7 +1,12 @@
-package ussr.physics.jme.actuators;
+package ussr.physics;
 
-import ussr.physics.PhysicsParameters;
 
+/**
+ * PID controller utility class for implementing PID-based controllers
+ * 
+ * @author david
+ *
+ */
 public class PIDController {
 	float Kp,Ki,Kd;
 	float P,I,D;

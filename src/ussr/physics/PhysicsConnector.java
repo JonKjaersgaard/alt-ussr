@@ -40,6 +40,8 @@ public interface PhysicsConnector extends PhysicsEntity {
      * @param connector the connector model to associate with this connector
      */
     public void setModel(Connector connector);
+    
+    public Connector getModel();
 
     public void disconnect();
     
@@ -62,5 +64,11 @@ public interface PhysicsConnector extends PhysicsEntity {
      */
     public void setConnectorBehaviorHandler(ConnectorBehaviorHandler handler);
 	
-	
+    public void setTimeToConnect(float time);
+    
+    public void setTimeToDisconnect(float time);
+    
+    public String getName();
+    
+
 }

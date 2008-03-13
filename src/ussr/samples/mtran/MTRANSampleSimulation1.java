@@ -10,7 +10,7 @@ import ussr.model.Controller;
 import ussr.physics.PhysicsSimulation;
 
 /**
- * Simple MTRAN simulation
+ * Simple MTRAN simulation with a snake robot
  * 
  * @author david
  *

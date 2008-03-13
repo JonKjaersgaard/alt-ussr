@@ -8,15 +8,30 @@ import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
 
+/**
+ * Helper class for assembling various standard ATRON configurations
+ * 
+ * @author ups
+ */
 public class ATRONBuilder {
 
     private ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
     private float connection_acceptance_range = 0.001f;
     
+    /**
+     * Function for naming individual modules being assembled by the builder
+     * 
+     * @author ups
+     */
     public interface Namer {
         public String name(int number, VectorDescription pos, RotationDescription rot);
     }
 
+    /**
+     * Function for selecting what specific type of module to insert at a given place
+     * 
+     * @author ups
+     */
     public interface ModuleSelector {
         String select(String name, int index, VectorDescription pos, RotationDescription rot);
     }
@@ -52,8 +67,8 @@ public class ATRONBuilder {
             mPos.add(new ModulePosition("driver0", new VectorDescription(-2*ATRON.UNIT,-2*ATRON.UNIT+Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
             mPos.add(new ModulePosition("RearRightWheel", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT+Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
             mPos.add(new ModulePosition("RearLeftWheel", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT+Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
-        }
-        else if(numberOfWheels==4) {
+        } else if(numberOfWheels==4) {
+            System.out.println("4 wheeler");
             mPos.add(new ModulePosition("driver0", new VectorDescription(2*0*ATRON.UNIT,0*ATRON.UNIT+Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
             mPos.add(new ModulePosition("axleOne5", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT+Yoffset,0*ATRON.UNIT), ATRON.ROTATION_UD));
             mPos.add(new ModulePosition("axleTwo6", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT+Yoffset,0*ATRON.UNIT), ATRON.ROTATION_UD));
@@ -62,6 +77,7 @@ public class ATRONBuilder {
             mPos.add(new ModulePosition("wheel3", new VectorDescription(1*ATRON.UNIT,-2*ATRON.UNIT+Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
             mPos.add(new ModulePosition("wheel4", new VectorDescription(1*ATRON.UNIT,-2*ATRON.UNIT+Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
         } else if(numberOfWheels==6) {
+            System.out.println("6 wheeler");
             mPos.add(new ModulePosition("driver0", aPos(0,0,0,position), ATRON.ROTATION_EW));
             mPos.add(new ModulePosition("driverExtra10", aPos(-2,0,0,position), ATRON.ROTATION_EW));
             mPos.add(new ModulePosition("axleOne11", aPos(1,-1,0,position), ATRON.ROTATION_UD));

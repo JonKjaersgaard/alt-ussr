@@ -26,6 +26,11 @@ import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.contact.MutableContactInfo;
 import com.jmex.physics.material.Material;
 
+/**
+ * JME factory for the White robot.  Adapts the connectors to get the right characteristics
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public class JMEWhiteFactory implements ModuleFactory {
     private JMESimulation simulation;
     private static final float pi = (float)Math.PI;
@@ -43,7 +48,7 @@ public class JMEWhiteFactory implements ModuleFactory {
         setMass(0.2f,moduleComponent.getModuleNode()); //200 grams?
         
         setMaterials(module, robot,module_name);
-        addConnectors(module);
+        adaptConnectors(module);
         addCommunication(module);
         addTiltSensors(module,moduleComponent.getModuleNode());
      }
@@ -84,7 +89,7 @@ public class JMEWhiteFactory implements ModuleFactory {
         }		
 	}
 
-	private void addConnectors(Module module) {
+	private void adaptConnectors(Module module) {
         float maxAlginmentForce = 0.1f;
         float maxAlignmentDistance = 0.1f;
         float epsilonAlignmentDistance = 0.01f;

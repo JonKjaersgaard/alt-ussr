@@ -12,6 +12,11 @@ import ussr.description.robot.ConnectorDescription;
 import ussr.description.robot.ModuleComponentDescription;
 import ussr.description.robot.RobotDescription;
 
+/**
+ * Odin hinge module
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public abstract class OdinHinge extends Odin {
 
 	/**

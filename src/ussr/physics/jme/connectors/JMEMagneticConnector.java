@@ -1,39 +1,23 @@
 package ussr.physics.jme.connectors;
 
-import java.awt.Color;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import com.jme.bounding.BoundingSphere;
-import com.jme.input.InputHandler;
-import com.jme.input.action.InputActionEvent;
-import com.jme.input.action.InputActionInterface;
-import com.jme.input.util.SyntheticButton;
-import com.jme.math.Quaternion;
-import com.jme.math.Vector3f;
-import com.jme.scene.TriMesh;
-import com.jmex.physics.DynamicPhysicsNode;
-import com.jmex.physics.Joint;
-import com.jmex.physics.RotationalJointAxis;
-import com.jmex.physics.contact.ContactInfo;
-
-import ussr.description.geometry.GeometryDescription;
-import ussr.description.geometry.RotationDescription;
-import ussr.description.geometry.VectorDescription;
 import ussr.description.robot.ConnectorDescription;
-import ussr.description.robot.RobotDescription;
 import ussr.model.Connector;
 import ussr.physics.ConnectorBehaviorHandler;
-import ussr.physics.PhysicsConnector;
-import ussr.physics.PhysicsLogger;
-import ussr.physics.PhysicsQuaternionHolder;
-import ussr.physics.jme.JMEGeometryHelper;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 
+import com.jme.math.Vector3f;
+import com.jmex.physics.DynamicPhysicsNode;
+import com.jmex.physics.Joint;
+import com.jmex.physics.RotationalJointAxis;
+
+/**
+ * Preliminary implementation of a magnetic connector
+ * 
+ * @author Modular Robots @ MMMI
+ */
 public class JMEMagneticConnector extends JMEMechanicalConnector {
-    private RotationalJointAxis xAxis,yAxis,zAxis;
+    private RotationalJointAxis xAxis,yAxis;
     private boolean isActive = false;
     
     /**

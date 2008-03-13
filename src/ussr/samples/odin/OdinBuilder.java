@@ -12,6 +12,11 @@ import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 
+/**
+ * Helper class for building structures of Odin modules
+ * 
+ * @author ups
+ */
 public class OdinBuilder {
     private ArrayList<ModulePosition> ballPos = new ArrayList<ModulePosition>();
     private ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
@@ -131,6 +136,11 @@ public class OdinBuilder {
         out.println("#Total         = "+modulePos.size());
     }
 
+    /**
+     * Function for designating what type of modules to insert into the structure
+     * 
+     * @author ups
+     */
     public interface ModuleDesignator {
         public String selectModule(int index);
     }

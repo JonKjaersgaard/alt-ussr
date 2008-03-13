@@ -16,6 +16,8 @@ import com.jmex.physics.JointAxis;
 
 
 /**
+ * Linear actuator for the JME based simulation
+ * 
  * @author david
  *
  */

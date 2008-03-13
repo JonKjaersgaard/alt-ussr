@@ -7,6 +7,11 @@ import ussr.model.ControllerImpl;
 import ussr.model.Module;
 import ussr.model.Sensor;
 
+/**
+ * Controller for the MTRAN robot
+ * 
+ * @author ups
+ */
 public abstract class MTRANController extends ControllerImpl implements PacketReceivedObserver {
 
 	boolean blocking;

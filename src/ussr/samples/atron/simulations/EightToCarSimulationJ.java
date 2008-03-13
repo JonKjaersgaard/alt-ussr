@@ -18,10 +18,9 @@ import ussr.samples.atron.ATRONController;
 import ussr.samples.atron.GenericATRONSimulation;
 
 /**
- * @author ups
- *
- * TODO Write a nice and user-friendly comment here
+ * Port of the eight-to-car simulation to Java
  * 
+ * @author ups
  */
 public class EightToCarSimulationJ extends GenericATRONSimulation {
 

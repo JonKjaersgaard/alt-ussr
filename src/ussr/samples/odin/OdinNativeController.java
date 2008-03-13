@@ -3,19 +3,14 @@
  */
 package ussr.samples.odin;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import ussr.model.NativeController;
 import ussr.model.NativeControllerProvider;
-import ussr.samples.atron.ATRONController;
 
 
 /**
- * @author ups
- *
- * TODO Write a nice and user-friendly comment here
+ * Odin controller for loading the controller implementation from a native library
  * 
+ * @author ups
  */
 public class OdinNativeController extends NativeController {
 	
