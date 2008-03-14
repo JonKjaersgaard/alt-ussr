@@ -21,7 +21,7 @@ import ussr.samples.atron.ATRONController;
 import ussr.samples.atron.GenericATRONSimulation;
 
 /**
- * Port of the eight-to-car simulation to Java
+ * Port of the eight-to-car simulation to Java.  Classical ATRON self-reconfiguration example.
  * 
  * @author ups
  */

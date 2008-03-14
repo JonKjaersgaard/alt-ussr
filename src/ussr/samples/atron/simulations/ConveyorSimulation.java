@@ -24,7 +24,7 @@ import ussr.samples.atron.ATRONBuilder.ModuleSelector;
 import ussr.samples.atron.ATRONBuilder.Namer;
 
 /**
- * A simulation of an ATRON conveyor belt that moves a box
+ * A simulation of an ATRON conveyor belt that moves a box. Preliminary!
  * 
  * @author Modular Robots @ MMMI
  */

@@ -39,33 +39,36 @@ public class ATRONCarController1 extends ATRONController {
         boolean firstTime = true;
         while(true) {
         	
-        	if(!module.getSimulation().isPaused()) {
-                if(!GenericSimulation.getActuatorsAreActive()) { yield(); firstTime = true; continue; }
-        		String name = module.getProperty("name");
-        		if(firstTime) {
-                    firstTime = false;
-        		    if(name=="wheel1") rotateContinuous(dir);
-        		    if(name=="wheel2") rotateContinuous(-dir);
-        		    if(name=="wheel3") rotateContinuous(dir);
-        		    if(name=="wheel4") rotateContinuous(-dir);
-        		    if(name=="axleOne5" && firstTime) {
-        		        this.rotateDegrees(10);
-        		    }
-        		}
-
-                float max_prox = Float.NEGATIVE_INFINITY;
-                for(Sensor s: module.getSensors()) {
-                    if(s.getName().startsWith("Proximity")) {
-                        float v = s.readValue();
-                        max_prox = Math.max(max_prox, v);
-                    }
+            // Enable stopping the car interactively:
+            if(!GenericSimulation.getActuatorsAreActive()) { yield(); firstTime = true; continue; }
+            
+            // Basic control: first time we enter the loop start rotating and turn the axle
+            String name = module.getProperty("name");
+            if(firstTime) {
+                firstTime = false;
+                if(name=="wheel1") rotateContinuous(dir);
+                if(name=="wheel2") rotateContinuous(-dir);
+                if(name=="wheel3") rotateContinuous(dir);
+                if(name=="wheel4") rotateContinuous(-dir);
+                if(name=="axleOne5" && firstTime) {
+                    this.rotateDegrees(10);
                 }
-                if(name.startsWith("wheel")&&Math.abs(lastProx-max_prox)>0.01) {
-                    System.out.println("Proximity "+name+" max = "+max_prox);
-                    lastProx = max_prox; 
-                }
+            }
 
-        	}
+            // Print out proximity information
+            float max_prox = Float.NEGATIVE_INFINITY;
+            for(Sensor s: module.getSensors()) {
+                if(s.getName().startsWith("Proximity")) {
+                    float v = s.readValue();
+                    max_prox = Math.max(max_prox, v);
+                }
+            }
+            if(name.startsWith("wheel")&&Math.abs(lastProx-max_prox)>0.01) {
+                System.out.println("Proximity "+name+" max = "+max_prox);
+                lastProx = max_prox; 
+            }
+
+            // Always call yield sometimes
         	yield();
         }
     }

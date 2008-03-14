@@ -20,7 +20,7 @@ import ussr.samples.atron.ATRON;
 import ussr.samples.atron.GenericATRONSimulation;
 
 /**
- * A sample ATRON simulation
+ * A simulation for the ATRON used to test the physical properties of the module
  * @author Modular Robots @ MMMI
  */
 public class ATRONTestSimulation extends GenericATRONSimulation {

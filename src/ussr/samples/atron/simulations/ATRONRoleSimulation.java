@@ -19,7 +19,7 @@ import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.atron.GenericATRONSimulation;
 
 /**
- * A sample simulation based on the ATRON robot
+ * An ATRON simulation for role-based control - <strong>currently broken</strong>
  * 
  * @author Modular Robots @ MMMI
  */

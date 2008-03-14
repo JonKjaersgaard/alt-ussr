@@ -20,14 +20,13 @@ public class ATRONSimpleVehicleController1 extends ATRONController {
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
+        yield();
         byte dir = 1;
         while(true) {
-        	if(!module.getSimulation().isPaused()) {
-        		String name = module.getProperty("name");
-    			if(name=="RearRightWheel") rotateContinuous(dir);
-    			if(name=="RearLeftWheel") rotateContinuous(-dir);
-        	}
-        	Thread.yield();
+            String name = module.getProperty("name");
+            if(name=="RearRightWheel") rotateContinuous(dir);
+            if(name=="RearLeftWheel") rotateContinuous(-dir);
+            yield();
         }
     }
 }

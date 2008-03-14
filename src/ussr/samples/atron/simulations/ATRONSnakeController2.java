@@ -30,10 +30,8 @@ public class ATRONSnakeController2 extends ATRONController {
      */
     public void activate() {
         while(true) {
-        	if(!module.getSimulation().isPaused()) {
-        		snakeSelfReconfigure();
-        	}
-        	Thread.yield();
+            snakeSelfReconfigure();
+        	yield();
         }
     }
     private int getRole() {

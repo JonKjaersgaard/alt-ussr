@@ -16,7 +16,7 @@ import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 
 /**
- * Extension of the {@link EightToCarSimulationJ} example to use snake and car modes of locomotion
+ * Extension of the {@link EightToCarSimulationJ} example to use snake and car modes of locomotion.
  * 
  * @author ups
  */

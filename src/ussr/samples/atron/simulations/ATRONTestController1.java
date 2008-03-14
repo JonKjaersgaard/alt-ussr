@@ -15,7 +15,7 @@ import ussr.physics.PhysicsParameters;
 import ussr.samples.atron.ATRONController;
 
 /**
- * A sample controller for the ATRON
+ * A controller for the ATRON used to test the physical parameters of the module
  * 
  * @author Modular Robots @ MMMI
  *

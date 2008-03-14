@@ -15,7 +15,9 @@ import ussr.samples.GenericSimulation;
 import ussr.samples.atron.ATRONController;
 
 /**
- * A sample controller for the ATRON
+ * A sample controller for the ATRON that works with different configurations.  
+ * Contains many fragments of controllers that will be nicely
+ * integrated real soon now but are not so organized at the moment.
  * 
  * @author Modular Robots @ MMMI
  *
@@ -27,21 +29,20 @@ public class ATRONSampleController1 extends ATRONController {
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
+        yield();
         while(true) {
-        	if(!module.getSimulation().isPaused()) {
-        		String name = module.getProperty("name");
-    			float time = module.getSimulation().getTime();
-        		//rotate((float)(Math.sin(time)+1)/2f);
-    			if(name=="hermit") this.rotateToDegreeInDegrees(45);
-    			if(name=="wheel1") rotateContinuous(1);
-    			if(name=="wheel2") rotateContinuous(-1);
-    			if(name=="wheel3") rotateContinuous(1);
-    			if(name=="wheel4") rotateContinuous(-1);
-    			if(name.contains("snake")) snakeControl();
-    			if(!GenericSimulation.getConnectorsAreActive()) {
-    				disconnectAll();
-    			}
-        	}
+            String name = module.getProperty("name");
+            float time = module.getSimulation().getTime();
+            //rotate((float)(Math.sin(time)+1)/2f);
+            if(name=="hermit") this.rotateToDegreeInDegrees(45);
+            if(name=="wheel1") rotateContinuous(1);
+            if(name=="wheel2") rotateContinuous(-1);
+            if(name=="wheel3") rotateContinuous(1);
+            if(name=="wheel4") rotateContinuous(-1);
+            if(name.contains("snake")) snakeControl();
+            if(!GenericSimulation.getConnectorsAreActive()) {
+                disconnectAll();
+            }
         	Thread.yield();
         }
     }

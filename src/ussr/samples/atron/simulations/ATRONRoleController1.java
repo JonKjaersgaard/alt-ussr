@@ -17,7 +17,7 @@ import ussr.samples.GenericSimulation;
 import ussr.samples.atron.ATRONController;
 
 /**
- * A sample controller for the ATRON
+ * An ATRON simulation for role-based control - <strong>currently broken</strong>
  * 
  * @author Modular Robots @ MMMI
  *
@@ -36,7 +36,7 @@ public class ATRONRoleController1 extends ATRONController {
     				disconnectAll();
     			}*/
         	}
-        	Thread.yield();
+        	yield();
         }
     }
     public void handleMessage(byte[] message, int messageSize, int channel) {
