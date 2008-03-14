@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import samples.odin.simulations.OdinSampleController3;
+import samples.odin.simulations.OdinSimulation3;
 import ussr.description.Robot;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
@@ -33,8 +35,6 @@ import ussr.samples.odin.modules.OdinHinge;
 import ussr.samples.odin.modules.OdinMuscle;
 import ussr.samples.odin.modules.OdinWheel;
 import ussr.samples.odin.simulations.OdinSampleController1;
-import ussr.samples.odin.simulations.OdinSampleController3;
-import ussr.samples.odin.simulations.OdinSimulation3;
 
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
