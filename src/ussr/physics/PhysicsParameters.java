@@ -29,10 +29,10 @@ public class PhysicsParameters {
     // Use e.g. PhysicsParameters.get().setPhysicsSimulationStepSize(0.0001f);
     // This can be called from the main method of your simulation 
     private float physicsSimulationStepSize = 0.005f;
-    private boolean realisticCollision = false;
+    private boolean realisticCollision = true; // true = less likely to cause trouble, more user friendly
     private float gravity =-9.82f;
     private Material planeMaterial = Material.RUBBER;
-    private boolean maintainRotationalJointPositions = false;
+    private boolean maintainRotationalJointPositions = true; // true = more user friendly
     private boolean hasMechanicalConnectorSpringiness = false;
     private float mechanicalConnectorSpringConstant;
     private float mechanicalConnectorDamping;
