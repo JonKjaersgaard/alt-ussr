@@ -7,18 +7,56 @@
 <h1>USSR FAQ</h1>
 
 This section of the manual contains various frequently asked questions
-regarding use of the simulator.
+regarding use of the simulator.  For answers other questions, please contact the 
+maintainer <a href="mailto:ups@mmmi.sdu.dk">Ulrik P Schultz</a>.
 
 <h2>Installation FAQs</h2>
 
-<h3>Q1: Why does eclipse display an error that external libraries (jar
-  files) cannot be found, after having checked out USSR from the MMMI
-  SVN repository?</h3>
+<h3>Qi1: Why does eclipse display an error that external libraries (jar
+  files) cannot be found, after having initially installed/checked out USSR?</h3>
 
-<strong>A1:</strong> There appears to be some cross-platform issue with
+<strong>Ai1:</strong> There appears to be some cross-platform issue with
 the path setup.  Remove all the jar files, wait for the system to
-build (with lots of errors), then add the jar files again.
+build (with lots of errors), then add the jar files again.  See Q2 for
+a description of what jar files needs to be added and Q3 for a brief
+description of how to do this in eclipse.
 
+<h3>Qi2: What jar files and native libraries and source paths and so on
+  are required for USSR to run?</h3>
+
+<strong>Ai2:</strong> See
+the <a href="installation.html">installation</a> section of the
+manual, look under <i>Installation without eclipse</i>.  Basically,
+you need to add all the jar files from <tt>zoo/jME/lib</tt> as well as the
+native library paths and the source paths listed in the installation section.
+
+<h3>Qi3: How do I change the Java paths for Q2 in eclipse?</h3>
+
+<strong>Ai3:</strong> Right-click on the project in the package
+explorer view, choose <strong>Properties</strong>, then <strong>Java build
+path</strong>.  In this view you need to set up
+the <strong>Source</strong> and <strong>Libraries</strong> as
+specified in Q2.
+
+<h2>Simulation FAQ</h2>
+
+<h3>Qs1: How do I make my simulation run faster?</h3>
+
+<strong>As1:</strong> Modifying the parameters
+in <a href="api/ussr/physics/PhysicsParameters.html">ussr.physics.PhysicsParamters</a>
+can have a significant influence on performance: increase step size,
+turn off realistic collisions, turn of maintain joint positions,
+reduce the resolution factor for spherical geometries.  Moreover,
+switching to act-based controllers (see <a href="api/ussr/model/ActBasedController.html">ussr.model.ActBasedController</a>) improves performance when there are many modules in the simulation.
+
+<h3>Qs2: What are the spatial orientations in the simulator and in the ATRON rotations used 
+for assembling robots?</h3>
+
+<strong>As2:</strong> The ATRON orientations concern the rotation of
+the central axis (around which the main joint rotates).  In the
+initial view, x is left-to-right which is called east-west in the
+ATRON rotations, y is down-to-up, whereas z is the perspective which
+is called north-south.
 
 </body>
 </html>

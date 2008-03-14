@@ -7,7 +7,97 @@
 <h1>USSR Installation</h1>
 
 We recommend using the eclipse IDE to develop software using USSR, but
-any editor and Java compiler should do the job.
+any editor and Java compiler should do the job.  Linux users please
+note that Sun's own Java implementation is apparently needed for
+eclipse and USSR to run correctly.
+
+<h2>Installation with eclipse</h2>
+
+To work with USSR using eclipse, follow these steps.
+
+<ol>
+
+<li>Unzip the archive containing USSR.</li>
+
+<li>If you have not already done so, install <a href="eclipse.org">eclipse</a>.
+  (First-time eclipse users may want to follow the eclipse tutorial before proceeding with
+  USSR.)</li>
+
+<li>Create a project: From the eclipse menu, choose <strong>File: New: Java
+  Project</strong>, type in the project name (e.g., <tt>ussr</tt>), pick <strong>Create
+  project from existing source</strong>, use the browse button to locate the root of the
+  unzipped USSR distribution, and click <strong>Finish</strong>.  If eclipse asks you
+  whether to use subversion control, answer no.</li>
+
+<li>After building you should be able to run the examples, as described in
+the <a href="usage.html">usage</a> section.</li>
+
+</ol>
+
+If eclipse was for some reason unable to read the project settings such as the classpath,
+compilation will fail.  See the installation part of the <a href="faq.html">FAQ</a> for a
+specification of how to set up the class path.
+
+<h2>Installation without eclipse</h2>
+
+To work with USSR without eclipse, simply start by unzipping the archive.  The compiled
+Java files are in the <tt>bin</tt> subdirectory, ready to run.  Nevertheless, USSR has a
+significant number of runtime and compiletime dependencies within the project, as
+follows.  (If the settings in eclipse for some reason cannot be automatically important,
+the following information also has to be entered manually in the project properties.)
+
+<ul>
+
+<li>When running USSR, the classpath must include the following:
+<pre>
+zoo/jME/lib/native-mac.jar
+zoo/jME/lib/lwjgl.jar
+zoo/jME/lib/lwjgl_util.jar
+zoo/jME/lib/lwjgl_util_applet.jar
+zoo/jME/lib/lwjgl_test.jar
+zoo/jME/lib/lwjgl_fmod3.jar
+zoo/jME/lib/lwjgl_applet.jar
+zoo/jME/lib/jorbis-0.0.12.jar
+zoo/jME/lib/jogg-0.0.5.jar
+zoo/jME/lib/jinput.jar
+</pre>
+(In to addition the <tt>bin</tt> directory which must of course also be included on the
+command line.)
+</li>
+
+<li>Moreover, when running USSR, the native library path must include the following directories:
+<pre>
+zoo/jME/lib
+zoo/jmephysics/impl/ode/lib
+</pre>
+</li>
+
+<li>When compiling USSR, the source path must include the following directories:
+<pre>
+zoo/jME/src
+zoo/jmephysics/impl/ode/src
+</pre>
+(In addition to the <tt>src</tt> directory which must of course also be included on the
+command line.)
+Note that these directories are needed when compiling, but assuming they are also compiled into
+the <tt>bin</tt> directory, they are not needed on the classpath.
+</li>
+
+</ul>
+
+Assuming the variable <tt>USSRHOME</tt> points to the root directory of the USSR
+distribution, the command lines needed to run the simulations and compile simulations or
+projects that use the USSR framework are thus the following on a unix machine:
+
+<pre>
+export USSRCLASSPATH=${USSRHOME}/bin:${USSRHOME}/zoo/jME/lib/native-mac.jar:${USSRHOME}/zoo/jME/lib/lwjgl.jar:${USSRHOME}/zoo/jME/lib/lwjgl_util.jar:${USSRHOME}/zoo/jME/lib/lwjgl_util_applet.jar:${USSRHOME}/zoo/jME/lib/lwjgl_test.jar:${USSRHOME}/zoo/jME/lib/lwjgl_fmod3.jar:${USSRHOME}/zoo/jME/lib/lwjgl_applet.jar:${USSRHOME}/zoo/jME/lib/jorbis-0.0.12.jar:${USSRHOME}/zoo/jME/lib/jogg-0.0.5.jar:${USSRHOME}/zoo/jME/lib/jinput.jar
+export USSRNATIVEPATH=${USSRHOME}/zoo/jME/lib:${USSRHOME}/zoo/jmephysics/impl/ode/lib
+export USSRSOURCEPATH=${USSRHOME}/src:${USSRHOME}/zoo/jME/src:${USSRHOME}/zoo/jmephysics/impl/ode/src
+java -classpath ${USSRCLASSPATH} -Djava.library.path=${USSRNATIVEPATH} [Java class name]
+javac -classpath ${USSRCLASSPATH} -sourcepath ${USSRSOURCEPATH} [Java source files]
+</pre>
+
+(Windows users should modify the path specifications appropriately.)
 
 </body>
 </html>
