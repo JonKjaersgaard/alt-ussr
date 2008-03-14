@@ -29,6 +29,7 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
     protected void changeWorldHook(WorldDescription world) {
         world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
         world.setHasBackgroundScenery(false);
+        world.setHeavyObstacles(true);
         ObstacleGenerator generator = new ObstacleGenerator();
         generator.setNumberOfCircleObstacles(64);
         generator.setNumberOfCircleLayers(1);

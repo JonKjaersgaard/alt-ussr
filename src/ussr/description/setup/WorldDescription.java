@@ -106,7 +106,7 @@ public class WorldDescription extends Description {
     /**
      * Light or heavy obstacles?
      */
-    private boolean heavyObstacles = true;
+    private boolean heavyObstacles = false;
     
     /**
      * Get the number of modules initially placed in the simulation
