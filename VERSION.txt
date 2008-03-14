@@ -1,2 +1,7 @@
-0_1
-Version 0.1: pre-release for initial feedback and experimentation
+v1_0
+Version 1.0: first stable release (works, but expect many API changes)
+
+Changes since earlier releases:
+
+  0.1: Massive restructuring and numerous new features
+ 
