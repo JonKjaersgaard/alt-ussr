@@ -3,17 +3,19 @@ package onlineLearning.realAtron;
 import java.io.IOException;
 import java.util.Random;
 
-import onlineLearning.realAtron.comm.AtronSpotComm;
-import onlineLearning.realAtron.comm.LearningMessage;
-import onlineLearning.realAtron.comm.SpiMessage;
+import onlineLearning.realAtron.comm.messages.LearningMessage;
+import onlineLearning.realAtron.comm.messages.SpiMessage;
+import onlineLearning.realAtron.comm.sockets.AtronSpotServer;
+import onlineLearning.realAtron.comm.spot.AtronSpotComm;
 import onlineLearning.realAtron.odometer.MouseVelocityHandler;
 import onlineLearning.realAtron.tracking.ATRONTracker;
 import onlineLearning.realAtron.tracking.ATRONTrackerGUI;
+
 import com.jme.math.Vector2f;
 
 public class FitnessManager {
 	boolean communication = true;
-	AtronSpotComm atronComm;
+	AtronSpotServer atronComm;
 	LearningMessage atronMsg;
 	
 	enum AtronState {LEARNING, PAUSED};
@@ -68,9 +70,7 @@ public class FitnessManager {
 			byte[] data = null;
 			SpiMessage spiMsg = new SpiMessage();
 			while(true) {
-				try {
-					data = atronComm.read();
-				} catch (IOException e) {e.printStackTrace();}
+				data = atronComm.read();
 				spiMsg.fromByteArray(data);
 				System.out.println("Modtaget: "+spiMsg.toString());
 			}
@@ -99,7 +99,7 @@ public class FitnessManager {
 			trackerGUI = ATRONTrackerGUI.startGUI(tracker);
 		}
 		if(communication) {
-			atronComm = new AtronSpotComm();
+			atronComm = new AtronSpotServer();
 			atronMsg = new LearningMessage();
 			new AtronReaderThread().start();
 		}

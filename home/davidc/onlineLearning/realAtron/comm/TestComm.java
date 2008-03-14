@@ -1,6 +1,9 @@
 package onlineLearning.realAtron.comm;
 import java.io.IOException;
 
+import onlineLearning.realAtron.comm.messages.LearningMessage;
+import onlineLearning.realAtron.comm.spot.AtronSpotComm;
+
 
 public class TestComm {
 	static AtronSpotComm atronComm;

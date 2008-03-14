@@ -1,32 +1,27 @@
-package onlineLearning.realAtron.comm;
+package onlineLearning.realAtron.comm.sockets;
 
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-public class AtronSpotServer {
+public class AtronSpotServer extends AtronSocket {
+	ServerSocket atronService;
+	Socket serviceSocket = null;
 	public AtronSpotServer() {
-		ServerSocket atronService;
-		Socket serviceSocket = null;
-		DataInputStream input;
-		DataOutputStream output;
 		try {
+			System.out.println("Server Running");
 			atronService = new ServerSocket(1058);
 			serviceSocket = atronService.accept();
+			System.out.println("Client accepted");
 			input = new DataInputStream(serviceSocket.getInputStream());
 			output = new DataOutputStream(serviceSocket.getOutputStream());
-			while(true) {
-				System.out.println("Client sending 1,2,3");
-				output.write(new byte[] {1,2,3},0,3);
-				output.flush();
-				
-			}
 		}
 		catch (Exception e) {
 			System.out.println(e);
 		}
 	}
+	
 	public static void main(String[] args) {
 		new AtronSpotServer();
 	}
