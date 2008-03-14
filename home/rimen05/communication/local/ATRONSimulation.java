@@ -4,7 +4,7 @@
  * This software is distributed under the BSD open-source license.
  * For licensing see the file LICENCE.txt included in the root of the USSR distribution.
  */
-package ussr.samples.atron.simulations;
+package communication.local;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,10 +28,10 @@ import ussr.samples.atron.ATRONBuilder;
  * @author Modular Robots @ MMMI
  *
  */
-public class ATRONSimulation1 extends GenericSimulation {
+public class ATRONSimulation extends GenericSimulation {
 	
     public static void main( String[] args ) {
-        new ATRONSimulation1().main();
+        new ATRONSimulation().main();
     }
 
     public void main() {
@@ -57,7 +57,7 @@ public class ATRONSimulation1 extends GenericSimulation {
     protected Robot getRobot() {
         return new ATRON() {
             public Controller createController() {
-                return new ATRONSampleController1();
+                return new ATRONControllerLocal();
             }
         };
     }
