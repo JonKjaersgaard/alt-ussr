@@ -33,7 +33,7 @@ public class OdinController extends ussr.samples.odin.OdinController {
     static int ne = 0;
     static int nt = 0;
     //static int e = ((int)(1/pe));
-    static int e = (int)(pe*100);
+    static int e = (int)((pe*100)-1);
     static int id = -1;
     static boolean idDone = false;
     //static boolean peDone = false;
@@ -44,7 +44,7 @@ public class OdinController extends ussr.samples.odin.OdinController {
     int[] counters;
     int time = 0;
     List<Color> lastColors;
-    static float commInterval = 0.5f;
+    static float commInterval = 1.0f;
     static float blinkInterval = 0.5f*commInterval;
     //We can also access modules, which is a protected attribute of a parent class.
     
