@@ -8,7 +8,8 @@ import net.tinyos.util.PrintStreamMessenger;
 
 
 public class AtronSpotComm {
-	String sourceStr = "sf@localhost:9002";
+	//String sourceStr = "sf@localhost:9002";
+	String sourceStr = "sf@10.194.95.255:9002";
 	PacketSource source; 
 	boolean debugPrint = false;
 	public AtronSpotComm() {
@@ -16,7 +17,8 @@ public class AtronSpotComm {
 	}
 	public void init() {
 		try {
-			source = BuildSource.makePacketSource(sourceStr);
+			//source = BuildSource.makePacketSource(sourceStr);
+			source = BuildSource.makeArgsSF("10.194.95.255:9002");
 			System.out.print("Opening source");
 			source.open(PrintStreamMessenger.err);
 			System.out.println("...done");

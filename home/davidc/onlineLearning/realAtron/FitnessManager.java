@@ -104,6 +104,9 @@ public class FitnessManager {
 			new AtronReaderThread().start();
 		}
 		waitForReady();
+		if(fitnessType==FitnessType.VISION) {
+			tracker.setBackgroundImage(trackerGUI.grapFrame());
+		}
 	}
 	private void waitForReady() {
 		try {

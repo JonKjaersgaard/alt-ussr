@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FileDialog;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -15,11 +14,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.FileOutputStream;
+import java.util.Vector;
 
 import javax.media.Buffer;
 import javax.media.CaptureDeviceInfo;
+import javax.media.CaptureDeviceManager;
 import javax.media.Format;
 import javax.media.Manager;
 import javax.media.MediaLocator;
@@ -65,27 +65,21 @@ public class ATRONTrackerGUI extends Panel implements ActionListener
     
     findATRON = new JButton("Find ATRONs");
     findATRON.addActionListener(this);
-    /*
+    
     String str1 = "vfw:Logitech USB Video Camera:0";
     String str2 = "vfw:Microsoft WDM Image Capture (Win32):0";
     Vector v = CaptureDeviceManager.getDeviceList(null);
-    System.out.println("Capture devices detected "+v.size());
+    /*System.out.println("Capture devices detected "+v.size());
     for(int i=0;i<v.size();i++) {
     	CaptureDeviceInfo cInfo = (CaptureDeviceInfo)v.get(i);
     	System.out.println(i+" : "+ cInfo.toString());
-    }
-    di = CaptureDeviceManager.getDevice(str1);
-    //ml = di.getLocator();
-    */
-    Frame frame = new Frame();
-	FileDialog fd = new FileDialog(frame, "Load File", FileDialog.LOAD);
-	fd.setVisible(true);
-	
-    ml = new MediaLocator("file://"+fd.getDirectory()+fd.getFile());
+    }*/
+    di = CaptureDeviceManager.getDevice(str2);
+    ml = di.getLocator();
     try 
     {
       player = Manager.createRealizedPlayer(ml);
-      //setFormat();
+      setFormat();
       player.start();
       
       Component comp;
@@ -162,11 +156,11 @@ public class ATRONTrackerGUI extends Panel implements ActionListener
     if (c == capture) 
     {
     	img = grapFrame();
-      // show the image
-      imgpanel.setImage(img.getScaledInstance(dim0, dim1, 24));
+    	// show the image
+    	imgpanel.setImage(img.getScaledInstance(dim0, dim1, 24));
       
-      // save image
-      saveJPG(img,"c:\\test.jpg");
+    	// 	save image
+    	saveJPG(img,"c:\\test.jpg");
     }
     if(c == findATRON) {
     	System.out.println("Finding ATRONS");
