@@ -9,10 +9,7 @@ package ussr.samples;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
-import samples.odin.simulations.OdinSampleController3;
-import samples.odin.simulations.OdinSimulation3;
 import ussr.description.Robot;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
@@ -22,7 +19,6 @@ import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
-import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.samples.atron.ATRON;
@@ -37,7 +33,6 @@ import ussr.samples.odin.modules.OdinWheel;
 import ussr.samples.odin.simulations.OdinSampleController1;
 
 import com.jme.math.Quaternion;
-import com.jme.math.Vector3f;
 
 /**
  * Sample simulation showing multiple robot types in the same simulation
