@@ -39,10 +39,13 @@ public class ATRONSimulation extends GenericSimulation {
         setConnectorsAreActive(true);
         WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
+        //
+        world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+        //
         List<ModulePosition> modulePos;
         ATRONBuilder builder = new ATRONBuilder(); 
-        //modulePos = buildAsLattice(5,2,4,1);
-        modulePos = builder.buildCar(4, new VectorDescription(0,-0.25f,0));
+        modulePos = builder.buildAsLattice(5,5,5,5);
+        //modulePos = builder.buildCar(4, new VectorDescription(0,-0.25f,0));
        // modulePos = buildSnake(2);
         // modulePos = Arrays.asList(new WorldDescription.ModulePosition[] { new WorldDescription.ModulePosition("hermit", new VectorDescription(2*0*unit,0*unit,0*unit), rotation_EW) });
         world.setModulePositions(modulePos);

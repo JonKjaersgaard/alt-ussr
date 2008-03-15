@@ -24,6 +24,10 @@ public class ATRONControllerLocal extends ATRONController {
 
 	private int[] roleOfConnector = {-1,-1,-1,-1,-1,-1,-1,-1};
     /**
+     * This method differs from the Odin Controller's one, because we have
+     * just one type of module in ATRON. Therefore, the infinite loop begins
+     * here and not at another methods (muscleControl and so on...).
+     * 
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
