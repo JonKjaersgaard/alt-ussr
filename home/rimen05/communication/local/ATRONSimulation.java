@@ -60,7 +60,7 @@ public class ATRONSimulation extends GenericSimulation {
     protected Robot getRobot() {
         return new ATRON() {
             public Controller createController() {
-                return new ATRONControllerLocal();
+                return new ATRONController();
             }
         };
     }
