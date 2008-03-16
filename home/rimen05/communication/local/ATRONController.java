@@ -44,7 +44,7 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
     int[] counters;
     int time = 0;
     List<Color> lastColors;
-    static float commInterval = 1.0f;
+    static float commInterval = 0.1f;
     static float blinkInterval = 0.5f*commInterval;
     //We can also access modules, which is a protected attribute of a parent class.
 
@@ -70,7 +70,7 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
         	int counter = 0;
         	while(!idDone){
                 pos = rand.nextInt(modules.size());
-                OdinController controller = (OdinController)(modules.get(pos)).getController();
+                ATRONController controller = (ATRONController)(modules.get(pos)).getController();
                 if(Imod == 0){
                 	Imod++;
                 	controller.color = 1;//purple
@@ -80,12 +80,7 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
                 	idDone = true;
                 }
             }
-        	/*for(int i=0; i<modules.size(); i++){
-        		OdinController controller = (OdinController)(modules.get(i)).getController(); 
-                if(controller.type=="OdinMuscle"){
-                	counter++;
-                }
-        	}*/
+
         	counter = modules.size();
         	ne = ((int)(pne*counter));
         	nt = counter;
@@ -149,6 +144,16 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
         }
     }
 	
+    /**
+     * This handler decide what to do with the messages the modules receive.
+     */
+    public void handleMessage(byte[] message, int messageSize, int channel) {
+    	
+    	(counters[channel])++;
+    	channels[channel] = message[0];
+
+    }
+    
     /**
      * 
      * This method should be on the ATRONController class, which I will not

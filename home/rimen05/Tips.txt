@@ -1,0 +1,39 @@
+How can i run java programs on linux?(I got SUSE linux.i have been doing them on windows)
+
+You use the same commands on Linux (and Mac OS X and other Unix) as you do on MS-Windows.
+Be aware they must be all in lowercase since Linux (like Unix) is completely case sensitive
+when it comes to file and directory names.
+
+What changes going from MS-Windows to these Unix/Linux-based operating systems is:
+
+   1. CLASSPATH uses colon (:) instead of semicolon (;) as the jar/directory name separator
+   2. CLASSPATHmust be capitalized (not sure if lower/mixed case is okay on MS-Windows it
+      must definitely be uppercase)
+   3. same rules for CLASSPATH value apply for -classpath command-line argument values
+   4. directory/filenames are case-sensitive – so do not write MyFile.txt as MYFILE.TXT!
+   5. directory/filename delimiter in file paths is forward slash (/) instead of backslash (\)
+
+These are basically operating system wide conventions. Java is just following the norms for
+the OS it is running on in these cases.
+
+By the way, in your own programs, make sure you use the features in the java.io.File class
+so your program is compatible with the OS it runs on.
+
+Also, when launching Java programs from .class files and creating .java files – remember that
+Java is always case sensitive for class names (and their respective file names) – regardless
+of the OS being used.
+
+One more thing. If you are running a Java application and there is no windowing system (e.g.
+no X Windows) then you must launch with -Djava.awt.headless=true . This often happens when
+running a web server like Tomcat or an EJB server like JBoss. Read Sun’s explanation for more
+info on headless mode.
+
+You might find the Linux strace command very helpful for troubleshooting system problems with
+your application. It lets you monitor kernel calls.
+It is the Linux equivalent of the truss command on Solaris/SunOS and the ktrace command on Mac
+OS X. It can be a life-saver when things go totally sideways and you just want to see what is
+going on inside the JVM’s head.
+
+Java Programming on Linux was very helpful but it is out of print now. You might find it at a
+library or a used bookstore. However, the tips I have given will probably be sufficient to
+keep you from getting tripped up by the switch to Linux.
