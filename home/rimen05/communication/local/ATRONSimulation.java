@@ -68,7 +68,7 @@ public class ATRONSimulation extends GenericSimulation {
             }
         };
         
-        int nModules=25, xMax=5, yMax=1,zMax=5;//Plane
+        int nModules=20, xMax=10, yMax=1,zMax=4;//Plane
         
         int index=0;
         for(int x=0;x<xMax;x++) {
@@ -106,11 +106,14 @@ public class ATRONSimulation extends GenericSimulation {
                 }
             }
         }
-        
+                
         ArrayList<ModuleConnection> connections = allConnections(modulePos);
+        System.out.println("#connection found = "+connections.size());
         world.setModuleConnections(connections);
-        
+        System.out.println("#Modules Placed = "+modulePos.size());
         world.setModulePositions(modulePos);
+        //System.out.println("#Total         = "+modulePos.size());
+        System.out.println("#Modules per Interface (avg)= "+(1+(((float)(2*connections.size()))/((float)(8*modulePos.size())))));
         
         this.runSimulation(world,true);
     }

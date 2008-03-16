@@ -44,7 +44,7 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
     int[] counters;
     int time = 0;
     List<Color> lastColors;
-    static float commInterval = 0.1f;
+    static float commInterval = 0.5f;
     static float blinkInterval = 0.5f*commInterval;
     //We can also access modules, which is a protected attribute of a parent class.
 
