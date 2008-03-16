@@ -1,6 +1,6 @@
 package atron.spot;
 import java.util.List;
-
+//
 import ussr.model.Sensor;
 import ussr.samples.atron.*;
 /**
