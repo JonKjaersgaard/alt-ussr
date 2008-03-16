@@ -22,10 +22,6 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
 	
 	static Random rand = new Random(System.currentTimeMillis());
 
-    float timeOffset=0;
-    //public byte[] msg = {0};
-    public byte[] msg = {'n'};//non-informed module (default)
-    public int color = 0;
     /*BEGIN TO BE SET*/
     static float pe = 0.1f; //0 to 1, modules sending information out.
     static float pne = 1.0f; //0 to 1, modules the information is transmitted to.
@@ -36,16 +32,21 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
     static int e = (int)((pe*100)-1);
     static int id = -1;
     static boolean idDone = false;
-    //static boolean peDone = false;
     static boolean txDone = false;
     static int Imod = 0;
-    //int receivingChannel = -1;
-    byte[] channels;
-    int[] counters;
-    int time = 0;
-    List<Color> lastColors;
-    static float commInterval = 0.5f;
+    
+    static int time = 0;
+    static int activityCounter = 0; //How many modules are done before next time.
+    static float lastTime = 0;
+    static float commInterval = 0.1f;
     static float blinkInterval = 0.5f*commInterval;
+    
+    public byte[] msg = {'n'};//non-informed module (default)
+    public int color = 0;
+    public byte[] channels;
+    public int[] counters;
+    public List<Color> lastColors;
+    public boolean done = false;
     //We can also access modules, which is a protected attribute of a parent class.
 
     
@@ -61,29 +62,34 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
     	delay(1000);
     	
     	/***************************************/
+    	
+    	List<Module> modules = module.getSimulation().getModules();
+    	ATRONController controller;
+    	
     	//This process is done until I have selected the one propagating module.
     	//Only in the activation of the first module. Watch out, many modules are
     	//activated at the same time...
     	if(!idDone){//I randomly select the propagating module
-        	List<Module> modules = module.getSimulation().getModules();
         	int pos = 0;
         	int counter = 0;
         	while(!idDone){
+        		//List<Module> modules = module.getSimulation().getModules();
                 pos = rand.nextInt(modules.size());
-                ATRONController controller = (ATRONController)(modules.get(pos)).getController();
-                if(Imod == 0){
-                	Imod++;
+                controller = (ATRONController)(modules.get(pos)).getController();
+                if(ATRONController.Imod == 0){
+                	ATRONController.Imod++;
                 	controller.color = 1;//purple
                 	controller.setColor(0.5f,0.5f,1);//paint purple
                 	controller.msg[0] = 'i';//become informed module
-                	id = controller.getModule().getID();
-                	idDone = true;
+                	ATRONController.id = controller.getModule().getID();
+                	ATRONController.idDone = true;
+                	ATRONController.lastTime = module.getSimulation().getTime();
                 }
             }
 
         	counter = modules.size();
-        	ne = ((int)(pne*counter));
-        	nt = counter;
+        	ATRONController.ne = ((int)(pne*counter));
+        	ATRONController.nt = counter;
         	System.out.println("ne = "+ne);
         	System.out.println("simulation");
     	}
@@ -95,50 +101,66 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
 
     	/***************************************/
     	
-    	
-    	//float lastTime = module.getSimulation().getTime()+timeOffset;
-    	float lastTime = module.getSimulation().getTime();
+    	//float lastTime = module.getSimulation().getTime();
     	while(true) {
 			module.getSimulation().waitForPhysicsStep(false);
 			
-			if((lastTime+commInterval)<module.getSimulation().getTime()){
-				
-				if(module.getID()==id && !txDone){//Check if we transmitted to "ne" modules already...
-					System.out.print("{"+time+","+((float)Imod/(float)nt)+"},");
-					time++;
-					if(Imod>=ne){
-						System.out.println("\nInformation Transmitted");
-						//System.out.println("Time = "+time);
-						txDone = true;
-					}
-				}
-				
+			if(!done && ATRONController.activityCounter < nt){
 				if(rand.nextInt(100) <= e){//Propagate info with probability pe
 					for(int x=0; x<channels.length; x++){
 						sendMessage(msg, (byte)msg.length,(byte)x);
+						//the module itself may produce collisions...
+						(counters[x])++;
+				    	channels[x] = msg[0];
 					}
 					setColor(0,1,0);//blink green
 				}
-				
-				//Check if information is received by a non-informed module
-				for(int x=0; x<channels.length; x++){
-					if(counters[x]==1 && channels[x]=='i' && color!=1){
-						//information received by a non-informed module
-						color = 1;
-						setColor(0.5f,0.5f,1);//paint purple
-						lastColors = module.getColorList();
-						msg[0] = 'i';//become informed module
-						//receivingChannel = x;
-						Imod++;
+				activityCounter++;
+				done = true;
+			}
+			
+			//if((lastTime+commInterval)<module.getSimulation().getTime()){
+			if(ATRONController.activityCounter >= ATRONController.nt){
+				if((ATRONController.lastTime+commInterval)<module.getSimulation().getTime()){
+					if(module.getID()==ATRONController.id){
+						
+						if(!ATRONController.txDone){//Check if we transmitted to "ne" modules already...
+							System.out.print("{"+ATRONController.time+","+ATRONController.Imod+","+((float)ATRONController.Imod/(float)ATRONController.nt)+"},");
+							ATRONController.time++;
+							if(ATRONController.Imod>=ne){
+								System.out.println("\nInformation Transmitted");
+								//System.out.println("Time = "+time);
+								ATRONController.txDone = true;
+							}
+						}
+						
+						for(int i=0; i<modules.size();i++){//Check if information was received by a non-informed module
+							controller = (ATRONController)(modules.get(i)).getController();
+							if(controller.color != 1){
+								for(int x=0; x<controller.channels.length; x++){
+									if(controller.counters[x]==1 && controller.channels[x]=='i'){
+										//information received by a non-informed module
+										controller.color = 1;
+										controller.setColor(0.5f,0.5f,1);//paint purple
+										controller.lastColors = module.getColorList();
+										controller.msg[0] = 'i';//become informed module
+										ATRONController.Imod++;
+									}
+									controller.channels[x] = 'n';
+									controller.counters[x] = 0;
+								}
+							}
+							controller.done = false;
+						}
+						
+						ATRONController.lastTime = module.getSimulation().getTime();
+						ATRONController.activityCounter = 0;
 					}
-					channels[x] = 'n';
-					counters[x] = 0;
 				}
-				
-				lastTime = module.getSimulation().getTime();
 			}
 			
 			if((lastTime+blinkInterval)<module.getSimulation().getTime()){
+			//if(activityCounter >= (0.5*nt)){
 				module.setColorList(lastColors);
 			}
         }
