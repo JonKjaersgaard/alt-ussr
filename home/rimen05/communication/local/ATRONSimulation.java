@@ -68,7 +68,7 @@ public class ATRONSimulation extends GenericSimulation {
             }
         };
         
-        int nModules=30, xMax=10, yMax=1,zMax=5;//Plane
+        int nModules=8, xMax=10, yMax=1,zMax=5;//Plane
         
         int index=0;
         for(int x=0;x<xMax;x++) {

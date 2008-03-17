@@ -96,6 +96,10 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
     	
     	channels = new byte[this.getModule().getConnectors().size()];
     	counters = new int[this.getModule().getConnectors().size()];
+    	for(int x=0; x<channels.length;x++){
+    		channels[x] = 'n';
+    		counters[x] = 0;
+    	}
     	
     	lastColors = module.getColorList();
 
@@ -103,9 +107,10 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
     	
     	//float lastTime = module.getSimulation().getTime();
     	while(true) {
+    		
 			module.getSimulation().waitForPhysicsStep(false);
 			
-			if(!done && ATRONController.activityCounter < nt){
+			if(!done && (ATRONController.activityCounter < nt)){
 				if(rand.nextInt(100) <= e){//Propagate info with probability pe
 					for(int x=0; x<channels.length; x++){
 						sendMessage(msg, (byte)msg.length,(byte)x);
@@ -125,19 +130,23 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
 					if(module.getID()==ATRONController.id){
 						
 						if(!ATRONController.txDone){//Check if we transmitted to "ne" modules already...
-							System.out.print("{"+ATRONController.time+","+ATRONController.Imod+","+((float)ATRONController.Imod/(float)ATRONController.nt)+"},");
+							//System.out.print("{"+ATRONController.time+","+ATRONController.Imod+","+((float)ATRONController.Imod/(float)ATRONController.nt)+"},");
+							System.out.println("\n(counter,channel) = ");
+							for(int j=0; j<counters.length; j++){
+								System.out.print("("+counters[j]+","+(char)channels[j]+")"+",");
+							}
 							ATRONController.time++;
 							if(ATRONController.Imod>=ne){
 								System.out.println("\nInformation Transmitted");
-								//System.out.println("Time = "+time);
 								ATRONController.txDone = true;
 							}
 						}
 						
 						for(int i=0; i<modules.size();i++){//Check if information was received by a non-informed module
 							controller = (ATRONController)(modules.get(i)).getController();
-							if(controller.color != 1){
+							//if(controller.color != 1){
 								for(int x=0; x<controller.channels.length; x++){
+									if(controller.color != 1){
 									if(controller.counters[x]==1 && controller.channels[x]=='i'){
 										//information received by a non-informed module
 										controller.color = 1;
@@ -146,10 +155,11 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
 										controller.msg[0] = 'i';//become informed module
 										ATRONController.Imod++;
 									}
+									}
 									controller.channels[x] = 'n';
 									controller.counters[x] = 0;
 								}
-							}
+							//}
 							controller.done = false;
 						}
 						
