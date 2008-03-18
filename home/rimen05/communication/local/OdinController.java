@@ -64,7 +64,7 @@ public class OdinController extends ussr.samples.odin.OdinController {
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
-    	while(module.getSimulation().isPaused()) Thread.yield();
+    	while(module.getSimulation().isPaused()) yield();
     	delay(1000);
     	
     	//This process is done until I have selected the one propagating module.

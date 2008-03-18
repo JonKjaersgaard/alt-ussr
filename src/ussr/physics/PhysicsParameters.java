@@ -84,7 +84,7 @@ public class PhysicsParameters {
      * @param realisticCollision the realisticCollision to set
      */
     public void setRealisticCollision(boolean realisticCollision) {
-        this.realisticCollision = realisticCollision;
+    	this.realisticCollision = realisticCollision;
     }
     /**
      * @return the gravity

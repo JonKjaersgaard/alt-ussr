@@ -39,7 +39,8 @@ public class ATRONSimulation extends GenericSimulation {
     }
 
     public void main() {
-        PhysicsParameters.get().setPhysicsSimulationStepSize(0.001f);
+        PhysicsParameters.get().setPhysicsSimulationStepSize(0.002f);
+        PhysicsParameters.get().setRealisticCollision(false);
         setConnectorsAreActive(true);
         WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
@@ -68,7 +69,7 @@ public class ATRONSimulation extends GenericSimulation {
             }
         };
         
-        int nModules=30, xMax=10, yMax=1,zMax=5;//Plane
+        int nModules=30, xMax=5, yMax=1,zMax=10;//Plane
         
         int index=0;
         for(int x=0;x<xMax;x++) {

@@ -23,9 +23,9 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
 	static Random rand = new Random(System.currentTimeMillis());
 
     /*BEGIN TO BE SET*/
-    static float pe = 0.1f; //0 to 1, modules sending information out.
-    static float pne = 1.0f; //0 to 1, modules the information is transmitted to.
-    static float pp = 1.0f; //0 to 1, propagation probability of Imods.
+    static float pe = 0.1f; //0 to 1, probability of modules sending information out.
+    static float pne = 1.0f; //0 to 1, proportion of modules the information is transmitted to.
+    static float pp = 0.1f; //0 to 1, probability of Imods modules sending information out.
     //For simulation approach 1, set pp to pe and for simulation approach 2 set it
     //to 1 or high number (e.g., 0.9).
     /*END TO BE SET*/
@@ -61,9 +61,8 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate(){
-    	while(module.getSimulation().isPaused()) Thread.yield();
+    	while(module.getSimulation().isPaused()) yield();
     	delay(1000);
-    	
     	/***************************************/
     	
     	List<Module> modules = module.getSimulation().getModules();
@@ -88,8 +87,8 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
                 	ATRONController.idDone = true;
                 	ATRONController.lastTime = module.getSimulation().getTime();
                 }
+                yield();
             }
-
         	counter = modules.size();
         	ATRONController.ne = ((int)(pne*counter));
         	ATRONController.nt = counter;
@@ -185,6 +184,9 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
 			//if(activityCounter >= (0.5*nt)){
 				module.setColorList(lastColors);
 			}
+			
+			yield();
+			
         }
     }
 	
