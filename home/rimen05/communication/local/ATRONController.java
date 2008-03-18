@@ -25,11 +25,14 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
     /*BEGIN TO BE SET*/
     static float pe = 0.1f; //0 to 1, modules sending information out.
     static float pne = 1.0f; //0 to 1, modules the information is transmitted to.
+    static float pp = 1.0f; //0 to 1, propagation probability of Imods.
+    //For simulation approach 1, set pp to pe and for simulation approach 2 set it
+    //to 1 or high number (e.g., 0.9).
     /*END TO BE SET*/
     static int ne = 0;
     static int nt = 0;
-    //static int e = ((int)(1/pe));
     static int e = (int)((pe*100)-1);
+    static int p = (int)((pp*100)-1);
     static int id = -1;
     static boolean idDone = false;
     static boolean txDone = false;
@@ -106,17 +109,25 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
     	/***************************************/
     	
     	//float lastTime = module.getSimulation().getTime();
+    	int number = 0;
     	while(true) {
     		
 			module.getSimulation().waitForPhysicsStep(false);
 			
 			if(!done && (ATRONController.activityCounter < nt)){
-				if(rand.nextInt(100) <= e){//Propagate info with probability pe
+
+				if(color==1){
+					number = p;
+				}
+				else{
+					number = e;
+				}
+				if(rand.nextInt(100) <= number){//Propagate info with probability pe
 					for(int x=0; x<channels.length; x++){
 						sendMessage(msg, (byte)msg.length,(byte)x);
 						//the module itself may produce collisions...
 						(counters[x])++;
-				    	channels[x] = msg[0];
+						channels[x] = msg[0];
 					}
 					setColor(0,1,0);//blink green
 				}
@@ -131,10 +142,11 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
 						
 						if(!ATRONController.txDone){//Check if we transmitted to "ne" modules already...
 							//System.out.print("{"+ATRONController.time+","+ATRONController.Imod+","+((float)ATRONController.Imod/(float)ATRONController.nt)+"},");
-							System.out.println("\n(counter,channel) = ");
-							for(int j=0; j<counters.length; j++){
-								System.out.print("("+counters[j]+","+(char)channels[j]+")"+",");
-							}
+							System.out.print("{"+ATRONController.time+","+((float)ATRONController.Imod/(float)ATRONController.nt)+"},");
+							//System.out.println("\n(counter,channel) = ");
+							//for(int j=0; j<counters.length; j++){
+							//	System.out.print("("+counters[j]+","+(char)channels[j]+")"+",");
+							//}
 							ATRONController.time++;
 							if(ATRONController.Imod>=ne){
 								System.out.println("\nInformation Transmitted");
