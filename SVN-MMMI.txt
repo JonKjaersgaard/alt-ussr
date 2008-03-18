@@ -1,0 +1,28 @@
+Guidelines for working with the MMMI USSR SVN repository.
+
+Administration:
+* Pre-MS students are by default given read-only access.  USSR should support
+  most standard projects at this level without requiring modifications to
+  the classes contained in USSR.  Having read-only access to the repository
+  facilitates providing updates to students.
+* MS-students can be given read-write access but should normally store their
+  work either in a subdirectory of the "home" directory or in a separate
+  project. 
+
+Options for working with USSR:
+(1) Store your files in a separate project that depends on USSR.
+(2) Store your files in a subdirectory of "home", follow the checkin
+    guidelines below.
+    
+Checking in changes to USSR:
+* Whenever you need to make use of an external jar file, store it in the "lib"
+  directory and consider checking it in straight away.  To commit the change to
+  the classpath required to access the jar file, check in the root of the project
+  but be selective about what files are selected for checkin (should only be the
+  jar file and the .classpath file).
+* When checking in changes be selective about what directory you select, you can
+  for example select just the "src" directory or the appropriate "home" directory.
+  Then review the list of files (or click all files for your home directory) to
+  make sure that the correct selection of files is being checked in.
+  
+If something goes wrong: ask Franco, he knows how to repair damages to the repository :-)
