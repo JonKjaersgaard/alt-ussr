@@ -25,7 +25,7 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
     /*BEGIN TO BE SET*/
     static float pe = 0.1f; //0 to 1, probability of modules sending information out.
     static float pne = 1.0f; //0 to 1, proportion of modules the information is transmitted to.
-    static float pp = 0.1f; //0 to 1, probability of Imods modules sending information out.
+    static float pp = 1.0f; //0 to 1, probability of Imods modules sending information out.
     //For simulation approach 1, set pp to pe and for simulation approach 2 set it
     //to 1 or high number (e.g., 0.9).
     /*END TO BE SET*/
