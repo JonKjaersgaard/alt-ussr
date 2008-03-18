@@ -16,6 +16,7 @@ import ussr.description.robot.RobotDescription;
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.ConnectorBehaviorHandler;
+import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsQuaternionHolder;
 import ussr.physics.PhysicsSimulation;
@@ -226,7 +227,14 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
 	/* (non-Javadoc)
      * @see ussr.physics.jme.JMEConnector#disconnect(ussr.physics.PhysicsConnector)
      */
+	private boolean disconnectingNow = false;
     public synchronized void disconnectNow() {
+        // TODO: sometimes disconnect now spawns too many threads, this is a temporary fix
+        if(disconnectingNow) {
+            PhysicsLogger.logNonCritical("Skipping disconnect now");
+            return;
+        }
+        disconnectingNow = true;
     	new Thread () {
     		public void run() {
     			synchronized (JMESimulation.physicsLock) {

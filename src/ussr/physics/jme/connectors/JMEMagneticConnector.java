@@ -41,9 +41,7 @@ public class JMEMagneticConnector extends JMEMechanicalConnector {
 
     @Override
     protected void addAxis(Joint connection) {
-        xAxis = connection.createRotationalAxis(); xAxis.setDirection(new Vector3f(1,0,0));
-        yAxis = connection.createRotationalAxis(); yAxis.setDirection(new Vector3f(0,0,1));
-        yAxis.setRelativeToSecondObject(true);
+        // No axes, meaning that connector is rigid
     }
 
     @Override
