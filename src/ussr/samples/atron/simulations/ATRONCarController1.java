@@ -46,11 +46,11 @@ public class ATRONCarController1 extends ATRONController {
             String name = module.getProperty("name");
             if(firstTime) {
                 firstTime = false;
-                if(name=="wheel1") rotateContinuous(dir);
-                if(name=="wheel2") rotateContinuous(-dir);
-                if(name=="wheel3") rotateContinuous(dir);
-                if(name=="wheel4") rotateContinuous(-dir);
-                if(name=="axleOne5" && firstTime) {
+                if(name.equals("wheel1")) rotateContinuous(dir);
+                if(name.equals("wheel2")) rotateContinuous(-dir);
+                if(name.equals("wheel3")) rotateContinuous(dir);
+                if(name.equals("wheel4")) rotateContinuous(-dir);
+                if(name.equals("axleOne5")) {
                     this.rotateDegrees(10);
                 }
             }
