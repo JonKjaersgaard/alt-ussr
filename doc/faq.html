@@ -56,11 +56,12 @@ available) to solve the problem.
 
 <strong>Ar2:</strong> This error seems to manifest itself when the
 physics engine is somehow being "stressed", for example with a large
-number of collisions (e.g., vigorous M-TRAN snake movements) or objects moving
-very quickly (robot falling over the edge).  To reduce the number of
-collisions, try changing the movement patterns of the robot.
-Sometimes reducing the size of the physics step
-(see <a href="api/ussr/physics/PhysicsParameters.html">ussr.physics.PhysicsParameters</a>) helps.
+number of collisions (e.g., vigorous movements with many collisions) or objects moving
+very quickly (robot falling over the edge).  
+Reducing the size of the physics step or the resolution factor
+(see <a href="api/ussr/physics/PhysicsParameters.html">ussr.physics.PhysicsParameters</a>)
+usually helps.  Alternatively, to reduce the number of
+collisions and perhaps obtain a working simulation, one can try changing the movement patterns of the robot.
 
 <h2>Simulation FAQ</h2>
 
