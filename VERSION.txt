@@ -1,7 +1,10 @@
-v1_0
-Version 1.0: first stable release (works, but expect many API changes)
+v1_0_1
+Version 1.0.1: first stable release (works, but expect many API changes) with minor fixes
 
 Changes since earlier releases:
 
-  0.1: Massive restructuring and numerous new features
+  1.0.0: Fixed bug in magnetic connector implementation that caused StickyBot to fail
+         Changed timestep value for M-TRAN simulations improving ODE stability
+         Fixed minor bug in the car controller example
+  0.1.0: Massive restructuring and numerous new features
  

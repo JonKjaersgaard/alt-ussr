@@ -7,7 +7,7 @@
 <h1>USSR FAQ</h1>
 
 This section of the manual contains various frequently asked questions
-regarding use of the simulator.  For answers other questions, please contact the 
+regarding use of the simulator.  For answers to other questions, please contact the 
 maintainer <a href="mailto:ups@mmmi.sdu.dk">Ulrik P Schultz</a>.
 
 <h2>Installation FAQs</h2>
@@ -37,6 +37,30 @@ explorer view, choose <strong>Properties</strong>, then <strong>Java build
 path</strong>.  In this view you need to set up
 the <strong>Source</strong> and <strong>Libraries</strong> as
 specified in Q2.
+
+<h2>Running USSR FAQ</h2>
+
+<h3>Qr1: Why can USSR not create a window when starting up?</h3>
+
+<strong>Ar1:</strong> This error manifests itself with a stack trace including the following error:
+<pre>
+java.lang.Error: Cannot create window: Could not find a valid pixel format
+</pre>
+The issue seems to be some incompatibility between the low-level 3D
+graphics library USSR uses (through JME) and the driver for the
+graphics card.  The general recommendation is to try a different
+version of the graphics card driver (preferably a newer one if
+available) to solve the problem.
+
+<h3>Qr2: Why does my simulation crash with ODE errors?</h3>
+
+<strong>Ar2:</strong> This error seems to manifest itself when the
+physics engine is somehow being "stressed", for example with a large
+number of collisions (e.g., vigorous M-TRAN snake movements) or objects moving
+very quickly (robot falling over the edge).  To reduce the number of
+collisions, try changing the movement patterns of the robot.
+Sometimes reducing the size of the physics step
+(see <a href="api/ussr/physics/PhysicsParameters.html">ussr.physics.PhysicsParameters</a>) helps.
 
 <h2>Simulation FAQ</h2>
 
