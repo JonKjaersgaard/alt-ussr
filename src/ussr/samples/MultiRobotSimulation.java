@@ -67,6 +67,7 @@ public class MultiRobotSimulation extends GenericSimulation {
         //PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
         //PhysicsParameters.get().setWorldDampingLinearVelocity(0.9f);
         PhysicsParameters.get().setRealisticCollision(true);
+        PhysicsParameters.get().setPhysicsSimulationStepSize(0.0035f);
         //PhysicsParameters.get().setPhysicsSimulationStepSize(0.001f);
         simulation.runSimulation(null,true);
     }

@@ -8,6 +8,7 @@ package ussr.samples.mtran;
 
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
+import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 
 /**
@@ -27,11 +28,13 @@ public class MTRANSampleSimulation1 extends MTRANSimulation {
 
 	@Override
 	public void changeWorldHook(WorldDescription world) {
-        world.setHasBackgroundScenery(false);
-        world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+	    super.changeWorldHook(world);
+	    world.setPlaneTexture(WorldDescription.GRASS_TEXTURE);
+	    PhysicsParameters.get().setPhysicsSimulationStepSize(0.004f);
 	}
 	
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
 		//simulation.setGravity(0.0f);
 	}
+	
 }
