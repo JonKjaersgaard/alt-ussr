@@ -47,7 +47,7 @@ public abstract class MTRAN implements Robot {
         hemi1a.setColor(Color.red); hemi2a.setColor(Color.blue);
         hemi1a.setAccurateCollisionDetection(true);
         hemi2a.setAccurateCollisionDetection(true); //true for self-reconfiguration
-        PhysicsParameters.get().setResolutionFactor(2);
+        PhysicsParameters.get().setResolutionFactor(1);
         
         BoxShape hemi1b = new BoxShape(new VectorDescription(unit/2,unit,unit),new VectorDescription(-unit/2,0,0), new RotationDescription(0,0,0));
         BoxShape hemi2b = new BoxShape(new VectorDescription(unit/2,unit,unit),new VectorDescription(unit/2,0,0), new RotationDescription(0,0,0));
