@@ -345,6 +345,9 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
     public void clearDynamics() {
 		getNode().clearDynamics();
 	}
+    public void addExternalForce(float forceX, float forceY, float forceZ) {
+		getNode().addForce(new Vector3f(forceX,forceY,forceZ));		
+	}
     
     protected void updateProximiteConnectors(float ignoreDistance) {
 		ArrayList<JMEConnector> nearbyConnectors = getNearbyConnectors(ignoreDistance);

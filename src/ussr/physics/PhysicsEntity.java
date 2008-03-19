@@ -35,4 +35,5 @@ public interface PhysicsEntity {
 	public void setPosition(VectorDescription position);
 	public void setRotation(RotationDescription rotation);
 	public void clearDynamics();
+	public void addExternalForce(float forceX, float forceY, float forceZ);
 }

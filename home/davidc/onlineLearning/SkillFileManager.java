@@ -11,6 +11,7 @@ public class SkillFileManager {
 		DataLogger.addFile("rewards.txt");
 		DataLogger.addFile("Q-Values.txt");
 		DataLogger.addFile("Role-Rewards.txt");
+		DataLogger.addFile("BestRole-Rewards.txt");
 	}
 	public static void loadSkills() {
 		BufferedReader br = FileLoader.loadFile();

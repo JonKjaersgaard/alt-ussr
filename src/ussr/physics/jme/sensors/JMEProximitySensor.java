@@ -13,6 +13,7 @@ import ussr.model.PhysicsSensor;
 import ussr.model.Sensor;
 import ussr.physics.jme.JMESimulation;
 
+import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.PhysicsNode;
 
@@ -90,5 +91,8 @@ public class JMEProximitySensor implements PhysicsSensor {
 	}
 	 public void clearDynamics() {
 		node.clearDynamics();
+	}
+	public void addExternalForce(float forceX, float forceY, float forceZ) {
+		node.addForce(new Vector3f(forceX,forceY,forceZ));		
 	}
 }

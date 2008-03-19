@@ -280,7 +280,8 @@ public abstract class PhysicsSpace {
 
         if ( factory == null ) {
             // no factory set yet - search for known implementation
-            for ( String classname : knownImplementations ) {
+        	
+        	for ( String classname : knownImplementations ) {
                 try {
                     Class<?> cls = Class.forName( classname );
                     if ( Factory.class.isAssignableFrom( cls ) ) {

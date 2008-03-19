@@ -305,4 +305,11 @@ public class Module extends Entity {
 			c1.clearDynamics();
         }
 	}
+
+	public void addExternalForce(float forceX, float forceY, float forceZ) {
+		List<? extends PhysicsEntity> components = getPhysics();
+		for(PhysicsEntity c1: components) {
+			c1.addExternalForce(forceX, forceY, forceZ);
+        }
+	}
 }

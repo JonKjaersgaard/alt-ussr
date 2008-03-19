@@ -57,4 +57,5 @@ public class JMERigidMechanicalConnector extends JMEMechanicalConnector {
 		
 	*/	
 	}
+	
 }

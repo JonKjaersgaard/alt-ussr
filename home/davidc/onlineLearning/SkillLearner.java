@@ -5,12 +5,13 @@ import onlineLearning.skills.SkillPSO;
 import onlineLearning.skills.SkillQ;
 import onlineLearning.skills.SkillRandom;
 import onlineLearning.skills.SkillRoleTable;
+import onlineLearning.skills.SkillSystematic;
 import onlineLearning.skills.SkillTimeTable;
 import onlineLearning.utils.DataLogger;
 
 public class SkillLearner {
 	
-	static enum LearningStrategy {PSO, Q, RANDOM, TIMETABLE,ROLETABLE};
+	static enum LearningStrategy {PSO, Q, RANDOM, TIMETABLE,ROLETABLE,SYSTEMATIC};
     LearningStrategy learningStrategy = LearningStrategy.Q;
     
     static int nParticles = 5;
@@ -60,6 +61,7 @@ public class SkillLearner {
 			 if(learningStrategy==LearningStrategy.TIMETABLE) skills[i] = new SkillTimeTable(nRoles,evalPeriode,8,controller); 
 			 if(learningStrategy==LearningStrategy.ROLETABLE) skills[i] = new SkillRoleTable(nRoles,controller);
 			 if(learningStrategy==LearningStrategy.RANDOM) skills[i] = new SkillRandom(nRoles);
+			 if(learningStrategy==LearningStrategy.SYSTEMATIC) skills[i] = new SkillSystematic(nRoles,controller);
 			 if(loadSkillsQ()) {
 				 skills[i].fromFloats(getSkillData(controller.getDebugID(),i));
 			}
@@ -88,9 +90,13 @@ public class SkillLearner {
     		float startTime = controller.getTime();
     		int currentSkill = controller.getRobotSkill();
     		Role myRole = skills[currentSkill].getRole();
+    		Role bestRole = skills[currentSkill].getBestRole();
     		//System.out.println(myID+": Playing role = "+rolePlayer.roleToString(myRole));
     		while((startTime+evalPeriode)>controller.getTime() && currentSkill==controller.getRobotSkill()) {
-    			if(skills[currentSkill].isContinuous()) myRole = skills[currentSkill].getRole();
+    			if(skills[currentSkill].isContinuous()) {
+    				myRole = skills[currentSkill].getRole();
+    				bestRole = skills[currentSkill].getBestRole();
+    			}
     			controller.controlHook();
     			rolePlayer.playRole(myRole);
     			controller.yield();
@@ -100,7 +106,8 @@ public class SkillLearner {
     		float reward = updateSkills(currentSkill, myRole, controller.getTime()-startTime);
     		logReward(reward, currentSkill, controller);
     		logSkills(controller);
-    		logRole(reward, currentSkill, myRole, controller);
+    		logRole(reward, currentSkill, bestRole, controller);
+    		logBestRole(reward, currentSkill, bestRole, controller);
     	}
 	}
 	private void logReward(float reward, int currentSkill, SkillController controller) {
@@ -126,6 +133,16 @@ public class SkillLearner {
 		buffer.append(currentSkill);buffer.append("\t");
 		buffer.append(myRole.getRole(0));
 		DataLogger.logln(buffer.toString(), "Role-Rewards.txt", false);
+	}
+	private void logBestRole(float reward, int currentSkill, Role myRole, SkillController controller) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(controller.getTime()); buffer.append("\t");
+		buffer.append(controller.getRobotID());buffer.append("\t");
+		buffer.append(reward);buffer.append("\t");
+		buffer.append(controller.getDebugID());buffer.append("\t");
+		buffer.append(currentSkill);buffer.append("\t");
+		buffer.append(myRole.getRole(0));
+		DataLogger.logln(buffer.toString(), "BestRole-Rewards.txt", false);
 	}
 	private String formatFloat(float x) {
 		String s = Float.toString(x);

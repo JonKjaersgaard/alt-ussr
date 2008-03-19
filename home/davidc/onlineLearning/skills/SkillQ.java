@@ -19,7 +19,7 @@ public class SkillQ implements Skill {
 	static float epsilon = 0.8f;
 	static float T = 0.01f;//epsilon;//10*epsilon+1/20f;
 	
-	static boolean accelerated = true;
+	static boolean accelerated = false;
 	boolean learning = true;
 	float[] Q;
 	ArrayList<ArrayList<Float>> roleRewards;
@@ -38,9 +38,11 @@ public class SkillQ implements Skill {
 		Q = new float[nRoles];
 		for(int i=0;i<nRoles;i++) {
 			//Q[i] = 0.2f;
-			Q[i] = 99;
+			//Q[i] = 99;
+			Q[i] = 0;
 			roleRewards.add(new ArrayList<Float>());
 		}
+		Q[0] =0.2f/6f;
 	}
 	private int hardMax() {
 		int selectedRole = -1;
@@ -142,6 +144,7 @@ public class SkillQ implements Skill {
 	public Role getBestRole() {
 		Role role = new Role(1);
 		role.setRole(getBestRoleInt(), 0);
+		if(maxQ()==99) role.setRole(99, 0);
 		return role;
 	}
 	public int getBestRoleInt() {

@@ -250,6 +250,8 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
 	}
 	public void clearDynamics() {
 		getModuleNode().clearDynamics();
-		
+	}
+	public void addExternalForce(float forceX, float forceY, float forceZ) {
+		getModuleNode().addForce(new Vector3f(forceX, forceY,forceZ));
 	}
 }

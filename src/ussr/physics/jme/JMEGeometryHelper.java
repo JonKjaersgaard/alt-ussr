@@ -115,7 +115,7 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
     		
         	//shape.setIsCollidable(false);      	
         //	shape = moduleNode.createBox(name);
-        	/*shape = new Sphere( name, 9, 9, 0.025f); 
+        	/*shape = new Spherpe( name, 9, 9, 0.025f); 
         	if(((AtronShape) element).isNorth()) shape.setLocalTranslation(new Vector3f(0.0f,0,0.1f));
         	shape.setModelBound( new BoundingSphere() );*/
         }

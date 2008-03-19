@@ -3,6 +3,7 @@ import onlineLearning.SkillFileManager;
 import onlineLearning.skills.SkillQ;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
+import ussr.model.Module;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsSimulation;
 import ussr.samples.atron.GenericATRONSimulation;
@@ -55,6 +56,10 @@ public class AtronSkillSimulationMotion extends AtronSkillSimulation implements 
     }
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
     	//simulation.setGravity(0.0f);
+		for(Module m: simulation.getModules()) {
+			m.addExternalForce(0f,(float)Math.sin(simulation.getTime())*10f,0f);
+		}
+		
        	if(simulation.getTime()>simulationTime) {
        		System.out.println("stopping simulation at time "+simulation.getTime());
    			simulation.stop();

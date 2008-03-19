@@ -16,7 +16,6 @@ import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.SimulationGadget;
-import ussr.physics.PhysicsSimulation.Handler;
 import ussr.util.Pair;
 
 import com.jme.app.AbstractGame;
@@ -40,7 +39,6 @@ import com.jme.scene.Node;
 import com.jme.scene.SceneElement;
 import com.jme.scene.Skybox;
 import com.jme.scene.Text;
-import com.jme.scene.state.AlphaState;
 import com.jme.scene.state.LightState;
 import com.jme.scene.state.MaterialState;
 import com.jme.scene.state.RenderState;

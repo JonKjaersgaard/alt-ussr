@@ -161,4 +161,8 @@ public class JMELinearActuator implements JMEActuator {
 		node1.clearDynamics();
 		node2.clearDynamics();
 	}
+	public void addExternalForce(float forceX, float forceY, float forceZ) {
+		node1.addForce(new Vector3f(forceX,forceY,forceZ));
+		node2.addForce(new Vector3f(forceX,forceY,forceZ));
+	}
 }

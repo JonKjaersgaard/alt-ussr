@@ -29,6 +29,7 @@ public class MTRANSampleController1 extends MTRANController {
     public void activate() {
     	while(module.getSimulation().isPaused()) yield();
     	yield();
+    	
     	System.out.println("MTRAN RUNNING "+module.getID());
     	while(true) {
     		double goal0 = 0.5f*Math.sin(3*module.getSimulation().getTime()+module.getID()+0.5f);
