@@ -33,9 +33,47 @@ import ussr.samples.atron.ATRONBuilder.Namer;
 public class ATRONSimulation extends GenericSimulation {
 	
 	private float connection_acceptance_range = 0.001f;
+	static int nModules = 50;
+	static int xMax = 10;
+	static int yMax = 1;
+	static int zMax = 10;
+	static float pe = 10;
+	static float pne = 10;
+	static float pp = 10;
 	
     public static void main( String[] args ) {
+    	
+        for(int i=0;i<args.length;i++) {
+			if(args[i].contains("nModules=")) {
+				ATRONSimulation.nModules = Integer.parseInt(args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString());
+				//System.out.println(ATRONSimulation.nModules);
+			}
+			else if(args[i].contains("xMax=")) {
+				ATRONSimulation.xMax = Integer.parseInt(args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString());
+			}
+			else if(args[i].contains("yMax=")) {
+				ATRONSimulation.yMax = Integer.parseInt(args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString());
+			}
+			else if(args[i].contains("zMax=")) {
+				ATRONSimulation.zMax = Integer.parseInt(args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString());
+			}
+			else if(args[i].contains("pe=")) {
+				ATRONSimulation.pe = Float.parseFloat(args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString());
+			}
+			else if(args[i].contains("pne=")) {
+				ATRONSimulation.pne = Float.parseFloat(args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString());
+			}
+			else if(args[i].contains("pp=")) {
+				ATRONSimulation.pp = Float.parseFloat(args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString());
+			}
+			else {
+				System.out.println("Unrecognized option "+args[i]);
+			}
+		}
         new ATRONSimulation().main();
+        //System.out.println("\nSimulation Stopped");
+    	System.exit(0);
+    	
     }
 
     public void main() {
@@ -69,7 +107,7 @@ public class ATRONSimulation extends GenericSimulation {
             }
         };
         
-        int nModules=50, xMax=10, yMax=1,zMax=10;//Plane
+        //int nModules=50, xMax=10, yMax=1,zMax=10;//Plane
         
         int index=0;
         for(int x=0;x<xMax;x++) {

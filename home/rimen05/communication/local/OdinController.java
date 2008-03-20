@@ -129,6 +129,7 @@ public class OdinController extends ussr.samples.odin.OdinController {
 						System.out.println("\nInformation Transmitted");
 						//System.out.println("Time = "+time);
 						txDone = true;
+						module.getSimulation().stop();
 					}
 				}
 				

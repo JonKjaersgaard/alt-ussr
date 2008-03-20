@@ -23,9 +23,12 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
 	static Random rand = new Random(System.currentTimeMillis());
 
     /*BEGIN TO BE SET*/
-    static float pe = 0.1f; //0 to 1, probability of modules sending information out.
-    static float pne = 1.0f; //0 to 1, proportion of modules the information is transmitted to.
-    static float pp = 1.0f; //0 to 1, probability of Imods modules sending information out.
+    //static float pe = 0.1f; //0 to 1, probability of modules sending information out.
+    //static float pne = 1.0f; //0 to 1, proportion of modules the information is transmitted to.
+    //static float pp = 0.1f; //0 to 1, probability of Imods modules sending information out.
+	static float pe = ATRONSimulation.pe;
+	static float pne = ATRONSimulation.pne;
+	static float pp = ATRONSimulation.pp;
     //For simulation approach 1, set pp to pe and for simulation approach 2 set it
     //to 1 or high number (e.g., 0.9).
     /*END TO BE SET*/
@@ -150,6 +153,7 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
 							if(ATRONController.Imod>=ne){
 								System.out.println("\nInformation Transmitted");
 								ATRONController.txDone = true;
+								module.getSimulation().stop();
 							}
 						}
 						

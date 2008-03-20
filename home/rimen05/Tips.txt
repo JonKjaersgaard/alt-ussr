@@ -63,3 +63,10 @@ Exception in thread "main" java.lang.NoClassDefFoundError: org/lwjgl/LWJGLExcept
         at ussr.samples.GenericSimulation.runSimulation(GenericSimulation.java:79)
         at communication.local.ATRONSimulation.main(ATRONSimulation.java:115)
         at communication.local.ATRONSimulation.main(ATRONSimulation.java:38)
+        
+Works! (from workspace/ussr directory)
+
+java -cp .:/home/rimen05/workspace/ussr/bin:/home/rimen05/workspace/ussr/zoo/jME/lib/lwjgl.jar:/home/rimen05/workspace/ussr/zoo/jME/lib/jogg-0.0.5.jar:/home/rimen05/workspace/ussr/zoo/jME/lib/jorbis-0.0.12.jar:/home/rimen05/workspace/ussr/zoo/jME/lib/native-mac.jar:/home/rimen05/workspace/ussr/zoo/jME/lib/lwjgl_util.jar:/home/rimen05/workspace/ussr/zoo/jME/lib/lwjgl_util_applet.jar:/home/rimen05/workspace/ussr/zoo/jME/lib/lwjgl_test.jar:lib/lwjgl_fmod3.jar:/home/rimen05/workspace/ussr/zoo/jME/lib/lwjgl_applet.jar:/home/rimen05/workspace/ussr/zoo/jME/lib/jorbis-0.0.12.jar:/home/rimen05/workspace/ussr/zoo/jME/lib/jogg-0.0.5.jar:/home/rimen05/workspace/ussr/zoo/jME/lib/jinput.jar -Djava.library.path=/home/rimen05/workspace/ussr/zoo/jME/lib:/home/rimen05/workspace/ussr/zoo/jmephysics/impl/ode/lib -Xss1024k -XX:StackShadowPages=60 communication.local.ATRONSimulation
+
+
+#Execute the makefile from the /workspace/ussr folder as: make -f home/rimen05/makefile atron

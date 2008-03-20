@@ -38,6 +38,8 @@ public class OdinSimulation extends GenericSimulation {
     public static void main( String[] args ) {
     	//Here we call an overwritten method.
     	new OdinSimulation().runSimulation(null,true);
+    	//System.out.println("\nSimulation Stopped");
+    	System.exit(0);
     }
     
     //Here the abstract method is overwritten.
@@ -91,8 +93,8 @@ public class OdinSimulation extends GenericSimulation {
         //int nBalls=7, xMax=4, yMax=2,zMax=8;
         //int nBalls=20, xMax=4, yMax=4,zMax=4;
         
-        
-        int nBalls=100, xMax=10, yMax=1,zMax=10; //Plane
+        int nBalls=10, xMax=5, yMax=1,zMax=2; //Plane
+        //int nBalls=100, xMax=10, yMax=1,zMax=10; //Plane
         //int nBalls=40, xMax=4, yMax=3,zMax=4; //Cube
         
         for(int x=0;x<xMax;x++) {
