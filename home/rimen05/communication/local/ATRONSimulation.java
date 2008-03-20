@@ -33,11 +33,11 @@ import ussr.samples.atron.ATRONBuilder.Namer;
  */
 public class ATRONSimulation extends GenericSimulation {
 	
-	private float connection_acceptance_range = 0.001f;
-	static int nModules = 100;
-	static int xMax = 4;
-	static int yMax = 4;
-	static int zMax = 4;
+	private float connection_acceptance_range = 0.0000001f;
+	static int nModules = 50;
+	static int xMax = 2;
+	static int yMax = 2;
+	static int zMax = 2;
 	static float pe = 0.1f;
 	static float pne = 1.0f;
 	static float pp = 0.1f;
@@ -87,9 +87,6 @@ public class ATRONSimulation extends GenericSimulation {
         world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
         //
         
-        //List<ModulePosition> modulePos;
-        //ATRONBuilder builder = new ATRONBuilder(); 
-        //modulePos = builder.buildAsLattice(10,5,5,5);
         //modulePos = builder.buildCar(4, new VectorDescription(0,-0.25f,0));
         // modulePos = buildSnake(2);
         // modulePos = Arrays.asList(new WorldDescription.ModulePosition[] { new WorldDescription.ModulePosition("hermit", new VectorDescription(2*0*unit,0*unit,0*unit), rotation_EW) });
@@ -111,28 +108,37 @@ public class ATRONSimulation extends GenericSimulation {
         //int nModules=50, xMax=10, yMax=1,zMax=10;//Plane
         
         int index=0;
+        boolean skip = false;
         for(int x=0;x<xMax;x++) {
-            for(int y=0;y<yMax;y++) {
-                for(int z=0;z<zMax;z++) {
+            for(int y=0;y<(2*yMax-1);y++) {
+                for(int z=0;z<2*zMax;z++) {
                     VectorDescription pos = null;
                     RotationDescription rot = ATRON.ROTATION_NS;
-                    if(y%2==0&&z%2==0) {
+                    if(y%2==0&&z%2==0) {//even y, even z
                         pos = new VectorDescription(2*x*ATRON.UNIT,y*ATRON.UNIT-0.43f,z*ATRON.UNIT);
                         rot = ATRON.ROTATION_EW;
+                        skip = false;
                     }
-                    else if(y%2==0&&z%2==1)  {
+                    else if(y%2==0&&z%2==1)  {//even y, odd z
                         pos = new VectorDescription(2*x*ATRON.UNIT+ATRON.UNIT,y*ATRON.UNIT-0.43f,z*ATRON.UNIT);
                         rot = ATRON.ROTATION_NS;
+                        skip = false;
                     }
-                    else if(y%2==1&&z%2==0) {
+                    else if(y%2==1&&z%2==0) {//odd y, even z
                         pos = new VectorDescription(2*x*ATRON.UNIT+ATRON.UNIT,y*ATRON.UNIT-0.43f,z*ATRON.UNIT);
                         rot = ATRON.ROTATION_UD;
+                        skip = false;
                     }
-                    else if(y%2==1&&z%2==1) {
-                        pos = new VectorDescription(2*x*ATRON.UNIT,y*ATRON.UNIT-0.43f,z*ATRON.UNIT);
-                        rot = ATRON.ROTATION_NS;
+                    else if(y%2==1&&z%2==1) {//odd y, odd z
+                        //pos = new VectorDescription(2*x*ATRON.UNIT,y*ATRON.UNIT-0.43f,z*ATRON.UNIT);
+                    	//rot = ATRON.ROTATION_NS;
+                        //pos = new VectorDescription(2*x*ATRON.UNIT+ATRON.UNIT,y*ATRON.UNIT+ATRON.UNIT-0.43f,z*ATRON.UNIT);
+                        //rot = ATRON.ROTATION_NS;
+                    	//pos = new VectorDescription(2*x*ATRON.UNIT+ATRON.UNIT,y*ATRON.UNIT-0.43f,2*z*ATRON.UNIT);
+                        //rot = ATRON.ROTATION_UD;
+                    	skip = true;
                     }
-                    if(index<nModules) {
+                    if(index<nModules && !skip) {
                         String name = namer.name(index,pos,rot);
                         String robotNameMaybe = selector.select(name,index,pos,rot);
                         ModulePosition mpos;
@@ -141,8 +147,9 @@ public class ATRONSimulation extends GenericSimulation {
                         else
                             mpos = new ModulePosition(name, robotNameMaybe, pos, rot);
                         modulePos.add(mpos);
+                        index++;
                     }
-                    index++;
+                    //index++;
                 }
             }
         }
@@ -155,10 +162,9 @@ public class ATRONSimulation extends GenericSimulation {
         world.setModuleConnections(connections);
         System.out.println("#Modules Placed = "+modulePos.size());
         world.setModulePositions(modulePos);
-        //System.out.println("#Total         = "+modulePos.size());
         System.out.println("#Modules per Interface (avg)= "+(1+(((float)(2*connections.size()))/((float)(8*modulePos.size())))));
         
-        this.runSimulation(world,false);
+        this.runSimulation(world,true);
     }
     
     public ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
@@ -175,8 +181,11 @@ public class ATRONSimulation extends GenericSimulation {
     }
     
     public boolean isConnectable(ModulePosition m1, ModulePosition m2) {
+    	/*float dist = m1.getPosition().distance(m2.getPosition());
+    	if(dist-Math.abs(Math.sqrt(2*(ATRON.UNIT+Math.sqrt(ATRON.UNIT))))/2<connection_acceptance_range) return true;
+    	return dist==(float)Math.sqrt(2*(ATRON.UNIT+Math.sqrt(ATRON.UNIT)));*/
         float dist = m1.getPosition().distance(m2.getPosition());
-        return Math.abs(dist-0.11313708f)<connection_acceptance_range;
+        return Math.abs(dist-0.11313708f)<connection_acceptance_range;  
     }
 
     @Override
