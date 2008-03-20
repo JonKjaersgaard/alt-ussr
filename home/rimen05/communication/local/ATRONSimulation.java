@@ -21,6 +21,7 @@ import ussr.physics.PhysicsParameters;
 import ussr.samples.GenericSimulation;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONBuilder;
+import ussr.samples.atron.GenericATRONSimulation;
 import ussr.samples.atron.ATRONBuilder.ModuleSelector;
 import ussr.samples.atron.ATRONBuilder.Namer;
 
@@ -33,13 +34,13 @@ import ussr.samples.atron.ATRONBuilder.Namer;
 public class ATRONSimulation extends GenericSimulation {
 	
 	private float connection_acceptance_range = 0.001f;
-	static int nModules = 50;
-	static int xMax = 10;
-	static int yMax = 1;
-	static int zMax = 10;
-	static float pe = 10;
-	static float pne = 10;
-	static float pp = 10;
+	static int nModules = 100;
+	static int xMax = 4;
+	static int yMax = 4;
+	static int zMax = 4;
+	static float pe = 0.1f;
+	static float pne = 1.0f;
+	static float pp = 0.1f;
 	
     public static void main( String[] args ) {
     	
@@ -147,6 +148,9 @@ public class ATRONSimulation extends GenericSimulation {
         }
                 
         ArrayList<ModuleConnection> connections = allConnections(modulePos);
+        System.out.println("nModules = "+ATRONSimulation.nModules+" xMax = "+ATRONSimulation.xMax+" yMax = "+
+        		ATRONSimulation.yMax+" zMax = "+ATRONSimulation.zMax+" pe = "+ATRONSimulation.pe+" pne = "+
+        		ATRONSimulation.pne+" pp = "+ATRONSimulation.pp);
         System.out.println("#connection found = "+connections.size());
         world.setModuleConnections(connections);
         System.out.println("#Modules Placed = "+modulePos.size());
@@ -154,7 +158,7 @@ public class ATRONSimulation extends GenericSimulation {
         //System.out.println("#Total         = "+modulePos.size());
         System.out.println("#Modules per Interface (avg)= "+(1+(((float)(2*connections.size()))/((float)(8*modulePos.size())))));
         
-        this.runSimulation(world,true);
+        this.runSimulation(world,false);
     }
     
     public ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
