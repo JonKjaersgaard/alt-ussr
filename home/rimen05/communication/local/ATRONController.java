@@ -26,26 +26,26 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
     //static float pe = 0.1f; //0 to 1, probability of modules sending information out.
     //static float pne = 1.0f; //0 to 1, proportion of modules the information is transmitted to.
     //static float pp = 0.1f; //0 to 1, probability of Imods modules sending information out.
-	static float pe = ATRONSimulation.pe;
-	static float pne = ATRONSimulation.pne;
-	static float pp = ATRONSimulation.pp;
+	private static float pe = ATRONSimulation.pe;
+	private static float pne = ATRONSimulation.pne;
+	private static float pp = ATRONSimulation.pp;
     //For simulation approach 1, set pp to pe and for simulation approach 2 set it
     //to 1 or high number (e.g., 0.9).
     /*END TO BE SET*/
-    static int ne = 0;
-    static int nt = 0;
-    static int e = (int)((pe*100)-1);
-    static int p = (int)((pp*100)-1);
-    static int id = -1;
-    static boolean idDone = false;
-    static boolean txDone = false;
-    static int Imod = 0;
+	private static int ne = 0;
+	private static int nt = 0;
+	private static int e = (int)((ATRONController.pe*100)-1);
+	private static int p = (int)((ATRONController.pp*100)-1);
+	private static int id = -1;
+	private static boolean idDone = false;
+	private static boolean txDone = false;
+	private static int Imod = 0;
     
-    static int time = 0;
-    static int activityCounter = 0; //How many modules are done before next time.
-    static float lastTime = 0;
-    static float commInterval = 0.1f;
-    static float blinkInterval = 0.5f*commInterval;
+	private static int time = 0;
+	private static int activityCounter = 0; //How many modules are done before next time.
+	private static float lastTime = 0;
+	private static float commInterval = 0.1f;
+	private static float blinkInterval = 0.5f*commInterval;
     
     public byte[] msg = {'n'};//non-informed module (default)
     public int color = 0;
@@ -119,10 +119,10 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
 			if(!done && (ATRONController.activityCounter < nt)){
 
 				if(color==1){
-					number = p;
+					number = ATRONController.p;
 				}
 				else{
-					number = e;
+					number = ATRONController.e;
 				}
 				if(rand.nextInt(100) <= number){//Propagate info with probability pe
 					for(int x=0; x<channels.length; x++){
@@ -137,7 +137,6 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
 				done = true;
 			}
 			
-			//if((lastTime+commInterval)<module.getSimulation().getTime()){
 			if(ATRONController.activityCounter >= ATRONController.nt){
 				if((ATRONController.lastTime+commInterval)<module.getSimulation().getTime()){
 					if(module.getID()==ATRONController.id){
@@ -157,7 +156,7 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
 							}
 						}
 						
-						for(int i=0; i<modules.size();i++){//Check if information was received by a non-informed module
+						for(int i=0; i<modules.size();i++){//Check if information was received by non-informed modules
 							controller = (ATRONController)(modules.get(i)).getController();
 							//if(controller.color != 1){
 								for(int x=0; x<controller.channels.length; x++){

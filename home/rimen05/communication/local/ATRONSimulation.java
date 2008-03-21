@@ -34,13 +34,13 @@ import ussr.samples.atron.ATRONBuilder.Namer;
 public class ATRONSimulation extends GenericSimulation {
 	
 	private float connection_acceptance_range = 0.0000001f;
-	static int nModules = 50;
-	static int xMax = 2;
-	static int yMax = 2;
-	static int zMax = 2;
-	static float pe = 0.1f;
-	static float pne = 1.0f;
-	static float pp = 0.1f;
+	private static int nModules = 50;
+	private static int xMax = 2;
+	private static int yMax = 2;
+	private static int zMax = 2;
+	public static float pe = 0.1f;
+	public static float pne = 1.0f;
+	public static float pp = 0.1f;
 	
     public static void main( String[] args ) {
     	
@@ -105,13 +105,14 @@ public class ATRONSimulation extends GenericSimulation {
             }
         };
         
-        //int nModules=50, xMax=10, yMax=1,zMax=10;//Plane
+        //int nModules=50, xMax=5, yMax=1, zMax=5;//Plane
+        //int nModules=100, xMax=3, yMax=3, zMax=3;//Cube
         
         int index=0;
         boolean skip = false;
-        for(int x=0;x<xMax;x++) {
-            for(int y=0;y<(2*yMax-1);y++) {
-                for(int z=0;z<2*zMax;z++) {
+        for(int x=0;x<ATRONSimulation.xMax;x++) {
+            for(int y=0;y<(2*ATRONSimulation.yMax-1);y++) {
+                for(int z=0;z<2*ATRONSimulation.zMax;z++) {
                     VectorDescription pos = null;
                     RotationDescription rot = ATRON.ROTATION_NS;
                     if(y%2==0&&z%2==0) {//even y, even z
@@ -138,7 +139,7 @@ public class ATRONSimulation extends GenericSimulation {
                         //rot = ATRON.ROTATION_UD;
                     	skip = true;
                     }
-                    if(index<nModules && !skip) {
+                    if(index<ATRONSimulation.nModules && !skip) {
                         String name = namer.name(index,pos,rot);
                         String robotNameMaybe = selector.select(name,index,pos,rot);
                         ModulePosition mpos;
@@ -164,7 +165,7 @@ public class ATRONSimulation extends GenericSimulation {
         world.setModulePositions(modulePos);
         System.out.println("#Modules per Interface (avg)= "+(1+(((float)(2*connections.size()))/((float)(8*modulePos.size())))));
         
-        this.runSimulation(world,true);
+        this.runSimulation(world,false);
     }
     
     public ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {

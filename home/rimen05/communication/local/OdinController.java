@@ -12,40 +12,41 @@ import java.awt.Color;
 import ussr.model.Module;
 
 /**
- * A simple controller for the ODIN robot, oscillates OdinMuscles with a random start
- * state. The modules are links and joints.
+ * Odin controller for local communication model.
  * 
- * @author david (franco's mods)
+ * @author franco
  *
  */
 public class OdinController extends ussr.samples.odin.OdinController {
 	
 	static Random rand = new Random(System.currentTimeMillis());
 
-    float timeOffset=0;
-    //public byte[] msg = {0};
+    /*BEGIN TO BE SET*/
+    private static float pe = OdinSimulation.pe;
+    private static float pne = OdinSimulation.pne;
+    private static float pp = OdinSimulation.pp;
+    /*END TO BE SET*/
+    private static int ne = 0;
+    private static int nt = 0;
+    private static int e = (int)((OdinController.pe*100)-1);
+    private static int p = (int)((OdinController.pp*100)-1);
+    private static int id = -1;
+    private static boolean idDone = false;
+    private static boolean txDone = false;
+	private static int Imod = 0;
+    
+	private static int time = 0;
+	private static int activityCounter = 0; //How many modules are done before next time.
+	private static float lastTime = 0;
+	private static float commInterval = 0.1f;
+	private static float blinkInterval = 0.5f*commInterval;
+
     public byte[] msg = {'n'};//non-informed module (default)
     public int color = 0;
-    /*BEGIN TO BE SET*/
-    static float pe = 0.1f; //0 to 1, modules sending information out.
-    static float pne = 1.0f; //0 to 1, modules the information is transmitted to.
-    /*END TO BE SET*/
-    static int ne = 0;
-    static int nt = 0;
-    //static int e = ((int)(1/pe));
-    static int e = (int)((pe*100)-1);
-    static int id = -1;
-    static boolean idDone = false;
-    //static boolean peDone = false;
-    static boolean txDone = false;
-    static int Imod = 0;
-    //int receivingChannel = -1;
-    byte[] channels;
-    int[] counters;
-    int time = 0;
-    List<Color> lastColors;
-    static float commInterval = 1.0f;
-    static float blinkInterval = 0.5f*commInterval;
+    public byte[] channels;
+    public int[] counters;
+    public List<Color> lastColors;
+    public boolean done = false;
     //We can also access modules, which is a protected attribute of a parent class.
     
     /**
@@ -55,7 +56,6 @@ public class OdinController extends ussr.samples.odin.OdinController {
      */
     public OdinController(String type) {
     	this.type = type;
-    	timeOffset = commInterval*rand.nextFloat();
     }
     
 	/**
@@ -67,35 +67,39 @@ public class OdinController extends ussr.samples.odin.OdinController {
     	while(module.getSimulation().isPaused()) yield();
     	delay(1000);
     	
+    	List<Module> modules = module.getSimulation().getModules();
+    	OdinController controller;
+    	
     	//This process is done until I have selected the one propagating module.
     	//Only in the activation of the first module. Watch out, many modules are
     	//activated at the same time...
     	if(!idDone){//I randomly select the propagating module
-        	List<Module> modules = module.getSimulation().getModules();
         	int pos = 0;
         	int counter = 0;
         	while(!idDone){
                 pos = rand.nextInt(modules.size());
-                OdinController controller = (OdinController)(modules.get(pos)).getController(); 
+                controller = (OdinController)(modules.get(pos)).getController(); 
                 if(controller.type=="OdinMuscle"){
-                	if(Imod == 0){
-                		Imod++;
+                	if(OdinController.Imod == 0){
+                		OdinController.Imod++;
                     	controller.color = 1;//purple
                     	controller.setColor(0.5f,0.5f,1);//paint purple
     			    	controller.msg[0] = 'i';//become informed module
-    			    	id = controller.getModule().getID();
-                    	idDone = true;
+    			    	OdinController.id = controller.getModule().getID();
+    			    	OdinController.idDone = true;
+    			    	OdinController.lastTime = module.getSimulation().getTime();
                 	}
                 }
+                yield();
         	}
         	for(int i=0; i<modules.size(); i++){
-        		OdinController controller = (OdinController)(modules.get(i)).getController(); 
+        		controller = (OdinController)(modules.get(i)).getController(); 
                 if(controller.type=="OdinMuscle"){
                 	counter++;
                 }
         	}
-        	ne = ((int)(pne*counter));
-        	nt = counter;
+        	OdinController.ne = ((int)(pne*counter));
+        	OdinController.nt = counter;
         	System.out.println("ne = "+ne);
         	System.out.println("simulation");
     	}
@@ -103,6 +107,10 @@ public class OdinController extends ussr.samples.odin.OdinController {
     	if(type=="OdinMuscle"){
     		channels = new byte[this.getModule().getConnectors().size()];
     		counters = new int[this.getModule().getConnectors().size()];
+    		for(int x=0; x<channels.length;x++){
+        		channels[x] = 'n';
+        		counters[x] = 0;
+        	}
     	}
     	
     	lastColors = module.getColorList();
@@ -115,52 +123,86 @@ public class OdinController extends ussr.samples.odin.OdinController {
      * This method propagates the information.
      */
     public void muscleControl() {
-    	//float lastTime = module.getSimulation().getTime()+timeOffset;
-    	float lastTime = module.getSimulation().getTime();
+    	
+    	List<Module> modules = module.getSimulation().getModules();
+    	OdinController controller;
+    	
+    	int number = 0;
+    	//float lastTime = module.getSimulation().getTime();
     	while(true) {
+    		
 			module.getSimulation().waitForPhysicsStep(false);
 			
-			if((lastTime+commInterval)<module.getSimulation().getTime()){
-				
-				if(module.getID()==id && !txDone){//Check if we transmitted to "ne" modules already...
-					System.out.print("{"+time+","+((float)Imod/(float)nt)+"},");
-					time++;
-					if(Imod>=ne){
-						System.out.println("\nInformation Transmitted");
-						//System.out.println("Time = "+time);
-						txDone = true;
-						module.getSimulation().stop();
-					}
+			if(!done && (OdinController.activityCounter < nt)){
+
+				if(color==1){
+					number = OdinController.p;
 				}
-				
-				if(rand.nextInt(100) <= e){//Propagate info with probability pe
+				else{
+					number = OdinController.e;
+				}
+				if(rand.nextInt(100) <= number){//Propagate info with probability pe
 					for(int x=0; x<channels.length; x++){
 						sendMessage(msg, (byte)msg.length,(byte)x);
+						//the module itself may produce collisions...
+						(counters[x])++;
+						channels[x] = msg[0];
 					}
 					setColor(0,1,0);//blink green
 				}
+				activityCounter++;
+				done = true;
+			}
+			
+			//if((lastTime+commInterval)<module.getSimulation().getTime()){
+			if(OdinController.activityCounter >= OdinController.nt){
+				if((OdinController.lastTime+commInterval)<module.getSimulation().getTime()){
+					if(module.getID()==OdinController.id){
 				
-				//Check if information is received by a non-informed module
-				for(int x=0; x<channels.length; x++){
-					if(counters[x]==1 && channels[x]=='i' && color!=1){
-						//information received by a non-informed module
-						color = 1;
-						setColor(0.5f,0.5f,1);//paint purple
-						lastColors = module.getColorList();
-						msg[0] = 'i';//become informed module
-						//receivingChannel = x;
-						Imod++;
+
+						if(!OdinController.txDone){//Check if we transmitted to "ne" modules already...
+							System.out.print("{"+OdinController.time+","+((float)OdinController.Imod/(float)OdinController.nt)+"},");
+							OdinController.time++;
+							if(OdinController.Imod>=ne){
+								System.out.println("\nInformation Transmitted");
+								OdinController.txDone = true;
+								module.getSimulation().stop();
+							}
+						}
+						
+						for(int i=0; i<modules.size();i++){//Check if information was received by non-informed modules
+							controller = (OdinController)(modules.get(i)).getController();
+							//if(controller.color != 1){
+							if(controller.type=="OdinMuscle"){
+								for(int x=0; x<controller.channels.length; x++){
+									if(controller.color != 1){
+									if(controller.counters[x]==1 && controller.channels[x]=='i'){
+										//information received by a non-informed module
+										controller.color = 1;
+										controller.setColor(0.5f,0.5f,1);//paint purple
+										controller.lastColors = module.getColorList();
+										controller.msg[0] = 'i';//become informed module
+										OdinController.Imod++;
+									}
+									}
+									controller.channels[x] = 'n';
+									controller.counters[x] = 0;
+								}
+								controller.done = false;
+							}
+							//}
+						}
+						
+						OdinController.lastTime = module.getSimulation().getTime();
+						OdinController.activityCounter = 0;
 					}
-					channels[x] = 'n';
-					counters[x] = 0;
 				}
-				
-				lastTime = module.getSimulation().getTime();
 			}
 			
 			if((lastTime+blinkInterval)<module.getSimulation().getTime()){
 				module.setColorList(lastColors);
 			}
+			yield();
         }
     }
     
@@ -171,6 +213,7 @@ public class OdinController extends ussr.samples.odin.OdinController {
             } catch (InterruptedException e) {
                 throw new Error("unexpected");
             }
+            yield();
     	}
     }
     

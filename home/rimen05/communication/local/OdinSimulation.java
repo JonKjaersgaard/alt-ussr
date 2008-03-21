@@ -34,10 +34,44 @@ import ussr.samples.odin.modules.OdinMuscle;
 public class OdinSimulation extends GenericSimulation {
 	private static float unit = (float)Math.sqrt((0.18f*0.18f)/2);
 	private static float pi = (float)Math.PI;
+	//nBalls=100, xMax=10, yMax=1,zMax=10; PLANE
+	private static int nBalls = 50;
+	private static int xMax = 10;
+	private static int yMax = 1;
+	private static int zMax = 10;
+	public static float pe = 0.1f;//0 to 1, modules sending information out.
+	public static float pne = 1.0f;//0 to 1, modules the information is transmitted to.
+	public static float pp = 0.1f;
 	
     public static void main( String[] args ) {
+    	for(int i=0;i<args.length;i++) {
+			if(args[i].contains("nBalls=")) {
+				OdinSimulation.nBalls = Integer.parseInt(args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString());
+			}
+			else if(args[i].contains("xMax=")) {
+				OdinSimulation.xMax = Integer.parseInt(args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString());
+			}
+			else if(args[i].contains("yMax=")) {
+				OdinSimulation.yMax = Integer.parseInt(args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString());
+			}
+			else if(args[i].contains("zMax=")) {
+				OdinSimulation.zMax = Integer.parseInt(args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString());
+			}
+			else if(args[i].contains("pe=")) {
+				OdinSimulation.pe = Float.parseFloat(args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString());
+			}
+			else if(args[i].contains("pne=")) {
+				OdinSimulation.pne = Float.parseFloat(args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString());
+			}
+			else if(args[i].contains("pp=")) {
+				OdinSimulation.pp = Float.parseFloat(args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString());
+			}
+			else {
+				System.out.println("Unrecognized option "+args[i]);
+			}
+		}
     	//Here we call an overwritten method.
-    	new OdinSimulation().runSimulation(null,true);
+    	new OdinSimulation().runSimulation(null,false);
     	//System.out.println("\nSimulation Stopped");
     	System.exit(0);
     }
@@ -93,11 +127,11 @@ public class OdinSimulation extends GenericSimulation {
         //int nBalls=7, xMax=4, yMax=2,zMax=8;
         //int nBalls=20, xMax=4, yMax=4,zMax=4;
         
-        int nBalls=10, xMax=5, yMax=1,zMax=2; //Plane
+        //int nBalls=10, xMax=5, yMax=1,zMax=2; //Plane
         //int nBalls=100, xMax=10, yMax=1,zMax=10; //Plane
         //int nBalls=40, xMax=4, yMax=3,zMax=4; //Cube
         
-        for(int x=0;x<xMax;x++) {
+        for(int x=0;x<OdinSimulation.xMax;x++) {
         	for(int y=0;y<yMax;y++) {
         		for(int z=0;z<zMax;z++) {
         			if((x+y+z)%2==0) {
@@ -133,25 +167,13 @@ public class OdinSimulation extends GenericSimulation {
         	}
         }
         ArrayList<ModuleConnection> connections = allConnections(ballPos,modulePos);
+        System.out.println("nBalls = "+OdinSimulation.nBalls+" xMax = "+OdinSimulation.xMax+" yMax = "+
+        		OdinSimulation.yMax+" zMax = "+OdinSimulation.zMax+" pe = "+OdinSimulation.pe+" pne = "+
+        		OdinSimulation.pne+" pp = "+OdinSimulation.pp);
         System.out.println("#connection found = "+connections.size());
         world.setModuleConnections(connections);
         System.out.println("#Balls Placed  = "+ballPos.size());
         System.out.println("#Modules Placed = "+modulePos.size());
-        
-        /*
-        float half = (float)(Math.PI);
-    	float quart = (float)(0.5*Math.PI);
-    	float eigth = (float)(0.25*Math.PI);
-    	
-    	float unit = 0.08f;//8 cm between two lattice positions on physical atrons
-    	RotationDescription rotation_NS = new RotationDescription(0,0,eigth+quart);//(0,0,eigth);
-    	RotationDescription rotation_SN = new RotationDescription(0,half,eigth);
-    	RotationDescription rotation_UD = new RotationDescription(quart,eigth,0);
-    	RotationDescription rotation_EW = new RotationDescription(new VectorDescription(eigth,0,0),new VectorDescription(0,quart,0));
-    	
-    	float Yoffset = 0.25f-0.5f;
-        
-        modulePos.add(new WorldDescription.ModulePosition("wheel4", "ATRON", new VectorDescription(1*unit,-2*unit-Yoffset,-1*unit), rotation_NS));*/
         
         modulePos.addAll(ballPos);
         world.setModulePositions(modulePos);

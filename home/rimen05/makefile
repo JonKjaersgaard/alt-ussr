@@ -8,10 +8,12 @@ ATRON_PROGRAM = communication.local.ATRONSimulation
 
 ODIN_PROGRAM = communication.local.OdinSimulation
 
-ARGUMENTS = nModules=50 xMax=5 yMax=5 zMax=5 pe=0.1f pne=1.0 pp=1.0f
+ATRON_ARGUMENTS = nModules=100 xMax=3 yMax=3 zMax=3 pe=0.1f pne=1.0 pp=1.0f
+
+ODIN_ARGUMENTS = nBalls=50 xMax=4 yMax=3 zMax=4 pe=0.1f pne=1.0 pp=0.1f
 
 atron:
-	@java $(OPTIONS) $(ATRON_PROGRAM) $(ARGUMENTS)
+	@java $(OPTIONS) $(ATRON_PROGRAM) $(ATRON_ARGUMENTS)
 
 odin:
-	@java $(OPTIONS) $(ODIN_PROGRAM) $(ARGUMENTS)
+	@java $(OPTIONS) $(ODIN_PROGRAM) $(ODIN_ARGUMENTS)
