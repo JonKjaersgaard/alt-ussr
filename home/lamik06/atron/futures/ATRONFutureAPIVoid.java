@@ -1,6 +1,6 @@
-package atron.future.api;
+package atron.futures;
 
-public class ATRONFutureAPIInt extends ATRONFuturesAPI {
+public class ATRONFutureAPIVoid extends ATRONFuturesAPI {
 
 	@Override
 	public boolean isAvalible() {

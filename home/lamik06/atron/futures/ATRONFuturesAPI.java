@@ -1,4 +1,4 @@
-package atron.future.api;
+package atron.futures;
 
 public abstract class ATRONFuturesAPI {
 	abstract public boolean isAvalible();
