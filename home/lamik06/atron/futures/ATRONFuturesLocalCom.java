@@ -1,6 +1,6 @@
 package atron.futures;
 
-public class ATRONFutureGlobalCom extends ATRONFutures {
+public class ATRONFuturesLocalCom extends ATRONFutures {
 
 	@Override
 	public boolean isAvalible() {
@@ -14,7 +14,13 @@ public class ATRONFutureGlobalCom extends ATRONFutures {
 	}
 
 	@Override
-	public void onComplition(ICommand command) {
+	public void onCompletion(ICommand command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void run() {
 		// TODO Auto-generated method stub
 		
 	}
