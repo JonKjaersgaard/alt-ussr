@@ -6,27 +6,12 @@ public class ATRONFuturesActuators extends ATRONFutures{
 		connectorNo = i;
 	}
 
-	@Override
-	public boolean isAvalible() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
-	public void waitForComplition() {
+	public void waitForCompletion() {
 		// TODO Auto-generated method stub
 	}
 
-	@Override
-	public void onCompletion(ICommand command) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
