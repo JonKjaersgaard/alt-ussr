@@ -45,9 +45,7 @@ public class StickyBotController1 extends ActControllerImpl {
                 connector.setColor(Color.BLUE);
             else
                 connector.setColor(Color.GREEN);
-            JMEMagneticConnector temporaryHack = (JMEMagneticConnector)connector.getPhysics().get(0);
-            temporaryHack.setIsActivelyConnecting(true);
-            temporaryHack.setConnectorBehaviorHandler(new ConnectorBehaviorHandler() {
+            connector.setConnectorBehaviorHandler(new ConnectorBehaviorHandler() {
 
                 public boolean connectToProximateConnector(Connector target, Connector proximate) {
                     return target.getColor().equals(proximate.getColor());
@@ -57,6 +55,10 @@ public class StickyBotController1 extends ActControllerImpl {
         }
     }
 
+    // When a magnetic connector disconnects it stops actively connecting, to reactivate use
+    // JMEMagneticConnector temporaryHack = (JMEMagneticConnector)connector.getPhysics().get(0);
+    // temporaryHack.setIsActivelyConnecting(true);
+    
     public boolean singleActStep() {
         int connectionCount = 0;
         for(Connector connector: module.getConnectors())
@@ -77,11 +79,4 @@ public class StickyBotController1 extends ActControllerImpl {
         return true;
     }
 
-    private boolean moduleIsConnected() {
-        for(Connector connector: module.getConnectors())
-            if(connector.isConnected())
-                return true;
-        return false;
-    }
-    
 }

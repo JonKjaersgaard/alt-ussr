@@ -39,8 +39,9 @@ import com.jme.util.LoggingSystem;
  */
 public class StickyBotSimulation1 extends GenericSimulation {
     
-    public static final int NMODULES = 50;
-    public static final int AREA = 20;
+    public static final boolean LARGE_SIMULATION = false;
+    public static final int NMODULES = LARGE_SIMULATION ? 1000 : 50;
+    public static final int AREA = LARGE_SIMULATION ? 50 : 20;
     
     public static void main( String[] args ) {
         PhysicsFactory.addDefaultFactory("Sticky");
@@ -69,11 +70,14 @@ public class StickyBotSimulation1 extends GenericSimulation {
        final float scale = StickyBot.SCALE*1.5f;
        ArrayList<ModulePosition> positions = new ArrayList<ModulePosition>();
        Random random = new Random(); 
-       for(int i=0; i<NMODULES; i++) {
+       populate: for(int i=0; i<NMODULES; i++) {
            float x = scale*(random.nextFloat()*AREA-AREA/2);
            float y = scale*(random.nextFloat()*AREA);
            float z = scale*(random.nextFloat()*AREA-AREA/2);
-           positions.add(new ModulePosition("Bot#"+i, "default", new VectorDescription(x,y,z), new RotationDescription(0,0,0)));
+           VectorDescription placement = new VectorDescription(x,y,z);
+           for(ModulePosition existing: positions)
+               if(existing.getPosition().equals(placement)) continue populate; 
+           positions.add(new ModulePosition("Bot#"+i, "default", placement, new RotationDescription(0,0,0)));
        }
        return positions;
    }
