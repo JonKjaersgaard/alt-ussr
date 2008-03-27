@@ -49,7 +49,7 @@ public class StickyBot implements Robot {
                 new ConnectorDescription(common, new VectorDescription(0.0f*SCALE, 0.0f*SCALE, -2.0f*SCALE)),
                 new ConnectorDescription(common, new VectorDescription(0.0f*SCALE, 0f*SCALE, 2.0f*SCALE)) };
         description.setModuleComponents(new ModuleComponentDescription[] { new ModuleComponentDescription(new SphereShape(SCALE*2), connectors )}); 
-        description.setTransmitters(new TransmissionDevice[] { new TransmissionDevice(TransmissionType.RADIO,5*SCALE) });
+        description.setTransmitters(new TransmissionDevice[] { new TransmissionDevice(TransmissionType.RADIO,20*SCALE) });
         description.setReceivers(new ReceivingDevice[] { new ReceivingDevice(TransmissionType.RADIO,10) });
         return description;
     }

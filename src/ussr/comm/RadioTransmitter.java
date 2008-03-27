@@ -6,6 +6,7 @@
  */
 package ussr.comm;
 
+import ussr.description.geometry.VectorDescription;
 import ussr.model.Entity;
 import ussr.model.Module;
 
@@ -23,8 +24,9 @@ public class RadioTransmitter extends GenericTransmitter {
 	}
 
 	public boolean canSendTo(Receiver receiver) {
-		// TODO Auto-generated method stub
-		return true;
+	    VectorDescription p1 = this.getHardware().getPosition();
+	    VectorDescription p2 = receiver.getHardware().getPosition();
+	    return p1.distance(p2)<range;
 	}
 
 

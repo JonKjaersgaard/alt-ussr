@@ -40,13 +40,13 @@ import com.jme.util.LoggingSystem;
 public class StickyBotSimulation1 extends GenericSimulation {
     
     public static final boolean LARGE_SIMULATION = false;
-    public static final int NMODULES = LARGE_SIMULATION ? 1000 : 50;
-    public static final int AREA = LARGE_SIMULATION ? 50 : 20;
+    public static final int NMODULES = LARGE_SIMULATION ? 4000 : 50;
+    public static final int AREA = LARGE_SIMULATION ? 100 : 20;
     
     public static void main( String[] args ) {
         PhysicsFactory.addDefaultFactory("Sticky");
         PhysicsParameters.get().setWorldDampingAngularVelocity(0.01f);
-        PhysicsParameters.get().setResolutionFactor(2);
+        PhysicsParameters.get().setResolutionFactor(1);
         new StickyBotSimulation1().runSimulation(null,false);
     }
 
