@@ -779,7 +779,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         JoystickInput.destroyIfInitalized();
     }
     protected void quit() {
-        //System.exit( 0 );
+        System.exit( 0 );
     	//getPhysicsSpace().delete();
         
     }

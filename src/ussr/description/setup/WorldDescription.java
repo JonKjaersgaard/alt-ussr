@@ -107,6 +107,11 @@ public class WorldDescription extends Description {
      * Light or heavy obstacles?
      */
     private boolean heavyObstacles = false;
+
+    /**
+     * Is frame grabbing active when the simulation starts?
+     */
+    private boolean isFrameGrabbingActive = false;
     
     /**
      * Get the number of modules initially placed in the simulation
@@ -262,5 +267,13 @@ public class WorldDescription extends Description {
      */
     public ModulePosition placeModule(int i) {
         throw new Error("Random module placement not specified for simulation");
+    }
+
+    public boolean getIsFrameGrabbingActive() {
+        return isFrameGrabbingActive ;
+    }
+
+    public void setIsFrameGrabbingActive(boolean isActive) {
+        isFrameGrabbingActive = isActive;
     }
 }

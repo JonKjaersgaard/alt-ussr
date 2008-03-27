@@ -100,12 +100,11 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         else
     	  setStaticPlane(helper.createTerrain(worldDescription.getPlaneSize(), worldDescription.getPlaneTexture()));
     	
-        
         createSky(worldDescription);
         setGravity(gravity);
 
         setPhysicsErrorParameters(PhysicsParameters.get().getConstraintForceMix(), PhysicsParameters.get().getErrorReductionParameter()); 
-        
+        this.grapFrames = worldDescription.getIsFrameGrabbingActive();
 		
         // Create obstacle boxes
         obstacleBoxes = new ArrayList<PhysicsNode>();
