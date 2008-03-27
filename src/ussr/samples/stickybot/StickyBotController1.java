@@ -8,6 +8,7 @@ package ussr.samples.stickybot;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Random;
 
 import ussr.comm.Packet;
 import ussr.comm.Receiver;
@@ -15,6 +16,7 @@ import ussr.comm.Transmitter;
 import ussr.model.ActControllerImpl;
 import ussr.model.Connector;
 import ussr.model.ControllerImpl;
+import ussr.physics.ConnectorBehaviorHandler;
 import ussr.physics.jme.connectors.JMEMagneticConnector;
 import ussr.samples.GenericSimulation;
 
@@ -27,21 +29,41 @@ import ussr.samples.GenericSimulation;
  */
 public class StickyBotController1 extends ActControllerImpl {
     
+    // TODO: magnetic connector inactive for a while after disconnect
+    // TODO: better stickybot example    
+    // TODO: connector warnings vs disconnection
+    
     private Transmitter transmitter;
     private Receiver receiver;
     
     public void initializationActStep() {
+        Random randomizer = new Random();
         transmitter = module.getTransmitters().get(0);
         receiver = module.getReceivers().get(0);
         for(Connector connector: module.getConnectors()) {
-            connector.setColor(Color.BLUE);
+            if(randomizer.nextBoolean())
+                connector.setColor(Color.BLUE);
+            else
+                connector.setColor(Color.GREEN);
             JMEMagneticConnector temporaryHack = (JMEMagneticConnector)connector.getPhysics().get(0);
-            temporaryHack.setIsActive(true);
+            temporaryHack.setIsActivelyConnecting(true);
+            temporaryHack.setConnectorBehaviorHandler(new ConnectorBehaviorHandler() {
+
+                public boolean connectToProximateConnector(Connector target, Connector proximate) {
+                    return target.getColor().equals(proximate.getColor());
+                }
+                
+            });
         }
     }
 
     public boolean singleActStep() {
-        if(this.moduleIsConnected()) {
+        int connectionCount = 0;
+        for(Connector connector: module.getConnectors())
+            if(connector.isConnected()) connectionCount++;
+        if(connectionCount>=4) {
+            for(Connector connector: module.getConnectors())
+                if(connector.isConnected()) connector.disconnect();
             transmitter.send(new Packet(87));
             module.setColor(Color.RED);
             return false;
@@ -49,7 +71,7 @@ public class StickyBotController1 extends ActControllerImpl {
         if(receiver.hasData()) {
             Packet data = receiver.getData();
             if(data.get(0)==87) {
-                module.setColor(Color.RED);
+                module.setColor(Color.YELLOW);
             }
         }
         return true;

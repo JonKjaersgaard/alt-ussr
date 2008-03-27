@@ -79,4 +79,8 @@ public class JMEConnectorGeometry {
 			mesh.setCullMode(SceneElement.CULL_ALWAYS);
 		}
 	}
+
+    public Color getColor() {
+        return world.getHelper().getColor(mesh);
+    }
 }

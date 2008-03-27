@@ -100,4 +100,8 @@ public class Connector extends Entity {
 	public void setConnectorBehaviorHandler(ConnectorBehaviorHandler handler) {
 	    physics.setConnectorBehaviorHandler(handler);
 	}
+
+    public Color getColor() {
+        return physics.getConnectorColor();
+    }
 }

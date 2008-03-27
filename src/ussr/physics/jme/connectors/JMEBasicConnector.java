@@ -378,6 +378,10 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
     	return nearbyConnectors;
     }
     
+    public Color getConnectorColor() {
+        return connectorGeometry.getColor();
+    }
+    
     //protected abstract void align(JMEConnector connector);
     public abstract boolean canConnectTo(JMEConnector connector);
     public abstract boolean canConnectNow(JMEConnector connector);

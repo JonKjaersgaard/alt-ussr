@@ -24,7 +24,7 @@ import com.jmex.physics.RotationalJointAxis;
  */
 public class JMEMagneticConnector extends JMEMechanicalConnector {
     private RotationalJointAxis xAxis,yAxis;
-    private boolean isActive = false;
+    private boolean isActivelyConnecting = true;
     
     /**
      * The connector behavior handler is used to decide whether to automatically connector to proximate
@@ -70,7 +70,7 @@ public class JMEMagneticConnector extends JMEMechanicalConnector {
     
     @Override
     protected void updateHook() {
-        if((!isActive) || isConnected()) return;
+        if((!isActivelyConnecting) || isConnected()) return;
         if(this.proximateConnectors.size()>0) {
             for(JMEConnector other: proximateConnectors) {
                 if(!handler.connectToProximateConnector(this.getModel(), other.getModel())) continue;
@@ -79,9 +79,8 @@ public class JMEMagneticConnector extends JMEMechanicalConnector {
         }
     }
     
-    public void setIsActive(boolean active) {
-        this.isActive = active;
-        if((!active) && this.isConnected()) this.disconnect();
+    public void setIsActivelyConnecting(boolean active) {
+        this.isActivelyConnecting = active;
     }
 
     @Override
@@ -95,7 +94,20 @@ public class JMEMagneticConnector extends JMEMechanicalConnector {
     }
 
     @Override
+    protected void handleConnectorBeyondSafetyRegion(JMEConnector connector) {
+        this.disconnect();
+    }
+    
+    @Override
     public void setConnectorBehaviorHandler(ConnectorBehaviorHandler handler) {
         this.handler  = handler;
+    }
+    
+    @Override
+    public void disconnect() {
+        this.isActivelyConnecting = false;
+        for(JMEConnector other: connectedConnectors)
+            ((JMEMagneticConnector)other).setIsActivelyConnecting(false);
+        super.disconnect();
     }
 }

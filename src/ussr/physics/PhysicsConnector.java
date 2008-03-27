@@ -70,6 +70,7 @@ public interface PhysicsConnector extends PhysicsEntity {
     public void setTimeToDisconnect(float time);
     
     public String getName();
-    
+
+    public Color getConnectorColor();
 
 }

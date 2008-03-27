@@ -60,7 +60,7 @@ public abstract class JMEMechanicalConnector extends JMEBasicConnector  {
     private void updateConnectorsIntegrity() {
     	for(JMEConnector c: connectedConnectors) {
     		if(isConnected()&&c.getPos().distance(getPos())>5*maxConnectDistance) {
-    			System.out.println("Warning connected from "+getName()+" module to "+c.getName()+" beyond saftyRegion - distance between connectors = "+c.getPos().distance(getPos()));
+    		    handleConnectorBeyondSafetyRegion(c);
     		}
     	}
     	if(proximateConnectors.size()>1) {
@@ -70,6 +70,10 @@ public abstract class JMEMechanicalConnector extends JMEBasicConnector  {
     	    handleConnectedConnectorsOverflow();
     	}
 	}
+    
+    protected void handleConnectorBeyondSafetyRegion(JMEConnector otherConnector) {
+        System.out.println("Warning connected from "+getName()+" module to "+otherConnector.getName()+" beyond saftyRegion - distance between connectors = "+otherConnector.getPos().distance(getPos()));
+    }
     
     protected void handleConnectedConnectorsOverflow() {
         System.err.println(module.toString()+": This module is connected to "+connectedConnectors.size()+" neighbors at connector! "+this);

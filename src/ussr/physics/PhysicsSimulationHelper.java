@@ -40,7 +40,7 @@ public interface PhysicsSimulationHelper {
     void setColor(Object object, Color color);
 
     /**
-     * Set the color of a simulated physics object
+     * Get the color of a simulated physics object
      * @return the color of the object
      */
     Color getColor(Object object);
