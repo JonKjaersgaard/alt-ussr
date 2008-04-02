@@ -35,21 +35,24 @@ public class StickyBot implements Robot {
      */
     public RobotDescription getDescription() {
         RobotDescription description = new RobotDescription("Sticky");
-        GeometryDescription[] connectorGeometry = new GeometryDescription[] { new SphereShape(SCALE*0.8f) };
+        GeometryDescription[] connectorGeometry = new GeometryDescription[] { new SphereShape(SCALE*1f) };
         connectorGeometry[0].setColor(Color.BLUE);
         ConnectorDescription.Common common = new ConnectorDescription.Common();
         common.setGeometry(connectorGeometry);
         common.setType( ConnectorDescription.Type.MAGNETIC_CONNECTOR);
-        common.setMaxConnectionDistance(SCALE*0.8f);
+        common.setMaxConnectionDistance(SCALE*1f);
+        float base = 2.0f*SCALE;
         ConnectorDescription[] connectors = new ConnectorDescription[] {
-                new ConnectorDescription(common, new VectorDescription(-2.0f*SCALE, 0.0f*SCALE, 0*SCALE)), 
-                new ConnectorDescription(common, new VectorDescription(2.0f*SCALE, 0.0f*SCALE, 0*SCALE)),
-                new ConnectorDescription(common, new VectorDescription(0.0f*SCALE, 2.0f*SCALE, 0*SCALE)),
-                new ConnectorDescription(common, new VectorDescription(0.0f*SCALE, -2.0f*SCALE, 0*SCALE)),
-                new ConnectorDescription(common, new VectorDescription(0.0f*SCALE, 0.0f*SCALE, -2.0f*SCALE)),
-                new ConnectorDescription(common, new VectorDescription(0.0f*SCALE, 0f*SCALE, 2.0f*SCALE)) };
+                // 6 connectors at EWNSUD
+                new ConnectorDescription(common, new VectorDescription(-base, 0, 0)),
+                new ConnectorDescription(common, new VectorDescription(base, 0, 0)),
+                new ConnectorDescription(common, new VectorDescription(0, base, 0)),
+                new ConnectorDescription(common, new VectorDescription(0, -base, 0)),
+                new ConnectorDescription(common, new VectorDescription(0, 0, -base)),
+                new ConnectorDescription(common, new VectorDescription(0, 0, base))
+        };
         description.setModuleComponents(new ModuleComponentDescription[] { new ModuleComponentDescription(new SphereShape(SCALE*2), connectors )}); 
-        description.setTransmitters(new TransmissionDevice[] { new TransmissionDevice(TransmissionType.RADIO,20*SCALE) });
+        description.setTransmitters(new TransmissionDevice[] { new TransmissionDevice(TransmissionType.RADIO,SCALE*10) });
         description.setReceivers(new ReceivingDevice[] { new ReceivingDevice(TransmissionType.RADIO,10) });
         return description;
     }
@@ -58,7 +61,7 @@ public class StickyBot implements Robot {
      * @see ussr.description.Robot#createController()
      */
     public Controller createController() {
-        return new StickyBotController1();
+        return new InteractiveStickyBotSimController();
     }
     
 }
