@@ -37,24 +37,20 @@ import com.jme.util.LoggingSystem;
  * @author ups
  *
  */
-public class StickyBotSimulation1 extends GenericSimulation {
+public class VelcroStickyBotSimulation extends StickyBotSimulation {
     
-    public static final boolean LARGE_SIMULATION = false;
-    public static final int NMODULES = LARGE_SIMULATION ? 4000 : 50;
-    public static final int AREA = LARGE_SIMULATION ? 100 : 20;
+    public static final int NMODULES = 100;
+    public static final int AREA = 5;
     
     public static void main( String[] args ) {
-        PhysicsFactory.addDefaultFactory("Sticky");
-        PhysicsParameters.get().setWorldDampingAngularVelocity(0.01f);
-        PhysicsParameters.get().setResolutionFactor(1);
-        new StickyBotSimulation1().runSimulation(null,false);
+        new VelcroStickyBotSimulation().main();
     }
 
     @Override
     protected Robot getRobot() {
-        return new StickyBot() {
+        return new StickyBot1() {
             public Controller createController() {
-                return new StickyBotController1();
+                return new VelcroStickyBotSimController();
             }
             
         };
@@ -62,23 +58,7 @@ public class StickyBotSimulation1 extends GenericSimulation {
 
    @Override
    protected void adaptWorldToSimulationHook(WorldDescription world) {
-       //world.setCameraPosition(WorldDescription.CameraPosition.FAROUT);
-       world.setModulePositions(generatePositions());
-   }
-   
-   private List<ModulePosition> generatePositions() {
-       final float scale = StickyBot.SCALE*1.5f;
-       ArrayList<ModulePosition> positions = new ArrayList<ModulePosition>();
-       Random random = new Random(); 
-       populate: for(int i=0; i<NMODULES; i++) {
-           float x = scale*(random.nextFloat()*AREA-AREA/2);
-           float y = scale*(random.nextFloat()*AREA);
-           float z = scale*(random.nextFloat()*AREA-AREA/2);
-           VectorDescription placement = new VectorDescription(x,y,z);
-           for(ModulePosition existing: positions)
-               if(existing.getPosition().equals(placement)) continue populate; 
-           positions.add(new ModulePosition("Bot#"+i, "default", placement, new RotationDescription(0,0,0)));
-       }
-       return positions;
+       PhysicsParameters.get().setResolutionFactor(5);
+       world.setModulePositions(generateRandomizedPositions(NMODULES,AREA));
    }
 }

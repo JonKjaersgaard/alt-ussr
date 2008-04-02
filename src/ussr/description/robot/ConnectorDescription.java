@@ -33,7 +33,7 @@ public class ConnectorDescription extends Description {
         MECHANICAL_CONNECTOR_RIGID,
         MECHANICAL_CONNECTOR_HINGE,
         MECHANICAL_CONNECTOR_BALL_SOCKET,
-        NONE
+        NONE, VELCRO_CONNECTOR
     }
     private Type type = Type.NONE;
 

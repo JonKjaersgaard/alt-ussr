@@ -24,13 +24,13 @@ import com.jmex.physics.RotationalJointAxis;
  */
 public class JMEMagneticConnector extends JMEMechanicalConnector {
     private RotationalJointAxis xAxis,yAxis;
-    private boolean isActivelyConnecting = true;
+    protected boolean isActivelyConnecting = true;
     
     /**
      * The connector behavior handler is used to decide whether to automatically connector to proximate
      * connectors.  Initialized with null object that provides connect-always behavior. 
      */
-    private ConnectorBehaviorHandler handler = new ConnectorBehaviorHandler() {
+    protected ConnectorBehaviorHandler handler = new ConnectorBehaviorHandler() {
         public boolean connectToProximateConnector(Connector target, Connector proximate) { return true; }
     };
 

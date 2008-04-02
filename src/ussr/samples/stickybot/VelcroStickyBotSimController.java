@@ -10,9 +10,12 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Random;
 
+import com.jme.math.Vector3f;
+
 import ussr.comm.Packet;
 import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
+import ussr.description.geometry.VectorDescription;
 import ussr.model.ActControllerImpl;
 import ussr.model.Connector;
 import ussr.model.ControllerImpl;
@@ -27,11 +30,7 @@ import ussr.samples.GenericSimulation;
  * @author ups
  *
  */
-public class StickyBotController1 extends ActControllerImpl {
-    
-    // TODO: magnetic connector inactive for a while after disconnect
-    // TODO: better stickybot example    
-    // TODO: connector warnings vs disconnection
+public class VelcroStickyBotSimController extends ActControllerImpl {
     
     private Transmitter transmitter;
     private Receiver receiver;
@@ -46,12 +45,12 @@ public class StickyBotController1 extends ActControllerImpl {
             else
                 connector.setColor(Color.GREEN);
             connector.setConnectorBehaviorHandler(new ConnectorBehaviorHandler() {
-
                 public boolean connectToProximateConnector(Connector target, Connector proximate) {
                     return target.getColor().equals(proximate.getColor());
                 }
-                
             });
+            JMEMagneticConnector temporaryHack = (JMEMagneticConnector)connector.getPhysics().get(0);
+            //temporaryHack.setAlignmentValues(20f, StickyBot.SCALE*2.2f*2, StickyBot.SCALE*0.1f, 10);
         }
     }
 

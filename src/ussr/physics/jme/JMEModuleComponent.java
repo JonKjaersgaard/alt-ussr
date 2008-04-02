@@ -32,6 +32,7 @@ import ussr.physics.jme.connectors.JMEConnector;
 import ussr.physics.jme.connectors.JMEHingeMechanicalConnector;
 import ussr.physics.jme.connectors.JMEMagneticConnector;
 import ussr.physics.jme.connectors.JMERigidMechanicalConnector;
+import ussr.physics.jme.connectors.JMEVelcroConnector;
 
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
@@ -161,6 +162,8 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         	connector = new JMEHingeMechanicalConnector(position,moduleNode,name,world,this,description); 
         else if(type==ConnectorDescription.Type.MECHANICAL_CONNECTOR_BALL_SOCKET)
             connector = new JMEBallSocketConnector(position,moduleNode,name,world,this,description);
+        else if(type==ConnectorDescription.Type.VELCRO_CONNECTOR)
+            connector = new JMEVelcroConnector(position,moduleNode,name,world,this,description);
         else throw new Error("Unknown connector type");
         return connector;
     }
