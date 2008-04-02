@@ -164,50 +164,59 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
     		new AlignAndConnectManager(timeToConnect);
     	}
     }
-	private class AlignAndConnectManager implements PhysicsObserver{
+	protected class AlignAndConnectManager implements PhysicsObserver{
     	float timeToConnect;
     	float startTime;
+    	JMEConnector specificConnector;
     	public AlignAndConnectManager(float timeToConnect) {
+    	    this(timeToConnect,null);
+    	}
+    	public AlignAndConnectManager(float timeToConnect, JMEConnector specificConnector) {
     		this.timeToConnect = timeToConnect;
+    		this.specificConnector = specificConnector;
     		startTime = world.getTime();
     		world.subscribePhysicsTimestep(this);
     	}
     	public void physicsTimeStepHook(PhysicsSimulation simulation) {
-			if((startTime+timeToConnect)>simulation.getTime()) { //correct misalignment period
-				alignNow();
+    	    boolean skipAlignment = specificConnector!=null && canConnectNow(specificConnector);
+			if(!skipAlignment && (startTime+timeToConnect)>simulation.getTime()) { //correct misalignment period
+				alignNow(specificConnector);
 			}
 			else { //connect now
-				connectNow();
+				connectNow(specificConnector);
 				simulation.unsubscribePhysicsTimestep(this);
 			}
 		}
     }
     
-    protected synchronized void alignNow() {
-    	synchronized (JMESimulation.physicsLock) {
-	    	if(hasProximateConnector()) {
-	    		for(int i=0;i<proximateConnectors.size();i++) {
-    				JMEConnector c = proximateConnectors.get(i);
-		    		if(connectorAligner.canAlign(c)&&!isSameModule(c)) {
-		    			connectorAligner.align(c);
-		    		}
-	    		}
-	    	}
-    	}
+    protected synchronized void alignNow(JMEConnector specificConnectorMaybe) {
+        synchronized (JMESimulation.physicsLock) {
+            if(specificConnectorMaybe!=null)
+                tryAlign(specificConnectorMaybe);
+            else
+                if(hasProximateConnector()) {
+                    for(int i=0;i<proximateConnectors.size();i++) {
+                        JMEConnector c = proximateConnectors.get(i);
+                        tryAlign(c);
+                    }
+                }
+        }
+    }
+    private void tryAlign(JMEConnector otherConnector) {
+        if(connectorAligner.canAlign(otherConnector)&&!isSameModule(otherConnector)) {
+            connectorAligner.align(otherConnector);
+        }
     }
     
-    public synchronized void connectNow() {
+    public synchronized void connectNow(JMEConnector specificConnectorMaybe) {
     	synchronized (JMESimulation.physicsLock) {
     		boolean connected = false;
-	    	if(hasProximateConnector()) {
+    		if(specificConnectorMaybe!=null)
+    		    connected = tryConnectNow(connected,specificConnectorMaybe);
+    		else if(hasProximateConnector()) {
 	    		for(int i=0;i<proximateConnectors.size();i++) {
     				JMEConnector c = proximateConnectors.get(i);
-		    		if(canConnectNow(c)&&!isSameModule(c)&&!isConnectedTo(c)) {
-		    			connectTo(c);
-		    			c.update();
-			    		update();
-			    		connected = true;
-		    		}
+		    		connected = tryConnectNow(connected, c);
 	    		}
 	    	}
 	    	if(connected) System.out.println("Connected success");
@@ -215,6 +224,15 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
 	    	connecting = false;
     	}
     	
+    }
+    private boolean tryConnectNow(boolean connected, JMEConnector connector) {
+        if(canConnectNow(connector)&&!isSameModule(connector)&&!isConnectedTo(connector)) {
+        	connectTo(connector);
+        	connector.update();
+        	update();
+        	connected = true;
+        }
+        return connected;
     }
     
     private boolean isConnectedTo(JMEConnector c) {

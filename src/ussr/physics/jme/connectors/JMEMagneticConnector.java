@@ -39,6 +39,11 @@ public class JMEMagneticConnector extends JMEMechanicalConnector {
         super(position, moduleNode, baseName, world, component, description);
     }
 
+    public void setAlignmentValues(float force, float distance, float epsilon, int timeToConnect) {
+        this.connectorAligner.addAlignmentPoint(this.connectorGeometry.getLocalPosition(), 1, 0, force, distance, epsilon);
+        this.timeToConnect = timeToConnect;
+    }
+    
     @Override
     protected void addAxis(Joint connection) {
         // No axes, meaning that connector is rigid
@@ -46,15 +51,14 @@ public class JMEMagneticConnector extends JMEMechanicalConnector {
 
     @Override
     public boolean canConnectNow(JMEConnector connector) {
-        if(getPos().distance(connector.getPos())>maxConnectDistance)
-            return false;
+        if(!canConnectTo(connector)) return false;
+        if(!connectorAligner.isAligned(connector)) return false;
         return true;
     }
 
     @Override
     public boolean canConnectTo(JMEConnector connector) {
-        if(!canConnectNow(connector)) return false;
-        return true;
+        return connector instanceof JMEMagneticConnector;
     }
 
     @Override
@@ -72,9 +76,12 @@ public class JMEMagneticConnector extends JMEMechanicalConnector {
     protected void updateHook() {
         if((!isActivelyConnecting) || isConnected()) return;
         if(this.proximateConnectors.size()>0) {
+            System.out.println("Proximate connectors: "+proximateConnectors.size());
             for(JMEConnector other: proximateConnectors) {
                 if(!handler.connectToProximateConnector(this.getModel(), other.getModel())) continue;
-                this.connectTo(other);
+                //this.connectTo(other);
+                new AlignAndConnectManager(this.timeToConnect,other);
+                break;
             }
         }
     }
