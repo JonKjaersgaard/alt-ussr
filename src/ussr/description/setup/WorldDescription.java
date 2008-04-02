@@ -31,7 +31,7 @@ public class WorldDescription extends Description {
      *
      */
     public static enum CameraPosition {
-        DEFAULT, FAROUT;
+        DEFAULT, FAROUT, MIDDLE;
     }
 
     /**

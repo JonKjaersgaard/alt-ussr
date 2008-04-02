@@ -82,7 +82,6 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     private JMEGeometryHelper helper = new JMEGeometryHelper(this);
     private JMEFactoryHelper factory;    
     private long mainLoopCounter=0;
-    private static final float FAROUT_DISTANCE = 50f;
     private List<PhysicsObserver> physicsObservers = new CopyOnWriteArrayList<PhysicsObserver>();
     private List<ActBasedController> actControllers = Collections.synchronizedList(new ArrayList<ActBasedController>());
     
@@ -291,9 +290,12 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 	}
 	
     private void readWorldParameters() {
-        if(worldDescription.getCameraPosition()==WorldDescription.CameraPosition.FAROUT) {
-            cam.setLocation(cam.getLocation().add(0, 0, FAROUT_DISTANCE));
-        }
+        if(worldDescription.getCameraPosition()==WorldDescription.CameraPosition.FAROUT)
+            cam.setLocation(cam.getLocation().add(0, 0, 50f));
+        else if(worldDescription.getCameraPosition()==WorldDescription.CameraPosition.MIDDLE)
+            cam.setLocation(cam.getLocation().add(0,5f,15f));
+        else if(!(worldDescription.getCameraPosition()==WorldDescription.CameraPosition.DEFAULT))
+            throw new Error("Unknown camera position");
     }
 
     private final void physicsStep() {
