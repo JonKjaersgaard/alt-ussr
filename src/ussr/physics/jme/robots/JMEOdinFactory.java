@@ -57,6 +57,7 @@ public class JMEOdinFactory implements ModuleFactory {
         else if(robot.getDescription().getType()=="OdinSpring")
         	createOdinSpring(module_id, module, robot);
         else throw new Error("Illegal module type: "+robot.getDescription().getType());
+        ((JMEModuleComponent)module.getPhysics().get(0)).getModuleNode().setName(module_name);
     }
 
     public String getModulePrefix() {
@@ -86,6 +87,7 @@ public class JMEOdinFactory implements ModuleFactory {
         }
         moduleNode.setMaterial(Material.GRANITE);
         moduleNode.setMass(0.020f); //20 grams?
+        
     }
 
     /**
@@ -121,7 +123,6 @@ public class JMEOdinFactory implements ModuleFactory {
             module.addComponent(componentSouth);
             simulation.getModuleComponents().add(componentNorth);
             simulation.getModuleComponents().add(componentSouth);
-            
             this.adapt(module, moduleNodeNorth, moduleNodeSouth);
             
             TransmissionDevice odinTrans = new TransmissionDevice(TransmissionType.WIRE_MALE,0.01f);
