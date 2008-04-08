@@ -2,6 +2,8 @@ package atron.samples.carRemoteControl;
 
 import java.util.ArrayList;
 
+import atron.samples.xmlController.ATRONSimpleXmlController;
+
 import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
@@ -10,6 +12,7 @@ import ussr.physics.PhysicsParameters;
 
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.GenericATRONSimulation;
+import ussr.samples.atron.network.ATRONCarControllerRemoteControl;
 
 
 
@@ -32,7 +35,7 @@ public class ATRONCarSimulationRemoteControl extends GenericATRONSimulation {
 		
         return new ATRON() {
             public Controller createController() {
-                return new ATRONCarUSSRControllerRemoteControl();
+                return new ATRONCarControllerRemoteControl();
             }
         };
     }

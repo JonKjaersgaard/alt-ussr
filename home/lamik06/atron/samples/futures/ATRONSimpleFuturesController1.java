@@ -6,6 +6,8 @@
  */
 package atron.samples.futures;
 
+import java.awt.Color;
+
 import atron.delegate.ATRONDelegateAPI;
 import atron.futures.ATRONFuturesCenterMotor;
 import atron.futures.ICommand;
@@ -18,7 +20,7 @@ import ussr.samples.atron.ATRONController;
  * @author Modular Robots @ MMMI
  *
  */
-public class ATRONSimpleFuturesController extends ATRONController {
+public class ATRONSimpleFuturesController1 extends ATRONController {
 	
 	int i = 0;
 
@@ -29,7 +31,7 @@ public class ATRONSimpleFuturesController extends ATRONController {
         yield();
         String name = module.getProperty("name");
         if(name=="RearRightWheel"){
-        	System.out.println("Simple Futures demo");
+        	System.out.println("test");
         	ATRONDelegateAPI atronDelegateAPI = new ATRONDelegateAPI(module);
         	System.out.println("Start pos. =" + atronDelegateAPI.getAngularPositionDegrees());
             ATRONFuturesCenterMotor f = atronDelegateAPI.rotateToDegreeInDegreesFutures(90);
@@ -38,6 +40,7 @@ public class ATRONSimpleFuturesController extends ATRONController {
             f.onCompletion(new ICommand(){
 			public void execute(){
 				System.out.println("onCompletion() -> execute() -> show this text!");
+				module.setColor(Color.yellow);
 			}
 			});
             
@@ -57,5 +60,10 @@ public class ATRONSimpleFuturesController extends ATRONController {
         	yield();
         }
         
+    }
+    @Override
+    public void handleMessage(byte[] message, int messageSize, int channel) {
+    	// TODO Auto-generated method stub
+    	super.handleMessage(message, messageSize, channel);
     }
 }
