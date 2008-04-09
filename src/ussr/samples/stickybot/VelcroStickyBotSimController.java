@@ -57,17 +57,18 @@ public class VelcroStickyBotSimController extends ActControllerImpl {
     // When a magnetic connector disconnects it stops actively connecting, to reactivate use
     // JMEMagneticConnector temporaryHack = (JMEMagneticConnector)connector.getPhysics().get(0);
     // temporaryHack.setIsActivelyConnecting(true);
-    
+    boolean sentData = false;
     public boolean singleActStep() {
         int connectionCount = 0;
         for(Connector connector: module.getConnectors())
             if(connector.isConnected()) connectionCount++;
-        if(connectionCount>=4) {
-            for(Connector connector: module.getConnectors())
-                if(connector.isConnected()) connector.disconnect();
+        if(!sentData && connectionCount>=1) {
+//            for(Connector connector: module.getConnectors())
+//                if(connector.isConnected()) connector.disconnect();
             transmitter.send(new Packet(87));
             module.setColor(Color.RED);
-            return false;
+            sentData = true;
+            return true;
         }
         if(receiver.hasData()) {
             Packet data = receiver.getData();

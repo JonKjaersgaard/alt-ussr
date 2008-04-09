@@ -164,6 +164,16 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
     		new AlignAndConnectManager(timeToConnect);
     	}
     }
+    private int numberOfAligningConnectors = 0;
+    protected synchronized void incrementAligningConnectorsCount() {
+        this.numberOfAligningConnectors++;
+    }
+    protected synchronized void decrementAligningConnectorsCount() {
+        this.numberOfAligningConnectors--;
+    }
+    protected synchronized int getAligningConnectorsCount() {
+        return this.numberOfAligningConnectors;
+    }
 	protected class AlignAndConnectManager implements PhysicsObserver{
     	float timeToConnect;
     	float startTime;
@@ -176,13 +186,15 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
     		this.specificConnector = specificConnector;
     		startTime = world.getTime();
     		world.subscribePhysicsTimestep(this);
+    		incrementAligningConnectorsCount();
     	}
     	public void physicsTimeStepHook(PhysicsSimulation simulation) {
     	    boolean skipAlignment = specificConnector!=null && canConnectNow(specificConnector);
-			if(!skipAlignment && (startTime+timeToConnect)>simulation.getTime()) { //correct misalignment period
+    	    if(!skipAlignment && (startTime+timeToConnect)>simulation.getTime()) { //correct misalignment period
 				alignNow(specificConnector);
 			}
 			else { //connect now
+			    decrementAligningConnectorsCount();
 				connectNow(specificConnector);
 				simulation.unsubscribePhysicsTimestep(this);
 			}
