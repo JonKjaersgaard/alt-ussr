@@ -49,8 +49,11 @@ import com.jme.util.export.Savable;
  * information such as a collection of states and the data for a model.
  * Subclasses define what the model data is.
  * 
+ * <p>Modified for use with USSR: added clearCollisionTree()
+ * 
  * @author Mark Powell
  * @author Joshua Slack
+ * @author Modified for USSR by: ups
  * @version $Id: Geometry.java,v 1.108 2006/08/27 10:28:07 rherlitz Exp $
  */
 public abstract class Geometry extends Spatial implements Serializable,
@@ -773,5 +776,15 @@ public abstract class Geometry extends Spatial implements Serializable,
                 GeomBatch batch = getBatch(x);
                 batch.setParentGeom(this);
             }
+    }
+    
+    /**
+     * Clear all collision information stored in this geometry.  Reduces memory usage at the
+     * cost of extra computation. 
+     */
+    @Override
+    public void clearCollisionTree() {
+        for(GeomBatch batch: batchList)
+            batch.clearCollisionTree();
     }
 }

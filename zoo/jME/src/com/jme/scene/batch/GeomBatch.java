@@ -63,6 +63,10 @@ import com.jme.util.export.OutputCapsule;
 import com.jme.util.export.Savable;
 import com.jme.util.geom.BufferUtils;
 
+/**
+ * Modified for use with USSR: added clearCollisionTree()
+ * @author Modified for USSR by: ups
+ */
 public class GeomBatch extends SceneElement implements Serializable, Savable {
 
     private static final long serialVersionUID = -6361186042554187448L;
@@ -864,5 +868,12 @@ public class GeomBatch extends SceneElement implements Serializable, Savable {
 
     public void setParentGeom(Geometry parentGeom) {
         this.parentGeom = parentGeom;
+    }
+    
+    /**
+     * Clear all collision information stored in this geometry.  Reduces memory usage at the
+     * cost of extra computation. 
+     */
+    public void clearCollisionTree() {
     }
 }

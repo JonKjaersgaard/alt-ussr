@@ -59,7 +59,11 @@ import com.jme.util.geom.BufferUtils;
  * TriangleBatch provides an extension of GeomBatch adding the capabilities for
  * triangle indices and OBBTree collisions. These batch elements are usually contained
  * in the TriMesh object, while Geometry contains GeomBatch elements.
+ * 
+ * <p>Modified for use with USSR: added clearCollisionTree()
+ * 
  * @author Mark Powell
+ * @author Modified for USSR by: ups
  *
  */
 public class TriangleBatch extends GeomBatch implements Serializable, Savable {
@@ -111,6 +115,11 @@ public class TriangleBatch extends GeomBatch implements Serializable, Savable {
 
 	public void setCollisionTree(OBBTree collisionTree) {
 		this.collisionTree = collisionTree;
+	}
+	
+	@Override
+	public void clearCollisionTree() {
+	    this.collisionTree = null;
 	}
 
 	public IntBuffer getIndexBuffer() {

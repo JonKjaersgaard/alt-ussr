@@ -61,8 +61,11 @@ import com.jme.util.export.Savable;
  * transforms. All other nodes, such as <code>Node</code> and
  * <code>Geometry</code> are subclasses of <code>Spatial</code>.
  * 
+ * <p>Modified for use with USSR: added clearCollisionTree()
+ * 
  * @author Mark Powell
  * @author Joshua Slack
+ * @author Modified for USSR by: ups
  * @version $Id: Spatial.java,v 1.116 2006/12/15 15:57:30 irrisor Exp $
  */
 public abstract class Spatial extends SceneElement implements Serializable, Savable {
@@ -692,5 +695,12 @@ public abstract class Spatial extends SceneElement implements Serializable, Sava
         worldRotation = new Quaternion();
         worldTranslation = new Vector3f();
         worldScale = new Vector3f(1.0f, 1.0f, 1.0f);
+    }
+
+    /**
+     * Clear all collision information stored in this geometry.  Reduces memory usage at the
+     * cost of extra computation. 
+     */
+    public void clearCollisionTree() {
     }
 }

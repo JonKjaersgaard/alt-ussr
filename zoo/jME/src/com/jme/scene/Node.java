@@ -54,8 +54,11 @@ import com.jme.util.export.Savable;
  * into a single bound to allow for very fast culling of multiple nodes. Node
  * allows for any number of children to be attached.
  * 
+ * <p>Modified for use with USSR: added clearCollisionTree()
+ * 
  * @author Mark Powell
  * @author Gregg Patton
+ * @author Modified for USSR by: ups
  * @version $Id: Node.java,v 1.67 2006/10/21 22:35:54 renanse Exp $
  */
 public class Node extends Spatial implements Serializable, Savable {
@@ -687,5 +690,14 @@ public class Node extends Spatial implements Serializable, Savable {
                 children.get(i).updateModelBound();
             }
         }
+    }
+    
+    /**
+     * Clear all collision information stored in this geometry.  Reduces memory usage at the
+     * cost of extra computation. 
+     */
+    public void clearCollisionTree() {
+        for(Spatial child: getChildren())
+            child.clearCollisionTree();
     }
 }
