@@ -31,11 +31,13 @@ import ussr.model.ActBasedController;
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.ModuleFactory;
+import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsSimulationHelper;
+import ussr.physics.PhysicsFactory.Options;
 import ussr.physics.jme.connectors.JMEBasicConnector;
 import ussr.physics.jme.connectors.JMEConnector;
 
@@ -84,8 +86,10 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     private long mainLoopCounter=0;
     private List<PhysicsObserver> physicsObservers = new CopyOnWriteArrayList<PhysicsObserver>();
     private List<ActBasedController> actControllers = Collections.synchronizedList(new ArrayList<ActBasedController>());
+    private PhysicsFactory.Options options;
     
-    public JMESimulation(ModuleFactory[] factories) {
+    public JMESimulation(ModuleFactory[] factories, PhysicsFactory.Options options) {
+        this.options = options; 
         PhysicsParameters parameters = PhysicsParameters.get();
         this.gravity = parameters.getGravity();
        // this.physicsSimulationStepSize = parameters.getPhysicsSimulationStepSize();
@@ -216,7 +220,12 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         doAddInputHandlers();
         
          MouseInput.get().setCursorVisible( true );
-         new PhysicsPicker( input, rootNode, getPhysicsSpace() );
+         if(options.getPicker()==PhysicsFactory.PickerMode.SIMPLE)
+             new USSRPicker( this, input, rootNode, getPhysicsSpace() );
+         else if(options.getPicker()==PhysicsFactory.PickerMode.PHYSICS)
+             new PhysicsPicker( input, rootNode, getPhysicsSpace() );
+         else
+             throw new Error("Unknown picker option: "+options.getPicker());
     }
 
     private void setPhysicsErrorParameters(float cfm, float erp) {
@@ -401,20 +410,20 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     }
 
     public synchronized void associateGeometry(DynamicPhysicsNode moduleNode, TriMesh shape) {
-        Set<TriMesh> associated = geometryMap.get(moduleNode);
+/*        Set<TriMesh> associated = geometryMap.get(moduleNode);
         if(associated==null) {
             associated = new HashSet<TriMesh>();
             geometryMap.put(moduleNode, associated);
         }
-        associated.add(shape);
+        associated.add(shape);*/
     }
 
-    public Set<TriMesh> getNodeGeometries(DynamicPhysicsNode node) {
+/*    public Set<TriMesh> getNodeGeometries(DynamicPhysicsNode node) {
         Set<TriMesh> result = geometryMap.get(node);
         if(result!=null) return result;
         return Collections.emptySet();
     }
-    
+*/    
     public List<Module> getModules() {
         return modules;
     }
