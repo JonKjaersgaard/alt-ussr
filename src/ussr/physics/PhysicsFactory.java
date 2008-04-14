@@ -27,24 +27,10 @@ import ussr.samples.white.JMEWhiteFactory;
 public class PhysicsFactory {
     
     /**
-     * Picker (controller for mouse clicks) to be used in the simulation 
-     * @author ups
-     */
-    public enum PickerMode { PHYSICS, SIMPLE };
-
-    /**
      * Options for creating the simulation
      * @author ups
      */
     public static class Options implements Cloneable {
-        private PickerMode pickerMode = PickerMode.PHYSICS;
-
-        public void setPicker(PickerMode mode) {
-            this.pickerMode = mode;
-        }
-        public PickerMode getPicker() {
-            return pickerMode;
-        }
         public Options copy() { 
             try {
                 return (Options)clone();

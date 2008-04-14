@@ -1,4 +1,7 @@
-package ussr.physics.jme;
+package ussr.physics.jme.pickers;
+
+import ussr.physics.jme.JMEModuleComponent;
+import ussr.physics.jme.JMESimulation;
 
 import com.jme.input.InputHandler;
 import com.jme.math.Vector3f;
@@ -24,26 +27,27 @@ import com.jmex.physics.PhysicsSpace;
 /**
  * A small tool to be able to pick the visual of physics nodes and move them around with the mouse.
  *
- * @author Irrisor, modified by ups to be USSR-specific
+ * @author Irrisor (original code)
+ * @author modified by ups to be USSR-specific
  */
-public class USSRPicker {
+public abstract class CustomizedPicker implements Picker {
 
     private JMESimulation simulation;
     /**
      * root node of the scene - used for picking.
      */
-    private final Node rootNode;
-    private USSRPicker.PickAction pickAction;
-    private USSRPicker.MoveAction moveAction;
+    private Node rootNode;
+    private CustomizedPicker.PickAction pickAction;
+    private CustomizedPicker.MoveAction moveAction;
 
     /**
-     * Constructor of the class.
+     * Attach the picker to a simulation
      *
      * @param input        where {@link #getInputHandler()} is attached to
      * @param rootNode     root node of the scene - used for picking
      * @param physicsSpace physics space to create joints in (picked nodes must reside in there)
      */
-    public USSRPicker( JMESimulation simulation, InputHandler input, Node rootNode, PhysicsSpace physicsSpace ) {
+    public void attach( JMESimulation simulation, InputHandler input, Node rootNode, PhysicsSpace physicsSpace ) {
         this.simulation = simulation;
         this.inputHandler = new InputHandler();
         input.addToAttachedHandlers( this.inputHandler );
@@ -58,6 +62,11 @@ public class USSRPicker {
         return inputHandler;
     }
 
+    /**
+     * Method to run when an object is picked
+     */
+    protected abstract void pickModuleComponent(JMEModuleComponent component);
+    
     private InputHandler inputHandler;
 
     private final Vector2f mousePosition = new Vector2f();
@@ -69,12 +78,11 @@ public class USSRPicker {
         inputHandler.addAction( moveAction, InputHandler.DEVICE_MOUSE, InputHandler.BUTTON_NONE, InputHandler.AXIS_ALL, false );
     }
 
-    private void attach(DynamicPhysicsNode node) {
+    private void pickNode(DynamicPhysicsNode node) {
         for(JMEModuleComponent component: simulation.getModuleComponents()) {
             if(component.getNodes().contains(node)) {
-                System.out.println("Found: "+component.getModel().getProperty("name"));
-                for(DynamicPhysicsNode part: component.getNodes())
-                    part.setLocalTranslation(part.getLocalTranslation().add(new Vector3f(0.2f,0.2f,0.2f)));
+                this.pickModuleComponent(component);
+                return;
             }
         }
     }
@@ -107,7 +115,7 @@ public class USSRPicker {
                             while ( target != null ) {
                                 if ( target instanceof DynamicPhysicsNode ) {
                                     DynamicPhysicsNode picked = (DynamicPhysicsNode) target;
-                                    attach( picked );
+                                    pickNode( picked );
                                     break loopResults;
                                 }
                                 target = target.getParent();

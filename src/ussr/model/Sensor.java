@@ -59,5 +59,13 @@ public class Sensor extends Entity {
     
 	public void reset() {
 		physics.reset();		
-	} 
+	}
+
+	/**
+     * Set the sensitivity of a sensor
+     * @arg sensitivity a positive floating point value that indicates the sensitivity
+	 */
+	public void setSensitivity(float sensitivity) {
+	    physics.setSensitivity(sensitivity);
+    } 
 }

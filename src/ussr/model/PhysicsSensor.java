@@ -34,4 +34,10 @@ public interface PhysicsSensor extends PhysicsEntity {
  	 * @return the name of the sensor
  	 */
     String getName();
+
+    /**
+     * Set the sensitivity of a sensor
+     * @arg sensitivity a positive floating point value that indicates the sensitivity
+     */
+    void setSensitivity(float sensitivity);
 }

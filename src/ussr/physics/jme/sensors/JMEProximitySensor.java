@@ -31,6 +31,7 @@ public class JMEProximitySensor implements PhysicsSensor {
     private Sensor model;
     private DynamicPhysicsNode node;
     private float range;
+    private float sensitivity = 1.0f;
     
     public JMEProximitySensor(JMESimulation simulation, String name, Entity hardware, float range, DynamicPhysicsNode node) {
         this.simulation = simulation;
@@ -50,9 +51,10 @@ public class JMEProximitySensor implements PhysicsSensor {
      * @see ussr.model.PhysicsSensor#readValue()
      */
     public float readValue() {
+        float adjustedRange = range*sensitivity;
         for(PhysicsNode obstacle: simulation.getObstacles()) {
             float distance = node.getWorldTranslation().distance(obstacle.getWorldTranslation());
-            if(distance<range) return 1-distance/range;
+            if(distance<adjustedRange) return 1-distance/adjustedRange;
         }
         return 0;
     }
@@ -95,4 +97,8 @@ public class JMEProximitySensor implements PhysicsSensor {
 	public void addExternalForce(float forceX, float forceY, float forceZ) {
 		node.addForce(new Vector3f(forceX,forceY,forceZ));		
 	}
+
+    public void setSensitivity(float sensitivity) {
+        this.sensitivity = sensitivity;
+    }
 }

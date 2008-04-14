@@ -40,6 +40,8 @@ import ussr.physics.PhysicsSimulationHelper;
 import ussr.physics.PhysicsFactory.Options;
 import ussr.physics.jme.connectors.JMEBasicConnector;
 import ussr.physics.jme.connectors.JMEConnector;
+import ussr.physics.jme.pickers.Picker;
+import ussr.physics.jme.pickers.PhysicsPicker;
 
 import com.jme.input.InputHandler;
 import com.jme.input.KeyInput;
@@ -56,7 +58,6 @@ import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
 import com.jmex.physics.PhysicsNode;
 import com.jmex.physics.impl.ode.OdePhysicsSpace;
-import com.jmex.physics.util.PhysicsPicker;
 
 /**
  * The physical simulation: initialization and main loop, references to all simulated entities. 
@@ -87,6 +88,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     private List<PhysicsObserver> physicsObservers = new CopyOnWriteArrayList<PhysicsObserver>();
     private List<ActBasedController> actControllers = Collections.synchronizedList(new ArrayList<ActBasedController>());
     private PhysicsFactory.Options options;
+    private Picker picker;
     
     public JMESimulation(ModuleFactory[] factories, PhysicsFactory.Options options) {
         this.options = options; 
@@ -219,15 +221,22 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         // Add any external input handlers
         doAddInputHandlers();
         
-         MouseInput.get().setCursorVisible( true );
-         if(options.getPicker()==PhysicsFactory.PickerMode.SIMPLE)
-             new USSRPicker( this, input, rootNode, getPhysicsSpace() );
-         else if(options.getPicker()==PhysicsFactory.PickerMode.PHYSICS)
-             new PhysicsPicker( input, rootNode, getPhysicsSpace() );
-         else
-             throw new Error("Unknown picker option: "+options.getPicker());
+        if(picker==null)
+            setPicker(new PhysicsPicker());
+        else {
+            Picker current = this.picker;
+            this.picker = null;
+            setPicker(current);
+        }
+        MouseInput.get().setCursorVisible( true );
     }
 
+    public synchronized void setPicker(Picker picker) {
+        if(this.picker!=null) this.picker.delete();
+        this.picker = picker;
+        if(input!=null) picker.attach(this, input, rootNode, getPhysicsSpace());
+    }
+    
     private void setPhysicsErrorParameters(float cfm, float erp) {
     	((OdePhysicsSpace)getPhysicsSpace()).getODEJavaWorld().setConstraintForceMix(cfm); //default = 10E-5f, typical = [10E-9, 1]
 		((OdePhysicsSpace)getPhysicsSpace()).getODEJavaWorld().setErrorReductionParameter(erp); //default = 0.2, typical = [0.1,0.8]
