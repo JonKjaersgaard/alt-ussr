@@ -14,7 +14,7 @@ import ussr.samples.atron.ATRONController;
 public class RoleSelector {
     // Neutral role
     public static final int NO_MODULE = 0;
-    public static final int ROLE_ANY = 1;
+    public static final int ROLE_ANY = 255;
     // Directions (sides of modules)
     public static final int DIR_NONE = 0;
     public static final int DIR_NORTH = 1;
@@ -148,7 +148,6 @@ public class RoleSelector {
             int z = self.getTiltZ(), az = (int)Math.abs(z);
             if(ay<t && az<t) {
                 if(x>t) {
-                    System.out.println("Normal way");
                     connector_direction[0] = DIR_UP|DIR_NORTH;
                     connector_direction[1] = DIR_WEST|DIR_NORTH;
                     connector_direction[2] = DIR_DOWN|DIR_NORTH;
@@ -159,7 +158,6 @@ public class RoleSelector {
                     connector_direction[7] = DIR_EAST|DIR_SOUTH;
                     updated = true;
                 } else if(x<-t) {
-                    System.out.println("Other way");
                     connector_direction[0] = DIR_DOWN|DIR_SOUTH;
                     connector_direction[1] = DIR_EAST|DIR_SOUTH;
                     connector_direction[2] = DIR_UP|DIR_SOUTH;

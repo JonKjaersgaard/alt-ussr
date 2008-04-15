@@ -18,9 +18,9 @@ import static roleselection.RoleSelector.*;
 public class ATRONSimpleVehicleController1 extends ATRONController {
 	
     // Roles
-    public static final int ROLE_LEFTWHEEL = 2;
-    public static final int ROLE_RIGHTWHEEL = 3;
-    public static final int ROLE_HEAD = 4;
+    public static final int ROLE_LEFTWHEEL = 1;
+    public static final int ROLE_RIGHTWHEEL = 2;
+    public static final int ROLE_HEAD = 3;
     
     // Selector helper
     RoleSelector selector = new RoleSelector(this,(byte)87);
