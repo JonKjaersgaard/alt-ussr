@@ -1,6 +1,7 @@
 package roleselection;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -12,6 +13,8 @@ import java.util.Set;
 import ussr.samples.atron.ATRONController;
 
 public class RoleSelector {
+    // Threshold to use for when we can match a specific tilt
+    public static final int TILT_THRESHOLD = 40;
     // Neutral role
     public static final int NO_MODULE = 0;
     public static final int ROLE_ANY = 255;
@@ -97,6 +100,15 @@ public class RoleSelector {
     public int get_connector_direction(int connector) {
         return this.connector_direction[connector];
     }
+    // Get connectors based on criteria
+    public BitSet get_matching_connectors(int direction, int role) {
+        BitSet result = new BitSet();
+        for(int i=0; i<8; i++) {
+            if((this.connector_direction[i]&direction)!=0 && ((role==ROLE_ANY&&this.neighbor_roles[i]!=NO_MODULE)||this.neighbor_roles[i]==role))
+                result.set(i);
+        }
+        return result;
+    }
     // Select a role for the module based on the current orientation and context
     public void select_role() {
         update_context();
@@ -138,7 +150,7 @@ public class RoleSelector {
     
     // Find orientation, trying to match to required origo
     public void set_local_origo(int definition) {
-        final int t = 50;
+        final int t = TILT_THRESHOLD;
         this.local_orientation = definition;
         connector_direction  = new int[8];
         boolean updated = false;
@@ -245,8 +257,10 @@ public class RoleSelector {
             if(ew!=0) label_hemispheres(connector,ew);
             //System.out.println("Updated connector directions in "+self.getModule().getProperty("name")+", 4="+connector_direction[4]);
             break;
+        case ORI_UD:
+            // Handle; ideas for operations: connector -> neighboring connectors, opposing connector 
         default:
-            throw new Error("Not implemented");
+            throw new Error("Not implemented: "+orientation);
         }
     }
     

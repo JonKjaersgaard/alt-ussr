@@ -54,7 +54,9 @@ public class ATRONSimpleVehicleController1 extends ATRONController {
             if(role==ROLE_RIGHTWHEEL) rotateContinuous(dir);
             if(role==ROLE_LEFTWHEEL) rotateContinuous(-dir);
             if(role==ROLE_HEAD) {
-                
+                int left = selector.get_matching_connectors(DIR_WEST, ROLE_ANY).nextSetBit(0);
+                int right = selector.get_matching_connectors(DIR_EAST, ROLE_ANY).nextSetBit(0);
+                System.out.println("Head: left connector="+left+", right="+right);
             }
             this.delay(1000);
             yield();
