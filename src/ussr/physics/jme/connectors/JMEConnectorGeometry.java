@@ -34,19 +34,19 @@ public class JMEConnectorGeometry {
 	private volatile JMESimulation world;
 	private Vector3f localPosition;
 	
-	public JMEConnectorGeometry(Vector3f position, DynamicPhysicsNode node, JMESimulation world, JMEModuleComponent component, ConnectorDescription description) {
+	public JMEConnectorGeometry(String name, Vector3f position, DynamicPhysicsNode node, JMESimulation world, JMEModuleComponent component, ConnectorDescription description) {
 		this.world= world;
 		this.localPosition = position;
 		// Create visual appearance
         List<GeometryDescription> geometry = description.getGeometry();
         assert geometry.size()==1; // Only tested with size 1 geometry
         for(GeometryDescription element: geometry) {
-        	mesh = JMEGeometryHelper.createShape(node, "Mechanical Connector Mesh", element);
+        	mesh = JMEGeometryHelper.createShape(node, "Connector mesh for "+name, element);
             mesh.getLocalTranslation().set( mesh.getLocalTranslation().add(new Vector3f(position)) );
             //TODO Mesh is already rotated - change this to here 
             node.attachChild( mesh );
             component.getComponentGeometries().add(mesh);
-            world.associateGeometry(node, mesh);
+            world.associateGeometry(name, mesh);
             world.getHelper().setColor(mesh, element.getColor());
         }
 	}

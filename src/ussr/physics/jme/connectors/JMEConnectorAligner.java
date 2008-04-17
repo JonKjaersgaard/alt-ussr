@@ -51,7 +51,7 @@ public class JMEConnectorAligner {
 		TriMesh mesh = JMEGeometryHelper.createShape(connector.getNode(), "Attraction Point Mesh", shapes[type]);
         mesh.getLocalTranslation().set( mesh.getLocalTranslation().add(new Vector3f(pos)) );
         connector.getNode().attachChild( mesh );
-        world.associateGeometry(connector.getNode(), mesh);
+        //world.associateGeometry(connector.getNode(), mesh);
         world.getHelper().setColor(mesh, colors[sex]);
 	}
 	public ArrayList<AlignmentPoint> getAlignmentPoints() {

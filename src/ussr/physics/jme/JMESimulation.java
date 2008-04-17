@@ -72,7 +72,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     public WorldDescription worldDescription;
     private List<JMEModuleComponent> moduleComponents = new ArrayList<JMEModuleComponent>();
     private List<Module> modules = new ArrayList<Module>();
-    private Map<DynamicPhysicsNode,Set<TriMesh>> geometryMap = new HashMap<DynamicPhysicsNode,Set<TriMesh>>();
+    private Map<TriMesh,String> geometryMap = new HashMap<TriMesh,String>();
     private ArrayList<Thread> moduleThreads = new ArrayList<Thread>();
     
     protected long physicsSteps = 0;
@@ -418,21 +418,14 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         }
     }
 
-    public synchronized void associateGeometry(DynamicPhysicsNode moduleNode, TriMesh shape) {
-/*        Set<TriMesh> associated = geometryMap.get(moduleNode);
-        if(associated==null) {
-            associated = new HashSet<TriMesh>();
-            geometryMap.put(moduleNode, associated);
-        }
-        associated.add(shape);*/
+    public synchronized void associateGeometry(String name, TriMesh shape) {
+        geometryMap.put(shape,name);
     }
 
-/*    public Set<TriMesh> getNodeGeometries(DynamicPhysicsNode node) {
-        Set<TriMesh> result = geometryMap.get(node);
-        if(result!=null) return result;
-        return Collections.emptySet();
+    public String getGeometryName(TriMesh mesh) {
+        return geometryMap.get(mesh);
     }
-*/    
+
     public List<Module> getModules() {
         return modules;
     }

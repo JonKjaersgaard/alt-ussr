@@ -54,7 +54,7 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
         this.module = component;
         this.name = baseName;
         this.node = moduleNode;
-        this.connectorGeometry = new JMEConnectorGeometry(position, node, world, component, description);
+        this.connectorGeometry = new JMEConnectorGeometry(baseName, position, node, world, component, description);
         this.connectorAligner =  new JMEConnectorAligner(this, world, component);
     	world.subscribePhysicsTimestep(this);
     }

@@ -34,8 +34,10 @@ package ussr.physics.jme.pickers;
 import ussr.physics.jme.JMESimulation;
 
 import com.jme.input.InputHandler;
+import com.jme.input.KeyInput;
 import com.jme.input.action.InputAction;
 import com.jme.input.action.InputActionEvent;
+import com.jme.input.action.InputActionInterface;
 import com.jme.intersection.PickData;
 import com.jme.intersection.TrianglePickResults;
 import com.jme.math.Ray;
@@ -43,17 +45,34 @@ import com.jme.math.Vector2f;
 import com.jme.math.Vector3f;
 import com.jme.scene.Node;
 import com.jme.scene.Spatial;
+import com.jme.scene.TriMesh;
 import com.jme.system.DisplaySystem;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
 import com.jmex.physics.PhysicsSpace;
+import com.jmex.physics.RotationalJointAxis;
 
 /**
  * A small tool to be able to pick the visual of physics nodes and move them around with the mouse.
  *
- * @author Irrisor
+ * @author Irrisor (original JME version)
+ * @author Ulrik (modified for USSR)
  */
 public class PhysicsPicker implements Picker {
+    private boolean shiftIsPressed = false;
+    private boolean isFlexible;
+
+    public class ModeAction implements InputActionInterface {
+
+        public void performAction(InputActionEvent evt) {
+            int c = evt.getTriggerIndex();
+            if(c==KeyInput.KEY_LSHIFT || c==KeyInput.KEY_RSHIFT) {
+                shiftIsPressed = evt.getTriggerPressed();
+            }
+        }
+
+    }
+
     /**
      * root node of the scene - used for picking.
      */
@@ -63,16 +82,24 @@ public class PhysicsPicker implements Picker {
      */
     private DynamicPhysicsNode myNode;
     /**
-     * joint to link myNode and picked node.
+     * joints to link myNode and picked node.
      */
-    private Joint joint;
+    private Joint flexibleJoint;
+    private Joint fixedJoint;
     /**
      * joint to fix myNode in the world.
      */
     private Joint worldJoint;
-    private PhysicsPicker.PickAction pickAction;
-    private PhysicsPicker.MoveAction moveAction;
-
+    private PickAction pickAction;
+    private MoveAction moveAction;
+    private ModeAction modeAction;
+    
+    private JMESimulation simulation;
+    /**
+     * axes to make the flexible joint flexible
+     */
+    RotationalJointAxis xAxis, yAxis;
+    
     /**
      * Constructor of the class.
      *
@@ -83,11 +110,17 @@ public class PhysicsPicker implements Picker {
     public PhysicsPicker() { }
     
     public void attach(JMESimulation simulation, InputHandler input, Node rootNode, PhysicsSpace physicsSpace ) {
+        this.simulation = simulation;
         this.inputHandler = new InputHandler();
         input.addToAttachedHandlers( this.inputHandler );
         this.rootNode = rootNode;
-        joint = physicsSpace.createJoint();
-        joint.setSpring( 2000, 200 );
+        fixedJoint = physicsSpace.createJoint();
+        fixedJoint.setSpring(2000, 200);
+        flexibleJoint = physicsSpace.createJoint();
+        flexibleJoint.setSpring( 2000, 200 );
+        xAxis = flexibleJoint.createRotationalAxis(); xAxis.setDirection(new Vector3f(1,0,0));
+        yAxis = flexibleJoint.createRotationalAxis(); yAxis.setDirection(new Vector3f(0,0,1));
+        yAxis.setRelativeToSecondObject(true);
         myNode = physicsSpace.createDynamicNode();
         myNode.setName( "Physics Picker Helper Node");
         myNode.setAffectedByGravity( false );
@@ -111,15 +144,20 @@ public class PhysicsPicker implements Picker {
     private void activatePhysicsPicker() {
         pickAction = new PickAction();
         inputHandler.addAction( pickAction, InputHandler.DEVICE_MOUSE, 0, InputHandler.AXIS_NONE, false );
+        
+        modeAction = new ModeAction();
+        inputHandler.addAction( modeAction, InputHandler.DEVICE_KEYBOARD, InputHandler.BUTTON_ALL, InputHandler.AXIS_NONE, false);
 
         moveAction = new MoveAction();
-        inputHandler.addAction( moveAction, InputHandler.DEVICE_MOUSE, InputHandler.BUTTON_NONE,
-                InputHandler.AXIS_ALL, false );
+        inputHandler.addAction( moveAction, InputHandler.DEVICE_MOUSE, InputHandler.BUTTON_NONE, InputHandler.AXIS_ALL, false );
     }
 
     private void release() {
         picked = null;
-        joint.detach();
+        if(isFlexible)
+            flexibleJoint.detach();
+        else
+            fixedJoint.detach();
         worldJoint.detach();
         myNode.setActive( false );
     }
@@ -137,17 +175,27 @@ public class PhysicsPicker implements Picker {
         myNode.setActive( true );
         worldJoint.setAnchor( myNode.getLocalTranslation() );
         worldJoint.attach( myNode );
-        joint.attach( myNode, node );
-        joint.setAnchor( new Vector3f() );
+        if(shiftIsPressed) {
+            flexibleJoint.attach( myNode, node );
+            flexibleJoint.setAnchor( new Vector3f() );
+            isFlexible = true;
+        } else {
+            fixedJoint.attach( myNode, node );
+            fixedJoint.setAnchor( new Vector3f() );
+            isFlexible = false;
+        }
     }
 
     public void delete() {
         inputHandler.removeAction( pickAction );
         inputHandler.removeAction( moveAction );
+        inputHandler.removeAction( modeAction );
         myNode.setActive( false );
         myNode.removeFromParent();
-        joint.detach();
-        joint.setActive( false );
+        flexibleJoint.detach();
+        flexibleJoint.setActive( false );
+        fixedJoint.detach();
+        fixedJoint.setActive(false);
         worldJoint.detach();
         worldJoint.setActive( false );
         picked = null;
@@ -159,6 +207,7 @@ public class PhysicsPicker implements Picker {
 
         public void performAction( InputActionEvent evt ) {
             if ( evt.getTriggerPressed() ) {
+                
                 DisplaySystem.getDisplaySystem().getWorldCoordinates( mousePosition, 0, pickRay.origin );
                 DisplaySystem.getDisplaySystem().getWorldCoordinates( mousePosition, 0.3f, pickRay.direction );
                 pickRay.direction.subtractLocal( pickRay.origin ).normalizeLocal();
@@ -173,6 +222,10 @@ public class PhysicsPicker implements Picker {
                     PickData data = pickResults.getPickData( i );
                     if ( data.getTargetTris() != null && data.getTargetTris().size() > 0 ) {
                         Spatial target = data.getTargetMesh().getParentGeom();
+                        if(target instanceof TriMesh) {
+                            String name = simulation.getGeometryName((TriMesh)target);
+                            if(name!=null) System.out.println("Initial click on: "+name);
+                        }
                         while ( target != null ) {
                             if ( target instanceof DynamicPhysicsNode ) {
                                 DynamicPhysicsNode picked = (DynamicPhysicsNode) target;

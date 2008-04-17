@@ -94,7 +94,7 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         for(GeometryDescription geometry: description.getGeometry()) {
             TriMesh shape = JMEGeometryHelper.createShape(moduleNode, name, geometry);
             geometries.add(shape);
-            world.associateGeometry(moduleNode,shape);
+            world.associateGeometry(name,shape);
             world.getHelper().setColor(shape,geometry.getColor());
             moduleNode.setIsCollidable(true);
             moduleNode.generatePhysicsGeometry(geometry.getAccurateCollisionDetection());
@@ -105,9 +105,11 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
         // Create connectors
    		int counter = 0;
         for(ConnectorDescription cd: description.getConnectors()) {
+            int index = model.getConnectors().size();
             VectorDescription p = cd.getPosition();
             Vector3f position = new Vector3f(p.getX(), p.getY(), p.getZ());
             String cname = cd.getName()==null ? "Connector "+(counter++) : cd.getName(); 
+            cname+=" #"+index;
             this.addConnector(cname, position, cd, cd.getRotation().getRotation());
         }
         //TODO change this way of creating communication sometimes we can it to be at a connector
