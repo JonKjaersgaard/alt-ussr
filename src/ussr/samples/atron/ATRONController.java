@@ -345,6 +345,14 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     }
     
     /**
+     * Set the sensitivity (e.g., range) of a proximity sensor
+     * @arg sensitivity a positive floating point value that is multiplied onto the base range
+     */
+    public void setSensorSensitivity(int connector, float sensitivity) {
+        module.getSensors().get(connector).setSensitivity(sensitivity);
+    }
+    
+    /**
 	 * @see ussr.samples.atron.IATRONAPI#sendMessage(byte[], byte, byte)
 	 */
     public byte sendMessage(byte[] message, byte messageSize, byte connector) 
