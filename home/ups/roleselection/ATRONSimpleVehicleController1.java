@@ -23,15 +23,16 @@ public class ATRONSimpleVehicleController1 extends ATRONController {
     public static final int ROLE_HEAD = 3;
     
     // Communication
-    public static final byte HEADER = 1;
+    public static final byte HEADER_NORMAL = 1;
     public static final byte MSG_GO = 2;
     public static final byte MSG_STOP = 3;
+    public static final byte HEADER_ROLESELECT = 87;
     
     // Control
     public static final int PERIOD = 30;
     
     // Selector helper
-    RoleSelector selector = new RoleSelector(this,(byte)87);
+    RoleSelector selector = new RoleSelector(this,HEADER_ROLESELECT);
 
     // State
     int role = ROLE_ANY;
@@ -81,7 +82,7 @@ public class ATRONSimpleVehicleController1 extends ATRONController {
                     head_counter = 0;
                     wheel_moving = !wheel_moving;
                     System.out.println("Sending message: "+(wheel_moving ? "MSG_STOP" : "MSG_GO" ));
-                    byte[] message = { HEADER, wheel_moving ? MSG_STOP : MSG_GO };
+                    byte[] message = { HEADER_NORMAL, wheel_moving ? MSG_STOP : MSG_GO };
                     this.sendMessage(message, (byte)2, (byte)left);
                     this.sendMessage(message, (byte)2, (byte)right);
                 }
@@ -95,8 +96,8 @@ public class ATRONSimpleVehicleController1 extends ATRONController {
     
     @Override
     public void handleMessage(byte[] message, int length, int connector) {
-        if(length>0 && message[0]==(byte)87) selector.deliver_message(message, (byte)length, (byte)connector);
-        else if(length>1 && message[0]==HEADER) {
+        if(length>0 && message[0]==HEADER_ROLESELECT) selector.deliver_message(message, (byte)length, (byte)connector);
+        else if(length>1 && message[0]==HEADER_NORMAL) {
             if(role==ROLE_LEFTWHEEL||role==ROLE_RIGHTWHEEL) {
                 if(message[1]==MSG_STOP)
                     wheel_moving = false;

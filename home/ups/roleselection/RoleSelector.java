@@ -130,7 +130,7 @@ public class RoleSelector {
                     if(head) System.out.println("Deselected head role based on orientation");
                 }
         }
-        // Eliminate roles based on connector constraints
+        // Eliminate roles based on connector constraints, only supports ROLE_ANY currently
         Iterator<Role> connector_roles_iterator = selected_roles.iterator();
         while(connector_roles_iterator.hasNext()) {
             Role role = connector_roles_iterator.next();
