@@ -22,8 +22,21 @@ public class ATRONSimpleVehicleController1 extends ATRONController {
     public static final int ROLE_RIGHTWHEEL = 2;
     public static final int ROLE_HEAD = 3;
     
+    // Communication
+    public static final byte HEADER = 1;
+    public static final byte MSG_GO = 2;
+    public static final byte MSG_STOP = 3;
+    
+    // Control
+    public static final int PERIOD = 30;
+    
     // Selector helper
     RoleSelector selector = new RoleSelector(this,(byte)87);
+
+    // State
+    int role = ROLE_ANY;
+    boolean wheel_moving = true;
+    int head_counter = 0;
     
     /**
      * @see ussr.model.ControllerImpl#activate()
@@ -35,28 +48,45 @@ public class ATRONSimpleVehicleController1 extends ATRONController {
         selector.set_role_connection_count(ROLE_RIGHTWHEEL,1);
         selector.set_role_connection_count(ROLE_HEAD,2);
         selector.set_role_orientation_definition(ROLE_HEAD, ORI_NS);
+        selector.set_role_orientation_constraint(ROLE_HEAD, ORI_NS);
         selector.set_role_connector_constraint(ROLE_LEFTWHEEL, DIR_WEST, 0, ROLE_ANY);
         selector.set_role_connector_constraint(ROLE_RIGHTWHEEL, DIR_EAST, 0, ROLE_ANY);
         // Start running
         byte dir = 1;
-        int role = ROLE_ANY;
         String self = this.getModule().getProperty("name");
         while(true) {
             int oldRole = role;
             // Find a role
-            do {
+            //do {
                 selector.select_role();
                 yield();
-            } while(selector.get_role()==ROLE_ANY);
+            //} while(selector.get_role()==ROLE_ANY);
             role = selector.get_role();
             if(role!=oldRole) System.out.println("Selected role "+role+" for "+self);
             // Perform action
-            if(role==ROLE_RIGHTWHEEL) rotateContinuous(dir);
-            if(role==ROLE_LEFTWHEEL) rotateContinuous(-dir);
-            if(role==ROLE_HEAD) {
+            switch(role) {
+            case ROLE_RIGHTWHEEL: 
+                if(wheel_moving) rotateContinuous(dir); 
+                else centerStop();
+                break;
+            case ROLE_LEFTWHEEL: 
+                if(wheel_moving) rotateContinuous(-dir);
+                else centerStop();
+                break;
+            case ROLE_HEAD:
                 int left = selector.get_matching_connectors(DIR_WEST, ROLE_ANY).nextSetBit(0);
                 int right = selector.get_matching_connectors(DIR_EAST, ROLE_ANY).nextSetBit(0);
-                System.out.println("Head: left connector="+left+", right="+right);
+                //System.out.println("left="+left+", right="+right);
+                if(head_counter++>PERIOD) {
+                    head_counter = 0;
+                    wheel_moving = !wheel_moving;
+                    System.out.println("Sending message: "+(wheel_moving ? "MSG_STOP" : "MSG_GO" ));
+                    byte[] message = { HEADER, wheel_moving ? MSG_STOP : MSG_GO };
+                    this.sendMessage(message, (byte)2, (byte)left);
+                    this.sendMessage(message, (byte)2, (byte)right);
+                }
+            default:
+                centerStop();
             }
             this.delay(1000);
             yield();
@@ -66,5 +96,15 @@ public class ATRONSimpleVehicleController1 extends ATRONController {
     @Override
     public void handleMessage(byte[] message, int length, int connector) {
         if(length>0 && message[0]==(byte)87) selector.deliver_message(message, (byte)length, (byte)connector);
+        else if(length>1 && message[0]==HEADER) {
+            if(role==ROLE_LEFTWHEEL||role==ROLE_RIGHTWHEEL) {
+                if(message[1]==MSG_STOP)
+                    wheel_moving = false;
+                else if(message[1]==MSG_GO)
+                    wheel_moving = true;
+                else
+                    System.err.println("Incorrect message");
+            }
+        }
     }
 }

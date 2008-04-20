@@ -14,7 +14,7 @@ import ussr.samples.atron.ATRONController;
 
 public class RoleSelector {
     // Threshold to use for when we can match a specific tilt
-    public static final int TILT_THRESHOLD = 40;
+    public static final int TILT_THRESHOLD = 50;
     // Neutral role
     public static final int NO_MODULE = 0;
     public static final int ROLE_ANY = 255;
@@ -104,62 +104,99 @@ public class RoleSelector {
     public BitSet get_matching_connectors(int direction, int role) {
         BitSet result = new BitSet();
         for(int i=0; i<8; i++) {
+            //System.out.println("Connector "+i+": ("+this.connector_direction[i]+"&"+direction+"!=0) && (("+(role==ROLE_ANY)+"&&"+(this.neighbor_roles[i]!=NO_MODULE)+")||"+(this.neighbor_roles[i]==role)+")");
             if((this.connector_direction[i]&direction)!=0 && ((role==ROLE_ANY&&this.neighbor_roles[i]!=NO_MODULE)||this.neighbor_roles[i]==role))
                 result.set(i);
         }
         return result;
     }
     // Select a role for the module based on the current orientation and context
-    public void select_role() {
+    int i;
+    public boolean select_role() {
+        boolean head = self.getModule().getProperty("name").startsWith("driver");
         update_context();
         List<Role> selected_roles = new LinkedList<Role>();
-        find_role: {
-            // Eliminate roles based on count
-            for(Role role: this.role_defns.values()) {
-                if(role.connection_count==this.neighbor_count) selected_roles.add(role);
-            }
-            if(selected_roles.size()==1) break find_role;
-            // Eliminate roles based on connector constraints
-            Iterator<Role> selected_roles_iterator = selected_roles.iterator();
-            while(selected_roles_iterator.hasNext()) {
-                Role role = selected_roles_iterator.next();
-                for(Constraint constraint: role.connector.values()) {
-                    int count = 0;
-                    for(int i=0; i<8; i++)
-                        if((this.connector_direction[i]&constraint.direction)!=0) {
-                            //System.out.println(" Module "+self.getModule().getProperty("name")+" considering "+role.id+" connector "+i);
-                            if(this.neighbor_roles[i]!=NO_MODULE) count++;
-                        }
-                    //System.out.println("Module "+self.getModule().getProperty("name")+" count="+count+", needed "+constraint.count);
-                    if(constraint.count!=count) selected_roles_iterator.remove(); 
+        // Eliminate roles based on count
+        for(Role role: this.role_defns.values()) {
+            if(role.connection_count==this.neighbor_count) selected_roles.add(role);
+        }
+        // Eliminate roles based on rotation
+        Iterator<Role> rotation_roles_iterator = selected_roles.iterator();
+        while(rotation_roles_iterator.hasNext()) {
+            Role role = rotation_roles_iterator.next();
+            if(role.orientation_constraint!=ORI_NONE)
+                if(!match_orientation(role.orientation_constraint)) {
+                    rotation_roles_iterator.remove();
+                    if(head) System.out.println("Deselected head role based on orientation");
                 }
+        }
+        // Eliminate roles based on connector constraints
+        Iterator<Role> connector_roles_iterator = selected_roles.iterator();
+        while(connector_roles_iterator.hasNext()) {
+            Role role = connector_roles_iterator.next();
+            for(Constraint constraint: role.connector.values()) {
+                int count = 0;
+                for(int i=0; i<8; i++)
+                    if((this.connector_direction[i]&constraint.direction)!=0) {
+                        //System.out.println(" Module "+self.getModule().getProperty("name")+" considering "+role.id+" connector "+i);
+                        if(this.neighbor_roles[i]!=NO_MODULE) count++;
+                    }
+                //System.out.println("Module "+self.getModule().getProperty("name")+" count="+count+", needed "+constraint.count);
+                if(constraint.count!=count) connector_roles_iterator.remove(); 
             }
         }
+        // Did we match?
         if(selected_roles.size()==1) {
+            //if(head) System.out.println("size1:"+i++);
             Role selected = selected_roles.get(0);
+            if(this.local_role==selected.id) return false;
             this.local_role = selected.id;
-            //System.out.println("Selected role "+this.local_role+" for module "+self.getModule().getProperty("name"));
+            //System.out.println("*Selected role "+this.local_role+" for module "+self.getModule().getProperty("name"));
             if(selected.orientation_definition!=0) {
                 set_local_origo(selected.orientation_definition);
-                //System.out.println("Setting module "+self.getModule().getProperty("name")+" as origo: "+get_orientation());
+                //System.out.println("*Setting module "+self.getModule().getProperty("name")+" as origo: "+get_orientation());
             }
         }
-        else
+        else {
+            //if(head) System.out.println("sizen:"+i++);
+            if(this.local_role==ROLE_ANY) {
+                //System.out.println("Already any");
+                return false;
+            }
+            boolean reset_orientation = (this.local_role!=ROLE_ANY && lookup(this.local_role).orientation_definition!=ORI_NONE);
             this.local_role = ROLE_ANY;
+            //System.out.println("*Set local origo to none");
+            if(reset_orientation) set_local_origo(ORI_NONE);
+        }
+        return true;
     }
-    
+
+    private boolean match_orientation(int orientation_constraint) {
+        // Note: same conditions as set_local_origo, combine
+        final int t = TILT_THRESHOLD;
+        int x = self.getTiltX(), ax = (int)Math.abs(x);
+        int y = self.getTiltY(), ay = (int)Math.abs(y);
+        int z = self.getTiltZ(), az = (int)Math.abs(z);
+        if(orientation_constraint==ORI_NS) {
+            if(ay<t && az<t)
+                return (x>t || x<-t);
+        }
+        return false;
+
+    }
     // Find orientation, trying to match to required origo
     public void set_local_origo(int definition) {
         final int t = TILT_THRESHOLD;
+        boolean updated = definition==ORI_NONE;
         this.local_orientation = definition;
         connector_direction  = new int[8];
-        boolean updated = false;
         if(definition==ORI_NS) {
             int x = self.getTiltX(), ax = (int)Math.abs(x);
             int y = self.getTiltY(), ay = (int)Math.abs(y);
             int z = self.getTiltZ(), az = (int)Math.abs(z);
             if(ay<t && az<t) {
                 if(x>t) {
+                    System.out.println("Initial orientation for head of small vehicle"); 
                     connector_direction[0] = DIR_UP|DIR_NORTH;
                     connector_direction[1] = DIR_WEST|DIR_NORTH;
                     connector_direction[2] = DIR_DOWN|DIR_NORTH;
@@ -170,6 +207,7 @@ public class RoleSelector {
                     connector_direction[7] = DIR_EAST|DIR_SOUTH;
                     updated = true;
                 } else if(x<-t) {
+                    System.out.println("Upside-down orientation for head of small vehicle"); 
                     connector_direction[0] = DIR_DOWN|DIR_SOUTH;
                     connector_direction[1] = DIR_EAST|DIR_SOUTH;
                     connector_direction[2] = DIR_UP|DIR_SOUTH;
@@ -197,10 +235,10 @@ public class RoleSelector {
             }
         }
     }
-    
+
     private byte transform_orientation(int direction) {
         switch(this.local_orientation) {
-        case ORI_NONE: throw new Error("Illegal NONE orientation");
+        case ORI_NONE: return ORI_NONE;
         case ORI_NS:
             if((direction&DIR_WEST)!=0 || (direction&DIR_EAST)!=0) return ORI_EW;
             return ORI_UD;
@@ -219,7 +257,7 @@ public class RoleSelector {
         if((direction&DIR_DOWN)!=0) result|=DIR_UP;        
         return (byte)result;
     }
-    
+
     private void update_context() {
         this.neighbor_count = 0;
         for(int i=0; i<8; i++) {
@@ -231,27 +269,28 @@ public class RoleSelector {
                 this.neighbor_roles[i] = NO_MODULE;
         }
     }
-    
+
     // Network communication
     public void deliver_message(byte[] message, byte length, byte connector) {
-        parse_message: 
-        {
-            if(message.length<2) break parse_message;
-            if(!(message[0]==this.message_prefix)) break parse_message;
-            if(!(message[1]==MSG_ORI)) break parse_message;
-            byte orientation = message[2];
-            byte direction = message[3];
-            set_remote_orientation(orientation,connector,direction);
-            return;
+        parse_message: {
+        if(message.length<2) break parse_message;
+        if(!(message[0]==this.message_prefix)) break parse_message;
+        if(!(message[1]==MSG_ORI)) break parse_message;
+        byte orientation = message[2];
+        byte direction = message[3];
+        set_remote_orientation(orientation,connector,direction);
+        return;
         }
-        System.err.println("Warning: illegal message received by "+self.getModule().getProperty("name")+": "+message);
+    System.err.println("Warning: illegal message received by "+self.getModule().getProperty("name")+": "+message);
     }
-    
+
     private void set_remote_orientation(int orientation, int connector, int direction) {
         this.local_orientation = orientation;
         this.connector_direction = new int[8];
         switch(orientation) {
-        case ORI_NONE: throw new Error("Illegal NONE orientation");
+        case ORI_NONE:
+            System.out.println("Reset orientation in "+self.getModule().getProperty("name"));
+            break;
         case ORI_EW:
             int ew = direction&(DIR_EAST|DIR_WEST);
             if(ew!=0) label_hemispheres(connector,ew);
@@ -263,11 +302,11 @@ public class RoleSelector {
             throw new Error("Not implemented: "+orientation);
         }
     }
-    
+
     private void label_hemispheres(int designator, int direction) {
         boolean lower = designator<4;
         for(int i=0; i<4; i++) connector_direction[i] |= lower ? direction : reverse_direction(direction);
         for(int i=4; i<8; i++) connector_direction[i] |= !lower ? direction : reverse_direction(direction);
     }
-    
+
 }

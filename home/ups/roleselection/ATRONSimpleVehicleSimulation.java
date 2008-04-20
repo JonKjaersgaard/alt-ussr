@@ -48,6 +48,7 @@ public class ATRONSimpleVehicleSimulation extends GenericATRONSimulation {
             }
         }; 
         rubber.setRubberRing();
+        rubber.setGentle();
         simulation.setRobot(normal, "plain");
         simulation.setRobot(rubber, "rubber");
     }
