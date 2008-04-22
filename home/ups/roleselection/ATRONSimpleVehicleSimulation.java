@@ -59,6 +59,7 @@ public class ATRONSimpleVehicleSimulation extends GenericATRONSimulation {
         mPos.add(new ModulePosition("driver0", "plain", new VectorDescription(-2*ATRON.UNIT,-2*ATRON.UNIT+Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
         mPos.add(new ModulePosition("RearLeftWheel", "rubber", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT+Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
         mPos.add(new ModulePosition("RearRightWheel", "rubber", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT+Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+        //mPos.add(new ModulePosition("roof", "plain", new VectorDescription(-1*ATRON.UNIT, -1*ATRON.UNIT+Yoffset,0), ATRON.ROTATION_UD));
 		return mPos;
 	}
     

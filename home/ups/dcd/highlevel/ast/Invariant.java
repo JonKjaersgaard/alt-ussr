@@ -1,6 +1,8 @@
 package dcd.highlevel.ast;
 
-public class Invariant extends Member {
+import dcd.highlevel.generic.InvariantSource;
+
+public class Invariant extends Member implements InvariantSource {
     private Exp condition;
 
     /**

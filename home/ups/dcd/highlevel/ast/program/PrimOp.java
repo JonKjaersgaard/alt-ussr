@@ -8,6 +8,7 @@ import dcd.highlevel.ast.Block;
 import dcd.highlevel.ast.Exp;
 import dcd.highlevel.ast.Name;
 import dcd.highlevel.ast.Statement;
+import dcd.highlevel.generic.IName;
 
 public class PrimOp extends Statement {
     public static final PrimOp MIGRATE_CONTINUE = new PrimOp("MIGRATE_CONTINUE");
@@ -76,7 +77,7 @@ public class PrimOp extends Statement {
             }
         throw new Error("Empty slot for block argument not found in "+this);
     }
-    public static PrimOp SET_ROLE_NOTIFY(Name roleName) {
+    public static PrimOp SET_ROLE_NOTIFY(IName roleName) {
         return new PrimOp("SET_ROLE_NOTIFY",new Predefined(CFileGenerator.roleName(roleName)));
     }
 
@@ -94,7 +95,7 @@ public class PrimOp extends Statement {
         compiler.visitPrimOp(this);
     }
 
-    public static PrimOp INSTALL_COMMAND(Name roleName, int methodIndex, Block body, boolean isBehavior) {
+    public static PrimOp INSTALL_COMMAND(IName roleName, int methodIndex, Block body, boolean isBehavior) {
         if(isBehavior)
             body.addStatement(PrimOp.END_REPEAT());
         else

@@ -1,10 +1,11 @@
-package dcd.highlevel;
+package dcd.highlevel.rdcd;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
+import dcd.highlevel.CFileGenerator;
 import dcd.highlevel.ast.*;
 import dcd.highlevel.ast.program.*;
 

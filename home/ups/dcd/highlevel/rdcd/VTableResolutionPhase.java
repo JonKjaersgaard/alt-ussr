@@ -1,4 +1,4 @@
-package dcd.highlevel;
+package dcd.highlevel.rdcd;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -6,8 +6,9 @@ import java.util.Map;
 import java.util.Set;
 
 import dcd.highlevel.ast.*;
+import dcd.highlevel.generic.Resolver;
 
-public class VTableResolutionPhase implements VTableResolver {
+public class VTableResolutionPhase implements Resolver {
     private Program program;
 
     private Map<String,Map<String,Integer>> vtableMap = new HashMap<String,Map<String,Integer>>();

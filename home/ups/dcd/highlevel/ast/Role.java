@@ -5,7 +5,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Role extends Node {
+import dcd.highlevel.generic.GlobalSource;
+import dcd.highlevel.generic.IName;
+import dcd.highlevel.generic.InvariantSource;
+
+public class Role extends Node implements GlobalSource {
     private Name name, zuper;
     private List<Modifier> modifiers;
     private List<ConstantDef> constants;
@@ -44,7 +48,7 @@ public class Role extends Node {
     /**
      * @return the invariants
      */
-    public List<Invariant> getInvariants() {
+    public List<? extends InvariantSource> getInvariants() {
         return Collections.unmodifiableList(invariants);
     }
     /**
@@ -87,7 +91,7 @@ public class Role extends Node {
     /**
      * @return the name
      */
-    public Name getName() {
+    public IName getName() {
         return name;
     }
     /**
