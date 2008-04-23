@@ -34,6 +34,7 @@ import ussr.physics.jme.connectors.JMEMagneticConnector;
 import ussr.physics.jme.connectors.JMERigidMechanicalConnector;
 import ussr.physics.jme.connectors.JMEVelcroConnector;
 
+import com.jme.math.Matrix4f;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.scene.Spatial;
@@ -178,8 +179,9 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
     }
 
     public void reset() {
-        for(JMEConnector connector: connectors)
+        for(JMEConnector connector: connectors) {
             connector.reset();
+        }
     }
 
     public void changeNotify() {
@@ -249,14 +251,32 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
 		getModuleNode().getLocalTranslation().set(p.getX(), p.getY(), p.getZ()).addLocal(localPosition);
 		getModuleNode().updateWorldVectors();
 	}
+	
 	public void setRotation(RotationDescription p) {
-        getModuleNode().setLocalRotation(new Quaternion(p.getRotation().mult(localRotation)));
+		getModuleNode().setLocalRotation(new Quaternion(p.getRotation().mult(localRotation)));
         getModuleNode().updateWorldVectors();
 	}
+	private Matrix4f toMatrix(Vector3f pos, Quaternion q) {
+    	Matrix4f m = new Matrix4f();
+		m.setRotationQuaternion(q);
+		m.setTranslation(pos);
+		return m;
+    }
+	public void moveTo(VectorDescription p, RotationDescription r) {
+		Matrix4f m1 = toMatrix(new Vector3f(),r.getRotation());
+		Matrix4f m2 = toMatrix(localPosition, localRotation);
+		Matrix4f mRes = m1.mult(m2);
+		Vector3f rotatedLocalPos = mRes.toTranslationVector();
+		getModuleNode().getLocalTranslation().set(p.getVector()).addLocal(rotatedLocalPos);
+        getModuleNode().setLocalRotation(new Quaternion(r.getRotation().mult(localRotation)));
+        getModuleNode().updateWorldVectors();
+	}
+	
 	public void clearDynamics() {
 		getModuleNode().clearDynamics();
 	}
 	public void addExternalForce(float forceX, float forceY, float forceZ) {
 		getModuleNode().addForce(new Vector3f(forceX, forceY,forceZ));
 	}
+	
 }
