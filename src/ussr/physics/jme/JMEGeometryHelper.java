@@ -57,6 +57,7 @@ import com.jme.math.Vector3f;
 import com.jme.renderer.ColorRGBA;
 import com.jme.scene.Node;
 import com.jme.scene.SceneElement;
+import com.jme.scene.SharedMesh;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
 import com.jme.scene.shape.Box;
@@ -124,7 +125,7 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
         	shape.setModelBound( new BoundingSphere() );
         }
         else if(element instanceof CylinderShape) {
-        	shape = new Cylinder(name, resolutionfactor*8, resolutionfactor*8, ((CylinderShape)element).getRadius(),((CylinderShape)element).getHeight(),true); 
+        	shape = new Cylinder(name, resolutionfactor*2, resolutionfactor*8, ((CylinderShape)element).getRadius(),((CylinderShape)element).getHeight(),true); 
         	shape.setModelBound(new BoundingBox()); //BoundingBox makes the simulation "unstable?"
         	//TODO can not control cap color of cylinder??? 
         }
