@@ -10,6 +10,10 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jme.math.Matrix4f;
+import com.jme.math.Quaternion;
+import com.jme.math.Vector3f;
+
 import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
 import ussr.description.geometry.RotationDescription;
@@ -285,6 +289,7 @@ public class Module extends Entity {
             s.reset();
 	}
 
+	
 	public void setPosition(VectorDescription position) {
 		List<? extends PhysicsEntity> components = getPhysics();
 		for(PhysicsEntity c1: components) {
@@ -298,6 +303,13 @@ public class Module extends Entity {
 			c1.setRotation(rotation);
         }
 	}
+	public void moveTo(VectorDescription position, RotationDescription rotation) {
+		List<? extends PhysicsEntity> components = getPhysics();
+		for(PhysicsEntity c1: components) {
+			c1.moveTo(position, rotation);
+        }
+	}
+	
 
 	public void clearDynamics() {
 		List<? extends PhysicsEntity> components = getPhysics();
