@@ -68,6 +68,9 @@ public class VectorDescription extends Description {
         return z;
     }
 
+    public Vector3f getVector() {
+    	return new Vector3f(x,y,z);
+    }
 	public float distance(VectorDescription p) {
 		return (float)Math.sqrt((p.x-x)*(p.x-x)+(p.y-y)*(p.y-y)+(p.z-z)*(p.z-z));
 	}
@@ -87,6 +90,9 @@ public class VectorDescription extends Description {
 
 	public void set(float x, float y, float z) {
 		this.x = x; this.y = y; this.z = z;	
+	}
+	public void set(Vector3f p) {
+		this.x = p.x; this.y = p.y; this.z = p.z;	
 	}
 
     public VectorDescription add(VectorDescription offset) {

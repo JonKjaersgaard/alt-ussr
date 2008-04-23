@@ -49,4 +49,7 @@ public class RotationDescription {
 	public void setRotation(Quaternion rot) {
 		rotation.set(rot);
 	}
+	public RotationDescription clone() {
+		return new RotationDescription(rotation); 
+	}
 }
