@@ -114,7 +114,9 @@ public class MotionRewardSystem implements RewardSystem {
 
 	private boolean isInSameRobot(Module module) {
 		int id = controller.getRobotID();	
-		if(module.getProperty("robotID").equals((new Integer(id)).toString())) 
+		String idString = module.getProperty("robotID");
+		if(idString==null) return true;
+		if(idString.equals((new Integer(id)).toString())) 
 			return true;
 		return false;
 	}

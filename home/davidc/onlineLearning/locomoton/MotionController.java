@@ -23,7 +23,7 @@ public class MotionController {
 				}
 			}
 		}
-		if(controller.getTime()>90*2*5*6) System.exit(0);
+		//if(controller.getTime()>90*2*5*6) System.exit(0);
 	}
 	//TODO Distribute skill to other modules
 	private void startRole(MotionSkills skill) {

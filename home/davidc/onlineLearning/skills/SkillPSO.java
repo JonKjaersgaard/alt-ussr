@@ -60,4 +60,9 @@ public class SkillPSO implements Skill {
 	public boolean isContinuous() {
 		return false;
 	}
+	@Override
+	public int getBestRoleInt() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

@@ -9,4 +9,5 @@ public interface Skill {
 	public void update(float reward, float evalTime, Role myRole);
 	public void fromFloats(float[] skillData);
 	public boolean isContinuous();
+	public int getBestRoleInt();
 }

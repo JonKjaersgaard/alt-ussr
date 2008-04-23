@@ -15,11 +15,11 @@ public class SkillQ implements Skill {
 	static RewardEstimationStragegy estimationStrategy =  RewardEstimationStragegy.EMA;
 	
 	/*Learning parameters*/
-	static float coolingTime =250;
-	static float epsilon = 0.8f;
+	static float coolingTime = 250;
+	static float epsilon = 0.80f;
 	static float T = 0.01f;//epsilon;//10*epsilon+1/20f;
 	
-	static boolean accelerated = false;
+	static boolean accelerated = true;
 	boolean learning = true;
 	float[] Q;
 	ArrayList<ArrayList<Float>> roleRewards;
@@ -27,22 +27,23 @@ public class SkillQ implements Skill {
 	
 	int currentRole = 0;
 	float currentReward =0; 
-	static Random rand = new Random(123);
-
+	static Random rand = new Random(System.currentTimeMillis());
+	public static float alpha = 0.1f;
+	
 	int iterations = 0;
 	
-	
+		
 	public SkillQ(int nRoles) {
 		this.nRoles = nRoles;
 		roleRewards = new ArrayList<ArrayList<Float>>();
 		Q = new float[nRoles];
 		for(int i=0;i<nRoles;i++) {
 			//Q[i] = 0.2f;
-			//Q[i] = 99;
-			Q[i] = 0;
+			Q[i] = 99;
+			//Q[i] = 0;
 			roleRewards.add(new ArrayList<Float>());
 		}
-		Q[0] =0.2f/6f;
+		//Q[0] =0.2f/6f;
 	}
 	private int hardMax() {
 		int selectedRole = -1;
@@ -121,6 +122,25 @@ public class SkillQ implements Skill {
 		role.setRole(currentRole, 0);
 		return role;
 	}
+	public Role getRole(boolean exploit) {
+		int selectedRole = -1;
+		if(!repeatPreviousRole()) {
+			if(exploit) {
+				selectedRole = getBestRoleInt();
+			}else {
+				selectedRole = rand.nextInt(nRoles);	
+			}
+		}
+		else {
+			selectedRole = currentRole;
+		}
+		
+		currentRole = selectedRole;
+		
+		Role role = new Role(1);
+		role.setRole(currentRole, 0);
+		return role;
+	}
 	private boolean repeatPreviousRole() {
 		if(accelerated) {
 			//boolean redo = maxQ()<currentReward && getBestRole()!=currentRole;
@@ -183,10 +203,8 @@ public class SkillQ implements Skill {
 		Q[role] = r;		
 	}
 	private void exponentialMovingAverageReward(int role, float r) {
-		float x = 0.1f;
-		//float x = 0.25f;
 		if(Q[role]==99) Q[role] = r;
-		else Q[role] += x*(r-Q[role]);
+		else Q[role] += alpha*(r-Q[role]);
 	}
 	private void medianReward(int role, float r) {
 		ArrayList<Float> roleHistory = roleRewards.get(role);

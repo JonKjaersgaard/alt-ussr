@@ -16,7 +16,7 @@ public class AtronRolePlayer implements RolePlayer  {
 	public int getNumberOfRoles() {
 		return AtronRoles.values().length;
 	}
-	public void playRole(Role roles) {
+	public void playRole(Role roles, float timePercent) {
 		//System.out.println("Playing:"+roleToString(role));
 		int role = roles.getRole(0);
 		switch(role) {

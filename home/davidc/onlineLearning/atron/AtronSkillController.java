@@ -57,8 +57,24 @@ public class AtronSkillController extends ATRONController implements SkillContro
 	}
     public void init() {
     	getModule().setProperty("robotID", getRobotID()+"");
-    	if(syncronized) delay(2000+rand.nextInt(10));
+    	if(syncronized) {
+    		delay(2000);
+    		/*float startTime = module.getSimulation().getTime();
+    		float ms = 200000;
+    		//System.out.println("Rotating to angle "+angle);
+    		int angle = 180;
+    		float updateTime=0;
+        	while(module.getSimulation().getTime()<(ms/1000.0+startTime)) {
+        		if(module.getSimulation().getTime()>(1+updateTime)) {
+        			updateTime = module.getSimulation().getTime();
+        			angle = rand.nextInt(360);//+180-10;
+        		}
+        		rotateToDegreeInDegrees(angle);
+    			module.getSimulation().waitForPhysicsStep(false);
+        	}*/
+    	}
     	else delay(2000+rand.nextInt(2000));
+    	System.out.println(getDebugID()+": Module staring "+getTime());
     }
 	public void controlHook() {
 		motionController.control(this);
