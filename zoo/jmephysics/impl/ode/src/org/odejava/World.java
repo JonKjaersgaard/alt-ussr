@@ -266,7 +266,7 @@ public class World {
      * @param stepInteractions The stepInteractions to set.
      */
     public void setStepInteractions( int stepInteractions ) {
-        this.stepInteractions = stepInteractions;
+        this.stepInteractions =stepInteractions;
     }
 
     /**
