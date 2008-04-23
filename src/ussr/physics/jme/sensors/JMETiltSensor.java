@@ -91,8 +91,10 @@ public class JMETiltSensor implements JMESensor {
 	public void addExternalForce(float forceX, float forceY, float forceZ) {
 		node.addForce(new Vector3f(forceX,forceY,forceZ));		
 	}
-
-    public void setSensitivity(float sensitivity) {
+	public void moveTo(VectorDescription position, RotationDescription rotation) {
+		throw new Error("Method not implemented");
+	}
+	public void setSensitivity(float sensitivity) {
         ;
     }
 }
