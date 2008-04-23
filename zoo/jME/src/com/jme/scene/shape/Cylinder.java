@@ -269,7 +269,6 @@ public class Cylinder extends TriMesh {
 
                 tempNormal.multLocal( ( radius - radius2 ) * axisFraction + radius2 ).addLocal( sliceCenter );
                 batch.getVertexBuffer().put(tempNormal.x).put(tempNormal.y).put(tempNormal.z);
-
                 batch.getTextureBuffers().get(0).put(radialFraction).put(axisFractionTexture);
                 i++;
             }
@@ -280,8 +279,8 @@ public class Cylinder extends TriMesh {
             batch.getTextureBuffers().get(0).put(1.0f).put(axisFractionTexture);
 
             i++;
+            
         }
-
         if ( closed ) {
         	batch.getVertexBuffer().put( 0 ).put( 0 ).put( -halfHeight ); // bottom center
             batch.getNormalBuffer().put( 0 ).put( 0 ).put( 1 );
