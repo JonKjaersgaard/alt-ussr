@@ -59,11 +59,11 @@ public class MTRANLearningSimulation extends MTRANSimulation {
 	int counter=0;
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
 		//simulation.setGravity(0.0f);
-		counter++;
-		/*if(counter%1==0) {
-			//System.out.println("{"+simulation.getTime()+","+getRobotCM().y+"},");
-		}
-		if(simulation.getTime()<20) {
+		/*counter++;
+		if(counter%1==0) {
+			System.out.println("{"+simulation.getTime()+","+getRobotCM().y+"},");
+		}*/
+		/*if(simulation.getTime()<20) {
 			SkillLearner.evalPeriode = 4.5f;
 		}
 		else if(simulation.getTime()<40) {
@@ -80,7 +80,7 @@ public class MTRANLearningSimulation extends MTRANSimulation {
    			simulation.stop();
        	}
 	}
-	static String robot = "CATERPILLAR";
+	static String robot = "WALKER";
 	protected void constructRobot() {
 		if(robot.equals("SINGLE")) {
 			addModule(0,0,0,ORI2,"X");

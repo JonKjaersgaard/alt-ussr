@@ -377,9 +377,9 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             module.setProperty("name", p.getName());
             registry.put(p.getName(), module);
             //module.reset();
-            module.setPosition(p.getPosition());
-            module.setRotation(p.getRotation());
-           // module.move();
+           // module.setPosition(p.getPosition());
+           // module.setRotation(p.getRotation());
+            module.moveTo(p.getPosition(),p.getRotation());
             module.clearDynamics();
             module.reset();
             
@@ -449,7 +449,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     
     public void setGravity(float g) {
         gravity = g;
-        getPhysicsSpace().setDirectionalGravity(new Vector3f(0,gravity,0));			
+        getPhysicsSpace().setDirectionalGravity(new Vector3f(0,gravity,0));
     }
 
     public synchronized void waitForPhysicsStep(boolean notify) {

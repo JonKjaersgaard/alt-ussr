@@ -656,7 +656,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         timer = Timer.getTimer();
         setPhysicsSpace( PhysicsSpace.create() );
         ((OdePhysicsSpace) getPhysicsSpace()).setStepSize(PhysicsParameters.get().getPhysicsSimulationStepSize());
-        ((OdePhysicsSpace) getPhysicsSpace()).setUpdateRate(1/PhysicsParameters.get().getPhysicsSimulationStepSize());
+        ((OdePhysicsSpace) getPhysicsSpace()).setUpdateRate(1f/PhysicsParameters.get().getPhysicsSimulationStepSize());
         ((OdePhysicsSpace) getPhysicsSpace()).setStepFunction(OdePhysicsSpace.SF_STEP_QUICK); //OdePhysicsSpace.SF_STEP_FAST or OdePhysicsSpace.SF_STEP_QUICK  or OdePhysicsSpace.SF_STEP_SIMULATION  
     
         input.addAction( new InputAction() {

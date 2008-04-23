@@ -145,8 +145,8 @@ public class MTRANRolePlayer implements RolePlayer  {
 			controller.rotate(1, 1);
 		}
 		counter++;
-		if(counter%50==0)
-			System.out.println("{"+controller.getDebugID()+", "+controller.getTime()+", "+controller.getEncoderPosition(0)+", "+controller.getEncoderPosition(1)+"},");
+		//if(counter%50==0)
+		//	System.out.println("{"+controller.getDebugID()+", "+controller.getTime()+", "+controller.getEncoderPosition(0)+", "+controller.getEncoderPosition(1)+"},");
 		//if(Math.abs(cur1-goal1)<0.05) controller.centerStop(1);
 		//if(controller.getDebugID()==0) System.out.println("got to: "+controller.getTime());
 		//if(controller.getDebugID()==0) System.out.println(controller.getTime()+": Error = "+(int)(Math.abs(cur0-goal0)*100)+" Error = "+(int)(Math.abs(cur1-goal1)*100));
