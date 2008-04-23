@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 
 import ussr.description.Robot;
@@ -37,11 +36,8 @@ import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsSimulationHelper;
-import ussr.physics.PhysicsFactory.Options;
 import ussr.physics.jme.connectors.JMEBasicConnector;
 import ussr.physics.jme.connectors.JMEConnector;
-import ussr.physics.jme.pickers.Picker;
-import ussr.physics.jme.pickers.PhysicsPicker;
 
 import com.jme.input.InputHandler;
 import com.jme.input.KeyInput;
@@ -49,15 +45,21 @@ import com.jme.input.MouseInput;
 import com.jme.input.action.InputAction;
 import com.jme.input.action.InputActionEvent;
 import com.jme.math.Quaternion;
+import com.jme.math.Vector2f;
 import com.jme.math.Vector3f;
-import com.jme.scene.Node;
+import com.jme.renderer.ColorRGBA;
 import com.jme.scene.TriMesh;
 import com.jme.system.DisplaySystem;
 import com.jme.util.LoggingSystem;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
 import com.jmex.physics.PhysicsNode;
+import com.jmex.physics.contact.ContactCallback;
+import com.jmex.physics.contact.PendingContact;
 import com.jmex.physics.impl.ode.OdePhysicsSpace;
+import com.jmex.physics.impl.ode.geometry.OdeMesh;
+import com.jmex.physics.material.Material;
+import com.jmex.physics.util.PhysicsPicker;
 
 /**
  * The physical simulation: initialization and main loop, references to all simulated entities. 
@@ -85,10 +87,9 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     private JMEGeometryHelper helper = new JMEGeometryHelper(this);
     private JMEFactoryHelper factory;    
     private long mainLoopCounter=0;
+    private static final float FAROUT_DISTANCE = 50f;
     private List<PhysicsObserver> physicsObservers = new CopyOnWriteArrayList<PhysicsObserver>();
     private List<ActBasedController> actControllers = Collections.synchronizedList(new ArrayList<ActBasedController>());
-    private PhysicsFactory.Options options;
-    private Picker picker;
     
     public JMESimulation(ModuleFactory[] factories, PhysicsFactory.Options options) {
         this.options = options; 
@@ -220,16 +221,31 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 
         // Add any external input handlers
         doAddInputHandlers();
-        
-        if(picker==null)
+       if(picker==null)
             setPicker(new PhysicsPicker());
         else {
             Picker current = this.picker;
             this.picker = null;
             setPicker(current);
         }
-        MouseInput.get().setCursorVisible( true );
-    }
+        MouseInput.get().setCursorVisible( true ); 
+      }
+	private void addContactCallback() {
+		//collision callback that removes? the internalt ODE error 
+         //caused by trimeshes colliding with some singularity 
+         getPhysicsSpace().getContactCallbacks().add(new ContactCallback(){  
+        	 public boolean adjustContact( PendingContact contact ) {
+        		 if (contact.getGeometry1() instanceof OdeMesh && contact.getGeometry2() instanceof OdeMesh) {
+        			 if(contact.getPenetrationDepth()>0.001) {
+        				 //System.out.println("Serious ATRON collision...ignored "+contact.getPenetrationDepth());
+        				 contact.setIgnored(true);
+        				 return true;
+        			 }
+        		 }
+        		 return false;
+        	 };
+         });
+	}
 
     public synchronized void setPicker(Picker picker) {
         if(this.picker!=null) this.picker.delete();
@@ -301,6 +317,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     
     public void stop() {
     	finished = true;
+    	//waitForPhysicsStep(true);
     }
     
 	public boolean isStopped() {
@@ -360,9 +377,9 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             module.setProperty("name", p.getName());
             registry.put(p.getName(), module);
             //module.reset();
-            module.setPosition(p.getPosition());
-            module.setRotation(p.getRotation());
-           // module.move();
+           // module.setPosition(p.getPosition());
+           // module.setRotation(p.getRotation());
+            module.moveTo(p.getPosition(),p.getRotation());
             module.clearDynamics();
             module.reset();
             
@@ -432,12 +449,12 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     
     public void setGravity(float g) {
         gravity = g;
-        getPhysicsSpace().setDirectionalGravity(new Vector3f(0,gravity,0));			
+        getPhysicsSpace().setDirectionalGravity(new Vector3f(0,gravity,0));
     }
-
+    int waitingModules = 0;
     public synchronized void waitForPhysicsStep(boolean notify) {
         if(notify) {
-            notifyAll();
+        	notifyAll();
         }
         else { //modules wait here
             try {
