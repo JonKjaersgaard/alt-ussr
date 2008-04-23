@@ -86,15 +86,19 @@ public class ATRONTestController1 extends ATRONController {
     
     private void testFullRotation() {
     	float startTime = module.getSimulation().getTime();
-    	System.out.println("Starting rotation - rad = "+getAngularPosition());
-    	rotate(1);
+    	float startAngle = getAngularPosition();
+    	System.out.println("Starting rotation - rad = "+startAngle);
+    	/*rotate(1);
     	System.out.println("                  - rad = "+getAngularPosition());
     	rotate(1);
     	System.out.println("                  - rad = "+getAngularPosition());
     	rotate(1);
     	System.out.println("                  - rad = "+getAngularPosition());
     	rotate(1);
-    	System.out.println("                  - rad = "+getAngularPosition());
+    	System.out.println("                  - rad = "+getAngularPosition());*/
+    	rotateContinuous(1);
+    	delay(2000);
+    	while(startAngle>=getAngularPosition()) yield();
     	System.out.println("One full rotation took "+(module.getSimulation().getTime()-startTime)+" sec");
 	}
 
