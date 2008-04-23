@@ -22,6 +22,7 @@ import ussr.model.Actuator;
 import ussr.model.Module;
 import ussr.model.Sensor;
 import ussr.physics.ModuleFactory;
+import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEGeometryHelper;
 import ussr.physics.jme.JMEModuleComponent;
@@ -62,6 +63,7 @@ public class JMEMTRANFactory implements ModuleFactory {
         setMass(0.2f,northNode);
         setMass(0.2f,southNode);
         setMass(0.05f,southNode);
+        System.out.println(northNode.getMass());
         
         setName(module, module_name);
         addActuators(module, northNode, southNode, centerNode);
@@ -120,24 +122,41 @@ public class JMEMTRANFactory implements ModuleFactory {
     	yAxis.setRelativeToSecondObject(true);
 		joint.setActive(true);*/
 	}
-	
+	private MutableContactInfo getDefaultMTRANontactDetails() {
+		MutableContactInfo contactDetails = new MutableContactInfo();
+		contactDetails.setBounce( 0.01f );
+		contactDetails.setMu(100f);
+		contactDetails.setMuOrthogonal(100f);
+		contactDetails.setMinimumBounceVelocity(100);
+		contactDetails.setSlip(new Vector2f(0.0f,0.0f));
+		return contactDetails; 
+	}
 	private void setMaterials(Module module, Robot robot, String module_name) {
         northNode.setMaterial(Material.RUBBER); // Better traction for driving experiments
         southNode.setMaterial(Material.RUBBER);
+        
+		northNode.getMaterial().putContactHandlingDetails(simulation.getStaticPlane().getMaterial(), getDefaultMTRANontactDetails());
+		southNode.getMaterial().putContactHandlingDetails(simulation.getStaticPlane().getMaterial(), getDefaultMTRANontactDetails());
+		
 	}
 
 	private void addActuators(Module module, DynamicPhysicsNode northNode, DynamicPhysicsNode southNode, DynamicPhysicsNode centerNode ) {
 		JMERotationalActuator northActuator = new JMERotationalActuator(simulation,"north");
         module.addActuator(new Actuator(northActuator));
         northActuator.attach(centerNode,northNode);
-        northActuator.setControlParameters(20, 2f, -pi/2, pi/2);
+        
+        float stepSize = PhysicsParameters.get().getPhysicsSimulationStepSize();
+        //float velocity = 0.01f/stepSize*6.28f/4;
+        float velocity = 6.28f/4;
+        
+        northActuator.setControlParameters(8f, velocity, -pi/2, pi/2); //maxacc=20 before, vel =2
         northActuator.setPIDParameters(10f, 0, 0);
         northActuator.setDirection(0, 1, 0);
         
         JMERotationalActuator southActuator = new JMERotationalActuator(simulation,"south");
         module.addActuator(new Actuator(southActuator));
         southActuator.attach(centerNode,southNode);
-        southActuator.setControlParameters(20f, 2f, -pi/2, pi/2);
+        southActuator.setControlParameters(8f, velocity, -pi/2, pi/2);
         southActuator.setPIDParameters(10f, 0, 0);
         southActuator.setDirection(0, 1, 0);
 	}

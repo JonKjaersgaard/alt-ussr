@@ -115,18 +115,24 @@ public class JMEATRONFactory implements ModuleFactory {
 		if(robot.getDescription().getType().contains("rubberRing")||module_name.contains("wheel")) { //TODO not a pretty hack "wheel"
 			northNode.setLocalScale(1.05f);
 			southNode.setLocalScale(0.95f);
-			northNode.generatePhysicsGeometry(false);
+			northNode.generatePhysicsGeometry(true);
+			//southNode.generatePhysicsGeometry(true);
+
 			//northNode.getMaterial().putContactHandlingDetails(simulation.getStaticPlane().getMaterial(), getRubberATRONContactDetails());
-			northNode.setMaterial(Material.RUBBER);
+			MutableContactInfo cd =  getDefaultATRONContactDetails();
+			cd.setSlip(new Vector2f(0,0));
+			northNode.getMaterial().putContactHandlingDetails(simulation.getStaticPlane().getMaterial(), cd);
+			//northNode.setMaterial(Material.RUBBER);
 		}
 	}
 	private MutableContactInfo getDefaultATRONContactDetails() {
 		MutableContactInfo contactDetails = new MutableContactInfo();
 		contactDetails.setBounce( 0.01f );
-		contactDetails.setMu(1f );
+		contactDetails.setMu(1f);
 		contactDetails.setMuOrthogonal(1f);
 		contactDetails.setMinimumBounceVelocity(100);
 		contactDetails.setSlip(new Vector2f(0.01f,0.01f));
+		//contactDetails.setSlip(new Vector2f(0,0)); //djc do not commit
 		//contactDetails.setSlip(new Vector2f(0.0f,0.0f));
 		//contactDetails.setSlip(new Vector2f( 0.001f, 0.001f));
 		//contactDetails.setSlip(new Vector2f(100f,100f));
@@ -138,8 +144,8 @@ public class JMEATRONFactory implements ModuleFactory {
         DynamicPhysicsNode northNode = ((JMEModuleComponent) module.getComponent(0)).getModuleNode();
         DynamicPhysicsNode southNode = ((JMEModuleComponent) module.getComponent(1)).getModuleNode();
         centerActuator.attach(southNode,northNode);
-        float stepSize = PhysicsParameters.get().getPhysicsSimulationStepSize();//is this a hack or not?
-        float velocity = 0.01f/stepSize*6.28f/6;
+        //float stepSize = PhysicsParameters.get().getPhysicsSimulationStepSize();//is this a hack or not? - yes it was..
+        float velocity = 6.28f/6f;//0.01f/stepSize*6.28f/6;
         if(robot.getDescription().getType().contains("super")) {
             centerActuator.setControlParameters(500f, 2f, 0, 0); //Extreme super ATRON
         }
