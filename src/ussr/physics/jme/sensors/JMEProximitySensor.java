@@ -87,11 +87,14 @@ public class JMEProximitySensor implements PhysicsSensor {
 		throw new Error("Method not implemented");
 		
 	}
-
 	public void setRotation(RotationDescription rotation) {
 		throw new Error("Method not implemented");		
 	}
-	 public void clearDynamics() {
+	public void moveTo(VectorDescription position, RotationDescription rotation) {
+		throw new Error("Method not implemented");
+	}
+
+	public void clearDynamics() {
 		node.clearDynamics();
 	}
 	public void addExternalForce(float forceX, float forceY, float forceZ) {
