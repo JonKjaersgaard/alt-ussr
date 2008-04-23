@@ -132,7 +132,7 @@ public class Role extends Node implements GlobalSource {
         else throw new Error("Type not supported: "+member);
     }
 
-    public ConstantDef getConstant(Name name) {
+    public ConstantDef getConstant(IName name) {
         for(ConstantDef constant: this.getConstants())
             if(constant.getName().equals(name)) {
                 if(constant.isAbstract()) throw new Error("Abstract constant reference "+this.getName()+"."+name);

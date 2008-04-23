@@ -1,5 +1,8 @@
 package dcd.highlevel.fapl;
 
+import dcd.highlevel.FAPLCodeGenerator;
+import dcd.highlevel.generic.Resolver;
+
 public class Test {
 
     public static void main(String argv[]) {
@@ -10,6 +13,8 @@ public class Test {
                 });
         // Step 1: resolve values (constants) etc
         // Step 2, for functions, compute set of roles, with associated behaviors [skip now]
+        Resolver r = new IncrementalNameResolver();
+        FAPLCodeGenerator streamer = new FAPLCodeGenerator(program,r);
     }
     
 }

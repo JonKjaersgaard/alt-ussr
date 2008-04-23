@@ -15,4 +15,7 @@ public class Function extends Unit {
         this.parameters = new ArrayList<Parameter>(Arrays.asList(parameters));
         this.body = body;
     }
+    public Exp getBody() {
+        return body;
+    }
 }

@@ -16,16 +16,17 @@ import dcd.highlevel.ast.Program;
 import dcd.highlevel.ast.Role;
 import dcd.highlevel.ast.Statement;
 import dcd.highlevel.ast.program.*;
+import dcd.highlevel.generic.GlobalSource;
 import dcd.highlevel.generic.Resolver;
 
 public class ByteCodeCompiler implements Visitor {
     
     private ByteCodeSequence result = new ByteCodeSequence();
-    private Role role;
+    private GlobalSource role;
     private Map<String,Block> blockMap = new HashMap<String,Block>();
     private Resolver vtableResolver;
     
-    public ByteCodeCompiler(Role role, Resolver vtableResolver) {
+    public ByteCodeCompiler(GlobalSource role, Resolver vtableResolver) {
         this.role = role;
         this.vtableResolver = vtableResolver;
     }

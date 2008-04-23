@@ -82,8 +82,9 @@ public class ByteCodeSequence {
         }
         return result.toString();
     }
-    public void generate(PrintWriter writer) {
-        writer.println(this);
+    public void generate(OutputBuilder writer) {
+        for(ByteCode bc: bytecodes)
+            writer.addByteCode(bc);
     }
     public void addLabel(String label) {
         pendingLabels.add(label);

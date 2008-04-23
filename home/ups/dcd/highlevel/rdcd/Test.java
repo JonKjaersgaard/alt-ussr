@@ -5,7 +5,8 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
-import dcd.highlevel.CFileGenerator;
+import dcd.highlevel.CFileBuilder;
+import dcd.highlevel.RDCDCompiler;
 import dcd.highlevel.ast.*;
 import dcd.highlevel.ast.program.*;
 
@@ -112,14 +113,14 @@ public class Test {
         VTableResolutionPhase vrp = new VTableResolutionPhase(program);
         vrp.resolve();
         
-        CFileGenerator cfg = new CFileGenerator(program,vrp);
+        RDCDCompiler cfg = new RDCDCompiler(program,vrp);
         OutputStreamWriter output;
         try {
             output = new OutputStreamWriter(new FileOutputStream(OUTPUT_FILE));
         } catch (FileNotFoundException e) {
             throw new Error("Unable to open output file: "+OUTPUT_FILE);
         }
-        cfg.generate(new PrintWriter(output));
+        cfg.generate(new CFileBuilder(new PrintWriter(output)));
         
         System.out.println("Done: output written to file "+OUTPUT_FILE);
     }

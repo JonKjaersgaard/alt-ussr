@@ -2,7 +2,7 @@ package dcd.highlevel.ast.program;
 
 import java.util.List;
 
-import dcd.highlevel.CFileGenerator;
+import dcd.highlevel.RDCDCompiler;
 import dcd.highlevel.Visitor;
 import dcd.highlevel.ast.Block;
 import dcd.highlevel.ast.Exp;
@@ -77,8 +77,13 @@ public class PrimOp extends Statement {
             }
         throw new Error("Empty slot for block argument not found in "+this);
     }
+
+    public static String roleName(IName roleName) {
+        return "ROLE_"+roleName;
+    }
+
     public static PrimOp SET_ROLE_NOTIFY(IName roleName) {
-        return new PrimOp("SET_ROLE_NOTIFY",new Predefined(CFileGenerator.roleName(roleName)));
+        return new PrimOp("SET_ROLE_NOTIFY",new Predefined(roleName(roleName)));
     }
 
     public static PrimOp HANDLE_EVENT(Exp vector, Block block) {
