@@ -512,7 +512,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
      * Get the time (physical) in seconds since the simulation started
      */
     public float getTime() {
-    	//System.out.println(physicsSimulationStepSize+" "+PhysicsParameters.get().getPhysicsSimulationStepSize());
     	return getPhysicsSteps()*PhysicsParameters.get().getPhysicsSimulationStepSize();
     }
     
@@ -657,8 +656,8 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         timer = Timer.getTimer();
         setPhysicsSpace( PhysicsSpace.create() );
         ((OdePhysicsSpace) getPhysicsSpace()).setStepSize(PhysicsParameters.get().getPhysicsSimulationStepSize());
+        ((OdePhysicsSpace) getPhysicsSpace()).setUpdateRate(1/PhysicsParameters.get().getPhysicsSimulationStepSize());
         ((OdePhysicsSpace) getPhysicsSpace()).setStepFunction(OdePhysicsSpace.SF_STEP_QUICK); //OdePhysicsSpace.SF_STEP_FAST or OdePhysicsSpace.SF_STEP_QUICK  or OdePhysicsSpace.SF_STEP_SIMULATION  
-        
     
         input.addAction( new InputAction() {
             public void performAction( InputActionEvent evt ) {
