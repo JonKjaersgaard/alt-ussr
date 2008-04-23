@@ -602,7 +602,6 @@ public class OdePhysicsSpace extends PhysicsSpace {
 
         // apply the contact information for the collisions
         collision.applyContacts();
-
         for ( int i = triMeshes.size() - 1; i >= 0; i-- ) {
             OdeMesh mesh = triMeshes.get( i );
             mesh.updateOdeLastTransformation();
