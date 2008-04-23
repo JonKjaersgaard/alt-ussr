@@ -17,13 +17,13 @@ import ussr.physics.PhysicsSimulation;
  * @author david
  *
  */
-public class MTRANSampleSimulation1 extends MTRANSimulation { 
+public class MTRANSampleSimulation2 extends MTRANSimulation { 
 
 	public static void main( String[] args ) {
-		new MTRANSampleSimulation1().runSimulation(null,true);
+		new MTRANSampleSimulation2().runSimulation(null,true);
 	}
 	public Controller getController(String type) {
-		return new MTRANSampleController1("MTRAN");
+		return new MTRANSampleController2("MTRAN");
 	}
 
 	@Override
@@ -31,19 +31,24 @@ public class MTRANSampleSimulation1 extends MTRANSimulation {
 	    super.changeWorldHook(world);
 	    world.setPlaneTexture(WorldDescription.GRASS_TEXTURE);
 	    PhysicsParameters.get().setPhysicsSimulationStepSize(0.004f);
+	    
 	}
 	
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
 		//simulation.setGravity(0.0f);
 	}
 	protected void constructRobot() {
-		addModule(0,0,0,ORI2);
-		addModule(2,0,0,ORI2);
-		addModule(4,0,0,ORI2);
-		addModule(6,0,0,ORI2);
-		addModule(8,0,0,ORI2);
-		addModule(10,0,0,ORI2);
-		addModule(12,0,0,ORI2);
-		addModule(14,0,0,ORI2);
+		addModule(2.5f,0,1.5f,ORI3X,"center");
+		
+		addModule(-1,0,0,ORI2,"leftBackFoot");
+		addModule(1,0,0,ORI2,"leftBackSpline");
+		addModule(3,0,0,ORI2,"leftFrontSpline");
+		addModule(5,0,0,ORI2,"leftFrontFoot");
+		
+		
+		addModule(0,0,3,ORI2,"rightBackFoot");
+		addModule(2,0,3,ORI2,"rightBackSpline");
+		addModule(4,0,3,ORI2,"rightFrontSpline");
+		addModule(6,0,3,ORI2,"rightFrontFoot");
 	}
 }

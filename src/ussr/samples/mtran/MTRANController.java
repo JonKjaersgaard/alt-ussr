@@ -104,11 +104,11 @@ public abstract class MTRANController extends ControllerImpl implements PacketRe
     public void rotateContinuous(float dir) {
     	module.getActuators().get(0).activate(dir);
     }
-    public void centerBrake() {
-    	module.getActuators().get(0).disactivate();
+    public void centerBrake(int actuator) {
+    	module.getActuators().get(actuator).disactivate();
     }
-    public void centerStop() {
-    	centerBrake(); //TODO implement the difference from center brake
+    public void centerStop(int actuator) {
+    	centerBrake(actuator); //TODO implement the difference from center brake
     }
     public boolean isOtherConnectorNearby(int connector) {
     	if(module.getConnectors().get(connector).isConnected()) {

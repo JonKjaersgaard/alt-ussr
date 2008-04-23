@@ -31,11 +31,11 @@ import ussr.samples.GenericSimulation;
 public abstract class MTRANSimulation extends GenericSimulation implements PhysicsObserver {
 	private static float unit = 0.065f*2+0.01f;
 	private static float pi = (float)Math.PI;
-    public static PhysicsSimulation simulation;
+    //public static PhysicsSimulation simulation;
     
     private static ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
     private static int constructIndex=0;
-    private static boolean printContrutionProgram = true;
+    private static boolean printContrutionProgram = false;
     
 	public void runSimulation(WorldDescription world, boolean startPaused) {
         PhysicsLogger.setDefaultLoggingLevel();
@@ -44,6 +44,7 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
         	public Controller createController() {
         		return getController("MTRAN");
         	}},"MTRAN");
+        constructRobot();
         if(world==null) world = createWorld();
         this.changeWorldHook(world);
         simulation.setWorld(world);
@@ -64,7 +65,6 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
     private static WorldDescription createWorld() {
     	WorldDescription world = new WorldDescription();
         world.setPlaneSize(100);
-        constructRobot();
 		ArrayList<ModuleConnection> connections = allConnections(modulePos);
 		System.out.println("#connection found = "+connections.size());
 		world.setModuleConnections(connections);
@@ -73,29 +73,35 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
 		System.out.println("#Total         = "+modulePos.size());
 		return world;
     }
-    public static final RotationDescription ORI1 = new RotationDescription(pi,0,0);
+	    
+	public static final RotationDescription ORI1 = new RotationDescription(-pi/2,0,pi/2);
+	public static final RotationDescription ORI1X = new RotationDescription(pi,0,pi/2);
+        
     public static final RotationDescription ORI2 = new RotationDescription(-pi/2,0,0);
-    public static final RotationDescription ORI3 = new RotationDescription(pi,0,pi/2);
-	private static void constructRobot() {
-		addModule(0,0,0,ORI2);
-		addModule(2,0,0,ORI2);
-		addModule(4,0,0,ORI2);
-		addModule(6,0,0,ORI2);
-		addModule(8,0,0,ORI2);
-		addModule(10,0,0,ORI2);
-		addModule(12,0,0,ORI2);
-		addModule(14,0,0,ORI2);
-		
-		//addModule(-4,0,0,ORI3);
-
-		
-    }
-    private static void addModule(int x, int y, int z, RotationDescription ori) {
+    public static final RotationDescription ORI2X = new RotationDescription(pi,0,0);
+    
+    public static final RotationDescription ORI3 = new RotationDescription(-pi/2,pi/2,0);
+    public static final RotationDescription ORI3X = new RotationDescription(pi,pi/2,0);
+    
+    public static final RotationDescription ORI1Y = new RotationDescription(-pi/2,pi,pi/2);
+	public static final RotationDescription ORI1XY = new RotationDescription(pi,pi,pi/2);
+        
+    public static final RotationDescription ORI2Y = new RotationDescription(-pi/2,pi,0);
+    public static final RotationDescription ORI2XY = new RotationDescription(pi,pi,0);
+    
+    public static final RotationDescription ORI3Y = new RotationDescription(-pi/2,pi/2+pi,0);
+    public static final RotationDescription ORI3XY = new RotationDescription(pi,pi/2+pi,0);
+    
+    protected static void addModule(float x, float y, float z, RotationDescription ori) {
     	VectorDescription pos = new VectorDescription(x*unit/2,y*unit/2-0.43f,z*unit/2);
     	//RotationDescription rot = rotFromBalls(ballPos.get(i),ballPos.get(j));
     	modulePos.add(new ModulePosition(Integer.toString(constructIndex),"MTRAN", pos, ori));
     	if(printContrutionProgram) System.out.println("addBall("+x+", "+y+", "+z+");");
     	constructIndex++;
+	}
+    protected static void addModule(float x, float y, float z, RotationDescription ori, String name) {
+    	VectorDescription pos = new VectorDescription(x*unit/2,y*unit/2-0.43f,z*unit/2);
+    	modulePos.add(new ModulePosition(name,"MTRAN", pos, ori));
 	}
     private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
     	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
@@ -112,7 +118,8 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
 	}
 	public static boolean isConnectable(ModulePosition m1, ModulePosition m2) {
     	float dist = m1.getPosition().distance(m2.getPosition());
-    	return Math.abs(dist-unit)<0.01f;
+    	System.out.println(Math.abs(dist-unit));
+    	return Math.abs(dist-unit)<0.05f;
     }
 
     public static void printConnectorPos() {
@@ -131,4 +138,5 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
 		return null;
 	}
 	public abstract Controller getController(String type);
+	protected abstract void constructRobot();
 }
