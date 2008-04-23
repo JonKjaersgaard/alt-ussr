@@ -130,7 +130,10 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
 		System.out.println("rotation set");
 		throw new RuntimeException();
 	}
-	
+	public void moveTo(VectorDescription position, RotationDescription rotation) {
+		throw new Error("Method not implemented");
+	}
+
 	/**
 	 * Position in the world (global)  
 	 * @return position
