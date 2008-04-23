@@ -12,6 +12,11 @@ import java.util.Map;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 
+import com.jme.math.Matrix4f;
+import com.jme.math.Quaternion;
+import com.jme.math.Vector3f;
+import com.jmex.model.collada.schema.faceType;
+
 /**
  * Global starting position of a module and annotations for the module
  * 
@@ -119,4 +124,26 @@ public class ModulePosition {
     public void setProperties(Map<String, String> properties) {
         this.properties = properties;
     }
+    private Matrix4f toMatrix(Vector3f pos, Quaternion q) {
+    	Matrix4f m = new Matrix4f();
+		m.setRotationQuaternion(q);
+		m.setTranslation(pos);
+		return m;
+    }
+	public void rotate(Vector3f origin, Quaternion rot) {
+		Quaternion q = rotation.getRotation();
+		Vector3f pos = new Vector3f(position.getX(),position.getY(),position.getZ()); 
+		
+		Matrix4f m1 = toMatrix(origin,rot);
+		Matrix4f m2 = toMatrix(pos,q);
+		Matrix4f mRes = m1.mult(m2);
+		
+		rotation.setRotation(mRes.toRotationQuat());
+		position.set(mRes.toTranslationVector());
+	}
+	public void translate(Vector3f translation) {
+		Vector3f pos = new Vector3f(position.getX(),position.getY(),position.getZ());
+		pos.addLocal(translation);
+		position.set(pos);
+	}
 }

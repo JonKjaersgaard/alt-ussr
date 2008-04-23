@@ -56,5 +56,11 @@ public class ModuleConnection {
     public String getModule2() {
         return module2;
     }
-
+    public boolean equals(ModuleConnection other) {
+    	if(other.connector1 !=connector1) return false;
+    	if(other.connector2 !=connector2) return false;
+    	if(!other.module1.equals(module1)) return false;
+    	if(!other.module2.equals(module2)) return false;
+    	return true;
+    }
 }
