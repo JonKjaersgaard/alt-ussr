@@ -219,6 +219,10 @@ public class JMERotationalActuator implements PhysicsActuator {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	public void moveTo(VectorDescription position, RotationDescription rotation) {
+		throw new Error("Method not implemented");
+	}
+
     public void poke() {
         joint.setSpring(1E20f, 1E20f);
     }

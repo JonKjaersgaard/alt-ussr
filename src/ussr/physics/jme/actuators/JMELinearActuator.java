@@ -155,8 +155,11 @@ public class JMELinearActuator implements JMEActuator {
 	}
 	public void setRotation(RotationDescription rotation) {
 		// TODO Auto-generated method stub
-		
 	}
+	public void moveTo(VectorDescription position, RotationDescription rotation) {
+		throw new Error("Method not implemented");
+	}
+
 	public void clearDynamics() {
 		node1.clearDynamics();
 		node2.clearDynamics();
