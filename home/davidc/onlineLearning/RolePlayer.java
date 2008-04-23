@@ -5,6 +5,6 @@ public interface RolePlayer {
 
 	int getNumberOfRoles();
 
-	void playRole(Role myRole);
+	void playRole(Role myRole, float timePercent);
 
 }

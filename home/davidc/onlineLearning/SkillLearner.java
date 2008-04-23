@@ -1,18 +1,23 @@
 package onlineLearning;
 
+import java.awt.Color;
+
+import onlineLearning.atron.ATRONSkillRoleTable;
+import onlineLearning.atron.AtronSkillController;
+import onlineLearning.atron.AtronSkillSimulation;
+import onlineLearning.mtran.MTRANSkillRoleTable;
 import onlineLearning.skills.Skill;
 import onlineLearning.skills.SkillPSO;
 import onlineLearning.skills.SkillQ;
 import onlineLearning.skills.SkillRandom;
-import onlineLearning.skills.SkillRoleTable;
 import onlineLearning.skills.SkillSystematic;
 import onlineLearning.skills.SkillTimeTable;
 import onlineLearning.utils.DataLogger;
 
 public class SkillLearner {
 	
-	static enum LearningStrategy {PSO, Q, RANDOM, TIMETABLE,ROLETABLE,SYSTEMATIC};
-    LearningStrategy learningStrategy = LearningStrategy.Q;
+	public static enum LearningStrategy {PSO, Q, RANDOM, TIMETABLE, ROLETABLE, SYSTEMATIC,ROLETABLE_MTRAN};
+    public static LearningStrategy learningStrategy = LearningStrategy.SYSTEMATIC;
     
     static int nParticles = 5;
     static boolean parallelLearning = false;
@@ -45,6 +50,7 @@ public class SkillLearner {
 				if(skillData[i][1]==id && skillData[i][2]==skill) {
 					for(int j=0;j<sData.length;j++) {
 						sData[j] = skillData[i][j+3];
+						if(id==0&&skill==1) System.out.print(sData[j]+" ");
 					}
 					return sData;
 				}
@@ -58,10 +64,11 @@ public class SkillLearner {
 		 for(int i=0;i<nSkills;i++) {
 			 if(learningStrategy==LearningStrategy.PSO) skills[i] = new SkillPSO(nParticles,nRoles);
 			 if(learningStrategy==LearningStrategy.Q) skills[i] = new SkillQ(nRoles);
-			 if(learningStrategy==LearningStrategy.TIMETABLE) skills[i] = new SkillTimeTable(nRoles,evalPeriode,8,controller); 
-			 if(learningStrategy==LearningStrategy.ROLETABLE) skills[i] = new SkillRoleTable(nRoles,controller);
+			 if(learningStrategy==LearningStrategy.TIMETABLE) skills[i] = new SkillTimeTable(3,evalPeriode,3,controller); 
+			 if(learningStrategy==LearningStrategy.ROLETABLE) skills[i] = new ATRONSkillRoleTable(evalPeriode,controller);
+			 if(learningStrategy==LearningStrategy.ROLETABLE_MTRAN) skills[i] = new MTRANSkillRoleTable(evalPeriode,controller);
 			 if(learningStrategy==LearningStrategy.RANDOM) skills[i] = new SkillRandom(nRoles);
-			 if(learningStrategy==LearningStrategy.SYSTEMATIC) skills[i] = new SkillSystematic(nRoles,controller);
+			 if(learningStrategy==LearningStrategy.SYSTEMATIC) skills[i] = new SkillSystematic(evalPeriode,controller);
 			 if(loadSkillsQ()) {
 				 skills[i].fromFloats(getSkillData(controller.getDebugID(),i));
 			}
@@ -86,21 +93,41 @@ public class SkillLearner {
     	initSkills(nSkills, nRoles, evalPeriode, controller);
     }
 	public void startLearning(SkillController controller, float evalPeriode) {
-    	while(true) {
-    		float startTime = controller.getTime();
+		float startTime = controller.getTime();
+		System.out.println(controller.getDebugID()+": Start learning at "+startTime );
+		float nowTime=controller.getTime();
+		while(true) {
     		int currentSkill = controller.getRobotSkill();
     		Role myRole = skills[currentSkill].getRole();
     		Role bestRole = skills[currentSkill].getBestRole();
-    		//System.out.println(myID+": Playing role = "+rolePlayer.roleToString(myRole));
     		while((startTime+evalPeriode)>controller.getTime() && currentSkill==controller.getRobotSkill()) {
     			if(skills[currentSkill].isContinuous()) {
     				myRole = skills[currentSkill].getRole();
     				bestRole = skills[currentSkill].getBestRole();
     			}
     			controller.controlHook();
-    			rolePlayer.playRole(myRole);
+    			float timePercent = (controller.getTime()-startTime)/(evalPeriode);
+    			rolePlayer.playRole(myRole,timePercent);
     			controller.yield();
+    			float endTime = controller.getTime();
+    			if((endTime-nowTime)>0.1f) System.out.println("Starvation detected..."+(endTime-nowTime));
+    			nowTime =controller.getTime();
+    	    	
+    	    	
+    	    	
     			if(controller.isStopped()) return;
+    			if(AtronSkillSimulation.SRFAULT) {
+	    			float FaultTime = 7*500+2;
+	        		if(controller.getTime()>FaultTime&&controller.getDebugID()==2&&controller.getTime()<(FaultTime+7*250)) {
+	       				System.out.println("Module breaks down");
+	        			while(controller.getTime()<(FaultTime+7*250)) {
+	        				((AtronSkillController) controller).centerStop();
+	        				((AtronSkillController) controller).getModule().setColor(Color.BLACK);
+	        				controller.yield();
+	        			}
+	        			System.out.println("Module restarts");
+	        		}
+    			}
     		}
     		//System.out.println(controller.getDebugID()+" is alive at "+controller.getTime()+"!");
     		float reward = updateSkills(currentSkill, myRole, controller.getTime()-startTime);
@@ -108,8 +135,48 @@ public class SkillLearner {
     		logSkills(controller);
     		logRole(reward, currentSkill, bestRole, controller);
     		logBestRole(reward, currentSkill, bestRole, controller);
+    		startTime = startTime+evalPeriode;
+    		if(AtronSkillSimulation.SRFAULT) {
+	    		float SRStartTime = 7*5;
+	    		if(controller.getTime()>SRStartTime&&controller.getTime()<SRStartTime+20) {
+	    			System.out.println("Starting to self-reconfigure");
+	    			selfReconfigure(controller);
+	    			while(controller.getTime()<SRStartTime+20) controller.yield();
+	    			System.out.println("Self-reconfiguration done - continue learning");
+	    		}
+    		}
     	}
 	}
+	private void selfReconfigure(SkillController controller) {
+		float startTime = controller.getTime();
+		AtronSkillController con = (AtronSkillController) controller;
+		con.setBlocking(true);
+		con.home();		
+		if(con.getDebugID()==4) {
+			con.rotate(1);
+			con.rotate(1);
+		}
+		if(con.getDebugID()==5) {
+			con.rotate(-1);
+			con.rotate(-1);
+		}
+		if(con.getDebugID()==1||con.getDebugID()==2||con.getDebugID()==6||con.getDebugID()==7) {
+			con.rotate(1);
+		}
+			
+		while(controller.getTime()<startTime+10.0f) con.yield();
+		con.connectAll();
+		while(controller.getTime()<startTime+13.0f) con.yield();
+		if(con.getDebugID()==4||con.getDebugID()==5) {
+			for(int i=0;i<4;i++) {
+				if(con.canDisconnect(i)) {
+					con.disconnect(i);
+				}
+			}
+		}
+		con.setBlocking(false);
+	}
+
 	private void logReward(float reward, int currentSkill, SkillController controller) {
 		if(controller.getDebugID()==0) {
 			String str = controller.getTime()+"\t"+ formatFloat(reward)+"\t"+controller.getRobotSkill();
@@ -148,5 +215,10 @@ public class SkillLearner {
 		String s = Float.toString(x);
 		if(s.contains("E")) return "0.0";
 		else return s;
+	}
+
+	public static void setLearningStrategy(String strategy) {
+		learningStrategy = LearningStrategy.valueOf(strategy);
+		System.out.println("LearningStrategy set to "+learningStrategy);
 	}
 }
