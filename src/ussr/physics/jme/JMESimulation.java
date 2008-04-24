@@ -91,6 +91,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     private Picker picker;
     
     public JMESimulation(ModuleFactory[] factories, PhysicsFactory.Options options) {
+        super(options);
         this.options = options; 
         PhysicsParameters parameters = PhysicsParameters.get();
         this.gravity = parameters.getGravity();

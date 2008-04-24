@@ -31,12 +31,22 @@ public class PhysicsFactory {
      * @author ups
      */
     public static class Options implements Cloneable {
+        private boolean exitOnQuit = true;
+
         public Options copy() { 
             try {
                 return (Options)clone();
             } catch (CloneNotSupportedException e) {
                 throw new Error("Internal error");
             } 
+        }
+
+        public boolean getExitOnQuit() {
+            return exitOnQuit;
+        }
+        
+        public void setExitOnQuit(boolean exitOnQuit) {
+            this.exitOnQuit = exitOnQuit;
         }
     }
     

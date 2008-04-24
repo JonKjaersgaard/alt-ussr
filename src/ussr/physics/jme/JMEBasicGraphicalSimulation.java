@@ -16,6 +16,7 @@ import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.SimulationGadget;
+import ussr.physics.PhysicsFactory.Options;
 import ussr.util.Pair;
 
 import com.jme.app.AbstractGame;
@@ -158,6 +159,10 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
     int tip_plane_axis = 1;
     protected PhysicsSpace physicsSpace;
     private StaticPhysicsNode staticPlane;
+    private boolean exitOnQuit;
+    public JMEBasicGraphicalSimulation(Options options) {
+        exitOnQuit = options.getExitOnQuit();
+    }
     protected void assignKeys() {       
     	/** Assign key P to action "toggle_pause". */
         //KeyBindingManager.getKeyBindingManager().set( "toggle_pause",
@@ -778,7 +783,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         JoystickInput.destroyIfInitalized();
     }
     protected void quit() {
-        System.exit( 0 );
+        if(exitOnQuit) System.exit( 0 );
     	//getPhysicsSpace().delete();
         
     }
