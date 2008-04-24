@@ -61,7 +61,7 @@ public class ATRONSimpleXmlController extends ATRONController {
         		// demo serialize
         		if (i ==3500){ 
 	    			try {
-	    				XmlControllers.writeXmlController(controllerLoop, module.getProperty("name") + ".xml");
+	    				XmlControllers.writeXmlController(controllerLoop, getName() + ".xml");
     				} catch (Exception e) {
     					e.printStackTrace();
     				}

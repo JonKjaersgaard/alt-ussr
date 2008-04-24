@@ -9,6 +9,8 @@ package atron.samples.futures;
 import java.awt.Color;
 
 import atron.delegate.ATRONDelegateAPI;
+import atron.futures.ATRONFutures;
+import atron.futures.ATRONFuturesConnectors;
 import atron.futures.ATRONFuturesCenterMotor;
 import atron.futures.ICommand;
 import ussr.model.Module;
@@ -24,9 +26,6 @@ public class ATRONSimpleFuturesController1 extends ATRONController {
 	
 	int i = 0;
 
-	/**
-     * @see ussr.model.ControllerImpl#activate()
-     */
     public void activate() {
         yield();
         String name = module.getProperty("name");
@@ -35,20 +34,13 @@ public class ATRONSimpleFuturesController1 extends ATRONController {
         	ATRONDelegateAPI atronDelegateAPI = new ATRONDelegateAPI(module);
         	System.out.println("Start pos. =" + atronDelegateAPI.getAngularPositionDegrees());
             ATRONFuturesCenterMotor f = atronDelegateAPI.rotateToDegreeInDegreesFutures(90);
-
-            // onCompletion test
-            f.onCompletion(new ICommand(){
-			public void execute(){
-				System.out.println("onCompletion() -> execute() -> show this text!");
-				module.setColor(Color.yellow);
-			}
-			});
-            
-            // waitForCompletion test
-//            f.waitForComplition();
-            
+            ATRONFuturesConnectors f1 = atronDelegateAPI.connectFuture(1);
+            System.out.println("f + f1 running");
+            ATRONFutures.wait(f1, f);
+            System.out.println("f + f1 completed");
+ 
             // Demo count
-            while(i < 300){
+            while(i < 30){
             	System.out.println("Demo count = " + i++);
             	yield();
             }
