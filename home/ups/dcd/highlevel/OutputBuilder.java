@@ -10,7 +10,7 @@ public interface OutputBuilder {
 
     void finishFragment();
 
-    void scheduleFragmentSend(String fragment);
+    void scheduleFragmentSend(String fragment, boolean receiveLocally);
 
     void startFragmentScheduling(String name);
 

@@ -33,7 +33,8 @@ public class ByteCodeStreamBuilder implements OutputBuilder {
         throw new Error("Method not implemented");
     }
 
-    public void scheduleFragmentSend(String fragment) {
+    public void scheduleFragmentSend(String fragment, boolean receiveLocally) {
+        if(!receiveLocally) throw new Error("Non-local reception not supported");
         // TODO Auto-generated method stub
         // 
         throw new Error("Method not implemented");

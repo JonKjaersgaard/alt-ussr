@@ -220,8 +220,9 @@ public class ByteCode {
 class SymbolTable {
     private static Map<String,Integer> table = new HashMap<String,Integer>();
     static {
-        table.put("PRIM_CENTERSTOP", 1);
-        table.put("PRIM_APPLY", 2);
+/*        table.put("PRIM_CENTERSTOP", 3); // CMD_ROTATE_STOP
+        table.put("PRIM_APPLY", 65); // CMD_MAX+1
+        */
     }
     public static Integer lookup(String name) {
         return table.get(name);

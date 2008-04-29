@@ -157,7 +157,7 @@ public class ByteCodeSequence {
                 new Rule() {
                     boolean condition(ByteCode in[]) { return in[0].getArguments()[0].startsWith("PRIM_"); }
                     ByteCode[] apply(ByteCode in[]) {
-                        return new ByteCode[] { ByteCode.MK_INS_CONSTANT(ByteCode.symbol2int(in[0].getArguments()[0]).toString()) };
+                        return new ByteCode[] { ByteCode.MK_INS_CONSTANT(in[0].getArguments()[0]) };
                     }
                 }),
         new Pattern(

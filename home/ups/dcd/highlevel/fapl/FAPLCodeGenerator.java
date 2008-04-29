@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import dcd.highlevel.ByteCode;
 import dcd.highlevel.ByteCodeCompiler;
 import dcd.highlevel.ByteCodeSequence;
 import dcd.highlevel.CodeGeneratorImpl;
@@ -57,6 +58,7 @@ public class FAPLCodeGenerator extends CodeGeneratorImpl {
                 compiled = generateEvaluateCodeBlock(output, (Evaluate)unit);
             else
                 throw new Error("Not supported yet: "+unit);
+            compiled.add(ByteCode.INS_TERMINATE());                     
             compiled.peepHoleOptimize();
             compiled.resolveGoto();
             output.startFragment(fragmentName,compiled.getSize());
@@ -65,7 +67,7 @@ public class FAPLCodeGenerator extends CodeGeneratorImpl {
         }
         output.startFragmentScheduling(name);
         for(String fragment: fragments)
-            output.scheduleFragmentSend(fragment);
+            output.scheduleFragmentSend(fragment,true);
         output.finish();
     }
 

@@ -22,11 +22,15 @@ public class CFileBuilder implements OutputBuilder {
         writer.println("unsigned char "+programName+"[SIZE_"+programName+"+1]= {");
     }
 
-    public void scheduleFragmentSend(String fragmentName) {
+    public void scheduleFragmentSend(String fragmentName, boolean receiveLocally) {
         writer.println("  printf(\"*** Sending program: "+fragmentName+" \\n\");");
-        writer.println("  for(channel=0; channel<8; channel++) {");
-        writer.println("    sendProgramMaybe(USSRONLYC(env) &context, channel, "+fragmentName+", SIZE_"+fragmentName+");");
-        writer.println("  }");
+        if(receiveLocally) {
+            writer.println("  installProgramMessage(USSRONLYC(env) &context, "+fragmentName+", SIZE_"+fragmentName+");");
+        } else {
+            writer.println("  for(channel=0; channel<8; channel++) {");
+            writer.println("    sendProgramMaybe(USSRONLYC(env) &context, channel, "+fragmentName+", SIZE_"+fragmentName+");");
+            writer.println("  }");
+        }
         writer.println("  context.program_id++;");
         writer.println("  printf(\"*** Waiting\\n\");");
         writer.println("  delay(USSRONLYC(env) WAITTIME);");

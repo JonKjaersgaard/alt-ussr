@@ -122,10 +122,10 @@ public class RDCDCompiler extends CodeGeneratorImpl {
         for(Name role: program.getDeployment()) {
             String fragmentName = invariantFragmentMap.get(role.getName());
             if(fragmentName==null) throw new Error("Undefined fragment name: "+role.getName());
-            writer.scheduleFragmentSend(fragmentName);
+            writer.scheduleFragmentSend(fragmentName,false);
         }
         for(String fragment: otherFragments)
-            writer.scheduleFragmentSend(fragment);
+            writer.scheduleFragmentSend(fragment,false);
     }
 
 }
