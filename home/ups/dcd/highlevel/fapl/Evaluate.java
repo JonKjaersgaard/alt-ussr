@@ -7,4 +7,7 @@ public class Evaluate extends Unit {
     public Evaluate(Exp exp) {
         this.exp = exp;
     }
+    public Exp getExp() {
+        return exp;
+    }
 }

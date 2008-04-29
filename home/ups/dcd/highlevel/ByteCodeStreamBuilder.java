@@ -45,7 +45,7 @@ public class ByteCodeStreamBuilder implements OutputBuilder {
         throw new Error("Method not implemented");
     }
 
-    public void startFragmentScheduling() {
+    public void startFragmentScheduling(String name) {
         // TODO Auto-generated method stub
         // 
         throw new Error("Method not implemented");

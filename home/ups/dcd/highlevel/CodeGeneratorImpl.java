@@ -45,6 +45,12 @@ public abstract class CodeGeneratorImpl {
         return new Block(statements);
     }
     
+    protected Block mobilizeAnyRole(Block body) {
+        List<Statement> statements = new ArrayList<Statement>(body.getStatements());
+        statements.add(PrimOp.MIGRATE_CONTINUE);
+        return new Block(statements);
+    }
+    
     protected Block installize(GlobalSource role, Method method, boolean isBehavior) {
         List<Statement> statements = new ArrayList<Statement>();
         int index = resolver.getMethodIndex(role.getName().getName(), method.getName().getName())+128;

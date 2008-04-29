@@ -32,12 +32,12 @@ public class CFileBuilder implements OutputBuilder {
         writer.println("  delay(USSRONLYC(env) WAITTIME);");
     }
 
-    public void startFragmentScheduling() {
+    public void startFragmentScheduling(String name) {
         writer.println("static void dcd_action(USSRONLY(USSREnv *env)) {");
         writer.println("  char channel;");
         writer.println("  InterpreterContext context = { 0,0,0,ARG_NORTH_SOUTH, 0, 0, 0 };");
         writer.println("  printf(\"################################\\n\");");
-        writer.println("  printf(\"## CAR ACTION DCD CONTROLLER ###\\n\");");
+        writer.println("  printf(\"## DCD CONTROLLER: "+name+"\");");
         writer.println("  printf(\"################################\\n\");");
         writer.println("  delay(USSRONLYC(env) WAITTIME);");
     }

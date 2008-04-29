@@ -17,6 +17,7 @@ import dcd.highlevel.ast.Role;
 import dcd.highlevel.ast.Statement;
 import dcd.highlevel.ast.program.*;
 import dcd.highlevel.fapl.Apply;
+import dcd.highlevel.fapl.PrimName;
 
 public class ByteCodeCompiler implements Visitor {
     
@@ -260,7 +261,16 @@ public class ByteCodeCompiler implements Visitor {
     }
 
     public void visitApply(Apply apply) {
-        
+        // Compute argument and push on stack
+        apply.getArg().visit(this);
+        // Compute function and push on stack
+        apply.getFun().visit(this);
+        // Apply function
+        result.add(ByteCode.INS_APPLY_FN());
+    }
+
+    public void visitPrimName(PrimName primName) {
+        result.add(ByteCode.INS_PUSHC(primName.getName()));
     }
 
 

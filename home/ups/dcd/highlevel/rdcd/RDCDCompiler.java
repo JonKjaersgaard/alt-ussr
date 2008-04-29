@@ -35,11 +35,13 @@ import dcd.highlevel.ast.program.SelfFunction;
 
 public class RDCDCompiler extends CodeGeneratorImpl {
     private Program program;
+    private String name;
     private Map<String,String> invariantFragmentMap = new HashMap<String,String>();
     private Set<String> otherFragments = new HashSet<String>();
     
-    public RDCDCompiler(Program program, Resolver resolver) {
+    public RDCDCompiler(String name, Program program, Resolver resolver) {
         super(resolver);
+        this.name = name;
         this.program = program;
     }
 
@@ -48,7 +50,7 @@ public class RDCDCompiler extends CodeGeneratorImpl {
         generateStartupMethods(writer);
         generateBehaviorMethods(writer);
         generateCommandMethods(writer);
-        writer.startFragmentScheduling();
+        writer.startFragmentScheduling(name);
         generateFragmentSends(writer);
         writer.finish();
     }

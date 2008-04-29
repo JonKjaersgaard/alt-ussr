@@ -153,6 +153,14 @@ public class ByteCodeSequence {
                     }
                 }),
         new Pattern(
+                new String[] { ByteCode.PUSHC },
+                new Rule() {
+                    boolean condition(ByteCode in[]) { return in[0].getArguments()[0].startsWith("PRIM_"); }
+                    ByteCode[] apply(ByteCode in[]) {
+                        return new ByteCode[] { ByteCode.MK_INS_CONSTANT(ByteCode.symbol2int(in[0].getArguments()[0]).toString()) };
+                    }
+                }),
+        new Pattern(
                 new String[] { ByteCode.CONNECTED_DIR, ByteCode.SIZEOF },
                 new Rule() { ByteCode[] apply(ByteCode in[]) {
                     return new ByteCode[] { ByteCode.MK_INS_CONNECTED_DIR_SIZEOF(in[0].getArguments()[0]) };

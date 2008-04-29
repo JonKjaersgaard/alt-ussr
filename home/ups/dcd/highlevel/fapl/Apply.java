@@ -19,5 +19,19 @@ public class Apply extends Exp {
     public void visit(Visitor visitor) {
         visitor.visitApply(this);
     }
+
+    /**
+     * @return the fun
+     */
+    public Exp getFun() {
+        return fun;
+    }
+
+    /**
+     * @return the arg
+     */
+    public Exp getArg() {
+        return arg;
+    }
     
 }

@@ -112,7 +112,7 @@ public class Test {
         VTableResolutionPhase vrp = new VTableResolutionPhase(program);
         vrp.resolve();
         
-        RDCDCompiler cfg = new RDCDCompiler(program,vrp);
+        RDCDCompiler cfg = new RDCDCompiler("car",program,vrp);
         OutputStreamWriter output;
         try {
             output = new OutputStreamWriter(new FileOutputStream(OUTPUT_FILE));

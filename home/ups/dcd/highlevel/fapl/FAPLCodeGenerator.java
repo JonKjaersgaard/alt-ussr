@@ -35,30 +35,51 @@ import dcd.highlevel.ast.program.SelfFunction;
 import dcd.highlevel.ast.program.SingleExp;
 
 public class FAPLCodeGenerator extends CodeGeneratorImpl {
-    
+    private String name;
     private Program program;
     
-    public FAPLCodeGenerator(Program program, Resolver resolver) {
+    public FAPLCodeGenerator(String name, Program program, Resolver resolver) {
         super(resolver);
+        this.name = name;
         this.program = program;
     }
 
     public void generate(OutputBuilder output) {
+        int count = 0;
+        Set<String> fragments = new HashSet<String>();
         for(Unit unit: program.getUnits()) {
+            String fragmentName = "FAPL_"+name+"_"+count++;
+            fragments.add(fragmentName);
+            ByteCodeSequence compiled;
             if(unit instanceof Function)
-                generateCodeBlock(output, (Function)unit);
+                compiled = generateFunctionCodeBlock(output, (Function)unit);
+            else if(unit instanceof Evaluate)
+                compiled = generateEvaluateCodeBlock(output, (Evaluate)unit);
             else
                 throw new Error("Not supported yet: "+unit);
+            compiled.peepHoleOptimize();
+            compiled.resolveGoto();
+            output.startFragment(fragmentName,compiled.getSize());
+            compiled.generate(output);
+            output.finishFragment();
         }
+        output.startFragmentScheduling(name);
+        for(String fragment: fragments)
+            output.scheduleFragmentSend(fragment);
         output.finish();
     }
 
-    private void generateCodeBlock(OutputBuilder output, Function function) {
-        Block source = new Block(new Statement[] { new SingleExp(function.getBody()) });
+    private ByteCodeSequence generateEvaluateCodeBlock(OutputBuilder output, Evaluate unit) {
+        Block source = new Block(new Statement[] { new SingleExp(unit.getExp()) });
         ByteCodeSequence compiled = new ByteCodeCompiler(program,resolver).compileCodeBlock(source);
-        compiled.peepHoleOptimize();
-        compiled.resolveGoto();
-        compiled.generate(output);
+        return compiled;
+    }
+
+    private ByteCodeSequence generateFunctionCodeBlock(OutputBuilder output, Function function) {
+        Block source = new Block(new Statement[] { new SingleExp(function.getBody()) });
+        // installize source
+        ByteCodeSequence compiled = new ByteCodeCompiler(program,resolver).compileCodeBlock(source);
+        return compiled;
     }
 
 }

@@ -1,6 +1,7 @@
 package dcd.highlevel;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -205,5 +206,24 @@ public class ByteCode {
     public static ByteCode MK_INS_COORD_any_any(String coord, String comp) {
         return new ByteCode("INS_COORD_"+coord+"_"+comp,1,new String[0]);
     }
+    public static ByteCode INS_APPLY_FN() {
+        return new ByteCode("INS_APPLY",1,new String[0]);
+    }
+    public static Integer symbol2int(String string) {
+        Integer value = SymbolTable.lookup(string);
+        if(value==null) throw new Error("Symbol not defined: "+string);
+        return value;
+    }
     
+}
+
+class SymbolTable {
+    private static Map<String,Integer> table = new HashMap<String,Integer>();
+    static {
+        table.put("PRIM_CENTERSTOP", 1);
+        table.put("PRIM_APPLY", 2);
+    }
+    public static Integer lookup(String name) {
+        return table.get(name);
+    }
 }

@@ -22,7 +22,6 @@ unsigned char RDCD_program_find_RightWheel[SIZE_RDCD_program_find_RightWheel+1]=
 /*[28]*/ /* cond_1_end: */INS_GOTO, 31 /*cond_0_end*/,
 /*[30]*/ /* cond_0_else: */INS_MIGRATE_CONTINUE,
 /*[31]*/ /* cond_0_end: */INS_MIGRATE_CONTINUE,
-
 0
 };
 /* Role selection code for LeftWheel */
@@ -49,7 +48,6 @@ unsigned char RDCD_program_find_LeftWheel[SIZE_RDCD_program_find_LeftWheel+1]= {
 /*[28]*/ /* cond_1_end: */INS_GOTO, 31 /*cond_0_end*/,
 /*[30]*/ /* cond_0_else: */INS_MIGRATE_CONTINUE,
 /*[31]*/ /* cond_0_end: */INS_MIGRATE_CONTINUE,
-
 0
 };
 /* Role selection code for Axle */
@@ -64,7 +62,6 @@ unsigned char RDCD_program_find_Axle[SIZE_RDCD_program_find_Axle+1]= {
 /*[9]*/ INS_GOTO, 12 /*cond_0_end*/,
 /*[11]*/ /* cond_0_else: */INS_MIGRATE_CONTINUE,
 /*[12]*/ /* cond_0_end: */INS_MIGRATE_CONTINUE,
-
 0
 };
 /* Startup method for RightWheel */
@@ -84,7 +81,6 @@ unsigned char RDCD_program_startup_RightWheel[SIZE_RDCD_program_startup_RightWhe
 /*[22(2)]*/ INS_SEND_COMMAND, ROLE_Wheel, 128, 0,
 /*[26(6)]*/ INS_END_TERMINATE,
 /*[27(7)]*/ /* _block_0_END: */INS_NOP,
-
 0
 };
 /* Startup method for LeftWheel */
@@ -104,7 +100,6 @@ unsigned char RDCD_program_startup_LeftWheel[SIZE_RDCD_program_startup_LeftWheel
 /*[22(2)]*/ INS_SEND_COMMAND, ROLE_Wheel, 128, 0,
 /*[26(6)]*/ INS_END_TERMINATE,
 /*[27(7)]*/ /* _block_0_END: */INS_NOP,
-
 0
 };
 /* Behavior method for Axle */
@@ -131,7 +126,6 @@ unsigned char RDCD_program_behavior_Axle[SIZE_RDCD_program_behavior_Axle+1]= {
 /*[36(21)]*/ /* cond_1_else: */INS_EVAL_COMMAND, CMD_ROTATE_TO, 18,
 /*[39(24)]*/ /* cond_1_end: */INS_END_REPEAT,
 /*[40(25)]*/ /* _block_0_END: */INS_NOP,
-
 0
 };
 /* Command method for RightWheel */
@@ -150,7 +144,6 @@ unsigned char RDCD_program_command_RightWheel[SIZE_RDCD_program_command_RightWhe
 /*[24(12)]*/ INS_SET_ROLE_NOTIFY, ROLE_RightWheel,
 /*[26(14)]*/ INS_END_TERMINATE,
 /*[27(15)]*/ /* _block_0_END: */INS_NOP,
-
 0
 };
 /* Command method for LeftWheel */
@@ -169,7 +162,6 @@ unsigned char RDCD_program_command_LeftWheel[SIZE_RDCD_program_command_LeftWheel
 /*[24(12)]*/ INS_SET_ROLE_NOTIFY, ROLE_LeftWheel,
 /*[26(14)]*/ INS_END_TERMINATE,
 /*[27(15)]*/ /* _block_0_END: */INS_NOP,
-
 0
 };
 static void dcd_action(USSRONLY(USSREnv *env)) {
@@ -200,6 +192,20 @@ static void dcd_action(USSRONLY(USSREnv *env)) {
   context.program_id++;
   printf("*** Waiting\n");
   delay(USSRONLYC(env) WAITTIME);
+  printf("*** Sending program: RDCD_program_startup_RightWheel \n");
+  for(channel=0; channel<8; channel++) {
+    sendProgramMaybe(USSRONLYC(env) &context, channel, RDCD_program_startup_RightWheel, SIZE_RDCD_program_startup_RightWheel);
+  }
+  context.program_id++;
+  printf("*** Waiting\n");
+  delay(USSRONLYC(env) WAITTIME);
+  printf("*** Sending program: RDCD_program_startup_LeftWheel \n");
+  for(channel=0; channel<8; channel++) {
+    sendProgramMaybe(USSRONLYC(env) &context, channel, RDCD_program_startup_LeftWheel, SIZE_RDCD_program_startup_LeftWheel);
+  }
+  context.program_id++;
+  printf("*** Waiting\n");
+  delay(USSRONLYC(env) WAITTIME);
   printf("*** Sending program: RDCD_program_command_RightWheel \n");
   for(channel=0; channel<8; channel++) {
     sendProgramMaybe(USSRONLYC(env) &context, channel, RDCD_program_command_RightWheel, SIZE_RDCD_program_command_RightWheel);
@@ -217,20 +223,6 @@ static void dcd_action(USSRONLY(USSREnv *env)) {
   printf("*** Sending program: RDCD_program_behavior_Axle \n");
   for(channel=0; channel<8; channel++) {
     sendProgramMaybe(USSRONLYC(env) &context, channel, RDCD_program_behavior_Axle, SIZE_RDCD_program_behavior_Axle);
-  }
-  context.program_id++;
-  printf("*** Waiting\n");
-  delay(USSRONLYC(env) WAITTIME);
-  printf("*** Sending program: RDCD_program_startup_RightWheel \n");
-  for(channel=0; channel<8; channel++) {
-    sendProgramMaybe(USSRONLYC(env) &context, channel, RDCD_program_startup_RightWheel, SIZE_RDCD_program_startup_RightWheel);
-  }
-  context.program_id++;
-  printf("*** Waiting\n");
-  delay(USSRONLYC(env) WAITTIME);
-  printf("*** Sending program: RDCD_program_startup_LeftWheel \n");
-  for(channel=0; channel<8; channel++) {
-    sendProgramMaybe(USSRONLYC(env) &context, channel, RDCD_program_startup_LeftWheel, SIZE_RDCD_program_startup_LeftWheel);
   }
   context.program_id++;
   printf("*** Waiting\n");

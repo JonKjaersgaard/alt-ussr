@@ -9,8 +9,11 @@ public class PrimName extends Name {
 
     @Override
     public void visit(Visitor visitor) {
-        // TODO Auto-generated method stub
-        // 
-        throw new Error("Method not implemented");
+        visitor.visitPrimName(this);
+    }
+    
+    @Override
+    public String getName() {
+        return "PRIM_"+super.getName().toUpperCase();
     }
 }

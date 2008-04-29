@@ -12,7 +12,7 @@ public interface OutputBuilder {
 
     void scheduleFragmentSend(String fragment);
 
-    void startFragmentScheduling();
+    void startFragmentScheduling(String name);
 
     void addByteCode(ByteCode bc);
 
