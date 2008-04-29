@@ -2,15 +2,17 @@ package atron.delegate;
 
 import java.util.List;
 
-import atron.spot.IATRONSPOTAPI;
+import atron.spot.ISunTRONAPI;
+import atron.spot.IUSSRSunTRONSAPI;
 import ussr.model.Module;
 import ussr.model.Sensor;
 import ussr.samples.atron.ATRONController;
+import atron.futures.ATRONFutures;
 import atron.futures.ATRONFuturesConnectors;
 import atron.futures.ATRONFuturesCenterMotor;
 
 
-public class ATRONDelegateAPI extends ATRONController implements IATRONSPOTAPI{
+public class ATRONDelegateAPI extends ATRONController implements ISunTRONAPI{
 
 	public ATRONDelegateAPI(Module module){
 		setModule(module);
@@ -32,7 +34,7 @@ public class ATRONDelegateAPI extends ATRONController implements IATRONSPOTAPI{
 		return module.getSensors();
 	}
 	public ATRONFuturesConnectors connectFuture(int i) {
-		ATRONFuturesConnectors f = new ATRONFuturesConnectors(i,this);
+		ATRONFuturesConnectors f = new ATRONFuturesConnectors(i, this);
 		super.connect(i);
 		return f;
 		
@@ -42,6 +44,36 @@ public class ATRONDelegateAPI extends ATRONController implements IATRONSPOTAPI{
 		setBlocking(false);
 		rotateToDegreeInDegrees(i);
 		return f;
+		
+	}
+
+	@Override
+	public boolean activeFutures() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void addActiveFuturesTable(String tmpKey, ATRONFutures f) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeActiveFuturesTable(String tmpKey) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sleep(long delay) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void waitForAllActiveFutures() {
+		// TODO Auto-generated method stub
 		
 	}
 }

@@ -3,14 +3,14 @@ package atron.delegate.samples.basicCar;
 import ussr.model.Sensor;
 import atron.delegate.ATRONDelegateAPI;
 import atron.delegate.controllerLoop.DelegateControllerLoopImpl;
-import atron.spot.IATRONSPOTAPI;
+import atron.spot.IUSSRSunTRONSAPI;
 
 public class ATRONCarControllerLoop extends DelegateControllerLoopImpl{
     byte dir = 1;
     float lastProx = Float.NEGATIVE_INFINITY; /* for printing out proximity data */
     boolean firstTime = true;
     
-	ATRONCarControllerLoop(IATRONSPOTAPI iatronspotapi) {
+	ATRONCarControllerLoop(IUSSRSunTRONSAPI iatronspotapi) {
 		super(iatronspotapi);
 	}
 

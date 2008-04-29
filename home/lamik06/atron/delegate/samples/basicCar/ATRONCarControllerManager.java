@@ -8,8 +8,9 @@ package atron.delegate.samples.basicCar;
 import java.util.List;
 
 import atron.delegate.ATRONDelegateAPI;
+import atron.futures.ATRONFutures;
 import atron.spot.ATRONSPOTController;
-import atron.spot.IATRONSPOTAPI;
+import atron.spot.IUSSRSunTRONSAPI;
 import ussr.samples.GenericSimulation;
 import ussr.samples.atron.ATRONController;
 import ussr.model.ControllerImpl;
@@ -39,7 +40,7 @@ public class ATRONCarControllerManager extends ATRONSPOTController {
 	ATRONCarControllerLoop aTRONControllerLoop;
 	public void activate() {
 //		aTRONAPI = new ATRONDelegateAPI(getModule());
-		aTRONControllerLoop = new ATRONCarControllerLoop((IATRONSPOTAPI)this);
+		aTRONControllerLoop = new ATRONCarControllerLoop((IUSSRSunTRONSAPI)this);
 		yield();
     	this.delay(1000); /* rotateContinuous seem to fail sometimes if we do not wait at first */
  
@@ -49,6 +50,7 @@ public class ATRONCarControllerManager extends ATRONSPOTController {
         	yield();
         }
     }
+
 
 
 

@@ -8,9 +8,7 @@ import ussr.samples.atron.*;
  * @author lamik06@student.sdu.dk
  *
  */
-public interface IATRONSPOTAPI extends IATRONAPI  {
-	public byte sendRadioMessage(byte[] message, int destination);
-
+public interface IUSSRSunTRONSAPI extends ISunTRONAPI  {
 	public List<Sensor> getSensors();
 	
 }

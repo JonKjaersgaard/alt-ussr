@@ -9,6 +9,8 @@ import ussr.samples.GenericSimulation;
 import java.io.*;
 import java.util.List;
 
+import atron.futures.ATRONFutures;
+
 //import org.lwjgl.util.Color;
 
 import ussr.model.*;
@@ -259,11 +261,7 @@ public class ATRONCarUSSRControllerRemoteControl extends ATRONSPOTController {
 			}
 		}
 	}
-	@Override
-	public List<Sensor> getSensors() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 
 

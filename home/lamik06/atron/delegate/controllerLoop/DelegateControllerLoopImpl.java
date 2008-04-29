@@ -1,14 +1,14 @@
 package atron.delegate.controllerLoop;
 
-import atron.spot.IATRONSPOTAPI;
+import atron.spot.IUSSRSunTRONSAPI;
 
 public abstract class DelegateControllerLoopImpl implements IDelegateControllerLoop {
-	public IATRONSPOTAPI atronDelegateController;
+	public IUSSRSunTRONSAPI atronDelegateController;
 
-	public DelegateControllerLoopImpl(IATRONSPOTAPI atronDelegateAPI){
+	public DelegateControllerLoopImpl(IUSSRSunTRONSAPI atronDelegateAPI){
 		this.atronDelegateController = atronDelegateAPI;
 	}
-	public void setATRONDelegateAPI(IATRONSPOTAPI atronDelegateAPI) {
+	public void setATRONDelegateAPI(IUSSRSunTRONSAPI atronDelegateAPI) {
 		this.atronDelegateController = atronDelegateAPI;
 	}
 
