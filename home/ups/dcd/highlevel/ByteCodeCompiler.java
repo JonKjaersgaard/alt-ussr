@@ -16,8 +16,7 @@ import dcd.highlevel.ast.Program;
 import dcd.highlevel.ast.Role;
 import dcd.highlevel.ast.Statement;
 import dcd.highlevel.ast.program.*;
-import dcd.highlevel.generic.GlobalSource;
-import dcd.highlevel.generic.Resolver;
+import dcd.highlevel.fapl.Apply;
 
 public class ByteCodeCompiler implements Visitor {
     
@@ -258,6 +257,10 @@ public class ByteCodeCompiler implements Visitor {
     public void visitNegate(Negate negativeConstant) {
         negativeConstant.getExp().visit(this);
         result.add(new ByteCode("INS_NEGATE",1,new String[] { }));
+    }
+
+    public void visitApply(Apply apply) {
+        
     }
 
 

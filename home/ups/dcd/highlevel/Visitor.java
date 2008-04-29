@@ -2,6 +2,7 @@ package dcd.highlevel;
 
 import dcd.highlevel.ast.Block;
 import dcd.highlevel.ast.program.*;
+import dcd.highlevel.fapl.Apply;
 
 public interface Visitor {
     public void visitConditional(Conditional conditional);
@@ -23,4 +24,5 @@ public interface Visitor {
     public void visitUnaryExp(UnaryExp exp);
     public void visitBlock(Block block);
     public void visitNegate(Negate negativeConstant);
+    public void visitApply(Apply apply);
 }

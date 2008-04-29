@@ -1,6 +1,6 @@
 package dcd.highlevel.ast;
 
-import dcd.highlevel.generic.IName;
+import dcd.highlevel.IName;
 
 public class Name extends Node implements IName {
     private final String name;

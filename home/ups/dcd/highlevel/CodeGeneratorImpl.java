@@ -9,15 +9,12 @@ import dcd.highlevel.ast.Block;
 import dcd.highlevel.ast.Invariant;
 import dcd.highlevel.ast.Method;
 import dcd.highlevel.ast.Modifier;
-import dcd.highlevel.generic.GlobalSource;
-import dcd.highlevel.generic.InvariantSource;
 import dcd.highlevel.ast.Statement;
 import dcd.highlevel.ast.program.Conditional;
 import dcd.highlevel.ast.program.Nop;
 import dcd.highlevel.ast.program.Numeric;
 import dcd.highlevel.ast.program.PrimOp;
 import dcd.highlevel.ast.program.SelfFunction;
-import dcd.highlevel.generic.Resolver;
 
 public abstract class CodeGeneratorImpl {
     protected Resolver resolver;

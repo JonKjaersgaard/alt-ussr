@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dcd.highlevel.GlobalSource;
+import dcd.highlevel.IName;
+import dcd.highlevel.InvariantSource;
 import dcd.highlevel.ast.ConstantDef;
 import dcd.highlevel.ast.Modifier;
-import dcd.highlevel.generic.GlobalSource;
-import dcd.highlevel.generic.IName;
-import dcd.highlevel.generic.InvariantSource;
 
 public class Program implements GlobalSource {
     private List<Unit> declarations;

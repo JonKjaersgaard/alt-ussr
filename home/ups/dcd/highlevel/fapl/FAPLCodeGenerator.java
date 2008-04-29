@@ -1,4 +1,4 @@
-package dcd.highlevel;
+package dcd.highlevel.fapl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
@@ -12,14 +12,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import dcd.highlevel.ByteCodeCompiler;
+import dcd.highlevel.ByteCodeSequence;
+import dcd.highlevel.CodeGeneratorImpl;
+import dcd.highlevel.IName;
+import dcd.highlevel.OutputBuilder;
+import dcd.highlevel.Resolver;
 import dcd.highlevel.ast.Block;
 import dcd.highlevel.ast.Invariant;
 import dcd.highlevel.ast.Method;
 import dcd.highlevel.ast.Modifier;
 import dcd.highlevel.ast.Name;
-import dcd.highlevel.fapl.Function;
-import dcd.highlevel.fapl.Program;
-import dcd.highlevel.fapl.Unit;
 import dcd.highlevel.ast.Role;
 import dcd.highlevel.ast.Statement;
 import dcd.highlevel.ast.program.Conditional;
@@ -30,20 +33,10 @@ import dcd.highlevel.ast.program.Numeric;
 import dcd.highlevel.ast.program.PrimOp;
 import dcd.highlevel.ast.program.SelfFunction;
 import dcd.highlevel.ast.program.SingleExp;
-import dcd.highlevel.generic.IName;
-import dcd.highlevel.generic.Resolver;
 
 public class FAPLCodeGenerator extends CodeGeneratorImpl {
     
-    public static class Packet {
-        private byte[] content;
-        public Packet(byte[] content) {
-            this.content = content;
-        }
-    }
     private Program program;
-    private Map<String,String> invariantFragmentMap = new HashMap<String,String>();
-    private Set<String> otherFragments = new HashSet<String>();
     
     public FAPLCodeGenerator(Program program, Resolver resolver) {
         super(resolver);

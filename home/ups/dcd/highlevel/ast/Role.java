@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import dcd.highlevel.generic.GlobalSource;
-import dcd.highlevel.generic.IName;
-import dcd.highlevel.generic.InvariantSource;
+import dcd.highlevel.GlobalSource;
+import dcd.highlevel.IName;
+import dcd.highlevel.InvariantSource;
 
 public class Role extends Node implements GlobalSource {
     private Name name, zuper;

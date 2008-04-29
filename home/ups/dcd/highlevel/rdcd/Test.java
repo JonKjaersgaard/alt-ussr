@@ -6,7 +6,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 import dcd.highlevel.CFileBuilder;
-import dcd.highlevel.RDCDCompiler;
 import dcd.highlevel.ast.*;
 import dcd.highlevel.ast.program.*;
 

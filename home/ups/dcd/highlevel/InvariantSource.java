@@ -1,4 +1,4 @@
-package dcd.highlevel.generic;
+package dcd.highlevel;
 
 public interface InvariantSource {
 

@@ -1,4 +1,4 @@
-package dcd.highlevel;
+package dcd.highlevel.rdcd;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -11,6 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import dcd.highlevel.ByteCodeCompiler;
+import dcd.highlevel.ByteCodeSequence;
+import dcd.highlevel.CodeGeneratorImpl;
+import dcd.highlevel.IName;
+import dcd.highlevel.OutputBuilder;
+import dcd.highlevel.Resolver;
 import dcd.highlevel.ast.Block;
 import dcd.highlevel.ast.Invariant;
 import dcd.highlevel.ast.Method;
@@ -26,8 +32,6 @@ import dcd.highlevel.ast.program.Nop;
 import dcd.highlevel.ast.program.Numeric;
 import dcd.highlevel.ast.program.PrimOp;
 import dcd.highlevel.ast.program.SelfFunction;
-import dcd.highlevel.generic.IName;
-import dcd.highlevel.generic.Resolver;
 
 public class RDCDCompiler extends CodeGeneratorImpl {
     private Program program;

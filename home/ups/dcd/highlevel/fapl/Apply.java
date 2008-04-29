@@ -17,9 +17,7 @@ public class Apply extends Exp {
 
     @Override
     public void visit(Visitor visitor) {
-        // TODO Auto-generated method stub
-        // 
-        throw new Error("Method not implemented");
+        visitor.visitApply(this);
     }
     
 }

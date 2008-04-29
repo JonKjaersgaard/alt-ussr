@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import dcd.highlevel.Resolver;
 import dcd.highlevel.ast.*;
-import dcd.highlevel.generic.Resolver;
 
 public class VTableResolutionPhase implements Resolver {
     private Program program;

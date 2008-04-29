@@ -1,6 +1,6 @@
 package dcd.highlevel.fapl;
 
-import dcd.highlevel.generic.Resolver;
+import dcd.highlevel.Resolver;
 
 public class IncrementalNameResolver implements Resolver {
 

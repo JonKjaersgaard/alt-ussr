@@ -1,4 +1,4 @@
-package dcd.highlevel.generic;
+package dcd.highlevel;
 
 import dcd.highlevel.ast.Method;
 import dcd.highlevel.ast.Role;
