@@ -125,25 +125,44 @@ void resendCommandMaybe(USSRONLYC(USSREnv *env) unsigned char virtual_channel, C
   sendCommandMaybe(USSRONLYC(env) &context, virtual_channel, task->role, task->command, task->argument, 0, task->packet_id);
 }
 
+void createProgramPacket(unsigned char *buffer, InterpreterContext *context, unsigned char receiver_virtual_channel, unsigned char *program, int programSize) {
+  ProgramPacket* packet = (ProgramPacket*)buffer;
+  int i;
+  packet->header = MT_PROGRAM;
+  packet->id = context->program_id;
+  packet->x = context->mod_x;
+  packet->y = context->mod_y;
+  packet->z = context->mod_z;
+  packet->r = context->mod_rotation;
+  packet->virtual_channel = receiver_virtual_channel;
+  for(i=0; i<programSize; i++)
+    packet->program[i] = program[i];
+}
+
 void sendProgramMaybe(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char virtual_channel, unsigned char *program, int programSize) {
   unsigned char buffer[MAX_PROGRAM_SIZE+MT_PACKET_HEADER_SIZE];
-  ProgramPacket* packet = (ProgramPacket*)&buffer;
-  int i;
   signed char x = context->mod_x, y = context->mod_y, z = context->mod_z;
   unsigned char r = context->mod_rotation;
   unsigned char physical_channel = virtual2physical(USSRONLYC(env) context, virtual_channel);
   unsigned char receiver_virtual_channel = compute_receiver_coordinates(USSRONLYC(env) virtual_channel, &x, &y, &z, &r);
   if(!isOtherConnectorNearby(USSRONLYC(env) physical_channel)) return;
   USSRDEBUG(TRACE_MIGRATION|TRACE_NETWORK,printf("### SendP <%d> name=%d, pch=%d (vch=%d), MY{vch=%d, pos=(%d,%d,%d), r=%d} RC{vch=%d, pos={%d,%d,%d}, r=%d}\n", env->context, getRole(env), physical_channel, virtual_channel, context->incoming_virtual_channel, context->mod_x, context->mod_y, context->mod_z, context->mod_rotation, receiver_virtual_channel, x, y, z, r));
-  packet->header = MT_PROGRAM;
-  packet->id = context->program_id;
-  packet->x = x;
-  packet->y = y;
-  packet->z = z;
-  packet->r = r;
-  packet->virtual_channel = receiver_virtual_channel;
-  for(i=0; i<programSize; i++)
-    packet->program[i] = program[i];
+  createProgramPacket(buffer,context,receiver_virtual_channel,program,programSize);
+#ifdef UNDEFINED
+  {
+    ProgramPacket* packet = (ProgramPacket*)&buffer;
+    int i;
+    packet->header = MT_PROGRAM;
+    packet->id = context->program_id;
+    packet->x = x;
+    packet->y = y;
+    packet->z = z;
+    packet->r = r;
+    packet->virtual_channel = receiver_virtual_channel;
+    for(i=0; i<programSize; i++)
+      packet->program[i] = program[i];
+  }
+#endif
   sendMessage(USSRONLYC(env) buffer, programSize+MT_PACKET_HEADER_SIZE, physical_channel);
 }
 
@@ -159,7 +178,7 @@ unsigned char checkForEvents(USSRONLY(USSREnv *env)) {
       if(isObjectNearby(USSRONLYC(env) channel)) {
 	StoredProgram *program = GLOBAL(env,global_program_store)+hv[vector];
 	USSRDEBUG(TRACE_EVENTS,printf("<%d>(%d) Handling vector %d\n", env->context, getRole(env), vector));
-	interpret(USSRONLYC(env) &program->context, program->program, program->size);
+	interpret(USSRONLYC(env) &program->context, program->program, program->size, 0);
 	break;
       }
     }
@@ -193,7 +212,7 @@ unsigned char schedulerAction(USSRONLY(USSREnv *env)) {
 	{
 	  /* Execute program, free or reschedule afterwards */
 	  USSRDEBUG(TRACE_TASKS|TRACE_MIGRATION,printf("<%d>(%d) Interpreting program @%d, mask=%d\n", env->context, getRole(env), task_arg_1, GLOBAL(env,global_program_store_use_flags)));
-	  if(!interpret(USSRONLYC(env) &GLOBAL(env,global_program_store)[task_arg_1].context, GLOBAL(env,global_program_store)[task_arg_1].program, GLOBAL(env,global_program_store)[task_arg_1].size))
+	  if(!interpret(USSRONLYC(env) &GLOBAL(env,global_program_store)[task_arg_1].context, GLOBAL(env,global_program_store)[task_arg_1].program, GLOBAL(env,global_program_store)[task_arg_1].size,task_arg_2))
 	    GLOBAL(env,global_program_store_use_flags) ^= (1<<task_arg_1);
 	  else { /* Reschedule */
 	    Task *task;
@@ -202,6 +221,7 @@ unsigned char schedulerAction(USSRONLY(USSREnv *env)) {
 	    task->type = TASK_INTERPRET;
 	    task->flags = 0;
 	    task->arg1 = task_arg_1;
+	    task->arg2 = task_arg_2;
 	    enqueue_task(USSRONLYC(env) task);
 	    enable_interrupts();
 	  }
@@ -363,6 +383,7 @@ void handleMessage(USSRONLYC(USSREnv *env) unsigned char* message, unsigned char
       task->type = TASK_INTERPRET;
       task->flags = 0;
       task->arg1 = id;
+      task->arg2 = 0; /* Default argument is 0 */
       enqueue_task(USSRONLYC(env) task);
     }
     break;
@@ -398,6 +419,12 @@ void handleMessage(USSRONLYC(USSREnv *env) unsigned char* message, unsigned char
     USSRDEBUG(TRACE_NETWORK,printf("Unknown message (header=%d, size=%d)\n ", message[0], messageSize));
     report_error(USSRONLYC(env) ERROR_UNKNOWN_MESSAGE,message[0]);
   }
+}
+
+void installProgramMessage(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char* program, unsigned char programSize) {
+  unsigned char buffer[MAX_PROGRAM_SIZE+MT_PACKET_HEADER_SIZE];
+  createProgramPacket(buffer,context,0,program,programSize);
+  handleMessage(USSRONLYC(env) buffer,programSize+MT_PACKET_HEADER_SIZE,0);
 }
 
 extern void dcd_activate(USSRONLYC(USSREnv *env) int role);

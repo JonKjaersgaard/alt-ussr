@@ -326,11 +326,11 @@ static void car_action(USSRONLY(USSREnv *env)) {
 #define ROLE_LeftWheel ROLE_LEFT_WHEEL
 #define ROLE_Axle ROLE_AXLE
 #define ROLE_Reverse ROLE_REVERSE
-#include "/Users/ups/eclipse_workspace/ussr/home/ups/action_gen.c"
+#include "/Users/ups/eclipse_workspace/ussr/home/ups/fapl_gen.c"
 
 void dcd_activate(USSRONLYC(USSREnv *env) int role) {
   //if(role==0) arm_action(USSRONLY(env));
-  if(role==0) car_action(USSRONLY(env));
-  //if(role==0) dcd_action(USSRONLY(env));
+  //if(role==0) car_action(USSRONLY(env));
+  if(role==0) dcd_action(USSRONLY(env));
   //if(role==0) test_action_2(USSRONLY(env));
 }

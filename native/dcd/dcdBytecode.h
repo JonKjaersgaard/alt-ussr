@@ -72,6 +72,7 @@
 #define INS_SIZEOF               49
 #define INS_NEGATE               50
 #define INS_ACTIVATE_DEBUG       51
+#define INS_APPLY                52
 #define INS_NOP                 127
 
 /* MSB reserved for constant-push operations */

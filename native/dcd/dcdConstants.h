@@ -10,6 +10,11 @@
 #define CMD_ROTATE_STOP 3
 #define CMD_ROTATE_DEGREES 4
 #define CMD_ROTATE_TO 5
+#define CMD_MAX 64
+
+/* Primitive functions */
+#define PRIM_CENTERSTOP CMD_ROTATE_STOP
+#define PRIM_APPLY (CMD_MAX+0)
 
 #define TASK_NONE 0
 #define TASK_INTERPRET 1

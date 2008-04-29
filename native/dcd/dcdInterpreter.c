@@ -50,14 +50,16 @@ void execute_command(USSRONLYC(USSREnv *env) unsigned char command, unsigned cha
 	unsigned char index = GLOBAL(env,command_table)[GLOBAL(env,role)][user_command];
 	if(index!=COMMAND_NONE) {
 	  StoredProgram *program = GLOBAL(env,global_program_store)+index;
-	  if(interpret(USSRONLYC(env) &program->context, program->program, program->size)) {
+	  if(interpret(USSRONLYC(env) &program->context, program->program, program->size, argument)) {
 	    Task *task;
 	    disable_interrupts();
 	    task = allocate_task(USSRONLY(env));
 	    task->type = TASK_INTERPRET;
 	    task->flags = 0;
 	    task->arg1 = index;
+	    task->arg2 = argument;
 	    enqueue_task(USSRONLYC(env) task);
+	    enable_interrupts();
 	  }
 	  return;
 	}
@@ -337,7 +339,34 @@ void sleep_rotations(USSRONLYC(USSREnv *env) unsigned char rotations) {
   }
 }
 
-unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char *program, unsigned char program_size, unsigned char pc, char *stack, unsigned char sp) {
+void send_command(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char qual_role, unsigned char command, unsigned char argument) {
+  unsigned char channel;
+  for(channel=0; channel<8; channel++)
+    sendCommandMaybe(USSRONLYC(env) context, channel, qual_role, command, argument, 1, 0);
+  if(check_role_instanceof(GLOBAL(env,role),qual_role))
+    execute_command(USSRONLYC(env) command, argument);
+}
+
+unsigned char function_apply(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char function, unsigned char argument) {
+  if(function<CMD_MAX || function>=128) { // Command, internal or user-defined
+    execute_command(USSRONLYC(env) function, argument);
+  } else { // Special primop
+    switch(function) {
+    case PRIM_APPLY:
+      if(argument<128) { // special case: command taking no argument (or rather: a module and the unit value = 0)
+	send_command(USSRONLYC(env) context, ROLE_ANY, argument, 0);
+      } else { // closure
+	report_error(USSRONLYC(env) ERROR_ILLEGAL_CLOSURE, argument);
+      }
+      break;
+    default:
+    report_error(USSRONLYC(env) ERROR_ILLEGAL_FUNCTION, function);
+    }
+  }
+  return 0;
+}
+
+unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char *program, unsigned char program_size, unsigned char argument, unsigned char pc, char *stack, unsigned char sp) {
   int instruction_counter = 0;
   unsigned char role = getRole(USSRONLY(env));
   int interpreter_debug_flags = 0;
@@ -524,13 +553,7 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
       break;
     case INS_SEND_COMMAND:
       USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_SEND_COMMAND %d %d %d (pc=%d)\n", program[pc], program[pc+1], program[pc+2], pc));
-      {
-	unsigned char channel;
-	for(channel=0; channel<8; channel++)
-	  sendCommandMaybe(USSRONLYC(env) context, channel, program[pc], program[pc+1], program[pc+2], 1, 0);
-	if(check_role_instanceof(GLOBAL(env,role),program[pc]))
-	  execute_command(USSRONLYC(env) program[pc+1], program[pc+2]);
-      }
+      send_command(USSRONLYC(env) context, program[pc], program[pc+1], program[pc+2]);
       pc+=3;
       break;
     case INS_SLEEP:
@@ -551,6 +574,14 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
       interpreter_debug_flags |= TRACE_INTERPRET;
       printf("### Activated debug: %d\n", interpreter_debug_flags);
       break;
+    case INS_APPLY:
+      {
+	unsigned char function = stack_pop(USSRONLYC(env) stack, &sp);
+	unsigned char arg = stack_pop(USSRONLYC(env) stack, &sp);
+	unsigned char result = function_apply(USSRONLYC(env) context,function,arg);
+	stack_push(USSRONLYC(env) stack, &sp, result);
+	break;
+      }
     default:
       {
 	unsigned char instruction = program[pc-1];
@@ -570,7 +601,7 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
   return 0;
 }
   
-unsigned char interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char *program, unsigned char size) {
+unsigned char interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char *program, unsigned char size, unsigned char argument) {
   char stack[MAX_STACK_SIZE];
   int i;
   USSRDEBUG(TRACE_INTERPRET,printf("Executing program:\n"));
@@ -579,6 +610,6 @@ unsigned char interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, uns
   printf("Trace:\n");
 #endif
   for(i=0; i<MAX_STACK_SIZE; i++) stack[i] = 0;
-  return do_interpret(USSRONLYC(env) context, program, size, 0, stack, 0);
+  return do_interpret(USSRONLYC(env) context, program, size, argument, 0, stack, 0);
 }
 

@@ -11,6 +11,7 @@ extern void activate(USSRONLY(USSREnv *env));
 extern unsigned char store_program(USSRONLYC(USSREnv *env) ProgramPacket *packet, unsigned char messageSize, unsigned char channel);
 extern Task *allocate_task(USSRONLY(USSREnv *env));
 extern void enqueue_task(USSRONLYC(USSREnv *env) Task *task);
+void installProgramMessage(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char* program, unsigned char programSize);
 
 /* Global store */
 #ifdef USSR
