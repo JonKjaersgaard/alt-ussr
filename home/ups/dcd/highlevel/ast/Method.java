@@ -1,8 +1,9 @@
 package dcd.highlevel.ast;
 
 import dcd.highlevel.BehaviorSource;
+import dcd.highlevel.MethodSpec;
 
-public class Method extends Member implements BehaviorSource {
+public class Method extends Member implements BehaviorSource, MethodSpec {
     private Modifier modifier;
     private Name name;
     private Block body;

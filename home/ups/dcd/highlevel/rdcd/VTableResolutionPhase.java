@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import dcd.highlevel.IName;
 import dcd.highlevel.Resolver;
 import dcd.highlevel.ast.*;
 
@@ -53,5 +54,9 @@ public class VTableResolutionPhase implements Resolver {
         if(vtableMap.get(role)==null || vtableMap.get(role).get(method)==null) throw new Error("Undefined method name: "+role+"."+method);
         return vtableMap.get(role).get(method).intValue();
         
+    }
+
+    public int getGlobalIndex(String name) {
+        throw new Error("Not implemented yet, should compute max index in vtables and return +1 (but also somehow increment)");
     }
 }

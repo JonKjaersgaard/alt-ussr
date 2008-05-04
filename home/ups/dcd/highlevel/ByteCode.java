@@ -214,6 +214,9 @@ public class ByteCode {
         if(value==null) throw new Error("Symbol not defined: "+string);
         return value;
     }
+    public static ByteCode INS_PUSH_ARGUMENT(int index) {
+        return new ByteCode("INS_PUSH_ARGUMENT",2,new String[] { new Integer(index).toString() });
+    }
     
 }
 

@@ -3,7 +3,9 @@ package dcd.highlevel;
 import dcd.highlevel.ast.Block;
 import dcd.highlevel.ast.program.*;
 import dcd.highlevel.fapl.Apply;
+import dcd.highlevel.fapl.LocalName;
 import dcd.highlevel.fapl.PrimName;
+import dcd.highlevel.fapl.GlobalName;
 
 public interface Visitor {
     public void visitConditional(Conditional conditional);
@@ -27,4 +29,6 @@ public interface Visitor {
     public void visitNegate(Negate negativeConstant);
     public void visitApply(Apply apply);
     public void visitPrimName(PrimName primName);
+    public void visitLocalName(LocalName localName);
+    public void visitGlobalName(GlobalName varName);
 }

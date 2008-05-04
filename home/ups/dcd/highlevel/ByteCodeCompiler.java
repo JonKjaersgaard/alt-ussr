@@ -17,18 +17,20 @@ import dcd.highlevel.ast.Role;
 import dcd.highlevel.ast.Statement;
 import dcd.highlevel.ast.program.*;
 import dcd.highlevel.fapl.Apply;
+import dcd.highlevel.fapl.GlobalName;
+import dcd.highlevel.fapl.LocalName;
 import dcd.highlevel.fapl.PrimName;
 
 public class ByteCodeCompiler implements Visitor {
     
     private ByteCodeSequence result = new ByteCodeSequence();
-    private GlobalSource role;
+    private GlobalSource source;
     private Map<String,Block> blockMap = new HashMap<String,Block>();
-    private Resolver vtableResolver;
+    private Resolver resolver;
     
     public ByteCodeCompiler(GlobalSource role, Resolver vtableResolver) {
-        this.role = role;
-        this.vtableResolver = vtableResolver;
+        this.source = role;
+        this.resolver = vtableResolver;
     }
     
     public ByteCodeSequence compileCodeBlock(Block block) {
@@ -116,7 +118,7 @@ public class ByteCodeCompiler implements Visitor {
             residual[i] = ((Label)arg).getLabel();
             blockArgIndex = i;
         } else if(arg instanceof ConstantRef)
-            residual[i] = role.getConstant(((ConstantRef)arg).getName()).getValue().residualize();
+            residual[i] = source.getConstant(((ConstantRef)arg).getName()).getValue().residualize();
         else if(arg instanceof Literal)
             residual[i] = ((Literal)arg).residualize();
         else if(arg instanceof Negate) {
@@ -156,7 +158,7 @@ public class ByteCodeCompiler implements Visitor {
         if(argument instanceof Numeric)
             direction = ((Numeric)argument).getValue();
         else if(argument instanceof ConstantRef)
-            direction = ((Numeric)role.getConstant(((ConstantRef)argument).getName()).getValue()).getValue();
+            direction = ((Numeric)source.getConstant(((ConstantRef)argument).getName()).getValue()).getValue();
         else if(argument instanceof Negate)
             direction = -arg2dir(((Negate)argument).getExp(),operation);
         else throw new Error("Unknown argument type to "+operation+":"+argument);
@@ -213,7 +215,7 @@ public class ByteCodeCompiler implements Visitor {
     public Literal literalize(Exp expression) {
         if(expression instanceof Literal) return (Literal)expression;
         if(expression instanceof ConstantRef) {
-            ConstantDef def = role.getConstant(((ConstantRef)expression).getName());
+            ConstantDef def = source.getConstant(((ConstantRef)expression).getName());
             return def.getValue();
         }
         throw new Error("Unable to handle expression type:"+expression);
@@ -228,7 +230,7 @@ public class ByteCodeCompiler implements Visitor {
     }
 
     public void visitSendCommand(SendCommand command) {
-        int methodIndex = vtableResolver.getMethodIndex(command.getRole(), command.getMethod())+128;
+        int methodIndex = resolver.getMethodIndex(command.getRole(), command.getMethod())+Resolver.METHOD_OFFSET;
         result.add(new ByteCode("INS_SEND_COMMAND",4,new String[] { "ROLE_"+command.getRole(), Integer.toString(methodIndex), command.getArgument().residualize() }));
     }
 
@@ -242,7 +244,7 @@ public class ByteCodeCompiler implements Visitor {
         result.add(new ByteCode("INS_SET_ROLE_NOTIFY",2,new String[] { "ROLE_"+assume.getRole() }));
         for(Statement statement: assume.getBehavior().getStatements())
             statement.visit(this);
-        result.add(new ByteCode("INS_SET_ROLE_NOTIFY",2,new String[] { "ROLE_"+role.getName().getName() }));
+        result.add(new ByteCode("INS_SET_ROLE_NOTIFY",2,new String[] { "ROLE_"+source.getName().getName() }));
     }
 
     public void visitUnaryExp(UnaryExp exp) {
@@ -271,6 +273,14 @@ public class ByteCodeCompiler implements Visitor {
 
     public void visitPrimName(PrimName primName) {
         result.add(ByteCode.INS_PUSHC(primName.getName()));
+    }
+
+    public void visitLocalName(LocalName localName) {
+        result.add(ByteCode.INS_PUSH_ARGUMENT(0));
+    }
+
+    public void visitGlobalName(GlobalName name) {
+        result.add(ByteCode.INS_PUSHC(new Integer(resolver.getGlobalIndex(name.getName())).toString()));
     }
 
 

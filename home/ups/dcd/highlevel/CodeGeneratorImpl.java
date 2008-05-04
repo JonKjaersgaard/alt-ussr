@@ -51,9 +51,9 @@ public abstract class CodeGeneratorImpl {
         return new Block(statements);
     }
     
-    protected Block installize(GlobalSource role, Method method, boolean isBehavior) {
+    protected Block installize(GlobalSource role, MethodSpec method, boolean isBehavior) {
         List<Statement> statements = new ArrayList<Statement>();
-        int index = resolver.getMethodIndex(role.getName().getName(), method.getName().getName())+128;
+        int index = resolver.getMethodIndex(role.getName().getName(), method.getName().getName())+Resolver.METHOD_OFFSET;
         statements.add(PrimOp.INSTALL_COMMAND(role.getName(),index,method.getBody(),isBehavior));
         if(isBehavior) {
             statements.add(PrimOp.EVAL_COMMAND(index,new Numeric(0)));

@@ -16,10 +16,13 @@ import dcd.highlevel.ByteCode;
 import dcd.highlevel.ByteCodeCompiler;
 import dcd.highlevel.ByteCodeSequence;
 import dcd.highlevel.CodeGeneratorImpl;
+import dcd.highlevel.GlobalSource;
 import dcd.highlevel.IName;
+import dcd.highlevel.InvariantSource;
 import dcd.highlevel.OutputBuilder;
 import dcd.highlevel.Resolver;
 import dcd.highlevel.ast.Block;
+import dcd.highlevel.ast.ConstantDef;
 import dcd.highlevel.ast.Invariant;
 import dcd.highlevel.ast.Method;
 import dcd.highlevel.ast.Modifier;
@@ -78,10 +81,42 @@ public class FAPLCodeGenerator extends CodeGeneratorImpl {
     }
 
     private ByteCodeSequence generateFunctionCodeBlock(OutputBuilder output, Function function) {
-        Block source = new Block(new Statement[] { new SingleExp(function.getBody()) });
+        Block source = function.getBody();
+        SourceAdapter adapter = new SourceAdapter(function);
+        source = super.installize(adapter, function, false);
+        source = super.mobilize(adapter, source);
         // installize source
         ByteCodeSequence compiled = new ByteCodeCompiler(program,resolver).compileCodeBlock(source);
         return compiled;
     }
 
+    class SourceAdapter implements GlobalSource {
+
+        private Function function;
+        
+        public SourceAdapter(Function function) {
+            this.function = function;
+        }
+
+        public ConstantDef getConstant(IName name) {
+            // TODO Auto-generated method stub
+            // return null;
+            throw new Error("Method not implemented");
+        }
+
+        public List<? extends InvariantSource> getInvariants() {
+            // TODO Auto-generated method stub
+            // return null;
+            throw new Error("Method not implemented");
+        }
+
+        public IName getName() {
+            return new Name(function.getRole());
+        }
+
+        public boolean hasModifier(Modifier modifier) {
+            return false;
+        }
+        
+    }
 }
