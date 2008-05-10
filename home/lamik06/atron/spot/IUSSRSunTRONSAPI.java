@@ -8,7 +8,7 @@ import ussr.samples.atron.*;
  * @author lamik06@student.sdu.dk
  *
  */
-public interface IUSSRSunTRONSAPI extends ISunTRONAPI  {
+public interface IUSSRSunTRONSAPI extends ISunTRONAPI1  {
 	public List<Sensor> getSensors();
 	
 }

@@ -4,7 +4,7 @@ import atron.futures.ATRONFutures;
 import atron.futures.ATRONFuturesConnectors;
 import ussr.samples.atron.ATRONController;
 
-public abstract class SunTronController extends ATRONController implements ISunTRONAPI {
+public abstract class SunTronController extends ATRONController implements ISunTRONAPI1 {
 	private static final byte LOCALMESSAGE = 0;
 	private static final byte ROUTINGMESSAGE = 1;
 	private static final byte REMOTEACTION = 2;

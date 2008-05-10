@@ -11,7 +11,7 @@ import ussr.samples.atron.IATRONAPI;
  * @author lamik06@student.sdu.dk
  *
  */
-public interface ISunTRONAPI extends IATRONAPI{
+public interface ISunTRONAPI1 extends IATRONAPI{
 	public byte sendRadioMessage(byte[] message, int destination);
 	public void sleep(long delay);
 	public void activate();
