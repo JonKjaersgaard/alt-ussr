@@ -1,6 +1,7 @@
 package atron.spot;
 
 import atron.futures.ATRONFutures;
+import atron.futures.ATRONFuturesConnectors;
 import ussr.samples.atron.IATRONAPI;
 
 
@@ -19,4 +20,7 @@ public interface ISunTRONAPI extends IATRONAPI{
 	public void removeActiveFuturesTable(String tmpKey);
 	public boolean activeFutures();
 	public void waitForAllActiveFutures();
+	
+	public ATRONFuturesConnectors extendConnector(int connectNo);
+	public void retractConnector(int connectNo);
 }

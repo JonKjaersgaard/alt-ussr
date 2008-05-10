@@ -3,8 +3,9 @@ package atron.futures;
 public interface IATRONFutures {
 
 	public void waitForCompletion();
-	public void onCompletion(ICommand command);
-	public void setTimeOut(int timeInSec);
+	public boolean isCompleted();
+	public void onCompletion(IFutureActions command);
+	public void setTimeOutMiliSec(long timeInMiliSec);
 	public String getKey();
 	
 }

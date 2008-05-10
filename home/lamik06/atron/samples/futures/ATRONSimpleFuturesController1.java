@@ -12,7 +12,7 @@ import atron.delegate.ATRONDelegateAPI;
 import atron.futures.ATRONFutures;
 import atron.futures.ATRONFuturesConnectors;
 import atron.futures.ATRONFuturesCenterMotor;
-import atron.futures.ICommand;
+import atron.futures.FutureAction;
 import ussr.model.Module;
 import ussr.samples.atron.ATRONController;
 

@@ -4,6 +4,7 @@ import atron.spot.ISunTRONAPI;
 
 public class ATRONFuturesConnectors extends ATRONFutures{
 	int connectorNo;
+	int i = 0;
 	public ATRONFuturesConnectors(int i,ISunTRONAPI atronDelegateAPI) {
 		this.atronAPI = atronDelegateAPI;
 		connectorNo = i;
@@ -11,12 +12,13 @@ public class ATRONFuturesConnectors extends ATRONFutures{
 
 
 
-	public void waitForCompletion() {
+	public boolean isCompleted() {
+		boolean state = false;
 		// TODO Auto-generated method stub
-		for(int i = 0; i < 100; i++){
-			atronAPI.yield();
-			System.out.println("Connector " + i);
-		}
+		if(i > 100) state  = true; 
+		i++;
+		
+		return state;
 		
 	}
 

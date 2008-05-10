@@ -6,28 +6,52 @@ import atron.spot.ISunTRONAPI;
 
 public abstract class ATRONFutures extends Thread implements IATRONFutures{
 	Thread threadFuture;
-	ICommand command;
+	IFutureActions futureAction;
+	long futureStartTime;
+	long timeOutInMiliSec = 5;//30000; //Default 30 sec. Disable 0 sec. 
 	protected ISunTRONAPI atronAPI;
 	
-	public void setTimeOut(int timeInSec){}
-	abstract public void waitForCompletion();
 	
-	public void onCompletion(ICommand command) {
-		this.command = command;
+	public void setTimeOutMiliSec(long timeInMiliSec){
+		this.timeOutInMiliSec = timeInMiliSec;
+	}
+	public void waitForCompletion() {
+		while(!isCompleted()){
+			yield();
+		}
+		atronAPI.removeActiveFuturesTable(getKey());
+	}
+	
+	
+	public abstract boolean isCompleted();
+	
+	public void onCompletion(IFutureActions futureAction) {
+		this.futureAction = futureAction;
+		futureStartTime = System.currentTimeMillis();
 		start();
 	}
 	public void  run() {
-		waitForCompletion();
-		command.execute();
+		while(true){
+			long tmpTime = System.currentTimeMillis();
+			if(isCompleted()){
+				futureAction.execute();
+				break;
+			}
+			if(tmpTime-futureStartTime > timeOutInMiliSec
+					&& timeOutInMiliSec != 0){ // Disable timeOut
+				futureAction.timeOutHandler();
+				break;
+			}
+			yield();
+		}
+		atronAPI.removeActiveFuturesTable(getKey());
+		
 	}
 	/*
-	 * Test of wait() for multiple futures
+	 * Example on a wait() for multiple futures
+	 * onCompletion() have to be invoked
 	 */
 	public static void wait(ATRONFutures f,ATRONFutures f1){
-		f.onCompletion(new ICommand(){public void execute(){}}); 
-		f1.onCompletion(new ICommand(){public void execute(){}});
-//		while (f.getState() != Thread.State.TERMINATED || f1.getState() != Thread.State.TERMINATED){
-//		}
 		while (f.isAlive() || f1.isAlive()){
 			yield();
 		}

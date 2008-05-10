@@ -10,6 +10,7 @@ import java.io.*;
 import java.util.List;
 
 import atron.futures.ATRONFutures;
+import atron.futures.ATRONFuturesConnectors;
 
 //import org.lwjgl.util.Color;
 
@@ -260,6 +261,17 @@ public class ATRONCarUSSRControllerRemoteControl extends ATRONSPOTController {
 				}
 			}
 		}
+	}
+	@Override
+	public ATRONFuturesConnectors extendConnector(int connectNo) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void retractConnector(int connectNo) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

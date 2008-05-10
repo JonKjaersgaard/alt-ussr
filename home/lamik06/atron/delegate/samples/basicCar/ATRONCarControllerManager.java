@@ -9,6 +9,7 @@ import java.util.List;
 
 import atron.delegate.ATRONDelegateAPI;
 import atron.futures.ATRONFutures;
+import atron.futures.ATRONFuturesConnectors;
 import atron.spot.ATRONSPOTController;
 import atron.spot.IUSSRSunTRONSAPI;
 import ussr.samples.GenericSimulation;
@@ -50,6 +51,17 @@ public class ATRONCarControllerManager extends ATRONSPOTController {
         	yield();
         }
     }
+	@Override
+	public ATRONFuturesConnectors extendConnector(int connectNo) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void retractConnector(int connectNo) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 

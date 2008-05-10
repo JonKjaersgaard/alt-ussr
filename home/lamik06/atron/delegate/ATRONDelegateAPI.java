@@ -76,4 +76,17 @@ public class ATRONDelegateAPI extends ATRONController implements ISunTRONAPI{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public ATRONFuturesConnectors extendConnector(int connectNo) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void retractConnector(int connectNo) {
+		// TODO Auto-generated method stub
+		
+	}
 }
