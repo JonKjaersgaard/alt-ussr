@@ -1,6 +1,6 @@
 package atron.futures;
 
-public class ATRONFuturesLocalCom extends ATRONFutures {
+public class FutureIR extends Future {
 
 	
 

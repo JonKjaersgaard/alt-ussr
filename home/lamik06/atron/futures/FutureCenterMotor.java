@@ -1,11 +1,11 @@
 package atron.futures;
 
-import atron.spot.ISunTRONAPI;
+import atron.spot.ISunTronAPI;
 
-public class ATRONFuturesCenterMotor extends ATRONFutures {
+public class FutureCenterMotor extends Future {
 	int target;
 
-	public ATRONFuturesCenterMotor(int target,ISunTRONAPI atronDelegateAPI) {
+	public FutureCenterMotor(int target,ISunTronAPI atronDelegateAPI) {
 		this.atronAPI = atronDelegateAPI;
 		this.target = target;// TODO Auto-generated constructor stub
 	}

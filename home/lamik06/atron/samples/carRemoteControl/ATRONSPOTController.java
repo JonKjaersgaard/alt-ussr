@@ -3,7 +3,7 @@ package atron.samples.carRemoteControl;
 
 import java.util.List;
 
-import atron.futures.ATRONFutures;
+import atron.futures.Future;
 import atron.spot.IUSSRSunTRONSAPI;
 
 
@@ -27,7 +27,7 @@ public abstract class ATRONSPOTController extends ATRONController implements IUS
 		return false;
 	}
 	@Override
-	public void addActiveFuturesTable(String tmpKey, ATRONFutures f) {
+	public void addActiveFuturesTable(String tmpKey, Future f) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -7,10 +7,10 @@
 package atron.samples.futures;
 
 import atron.delegate.ATRONDelegateAPI;
-import atron.futures.ATRONFutures;
-import atron.futures.ATRONFuturesCenterMotor;
+import atron.futures.Future;
+import atron.futures.FutureCenterMotor;
 import atron.futures.FutureAction;
-import atron.spot.SunTronController;
+import atron.spot.SunTronAPIImpl;
 import ussr.model.Module;
 import ussr.physics.PhysicsLogger;
 import ussr.samples.atron.ATRONController;
@@ -21,7 +21,7 @@ import ussr.samples.atron.ATRONController;
  * @author Modular Robots @ MMMI
  *
  */
-public class ATRONSimpleFuturesController extends SunTronController {
+public class ATRONSimpleFuturesController extends SunTronAPIImpl {
 	
 	private static final byte EXTENDCONNECTOR = 1;
 	private static final byte CONNECTOR = 0;
@@ -39,7 +39,7 @@ public class ATRONSimpleFuturesController extends SunTronController {
         	System.out.println("Simple Futures demo");
         	ATRONDelegateAPI atronDelegateAPI = new ATRONDelegateAPI(module);
         	System.out.println("Start pos. =" + atronDelegateAPI.getAngularPositionDegrees());
-            ATRONFuturesCenterMotor f = atronDelegateAPI.rotateToDegreeInDegreesFutures(90);
+            FutureCenterMotor f = atronDelegateAPI.rotateToDegreeInDegreesFutures(90);
 
             // onCompletion test
             f.setTimeOutMiliSec(0);

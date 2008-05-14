@@ -9,9 +9,9 @@ package atron.samples.futures;
 import java.awt.Color;
 
 import atron.delegate.ATRONDelegateAPI;
-import atron.futures.ATRONFutures;
-import atron.futures.ATRONFuturesConnectors;
-import atron.futures.ATRONFuturesCenterMotor;
+import atron.futures.Future;
+import atron.futures.FuturesExtend;
+import atron.futures.FutureCenterMotor;
 import atron.futures.FutureAction;
 import ussr.model.Module;
 import ussr.samples.atron.ATRONController;
@@ -33,10 +33,10 @@ public class ATRONSimpleFuturesController1 extends ATRONController {
         	System.out.println("test");
         	ATRONDelegateAPI atronDelegateAPI = new ATRONDelegateAPI(module);
         	System.out.println("Start pos. =" + atronDelegateAPI.getAngularPositionDegrees());
-            ATRONFuturesCenterMotor f = atronDelegateAPI.rotateToDegreeInDegreesFutures(90);
-            ATRONFuturesConnectors f1 = atronDelegateAPI.connectFuture(1);
+            FutureCenterMotor f = atronDelegateAPI.rotateToDegreeInDegreesFutures(90);
+            FuturesExtend f1 = atronDelegateAPI.connectFuture(1);
             System.out.println("f + f1 running");
-            ATRONFutures.wait(f1, f);
+            Future.wait(f1, f);
             System.out.println("f + f1 completed");
  
             // Demo count

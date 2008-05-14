@@ -1,11 +1,11 @@
 package atron.futures;
 
-import atron.spot.ISunTRONAPI;
+import atron.spot.ISunTronAPI;
 
-public class ATRONFuturesConnectors extends ATRONFutures{
+public class FutureRetract extends Future{
 	int connectorNo;
 	int i = 0;
-	public ATRONFuturesConnectors(int i,ISunTRONAPI atronDelegateAPI) {
+	public FutureRetract(int i,ISunTronAPI atronDelegateAPI) {
 		this.atronAPI = atronDelegateAPI;
 		connectorNo = i;
 	}

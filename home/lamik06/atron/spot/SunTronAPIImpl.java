@@ -1,10 +1,10 @@
 package atron.spot;
 
-import atron.futures.ATRONFutures;
-import atron.futures.ATRONFuturesConnectors;
+import atron.futures.Future;
+import atron.futures.FuturesExtend;
 import ussr.samples.atron.ATRONController;
 
-public abstract class SunTronController extends ATRONController implements ISunTRONAPI1 {
+public abstract class SunTronAPIImpl extends ATRONController implements ISunTronAPI {
 	private static final byte LOCALMESSAGE = 0;
 	private static final byte ROUTINGMESSAGE = 1;
 	private static final byte REMOTEACTION = 2;
@@ -13,7 +13,7 @@ public abstract class SunTronController extends ATRONController implements ISunT
 	
 
 	/*
-	 * IR - filter
+	 * Filter for IR communication
 	 * @see ussr.samples.atron.ATRONController#handleMessage(byte[], int, int)
 	 */
 	public void handleMessage(byte[] message, int messageSize, int channel) {
@@ -29,7 +29,7 @@ public abstract class SunTronController extends ATRONController implements ISunT
 			break;
 		
 		case CONNECTOR:
-			handleConnector(message, messageSize, channel);
+			handleConnectorRequest(message, messageSize, channel);
 			break;
 			
 		default:
@@ -40,7 +40,7 @@ public abstract class SunTronController extends ATRONController implements ISunT
 
 
 
-	private void handleConnector(byte[] message2, int messageSize, int channel) {
+	private void handleConnectorRequest(byte[] message2, int messageSize, int channel) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -68,7 +68,7 @@ public abstract class SunTronController extends ATRONController implements ISunT
 		// TODO Auto-generated method stub
 		
 	}
-	public ATRONFutures retractConnector(byte b) {
+	public Future retractConnector(byte b) {
 		return null;
 		// TODO Auto-generated method stub
 		
@@ -80,14 +80,14 @@ public abstract class SunTronController extends ATRONController implements ISunT
 		return false;
 	}
 	@Override
-	public void addActiveFuturesTable(String tmpKey, ATRONFutures f) {
+	public void addActiveFuturesTable(String tmpKey, Future f) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public ATRONFuturesConnectors extendConnector(int connectNo) {
+	public FuturesExtend extendConnector(int connectNo) {
 		// TODO Auto-generated method stub
-		ATRONFuturesConnectors f = new ATRONFuturesConnectors(connectNo,this);
+		FuturesExtend f = new FuturesExtend(connectNo,this);
 		return f;
 	}
 	@Override
@@ -114,5 +114,11 @@ public abstract class SunTronController extends ATRONController implements ISunT
 	public void waitForAllActiveFutures() {
 		// TODO Auto-generated method stub
 		
+	}
+	public FuturesExtend connectFuture(int i) {
+		FuturesExtend f = new FuturesExtend(i,(ISunTronAPI)this);
+		addActiveFuturesTable(f.getKey(),(Future)f);
+		super.connect(i);
+		return f;
 	}
 }

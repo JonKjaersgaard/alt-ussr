@@ -1,6 +1,6 @@
 package atron.futures;
 
-public interface IATRONFutures {
+public interface IFutures {
 
 	public void waitForCompletion();
 	public boolean isCompleted();

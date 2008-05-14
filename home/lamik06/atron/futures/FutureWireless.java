@@ -1,6 +1,6 @@
 package atron.futures;
 
-public class ATRONFuturesGlobalCom extends ATRONFutures {
+public class FutureWireless extends Future {
 
 	
 

@@ -9,8 +9,8 @@ import ussr.samples.GenericSimulation;
 import java.io.*;
 import java.util.List;
 
-import atron.futures.ATRONFutures;
-import atron.futures.ATRONFuturesConnectors;
+import atron.futures.Future;
+import atron.futures.FuturesExtend;
 
 //import org.lwjgl.util.Color;
 
@@ -263,7 +263,7 @@ public class ATRONCarUSSRControllerRemoteControl extends ATRONSPOTController {
 		}
 	}
 	@Override
-	public ATRONFuturesConnectors extendConnector(int connectNo) {
+	public FuturesExtend extendConnector(int connectNo) {
 		return null;
 		// TODO Auto-generated method stub
 		

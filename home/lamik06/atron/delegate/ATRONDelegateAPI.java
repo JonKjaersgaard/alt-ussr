@@ -2,17 +2,17 @@ package atron.delegate;
 
 import java.util.List;
 
-import atron.spot.ISunTRONAPI;
+import atron.spot.ISunTronAPI;
 import atron.spot.IUSSRSunTRONSAPI;
 import ussr.model.Module;
 import ussr.model.Sensor;
 import ussr.samples.atron.ATRONController;
-import atron.futures.ATRONFutures;
-import atron.futures.ATRONFuturesConnectors;
-import atron.futures.ATRONFuturesCenterMotor;
+import atron.futures.Future;
+import atron.futures.FuturesExtend;
+import atron.futures.FutureCenterMotor;
 
 
-public class ATRONDelegateAPI extends ATRONController implements ISunTRONAPI{
+public class ATRONDelegateAPI extends ATRONController implements ISunTronAPI{
 
 	public ATRONDelegateAPI(Module module){
 		setModule(module);
@@ -33,14 +33,14 @@ public class ATRONDelegateAPI extends ATRONController implements ISunTRONAPI{
 		// TODO Auto-generated method stub
 		return module.getSensors();
 	}
-	public ATRONFuturesConnectors connectFuture(int i) {
-		ATRONFuturesConnectors f = new ATRONFuturesConnectors(i, this);
+	public FuturesExtend connectFuture(int i) {
+		FuturesExtend f = new FuturesExtend(i, this);
 		super.connect(i);
 		return f;
 		
 	}
-	public ATRONFuturesCenterMotor rotateToDegreeInDegreesFutures(int i) {
-		ATRONFuturesCenterMotor f = new ATRONFuturesCenterMotor(i, this);
+	public FutureCenterMotor rotateToDegreeInDegreesFutures(int i) {
+		FutureCenterMotor f = new FutureCenterMotor(i, this);
 		setBlocking(false);
 		rotateToDegreeInDegrees(i);
 		return f;
@@ -54,7 +54,7 @@ public class ATRONDelegateAPI extends ATRONController implements ISunTRONAPI{
 	}
 
 	@Override
-	public void addActiveFuturesTable(String tmpKey, ATRONFutures f) {
+	public void addActiveFuturesTable(String tmpKey, Future f) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -78,7 +78,7 @@ public class ATRONDelegateAPI extends ATRONController implements ISunTRONAPI{
 	}
 
 	@Override
-	public ATRONFuturesConnectors extendConnector(int connectNo) {
+	public FuturesExtend extendConnector(int connectNo) {
 		return null;
 		// TODO Auto-generated method stub
 		

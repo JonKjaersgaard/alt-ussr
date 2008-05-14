@@ -8,8 +8,8 @@ package atron.delegate.samples.basicCar;
 import java.util.List;
 
 import atron.delegate.ATRONDelegateAPI;
-import atron.futures.ATRONFutures;
-import atron.futures.ATRONFuturesConnectors;
+import atron.futures.Future;
+import atron.futures.FuturesExtend;
 import atron.spot.ATRONSPOTController;
 import atron.spot.IUSSRSunTRONSAPI;
 import ussr.samples.GenericSimulation;
@@ -52,7 +52,7 @@ public class ATRONCarControllerManager extends ATRONSPOTController {
         }
     }
 	@Override
-	public ATRONFuturesConnectors extendConnector(int connectNo) {
+	public FuturesExtend extendConnector(int connectNo) {
 		return null;
 		// TODO Auto-generated method stub
 		
