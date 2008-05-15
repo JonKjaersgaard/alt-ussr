@@ -21,8 +21,8 @@ public interface ISunTronAPI {
 	public boolean activeFutures();
 	public void waitForAllActiveFutures();
 	
-	public FutureExtend extendConnector(int connectNo);
-	public void retractConnector(int connectNo);
+	public Future extendConnector(int connectNo);
+	public Future retractConnector(int connectNo);
 	
 	
 
@@ -144,7 +144,7 @@ public interface ISunTronAPI {
 	 * it is possible to connect) 
 	 * @param connector the connector to connect
 	 */
-	public FutureExtend connect(int connector);
+	public Future connect(int connector);
 
 	/**
 	 * Attempt to disconnect this connector, will work if the connector 

@@ -271,7 +271,8 @@ public class ATRONCarUSSRControllerRemoteControl extends SunTronAPIImpl {
 		
 	}
 	@Override
-	public void retractConnector(int connectNo) {
+	public Future retractConnector(int connectNo) {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}

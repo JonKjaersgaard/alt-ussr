@@ -72,7 +72,8 @@ public class SunTronDelegateAPIImpl implements ISunTronAPI{
 
 
 	@Override
-	public void retractConnector(int connectNo) {
+	public Future retractConnector(int connectNo) {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}
