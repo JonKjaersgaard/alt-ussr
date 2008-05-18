@@ -10,9 +10,9 @@ import ussr.model.Sensor;
 import ussr.samples.atron.ATRONController;
 
 
-public class SunTronDelegateAPIImpl implements ISunTronAPI{
+public class SunTronDelegateAPI implements ISunTronAPI{
 
-	SunTronAPIImpl sunTronAPIImpl = new SunTronAPIImpl();
+	SunTronAPI sunTronAPIImpl = new SunTronAPI();
 	public void activate() {
 		// TODO Auto-generated method stub
 		

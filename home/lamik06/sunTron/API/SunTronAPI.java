@@ -2,16 +2,21 @@ package sunTron.API;
 
 import sunTron.futures.Future;
 import sunTron.futures.FutureExtend;
+import ussr.model.ControllerImpl;
+import ussr.model.Module;
 
-
-public class SunTronAPIImpl implements ISunTronAPI {
+public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 	private static final byte LOCALMESSAGE = 0;
 	private static final byte ROUTINGMESSAGE = 1;
 	private static final byte REMOTEACTION = 2;
 	private static final byte CONNECTOR = 3;
 	
-	public ATRONAPIImpl atronAPIImpl = new ATRONAPIImpl();
-
+	public ATRONControllerImpl atronAPIImpl = new ATRONControllerImpl();
+	
+//	SunTronAPIImpl(){
+//		atronAPIImpl.setModule(this.getModule());
+//	}
+	
 	/*
 	 * Filter for IR communication
 	 * @see ussr.samples.atron.ATRONController#handleMessage(byte[], int, int)
@@ -21,6 +26,11 @@ public class SunTronAPIImpl implements ISunTronAPI {
 		case LOCALMESSAGE:
 			handleLocalMessage(message, messageSize, channel);			
 			break;
+		case CONNECTOR:
+			handleConnectorRequest(message, messageSize, channel);
+			break;
+			
+			
 		case ROUTINGMESSAGE:
 			handleRoutingMessage(message, messageSize, channel);
 			break;
@@ -28,9 +38,7 @@ public class SunTronAPIImpl implements ISunTronAPI {
 			handleRemoteAction(message, messageSize, channel);			
 			break;
 		
-		case CONNECTOR:
-			handleConnectorRequest(message, messageSize, channel);
-			break;
+
 			
 		default:
 			System.out.println("Error: handleMessage() -> message type not supported ");
@@ -184,8 +192,10 @@ public class SunTronAPIImpl implements ISunTronAPI {
 
 	@Override
 	public void disconnect(int connector) {
-		// TODO Auto-generated method stub
-		
+		if (atronAPIImpl.getModule()!=getModule()){
+			atronAPIImpl.setModule(this.getModule());
+		}
+		atronAPIImpl.disconnect(connector);
 	}
 
 
@@ -226,8 +236,8 @@ public class SunTronAPIImpl implements ISunTronAPI {
 	public String getName() {
 		// TODO Auto-generated method stub
 		
-		if(atronAPIImpl.getModule().getProperty("name")==null) atronAPIImpl.getModule().waitForPropertyToExist("name");
-		return null;
+//		if(getModule().getProperty("name")==null) getModule().waitForPropertyToExist("name");
+		return getModule().getProperty("name");
 	}
 
 
@@ -274,8 +284,10 @@ public class SunTronAPIImpl implements ISunTronAPI {
 
 	@Override
 	public boolean isConnected(int connector) {
-		// TODO Auto-generated method stub
-		return false;
+		if (atronAPIImpl.getModule()!=getModule()){
+			atronAPIImpl.setModule(this.getModule());
+		}
+		return atronAPIImpl.isConnected(connector);
 	}
 
 
@@ -330,8 +342,10 @@ public class SunTronAPIImpl implements ISunTronAPI {
 
 	@Override
 	public void rotateContinuous(float dir) {
-		// TODO Auto-generated method stub
-		
+		if (atronAPIImpl.getModule()!=getModule()){
+			atronAPIImpl.setModule(this.getModule());
+		}
+		atronAPIImpl.rotateContinuous(dir);
 	}
 
 
@@ -384,9 +398,9 @@ public class SunTronAPIImpl implements ISunTronAPI {
 
 
 
-	@Override
-	public void yield() {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void yield() {
+//		// TODO Auto-generated method stub
+//		yield();
+//	}
 }

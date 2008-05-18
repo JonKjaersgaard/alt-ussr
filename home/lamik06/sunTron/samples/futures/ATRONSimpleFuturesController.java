@@ -6,8 +6,8 @@
  */
 package sunTron.samples.futures;
 
-import sunTron.API.SunTronAPIImpl;
-import sunTron.API.SunTronDelegateAPIImpl;
+import sunTron.API.SunTronAPI;
+import sunTron.API.SunTronDelegateAPI;
 import sunTron.futures.Future;
 import sunTron.futures.FutureAction;
 import sunTron.futures.FutureCenterMotor;
@@ -21,7 +21,7 @@ import ussr.samples.atron.ATRONController;
  * @author Modular Robots @ MMMI
  *
  */
-public class ATRONSimpleFuturesController extends SunTronAPIImpl {
+public class ATRONSimpleFuturesController extends SunTronAPI {
 	
 	private static final byte EXTENDCONNECTOR = 1;
 	private static final byte CONNECTOR = 0;
@@ -37,7 +37,7 @@ public class ATRONSimpleFuturesController extends SunTronAPIImpl {
         String name = getName();
         if(name=="RearRightWheel"){
         	System.out.println("Simple Futures demo");
-        	SunTronDelegateAPIImpl atronDelegateAPI = new SunTronDelegateAPIImpl();
+        	SunTronDelegateAPI atronDelegateAPI = new SunTronDelegateAPI();
         	System.out.println("Start pos. =" + atronDelegateAPI.getAngularPositionDegrees());
             FutureCenterMotor f = atronDelegateAPI.rotateToDegreeInDegreesFutures(90);
 

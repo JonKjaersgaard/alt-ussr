@@ -8,8 +8,8 @@ package sunTron.samples.futures;
 
 import java.awt.Color;
 
-import sunTron.API.SunTronAPIImpl;
-import sunTron.API.SunTronDelegateAPIImpl;
+import sunTron.API.SunTronAPI;
+import sunTron.API.SunTronDelegateAPI;
 import sunTron.futures.Future;
 import sunTron.futures.FutureAction;
 import sunTron.futures.FutureCenterMotor;
@@ -23,7 +23,7 @@ import ussr.samples.atron.ATRONController;
  * @author Modular Robots @ MMMI
  *
  */
-public class ATRONSimpleFuturesController1 extends SunTronAPIImpl {
+public class ATRONSimpleFuturesController1 extends SunTronAPI {
 	
 	int i = 0;
 
@@ -32,7 +32,7 @@ public class ATRONSimpleFuturesController1 extends SunTronAPIImpl {
         String name = getName();
         if(name=="RearRightWheel"){
         	System.out.println("test");
-        	SunTronDelegateAPIImpl atronDelegateAPI = new SunTronDelegateAPIImpl();
+        	SunTronDelegateAPI atronDelegateAPI = new SunTronDelegateAPI();
         	System.out.println("Start pos. =" + atronDelegateAPI.getAngularPositionDegrees());
             FutureCenterMotor f = atronDelegateAPI.rotateToDegreeInDegreesFutures(90);
             FutureExtend f1 = atronDelegateAPI.connect(1);

@@ -1,10 +1,10 @@
 package sunTron.samples.xmlController;
 
-import sunTron.API.SunTronDelegateAPIImpl;
+import sunTron.API.SunTronDelegateAPI;
 import ussr.model.Sensor;
 
 public class ControllerLoopXML {
-	private SunTronDelegateAPIImpl atronDelegateAPI;
+	private SunTronDelegateAPI atronDelegateAPI;
 	private int stepCounter = 0;
 	private String demoString;
 	private int dir;
@@ -37,7 +37,7 @@ public class ControllerLoopXML {
 	public String getDemoString(){
 		return demoString;
 	}
-	public void setAPI(SunTronDelegateAPIImpl atronDelegateAPI2) {
+	public void setAPI(SunTronDelegateAPI atronDelegateAPI2) {
 		// TODO Auto-generated method stub
 		atronDelegateAPI = atronDelegateAPI2;
 	}
