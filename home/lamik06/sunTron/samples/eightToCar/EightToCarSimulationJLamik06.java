@@ -86,6 +86,8 @@ public class EightToCarSimulationJLamik06 extends GenericATRONSimulation {
         int retries = 0;
 		private boolean messageSend0;
 		private boolean messageSend2;
+		private byte HEADER = 99;
+
 
         private void sendMessage(int[] message, int size, int channel) {
             if(VERIFY_OPERATIONS && !this.isConnected(channel)) { 
@@ -609,19 +611,17 @@ public class EightToCarSimulationJLamik06 extends GenericATRONSimulation {
 case 65:
     disconnect_module(0,5);
     disconnect_module(2,2);
-    testMessage[0]=0;
-    testMessage[1]=98;
-    testMessage[2]=99;
+    testMessage= new byte[]{(byte)10,(byte)11,HEADER};
     while (!isDisconnected(0) || !isDisconnected(2)){
 		if(!isDisconnected(0) && !messageSend0){
     		messageSend0 = true;
 			super.sendMessage(testMessage,(byte) testMessage.length, (byte) 0);
-			System.out.println("Test debugging message send on IR-port 0");
+//			System.out.println("Test debugging message send on IR-port 0");
 		}
 		if(!isDisconnected(2) && !messageSend2){
     		messageSend2 = true;
 			super.sendMessage(testMessage, (byte) testMessage.length, (byte) 2);
-			System.out.println("Test debugging message send on IR-port 2");
+//			System.out.println("Test debugging message send on IR-port 2");
     	}
     	super.yield();
     }

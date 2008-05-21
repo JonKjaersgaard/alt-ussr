@@ -6,7 +6,7 @@ public class FutureExtend extends Future{
 	int connectorNo;
 	int i = 0;
 	public FutureExtend(int i,ISunTronAPI atronDelegateAPI) {
-		this.atronAPI = atronDelegateAPI;
+		this.sunTronAPI = atronDelegateAPI;
 		connectorNo = i;
 	}
 
@@ -28,6 +28,9 @@ public class FutureExtend extends Future{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
 
 
 

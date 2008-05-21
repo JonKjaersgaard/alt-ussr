@@ -21,13 +21,17 @@ public interface ISunTronAPI {
 	public boolean activeFutures();
 	public void waitForAllActiveFutures();
 	
-	public Future extendConnector(int connectNo);
-	public Future retractConnector(int connectNo);
+	public Future extend(int connectNo);
+	public Future retract(int connectNo);
+	public Future rotateTo(int targetInDegrees);
+	public void addDebugInfo(String debugInfo);
+	public String getDebugInfo();
 	
 	
 
     /**
-     * Move the main joint to the initial position (zero degrees)
+     * Move the main joint to the initial
+     *  position (zero degrees)
      */
     public void home();
 
@@ -79,7 +83,7 @@ public interface ISunTronAPI {
 	 * Rotate the main joint to a specific degree position
 	 * @param degrees the position in degrees to which to rotate
 	 */
-	public void rotateToDegreeInDegrees(int degrees);
+	public Future rotateToDegreeInDegrees(int degrees);
 
 	/**
 	 * Rotate the main jount to a specific radian position

@@ -3,11 +3,10 @@ package sunTron.API;
 import java.util.List;
 
 import sunTron.futures.Future;
-import sunTron.futures.FutureCenterMotor;
+import sunTron.futures.FutureRotate;
 import sunTron.futures.FutureExtend;
-import ussr.model.Module;
 import ussr.model.Sensor;
-import ussr.samples.atron.ATRONController;
+
 
 
 public class SunTronDelegateAPI implements ISunTronAPI{
@@ -31,8 +30,8 @@ public class SunTronDelegateAPI implements ISunTronAPI{
 		return sunTronAPIImpl.connectFuture(i);
 		
 	}
-	public FutureCenterMotor rotateToDegreeInDegreesFutures(int i) {
-		FutureCenterMotor f = new FutureCenterMotor(i, this);
+	public FutureRotate rotateToDegreeInDegreesFutures(int i) {
+		FutureRotate f = new FutureRotate(i, this);
 		setBlocking(false);
 		rotateToDegreeInDegrees(i);
 		return f;
@@ -72,14 +71,14 @@ public class SunTronDelegateAPI implements ISunTronAPI{
 
 
 	@Override
-	public Future retractConnector(int connectNo) {
+	public Future retract(int connectNo) {
 		return null;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public FutureExtend extendConnector(int connectNo) {
+	public FutureExtend extend(int connectNo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -254,8 +253,8 @@ public class SunTronDelegateAPI implements ISunTronAPI{
 	}
 
 	@Override
-	public void rotateToDegreeInDegrees(int degrees) {
-		// TODO Auto-generated method stub
+	public Future rotateToDegreeInDegrees(int degrees) {
+		return sunTronAPIImpl.rotateToDegreeInDegrees(degrees);
 		
 	}
 
@@ -281,5 +280,25 @@ public class SunTronDelegateAPI implements ISunTronAPI{
 	public void yield() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Future rotateTo(int targetInDegrees) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public void addDebugInfo(String debugInfo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getDebugInfo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

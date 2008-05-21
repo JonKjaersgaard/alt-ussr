@@ -4,33 +4,45 @@ import sunTron.API.ISunTronAPI;
 
 
 
-public abstract class Future extends Thread implements IFutures{
+public abstract class Future extends Thread implements IFuture{
 	Thread threadFuture;
-	IFutureActions futureAction;
+	IFutureAction futureAction;
 	long futureStartTime;
 	/*
 	 * Future timeout:
 	 * Default = 30 sec. 
 	 * Disable when set to 0 sec.
 	 */
-	long timeOutInMiliSec = 30000; 
-	protected ISunTronAPI atronAPI;
+	long timeoutInMiliSec = 30000; 
+	protected ISunTronAPI sunTronAPI;
 	
 	
-	public void setTimeOutMiliSec(long timeInMiliSec){
-		this.timeOutInMiliSec = timeInMiliSec;
+	public void setTimeoutMiliSec(long timeInMiliSec){
+		this.timeoutInMiliSec = timeInMiliSec;
 	}
-	public void waitForCompletion() {
+	public void block() {
 		while(!isCompleted()){
 			yield();
 		}
-		atronAPI.removeActiveFuturesTable(getKey());
+		sunTronAPI.removeActiveFuturesTable(getKey());
 	}
 	
-	public void onCompletion(IFutureActions futureAction) {
+	public void waitFor(Future f) {
+		while(f.isAlive()){
+			yield();
+		}
+
+	}
+	
+	
+	public void onCompletion(FutureAction futureAction) {
 		this.futureAction = futureAction;
 		futureStartTime = System.currentTimeMillis();
 		start();
+	}
+	public void onCompletion(FutureAction futureAction, long timeInMiliSec) {
+		setTimeoutMiliSec(timeInMiliSec);
+		onCompletion(futureAction);
 	}
 	public void  run() {
 		while(true){
@@ -39,21 +51,21 @@ public abstract class Future extends Thread implements IFutures{
 				futureAction.execute();
 				break;
 			}
-			if(tmpTime-futureStartTime > timeOutInMiliSec
-					&& timeOutInMiliSec != 0){ // Disable timeOut
-				futureAction.timeOutHandler();
+			if(tmpTime-futureStartTime > timeoutInMiliSec
+					&& timeoutInMiliSec != 0){ // Disable timeOut
+				futureAction.timeout();
 				break;
 			}
 			yield();
 		}
-		atronAPI.removeActiveFuturesTable(getKey());
+		sunTronAPI.removeActiveFuturesTable(getKey());
 		
 	}
 	/*
-	 * Example on a wait() for two futures.
+	 * Example on a waitForFutures() for two futures.
 	 * onCompletion() have to be invoked before wait(f,f1)
 	 */
-	public static void wait(Future f,Future f1){
+	public static void waitForFutures(Future f,Future f1){
 		while (f.isAlive() || f1.isAlive()){
 			yield();
 		}

@@ -10,7 +10,7 @@ import sunTron.API.SunTronAPI;
 import sunTron.API.SunTronDelegateAPI;
 import sunTron.futures.Future;
 import sunTron.futures.FutureAction;
-import sunTron.futures.FutureCenterMotor;
+import sunTron.futures.FutureRotate;
 import ussr.model.Module;
 import ussr.physics.PhysicsLogger;
 import ussr.samples.atron.ATRONController;
@@ -37,12 +37,12 @@ public class ATRONSimpleFuturesController extends SunTronAPI {
         String name = getName();
         if(name=="RearRightWheel"){
         	System.out.println("Simple Futures demo");
-        	SunTronDelegateAPI atronDelegateAPI = new SunTronDelegateAPI();
-        	System.out.println("Start pos. =" + atronDelegateAPI.getAngularPositionDegrees());
-            FutureCenterMotor f = atronDelegateAPI.rotateToDegreeInDegreesFutures(90);
+//        	SunTronAPI sunTronAPI = new SunTronAPI();
+        	System.out.println("Start pos. =" + getAngularPositionDegrees());
+            Future f = rotateToDegreeInDegrees(90);
 
             // onCompletion test
-            f.setTimeOutMiliSec(0);
+//            f.setTimeOutMiliSec(0);
             f.onCompletion(new FutureAction(){
 				public void execute(){
 					System.out.println("onCompletion() -> execute() -> show this text!");
@@ -75,12 +75,12 @@ public class ATRONSimpleFuturesController extends SunTronAPI {
     	switch (message[0]) {
 		case CONNECTOR:
 			if(message[2] == EXTENDCONNECTOR){
-				extendConnector(message[1]).onCompletion(new FutureAction(){
+				extend(message[1]).onCompletion(new FutureAction(){
 					public void execute(){
 						byte[] state = {1};
 						sendMessage(state,(byte) 1,(byte) comConnector);
 					}
-					public void timeOutHandler() {
+					public void timeout() {
 						byte[] state = {-1};
 						sendMessage(state,(byte) 1,(byte) comConnector);
 					}
@@ -91,7 +91,7 @@ public class ATRONSimpleFuturesController extends SunTronAPI {
 						byte[] state = {1};
 						sendMessage(state,(byte) 1,(byte) comConnector);
 					}
-					public void timeOutHandler() {
+					public void timeout() {
 						byte[] state = {-1};
 						sendMessage(state,(byte) 1,(byte) comConnector);
 					}
@@ -100,7 +100,7 @@ public class ATRONSimpleFuturesController extends SunTronAPI {
 			break;
 		case CENTERMOTOR:
 			if(message[2] == EXTENDCONNECTOR){
-				extendConnector(message[1]);
+				extend(message[1]);
 			}else{
 				retractConnector(message[1]);
 			}

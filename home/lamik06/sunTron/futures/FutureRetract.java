@@ -6,7 +6,7 @@ public class FutureRetract extends Future{
 	int connectorNo;
 	int i = 0;
 	public FutureRetract(int i,ISunTronAPI atronDelegateAPI) {
-		this.atronAPI = atronDelegateAPI;
+		this.sunTronAPI = atronDelegateAPI;
 		connectorNo = i;
 	}
 

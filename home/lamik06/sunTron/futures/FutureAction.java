@@ -1,8 +1,8 @@
 package sunTron.futures;
 
-public abstract class FutureAction implements IFutureActions{
+public abstract class FutureAction implements IFutureAction{
 	public abstract void execute ( );
-	public void timeOutHandler(){
+	public void timeout(){
 		System.out.println("Debuginfo: Future timeout");
 	}
 }

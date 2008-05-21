@@ -12,7 +12,7 @@ import sunTron.API.SunTronAPI;
 import sunTron.API.SunTronDelegateAPI;
 import sunTron.futures.Future;
 import sunTron.futures.FutureAction;
-import sunTron.futures.FutureCenterMotor;
+import sunTron.futures.FutureRotate;
 import sunTron.futures.FutureExtend;
 import ussr.model.Module;
 import ussr.samples.atron.ATRONController;
@@ -32,12 +32,12 @@ public class ATRONSimpleFuturesController1 extends SunTronAPI {
         String name = getName();
         if(name=="RearRightWheel"){
         	System.out.println("test");
-        	SunTronDelegateAPI atronDelegateAPI = new SunTronDelegateAPI();
+        	SunTronAPI atronDelegateAPI = new SunTronAPI();
         	System.out.println("Start pos. =" + atronDelegateAPI.getAngularPositionDegrees());
-            FutureCenterMotor f = atronDelegateAPI.rotateToDegreeInDegreesFutures(90);
+            Future f = atronDelegateAPI.rotateToDegreeInDegrees(90);
             FutureExtend f1 = atronDelegateAPI.connect(1);
             System.out.println("f + f1 running");
-            Future.wait(f1, f);
+            Future.waitForFutures(f1, f);
             System.out.println("f + f1 completed");
  
             // Demo count
