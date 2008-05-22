@@ -12,7 +12,7 @@ import sunTron.API.SunTronAPI;
 import sunTron.API.SunTronDelegateAPI;
 import sunTron.futures.Future;
 import sunTron.futures.FutureAction;
-import sunTron.futures.FutureRotate;
+import sunTron.futures.FutureRotateTo;
 import sunTron.futures.FutureExtend;
 import ussr.model.Module;
 import ussr.samples.atron.ATRONController;

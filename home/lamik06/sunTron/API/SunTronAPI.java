@@ -1,8 +1,10 @@
 package sunTron.API;
 
+import java.util.Hashtable;
+
 import sunTron.futures.Future;
 import sunTron.futures.FutureExtend;
-import sunTron.futures.FutureRotate;
+import sunTron.futures.FutureRotateTo;
 import ussr.model.ControllerImpl;
 
 
@@ -16,9 +18,10 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 	private static final byte GETCONNECTNO = 6;
 	private static final byte CONNECTED = 7;
 	private boolean[] connectorList = new boolean[8];
-	
+	Hashtable<String, Future> activeFuturesTable = new Hashtable();
 	public ATRONControllerImpl atronAPIImpl = new ATRONControllerImpl(this);
 	private String connectNoInfo = "99";
+	private boolean atronAPIInit = false;
 	
 //	SunTronAPIImpl(){
 //		atronAPIImpl.setModule(this.getModule());
@@ -45,6 +48,7 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 			break;
 		case GETCONNECTNO:
 			atronAPIImpl.sendMessage(new byte[]{CONNECTNOINFO,(byte)channel}, (byte) 2, (byte) channel);
+			System.out.println(getName() + " GETCONNECTNO" + channel +" nearby: " + atronAPIImpl.isOtherConnectorNearby(5));
 			break;
 		case CONNECTNOINFO:
 			setConnectorNoInfo(message[1]);
@@ -73,6 +77,7 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 		
 		synchronized (connectNoInfo) {
 			connectNoInfo = b + "";
+			System.out.println("setConnectorNoInfo(): " + connectNoInfo);
 		
 		}
 		
@@ -154,36 +159,39 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 		
 	}
 
-	@Override
-	public boolean activeFutures() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 	@Override
 	public void addActiveFuturesTable(String tmpKey, Future f) {
-		// TODO Auto-generated method stub
+		activeFuturesTable.put(tmpKey,f);
 		
 	}
-
-	public FutureExtend extend(int connectNo) {
-		if (atronAPIImpl.getModule()!=getModule()){
-			atronAPIImpl.setModule(this.getModule());
+	
+	
+	public synchronized void removeActiveFuturesTable(String tmpKey) {
+		activeFuturesTable.remove(tmpKey);
+	}
+	public boolean activeFutures() {
+		return !activeFuturesTable.isEmpty();
+	}
+	public void waitForAllActiveFutures() {
+		while(!activeFuturesTable.isEmpty()){
+			yield();
 		}
+	}
+	
+	
+	
+	public Future extend(int connectNo) {
+		if (!atronAPIInit) initATRONAPI();
 		atronAPIImpl.connect(connectNo);
 		System.out.println(getName()+ " extended " + connectNo);
-		FutureExtend f = new FutureExtend(connectNo,this);
+		Future f = new FutureExtend(connectNo,this);
 		return f;
 	}
-	@Override
-	public void removeActiveFuturesTable(String tmpKey) {
-		// TODO Auto-generated method stub
-		
-	}
+
 	@Override
 	public Future retract(int connectNo) {
-		if (atronAPIImpl.getModule()!=getModule()){
-			atronAPIImpl.setModule(this.getModule());
-		}
+		if (!atronAPIInit) initATRONAPI();
 		atronAPIImpl.disconnect(connectNo);
 		System.out.println(getName()+ " retracted " + connectNo);
 		return null;
@@ -200,17 +208,11 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
-	public void waitForAllActiveFutures() {
-		// TODO Auto-generated method stub
-		
-	}
-	public FutureExtend connectFuture(int i) {
-		FutureExtend f = new FutureExtend(i,(ISunTronAPI)this);
-		addActiveFuturesTable(f.getKey(),(Future)f);
-		atronAPIImpl.connect(i);
-		return f;
-	}
+//	public Future connect(int i) {
+//		FutureExtend f = new FutureExtend(i,(ISunTronAPI)this);
+//		atronAPIImpl.connect(i);
+//		return f;
+//	}
 
 
 
@@ -256,9 +258,7 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 
 	@Override
 	public FutureExtend connect(int connector) {
-		if (atronAPIImpl.getModule()!=getModule()){
-			atronAPIImpl.setModule(this.getModule());
-		}
+		if (!atronAPIInit) initATRONAPI();
 		if (connector == 0 || connector == 2 || connector == 4 || connector == 6){
 			if (neighbourIsFemal(connector)){
 				extend(connector);
@@ -280,10 +280,8 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 	}
 
 	private boolean neighbourIsFemal(int connector) {
-		if (atronAPIImpl.getModule()!=getModule()){
-			atronAPIImpl.setModule(this.getModule());
-		}
-				atronAPIImpl.sendMessage(new byte[]{GETCONNECTNO}, (byte) 1, (byte) connector);			
+		if (!atronAPIInit) initATRONAPI();
+		atronAPIImpl.sendMessage(new byte[]{GETCONNECTNO}, (byte) 1, (byte) connector);			
 		int tmp = getConnectorNoInfo();
 		if (tmp == 1 || tmp == 3 || tmp == 5 || tmp == 7){
 			return true;
@@ -295,9 +293,7 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 
 
 	public void initConnectorList(){
-		if (atronAPIImpl.getModule()!=getModule()){
-			atronAPIImpl.setModule(this.getModule());
-		}
+		if (!atronAPIInit) initATRONAPI();
         for(int i = 0;i<8;i++){
         	if (atronAPIImpl.isConnected(i)) connectorList[i] = true;
         }
@@ -313,11 +309,9 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 
 	@Override
 	public void disconnect(int connector) {
-		if (atronAPIImpl.getModule()!=getModule()){
-			atronAPIImpl.setModule(this.getModule());
-		}
+		if (!atronAPIInit) initATRONAPI();
 		connectorList[connector]= false;
-		if (connector == 1 || connector == 3 || connector == 5 || connector == 7) retract(connector);
+		if (connector == 0 || connector == 2 || connector == 4 || connector == 6) retract(connector);
 		atronAPIImpl.sendMessage(new byte[]{DISCONNECT}, (byte) 1, (byte) connector);
 		System.out.println(getName() + " connectorList false" + connector);		
 	}
@@ -342,9 +336,7 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 
 	@Override
 	public int getAngularPositionDegrees() {
-		if (atronAPIImpl.getModule()!=getModule()){
-			atronAPIImpl.setModule(this.getModule());
-		}
+		if (!atronAPIInit) initATRONAPI();
 		return atronAPIImpl.getAngularPositionDegrees();
 	}
 
@@ -470,9 +462,7 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 
 	@Override
 	public void rotateContinuous(float dir) {
-		if (atronAPIImpl.getModule()!=getModule()){
-			atronAPIImpl.setModule(this.getModule());
-		}
+		if (!atronAPIInit) initATRONAPI();
 		atronAPIImpl.rotateContinuous(dir);
 	}
 
@@ -495,12 +485,17 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 
 
 	@Override
+	public Future  rotateTo(int target){
+		if (!atronAPIInit) initATRONAPI();
+		Future f = new FutureRotateTo(target, this);
+		atronAPIImpl.rotateToDegreeInDegrees(target);
+		return f;	
+	}
+	
+	
 	public Future rotateToDegreeInDegrees(int degrees) {
-		if (atronAPIImpl.getModule()!=getModule()){
-			atronAPIImpl.setModule(this.getModule());
-		}
-		FutureRotate f = new FutureRotate(degrees, this);
-		atronAPIImpl.setBlocking(false);
+		if (!atronAPIInit) initATRONAPI();
+		FutureRotateTo f = new FutureRotateTo(degrees, this);
 		atronAPIImpl.rotateToDegreeInDegrees(degrees);
 		return f;
 		
@@ -535,11 +530,7 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 
 
 
-	@Override
-	public Future rotateTo(int targetInDegrees) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 
 
@@ -558,7 +549,13 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 	}
 
 
-
+	public void  initATRONAPI() {
+		if (atronAPIImpl.getModule()!=getModule()){
+			atronAPIImpl.setModule(this.getModule());
+		}
+		atronAPIImpl.setBlocking(false);
+		atronAPIInit = true;
+	}
 //	@Override
 //	public void yield() {
 //		// TODO Auto-generated method stub

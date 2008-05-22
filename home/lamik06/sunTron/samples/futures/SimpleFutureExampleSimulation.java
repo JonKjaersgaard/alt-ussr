@@ -24,16 +24,16 @@ import ussr.samples.atron.GenericATRONSimulation;
  * @author Modular Robots @ MMMI
  *
  */
-public class ATRONSimpleFuturesSimulation extends GenericATRONSimulation {
+public class SimpleFutureExampleSimulation extends GenericATRONSimulation {
 	
 	public static void main( String[] args ) {
-        new ATRONSimpleFuturesSimulation().main();
+        new SimpleFutureExampleSimulation().main();
     }
 	
 	protected Robot getRobot() {
         return new ATRON() {
             public Controller createController() {
-                return (Controller) new ATRONSimpleFuturesController();
+                return (Controller) new SimpleFutureExampleController();
             }
         };
     }

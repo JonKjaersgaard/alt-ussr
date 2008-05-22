@@ -21,6 +21,7 @@ public abstract class Future extends Thread implements IFuture{
 		this.timeoutInMiliSec = timeInMiliSec;
 	}
 	public void block() {
+		sunTronAPI.addActiveFuturesTable(getKey(),(Future)this);
 		while(!isCompleted()){
 			yield();
 		}
@@ -28,16 +29,19 @@ public abstract class Future extends Thread implements IFuture{
 	}
 	
 	public void waitFor(Future f) {
-		while(f.isAlive()){
+		sunTronAPI.addActiveFuturesTable(getKey(),(Future)this);
+		if (!f.isAlive()) f.onCompletion(new FutureAction(){public void execute(){}});
+		while(f.isAlive() || !isCompleted()){
 			yield();
 		}
-
+		sunTronAPI.removeActiveFuturesTable(getKey());
 	}
 	
 	
 	public void onCompletion(FutureAction futureAction) {
 		this.futureAction = futureAction;
 		futureStartTime = System.currentTimeMillis();
+		sunTronAPI.addActiveFuturesTable(getKey(),(Future)this);
 		start();
 	}
 	public void onCompletion(FutureAction futureAction, long timeInMiliSec) {
@@ -66,6 +70,8 @@ public abstract class Future extends Thread implements IFuture{
 	 * onCompletion() have to be invoked before wait(f,f1)
 	 */
 	public static void waitForFutures(Future f,Future f1){
+		if (!f.isAlive()) f.onCompletion(new FutureAction(){public void execute(){}});
+		if (!f1.isAlive()) f.onCompletion(new FutureAction(){public void execute(){}});
 		while (f.isAlive() || f1.isAlive()){
 			yield();
 		}

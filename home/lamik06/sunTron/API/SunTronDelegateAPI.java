@@ -3,7 +3,7 @@ package sunTron.API;
 import java.util.List;
 
 import sunTron.futures.Future;
-import sunTron.futures.FutureRotate;
+import sunTron.futures.FutureRotateTo;
 import sunTron.futures.FutureExtend;
 import ussr.model.Sensor;
 
@@ -27,11 +27,11 @@ public class SunTronDelegateAPI implements ISunTronAPI{
 		return null;
 	}
 	public FutureExtend connectFuture(int i) {
-		return sunTronAPIImpl.connectFuture(i);
+		return sunTronAPIImpl.connect(i);
 		
 	}
-	public FutureRotate rotateToDegreeInDegreesFutures(int i) {
-		FutureRotate f = new FutureRotate(i, this);
+	public FutureRotateTo rotateToDegreeInDegreesFutures(int i) {
+		FutureRotateTo f = new FutureRotateTo(i, this);
 		setBlocking(false);
 		rotateToDegreeInDegrees(i);
 		return f;

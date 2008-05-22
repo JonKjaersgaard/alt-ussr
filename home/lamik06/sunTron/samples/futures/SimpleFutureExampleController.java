@@ -10,7 +10,7 @@ import sunTron.API.SunTronAPI;
 import sunTron.API.SunTronDelegateAPI;
 import sunTron.futures.Future;
 import sunTron.futures.FutureAction;
-import sunTron.futures.FutureRotate;
+import sunTron.futures.FutureRotateTo;
 import ussr.model.Module;
 import ussr.physics.PhysicsLogger;
 import ussr.samples.atron.ATRONController;
@@ -21,7 +21,7 @@ import ussr.samples.atron.ATRONController;
  * @author Modular Robots @ MMMI
  *
  */
-public class ATRONSimpleFuturesController extends SunTronAPI {
+public class SimpleFutureExampleController extends SunTronAPI {
 	
 	private static final byte EXTENDCONNECTOR = 1;
 	private static final byte CONNECTOR = 0;
@@ -37,9 +37,8 @@ public class ATRONSimpleFuturesController extends SunTronAPI {
         String name = getName();
         if(name=="RearRightWheel"){
         	System.out.println("Simple Futures demo");
-//        	SunTronAPI sunTronAPI = new SunTronAPI();
         	System.out.println("Start pos. =" + getAngularPositionDegrees());
-            Future f = rotateToDegreeInDegrees(90);
+            Future f = rotateTo(90);
 
             // onCompletion test
 //            f.setTimeOutMiliSec(0);
@@ -53,8 +52,8 @@ public class ATRONSimpleFuturesController extends SunTronAPI {
 //				}
 			});
             
-            // waitForCompletion test
-//            f.waitForComplition();
+            // block test
+//            f.block();
             
             // Demo count
             while(i < 300){
