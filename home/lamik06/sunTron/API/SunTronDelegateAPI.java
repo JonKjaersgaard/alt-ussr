@@ -301,4 +301,16 @@ public class SunTronDelegateAPI implements ISunTronAPI{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Future moveLoopTo(IControllerLoop controllerLoop, String target) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Future receiveLoopFrom(IControllerLoop controllerLoop, String target) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

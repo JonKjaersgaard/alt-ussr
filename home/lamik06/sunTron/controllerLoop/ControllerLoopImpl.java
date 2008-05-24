@@ -1,5 +1,6 @@
 package sunTron.controllerLoop;
 
+import sunTron.API.IControllerLoop;
 import sunTron.API.ISunTronAPI;
 
 public abstract class ControllerLoopImpl implements IControllerLoop {

@@ -2,6 +2,7 @@ package sunTron.API;
 
 import java.util.Hashtable;
 
+
 import sunTron.futures.Future;
 import sunTron.futures.FutureExtend;
 import sunTron.futures.FutureRotateTo;
@@ -561,4 +562,20 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 //		// TODO Auto-generated method stub
 //		yield();
 //	}
+
+
+
+	@Override
+	public Future moveLoopTo(IControllerLoop controllerLoop, String target) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public Future receiveLoopFrom(IControllerLoop controllerLoop, String target) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

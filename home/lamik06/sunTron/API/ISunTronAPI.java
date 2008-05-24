@@ -1,5 +1,6 @@
 package sunTron.API;
 
+
 import sunTron.futures.Future;
 import sunTron.futures.FutureExtend;
 
@@ -27,8 +28,9 @@ public interface ISunTronAPI {
 	public void addDebugInfo(String debugInfo);
 	public String getDebugInfo();
 	
-	
-
+	public Future moveLoopTo(IControllerLoop controllerLoop, String target);
+	public Future receiveLoopFrom(IControllerLoop controllerLoop, String target);
+//	public Future moveLoopFrom(String target);
     /**
      * Move the main joint to the initial
      *  position (zero degrees)

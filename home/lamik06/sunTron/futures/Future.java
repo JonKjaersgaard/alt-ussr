@@ -76,4 +76,5 @@ public abstract class Future extends Thread implements IFuture{
 			yield();
 		}
 	}
+
 }
