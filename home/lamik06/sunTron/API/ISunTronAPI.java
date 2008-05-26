@@ -29,7 +29,7 @@ public interface ISunTronAPI {
 	public String getDebugInfo();
 	
 	public Future moveLoopTo(IControllerLoop controllerLoop, String target);
-	public Future receiveLoopFrom(IControllerLoop controllerLoop, String target);
+	public Future receiveLoopFrom(IControllerLoop controllerLoop, String sender);
 //	public Future moveLoopFrom(String target);
     /**
      * Move the main joint to the initial

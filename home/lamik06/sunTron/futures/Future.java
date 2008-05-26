@@ -42,7 +42,7 @@ public abstract class Future extends Thread implements IFuture{
 		this.futureAction = futureAction;
 		futureStartTime = System.currentTimeMillis();
 		sunTronAPI.addActiveFuturesTable(getKey(),(Future)this);
-		start();
+		if (!isAlive()) start();
 	}
 	public void onCompletion(FutureAction futureAction, long timeInMiliSec) {
 		setTimeoutMiliSec(timeInMiliSec);

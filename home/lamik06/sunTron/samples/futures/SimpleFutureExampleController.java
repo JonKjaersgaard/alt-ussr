@@ -39,12 +39,17 @@ public class SimpleFutureExampleController extends SunTronAPI {
         	System.out.println("Simple Futures demo");
         	System.out.println("Start pos. =" + getAngularPositionDegrees());
             Future f = rotateTo(90);
-
+            f.onCompletion(new FutureAction(){
+				public void execute(){
+					System.out.println("onCompletion() -> execute() -> don´t show this text :-(");
+				}});
+            
+            yield();
             // onCompletion test
 //            f.setTimeOutMiliSec(0);
             f.onCompletion(new FutureAction(){
 				public void execute(){
-					System.out.println("onCompletion() -> execute() -> show this text!");
+					System.out.println("onCompletion() -> execute() -> show this text :-)");
 				}
 //				public void timeOutHandler() {
 //					System.out.println("onCompletion() -> timeOutHandler()");

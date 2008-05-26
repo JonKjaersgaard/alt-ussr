@@ -26,7 +26,7 @@ public class SunTronDelegateAPI implements ISunTronAPI{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public FutureExtend connectFuture(int i) {
+	public Future connectFuture(int i) {
 		return sunTronAPIImpl.connect(i);
 		
 	}

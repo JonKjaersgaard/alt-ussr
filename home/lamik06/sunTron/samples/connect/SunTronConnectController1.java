@@ -25,15 +25,21 @@ public class SunTronConnectController1 extends ATRONController {
         while(true) {
             String name = getName();
             if(name=="RearRightWheel"){
-            	disconnect(4);
-            	System.out.println(getName() + " isDisconnected() = " +  isDisconnected(4));
+            	disconnect(5);
+            	System.out.println(getName() + " isDisconnected() = " +  isDisconnected(5));
             	for(int i=0; i < 1000 ;i++) yield();
 
-            	connect(4);
-            	System.out.println(getName() + " isConnected = " + isConnected(4));
+            	connect(5);
+            	System.out.println(getName() + " isConnected = " + isConnected(5));
             	for(int i=0; i < 1000 ;i++) yield();
             }
-
+            if(name=="driver0"){
+                for(int i = 0;i<8;i++){
+                	System.out.println(getName() + "isOtherConnectorNearby("+i+")" + isOtherConnectorNearby(i));
+                }
+                for(int i=0; i < 800 ;i++) yield();
+            	
+            }
             yield();
         }
     }

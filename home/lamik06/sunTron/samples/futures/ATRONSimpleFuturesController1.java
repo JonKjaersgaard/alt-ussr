@@ -35,7 +35,7 @@ public class ATRONSimpleFuturesController1 extends SunTronAPI {
         	SunTronAPI atronDelegateAPI = new SunTronAPI();
         	System.out.println("Start pos. =" + atronDelegateAPI.getAngularPositionDegrees());
             Future f = atronDelegateAPI.rotateToDegreeInDegrees(90);
-            FutureExtend f1 = atronDelegateAPI.connect(1);
+            Future f1 = atronDelegateAPI.connect(1);
             System.out.println("f + f1 running");
             Future.waitForFutures(f1, f);
             System.out.println("f + f1 completed");

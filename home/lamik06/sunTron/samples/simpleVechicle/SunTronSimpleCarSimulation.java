@@ -1,14 +1,5 @@
-/**
- * Unified Simulator for Self-Reconfigurable Robots (USSR)
- * (C) University of Southern Denmark 2008
- * This software is distributed under the BSD open-source license.
- * For licensing see the file LICENCE.txt included in the root of the USSR distribution.
- */
-package sunTron.samples.simpleCar;
-
+package sunTron.samples.simpleVechicle;
 import java.util.ArrayList;
-/* Essentially a stripped down car */
-
 import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;

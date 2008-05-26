@@ -4,7 +4,10 @@ import java.util.Hashtable;
 
 
 import sunTron.futures.Future;
+import sunTron.futures.FutureAction;
+import sunTron.futures.FutureConnect;
 import sunTron.futures.FutureExtend;
+import sunTron.futures.FutureRetract;
 import sunTron.futures.FutureRotateTo;
 import ussr.model.ControllerImpl;
 
@@ -13,12 +16,14 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 	private static final byte LOCALMESSAGE = 0;
 	private static final byte ROUTINGMESSAGE = 1;
 	private static final byte REMOTEACTION = 2;
-	private static final byte CONNECT = 3;
+	public static final byte EXTEND = 3;
 	private static final byte DISCONNECT = 4;
 	private static final byte CONNECTNOINFO = 5;
 	private static final byte GETCONNECTNO = 6;
 	private static final byte CONNECTED = 7;
-	private boolean[] connectorList = new boolean[8];
+	private static final byte DISCONNECTED = 8;
+	public static final byte EXTENDED = 9;
+	public boolean[] connectorList = new boolean[8];
 	Hashtable<String, Future> activeFuturesTable = new Hashtable();
 	public ATRONControllerImpl atronAPIImpl = new ATRONControllerImpl(this);
 	private String connectNoInfo = "99";
@@ -33,7 +38,7 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 	 * @see ussr.samples.atron.ATRONController#handleMessage(byte[], int, int)
 	 */
 	public void handleMessage(byte[] message, int messageSize, int channel) {
-		System.out.println(getName() + " Message recieved " + message[0]);
+		System.out.println(getName() + " Message recieved " + message[0] +" channel: "+ channel);
 		switch (message[0]) {
 		case LOCALMESSAGE:
 			handleLocalMessage(message, messageSize, channel);			
@@ -41,7 +46,7 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 		case DISCONNECT:
 			handleDisConnectRequest(message, messageSize, channel);
 			break;
-		case CONNECT:
+		case EXTEND:
 			handleConnectRequest(message, messageSize, channel);
 			break;
 		case CONNECTED:
@@ -49,12 +54,14 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 			break;
 		case GETCONNECTNO:
 			atronAPIImpl.sendMessage(new byte[]{CONNECTNOINFO,(byte)channel}, (byte) 2, (byte) channel);
-			System.out.println(getName() + " GETCONNECTNO" + channel +" nearby: " + atronAPIImpl.isOtherConnectorNearby(5));
+			System.out.println(getName() + " GETCONNECTNO: " + channel +" nearby: " + atronAPIImpl.isOtherConnectorNearby(channel));
 			break;
 		case CONNECTNOINFO:
-			setConnectorNoInfo(message[1]);
+			setConnectorNoInfo((byte)channel,true);
 			break;
-			
+		case DISCONNECTED:
+			setConnectorNoInfo((byte)channel,false);
+			break;			
 			
 			
 		case ROUTINGMESSAGE:
@@ -74,11 +81,11 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 
 
 
-	private void setConnectorNoInfo(byte b) {
+	private void setConnectorNoInfo(byte b, boolean c) {
 		
 		synchronized (connectNoInfo) {
 			connectNoInfo = b + "";
-			System.out.println("setConnectorNoInfo(): " + connectNoInfo);
+			System.out.println("setConnectorNoInfo(): " + connectNoInfo +" "+ c);
 		
 		}
 		
@@ -115,8 +122,7 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 		if (atronAPIImpl.getModule()!=getModule()){
 			atronAPIImpl.setModule(this.getModule());
 		}
-		connectorList[channel]= true;
-		extend(channel);
+		atronAPIImpl.connect(channel);
 		atronAPIImpl.sendMessage(new byte[]{CONNECTED}, (byte) 1, (byte) channel);
 		System.out.println(getName() + " connectorList handleConnectRequest" + channel);	
 	
@@ -184,18 +190,23 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 	
 	public Future extend(int connectNo) {
 		if (!atronAPIInit) initATRONAPI();
-		atronAPIImpl.connect(connectNo);
 		System.out.println(getName()+ " extended " + connectNo);
-		Future f = new FutureExtend(connectNo,this);
-		return f;
+		return new FutureExtend(connectNo,this);
 	}
+	
+	public void extendUSSR(int connectNo) {
+		if (!atronAPIInit) initATRONAPI();
+		atronAPIImpl.connect(connectNo);
+	}
+	
+	
 
 	@Override
 	public Future retract(int connectNo) {
 		if (!atronAPIInit) initATRONAPI();
-		atronAPIImpl.disconnect(connectNo);
 		System.out.println(getName()+ " retracted " + connectNo);
-		return null;
+		atronAPIImpl.disconnect(connectNo);
+		return new FutureRetract(connectNo,this);
 		// TODO Auto-generated method stub
 		
 	}
@@ -206,8 +217,12 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 	}
 	@Override
 	public void sleep(long delay) {
-		// TODO Auto-generated method stub
-		
+		try {
+			Thread.sleep(delay);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 //	public Future connect(int i) {
 //		FutureExtend f = new FutureExtend(i,(ISunTronAPI)this);
@@ -255,40 +270,39 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 		
 	}
 
-
+//	if (!atronAPIInit) initATRONAPI();
+//	if (connector == 0 || connector == 2 || connector == 4 || connector == 6){
+//		if (neighbourIsFemal(connector)){
+//			extend(connector);
+//			connectorList[connector]= true;
+//			atronAPIImpl.sendMessage(new byte[]{CONNECTED}, (byte) 1, (byte) connector);
+//		}else{
+//			// TODO error handling
+//		}
+//
+//		
+//	}else{
+//		atronAPIImpl.sendMessage(new byte[]{EXTEND}, (byte) 1, (byte) connector);
+//		System.out.println("test1");
+//	}
 
 	@Override
-	public FutureExtend connect(int connector) {
-		if (!atronAPIInit) initATRONAPI();
-		if (connector == 0 || connector == 2 || connector == 4 || connector == 6){
-			if (neighbourIsFemal(connector)){
-				extend(connector);
-				connectorList[connector]= true;
-				atronAPIImpl.sendMessage(new byte[]{CONNECTED}, (byte) 1, (byte) connector);
-			}else{
-				// TODO error handling
-			}
-
-			
-		}else{
-			atronAPIImpl.sendMessage(new byte[]{CONNECT}, (byte) 1, (byte) connector);
-			System.out.println("test1");
-		}
-		
-		
-		return null;
-	
+	public Future connect(int connector) {
+		Future f = new FutureConnect(connector,this);
+		f.onCompletion(new FutureAction(){public void execute(){}});
+		return f;
 	}
 
-	private boolean neighbourIsFemal(int connector) {
+	public boolean neighbourIsFemal(int connector) {
 		if (!atronAPIInit) initATRONAPI();
-		atronAPIImpl.sendMessage(new byte[]{GETCONNECTNO}, (byte) 1, (byte) connector);			
-		int tmp = getConnectorNoInfo();
-		if (tmp == 1 || tmp == 3 || tmp == 5 || tmp == 7){
-			return true;
-		}else{
-			return false;
-		}
+//		atronAPIImpl.sendMessage(new byte[]{GETCONNECTNO}, (byte) 1, (byte) connector);			
+//		int tmp = getConnectorNoInfo();
+//		if (tmp == 1 || tmp == 3 || tmp == 5 || tmp == 7){
+//			return true;
+//		}else{
+//			return false;
+//		}
+		return true;
 	}
 
 
@@ -311,10 +325,25 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 	@Override
 	public void disconnect(int connector) {
 		if (!atronAPIInit) initATRONAPI();
-		connectorList[connector]= false;
-		if (connector == 0 || connector == 2 || connector == 4 || connector == 6) retract(connector);
-		atronAPIImpl.sendMessage(new byte[]{DISCONNECT}, (byte) 1, (byte) connector);
-		System.out.println(getName() + " connectorList false" + connector);		
+
+//		if (connector == 0 || connector == 2 || connector == 4 || connector == 6){
+//			retract(connector).onCompletion(new FutureAction(connector){
+//				int connector;
+//				public void FutureAction(int connector){
+//					this.connector = connector;				
+//				}
+//				
+//				@Override
+//				public void execute() {
+//					connectorList[connector] = false;
+//					
+//				}});
+			
+//		}
+				
+				
+//		atronAPIImpl.sendMessage(new byte[]{DISCONNECTED}, (byte) 1, (byte) connector);
+//		System.out.println(getName() + " connectorList false" + connector);		
 	}
 
 
@@ -353,9 +382,6 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		
-//		if(getModule().getProperty("name")==null) getModule().waitForPropertyToExist("name");
 		return getModule().getProperty("name");
 	}
 
@@ -403,11 +429,6 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 
 	@Override
 	public boolean isConnected(int connector) {
-//		if (atronAPIImpl.getModule()!=getModule()){
-//			atronAPIImpl.setModule(this.getModule());
-//		}
-//		return atronAPIImpl.isConnected(connector);
-		
 		return connectorList[connector];
 	}
 
@@ -509,8 +530,8 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 
 	@Override
 	public byte sendMessage(byte[] message, byte messageSize, byte connector) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return atronAPIImpl.sendMessage(message, messageSize, connector);
 	}
 
 

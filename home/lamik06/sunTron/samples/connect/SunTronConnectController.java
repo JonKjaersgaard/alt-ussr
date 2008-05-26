@@ -7,6 +7,7 @@
 package sunTron.samples.connect;
 
 import sunTron.API.SunTronAPI;
+import sunTron.futures.FutureAction;
 import ussr.samples.atron.ATRONController;
 
 /**
@@ -25,30 +26,62 @@ public class SunTronConnectController extends SunTronAPI {
         initConnectorList();
         yield();
         byte dir = 1;
-        for(int i = 0;i<8;i++){
-        	if (isConnected(i)) System.out.println(getName()+ " isConnected: " + i);
-        }
+//        for(int i = 0;i<8;i++){
+//        	if (isConnected(i)) System.out.println(getName()+ " isConnected: " + i);
+//        }
 
 
         //        if(name=="RearRightWheel") disconnect(4);
         while(true) {
             String name = getName();
-            if(name=="RearRightWheel"){
-            	disconnect(4);
-            	System.out.println(getName() + " disconnect" + atronAPIImpl.isOtherConnectorNearby(4));
-            	for(int i=0; i < 1000 ;i++) yield();
 
-            	connect(4);
-            	System.out.println(getName() + " connect" + atronAPIImpl.isOtherConnectorNearby(4));
-            	for(int i=0; i < 1000 ;i++) yield();
+            if(name=="RearRightWheel"){
+            	System.out.println(getName() + " disconnect" + atronAPIImpl.isDisconnected(4));
+            	atronAPIImpl.disconnect(4);
+            	for(int i=0; i < 500 ;i++){ 
+            		yield();
+            	}
+            	System.out.println(getName() + " disconnect" + atronAPIImpl.isDisconnected(4));
+            	System.out.println(getName() + " connect" + atronAPIImpl.isConnected(4));
+            	for(int i=0; i < 500 ;i++){ 
+            		yield();
+            	}
+            	
+            	System.out.println(getName() + " disconnect" + atronAPIImpl.isDisconnected(4));
+            	connect(4).onCompletion(new FutureAction(){
+
+					@Override
+					public void execute() {
+						// TODO Auto-generated method stub
+						System.out.println("test");
+					}});
+            	for(int i=0; i < 200 ;i++){ 
+            		yield();
+            	}
+            	
+            	System.out.println(getName() + " connect" + atronAPIImpl.isConnected(4));
             }
+            if(name=="driver0"){
+            	
+//            	for(int i=0; i < 1000 ;i++) yield();
+//                for(int i = 0;i<8;i++){
+//                	System.out.println(getName() + "isOtherConnectorNearby("+i+")" + atronAPIImpl.isOtherConnectorNearby(i));
+//                }
+//            	extend(5).onCompletion(new FutureAction(){
+//
+//					@Override
+//					public void execute() {
+//						// TODO Auto-generated method stub
+//						System.out.println("test");
+//					}});
+            	
+            }
+            while (true) {
+				yield();
+			}
+          
         	
-        	
-        	
-//            String name = getName();
-//            if(name=="RearRightWheel") disconnect(4);//rotateContinuous(dir);
-//            if(name=="RearLeftWheel") //rotateContinuous(-dir);
-            yield();
+
         }
     }
 }
