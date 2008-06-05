@@ -12,7 +12,7 @@ import sunTron.futures.FutureRotateTo;
 import ussr.model.ControllerImpl;
 
 
-public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
+public class SunTronAPIUSSR extends ControllerImpl implements ISunTronAPI {
 	private static final byte LOCALMESSAGE = 0;
 	private static final byte ROUTINGMESSAGE = 1;
 	private static final byte REMOTEACTION = 2;
@@ -598,5 +598,12 @@ public class SunTronAPI extends ControllerImpl implements ISunTronAPI {
 	public Future receiveLoopFrom(IControllerLoop controllerLoop, String target) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+
+	public int getNeighborConnetorType(int connector) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

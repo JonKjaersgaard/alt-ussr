@@ -6,7 +6,7 @@
  */
 package sunTron.samples.futures;
 
-import sunTron.API.SunTronAPI;
+import sunTron.API.SunTronAPIUSSR;
 import sunTron.API.SunTronDelegateAPI;
 import sunTron.futures.Future;
 import sunTron.futures.FutureAction;
@@ -21,7 +21,7 @@ import ussr.samples.atron.ATRONController;
  * @author Modular Robots @ MMMI
  *
  */
-public class SimpleFutureExampleController extends SunTronAPI {
+public class SimpleFutureExampleController extends SunTronAPIUSSR {
 	
 	private static final byte EXTENDCONNECTOR = 1;
 	private static final byte CONNECTOR = 0;

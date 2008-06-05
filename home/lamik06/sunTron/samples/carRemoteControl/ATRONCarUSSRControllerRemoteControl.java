@@ -5,7 +5,7 @@
  */
 package sunTron.samples.carRemoteControl;
 
-import sunTron.API.SunTronAPI;
+import sunTron.API.SunTronAPIUSSR;
 import sunTron.futures.Future;
 import sunTron.futures.FutureExtend;
 import ussr.samples.GenericSimulation;
@@ -25,7 +25,7 @@ import ussr.model.*;
  * @author ups
  *
  */
-public class ATRONCarUSSRControllerRemoteControl extends SunTronAPI {
+public class ATRONCarUSSRControllerRemoteControl extends SunTronAPIUSSR {
 	
     /**
      * @see ussr.model.ControllerImpl#activate()

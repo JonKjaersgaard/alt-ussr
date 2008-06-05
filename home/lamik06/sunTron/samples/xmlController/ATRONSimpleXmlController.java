@@ -7,7 +7,7 @@
 package sunTron.samples.xmlController;
 
 
-import sunTron.API.SunTronAPI;
+import sunTron.API.SunTronAPIUSSR;
 import sunTron.API.SunTronDelegateAPI;
 import sunTron.mobileXmlControllers.XmlControllers;
 import ussr.samples.atron.ATRONController;
@@ -19,7 +19,7 @@ import ussr.samples.atron.ATRONController;
  * @author Modular Robots @ MMMI
  *
  */
-public class ATRONSimpleXmlController extends SunTronAPI {
+public class ATRONSimpleXmlController extends SunTronAPIUSSR {
 	
 	int i = 0;
 	private boolean justStarted = true;

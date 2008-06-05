@@ -9,9 +9,9 @@ public class ATRONControllerImpl extends ATRONController {
 //		this.setModule(module1);
 //		// TODO Auto-generated constructor stub
 //	}
-	SunTronAPI sunTronAPI;
+	SunTronAPIUSSR sunTronAPI;
 
-	public ATRONControllerImpl(SunTronAPI sunTronAPI) {
+	public ATRONControllerImpl(SunTronAPIUSSR sunTronAPI) {
 		this.sunTronAPI = sunTronAPI;// TODO Auto-generated constructor stub
 	}
 	public void activate() {

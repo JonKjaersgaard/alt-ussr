@@ -1,7 +1,7 @@
 package sunTron.futures;
 
 import sunTron.API.ISunTronAPI;
-import sunTron.API.SunTronAPI;
+import sunTron.API.SunTronAPIUSSR;
 
 public class FutureExtend extends Future{
 	boolean error = false;
@@ -10,7 +10,7 @@ public class FutureExtend extends Future{
 		this.sunTronAPI = sunTronAPI;
 		this.connector = connector; 
 		if (connector == 0 || connector == 2 || connector == 4 || connector == 6){ 
-			((SunTronAPI) sunTronAPI).atronAPIImpl.connect(connector);
+			((SunTronAPIUSSR) sunTronAPI).atronAPIImpl.connect(connector);
 		}else{
 			error = true;
 			sunTronAPI.addDebugInfo("Error: Can't extend a femal connector no. " + connector);
@@ -23,7 +23,7 @@ public class FutureExtend extends Future{
 		if (error == true){
 			return false;
 		}else{
-			return ((SunTronAPI) sunTronAPI).atronAPIImpl.isConnected(connector);
+			return ((SunTronAPIUSSR) sunTronAPI).atronAPIImpl.isConnected(connector);
 		}
 		
 		

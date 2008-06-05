@@ -2,7 +2,7 @@ package sunTron.API;
 
 
 import sunTron.futures.Future;
-import sunTron.futures.FutureExtend;
+
 
 
 
@@ -27,6 +27,7 @@ public interface ISunTronAPI {
 	public Future rotateTo(int targetInDegrees);
 	public void addDebugInfo(String debugInfo);
 	public String getDebugInfo();
+
 	
 	public Future moveLoopTo(IControllerLoop controllerLoop, String target);
 	public Future receiveLoopFrom(IControllerLoop controllerLoop, String sender);

@@ -21,27 +21,27 @@ public abstract class Future extends Thread implements IFuture{
 		this.timeoutInMiliSec = timeInMiliSec;
 	}
 	public void block() {
-		sunTronAPI.addActiveFuturesTable(getKey(),(Future)this);
+//		sunTronAPI.addActiveFuturesTable(getKey(),(Future)this);
 		while(!isCompleted()){
 			yield();
 		}
-		sunTronAPI.removeActiveFuturesTable(getKey());
+//		sunTronAPI.removeActiveFuturesTable(getKey());
 	}
 	
 	public void waitFor(Future f) {
-		sunTronAPI.addActiveFuturesTable(getKey(),(Future)this);
+//		sunTronAPI.addActiveFuturesTable(getKey(),(Future)this);
 		if (!f.isAlive()) f.onCompletion(new FutureAction(){public void execute(){}});
 		while(f.isAlive() || !isCompleted()){
 			yield();
 		}
-		sunTronAPI.removeActiveFuturesTable(getKey());
+//		sunTronAPI.removeActiveFuturesTable(getKey());
 	}
 	
 	
 	public void onCompletion(FutureAction futureAction) {
 		this.futureAction = futureAction;
 		futureStartTime = System.currentTimeMillis();
-		sunTronAPI.addActiveFuturesTable(getKey(),(Future)this);
+//		sunTronAPI.addActiveFuturesTable(getKey(),(Future)this);
 		if (!isAlive()) start();
 	}
 	public void onCompletion(FutureAction futureAction, long timeInMiliSec) {
@@ -62,7 +62,7 @@ public abstract class Future extends Thread implements IFuture{
 			}
 			yield();
 		}
-		sunTronAPI.removeActiveFuturesTable(getKey());
+//		sunTronAPI.removeActiveFuturesTable(getKey());
 		
 	}
 	/*

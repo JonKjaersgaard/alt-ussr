@@ -1,6 +1,6 @@
 package sunTron.samples.simpleVechicle;
-import sunTron.API.SunTronAPI;
-public class SunTronSimpleVehicleController extends SunTronAPI {
+import sunTron.API.SunTronAPIUSSR;
+public class SunTronSimpleVehicleController extends SunTronAPIUSSR {
     public void activate() {
         yield();
         byte dir = 1;

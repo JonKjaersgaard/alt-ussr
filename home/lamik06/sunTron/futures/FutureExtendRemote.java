@@ -1,7 +1,7 @@
 package sunTron.futures;
 
 import sunTron.API.ISunTronAPI;
-import sunTron.API.SunTronAPI;
+import sunTron.API.SunTronAPIUSSR;
 
 public class FutureExtendRemote extends Future {
 
@@ -17,11 +17,11 @@ public class FutureExtendRemote extends Future {
 		return null;
 	}
 
-	@Override
+
 	public boolean isCompleted() {
-		((SunTronAPI) sunTronAPI).connectorList[connector] = false;
-		sunTronAPI.sendMessage(new byte[]{SunTronAPI.EXTEND}, (byte) 1,(byte) connector);
-		while(((SunTronAPI) sunTronAPI).connectorList[connector] == false){
+		((SunTronAPIUSSR) sunTronAPI).connectorList[connector] = false;
+		sunTronAPI.sendMessage(new byte[]{SunTronAPIUSSR.EXTEND}, (byte) 1,(byte) connector);
+		while(((SunTronAPIUSSR) sunTronAPI).connectorList[connector] == false){
 			yield();
 		}
 		// TODO Auto-generated method stub

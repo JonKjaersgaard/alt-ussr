@@ -11,7 +11,7 @@ import ussr.model.Sensor;
 
 public class SunTronDelegateAPI implements ISunTronAPI{
 
-	SunTronAPI sunTronAPIImpl = new SunTronAPI();
+	SunTronAPIUSSR sunTronAPIImpl = new SunTronAPIUSSR();
 	public void activate() {
 		// TODO Auto-generated method stub
 		

@@ -6,7 +6,7 @@
  */
 package sunTron.samples.connect;
 
-import sunTron.API.SunTronAPI;
+import sunTron.API.SunTronAPIUSSR;
 import sunTron.futures.FutureAction;
 import ussr.samples.atron.ATRONController;
 
@@ -16,7 +16,7 @@ import ussr.samples.atron.ATRONController;
  * @author Modular Robots @ MMMI
  *
  */
-public class SunTronConnectController extends SunTronAPI {
+public class SunTronConnectController extends SunTronAPIUSSR {
 	
     /**
      * @see ussr.model.ControllerImpl#activate()
