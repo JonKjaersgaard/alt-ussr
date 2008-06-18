@@ -1,6 +1,6 @@
 package sunTron.futures;
 
-import sunTron.API.ISunTronAPI;
+import sunTron.api.ISunTronAPI;
 
 public class FutureRetract extends Future{
 	int connector;

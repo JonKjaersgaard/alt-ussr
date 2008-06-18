@@ -7,8 +7,8 @@
 package sunTron.samples.xmlController;
 
 
-import sunTron.API.SunTronAPIUSSR;
-import sunTron.API.SunTronDelegateAPI;
+import sunTron.api.SunTronAPIUSSR;
+import sunTron.api.SunTronDelegateAPI;
 import sunTron.mobileXmlControllers.XmlControllers;
 import ussr.samples.atron.ATRONController;
 

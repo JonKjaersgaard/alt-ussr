@@ -1,7 +1,7 @@
 package sunTron.controllerLoop;
 
-import sunTron.API.IControllerLoop;
-import sunTron.API.ISunTronAPI;
+import sunTron.api.IControllerLoop;
+import sunTron.api.ISunTronAPI;
 
 public abstract class ControllerLoopImpl implements IControllerLoop {
 	public ISunTronAPI sunTronAPI;

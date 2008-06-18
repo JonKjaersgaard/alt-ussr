@@ -1,6 +1,6 @@
 package sunTron.samples.xmlController;
 
-import sunTron.API.SunTronDelegateAPI;
+import sunTron.api.SunTronDelegateAPI;
 import ussr.model.Sensor;
 
 public class ControllerLoopXML {

@@ -6,7 +6,7 @@
  */
 package sunTron.samples.connect;
 
-import sunTron.API.SunTronAPIUSSR;
+import sunTron.api.SunTronAPIUSSR;
 import sunTron.futures.FutureAction;
 import ussr.samples.atron.ATRONController;
 

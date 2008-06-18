@@ -1,4 +1,4 @@
-package sunTron.API1;
+package sunTron.api;
 
 
 import sunTron.futures.Future;

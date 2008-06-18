@@ -1,7 +1,7 @@
 package sunTron.futures;
 
-import sunTron.API.ISunTronAPI;
-import sunTron.API.SunTronAPIUSSR;
+import sunTron.api.ISunTronAPI;
+import sunTron.api.SunTronAPIUSSR;
 
 public class FutureExtendRemote extends Future {
 

@@ -1,4 +1,4 @@
-package sunTron.API1;
+package sunTron.api;
 
 import ussr.model.Module;
 import ussr.samples.atron.ATRONController;

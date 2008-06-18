@@ -1,6 +1,6 @@
 package sunTron.futures;
 
-import sunTron.API.ISunTronAPI;
+import sunTron.api.ISunTronAPI;
 
 public class FutureRotateTo extends Future {
 	int target;

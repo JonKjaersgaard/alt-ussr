@@ -8,8 +8,8 @@ package sunTron.samples.futures;
 
 import java.awt.Color;
 
-import sunTron.API.SunTronAPIUSSR;
-import sunTron.API.SunTronDelegateAPI;
+import sunTron.api.SunTronAPIUSSR;
+import sunTron.api.SunTronDelegateAPI;
 import sunTron.futures.Future;
 import sunTron.futures.FutureAction;
 import sunTron.futures.FutureRotateTo;
