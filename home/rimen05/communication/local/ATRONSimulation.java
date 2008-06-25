@@ -35,9 +35,9 @@ public class ATRONSimulation extends GenericSimulation {
 	
 	private float connection_acceptance_range = 0.0000001f;
 	private static int nModules = 50;
-	private static int xMax = 2;
+	private static int xMax = 5;
 	private static int yMax = 1;
-	private static int zMax = 1;
+	private static int zMax = 5;
 	public static float pe = 0.1f;//0 to 1, probability of modules sending information out.
 	public static float pne = 1.0f;//0 to 1, proportion of modules the information is transmitted to.
 	public static float pp = 0.1f;//0 to 1, probability of Imods modules sending information out.
@@ -163,7 +163,10 @@ public class ATRONSimulation extends GenericSimulation {
         world.setModuleConnections(connections);
         System.out.println("#Modules Placed = "+modulePos.size());
         world.setModulePositions(modulePos);
-        System.out.println("#Modules per Interface (avg)= "+(1+(((float)(2*connections.size()))/((float)(8*modulePos.size())))));
+        //Here is the cheese...
+        //System.out.println("connections.size() = "+connections.size()+"; modulePos.size() = "+modulePos.size());
+        //System.out.println("#Modules per Interface (avg) = " + (1+(((float)(2*connections.size()))/((float)(8*modulePos.size())))) );
+        System.out.println("#Modules per Interface (avg) = " + (1+(((float)(connections.size()))/((float)(8*modulePos.size()-connections.size())))) );
         
         this.runSimulation(world,false);
     }
