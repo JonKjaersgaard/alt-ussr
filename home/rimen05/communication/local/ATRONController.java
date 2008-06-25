@@ -32,8 +32,8 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
     //For simulation approach 1, set pp to pe and for simulation approach 2 set it
     //to 1 or high number (e.g., 0.9).
     /*END TO BE SET*/
-	private static int ne = 0;
-	private static int nt = 0;
+	private static int ne = 0;//Number of modules the information is transmitted to.
+	private static int nt = 0;//Number of modules in the system.
 	private static int e = (int)((ATRONController.pe*100)-1);
 	private static int p = (int)((ATRONController.pp*100)-1);
 	private static int id = -1;
@@ -44,7 +44,7 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
 	private static int time = 0;
 	private static int activityCounter = 0; //How many modules are done before next time.
 	private static float lastTime = 0;
-	private static float commInterval = 0.1f;
+	private static float commInterval = 1.0f;
 	private static float blinkInterval = 0.5f*commInterval;
     
     public byte[] msg = {'n'};//non-informed module (default)

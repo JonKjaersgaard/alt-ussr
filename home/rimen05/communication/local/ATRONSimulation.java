@@ -36,10 +36,10 @@ public class ATRONSimulation extends GenericSimulation {
 	private float connection_acceptance_range = 0.0000001f;
 	private static int nModules = 50;
 	private static int xMax = 2;
-	private static int yMax = 2;
-	private static int zMax = 2;
+	private static int yMax = 1;
+	private static int zMax = 1;
 	public static float pe = 0.1f;
-	public static float pne = 1.0f;
+	public static float pne = 2.0f;
 	public static float pp = 0.1f;
 	
     public static void main( String[] args ) {
