@@ -38,7 +38,7 @@ public class OdinController extends ussr.samples.odin.OdinController {
 	private static int time = 0;
 	private static int activityCounter = 0; //How many modules are done before next time.
 	private static float lastTime = 0;
-	private static float commInterval = 0.1f;
+	private static float commInterval = 2.0f;
 	private static float blinkInterval = 0.5f*commInterval;
 
     public byte[] msg = {'n'};//non-informed module (default)
