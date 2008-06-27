@@ -40,7 +40,7 @@ public class OdinSimulation extends GenericSimulation {
 	private static int yMax = 1;
 	private static int zMax = 10;
 	public static float pe = 0.1f;//0 to 1, modules sending information out.
-	public static float pne = 1.0f;//0 to 1, modules the information is transmitted to.
+	public static float pne = 1.0f;//0 to 1, proportion of modules the information is transmitted to.
 	public static float pp = 0.1f;
 	
     public static void main( String[] args ) {
