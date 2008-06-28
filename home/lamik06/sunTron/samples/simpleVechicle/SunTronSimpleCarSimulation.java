@@ -30,7 +30,16 @@ public class SunTronSimpleCarSimulation extends GenericATRONSimulation {
     }
 
 	protected ArrayList<ModulePosition> buildRobot() {
-		return new ATRONBuilder().buildCar(2, new VectorDescription(0,-0.25f,0));
+//		return new ATRONBuilder().buildCar(2, new VectorDescription(0,-0.25f,0));
+		ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
+		VectorDescription position = new VectorDescription(0,-0.25f,0);
+        float Yoffset = position.getY();
+        mPos.add(new ModulePosition("driver0:5432", new VectorDescription(-2*ATRON.UNIT,-2*ATRON.UNIT+Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+        mPos.add(new ModulePosition("RearRightWheel", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT+Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+        mPos.add(new ModulePosition("RearLeftWheel", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT+Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+
+		
+		return mPos;
 	}
     
     protected void changeWorldHook(WorldDescription world) {

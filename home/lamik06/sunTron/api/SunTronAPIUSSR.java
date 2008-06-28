@@ -530,7 +530,7 @@ public class SunTronAPIUSSR extends ControllerImpl implements ISunTronAPI {
 
 	@Override
 	public byte sendMessage(byte[] message, byte messageSize, byte connector) {
-		
+		if (!atronAPIInit) initATRONAPI();
 		return atronAPIImpl.sendMessage(message, messageSize, connector);
 	}
 

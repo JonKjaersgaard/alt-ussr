@@ -153,7 +153,7 @@ public class SunTronDelegateAPI implements ISunTronAPI{
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return sunTronAPIImpl.getName();
 	}
 
 	@Override
