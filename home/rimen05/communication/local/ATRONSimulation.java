@@ -35,9 +35,9 @@ public class ATRONSimulation extends GenericSimulation {
 	
 	private float connection_acceptance_range = 0.0000001f;
 	private static int nModules = 50;
-	private static int xMax = 10;
+	private static int xMax = 5;
 	private static int yMax = 1;
-	private static int zMax = 10;
+	private static int zMax = 1;
 	public static float pe = 0.1f;//0 to 1, probability of modules sending information out.
 	public static float pne = 1.0f;//0 to 1, proportion of modules the information is transmitted to.
 	public static float pp = 0.1f;//0 to 1, probability of Imods modules sending information out.
