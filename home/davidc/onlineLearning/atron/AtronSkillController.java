@@ -96,12 +96,17 @@ public class AtronSkillController extends ATRONController implements SkillContro
     
     public int getRobotID() {
     	String name = getModule().getProperty("name");
-    	CharSequence id = name.subSequence(name.indexOf("[")+1, name.indexOf("]"));
-    	return Integer.parseInt(id.toString());
+    	try{ CharSequence id = name.subSequence(name.indexOf("[")+1, name.indexOf("]"));
+    		return Integer.parseInt(id.toString());
+    	}
+    	catch (Exception e) {
+			return 0;
+		}
+    	
     }
     public void yield() {
-    	while(module.getSimulation().isPaused()) Thread.yield();
-    	if(!isStopped()) module.getSimulation().waitForPhysicsStep(false);
+    	while(module.getSimulation().isPaused()) module.getSimulation().waitForPhysicsStep(module);
+    	if(!isStopped()) module.getSimulation().waitForPhysicsStep(module);
 	}
     public boolean isStopped() {
     	return module.getSimulation().isStopped();
@@ -109,7 +114,7 @@ public class AtronSkillController extends ATRONController implements SkillContro
     public void delay(int ms) {
     	float startTime = module.getSimulation().getTime();
     	while(module.getSimulation().getTime()<(ms/1000.0+startTime)) {
-			module.getSimulation().waitForPhysicsStep(false);
+			module.getSimulation().waitForPhysicsStep(module);
     	}
     }
     public AtronConnectorProxy getConnectorProxy() {

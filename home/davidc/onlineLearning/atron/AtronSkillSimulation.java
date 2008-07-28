@@ -12,6 +12,7 @@ import ussr.model.Controller;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsParameters.Material;
 import ussr.samples.atron.ATRON;
+import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.atron.GenericATRONSimulation;
 
 import com.jme.math.Quaternion;
@@ -21,15 +22,15 @@ public abstract class AtronSkillSimulation extends GenericATRONSimulation {
 		
 
     /*USER PARAMETERS START*/
-	protected static enum ATRONRobots {NONE, ONE, TWOWHEELER, CRAWLER1, CRAWLER2, CAR, SNAKE2, SNAKE3, SNAKE4, SNAKE7, WALKER1, WALKER2, WALKER3, WALKER4, WALKER5, WALKER6,LOOP4, LOOP7, LOOP8,MILLIPEDE1,MILLIPEDE2,MILLIPEDE3,MILLIPEDE4,MILLIPEDE5,MILLIPEDE6,MILLIPEDE7,MILLIPEDE8,MILLIPEDE9,MILLIPEDE10,MILLIPEDE12,MILLIPEDE14,MILLIPEDE16,MILLIPEDE18,MILLIPEDE20};
-	protected static ATRONRobots robotType =  ATRONRobots.MILLIPEDE10;
+	protected static enum ATRONRobots {NONE, ONE, TWOWHEELER, CRAWLER1, CRAWLER2 ,CRAWLER3, CRAWLER4, CAR, SNAKE2, SNAKE3, SNAKE4, SNAKE7, WALKER1, WALKER2, WALKER3, WALKER4, WALKER5, WALKER6,LOOP4, LOOP7, LOOP8,MILLIPEDE1,MILLIPEDE2,MILLIPEDE3,MILLIPEDE4,MILLIPEDE5,MILLIPEDE6,MILLIPEDE7,MILLIPEDE8,MILLIPEDE9,MILLIPEDE10,MILLIPEDE12,MILLIPEDE14,MILLIPEDE16,MILLIPEDE18,MILLIPEDE20,MANDELBROT,MILLIPEDE3EX};
+	protected static ATRONRobots robotType =  ATRONRobots.SNAKE7;
 	protected static int nRobots =  1;
-	static boolean loadSkillsFromFile = false;
-	static boolean startPaused = false;
+	static boolean loadSkillsFromFile = true;
+	static boolean startPaused = true;
 	static boolean realistic = true;
 	static boolean realisticCollision = true;	
 	static float periodeTime = 7;//7f;
-	static float evalPeriode = 7;//7f;
+	static float evalPeriode = 7;//7f;p
 	static float simulationTime = evalPeriode*1030;//1030;//520; //2000
 	static boolean syncronized = true;
 	static float physicsSimulationStepSize = 0.01f;//0.01f;
@@ -37,14 +38,13 @@ public abstract class AtronSkillSimulation extends GenericATRONSimulation {
 	static boolean rubberRing = false;
 	public static boolean SRFAULT = false;
 	protected static String trialID = System.currentTimeMillis()%1000+""; 
-    /*USER PARAMETERS END*/
-	
+
+	/*USER PARAMETERS END*/
 	public static enum ObstacleType { NONE, LINE, CIRCLE }
     private ObstacleType obstacle = ObstacleType.CIRCLE;
     
     public void setObstableType(ObstacleType obstacle) { this.obstacle = obstacle; }
 	
-    
 	protected Robot getRobot() {
 		ATRON atron = new ATRON() {
             public Controller createController() {
@@ -274,6 +274,35 @@ public abstract class AtronSkillSimulation extends GenericATRONSimulation {
     	
     	return mPos;
 	}
+	protected ArrayList<ModulePosition> buildMillipedeEX(String id, int nLegPairs) {
+    	float Yoffset = 0.25f;
+    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
+    	final float eigth = (float)(0.25*Math.PI);
+        final float quart = (float)(0.5*Math.PI);
+        final float half = (float)(Math.PI);
+        
+        for(int i=0;i<nLegPairs;i++) {
+        	mPos.add(new ModulePosition("spline"+(i)+"["+id+"]", new VectorDescription(0*ATRON.UNIT,2*i*ATRON.UNIT-Yoffset,0*ATRON.UNIT),ATRON.ROTATION_UD.clone()));
+        	mPos.add(new ModulePosition("xLeg"+(i)+"["+id+"]", new VectorDescription(1*ATRON.UNIT,(1+2*i)*ATRON.UNIT-Yoffset,0*ATRON.UNIT),ATRON.ROTATION_WE.clone()));
+        	mPos.add(new ModulePosition("yLeg"+(i)+"["+id+"]", new VectorDescription(-1*ATRON.UNIT,(1+2*i)*ATRON.UNIT-Yoffset,0*ATRON.UNIT),ATRON.ROTATION_EW.clone()));
+        	if(i%1==0) {
+	        	mPos.add(new ModulePosition("xFeet"+(i)+"["+id+"]", new VectorDescription(2*ATRON.UNIT,(1+2*i)*ATRON.UNIT-Yoffset,1*ATRON.UNIT),ATRON.ROTATION_NS.clone()));
+	        	mPos.add(new ModulePosition("yFeet"+(i)+"["+id+"]", new VectorDescription(-2*ATRON.UNIT,(1+2*i)*ATRON.UNIT-Yoffset,1*ATRON.UNIT),ATRON.ROTATION_SN.clone()));
+	        	
+	        	mPos.add(new ModulePosition("xTows"+(i)+"["+id+"]", new VectorDescription(3*ATRON.UNIT,(1+2*i)*ATRON.UNIT-Yoffset,2*ATRON.UNIT),ATRON.ROTATION_WE.clone()));
+	        	mPos.add(new ModulePosition("yTows"+(i)+"["+id+"]", new VectorDescription(-3*ATRON.UNIT,(1+2*i)*ATRON.UNIT-Yoffset,2*ATRON.UNIT),ATRON.ROTATION_WE.clone()));
+        	}
+        }
+    	
+    	for(ModulePosition m: mPos) {
+        	Quaternion q = new Quaternion();
+        	q.fromAngles(quart, 0, 0);
+        	m.rotate(new Vector3f(0,0,0),q);
+        	m.translate(new Vector3f(0,-Yoffset,0));
+    	}
+    	
+    	return mPos;
+	}
 	ArrayList<ModuleConnection> ignoreConnections = new ArrayList<ModuleConnection>();
 	protected ArrayList<ModulePosition> buildMillipede2(String id) {
     	float Yoffset = 0.25f;
@@ -366,6 +395,35 @@ public abstract class AtronSkillSimulation extends GenericATRONSimulation {
     	//mPos.add(new ModulePosition("Tail["+id+"]", new VectorDescription(0*unit,0*unit-Yoffset,0*unit), rotation_EW));
         return mPos;
 	}
+	protected ArrayList<ModulePosition> buildCrawler3(String id) {
+		float Yoffset = 0.25f;
+    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
+    	mPos.add(new ModulePosition("Spline["+id+"]", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+    	
+    	mPos.add(new ModulePosition("fa1["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("fa2["+id+"]", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+
+    	mPos.add(new ModulePosition("fl1["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("fl2["+id+"]", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));
+        return mPos;
+	}
+	protected static ArrayList<ModulePosition> buildCrawler4(String id) {
+    	float Yoffset = 0.4f;
+    	int length = 4;
+    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
+    	int x=0,y=0,z=0;
+    	for(int i=0;i<length;i++) {
+    		if(i%2==0) {
+    			mPos.add(new ModulePosition("snake "+i+"["+id+"]", new VectorDescription(x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT), ATRON.ROTATION_EW));
+    		}
+    		else {
+    			mPos.add(new ModulePosition("snake "+i+"["+id+"]", new VectorDescription(x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT), ATRON.ROTATION_NS));
+    		}
+    		x++;z++;
+    	}
+    	mPos.add(new ModulePosition("Spline["+id+"]", new VectorDescription(1*ATRON.UNIT,1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));	
+		return mPos;
+	}
 	protected static ArrayList<ModulePosition> buildSnake(int length, String id) {
     	float Yoffset = 0.4f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
@@ -381,6 +439,13 @@ public abstract class AtronSkillSimulation extends GenericATRONSimulation {
     	}
 		return mPos;
 	}
+	protected static ArrayList<ModulePosition> buildMandelbrot(String id) {
+    	float Yoffset = 0.4f;
+    	realisticCollision=false;
+    	startPaused=true;
+    	return new ATRONBuilder().buildAsLattice(150, 10, 10, 1);
+	}
+	
 
 	protected ArrayList<ModulePosition> buildRobot() {
 		ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
@@ -398,6 +463,7 @@ public abstract class AtronSkillSimulation extends GenericATRONSimulation {
 					if(robotType == ATRONRobots.SNAKE3) modulePos.addAll(buildSnake(3,robotCount+""));
 					if(robotType == ATRONRobots.SNAKE4) modulePos.addAll(buildSnake(4,robotCount+""));
 			        if(robotType == ATRONRobots.SNAKE7) modulePos.addAll(buildSnake(7,robotCount+""));
+			        if(robotType == ATRONRobots.MANDELBROT) modulePos.addAll(buildMandelbrot(robotCount+""));
 			        if(robotType == ATRONRobots.WALKER1) modulePos.addAll(buildWalker1(robotCount+""));
 			        if(robotType == ATRONRobots.WALKER2) modulePos.addAll(buildWalker2(robotCount+""));
 			        if(robotType == ATRONRobots.WALKER3) modulePos.addAll(buildWalker3(robotCount+""));
@@ -419,10 +485,12 @@ public abstract class AtronSkillSimulation extends GenericATRONSimulation {
 			        if(robotType == ATRONRobots.MILLIPEDE16) modulePos.addAll(buildMillipede(robotCount+"",16));
 			        if(robotType == ATRONRobots.MILLIPEDE18) modulePos.addAll(buildMillipede(robotCount+"",18));
 			        if(robotType == ATRONRobots.MILLIPEDE20) modulePos.addAll(buildMillipede(robotCount+"",20));
-			        
+			        if(robotType == ATRONRobots.MILLIPEDE3EX) modulePos.addAll(buildMillipedeEX(robotCount+"",3));
 			        
 			        if(robotType == ATRONRobots.CRAWLER1) modulePos.addAll(buildCrawler1(robotCount+""));
 			        if(robotType == ATRONRobots.CRAWLER2) modulePos.addAll(buildCrawler2(robotCount+""));
+			        if(robotType == ATRONRobots.CRAWLER3) modulePos.addAll(buildCrawler3(robotCount+""));
+			        if(robotType == ATRONRobots.CRAWLER4) modulePos.addAll(buildCrawler4(robotCount+""));
 			        if(robotType == ATRONRobots.LOOP4) modulePos.addAll(buildLoop4(robotCount+""));
 			        if(robotType == ATRONRobots.LOOP7) modulePos.addAll(buildLoop7(robotCount+""));
 			        if(robotType == ATRONRobots.LOOP8) modulePos.addAll(buildLoop8(robotCount+""));

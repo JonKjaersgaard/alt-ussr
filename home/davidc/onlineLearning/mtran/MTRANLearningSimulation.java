@@ -6,10 +6,12 @@
  */
 package onlineLearning.mtran;
 
+import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
 import onlineLearning.SkillFileManager;
 import onlineLearning.SkillLearner;
+import onlineLearning.skills.SkillQ;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsParameters;
@@ -30,6 +32,17 @@ public class MTRANLearningSimulation extends MTRANSimulation {
 	public static void main( String[] args ) {
 		if(args.length>0) robot=args[0];
 		if(args.length>1) trialID=args[1];
+		if(args.length>2) {
+			for(int i=2;i<args.length;i++) {
+				if(args[i].contains("TrialID=")) {
+					trialID = args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString();
+				}
+				if(args[i].contains("RoleSelectionStrategy=")) {
+					String strategy = args[i].subSequence(args[i].indexOf('=')+1, args[i].length()).toString();
+					SkillQ.setRoleSelectionStrategy(strategy);
+				}
+			}
+		}
 		new MTRANLearningSimulation().runSimulation(null,false);
 	}
 	public Controller getController(String type) {
@@ -40,6 +53,7 @@ public class MTRANLearningSimulation extends MTRANSimulation {
 	public void changeWorldHook(WorldDescription world) {
 	    world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
 	    world.setHasBackgroundScenery(false);
+	    world.setPlaneSize(500);
 	    PhysicsParameters.get().setPhysicsSimulationStepSize(0.005f);
 	    PhysicsParameters.get().setResolutionFactor(1);
 	    SkillFileManager.initLogFiles("MTRAN",robot,trialID);
@@ -56,13 +70,42 @@ public class MTRANLearningSimulation extends MTRANSimulation {
         cm = cm.multLocal(1.0f/nModulesInRobot);
         return cm;
     }
+	public Vector3f getModulePos(int index) {
+    	Vector3f pos = (Vector3f) simulation.getHelper().getModulePos(simulation.getModules().get(index)).get();
+        return pos;
+    }
+	public float[] getModuleOri(int index) {
+    	return ((Quaternion)simulation.getHelper().getModuleOri(simulation.getModules().get(index)).get()).toAngles(null);
+    }
 	int counter=0;
+	int fallenCounter=0;
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
 		//simulation.setGravity(0.0f);
-		/*counter++;
-		if(counter%1==0) {
-			System.out.println("{"+simulation.getTime()+","+getRobotCM().y+"},");
-		}*/
+		if(robot.equals("WALKER")) {
+			counter++;
+			if(counter%100==0) {
+				System.out.println("{"+simulation.getTime()+","+getModulePos(6).y+"},");
+				if(getModulePos(6).y<-0.45) {
+					System.out.println("Fallen "+fallenCounter);
+					fallenCounter++;
+					if(fallenCounter>25) System.exit(0);
+					System.out.println();
+				}
+			}
+		}
+		if(robot.equals("MINI")) {
+			counter++;
+			if(counter%100==0) {
+				System.out.println("{"+simulation.getTime()+","+getModuleOri(0)[0]+","+getModuleOri(0)[1]+","+getModuleOri(0)[2]+"},");
+				if(getModuleOri(0)[0]>0) 
+				{ 
+					System.out.println("Fallen "+fallenCounter);
+					fallenCounter++;
+					if(fallenCounter>25) System.exit(0);
+					System.out.println();
+				}
+			}
+		}
 		/*if(simulation.getTime()<20) {
 			SkillLearner.evalPeriode = 4.5f;
 		}
@@ -75,12 +118,12 @@ public class MTRANLearningSimulation extends MTRANSimulation {
 		else {
 			SkillLearner.evalPeriode = 1.5f;
 		}*/
-		if(simulation.getTime()>(3600+100)) {
+		if(simulation.getTime()>2*(3600+100)) {
        		System.out.println("stopping simulation at time "+simulation.getTime());
    			simulation.stop();
        	}
 	}
-	static String robot = "WALKER";
+	static String robot = "CATERPILLAR";
 	protected void constructRobot() {
 		if(robot.equals("SINGLE")) {
 			addModule(0,0,0,ORI2,"X");

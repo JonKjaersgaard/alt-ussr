@@ -178,10 +178,10 @@ public class AtronRolePlayerPrimitive implements RolePlayer  {
 			//rotateTo((int)(centerRole*360.0/3.0));
 			switch(centerRole) {
 				case 0: rotateToNotUnlimited(0); break;
-				case 1: rotateToNotUnlimited(-45); break;
-				case 2: rotateToNotUnlimited(45); break;
-				case 3: rotateToNotUnlimited(90); break;
-				case 4: rotateToNotUnlimited(-90); break;
+				case 1: rotateToNotUnlimited(-30); break;
+				case 2: rotateToNotUnlimited(60); break;
+				case 3: rotateToNotUnlimited(30); break;
+				case 4: rotateToNotUnlimited(-60); break;
 				default: break;
 			}
 			/*switch(centerRole) {
@@ -256,7 +256,7 @@ public class AtronRolePlayerPrimitive implements RolePlayer  {
 		if(error>0.5) error -=1;
 		else if(error<-0.5) error +=1;
 		
-		/*if(controller.getDebugID()==0) {
+		/*if(controller.getDebugID()==0) { 
 			if(Math.abs(error)<0.05f) System.out.println("On time: "+error);
 			else if(error<0) System.out.println("Behind: "+error);
 			else System.out.println("Ahead: "+error);

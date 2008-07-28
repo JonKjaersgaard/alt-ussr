@@ -1,0 +1,128 @@
+solid Created_by_Wolfram_Mathematica_6.0
+facet normal 0. 0. 0.
+  outer loop
+    vertex 3. -3. 4.
+    vertex -3. -3. 4.
+    vertex 0 -5.5 0
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex 2.75 -4.763139720814412 0
+    vertex 3. -3. 4.
+    vertex 0 -5.5 0
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex 2.75 4.763139720814412 0
+    vertex 0 5.5 0
+    vertex 3. 3. 4.
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex 4.763139720814412 2.75 0
+    vertex 3. 3. 4.
+    vertex 5.5 0 0
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex -5.5 0 0
+    vertex -3. -3. 4.
+    vertex -3. 3. 4.
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex -3. -3. 4.
+    vertex 3. -3. 4.
+    vertex -3. 3. 4.
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex 3. 3. 4.
+    vertex -3. 3. 4.
+    vertex 3. -3. 4.
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex -3. 3. 4.
+    vertex 0 5.5 0
+    vertex -2.75 4.763139720814412 0
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex -3. 3. 4.
+    vertex 3. 3. 4.
+    vertex 0 5.5 0
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex 3. 3. 4.
+    vertex 3. -3. 4.
+    vertex 5.5 0 0
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex -3. -3. 4.
+    vertex -4.763139720814412 -2.75 0
+    vertex -2.75 -4.763139720814412 0
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex 3. -3. 4.
+    vertex 4.763139720814412 -2.75 0
+    vertex 5.5 0 0
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex -4.763139720814412 -2.75 0
+    vertex -3. -3. 4.
+    vertex -5.5 0 0
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex 3. -3. 4.
+    vertex 2.75 -4.763139720814412 0
+    vertex 4.763139720814412 -2.75 0
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex -3. 3. 4.
+    vertex -2.75 4.763139720814412 0
+    vertex -4.763139720814412 2.75 0
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex -3. -3. 4.
+    vertex -2.75 -4.763139720814412 0
+    vertex 0 -5.5 0
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex -3. 3. 4.
+    vertex -4.763139720814412 2.75 0
+    vertex -5.5 0 0
+  endloop
+endfacet
+facet normal 0. 0. 0.
+  outer loop
+    vertex 3. 3. 4.
+    vertex 4.763139720814412 2.75 0
+    vertex 2.75 4.763139720814412 0
+  endloop
+endfacet
+endsolid

@@ -52,7 +52,7 @@ public class MTRANLearningController extends MTRANController implements SkillCon
     	float startTime = module.getSimulation().getTime();
     	while(module.getSimulation().getTime()<(10+startTime)) {
     		rolePlayer.playRole(new Role(2),0);
-			module.getSimulation().waitForPhysicsStep(false);
+			module.getSimulation().waitForPhysicsStep(module);
     	}
     	System.out.println(getDebugID()+": Module staring "+getTime());
     }
@@ -67,8 +67,8 @@ public class MTRANLearningController extends MTRANController implements SkillCon
     }
     
     public void yield() {
-    	while(module.getSimulation().isPaused()) module.getSimulation().waitForPhysicsStep(false);
-    	if(!isStopped()) module.getSimulation().waitForPhysicsStep(false);
+    	while(module.getSimulation().isPaused()) module.getSimulation().waitForPhysicsStep(module);
+    	if(!isStopped()) module.getSimulation().waitForPhysicsStep(module);
 	}
     public boolean isStopped() {
     	return module.getSimulation().isStopped();
@@ -76,7 +76,7 @@ public class MTRANLearningController extends MTRANController implements SkillCon
     public void delay(int ms) {
     	float startTime = module.getSimulation().getTime();
     	while(module.getSimulation().getTime()<(ms/1000.0+startTime)) {
-			module.getSimulation().waitForPhysicsStep(false);
+			module.getSimulation().waitForPhysicsStep(module);
     	}
     }
 	public void controlHook() { }

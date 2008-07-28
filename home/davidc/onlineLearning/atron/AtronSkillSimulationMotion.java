@@ -1,18 +1,18 @@
 package onlineLearning.atron;
-import java.util.ArrayList;
-
-import com.jme.math.Vector3f;
+import java.awt.Color;
+import java.util.Random;
 
 import onlineLearning.SkillFileManager;
 import onlineLearning.SkillLearner;
 import onlineLearning.skills.SkillQ;
-import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.model.Module;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsSimulation;
 import ussr.samples.atron.GenericATRONSimulation;
+
+import com.jme.math.Vector3f;
 public class AtronSkillSimulationMotion extends AtronSkillSimulation implements PhysicsObserver {
 	float oldDist = 0;  
     float oldPrintTime=0;
@@ -79,7 +79,11 @@ public class AtronSkillSimulationMotion extends AtronSkillSimulation implements 
 		/*for(Module m: simulation.getModules()) {
 			m.addExternalForce(0f,(float)Math.sin(simulation.getTime())*10f,0f);
 		}*/
-		//System.out.println("{"+simulation.getTime()+","+getRobotCM().y+"},");		
+		//System.out.println("{"+simulation.getTime()+","+getRobotCM().y+"},");
+	/*	Random r = new Random();
+		for(Module m: simulation.getModules()) {
+			m.setColor(new Color(r.nextFloat(),r.nextFloat(),r.nextFloat()));
+		}*/
        	if(simulation.getTime()>simulationTime) {
        		System.out.println("stopping simulation at time "+simulation.getTime());
    			simulation.stop();
@@ -88,8 +92,9 @@ public class AtronSkillSimulationMotion extends AtronSkillSimulation implements 
 	protected void changeWorldHook(WorldDescription world) {
 		SkillFileManager.initLogFiles("ATRON",robotType.name(),trialID);
 		if(loadSkillsFromFile) SkillFileManager.loadSkills();
-		world.setPlaneTexture(WorldDescription.WHITE_TEXTURE);
-		//world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+		//world.setPlaneTexture(WorldDescription.WHITE_TEXTURE);
+		world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+		
 		world.setHasBackgroundScenery(false);
 		world.setFlatWorld(true);
 		for(int i=0;i<ignoreConnections.size();i++) {
@@ -100,6 +105,7 @@ public class AtronSkillSimulationMotion extends AtronSkillSimulation implements 
 				}
 			}
 		}
+		//PhysicsParameters.get().setResolutionFactor(2);
         /*WorldDescription.BoxDescription[] boxes = new WorldDescription.BoxDescription[5];
         VectorDescription size = new VectorDescription(10f,0.1f,0.05f);
         RotationDescription rotEastWest = new RotationDescription(new Quaternion(new float[]{0,(float)Math.PI/2,0}));

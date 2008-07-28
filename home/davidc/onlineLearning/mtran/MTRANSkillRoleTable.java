@@ -12,7 +12,7 @@ public class MTRANSkillRoleTable extends SkillRoleTable {
 
 	public MTRANSkillRoleTable(float periodeTime, SkillController controller) {
 		super(periodeTime, controller);
-		SkillQ.alpha = 0.1f/5;
+		SkillQ.alpha = 0.0333f;//0.1f/5;
 		skills.add(new SkillTimeTable(3,periodeTime,5,controller)); //actuator 1
 		skills.add(new SkillTimeTable(3,periodeTime,5,controller)); //actuator 2
 		

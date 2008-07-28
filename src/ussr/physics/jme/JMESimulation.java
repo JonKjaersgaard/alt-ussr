@@ -28,6 +28,7 @@ import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.ActBasedController;
 import ussr.model.Connector;
+import ussr.model.Controller;
 import ussr.model.Module;
 import ussr.physics.ModuleFactory;
 import ussr.physics.PhysicsFactory;
@@ -281,7 +282,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                     	physicsCallBack();
                     	physicsStep(); // 1 call to = 32ms (one example setup)
                     	physicsStep = true;
-                    	waitForPhysicsStep(true);
+                    	//waitForPhysicsStep(true);
+                    	unlockModules();
                     	//System.out.println(getTime()+" : "+(System.currentTimeMillis()-startTime)/1000.0);
                     }
                     
@@ -452,10 +454,29 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         gravity = g;
         getPhysicsSpace().setDirectionalGravity(new Vector3f(0,gravity,0));
     }
-
+    HashSet<Module> waitingModules = new HashSet<Module>();
+    HashSet<Module> startedModules = new HashSet<Module>();
+    public synchronized void waitForPhysicsStep(Module module) {
+    	waitingModules.add(module);
+    	waitForPhysicsStep(false);
+    	waitingModules.remove(module);
+    	startedModules.add(module);
+    }
+    public void unlockModules() {
+       	int waitingModuleCount =  waitingModules.size();
+    	waitForPhysicsStep(true);
+    	while(startedModules.size()<waitingModuleCount&&!isStopped()) {
+    		//System.out.println(startedModules.size()+" vs "+waitingModuleCount);
+    		Thread.yield();
+    	}
+    	startedModules.clear();
+    	while(waitingModules.size()!=waitingModuleCount&&!isStopped()) {
+    		Thread.yield();
+    	}
+    }
     public synchronized void waitForPhysicsStep(boolean notify) {
         if(notify) {
-            notifyAll();
+        	notifyAll();
         }
         else { //modules wait here
             try {

@@ -112,6 +112,7 @@ public interface PhysicsSimulation {
 	 * @param notify whether to notify other threads or not
 	 */
 	public void waitForPhysicsStep(boolean notify);
+	public void waitForPhysicsStep(Module m);
 
 	/**
 	 * Subscribe to the simulation steps, meaning that the observer is notified each time a

@@ -64,7 +64,7 @@ public class SkillLearner {
 		 for(int i=0;i<nSkills;i++) {
 			 if(learningStrategy==LearningStrategy.PSO) skills[i] = new SkillPSO(nParticles,nRoles);
 			 if(learningStrategy==LearningStrategy.Q) skills[i] = new SkillQ(nRoles);
-			 if(learningStrategy==LearningStrategy.TIMETABLE) skills[i] = new SkillTimeTable(3,evalPeriode,3,controller); 
+			 if(learningStrategy==LearningStrategy.TIMETABLE) skills[i] = new SkillTimeTable(5,evalPeriode,5,controller); //was 5 
 			 if(learningStrategy==LearningStrategy.ROLETABLE) skills[i] = new ATRONSkillRoleTable(evalPeriode,controller);
 			 if(learningStrategy==LearningStrategy.ROLETABLE_MTRAN) skills[i] = new MTRANSkillRoleTable(evalPeriode,controller);
 			 if(learningStrategy==LearningStrategy.RANDOM) skills[i] = new SkillRandom(nRoles);

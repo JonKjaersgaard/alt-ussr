@@ -117,8 +117,9 @@ public class MTRANRolePlayer implements RolePlayer  {
 				}
 			}
 		}
-		//goal0=0;goal1=0;
+		//goal0=-1;goal1=-1;
 		goToAngles(0.33*goal0+offset0,0.33*goal1+offset1);
+		//goToAngles(0.0,0);
 		
 		
 		/*int time = (int)controller.getTime();
@@ -136,7 +137,7 @@ public class MTRANRolePlayer implements RolePlayer  {
 		}else {
 			controller.rotate(1, 0);
 		}
-		if(Math.abs(cur0-goal0)<0.05) controller.centerStop(0);
+		//if(Math.abs(cur0-goal0)<0.05) controller.centerStop(0);
 
 		double cur1 =  2*(controller.getEncoderPosition(1)-0.5);
 		if(cur1>goal1) {
@@ -145,7 +146,7 @@ public class MTRANRolePlayer implements RolePlayer  {
 			controller.rotate(1, 1);
 		}
 		counter++;
-		//if(counter%50==0)
+		//if(counter%5==0)
 		//	System.out.println("{"+controller.getDebugID()+", "+controller.getTime()+", "+controller.getEncoderPosition(0)+", "+controller.getEncoderPosition(1)+"},");
 		//if(Math.abs(cur1-goal1)<0.05) controller.centerStop(1);
 		//if(controller.getDebugID()==0) System.out.println("got to: "+controller.getTime());
