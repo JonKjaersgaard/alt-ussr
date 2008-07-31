@@ -69,9 +69,9 @@ public class ChaseCamera extends InputHandler {
 
     public static final float DEFAULT_DAMPINGK = 12.0f;
     public static final float DEFAULT_SPRINGK = 36.0f;
-    public static final float DEFAULT_MAXDISTANCE = 0f;
-    public static final float DEFAULT_MINDISTANCE = 0f;
-    public static final boolean DEFAULT_ENABLESPRING = true;
+    public static final float DEFAULT_MAXDISTANCE = 2f;
+    public static final float DEFAULT_MINDISTANCE = 1f;
+    public static final boolean DEFAULT_ENABLESPRING = false;
     public static final boolean DEFAULT_STAYBEHINDTARGET = false;
     public static final boolean DEFAULT_MAINTAINAZIMUTH = false;
     public static final Vector3f DEFAULT_WORLDUPVECTOR = new Vector3f(Vector3f.UNIT_Y);

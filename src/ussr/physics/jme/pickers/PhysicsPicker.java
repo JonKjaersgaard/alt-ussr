@@ -151,7 +151,9 @@ public class PhysicsPicker implements Picker {
         moveAction = new MoveAction();
         inputHandler.addAction( moveAction, InputHandler.DEVICE_MOUSE, InputHandler.BUTTON_NONE, InputHandler.AXIS_ALL, false );
     }
-
+    public DynamicPhysicsNode getPicked() {
+    	return picked;
+    }
     private void release() {
         picked = null;
         if(isFlexible)

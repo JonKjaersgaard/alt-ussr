@@ -17,7 +17,7 @@ import onlineLearning.utils.DataLogger;
 public class SkillLearner {
 	
 	public static enum LearningStrategy {PSO, Q, RANDOM, TIMETABLE, ROLETABLE, SYSTEMATIC,ROLETABLE_MTRAN};
-    public static LearningStrategy learningStrategy = LearningStrategy.ROLETABLE_MTRAN;
+    public static LearningStrategy learningStrategy = LearningStrategy.TIMETABLE;
     
     static int nParticles = 5;
     static boolean parallelLearning = false;
@@ -126,6 +126,7 @@ public class SkillLearner {
 	        				controller.yield();
 	        			}
 	        			System.out.println("Module restarts");
+	        			((AtronSkillController) controller).getModule().setColor(Color.WHITE);
 	        		}
     			}
     		}
@@ -137,7 +138,7 @@ public class SkillLearner {
     		logBestRole(reward, currentSkill, bestRole, controller);
     		startTime = startTime+evalPeriode;
     		if(AtronSkillSimulation.SRFAULT) {
-	    		float SRStartTime = 7*5;
+	    		float SRStartTime = 7*250;
 	    		if(controller.getTime()>SRStartTime&&controller.getTime()<SRStartTime+20) {
 	    			System.out.println("Starting to self-reconfigure");
 	    			selfReconfigure(controller);

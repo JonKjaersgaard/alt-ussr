@@ -8,6 +8,7 @@ package ussr.physics.jme;
 
 import java.awt.Color;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,6 +18,7 @@ import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.SimulationGadget;
 import ussr.physics.PhysicsFactory.Options;
+import ussr.physics.jme.cameraHandlers.RobotCameraHandler;
 import ussr.util.Pair;
 
 import com.jme.app.AbstractGame;
@@ -39,6 +41,7 @@ import com.jme.renderer.Renderer;
 import com.jme.scene.Node;
 import com.jme.scene.SceneElement;
 import com.jme.scene.Skybox;
+import com.jme.scene.Spatial;
 import com.jme.scene.Text;
 import com.jme.scene.state.LightState;
 import com.jme.scene.state.MaterialState;
@@ -55,6 +58,7 @@ import com.jme.util.TextureManager;
 import com.jme.util.Timer;
 import com.jme.util.geom.Debugger;
 import com.jmex.awt.input.AWTMouseInput;
+import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.PhysicsDebugger;
 import com.jmex.physics.PhysicsSpace;
 import com.jmex.physics.StaticPhysicsNode;
@@ -185,6 +189,8 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         /** Assign key C to action "camera_out". */
         KeyBindingManager.getKeyBindingManager().set( "camera_out",
                 KeyInput.KEY_C );
+        KeyBindingManager.getKeyBindingManager().set( "camera_mode",
+                KeyInput.KEY_M );
         KeyBindingManager.getKeyBindingManager().set( "screen_shot",
                 KeyInput.KEY_F1 );
         KeyBindingManager.getKeyBindingManager().set( "exit",
@@ -245,7 +251,16 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
                 "screen_shot", false ) ) {
             display.getRenderer().takeScreenShot( "SimpleGameScreenShot" );
         }
-    
+        if ( KeyBindingManager.getKeyBindingManager().isValidCommand(
+                "camera_mode", false ) ) { 
+        	//FIXME When toggeling camera mode several times first-person mode works different 
+        	if(cameraInputHandler instanceof FirstPersonHandler) {
+        		cameraChase(); 
+        	}
+        	else { 
+        		cameraFirstPerson();
+        	}
+        }
         if ( KeyBindingManager.getKeyBindingManager().isValidCommand(
                 "parallel_projection", false ) ) {
             if ( cam.isParallelProjection() ) {
@@ -293,6 +308,27 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	        cam.update();
     	}
     }
+    protected void cameraChase() {
+    	if(input!=null&&cameraInputHandler!=null) { 
+	    	input.removeFromAttachedHandlers(cameraInputHandler);
+	    	ArrayList<DynamicPhysicsNode> dynNodes= new ArrayList<DynamicPhysicsNode>();
+	    	for(JMEModuleComponent component: getModuleComponents())
+	    		dynNodes.add(component.getModuleNode());
+	    	
+	    	cameraInputHandler = new RobotCameraHandler(cam,dynNodes);
+	        input.addToAttachedHandlers( cameraInputHandler ); 
+	        System.out.println("Automatic Camera Chasing Robot");
+    	}
+    }
+    protected void cameraFirstPerson() {
+    	if(input!=null&&cameraInputHandler!=null) {
+    		cameraInputHandler.setEnabled(false);
+	    	input.removeFromAttachedHandlers(cameraInputHandler);
+    		cameraInputHandler = new FirstPersonHandler( cam, 1f, 1 );
+	        input.addToAttachedHandlers( cameraInputHandler );
+	        System.out.println("First Person Camera Mode");
+    	}
+    }
     public synchronized void addInputHandler(String keyName, final PhysicsSimulation.Handler handler) {
         if(inputHandlers==null) throw new Error("Input handlers cannot be added after simulation has been started");
         inputHandlers.add(new Pair<String,PhysicsSimulation.Handler>(keyName,handler));
@@ -311,7 +347,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         }
         inputHandlers = null;
     }
-    protected void grapFrame() {
+    protected void grapFrame() { //FIXME only work if window is not minimized 
     	if(frameCount==0) { //delete content of and create frame directory
     		File dir = new File("frames");
     		if(dir.isDirectory()) {
@@ -319,6 +355,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
     		}
     		dir.mkdir();
     	}
+    	rootNode.updateGeometricState(tpf, true );
     	String name = (new Long(frameCount+1000000)).toString().substring(1);
     	display.getRenderer().takeScreenShot("frames/frame"+name);
     	frameCount++;
@@ -507,9 +544,11 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
         fps.print( updateBuffer );
     
         handleKeys();
-        input.update(tpf);
+       // input.update(tpf); //TODO if problems with key inputs this may be the cause?
+        input.update(getPhysicsSimulationStepSize());
         
-        cameraInputHandler.setEnabled( MouseInput.get().isButtonDown( 1 ) );
+        if(cameraInputHandler instanceof FirstPersonHandler) cameraInputHandler.setEnabled(MouseInput.get().isButtonDown( 1 ) );
+        else cameraInputHandler.setEnabled(true);
         rootNode.updateGeometricState(tpf, true );
         
     }
@@ -522,6 +561,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
     
     public abstract long getPhysicsSteps();
     public abstract float getPhysicsSimulationStepSize();
+    public abstract List<JMEModuleComponent> getModuleComponents();
 
     private static String resourcePathPrefix = "";
     public static void setResourcePathPrefix(String prefix) {

@@ -288,16 +288,20 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                     }
                     
                
-            	   KeyInput.get().update();
-            	   if(mainLoopCounter%5==0 ||singleStep) { // 1 call to = 16ms (same example setup)
-            		   MouseInput.get().update(); //InputSystem.update();
+            	   
+                    KeyInput.get().update();
+            	   //if(mainLoopCounter%5==0 ||singleStep) { // 1 call to = 16ms (same example setup)
+                    float fps = 10;
+                    float loopsPerSecond = 1.0f/getPhysicsSimulationStepSize();
+                    int loopsPerUpdate = (int)(loopsPerSecond/fps);
+                    if(mainLoopCounter%loopsPerUpdate==0 ||singleStep) { // 1 call to = 16ms (same example setup)
+                    	MouseInput.get().update(); //InputSystem.update();	            		   
                 		update(-1.0f);
                 		render(-1.0f);
-                		getDisplay().getRenderer().displayBackBuffer();// swap buffers
-                	
-	                    if(grapFrames) {
+                		if(grapFrames) {
 	                    	grapFrame();
 	                    }
+                		getDisplay().getRenderer().displayBackBuffer();// swap buffers
                     }
                    mainLoopCounter++;
                    Thread.yield();
@@ -531,7 +535,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 
     public long getPhysicsSteps() { return physicsSteps; }
 
-    public float getPhysicsSimulationStepSize() { return physicsSimulationStepSize; }
+    public float getPhysicsSimulationStepSize() { return PhysicsParameters.get().getPhysicsSimulationStepSize(); }
 
 }
 
