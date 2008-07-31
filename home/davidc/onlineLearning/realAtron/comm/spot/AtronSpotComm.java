@@ -12,8 +12,8 @@ public class AtronSpotComm {
 	String sourceStr = "sf@localhost:9002";
 //	String sourceStr = "sf@10.194.95.255:9002";
 	PacketSource source; 
-	boolean debugPrint = false;
-	boolean remote = true;
+	boolean debugPrint = true;
+	//boolean remote = true;
 	public AtronSpotComm() {
 		init();
 	}
@@ -53,7 +53,7 @@ public class AtronSpotComm {
 	{
 		byte[] packet = AtronPacketPacker.packPacket(payload);
 		try {
-			if(debugPrint) System.out.println("Sending package");
+			if(debugPrint) System.out.println("Sending package (length="+packet.length+")");
 			source.writePacket(packet);
 			if(debugPrint) System.out.println("...done");
 		}

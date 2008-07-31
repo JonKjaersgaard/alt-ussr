@@ -6,28 +6,30 @@ import onlineLearning.realAtron.comm.spot.AtronSpotComm;
 
 public class AtronClient {
 	
-	final AtronSpotComm comm;
-	final AtronSocketClient client;
+	AtronSpotComm comm;
+	AtronSocketClient client = null;
+	boolean hasClient = true;
 	public AtronClient() {
 		comm = new AtronSpotComm();
-		client = new AtronSocketClient();
+		if(hasClient) client = new AtronSocketClient();
 		new Thread() {
 			public void run() {
 				while(true) {
 					byte[] data = comm.read();
-					client.send(data);
+					if(hasClient) client.send(data);
 				}
-				
 			}
-		};
+		}.start();
 		new Thread() {
 			public void run() {
 				while(true) {
-					byte[] data = client.read();
-					comm.send(data);
+					if(hasClient) {
+						byte[] data = client.read();
+						comm.send(data);
+					}
 				}
 			}
-		};
+		}.start();
 	}
 	public static void main(String[] args) {
 		new AtronClient();

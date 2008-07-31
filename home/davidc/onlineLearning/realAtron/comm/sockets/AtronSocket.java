@@ -9,7 +9,8 @@ public abstract class AtronSocket {
 	public byte[] read() {
 		byte[] data = null;
 		try {
-			int length = input.readInt();
+			int length = (int)input.readByte();
+			System.out.println("Length: "+length);
 			data = new byte[length];
 			input.readFully(data);
     		System.out.print("Reading: ");
@@ -28,7 +29,7 @@ public abstract class AtronSocket {
 				System.out.print(" "+data[i]);
 			}
 			System.out.println();
-			output.write(data.length);
+			output.writeByte(data.length);
 			output.write(data);
     		output.flush();
 			
