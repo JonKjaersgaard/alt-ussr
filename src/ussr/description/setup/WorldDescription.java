@@ -49,7 +49,7 @@ public class WorldDescription extends Description {
         public VectorDescription getScale(int size) { return new VectorDescription(100f,100f,0f); }
     };
 
-    public static final TextureDescription GRID_TEXTURE = new TextureDescription() {
+    public static final TextureDescription WHITE_GRID_TEXTURE = new TextureDescription() {
         public String getFileName() { return "resources/grid2.jpg"; }
         public VectorDescription getScale(int size) { return new VectorDescription(50f*size,50f*size,0f); }
     };
@@ -62,6 +62,11 @@ public class WorldDescription extends Description {
     public static final TextureDescription MARS_TEXTURE = new TextureDescription() {
         public String getFileName() { return "resources/marsTexture.jpg"; }
         public VectorDescription getScale(int size) { return new VectorDescription(100f,100f,0f); }
+    };
+
+    public static final TextureDescription GREY_GRID_TEXTURE = new TextureDescription() {
+        public String getFileName() { return "resources/grid3.jpg"; }
+        public VectorDescription getScale(int size) { return new VectorDescription(50f*size,50f*size,0f); }
     };
 
     /**

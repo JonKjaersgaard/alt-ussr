@@ -27,7 +27,7 @@ import ussr.comm.TransmissionType;
 import ussr.comm.Transmitter;
 import ussr.comm.WiredReceiver;
 import ussr.comm.WiredTransmitter;
-import ussr.description.geometry.AtronShape;
+import ussr.description.geometry.MeshShape;
 import ussr.description.geometry.BoxShape;
 import ussr.description.geometry.ConeShape;
 import ussr.description.geometry.CylinderShape;
@@ -107,9 +107,11 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
             }
         	shape.setModelBound( new BoundingSphere() );
         }
-        else if(element instanceof AtronShape) {
-        	AtronShape half = (AtronShape) element;
-        	shape = constructAtronModel(name, half);
+        else if(element instanceof MeshShape) {
+        	MeshShape half = (MeshShape) element;
+        	if(half.getName().equals("ATRON"))
+        	    shape = constructAtronModel(name, half);
+        	else throw new Error("Mesh shape not supported: "+half.getName());
         	shape.setModelBound(new BoundingSphere());
     		shape.getBatch(0).setIsCollidable(true);
     		shape.setIsCollidable(true);
@@ -206,7 +208,7 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
        return meshSphere;
     }
 	
-	private synchronized static TriMesh constructAtronModel(String name, AtronShape half) {
+	private synchronized static TriMesh constructAtronModel(String name, MeshShape half) {
 		if(atronModel==null) loadAtronModel(half.getRadius());
 		//SharedMesh atronMesh = new SharedMesh(name,atronModel,true);
 		TriMesh atronMesh = new TriMesh(atronModel.getName(),atronModel.getVertexBuffer(0),atronModel.getNormalBuffer(0),atronModel.getColorBuffer(0),atronModel.getTextureBuffer(0,0),atronModel.getIndexBuffer(0));

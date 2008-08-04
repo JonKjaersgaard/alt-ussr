@@ -10,7 +10,7 @@ import java.awt.Color;
 
 import ussr.comm.TransmissionType;
 import ussr.description.Robot;
-import ussr.description.geometry.AtronShape;
+import ussr.description.geometry.MeshShape;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.robot.ModuleComponentDescription;
 import ussr.description.robot.ReceivingDevice;

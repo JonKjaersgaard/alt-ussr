@@ -7,6 +7,8 @@
 package ussr.description.geometry;
 
 import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 
 
 
@@ -18,7 +20,12 @@ import java.awt.Color;
  * @author Modualar Robots @ MMMI
  *
  */
-public class AtronShape extends GeometryDescriptionImpl {
+public class MeshShape extends GeometryDescriptionImpl {
+    
+    /**
+     * What the mesh shape is representing
+     */
+    private String name;
     
     /**
      * The radius of the sphere
@@ -26,9 +33,9 @@ public class AtronShape extends GeometryDescriptionImpl {
     private float radius;
     
     /**
-     * Flag indicating what hemisphere the shape is modelling
+     * Flags describing the shape
      */
-    private boolean north;
+    private Map<String,Object> properties = new HashMap<String,Object>();
     
     /** 
      * local translation of the atron half 
@@ -57,11 +64,15 @@ public class AtronShape extends GeometryDescriptionImpl {
      * @param translation the position
      * @param rotation the rotation
      */
-    public AtronShape(float radius, boolean north, VectorDescription translation, RotationDescription rotation) { 
+    public MeshShape(String name, float radius, VectorDescription translation, RotationDescription rotation) {
+        this.name = name;
     	this.radius = radius; 
-    	setNorth(north); 
     	this.translation = translation;
 		this.rotation = rotation;
+    }
+
+    public void setProperty(String name, Object value) {
+        this.properties.put(name, value);
     }
     
     /**
@@ -79,19 +90,10 @@ public class AtronShape extends GeometryDescriptionImpl {
     }
     
     /**
-     * Set what hemisphere this shape is modelling
-     * @param north true if northern hemisphere, false if southern
+    * return property
      */
-    public void setNorth(boolean north) {
-    	this.north = north;
-    }
-    
-    /**
-     * Get what hemispshere this shape is modelling
-     * @return true if northen hemisphere, false if southern
-     */
-    public boolean isNorth() {
-    	return north;
+    public Object getProperty(String name) {
+    	return properties.get(name);
     }
     
     public VectorDescription getTranslation() { return translation; }
@@ -110,4 +112,8 @@ public class AtronShape extends GeometryDescriptionImpl {
 	public void setAccurateCollisionDetection(boolean accurateCD) {
 		this.accurateCD = accurateCD;
 	}
+
+    public String getName() {
+        return name;
+    }
 }

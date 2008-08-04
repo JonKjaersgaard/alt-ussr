@@ -11,6 +11,7 @@ import java.awt.event.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -245,5 +246,14 @@ public class DebugShell extends JPanel implements ActionListener, SimulationGadg
 
     public List<Module> getModules() {
         return Collections.unmodifiableList(simulation.getModules());
+    }
+    
+    public Module[] getModulesArray() {
+        List<Module> modules = this.getModules();
+        Module[] result = new Module[modules.size()];
+        int index = 0;
+        for(Module m: modules)
+            result[index++] = m;
+        return result;
     }
 }
