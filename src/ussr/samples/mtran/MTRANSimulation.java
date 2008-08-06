@@ -53,7 +53,7 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
         simulation.start();
     }
 	protected void changeWorldHook(WorldDescription world) {
-		world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+		world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 		
 		world.setHasBackgroundScenery(false);
 		PhysicsParameters.get().setPhysicsSimulationStepSize(0.005f);

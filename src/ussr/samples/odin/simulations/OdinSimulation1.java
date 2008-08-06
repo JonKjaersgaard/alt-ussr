@@ -67,7 +67,7 @@ public class OdinSimulation1 extends GenericSimulation {
     	WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
         world.setHasBackgroundScenery(false);
-        world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+        world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
         OdinBuilder builder = new OdinBuilder();
         //int nBalls=0,xMax=0, yMax=0,zMax=0; = Arrays.asList(new WorldDescription.ModulePosition[] { new WorldDescription.ModulePosition("0","OdinMuscle", new VectorDescription(0,0,0), new RotationDescription(0,0,0))});
         //int nBalls=2, xMax=1, yMax=2,zMax=2;

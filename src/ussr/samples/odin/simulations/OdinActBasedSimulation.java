@@ -65,7 +65,7 @@ public class OdinActBasedSimulation extends GenericSimulation {
     	WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
         world.setHasBackgroundScenery(false);
-        world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+        world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
         OdinBuilder builder = new OdinBuilder();
         //printConnectorPos();
         int index=0;

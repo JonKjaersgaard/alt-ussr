@@ -141,7 +141,7 @@ public class MultiRobotSimulation extends GenericSimulation {
     private WorldDescription createWorld() {
         WorldDescription world = new WorldDescription();
         world.setHasBackgroundScenery(false);
-        world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+        world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
         world.setPlaneSize(5);
         // Odin
         ArrayList<ModulePosition> odinBallPos = new ArrayList<ModulePosition>();

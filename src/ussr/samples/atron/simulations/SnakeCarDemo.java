@@ -27,7 +27,7 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
     }
 
     protected void changeWorldHook(WorldDescription world) {
-        world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+        world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
         world.setHasBackgroundScenery(false);
         world.setHeavyObstacles(true);
         ObstacleGenerator generator = new ObstacleGenerator();
@@ -36,7 +36,7 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
         generator.setCircleObstacleRadius(0.5f);
         generator.setObstacleY(-0.4f);
         generator.setObstacleIncY(0.15f);
-        generator.setObstacleSize(0.02f);
+        generator.setObstacleSize(0.015f);
         generator.obstacalize(ObstacleGenerator.ObstacleType.CIRCLE, world);
     }
     @Override
@@ -54,7 +54,7 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
     protected class CarStuffController extends EightController {
 
         volatile private int state = 0;
-        int snake_counter = 8;
+        int snake_counter = 2;
 
         @Override
         public void activate_before_eight2car() {

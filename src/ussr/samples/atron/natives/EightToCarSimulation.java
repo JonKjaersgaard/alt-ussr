@@ -53,7 +53,7 @@ public class EightToCarSimulation extends GenericATRONSimulation {
     }
 
     protected void changeWorldHook(WorldDescription world) {
-        world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+        world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
     }
     
     protected void simulationHook(PhysicsSimulation simulation) {

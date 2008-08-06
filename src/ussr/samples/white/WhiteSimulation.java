@@ -54,7 +54,7 @@ public abstract class WhiteSimulation extends GenericSimulation implements Physi
         simulation.start();
     }
 	protected void changeWorldHook(WorldDescription world) {
-		world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+		world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 		world.setHasBackgroundScenery(false);
 		PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
 		PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);

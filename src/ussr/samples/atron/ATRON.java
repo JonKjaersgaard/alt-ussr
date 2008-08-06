@@ -12,7 +12,7 @@ import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
 import ussr.description.Robot;
-import ussr.description.geometry.AtronShape;
+import ussr.description.geometry.MeshShape;
 import ussr.description.geometry.ConeShape;
 import ussr.description.geometry.GeometryDescription;
 import ussr.description.geometry.RotationDescription;
@@ -62,9 +62,11 @@ public abstract class ATRON implements Robot {
         RobotDescription description = new RobotDescription(type);
         // Module components
         float pi = (float)Math.PI;
-        AtronShape hemi1, hemi2;
-        hemi1 = new AtronShape(smooth ? 0.5f : 0.935f, true, new VectorDescription(0f,0f,-0.00f),new RotationDescription(0,pi,pi/4)); //north
-        hemi2 = new AtronShape(smooth ? 0.5f : 0.935f, false, new VectorDescription(0f,0f,0.00f),new RotationDescription(0,0f,pi/4)); //south
+        MeshShape hemi1, hemi2;
+        hemi1 = new MeshShape("ATRON", smooth ? 0.5f : 0.935f, new VectorDescription(0f,0f,-0.00f),new RotationDescription(0,pi,pi/4)); //north
+        hemi1.setProperty("north", true);
+        hemi2 = new MeshShape("ATRON", smooth ? 0.5f : 0.935f, new VectorDescription(0f,0f,0.00f),new RotationDescription(0,0f,pi/4)); //south
+        hemi2.setProperty("north", false);
 
         hemi1.setColor(smooth ? Color.magenta : Color.blue); hemi2.setColor(Color.RED);
         boolean accurate = PhysicsParameters.get().getRealisticCollision();

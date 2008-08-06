@@ -50,11 +50,11 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
         PhysicsParameters.get().setMaintainRotationalJointPositions(true);
         PhysicsParameters.get().setRealisticCollision(true);
         PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f); // before: 0.0005f
-        PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
+        //PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
     }
     
     protected void changeWorldHook(WorldDescription world) {
-        world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+        world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
         world.setHasBackgroundScenery(false);
     }
 

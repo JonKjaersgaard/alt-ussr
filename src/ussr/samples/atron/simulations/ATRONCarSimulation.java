@@ -14,6 +14,9 @@ import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsParameters;
+import ussr.physics.PhysicsSimulation;
+import ussr.physics.jme.JMESimulation;
+import ussr.physics.jme.pickers.DisplacementPicker;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONBuilder;
@@ -49,8 +52,15 @@ public class ATRONCarSimulation extends GenericATRONSimulation {
 		return new ATRONBuilder().buildCar(4, new VectorDescription(0,-0.25f,0));
 	}
     
+	@Override
     protected void changeWorldHook(WorldDescription world) {
         ObstacleGenerator generator = new ObstacleGenerator();
         generator.obstacalize(obstacleType, world);
     }
+	
+	@Override
+	protected void simulationHook(PhysicsSimulation simulation) {
+	    ((JMESimulation)simulation).setPicker(new DisplacementPicker());
+	}
+    
 }

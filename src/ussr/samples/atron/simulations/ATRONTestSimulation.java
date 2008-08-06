@@ -46,10 +46,10 @@ public class ATRONTestSimulation extends GenericATRONSimulation {
         return atron;
     }
 	protected void changeWorldHook(WorldDescription world) {
-		world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+		world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 		PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
 		if(testType.equals("velocityTest")) PhysicsParameters.get().setGravity(0);
-		if(testType.equals("torqueTest")) world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+		if(testType.equals("torqueTest")) world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
     }
 	private static ArrayList<ModulePosition> buildSnake(int length) {
     	float Yoffset = 0.0f; //0.4f;
