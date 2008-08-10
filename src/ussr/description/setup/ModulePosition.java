@@ -24,6 +24,8 @@ import com.jmex.model.collada.schema.faceType;
  *
  */
 public class ModulePosition {
+    public static final String DEFAULT_ROBOT_TYPE = "default";
+    
     private String name;
     private String type;
     private VectorDescription position;
@@ -36,40 +38,37 @@ public class ModulePosition {
      * @param rotation_EW
      */
     public ModulePosition(String name, VectorDescription position, RotationDescription rotation) {
-        this(name,"default",position,rotation);
+        this(name,DEFAULT_ROBOT_TYPE,position,rotation);
     }
     /**
      * 
      * @param name name of module
-     * @param type type of module like "atron", "odin", etc
+     * @param typeProperties type of module like "atron", "odin", etc plus any module-specific properties, separated by ";" and written "name=value". Module type can be omitted by starting with ";"
      * @param position position of module in the world
      * @param rotation rotation of module in the world
      */
-    public ModulePosition(String name, String type, VectorDescription position, RotationDescription rotation) {
-        this(name,type,position,rotation,null);
-    }
-
-    public ModulePosition(String name, String type, VectorDescription position, RotationDescription rotation, Map<String,String> properties) {
+    public ModulePosition(String name, String typeProperties, VectorDescription position, RotationDescription rotation) {
         this.name = name;
         this.position = position;
         this.rotation = rotation;
-        if(properties!=null)
-            this.properties = properties;
-        else
-            this.properties = new HashMap<String,String>();
-        if(type.indexOf(':')>=0) {
-            int index = type.indexOf(':');
-            this.type = type.substring(0,index);
-            while(index<type.length()) {
-                int end = type.indexOf(':',index);
-                end = end==-1 ? type.length() : end;
-                String property = type.substring(index,end);
-                int pos = property.indexOf('=');
-                if(pos==-1||pos==0||pos==property.length()-1) throw new Error("Illegal module property: "+property);
-                properties.put(property.substring(0,pos), property.substring(pos+1));
+        this.properties = new HashMap<String,String>();
+        if(typeProperties.indexOf(';')>=0) {
+            int semi = typeProperties.indexOf(';');
+            this.type = typeProperties.substring(0,semi);
+            if(this.type.length()==0) this.type=DEFAULT_ROBOT_TYPE;
+            while(semi<typeProperties.length()) {
+                int nextSemi = typeProperties.indexOf(';',semi+1);
+                nextSemi = nextSemi==-1 ? typeProperties.length() : nextSemi;
+                String property = typeProperties.substring(semi+1,nextSemi);
+                int equals = property.indexOf('=');
+                if(equals==-1||equals==0||equals==property.length()-1) throw new Error("Illegal module property: "+property);
+                String propertyName = property.substring(0,equals);
+                String propertyValue = property.substring(equals+1);
+                properties.put(propertyName, propertyValue);
+                semi = nextSemi;
             }
         } else
-            this.type = type;
+            this.type = typeProperties;
     }
 
     /**

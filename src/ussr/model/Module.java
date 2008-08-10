@@ -9,6 +9,7 @@ package ussr.model;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.jme.math.Matrix4f;
 import com.jme.math.Quaternion;
@@ -72,6 +73,11 @@ public class Module extends Entity {
      * Communication receivers for the module
      */
     private List<Receiver> receivers = new ArrayList<Receiver>();
+
+    /**
+     * Indicates whether module is ready for simulation (placed in the world, properly connected, etc)
+     */
+    private boolean isReady = false;
     
     /**
      * Construct a module 
@@ -324,4 +330,19 @@ public class Module extends Entity {
 			c1.addExternalForce(forceX, forceY, forceZ);
         }
 	}
+
+    public synchronized void setReady(boolean isReady) {
+        this.isReady = isReady;
+        this.notifyAll();
+    }
+    
+    public synchronized void waitForReady() {
+        while(!isReady)
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                throw new Error("Unexpected interruption");
+            }
+    }
+
 }

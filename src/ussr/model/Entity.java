@@ -82,4 +82,9 @@ public abstract class Entity {
         for(String label: description.getLabels())
             this.setProperty("label:"+label, label);
     }
+
+    public void setProperties(Map<String, String> otherProperties) {
+        for(Map.Entry<String, String> prop: otherProperties.entrySet())
+            this.setProperty(prop.getKey(), prop.getValue());
+    }
 }
