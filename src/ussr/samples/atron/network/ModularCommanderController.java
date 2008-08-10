@@ -20,8 +20,8 @@ public class ModularCommanderController extends AbstractNetworkConnection {
         public void mapPacketToAPI(byte[] packet);
     }
 
-    public ModularCommanderController(String name, int port, Mapper mapper) {
-        super(name,port);
+    public ModularCommanderController(int port, Mapper mapper) {
+        super(port);
         this.controller = mapper;
     }
 

@@ -9,23 +9,18 @@ public class ATRONModularCommanderController extends ATRONController implements 
     
     @Override
     public void activate() {
-        super.getModule().waitForPropertyToExist("name");
-        String moduleName = super.getModule().getProperty("name");
-        int index = moduleName.indexOf(':');
-        if(index==-1) {
-            System.out.println("Module "+moduleName+" is passive");
+        String portDescription = super.getModule().getProperty("port");
+        if(portDescription==null) {
+            System.out.println("Module "+getModule().getProperty("name")+" is passive");
             return;
         }
-        String[] components = moduleName.split(":");
-        String name = components[0];
         int port;
         try {
-            port = Integer.parseInt(components[1]);
+            port = Integer.parseInt(portDescription);
         } catch(NumberFormatException exn) {
-            throw new Error("Illegal port number, cannot parse: "+components[1]);
+            throw new Error("Illegal port number, cannot parse: "+portDescription);
         }
-        super.getModule().setProperty("name", name);
-        mc = new ModularCommanderController(name,port,this);
+        mc = new ModularCommanderController(port,this);
         mc.activate();
     }
 
