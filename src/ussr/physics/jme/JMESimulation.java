@@ -152,6 +152,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             else {
                 Thread moduleThread = new Thread() {
                     public void run() {
+                        module.waitForReady();
                         module.getController().activate();
                         if(!isStopped()) {
                             PhysicsLogger.log("Warning: unexpected controller exit");
@@ -382,6 +383,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         for(Module module: modules) {
             ModulePosition p = positions.next();
             module.setProperty("name", p.getName());
+            module.setProperties(p.getProperties());
             registry.put(p.getName(), module);
             //module.reset();
            // module.setPosition(p.getPosition());
@@ -440,6 +442,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 }
             }
         }
+        for(Module module: modules)
+            module.setReady(true);
     }
 
     public synchronized void associateGeometry(String name, TriMesh shape) {
