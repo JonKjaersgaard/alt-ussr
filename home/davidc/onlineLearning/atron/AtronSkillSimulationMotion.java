@@ -93,7 +93,7 @@ public class AtronSkillSimulationMotion extends AtronSkillSimulation implements 
 		SkillFileManager.initLogFiles("ATRON",robotType.name(),trialID);
 		if(loadSkillsFromFile) SkillFileManager.loadSkills();
 		//world.setPlaneTexture(WorldDescription.WHITE_TEXTURE);
-		world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+		world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 		
 		world.setHasBackgroundScenery(false);
 		world.setFlatWorld(true);

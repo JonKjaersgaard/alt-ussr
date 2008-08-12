@@ -11,7 +11,7 @@ public class AtronSpotComm {
 	
 	String sourceStr = "sf@localhost:9002";
 //	String sourceStr = "sf@10.194.95.255:9002";
-	PacketSource source; 
+	PacketSource source;
 	boolean debugPrint = true;
 	//boolean remote = true;
 	public AtronSpotComm() {

@@ -66,4 +66,9 @@ public class OdinRolePlayer implements RolePlayer  {
 		else if(controller.getType()=="OdinBattery") return OdinBatteryRoles.values()[role].toString();
 		return "NaN";
 	}
+	@Override
+	public void playRole(Role myRole, float timePercent) {
+		throw new RuntimeException("Not implemented");
+		
+	}
 }

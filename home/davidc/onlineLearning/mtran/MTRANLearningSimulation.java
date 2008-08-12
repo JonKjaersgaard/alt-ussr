@@ -48,10 +48,8 @@ public class MTRANLearningSimulation extends MTRANSimulation {
 	public Controller getController(String type) {
 		return new MTRANLearningController();
 	}
-
-	@Override
 	public void changeWorldHook(WorldDescription world) {
-	    world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+	    world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 	    world.setHasBackgroundScenery(false);
 	    world.setPlaneSize(500);
 	    PhysicsParameters.get().setPhysicsSimulationStepSize(0.005f);
