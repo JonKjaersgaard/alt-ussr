@@ -1,2 +1,0 @@
-28-09-2007 13:48:30 com.jme.system.PropertiesIO load
-WARNING: Could not load properties. Creating a new one.
