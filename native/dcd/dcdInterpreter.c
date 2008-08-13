@@ -15,12 +15,7 @@
 
 #include "roles.h"
 
-#ifdef USSR
-static int module_rotation_cache[1000];
-static int cache_initialized = 0;
-#endif
-
-void execute_command(USSRONLYC(USSREnv *env) unsigned char command, unsigned char argument) {
+void execute_command(USSRONLYC(USSREnv *env) uint8_t command, uint8_t argument) {
   switch(command) {
   case CMD_ROTATE_CLOCKWISE:
     USSRDEBUG(TRACE_ACTUATION,printf("<%d>(%d) Actuate: ROTATE_CLOCKWISE(%d) = rotateContinuously(%d)\n", env->context, getRole(env), argument, argument));
@@ -35,19 +30,19 @@ void execute_command(USSRONLYC(USSREnv *env) unsigned char command, unsigned cha
     centerStop(USSRONLY(env));
     break;
   case CMD_ROTATE_DEGREES:
-    USSRDEBUG(TRACE_ACTUATION,printf("<%d>(%d) Actuate: ROTATE_DEGREES(%d) = rotateDegrees(%d)\n", env->context, getRole(env), argument, 10*(signed char)argument));
-    rotateDegrees(USSRONLYC(env) 10*(signed char)argument);
+    USSRDEBUG(TRACE_ACTUATION,printf("<%d>(%d) Actuate: ROTATE_DEGREES(%d) = rotateDegrees(%d)\n", env->context, getRole(env), argument, 10*(int8_t)argument));
+    rotateDegrees(USSRONLYC(env) 10*(int8_t)argument);
     break;
   case CMD_ROTATE_TO:
-    USSRDEBUG(TRACE_ACTUATION,printf("<%d>(%d) Actuate: ROTATE_TO(%d) = rotateToDegree(%d)\n", env->context, getRole(env), argument, 10*(signed char)argument));
-    rotateToDegree(USSRONLYC(env) 10*(signed char)argument);
+    USSRDEBUG(TRACE_ACTUATION,printf("<%d>(%d) Actuate: ROTATE_TO(%d) = rotateToDegree(%d)\n", env->context, getRole(env), argument, 10*(int8_t)argument));
+    rotateToDegree(USSRONLYC(env) 10*(int8_t)argument);
     break;
   default:
     USSRDEBUG(TRACE_COMMANDS,printf("Got command %d (mx=%d), role=%d\n", command, MAX_N_GENERIC_COMMANDS,GLOBAL(env,role)));
     if(command>=MAX_N_GENERIC_COMMANDS) {
-      unsigned char user_command = command-MAX_N_GENERIC_COMMANDS;
+      uint8_t user_command = command-MAX_N_GENERIC_COMMANDS;
       if(user_command<MAX_ROLE_COMMANDS) {
-	unsigned char index;
+	uint8_t index;
 	index = GLOBAL(env,command_table)[GLOBAL(env,role)][user_command];
 	if(index!=COMMAND_NONE) {
 	  StoredProgram *program = GLOBAL(env,global_program_store)+index;
@@ -71,7 +66,7 @@ void execute_command(USSRONLYC(USSREnv *env) unsigned char command, unsigned cha
   }
 }
 
-static inline void stack_push(USSRONLYC(USSREnv *env) char *stack, unsigned char *sp, char value) {
+static inline void stack_push(USSRONLYC(USSREnv *env) int8_t *stack, uint8_t *sp, int8_t value) {
   if(*sp==MAX_STACK_SIZE) {
     report_error(USSRONLYC(env) INTERPRETER_STACK_OVERFLOW,*sp);
     return;
@@ -79,7 +74,7 @@ static inline void stack_push(USSRONLYC(USSREnv *env) char *stack, unsigned char
   stack[(*sp)++] = value;
 }
 
-static inline char stack_pop(USSRONLYC(USSREnv *env) char *stack, unsigned char *sp) {
+static inline int8_t stack_pop(USSRONLYC(USSREnv *env) int8_t *stack, uint8_t *sp) {
   if(sp==0) {
     report_error(USSRONLYC(env) INTERPRETER_STACK_UNDERFLOW,*sp);
     return 0;
@@ -87,9 +82,9 @@ static inline char stack_pop(USSRONLYC(USSREnv *env) char *stack, unsigned char 
   return stack[--(*sp)];
 }
 
-unsigned char count_bits(unsigned char value) {
-  unsigned char total = 0;
-  unsigned char count;
+uint8_t count_bits(uint8_t value) {
+  uint8_t total = 0;
+  uint8_t count;
   for(count=0; count<8; count++) {
     if(value&1) total++;
     value>>=1;
@@ -97,12 +92,12 @@ unsigned char count_bits(unsigned char value) {
   return total;
 }
 
-static unsigned char compute_2_dir(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char dir, unsigned char dir1, unsigned char dir2) {
-  unsigned char total = 0;
-  unsigned char c0 = virtual2physical(USSRONLYC(env) context, dir1);
-  unsigned char c4 = virtual2physical(USSRONLYC(env) context, dir2);
-  unsigned char is0 = isOtherConnectorNearby(USSRONLYC(env) c0);
-  unsigned char is4 = isOtherConnectorNearby(USSRONLYC(env) c4);
+static uint8_t compute_2_dir(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t dir, uint8_t dir1, uint8_t dir2) {
+  uint8_t total = 0;
+  uint8_t c0 = virtual2physical(USSRONLYC(env) context, dir1);
+  uint8_t c4 = virtual2physical(USSRONLYC(env) context, dir2);
+  uint8_t is0 = isOtherConnectorNearby(USSRONLYC(env) c0);
+  uint8_t is4 = isOtherConnectorNearby(USSRONLYC(env) c4);
   if(is0) total++;
   if(is4) total++;
   USSRDEBUG(TRACE_COMPASS,printf("  <%6d> (Computing connected dir %d [%d->%d]: %d->%d=%d, %d->%d=%d, total=%d)\n", env->context, dir, context->incoming_virtual_channel, context->incoming_physical_channel, dir1, c0, is0, dir2, c4, is4, total));
@@ -111,8 +106,8 @@ static unsigned char compute_2_dir(USSRONLYC(USSREnv *env) InterpreterContext *c
 
 // need function mapping direction to virtual connectors!
 // for each relevant virtual connector vc, return 1 if GLOBAL(env,neighbor_role_cache)[vc]==role
-unsigned char check_neighbor_role(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char direction, unsigned char role) {
-  unsigned char c;
+uint8_t check_neighbor_role(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t direction, uint8_t role) {
+  uint8_t c;
   switch(context->mod_rotation) {
   case ARG_NORTH_SOUTH:
     switch(direction) {
@@ -142,8 +137,8 @@ unsigned char check_neighbor_role(USSRONLYC(USSREnv *env) InterpreterContext *co
   }      
 }
 
-unsigned char compute_connected_dir(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char dir) {
-  unsigned char total = 0, index;
+uint8_t compute_connected_dir(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t dir) {
+  uint8_t total = 0, index;
   switch(context->mod_rotation) {
   case ARG_NORTH_SOUTH:
     switch(dir) {
@@ -175,8 +170,8 @@ unsigned char compute_connected_dir(USSRONLYC(USSREnv *env) InterpreterContext *
   }
 }
 
-unsigned char deprecated_compute_connected_dir(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char dir) {
-  unsigned char total = 0, index;
+uint8_t deprecated_compute_connected_dir(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t dir) {
+  uint8_t total = 0, index;
   switch(context->mod_rotation) {
   case ARG_NORTH_SOUTH:
     switch(dir) {
@@ -211,9 +206,9 @@ unsigned char deprecated_compute_connected_dir(USSRONLYC(USSREnv *env) Interpret
   }
 }
 
-void migrate_continue(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char *program, unsigned char program_size) {
-  unsigned char except = context->incoming_virtual_channel;
-  unsigned char channel;
+void migrate_continue(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t *program, uint8_t program_size) {
+  uint8_t except = context->incoming_virtual_channel;
+  uint8_t channel;
   for(channel=0; channel<8; channel++)
     if(channel!=except) {
       USSRDEBUG(TRACE_MIGRATION,printf("  <%6d> (Considering migrate continue on channel %d)\n", env->context, channel));
@@ -221,16 +216,16 @@ void migrate_continue(USSRONLYC(USSREnv *env) InterpreterContext *context, unsig
     }
 }
 
-void set_role_notify(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char role) {
-  unsigned char channel;
+void set_role_notify(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t role) {
+  uint8_t channel;
   GLOBAL(env,role)=role;
   USSRDEBUG(TRACE_EVENTS,printf("set role notify: module <%d>(%d) set to %d\n", env->context, getRole(env), role));
   for(channel=0; channel<8; channel++)
     notifyRoleChange(USSRONLYC(env) context, channel, role);
 }
 
-unsigned char save_program(USSRONLYC(USSREnv *env) InterpreterContext  *context, unsigned char *source_program, unsigned char adr, unsigned char size) {
-  unsigned char index;
+uint8_t save_program(USSRONLYC(USSREnv *env) InterpreterContext  *context, uint8_t *source_program, uint8_t adr, uint8_t size) {
+  uint8_t index;
   StoredProgram* target_program;
   /* Find vacant program slot */
   disable_interrupts(USSRONLY(env));
@@ -258,16 +253,16 @@ unsigned char save_program(USSRONLYC(USSREnv *env) InterpreterContext  *context,
   return index;
 }
 
-void install_event_handler(USSRONLYC(USSREnv *env) InterpreterContext  *context, unsigned char *source_program, unsigned char vector, unsigned char adr, unsigned char size) {
-  unsigned char index = save_program(USSRONLYC(env) context, source_program, adr, size);
+void install_event_handler(USSRONLYC(USSREnv *env) InterpreterContext  *context, uint8_t *source_program, uint8_t vector, uint8_t adr, uint8_t size) {
+  uint8_t index = save_program(USSRONLYC(env) context, source_program, adr, size);
   /* Set up vector */
   GLOBAL(env,event_handler_vectors[vector]) = index;
   USSRDEBUG(TRACE_EVENTS,printf("<%d>(%d) Stored event handler in slot %d, queue: {%d,%d}\n", env->context, getRole(env), index, GLOBAL(env,task_queue_start), GLOBAL(env,task_queue_end)));
 }
 
-void install_command(USSRONLYC(USSREnv *env) InterpreterContext  *context, unsigned char *source_program, unsigned char role, unsigned char raw_command, unsigned char adr, unsigned char size) {
-  unsigned char index = save_program(USSRONLYC(env) context, source_program, adr, size);
-  unsigned char command, r;
+void install_command(USSRONLYC(USSREnv *env) InterpreterContext  *context, uint8_t *source_program, uint8_t role, uint8_t raw_command, uint8_t adr, uint8_t size) {
+  uint8_t index = save_program(USSRONLYC(env) context, source_program, adr, size);
+  uint8_t command, r;
   if(raw_command<MAX_N_GENERIC_COMMANDS)
     report_error(USSRONLYC(env) ERROR_ILLEGAL_COMMAND_INSTALL,command);
   command = raw_command - MAX_N_GENERIC_COMMANDS;
@@ -284,8 +279,8 @@ void install_command(USSRONLYC(USSREnv *env) InterpreterContext  *context, unsig
     }
 }
 
-void clear_event_handler(USSRONLYC(USSREnv *env) unsigned char vector) {
-  int c;
+void clear_event_handler(USSRONLYC(USSREnv *env) uint8_t vector) {
+  uint8_t c;
   GLOBAL(env,event_handler_vectors[vector]) = VECTOR_NONE;
   USSRDEBUG(TRACE_EVENTS,printf("<%d>(%d) Cleared vector %d\n", env->context, getRole(env), vector));
 #ifdef VERBOSE_DEBUG
@@ -295,8 +290,8 @@ void clear_event_handler(USSRONLYC(USSREnv *env) unsigned char vector) {
   GLOBAL(env,global_program_store_use_flags) ^= (1<<vector);
 }
 
-void disable_event_handler(USSRONLYC(USSREnv *env) unsigned char vector) {
-  int c;
+void disable_event_handler(USSRONLYC(USSREnv *env) uint8_t vector) {
+  uint8_t c;
   if(GLOBAL(env,event_handler_vectors[vector])==VECTOR_NONE) return;
   GLOBAL(env,event_handler_vectors[vector]) |= VECTOR_DISABLED_FLAG;
   USSRDEBUG(TRACE_EVENTS,printf("<%d>(%d) Disabled vector %d\n", env->context, getRole(env), vector));
@@ -307,7 +302,7 @@ void disable_event_handler(USSRONLYC(USSREnv *env) unsigned char vector) {
 #endif
 }
 
-void enable_event_handler(USSRONLYC(USSREnv *env) unsigned char vector) {
+void enable_event_handler(USSRONLYC(USSREnv *env) uint8_t vector) {
   int c;
   if(GLOBAL(env,event_handler_vectors[vector])==VECTOR_NONE) return;
   GLOBAL(env,event_handler_vectors[vector]) ^= VECTOR_DISABLED_FLAG;
@@ -319,8 +314,8 @@ void enable_event_handler(USSRONLYC(USSREnv *env) unsigned char vector) {
 #endif
 }
 
-void clear_command_queue(USSRONLYC(USSREnv *env) unsigned char command) {
-  unsigned char index;
+void clear_command_queue(USSRONLYC(USSREnv *env) uint8_t command) {
+  uint8_t index;
   index = GLOBAL(env, task_queue_start);
   while(index!=GLOBAL(env,task_queue_end)) {
     Task *task = GLOBAL(env,task_queue)+index;
@@ -329,10 +324,10 @@ void clear_command_queue(USSRONLYC(USSREnv *env) unsigned char command) {
   }
 }
 
-void sleep_rotations(USSRONLYC(USSREnv *env) unsigned char rotations) {
-  unsigned char rotations_seen = 0, starting_joint_pos = getJointPosition(USSRONLY(env)), currently_at_start = 1;
+void sleep_rotations(USSRONLYC(USSREnv *env) uint8_t rotations) {
+  uint8_t rotations_seen = 0, starting_joint_pos = getJointPosition(USSRONLY(env)), currently_at_start = 1;
   while(rotations_seen<rotations) {
-    unsigned char current_pos = getJointPosition(USSRONLY(env));
+    uint8_t current_pos = getJointPosition(USSRONLY(env));
     if(currently_at_start) {
       if(current_pos!=starting_joint_pos) currently_at_start = 0;
     } else {
@@ -345,15 +340,15 @@ void sleep_rotations(USSRONLYC(USSREnv *env) unsigned char rotations) {
   }
 }
 
-void send_command(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char qual_role, unsigned char command, unsigned char argument) {
-  unsigned char channel;
+void send_command(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t qual_role, uint8_t command, uint8_t argument) {
+  uint8_t channel;
   for(channel=0; channel<8; channel++)
     sendCommandMaybe(USSRONLYC(env) context, channel, qual_role, command, argument, 1, 0);
   if(check_role_instanceof(GLOBAL(env,role),qual_role))
     execute_command(USSRONLYC(env) command, argument);
 }
 
-unsigned char function_apply(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char function, unsigned char argument) {
+uint8_t function_apply(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t function, uint8_t argument) {
   if(function<CMD_MAX || function>=128) { /* Command, internal or user-defined */
     execute_command(USSRONLYC(env) function, argument);
   } else { /* Special primop */
@@ -372,10 +367,10 @@ unsigned char function_apply(USSRONLYC(USSREnv *env) InterpreterContext *context
   return 0;
 }
 
-unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char *program, unsigned char program_size, unsigned char argument, unsigned char pc, char *stack, unsigned char sp) {
-  int instruction_counter = 0;
-  unsigned char role = getRole(USSRONLY(env));
-  int interpreter_debug_flags = 0;
+uint8_t do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t *program, uint8_t program_size, uint8_t argument, uint8_t pc, int8_t *stack, uint8_t sp) {
+  uint8_t instruction_counter = 0;
+  uint8_t role = getRole(USSRONLY(env));
+  uint16_t interpreter_debug_flags = 0;
   printf("Interpreting program at address %d\n", program);
   while(pc<program_size) {
     USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("  <%6d,%2d> %2d(%2d) [%3d %3d %3d %3d %3d]: ", env->context, role, pc, sp, stack[0], stack[1], stack[2], stack[3], stack[4]));
@@ -403,8 +398,8 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
     case INS_CONNECTED:
       USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_CONNECTED\n"));
       {
-	signed char channel;
-	unsigned char result = 0;
+	int8_t channel;
+	uint8_t result = 0;
 	for(channel=7; channel>=0; channel--) {
 	  if(isOtherConnectorNearby(USSRONLYC(env) channel)) result |= 1;
 	  result <<= 1;
@@ -415,7 +410,7 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
     case INS_CONNECTED_SIZEOF:
       USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_CONNECTED_SIZEOF\n"));
       {
-	unsigned char channel, total = 0;
+	uint8_t channel, total = 0;
 	for(channel=0; channel<8; channel++)
 	  if(isOtherConnectorNearby(USSRONLYC(env) channel)) total++;
 	stack_push(USSRONLYC(env) stack,&sp,total);
@@ -424,9 +419,9 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
     case INS_SIZEOF:
       USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_SIZEOF\n"));
       {
-	unsigned char tos = stack_pop(USSRONLYC(env) stack,&sp);
-	unsigned char result = 0;
-	char i;
+	uint8_t tos = stack_pop(USSRONLYC(env) stack,&sp);
+	uint8_t result = 0;
+	int8_t i;
 	for(i=0; i<8; i++) {
 	  if(tos&1) result++;
 	  tos >>= 1;
@@ -437,22 +432,22 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
     case INS_GREATER:
       USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_GREATER\n"));
       {
-	signed char tos = stack_pop(USSRONLYC(env) stack,&sp);
-	signed char sos = stack_pop(USSRONLYC(env) stack,&sp);
+	int8_t tos = stack_pop(USSRONLYC(env) stack,&sp);
+	int8_t sos = stack_pop(USSRONLYC(env) stack,&sp);
 	stack_push(USSRONLYC(env) stack,&sp,sos>tos);
       }
       break;
     case INS_EQUALS_0:
       USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_EQUALS_0\n"));
       {
-	char tos = stack_pop(USSRONLYC(env) stack,&sp);
+	int8_t tos = stack_pop(USSRONLYC(env) stack,&sp);
 	stack_push(USSRONLYC(env) stack,&sp,tos==0);
       }
       break;
     case INS_EQUALS_1:
       USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_EQUALS_1\n"));
       {
-	char tos = stack_pop(USSRONLYC(env) stack,&sp);
+	int8_t tos = stack_pop(USSRONLYC(env) stack,&sp);
 	stack_push(USSRONLYC(env) stack,&sp,tos==1);
       }
       break;
@@ -460,16 +455,16 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
       USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_CONNECTED_DIR_SIZEOF "));
       USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,print_arg(program,pc,1));
       {
-	unsigned char dir = program[pc++];
+	uint8_t dir = program[pc++];
 	stack_push(USSRONLYC(env) stack,&sp,count_bits(deprecated_compute_connected_dir(USSRONLYC(env) context, dir)));
       }
       break;
     case INS_CONNECTED_DOWN_ROLE:
       USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_CONNECTED_DOWN_ROLE %d\n", program[pc]));
       {
-	unsigned char role = program[pc++];
+	uint8_t role = program[pc++];
 #ifdef VERBOSE_DEBUGGING
-	unsigned char c;
+	uint8_t c;
 	USSRDEBUG2(interpreter_debug_flags,TRACE_EVENTS,printf("<%d> Looking for %d in [ ", env->context, role));
 	for(c=0; c<8; c++) USSRDEBUG2(interpreter_debug_flags,TRACE_EVENTS,printf("%d ", GLOBAL(env,neighbor_role_cache[c])));
 	USSRDEBUG2(interpreter_debug_flags,TRACE_EVENTS,printf("\n"));
@@ -583,15 +578,15 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
       break;
     case INS_APPLY:
       {
-	unsigned char function = stack_pop(USSRONLYC(env) stack, &sp);
-	unsigned char arg = stack_pop(USSRONLYC(env) stack, &sp);
-	unsigned char result = function_apply(USSRONLYC(env) context,function,arg);
+	uint8_t function = stack_pop(USSRONLYC(env) stack, &sp);
+	uint8_t arg = stack_pop(USSRONLYC(env) stack, &sp);
+	uint8_t result = function_apply(USSRONLYC(env) context,function,arg);
 	stack_push(USSRONLYC(env) stack, &sp, result);
 	break;
       }
     case INS_PUSH_ARGUMENT:
       {
-	unsigned char index = program[pc];
+	uint8_t index = program[pc];
 	if(index!=0) report_error(USSRONLYC(env) ERROR_ILLEGAL_ARGUMENT_INDEX, index);
 	stack_push(USSRONLYC(env) stack, &sp, argument);
 	pc++;
@@ -604,13 +599,13 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
     case INS_SET_LED:
       {
 	USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_SET_LED %d (pc=%d)\n", program[pc], pc));
-	unsigned char value = program[pc++];
+	uint8_t value = program[pc++];
 	setNorthIOPort(USSRONLYC(env) value);
 	break;
       }
     default:
       {
-	unsigned char instruction = program[pc-1];
+	uint8_t instruction = program[pc-1];
 	if(instruction>127) {
 	  USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_PUSHC %d\n", instruction^128));
 	  stack_push(USSRONLYC(env) stack, &sp, instruction^128);
@@ -627,9 +622,9 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
   return 0;
 }
   
-unsigned char interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char *program, unsigned char size, unsigned char argument) {
-  char stack[MAX_STACK_SIZE];
-  int i;
+uint8_t interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t *program, uint8_t size, uint8_t argument) {
+  int8_t stack[MAX_STACK_SIZE];
+  uint8_t i;
   USSRDEBUG(TRACE_INTERPRET,printf("Executing program:\n"));
 #ifdef VERBOSE_DEBUG
   print_program(program, size);

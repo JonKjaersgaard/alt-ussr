@@ -7,12 +7,12 @@
 #include <strings.h>
 
 #ifdef USSR
-int vm_trace_flags = /*TRACE_BEHAVIOR|*/ TRACE_EVENTS|TRACE_MIGRATION|TRACE_NETWORK|TRACE_COMMANDS|TRACE_INTERPRET|TRACE_ACTUATION;
+uint32_t vm_trace_flags = /*TRACE_BEHAVIOR|*/ TRACE_EVENTS|TRACE_MIGRATION|TRACE_NETWORK|TRACE_COMMANDS|TRACE_INTERPRET|TRACE_ACTUATION;
 #endif
 
 #define SIZE_program_findWheels 24
 #define ROLE_program_findWheels ROLE_ANY
-unsigned char program_findWheels[SIZE_program_findWheels] = {
+uint8_t program_findWheels[SIZE_program_findWheels] = {
   INS_CENTER_POSITION_EW,
   INS_IF_FALSE_GOTO, 23,
   INS_CONNECTED_SIZEOF,
@@ -32,7 +32,7 @@ unsigned char program_findWheels[SIZE_program_findWheels] = {
 
 #define SIZE_program_findWheels_START 30
 #define ROLE_program_findWheels ROLE_ANY
-unsigned char program_findWheels_START[SIZE_program_findWheels_START] = {
+uint8_t program_findWheels_START[SIZE_program_findWheels_START] = {
   INS_CENTER_POSITION_EW,
   INS_IF_FALSE_GOTO, 29,
   INS_CONNECTED_SIZEOF,
@@ -54,7 +54,7 @@ unsigned char program_findWheels_START[SIZE_program_findWheels_START] = {
 
 #define SIZE_program_installProximityEventHandler_right 21
 #define ROLE_program_installProximityEventHandler_right ROLE_RIGHT_WHEEL
-unsigned char program_installProximityEventHandler_right[SIZE_program_installProximityEventHandler_right] = {
+uint8_t program_installProximityEventHandler_right[SIZE_program_installProximityEventHandler_right] = {
   INS_HAS_ROLE, ROLE_RIGHT_WHEEL,
   INS_IF_FALSE_GOTO, 20,
   MK_INS_CONSTANT(0),
@@ -70,7 +70,7 @@ unsigned char program_installProximityEventHandler_right[SIZE_program_installPro
 
 #define SIZE_program_installProximityEventHandler_left 21
 #define ROLE_program_installProximityEventHandler_left ROLE_LEFT_WHEEL
-unsigned char program_installProximityEventHandler_left[SIZE_program_installProximityEventHandler_left] = {
+uint8_t program_installProximityEventHandler_left[SIZE_program_installProximityEventHandler_left] = {
   INS_HAS_ROLE, ROLE_LEFT_WHEEL,
   INS_IF_FALSE_GOTO, 20,
   MK_INS_CONSTANT(0),
@@ -86,7 +86,7 @@ unsigned char program_installProximityEventHandler_left[SIZE_program_installProx
 
 #define SIZE_program_findAxles 13
 #define ROLE_program_findAxles ROLE_ANY
-unsigned char program_findAxles[SIZE_program_findAxles] = {
+uint8_t program_findAxles[SIZE_program_findAxles] = {
   INS_CENTER_POSITION_UD,
   INS_IF_FALSE_GOTO, 12,
   INS_CONNECTED_DOWN_ROLE, ROLE_WHEEL,
@@ -99,7 +99,7 @@ unsigned char program_findAxles[SIZE_program_findAxles] = {
 
 #define SIZE_program_installStopLeft 34
 #define ROLE_program_installStopLeft ROLE_LEFT_WHEEL
-unsigned char program_installStopLeft[SIZE_program_installStopLeft] = {
+uint8_t program_installStopLeft[SIZE_program_installStopLeft] = {
   INS_HAS_ROLE, ROLE_LEFT_WHEEL,
   INS_IF_FALSE_GOTO, 10,
   INS_INSTALL_COMMAND, ROLE_WHEEL, 128, 11, 23,
@@ -119,7 +119,7 @@ unsigned char program_installStopLeft[SIZE_program_installStopLeft] = {
 
 #define SIZE_program_installStopRight 34
 #define ROLE_program_installStopRight ROLE_RIGHT_WHEEL
-unsigned char program_installStopRight[SIZE_program_installStopRight] = {
+uint8_t program_installStopRight[SIZE_program_installStopRight] = {
   INS_HAS_ROLE, ROLE_RIGHT_WHEEL,
   INS_IF_FALSE_GOTO, 10,
   INS_INSTALL_COMMAND, ROLE_WHEEL, 128, 11, 23,
@@ -139,7 +139,7 @@ unsigned char program_installStopRight[SIZE_program_installStopRight] = {
 
 #define SIZE_program_axleBehavior 53
 #define ROLE_program_axleBehavior ROLE_AXLE
-unsigned char program_axleBehavior[SIZE_program_axleBehavior] = {
+uint8_t program_axleBehavior[SIZE_program_axleBehavior] = {
   INS_HAS_ROLE, ROLE_AXLE,
   INS_IF_FALSE_GOTO, 12,
   INS_INSTALL_COMMAND, ROLE_AXLE, 128, 13, 40,
@@ -172,7 +172,7 @@ unsigned char program_axleBehavior[SIZE_program_axleBehavior] = {
 };
 
 #define SIZE_program_simpleTest 14
-unsigned char program_simpleTest[SIZE_program_simpleTest] = {
+uint8_t program_simpleTest[SIZE_program_simpleTest] = {
   INS_SET_LED, 31,
   INS_INSTALL_COMMAND, ROLE_ANY, 128, 11, 3,
   INS_EVAL_COMMAND, 128, 0,
@@ -186,7 +186,7 @@ unsigned char program_simpleTest[SIZE_program_simpleTest] = {
 
 #define SIZE_program_findArm 17
 #define ROLE_program_findArm ROLE_ANY
-unsigned char program_findArm[SIZE_program_findArm] = {
+uint8_t program_findArm[SIZE_program_findArm] = {
   INS_CENTER_POSITION_UD,
   INS_IF_FALSE_GOTO, 4,
   INS_MIGRATE_CONTINUE,
@@ -205,8 +205,8 @@ unsigned char program_findArm[SIZE_program_findArm] = {
 
 static void test_action_1(USSRONLY(USSREnv *env)) {
   InterpreterContext context = { 0,0,0,ARG_NORTH_SOUTH, 0, 0, 0 }; /* assume physical channel = virtual channel */
-  unsigned char channel;
-  unsigned char id = 0;
+  uint8_t channel;
+  uint8_t id = 0;
   printf("################################\n");
   printf("##### TEST-1 DCD CONTROLLER# ###\n");
   printf("################################\n");
@@ -224,12 +224,12 @@ ProgramPacket program_and_context_test = {
 };
 
 static void test_action_2(USSRONLY(USSREnv *env)) {
-  unsigned char pos;
+  uint8_t pos;
   Task *task;
   printf("################################\n");
   printf("##### TEST-2 DCD CONTROLLER# ###\n");
   printf("################################\n");
-  int packet_size = sizeof(ProgramPacket)+SIZE_program_simpleTest;
+  int16_t packet_size = sizeof(ProgramPacket)+SIZE_program_simpleTest;
   memcpy(&program_and_context_test.program,program_simpleTest,SIZE_program_simpleTest);
   pos = store_program(USSRONLYC(env) &program_and_context_test, packet_size, 0);
   USSRONLY(printf("### Stored test program @%d\n",pos));
@@ -242,7 +242,7 @@ static void test_action_2(USSRONLY(USSREnv *env)) {
 
 /* Currently assumes phy_ch==vir_ch for starting module */
 static void arm_action(USSRONLY(USSREnv *env)) {
-  char channel;
+  uint8_t channel;
   InterpreterContext context = { 0,0,0,ARG_NORTH_SOUTH, 0, 0, 0 }; /* incoming_*_channel not used */
   printf("################################\n");
   printf("##ARM ACTION DCD CONTROLLER ###\n");
@@ -265,7 +265,7 @@ static void arm_action(USSRONLY(USSREnv *env)) {
 
 /* Currently assumes phy_ch==vir_ch for starting module */
 static void car_action(USSRONLY(USSREnv *env)) {
-  char channel;
+  uint8_t channel;
   InterpreterContext context = { 0,0,0,ARG_NORTH_SOUTH, 0, 0, 0 }; /* incoming_*_channel not used */
   printf("################################\n");
   printf("## CAR ACTION DCD CONTROLLER ###\n");
@@ -345,7 +345,7 @@ static void car_action(USSRONLY(USSREnv *env)) {
 /*#include "/Users/ups/eclipse_workspace/ussr/home/ups/fapl_gen.c"*/
 #include "/Users/ups/eclipse_workspace/ussr/home/ups/rdcd_gen.c"
 
-void dcd_activate(USSRONLYC(USSREnv *env) int role) {
+void dcd_activate(USSRONLYC(USSREnv *env) uint8_t role) {
   printf("DCD VM activated, static memory usage = %d bytes, packet header size = %d bytes\n", sizeof(Global), sizeof(Packet));
   //if(role==0) arm_action(USSRONLY(env));
   //if(role==0) car_action(USSRONLY(env));

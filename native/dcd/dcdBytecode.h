@@ -1,3 +1,7 @@
+#ifndef __DCD_BYTECODE__
+#define __DCD_BYTECODE__
+#include "config.h"
+
 /* Instruction arguments */
 #define ARG_EAST_WEST 1
 #define ARG_NORTH_SOUTH 2
@@ -90,3 +94,6 @@
       (next-line 1)
       (setq start (1+ start))))
 */
+
+#endif
+

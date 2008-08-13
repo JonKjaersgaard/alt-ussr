@@ -23,9 +23,9 @@ Global globals_static_alloc;
 #endif
 
 /* Initialize controller: global store and scheduler */
-int initialize(USSRONLY(USSREnv *env)) {
+int32_t initialize(USSRONLY(USSREnv *env)) {
   Global *global;
-  unsigned char vector, role, command, connector;
+  uint8_t vector, role, command, connector;
 #ifdef USSR
   global = (Global*)malloc(sizeof(Global));
 #else
@@ -47,9 +47,9 @@ int initialize(USSRONLY(USSREnv *env)) {
 }
 
 Task *allocate_task(USSRONLY(USSREnv *env)) {
-  char start = GLOBAL(env,task_queue_start);
-  int index = GLOBAL(env,task_queue_end);
-  char task_queue_next = (index+1)%MAX_N_ENQUEUED_TASKS;
+  int8_t start = GLOBAL(env,task_queue_start);
+  int8_t index = GLOBAL(env,task_queue_end);
+  int8_t task_queue_next = (index+1)%MAX_N_ENQUEUED_TASKS;
   if(task_queue_next==start) {
     report_error(USSRONLYC(env) ERROR_TASK_QUEUE_FULL,0);
     return 0;
@@ -58,14 +58,14 @@ Task *allocate_task(USSRONLY(USSREnv *env)) {
 }
   
 void enqueue_task(USSRONLYC(USSREnv *env) Task *task) {
-  int task_index = task-GLOBAL(env,task_queue);
-  char start = GLOBAL(env,task_queue_start);
-  int index = GLOBAL(env,task_queue_end);
+  int8_t task_index = task-GLOBAL(env,task_queue);
+  int8_t start = GLOBAL(env,task_queue_start);
+  int8_t index = GLOBAL(env,task_queue_end);
   if(task_index!=index) {
     report_error(USSRONLYC(env) ERROR_TASK_QUEUE_BORKED,0);
     return;
   }
-  char task_queue_next = (index+1)%MAX_N_ENQUEUED_TASKS;
+  int8_t task_queue_next = (index+1)%MAX_N_ENQUEUED_TASKS;
   if(task_queue_next==start) {
     report_error(USSRONLYC(env) ERROR_TASK_QUEUE_FULL,0);
     return;
@@ -74,12 +74,12 @@ void enqueue_task(USSRONLYC(USSREnv *env) Task *task) {
   USSRDEBUG(TRACE_TASKS,printf("<%d>(%d) enqueued task @%d %d(%d,%d,%d,%d): {%d,%d}\n", env->context, getRole(env), index, task->type, task->arg1, task->arg2, task->arg3, task->arg4, GLOBAL(env,task_queue_start), GLOBAL(env,task_queue_end)));
 }
 
-void notifyRoleChange(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char virtual_channel, unsigned char role) {
+void notifyRoleChange(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t virtual_channel, uint8_t role) {
   NotifyPacket packet;
-  signed char x = context->mod_x, y = context->mod_y, z = context->mod_z;
-  unsigned char r = context->mod_rotation;
-  unsigned char physical_channel = virtual2physical(USSRONLYC(env) context, virtual_channel);
-  unsigned char receiver_virtual_channel = compute_receiver_coordinates(USSRONLYC(env) virtual_channel, &x, &y, &z, &r);
+  int8_t x = context->mod_x, y = context->mod_y, z = context->mod_z;
+  uint8_t r = context->mod_rotation;
+  uint8_t physical_channel = virtual2physical(USSRONLYC(env) context, virtual_channel);
+  uint8_t receiver_virtual_channel = compute_receiver_coordinates(USSRONLYC(env) virtual_channel, &x, &y, &z, &r);
   if(!isOtherConnectorNearby(USSRONLYC(env) physical_channel)) return;
   packet.header = MT_NOTIFY;
   packet.id = GLOBAL(env,packet_id)++;
@@ -89,15 +89,15 @@ void notifyRoleChange(USSRONLYC(USSREnv *env) InterpreterContext *context, unsig
   packet.r = r;
   packet.virtual_channel = receiver_virtual_channel;
   packet.role = role;
-  sendMessage(USSRONLYC(env) (unsigned char*)&packet, sizeof(NotifyPacket), physical_channel);
+  sendMessage(USSRONLYC(env) (uint8_t*)&packet, sizeof(NotifyPacket), physical_channel);
 }
 
-void sendCommandMaybe(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char virtual_channel, unsigned char role, unsigned char command, unsigned char argument, unsigned char use_local_packet_id, unsigned char packet_id_maybe) {
+void sendCommandMaybe(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t virtual_channel, uint8_t role, uint8_t command, uint8_t argument, uint8_t use_local_packet_id, uint8_t packet_id_maybe) {
   CommandPacket packet;
-  signed char x = context->mod_x, y = context->mod_y, z = context->mod_z;
-  unsigned char r = context->mod_rotation;
-  unsigned char physical_channel = virtual2physical(USSRONLYC(env) context, virtual_channel);
-  unsigned char receiver_virtual_channel = compute_receiver_coordinates(USSRONLYC(env) virtual_channel, &x, &y, &z, &r);
+  int8_t x = context->mod_x, y = context->mod_y, z = context->mod_z;
+  uint8_t r = context->mod_rotation;
+  uint8_t physical_channel = virtual2physical(USSRONLYC(env) context, virtual_channel);
+  uint8_t receiver_virtual_channel = compute_receiver_coordinates(USSRONLYC(env) virtual_channel, &x, &y, &z, &r);
   if(!isOtherConnectorNearby(USSRONLYC(env) physical_channel)) return;
   USSRDEBUG(TRACE_COMMANDS|TRACE_NETWORK,printf("<%d>(%d) Sending command %d %d on %d (v=%d) (%d,%d,%d) -> (%d,%d,%d)\n", env->context, getRole(env), command, argument, physical_channel, receiver_virtual_channel, context->mod_x, context->mod_y, context->mod_z, x, y, z));
   USSRDEBUG(TRACE_COMMANDS|TRACE_NETWORK,printf("### SendC <%d> name=%d, pch=%d (vch=%d), MY{pch=%d,vch=%d, pos=(%d,%d,%d), r=%d} RC{vch=%d, pos={%d,%d,%d}, r=%d}\n", env->context, getRole(env), physical_channel, receiver_virtual_channel, context->incoming_physical_channel, context->incoming_virtual_channel, context->mod_x, context->mod_y, context->mod_z, context->mod_rotation, virtual_channel, x, y, z, r));
@@ -111,10 +111,10 @@ void sendCommandMaybe(USSRONLYC(USSREnv *env) InterpreterContext *context, unsig
   packet.role = role;
   packet.command = command;
   packet.argument = argument;
-  sendMessage(USSRONLYC(env) (unsigned char*)&packet, sizeof(CommandPacket), physical_channel);
+  sendMessage(USSRONLYC(env) (uint8_t*)&packet, sizeof(CommandPacket), physical_channel);
 }
 
-void resendCommandMaybe(USSRONLYC(USSREnv *env) unsigned char virtual_channel, CommandTask *task) {
+void resendCommandMaybe(USSRONLYC(USSREnv *env) uint8_t virtual_channel, CommandTask *task) {
   InterpreterContext context;
   context.mod_x = task->x;
   context.mod_y = task->y;
@@ -125,9 +125,9 @@ void resendCommandMaybe(USSRONLYC(USSREnv *env) unsigned char virtual_channel, C
   sendCommandMaybe(USSRONLYC(env) &context, virtual_channel, task->role, task->command, task->argument, 0, task->packet_id);
 }
 
-void createProgramPacket(unsigned char *buffer, InterpreterContext *context, unsigned char receiver_virtual_channel, unsigned char *program, int programSize) {
+void createProgramPacket(uint8_t *buffer, InterpreterContext *context, uint8_t receiver_virtual_channel, uint8_t *program, uint8_t programSize) {
   ProgramPacket* packet = (ProgramPacket*)buffer;
-  int i;
+  uint8_t i;
   packet->header = MT_PROGRAM;
   packet->id = context->program_id;
   packet->x = context->mod_x;
@@ -139,12 +139,12 @@ void createProgramPacket(unsigned char *buffer, InterpreterContext *context, uns
     packet->program[i] = program[i];
 }
 
-void sendProgramMaybe(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char virtual_channel, unsigned char *program, int programSize) {
-  unsigned char buffer[MAX_PROGRAM_SIZE+MT_PACKET_HEADER_SIZE];
-  signed char x = context->mod_x, y = context->mod_y, z = context->mod_z;
-  unsigned char r = context->mod_rotation;
-  unsigned char physical_channel = virtual2physical(USSRONLYC(env) context, virtual_channel);
-  unsigned char receiver_virtual_channel = compute_receiver_coordinates(USSRONLYC(env) virtual_channel, &x, &y, &z, &r);
+void sendProgramMaybe(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t virtual_channel, uint8_t *program, uint8_t programSize) {
+  uint8_t buffer[MAX_PROGRAM_SIZE+MT_PACKET_HEADER_SIZE];
+  int8_t x = context->mod_x, y = context->mod_y, z = context->mod_z;
+  uint8_t r = context->mod_rotation;
+  uint8_t physical_channel = virtual2physical(USSRONLYC(env) context, virtual_channel);
+  uint8_t receiver_virtual_channel = compute_receiver_coordinates(USSRONLYC(env) virtual_channel, &x, &y, &z, &r);
   if(!isOtherConnectorNearby(USSRONLYC(env) physical_channel)) return;
   USSRDEBUG(TRACE_MIGRATION|TRACE_NETWORK,printf("### SendP <%d> name=%d, pch=%d (vch=%d), MY{vch=%d, pos=(%d,%d,%d), r=%d} RC{vch=%d, pos={%d,%d,%d}, r=%d}\n", env->context, getRole(env), physical_channel, virtual_channel, context->incoming_virtual_channel, context->mod_x, context->mod_y, context->mod_z, context->mod_rotation, receiver_virtual_channel, x, y, z, r));
   createProgramPacket(buffer,context,receiver_virtual_channel,program,programSize);
@@ -166,11 +166,11 @@ void sendProgramMaybe(USSRONLYC(USSREnv *env) InterpreterContext *context, unsig
   sendMessage(USSRONLYC(env) buffer, programSize+MT_PACKET_HEADER_SIZE, physical_channel);
 }
 
-unsigned char checkForEvents(USSRONLY(USSREnv *env)) {
-  unsigned char vector, channel, activityFlag = 0;
+uint8_t checkForEvents(USSRONLY(USSREnv *env)) {
+  uint8_t vector, channel, activityFlag = 0;
   /* Check for proximity */
   for(vector=EVENT_PROXIMITY_0; vector<=EVENT_PROXIMITY_7; vector++) {
-    unsigned char *hv = GLOBAL(env,event_handler_vectors);
+    uint8_t *hv = GLOBAL(env,event_handler_vectors);
     if(hv[vector]!=VECTOR_NONE && !(hv[vector]&VECTOR_DISABLED_FLAG)) {
       activityFlag = 1;
       channel = vector-EVENT_PROXIMITY_0;
@@ -186,8 +186,8 @@ unsigned char checkForEvents(USSRONLY(USSREnv *env)) {
   return activityFlag;
 }
 
-unsigned char schedulerAction(USSRONLY(USSREnv *env)) {
-  unsigned char activityFlag = 0;
+uint8_t schedulerAction(USSRONLY(USSREnv *env)) {
+  uint8_t activityFlag = 0;
   activityFlag = checkForEvents(USSRONLY(env));
   /* Any tasks to execute? */
   if(GLOBAL(env,task_queue_end)!=GLOBAL(env,task_queue_start)) {
@@ -195,13 +195,13 @@ unsigned char schedulerAction(USSRONLY(USSREnv *env)) {
     USSRDEBUG(TRACE_TASKS,printf("<%d>(%d) {%d,%d} ", env->context, getRole(env), GLOBAL(env,task_queue_start), GLOBAL(env,task_queue_end)));
 #endif
     /* Remove task from queue */
-    int start = GLOBAL(env,task_queue_start);
-    unsigned char task_type = GLOBAL(env,task_queue)[start].type;
-    unsigned char task_flags = GLOBAL(env,task_queue)[start].flags;
-    unsigned char task_arg_1 = GLOBAL(env,task_queue)[start].arg1;
-    unsigned char task_arg_2 = GLOBAL(env,task_queue)[start].arg2;
-    unsigned char task_arg_3 = GLOBAL(env,task_queue)[start].arg3;
-    unsigned char task_arg_4 = GLOBAL(env,task_queue)[start].arg4;
+    int8_t start = GLOBAL(env,task_queue_start);
+    uint8_t task_type = GLOBAL(env,task_queue)[start].type;
+    uint8_t task_flags = GLOBAL(env,task_queue)[start].flags;
+    uint8_t task_arg_1 = GLOBAL(env,task_queue)[start].arg1;
+    uint8_t task_arg_2 = GLOBAL(env,task_queue)[start].arg2;
+    uint8_t task_arg_3 = GLOBAL(env,task_queue)[start].arg3;
+    uint8_t task_arg_4 = GLOBAL(env,task_queue)[start].arg4;
     /* Process task */
     USSRDEBUG(TRACE_TASKS,printf("<%d>(%d) Found task in queue @%d: %d(%d,%d,%d,%d)\n", env->context, getRole(env), start, task_type, task_arg_1, task_arg_2, task_arg_3, task_arg_4));
     if(task_flags&TASK_FLAG_DISCARD) {
@@ -230,7 +230,7 @@ unsigned char schedulerAction(USSRONLY(USSREnv *env)) {
 	}
       case TASK_COMMAND:
 	{
-	  unsigned char channel;
+	  uint8_t channel;
 	  CommandTask* task = (CommandTask*)(GLOBAL(env,task_queue)+start);
 	  for(channel=0; channel<8; channel++)
 	    if(channel!=task->virtual_channel) resendCommandMaybe(USSRONLYC(env) channel, task);
@@ -250,8 +250,8 @@ unsigned char schedulerAction(USSRONLY(USSREnv *env)) {
   return activityFlag;
 }
 
-signed char updateLED(signed char pos) {
-  unsigned char bit;
+int8_t updateLED(int8_t pos) {
+  uint8_t bit;
   /* compute bit and next position */
   if(pos>=0) {
     bit = pos++;
@@ -264,8 +264,8 @@ signed char updateLED(signed char pos) {
   return pos;
 }
 
-unsigned char store_program(USSRONLYC(USSREnv *env) ProgramPacket *packet, unsigned char messageSize, unsigned char channel) {
-  unsigned char index;
+uint8_t store_program(USSRONLYC(USSREnv *env) ProgramPacket *packet, uint8_t messageSize, uint8_t channel) {
+  uint8_t index;
   for(index=0; index<MAX_N_STORED_PROGRAMS; index++) {
     if(((1<<index)&GLOBAL(env,global_program_store_use_flags))==0) {
       StoredProgram* program = GLOBAL(env,global_program_store)+index;
@@ -280,7 +280,7 @@ unsigned char store_program(USSRONLYC(USSREnv *env) ProgramPacket *packet, unsig
       program->context.program_id = packet->id;
       program->size = messageSize-MT_PACKET_HEADER_SIZE;
       memcpy(program->program, packet->program, program->size);
-      int i;
+      uint8_t i;
       for(i=0; i<program->size; i++)
 	printf("<%d,%d>", packet->program[i], program->program[i]);
       printf("\n");
@@ -301,27 +301,29 @@ unsigned char store_program(USSRONLYC(USSREnv *env) ProgramPacket *packet, unsig
   return 0;
 }
 
-#define DCD_PERFECT_CACHE
+#ifdef DCD_OMIT_CACHE
+uint8_t fresh_message(USSRONLYC(USSREnv *env) Packet *packet) { return 1; }
+#else
 #ifdef DCD_PERFECT_CACHE
 #ifndef USSR
 #error "Perfect cache configuration is only available for the simulator"
 #endif
 #include <ussr_internal.h>
-unsigned char fresh_message(USSRONLYC(USSREnv *env) Packet *packet) {
+uint8_t fresh_message(USSRONLYC(USSREnv *env) Packet *packet) {
   return ussr_call_int_controller_method(env, "dcd_perfect_cache", "(IIIII)I", (int)packet->id, (int)packet->x, (int)packet->y, (int)packet->z, (int)packet->r);
 }
-#else
-static inline unsigned char inrange(unsigned char value, unsigned char min, unsigned char max) {
+#else /* DCD_PERFECT_CACHE */
+static inline uint8_t inrange(uint8_t value, uint8_t min, uint8_t max) {
   if(min<max)
     return value>=min && value<max;
   else
     return value>=max || value<min;
 }
 
-unsigned char fresh_message(USSRONLYC(USSREnv *env) Packet *packet) {
-  MessageCache *cache; int index;
+uint8_t fresh_message(USSRONLYC(USSREnv *env) Packet *packet) {
+  MessageCache *cache; uint8_t index;
   cache = GLOBAL(env,message_cache);
-  int limit = GLOBAL(env,message_cache_size);
+  uint8_t limit = GLOBAL(env,message_cache_size);
   if(packet->x==0 && packet->y==0 && packet->z==0) { USSRDEBUG(TRACE_CACHE,printf("<%d,X1:packet from this module>\n",env->context)); return 0; }; /* Packet was sent from this module */
   for(index=0; index<limit; index++)
     if(packet->x==cache[index].x && packet->y==cache[index].y && packet->z==cache[index].z && packet->r==cache[index].r) { /* hit */
@@ -353,16 +355,17 @@ unsigned char fresh_message(USSRONLYC(USSREnv *env) Packet *packet) {
   USSRDEBUG(TRACE_CACHE,printf("<%d@%d,X5:fresh message unknown origin>\n",env->context,index));
   return 1;
 }
-#endif
+#endif /* DCD_PERFECT_CACHE */
+#endif /* DCD_OMIT_CACHE */
 
-static int checksum(unsigned char *bytes, int max) {
-  int sum = 0, index = 0;
+static int checksum(uint8_t *bytes, uint8_t max) {
+  uint8_t sum = 0, index = 0;
   for(index=0; index<max; index++) sum += bytes[index];
   return sum;
 }
 
-void handleMessage(USSRONLYC(USSREnv *env) unsigned char* message, unsigned char messageSize, unsigned char channel) {
-  unsigned char id;
+void handleMessage(USSRONLYC(USSREnv *env) uint8_t* message, uint8_t messageSize, uint8_t channel) {
+  uint8_t id;
   Packet *p = (Packet*)message;
   USSRDEBUG(TRACE_NETWORK,printf("### Receive <%d> name=%d, type=%d, pch=%d, vch=%d, pos=(%d,%d,%d), r=%d\n", env->context, getRole(env), p->header, channel, p->virtual_channel, p->x, p->y, p->z, p->r));
   USSRDEBUG(TRACE_NETWORK,printf("<%d>(%d) Got a message on channel %d: id=%d,pos=(%d,%d,%d),r=%d,vc=%d {%d} ", env->context, getRole(env), channel, p->id, p->x, p->y, p->z, p->r, p->virtual_channel, checksum(message,messageSize)));
@@ -426,17 +429,17 @@ void handleMessage(USSRONLYC(USSREnv *env) unsigned char* message, unsigned char
   }
 }
 
-void installProgramMessage(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char* program, unsigned char programSize) {
-  unsigned char buffer[MAX_PROGRAM_SIZE+MT_PACKET_HEADER_SIZE];
+void installProgramMessage(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t* program, uint8_t programSize) {
+  uint8_t buffer[MAX_PROGRAM_SIZE+MT_PACKET_HEADER_SIZE];
   createProgramPacket(buffer,context,0,program,programSize);
   handleMessage(USSRONLYC(env) buffer,programSize+MT_PACKET_HEADER_SIZE,0);
 }
 
-extern void dcd_activate(USSRONLYC(USSREnv *env) int role);
+extern void dcd_activate(USSRONLYC(USSREnv *env) uint8_t role);
 
-void activate_step(USSRONLYC(USSREnv *env) int maxSteps) {
-  signed char bitpos = 0; unsigned int iteration = 0; unsigned char active;
-  int step = 0;
+void activate_step(USSRONLYC(USSREnv *env) int32_t maxSteps) {
+  int8_t bitpos = 0; unsigned int iteration = 0; uint8_t active;
+  int32_t step = 0;
   while(step!=maxSteps) {
     active = schedulerAction(USSRONLY(env));
     controllerIterationSimulatorHook(USSRONLY(env),1);
@@ -446,7 +449,7 @@ void activate_step(USSRONLYC(USSREnv *env) int maxSteps) {
 }
 
 void activate(USSRONLY(USSREnv *env)) {
-  int role; 
+  uint8_t role; 
   controllerIterationSimulatorHook(USSRONLY(env),1);
   role = getRole(USSRONLY(env));
   dcd_activate(USSRONLYC(env) role);

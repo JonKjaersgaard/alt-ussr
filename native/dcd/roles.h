@@ -1,3 +1,7 @@
+#ifndef __DCD_ROLES__
+#define __DCD_ROLES__
+#include "config.h"
+
 #define ROLE_NONE 0
 #define ROLE_ANY 255
 #define MAX_N_ROLES 15 /* includes role#0 */
@@ -13,4 +17,6 @@
 #define ROLE_FRONTAXLE 9
 #define ROLE_REARAXLE 10
 
-extern unsigned char check_role_instanceof(unsigned char self_role, unsigned char test_role);
+extern uint8_t check_role_instanceof(uint8_t self_role, uint8_t test_role);
+
+#endif

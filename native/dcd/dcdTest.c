@@ -2,16 +2,16 @@
 #include "dcdBytecode.h"
 #include <stdio.h>
 
-unsigned char getJointPosition() { return 0; }
-int getRole() { return 0; }
-unsigned char isOtherConnectorNearby(unsigned char ignore) { return 0; }
-char sendMessage(unsigned char *message, unsigned char messageSize, unsigned char connector) { return 0; }
+uint8_t getJointPosition() { return 0; }
+uint8_t getRole() { return 0; }
+uint8_t isOtherConnectorNearby(uint8_t ignore) { return 0; }
+int8_t sendMessage(uint8_t *message, uint8_t messageSize, uint8_t connector) { return 0; }
 
 void breakpoint() { ; }
 
 #define N_VIRTUAL2PHYSICAL 82
 typedef struct _V2Pdata {
-  unsigned char context_vc, context_pc, in, out;
+  uint8_t context_vc, context_pc, in, out;
 } V2Pdata;
 
 V2Pdata virtual2physical_data[N_VIRTUAL2PHYSICAL] = {
@@ -100,12 +100,12 @@ V2Pdata virtual2physical_data[N_VIRTUAL2PHYSICAL] = {
   { 1, 0, 2, 1 }
 };
 
-void report_error(unsigned char x, unsigned char y) {
+void report_error(uint8_t x, uint8_t y) {
   printf("Error reported: %d.%d\n", x, y);
 }
 
-void v2p_assert(InterpreterContext *context, unsigned char virtual, unsigned char physical) {
-  unsigned char result = virtual2physical(context,virtual);
+void v2p_assert(InterpreterContext *context, uint8_t virtual, uint8_t physical) {
+  uint8_t result = virtual2physical(context,virtual);
   if(physical!=result) printf("Error for virtual2physical (v=%d, p=%d): %d should yield %d but gave %d\n",
 			     context->incoming_virtual_channel,
 			     context->incoming_physical_channel,
@@ -114,8 +114,8 @@ void v2p_assert(InterpreterContext *context, unsigned char virtual, unsigned cha
 							
 void test_virtual2physical() {
   InterpreterContext context;
-  int index;
-  unsigned char c;
+  uint8_t index;
+  uint8_t c;
   for(index=0; index<N_VIRTUAL2PHYSICAL; index++) {
     context.incoming_virtual_channel = virtual2physical_data[index].context_vc;
     context.incoming_physical_channel = virtual2physical_data[index].context_pc;
@@ -124,12 +124,12 @@ void test_virtual2physical() {
 }
 
 typedef struct _CRCData {
-  unsigned char in_ch;
-  signed char in_x, in_y, in_z;
-  signed char in_r;
-  unsigned char out_ch;
-  signed char out_x, out_y, out_z;
-  unsigned char out_r;
+  uint8_t in_ch;
+  int8_t in_x, in_y, in_z;
+  int8_t in_r;
+  uint8_t out_ch;
+  int8_t out_x, out_y, out_z;
+  uint8_t out_r;
 } CRCData;
 
 #define N_CRC 7
@@ -143,24 +143,24 @@ CRCData crc_data[N_CRC] = {
   { 7, -1, 1, 0, ARG_EAST_WEST,  /* */ 3, -2, 0, 0, ARG_NORTH_SOUTH }
 };
 
-void crc_uassert(CRCData *data, char *name, unsigned char whatwegot, unsigned char whatwewant) {
+void crc_uassert(CRCData *data, char *name, uint8_t whatwegot, uint8_t whatwewant) {
   if(whatwegot!=whatwewant)
     printf("Error for CRC: ch=%d x=%d y=%d z=%d r=%d: %s computed %d != wanted %d\n",
 	   data->in_ch, data->in_x, data->in_y, data->in_z, data->in_r, name, whatwegot, whatwewant);
 }
 
-void crc_sassert(CRCData *data, char *name, signed char whatwegot, signed char whatwewant) {
+void crc_sassert(CRCData *data, char *name, int8_t whatwegot, int8_t whatwewant) {
   if(whatwegot!=whatwewant)
     printf("Error for CRC: ch=%d x=%d y=%d z=%d r=%d: %s computed %d != wanted %d\n",
 	   data->in_ch, data->in_x, data->in_y, data->in_z, data->in_r, name, whatwegot, whatwewant);
 }
 
 void test_compute_receiver_coordinates() {
-  unsigned char channel;
-  signed char x, y, z;
-  unsigned char r;
-  unsigned char out;
-  int index;
+  uint8_t channel;
+  int8_t x, y, z;
+  uint8_t r;
+  uint8_t out;
+  uint8_t index;
   for(index=0;index<N_CRC;index++) {
     channel = crc_data[index].in_ch;
     x = crc_data[index].in_x;
@@ -185,7 +185,7 @@ int main(int argc, char *argv[]) {
 
 void old_foo() {  
   InterpreterContext context;
-  unsigned char c;
+  uint8_t c;
   for(c=0; c<8; c++)
     printf("v=%d, p=%d: %d becomes %d\n", context.incoming_virtual_channel, context.incoming_physical_channel, c, virtual2physical(&context, c));
   context.incoming_virtual_channel = 2;

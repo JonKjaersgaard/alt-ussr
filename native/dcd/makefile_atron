@@ -3,17 +3,18 @@ BASEDIR=/Users/ups/eclipse_workspace/ussr
 PROJECTFILESC = dcdController.c dcdError.c dcdInterpreter.c roles.c $(BASEDIR)/native/base/main_atron.c navigation.c actions.c 
 PROJECTFILESH = dcdBytecode.h dcdConstants.h dcdController.h dcdError.h dcdInterpreter.h dcdTypes.h roles.h
 PROJECT = avrdcd
+PORT = /dev/cu.usbserial-PRPQVMDD
 
 # Generic variables
 ATRONDIR=$(BASEDIR)/../atronAvr
 PROCESSOR =  atmega128
 C	= $(ATRONDIR)/adc/ADCDriver.c  $(ATRONDIR)/connector/ConnectorDriver.c $(ATRONDIR)/encoder/EncoderDriver.c $(ATRONDIR)/io/IOPortDriver.c $(ATRONDIR)/pwm/PWMDriver.c $(ATRONDIR)/rs485/RS485PhysicalLayer.c $(ATRONDIR)/communication/Communication.c $(ATRONDIR)/communication/ByteBuffer.c $(ATRONDIR)/communication/datalink_protocol.c $(ATRONDIR)/ir/IRProtocolPhysicalLayer.c $(ATRONDIR)/tilt/TiltDriver.c $(ATRONDIR)/battery/BatteryDriver.c $(ATRONDIR)/api/API.c $(PROJECTFILESC) 
 H	= $(ATRONDIR)/adc/ADCDriver.h  $(ATRONDIR)/connector/ConnectorDriver.h $(ATRONDIR)/encoder/EncoderDriver.h $(ATRONDIR)/io/IOPortDriver.h $(ATRONDIR)/pwm/PWMDriver.h $(ATRONDIR)/rs485/RS485PhysicalLayer.h $(ATRONDIR)/communication/Communication.h $(ATRONDIR)/communication/ByteBuffer.h $(ATRONDIR)/communication/datalink_protocol.h $(ATRONDIR)/ir/IRProtocolPhysicalLayer.h $(ATRONDIR)/tilt/TiltDriver.h $(ATRONDIR)/battery/BatteryDriver.h $(ATRONDIR)/api/API.h $(ATRONDIR)/include/config.h $(PROJECTFILESH) 
-PORT = /dev/cu.usbserial-PRPQVMDD
 FINALTYPE=bin
+INCLUDES=-I/opt/local/avr/include
 
 # OS-specific variables
-CFLAGS=-mmcu=$(PROCESSOR) -g -Wall -Os -D__SOUTH__ -mmcu=$(PROCESSOR) -I$(ATRONDIR) -I$(BASEDIR)/native/include
+CFLAGS=-mmcu=$(PROCESSOR) -g -Wall -Os -D__SOUTH__ -mmcu=$(PROCESSOR) -I$(ATRONDIR) -I$(BASEDIR)/native/include $(INCLUDES)
 
 ERASE = avarice --jtag $(PORT) --part $(PROCESSOR) --erase
 PROGRAM = avarice -B 250kHz --jtag $(PORT) --part $(PROCESSOR) --erase --verify --program --file $(PROJECT).$(FINALTYPE)

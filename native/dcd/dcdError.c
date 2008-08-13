@@ -5,7 +5,7 @@
 
 #define ENOUGH_TIME (24*3600)
 
-void report_error(USSRONLYC(USSREnv *env) char error_number, unsigned char argument) {
+void report_error(USSRONLYC(USSREnv *env) int8_t error_number, uint8_t argument) {
 #ifdef USSR
   fprintf(stderr, "<%d>(%d) Program error: %d.%d\n", env->context, getRole(env), error_number, argument);
   sleep(ENOUGH_TIME);
@@ -28,7 +28,7 @@ void report_error(USSRONLYC(USSREnv *env) char error_number, unsigned char argum
 }
 
 #ifdef USSR
-void print_arg(unsigned char *program, unsigned char pc, int nl) {
+void print_arg(uint8_t *program, uint8_t pc, int8_t nl) {
   switch(program[pc]) {
   case ARG_UP:
     printf("ARG_UP"); break;
@@ -51,8 +51,8 @@ void print_arg(unsigned char *program, unsigned char pc, int nl) {
     printf(" ");
 }
 
-void print_program(unsigned char *program, unsigned char program_size) {
-  unsigned char pc = 0;
+void print_program(uint8_t *program, uint8_t program_size) {
+  uint8_t pc = 0;
   while(pc<program_size) {
     printf("  %2d: ", pc);
     switch(program[pc++]) {

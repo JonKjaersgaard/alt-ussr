@@ -1,5 +1,6 @@
 #ifndef __DCD_ERROR_H_
 #define __DCD_ERROR_H_
+#include "config.h"
 
 #include <ussr.h>
 
@@ -43,11 +44,11 @@
 #define USSRDEBUG(flags,command) { if(vm_trace_flags&(flags)) command; fflush(stdout); }
 #define USSRDEBUG2(local_trace_flags,flags,command) { if((vm_trace_flags|local_trace_flags)&(flags)) command; fflush(stdout); }
 
-extern void report_error(USSRONLYC(USSREnv *env) char error_number, unsigned char argument);
+extern void report_error(USSRONLYC(USSREnv *env) int8_t error_number, uint8_t argument);
 #ifdef USSR
-extern int vm_trace_flags;
-extern void print_arg(unsigned char *program, unsigned char pc, int nl);
-extern void print_program(unsigned char *program, unsigned char program_size);
+extern uint32_t vm_trace_flags;
+extern void print_arg(uint8_t *program, uint8_t pc, int8_t nl);
+extern void print_program(uint8_t *program, uint8_t program_size);
 #endif
 
 #endif

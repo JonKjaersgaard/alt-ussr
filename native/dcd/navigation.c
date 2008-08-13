@@ -3,7 +3,7 @@
 #include "dcdError.h"
 #include "dcdTypes.h"
 
-unsigned char compute_receiver_coordinates(USSRONLYC(USSREnv *env) unsigned char virtual_channel, signed char *x, signed char *y, signed char *z, unsigned char *r) {
+uint8_t compute_receiver_coordinates(USSRONLYC(USSREnv *env) uint8_t virtual_channel, int8_t *x, int8_t *y, int8_t *z, uint8_t *r) {
   switch(*r) {
   case ARG_NORTH_SOUTH:
     switch(virtual_channel) {
@@ -53,18 +53,18 @@ unsigned char compute_receiver_coordinates(USSRONLYC(USSREnv *env) unsigned char
   return 255;
 }
 
-static inline unsigned char mod(signed char base, unsigned char quotient) {
-  signed char res = base%quotient;
+static inline uint8_t mod(int8_t base, uint8_t quotient) {
+  int8_t res = base%quotient;
   if(res<0) res+=quotient;
   return res;
 }
 
 #define SWAP(tmp,x,y) tmp=x; x=y; y=tmp;
 
-unsigned char virtual2physical(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char virtual_channel) {
-  unsigned char vc, pc, side, connector, i, changeSide, tmp;
-  signed char diff;
-  unsigned char virtuals[2][4];
+uint8_t virtual2physical(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t virtual_channel) {
+  uint8_t vc, pc, side, connector, i, changeSide, tmp;
+  int8_t diff;
+  uint8_t virtuals[2][4];
   // create model
   i = 0;
   for(side=0; side<2; side++)
@@ -82,7 +82,7 @@ unsigned char virtual2physical(USSRONLYC(USSREnv *env) InterpreterContext *conte
     SWAP(tmp,virtuals[0][3],virtuals[1][1]);
   }
   // shift
-  unsigned char side_index = vc>3, local_index = vc>3 ? vc-4 : vc;
+  uint8_t side_index = vc>3, local_index = vc>3 ? vc-4 : vc;
   while(virtuals[side_index][local_index]!=pc)
     for(side=0; side<2; side++) {
       if(changeSide) {

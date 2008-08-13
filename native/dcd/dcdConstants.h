@@ -1,5 +1,6 @@
 #ifndef __DCD_CONSTANTS_H_
 #define __DCD_CONSTANTS_H_
+#include "config.h"
 
 #define MT_PROGRAM 1
 #define MT_COMMAND 2
