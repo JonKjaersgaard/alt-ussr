@@ -12,6 +12,7 @@ extern unsigned char store_program(USSRONLYC(USSREnv *env) ProgramPacket *packet
 extern Task *allocate_task(USSRONLY(USSREnv *env));
 extern void enqueue_task(USSRONLYC(USSREnv *env) Task *task);
 void installProgramMessage(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char* program, unsigned char programSize);
+void activate_step(USSRONLYC(USSREnv *env) int maxSteps);
 
 /* Global store */
 #ifdef USSR

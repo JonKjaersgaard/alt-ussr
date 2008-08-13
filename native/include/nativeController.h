@@ -21,17 +21,6 @@ JNIEXPORT void JNICALL Java_ussr_samples_atron_natives_ATRONNativeController_nat
 }
 #endif
 #endif
-/* Header for class ussr_samples_atron_natives_ATRONNativeController_Entry */
-
-#ifndef _Included_ussr_samples_atron_natives_ATRONNativeController_Entry
-#define _Included_ussr_samples_atron_natives_ATRONNativeController_Entry
-#ifdef __cplusplus
-extern "C" {
-#endif
-#ifdef __cplusplus
-}
-#endif
-#endif
 /* Header for class ussr_samples_atron_natives_ATRONNativeController_Link */
 
 #ifndef _Included_ussr_samples_atron_natives_ATRONNativeController_Link

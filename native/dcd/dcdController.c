@@ -269,6 +269,7 @@ unsigned char store_program(USSRONLYC(USSREnv *env) ProgramPacket *packet, unsig
   for(index=0; index<MAX_N_STORED_PROGRAMS; index++) {
     if(((1<<index)&GLOBAL(env,global_program_store_use_flags))==0) {
       StoredProgram* program = GLOBAL(env,global_program_store)+index;
+      printf("Storing program at address %d\n", program->program);
       GLOBAL(env,global_program_store_use_flags) |= (1<<index);
       program->context.mod_x = packet->x;
       program->context.mod_y = packet->y;
@@ -279,6 +280,10 @@ unsigned char store_program(USSRONLYC(USSREnv *env) ProgramPacket *packet, unsig
       program->context.program_id = packet->id;
       program->size = messageSize-MT_PACKET_HEADER_SIZE;
       memcpy(program->program, packet->program, program->size);
+      int i;
+      for(i=0; i<program->size; i++)
+	printf("<%d,%d>", packet->program[i], program->program[i]);
+      printf("\n");
 #ifdef VERBOSE_DEBUG
       printf("Stored program {x=%d,y=%d,z=%d,r=%d,vc=%d,pc=%d,sz=%d}\n",
 	     program->context.mod_x,
@@ -429,14 +434,21 @@ void installProgramMessage(USSRONLYC(USSREnv *env) InterpreterContext *context, 
 
 extern void dcd_activate(USSRONLYC(USSREnv *env) int role);
 
+void activate_step(USSRONLYC(USSREnv *env) int maxSteps) {
+  signed char bitpos = 0; unsigned int iteration = 0; unsigned char active;
+  int step = 0;
+  while(step!=maxSteps) {
+    active = schedulerAction(USSRONLY(env));
+    controllerIterationSimulatorHook(USSRONLY(env),1);
+    if(!((iteration++)%50)) bitpos = updateLED(bitpos);
+    step++;
+  }
+}
+
 void activate(USSRONLY(USSREnv *env)) {
-  int role; signed char bitpos = 0; unsigned int iteration = 0; unsigned char active;
+  int role; 
+  controllerIterationSimulatorHook(USSRONLY(env),1);
   role = getRole(USSRONLY(env));
   dcd_activate(USSRONLYC(env) role);
-  controllerIterationSimulatorHook(USSRONLY(env),1);
-  while(1) {
-    active = schedulerAction(USSRONLY(env));
-    controllerIterationSimulatorHook(USSRONLY(env),active);
-    if(!((iteration++)%50)) bitpos = updateLED(bitpos);
-  }
+  activate_step(USSRONLYC(env) -1);
 }

@@ -4,9 +4,10 @@
 #include "dcdError.h"
 
 #include <stdio.h>
+#include <strings.h>
 
 #ifdef USSR
-int vm_trace_flags = /*TRACE_BEHAVIOR|*/ TRACE_EVENTS|TRACE_MIGRATION|TRACE_NETWORK; /*|TRACE_ACTUATION|TRACE_COMMANDS;*/
+int vm_trace_flags = /*TRACE_BEHAVIOR|*/ TRACE_EVENTS|TRACE_MIGRATION|TRACE_NETWORK|TRACE_COMMANDS|TRACE_INTERPRET|TRACE_ACTUATION;
 #endif
 
 #define SIZE_program_findWheels 24
@@ -170,15 +171,18 @@ unsigned char program_axleBehavior[SIZE_program_axleBehavior] = {
   INS_END_REPEAT                          /* 39 */
 };
 
-#define SIZE_program_and_context_test 11
-ProgramPacket program_and_context_test = {
-  MT_PROGRAM,
-  0,
-  0, 0, 0, /* x y z */
-  ARG_NORTH_SOUTH,
-  2, /* vir-ch */
-  { INS_EVAL_COMMAND, CMD_ROTATE_CLOCKWISE, 127, INS_END_TERMINATE }
+#define SIZE_program_simpleTest 14
+unsigned char program_simpleTest[SIZE_program_simpleTest] = {
+  INS_SET_LED, 31,
+  INS_INSTALL_COMMAND, ROLE_ANY, 128, 11, 3,
+  INS_EVAL_COMMAND, 128, 0,
+  INS_END_TERMINATE,
+  INS_SET_LED, 32+64, /* 0 */
+  INS_MIGRATE_CONTINUE /* 2 */
 };
+
+#define SIZE_program_findMminiwheels 0
+#define ROLE_program_findMiniwheels ROLE_ANY
 
 #define SIZE_program_findArm 17
 #define ROLE_program_findArm ROLE_ANY
@@ -211,14 +215,24 @@ static void test_action_1(USSRONLY(USSREnv *env)) {
   }
 }
 
+ProgramPacket program_and_context_test = {
+  MT_PROGRAM,
+  0,
+  0, 0, 0, /* x y z */
+  ARG_NORTH_SOUTH,
+  2, /* vir-ch */
+};
+
 static void test_action_2(USSRONLY(USSREnv *env)) {
   unsigned char pos;
   Task *task;
   printf("################################\n");
   printf("##### TEST-2 DCD CONTROLLER# ###\n");
   printf("################################\n");
-  USSRONLY(printf("### Storing test program\n"));
-  pos = store_program(USSRONLYC(env) &program_and_context_test, SIZE_program_and_context_test, 0);
+  int packet_size = sizeof(ProgramPacket)+SIZE_program_simpleTest;
+  memcpy(&program_and_context_test.program,program_simpleTest,SIZE_program_simpleTest);
+  pos = store_program(USSRONLYC(env) &program_and_context_test, packet_size, 0);
+  USSRONLY(printf("### Stored test program @%d\n",pos));
   task = allocate_task(USSRONLY(env));
   task->type = TASK_INTERPRET;
   task->flags = 0;
@@ -247,7 +261,7 @@ static void arm_action(USSRONLY(USSREnv *env)) {
   }
 }
 
-#define WAITTIME 1000
+#define WAITTIME 8000
 
 /* Currently assumes phy_ch==vir_ch for starting module */
 static void car_action(USSRONLY(USSREnv *env)) {
@@ -326,11 +340,15 @@ static void car_action(USSRONLY(USSREnv *env)) {
 #define ROLE_LeftWheel ROLE_LEFT_WHEEL
 #define ROLE_Axle ROLE_AXLE
 #define ROLE_Reverse ROLE_REVERSE
-#include "/Users/ups/eclipse_workspace/ussr/home/ups/fapl_gen.c"
+#define ROLE_FrontAxle ROLE_FRONTAXLE
+#define ROLE_RearAxle ROLE_REARAXLE
+/*#include "/Users/ups/eclipse_workspace/ussr/home/ups/fapl_gen.c"*/
+#include "/Users/ups/eclipse_workspace/ussr/home/ups/rdcd_gen.c"
 
 void dcd_activate(USSRONLYC(USSREnv *env) int role) {
+  printf("DCD VM activated, static memory usage = %d bytes, packet header size = %d bytes\n", sizeof(Global), sizeof(Packet));
   //if(role==0) arm_action(USSRONLY(env));
   //if(role==0) car_action(USSRONLY(env));
-  if(role==0) dcd_action(USSRONLY(env));
-  //if(role==0) test_action_2(USSRONLY(env));
+  //if(role==0) dcd_action(USSRONLY(env));
+  if(role==0) test_action_2(USSRONLY(env));
 }

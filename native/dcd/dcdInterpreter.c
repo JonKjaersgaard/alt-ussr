@@ -47,7 +47,8 @@ void execute_command(USSRONLYC(USSREnv *env) unsigned char command, unsigned cha
     if(command>=MAX_N_GENERIC_COMMANDS) {
       unsigned char user_command = command-MAX_N_GENERIC_COMMANDS;
       if(user_command<MAX_ROLE_COMMANDS) {
-	unsigned char index = GLOBAL(env,command_table)[GLOBAL(env,role)][user_command];
+	unsigned char index;
+	index = GLOBAL(env,command_table)[GLOBAL(env,role)][user_command];
 	if(index!=COMMAND_NONE) {
 	  StoredProgram *program = GLOBAL(env,global_program_store)+index;
 	  if(interpret(USSRONLYC(env) &program->context, program->program, program->size, argument)) {
@@ -65,7 +66,8 @@ void execute_command(USSRONLYC(USSREnv *env) unsigned char command, unsigned cha
 	}
       }
     }
-    report_error(USSRONLYC(env) ERROR_UNKNOWN_COMMAND,command);
+    /*report_error(USSRONLYC(env) ERROR_UNKNOWN_COMMAND,command);*/
+    printf("Warning: ignoring unknown command %d (my role=%d)\n",command,GLOBAL(env,role));
   }
 }
 
@@ -269,8 +271,12 @@ void install_command(USSRONLYC(USSREnv *env) InterpreterContext  *context, unsig
   if(raw_command<MAX_N_GENERIC_COMMANDS)
     report_error(USSRONLYC(env) ERROR_ILLEGAL_COMMAND_INSTALL,command);
   command = raw_command - MAX_N_GENERIC_COMMANDS;
-  if(role>MAX_N_ROLES || command>MAX_ROLE_COMMANDS)
+  if((role>MAX_N_ROLES && role!=ROLE_ANY) || command>MAX_ROLE_COMMANDS)
     report_error(USSRONLYC(env) ERROR_ILLEGAL_COMMAND_INSTALL,(role<<4)+command);
+  if(role==ROLE_ANY) {
+      GLOBAL(env,command_table)[0][command] = index;
+      USSRDEBUG(TRACE_EVENTS,printf("<%d>(%d) Installed command for ROLE_ANY,id=%d(%d) in slot %d\n", env->context, getRole(env), r, raw_command, command, index));
+  }
   for(r=1; r<MAX_N_ROLES; r++)
     if(check_role_instanceof(r,role)) {
       GLOBAL(env,command_table)[r][command] = index;
@@ -348,16 +354,16 @@ void send_command(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned 
 }
 
 unsigned char function_apply(USSRONLYC(USSREnv *env) InterpreterContext *context, unsigned char function, unsigned char argument) {
-  if(function<CMD_MAX || function>=128) { // Command, internal or user-defined
+  if(function<CMD_MAX || function>=128) { /* Command, internal or user-defined */
     execute_command(USSRONLYC(env) function, argument);
-  } else { // Special primop
+  } else { /* Special primop */
     switch(function) {
     case PRIM_APPLY:
-      if(argument<128) { // special case: command taking no argument (or rather: a module and the unit value = 0)
+      /* if(argument<128) { // special case: command taking no argument (or rather: a module and the unit value = 0) */
 	send_command(USSRONLYC(env) context, ROLE_ANY, argument, 0);
-      } else { // closure
-	report_error(USSRONLYC(env) ERROR_ILLEGAL_CLOSURE, argument);
-      }
+	/* } else { // closure
+      report_error(USSRONLYC(env) ERROR_ILLEGAL_CLOSURE, argument);
+      }*/
       break;
     default:
     report_error(USSRONLYC(env) ERROR_ILLEGAL_FUNCTION, function);
@@ -370,6 +376,7 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
   int instruction_counter = 0;
   unsigned char role = getRole(USSRONLY(env));
   int interpreter_debug_flags = 0;
+  printf("Interpreting program at address %d\n", program);
   while(pc<program_size) {
     USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("  <%6d,%2d> %2d(%2d) [%3d %3d %3d %3d %3d]: ", env->context, role, pc, sp, stack[0], stack[1], stack[2], stack[3], stack[4]));
     if(instruction_counter++>MAX_INSTRUCTION_COUNT) {
@@ -580,6 +587,25 @@ unsigned char do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, 
 	unsigned char arg = stack_pop(USSRONLYC(env) stack, &sp);
 	unsigned char result = function_apply(USSRONLYC(env) context,function,arg);
 	stack_push(USSRONLYC(env) stack, &sp, result);
+	break;
+      }
+    case INS_PUSH_ARGUMENT:
+      {
+	unsigned char index = program[pc];
+	if(index!=0) report_error(USSRONLYC(env) ERROR_ILLEGAL_ARGUMENT_INDEX, index);
+	stack_push(USSRONLYC(env) stack, &sp, argument);
+	pc++;
+	break;
+      }
+    case INS_PUSHC:
+      stack_push(USSRONLYC(env) stack, &sp, program[pc]);
+      pc++;
+      break;
+    case INS_SET_LED:
+      {
+	USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("INS_SET_LED %d (pc=%d)\n", program[pc], pc));
+	unsigned char value = program[pc++];
+	setNorthIOPort(USSRONLYC(env) value);
 	break;
       }
     default:

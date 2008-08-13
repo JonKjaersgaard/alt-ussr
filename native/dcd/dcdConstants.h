@@ -14,6 +14,7 @@
 
 /* Primitive functions */
 #define PRIM_CENTERSTOP CMD_ROTATE_STOP
+#define PRIM_TURNTO CMD_ROTATE_TO
 #define PRIM_APPLY (CMD_MAX+0)
 
 #define TASK_NONE 0
@@ -23,7 +24,7 @@
 #define TASK_FLAG_DISCARD 1
 
 #define MAX_PROGRAM_SIZE 64
-#define MAX_N_STORED_PROGRAMS 5
+#define MAX_N_STORED_PROGRAMS 10
 #define MAX_N_ENQUEUED_TASKS 10
 #define MAX_N_EVENT_TYPES 8
 

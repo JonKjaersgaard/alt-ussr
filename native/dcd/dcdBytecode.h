@@ -73,6 +73,10 @@
 #define INS_NEGATE               50
 #define INS_ACTIVATE_DEBUG       51
 #define INS_APPLY                52
+#define INS_PUSH_ARGUMENT        53
+#define INS_PUSHC                54
+/* foo */
+#define INS_SET_LED              55
 #define INS_NOP                 127
 
 /* MSB reserved for constant-push operations */
