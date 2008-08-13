@@ -22,6 +22,12 @@
 Global globals_static_alloc;
 #endif
 
+static int checksum(uint8_t *bytes, uint8_t max) {
+  uint8_t sum = 0, index = 0;
+  for(index=0; index<max; index++) sum += bytes[index];
+  return sum;
+}
+
 /* Initialize controller: global store and scheduler */
 int32_t initialize(USSRONLY(USSREnv *env)) {
   Global *global;
@@ -141,17 +147,22 @@ void createProgramPacket(uint8_t *buffer, InterpreterContext *context, uint8_t r
 
 void sendProgramMaybe(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_t virtual_channel, uint8_t *program, uint8_t programSize) {
   uint8_t buffer[MAX_PROGRAM_SIZE+MT_PACKET_HEADER_SIZE];
+  uint8_t total_size = MT_PACKET_HEADER_SIZE+programSize;
   int8_t x = context->mod_x, y = context->mod_y, z = context->mod_z;
   uint8_t r = context->mod_rotation;
   uint8_t physical_channel = virtual2physical(USSRONLYC(env) context, virtual_channel);
   uint8_t receiver_virtual_channel = compute_receiver_coordinates(USSRONLYC(env) virtual_channel, &x, &y, &z, &r);
   if(!isOtherConnectorNearby(USSRONLYC(env) physical_channel)) return;
-  USSRDEBUG(TRACE_MIGRATION|TRACE_NETWORK,printf("### SendP <%d> name=%d, pch=%d (vch=%d), MY{vch=%d, pos=(%d,%d,%d), r=%d} RC{vch=%d, pos={%d,%d,%d}, r=%d}\n", env->context, getRole(env), physical_channel, virtual_channel, context->incoming_virtual_channel, context->mod_x, context->mod_y, context->mod_z, context->mod_rotation, receiver_virtual_channel, x, y, z, r));
+  USSRDEBUG(TRACE_MIGRATION|TRACE_NETWORK,printf("### SendP <%d> name=%d, pch=%d (vch=%d), MY{vch=%d, pos=(%d,%d,%d), r=%d} RC{vch=%d, pos={%d,%d,%d}, r=%d}\n",
+						 env->context, getRole(env), physical_channel, virtual_channel,
+						 context->incoming_virtual_channel, context->mod_x, context->mod_y, context->mod_z, context->mod_rotation,
+						 receiver_virtual_channel, x, y, z, r));
+#ifdef STRANGE_HACK_THAT_DISABLES_PACKET_COORDINATE_AND_ROTATION_TRANSLATION
   createProgramPacket(buffer,context,receiver_virtual_channel,program,programSize);
-#ifdef UNDEFINED
+#else
   {
     ProgramPacket* packet = (ProgramPacket*)&buffer;
-    int i;
+    uint8_t i;
     packet->header = MT_PROGRAM;
     packet->id = context->program_id;
     packet->x = x;
@@ -163,7 +174,8 @@ void sendProgramMaybe(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8
       packet->program[i] = program[i];
   }
 #endif
-  sendMessage(USSRONLYC(env) buffer, programSize+MT_PACKET_HEADER_SIZE, physical_channel);
+  USSRDEBUG(TRACE_NETWORK,printf("### Checksum: %d\n", checksum(buffer,total_size)));
+  sendMessage(USSRONLYC(env) buffer, total_size, physical_channel);
 }
 
 uint8_t checkForEvents(USSRONLY(USSREnv *env)) {
@@ -280,11 +292,8 @@ uint8_t store_program(USSRONLYC(USSREnv *env) ProgramPacket *packet, uint8_t mes
       program->context.program_id = packet->id;
       program->size = messageSize-MT_PACKET_HEADER_SIZE;
       memcpy(program->program, packet->program, program->size);
-      uint8_t i;
-      for(i=0; i<program->size; i++)
-	printf("<%d,%d>", packet->program[i], program->program[i]);
-      printf("\n");
 #ifdef VERBOSE_DEBUG
+      uint8_t i;
       printf("Stored program {x=%d,y=%d,z=%d,r=%d,vc=%d,pc=%d,sz=%d}\n",
 	     program->context.mod_x,
 	     program->context.mod_y,
@@ -293,6 +302,9 @@ uint8_t store_program(USSRONLYC(USSREnv *env) ProgramPacket *packet, uint8_t mes
 	     program->context.incoming_virtual_channel,
 	     program->context.incoming_physical_channel,
 	     program->size);
+      for(i=0; i<program->size; i++)
+	printf("<%d,%d>", packet->program[i], program->program[i]);
+      printf("\n");
 #endif
       return index;
     }
@@ -357,12 +369,6 @@ uint8_t fresh_message(USSRONLYC(USSREnv *env) Packet *packet) {
 }
 #endif /* DCD_PERFECT_CACHE */
 #endif /* DCD_OMIT_CACHE */
-
-static int checksum(uint8_t *bytes, uint8_t max) {
-  uint8_t sum = 0, index = 0;
-  for(index=0; index<max; index++) sum += bytes[index];
-  return sum;
-}
 
 void handleMessage(USSRONLYC(USSREnv *env) uint8_t* message, uint8_t messageSize, uint8_t channel) {
   uint8_t id;

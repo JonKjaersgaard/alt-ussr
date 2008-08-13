@@ -349,6 +349,6 @@ void dcd_activate(USSRONLYC(USSREnv *env) uint8_t role) {
   printf("DCD VM activated, static memory usage = %d bytes, packet header size = %d bytes\n", sizeof(Global), sizeof(Packet));
   //if(role==0) arm_action(USSRONLY(env));
   //if(role==0) car_action(USSRONLY(env));
-  //if(role==0) dcd_action(USSRONLY(env));
-  if(role==0) test_action_2(USSRONLY(env));
+  if(role==0) dcd_action(USSRONLY(env));
+  //if(role==0) test_action_2(USSRONLY(env));
 }

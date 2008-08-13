@@ -196,6 +196,8 @@ uint8_t deprecated_compute_connected_dir(USSRONLYC(USSREnv *env) InterpreterCont
       return total;
     case ARG_DOWN:
       return compute_2_dir(USSRONLYC(env) context, dir, 2,6);
+    case ARG_NORTH:
+      return compute_2_dir(USSRONLYC(env) context, dir, 1,5);
     default:
       report_error(USSRONLYC(env) ERROR_ILLEGAL_CONNECTION_DIRECTION,dir);
       return 0;
@@ -371,7 +373,9 @@ uint8_t do_interpret(USSRONLYC(USSREnv *env) InterpreterContext *context, uint8_
   uint8_t instruction_counter = 0;
   uint8_t role = getRole(USSRONLY(env));
   uint16_t interpreter_debug_flags = 0;
+#ifdef VERBOSE_DEBUG
   printf("Interpreting program at address %d\n", program);
+#endif
   while(pc<program_size) {
     USSRDEBUG2(interpreter_debug_flags,TRACE_INTERPRET,printf("  <%6d,%2d> %2d(%2d) [%3d %3d %3d %3d %3d]: ", env->context, role, pc, sp, stack[0], stack[1], stack[2], stack[3], stack[4]));
     if(instruction_counter++>MAX_INSTRUCTION_COUNT) {
