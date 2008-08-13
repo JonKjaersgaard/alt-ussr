@@ -33,13 +33,13 @@ import dcd.highlevel.ast.program.Numeric;
 import dcd.highlevel.ast.program.PrimOp;
 import dcd.highlevel.ast.program.SelfFunction;
 
-public class RDCDCompiler extends CodeGeneratorImpl {
+public class RDCDCodeGenerator extends CodeGeneratorImpl {
     private Program program;
     private String name;
     private Map<String,String> invariantFragmentMap = new HashMap<String,String>();
     private Set<String> otherFragments = new HashSet<String>();
     
-    public RDCDCompiler(String name, Program program, Resolver resolver) {
+    public RDCDCodeGenerator(String name, Program program, Resolver resolver) {
         super(resolver);
         this.name = name;
         this.program = program;
@@ -60,12 +60,12 @@ public class RDCDCompiler extends CodeGeneratorImpl {
             if(role.isAbstract()) continue;
             writer.addComment("Role selection code for "+role.getName());
             Block checkInvariant = generateCheckInvariant(role);
-            generateCodeBlock(writer,role,programName("find_"+role.getName().getName()),checkInvariant,true);
+            generateCodeBlock(writer,role,programName("find",role.getName(),new Name("role")),null,checkInvariant,true);
         }
     }
 
-    private void generateCodeBlock(OutputBuilder writer, Role role, String name, Block source, boolean roleInvariant) {
-        ByteCodeSequence compiled = new ByteCodeCompiler(role,resolver).compileCodeBlock(source);
+    private void generateCodeBlock(OutputBuilder writer, Role role, String name, Name parameter, Block source, boolean roleInvariant) {
+        ByteCodeSequence compiled = new ByteCodeCompiler(role,resolver,parameter).compileCodeBlock(source);
         compiled.peepHoleOptimize();
         compiled.resolveGoto();
         String programName = "RDCD_"+name;
@@ -78,8 +78,8 @@ public class RDCDCompiler extends CodeGeneratorImpl {
             otherFragments.add(programName);
     }
 
-    private String programName(String string) {
-        return "program_"+string;
+    private String programName(String prefix, IName roleName, IName commandName) {
+        return "program_"+prefix+"_"+roleName+"_"+commandName;
     }
 
     private void generateStartupMethods(OutputBuilder writer) {
@@ -89,7 +89,7 @@ public class RDCDCompiler extends CodeGeneratorImpl {
                 if(!(method.getModifier()==Modifier.STARTUP)) continue;
                 writer.addComment("Startup method for "+role.getName());
                 Block body = generateStartupBody(role,method);
-                generateCodeBlock(writer,role,programName("startup_"+role.getName().getName()),body,false);
+                generateCodeBlock(writer,role,programName("startup",role.getName(),method.getName()),null,body,false);
             }
         }
     }
@@ -101,7 +101,7 @@ public class RDCDCompiler extends CodeGeneratorImpl {
                 if(!(method.getModifier()==Modifier.BEHAVIOR)) continue;
                 writer.addComment("Behavior method for "+role.getName());
                 Block body = generateBehaviorBody(role,method);
-                generateCodeBlock(writer,role,programName("behavior_"+role.getName().getName()),body,false);
+                generateCodeBlock(writer,role,programName("behavior",role.getName(),method.getName()),null,body,false);
             }
         }
     }
@@ -111,9 +111,9 @@ public class RDCDCompiler extends CodeGeneratorImpl {
             if(role.isAbstract()) continue;
             for(Method method: role.getMethods()) {
                 if(!(method.getModifier()==Modifier.COMMAND)) continue;
-                writer.addComment("Command method for "+role.getName());
+                writer.addComment("Command method for "+role.getName()+"."+method.getName().getName());
                 Block body = generateCommandBody(role,method);
-                generateCodeBlock(writer,role,programName("command_"+role.getName().getName()),body,false);
+                generateCodeBlock(writer,role,programName("command",role.getName(),method.getName()),method.getParameter(),body,false);
             }
         }
     }
