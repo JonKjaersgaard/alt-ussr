@@ -50,17 +50,20 @@ public class FAPLCodeGenerator extends CodeGeneratorImpl {
 
     public void generate(OutputBuilder output) {
         int count = 0;
-        Set<String> fragments = new HashSet<String>();
+        List<String> fragments = new ArrayList<String>();
         for(Unit unit: program.getUnits()) {
             String fragmentName = "FAPL_"+name+"_"+count++;
-            fragments.add(fragmentName);
             ByteCodeSequence compiled;
-            if(unit instanceof Function)
-                compiled = generateFunctionCodeBlock(output, (Function)unit);
+            if(unit instanceof FunctionDef)
+                compiled = generateFunctionCodeBlock(output, (FunctionDef)unit);
             else if(unit instanceof Evaluate)
                 compiled = generateEvaluateCodeBlock(output, (Evaluate)unit);
+            else if(unit instanceof RoleInvariantDef)
+                compiled = generateInvariantCodeBlock(output, (RoleInvariantDef)unit);
             else
                 throw new Error("Not supported yet: "+unit);
+            if(compiled==null) continue;
+            fragments.add(fragmentName);
             compiled.add(ByteCode.INS_TERMINATE());                     
             compiled.peepHoleOptimize();
             compiled.resolveGoto();
@@ -74,27 +77,37 @@ public class FAPLCodeGenerator extends CodeGeneratorImpl {
         output.finish();
     }
 
-    private ByteCodeSequence generateEvaluateCodeBlock(OutputBuilder output, Evaluate unit) {
-        Block source = new Block(new Statement[] { new SingleExp(unit.getExp()) });
-        ByteCodeSequence compiled = new ByteCodeCompiler(program,resolver).compileCodeBlock(source);
+    private ByteCodeSequence generateInvariantCodeBlock(OutputBuilder output, RoleInvariantDef unit) {
+        if(unit.isPartial()) return null;
+        output.addComment("Invariants for role "+unit.getRoleName());
+        Block source = new Block(new Statement[] { super.generateInvariantCascade(new Name(unit.getRoleName()), unit.getInvariants().iterator())});
+        ByteCodeSequence compiled = new ByteCodeCompiler(program,resolver,null).compileCodeBlock(source);
         return compiled;
     }
 
-    private ByteCodeSequence generateFunctionCodeBlock(OutputBuilder output, Function function) {
+    private ByteCodeSequence generateEvaluateCodeBlock(OutputBuilder output, Evaluate unit) {
+        output.addComment("Anonymous evaluation block");
+        Block source = new Block(new Statement[] { new SingleExp(unit.getExp()) });
+        ByteCodeSequence compiled = new ByteCodeCompiler(program,resolver,null).compileCodeBlock(source);
+        return compiled;
+    }
+
+    private ByteCodeSequence generateFunctionCodeBlock(OutputBuilder output, FunctionDef function) {
+        output.addComment("Function definition for "+function.getName().getName()+"("+function.getRole()+")");
         Block source = function.getBody();
         SourceAdapter adapter = new SourceAdapter(function);
         source = super.installize(adapter, function, false);
         source = super.mobilize(adapter, source);
         // installize source
-        ByteCodeSequence compiled = new ByteCodeCompiler(program,resolver).compileCodeBlock(source);
+        ByteCodeSequence compiled = new ByteCodeCompiler(program,resolver,new Name(function.getParameter())).compileCodeBlock(source);
         return compiled;
     }
 
     class SourceAdapter implements GlobalSource {
 
-        private Function function;
+        private FunctionDef function;
         
-        public SourceAdapter(Function function) {
+        public SourceAdapter(FunctionDef function) {
             this.function = function;
         }
 

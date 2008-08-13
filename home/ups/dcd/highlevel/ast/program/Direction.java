@@ -13,6 +13,8 @@ public class Direction extends Literal {
     public static final Direction EAST = new Direction("EAST");
     public static final Direction DOWN = new Direction("DOWN");
     public static final Direction WEST = new Direction("WEST");
+    public static final Direction NORTH = new Direction("NORTH");
+    public static final Direction SOUTH = new Direction("SOUTH");
     
     public Direction(String description) {
         this.description = description;

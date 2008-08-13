@@ -7,8 +7,15 @@ import java.io.PrintWriter;
 
 import dcd.highlevel.CFileBuilder;
 import dcd.highlevel.Resolver;
+import dcd.highlevel.ast.Invariant;
+import dcd.highlevel.ast.program.BinExp;
+import dcd.highlevel.ast.program.ConstantRef;
+import dcd.highlevel.ast.program.Direction;
+import dcd.highlevel.ast.program.Function;
+import dcd.highlevel.ast.program.LocalName;
 import dcd.highlevel.ast.program.Negate;
 import dcd.highlevel.ast.program.Numeric;
+import dcd.highlevel.ast.program.SelfFunction;
 
 public class Test {
 
@@ -17,51 +24,43 @@ public class Test {
     public static void main(String argv[]) {
         Program program = new Program(
                 new Unit[] {
-                   //new Function("stop", new Parameter[0], new Apply(new PrimName("apply*"),new PrimName("@centerStop"))),
-                   //new Evaluate(new Apply(new FunName("stop"),new Numeric(0)))
-		    //new Evaluate(new Apply(new PrimName("apply"),new PrimName("centerStop")))
-		    //		    new Value("rotateAll", new Closure(new Env[], SelfFunction.TURN_TOWARDS(new Numeric(30)))),
-		    //		    new Evaluate(new Apply(new PrimName("apply"),new VarName("rotateAll")))
-/*
-INS_INSTALL_COMMAND, ROLE_ANY, 128, _pos, _len,
-MIGRATE_CONTINUE,
-TURN_TOWARDS, 30,
-END_TERMINATE
-
-PUSHC 128
-PUSHC PRIM_APPLY
-APPLY
- */
-		    new Function("turn","degrees","FrontAxle",new Apply(new PrimName("turnTo"),new LocalName("degrees"))),
-		    new Function("turn","degrees","RearAxle",new Apply(new PrimName("turnTo"),new Negate(new LocalName("degrees")))),
-		    new Function("_eval_0","_","ANY",new Apply(new GlobalName("turn"),new Numeric(45))),
-		    new Evaluate(new Apply(new PrimName("apply"),new GlobalName("_eval_0"))) // apply* (turn 45)
-		    /*
-INS_INSTALL_COMMAND, 128, ROLE_FRONTAXLE, _pos, _len, // could be conditional install
-MIGRATE_CONTINUE,
-PUSH_ARG,
-PUSHC, PRIM_TURNTO,
-APPLY,
-END_TERMINATE
-
-...also 128...
-
-INS_INSTALL_COMMAND, 129, ROLE_ANY, _pos, _len,
-MIGRATE_CONTINUE,
-PUSHC, 45,
-PUSHC, 128,
-APPLY,
-END_TERMINATE
-
-PUSHC 128,
-PUSHC PRIM_APPLY
-APPLY
-END_TERMINATE
-		     */
+                        new RoleInvariantDef("Wheel",null,true,
+                                new Invariant[] { 
+                                new Invariant(BinExp.EQUALS(SelfFunction.CENTER_POSITION,Direction.EAST_WEST)),
+                                new Invariant(BinExp.EQUALS(SelfFunction.TOTAL_CONNECTED,new Numeric(1))),
+                                new Invariant(BinExp.EQUALS(Function.SIZEOF(SelfFunction.CONNECTED(Direction.UP)),new Numeric(1))),
+                        }),
+                        new RoleInvariantDef("LeftWheel","Wheel",false,
+                                new Invariant[] {
+                                new Invariant(BinExp.EQUALS(Function.SIZEOF(SelfFunction.CONNECTED(Direction.WEST)), new Numeric(1)))
+                        }),
+                        new RoleInvariantDef("RightWheel","Wheel",false,
+                                new Invariant[] {
+                                new Invariant(BinExp.EQUALS(Function.SIZEOF(SelfFunction.CONNECTED(Direction.EAST)), new Numeric(1)))
+                        }),
+                        new RoleInvariantDef("Axle",null,true,
+                        		new Invariant[] {
+                                new Invariant(BinExp.GREATER(Function.SIZEOF(SelfFunction.CONNECTED_ROLE(Direction.DOWN,"Wheel")),new Numeric(0)))
+                         }),
+                         new RoleInvariantDef("FrontAxle","Axle",false,
+                                 new Invariant[] {
+                                 new Invariant(BinExp.EQUALS(Function.SIZEOF(SelfFunction.CONNECTED(Direction.NORTH)), new Numeric(0)))
+                         }),
+                         new RoleInvariantDef("RearAxle","Axle",false,
+                                 new Invariant[] {
+                                 new Invariant(BinExp.EQUALS(Function.SIZEOF(SelfFunction.CONNECTED(Direction.SOUTH)), new Numeric(0)))
+                         }),
+                        new FunctionDef("stop", "_", "ANY", new Apply(new PrimName("apply"),new PrimName("centerStop"))),
+                        new FunctionDef("turn","degrees","FrontAxle",new Apply(new PrimName("turnTo"),new LocalName("degrees"))),
+                        new FunctionDef("turn","degrees","RearAxle",new Apply(new PrimName("turnTo"),new Negate(new LocalName("degrees")))),
+                        new FunctionDef("_eval_0","_","ANY",new Apply(new GlobalName("turn"),new Numeric(45))),
+                        new Evaluate(new Apply(new PrimName("apply"),new GlobalName("_eval_0"))) // apply* (turn 45)
                 });
         // Step 1: resolve values (constants) etc
         // Step 2, for functions, compute set of roles, with associated behaviors [skip now]
         Resolver r = new IncrementalNameResolver();
+        PropagateInvariantsPhase pip = new PropagateInvariantsPhase(program);
+        pip.propagate();
         FAPLCodeGenerator gen = new FAPLCodeGenerator("stop_all",program,r);
         OutputStreamWriter output;
         try {

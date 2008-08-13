@@ -16,10 +16,10 @@ import dcd.highlevel.ast.Modifier;
 import dcd.highlevel.ast.Statement;
 import dcd.highlevel.ast.program.SingleExp;
 
-public class Function extends Unit implements MethodSpec {
+public class FunctionDef extends Unit implements MethodSpec {
     private String name, parameter, role;
     private Exp body;
-    public Function(String name, String parameter, String role, Exp body) {
+    public FunctionDef(String name, String parameter, String role, Exp body) {
         this.name = name;
         this.parameter = parameter;
         this.role = role;

@@ -1,11 +1,11 @@
-package dcd.highlevel.fapl;
+package dcd.highlevel.ast.program;
 
 import dcd.highlevel.IName;
 import dcd.highlevel.ast.Exp;
 
-public abstract class Name extends Exp implements IName {
+public abstract class NameImpl extends Exp implements IName {
     private String name;
-    public Name(String name) {
+    public NameImpl(String name) {
         this.name = name;
     }
     public String getName() {

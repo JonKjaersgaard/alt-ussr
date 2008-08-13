@@ -1,8 +1,8 @@
-package dcd.highlevel.fapl;
+package dcd.highlevel.ast.program;
 
 import dcd.highlevel.Visitor;
 
-public class LocalName extends Name {
+public class LocalName extends NameImpl {
 
     public LocalName(String name) {
         super(name);

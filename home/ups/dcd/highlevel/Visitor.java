@@ -3,7 +3,6 @@ package dcd.highlevel;
 import dcd.highlevel.ast.Block;
 import dcd.highlevel.ast.program.*;
 import dcd.highlevel.fapl.Apply;
-import dcd.highlevel.fapl.LocalName;
 import dcd.highlevel.fapl.PrimName;
 import dcd.highlevel.fapl.GlobalName;
 

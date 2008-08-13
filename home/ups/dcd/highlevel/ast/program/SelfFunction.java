@@ -11,6 +11,7 @@ public class SelfFunction extends Function {
     public static final SelfFunction CENTER_POSITION = new SelfFunction("CENTER_POSITION");
     public static final SelfFunction TOTAL_CONNECTED = new SelfFunction("CONNECTED_SIZEOF");
     public static final SelfFunction Y = new SelfFunction("COORD_Y");
+    public static final SelfFunction Z = new SelfFunction("COORD_Z");
 
     public SelfFunction(String name) {
         super(name);
@@ -72,6 +73,10 @@ public class SelfFunction extends Function {
         Exp[] fresh = new Exp[getArguments().size()];
         for(int i=0; i<getArguments().size(); i++) fresh[i] = getArguments().get(i).duplicate();
         return new SelfFunction(getName(), fresh, hasInlineArgument());
+    }
+
+    public static Exp INHIBIT_ROLE() {
+        return new SelfFunction("INHIBIT_ROLE");
     }
 
 }

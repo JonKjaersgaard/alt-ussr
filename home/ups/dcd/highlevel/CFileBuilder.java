@@ -32,6 +32,7 @@ public class CFileBuilder implements OutputBuilder {
             writer.println("  }");
         }
         writer.println("  context.program_id++;");
+        writer.println("  activate_step(USSRONLYC(env) 100);");
         writer.println("  printf(\"*** Waiting\\n\");");
         writer.println("  delay(USSRONLYC(env) WAITTIME);");
     }

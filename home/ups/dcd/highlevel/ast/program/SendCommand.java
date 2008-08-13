@@ -1,17 +1,18 @@
 package dcd.highlevel.ast.program;
 
 import dcd.highlevel.Visitor;
+import dcd.highlevel.ast.Exp;
 import dcd.highlevel.ast.Statement;
 
 public class SendCommand extends Statement {
     private final String role, method;
-    private Literal argument;
+    private Exp argument;
     
     /**
      * @param role
      * @param method
      */
-    public SendCommand(String role, String method, Literal argument) {
+    public SendCommand(String role, String method, Exp argument) {
         this.role = role;
         this.method = method;
         this.argument = argument;
@@ -30,8 +31,17 @@ public class SendCommand extends Statement {
     public String getRole() {
         return role;
     }
+
+    public boolean hasLiteralArgument() {
+        return argument instanceof Literal;
+    }
     
-    public Literal getArgument() {
+    public Literal getLiteralArgument() {
+        if(!(argument instanceof Literal)) throw new Error("Argument is not literal");
+        return (Literal)argument;
+    }
+
+    public Exp getArgument() {
         return argument;
     }
 
@@ -40,4 +50,7 @@ public class SendCommand extends Statement {
         compiler.visitSendCommand(this);
     }
 
+    public Statement duplicate() {
+        return new SendCommand(role,method,argument.duplicate());
+    }
 }

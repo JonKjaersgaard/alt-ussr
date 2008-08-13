@@ -5,16 +5,18 @@ import dcd.highlevel.MethodSpec;
 
 public class Method extends Member implements BehaviorSource, MethodSpec {
     private Modifier modifier;
-    private Name name;
+    private Name name, parameter;
     private Block body;
     /**
      * @param modifier
      * @param name
+     * @param parameter
      * @param body
      */
-    public Method(Modifier modifier, Name name, Block body) {
+    public Method(Modifier modifier, Name name, Name parameter, Block body) {
         this.modifier = modifier;
         this.name = name;
+        this.parameter = parameter;
         this.body = body;
     }
     /**
@@ -53,13 +55,25 @@ public class Method extends Member implements BehaviorSource, MethodSpec {
     public void setName(Name name) {
         this.name = name;
     }
+    /**
+     * @return the parameter
+     */
+    public Name getParameter() {
+        return parameter;
+    }
+    /**
+     * @param parameter the parameter to set
+     */
+    public void setParameter(Name parameter) {
+        this.parameter = parameter;
+    }
     @Override
     public boolean isAbstract() {
         return modifier==Modifier.ABSTRACT;
     }
     @Override
     public Member duplicate() {
-        return new Method(modifier,name,body.duplicate());
+        return new Method(modifier,name,parameter,body.duplicate());
     }
     
 }

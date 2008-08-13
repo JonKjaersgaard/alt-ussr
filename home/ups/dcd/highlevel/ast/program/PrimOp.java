@@ -8,7 +8,7 @@ import dcd.highlevel.ast.Block;
 import dcd.highlevel.ast.Exp;
 import dcd.highlevel.ast.Name;
 import dcd.highlevel.ast.Statement;
-import dcd.highlevel.rdcd.RDCDCompiler;
+import dcd.highlevel.rdcd.RDCDCodeGenerator;
 
 public class PrimOp extends Statement {
     public static final PrimOp MIGRATE_CONTINUE = new PrimOp("MIGRATE_CONTINUE");

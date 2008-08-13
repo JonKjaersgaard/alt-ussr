@@ -18,7 +18,6 @@ import dcd.highlevel.ast.Statement;
 import dcd.highlevel.ast.program.*;
 import dcd.highlevel.fapl.Apply;
 import dcd.highlevel.fapl.GlobalName;
-import dcd.highlevel.fapl.LocalName;
 import dcd.highlevel.fapl.PrimName;
 
 public class ByteCodeCompiler implements Visitor {
@@ -27,10 +26,12 @@ public class ByteCodeCompiler implements Visitor {
     private GlobalSource source;
     private Map<String,Block> blockMap = new HashMap<String,Block>();
     private Resolver resolver;
-    
-    public ByteCodeCompiler(GlobalSource role, Resolver vtableResolver) {
+    private Map<String,Integer> parameters = new HashMap<String,Integer>();
+
+    public ByteCodeCompiler(GlobalSource role, Resolver vtableResolver, IName parameterName) {
         this.source = role;
         this.resolver = vtableResolver;
+        if(parameterName!=null) parameters.put(parameterName.getName(), 0);
     }
     
     public ByteCodeSequence compileCodeBlock(Block block) {
@@ -231,7 +232,15 @@ public class ByteCodeCompiler implements Visitor {
 
     public void visitSendCommand(SendCommand command) {
         int methodIndex = resolver.getMethodIndex(command.getRole(), command.getMethod())+Resolver.METHOD_OFFSET;
-        result.add(new ByteCode("INS_SEND_COMMAND",4,new String[] { "ROLE_"+command.getRole(), Integer.toString(methodIndex), command.getArgument().residualize() }));
+        String role = "ROLE_"+command.getRole();
+        String index = Integer.toString(methodIndex);
+        if(command.hasLiteralArgument())
+            result.add(new ByteCode("INS_SEND_COMMAND",4,new String[] { role, index, command.getLiteralArgument().residualize() }));
+        else {
+            Exp argument = command.getArgument();
+            argument.visit(this);
+            result.add(new ByteCode("INS_SEND_COMMAND_STACK_ARG",3,new String[] { role, index }));
+        }
     }
 
     public void visitPredefined(Predefined predefined) {
@@ -280,7 +289,7 @@ public class ByteCodeCompiler implements Visitor {
     }
 
     public void visitGlobalName(GlobalName name) {
-        result.add(ByteCode.INS_PUSHC(new Integer(resolver.getGlobalIndex(name.getName())).toString()));
+        result.add(ByteCode.INS_PUSHC(new Integer(resolver.getGlobalIndex(name.getName())+Resolver.METHOD_OFFSET).toString()));
     }
 
 

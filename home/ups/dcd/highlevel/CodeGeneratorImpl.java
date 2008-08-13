@@ -62,7 +62,7 @@ public abstract class CodeGeneratorImpl {
     }
 
     protected Block generateCheckInvariant(GlobalSource role) {
-        Statement cascade = generateInvariantCascade(role,role.getInvariants().iterator());
+        Statement cascade = generateInvariantCascade(role.getName(),role.getInvariants().iterator());
         return annotize(role,new Block(new ArrayList<Statement>(Arrays.asList(new Statement[] { cascade, PrimOp.MIGRATE_CONTINUE }))));
     }
     
@@ -72,7 +72,7 @@ public abstract class CodeGeneratorImpl {
         return wrapper;
     }
 
-    protected Statement generateInvariantCascade(GlobalSource role, Iterator<? extends InvariantSource> invariants) {
+    protected Statement generateInvariantCascade(IName role, Iterator<? extends InvariantSource> invariants) {
         if(invariants.hasNext()) {
             Invariant invariant = (Invariant)invariants.next();
             return new Conditional(
@@ -81,7 +81,7 @@ public abstract class CodeGeneratorImpl {
                     PrimOp.MIGRATE_CONTINUE
                     );
         } else {
-            return PrimOp.SET_ROLE_NOTIFY(role.getName());
+            return PrimOp.SET_ROLE_NOTIFY(role);
         }
     }
 }
