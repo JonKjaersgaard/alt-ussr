@@ -25,13 +25,13 @@ void controllerIterationSimulatorHook(USSREnv *env, unsigned char waitForEvent);
 #    define USSRONLYC(x)
 #    define controllerIterationSimulatorHook(x)
 
-extern int getRole();
+extern uint8_t getRole();
 
 #  endif /* USSR */
 
 /* Main controller functions */
 
 extern void activate(USSRONLY(USSREnv *env));
-extern int initialize(USSRONLY(USSREnv *env));
+extern int32_t initialize(USSRONLY(USSREnv *env));
 
 #endif /*USSR_H_*/
