@@ -23,7 +23,7 @@ void controllerIterationSimulatorHook(USSREnv *env, unsigned char waitForEvent);
 
 #    define USSRONLY(x)
 #    define USSRONLYC(x)
-#    define controllerIterationSimulatorHook(x)
+#    define controllerIterationSimulatorHook(x,y)
 
 extern uint8_t getRole();
 
