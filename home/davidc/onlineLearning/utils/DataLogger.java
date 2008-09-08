@@ -21,7 +21,7 @@ public class DataLogger {
 	//	dir.mkdirs()
 	}
 	public static void addFile(String name) {
-		File f = new File(dir.getAbsolutePath()+"\\"+name);
+		File f = new File(dir.getAbsolutePath()+"//"+name);
 		try {
 			f.createNewFile();
 			logFiles.put(name,new BufferedWriter(new FileWriter(f)));

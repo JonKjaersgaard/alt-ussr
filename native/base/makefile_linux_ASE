@@ -1,0 +1,31 @@
+# ASE Library
+ASE_DIR=home/david/workspace/ASE
+ASE_INCLUDE=-I/$(ASE_DIR)/include
+
+# OS-specific variables
+JAVAINCLUDE=-I/usr/lib/jvm/java-6-sun-1.6.0.06/include/ -I/usr/lib/jvm/java-6-sun-1.6.0.06/include/linux
+ALLINCLUDE=$(JAVAINCLUDE) -I$(BASEDIR)/native/include $(ASE_INCLUDE)
+CFLAGS=-fPIC -DUSSR $(JAVAINCLUDE) $(ALLINCLUDE) -Wall -pedantic
+#LDFLAGS=-dynamiclib -framework JavaVM -fPIC
+LDFLAGS=-shared --enable-stdcall-fixup
+
+# General variables
+NATIVECONTROLLER=$(BASEDIR)/native/base/nativeController.c
+APIFILE=$(BASEDIR)/native/base/$(API).c
+SRC=$(NATIVECONTROLLER) $(APIFILE) $(CONTROLLER).c $(FILES)
+BIN=$(SRC:.c=.o)
+CC=gcc
+
+all: nativeController.so
+	cp nativeController.so $(BASEDIR)/lib/lib$(CONTROLLER).so
+$(BASEDIR)/native/include/nativeController.h: $(BASEDIR)/bin/ussr/samples/atron/natives/ATRONNativeController.class
+	javah -jni -classpath $(BASEDIR)/bin -o $(BASEDIR)/native/include/nativeController.h ussr.samples.atron.natives.ATRONNativeController
+nativeController.so: $(BASEDIR)/native/include/nativeController.h $(BIN)
+	gcc $(LDFLAGS) -o nativeController.so $(BIN) /$(ASE_DIR)/lib/libASE.a
+clean:
+	rm -f .depends nativeController.so $(BIN)
+cleanh:
+	rm -f $(BASEDIR)/include/nativeController.h
+.depends: $(BASEDIR)/native/include/nativeController.h
+	gcc -DUSSR $(ALLINCLUDE) -M $(SRC) > .depends
+include .depends

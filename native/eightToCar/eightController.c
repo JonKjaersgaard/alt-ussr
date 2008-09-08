@@ -20,11 +20,11 @@ Global globals_static_alloc;
 void activate(USSRONLY(USSREnv *env)) {
   unsigned char i,k;
   // INSERTED:
-  for(k=0;k<7;k++) 
+  for(k=0;k<7;k++)
         GLOBAL(env,moduleTranslator)[k] = k;
 for (i=0;i<1;i++)
 	GLOBAL(env,token)[i]=255;
- delay(10);
+ delay(USSRONLY(env),10);
  setup(USSRONLY(env));
  home(USSRONLY(env));
  if(getRole(env)==0) GLOBAL(env,token)[0] = 0;
@@ -38,8 +38,10 @@ while(1)
 switch(GLOBAL(env,token)[0])
 {
 case 0:
-  disconnect(USSRONLYC(env) 0);
+	disconnect(USSRONLYC(env) 0);
+	printf("I am Disconnecting...\n"); fflush(stdout);
 	while (!isDisconnected(USSRONLYC(env) 0))controllerIterationSimulatorHook(USSRONLY(env),0);
+	printf("Done...\n"); fflush(stdout);
 	GLOBAL(env,token)[0]=1;
 	break;
 case 1:
@@ -535,7 +537,7 @@ case 68:
 
 }
 
-void handleMessage(USSRONLYC(USSREnv *env) unsigned char* incoming, unsigned char messageSize, unsigned char channel) { 
+void handleMessage(USSRONLYC(USSREnv *env) unsigned char* incoming, unsigned char messageSize, unsigned char channel) {
 
   if (incoming[2]==getRole(USSRONLY(env))) /* modified: getMyID */
 {

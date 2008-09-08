@@ -7,7 +7,7 @@ import onlineLearning.utils.FileLoader;
 
 public class SkillFileManager {
 	public static void initLogFiles(String moduleType, String robotName, String dirID) {
-		DataLogger.init("Online Learning\\"+moduleType+" Experiments\\"+robotName+"-"+dirID);
+		DataLogger.init("Online Learning//"+moduleType+" Experiments//"+robotName+"-"+dirID);
 		DataLogger.addFile("rewards.txt");
 		DataLogger.addFile("Q-Values.txt");
 		DataLogger.addFile("Role-Rewards.txt");

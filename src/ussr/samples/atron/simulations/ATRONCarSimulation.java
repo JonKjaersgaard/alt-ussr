@@ -56,6 +56,7 @@ public class ATRONCarSimulation extends GenericATRONSimulation {
     protected void changeWorldHook(WorldDescription world) {
         ObstacleGenerator generator = new ObstacleGenerator();
         generator.obstacalize(obstacleType, world);
+        world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
     }
 	
 	@Override
