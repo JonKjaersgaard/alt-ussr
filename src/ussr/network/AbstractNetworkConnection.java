@@ -4,7 +4,7 @@
  * This software is distributed under the BSD open-source license.
  * For licensing see the file LICENCE.txt included in the root of the USSR distribution.
  */
-package network;
+package ussr.network;
 /**
  * 
  *   @author ups

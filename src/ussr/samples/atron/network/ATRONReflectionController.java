@@ -1,12 +1,10 @@
 package ussr.samples.atron.network;
 
-import ussr.model.Controller;
-import ussr.network.ModularCommanderConnection;
-import ussr.network.ModularCommanderConnection.Mapper;
+import ussr.network.ReflectionConnection;
 import ussr.samples.atron.ATRONController;
 
-public class ATRONModularCommanderController extends ATRONController implements Mapper {
-    ModularCommanderConnection mc;
+public class ATRONReflectionController extends ATRONController {
+    ReflectionConnection rc;
     
     @Override
     public void activate() {
@@ -21,13 +19,8 @@ public class ATRONModularCommanderController extends ATRONController implements 
         } catch(NumberFormatException exn) {
             throw new Error("Illegal port number, cannot parse: "+portDescription);
         }
-        mc = new ModularCommanderConnection(port,this);
-        mc.activate();
-    }
-
-    public void mapPacketToAPI(byte[] packet) {
-        String name = getModule().getProperty("name");
-        System.out.println("Module "+name+" got: "+packet.length+" bytes");
+        rc = new ReflectionConnection(port,this);
+        rc.activate();
     }
 
 }

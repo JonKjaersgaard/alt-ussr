@@ -1,7 +1,7 @@
 /**
  * 
  */
-package network;
+package ussr.network;
 
 
 class XMLTokenizer {
