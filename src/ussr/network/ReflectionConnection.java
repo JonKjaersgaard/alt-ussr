@@ -55,8 +55,10 @@ public class ReflectionConnection extends AbstractNetworkConnection {
             Object response;
             try {
                 response = id+" OK "+handleMessage(parts);
-            } catch(Exception exn) {
-                response = id+" ERROR "+exn;
+            } catch(Throwable t) {
+                System.err.println("Warning: exception while processing request");
+                t.printStackTrace(System.err);
+                response = id+" ERROR "+t;
             }
             try {
                 writer.write(response.toString());
@@ -76,13 +78,15 @@ public class ReflectionConnection extends AbstractNetworkConnection {
         for(Method method: target.getClass().getMethods()) {
             if(method.getName().equals(command)) {
                 Class<?>[] parameters = method.getParameterTypes();
-                if(parameters.length==0) arguments = new Object[0];
-                if(parameters[0]==Integer.class)
-                    arguments = new Object[] { Integer.parseInt(parts[2]) };
-                else if(parameters[0]==Float.class)
-                    arguments = new Object[] { Float.parseFloat(parts[2]) };
-                else
-                    throw new Error("Illegal arguments type: parameters[0]");
+                arguments = new Object[parameters.length];
+                for(int i=0; i<parameters.length; i++) {
+                    if(parameters[i]==Integer.TYPE)
+                        arguments[i] = Integer.parseInt(parts[2+i]);
+                    else if(parameters[i]==Float.TYPE)
+                        arguments[i] = Float.parseFloat(parts[2+i]);
+                    else
+                        throw new Error("Illegal arguments type @"+i+": "+parameters[i]);
+                }
                 Object result = method.invoke(target, arguments);
                 return result;
             }
