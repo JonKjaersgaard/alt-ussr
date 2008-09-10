@@ -29,7 +29,7 @@ public abstract class AbstractNetworkConnection {
 	private ServerSocket socket;
 	private int port;
 		
-	public AbstractNetworkConnection(String name, int port) {
+	public AbstractNetworkConnection(int port) {
 	    this.port = port;
 		try {
 			socket = new ServerSocket(port);
