@@ -1,8 +1,9 @@
 package ussr.samples.atron.network;
 
+import network.ModularCommanderController;
+import network.ModularCommanderController.Mapper;
 import ussr.model.Controller;
 import ussr.samples.atron.ATRONController;
-import ussr.samples.atron.network.ModularCommanderController.Mapper;
 
 public class ATRONModularCommanderController extends ATRONController implements Mapper {
     ModularCommanderController mc;

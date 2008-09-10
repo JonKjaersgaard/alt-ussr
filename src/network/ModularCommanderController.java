@@ -1,4 +1,4 @@
-package ussr.samples.atron.network;
+package network;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 import ussr.model.Controller;
-import ussr.samples.AbstractNetworkConnection;
 
 public class ModularCommanderController extends AbstractNetworkConnection {
 
@@ -49,38 +49,13 @@ public class ModularCommanderController extends AbstractNetworkConnection {
 
     private byte[] ussrUnpackXML(String input) {
         List<Byte> storage = new ArrayList<Byte>();
-        XMLEater xe = new XMLEater(input);
+        XMLTokenizer xe = new XMLTokenizer(input);
         xe.eat("<modular_commander>");
         while(xe.hasTag("b")) storage.add(xe.eatByte());
         xe.eat("</modular_commander>");
         byte[] result = new byte[storage.size()];
         for(int i=0; i<result.length; i++) result[i] = storage.get(i);
         return result;
-    }
-    
-    private static class XMLEater {
-        private String string;
-        private int index;
-        public XMLEater(String string) { this.string = string; }
-        public void eat(String sequence) {
-            if(!string.startsWith(sequence, index)) throw new XMLEaterMismatch("Expected "+sequence+" got "+string.substring(index));
-            index+=sequence.length();
-        }
-        public boolean hasTag(String tag) {
-            return string.startsWith("<"+tag+">", index);
-        }
-        public byte eatByte() {
-            this.eat("<b>");
-            int end = string.indexOf('<', index);
-            byte result = Byte.parseByte(string.substring(index, end));
-            index = end;
-            this.eat("</b>");
-            return result;
-        }
-    }
-
-    private static class XMLEaterMismatch extends RuntimeException {
-        public XMLEaterMismatch(String string) { super(string); }
     }
 
 }

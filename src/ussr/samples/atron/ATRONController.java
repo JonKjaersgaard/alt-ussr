@@ -305,6 +305,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	 */
     public void rotateContinuous(float dir) {
         locked = false;
+        System.out.println("Java: rotate cont "+dir);
     	module.getActuators().get(0).activate(dir);
     }
     

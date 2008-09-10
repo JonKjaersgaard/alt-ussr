@@ -61,7 +61,7 @@ public class ATRONCarSimulation extends GenericATRONSimulation {
 	
 	@Override
 	protected void simulationHook(PhysicsSimulation simulation) {
-	    ((JMESimulation)simulation).setPicker(new DisplacementPicker());
+	    //((JMESimulation)simulation).setPicker(new DisplacementPicker());
 	}
     
 }
