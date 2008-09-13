@@ -67,7 +67,7 @@ public class FAPLCodeGenerator extends CodeGeneratorImpl {
             compiled.add(ByteCode.INS_TERMINATE());                     
             compiled.peepHoleOptimize();
             compiled.resolveGoto();
-            output.startFragment(fragmentName,compiled.getSize());
+            output.startFragment(fragmentName,compiled.getSize(),"ANY");
             compiled.generate(output);
             output.finishFragment();
         }

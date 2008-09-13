@@ -3,15 +3,19 @@ package dcd.highlevel.ast;
 import java.util.Arrays;
 import java.util.List;
 
-public class Program extends Node {
+public class Program extends ASTNode {
     private List<Role> roles;
     private List<Name> deployment;
     
     public Program(Role[] roles, Name[] deployment) {
-        this.roles = Arrays.asList(roles);
-        this.deployment = Arrays.asList(deployment);
+        this(Arrays.asList(roles),Arrays.asList(deployment));
     }
     
+    public Program(List<Role> roles2, List<Name> deployment2) {
+        this.roles = roles2;
+        this.deployment = deployment2;
+    }
+
     public Role getRole(Name name) {
         for(Role role: roles) if(role.getName().equals(name)) return role;
         throw new Error("Role not found: "+name);

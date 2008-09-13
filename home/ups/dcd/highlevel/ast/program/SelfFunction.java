@@ -53,7 +53,7 @@ public class SelfFunction extends Function {
         return new SelfFunction("SLEEP_ROTATIONS",exp,true);
     }
 
-    public static Exp ENABLE_EVENT(ConstantRef ref) {
+    public static Exp ENABLE_EVENT(Exp ref) {
         return new SelfFunction("ENABLE_EVENT",ref,true);
     }
     
@@ -77,6 +77,10 @@ public class SelfFunction extends Function {
 
     public static Exp INHIBIT_ROLE() {
         return new SelfFunction("INHIBIT_ROLE");
+    }
+
+    public static Exp SLEEP_CENTIS(Exp exp) {
+        return new SelfFunction("SLEEP_CS",exp,true);
     }
 
 }

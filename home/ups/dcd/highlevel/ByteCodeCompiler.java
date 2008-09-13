@@ -27,6 +27,8 @@ public class ByteCodeCompiler implements Visitor {
     private Map<String,Block> blockMap = new HashMap<String,Block>();
     private Resolver resolver;
     private Map<String,Integer> parameters = new HashMap<String,Integer>();
+    private int blockCounter = 0;
+    private Map<Block,String> blockCache;
 
     public ByteCodeCompiler(GlobalSource role, Resolver vtableResolver, IName parameterName) {
         this.source = role;
@@ -35,6 +37,7 @@ public class ByteCodeCompiler implements Visitor {
     }
     
     public ByteCodeSequence compileCodeBlock(Block block) {
+        blockCache = new HashMap<Block,String>();
         for(Statement statement: block.getStatements())
             statement.visit(this);
         boolean addedBlocks = false;
@@ -81,13 +84,18 @@ public class ByteCodeCompiler implements Visitor {
         result.addLabel(label.getLabel());
     }
 
-    private int blockCounter = 0;
     public void visitPrimOp(PrimOp primop) {
         int blockArgIndex = -1;
         String label = null;
         if(primop.hasBlockArgument()) {
-            label = "_block_"+(blockCounter++);
-            this.addBlockArgument(label,primop.getBlockArgument());
+            Block blockArg = primop.getBlockArgument();
+            if(blockCache.containsKey(blockArg))
+                label = blockCache.get(blockArg);
+            else {
+                label = "_block_"+(blockCounter++);
+                this.addBlockArgument(label,blockArg);
+                blockCache.put(blockArg, label);
+            }
             primop.setBlockResidualAddress(label);
         }
         Exp[] arguments = primop.duplicate().getArguments();
@@ -137,12 +145,12 @@ public class ByteCodeCompiler implements Visitor {
             String operation = ((Predefined)arguments[0]).getName();
             if(operation.equals("TURN_CONTINUOUSLY")) {
                 int direction = arg2dir(arguments[1], operation);
-                if(direction==1) {
+                if(direction>0) {
                     arguments[0] = new Predefined("CMD_ROTATE_CLOCKWISE");
                     return name;
                 } else {
                     arguments[0] = new Predefined("CMD_ROTATE_COUNTERCLOCKWISE");
-                    arguments[1] = new Numeric(1);
+                    arguments[1] = new Numeric(-direction);
                     return name;
                 }
             }

@@ -126,6 +126,7 @@ public class ByteCodeSequence {
                 new String[] { ByteCode.CENTER_POSITION,ByteCode.PUSHC,ByteCode.EQUALS },
                 new Rule() { ByteCode[] apply(ByteCode in[]) {
                     if(in[1].getArguments()[0].equals(ByteCode.EAST_WEST)) return new ByteCode[] { ByteCode.INS_CENTER_POSITION_something("EW") };
+                    if(in[1].getArguments()[0].equals(ByteCode.NORTH_SOUTH)) return new ByteCode[] { ByteCode.INS_CENTER_POSITION_something("NS") };
                     throw new Error("Unknown direction: "+in[1]);
                 }}),
         new Pattern(

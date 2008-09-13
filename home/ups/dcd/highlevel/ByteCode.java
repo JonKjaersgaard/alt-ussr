@@ -14,6 +14,7 @@ public class ByteCode {
     public static final String PUSHC = "PUSHC";
     public static final String EQUALS = "EQUALS";
     public static final String EAST_WEST = "ARG_EAST_WEST";
+    public static final String NORTH_SOUTH = "ARG_NORTH_SOUTH";
     public static final String ANY = "*";
     public static final String SIZEOF = "SIZEOF";
     public static final String CONNECTED_ROLE = "CONNECTED_ROLE";

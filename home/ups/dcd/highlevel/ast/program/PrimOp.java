@@ -91,6 +91,15 @@ public class PrimOp extends Statement {
         return new PrimOp("HANDLE_EVENT",new Exp[] { vector, null, Numeric.NaN }, block); 
     }
 
+    public static Statement HANDLE_EVENT_MULTI(Exp[] vectors, Block block) {
+        block.addStatement(PrimOp.TERMINATE());
+        Statement[] statements = new Statement[vectors.length];
+        for(int i=0; i<vectors.length; i++)
+            statements[i] = new PrimOp("HANDLE_EVENT",new Exp[] { vectors[i], null, Numeric.NaN }, block); 
+        Block result = new Block(statements);
+        return result;
+    }
+
     public static PrimOp TERMINATE() {
         return new PrimOp("END_TERMINATE");
     }

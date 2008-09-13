@@ -5,8 +5,12 @@ import dcd.highlevel.ast.program.Numeric;
 import dcd.highlevel.ast.program.Predefined;
 
 public class ConstantDef extends Member {
-    public static final Predefined EVENT_HANDLER_5 = new Predefined("EVENT_PROXIMITY_5");
+    public static final Predefined EVENT_HANDLER_1 = new Predefined("EVENT_PROXIMITY_1");
     public static final Predefined EVENT_HANDLER_3 = new Predefined("EVENT_PROXIMITY_3");
+    public static final Predefined EVENT_HANDLER_5 = new Predefined("EVENT_PROXIMITY_5");
+    public static Predefined MK_EVENT_HANDLER(Predefined event_1, Predefined event_2) {
+        return new Predefined("MK_EVENT_PROXIMITY("+event_1.getName()+","+event_2.getName()+")");
+    }
     
     private final Name name;
     private final Literal value;

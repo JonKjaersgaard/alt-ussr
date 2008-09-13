@@ -2,7 +2,7 @@ package dcd.highlevel.ast;
 
 import dcd.highlevel.IName;
 
-public class Name extends Node implements IName {
+public class Name extends ASTNode implements IName {
     private final String name;
 
     /**

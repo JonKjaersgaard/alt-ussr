@@ -49,4 +49,8 @@ public class Block extends Statement {
         return new Block(fresh);
     }
     
+    public boolean equals(Object other) {
+        return this==other;
+    }
+    
 }

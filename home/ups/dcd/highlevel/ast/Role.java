@@ -3,13 +3,14 @@ package dcd.highlevel.ast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import dcd.highlevel.GlobalSource;
 import dcd.highlevel.IName;
 import dcd.highlevel.InvariantSource;
 
-public class Role extends Node implements GlobalSource {
+public class Role extends ASTNode implements GlobalSource {
     private Name name, zuper;
     private List<Modifier> modifiers;
     private List<ConstantDef> constants;
@@ -31,6 +32,14 @@ public class Role extends Node implements GlobalSource {
         setConstants(new ArrayList<ConstantDef>(Arrays.asList(constants)));
         setInvariants(new ArrayList<Invariant>(Arrays.asList(invariants)));
         setMethods(new ArrayList<Method>(Arrays.asList(methods)));
+    }
+    public Role(Name name2, Name zuper2, List<Modifier> modifiers, List<ConstantDef> constants, List<Invariant> invariants, List<Method> methods) {
+        this.name = name2;
+        this.zuper = zuper2;
+        setModifiers(modifiers);
+        setConstants(constants);
+        setInvariants(invariants);
+        setMethods(methods);
     }
     /**
      * @return the constants

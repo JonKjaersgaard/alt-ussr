@@ -6,7 +6,7 @@ public interface OutputBuilder {
 
     void addComment(String string);
 
-    void startFragment(String programName, int size);
+    void startFragment(String programName, int size, String roleName);
 
     void finishFragment();
 

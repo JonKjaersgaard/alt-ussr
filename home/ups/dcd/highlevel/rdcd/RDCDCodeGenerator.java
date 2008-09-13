@@ -69,7 +69,7 @@ public class RDCDCodeGenerator extends CodeGeneratorImpl {
         compiled.peepHoleOptimize();
         compiled.resolveGoto();
         String programName = "RDCD_"+name;
-        writer.startFragment(programName,compiled.getSize());
+        writer.startFragment(programName,compiled.getSize(),roleInvariant ? "ANY" : role.getName().toString());
         compiled.generate(writer);
         writer.finishFragment();
         if(roleInvariant)
@@ -122,10 +122,10 @@ public class RDCDCodeGenerator extends CodeGeneratorImpl {
         for(Name role: program.getDeployment()) {
             String fragmentName = invariantFragmentMap.get(role.getName());
             if(fragmentName==null) throw new Error("Undefined fragment name: "+role.getName());
-            writer.scheduleFragmentSend(fragmentName,false);
+            writer.scheduleFragmentSend(fragmentName,true);
         }
         for(String fragment: otherFragments)
-            writer.scheduleFragmentSend(fragment,false);
+            writer.scheduleFragmentSend(fragment,true);
     }
 
 }
