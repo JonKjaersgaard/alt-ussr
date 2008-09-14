@@ -1,5 +1,5 @@
 role Head extends Module {
-  a = 1;
+  a = $EAST_WEST;
   b = 2;
   (a > b);
 }

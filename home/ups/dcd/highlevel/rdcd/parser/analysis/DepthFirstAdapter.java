@@ -246,6 +246,31 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outASimpleName(node);
     }
 
+    public void inAExternalName(AExternalName node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAExternalName(AExternalName node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAExternalName(AExternalName node)
+    {
+        inAExternalName(node);
+        if(node.getDollar() != null)
+        {
+            node.getDollar().apply(this);
+        }
+        if(node.getIdentifier() != null)
+        {
+            node.getIdentifier().apply(this);
+        }
+        outAExternalName(node);
+    }
+
     public void inACompilationUnit(ACompilationUnit node)
     {
         defaultIn(node);

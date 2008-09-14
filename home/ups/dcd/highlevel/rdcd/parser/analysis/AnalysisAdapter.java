@@ -119,6 +119,11 @@ public class AnalysisAdapter implements Analysis
         defaultCase(node);
     }
 
+    public void caseAExternalName(AExternalName node)
+    {
+        defaultCase(node);
+    }
+
     public void caseACompilationUnit(ACompilationUnit node)
     {
         defaultCase(node);
@@ -230,6 +235,11 @@ public class AnalysisAdapter implements Analysis
     }
 
     public void caseTDeployment(TDeployment node)
+    {
+        defaultCase(node);
+    }
+
+    public void caseTDollar(TDollar node)
     {
         defaultCase(node);
     }

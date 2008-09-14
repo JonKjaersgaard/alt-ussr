@@ -17,6 +17,7 @@ import dcd.highlevel.ast.Program;
 import dcd.highlevel.ast.Role;
 import dcd.highlevel.ast.program.BinExp;
 import dcd.highlevel.ast.program.ConstantRef;
+import dcd.highlevel.ast.program.Direction;
 import dcd.highlevel.ast.program.Literal;
 import dcd.highlevel.ast.program.Numeric;
 import dcd.highlevel.rdcd.parser.analysis.DepthFirstAdapter;
@@ -24,6 +25,7 @@ import dcd.highlevel.rdcd.parser.node.AAbstractConstant;
 import dcd.highlevel.rdcd.parser.node.AAdditionBinaryExp;
 import dcd.highlevel.rdcd.parser.node.ABinexpExp;
 import dcd.highlevel.rdcd.parser.node.AConcreteIntConstant;
+import dcd.highlevel.rdcd.parser.node.AConcreteNameConstant;
 import dcd.highlevel.rdcd.parser.node.ADecimalIntegerLiteral;
 import dcd.highlevel.rdcd.parser.node.ADeploymentSpec;
 import dcd.highlevel.rdcd.parser.node.AEqualityBinaryExp;
@@ -88,6 +90,11 @@ public class ASTGenerator extends DepthFirstAdapter {
     }
 
     @Override
+    public void outAConcreteNameConstant(AConcreteNameConstant constant) {
+        constants.add(new ConstantDef(constant.getName().getText(),lookupExternalVar(constant.getValue().getText())));
+    }
+
+    @Override
     public void outADecimalIntegerLiteral(ADecimalIntegerLiteral i) {
         set(i,new Numeric(Integer.parseInt(i.getDecimalIntegerLiteral().getText())));
     }
@@ -99,7 +106,11 @@ public class ASTGenerator extends DepthFirstAdapter {
 
     @Override
     public void outAVariableExp(AVariableExp var) {
-        set(var,new ConstantRef(var.getIdentifier().getText()));
+        String name = var.getIdentifier().getText();
+        if(name.startsWith("$"))
+            set(var,lookupExternalVar(name));
+        else
+            set(var,new ConstantRef(name));
     }
     
     @Override
@@ -115,5 +126,10 @@ public class ASTGenerator extends DepthFirstAdapter {
     @Override
     public void outAEqualityBinaryExp(AEqualityBinaryExp bin) {
         set(bin,BinExp.EQUALS((Exp)get(bin.getLeft()), (Exp)get(bin.getRight())));
+    }
+    
+    private Literal lookupExternalVar(String name) {
+        if(name.equals("$EAST_WEST")) return Direction.EAST_WEST;
+        throw new Error("Unknown external name: "+name);
     }
 }

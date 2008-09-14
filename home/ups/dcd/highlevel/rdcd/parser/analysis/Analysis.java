@@ -22,6 +22,7 @@ public interface Analysis extends Switch
     void caseAOctalIntegerLiteral(AOctalIntegerLiteral node);
     void caseASimpleNameName(ASimpleNameName node);
     void caseASimpleName(ASimpleName node);
+    void caseAExternalName(AExternalName node);
     void caseACompilationUnit(ACompilationUnit node);
     void caseADeploymentSpec(ADeploymentSpec node);
     void caseARoleDeclaration(ARoleDeclaration node);
@@ -46,6 +47,7 @@ public interface Analysis extends Switch
     void caseTEvent(TEvent node);
     void caseTExtends(TExtends node);
     void caseTDeployment(TDeployment node);
+    void caseTDollar(TDollar node);
     void caseTTrue(TTrue node);
     void caseTFalse(TFalse node);
     void caseTLParenthese(TLParenthese node);
