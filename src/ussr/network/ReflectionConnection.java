@@ -62,7 +62,6 @@ public class ReflectionConnection extends AbstractNetworkConnection {
             }
             try {
                 writer.write(response.toString());
-                writer.newLine();
                 writer.flush();
             } catch(IOException exn) {
                 throw new Error("Error writing to socket");
@@ -84,8 +83,15 @@ public class ReflectionConnection extends AbstractNetworkConnection {
                         arguments[i] = Integer.parseInt(parts[2+i]);
                     else if(parameters[i]==Float.TYPE)
                         arguments[i] = Float.parseFloat(parts[2+i]);
-                    else
-                        throw new Error("Illegal arguments type @"+i+": "+parameters[i]);
+                    else if(parameters[i]==Byte.TYPE) 
+                    	arguments[i] = Byte.parseByte(parts[2+i]);
+                    else if(parameters[i]==Character.TYPE) 
+                    	arguments[i] = parts[2+i].toCharArray()[0];
+                    else if(parameters[i].getCanonicalName().equals("byte[]"))
+                    	arguments[i] = ((String)parts[2+i]).getBytes();
+                    else {
+                    	throw new Error("Illegal arguments type @"+i+": "+parameters[i]);
+                    }
                 }
                 Object result = method.invoke(target, arguments);
                 return result;

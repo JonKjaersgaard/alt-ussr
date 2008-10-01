@@ -32,7 +32,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	 * Instantiate ATRON controller
 	 */
     public ATRONController() {
-        setBlocking(true);
+        setBlocking(false);
     }
     
     /**
@@ -358,13 +358,13 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	 */
     public byte sendMessage(byte[] message, byte messageSize, byte connector) 
 	{
-		if(isOtherConnectorNearby(connector)&&connector<8) {
+    	if(isOtherConnectorNearby(connector)&&connector<8) {
 			module.getTransmitters().get(connector).send(new Packet(message));
 			return 1;
 		}
 		return 0;
 	}
-    
+      
     /**
      * Called when a packet is received by the module
      * @param device the device that received an incoming packet 

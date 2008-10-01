@@ -12,9 +12,10 @@ typedef struct _Global {
   unsigned char message[3];
 } Global;
 
+int counter=0;
 
 #ifdef USSR
-int initialize(USSREnv *env) { return (int)malloc(sizeof(Global)); }
+int initialize(USSREnv *env) {return (int)malloc(sizeof(Global));}
 #define GLOBAL(env,name) (((Global*)(env)->context)->name)
 #else
 Global globals_static_alloc;
@@ -25,16 +26,21 @@ void activate(USSRONLY(USSREnv *env)) {
   delay(USSRONLY(env),10);
   setup(USSRONLY(env));
   home(USSRONLY(env));
+  GLOBAL(env,token)[0]=0;
   while(1)
   {
 	  controllerIterationSimulatorHook(USSRONLY(env),0);
-	  rotate(USSRONLYC(env) 1);
-	  printf("Module Running\n");
+	  //rotate(USSRONLYC(env) 1);
+	  //printf("Module Running\n");
+	  //delay(USSRONLY(env),1000);
+	  //printf("Calling ASE\n");
+	  //ASEmain();
+	  //componentTest();
 	  delay(USSRONLY(env),1000);
-	  printf("Calling ASE\n");
-	  ASEmain();
-	  componentTest();
-	  delay(USSRONLY(env),1000);
+	  counter++;
+	  printf("Counter = %i\n",counter);
+	  GLOBAL(env,token)[0]++;
+	  printf("Token = %i\n",GLOBAL(env,token)[0]);
   }
 }
 

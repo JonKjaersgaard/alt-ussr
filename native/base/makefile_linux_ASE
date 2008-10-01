@@ -1,6 +1,7 @@
 # ASE Library
 ASE_DIR=home/david/workspace/ASE
-ASE_INCLUDE=-I/$(ASE_DIR)/include
+ASE_INCLUDE=-I/$(ASE_DIR)/include/atron-ussr
+ASE_LIB=/$(ASE_DIR)/lib/atron-ussr/libASE.a
 
 # OS-specific variables
 JAVAINCLUDE=-I/usr/lib/jvm/java-6-sun-1.6.0.06/include/ -I/usr/lib/jvm/java-6-sun-1.6.0.06/include/linux
@@ -21,7 +22,7 @@ all: nativeController.so
 $(BASEDIR)/native/include/nativeController.h: $(BASEDIR)/bin/ussr/samples/atron/natives/ATRONNativeController.class
 	javah -jni -classpath $(BASEDIR)/bin -o $(BASEDIR)/native/include/nativeController.h ussr.samples.atron.natives.ATRONNativeController
 nativeController.so: $(BASEDIR)/native/include/nativeController.h $(BIN)
-	gcc $(LDFLAGS) -o nativeController.so $(BIN) /$(ASE_DIR)/lib/libASE.a
+	gcc $(LDFLAGS) -o nativeController.so $(BIN) $(ASE_LIB)
 clean:
 	rm -f .depends nativeController.so $(BIN)
 cleanh:
