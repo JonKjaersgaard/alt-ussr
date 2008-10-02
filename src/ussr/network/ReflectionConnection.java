@@ -85,7 +85,7 @@ public class ReflectionConnection extends AbstractNetworkConnection {
                         arguments[i] = Float.parseFloat(parts[2+i]);
                     else if(parameters[i]==Byte.TYPE) 
                     	arguments[i] = Byte.parseByte(parts[2+i]);
-                    else if(parameters[i]==Character.TYPE) 
+                    else if(parameters[i]==Character.TYPE)
                     	arguments[i] = parts[2+i].toCharArray()[0];
                     else if(parameters[i].getCanonicalName().equals("byte[]"))
                     	arguments[i] = ((String)parts[2+i]).getBytes();
@@ -99,5 +99,4 @@ public class ReflectionConnection extends AbstractNetworkConnection {
         }
         throw new Error("Method not found: "+command);
     }
-
 }

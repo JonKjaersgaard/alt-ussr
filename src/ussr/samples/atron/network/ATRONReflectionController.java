@@ -4,7 +4,8 @@ import ussr.network.ReflectionConnection;
 import ussr.samples.atron.ATRONController;
 
 public class ATRONReflectionController extends ATRONController {
-    ReflectionConnection rc;
+    ReflectionConnection rcIncomming;
+    ReflectionConnection rcOutgoing;
     
     @Override
     public void activate() {
@@ -19,8 +20,13 @@ public class ATRONReflectionController extends ATRONController {
         } catch(NumberFormatException exn) {
             throw new Error("Illegal port number, cannot parse: "+portDescription);
         }
-        rc = new ReflectionConnection(port,this);
-        rc.activate();
+        rcIncomming = new ReflectionConnection(port,this);
+        rcIncomming.activate();
+        
+        rcOutgoing = new ReflectionConnection(port+1,this);
+        rcOutgoing.activate();
     }
-
+    public void handleMessage(byte[] message, int messageSize, int channel) {
+    	System.out.println("Should reroute handlemessage(...) to socket");
+    }
 }
