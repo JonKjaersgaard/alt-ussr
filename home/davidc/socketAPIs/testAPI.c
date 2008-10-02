@@ -1,14 +1,52 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "AtronSocketApi.h"
 
-#define PORT 	9900
-#define HOST 	"localhost"
+char* host = "localhost";
+int port=9900;
 
-int main(void)  {
+void parseCommandLineParameters(int argc, char *argv[]) {
+	int i;
+	for(i=1;i<argc;i++) {
+		char * pch;
+		pch = strtok (argv[i],"=");
+		while (pch != NULL)
+		{
+			if(strcmp(pch,"-port")==0) {
+				pch = strtok (NULL, "=");
+				if(pch==NULL) {
+					printf("-port set error\n");
+					break;
+				}
+				else {
+					port = atoi(pch);
+					printf("Port set to %i\n",port);
+				}
+				break;
+			}
+			if(strcmp(pch,"-host")==0) {
+				pch = strtok (NULL, "=");
+				if(pch==NULL) {
+					printf("-host set error\n");
+					break;
+				}
+				else {
+					host = pch;
+					printf("Host set to %s\n",host);
+				}
+				break;
+			}
+			pch = strtok (NULL, "=");
+		}
+	}
+}
+int main(int argc, char *argv[])
+{
+	parseCommandLineParameters(argc, argv);
 	printf("Testing AtronSocketApi.c now...\n");
 
-	atronApi_setup();
+	atronApi_setup(port, host);
 	printf("> atronApi_setup() %i\n", atronApi_wasSend());
 
 	atronApi_home();

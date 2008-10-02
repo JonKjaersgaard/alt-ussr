@@ -6,7 +6,7 @@
  */
 
 #ifndef ATRONSOCKETAPI_H_
-	void atronApi_setup();
+	void atronApi_setup(int port, char* host);
 	int atronApi_wasSend();
 	void atronApi_home();
 	char* atronApi_getName();//String

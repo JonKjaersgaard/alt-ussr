@@ -3,12 +3,8 @@
 #include "AtronSocketApi.h"
 #include "CommandSender.h"
 
-#define PORT 	9900
-#define HOST 	"localhost"
-
-
-void atronApi_setup() {
-	cs_init(PORT, HOST);
+void atronApi_setup(int port, char* host) {
+	cs_init(port, host);
 	cs_sendCommand_void("setup");
 }
 int atronApi_wasSend() {
