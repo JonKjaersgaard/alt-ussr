@@ -14,10 +14,12 @@ import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsParameters;
+import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.GenericATRONSimulation;
 import ussr.samples.atron.network.ATRONReflectionController;
+import ussr.samples.atron.network.ATRONReflectionEventController;
 
 
 
@@ -36,9 +38,10 @@ public class SocTwoWheelerSimulation extends GenericATRONSimulation {
 
         ATRON robot = new ATRON() {
             public Controller createController() {
-                return new ATRONReflectionController();
+                return new ATRONReflectionEventController();
             }
         };
+        
         robot.setGentle();
         return robot;
     }
@@ -46,9 +49,9 @@ public class SocTwoWheelerSimulation extends GenericATRONSimulation {
 	protected ArrayList<ModulePosition> buildTwoWheeler(VectorDescription offset,String id) {
     	float Yoffset = 0.25f;
     	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("axle["+id+"]", ";port=9900", new VectorDescription(0*ATRON.UNIT+offset.getX(),-2*ATRON.UNIT-Yoffset+offset.getY(),0*ATRON.UNIT+offset.getZ()), ATRON.ROTATION_EW));
-    	mPos.add(new ModulePosition("wheel1["+id+"]", ";port=9901", new VectorDescription(1*ATRON.UNIT+offset.getX(),-2*ATRON.UNIT-Yoffset+offset.getY(),1*ATRON.UNIT+offset.getZ()), ATRON.ROTATION_SN));
-    	mPos.add(new ModulePosition("wheel2["+id+"]", ";port=9902", new VectorDescription(1*ATRON.UNIT+offset.getX(),-2*ATRON.UNIT-Yoffset+offset.getY(),-1*ATRON.UNIT+offset.getZ()), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("axle["+id+"]", ";portRC=9900;portEvent=9901", new VectorDescription(0*ATRON.UNIT+offset.getX(),-2*ATRON.UNIT-Yoffset+offset.getY(),0*ATRON.UNIT+offset.getZ()), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("wheel1["+id+"]", ";portRC=9902;portEvent=9903", new VectorDescription(1*ATRON.UNIT+offset.getX(),-2*ATRON.UNIT-Yoffset+offset.getY(),1*ATRON.UNIT+offset.getZ()), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("wheel2["+id+"]", ";portRC=9904;portEvent=9905", new VectorDescription(1*ATRON.UNIT+offset.getX(),-2*ATRON.UNIT-Yoffset+offset.getY(),-1*ATRON.UNIT+offset.getZ()), ATRON.ROTATION_NS));
         return mPos;
 	}
 	
@@ -67,11 +70,12 @@ public class SocTwoWheelerSimulation extends GenericATRONSimulation {
 
 	protected ArrayList<ModulePosition> buildRobot() {
 		//return buildCar();
-		return buildTwoWheeler(new VectorDescription(),"TW1" );
+		return buildTwoWheeler(new VectorDescription(),"TW1");
 	}
     
     protected void changeWorldHook(WorldDescription world) {
         new ObstacleGenerator().obstacalize(obstacle, world);
+        startPaused = false;
     }
     
 }
