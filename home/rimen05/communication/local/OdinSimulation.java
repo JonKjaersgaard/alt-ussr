@@ -112,7 +112,7 @@ public class OdinSimulation extends GenericSimulation {
     	WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
         //
-        world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+        world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
         //
         ArrayList<ModulePosition> ballPos = new ArrayList<ModulePosition>();
         ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();

@@ -35,7 +35,7 @@ public class ATRONSimulation extends GenericSimulation {
 	
 	private float connection_acceptance_range = 0.0000001f;
 	private static int nModules = 50;
-	private static int xMax = 5;
+	private static int xMax = 3;
 	private static int yMax = 1;
 	private static int zMax = 1;
 	public static float pe = 0.1f;//0 to 1, probability of modules sending information out.
@@ -84,7 +84,7 @@ public class ATRONSimulation extends GenericSimulation {
         WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
         //
-        world.setPlaneTexture(WorldDescription.GRID_TEXTURE);
+        world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
         //
         
         //modulePos = builder.buildCar(4, new VectorDescription(0,-0.25f,0));

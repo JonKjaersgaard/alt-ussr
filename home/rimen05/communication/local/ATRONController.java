@@ -58,7 +58,7 @@ public class ATRONController extends ussr.samples.atron.ATRONController {
     
     /**
      * This method differs from the Odin Controller's one, because we have
-     * just one type of module in ATRON. Therefore, the infinite loop begins
+     * only one type of module in ATRON. Therefore, the infinite loop begins
      * here and not at another methods (muscleControl and so on...).
      * 
      * @see ussr.model.ControllerImpl#activate()
