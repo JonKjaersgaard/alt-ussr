@@ -26,7 +26,6 @@ public class ReflectionConnection extends AbstractNetworkConnection {
         this.target = target;
     }
 
-    @Override
     public boolean activationHook(InputStream input, OutputStream output) {
         System.out.println("Reflection connection activated for "+target);
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));

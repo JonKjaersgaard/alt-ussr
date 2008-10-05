@@ -35,6 +35,6 @@ public class ATRONReflectionEventController extends ATRONController {
     
     public void handleMessage(byte[] message, int messageSize, int channel) {
     	System.out.println("Should reroute handlemessage(...) to socket");
-    	//eventConnection.sendEvent("handleMessage", new Object[]{message, messageSize, channel});
+    	eventConnection.sendEvent("handleMessage", new Object[]{message, messageSize, channel});
     }
 }

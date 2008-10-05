@@ -113,8 +113,6 @@ public class SkillLearner {
     			if((endTime-nowTime)>0.1f) System.out.println("Starvation detected..."+(endTime-nowTime));
     			nowTime =controller.getTime();
     	    	
-    	    	
-    	    	
     			if(controller.isStopped()) return;
     			if(AtronSkillSimulation.SRFAULT) {
 	    			float FaultTime = 7*500+2;

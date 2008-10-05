@@ -24,9 +24,11 @@ public class EventConnection extends AbstractNetworkConnection {
 	
 	public String sendEvent(String eventType, Object[] eventParams) {
 		String packet = packEvent(eventType, eventParams);
+		System.out.println("Packet: "+packet);
 		sendEvent(packet);
 		String reply = getReply();
-		String[] parts = reply.split(" ");
+		System.out.println("Reply: "+reply);
+		/*String[] parts = reply.split(" ");
 		int replyid = Integer.parseInt(parts[0]);
 		if(replyid==id||parts.length>2) {
 			if(parts[2]=="OK") {
@@ -39,13 +41,15 @@ public class EventConnection extends AbstractNetworkConnection {
 		}
 		else {
 			System.err.println("Warning: illegal packet received");
-		}
+		}*/
 		return null;
 	}
 	
 	private void sendEvent(String packet) {
+		System.out.println("Writer = "+writer+" packet: "+packet);
 		try {
-            writer.write(packet.toString());
+            writer.write(packet);
+            writer.newLine();
             writer.flush();
         } catch(IOException exn) {
             throw new Error("Error writing to socket");
@@ -66,7 +70,7 @@ public class EventConnection extends AbstractNetworkConnection {
 	}
 
 	private String paramToString(Object param) {
-		if(param==Integer.TYPE) return param.toString();
+		if(param.getClass().equals(Integer.class)) return param.toString();
 		else if(param==Float.TYPE) return param.toString();
 		else if(param==Byte.TYPE) return param.toString();
 		else if(param==Character.TYPE) return param.toString();
@@ -74,6 +78,7 @@ public class EventConnection extends AbstractNetworkConnection {
 			StringBuffer buffer = new StringBuffer();
 			for(int i=0;i<((byte[])param).length;i++) {
 				buffer.append(((byte[])param)[i]);
+				buffer.append(',');
 			}
 			return buffer.toString();
 		}
