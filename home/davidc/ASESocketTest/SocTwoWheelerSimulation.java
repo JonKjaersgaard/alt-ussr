@@ -77,5 +77,4 @@ public class SocTwoWheelerSimulation extends GenericATRONSimulation {
         new ObstacleGenerator().obstacalize(obstacle, world);
         startPaused = false;
     }
-    
 }

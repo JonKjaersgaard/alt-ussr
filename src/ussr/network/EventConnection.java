@@ -28,20 +28,20 @@ public class EventConnection extends AbstractNetworkConnection {
 		sendEvent(packet);
 		String reply = getReply();
 		System.out.println("Reply: "+reply);
-		/*String[] parts = reply.split(" ");
+		String[] parts = reply.split(" ");
 		int replyid = Integer.parseInt(parts[0]);
 		if(replyid==id||parts.length>2) {
-			if(parts[2]=="OK") {
+			if(parts[1].equals("OK")) {
 				id++;
-				return parts[3];
+				return parts[2];
 			}
 			else {
-				System.err.println("Warning: event error");
+				System.err.println("Warning: event error "+parts[1]+"!=OK");
 			}
 		}
 		else {
 			System.err.println("Warning: illegal packet received");
-		}*/
+		}
 		return null;
 	}
 	

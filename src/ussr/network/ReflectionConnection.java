@@ -86,8 +86,14 @@ public class ReflectionConnection extends AbstractNetworkConnection {
                     	arguments[i] = Byte.parseByte(parts[2+i]);
                     else if(parameters[i]==Character.TYPE)
                     	arguments[i] = parts[2+i].toCharArray()[0];
-                    else if(parameters[i].getCanonicalName().equals("byte[]"))
-                    	arguments[i] = ((String)parts[2+i]).getBytes();
+                    else if(parameters[i].getCanonicalName().equals("byte[]")) {
+                    	String[] stringValues = ((String)parts[2+i]).split(",");
+                    	byte[] byteValues = new byte[stringValues.length]; 
+                    	for(int j=0;j<stringValues.length;j++) {
+                    		byteValues[j] = Byte.parseByte(stringValues[j]);	
+                    	}
+                    	arguments[i] = byteValues;
+                    }
                     else {
                     	throw new Error("Illegal arguments type @"+i+": "+parameters[i]);
                     }
