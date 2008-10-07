@@ -31,15 +31,16 @@ public class ReflectionConnection extends AbstractNetworkConnection {
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output));
         String packet;
+        boolean debug = false;
         while(true) {
             try {
-                System.out.println("Waiting to read line...");
+                if(debug) System.out.println("Waiting to read line...");
                 packet = reader.readLine();
-                System.out.println("Read line...");
+                if(debug) System.out.println("Read line...");
             } catch (IOException e) {
                 throw new Error("Error reading from socket");
             }
-            System.out.println("Read: "+packet);
+            if(debug) System.out.println("Read: "+packet);
             if(packet==null) break;
             if(packet.length()==0) { 
                 System.err.println("Warning: empty packet received");

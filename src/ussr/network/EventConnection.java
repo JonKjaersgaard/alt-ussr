@@ -12,6 +12,7 @@ public class EventConnection extends AbstractNetworkConnection {
 	BufferedReader reader;
 	BufferedWriter writer;
 	int id = 1;
+	boolean debug = false;
 	public EventConnection(int port) {
 		super(port);
 	}
@@ -24,10 +25,10 @@ public class EventConnection extends AbstractNetworkConnection {
 	
 	public String sendEvent(String eventType, Object[] eventParams) {
 		String packet = packEvent(eventType, eventParams);
-		System.out.println("Packet: "+packet);
+		if(debug) System.out.println("Packet: "+packet);
 		sendEvent(packet);
 		String reply = getReply();
-		System.out.println("Reply: "+reply);
+		if(debug) System.out.println("Reply: "+reply);
 		String[] parts = reply.split(" ");
 		int replyid = Integer.parseInt(parts[0]);
 		if(replyid==id||parts.length>2) {
@@ -46,7 +47,6 @@ public class EventConnection extends AbstractNetworkConnection {
 	}
 	
 	private void sendEvent(String packet) {
-		System.out.println("Writer = "+writer+" packet: "+packet);
 		try {
             writer.write(packet);
             writer.newLine();

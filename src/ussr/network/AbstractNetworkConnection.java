@@ -28,7 +28,7 @@ import ussr.samples.atron.ATRONController;
 public abstract class AbstractNetworkConnection {
 	private ServerSocket socket;
 	private int port;
-		
+	boolean debug = false;
 	public AbstractNetworkConnection(int port) {
 	    this.port = port;
 		try {
@@ -47,9 +47,9 @@ public abstract class AbstractNetworkConnection {
         OutputStream output;
 	    do {
 	        try {
-	            System.out.println("Waiting for connection on port "+port);
+	            if(debug) System.out.println("Waiting for connection on port "+port);
 	            Socket connection = socket.accept();
-	            System.out.println("Received connection on port "+port);
+	            if(debug) System.out.println("Received connection on port "+port);
 	            input = connection.getInputStream();
 	            output = connection.getOutputStream();
 	        } catch (IOException exn) {
