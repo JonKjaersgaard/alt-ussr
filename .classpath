@@ -22,6 +22,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="home/lamik06"/>
 	<classpathentry kind="src" path="home/rimen05"/>
+	<classpathentry kind="src" path="home/lyder"/>
 	<classpathentry kind="lib" path="zoo/jME/lib/native-mac.jar"/>
 	<classpathentry kind="lib" path="zoo/jME/lib/lwjgl.jar"/>
 	<classpathentry kind="lib" path="zoo/jME/lib/lwjgl_util.jar"/>

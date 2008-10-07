@@ -244,6 +244,7 @@ public abstract class OdinSkillSimulation extends GenericSimulation implements P
     	if(printContrutionProgram) System.out.println("addBall("+x+", "+y+", "+z+");");
     	constructIndex++;
 	}
+	
 	private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> ballPos, ArrayList<ModulePosition> modulePos) {
     	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
     	for(int i=0;i<ballPos.size();i++) {

@@ -63,6 +63,6 @@ public class OdinSkillController extends OdinController implements SkillControll
     }
 
 	public int getRobotID() {
-		throw new RuntimeException();
+		return 1;//throw new RuntimeException();
 	}
 }
