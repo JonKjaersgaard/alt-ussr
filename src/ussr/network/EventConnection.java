@@ -12,7 +12,7 @@ public class EventConnection extends AbstractNetworkConnection {
 	BufferedReader reader;
 	BufferedWriter writer;
 	int id = 1;
-	boolean debug = false;
+	boolean debug = false; 
 	public EventConnection(int port) {
 		super(port);
 	}
