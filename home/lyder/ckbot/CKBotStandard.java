@@ -38,39 +38,39 @@ public abstract class CKBotStandard extends CKBot {
     	final float pi = (float)Math.PI;
     	final float unit = 0.065f/2f;
     	
-    	BoxShape headFace = new BoxShape(new VectorDescription(0.025f,0.03f,0.0025f),new VectorDescription(0f,0f,-0.0275f),new RotationDescription(0,0,0));
-    	BoxShape headBox = new BoxShape(new VectorDescription(0.025f,0.025f,0.0125f),new VectorDescription(0,0,-0.0125f),new RotationDescription(0,0,0));
-    	CylinderShape headCylinder = new CylinderShape(0.025f,0.05f,new VectorDescription(0,0,0),new RotationDescription(pi/2,0,0));
+    	BoxShape tailFace = new BoxShape(new VectorDescription(0.025f,0.03f,0.0025f),new VectorDescription(0f,0f,-0.0275f),new RotationDescription(0,0,0));
+    	BoxShape tailBox = new BoxShape(new VectorDescription(0.025f,0.025f,0.0125f),new VectorDescription(0,0,-0.0125f),new RotationDescription(0,0,0));
+    	CylinderShape tailCylinder = new CylinderShape(0.025f,0.05f,new VectorDescription(0,0,0),new RotationDescription(pi/2,0,0));
     	
-    	BoxShape tailFace = new BoxShape(new VectorDescription(0.03f,0.03f,0.0025f),new VectorDescription(0f,0f,0.0275f),new RotationDescription(0,0,0));
-    	BoxShape tailBox1 = new BoxShape(new VectorDescription(0.025f,0.0025f,0.0125f),new VectorDescription(0f,0.0275f,0.0125f),new RotationDescription(0,0,0));
-    	CylinderShape tailCylinder1 = new CylinderShape(0.025f,0.005f,new VectorDescription(0,0.0275f,0),new RotationDescription(-pi/2,0,0));
-    	BoxShape tailBox2 = new BoxShape(new VectorDescription(0.025f,0.0025f,0.0125f),new VectorDescription(0f,-0.0275f,0.0125f),new RotationDescription(0,0,0));
-    	CylinderShape tailCylinder2 = new CylinderShape(0.025f,0.005f,new VectorDescription(0,-0.0275f,0),new RotationDescription(pi/2,0,0));
+    	BoxShape headFace = new BoxShape(new VectorDescription(0.03f,0.03f,0.0025f),new VectorDescription(0f,0f,0.0275f),new RotationDescription(0,0,0));
+    	BoxShape headBox1 = new BoxShape(new VectorDescription(0.025f,0.0025f,0.0125f),new VectorDescription(0f,0.0275f,0.0125f),new RotationDescription(0,0,0));
+    	CylinderShape headCylinder1 = new CylinderShape(0.025f,0.005f,new VectorDescription(0,0.0275f,0),new RotationDescription(-pi/2,0,0));
+    	BoxShape headBox2 = new BoxShape(new VectorDescription(0.025f,0.0025f,0.0125f),new VectorDescription(0f,-0.0275f,0.0125f),new RotationDescription(0,0,0));
+    	CylinderShape headCylinder2 = new CylinderShape(0.025f,0.005f,new VectorDescription(0,-0.0275f,0),new RotationDescription(pi/2,0,0));
     	
-    	headFace.setColor(Color.BLUE);
-    	headBox.setColor(Color.BLUE);
-    	headCylinder.setColor(Color.BLUE);
+    	tailFace.setColor(Color.BLUE);
+    	tailBox.setColor(Color.BLUE);
+    	tailCylinder.setColor(Color.BLUE);
     	
-    	tailFace.setColor(Color.RED);
-    	tailBox1.setColor(Color.RED);
-    	tailCylinder1.setColor(Color.RED);
-    	tailBox2.setColor(Color.RED);
-    	tailCylinder2.setColor(Color.RED);
-    	
-    	headFace.setAccurateCollisionDetection(true);
-    	headBox.setAccurateCollisionDetection(true);
-    	headCylinder.setAccurateCollisionDetection(true);
+    	headFace.setColor(Color.RED);
+    	headBox1.setColor(Color.RED);
+    	headCylinder1.setColor(Color.RED);
+    	headBox2.setColor(Color.RED);
+    	headCylinder2.setColor(Color.RED);
     	
     	tailFace.setAccurateCollisionDetection(true);
-    	tailBox1.setAccurateCollisionDetection(true);
-    	tailCylinder1.setAccurateCollisionDetection(true);
-    	tailBox2.setAccurateCollisionDetection(true);
-    	tailCylinder2.setAccurateCollisionDetection(true);
+    	tailBox.setAccurateCollisionDetection(true);
+    	tailCylinder.setAccurateCollisionDetection(true);
+    	
+    	headFace.setAccurateCollisionDetection(true);
+    	headBox1.setAccurateCollisionDetection(true);
+    	headCylinder1.setAccurateCollisionDetection(true);
+    	headBox2.setAccurateCollisionDetection(true);
+    	headCylinder2.setAccurateCollisionDetection(true);
     	PhysicsParameters.get().setResolutionFactor(1);
     	
-        ModuleComponentDescription headComponent = new ModuleComponentDescription(new GeometryDescription[] {headFace,headBox,headCylinder});
-        ModuleComponentDescription tailComponent = new ModuleComponentDescription(new GeometryDescription[] {tailFace,tailBox1,tailCylinder1,tailBox2,tailCylinder2});
+        ModuleComponentDescription headComponent = new ModuleComponentDescription(new GeometryDescription[] {headFace,headBox1,headCylinder1,headBox2,headCylinder2});
+        ModuleComponentDescription tailComponent = new ModuleComponentDescription(new GeometryDescription[] {tailFace,tailBox,tailCylinder});
 
         ConnectorDescription.Common common = new ConnectorDescription.Common();
         ConeShape connector = new ConeShape(0.005f,0.01f);
