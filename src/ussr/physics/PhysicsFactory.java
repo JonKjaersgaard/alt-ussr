@@ -16,6 +16,7 @@ import ussr.physics.jme.robots.JMEDefaultFactory;
 import ussr.physics.jme.robots.JMEMTRANFactory;
 import ussr.physics.jme.robots.JMEOdinFactory;
 import ussr.samples.white.JMEWhiteFactory;
+import ussr.physics.jme.robots.JMECKBotFactory;
 
 /**
  * An factory for creating implementation-level objects used by higher-level parts of the
@@ -50,7 +51,7 @@ public class PhysicsFactory {
         }
     }
     
-    private static final ModuleFactory[] INITIAL_FACTORIES = new ModuleFactory[] { new JMEATRONFactory(), new JMEOdinFactory(), new JMEMTRANFactory() };
+    private static final ModuleFactory[] INITIAL_FACTORIES = new ModuleFactory[] { new JMEATRONFactory(), new JMEOdinFactory(), new JMEMTRANFactory(), new JMECKBotFactory() };
     
     private static ArrayList<ModuleFactory> factories = new ArrayList<ModuleFactory>(Arrays.asList(INITIAL_FACTORIES));
 
