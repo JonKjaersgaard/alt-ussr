@@ -1,0 +1,463 @@
+!SESSION 2008-10-08 10:14:08.286 -----------------------------------------------
+eclipse.buildId=I20080617-2000
+java.version=1.6.0_06
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=da_DK
+Command-line arguments:  -os linux -ws gtk -arch x86 -data /home/antek/dev/fork/workspace
+
+!ENTRY org.eclipse.ui 2 0 2008-10-08 10:14:17.547
+!MESSAGE Warnings while parsing the key bindings from the 'org.eclipse.ui.commands' extension point
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:14:17.547
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:14:17.547
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:14:17.547
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:14:17.547
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:14:17.547
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:14:17.547
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:14:17.547
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:14:17.547
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:14:17.547
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:14:17.547
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+
+!ENTRY org.tigris.subversion.subclipse.core 4 -6 2008-10-08 10:15:50.986
+!MESSAGE Cannot map the project with svn provider
+
+!ENTRY org.tigris.subversion.subclipse.core 4 -6 2008-10-08 10:17:02.754
+!MESSAGE Cannot map the project with svn provider
+
+!ENTRY org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Problems resolving provisioning plan.
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.command.env 1.0.205.v200710161954 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.command.env 1.0.205.v200710161954 to requiredCapability: osgi.bundle/org.eclipse.ant.core/[3.1.100,3.2.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.command.env.ui 1.0.203.v200709052219 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.wsdl 1.1.101.v200801152132 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.wsdl 1.1.101.v200801152132 to requiredCapability: osgi.bundle/org.eclipse.xsd/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.ws 1.0.204.v200711140435 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.ws 1.0.204.v200711140435 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.ws 1.0.204.v200711140435 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.ws 1.0.204.v200711140435 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.ws.explorer 1.0.206.v200802072125 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.ws.explorer 1.0.206.v200802072125 to requiredCapability: osgi.bundle/org.eclipse.ui/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.ws.explorer 1.0.206.v200802072125 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.ws.explorer 1.0.206.v200802072125 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.ws.explorer 1.0.206.v200802072125 to requiredCapability: osgi.bundle/org.eclipse.xsd/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.983
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws 1.0.205.v200801222138 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws 1.0.205.v200801222138 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws 1.0.205.v200801222138 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws 1.0.205.v200801222138 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.consumption 1.0.205.v200711222108 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.consumption 1.0.205.v200711222108 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.consumption 1.0.205.v200711222108 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.consumption 1.0.205.v200711222108 to requiredCapability: osgi.bundle/org.eclipse.xsd/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.consumption 1.0.205.v200711222108 to requiredCapability: osgi.bundle/org.eclipse.emf.codegen/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.ui 1.0.202.v200708202218 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.ui 1.0.202.v200708202218 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.emfworkbench.integration 1.1.105.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.emfworkbench.integration 1.1.105.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee 1.1.106.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee 1.1.106.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee 1.1.106.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee 1.1.106.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.codegen/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee 1.1.107.v200806252211 to requiredCapability: osgi.bundle/org.eclipse.emf.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee 1.1.107.v200806252211 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee 1.1.107.v200806252211 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.984
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee 1.1.107.v200806252211 to requiredCapability: osgi.bundle/org.eclipse.emf.codegen/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee 1.1.107.v200803071930 to requiredCapability: osgi.bundle/org.eclipse.emf.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee 1.1.107.v200803071930 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee 1.1.107.v200803071930 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee 1.1.107.v200803071930 to requiredCapability: osgi.bundle/org.eclipse.emf.codegen/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.core 1.1.104.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.core 1.1.104.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.ejb 1.1.105.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.ejb 1.1.105.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.ejb 1.1.105.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.frameworks 1.1.103.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.environment 1.0.200.v200705302225 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.server.generic.core 1.0.205.v200709061325 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.server.generic.core 1.0.205.v200709061325 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.server.generic.core 1.0.205.v200709061325 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.core 1.1.101.v200706120315 to requiredCapability: osgi.bundle/org.eclipse.core.runtime/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.985
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.core 1.1.101.v200706120315 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.986
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.core 1.1.101.v200706120315 to requiredCapability: osgi.bundle/org.eclipse.core.expressions/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.986
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jsf.common 1.0.2.v200802201120 to requiredCapability: osgi.bundle/org.eclipse.emf.edit.ui/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.986
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jsf.common 1.0.2.v200802201120 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.986
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.sse.ui 1.0.305.v200802142230 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.986
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.sse.core 1.1.203.v200802140626 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.986
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jsf.common.ui 1.0.1.v20070912 to requiredCapability: osgi.bundle/org.eclipse.emf/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.986
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jsf.common.ui 1.0.1.v20070912 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.986
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.ui 1.1.103.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.edit.ui/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.986
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.ui 1.1.103.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.986
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.modulecore 1.1.104.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.986
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.modulecore 1.1.104.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.987
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.modulecore 1.1.104.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.987
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jee 1.0.3.v200803242054 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.987
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jee 1.0.3.v200803242054 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.987
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jee 1.0.3.v200803242054 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.987
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jee 1.0.3.v200806261300 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.987
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jee 1.0.3.v200806261300 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.987
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jee 1.0.3.v200806261300 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.987
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jee 1.0.2.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.987
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jee 1.0.2.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.987
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jee 1.0.2.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.987
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.web.ui 1.1.101.v200706071630 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.987
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.web 1.1.103.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.988
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.web 1.1.105.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.988
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.web 1.1.105.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.988
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.web 1.1.105.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.codegen/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.988
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ejb.ui 1.1.102.v200709122200 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.988
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ejb.ui 1.1.102.v200709122200 to requiredCapability: osgi.bundle/org.eclipse.emf.edit.ui/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.988
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.emf 1.1.104.v200709131115 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.988
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.navigator.ui 1.1.102.v200709122200 to requiredCapability: osgi.bundle/org.eclipse.emf.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.988
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.navigator.ui 1.1.102.v200709122200 to requiredCapability: osgi.bundle/org.eclipse.emf.edit.ui/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.988
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.common.frameworks 1.1.102.v200709122200 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.988
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.common.frameworks 1.1.102.v200709122200 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.988
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.jca 1.1.105.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.988
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.jca 1.1.105.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.988
+!MESSAGE Unable to satisfy dependency from org.eclipse.jem 2.0.100.v200709051030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.3.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.ejb.annotations.xdoclet 1.1.3.v200802201934 to requiredCapability: osgi.bundle/org.eclipse.ant.core/[3.1.100,3.2.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.ejb.annotation.model 1.1.2.v200706120315 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.axis.consumption.core 1.0.204.v200708151945 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.ui 1.1.200.v200705302225 to requiredCapability: osgi.bundle/org.eclipse.ui.ide/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.ui 1.1.200.v200705302225 to requiredCapability: osgi.bundle/org.eclipse.ui/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.ui 1.1.200.v200705302225 to requiredCapability: osgi.bundle/org.eclipse.core.runtime/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.ui 1.1.200.v200705302225 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.ui 1.1.200.v200705302225 to requiredCapability: osgi.bundle/org.eclipse.search/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.ui 1.1.200.v200705302225 to requiredCapability: osgi.bundle/org.eclipse.jface.text/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.common.ui 1.1.200.v200705302225 to requiredCapability: osgi.bundle/org.eclipse.ui.workbench.texteditor/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jsf.core 1.0.2.v200802201120 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jsf.core 1.0.2.v200802201120 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jsf.core 1.0.2.v200802201120 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jsf.core 1.0.2.v200802201120 to requiredCapability: osgi.bundle/org.eclipse.emf.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.axis.consumption.ui 1.0.204.v200801222138 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.axis.consumption.ui 1.0.204.v200801222138 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.989
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.axis.consumption.ui 1.0.204.v200801222138 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.common.annotations.controller 1.1.2.v200708301745 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.ejb.annotations.emitter 1.1.2.v200708301745 to requiredCapability: osgi.bundle/org.eclipse.emf.codegen/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jsf.facesconfig 1.0.1.v20070912 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.jsf.facesconfig 1.0.1.v20070912 to requiredCapability: osgi.bundle/org.eclipse.emf.edit.ui/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.consumption.ui 1.0.206.v200712220541 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.consumption.ui 1.0.206.v200712220541 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.consumption.ui 1.0.206.v200712220541 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.ws.consumption.ui 1.0.206.v200712220541 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.ws.ui 1.0.203.v200708222126 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.ws.ui 1.0.203.v200708222126 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.server.tomcat.core 1.1.2.v20071023 to requiredCapability: osgi.bundle/org.eclipse.emf.common/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.common.annotations.core 1.1.2.v200706120315 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.webservice 1.1.102.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.webservice 1.1.102.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.webservice.ui 1.1.103.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.webservice.ui 1.1.103.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.edit.ui/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.j2ee.webservice.ui 1.1.103.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore.xmi/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.wsi 1.0.105.v200706120315 to requiredCapability: osgi.bundle/org.eclipse.core.resources/[3.2.0,3.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.servlet.ui 1.1.103.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.ecore/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.jst.servlet.ui 1.1.103.v200802192030 to requiredCapability: osgi.bundle/org.eclipse.emf.edit/[2.2.0,2.4.0).
+!SUBENTRY 1 org.eclipse.equinox.p2.director 2 0 2008-10-08 10:22:04.990
+!MESSAGE Unable to satisfy dependency from org.eclipse.wst.xsd.core 1.1.202.v200710011705 to requiredCapability: osgi.bundle/org.eclipse.xsd/[2.2.0,2.4.0).
+
+!ENTRY org.eclipse.equinox.p2.ui 2 10001 2008-10-08 10:22:13.297
+!MESSAGE Your original request has been modified.
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 2 10003 2008-10-08 10:22:13.297
+!MESSAGE SVNKit Library will be ignored because a newer version is already installed. 
+!SUBENTRY 1 org.eclipse.core.runtime 0 0 2008-10-08 10:22:13.297
+!MESSAGE OK
+
+!ENTRY org.eclipse.equinox.p2.ui 2 10001 2008-10-08 10:22:13.704
+!MESSAGE Your original request has been modified.
+!SUBENTRY 1 org.eclipse.equinox.p2.ui 2 10003 2008-10-08 10:22:13.704
+!MESSAGE SVNKit Library will be ignored because a newer version is already installed. 
+!SUBENTRY 1 org.eclipse.core.runtime 0 0 2008-10-08 10:22:13.704
+!MESSAGE OK
+!SESSION 2008-10-08 10:30:48.642 -----------------------------------------------
+eclipse.buildId=I20080617-2000
+java.version=1.6.0_06
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=da_DK
+Command-line arguments:  -os linux -ws gtk -arch x86 -data /home/antek/dev/fork/workspace
+
+!ENTRY org.eclipse.ui 2 0 2008-10-08 10:30:59.055
+!MESSAGE Warnings while parsing the key bindings from the 'org.eclipse.ui.commands' extension point
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:30:59.055
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:30:59.055
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:30:59.055
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:30:59.055
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:30:59.055
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:30:59.055
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:30:59.055
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:30:59.055
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:30:59.055
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-08 10:30:59.055
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+
+!ENTRY org.maven.ide.eclipse 4 0 2008-10-08 10:52:53.518
+!MESSAGE Unable to update index for central http://repo1.maven.org/maven2/
+!STACK 0
+java.io.IOException: Transfer for nexus-maven-repository-index.zip failed; Error transferring file
+	at org.sonatype.nexus.index.updater.DefaultIndexUpdater.downloadResource(DefaultIndexUpdater.java:247)
+	at org.sonatype.nexus.index.updater.DefaultIndexUpdater$1.invoke(DefaultIndexUpdater.java:87)
+	at org.sonatype.nexus.index.updater.DefaultIndexUpdater.run(DefaultIndexUpdater.java:169)
+	at org.sonatype.nexus.index.updater.DefaultIndexUpdater.fetchAndUpdateIndex(DefaultIndexUpdater.java:63)
+	at org.maven.ide.eclipse.internal.index.NexusIndexManager.fetchAndUpdateIndex(NexusIndexManager.java:478)
+	at org.maven.ide.eclipse.index.IndexManager$UpdateCommand.run(IndexManager.java:401)
+	at org.maven.ide.eclipse.index.IndexManager$IndexUpdaterJob.run(IndexManager.java:518)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.ui.workbench 2 0 2008-10-08 10:58:17.222
+!MESSAGE A handler conflict occurred.  This may disable some commands.
+!SUBENTRY 1 org.eclipse.ui.workbench 2 0 2008-10-08 10:58:17.222
+!MESSAGE Conflict for 'org.eclipse.wst.jsdt.ui.edit.text.java.open.editor':
+HandlerActivation(commandId=org.eclipse.wst.jsdt.ui.edit.text.java.open.editor,
+	handler=ActionHandler(org.eclipse.wst.jsdt.ui.actions.OpenAction@123f26),
+	expression=AndExpression(org.eclipse.ui.SubActionBars$1@dd7658,ActivePartExpression(org.eclipse.ui.navigator.CommonNavigator@14487c8),WorkbenchWindowExpression(org.eclipse.ui.internal.WorkbenchWindow@1d6e3d2)),sourcePriority=1064961)
+HandlerActivation(commandId=org.eclipse.wst.jsdt.ui.edit.text.java.open.editor,
+	handler=ActionHandler(org.eclipse.wst.jsdt.ui.actions.OpenAction@123f26),
+	expression=AndExpression(org.eclipse.ui.SubActionBars$1@dd7658,ActivePartExpression(org.eclipse.ui.navigator.CommonNavigator@14487c8),WorkbenchWindowExpression(org.eclipse.ui.internal.WorkbenchWindow@1d6e3d2)),sourcePriority=1064961)
+
+!ENTRY org.eclipse.team.core 4 0 2008-10-08 10:59:07.703
+!MESSAGE Failed in BaseResource.getLogMessages()
+!STACK 0
+org.tigris.subversion.svnclientadapter.SVNClientException: org.tigris.subversion.javahl.ClientException: svn: unknown host
+svn: OPTIONS request failed on '/ussr'
+	at org.tigris.subversion.svnclientadapter.javahl.AbstractJhlClientAdapter.getLogMessages(AbstractJhlClientAdapter.java:2179)
+	at org.tigris.subversion.svnclientadapter.javahl.AbstractJhlClientAdapter.getLogMessages(AbstractJhlClientAdapter.java:2199)
+	at org.tigris.subversion.svnclientadapter.AbstractClientAdapter.getLogMessages(AbstractClientAdapter.java:194)
+	at org.tigris.subversion.subclipse.core.resources.BaseResource.getLogMessages(BaseResource.java:202)
+	at org.tigris.subversion.subclipse.core.commands.GetLogsCommand.run(GetLogsCommand.java:81)
+	at org.tigris.subversion.subclipse.ui.history.SVNHistoryPage$AbstractFetchJob.getLogEntries(SVNHistoryPage.java:2533)
+	at org.tigris.subversion.subclipse.ui.history.SVNHistoryPage$FetchLogEntriesJob.run(SVNHistoryPage.java:2407)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+Caused by: org.tigris.subversion.javahl.ClientException: svn: unknown host
+svn: OPTIONS request failed on '/ussr'
+	at org.tigris.subversion.javahl.JavaHLObjectFactory.throwException(JavaHLObjectFactory.java:723)
+	at org.tmatesoft.svn.core.javahl.SVNClientImpl.throwException(SVNClientImpl.java:1852)
+	at org.tmatesoft.svn.core.javahl.SVNClientImpl.logMessages(SVNClientImpl.java:470)
+	at org.tmatesoft.svn.core.javahl.SVNClientImpl.logMessages(SVNClientImpl.java:430)
+	at org.tigris.subversion.svnclientadapter.javahl.AbstractJhlClientAdapter.getLogMessages(AbstractJhlClientAdapter.java:2169)
+	... 7 more
+Caused by: org.tmatesoft.svn.core.SVNException: svn: unknown host
+svn: OPTIONS request failed on '/ussr'
+	at org.tmatesoft.svn.core.internal.wc.SVNErrorManager.error(SVNErrorManager.java:103)
+	at org.tmatesoft.svn.core.internal.wc.SVNErrorManager.error(SVNErrorManager.java:87)
+	at org.tmatesoft.svn.core.internal.io.dav.http.HTTPConnection.request(HTTPConnection.java:550)
+	at org.tmatesoft.svn.core.internal.io.dav.http.HTTPConnection.request(HTTPConnection.java:257)
+	at org.tmatesoft.svn.core.internal.io.dav.http.HTTPConnection.request(HTTPConnection.java:245)
+	at org.tmatesoft.svn.core.internal.io.dav.DAVConnection.exchangeCapabilities(DAVConnection.java:454)
+	at org.tmatesoft.svn.core.internal.io.dav.DAVConnection.open(DAVConnection.java:97)
+	at org.tmatesoft.svn.core.internal.io.dav.DAVRepository.openConnection(DAVRepository.java:643)
+	at org.tmatesoft.svn.core.internal.io.dav.DAVRepository.getRepositoryUUID(DAVRepository.java:143)
+	at org.tmatesoft.svn.core.wc.SVNBasicClient.createRepository(SVNBasicClient.java:339)
+	at org.tmatesoft.svn.core.wc.SVNBasicClient.createRepository(SVNBasicClient.java:327)
+	at org.tmatesoft.svn.core.wc.SVNBasicClient.createRepository(SVNBasicClient.java:535)
+	at org.tmatesoft.svn.core.wc.SVNLogClient.doLog(SVNLogClient.java:601)
+	at org.tmatesoft.svn.core.javahl.SVNClientImpl.logMessages(SVNClientImpl.java:462)
+	... 9 more
+Caused by: java.net.UnknownHostException: svn.mip.sdu.dk
+	at java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.net.InetAddress$1.lookupAllHostAddr(InetAddress.java:849)
+	at java.net.InetAddress.getAddressFromNameService(InetAddress.java:1200)
+	at java.net.InetAddress.getAllByName0(InetAddress.java:1153)
+	at java.net.InetAddress.getAllByName(InetAddress.java:1083)
+	at java.net.InetAddress.getAllByName(InetAddress.java:1019)
+	at java.net.InetAddress.getByName(InetAddress.java:969)
+	at org.tmatesoft.svn.core.internal.util.SVNSocketFactory.createAddres(SVNSocketFactory.java:108)
+	at org.tmatesoft.svn.core.internal.util.SVNSocketFactory.createSSLSocket(SVNSocketFactory.java:63)
+	at org.tmatesoft.svn.core.internal.io.dav.http.HTTPConnection.connect(HTTPConnection.java:167)
+	at org.tmatesoft.svn.core.internal.io.dav.http.HTTPConnection.request(HTTPConnection.java:304)
+	... 20 more
+!SESSION 2008-10-09 08:51:50.371 -----------------------------------------------
+eclipse.buildId=I20080617-2000
+java.version=1.6.0_06
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=da_DK
+Command-line arguments:  -os linux -ws gtk -arch x86
+
+!ENTRY org.eclipse.ui 2 0 2008-10-09 08:52:16.873
+!MESSAGE Warnings while parsing the key bindings from the 'org.eclipse.ui.commands' extension point
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-09 08:52:16.873
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-09 08:52:16.873
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-09 08:52:16.873
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-09 08:52:16.873
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-09 08:52:16.874
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-09 08:52:16.874
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-09 08:52:16.874
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-09 08:52:16.874
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-09 08:52:16.874
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+!SUBENTRY 1 org.eclipse.ui 2 0 2008-10-09 08:52:16.874
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.tm.terminal', id='org.eclipse.tm.terminal.command1'
+
+!ENTRY org.maven.ide.eclipse 4 0 2008-10-09 11:34:54.010
+!MESSAGE Unable to update index for central http://repo1.maven.org/maven2/
+!STACK 0
+java.io.IOException: Transfer for nexus-maven-repository-index.zip failed; Error transferring file
+	at org.sonatype.nexus.index.updater.DefaultIndexUpdater.downloadResource(DefaultIndexUpdater.java:247)
+	at org.sonatype.nexus.index.updater.DefaultIndexUpdater$1.invoke(DefaultIndexUpdater.java:87)
+	at org.sonatype.nexus.index.updater.DefaultIndexUpdater.run(DefaultIndexUpdater.java:169)
+	at org.sonatype.nexus.index.updater.DefaultIndexUpdater.fetchAndUpdateIndex(DefaultIndexUpdater.java:63)
+	at org.maven.ide.eclipse.internal.index.NexusIndexManager.fetchAndUpdateIndex(NexusIndexManager.java:478)
+	at org.maven.ide.eclipse.index.IndexManager$UpdateCommand.run(IndexManager.java:401)
+	at org.maven.ide.eclipse.index.IndexManager$IndexUpdaterJob.run(IndexManager.java:518)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.ui.workbench 2 0 2008-10-09 13:57:58.372
+!MESSAGE A handler conflict occurred.  This may disable some commands.
+!SUBENTRY 1 org.eclipse.ui.workbench 2 0 2008-10-09 13:57:58.372
+!MESSAGE Conflict for 'org.eclipse.wst.jsdt.ui.edit.text.java.open.editor':
+HandlerActivation(commandId=org.eclipse.wst.jsdt.ui.edit.text.java.open.editor,
+	handler=ActionHandler(org.eclipse.wst.jsdt.ui.actions.OpenAction@15660c3),
+	expression=AndExpression(org.eclipse.ui.SubActionBars$1@5ced83,ActivePartExpression(org.eclipse.ui.navigator.CommonNavigator@170c7a3),WorkbenchWindowExpression(org.eclipse.ui.internal.WorkbenchWindow@1757337)),sourcePriority=1064961)
+HandlerActivation(commandId=org.eclipse.wst.jsdt.ui.edit.text.java.open.editor,
+	handler=ActionHandler(org.eclipse.wst.jsdt.ui.actions.OpenAction@15660c3),
+	expression=AndExpression(org.eclipse.ui.SubActionBars$1@5ced83,ActivePartExpression(org.eclipse.ui.navigator.CommonNavigator@170c7a3),WorkbenchWindowExpression(org.eclipse.ui.internal.WorkbenchWindow@1757337)),sourcePriority=1064961)
+
+!ENTRY org.maven.ide.eclipse 4 0 2008-10-09 13:59:50.244
+!MESSAGE Can't delete /home/antek/dev/fork/workspace/.metadata/.plugins/org.maven.ide.eclipse/ussr.sources
