@@ -432,7 +432,6 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
         			//System.out.println("dist from "+i+" to "+j+" is "+d);
         			connector = i;
         		}
-        		
         	}
     	}
     	return connector;

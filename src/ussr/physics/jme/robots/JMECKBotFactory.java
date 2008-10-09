@@ -129,6 +129,14 @@ public class JMECKBotFactory implements ModuleFactory {
         	c.setTimeToDisconnect(2.0f);
         	c.setConnectorType(JMEMechanicalConnector.UNISEX);
         }
+		TransmissionDevice ckBotTrans = new TransmissionDevice(TransmissionType.WIRE_UNISEX,0.05f);
+        ReceivingDevice ckBotRec = new ReceivingDevice(TransmissionType.WIRE_UNISEX,10);
+        for(int channel=0;channel<4;channel++) {
+            module.addTransmissionDevice(JMEGeometryHelper.createTransmitter(module, module.getConnectors().get(channel),ckBotTrans)); //use connector hardware for communication!
+            module.addReceivingDevice(JMEGeometryHelper.createReceiver(module, module.getConnectors().get(channel),ckBotRec));
+            module.getTransmitters().get(channel).setMaxBaud(19200);
+            module.getTransmitters().get(channel).setMaxBufferSize(128);
+        }	
     }
     
     private void createCKBotL7(int module_id, Module module, Robot robot) {
