@@ -234,8 +234,8 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
 		    		connected = tryConnectNow(connected, c);
 	    		}
 	    	}
-	    	if(connected) System.out.println("Connected success");
-	    	else System.out.println("Connected failure");
+	    	//if(connected) System.err.println("Connected success");
+	    	//else System.err.println("Connected failure");
 	    	connecting = false;
     	}
     	
@@ -281,6 +281,7 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
     			    		}
     	    			}
     	    		}
+    	    		disconnectingNow = false;
     	    	}
     		}
     	}.start();
