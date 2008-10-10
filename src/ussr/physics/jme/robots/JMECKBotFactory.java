@@ -129,7 +129,7 @@ public class JMECKBotFactory implements ModuleFactory {
         	c.setTimeToDisconnect(2.0f);
         	c.setConnectorType(JMEMechanicalConnector.UNISEX);
         }
-		TransmissionDevice ckBotTrans = new TransmissionDevice(TransmissionType.WIRE_UNISEX,0.05f);
+		TransmissionDevice ckBotTrans = new TransmissionDevice(TransmissionType.WIRE_UNISEX,0.01f);
         ReceivingDevice ckBotRec = new ReceivingDevice(TransmissionType.WIRE_UNISEX,10);
         for(int channel=0;channel<4;channel++) {
             module.addTransmissionDevice(JMEGeometryHelper.createTransmitter(module, module.getConnectors().get(channel),ckBotTrans)); //use connector hardware for communication!

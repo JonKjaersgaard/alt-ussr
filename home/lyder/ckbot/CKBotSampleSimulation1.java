@@ -38,10 +38,26 @@ public class CKBotSampleSimulation1 extends CKBotSimulation {
 		//simulation.setGravity(0.0f);
 	}
 	protected void constructRobot() {
-		addModule(0,0,0,new RotationDescription(0f,0f,0f));
+		addModule(0,0,0,new RotationDescription(0f,0f,(float)Math.PI/2));
 		addModule(0,0,1,new RotationDescription(0f,0f,(float)Math.PI/2));
-		addModule(0,0,2,new RotationDescription(0f,0f,0));
+		addModule(0,0,2,new RotationDescription(0f,0f,(float)Math.PI/2));
 		addModule(0,0,3,new RotationDescription(0f,0f,(float)Math.PI/2));
-		addModule(0,0,4,new RotationDescription(0f,0f,0));
+		addModule(0,0,4,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule(0,0,5,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule(0,0,6,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule(0,0,7,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule(0,0,8,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule(0,0,9,new RotationDescription(0f,0f,(float)Math.PI/2));
+		
+		/*addModule(2,0,0,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule(2,0,1,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule(2,0,2,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule(2,0,3,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule(2,0,4,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule(2,0,5,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule(2,0,6,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule(2,0,7,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule(2,0,8,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule(2,0,9,new RotationDescription(0f,0f,(float)Math.PI/2));*/
 	}
 }

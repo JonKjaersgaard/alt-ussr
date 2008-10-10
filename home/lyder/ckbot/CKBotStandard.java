@@ -36,7 +36,7 @@ public abstract class CKBotStandard extends CKBot {
         RobotDescription description = new RobotDescription("CKBotStandard");
         
     	final float pi = (float)Math.PI;
-    	final float unit = 0.065f/2f;
+    	final float unit = 0.060f;
     	
     	BoxShape tailFace = new BoxShape(new VectorDescription(0.025f,0.03f,0.0025f),new VectorDescription(0f,0f,-0.0275f),new RotationDescription(0,0,0));
     	BoxShape tailBox = new BoxShape(new VectorDescription(0.025f,0.025f,0.0125f),new VectorDescription(0,0,-0.0125f),new RotationDescription(0,0,0));
@@ -80,13 +80,13 @@ public abstract class CKBotStandard extends CKBot {
         common.setMaxConnectionDistance(0.03f);
         
         ConnectorDescription[] headConnectors = new ConnectorDescription[] {
-                new ConnectorDescription(common,"Connector 0",new VectorDescription(0,0,0.035f),new RotationDescription(pi,0,0),Color.WHITE),
-                new ConnectorDescription(common,"Connector 1",new VectorDescription(0,0.035f,0),new RotationDescription(pi/2,0,0),Color.WHITE),
-                new ConnectorDescription(common,"Connector 2",new VectorDescription(0,-0.035f,0),new RotationDescription(-pi/2,0,0),Color.WHITE)
+                new ConnectorDescription(common,"Connector 0",new VectorDescription(0,0,0.030f),new RotationDescription(pi,0,0),Color.WHITE),
+                new ConnectorDescription(common,"Connector 1",new VectorDescription(0,0.030f,0),new RotationDescription(pi/2,0,0),Color.WHITE),
+                new ConnectorDescription(common,"Connector 2",new VectorDescription(0,-0.030f,0),new RotationDescription(-pi/2,0,0),Color.WHITE)
         };
         
         ConnectorDescription[] tailConnectors = new ConnectorDescription[] {
-                new ConnectorDescription(common,"Connector 3",new VectorDescription(0,0,-0.035f),new RotationDescription(0,0,0),Color.WHITE),
+                new ConnectorDescription(common,"Connector 3",new VectorDescription(0,0,-0.030f),new RotationDescription(0,0,0),Color.WHITE),
         };
         
         headComponent.setConnectors(headConnectors);

@@ -25,6 +25,7 @@ public abstract class CKBotController extends ControllerImpl implements PacketRe
         super();
         setBlocking(true);
     }
+    
     public void setModule(Module module) {
     	super.setModule(module);
         for(Receiver r: module.getReceivers()) { 
