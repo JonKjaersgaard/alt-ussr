@@ -27,17 +27,19 @@ import ussr.samples.atron.ATRONBuilder.Namer;
 
 /**
  * A sample ATRON simulation
- * 
+ *
  * @author Modular Robots @ MMMI
  *
  */
 public class ATRONSimulation extends GenericSimulation {
 	
-	private float connection_acceptance_range = 0.0000001f;
+	//After USSR update, this acceptance range created too many collisions and made USSR (or ODE) to stop the simulation.
+	//private float connection_acceptance_range = 0.0000001f;
+	private float connection_acceptance_range = 0.001f;
 	private static int nModules = 50;
 	private static int xMax = 3;
-	private static int yMax = 1;
-	private static int zMax = 1;
+	private static int yMax = 3;
+	private static int zMax = 2;
 	public static float pe = 0.1f;//0 to 1, probability of modules sending information out.
 	public static float pne = 1.0f;//0 to 1, proportion of modules the information is transmitted to.
 	public static float pp = 0.1f;//0 to 1, probability of Imods modules sending information out.
@@ -78,9 +80,11 @@ public class ATRONSimulation extends GenericSimulation {
     }
 
     public void main() {
-        PhysicsParameters.get().setPhysicsSimulationStepSize(0.002f);
+    	PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
+        PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
+        PhysicsParameters.get().setResolutionFactor(3);
         PhysicsParameters.get().setRealisticCollision(false);
-        setConnectorsAreActive(true);
+        setConnectorsAreActive(false);
         WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
         //
@@ -90,6 +94,11 @@ public class ATRONSimulation extends GenericSimulation {
         //modulePos = builder.buildCar(4, new VectorDescription(0,-0.25f,0));
         // modulePos = buildSnake(2);
         // modulePos = Arrays.asList(new WorldDescription.ModulePosition[] { new WorldDescription.ModulePosition("hermit", new VectorDescription(2*0*unit,0*unit,0*unit), rotation_EW) });
+        
+        //ArrayList<ModulePosition> modulePos = new ATRONBuilder().buildAsLattice(50,4,4,3); //it looks like the computer is not powerfull enough.
+        
+        
+        
         
         ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
         Namer namer = new Namer() {
@@ -154,6 +163,8 @@ public class ATRONSimulation extends GenericSimulation {
                 }
             }
         }
+        
+        world.setModulePositions(modulePos);
                 
         ArrayList<ModuleConnection> connections = allConnections(modulePos);
         System.out.println("nModules = "+ATRONSimulation.nModules+" xMax = "+ATRONSimulation.xMax+" yMax = "+
@@ -162,7 +173,7 @@ public class ATRONSimulation extends GenericSimulation {
         System.out.println("#connection found = "+connections.size());
         world.setModuleConnections(connections);
         System.out.println("#Modules Placed = "+modulePos.size());
-        world.setModulePositions(modulePos);
+        //world.setModulePositions(modulePos);
         //Here is the cheese...
         //System.out.println("connections.size() = "+connections.size()+"; modulePos.size() = "+modulePos.size());
         //System.out.println("#Modules per Interface (avg) = " + (1+(((float)(2*connections.size()))/((float)(8*modulePos.size())))) );
