@@ -44,6 +44,22 @@ public abstract class CKBotSimulation extends GenericSimulation implements Physi
         	public Controller createController() {
         		return getController("CKBotStandard");
         	}},"CKBotStandard");
+        
+        simulation.setRobot(new CKBotL7(){
+        	public Controller createController() {
+        		return getController("CKBotL7");
+        	}},"CKBotL7");
+        
+        simulation.setRobot(new CKBotSpring(){
+        	public Controller createController() {
+        		return getController("CKBotSpring");
+        	}},"CKBotSpring");
+        
+        simulation.setRobot(new CKBotStand(){
+        	public Controller createController() {
+        		return getController("CKBotStand");
+        	}},"CKBotStand");
+        
         constructRobot();
         if(world==null) world = createWorld();
         this.changeWorldHook(world);
@@ -52,6 +68,7 @@ public abstract class CKBotSimulation extends GenericSimulation implements Physi
         simulation.subscribePhysicsTimestep(this);
         simulation.start();
     }
+	
 	protected void changeWorldHook(WorldDescription world) {
 		world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 		
@@ -75,16 +92,28 @@ public abstract class CKBotSimulation extends GenericSimulation implements Physi
 		return world;
     }
     
-    protected static void addModule(float x, float y, float z, RotationDescription ori) {
+    protected static void addModule(String module_type, float x, float y, float z, RotationDescription ori) {
     	VectorDescription pos = new VectorDescription(x*unit,y*unit,z*unit);
     	//RotationDescription rot = rotFromBalls(ballPos.get(i),ballPos.get(j));
-    	modulePos.add(new ModulePosition(Integer.toString(constructIndex),"CKBotStandard", pos, ori));
+    	System.out.println("Type: " + module_type);
+    	if (module_type.equals("CKBotStandard")) modulePos.add(new ModulePosition(Integer.toString(constructIndex),"CKBotStandard", pos, ori));
+    	else if (module_type.equals("CKBotL7")) modulePos.add(new ModulePosition(Integer.toString(constructIndex),"CKBotL7", pos, ori));
+    	else if (module_type.equals("CKBotSpring")) modulePos.add(new ModulePosition(Integer.toString(constructIndex),"CKBotSpring", pos, ori));
+    	else if (module_type.equals("CKBotStand")) modulePos.add(new ModulePosition(Integer.toString(constructIndex),"CKBotStand", pos, ori));
     	constructIndex++;
 	}
-    protected static void addModule(float x, float y, float z, RotationDescription ori, String name) {
-    	VectorDescription pos = new VectorDescription(x*unit,y*unit,z*unit);
-    	modulePos.add(new ModulePosition(name,"CKBotStandard", pos, ori));
+    
+    protected static void addModulePrecise(String module_type, float x, float y, float z, RotationDescription ori) {
+    	VectorDescription pos = new VectorDescription(x,y,z);
+    	//RotationDescription rot = rotFromBalls(ballPos.get(i),ballPos.get(j));
+    	System.out.println("Type: " + module_type);
+    	if (module_type.equals("CKBotStandard")) modulePos.add(new ModulePosition(Integer.toString(constructIndex),"CKBotStandard", pos, ori));
+    	else if (module_type.equals("CKBotL7")) modulePos.add(new ModulePosition(Integer.toString(constructIndex),"CKBotL7", pos, ori));
+    	else if (module_type.equals("CKBotSpring")) modulePos.add(new ModulePosition(Integer.toString(constructIndex),"CKBotSpring", pos, ori));
+    	else if (module_type.equals("CKBotStand")) modulePos.add(new ModulePosition(Integer.toString(constructIndex),"CKBotStand", pos, ori));
+    	constructIndex++;
 	}
+
     private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
     	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
     	System.out.println("modulePos.size()"+modulePos.size());

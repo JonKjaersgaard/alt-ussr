@@ -18,12 +18,15 @@ import ussr.physics.PhysicsSimulation;
  * @author david
  *
  */
-public class CKBotSampleSimulation1 extends CKBotSimulation { 
+public class CKBotSampleSimulation2 extends CKBotSimulation { 
 
 	public static void main( String[] args ) {
-		new CKBotSampleSimulation1().runSimulation(null,true);
+		new CKBotSampleSimulation2().runSimulation(null,true);
 	}
 	public Controller getController(String type) {
+		if (type.equals("CKBotStandard")) return new CKBotL7SampleController1();
+		else if (type.equals("CKBotL7")) return new CKBotL7SampleController1();
+		else if (type.equals("CKBotSpring")) return new CKBotSpringSampleController1();
 		return new CKBotStandardSampleController1();
 	}
 
@@ -38,15 +41,8 @@ public class CKBotSampleSimulation1 extends CKBotSimulation {
 		//simulation.setGravity(0.0f);
 	}
 	protected void constructRobot() {
-		addModule("CKBotStandard",0,0,0,new RotationDescription(0f,0f,(float)Math.PI/2));
-		addModule("CKBotStandard",0,0,1,new RotationDescription(0f,0f,(float)Math.PI/2));
-		addModule("CKBotStandard",0,0,2,new RotationDescription(0f,0f,(float)Math.PI/2));
-		addModule("CKBotStandard",0,0,3,new RotationDescription(0f,0f,(float)Math.PI/2));
-		addModule("CKBotStandard",0,0,4,new RotationDescription(0f,0f,(float)Math.PI/2));
-		addModule("CKBotStandard",0,0,5,new RotationDescription(0f,0f,(float)Math.PI/2));
-		addModule("CKBotStandard",0,0,6,new RotationDescription(0f,0f,(float)Math.PI/2));
-		addModule("CKBotStandard",0,0,7,new RotationDescription(0f,0f,(float)Math.PI/2));
-		addModule("CKBotStandard",0,0,8,new RotationDescription(0f,0f,(float)Math.PI/2));
-		addModule("CKBotStandard",0,0,9,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule("CKBotL7",0,0,0,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule("CKBotStandard",1,0,0,new RotationDescription(0f,(float)Math.PI/2,0f));
+		addModule("CKBotStandard",-1,0,0,new RotationDescription(0f,(float)Math.PI/2,0f));
 	}
 }

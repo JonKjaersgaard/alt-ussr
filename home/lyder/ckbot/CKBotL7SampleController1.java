@@ -1,31 +1,20 @@
 package ckbot;
 
-public class CKBotStandardController extends CKBotController {
+public class CKBotL7SampleController1 extends CKBotController {
 	float next_angle = 30;
 	boolean newmessage = false;
 	
-	public CKBotStandardController() {
+	public CKBotL7SampleController1() {
 	}
 	
 	public void activate() {
-		float angle;
 		while(module.getSimulation().isPaused()) Thread.yield();
-		if (module.getID()%5 == 0) next_angle = 80;
-		else next_angle = 25;
-		angle = next_angle;
-		goToPosition(angle);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {};
-		connectAll();
-		try {Thread.sleep(1000);} catch (InterruptedException e) {};
 		while(true) {
     		try {
-    			if (angle == 80) sendMessage(new byte[] {'a'},(byte)1,(byte)0);
-    			else sendMessage(new byte[] {'s'},(byte)1,(byte)0);
-    			while(!newmessage) yield();
-    			newmessage=false;
-    			Thread.sleep(150);
-    			angle = next_angle;
-    			goToPosition(angle);
+    			goToPosition(75);
+    			Thread.sleep(1000);
+    			goToPosition(-75);
+    			Thread.sleep(1000);
             } catch (InterruptedException e) {
                // throw new Error("unexpected");
             }
