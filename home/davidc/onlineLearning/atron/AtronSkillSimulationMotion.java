@@ -18,6 +18,24 @@ public class AtronSkillSimulationMotion extends AtronSkillSimulation implements 
     float oldPrintTime=0;
     float oldSkillTime=0;
     
+	/**
+	 * @param args
+	 */
+	/**
+	 * @param args
+	 */
+	/**
+	 * @param args
+	 */
+	/**
+	 * @param args
+	 */
+	/**
+	 * @param args
+	 */
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		for(int i=0;i<args.length;i++) {
 			if(args[i].contains("TrialID=")) {

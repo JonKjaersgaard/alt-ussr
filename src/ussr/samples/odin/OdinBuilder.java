@@ -59,7 +59,29 @@ public class OdinBuilder {
         allPos.addAll(ballPos);
         return allPos;
     }
-
+    public void addBall(int x, int y, int z, int index) {
+        if((x+y+z)%2==0) {
+        	VectorDescription pos = new VectorDescription(x*unit,y*unit,z*unit);
+        	ModulePosition ballPosition = new ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0));
+        	ballPos.add(ballPosition);
+        	allPos.add(ballPosition);
+        	return;
+        }
+        throw new RuntimeException("Odin ball placed outside lattice");
+    }
+    
+    public void addModule(int ballIndex1, int ballIndex2, String moduleType, int index) {
+        if(isNeighorBalls(ballPos.get(ballIndex1),ballPos.get(ballIndex2))) {
+            VectorDescription pos = posFromBalls(ballPos.get(ballIndex1),ballPos.get(ballIndex2));
+            RotationDescription rot = rotFromBalls(ballPos.get(ballIndex1),ballPos.get(ballIndex2));
+            ModulePosition modulePosition = new ModulePosition(Integer.toString(index),"OdinMuscle", pos, rot);
+            modulePos.add(modulePosition);
+            allPos.add(modulePosition);
+            return;
+        }
+        throw new RuntimeException("Odin module placed outside lattice");
+    }
+    
     public ArrayList<ModuleConnection> allConnections() {
         ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
         for(int i=0;i<ballPos.size();i++) {
