@@ -4,7 +4,8 @@ Internal MMMI instructions for getting USSR up an running from the SVN server
 Note: this document assumes that Eclipse is being used to check out and compile USSR.
 USSR should run on Windows, Linux and Mac OS X.
 
-(1) Install eclipse (eclipse.org)
+(1) Install eclipse (eclipse.org) and JDK 1.5 or higher (use JDK 1.5 compliance
+    before doing a commit)
 
 (2) Install the SVN plugin (subclipse.tigris.org): see the SVN site for instructions
 
