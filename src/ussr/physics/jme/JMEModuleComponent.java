@@ -111,7 +111,8 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
             Vector3f position = new Vector3f(p.getX(), p.getY(), p.getZ());
             String cname = cd.getName()==null ? "Connector "+(counter++) : cd.getName(); 
             cname+=" #"+index;
-            this.addConnector(cname, position, cd, cd.getRotation().getRotation());
+            JMEConnector c = this.addConnector(cname, position, cd, cd.getRotation().getRotation());
+            c.getModel().setProperty("ussr.connector_number", Integer.toString(index));
         }
         //TODO change this way of creating communication sometimes we can it to be at a connector
         // Create communicators
@@ -122,18 +123,20 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
             model.addReceivingDevice(JMEGeometryHelper.createReceiver(model, model, receiver));
             
     }
-	public void addConnector(String name, Vector3f position, ConnectorDescription description, Quaternion rotation) {
-		addConnector(name, position, description);
-		getConnector(name).setRotation(new PhysicsQuaternionHolder(rotation));
+	public JMEConnector addConnector(String name, Vector3f position, ConnectorDescription description, Quaternion rotation) {
+		JMEConnector c = addConnector(name, position, description);
+		c.setRotation(new PhysicsQuaternionHolder(rotation));
+		return c;
 	}
 
-	public void addConnector(String name, Vector3f position, ConnectorDescription description) {
+	public JMEConnector addConnector(String name, Vector3f position, ConnectorDescription description) {
     	 JMEConnector connector = createConnector(world, name, position, description);
          Connector c = new Connector(connector);
          model.addConnector(c);
          c.setProperty("name", name);
          c.readLabels(description);
          connectors.add(connector);
+         return connector;
     }
     public JMEConnector getConnector(int index) {
         return connectors.get(index);
