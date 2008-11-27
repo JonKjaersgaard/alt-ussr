@@ -280,6 +280,10 @@ public class Module extends Entity {
 	public PhysicsModuleComponent getComponent(int index) {
 		return physics.get(index);
 	}
+	
+	public int getNumberOfComponents() {
+	    return physics.size();
+	}
 
 	public void reset() {
 		List<? extends PhysicsEntity> components = getPhysics();
