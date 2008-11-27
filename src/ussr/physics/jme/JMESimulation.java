@@ -6,6 +6,7 @@
  */
 package ussr.physics.jme;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -129,41 +130,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         
         // Create modules
         for(int i=0; i<worldDescription.getNumberOfModules(); i++) {
-            final Module module = new Module();
-            String robotType;
-            ModulePosition position;
-            if(worldDescription.getModulePositions().size()>i) {
-                robotType = worldDescription.getModulePositions().get(i).getType();
-                position = worldDescription.getModulePositions().get(i);
-            } else {
-                robotType = "default";
-                position = worldDescription.placeModule(i);
-            }
-            Robot robot = robots.get(robotType);
-            if(robot==null) throw new Error("No definition for robot "+robotType);
-            String module_name = position.getName();
-            //System.out.println("Creating "+robotType);
-        	factory.createModule(i, module, robot, module_name);
-        	module.setController(robot.createController());
-            modules.add(module);
-        	
-            if(module.getController() instanceof ActBasedController)
-                actControllers.add((ActBasedController)module.getController());
-            else {
-                Thread moduleThread = new Thread() {
-                    public void run() {
-                        module.waitForReady();
-                        module.getController().activate();
-                        if(!isStopped()) {
-                            PhysicsLogger.log("Warning: unexpected controller exit");
-                        }
-                    }
-                };
-                //moduleThread.setPriority(Thread.NORM_PRIORITY-1);
-
-                moduleThreads.add(moduleThread);
-                moduleThread.start();
-            }
+            ModulePosition position = worldDescription.getModulePositions().get(i);
+            createModule(position,false);
         }
 
         if(actControllers.size()>0) {
@@ -234,6 +202,46 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         MouseInput.get().setCursorVisible( true );
         addContactCallback();
     }
+
+    public synchronized Module createModule(ModulePosition position, boolean assign) throws Error {
+        String robotType;
+        robotType = position.getType();
+        Robot robot = robots.get(robotType);
+        if(robot==null) throw new Error("No definition for robot "+robotType);
+        String module_name = position.getName();
+        final Module module = new Module();
+        factory.createModule(module, robot, module_name);
+        module.setController(robot.createController());
+        modules.add(module);
+        
+        if(module.getController() instanceof ActBasedController)
+            synchronized(actControllers) {
+                actControllers.add((ActBasedController)module.getController());
+                actControllers.notifyAll();
+            }
+        else {
+            Thread moduleThread = new Thread() {
+                public void run() {
+                    module.waitForReady();
+                    module.getController().activate();
+                    if(!isStopped()) {
+                        PhysicsLogger.log("Warning: unexpected controller exit");
+                    }
+                }
+            };
+            //moduleThread.setPriority(Thread.NORM_PRIORITY-1);
+
+            moduleThreads.add(moduleThread);
+            moduleThread.start();
+        }
+        
+        if(assign) {
+            module.assignToModulePosition(position);
+            module.setColor(Color.GREEN);
+        }
+        return module;
+    }
+    
     private void addContactCallback() {
 		//collision callback that removes? the internalt ODE error 
          //caused by trimeshes colliding with some singularity 
@@ -280,9 +288,11 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                     //if(!pause) Thread.sleep(100);
                 	boolean physicsStep = false;
                     if ( !pause ||singleStep ) {
-                    	physicsCallBack();
-                    	physicsStep(); // 1 call to = 32ms (one example setup)
-                    	physicsStep = true;
+                        physicsCallBack();
+                        synchronized(this) {
+                            physicsStep(); // 1 call to = 32ms (one example setup)
+                            physicsStep = true;
+                        }
                     	//waitForPhysicsStep(true);
                     	unlockModules();
                     	//System.out.println(getTime()+" : "+(System.currentTimeMillis()-startTime)/1000.0);
@@ -382,15 +392,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         Map<String,Module> registry = new HashMap<String,Module>();
         for(Module module: modules) {
             ModulePosition p = positions.next();
-            module.setProperty("name", p.getName());
-            module.setProperties(p.getProperties());
+            module.assignToModulePosition(p);
             registry.put(p.getName(), module);
-            //module.reset();
-           // module.setPosition(p.getPosition());
-           // module.setRotation(p.getRotation());
-            module.moveTo(p.getPosition(),p.getRotation());
-            module.clearDynamics();
-            module.reset();
             
             /*List<? extends PhysicsEntity> components = module.getPhysics();
             // Reset each component

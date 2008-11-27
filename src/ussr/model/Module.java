@@ -19,6 +19,7 @@ import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModulePosition;
 import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsModuleComponent;
 import ussr.physics.PhysicsSimulation;
@@ -343,6 +344,14 @@ public class Module extends Entity {
             } catch (InterruptedException e) {
                 throw new Error("Unexpected interruption");
             }
+    }
+
+    public void assignToModulePosition(ModulePosition p) {
+        this.setProperty("name", p.getName());
+        this.setProperties(p.getProperties());
+        this.moveTo(p.getPosition(),p.getRotation());
+        this.clearDynamics();
+        this.reset();
     }
 
 }

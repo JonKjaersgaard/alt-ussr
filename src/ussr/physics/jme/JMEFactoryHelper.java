@@ -30,6 +30,7 @@ import com.jmex.physics.material.Material;
 public class JMEFactoryHelper {
     private JMESimulation simulation;
     private Map<String,ModuleFactory> factories;
+    private int fresh_id = 0;
     
     public JMEFactoryHelper(JMESimulation simulation, ModuleFactory[] factories_list) {
         this.simulation = simulation;
@@ -39,7 +40,8 @@ public class JMEFactoryHelper {
             factories_list[i].setSimulation(simulation);
         }
     }
-    public void createModule(int module_id, final Module module, Robot robot, String module_name) {
+    public synchronized void createModule(final Module module, Robot robot, String module_name) {
+        int module_id = fresh_id++; 
         if(robot==null) throw new Error("Robot specification object is null");
         if(robot.getDescription()==null) throw new Error("Robot description object is null, robot type "+robot);
         String module_type = robot.getDescription().getType();
