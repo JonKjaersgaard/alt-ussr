@@ -70,11 +70,6 @@ public class WorldDescription extends Description {
     };
 
     /**
-     * Number of modules in the simulation
-     */
-    private int numberOfModules = 0;
-
-    /**
      * The size of one edge of the underlying plane
      */
     private int planeSize = 0;
@@ -128,10 +123,7 @@ public class WorldDescription extends Description {
      * @return number of initial modules
      */
     public int getNumberOfModules() {
-        if(modules.size()>0)
-            return modules.size();
-        else
-            return numberOfModules;
+        return modules.size();
     }
 
     /**
@@ -148,14 +140,6 @@ public class WorldDescription extends Description {
      */
     public List<VectorDescription> getObstacles() {
         return smallObstacles;
-    }
-
-    /**
-     * Set the number of modules initially placed in the simulation
-     * @param nModules number of initial modules
-     */
-    public void setNumberOfModules(int nModules) {
-        this.numberOfModules = nModules;
     }
 
     /**
