@@ -39,6 +39,7 @@ public abstract class CustomizedPicker implements Picker {
     private Node rootNode;
     private CustomizedPicker.PickAction pickAction;
     private CustomizedPicker.MoveAction moveAction;
+    /*KK*/public Spatial target;
 
     /**
      * Attach the picker to a simulation
@@ -82,10 +83,17 @@ public abstract class CustomizedPicker implements Picker {
         for(JMEModuleComponent component: simulation.getModuleComponents()) {
             if(component.getNodes().contains(node)) {
                 this.pickModuleComponent(component);
+                
                 return;
             }
         }
     }
+
+     /**
+     * Passes spatial parent geometry of picked visual object
+     * @param target, the picked spatial parent geometry
+     */
+    protected abstract  void pickTarget(Spatial target);
 
     public void delete() {
         inputHandler.removeAction( pickAction );
@@ -112,6 +120,7 @@ public abstract class CustomizedPicker implements Picker {
                         PickData data = pickResults.getPickData( i );
                         if ( data.getTargetTris() != null && data.getTargetTris().size() > 0 ) {
                             Spatial target = data.getTargetMesh().getParentGeom();
+      pickTarget(target);
                             while ( target != null ) {
                                 if ( target instanceof DynamicPhysicsNode ) {
                                     DynamicPhysicsNode picked = (DynamicPhysicsNode) target;
