@@ -4,7 +4,6 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 
 import ussr.model.Module;
-import ussr.samples.tests.AbstractTopologyWriter;
 
 public class XMLTopologyWriter extends AbstractTopologyWriter {
 

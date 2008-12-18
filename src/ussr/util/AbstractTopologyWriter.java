@@ -1,4 +1,4 @@
-package ussr.samples.tests;
+package ussr.util;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 
 import ussr.model.Module;
-import ussr.util.ToplogyWriter;
 
 public abstract class AbstractTopologyWriter implements ToplogyWriter {
     private Map<Module,Set<Module>> connections = new HashMap<Module,Set<Module>>();
