@@ -42,6 +42,8 @@ import ussr.physics.jme.connectors.JMEBasicConnector;
 import ussr.physics.jme.connectors.JMEConnector;
 import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.physics.jme.pickers.Picker;
+import ussr.util.NullTopologyWriter;
+import ussr.util.ToplogyWriter;
 
 import com.jme.input.InputHandler;
 import com.jme.input.KeyInput;
@@ -412,6 +414,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         }
         // The following only works for mechanical connectors
         // HARDCODED: assumes one physics per connector
+        ToplogyWriter writer = PhysicsParameters.get().getToplogyWriter();
+        if(writer==null) writer = new NullTopologyWriter();
         for(ModuleConnection connection: this.worldDescription.getConnections()) {
             Module m1 = registry.get(connection.getModule1());
             Module m2 = registry.get(connection.getModule2());
@@ -428,6 +432,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 Connector c1 = m1.getConnectors().get(c1i);
                 Connector c2 = m2.getConnectors().get(c2i);
                 PhysicsLogger.displayInfo("Connecting "+m1.getProperty("name")+"<"+c1i+":"+c1.getProperty("name")+"> to "+m2.getProperty("name")+"<"+c2i+":"+c2.getProperty("name")+">");
+                writer.addConnection(m1, m2);
                 if((c1.getPhysics().get(0) instanceof JMEBasicConnector)&&(c2.getPhysics().get(0) instanceof JMEBasicConnector)) {
                     JMEBasicConnector jc1 = (JMEBasicConnector)c1.getPhysics().get(0);
                     JMEBasicConnector jc2 = (JMEBasicConnector)c2.getPhysics().get(0);
@@ -445,6 +450,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 }
             }
         }
+        writer.finish();
         for(Module module: modules)
             module.setReady(true);
     }

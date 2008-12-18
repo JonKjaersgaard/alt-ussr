@@ -113,6 +113,7 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
             cname+=" #"+index;
             JMEConnector c = this.addConnector(cname, position, cd, cd.getRotation().getRotation());
             c.getModel().setProperty("ussr.connector_number", Integer.toString(index));
+            System.out.println("Module "+name+", connector #"+index+" has name "+cname);
         }
         //TODO change this way of creating communication sometimes we can it to be at a connector
         // Create communicators

@@ -74,7 +74,9 @@ public class JMEOdinFactory implements ModuleFactory {
         DynamicPhysicsNode moduleNode = simulation.getPhysicsSpace().createDynamicNode();            
         int j=0;
         for(ModuleComponentDescription component: robot.getDescription().getModuleComponents()) {
-            JMEModuleComponent physicsModule = new JMEModuleComponent(simulation,robot,component,"module#"+Integer.toString(i)+"."+(j++),module,moduleNode);
+            String name = "module#"+Integer.toString(i)+"."+(j++);
+            System.out.println("Creating module "+name);
+            JMEModuleComponent physicsModule = new JMEModuleComponent(simulation,robot,component,name,module,moduleNode);
             module.addComponent(physicsModule);
             simulation.getModuleComponents().add(physicsModule);
         }

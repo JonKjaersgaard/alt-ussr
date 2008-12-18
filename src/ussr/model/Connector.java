@@ -104,4 +104,15 @@ public class Connector extends Entity {
     public Color getColor() {
         return physics.getConnectorColor();
     }
+    
+    public List<Module> getConnectedModules() {
+        List<Module> result = new ArrayList<Module>();
+        List<? extends PhysicsConnector> connectors = physics.getConnectedConnectors();
+        for(PhysicsConnector c: connectors) {
+            PhysicsModuleComponent x = c.getComponent();
+            Module m = x.getModel();
+            result.add(m);
+        }
+        return result;
+    }
 }

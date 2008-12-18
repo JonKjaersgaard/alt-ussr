@@ -7,6 +7,8 @@
 package ussr.physics;
 
 import java.awt.Color;
+import java.util.List;
+
 import ussr.model.Connector;
 
 /**
@@ -72,5 +74,8 @@ public interface PhysicsConnector extends PhysicsEntity {
     public String getName();
 
     public Color getConnectorColor();
+
+    public List<? extends PhysicsConnector> getConnectedConnectors();
+    public PhysicsModuleComponent getComponent();
 
 }

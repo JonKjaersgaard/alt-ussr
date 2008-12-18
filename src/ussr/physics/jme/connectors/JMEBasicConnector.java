@@ -8,6 +8,7 @@ package ussr.physics.jme.connectors;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
@@ -16,7 +17,9 @@ import ussr.description.robot.RobotDescription;
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.ConnectorBehaviorHandler;
+import ussr.physics.PhysicsConnector;
 import ussr.physics.PhysicsLogger;
+import ussr.physics.PhysicsModuleComponent;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsQuaternionHolder;
 import ussr.physics.PhysicsSimulation;
@@ -414,6 +417,14 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
     
     public Color getConnectorColor() {
         return connectorGeometry.getColor();
+    }
+    
+    public List<? extends PhysicsConnector> getConnectedConnectors() {
+        return (ArrayList)connectedConnectors.clone();
+    }
+    
+    public PhysicsModuleComponent getComponent() {
+        return module;
     }
     
     //protected abstract void align(JMEConnector connector);

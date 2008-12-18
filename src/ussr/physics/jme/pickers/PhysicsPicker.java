@@ -168,12 +168,13 @@ public class PhysicsPicker implements Picker {
     private final Vector3f pickedWorldOffset = new Vector3f();
 
     private void attach( DynamicPhysicsNode node ) {
-    	System.out.println("Clicked on "+node.getName());
+    	System.out.println("Clicked on "+node.getName()+" ["+node.hashCode()+"]");
         DisplaySystem.getDisplaySystem().getScreenCoordinates( node.getWorldTranslation(), pickedScreenPos );
         DisplaySystem.getDisplaySystem().getWorldCoordinates( mousePosition, pickedScreenPos.z, pickedWorldOffset );
         pickedWorldOffset.subtractLocal( node.getWorldTranslation() );
         picked = node;
         myNode.getLocalTranslation().set( node.getWorldTranslation() );
+        System.out.println("T="+node.getWorldTranslation());
         myNode.setActive( true );
         worldJoint.setAnchor( myNode.getLocalTranslation() );
         worldJoint.attach( myNode );
@@ -227,6 +228,9 @@ public class PhysicsPicker implements Picker {
                         if(target instanceof TriMesh) {
                             String name = simulation.getGeometryName((TriMesh)target);
                             if(name!=null) System.out.println("Initial click on: "+name);
+                            System.out.println("Position: "+((TriMesh)target).getWorldTranslation());
+                        } else {
+                            System.out.println("Hit non-trimesh: "+target);
                         }
                         while ( target != null ) {
                             if ( target instanceof DynamicPhysicsNode ) {
@@ -236,6 +240,8 @@ public class PhysicsPicker implements Picker {
                             }
                             target = target.getParent();
                         }
+                    } else {
+                        System.out.println("Alt target with target mesh "+data.getTargetMesh());
                     }
                 }
             }
