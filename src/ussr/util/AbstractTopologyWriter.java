@@ -8,7 +8,7 @@ import java.util.Set;
 
 import ussr.model.Module;
 
-public abstract class AbstractTopologyWriter implements ToplogyWriter {
+public abstract class AbstractTopologyWriter implements TopologyWriter {
     private Map<Module,Set<Module>> connections = new HashMap<Module,Set<Module>>();
     
     public void addConnection(Module m1, Module m2) {

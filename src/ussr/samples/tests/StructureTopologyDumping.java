@@ -14,6 +14,7 @@ import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
+import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMESimulation;
@@ -34,7 +35,7 @@ public class StructureTopologyDumping extends GenericATRONSimulation {
 	public static void main( String[] args ) {
 		PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
 		PhysicsParameters.get().setRealisticCollision(true);
-		PhysicsParameters.get().setTopologyWriter(new XMLTopologyWriter(new PrintWriter(System.out)));
+		PhysicsFactory.getOptions().setTopologyWriter(new XMLTopologyWriter(new PrintWriter(System.out)));
 		new StructureTopologyDumping().main();
     }
 	

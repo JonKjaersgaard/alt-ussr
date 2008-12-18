@@ -6,7 +6,7 @@
  */
 package ussr.physics;
 
-import ussr.util.ToplogyWriter;
+import ussr.util.TopologyWriter;
 
 /**
  * A collection of parameters that describe the physical properties of the simulation.
@@ -43,7 +43,6 @@ public class PhysicsParameters {
     private float worldDampingLinearVelocity = 0.0f;
     private float worldDampingAngularVelocity = 0.0f;
     private int resolutionFactor = 5;
-    private ToplogyWriter topologyWriter;
     
     
     public float getWorldDampingLinearVelocity() {
@@ -181,11 +180,5 @@ public class PhysicsParameters {
     }
     public void setResolutionFactor(int resolutionFactor) {
         this.resolutionFactor = resolutionFactor;
-    }
-    public ToplogyWriter getToplogyWriter() {
-        return topologyWriter;
-    }
-    public void setTopologyWriter(ToplogyWriter writer) {
-        this.topologyWriter = writer;
     }
 }

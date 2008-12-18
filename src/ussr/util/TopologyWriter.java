@@ -4,7 +4,7 @@ import java.util.List;
 
 import ussr.model.Module;
 
-public interface ToplogyWriter {
+public interface TopologyWriter {
 
     void addConnection(Module m1, Module m2);
 

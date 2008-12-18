@@ -164,7 +164,9 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	protected PhysicsSpace physicsSpace;
 	private StaticPhysicsNode staticPlane;
 	private boolean exitOnQuit;
+	protected Options options;
 	public JMEBasicGraphicalSimulation(Options options) {
+	    this.options = options;
 		exitOnQuit = options.getExitOnQuit();
 	}
 	protected void assignKeys() {       
@@ -830,7 +832,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		JoystickInput.destroyIfInitalized();
 	}
 	protected void quit() {
-		if(exitOnQuit) System.exit( 0 );
+		if(options.getExitOnQuit()) System.exit( 0 );
 		//getPhysicsSpace().delete();
 
 	}

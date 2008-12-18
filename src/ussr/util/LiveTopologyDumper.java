@@ -17,7 +17,7 @@ public class LiveTopologyDumper {
         this.start = module;
     }
 
-    public void dump(ToplogyWriter writer) {
+    public void dump(TopologyWriter writer) {
         Set<Module> visited = new HashSet<Module>();
         List<Module> pending = new ArrayList<Module>();
         pending.add(start);

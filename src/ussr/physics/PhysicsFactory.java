@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.robots.JMEATRONFactory;
 import ussr.physics.jme.robots.JMEDefaultFactory;
 import ussr.physics.jme.robots.JMEMTRANFactory;
 import ussr.physics.jme.robots.JMEOdinFactory;
 import ussr.samples.white.JMEWhiteFactory;
+import ussr.util.TopologyWriter;
 import ussr.physics.jme.robots.JMECKBotFactory;
 
 /**
@@ -33,6 +35,10 @@ public class PhysicsFactory {
      */
     public static class Options implements Cloneable {
         private boolean exitOnQuit = true;
+        private TopologyWriter topologyWriter = new TopologyWriter() {
+            public void addConnection(Module m1, Module m2) { ; }
+            public void finish() { ; }
+        };
 
         public Options copy() { 
             try {
@@ -48,6 +54,13 @@ public class PhysicsFactory {
         
         public void setExitOnQuit(boolean exitOnQuit) {
             this.exitOnQuit = exitOnQuit;
+        }
+
+        public TopologyWriter getTopologyWriter() {
+            return topologyWriter;
+        }
+        public void setTopologyWriter(TopologyWriter writer) {
+            this.topologyWriter = writer;
         }
     }
     

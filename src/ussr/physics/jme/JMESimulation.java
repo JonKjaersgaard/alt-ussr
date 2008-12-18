@@ -42,8 +42,7 @@ import ussr.physics.jme.connectors.JMEBasicConnector;
 import ussr.physics.jme.connectors.JMEConnector;
 import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.physics.jme.pickers.Picker;
-import ussr.util.NullTopologyWriter;
-import ussr.util.ToplogyWriter;
+import ussr.util.TopologyWriter;
 
 import com.jme.input.InputHandler;
 import com.jme.input.KeyInput;
@@ -414,8 +413,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         }
         // The following only works for mechanical connectors
         // HARDCODED: assumes one physics per connector
-        ToplogyWriter writer = PhysicsParameters.get().getToplogyWriter();
-        if(writer==null) writer = new NullTopologyWriter();
+        TopologyWriter writer = options.getTopologyWriter();
         for(ModuleConnection connection: this.worldDescription.getConnections()) {
             Module m1 = registry.get(connection.getModule1());
             Module m2 = registry.get(connection.getModule2());
