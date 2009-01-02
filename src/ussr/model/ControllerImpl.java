@@ -67,7 +67,7 @@ public abstract class ControllerImpl implements Controller {
      * current thread of control using {@link #yield()} while busy-waiting.
      * @param ms amount of time to wait, in simulation milliseconds
      */
-    protected void delay(long ms) {
+    public void delay(int ms) {
     	float stopTime = module.getSimulation().getTime()+ms/1000f;
     	while(stopTime>module.getSimulation().getTime()) {
     		yield();
