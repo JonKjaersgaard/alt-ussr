@@ -5,7 +5,7 @@ import java.util.List;
 
 import ussr.samples.atron.ATRONController;
 
-public class AtronConnectorProxy {
+public class AtronConnectorProxy { 
     private boolean[] disconnectingSemaphore  = new boolean[8];
     private boolean safeDisconnectDebug = false; 
     private ATRONController controller;
