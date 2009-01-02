@@ -7,15 +7,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-
-import ussr.model.Controller;
+import java.net.Socket;
 
 public class ReflectionConnection extends AbstractNetworkConnection {
 
@@ -26,7 +20,7 @@ public class ReflectionConnection extends AbstractNetworkConnection {
         this.target = target;
     }
 
-    public boolean activationHook(InputStream input, OutputStream output) {
+    public boolean activationHook(InputStream input, OutputStream output, Socket connection) {
         System.out.println("Reflection connection activated for "+target);
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output));
@@ -38,36 +32,53 @@ public class ReflectionConnection extends AbstractNetworkConnection {
                 packet = reader.readLine();
                 if(debug) System.out.println("Read line...");
             } catch (IOException e) {
-                throw new Error("Error reading from socket");
+            	System.err.println("Error reading from socket: "+e);
+            	break;
+            	//throw new Error("Error reading from socket: "+e);
             }
             if(debug) System.out.println("Read: "+packet);
-            if(packet==null) break;
+            if(packet==null) {
+            	System.err.println("Warning: null packet received");
+            	//continue;
+            	break;
+            }
             if(packet.length()==0) { 
                 System.err.println("Warning: empty packet received");
-                continue;
+                break;
+                //continue;
             }
             String[] parts = packet.split(" ");
             if(parts.length<2) {
-                System.err.println("Warning: illegal packet received");
-                continue;
+                System.err.println("Warning: illegal packet received: "+packet);
+                break;
+                //continue;
             }
             int id = Integer.parseInt(parts[0]);
             Object response;
             try {
                 response = id+" OK "+handleMessage(parts);
             } catch(Throwable t) {
-                System.err.println("Warning: exception while processing request");
-                t.printStackTrace(System.err);
-                response = id+" ERROR "+t;
+                System.err.println("Warning: exception while processing request for packet: "+packet);
+                //t.printStackTrace(System.err);
+                //response = id+" ERROR "+t;
+            	break;
             }
             try {
                 writer.write(response.toString());
                 writer.flush();
             } catch(IOException exn) {
-                throw new Error("Error writing to socket");
+                //throw new Error("Error writing to socket");
+                break;
             }
         }
-        System.out.println("Socket closed, waiting for new connection");
+        try {
+        	reader.close();
+        	writer.close();
+			connection.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        System.err.println("Reflection connection closed, waiting for new connection");
         return true;
     }
 
