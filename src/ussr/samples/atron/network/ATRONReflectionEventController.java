@@ -26,14 +26,18 @@ public class ATRONReflectionEventController extends ATRONController {
         eventConnection = new EventConnection(portEvent);
         (new Thread() {
     	    public void run() { 
-    	    	eventConnection.activate();    	       
+    	    	eventConnection.activate(); 	       
     	    }
     	 }).start();
         rcConnection = new ReflectionConnection(portRC,this);
         rcConnection.activate();
     }
-    
     public void handleMessage(byte[] message, int messageSize, int channel) {
-    	eventConnection.sendEvent("handleMessage", new Object[]{message, messageSize, channel});
+    	if(eventConnection.isReady()) {
+    		eventConnection.sendEvent("handleMessage", new Object[]{message, messageSize, channel});
+    	}
+    	else {
+    		System.err.println("Event connection not ready, throw away package..");
+    	}
     }
 }
