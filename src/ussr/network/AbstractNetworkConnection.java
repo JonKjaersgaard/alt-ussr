@@ -45,10 +45,11 @@ public abstract class AbstractNetworkConnection {
 	public void activate() {
         InputStream input;
         OutputStream output;
+        Socket connection;
 	    do {
 	        try {
 	            if(debug) System.out.println("Waiting for connection on port "+port);
-	            Socket connection = socket.accept();
+	            connection = socket.accept();
 	            if(debug) System.out.println("Received connection on port "+port);
 	            input = connection.getInputStream();
 	            output = connection.getOutputStream();
@@ -56,8 +57,8 @@ public abstract class AbstractNetworkConnection {
 	            throw new Error("Unable to open connection");
 	        }
 	    }
-	    while(activationHook(input,output));
+	    while(activationHook(input,output,connection));
 	}
 
-	public abstract boolean activationHook(InputStream input, OutputStream output);
+	public abstract boolean activationHook(InputStream input, OutputStream output, Socket connection);
 }
