@@ -104,7 +104,6 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     public void setBlocking(boolean blocking) {
     	this.blocking = blocking;
     }
-
     /**
 	 * @see ussr.samples.atron.IATRONAPI#getJointPosition()
 	 */
