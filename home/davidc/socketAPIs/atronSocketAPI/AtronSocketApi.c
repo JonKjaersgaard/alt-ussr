@@ -49,7 +49,7 @@ float atronApi_getTime() {
 }
 float atronApi_getAngularPosition() {
 	char str[50]; sprintf(str, "getAngularPosition");
-	return cs_sendCommand_float(str);
+	return cs_sendCommand_float(str); 
 }
 int atronApi_getAngularPositionDegrees() {
 	char str[50]; sprintf(str, "getAngularPositionDegrees");
