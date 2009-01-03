@@ -35,8 +35,8 @@ public class OdinSimulation extends GenericSimulation {
 	private static float unit = (float)Math.sqrt((0.18f*0.18f)/2);
 	private static float pi = (float)Math.PI;
 	//nBalls=100, xMax=10, yMax=1,zMax=10; PLANE
-	private static int nBalls = 50;
-	private static int xMax = 10;
+	private static int nBalls = 100;
+	private static int xMax = 20;
 	private static int yMax = 1;
 	private static int zMax = 10;
 	public static float pe = 0.1f;//0 to 1, modules sending information out.
@@ -71,7 +71,7 @@ public class OdinSimulation extends GenericSimulation {
 			}
 		}
     	//Here we call an overwritten method.
-    	new OdinSimulation().runSimulation(null,false);
+    	new OdinSimulation().runSimulation(null,true);
     	//System.out.println("\nSimulation Stopped");
     	System.exit(0);
     }
