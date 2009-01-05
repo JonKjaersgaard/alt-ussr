@@ -59,7 +59,7 @@ public class ReflectionConnection extends AbstractNetworkConnection {
                 response = id+" OK "+handleMessage(parts);
             } catch(Throwable t) {
                 System.err.println("Warning: exception while processing request for packet: "+packet);
-                //t.printStackTrace(System.err);
+                t.printStackTrace(System.err);
                 //response = id+" ERROR "+t;
             	break;
             }

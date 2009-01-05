@@ -70,7 +70,6 @@ public class ModulePosition {
         } else
             this.type = typeProperties;
     }
-
     /**
      * @return the position
      */

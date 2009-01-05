@@ -14,6 +14,7 @@ import ussr.comm.Receiver;
 import ussr.model.ControllerImpl;
 import ussr.model.Module;
 import ussr.model.Sensor;
+import ussr.physics.PhysicsLogger;
 
 /**
  * Controller implementation for the Odin robot
@@ -23,9 +24,14 @@ import ussr.model.Sensor;
  */
 public abstract class OdinController extends ControllerImpl implements PacketReceivedObserver {
 	protected String type;
-    public OdinController() {
+    
+	public OdinController() {
         super();
+    } 
+//    
+    public void setup() {
     }
+    
     public void setModule(Module module) {
     	super.setModule(module);
         for(Receiver r: module.getReceivers()) { 
@@ -49,6 +55,13 @@ public abstract class OdinController extends ControllerImpl implements PacketRec
     		module.getActuators().get(0).disactivate();
     	}
 	}
+    public float getTime() {
+    	return getModule().getSimulation().getTime();
+    }
+    public String getName() {
+        return module.getProperty("name");
+    }
+    
     public void setColor(float r, float g, float b) {
     	if(type=="OdinBattery") {
 			module.setColor(new Color(r,g,b));
@@ -126,14 +139,9 @@ public abstract class OdinController extends ControllerImpl implements PacketRec
     public int getDebugID() {
     	return getModule().getID();
     }
+    
     public String getType() {
     	return type;
-    }
-    public void delay(int ms) {
-    	float startTime = module.getSimulation().getTime();
-    	while(module.getSimulation().getTime()<(ms/1000.0+startTime)) {
-			module.getSimulation().waitForPhysicsStep(false);
-    	}
     }
     /**
      * Controllers should generally overwrite this method to receive messages 
@@ -145,7 +153,7 @@ public abstract class OdinController extends ControllerImpl implements PacketRec
     	System.out.println("Message recieved please overwrite this method");
     }
     
-    private byte read(String name) {
+    public byte read(String name) {
         for(Sensor sensor: module.getSensors()) {
             if(name.equals(sensor.getName())) {
                 float value = sensor.readValue();
