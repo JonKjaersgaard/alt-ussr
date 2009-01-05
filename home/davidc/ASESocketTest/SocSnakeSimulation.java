@@ -67,7 +67,7 @@ public class SocSnakeSimulation extends GenericATRONSimulation {
 	}
 
 	protected ArrayList<ModulePosition> buildRobot() {
-		return buildSnake(2);
+		return buildSnake(7);
 	}
     
     protected void changeWorldHook(WorldDescription world) {
