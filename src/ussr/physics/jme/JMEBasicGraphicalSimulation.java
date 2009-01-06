@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 
+import ussr.builder.QuickPrototyping;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
@@ -205,8 +206,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 				KeyInput.KEY_R); 
 		KeyBindingManager.getKeyBindingManager().set("display_debug_shell", KeyInput.KEY_U);
 
-		KeyBindingManager.getKeyBindingManager().set("display_quick_prototyping_of_simulation_scenarios", KeyInput.KEY_Q);
-
+		KeyBindingManager.getKeyBindingManager().set("display_quick_prototyping_of_simulation_scenarios", KeyInput.KEY_Q);		
 	}
 	protected void handleKeys() {        /** If toggle_pause is a valid command (via key p), change pause. */
 		if ( KeyBindingManager.getKeyBindingManager().isValidCommand(
@@ -299,7 +299,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_quick_prototyping_of_simulation_scenarios", false)) {
 			QuickPrototyping.activate(this);
 		}
-
 	}
 	protected void cameraPerspective() {
 		if(cam!=null) {
@@ -861,5 +860,5 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
 	public void addGadget(SimulationGadget gadget) {
 		DebugShell.addGadget(gadget);
-	}
+	}	
 }
