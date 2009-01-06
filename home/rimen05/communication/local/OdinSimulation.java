@@ -80,7 +80,7 @@ public class OdinSimulation extends GenericSimulation {
     public void runSimulation(WorldDescription world, boolean startPaused) {
         PhysicsLogger.setDefaultLoggingLevel();
         final PhysicsSimulation simulation = PhysicsFactory.createSimulator();
-        PhysicsParameters.get().setResolutionFactor(2); // Needed for large Odin structures 
+        PhysicsParameters.get().setResolutionFactor(2); // Needed for large Odin structures
         
         simulation.setRobot(new OdinMuscle(){
         	public Controller createController() {

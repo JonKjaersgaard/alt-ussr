@@ -6,9 +6,10 @@
  */
 package communication.local;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+//import java.util.Arrays;
+//import java.util.List;
 
 import ussr.description.Robot;
 import ussr.description.geometry.RotationDescription;
@@ -17,13 +18,15 @@ import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
+import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
 import ussr.samples.GenericSimulation;
 import ussr.samples.atron.ATRON;
-import ussr.samples.atron.ATRONBuilder;
-import ussr.samples.atron.GenericATRONSimulation;
+//import ussr.samples.atron.ATRONBuilder;
+//import ussr.samples.atron.GenericATRONSimulation;
 import ussr.samples.atron.ATRONBuilder.ModuleSelector;
 import ussr.samples.atron.ATRONBuilder.Namer;
+import ussr.util.XMLTopologyWriter;
 
 /**
  * A sample ATRON simulation
@@ -84,6 +87,8 @@ public class ATRONSimulation extends GenericSimulation {
         PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
         PhysicsParameters.get().setResolutionFactor(3);
         PhysicsParameters.get().setRealisticCollision(false);
+        PhysicsFactory.getOptions().setTopologyWriter(new XMLTopologyWriter(new PrintWriter(System.out)));
+        
         setConnectorsAreActive(false);
         WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
