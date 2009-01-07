@@ -46,6 +46,7 @@ public class JMEFactoryHelper {
         if(robot.getDescription()==null) throw new Error("Robot description object is null, robot type "+robot);
         String module_type = robot.getDescription().getType();
         if(module_type==null) throw new Error("Module type is null");
+        module.setProperty("ussr.module.type", module_type);
         ModuleFactory factory;
         // Find a matching factory
         for(String prefix: factories.keySet())
