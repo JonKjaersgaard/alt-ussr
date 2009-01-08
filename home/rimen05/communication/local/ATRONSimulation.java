@@ -26,7 +26,9 @@ import ussr.samples.atron.ATRON;
 //import ussr.samples.atron.GenericATRONSimulation;
 import ussr.samples.atron.ATRONBuilder.ModuleSelector;
 import ussr.samples.atron.ATRONBuilder.Namer;
-import ussr.util.XMLTopologyWriter;
+//import ussr.util.XMLTopologyWriter;
+
+import franco.util.NEDTopologyWriter;
 
 /**
  * A sample ATRON simulation
@@ -39,7 +41,7 @@ public class ATRONSimulation extends GenericSimulation {
 	//After USSR update, this acceptance range created too many collisions and made USSR (or ODE) to stop the simulation.
 	//private float connection_acceptance_range = 0.0000001f;
 	private float connection_acceptance_range = 0.001f;
-	private static int nModules = 50;
+	private static int nModules = 100;
 	private static int xMax = 2;
 	private static int yMax = 1;
 	private static int zMax = 1;
@@ -87,7 +89,7 @@ public class ATRONSimulation extends GenericSimulation {
         PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
         PhysicsParameters.get().setResolutionFactor(3);
         PhysicsParameters.get().setRealisticCollision(false);
-        PhysicsFactory.getOptions().setTopologyWriter(new XMLTopologyWriter(new PrintWriter(System.out)));
+        PhysicsFactory.getOptions().setTopologyWriter(new NEDTopologyWriter(new PrintWriter(System.out)));
         
         setConnectorsAreActive(false);
         WorldDescription world = new WorldDescription();
@@ -184,7 +186,7 @@ public class ATRONSimulation extends GenericSimulation {
         //System.out.println("#Modules per Interface (avg) = " + (1+(((float)(2*connections.size()))/((float)(8*modulePos.size())))) );
         System.out.println("#Modules per Interface (avg) = " + (1+(((float)(connections.size()))/((float)(8*modulePos.size()-connections.size())))) );
         
-        this.runSimulation(world,false);
+        this.runSimulation(world,true);
     }
     
     public ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {

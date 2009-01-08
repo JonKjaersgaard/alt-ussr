@@ -5,9 +5,12 @@
  */
 package communication.local;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import com.jme.math.Quaternion;
+
+import franco.util.NEDTopologyWriter;
 
 import ussr.description.Robot;
 import ussr.description.geometry.RotationDescription;
@@ -36,9 +39,9 @@ public class OdinSimulation extends GenericSimulation {
 	private static float pi = (float)Math.PI;
 	//nBalls=100, xMax=10, yMax=1,zMax=10; PLANE
 	private static int nBalls = 100;
-	private static int xMax = 20;
+	private static int xMax = 3;
 	private static int yMax = 1;
-	private static int zMax = 10;
+	private static int zMax = 3;
 	public static float pe = 0.1f;//0 to 1, modules sending information out.
 	public static float pne = 1.0f;//0 to 1, proportion of modules the information is transmitted to.
 	public static float pp = 0.1f;
@@ -79,8 +82,9 @@ public class OdinSimulation extends GenericSimulation {
     //Here the abstract method is overwritten.
     public void runSimulation(WorldDescription world, boolean startPaused) {
         PhysicsLogger.setDefaultLoggingLevel();
-        final PhysicsSimulation simulation = PhysicsFactory.createSimulator();
         PhysicsParameters.get().setResolutionFactor(2); // Needed for large Odin structures
+        PhysicsFactory.getOptions().setTopologyWriter(new NEDTopologyWriter(new PrintWriter(System.out))); //YES!!!
+        final PhysicsSimulation simulation = PhysicsFactory.createSimulator();
         
         simulation.setRobot(new OdinMuscle(){
         	public Controller createController() {
@@ -157,7 +161,7 @@ public class OdinSimulation extends GenericSimulation {
         				
         			}
         			//modulePos.add(new ModulePosition(Integer.toString(index),"OdinHinge", pos, rot));
-        			modulePos.add(new ModulePosition(Integer.toString(index),"OdinMuscle", pos, rot));
+        			modulePos.add(new ModulePosition("module"+Integer.toString(index),"OdinMuscle", pos, rot));
         			//if(index%2==0) modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinMuscle", pos, rot));
         			//if(index%2==0) modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinBattery", pos, rot));
         			//else modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinWheel", pos, rot));
