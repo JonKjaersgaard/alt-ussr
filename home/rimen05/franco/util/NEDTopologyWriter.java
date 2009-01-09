@@ -14,8 +14,8 @@ import ussr.util.AbstractTopologyWriter;
 
 public class NEDTopologyWriter extends AbstractTopologyWriter {
 
-    private PrintWriter writer;
-    private int numberOfModules = 0;
+    protected PrintWriter writer;
+    protected int numberOfModules = 0;
     
     public NEDTopologyWriter(PrintWriter writer) {
         this.writer = writer;
@@ -54,6 +54,7 @@ public class NEDTopologyWriter extends AbstractTopologyWriter {
     	numberOfModules++;
     	while(connections.hasNext())
     		writer.println("    modules["+getIndex(name(key))+"].out++ --> modules["+getIndex(name(connections.next()))+"].in++;");
+    		//writer.println("    modules["+name(key)+"].out++ --> modules["+name(connections.next())+"].in++;");
     	writer.println("");
     }
     
@@ -69,12 +70,18 @@ public class NEDTopologyWriter extends AbstractTopologyWriter {
         writer.flush();
     }
 
-    private String name(Module key) {
+    protected String name(Module key) {
         return key.getProperty("name");
     }
     
-    private String getIndex(String name){
-    	return name.substring(6);
+    protected String getIndex(String name){
+    	int index = name.indexOf("-");
+    	return name.substring(index+1);
+    }
+    
+    protected String getType(String name){
+    	int index = name.indexOf("-");
+    	return name.substring(0,index);
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import com.jme.math.Quaternion;
 
-import franco.util.NEDTopologyWriter;
+import franco.util.OdinNEDTopologyWriter;
 
 import ussr.description.Robot;
 import ussr.description.geometry.RotationDescription;
@@ -83,7 +83,8 @@ public class OdinSimulation extends GenericSimulation {
     public void runSimulation(WorldDescription world, boolean startPaused) {
         PhysicsLogger.setDefaultLoggingLevel();
         PhysicsParameters.get().setResolutionFactor(2); // Needed for large Odin structures
-        PhysicsFactory.getOptions().setTopologyWriter(new NEDTopologyWriter(new PrintWriter(System.out))); //YES!!!
+        //PhysicsFactory.getOptions().setTopologyWriter(new NEDTopologyWriter(new PrintWriter(System.out))); //YES!!!
+        PhysicsFactory.getOptions().setTopologyWriter(new OdinNEDTopologyWriter(new PrintWriter(System.out)));
         final PhysicsSimulation simulation = PhysicsFactory.createSimulator();
         
         simulation.setRobot(new OdinMuscle(){
@@ -142,7 +143,7 @@ public class OdinSimulation extends GenericSimulation {
         				//VectorDescription pos = new VectorDescription(x*unit,y*unit-0.48f,z*unit);
         				VectorDescription pos = new VectorDescription(x*unit,y*unit-0.47f,z*unit);
         				if(index<nBalls) {
-       						ballPos.add(new ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
+       						ballPos.add(new ModulePosition("ball-"+Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
         				}
     	        		index++;
         			}
@@ -161,12 +162,12 @@ public class OdinSimulation extends GenericSimulation {
         				
         			}
         			//modulePos.add(new ModulePosition(Integer.toString(index),"OdinHinge", pos, rot));
-        			modulePos.add(new ModulePosition("module"+Integer.toString(index),"OdinMuscle", pos, rot));
+        			modulePos.add(new ModulePosition("module-"+Integer.toString(index),"OdinMuscle", pos, rot));
         			//if(index%2==0) modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinMuscle", pos, rot));
         			//if(index%2==0) modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinBattery", pos, rot));
         			//else modulePos.add(new WorldDescription.ModulePosition(Integer.toString(index),"OdinWheel", pos, rot));
         			index++;
-        			//System.out.println("Ball "+i+" and ball "+j+" are neighbors");
+        			//System.out.println("Ball "+i+" and ball "+j+" are neighbours");
         		}
         	}
         }
