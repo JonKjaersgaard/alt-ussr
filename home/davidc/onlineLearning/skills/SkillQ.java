@@ -44,6 +44,9 @@ public class SkillQ implements Skill {
 			roleRewards.add(new ArrayList<Float>());
 		}
 		//Q[0] =0.2f/6f;
+		Q[0] =0.1f;
+		Q[1] =0;
+		Q[2] =0;
 	}
 	private int hardMax() {
 		int selectedRole = -1;

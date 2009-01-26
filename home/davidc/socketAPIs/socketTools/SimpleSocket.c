@@ -35,6 +35,8 @@ int ss_connect(char* host, int port) {
 	return sockfd;
 }
 
+
+
 int ss_receive(char* buffer, int sockfd) {
 	int numbytes;
 	if ((numbytes=recv(sockfd, buffer, MAXDATASIZE-1, 0)) == -1) {

@@ -47,11 +47,11 @@ public class AtronRolePlayerPrimitive implements RolePlayer  {
 		
 		
 		//Systematic WALKER 1
-	/*	if(controller.getDebugID()==4) roles.setRole(0, 0);
+		if(controller.getDebugID()==4) roles.setRole(0, 0);
 		if(controller.getDebugID()==5) roles.setRole(0, 0);
 		if(controller.getDebugID()==6) roles.setRole(0, 0);
 		if(controller.getDebugID()==7) roles.setRole(0, 0);
-		*/
+		
 
 		//System.out.println("if(controller.getDebugID()=="+controller.getDebugID()+") role="+role+";");
 		//System.out.println("Role count = "+roles.getRoleCount());

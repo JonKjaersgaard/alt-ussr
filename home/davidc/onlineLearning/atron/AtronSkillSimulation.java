@@ -23,7 +23,7 @@ public abstract class AtronSkillSimulation extends GenericATRONSimulation {
 
     /*USER PARAMETERS START*/
 	protected static enum ATRONRobots {NONE, ONE, TWOWHEELER, CRAWLER1, CRAWLER2 ,CRAWLER3, CRAWLER4, CAR, SNAKE2, SNAKE3, SNAKE4, SNAKE7, WALKER1, WALKER2, WALKER3, WALKER4, WALKER5, WALKER6,LOOP4, LOOP7, LOOP8,MILLIPEDE1,MILLIPEDE2,MILLIPEDE3,MILLIPEDE4,MILLIPEDE5,MILLIPEDE6,MILLIPEDE7,MILLIPEDE8,MILLIPEDE9,MILLIPEDE10,MILLIPEDE12,MILLIPEDE14,MILLIPEDE16,MILLIPEDE18,MILLIPEDE20,MANDELBROT,MILLIPEDE3EX};
-	protected static ATRONRobots robotType =  ATRONRobots.SNAKE7;
+	protected static ATRONRobots robotType =  ATRONRobots.WALKER1;
 	protected static int nRobots =  1;
 	static boolean loadSkillsFromFile = false;
 	static boolean startPaused = true;
@@ -31,7 +31,7 @@ public abstract class AtronSkillSimulation extends GenericATRONSimulation {
 	static boolean realisticCollision = true;
 	static float periodeTime = 7;//7f;
 	static float evalPeriode = 7;//7f;p
-	static float simulationTime = evalPeriode*1030;//1030;//520; //2000
+	static float simulationTime = evalPeriode*520;//1030;//520; //2000
 	static boolean syncronized = true;
 	static float physicsSimulationStepSize = 0.01f;//0.01f;
 	static boolean primitiveRoles = true;
