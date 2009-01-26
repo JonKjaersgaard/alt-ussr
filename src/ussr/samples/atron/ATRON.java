@@ -26,7 +26,7 @@ import ussr.physics.PhysicsParameters;
 /**
  * The ATRON modular self-reconfigurable robot
  *   
- * @author Modular Robots @ÊMMMI
+ * @author Modular Robots @ï¿½MMMI
  */
 public abstract class ATRON implements Robot {
     
@@ -47,18 +47,19 @@ public abstract class ATRON implements Robot {
     public static final RotationDescription ROTATION_NS_BROKEN = new RotationDescription(0,0,eigth+3*quart);
     public static final RotationDescription ROTATION_NS = new RotationDescription(0,0,eigth+quart);
 
-    protected boolean zuper = false, smooth = false, realistic =false, rubberRing = false, gentle = false;// Different variants
+    protected boolean zuper = false, smooth = false, realistic =false, rubberRing = false, gentle = false, radio = false;// Different variants
     private PhysicsParameters parameters;
 
     public void setSuper() { zuper = true; }
     public void setRealistic() { realistic = true; }
     public void setGentle() { gentle = true; }
+    public void setRadio() { radio = true; }
     
     /**
      * @see ussr.description.Robot#getDescription()
      */
     public RobotDescription getDescription() {
-        String type = "ATRON"+(zuper ? " super" : "")+(realistic ? " realistic" : "")+(smooth ? " smooth" : "")+(rubberRing ? " rubberRing" : "")+(gentle ? " gentle" : "");
+        String type = "ATRON"+(zuper ? " super" : "")+(realistic ? " realistic" : "")+(smooth ? " smooth" : "")+(rubberRing ? " rubberRing" : "")+(gentle ? " gentle" : "")+(radio ? " radio" : "");
         RobotDescription description = new RobotDescription(type);
         // Module components
         float pi = (float)Math.PI;

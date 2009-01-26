@@ -93,7 +93,7 @@ public class JMEATRONFactory implements ModuleFactory {
         southNode.setName("AtronSouth");
 
         module.addComponent(northComponent);
-        module.addComponent(southComponent); //hvad skal håndteres ved fx placering af moduler?
+        module.addComponent(southComponent); //hvad skal hï¿½ndteres ved fx placering af moduler?
         
         simulation.getModuleComponents().add(northComponent);
         simulation.getModuleComponents().add(southComponent);
@@ -199,8 +199,17 @@ public class JMEATRONFactory implements ModuleFactory {
             module.addReceivingDevice(JMEGeometryHelper.createReceiver(module, module.getConnectors().get(channel),atronRec));
             module.getTransmitters().get(channel).setMaxBaud(19200);
             module.getTransmitters().get(channel).setMaxBufferSize(128);
-        }		
-        
+        }
+        if(robot.getDescription().getType().contains("radio")) {
+        	System.out.println("module has an radio");
+        	int channel = 8;
+        	TransmissionDevice atronRadioTrans = new TransmissionDevice(TransmissionType.RADIO,Float.MAX_VALUE);
+            ReceivingDevice atronRadioRec = new ReceivingDevice(TransmissionType.RADIO,10);
+            module.addTransmissionDevice(JMEGeometryHelper.createTransmitter(module, null, atronRadioTrans)); //use connector hardware for communication!
+            module.addReceivingDevice(JMEGeometryHelper.createReceiver(module, null, atronRadioRec));
+            module.getTransmitters().get(channel).setMaxBaud(19200);
+            module.getTransmitters().get(channel).setMaxBufferSize(128);
+        }
 	}
 
 	private void addProximitySensors(Module module) {

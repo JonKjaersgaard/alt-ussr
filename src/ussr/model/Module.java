@@ -75,6 +75,8 @@ public class Module extends Entity {
      */
     private List<Receiver> receivers = new ArrayList<Receiver>();
 
+    PhysicsSimulation simulation;
+    
     /**
      * Indicates whether module is ready for simulation (placed in the world, properly connected, etc)
      */
@@ -258,7 +260,9 @@ public class Module extends Entity {
      * @return the physics simulation of the module
      */
     public PhysicsSimulation getSimulation() {
-        return physics.get(0).getSimulation(); // All modules are in the same simulation
+    	if(simulation==null)
+    		return physics.get(0).getSimulation(); // All modules are in the same simulation
+    	else return simulation;
     }
     
     public PhysicsSimulationHelper getSimulationHelper() {
@@ -358,4 +362,7 @@ public class Module extends Entity {
         this.reset();
     }
 
+	public void setSimulation(PhysicsSimulation simulation) {
+		this.simulation = simulation;
+	}
 }

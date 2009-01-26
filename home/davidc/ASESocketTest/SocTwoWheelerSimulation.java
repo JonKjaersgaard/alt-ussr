@@ -8,12 +8,16 @@ package ASESocketTest;
 
 import java.util.ArrayList;
 
+import com.jme.math.Vector3f;
+
 import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
+import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
+import ussr.physics.PhysicsSimulation;
 import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
@@ -33,9 +37,13 @@ public class SocTwoWheelerSimulation extends GenericATRONSimulation {
 		PhysicsParameters.get().setRealisticCollision(true);
 		new SocTwoWheelerSimulation().main();
     }
-	
+	protected void simulationHook(PhysicsSimulation simulation) {
+		super.simulationHook(simulation);
+		CMTracker tracker = new CMTracker(simulation);
+		WifiBroadcaster broadcaster = new WifiBroadcaster(simulation, 7.0, tracker);
+		simulation.subscribePhysicsTimestep(broadcaster);
+	}
 	protected Robot getRobot() {
-
         ATRON robot = new ATRON() {
             public Controller createController() {
                 return new ATRONReflectionEventController();
@@ -43,6 +51,7 @@ public class SocTwoWheelerSimulation extends GenericATRONSimulation {
         };
         
         robot.setGentle();
+        robot.setRadio();
         return robot;
     }
 	
@@ -67,7 +76,7 @@ public class SocTwoWheelerSimulation extends GenericATRONSimulation {
     	mPos.add(new ModulePosition("wheel4", new VectorDescription(1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
         return mPos;
 	}
-
+	
 	protected ArrayList<ModulePosition> buildRobot() {
 		//return buildCar();
 		return buildTwoWheeler(new VectorDescription(),"TW1");

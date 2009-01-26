@@ -369,7 +369,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
      * @param device the device that received an incoming packet 
      */
     public void packetReceived(Receiver device) {
-    	for(int i=0;i<8;i++) {
+    	for(int i=0;i<module.getReceivers().size();i++) {
     		if(module.getReceivers().get(i).equals(device)) {
     			byte[] data = device.getData().getData();
     			handleMessage(data,data.length,i);
