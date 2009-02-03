@@ -40,6 +40,7 @@ public class Module extends Entity {
      */
     private Controller controller;
     
+        
     /**
      * The physics model for the module
      */

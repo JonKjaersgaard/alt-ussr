@@ -87,7 +87,7 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
     public static final RotationDescription ORI1Y = new RotationDescription(-pi/2,pi,pi/2);
 	public static final RotationDescription ORI1XY = new RotationDescription(pi,pi,pi/2);
         
-    public static final RotationDescription ORI2Y = new RotationDescription(-pi/2,pi,0);
+    public static final RotationDescription ORI2Y = new RotationDescription(pi/2+pi,pi,0);
     public static final RotationDescription ORI2XY = new RotationDescription(pi,pi,0);
     
     public static final RotationDescription ORI3Y = new RotationDescription(-pi/2,pi/2+pi,0);
