@@ -11,13 +11,15 @@ import com.jme.math.Vector3f;
 import com.sun.corba.se.impl.ior.ByteBuffer;
 
 public class WifiBroadcaster implements PhysicsObserver {
-	final byte REWARDSIGNAL = 10;
+	final byte LEARNING_MESSAGE = 4;
+	final byte label = 1;
 	PhysicsSimulation simulation;
 	double deltaT;
 	double nextT;
 	CMTracker tracker;
 	RadioTransmitter radio;
 	Vector3f oldPos;
+	byte stateCount;
 	public WifiBroadcaster(PhysicsSimulation simulation, double deltaT, CMTracker tracker) {
 		this.simulation = simulation;
 		this.deltaT = deltaT;
@@ -27,6 +29,7 @@ public class WifiBroadcaster implements PhysicsObserver {
 		radio = new RadioTransmitter(dummyModule, dummyModule,TransmissionType.RADIO, Float.MAX_VALUE);
 		nextT = simulation.getTime()+deltaT;
 		oldPos = tracker.getRobotCM();
+		stateCount = 0;
 	}
 	
 	/**
@@ -37,14 +40,16 @@ public class WifiBroadcaster implements PhysicsObserver {
 			float dist = tracker.getRobotCM().distance(oldPos);
 			byte reward = (byte)(500*dist);
 			if(!Float.isNaN(dist)) {				
-	 			ByteBuffer bb = new ByteBuffer(2);
-				bb.append(REWARDSIGNAL);
+	 			ByteBuffer bb = new ByteBuffer(3);
+				bb.append(LEARNING_MESSAGE);
+				bb.append(label);
 				bb.append(reward);
 				System.out.println("reward send = "+reward);
 				Packet packet = new Packet(bb.toArray());
 				radio.send(packet);
 			}
 			nextT += deltaT;
+			stateCount++;
 			oldPos = tracker.getRobotCM();
 		}
 	}
