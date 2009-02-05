@@ -38,7 +38,7 @@ public class WifiBroadcaster implements PhysicsObserver {
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
 		if(nextT<simulation.getTime()) {
 			float dist = tracker.getRobotCM().distance(oldPos);
-			byte reward = (byte)(500*dist);
+			byte reward = (byte)(250*dist);
 			if(!Float.isNaN(dist)) {				
 	 			ByteBuffer bb = new ByteBuffer(3);
 				bb.append(LEARNING_MESSAGE);

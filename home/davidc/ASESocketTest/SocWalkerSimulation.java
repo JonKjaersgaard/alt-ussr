@@ -29,7 +29,7 @@ import ussr.samples.atron.network.ATRONReflectionEventController;
 
 
 
-public class SocTwoWheelerSimulation extends GenericATRONSimulation {
+public class SocWalkerSimulation extends GenericATRONSimulation {
 	
     private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;
     
@@ -39,7 +39,7 @@ public class SocTwoWheelerSimulation extends GenericATRONSimulation {
  		PhysicsParameters.get().setRealisticCollision(true);
 		PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
 		PhysicsParameters.get().setMaintainRotationalJointPositions(false); 
-        new SocTwoWheelerSimulation().main();
+        new SocWalkerSimulation().main();
     }
 	protected void simulationHook(PhysicsSimulation simulation) {
 		super.simulationHook(simulation);
@@ -59,35 +59,28 @@ public class SocTwoWheelerSimulation extends GenericATRONSimulation {
         return robot;
     }
 	
-	protected ArrayList<ModulePosition> buildTwoWheeler(VectorDescription offset,String id) {
+	protected ArrayList<ModulePosition> buildWalker1(String id) {
     	float Yoffset = 0.25f;
-    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("axle["+id+"]", ";portRC=9900;portEvent=9901", new VectorDescription(0*ATRON.UNIT+offset.getX(),-2*ATRON.UNIT-Yoffset+offset.getY(),0*ATRON.UNIT+offset.getZ()), ATRON.ROTATION_EW));
-    	mPos.add(new ModulePosition("wheel1["+id+"]", ";portRC=9902;portEvent=9903", new VectorDescription(1*ATRON.UNIT+offset.getX(),-2*ATRON.UNIT-Yoffset+offset.getY(),1*ATRON.UNIT+offset.getZ()), ATRON.ROTATION_SN));
-    	mPos.add(new ModulePosition("wheel2["+id+"]", ";portRC=9904;portEvent=9905", new VectorDescription(1*ATRON.UNIT+offset.getX(),-2*ATRON.UNIT-Yoffset+offset.getY(),-1*ATRON.UNIT+offset.getZ()), ATRON.ROTATION_NS));
-        return mPos;
-	}
-	
-	protected ArrayList<ModulePosition> buildCar() {
-    	float Yoffset = 0.25f;
-    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
-    	mPos.add(new ModulePosition("driver0", ";port=9900", new VectorDescription(2*0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
-    	mPos.add(new ModulePosition("axleOne5", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_UD));
-    	mPos.add(new ModulePosition("axleTwo6", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_UD));
-    	mPos.add(new ModulePosition("wheel1", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
-    	mPos.add(new ModulePosition("wheel2", new VectorDescription(-1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
-    	mPos.add(new ModulePosition("wheel3", new VectorDescription(1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
-    	mPos.add(new ModulePosition("wheel4", new VectorDescription(1*ATRON.UNIT,-2*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>(); 
+    	mPos.add(new ModulePosition("x1["+id+"]", ";portRC=9900;portEvent=9901", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("x2["+id+"]", ";portRC=9902;portEvent=9903", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("x3["+id+"]", ";portRC=9904;portEvent=9905", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("x4["+id+"]", ";portRC=9906;portEvent=9907", new VectorDescription(2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_WE));
+    	mPos.add(new ModulePosition("y1["+id+"]", ";portRC=9908;portEvent=9909", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("y2["+id+"]", ";portRC=9910;portEvent=9911", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("y3["+id+"]", ";portRC=9912;portEvent=9913", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("y4["+id+"]", ";portRC=9914;portEvent=9915", new VectorDescription(3*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_DU));
         return mPos;
 	}
 	
 	protected ArrayList<ModulePosition> buildRobot() {
-		//return buildCar();
-		return buildTwoWheeler(new VectorDescription(),"TW1");
+		return buildWalker1("");
 	}
     
     protected void changeWorldHook(WorldDescription world) {
         //new ObstacleGenerator().obstacalize(obstacle, world);
-        startPaused = false;
+    	world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
+		world.setHasBackgroundScenery(false);
+    	startPaused = false;
     }
 }
