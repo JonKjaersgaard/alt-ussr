@@ -14,6 +14,7 @@ import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsParameters;
+import ussr.physics.PhysicsParameters.Material;
 import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
@@ -29,9 +30,11 @@ public class SocSnakeSimulation extends GenericATRONSimulation {
     private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;
     
 	public static void main( String[] args ) {
+		PhysicsParameters.get().setPlaneMaterial(Material.CONCRETE);
+        PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
+ 		PhysicsParameters.get().setRealisticCollision(true);
 		PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
-		PhysicsParameters.get().setRealisticCollision(true);
-		PhysicsParameters.get().setMaintainRotationalJointPositions(false);
+		PhysicsParameters.get().setMaintainRotationalJointPositions(false); 
 		new SocSnakeSimulation().main();
     }
 	
@@ -43,7 +46,9 @@ public class SocSnakeSimulation extends GenericATRONSimulation {
             }
         };
         
-        robot.setGentle();
+        robot.setRealistic();
+        robot.setRadio();
+
         return robot;
     }
 	
@@ -71,6 +76,8 @@ public class SocSnakeSimulation extends GenericATRONSimulation {
 	}
     
     protected void changeWorldHook(WorldDescription world) {
-        startPaused = false;
+    	world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
+		world.setHasBackgroundScenery(false);
+    	startPaused = false;
     }
 }

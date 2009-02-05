@@ -8,22 +8,17 @@ package ASESocketTest;
 
 import java.util.ArrayList;
 
-import com.jme.math.Vector3f;
-
 import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
-import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsParameters.Material;
-import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.GenericATRONSimulation;
-import ussr.samples.atron.network.ATRONReflectionController;
 import ussr.samples.atron.network.ATRONReflectionEventController;
 
 
