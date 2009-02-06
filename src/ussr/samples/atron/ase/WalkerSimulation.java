@@ -26,7 +26,7 @@ import ussr.util.learning.WifiCMBroadcaster;
 
  
 
-public class WalkerSimulation2 extends GenericATRONSimulation {
+public class WalkerSimulation extends GenericATRONSimulation {
 	
     private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;
     
