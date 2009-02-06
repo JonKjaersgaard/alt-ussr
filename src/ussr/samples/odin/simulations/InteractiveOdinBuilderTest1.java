@@ -69,15 +69,8 @@ public class InteractiveOdinBuilderTest1 extends GenericSimulation {
         world.setPlaneSize(5);
         world.setHasBackgroundScenery(false);
         world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
-        OdinBuilder builder = new OdinBuilder();
-        //int nBalls=0,xMax=0, yMax=0,zMax=0; = Arrays.asList(new WorldDescription.ModulePosition[] { new WorldDescription.ModulePosition("0","OdinMuscle", new VectorDescription(0,0,0), new RotationDescription(0,0,0))});
-        //int nBalls=2, xMax=1, yMax=2,zMax=2;
-       // int nBalls=3, xMax=3, yMax=2,zMax=2;
-       // int nBalls=4, xMax=3, yMax=2,zMax=2;
-       //int nBalls=8, xMax=3, yMax=2,zMax=2;
-       //int nBalls=14, xMax=3, yMax=3,zMax=3;
-        int nBalls=20, xMax=4, yMax=4,zMax=4;
-        //int nBalls=80, xMax=5, yMax=5,zMax=5; // Max on Ulrik's machine
+        OdinBuilder builder = new OdinBuilder();     
+        int nBalls=1, xMax=4, yMax=4,zMax=4;       
         ArrayList<ModulePosition> modulePos = builder.buildDenseBlob(nBalls,xMax,yMax,zMax);
         world.setModulePositions(modulePos);
         world.setModuleConnections(builder.allConnections());
