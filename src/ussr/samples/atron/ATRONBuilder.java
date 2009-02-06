@@ -113,6 +113,20 @@ public class ATRONBuilder {
         return mPos;
     }
     
+    public ArrayList<ModulePosition> buildCrawler() {
+    	float Yoffset = 0.25f;
+    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>(); 
+    	mPos.add(new ModulePosition("x1", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("x2", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("x3", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("x4", new VectorDescription(2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_WE));
+    	mPos.add(new ModulePosition("y1", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("y2", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("y3", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("y4", new VectorDescription(3*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_DU));
+        return mPos;
+	}
+    
     private static VectorDescription aPos(float x, float y, float z, VectorDescription offset) {
         final float Xoffset = offset.getX();
         final float Yoffset = offset.getY();
