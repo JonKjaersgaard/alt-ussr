@@ -1,51 +1,54 @@
-
 package ussr.builder;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
+import javax.swing.JToolBar;
+
+import ussr.builder.constructionTools.ConstructionTools;
 import ussr.builder.gui.FileChooser;
+import ussr.builder.gui.GuiUtilities;
 import ussr.builder.pickers.ColorConnectorsPicker;
 import ussr.builder.pickers.RemoveModulePicker;
-import ussr.builder.pickers.atron.AssembleATRONPicker;
-import ussr.builder.pickers.atron.AssembleATRONPicker1;
-import ussr.builder.pickers.atron.AssembleATRONPicker2;
-import ussr.builder.pickers.atron.AssembleATRONPicker3;
-import ussr.builder.pickers.atron.AssembleATRONPicker4;
-import ussr.builder.pickers.atron.OppositeRotationATRONPicker;
-import ussr.builder.pickers.mtran.AssembleMTRANPicker1;
-import ussr.builder.pickers.mtran.AssembleMTRANPicker2;
-import ussr.builder.pickers.mtran.AssembleMTRANPicker3;
-import ussr.builder.pickers.odin.AssembleOdinPicker2;
-import ussr.builder.pickers.odin.AssembleOdinPicker3;
-import ussr.builder.pickers.odin.AssembleOdinPicker4;
-import ussr.builder.pickers.odin.OppositeRotationOdinPicker;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
 
-
-
-//TODO IS A SUBJECT TO MAJOR CHANGE
-// ASK about this visibility thing
 /**
  *
  * @author  Konstantinas
  */
 public class QuickPrototyping extends javax.swing.JFrame {
 
-
-
+	/**
+	 * The physical simulation
+	 */	   
 	private JMESimulation JME_simulation;
+	/**
+	 * FileChooser object as save dialog window
+	 */
+	private FileChooser fileChooserSave;
+	/**
+	 * FileChooser object as open dialog window
+	 */
+	private FileChooser fileChooserOpen;
 
+	private final GuiUtilities guiUtil = new GuiUtilities();
 
-	/** Creates new form QuickPrototyping */
+	private String chosenMRname ="ATRON"; //MR- modular robot. Default is ATRON, just do not have the case when it is empty String
+
+	private int connectorNr;
+
+	private static final int amountATRONConnectors = 7;
+
+	private static final int amountMTRANConnectors = 5; 
+	
+	private static final int amountOdinBallConnectors = 11;
+
+	/** Creates new form QuickPrototyping1 */
 	public QuickPrototyping(JMEBasicGraphicalSimulation simulation) {
 		initComponents();
-		changeToSetLookAndFeel();
-		this.JME_simulation = (JMESimulation) simulation;        
+		//Set to generic view      
+		guiUtil.changeToSetLookAndFeel(this);         
+		this.JME_simulation = (JMESimulation) simulation;
+		adaptGuiToMR();// Adapt GUI to modular robot existing in simulation environment
 	}
 
 	/** This method is called from within the constructor to
@@ -56,284 +59,190 @@ public class QuickPrototyping extends javax.swing.JFrame {
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents() {
 
-		jToolBar3 = new javax.swing.JToolBar();
-		jSeparator32 = new javax.swing.JToolBar.Separator();
-		jButton5 = new javax.swing.JButton();
-		jSeparator4 = new javax.swing.JToolBar.Separator();
-		jButton6 = new javax.swing.JButton();
-		jSeparator31 = new javax.swing.JToolBar.Separator();
-		jButton42 = new javax.swing.JButton();
-		jSeparator46 = new javax.swing.JToolBar.Separator();
-		jButton43 = new javax.swing.JButton();
-		jSeparator47 = new javax.swing.JToolBar.Separator();
 		jToolBar1 = new javax.swing.JToolBar();
+		jButton1 = new javax.swing.JButton();
+		jButton2 = new javax.swing.JButton();
+		jButton3 = new javax.swing.JButton();
+		jButton4 = new javax.swing.JButton();
+		jToolBar3 = new javax.swing.JToolBar();
+		jCheckBox1 = new javax.swing.JCheckBox();
+		jCheckBox2 = new javax.swing.JCheckBox();
+		jCheckBox3 = new javax.swing.JCheckBox();
+		jCheckBox4 = new javax.swing.JCheckBox();
+		jCheckBox5 = new javax.swing.JCheckBox();
+		jToolBar4 = new javax.swing.JToolBar();
+		jButton5 = new javax.swing.JButton();
 		jButton7 = new javax.swing.JButton();
 		jButton8 = new javax.swing.JButton();
-		jButton10 = new javax.swing.JButton();
-		jSeparator3 = new javax.swing.JToolBar.Separator();
-		jToolBar2 = new javax.swing.JToolBar();
-		jButton9 = new javax.swing.JButton();
-		jSeparator1 = new javax.swing.JToolBar.Separator();
-		jToolBar4 = new javax.swing.JToolBar();
-		jSeparator30 = new javax.swing.JToolBar.Separator();
-		jButton11 = new javax.swing.JButton();
-		jSeparator6 = new javax.swing.JToolBar.Separator();
-		jButton12 = new javax.swing.JButton();
-		jSeparator7 = new javax.swing.JToolBar.Separator();
-		jButton22 = new javax.swing.JButton();
-		jSeparator29 = new javax.swing.JToolBar.Separator();
+		jCheckBox6 = new javax.swing.JCheckBox();
+		jCheckBox7 = new javax.swing.JCheckBox();
+		jCheckBox8 = new javax.swing.JCheckBox();
+		jSpinner1 = new javax.swing.JSpinner();
+		jButton6 = new javax.swing.JButton();
 		jToolBar5 = new javax.swing.JToolBar();
-		jSeparator21 = new javax.swing.JToolBar.Separator();
-		jButton13 = new javax.swing.JButton();
-		jSeparator8 = new javax.swing.JToolBar.Separator();
-		jButton23 = new javax.swing.JButton();
-		jComboBox2 = new javax.swing.JComboBox();
-		jSeparator23 = new javax.swing.JToolBar.Separator();
-		jButton24 = new javax.swing.JButton();
-		jSeparator10 = new javax.swing.JToolBar.Separator();
-		jButton29 = new javax.swing.JButton();
-		jButton30 = new javax.swing.JButton();
-		jSeparator25 = new javax.swing.JToolBar.Separator();
-		jButton14 = new javax.swing.JButton();
-		jSeparator9 = new javax.swing.JToolBar.Separator();
-		jButton15 = new javax.swing.JButton();
-		jSeparator22 = new javax.swing.JToolBar.Separator();
-		jToolBar6 = new javax.swing.JToolBar();
-		jSeparator24 = new javax.swing.JToolBar.Separator();
-		jButton16 = new javax.swing.JButton();
-		jSeparator11 = new javax.swing.JToolBar.Separator();
-		jButton25 = new javax.swing.JButton();
-		jComboBox3 = new javax.swing.JComboBox();
-		jSeparator27 = new javax.swing.JToolBar.Separator();
-		jButton26 = new javax.swing.JButton();
-		jSeparator28 = new javax.swing.JToolBar.Separator();
-		jButton31 = new javax.swing.JButton();
-		jButton39 = new javax.swing.JButton();
-		jSeparator35 = new javax.swing.JToolBar.Separator();
-		jButton17 = new javax.swing.JButton();
-		jSeparator12 = new javax.swing.JToolBar.Separator();
-		jButton18 = new javax.swing.JButton();
-		jSeparator26 = new javax.swing.JToolBar.Separator();
-		jToolBar7 = new javax.swing.JToolBar();
-		jSeparator13 = new javax.swing.JToolBar.Separator();
-		jButton19 = new javax.swing.JButton();
-		jSeparator14 = new javax.swing.JToolBar.Separator();
-		jButton27 = new javax.swing.JButton();
 		jComboBox1 = new javax.swing.JComboBox();
-		jSeparator17 = new javax.swing.JToolBar.Separator();
-		jButton28 = new javax.swing.JButton();
-		jSeparator36 = new javax.swing.JToolBar.Separator();
-		jButton40 = new javax.swing.JButton();
-		jButton41 = new javax.swing.JButton();
-		jSeparator16 = new javax.swing.JToolBar.Separator();
-		jButton20 = new javax.swing.JButton();
-		jSeparator15 = new javax.swing.JToolBar.Separator();
-		jButton21 = new javax.swing.JButton();
-		jSeparator37 = new javax.swing.JToolBar.Separator();
+		jButton9 = new javax.swing.JButton();
+		jComboBox2 = new javax.swing.JComboBox();
+		jButton10 = new javax.swing.JButton();
+		jButton13 = new javax.swing.JButton();
+		jButton11 = new javax.swing.JButton();
+		jButton12 = new javax.swing.JButton();
+		jToolBar6 = new javax.swing.JToolBar();
+		jButton14 = new javax.swing.JButton();
+		jComboBox6 = new javax.swing.JComboBox();
+		jToolBar2 = new javax.swing.JToolBar();
+		jLabel1 = new javax.swing.JLabel();
+		jTextField1 = new javax.swing.JTextField();
 		jMenuBar1 = new javax.swing.JMenuBar();
 		jMenu1 = new javax.swing.JMenu();
-		jMenuItem5 = new javax.swing.JMenuItem();
-		jSeparator5 = new javax.swing.JSeparator();
-		jMenuItem10 = new javax.swing.JMenuItem();
-		jMenu2 = new javax.swing.JMenu();
-		jMenu3 = new javax.swing.JMenu();
-		jMenu4 = new javax.swing.JMenu();
-		jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-		jMenuItem1 = new javax.swing.JMenuItem();
-		jMenuItem2 = new javax.swing.JMenuItem();
 		jMenuItem3 = new javax.swing.JMenuItem();
-		jSeparator2 = new javax.swing.JSeparator();
-		jMenuItem4 = new javax.swing.JMenuItem();
-		jMenu7 = new javax.swing.JMenu();
-		jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem4 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem10 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem11 = new javax.swing.JCheckBoxMenuItem();
-		jMenu5 = new javax.swing.JMenu();
-		jCheckBoxMenuItem5 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem6 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem7 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem8 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem9 = new javax.swing.JCheckBoxMenuItem();
-		jMenuBar2 = new javax.swing.JMenuBar();
-		jMenu6 = new javax.swing.JMenu();
-		jMenuItem6 = new javax.swing.JMenuItem();
-		jSeparator18 = new javax.swing.JSeparator();
-		jMenuItem11 = new javax.swing.JMenuItem();
-		jMenu8 = new javax.swing.JMenu();
-		jMenu9 = new javax.swing.JMenu();
-		jMenu10 = new javax.swing.JMenu();
-		jCheckBoxMenuItem12 = new javax.swing.JCheckBoxMenuItem();
-		jMenuItem7 = new javax.swing.JMenuItem();
-		jMenuItem8 = new javax.swing.JMenuItem();
-		jMenuItem9 = new javax.swing.JMenuItem();
-		jSeparator19 = new javax.swing.JSeparator();
-		jMenuItem12 = new javax.swing.JMenuItem();
-		jMenu11 = new javax.swing.JMenu();
-		jCheckBoxMenuItem13 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem14 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem15 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem16 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem17 = new javax.swing.JCheckBoxMenuItem();
-		jMenu12 = new javax.swing.JMenu();
-		jCheckBoxMenuItem18 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem19 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem20 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem21 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem22 = new javax.swing.JCheckBoxMenuItem();
-		jMenuBar3 = new javax.swing.JMenuBar();
-		jMenu13 = new javax.swing.JMenu();
-		jMenuItem13 = new javax.swing.JMenuItem();
-		jSeparator33 = new javax.swing.JSeparator();
-		jMenuItem14 = new javax.swing.JMenuItem();
-		jMenu14 = new javax.swing.JMenu();
-		jMenu15 = new javax.swing.JMenu();
-		jMenu16 = new javax.swing.JMenu();
-		jCheckBoxMenuItem23 = new javax.swing.JCheckBoxMenuItem();
-		jMenuItem15 = new javax.swing.JMenuItem();
-		jMenuItem16 = new javax.swing.JMenuItem();
-		jMenuItem17 = new javax.swing.JMenuItem();
-		jSeparator34 = new javax.swing.JSeparator();
-		jMenuItem18 = new javax.swing.JMenuItem();
-		jMenu17 = new javax.swing.JMenu();
-		jCheckBoxMenuItem24 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem25 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem26 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem27 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem28 = new javax.swing.JCheckBoxMenuItem();
-		jMenu18 = new javax.swing.JMenu();
-		jCheckBoxMenuItem29 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem30 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem31 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem32 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem33 = new javax.swing.JCheckBoxMenuItem();
-		jMenuBar4 = new javax.swing.JMenuBar();
-		jMenu19 = new javax.swing.JMenu();
-		jMenuItem19 = new javax.swing.JMenuItem();
-		jSeparator38 = new javax.swing.JSeparator();
-		jMenuItem20 = new javax.swing.JMenuItem();
-		jMenu20 = new javax.swing.JMenu();
-		jMenu21 = new javax.swing.JMenu();
-		jMenu22 = new javax.swing.JMenu();
-		jCheckBoxMenuItem34 = new javax.swing.JCheckBoxMenuItem();
-		jMenuItem21 = new javax.swing.JMenuItem();
-		jMenuItem22 = new javax.swing.JMenuItem();
-		jMenuItem23 = new javax.swing.JMenuItem();
-		jSeparator39 = new javax.swing.JSeparator();
-		jMenuItem24 = new javax.swing.JMenuItem();
-		jMenu23 = new javax.swing.JMenu();
-		jCheckBoxMenuItem35 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem36 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem37 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem38 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem39 = new javax.swing.JCheckBoxMenuItem();
-		jMenu24 = new javax.swing.JMenu();
-		jCheckBoxMenuItem40 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem41 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem42 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem43 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem44 = new javax.swing.JCheckBoxMenuItem();
-		jButton32 = new javax.swing.JButton();
-		jButton33 = new javax.swing.JButton();
-		jMenuBar5 = new javax.swing.JMenuBar();
-		jMenu25 = new javax.swing.JMenu();
-		jMenuItem25 = new javax.swing.JMenuItem();
-		jSeparator40 = new javax.swing.JSeparator();
-		jMenuItem26 = new javax.swing.JMenuItem();
-		jMenu26 = new javax.swing.JMenu();
-		jMenu27 = new javax.swing.JMenu();
-		jMenu28 = new javax.swing.JMenu();
-		jCheckBoxMenuItem45 = new javax.swing.JCheckBoxMenuItem();
-		jMenuItem27 = new javax.swing.JMenuItem();
-		jMenuItem28 = new javax.swing.JMenuItem();
-		jMenuItem29 = new javax.swing.JMenuItem();
-		jSeparator41 = new javax.swing.JSeparator();
-		jMenuItem30 = new javax.swing.JMenuItem();
-		jMenu29 = new javax.swing.JMenu();
-		jCheckBoxMenuItem46 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem47 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem48 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem49 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem50 = new javax.swing.JCheckBoxMenuItem();
-		jMenu30 = new javax.swing.JMenu();
-		jCheckBoxMenuItem51 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem52 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem53 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem54 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem55 = new javax.swing.JCheckBoxMenuItem();
-		jButton34 = new javax.swing.JButton();
-		jButton35 = new javax.swing.JButton();
-		jButton36 = new javax.swing.JButton();
-		jButton37 = new javax.swing.JButton();
-		jMenuBar6 = new javax.swing.JMenuBar();
+		jMenuItem2 = new javax.swing.JMenuItem();
+		jSeparator1 = new javax.swing.JSeparator();
+		jMenuItem1 = new javax.swing.JMenuItem();
+		jMenuBar8 = new javax.swing.JMenuBar();
+		jMenuBar10 = new javax.swing.JMenuBar();
+		jMenuBar11 = new javax.swing.JMenuBar();
 		jMenu31 = new javax.swing.JMenu();
-		jMenuItem31 = new javax.swing.JMenuItem();
-		jSeparator42 = new javax.swing.JSeparator();
-		jMenuItem32 = new javax.swing.JMenuItem();
+		jMenuItem41 = new javax.swing.JMenuItem();
+		jMenuItem42 = new javax.swing.JMenuItem();
+		jSeparator21 = new javax.swing.JSeparator();
+		jMenuItem43 = new javax.swing.JMenuItem();
 		jMenu32 = new javax.swing.JMenu();
 		jMenu33 = new javax.swing.JMenu();
-		jMenu34 = new javax.swing.JMenu();
-		jCheckBoxMenuItem56 = new javax.swing.JCheckBoxMenuItem();
-		jMenuItem33 = new javax.swing.JMenuItem();
-		jMenuItem34 = new javax.swing.JMenuItem();
-		jMenuItem35 = new javax.swing.JMenuItem();
-		jSeparator43 = new javax.swing.JSeparator();
-		jMenuItem36 = new javax.swing.JMenuItem();
-		jMenu35 = new javax.swing.JMenu();
-		jCheckBoxMenuItem57 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem58 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem59 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem60 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem61 = new javax.swing.JCheckBoxMenuItem();
-		jMenu36 = new javax.swing.JMenu();
-		jCheckBoxMenuItem62 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem63 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem64 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem65 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem66 = new javax.swing.JCheckBoxMenuItem();
-		jButton38 = new javax.swing.JButton();
-		jSeparator20 = new javax.swing.JToolBar.Separator();
-		jMenuBar7 = new javax.swing.JMenuBar();
-		jMenu37 = new javax.swing.JMenu();
-		jMenuItem37 = new javax.swing.JMenuItem();
-		jMenuItem43 = new javax.swing.JMenuItem();
-		jSeparator44 = new javax.swing.JSeparator();
-		jMenuItem38 = new javax.swing.JMenuItem();
-		jMenu38 = new javax.swing.JMenu();
-		jMenu39 = new javax.swing.JMenu();
-		jMenu40 = new javax.swing.JMenu();
 		jCheckBoxMenuItem67 = new javax.swing.JCheckBoxMenuItem();
-		jMenuItem39 = new javax.swing.JMenuItem();
-		jMenuItem40 = new javax.swing.JMenuItem();
-		jMenuItem41 = new javax.swing.JMenuItem();
-		jSeparator45 = new javax.swing.JSeparator();
-		jMenuItem42 = new javax.swing.JMenuItem();
-		jMenu41 = new javax.swing.JMenu();
 		jCheckBoxMenuItem68 = new javax.swing.JCheckBoxMenuItem();
 		jCheckBoxMenuItem69 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem70 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem71 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem72 = new javax.swing.JCheckBoxMenuItem();
-		jMenu42 = new javax.swing.JMenu();
+		jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+		jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
 		jCheckBoxMenuItem73 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem74 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem75 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem76 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem77 = new javax.swing.JCheckBoxMenuItem();
+		jSeparator22 = new javax.swing.JSeparator();
+		jMenuItem44 = new javax.swing.JMenuItem();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle("Quick prototyping of simulation scenarios");
-		setBounds(new java.awt.Rectangle(0, 0, 0, 0));
-		setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+		setTitle("Quick Prototyping of Simulation Scenarios");
 		setResizable(false);
+		getContentPane().setLayout(new java.awt.FlowLayout());
 
+		jButton1.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\play.JPG")); // NOI18N
+		//jButton1.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/play.JPG"));
+		jButton1.setToolTipText("Play/Pause");
+		jButton1.setFocusable(false);
+		jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jButton1.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jButton1ActionPerformed(evt);
+			}
+		});
+		jToolBar1.add(jButton1);
+
+		jButton2.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\step_by_step.JPG")); // NOI18N
+		//jButton2.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/step_by_step.JPG"));
+		jButton2.setToolTipText("Step by step ");
+		jButton2.setFocusable(false);
+		jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jButton2.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jButton2ActionPerformed(evt);
+			}
+		});
+		jToolBar1.add(jButton2);
+
+		jButton3.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\save.JPG")); // NOI18N
+		//jButton3.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/save.JPG"));
+		jButton3.setToolTipText(" Save");
+		jButton3.setFocusable(false);
+		jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jButton3.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jButton3ActionPerformed(evt);
+			}
+		});
+		jToolBar1.add(jButton3);
+
+		jButton4.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\open.JPG")); // NOI18N
+		//jButton4.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/open.JPG"));
+		jButton4.setToolTipText("Open");
+		jButton4.setFocusable(false);
+		jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jButton4.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jButton4ActionPerformed(evt);
+			}
+		});
+		jToolBar1.add(jButton4);
+
+		getContentPane().add(jToolBar1);
+
+		jToolBar3.setFloatable(false);
 		jToolBar3.setRollover(true);
-		jToolBar3.add(jSeparator32);
 
-		//jButton5.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\play.JPG")); // NOI18N
-		jButton5.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/play.JPG")); // NOI18N
-		jButton5.setToolTipText("Play/Pause");
+		jCheckBox1.setText("Physics");
+		jCheckBox1.setFocusable(false);
+		jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jCheckBox1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jCheckBox1ActionPerformed(evt);
+			}
+		});
+		jToolBar3.add(jCheckBox1);
+
+		jCheckBox2.setText("Wireframe");
+		jCheckBox2.setFocusable(false);
+		jCheckBox2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jCheckBox2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jCheckBox2ActionPerformed(evt);
+			}
+		});
+		jToolBar3.add(jCheckBox2);
+
+		jCheckBox3.setText("Bounds");
+		jCheckBox3.setFocusable(false);
+		jCheckBox3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jCheckBox3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jCheckBox3ActionPerformed(evt);
+			}
+		});
+		jToolBar3.add(jCheckBox3);
+
+		jCheckBox4.setText("Normals");
+		jCheckBox4.setFocusable(false);
+		jCheckBox4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jCheckBox4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jCheckBox4ActionPerformed(evt);
+			}
+		});
+		jToolBar3.add(jCheckBox4);
+
+		jCheckBox5.setText("Lights");
+		jCheckBox5.setFocusable(false);
+		jCheckBox5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jCheckBox5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jCheckBox5.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jCheckBox5ActionPerformed(evt);
+			}
+		});
+		jToolBar3.add(jCheckBox5);
+
+		getContentPane().add(jToolBar3);
+
+		jToolBar4.setRollover(true);
+		jToolBar4.setPreferredSize(new java.awt.Dimension(300, 43));
+
+		jButton5.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\move.JPG")); // NOI18N
+		//jButton5.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/move.JPG"));
+		jButton5.setToolTipText("Move");
 		jButton5.setFocusable(false);
 		jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 		jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -342,56 +251,11 @@ public class QuickPrototyping extends javax.swing.JFrame {
 				jButton5ActionPerformed(evt);
 			}
 		});
-		jToolBar3.add(jButton5);
-		jToolBar3.add(jSeparator4);
+		jToolBar4.add(jButton5);
 
-		//jButton6.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\step_by_step.JPG")); // NOI18N
-		jButton6.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/step_by_step.JPG")); // NOI18N
-		jButton6.setToolTipText("Step by step");
-		jButton6.setFocusable(false);
-		jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton6.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton6ActionPerformed(evt);
-			}
-		});
-		jToolBar3.add(jButton6);
-		jToolBar3.add(jSeparator31);
-
-		//jButton42.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\save.JPG")); // NOI18N
-		jButton42.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/save.JPG")); // NOI18N
-		jButton42.setToolTipText("Save");
-		jButton42.setFocusable(false);
-		jButton42.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton42.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton42.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton42ActionPerformed(evt);
-			}
-		});
-		jToolBar3.add(jButton42);
-		jToolBar3.add(jSeparator46);
-
-		//jButton43.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\open.JPG")); // NOI18N
-		jButton43.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/open.JPG")); // NOI18N
-		jButton43.setToolTipText("Open");
-		jButton43.setFocusable(false);
-		jButton43.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton43.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton43.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton43ActionPerformed(evt);
-			}
-		});
-		jToolBar3.add(jButton43);
-		jToolBar3.add(jSeparator47);
-
-		jToolBar1.setRollover(true);
-
-		//jButton7.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\leftArrow.JPG")); // NOI18N
-		jButton7.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/leftArrow.JPG"));
-		jButton7.setToolTipText("Left");
+		jButton7.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\delete.JPG")); // NOI18N
+		//jButton7.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/delete.JPG"));
+		jButton7.setToolTipText("Delete");
 		jButton7.setFocusable(false);
 		jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 		jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -400,11 +264,11 @@ public class QuickPrototyping extends javax.swing.JFrame {
 				jButton7ActionPerformed(evt);
 			}
 		});
-		jToolBar1.add(jButton7);
+		jToolBar4.add(jButton7);
 
-		//jButton8.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\downArrow.JPG")); // NOI18N
-		jButton8.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/downArrow.JPG"));
-		jButton8.setToolTipText("Down");
+		jButton8.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\colorConnectors.JPG")); // NOI18N
+		//jButton8.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/colorConnectors.JPG"));
+		jButton8.setToolTipText("Color connectors");
 		jButton8.setFocusable(false);
 		jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 		jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -413,112 +277,86 @@ public class QuickPrototyping extends javax.swing.JFrame {
 				jButton8ActionPerformed(evt);
 			}
 		});
-		jToolBar1.add(jButton8);
+		jToolBar4.add(jButton8);
 
-		//jButton10.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\rightArrow.JPG")); // NOI18N
-		jButton10.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/rightArrow.JPG"));
-		jButton10.setToolTipText("Right");
-		jButton10.setFocusable(false);
-		jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton10.addActionListener(new java.awt.event.ActionListener() {
+		jCheckBox6.setText("x");
+		jCheckBox6.setFocusable(false);
+		jCheckBox6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jCheckBox6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jCheckBox6.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton10ActionPerformed(evt);
+				jCheckBox6ActionPerformed(evt);
 			}
 		});
-		jToolBar1.add(jButton10);
-		jToolBar1.add(jSeparator3);
+		jToolBar4.add(jCheckBox6);
 
-		jToolBar2.setRollover(true);
+		jCheckBox7.setText("y");
+		jCheckBox7.setFocusable(false);
+		jCheckBox7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jCheckBox7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jCheckBox7.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jCheckBox7ActionPerformed(evt);
+			}
+		});
+		jToolBar4.add(jCheckBox7);
 
-		//jButton9.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\upArrow.JPG")); // NOI18N
-		jButton9.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/upArrow.JPG"));
-		jButton9.setToolTipText("Up");
+		jCheckBox8.setText("z");
+		jCheckBox8.setFocusable(false);
+		jCheckBox8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jCheckBox8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jCheckBox8.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jCheckBox8ActionPerformed(evt);
+			}
+		});
+		jToolBar4.add(jCheckBox8);
+
+		jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+			public void stateChanged(javax.swing.event.ChangeEvent evt) {
+				jSpinner1StateChanged(evt);
+			}
+		});
+		jToolBar4.add(jSpinner1);
+
+		jButton6.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\rotateArrow.JPG")); // NOI18N
+		//jButton6.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/rotateArrow.JPG"));
+		jButton6.setToolTipText("Rotate");
+		jButton6.setFocusable(false);
+		jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jButton6.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jButton6ActionPerformed(evt);
+			}
+		});
+		jToolBar4.add(jButton6);
+
+		getContentPane().add(jToolBar4);
+
+		jToolBar5.setRollover(true);
+		jToolBar5.setPreferredSize(new java.awt.Dimension(300, 35));
+
+		jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ATRON", "MTRAN", "Odin" }));
+		jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jComboBox1ActionPerformed(evt);
+			}
+		});
+		jToolBar5.add(jComboBox1);
+
+		jButton9.setFont(new java.awt.Font("Tahoma", 0, 14));
+		jButton9.setText("Con");
 		jButton9.setFocusable(false);
 		jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jButton9.setPreferredSize(new java.awt.Dimension(31, 30));
 		jButton9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jButton9.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButton9ActionPerformed(evt);
 			}
 		});
-		jToolBar2.add(jButton9);
-		jToolBar2.add(jSeparator1);
-
-		jToolBar4.setRollover(true);
-		jToolBar4.add(jSeparator30);
-
-		//jButton11.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\move.JPG")); // NOI18N
-		jButton11.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/move.JPG"));
-		jButton11.setToolTipText("Move");
-		jButton11.setFocusable(false);
-		jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton11.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton11ActionPerformed(evt);
-			}
-		});
-		jToolBar4.add(jButton11);
-		jToolBar4.add(jSeparator6);
-
-		//jButton12.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\delete.JPG")); // NOI18N
-		jButton12.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/delete.JPG")); // NOI18N
-		jButton12.setToolTipText("Delete");
-		jButton12.setFocusable(false);
-		jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton12.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton12.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton12ActionPerformed(evt);
-			}
-		});
-		jToolBar4.add(jButton12);
-		jToolBar4.add(jSeparator7);
-
-		//jButton22.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\colorConnectors.JPG")); // NOI18N
-		jButton22.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/colorConnectors.JPG")); // NOI18N
-		jButton22.setToolTipText("Color Connectors");
-		jButton22.setFocusable(false);
-		jButton22.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton22.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton22.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton22ActionPerformed(evt);
-			}
-		});
-		jToolBar4.add(jButton22);
-		jToolBar4.add(jSeparator29);
-
-		jToolBar5.setRollover(true);
-		jToolBar5.add(jSeparator21);
-
-		//jButton13.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\atron1.JPG")); // NOI18N
-		jButton13.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/atron1.JPG")); // NOI18N
-		jButton13.setToolTipText("Atron pick1");
-		jButton13.setFocusable(false);
-		jButton13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton13.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton13.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton13ActionPerformed(evt);
-			}
-		});
-		jToolBar5.add(jButton13);
-		jToolBar5.add(jSeparator8);
-
-		//jButton23.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\atron2.JPG")); // NOI18N
-		jButton23.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/atron2.JPG")); // NOI18N
-		jButton23.setToolTipText("Atron pick2");
-		jButton23.setFocusable(false);
-		jButton23.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton23.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton23.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton23ActionPerformed(evt);
-			}
-		});
-		jToolBar5.add(jButton23);
+		jToolBar5.add(jButton9);
 
 		jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7" }));
 		jComboBox2.addActionListener(new java.awt.event.ActionListener() {
@@ -527,2147 +365,651 @@ public class QuickPrototyping extends javax.swing.JFrame {
 			}
 		});
 		jToolBar5.add(jComboBox2);
-		jToolBar5.add(jSeparator23);
 
-		//jButton24.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\atron3.JPG")); // NOI18N
-		jButton24.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/atron3.JPG"));
-		jButton24.setToolTipText("Atron pick3");
-		jButton24.setFocusable(false);
-		jButton24.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton24.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton24.addActionListener(new java.awt.event.ActionListener() {
+		jButton10.setFont(new java.awt.Font("Tahoma", 0, 14));
+		jButton10.setText("All");
+		jButton10.setFocusable(false);
+		jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jButton10.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton24ActionPerformed(evt);
+				jButton10ActionPerformed(evt);
 			}
 		});
-		jToolBar5.add(jButton24);
-		jToolBar5.add(jSeparator10);
+		jToolBar5.add(jButton10);
 
-		//jButton29.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\atron4.JPG")); // NOI18N
-		jButton29.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/atron4.JPG")); // NOI18N
-		jButton29.setToolTipText("Atron pick4");
-		jButton29.setFocusable(false);
-		jButton29.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton29.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton29.addActionListener(new java.awt.event.ActionListener() {
+		jButton13.setFont(new java.awt.Font("Tahoma", 0, 14));
+		jButton13.setText("Loop");
+		jButton13.setFocusable(false);
+		jButton13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jButton13.setPreferredSize(new java.awt.Dimension(37, 25));
+		jButton13.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jButton13.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton29ActionPerformed(evt);
+				jButton13ActionPerformed(evt);
 			}
 		});
-		jToolBar5.add(jButton29);
+		jToolBar5.add(jButton13);
 
-		//jButton30.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\rightArrow.JPG")); // NOI18N
-		jButton30.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/rightArrow.JPG")); // NOI18N
-		jButton30.setToolTipText("Next connector");
-		jButton30.setFocusable(false);
-		jButton30.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton30.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton30.addActionListener(new java.awt.event.ActionListener() {
+		jButton11.setFont(new java.awt.Font("Tahoma", 0, 14));
+		jButton11.setText("Next");
+		jButton11.setFocusable(false);
+		jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jButton11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jButton11.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton30ActionPerformed(evt);
+				jButton11ActionPerformed(evt);
 			}
 		});
-		jToolBar5.add(jButton30);
-		jToolBar5.add(jSeparator25);
+		jToolBar5.add(jButton11);
 
-		//jButton14.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\rotateArrow.JPG")); // NOI18N
-		jButton14.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/rotateArrow.JPG"));
-		jButton14.setToolTipText("Opposite rotation");
+		jButton12.setFont(new java.awt.Font("Tahoma", 0, 14));
+		jButton12.setText("Back");
+		jButton12.setFocusable(false);
+		jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jButton12.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jButton12.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jButton12ActionPerformed(evt);
+			}
+		});
+		jToolBar5.add(jButton12);
+
+		getContentPane().add(jToolBar5);
+
+		jToolBar6.setRollover(true);
+		jToolBar6.setPreferredSize(new java.awt.Dimension(300, 35));
+
+		jButton14.setFont(new java.awt.Font("Tahoma", 0, 14));
+		jButton14.setText("Opposite");
 		jButton14.setFocusable(false);
 		jButton14.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jButton14.setPreferredSize(new java.awt.Dimension(65, 30));
 		jButton14.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jButton14.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButton14ActionPerformed(evt);
 			}
 		});
-		jToolBar5.add(jButton14);
-		jToolBar5.add(jSeparator9);
+		jToolBar6.add(jButton14);
 
-		//jButton15.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\delete.JPG")); // NOI18N
-		jButton15.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/delete.JPG"));
-		jButton15.setToolTipText("Delete");
-		jButton15.setFocusable(false);
-		jButton15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton15.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton15.addActionListener(new java.awt.event.ActionListener() {
+		jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EW", "WE", "DU", "UD", "SN", "NS" }));
+		jComboBox6.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton15ActionPerformed(evt);
+				jComboBox6ActionPerformed(evt);
 			}
 		});
-		jToolBar5.add(jButton15);
-		jToolBar5.add(jSeparator22);
+		jToolBar6.add(jComboBox6);
 
-		jToolBar6.setRollover(true);
-		jToolBar6.add(jSeparator24);
+		getContentPane().add(jToolBar6);
 
-		//jButton16.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\mtran1.JPG")); // NOI18N
-		jButton16.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/mtran1.JPG"));
-		jButton16.setToolTipText("M-Tran picker1");
-		jButton16.setFocusable(false);
-		jButton16.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton16.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton16.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton16ActionPerformed(evt);
-			}
-		});
-		jToolBar6.add(jButton16);
-		jToolBar6.add(jSeparator11);
+		jToolBar2.setRollover(true);
+		jToolBar2.setPreferredSize(new java.awt.Dimension(310, 35));
 
-		//jButton25.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\mtran2.JPG")); // NOI18N
-		jButton25.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/mtran2.JPG"));
-		jButton25.setToolTipText("M-Tran picker2");
-		jButton25.setFocusable(false);
-		jButton25.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton25.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton25.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton25ActionPerformed(evt);
-			}
-		});
-		jToolBar6.add(jButton25);
+		jLabel1.setText("Assistant:");
+		jToolBar2.add(jLabel1);
 
-		jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5" }));
-		jComboBox3.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jComboBox3ActionPerformed(evt);
-			}
-		});
-		jToolBar6.add(jComboBox3);
-		jToolBar6.add(jSeparator27);
+		jTextField1.setEditable(false);
+		jTextField1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+		jTextField1.setToolTipText("");
+		jToolBar2.add(jTextField1);
 
-		//jButton26.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\mtran3.JPG")); // NOI18N
-		jButton26.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/mtran3.JPG"));
-		jButton26.setToolTipText("M-Tran picker3");
-		jButton26.setFocusable(false);
-		jButton26.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton26.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton26.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton26ActionPerformed(evt);
-			}
-		});
-		jToolBar6.add(jButton26);
-		jToolBar6.add(jSeparator28);
-
-		//jButton31.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\mtran4.JPG")); // NOI18N
-		jButton31.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/mtran4.JPG"));
-		jButton31.setToolTipText("M-Tran picker4");
-		jButton31.setFocusable(false);
-		jButton31.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton31.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton31.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton31ActionPerformed(evt);
-			}
-		});
-		jToolBar6.add(jButton31);
-
-		//jButton39.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\rightArrow.JPG")); // NOI18N
-		jButton39.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/rightArrow.JPG"));
-		jButton39.setToolTipText("Next connector");
-		jButton39.setFocusable(false);
-		jButton39.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton39.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton39.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton39ActionPerformed(evt);
-			}
-		});
-		jToolBar6.add(jButton39);
-		jToolBar6.add(jSeparator35);
-
-		//jButton17.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\rotateArrow.JPG")); // NOI18N
-		jButton17.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/rotateArrow.JPG"));
-		jButton17.setToolTipText("Opposite rotation");
-		jButton17.setFocusable(false);
-		jButton17.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton17.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton17.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton17ActionPerformed(evt);
-			}
-		});
-		jToolBar6.add(jButton17);
-		jToolBar6.add(jSeparator12);
-
-		//jButton18.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\delete.JPG")); // NOI18N
-		jButton18.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/delete.JPG"));
-		jButton18.setToolTipText("Delete");
-		jButton18.setFocusable(false);
-		jButton18.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton18.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton18.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton18ActionPerformed(evt);
-			}
-		});
-		jToolBar6.add(jButton18);
-		jToolBar6.add(jSeparator26);
-
-		jToolBar7.setRollover(true);
-		jToolBar7.add(jSeparator13);
-
-		//jButton19.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\odin1.JPG")); // NOI18N
-		jButton19.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/odin1.JPG"));
-		jButton19.setToolTipText("Odin picker1");
-		jButton19.setFocusable(false);
-		jButton19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton19.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton19.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton19ActionPerformed(evt);
-			}
-		});
-		jToolBar7.add(jButton19);
-		jToolBar7.add(jSeparator14);
-
-		//jButton27.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\odin2.JPG")); // NOI18N
-		jButton27.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/odin2.JPG"));
-		jButton27.setToolTipText("Odin picker2");
-		jButton27.setFocusable(false);
-		jButton27.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton27.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton27.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton27ActionPerformed(evt);
-			}
-		});
-		jToolBar7.add(jButton27);
-
-		jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11" }));
-		jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jComboBox1ActionPerformed(evt);
-			}
-		});
-		jToolBar7.add(jComboBox1);
-		jToolBar7.add(jSeparator17);
-
-		//jButton28.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\odin3.JPG")); // NOI18N
-		jButton28.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/odin3.JPG"));
-		jButton28.setToolTipText("Odin picker3");
-		jButton28.setFocusable(false);
-		jButton28.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton28.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton28.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton28ActionPerformed(evt);
-			}
-		});
-		jToolBar7.add(jButton28);
-		jToolBar7.add(jSeparator36);
-
-		//jButton40.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\odin4.JPG")); // NOI18N
-		jButton40.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/odin4.JPG"));
-		jButton40.setToolTipText("Odin picker4");
-		jButton40.setFocusable(false);
-		jButton40.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton40.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton40.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton40ActionPerformed(evt);
-			}
-		});
-		jToolBar7.add(jButton40);
-
-		//jButton41.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\rightArrow.JPG")); // NOI18N
-		jButton41.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/rightArrow.JPG"));
-		jButton41.setToolTipText("Next connector");
-		jButton41.setFocusable(false);
-		jButton41.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton41.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton41.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton41ActionPerformed(evt);
-			}
-		});
-		jToolBar7.add(jButton41);
-		jToolBar7.add(jSeparator16);
-
-		//jButton20.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\rotateArrow.JPG")); // NOI18N
-		jButton20.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/rotateArrow.JPG"));
-		jButton20.setToolTipText("Opposite rotation");
-		jButton20.setFocusable(false);
-		jButton20.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton20.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton20.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton20ActionPerformed(evt);
-			}
-		});
-		jToolBar7.add(jButton20);
-		jToolBar7.add(jSeparator15);
-
-		//jButton21.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\FORK\\delete.JPG")); // NOI18N
-		jButton21.setIcon(new javax.swing.ImageIcon( "resources/quickPrototyping/icons/delete.JPG"));
-		jButton21.setToolTipText("Delete");
-		jButton21.setFocusable(false);
-		jButton21.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton21.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton21.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton21ActionPerformed(evt);
-			}
-		});
-		jToolBar7.add(jButton21);
-		jToolBar7.add(jSeparator37);
+		getContentPane().add(jToolBar2);
 
 		jMenu1.setText("File");
 
-		jMenuItem5.setText("Save as");
-		jMenu1.add(jMenuItem5);
-		jMenu1.add(jSeparator5);
-
-		jMenuItem10.setText("Exit");
-		jMenuItem10.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jMenuItem10MouseReleased(evt);
+		jMenuItem3.setText("Open");
+		jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jMenuItem3ActionPerformed(evt);
 			}
 		});
-		jMenu1.add(jMenuItem10);
+		jMenu1.add(jMenuItem3);
+
+		jMenuItem2.setText("Save as ");
+		jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jMenuItem2ActionPerformed(evt);
+			}
+		});
+		jMenu1.add(jMenuItem2);
+		jMenu1.add(jSeparator1);
+
+		jMenuItem1.setText("Exit");
+		jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jMenuItem1ActionPerformed(evt);
+			}
+		});
+		jMenu1.add(jMenuItem1);
 
 		jMenuBar1.add(jMenu1);
 
-		jMenu2.setText("Edit");
-		jMenuBar1.add(jMenu2);
-
-		jMenu3.setText("View");
-
-		jMenu4.setText("Toolbars");
-
-		jCheckBoxMenuItem1.setSelected(true);
-		jCheckBoxMenuItem1.setText("Shapes");
-		jMenu4.add(jCheckBoxMenuItem1);
-
-		jMenuItem1.setText("Item");
-		jMenu4.add(jMenuItem1);
-
-		jMenuItem2.setText("Item");
-		jMenu4.add(jMenuItem2);
-
-		jMenuItem3.setText("Item");
-		jMenu4.add(jMenuItem3);
-		jMenu4.add(jSeparator2);
-
-		jMenuItem4.setText("Customize");
-		jMenu4.add(jMenuItem4);
-
-		jMenu3.add(jMenu4);
-
-		jMenuBar1.add(jMenu3);
-
-		jMenu7.setText("Module");
-
-		jCheckBoxMenuItem2.setSelected(true);
-		jCheckBoxMenuItem2.setText("Disconnect");
-		jCheckBoxMenuItem2.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem2MouseReleased(evt);
-			}
-		});
-		jMenu7.add(jCheckBoxMenuItem2);
-
-		jCheckBoxMenuItem3.setSelected(true);
-		jCheckBoxMenuItem3.setText("Connect");
-		jCheckBoxMenuItem3.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem3MouseReleased(evt);
-			}
-		});
-		jMenu7.add(jCheckBoxMenuItem3);
-
-		jCheckBoxMenuItem4.setSelected(true);
-		jCheckBoxMenuItem4.setText("Move");
-		jCheckBoxMenuItem4.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem4MouseReleased(evt);
-			}
-		});
-		jMenu7.add(jCheckBoxMenuItem4);
-
-		jCheckBoxMenuItem10.setSelected(true);
-		jCheckBoxMenuItem10.setText("Add block");
-		jCheckBoxMenuItem10.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem10MouseReleased(evt);
-			}
-		});
-		jMenu7.add(jCheckBoxMenuItem10);
-
-		jCheckBoxMenuItem11.setSelected(true);
-		jCheckBoxMenuItem11.setText("CheckBox");
-		jMenu7.add(jCheckBoxMenuItem11);
-
-		jMenuBar1.add(jMenu7);
-
-		jMenu5.setText("Render");
-
-		jCheckBoxMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, 0));
-		jCheckBoxMenuItem5.setSelected(true);
-		jCheckBoxMenuItem5.setText("Physics");
-		jCheckBoxMenuItem5.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem5MouseReleased(evt);
-			}
-		});
-		jMenu5.add(jCheckBoxMenuItem5);
-		jCheckBoxMenuItem5.setSelected(false);
-
-		jCheckBoxMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, 0));
-		jCheckBoxMenuItem6.setSelected(true);
-		jCheckBoxMenuItem6.setText("Wireframe");
-		jCheckBoxMenuItem6.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem6MouseReleased(evt);
-			}
-		});
-		jMenu5.add(jCheckBoxMenuItem6);
-		jCheckBoxMenuItem6.setSelected(false);
-
-		jCheckBoxMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, 0));
-		jCheckBoxMenuItem7.setSelected(true);
-		jCheckBoxMenuItem7.setText("Lights");
-		jCheckBoxMenuItem7.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem7MouseReleased(evt);
-			}
-		});
-		jMenu5.add(jCheckBoxMenuItem7);
-		jCheckBoxMenuItem7.setSelected(false);
-
-		jCheckBoxMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
-		jCheckBoxMenuItem8.setSelected(true);
-		jCheckBoxMenuItem8.setText("Bounds");
-		jCheckBoxMenuItem8.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem8MouseReleased(evt);
-			}
-		});
-		jMenu5.add(jCheckBoxMenuItem8);
-		jCheckBoxMenuItem8.setSelected(false);
-
-		jCheckBoxMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, 0));
-		jCheckBoxMenuItem9.setSelected(true);
-		jCheckBoxMenuItem9.setText("Normals");
-		jCheckBoxMenuItem9.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem9MouseReleased(evt);
-			}
-		});
-		jMenu5.add(jCheckBoxMenuItem9);
-		jCheckBoxMenuItem9.setSelected(false);
-
-		jMenuBar1.add(jMenu5);
-
-		jMenu6.setText("File");
-
-		jMenuItem6.setText("Save as");
-		jMenu6.add(jMenuItem6);
-		jMenu6.add(jSeparator18);
-
-		jMenuItem11.setText("Exit");
-		jMenuItem11.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jMenuItem10MouseReleased(evt);
-			}
-		});
-		jMenu6.add(jMenuItem11);
-
-		jMenuBar2.add(jMenu6);
-
-		jMenu8.setText("Edit");
-		jMenuBar2.add(jMenu8);
-
-		jMenu9.setText("View");
-
-		jMenu10.setText("Toolbars");
-
-		jCheckBoxMenuItem12.setSelected(true);
-		jCheckBoxMenuItem12.setText("Shapes");
-		jMenu10.add(jCheckBoxMenuItem12);
-
-		jMenuItem7.setText("Item");
-		jMenu10.add(jMenuItem7);
-
-		jMenuItem8.setText("Item");
-		jMenu10.add(jMenuItem8);
-
-		jMenuItem9.setText("Item");
-		jMenu10.add(jMenuItem9);
-		jMenu10.add(jSeparator19);
-
-		jMenuItem12.setText("Customize");
-		jMenu10.add(jMenuItem12);
-
-		jMenu9.add(jMenu10);
-
-		jMenuBar2.add(jMenu9);
-
-		jMenu11.setText("Module");
-
-		jCheckBoxMenuItem13.setSelected(true);
-		jCheckBoxMenuItem13.setText("Disconnect");
-		jCheckBoxMenuItem13.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem2MouseReleased(evt);
-			}
-		});
-		jMenu11.add(jCheckBoxMenuItem13);
-
-		jCheckBoxMenuItem14.setSelected(true);
-		jCheckBoxMenuItem14.setText("Connect");
-		jCheckBoxMenuItem14.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem3MouseReleased(evt);
-			}
-		});
-		jMenu11.add(jCheckBoxMenuItem14);
-
-		jCheckBoxMenuItem15.setSelected(true);
-		jCheckBoxMenuItem15.setText("Move");
-		jCheckBoxMenuItem15.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem4MouseReleased(evt);
-			}
-		});
-		jMenu11.add(jCheckBoxMenuItem15);
-
-		jCheckBoxMenuItem16.setSelected(true);
-		jCheckBoxMenuItem16.setText("Add block");
-		jCheckBoxMenuItem16.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem10MouseReleased(evt);
-			}
-		});
-		jMenu11.add(jCheckBoxMenuItem16);
-
-		jCheckBoxMenuItem17.setSelected(true);
-		jCheckBoxMenuItem17.setText("CheckBox");
-		jMenu11.add(jCheckBoxMenuItem17);
-
-		jMenuBar2.add(jMenu11);
-
-		jMenu12.setText("Render");
-
-		jCheckBoxMenuItem18.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, 0));
-		jCheckBoxMenuItem18.setSelected(true);
-		jCheckBoxMenuItem18.setText("Physics");
-		jCheckBoxMenuItem18.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem5MouseReleased(evt);
-			}
-		});
-		jMenu12.add(jCheckBoxMenuItem18);
-		jCheckBoxMenuItem5.setSelected(false);
-
-		jCheckBoxMenuItem19.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, 0));
-		jCheckBoxMenuItem19.setSelected(true);
-		jCheckBoxMenuItem19.setText("Wireframe");
-		jCheckBoxMenuItem19.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem6MouseReleased(evt);
-			}
-		});
-		jMenu12.add(jCheckBoxMenuItem19);
-		jCheckBoxMenuItem6.setSelected(false);
-
-		jCheckBoxMenuItem20.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, 0));
-		jCheckBoxMenuItem20.setSelected(true);
-		jCheckBoxMenuItem20.setText("Lights");
-		jCheckBoxMenuItem20.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem7MouseReleased(evt);
-			}
-		});
-		jMenu12.add(jCheckBoxMenuItem20);
-		jCheckBoxMenuItem7.setSelected(false);
-
-		jCheckBoxMenuItem21.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
-		jCheckBoxMenuItem21.setSelected(true);
-		jCheckBoxMenuItem21.setText("Bounds");
-		jCheckBoxMenuItem21.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem8MouseReleased(evt);
-			}
-		});
-		jMenu12.add(jCheckBoxMenuItem21);
-		jCheckBoxMenuItem8.setSelected(false);
-
-		jCheckBoxMenuItem22.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, 0));
-		jCheckBoxMenuItem22.setSelected(true);
-		jCheckBoxMenuItem22.setText("Normals");
-		jCheckBoxMenuItem22.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem9MouseReleased(evt);
-			}
-		});
-		jMenu12.add(jCheckBoxMenuItem22);
-		jCheckBoxMenuItem9.setSelected(false);
-
-		jMenuBar2.add(jMenu12);
-
-		jMenu13.setText("File");
-
-		jMenuItem13.setText("Save as");
-		jMenu13.add(jMenuItem13);
-		jMenu13.add(jSeparator33);
-
-		jMenuItem14.setText("Exit");
-		jMenuItem14.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jMenuItem10MouseReleased(evt);
-			}
-		});
-		jMenu13.add(jMenuItem14);
-
-		jMenuBar3.add(jMenu13);
-
-		jMenu14.setText("Edit");
-		jMenuBar3.add(jMenu14);
-
-		jMenu15.setText("View");
-
-		jMenu16.setText("Toolbars");
-
-		jCheckBoxMenuItem23.setSelected(true);
-		jCheckBoxMenuItem23.setText("Shapes");
-		jMenu16.add(jCheckBoxMenuItem23);
-
-		jMenuItem15.setText("Item");
-		jMenu16.add(jMenuItem15);
-
-		jMenuItem16.setText("Item");
-		jMenu16.add(jMenuItem16);
-
-		jMenuItem17.setText("Item");
-		jMenu16.add(jMenuItem17);
-		jMenu16.add(jSeparator34);
-
-		jMenuItem18.setText("Customize");
-		jMenu16.add(jMenuItem18);
-
-		jMenu15.add(jMenu16);
-
-		jMenuBar3.add(jMenu15);
-
-		jMenu17.setText("Module");
-
-		jCheckBoxMenuItem24.setSelected(true);
-		jCheckBoxMenuItem24.setText("Disconnect");
-		jCheckBoxMenuItem24.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem2MouseReleased(evt);
-			}
-		});
-		jMenu17.add(jCheckBoxMenuItem24);
-
-		jCheckBoxMenuItem25.setSelected(true);
-		jCheckBoxMenuItem25.setText("Connect");
-		jCheckBoxMenuItem25.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem3MouseReleased(evt);
-			}
-		});
-		jMenu17.add(jCheckBoxMenuItem25);
-
-		jCheckBoxMenuItem26.setSelected(true);
-		jCheckBoxMenuItem26.setText("Move");
-		jCheckBoxMenuItem26.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem4MouseReleased(evt);
-			}
-		});
-		jMenu17.add(jCheckBoxMenuItem26);
-
-		jCheckBoxMenuItem27.setSelected(true);
-		jCheckBoxMenuItem27.setText("Add block");
-		jCheckBoxMenuItem27.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem10MouseReleased(evt);
-			}
-		});
-		jMenu17.add(jCheckBoxMenuItem27);
-
-		jCheckBoxMenuItem28.setSelected(true);
-		jCheckBoxMenuItem28.setText("CheckBox");
-		jMenu17.add(jCheckBoxMenuItem28);
-
-		jMenuBar3.add(jMenu17);
-
-		jMenu18.setText("Render");
-
-		jCheckBoxMenuItem29.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, 0));
-		jCheckBoxMenuItem29.setSelected(true);
-		jCheckBoxMenuItem29.setText("Physics");
-		jCheckBoxMenuItem29.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem5MouseReleased(evt);
-			}
-		});
-		jMenu18.add(jCheckBoxMenuItem29);
-		jCheckBoxMenuItem5.setSelected(false);
-
-		jCheckBoxMenuItem30.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, 0));
-		jCheckBoxMenuItem30.setSelected(true);
-		jCheckBoxMenuItem30.setText("Wireframe");
-		jCheckBoxMenuItem30.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem6MouseReleased(evt);
-			}
-		});
-		jMenu18.add(jCheckBoxMenuItem30);
-		jCheckBoxMenuItem6.setSelected(false);
-
-		jCheckBoxMenuItem31.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, 0));
-		jCheckBoxMenuItem31.setSelected(true);
-		jCheckBoxMenuItem31.setText("Lights");
-		jCheckBoxMenuItem31.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem7MouseReleased(evt);
-			}
-		});
-		jMenu18.add(jCheckBoxMenuItem31);
-		jCheckBoxMenuItem7.setSelected(false);
-
-		jCheckBoxMenuItem32.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
-		jCheckBoxMenuItem32.setSelected(true);
-		jCheckBoxMenuItem32.setText("Bounds");
-		jCheckBoxMenuItem32.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem8MouseReleased(evt);
-			}
-		});
-		jMenu18.add(jCheckBoxMenuItem32);
-		jCheckBoxMenuItem8.setSelected(false);
-
-		jCheckBoxMenuItem33.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, 0));
-		jCheckBoxMenuItem33.setSelected(true);
-		jCheckBoxMenuItem33.setText("Normals");
-		jCheckBoxMenuItem33.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem9MouseReleased(evt);
-			}
-		});
-		jMenu18.add(jCheckBoxMenuItem33);
-		jCheckBoxMenuItem9.setSelected(false);
-
-		jMenuBar3.add(jMenu18);
-
-		jMenu19.setText("File");
-
-		jMenuItem19.setText("Save as");
-		jMenu19.add(jMenuItem19);
-		jMenu19.add(jSeparator38);
-
-		jMenuItem20.setText("Exit");
-		jMenuItem20.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jMenuItem10MouseReleased(evt);
-			}
-		});
-		jMenu19.add(jMenuItem20);
-
-		jMenuBar4.add(jMenu19);
-
-		jMenu20.setText("Edit");
-		jMenuBar4.add(jMenu20);
-
-		jMenu21.setText("View");
-
-		jMenu22.setText("Toolbars");
-
-		jCheckBoxMenuItem34.setSelected(true);
-		jCheckBoxMenuItem34.setText("Shapes");
-		jMenu22.add(jCheckBoxMenuItem34);
-
-		jMenuItem21.setText("Item");
-		jMenu22.add(jMenuItem21);
-
-		jMenuItem22.setText("Item");
-		jMenu22.add(jMenuItem22);
-
-		jMenuItem23.setText("Item");
-		jMenu22.add(jMenuItem23);
-		jMenu22.add(jSeparator39);
-
-		jMenuItem24.setText("Customize");
-		jMenu22.add(jMenuItem24);
-
-		jMenu21.add(jMenu22);
-
-		jMenuBar4.add(jMenu21);
-
-		jMenu23.setText("Module");
-
-		jCheckBoxMenuItem35.setSelected(true);
-		jCheckBoxMenuItem35.setText("Disconnect");
-		jCheckBoxMenuItem35.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem2MouseReleased(evt);
-			}
-		});
-		jMenu23.add(jCheckBoxMenuItem35);
-
-		jCheckBoxMenuItem36.setSelected(true);
-		jCheckBoxMenuItem36.setText("Connect");
-		jCheckBoxMenuItem36.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem3MouseReleased(evt);
-			}
-		});
-		jMenu23.add(jCheckBoxMenuItem36);
-
-		jCheckBoxMenuItem37.setSelected(true);
-		jCheckBoxMenuItem37.setText("Move");
-		jCheckBoxMenuItem37.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem4MouseReleased(evt);
-			}
-		});
-		jMenu23.add(jCheckBoxMenuItem37);
-
-		jCheckBoxMenuItem38.setSelected(true);
-		jCheckBoxMenuItem38.setText("Add block");
-		jCheckBoxMenuItem38.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem10MouseReleased(evt);
-			}
-		});
-		jMenu23.add(jCheckBoxMenuItem38);
-
-		jCheckBoxMenuItem39.setSelected(true);
-		jCheckBoxMenuItem39.setText("CheckBox");
-		jMenu23.add(jCheckBoxMenuItem39);
-
-		jMenuBar4.add(jMenu23);
-
-		jMenu24.setText("Render");
-
-		jCheckBoxMenuItem40.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, 0));
-		jCheckBoxMenuItem40.setSelected(true);
-		jCheckBoxMenuItem40.setText("Physics");
-		jCheckBoxMenuItem40.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem5MouseReleased(evt);
-			}
-		});
-		jMenu24.add(jCheckBoxMenuItem40);
-		jCheckBoxMenuItem5.setSelected(false);
-
-		jCheckBoxMenuItem41.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, 0));
-		jCheckBoxMenuItem41.setSelected(true);
-		jCheckBoxMenuItem41.setText("Wireframe");
-		jCheckBoxMenuItem41.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem6MouseReleased(evt);
-			}
-		});
-		jMenu24.add(jCheckBoxMenuItem41);
-		jCheckBoxMenuItem6.setSelected(false);
-
-		jCheckBoxMenuItem42.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, 0));
-		jCheckBoxMenuItem42.setSelected(true);
-		jCheckBoxMenuItem42.setText("Lights");
-		jCheckBoxMenuItem42.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem7MouseReleased(evt);
-			}
-		});
-		jMenu24.add(jCheckBoxMenuItem42);
-		jCheckBoxMenuItem7.setSelected(false);
-
-		jCheckBoxMenuItem43.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
-		jCheckBoxMenuItem43.setSelected(true);
-		jCheckBoxMenuItem43.setText("Bounds");
-		jCheckBoxMenuItem43.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem8MouseReleased(evt);
-			}
-		});
-		jMenu24.add(jCheckBoxMenuItem43);
-		jCheckBoxMenuItem8.setSelected(false);
-
-		jCheckBoxMenuItem44.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, 0));
-		jCheckBoxMenuItem44.setSelected(true);
-		jCheckBoxMenuItem44.setText("Normals");
-		jCheckBoxMenuItem44.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem9MouseReleased(evt);
-			}
-		});
-		jMenu24.add(jCheckBoxMenuItem44);
-		jCheckBoxMenuItem9.setSelected(false);
-
-		jMenuBar4.add(jMenu24);
-
-		jButton32.setToolTipText("Play/Pause");
-		jButton32.setFocusable(false);
-		jButton32.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton32.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-		jButton33.setToolTipText("Play/Pause");
-		jButton33.setFocusable(false);
-		jButton33.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton33.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-		jMenu25.setText("File");
-
-		jMenuItem25.setText("Save as");
-		jMenu25.add(jMenuItem25);
-		jMenu25.add(jSeparator40);
-
-		jMenuItem26.setText("Exit");
-		jMenuItem26.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jMenuItem10MouseReleased(evt);
-			}
-		});
-		jMenu25.add(jMenuItem26);
-
-		jMenuBar5.add(jMenu25);
-
-		jMenu26.setText("Edit");
-		jMenuBar5.add(jMenu26);
-
-		jMenu27.setText("View");
-
-		jMenu28.setText("Toolbars");
-
-		jCheckBoxMenuItem45.setSelected(true);
-		jCheckBoxMenuItem45.setText("Shapes");
-		jMenu28.add(jCheckBoxMenuItem45);
-
-		jMenuItem27.setText("Item");
-		jMenu28.add(jMenuItem27);
-
-		jMenuItem28.setText("Item");
-		jMenu28.add(jMenuItem28);
-
-		jMenuItem29.setText("Item");
-		jMenu28.add(jMenuItem29);
-		jMenu28.add(jSeparator41);
-
-		jMenuItem30.setText("Customize");
-		jMenu28.add(jMenuItem30);
-
-		jMenu27.add(jMenu28);
-
-		jMenuBar5.add(jMenu27);
-
-		jMenu29.setText("Module");
-
-		jCheckBoxMenuItem46.setSelected(true);
-		jCheckBoxMenuItem46.setText("Disconnect");
-		jCheckBoxMenuItem46.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem2MouseReleased(evt);
-			}
-		});
-		jMenu29.add(jCheckBoxMenuItem46);
-
-		jCheckBoxMenuItem47.setSelected(true);
-		jCheckBoxMenuItem47.setText("Connect");
-		jCheckBoxMenuItem47.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem3MouseReleased(evt);
-			}
-		});
-		jMenu29.add(jCheckBoxMenuItem47);
-
-		jCheckBoxMenuItem48.setSelected(true);
-		jCheckBoxMenuItem48.setText("Move");
-		jCheckBoxMenuItem48.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem4MouseReleased(evt);
-			}
-		});
-		jMenu29.add(jCheckBoxMenuItem48);
-
-		jCheckBoxMenuItem49.setSelected(true);
-		jCheckBoxMenuItem49.setText("Add block");
-		jCheckBoxMenuItem49.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem10MouseReleased(evt);
-			}
-		});
-		jMenu29.add(jCheckBoxMenuItem49);
-
-		jCheckBoxMenuItem50.setSelected(true);
-		jCheckBoxMenuItem50.setText("CheckBox");
-		jMenu29.add(jCheckBoxMenuItem50);
-
-		jMenuBar5.add(jMenu29);
-
-		jMenu30.setText("Render");
-
-		jCheckBoxMenuItem51.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, 0));
-		jCheckBoxMenuItem51.setSelected(true);
-		jCheckBoxMenuItem51.setText("Physics");
-		jCheckBoxMenuItem51.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem5MouseReleased(evt);
-			}
-		});
-		jMenu30.add(jCheckBoxMenuItem51);
-		jCheckBoxMenuItem5.setSelected(false);
-
-		jCheckBoxMenuItem52.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, 0));
-		jCheckBoxMenuItem52.setSelected(true);
-		jCheckBoxMenuItem52.setText("Wireframe");
-		jCheckBoxMenuItem52.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem6MouseReleased(evt);
-			}
-		});
-		jMenu30.add(jCheckBoxMenuItem52);
-		jCheckBoxMenuItem6.setSelected(false);
-
-		jCheckBoxMenuItem53.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, 0));
-		jCheckBoxMenuItem53.setSelected(true);
-		jCheckBoxMenuItem53.setText("Lights");
-		jCheckBoxMenuItem53.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem7MouseReleased(evt);
-			}
-		});
-		jMenu30.add(jCheckBoxMenuItem53);
-		jCheckBoxMenuItem7.setSelected(false);
-
-		jCheckBoxMenuItem54.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
-		jCheckBoxMenuItem54.setSelected(true);
-		jCheckBoxMenuItem54.setText("Bounds");
-		jCheckBoxMenuItem54.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem8MouseReleased(evt);
-			}
-		});
-		jMenu30.add(jCheckBoxMenuItem54);
-		jCheckBoxMenuItem8.setSelected(false);
-
-		jCheckBoxMenuItem55.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, 0));
-		jCheckBoxMenuItem55.setSelected(true);
-		jCheckBoxMenuItem55.setText("Normals");
-		jCheckBoxMenuItem55.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem9MouseReleased(evt);
-			}
-		});
-		jMenu30.add(jCheckBoxMenuItem55);
-		jCheckBoxMenuItem9.setSelected(false);
-
-		jMenuBar5.add(jMenu30);
-
-		jButton34.setToolTipText("Play/Pause");
-		jButton34.setFocusable(false);
-		jButton34.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton34.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-		jButton35.setToolTipText("Play/Pause");
-		jButton35.setFocusable(false);
-		jButton35.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton35.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-		jButton36.setToolTipText("Play/Pause");
-		jButton36.setFocusable(false);
-		jButton36.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton36.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-		jButton37.setToolTipText("Play/Pause");
-		jButton37.setFocusable(false);
-		jButton37.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton37.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		getContentPane().add(jMenuBar1);
+		getContentPane().add(jMenuBar8);
+		getContentPane().add(jMenuBar10);
 
 		jMenu31.setText("File");
 
-		jMenuItem31.setText("Save as");
-		jMenu31.add(jMenuItem31);
-		jMenu31.add(jSeparator42);
-
-		jMenuItem32.setText("Exit");
-		jMenuItem32.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jMenuItem10MouseReleased(evt);
-			}
-		});
-		jMenu31.add(jMenuItem32);
-
-		jMenuBar6.add(jMenu31);
-
-		jMenu32.setText("Edit");
-		jMenuBar6.add(jMenu32);
-
-		jMenu33.setText("View");
-
-		jMenu34.setText("Toolbars");
-
-		jCheckBoxMenuItem56.setSelected(true);
-		jCheckBoxMenuItem56.setText("Shapes");
-		jMenu34.add(jCheckBoxMenuItem56);
-
-		jMenuItem33.setText("Item");
-		jMenu34.add(jMenuItem33);
-
-		jMenuItem34.setText("Item");
-		jMenu34.add(jMenuItem34);
-
-		jMenuItem35.setText("Item");
-		jMenu34.add(jMenuItem35);
-		jMenu34.add(jSeparator43);
-
-		jMenuItem36.setText("Customize");
-		jMenu34.add(jMenuItem36);
-
-		jMenu33.add(jMenu34);
-
-		jMenuBar6.add(jMenu33);
-
-		jMenu35.setText("Module");
-
-		jCheckBoxMenuItem57.setSelected(true);
-		jCheckBoxMenuItem57.setText("Disconnect");
-		jCheckBoxMenuItem57.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem2MouseReleased(evt);
-			}
-		});
-		jMenu35.add(jCheckBoxMenuItem57);
-
-		jCheckBoxMenuItem58.setSelected(true);
-		jCheckBoxMenuItem58.setText("Connect");
-		jCheckBoxMenuItem58.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem3MouseReleased(evt);
-			}
-		});
-		jMenu35.add(jCheckBoxMenuItem58);
-
-		jCheckBoxMenuItem59.setSelected(true);
-		jCheckBoxMenuItem59.setText("Move");
-		jCheckBoxMenuItem59.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem4MouseReleased(evt);
-			}
-		});
-		jMenu35.add(jCheckBoxMenuItem59);
-
-		jCheckBoxMenuItem60.setSelected(true);
-		jCheckBoxMenuItem60.setText("Add block");
-		jCheckBoxMenuItem60.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem10MouseReleased(evt);
-			}
-		});
-		jMenu35.add(jCheckBoxMenuItem60);
-
-		jCheckBoxMenuItem61.setSelected(true);
-		jCheckBoxMenuItem61.setText("CheckBox");
-		jMenu35.add(jCheckBoxMenuItem61);
-
-		jMenuBar6.add(jMenu35);
-
-		jMenu36.setText("Render");
-
-		jCheckBoxMenuItem62.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, 0));
-		jCheckBoxMenuItem62.setSelected(true);
-		jCheckBoxMenuItem62.setText("Physics");
-		jCheckBoxMenuItem62.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem5MouseReleased(evt);
-			}
-		});
-		jMenu36.add(jCheckBoxMenuItem62);
-		jCheckBoxMenuItem5.setSelected(false);
-
-		jCheckBoxMenuItem63.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, 0));
-		jCheckBoxMenuItem63.setSelected(true);
-		jCheckBoxMenuItem63.setText("Wireframe");
-		jCheckBoxMenuItem63.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem6MouseReleased(evt);
-			}
-		});
-		jMenu36.add(jCheckBoxMenuItem63);
-		jCheckBoxMenuItem6.setSelected(false);
-
-		jCheckBoxMenuItem64.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, 0));
-		jCheckBoxMenuItem64.setSelected(true);
-		jCheckBoxMenuItem64.setText("Lights");
-		jCheckBoxMenuItem64.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem7MouseReleased(evt);
-			}
-		});
-		jMenu36.add(jCheckBoxMenuItem64);
-		jCheckBoxMenuItem7.setSelected(false);
-
-		jCheckBoxMenuItem65.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
-		jCheckBoxMenuItem65.setSelected(true);
-		jCheckBoxMenuItem65.setText("Bounds");
-		jCheckBoxMenuItem65.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem8MouseReleased(evt);
-			}
-		});
-		jMenu36.add(jCheckBoxMenuItem65);
-		jCheckBoxMenuItem8.setSelected(false);
-
-		jCheckBoxMenuItem66.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, 0));
-		jCheckBoxMenuItem66.setSelected(true);
-		jCheckBoxMenuItem66.setText("Normals");
-		jCheckBoxMenuItem66.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem9MouseReleased(evt);
-			}
-		});
-		jMenu36.add(jCheckBoxMenuItem66);
-		jCheckBoxMenuItem9.setSelected(false);
-
-		jMenuBar6.add(jMenu36);
-
-		jButton38.setToolTipText("Play/Pause");
-		jButton38.setFocusable(false);
-		jButton38.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton38.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-		jMenu37.setText("File");
-
-		jMenuItem37.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-		jMenuItem37.setText("Save ");
-		jMenuItem37.addActionListener(new java.awt.event.ActionListener() {
+		jMenuItem41.setText("Open");
+		jMenuItem41.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jMenuItem37ActionPerformed(evt);
+				jMenuItem3ActionPerformed(evt);
 			}
 		});
-		jMenu37.add(jMenuItem37);
+		jMenu31.add(jMenuItem41);
 
-		jMenuItem43.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-		jMenuItem43.setText("Open");
+		jMenuItem42.setText("Save as ");
+		jMenuItem42.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jMenuItem2ActionPerformed(evt);
+			}
+		});
+		jMenu31.add(jMenuItem42);
+		jMenu31.add(jSeparator21);
+
+		jMenuItem43.setText("Exit");
 		jMenuItem43.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jMenuItem43ActionPerformed(evt);
+				jMenuItem1ActionPerformed(evt);
 			}
 		});
-		jMenu37.add(jMenuItem43);
-		jMenu37.add(jSeparator44);
+		jMenu31.add(jMenuItem43);
 
-		jMenuItem38.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
-		jMenuItem38.setText("Exit");
-		jMenuItem38.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jMenuItem38ActionPerformed(evt);
-			}
-		});
-		jMenu37.add(jMenuItem38);
+		jMenuBar11.add(jMenu31);
 
-		jMenuBar7.add(jMenu37);
+		jMenu32.setText("View");
 
-		jMenu38.setText("Edit");
-		jMenuBar7.add(jMenu38);
-
-		jMenu39.setText("View");
-
-		jMenu40.setText("Toolbars");
+		jMenu33.setText("Toolbars");
 
 		jCheckBoxMenuItem67.setSelected(true);
-		jCheckBoxMenuItem67.setText("Shapes");
-		jMenu40.add(jCheckBoxMenuItem67);
-
-		jMenuItem39.setText("Item");
-		jMenu40.add(jMenuItem39);
-
-		jMenuItem40.setText("Item");
-		jMenu40.add(jMenuItem40);
-
-		jMenuItem41.setText("Item");
-		jMenu40.add(jMenuItem41);
-		jMenu40.add(jSeparator45);
-
-		jMenuItem42.setText("Customize");
-		jMenu40.add(jMenuItem42);
-
-		jMenu39.add(jMenu40);
-
-		jMenuBar7.add(jMenu39);
-
-		jMenu41.setText("Module");
+		jCheckBoxMenuItem67.setText("Simulation");
+		jCheckBoxMenuItem67.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jCheckBoxMenuItem1ActionPerformed(evt);
+			}
+		});
+		jMenu33.add(jCheckBoxMenuItem67);
 
 		jCheckBoxMenuItem68.setSelected(true);
-		jCheckBoxMenuItem68.setText("Disconnect");
-		jCheckBoxMenuItem68.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem2MouseReleased(evt);
+		jCheckBoxMenuItem68.setText("Rendering");
+		jCheckBoxMenuItem68.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jCheckBoxMenuItem3ActionPerformed(evt);
 			}
 		});
-		jMenu41.add(jCheckBoxMenuItem68);
+		jMenu33.add(jCheckBoxMenuItem68);
 
 		jCheckBoxMenuItem69.setSelected(true);
-		jCheckBoxMenuItem69.setText("Connect");
-		jCheckBoxMenuItem69.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem3MouseReleased(evt);
+		jCheckBoxMenuItem69.setText("Module generic");
+		jCheckBoxMenuItem69.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jCheckBoxMenuItem7ActionPerformed(evt);
 			}
 		});
-		jMenu41.add(jCheckBoxMenuItem69);
+		jMenu33.add(jCheckBoxMenuItem69);
 
-		jCheckBoxMenuItem70.setSelected(true);
-		jCheckBoxMenuItem70.setText("Move");
-		jCheckBoxMenuItem70.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				jCheckBoxMenuItem4MouseReleased(evt);
-			}
-		});
-		jMenu41.add(jCheckBoxMenuItem70);
+		jCheckBoxMenuItem1.setSelected(true);
+		jCheckBoxMenuItem1.setText("Supported modular robots (MR)");
+		jMenu33.add(jCheckBoxMenuItem1);
 
-		jCheckBoxMenuItem71.setSelected(true);
-		jCheckBoxMenuItem71.setText("Add block");
-		jMenu41.add(jCheckBoxMenuItem71);
+		jCheckBoxMenuItem2.setSelected(true);
+		jCheckBoxMenuItem2.setText("Rotation of supported MR");
+		jMenu33.add(jCheckBoxMenuItem2);
 
-		jCheckBoxMenuItem72.setSelected(true);
-		jCheckBoxMenuItem72.setText("CheckBox");
-		jMenu41.add(jCheckBoxMenuItem72);
-
-		jMenuBar7.add(jMenu41);
-
-		jMenu42.setText("Render");
-
-		jCheckBoxMenuItem73.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, 0));
 		jCheckBoxMenuItem73.setSelected(true);
-		jCheckBoxMenuItem73.setText("Physics");
+		jCheckBoxMenuItem73.setText("Assistant");
 		jCheckBoxMenuItem73.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jCheckBoxMenuItem73ActionPerformed(evt);
+				jCheckBoxMenuItem2ActionPerformed(evt);
 			}
 		});
-		jMenu42.add(jCheckBoxMenuItem73);
-		jCheckBoxMenuItem5.setSelected(false);
+		jMenu33.add(jCheckBoxMenuItem73);
+		jMenu33.add(jSeparator22);
 
-		jCheckBoxMenuItem74.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, 0));
-		jCheckBoxMenuItem74.setSelected(true);
-		jCheckBoxMenuItem74.setText("Wireframe");
-		jCheckBoxMenuItem74.addActionListener(new java.awt.event.ActionListener() {
+		jMenuItem44.setText("Customize...");
+		jMenuItem44.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jCheckBoxMenuItem74ActionPerformed(evt);
+				jMenuItem8ActionPerformed(evt);
 			}
 		});
-		jMenu42.add(jCheckBoxMenuItem74);
-		jCheckBoxMenuItem6.setSelected(false);
+		jMenu33.add(jMenuItem44);
 
-		jCheckBoxMenuItem75.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, 0));
-		jCheckBoxMenuItem75.setSelected(true);
-		jCheckBoxMenuItem75.setText("Lights");
-		jCheckBoxMenuItem75.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jCheckBoxMenuItem75ActionPerformed(evt);
-			}
-		});
-		jMenu42.add(jCheckBoxMenuItem75);
-		jCheckBoxMenuItem7.setSelected(false);
+		jMenu32.add(jMenu33);
 
-		jCheckBoxMenuItem76.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, 0));
-		jCheckBoxMenuItem76.setSelected(true);
-		jCheckBoxMenuItem76.setText("Bounds");
-		jCheckBoxMenuItem76.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jCheckBoxMenuItem76ActionPerformed(evt);
-			}
-		});
-		jMenu42.add(jCheckBoxMenuItem76);
-		jCheckBoxMenuItem8.setSelected(false);
+		jMenuBar11.add(jMenu32);
 
-		jCheckBoxMenuItem77.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, 0));
-		jCheckBoxMenuItem77.setSelected(true);
-		jCheckBoxMenuItem77.setText("Normals");
-		jCheckBoxMenuItem77.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jCheckBoxMenuItem77ActionPerformed(evt);
-			}
-		});
-		jMenu42.add(jCheckBoxMenuItem77);
-		jCheckBoxMenuItem9.setSelected(false);
-
-		jMenuBar7.add(jMenu42);
-
-		setJMenuBar(jMenuBar7);
-
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(
-				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup()
-						.addGap(48, 48, 48)
-						.addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-						.addGap(522, 522, 522))
-						.addGroup(layout.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(475, Short.MAX_VALUE))
-								.addGroup(layout.createSequentialGroup()
-										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-												.addComponent(jToolBar7, javax.swing.GroupLayout.Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-												.addComponent(jToolBar6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(jToolBar5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-												.addContainerGap())
-												.addGroup(layout.createSequentialGroup()
-														.addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addContainerGap(382, Short.MAX_VALUE))
-														.addGroup(layout.createSequentialGroup()
-																.addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-																.addContainerGap(414, Short.MAX_VALUE))
-		);
-		layout.setVerticalGroup(
-				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup()
-						.addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addComponent(jToolBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addComponent(jToolBar6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-						.addComponent(jToolBar7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addGap(34, 34, 34))
-		);
+		setJMenuBar(jMenuBar11);
 
 		pack();
 	}// </editor-fold>
 
-	// Generic view of GUI
-	private void changeToSetLookAndFeel(){
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			SwingUtilities.updateComponentTreeUI(this);
-		} catch (ClassNotFoundException ex) {
-			Logger.getLogger(QuickPrototyping.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			Logger.getLogger(QuickPrototyping.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			Logger.getLogger(QuickPrototyping.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (UnsupportedLookAndFeelException ex) {
-			Logger.getLogger(QuickPrototyping.class.getName()).log(Level.SEVERE, null, ex);
+	private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+		//System.out.println("File-->Exit");//for debugging 
+		System.out.println("File-->"+jMenuItem1.getText());//for debugging 
+		this.dispose();
+	}
+	
+	private void adaptGuiToMR(){
+		String modularRobotName = JME_simulation.getModules().get(0).getProperty("ussr.module.type");
+		if (modularRobotName.contains("Odin")){
+			jComboBox1.setSelectedIndex(2);			
+		}else if (modularRobotName.contains("ATRON")){
+			jComboBox1.setSelectedIndex(0);			
+		}else if (modularRobotName.contains("MTRAN")){
+			jComboBox1.setSelectedIndex(1);			
 		}
-	}    
+	}
 
-	private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-		// TODO add your handling code here:
-		System.out.println("Pause-Play simulation");
+	private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+		//System.out.println("File-->Save as");//for debugging            
+		System.out.println("File-->"+jMenuItem2.getText());//for debugging 
+		this.fileChooserSave = new FileChooser(JME_simulation,false); 
+		fileChooserSave.activate();
+		guiUtil.passTo(jTextField1,"Save simulation data to XML file");// informing user
+	}                                          
+
+	private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+		//System.out.println("File-->Open");//for debugging
+		System.out.println("File-->"+jMenuItem3.getText());//for debugging 
+		this.fileChooserOpen = new FileChooser(JME_simulation,true); 
+		fileChooserOpen.activate();
+		guiUtil.passTo(jTextField1,"Load simulation data to XML file");// informing user
+	}                                          
+
+	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+		//System.out.println("Simulation ToolBar-->Pause/Play simulation");//for debugging 
+		System.out.println("Simulation ToolBar-->"+jButton1.getToolTipText());//for debugging        
 		if (JME_simulation.isPaused()==false){        
 			JME_simulation.setPause(true);
-			System.out.println("Pause on");
-			jButton5.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/pause.JPG"));
+			System.out.println("Pause on");//for debugging 
+			guiUtil.passTo(jTextField1, "Simulation is in paused state");// informing user
+			jButton1.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/pause.JPG"));
 
 		}else{
-			System.out.println("Pause of");        	
-			jButton5.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/play.JPG"));
+			System.out.println("Play"); //for debugging 
+			guiUtil.passTo(jTextField1, "Simulation running");// informing user
+			jButton1.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/play.JPG"));
 			JME_simulation.setPause(false);
 		}
+
 	}                                        
 
-	private void jMenuItem10MouseReleased(java.awt.event.MouseEvent evt) {                                          
+	private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
+		//System.out.println("View-->Toolbars-->Simulation");//for debugging 
+		//System.out.println("View-->Toolbars-->"+jCheckBoxMenuItem1.getText());//for debugging        
+		// this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem1, jToolBar1);        
+	}                                                  
 
+	private void jCheckBoxMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
+		System.out.println("View-->Toolbars-->Assistant");        
+		// System.out.println("View-->Toolbars-->"+jCheckBoxMenuItem2.getText());//for debugging     
+		//this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem2, jToolBar2);  
+	}                                                  
 
-	}                                         
+	int simulationStep =0;
+	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+/*		//System.out.println("Simulation ToolBar-->Step by step");//for debugging 
+		System.out.println("Simulation ToolBar-->"+jButton2.getToolTipText());//for debugging        
+		simulationStep++;
+		guiUtil.passTo(jTextField1, "Executed simulation step Nr:"+simulationStep);
+		JME_simulation.singleStep = true;*/
+	}                                        
 
-	private void jCheckBoxMenuItem2MouseReleased(java.awt.event.MouseEvent evt) {                                                 
-		// TODO add your handling code here:
-		System.out.println("Module-->Disconnect");
+	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+		//System.out.println("Simulation ToolBar-->Save");//for debugging 
+		System.out.println("Simulation ToolBar-->"+jButton3.getToolTipText());//for debugging     
+		this.fileChooserSave = new FileChooser(JME_simulation,false); 
+		this.fileChooserSave.activate(); 	 
+	}                                        
 
-	}                                                
+	private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+		//System.out.println("Simulation ToolBar-->Open");//for debugging 
+		System.out.println("Simulation ToolBar-->"+jButton4.getToolTipText());//for debugging          
+		this.fileChooserOpen = new FileChooser(JME_simulation,true); 
+		fileChooserOpen.activate();                       
+	}                                        
 
-	private void jCheckBoxMenuItem5MouseReleased(java.awt.event.MouseEvent evt) {                                                 
-		// TODO add your handling code here:
-		System.out.println("Render-->Physics");
-	/*	if ( JME_simulation.isShowPhysics()== false ){
-			System.out.println("De-Selected");
-			jCheckBoxMenuItem5.setSelected(false);
-			JME_simulation.setShowPhysics(true);
-		}else {
-			System.out.println("Selected");
-			jCheckBoxMenuItem5.setSelected(true);
-			JME_simulation.setShowPhysics(false);
-		}*/
-	}                                                
+	private void jCheckBoxMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
+		//System.out.println("View-->Toolbars-->Rendering");//for debugging 
+		//  System.out.println("View-->Toolbars-->"+ jCheckBoxMenuItem3.getText());//for debugging                       
+//		this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem3, jToolBar3); 
+	}                                                  
 
-	private void jCheckBoxMenuItem6MouseReleased(java.awt.event.MouseEvent evt) {                                                 
-		// TODO add your handling code here:
-		System.out.println("Render-->Wireframe");
-	/*	if ( JME_simulation.getWireState().isEnabled() == false ){
-			System.out.println("De-Selected");
-			jCheckBoxMenuItem6.setSelected(false);
-			JME_simulation.setWireState(true);
-		}else {
-			System.out.println("Selected");
-			jCheckBoxMenuItem6.setSelected(true);
-			JME_simulation.setWireState(false);
-		}*/
-	}                                                
-
-	private void jCheckBoxMenuItem7MouseReleased(java.awt.event.MouseEvent evt) {                                                 
-		// TODO add your handling code here:
-		System.out.println("Render-->Lights");
-/*		if (JME_simulation.lightState.isEnabled() == false ){
-			System.out.println("De-Selected");
-			jCheckBoxMenuItem7.setSelected(false);
-			JME_simulation.lightState.setEnabled(true);
-		}else {
-			System.out.println("Selected");
-			jCheckBoxMenuItem7.setSelected(true);
-			JME_simulation.lightState.setEnabled(false);
-		}*/
-	}                                                
-
-	private void jCheckBoxMenuItem8MouseReleased(java.awt.event.MouseEvent evt) {                                                 
-		// TODO add your handling code here:
-/*		System.out.println("Render-->Bounds");
-		if ( JME_simulation.showBounds == false ){
-			System.out.println("De-Selected");
-			jCheckBoxMenuItem8.setSelected(false);
-			JME_simulation.showBounds = true;
-		}else {
-			System.out.println("Selected");
-			jCheckBoxMenuItem8.setSelected(true);
-			JME_simulation.showBounds = false;
-		}*/
-
-	}                                                
-
-	private void jCheckBoxMenuItem9MouseReleased(java.awt.event.MouseEvent evt) {                                                 
-		// TODO add your handling code here:
-		System.out.println("Render-->Normals");
-/*		if ( JME_simulation.showNormals == false ){
-			System.out.println("De-Selected");
-			jCheckBoxMenuItem9.setSelected(false);
-			JME_simulation.showNormals = true;
-		}else {
-			System.out.println("Selected");
-			jCheckBoxMenuItem9.setSelected(true);
-			JME_simulation.showNormals = false;
-		}*/
-	}                                                
-
-	private void jCheckBoxMenuItem3MouseReleased(java.awt.event.MouseEvent evt) {                                                 
-		// TODO add your handling code here:
-	}                                                
-
-	private void jCheckBoxMenuItem4MouseReleased(java.awt.event.MouseEvent evt) {                                                 
-		// TODO add your handling code here:
-
-	}                                                
+	private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+		//System.out.println("GenericToolbar-->Move"); //for debugging 
+		System.out.println("GenericToolbar-->"+jButton5.getToolTipText());//for debugging 	
+		guiUtil.passTo(jTextField1, "Select and move module");// informing user
+	}                                        
 
 	private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-		// TODO add your handling code here:
-		System.out.println("Step-by-Step simulation");
-		//JME_simulation.singleStep = true;
+		// System.out.println("GenericToolbar-->Rotate"); //for debugging
+		System.out.println("GenericToolbar-->"+jButton6.getToolTipText());//for debugging 
+		//TODO
+		guiUtil.passTo(jTextField1, "Select module to rotate");// informing user
 	}                                        
 
 	private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-		// TODO add your handling code here:
-		System.out.println("Arrow Left");
+		//System.out.println("GenericToolbar-->Delete"); //for debugging 
+		System.out.println("GenericToolbar-->"+jButton7.getToolTipText());//for debugging 
+		guiUtil.passTo(jTextField1, "Select module to delete");// informing user
+		JME_simulation.setPicker(new RemoveModulePicker(JME_simulation));
 	}                                        
 
 	private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-		// TODO add your handling code here:
-		System.out.println("Arrow Down");
-	}                                        
-
-
-	private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-		// TODO add your handling code here:
-		System.out.println("Arrow Up");
-	}                                        
-
-	private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("Arrow Right");
-	}                                         
-
-	private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("Move picker");
-
-
-	}                                         
-
-	private void jCheckBoxMenuItem10MouseReleased(java.awt.event.MouseEvent evt) {                                                  
-		// TODO add your handling code here:
-		System.out.println("Add block");
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				// new AddModules().setVisible(true);
-			}
-		});
-
-	}                                                 
-
-	private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("Delete Module Picker");
-		JME_simulation.setPicker(new RemoveModulePicker(JME_simulation));
-	}                                         
-
-	private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("AssembleATRONPicker1");
-		JME_simulation.setPicker(new AssembleATRONPicker1(JME_simulation));
-	}                                         
-
-	private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("RotationATRONModulePicker");
-		JME_simulation.setPicker(new OppositeRotationATRONPicker(JME_simulation));
-	}                                         
-
-	private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("DeleteATRONModulePicker");         
-
-	}                                         
-
-	private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("AssembleMTRANPicker1");
-		JME_simulation.setPicker(new AssembleMTRANPicker1(JME_simulation));
-	}                                         
-
-	private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("RotationMTRANModulePicker");
-	}                                         
-
-	private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("DeleteMTRANModulePicker");        
-	}                                         
-
-	private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("AssembleOdinPicker1");
-		//NotYetJME_simulation.setPicker(new AssembleOdinPicker1(JME_simulation));
-	}                                         
-
-	private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("RotationOdinModulePicker");
-		JME_simulation.setPicker(new OppositeRotationOdinPicker(JME_simulation));
-	}                                         
-
-	private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("Delete OdinModule Picker");
-	}                                         
-
-	private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("ColorConnectorsPicker");
+		//System.out.println("GenericToolbar-->Color connectors"); //for debugging 
+		System.out.println("GenericToolbar-->"+jButton8.getToolTipText());//for debugging 
+		guiUtil.passTo(jTextField1, "Select module to color its connectors");// informing user
 		JME_simulation.setPicker(new ColorConnectorsPicker(JME_simulation));
-	}                                         
+	}                                        
 
-	private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("AssembleATRONPicker2");
-		JME_simulation.setPicker(new AssembleATRONPicker2(JME_simulation, 0));
-	}                                         
+	private void jCheckBoxMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
+		System.out.println("View-->Toolbars-->Module generic");//for debugging
+//		System.out.println("View-->Toolbars-->"+jCheckBoxMenuItem7.getToolTipText());//for debugging         
+		//       this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem7, jToolBar4); 
+	}                                                  
 
-	private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("AssembleATRONPicker3");
-		JME_simulation.setPicker(new AssembleATRONPicker3(JME_simulation));
-	}                                         
 
-	private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("AssembleMTRANPicker2");
-		JME_simulation.setPicker(new AssembleMTRANPicker2(JME_simulation, 0));
-	}                                         
-
-	private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		System.out.println("AssembleMTRANPicker3");
-		JME_simulation.setPicker(new AssembleMTRANPicker3(JME_simulation));
-	}                                         
-
-	private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("AssembleOdinPicker2");
-		JME_simulation.setPicker(new AssembleOdinPicker2(JME_simulation, 0));
-	}                                         
-
-	private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("AssembleOdinPicker3");
-		JME_simulation.setPicker(new AssembleOdinPicker3(JME_simulation));
-	}                                         
-
-	private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-		// TODO add your handling code here:        
-		System.out.println("ATRONConnectorNumber:"+jComboBox2.getSelectedIndex());        
-		int connectorNr= jComboBox2.getSelectedIndex();
-		JME_simulation.setPicker(new AssembleATRONPicker2(JME_simulation, connectorNr));
+	private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+		//System.out.println("View-->Toolbars-->Customize");//for debugging 
+		//   System.out.println("View-->Toolbars-->"+jMenuItem8.getText());//for debugging
+		resetToolBarVisibility();
+		//ToolBarDisplayer toolBarDisplayer = new ToolBarDisplayer(this);
+		// toolBarDisplayer.activate();
 	}                                          
 
-	private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-		// TODO add your handling code here:
-		System.out.println("MTRANConnectorNumber:"+jComboBox3.getSelectedIndex());
-		int connectorNr= jComboBox3.getSelectedIndex();
-		JME_simulation.setPicker(new AssembleMTRANPicker2(JME_simulation, connectorNr));
+	private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {      	
+		JME_simulation.setPicker(new ConstructionTools(JME_simulation, this.chosenMRname,"OnConnector"));
+		guiUtil.passTo(jTextField1,"Select connector on "+ this.chosenMRname +" modular robot");
+	}                                        
+
+	private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) { 
+		JME_simulation.setPicker(new ConstructionTools(JME_simulation, this.chosenMRname,"AllConnectors"));
+		guiUtil.passTo(jTextField1,"Select " +this.chosenMRname +" module");
+	}                                         
+
+	ConstructionTools constructionTools = new ConstructionTools(JME_simulation, this.chosenMRname,"Loop",0);
+	private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {			
+		this.connectorNr =0;//reset
+		ConstructionTools constructionToolsnew = new ConstructionTools(JME_simulation, this.chosenMRname,"Loop",this.connectorNr);
+        this.constructionTools = constructionToolsnew;
+        JME_simulation.setPicker(constructionToolsnew);
+        guiUtil.passTo(jTextField1,"1)Select " +this.chosenMRname +" module,2)use NEXT and BACK");
+
+	}                                         
+
+	private void jCheckBox5ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+		/*System.out.println("RenderToolbar-->Lights");//for debugging
+		System.out.println("RenderToolbar-->"+jCheckBox5.getText());//for debugging
+		if (JME_simulation.lightState.isEnabled() == false ){
+			System.out.println("Selected");//for debugging
+			jCheckBox5.setSelected(true);
+			JME_simulation.lightState.setEnabled(true);
+			guiUtil.passTo(jTextField1, "Rendering lights");// informing user
+		}else {
+			System.out.println("De-Selected");//for debugging
+			jCheckBox5.setSelected(false);
+			JME_simulation.lightState.setEnabled(false);
+			guiUtil.passTo(jTextField1, "Stopped rendering lights");// informing user
+		}*/
+	}                                          
+
+	private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+	/*	//System.out.println("RenderToolbar-->Normals");//for debugging
+		System.out.println("RenderToolbar-->"+jCheckBox4.getText());//for debugging
+		if ( JME_simulation.showNormals == false ){
+			System.out.println("Selected");//for debugging
+			jCheckBox4.setSelected(true);
+			JME_simulation.showNormals = true;
+			guiUtil.passTo(jTextField1, "Rendering normals");// informing user
+		}else {
+			System.out.println("De-Selected");//for debugging
+			jCheckBox4.setSelected(false);
+			JME_simulation.showNormals = false;
+			guiUtil.passTo(jTextField1, "Stopped rendering normals");// informing user
+		}*/
+	}                                          
+
+	private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+	/*	//System.out.println("RenderToolbar-->Bounds");//for debugging
+		System.out.println("RenderToolbar-->"+jCheckBox3.getText());//for debugging
+		if ( JME_simulation.showBounds == false ){
+			System.out.println("Selected");//for debugging
+			jCheckBox3.setSelected(true);
+			JME_simulation.showBounds = true;
+			guiUtil.passTo(jTextField1, "Rendering bounds");// informing user
+		}else {
+			System.out.println("De-Selected");//for debugging
+			jCheckBox3.setSelected(false);
+			JME_simulation.showBounds = false;
+			guiUtil.passTo(jTextField1, "Stopped rendering bounds");// informing user
+		}*/
+	}                                          
+
+	private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+/*		// System.out.println("RenderToolbar-->Wireframe");//for debugging
+		System.out.println("RenderToolbar-->"+jCheckBox2.getText());//for debugging
+		if ( JME_simulation.wireState.isEnabled() == false ){
+			System.out.println("Selected");//for debugging
+			jCheckBox2.setSelected(true);
+			JME_simulation.wireState.setEnabled(true);
+			guiUtil.passTo(jTextField1, "Rendering wireframe");// informing user
+		}else {
+			System.out.println("De-Selected");//for debugging
+			jCheckBox2.setSelected(false);
+			JME_simulation.wireState.setEnabled(false);
+			guiUtil.passTo(jTextField1, "Stopped rendering wireframe");// informing user
+		}*/
+	}                                          
+
+	private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+	/*	//System.out.println("RenderToolbar-->Physics");//for debugging
+		System.out.println("RenderToolbar-->"+jCheckBox1.getText());//for debugging
+		if (JME_simulation.showPhysics == false ){
+			System.out.println("Selected");//for debugging
+			jCheckBox1.setSelected(true);
+			JME_simulation.showPhysics = true;
+			guiUtil.passTo(jTextField1, "Rendering physics");// informing user
+		}else {
+			System.out.println("De-Selected");//for debugging
+			jCheckBox1.setSelected(false);
+			JME_simulation.showPhysics = false;
+			guiUtil.passTo(jTextField1, "Stopped rendering physics");// informing user
+		}*/
 	}                                          
 
 	private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-		// TODO add your handling code here:
-		System.out.println("OdinConnectorNumber:"+jComboBox1.getSelectedIndex());
-		int connectorNr= jComboBox1.getSelectedIndex();
-		JME_simulation.setPicker(new AssembleOdinPicker2(JME_simulation, connectorNr));
+		this.chosenMRname = jComboBox1.getSelectedItem().toString();
+		if (this.chosenMRname.equalsIgnoreCase("ATRON")){
+			jButton9.setEnabled(true);
+			jComboBox6.setEnabled(true);
+			jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0","1", "2", "3","4", "5", "6","7"}));
+			jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EW", "WE", "DU", "UD", "SN", "NS" }));
+
+		}else if (this.chosenMRname.equalsIgnoreCase("MTRAN")){
+			jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0","1", "2", "3","4", "5"}));
+			jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ORI1", "ORI1X", "ORI1Y", "ORI1XY", "ORI2", "ORI2X", "ORI2Y", "ORI2XY", "ORI3", "ORI3X", "ORI3Y", "ORI3XY" }));
+			jButton9.setEnabled(true);
+			jComboBox6.setEnabled(true);
+		}else if (this.chosenMRname.equalsIgnoreCase("Odin")){
+			jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0","1", "2", "3","4", "5", "6","7", "8","9", "10", "11"}));
+			jButton9.setEnabled(false);
+			jComboBox6.setEnabled(false);
+		}
+		guiUtil.passTo(jTextField1,this.chosenMRname +" modular robot (MR)");
 	}                                          
-	AssembleATRONPicker4 asapAtron4= new AssembleATRONPicker4(JME_simulation,0);
-	private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("AssembleATRONPicker4");
-		AssembleATRONPicker4 asap=new AssembleATRONPicker4(JME_simulation,0);
-		this.asapAtron4 = asap;
-		JME_simulation.setPicker(asap);		
-	}                                         
-	int connectorNrCounterAtron = 0;
-	private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("AssembleATRONPicker4-->Next");
-		asapAtron4.getIdModule();
-		System.out.println("ModuleID:"+asapAtron4.getIdModule());
-		if (connectorNrCounterAtron>7){
-			this.connectorNrCounterAtron=0;//reset
-		}        
-		asapAtron4.addNewModule(connectorNrCounterAtron++);
+
+	private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+		this.connectorNr++;
+		if (this.chosenMRname.equalsIgnoreCase("ATRON")){			
+			if (this.connectorNr>amountATRONConnectors){ this.connectorNr=0;}				
+		}else if (this.chosenMRname.equalsIgnoreCase("MTRAN")){
+			if (this.connectorNr>amountMTRANConnectors){ this.connectorNr=0;}
+		}else if (this.chosenMRname.equalsIgnoreCase("Odin")){
+			if (this.connectorNr>amountOdinBallConnectors){ this.connectorNr=0;}
+		}
+//TODO NEED TO GET BACK FOR ODIN WHICH TYPE OF MODULE IS SELECTED. 
+		constructionTools.moveToNextConnector(this.connectorNr);
+		/*else if (this.chosenMRname.equalsIgnoreCase("Odin")){
+       if (this.connectorNr>amountOdinConnectors){ this.connectorNr=0;}
+       }*/
+		guiUtil.passTo(jTextField1,this.chosenMRname +" module is on connector number "+this.connectorNr);
 	}                                         
 
-	private void jButton31ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("AssembleMTRANPicker4");
+	private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+		this.connectorNr--;
+		if (this.chosenMRname.equalsIgnoreCase("ATRON") && this.connectorNr<0){
+			this.connectorNr =7;//reset
+		}else if (this.chosenMRname.equalsIgnoreCase("MTRAN") && this.connectorNr<0){this.connectorNr=5;}
+		else if (this.chosenMRname.equalsIgnoreCase("Odin") && this.connectorNr<0){this.connectorNr=11;}
+			
+		constructionTools.moveToNextConnector(this.connectorNr);
+		guiUtil.passTo(jTextField1,this.chosenMRname +" module is on connector number "+this.connectorNr);
 	}                                         
 
-	private void jButton39ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("AssembleMTRANPicker4-->Next");
-	}         
-
-	AssembleOdinPicker4 asapOdin4= new AssembleOdinPicker4(JME_simulation,0);
-	private void jButton40ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("AssembleOdinPicker4");
-		AssembleOdinPicker4 asap=new AssembleOdinPicker4(JME_simulation,0);
-		this.asapOdin4 = asap;
-		JME_simulation.setPicker(asap);
-	}                                         
-	int connectorNrCounterOdin = 0;
-	private void jButton41ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-		// TODO add your handling code here:
-		System.out.println("AssembleOdinPicker4-->Next");
-		asapOdin4.getIdModule();
-		System.out.println("ModuleID:"+asapOdin4.getIdModule());
-		int amountConnectors =asapOdin4.getAmountConnectors();
-		System.out.println("AmounConnectors"+amountConnectors);
-		if (amountConnectors==12&&connectorNrCounterOdin>11){
-			this.connectorNrCounterOdin=0;//reset
-		}else if (amountConnectors==2 &&connectorNrCounterOdin>1){
-			this.connectorNrCounterOdin=0;
-		}  
-		System.out.println("Counter:"+connectorNrCounterOdin);
-		asapOdin4.addNewModule(connectorNrCounterOdin++);
+	private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) { 
+		JME_simulation.setPicker(new ConstructionTools(JME_simulation, this.chosenMRname,"OppositeRotation"));
+		//JME_simulation.setPicker(new OppositeRotation(JME_simulation));
+		guiUtil.passTo(jTextField1,"Select " +this.chosenMRname +" module to rotate it opposite ");
 	}                                         
 
-	private void jButton42ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+	private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {
+		String rotationName = jComboBox6.getSelectedItem().toString();
+		JME_simulation.setPicker(new ConstructionTools(JME_simulation, this.chosenMRname,"StandardRotation",rotationName));		
+		guiUtil.passTo(jTextField1,"Select " +this.chosenMRname +" module to rotate with "+ rotationName+ " rotation");
+	}                                          
+
+	private void jCheckBox6ActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		System.out.println("SaveIcon");
-		FileChooser fileChooser = new FileChooser(JME_simulation, false); 
-		fileChooser.activate(); 
+	}
 
-	}                                         
-
-	private void jButton43ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+	private void jCheckBox7ActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		System.out.println("OpenIcon");
-		FileChooser fileChooser = new FileChooser(JME_simulation, true); 
-		fileChooser.activate(); 
+	}
 
-	}                                         
-
-	private void jMenuItem38ActionPerformed(java.awt.event.ActionEvent evt) {
+	private void jCheckBox8ActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		System.out.println("File-->Exit ");
-		this.setVisible(false);
 	}
 
-	private void jMenuItem37ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-		System.out.println("File-->Save ");
-		FileChooser fileChooser = new FileChooser(JME_simulation, false); 
-		fileChooser.activate(); 
+	private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {
+		int connectorNumber = Integer.parseInt(jComboBox2.getSelectedItem().toString());
+		JME_simulation.setPicker(new ConstructionTools(JME_simulation, this.chosenMRname,"chosenConnector",connectorNumber));
+		guiUtil.passTo(jTextField1,"Select " +this.chosenMRname +" module");
 	}
 
-	private void jMenuItem43ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-		System.out.println("File-->Open ");
-		FileChooser fileChooser = new FileChooser(JME_simulation, true); 
-		fileChooser.activate(); 
+	private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {
+
+
 	}
+	private void resetToolBarVisibility(){
+		jToolBar1.setVisible(true);
+		jToolBar2.setVisible(true);
+//		jToolBar3.setVisible(true);
+		jToolBar4.setVisible(true);
+		jToolBar5.setVisible(true);
 
-	private void jCheckBoxMenuItem73ActionPerformed(java.awt.event.ActionEvent evt) {
-
-		System.out.println("Render-->Physics");
-/*		if ( JME_simulation.showPhysics == false ){
-			System.out.println("De-Selected");
-			jCheckBoxMenuItem5.setSelected(false);
-			JME_simulation.showPhysics = true;
-		}else {
-			System.out.println("Selected");
-			jCheckBoxMenuItem5.setSelected(true);
-			JME_simulation.showPhysics = false;
-		}*/
-	}
-
-	private void jCheckBoxMenuItem74ActionPerformed(java.awt.event.ActionEvent evt) {
-
-		System.out.println("Render-->Wireframe");
-/*		if ( JME_simulation.wireState.isEnabled() == false ){
-			System.out.println("De-Selected");
-			jCheckBoxMenuItem6.setSelected(false);
-			JME_simulation.wireState.setEnabled(true);
-		}else {
-			System.out.println("Selected");
-			jCheckBoxMenuItem6.setSelected(true);
-			JME_simulation.wireState.setEnabled(false);
-		}*/
-	}
-
-	private void jCheckBoxMenuItem75ActionPerformed(java.awt.event.ActionEvent evt) {
-
-		System.out.println("Render-->Lights");
-/*		if (JME_simulation.lightState.isEnabled() == false ){
-			System.out.println("De-Selected");
-			jCheckBoxMenuItem7.setSelected(false);
-			JME_simulation.lightState.setEnabled(true);
-		}else {
-			System.out.println("Selected");
-			jCheckBoxMenuItem7.setSelected(true);
-			JME_simulation.lightState.setEnabled(false);
-		}*/
-	}
-
-	private void jCheckBoxMenuItem76ActionPerformed(java.awt.event.ActionEvent evt) {
-
-		System.out.println("Render-->Bounds");
-/*		if ( JME_simulation.showBounds == false ){
-			System.out.println("De-Selected");
-			jCheckBoxMenuItem8.setSelected(false);
-			JME_simulation.showBounds = true;
-		}else {
-			System.out.println("Selected");
-			jCheckBoxMenuItem8.setSelected(true);
-			JME_simulation.showBounds = false;
-		}*/
-	}
-
-	private void jCheckBoxMenuItem77ActionPerformed(java.awt.event.ActionEvent evt) {
-
-		System.out.println("Render-->Normals");
-/*		if ( JME_simulation.showNormals == false ){
-			System.out.println("De-Selected");
-			jCheckBoxMenuItem9.setSelected(false);
-			JME_simulation.showNormals = true;
-		}else {
-			System.out.println("Selected");
-			jCheckBoxMenuItem9.setSelected(true);
-			JME_simulation.showNormals = false;
-		}*/
-	}
+	}  
 
 	/**
 	 * @param args the command line arguments
 	 */
-	/*public static void main (String args[]) {
+	/*   public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QuickPrototyping().setVisible(true);
+                QuickPrototyping1 quickPrototyping = new QuickPrototyping1(JME_simulation);
+                quickPrototyping.setSize(320, 320);
+                quickPrototyping.setVisible(true);                
             }
         });
     }*/
-	public static void activate (final JMEBasicGraphicalSimulation simulation) {
+	public static void activate(final JMEBasicGraphicalSimulation simulation) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new QuickPrototyping(simulation).setVisible(true);
+				QuickPrototyping quickPrototyping = new QuickPrototyping(simulation);
+				quickPrototyping.setSize(320, 320);
+				quickPrototyping.setVisible(true); 
 			}
 		});
 	}
 
+	public JToolBar getToolBar1(){         
+		return jToolBar1;
+	}
+
+	public JToolBar getToolBar2(){         
+		return jToolBar2;
+	}
+
+	public JToolBar getToolBar3(){         
+		return jToolBar3;
+	}
+	public JToolBar getToolBar4(){         
+		return jToolBar4;
+	} 
+	public JToolBar getToolBar5(){         
+		return jToolBar5;
+	}  
+
+
 	// Variables declaration - do not modify
+	private javax.swing.JButton jButton1;
 	private javax.swing.JButton jButton10;
 	private javax.swing.JButton jButton11;
 	private javax.swing.JButton jButton12;
 	private javax.swing.JButton jButton13;
 	private javax.swing.JButton jButton14;
-	private javax.swing.JButton jButton15;
-	private javax.swing.JButton jButton16;
-	private javax.swing.JButton jButton17;
-	private javax.swing.JButton jButton18;
-	private javax.swing.JButton jButton19;
-	private javax.swing.JButton jButton20;
-	private javax.swing.JButton jButton21;
-	private javax.swing.JButton jButton22;
-	private javax.swing.JButton jButton23;
-	private javax.swing.JButton jButton24;
-	private javax.swing.JButton jButton25;
-	private javax.swing.JButton jButton26;
-	private javax.swing.JButton jButton27;
-	private javax.swing.JButton jButton28;
-	private javax.swing.JButton jButton29;
-	private javax.swing.JButton jButton30;
-	private javax.swing.JButton jButton31;
-	private javax.swing.JButton jButton32;
-	private javax.swing.JButton jButton33;
-	private javax.swing.JButton jButton34;
-	private javax.swing.JButton jButton35;
-	private javax.swing.JButton jButton36;
-	private javax.swing.JButton jButton37;
-	private javax.swing.JButton jButton38;
-	private javax.swing.JButton jButton39;
-	private javax.swing.JButton jButton40;
-	private javax.swing.JButton jButton41;
-	private javax.swing.JButton jButton42;
-	private javax.swing.JButton jButton43;
+	private javax.swing.JButton jButton2;
+	private javax.swing.JButton jButton3;
+	private javax.swing.JButton jButton4;
 	private javax.swing.JButton jButton5;
 	private javax.swing.JButton jButton6;
 	private javax.swing.JButton jButton7;
 	private javax.swing.JButton jButton8;
 	private javax.swing.JButton jButton9;
+	private javax.swing.JCheckBox jCheckBox1;
+	private javax.swing.JCheckBox jCheckBox2;
+	private javax.swing.JCheckBox jCheckBox3;
+	private javax.swing.JCheckBox jCheckBox4;
+	private javax.swing.JCheckBox jCheckBox5;
+	private javax.swing.JCheckBox jCheckBox6;
+	private javax.swing.JCheckBox jCheckBox7;
+	private javax.swing.JCheckBox jCheckBox8;
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem10;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem11;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem12;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem13;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem14;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem15;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem16;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem17;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem18;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem19;
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem20;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem21;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem22;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem23;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem24;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem25;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem26;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem27;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem28;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem29;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem30;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem31;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem32;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem33;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem34;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem35;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem36;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem37;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem38;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem39;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem40;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem41;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem42;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem43;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem44;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem45;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem46;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem47;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem48;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem49;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem5;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem50;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem51;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem52;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem53;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem54;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem55;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem56;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem57;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem58;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem59;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem6;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem60;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem61;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem62;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem63;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem64;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem65;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem66;
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem67;
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem68;
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem69;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem7;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem70;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem71;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem72;
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem73;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem74;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem75;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem76;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem77;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem8;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem9;
 	private javax.swing.JComboBox jComboBox1;
 	private javax.swing.JComboBox jComboBox2;
-	private javax.swing.JComboBox jComboBox3;
+	private javax.swing.JComboBox jComboBox6;
+	private javax.swing.JLabel jLabel1;
 	private javax.swing.JMenu jMenu1;
-	private javax.swing.JMenu jMenu10;
-	private javax.swing.JMenu jMenu11;
-	private javax.swing.JMenu jMenu12;
-	private javax.swing.JMenu jMenu13;
-	private javax.swing.JMenu jMenu14;
-	private javax.swing.JMenu jMenu15;
-	private javax.swing.JMenu jMenu16;
-	private javax.swing.JMenu jMenu17;
-	private javax.swing.JMenu jMenu18;
-	private javax.swing.JMenu jMenu19;
-	private javax.swing.JMenu jMenu2;
-	private javax.swing.JMenu jMenu20;
-	private javax.swing.JMenu jMenu21;
-	private javax.swing.JMenu jMenu22;
-	private javax.swing.JMenu jMenu23;
-	private javax.swing.JMenu jMenu24;
-	private javax.swing.JMenu jMenu25;
-	private javax.swing.JMenu jMenu26;
-	private javax.swing.JMenu jMenu27;
-	private javax.swing.JMenu jMenu28;
-	private javax.swing.JMenu jMenu29;
-	private javax.swing.JMenu jMenu3;
-	private javax.swing.JMenu jMenu30;
 	private javax.swing.JMenu jMenu31;
 	private javax.swing.JMenu jMenu32;
 	private javax.swing.JMenu jMenu33;
-	private javax.swing.JMenu jMenu34;
-	private javax.swing.JMenu jMenu35;
-	private javax.swing.JMenu jMenu36;
-	private javax.swing.JMenu jMenu37;
-	private javax.swing.JMenu jMenu38;
-	private javax.swing.JMenu jMenu39;
-	private javax.swing.JMenu jMenu4;
-	private javax.swing.JMenu jMenu40;
-	private javax.swing.JMenu jMenu41;
-	private javax.swing.JMenu jMenu42;
-	private javax.swing.JMenu jMenu5;
-	private javax.swing.JMenu jMenu6;
-	private javax.swing.JMenu jMenu7;
-	private javax.swing.JMenu jMenu8;
-	private javax.swing.JMenu jMenu9;
 	private javax.swing.JMenuBar jMenuBar1;
-	private javax.swing.JMenuBar jMenuBar2;
-	private javax.swing.JMenuBar jMenuBar3;
-	private javax.swing.JMenuBar jMenuBar4;
-	private javax.swing.JMenuBar jMenuBar5;
-	private javax.swing.JMenuBar jMenuBar6;
-	private javax.swing.JMenuBar jMenuBar7;
+	private javax.swing.JMenuBar jMenuBar10;
+	private javax.swing.JMenuBar jMenuBar11;
+	private javax.swing.JMenuBar jMenuBar8;
 	private javax.swing.JMenuItem jMenuItem1;
-	private javax.swing.JMenuItem jMenuItem10;
-	private javax.swing.JMenuItem jMenuItem11;
-	private javax.swing.JMenuItem jMenuItem12;
-	private javax.swing.JMenuItem jMenuItem13;
-	private javax.swing.JMenuItem jMenuItem14;
-	private javax.swing.JMenuItem jMenuItem15;
-	private javax.swing.JMenuItem jMenuItem16;
-	private javax.swing.JMenuItem jMenuItem17;
-	private javax.swing.JMenuItem jMenuItem18;
-	private javax.swing.JMenuItem jMenuItem19;
 	private javax.swing.JMenuItem jMenuItem2;
-	private javax.swing.JMenuItem jMenuItem20;
-	private javax.swing.JMenuItem jMenuItem21;
-	private javax.swing.JMenuItem jMenuItem22;
-	private javax.swing.JMenuItem jMenuItem23;
-	private javax.swing.JMenuItem jMenuItem24;
-	private javax.swing.JMenuItem jMenuItem25;
-	private javax.swing.JMenuItem jMenuItem26;
-	private javax.swing.JMenuItem jMenuItem27;
-	private javax.swing.JMenuItem jMenuItem28;
-	private javax.swing.JMenuItem jMenuItem29;
 	private javax.swing.JMenuItem jMenuItem3;
-	private javax.swing.JMenuItem jMenuItem30;
-	private javax.swing.JMenuItem jMenuItem31;
-	private javax.swing.JMenuItem jMenuItem32;
-	private javax.swing.JMenuItem jMenuItem33;
-	private javax.swing.JMenuItem jMenuItem34;
-	private javax.swing.JMenuItem jMenuItem35;
-	private javax.swing.JMenuItem jMenuItem36;
-	private javax.swing.JMenuItem jMenuItem37;
-	private javax.swing.JMenuItem jMenuItem38;
-	private javax.swing.JMenuItem jMenuItem39;
-	private javax.swing.JMenuItem jMenuItem4;
-	private javax.swing.JMenuItem jMenuItem40;
 	private javax.swing.JMenuItem jMenuItem41;
 	private javax.swing.JMenuItem jMenuItem42;
 	private javax.swing.JMenuItem jMenuItem43;
-	private javax.swing.JMenuItem jMenuItem5;
-	private javax.swing.JMenuItem jMenuItem6;
-	private javax.swing.JMenuItem jMenuItem7;
-	private javax.swing.JMenuItem jMenuItem8;
-	private javax.swing.JMenuItem jMenuItem9;
-	private javax.swing.JToolBar.Separator jSeparator1;
-	private javax.swing.JToolBar.Separator jSeparator10;
-	private javax.swing.JToolBar.Separator jSeparator11;
-	private javax.swing.JToolBar.Separator jSeparator12;
-	private javax.swing.JToolBar.Separator jSeparator13;
-	private javax.swing.JToolBar.Separator jSeparator14;
-	private javax.swing.JToolBar.Separator jSeparator15;
-	private javax.swing.JToolBar.Separator jSeparator16;
-	private javax.swing.JToolBar.Separator jSeparator17;
-	private javax.swing.JSeparator jSeparator18;
-	private javax.swing.JSeparator jSeparator19;
-	private javax.swing.JSeparator jSeparator2;
-	private javax.swing.JToolBar.Separator jSeparator20;
-	private javax.swing.JToolBar.Separator jSeparator21;
-	private javax.swing.JToolBar.Separator jSeparator22;
-	private javax.swing.JToolBar.Separator jSeparator23;
-	private javax.swing.JToolBar.Separator jSeparator24;
-	private javax.swing.JToolBar.Separator jSeparator25;
-	private javax.swing.JToolBar.Separator jSeparator26;
-	private javax.swing.JToolBar.Separator jSeparator27;
-	private javax.swing.JToolBar.Separator jSeparator28;
-	private javax.swing.JToolBar.Separator jSeparator29;
-	private javax.swing.JToolBar.Separator jSeparator3;
-	private javax.swing.JToolBar.Separator jSeparator30;
-	private javax.swing.JToolBar.Separator jSeparator31;
-	private javax.swing.JToolBar.Separator jSeparator32;
-	private javax.swing.JSeparator jSeparator33;
-	private javax.swing.JSeparator jSeparator34;
-	private javax.swing.JToolBar.Separator jSeparator35;
-	private javax.swing.JToolBar.Separator jSeparator36;
-	private javax.swing.JToolBar.Separator jSeparator37;
-	private javax.swing.JSeparator jSeparator38;
-	private javax.swing.JSeparator jSeparator39;
-	private javax.swing.JToolBar.Separator jSeparator4;
-	private javax.swing.JSeparator jSeparator40;
-	private javax.swing.JSeparator jSeparator41;
-	private javax.swing.JSeparator jSeparator42;
-	private javax.swing.JSeparator jSeparator43;
-	private javax.swing.JSeparator jSeparator44;
-	private javax.swing.JSeparator jSeparator45;
-	private javax.swing.JToolBar.Separator jSeparator46;
-	private javax.swing.JToolBar.Separator jSeparator47;
-	private javax.swing.JSeparator jSeparator5;
-	private javax.swing.JToolBar.Separator jSeparator6;
-	private javax.swing.JToolBar.Separator jSeparator7;
-	private javax.swing.JToolBar.Separator jSeparator8;
-	private javax.swing.JToolBar.Separator jSeparator9;
+	private javax.swing.JMenuItem jMenuItem44;
+	private javax.swing.JSeparator jSeparator1;
+	private javax.swing.JSeparator jSeparator21;
+	private javax.swing.JSeparator jSeparator22;
+	private javax.swing.JSpinner jSpinner1;
+	private javax.swing.JTextField jTextField1;
 	private javax.swing.JToolBar jToolBar1;
 	private javax.swing.JToolBar jToolBar2;
 	private javax.swing.JToolBar jToolBar3;
 	private javax.swing.JToolBar jToolBar4;
 	private javax.swing.JToolBar jToolBar5;
 	private javax.swing.JToolBar jToolBar6;
-	private javax.swing.JToolBar jToolBar7;
 	// End of variables declaration
 
 }
