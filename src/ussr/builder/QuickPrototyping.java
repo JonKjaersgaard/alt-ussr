@@ -123,8 +123,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
 		setResizable(false);
 		getContentPane().setLayout(new java.awt.FlowLayout());
 
-		jButton1.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\play.JPG")); // NOI18N
-		//jButton1.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/play.JPG"));
+		//jButton1.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\play.JPG")); // NOI18N
+		jButton1.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/play.JPG"));
 		jButton1.setToolTipText("Play/Pause");
 		jButton1.setFocusable(false);
 		jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -136,8 +136,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
 		});
 		jToolBar1.add(jButton1);
 
-		jButton2.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\step_by_step.JPG")); // NOI18N
-		//jButton2.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/step_by_step.JPG"));
+		//jButton2.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\step_by_step.JPG")); // NOI18N
+		jButton2.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/step_by_step.JPG"));
 		jButton2.setToolTipText("Step by step ");
 		jButton2.setFocusable(false);
 		jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -149,8 +149,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
 		});
 		jToolBar1.add(jButton2);
 
-		jButton3.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\save.JPG")); // NOI18N
-		//jButton3.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/save.JPG"));
+		//jButton3.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\save.JPG")); // NOI18N
+		jButton3.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/save.JPG"));
 		jButton3.setToolTipText(" Save");
 		jButton3.setFocusable(false);
 		jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -162,8 +162,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
 		});
 		jToolBar1.add(jButton3);
 
-		jButton4.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\open.JPG")); // NOI18N
-		//jButton4.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/open.JPG"));
+		//jButton4.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\open.JPG")); // NOI18N
+		jButton4.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/open.JPG"));
 		jButton4.setToolTipText("Open");
 		jButton4.setFocusable(false);
 		jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -240,8 +240,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
 		jToolBar4.setRollover(true);
 		jToolBar4.setPreferredSize(new java.awt.Dimension(300, 43));
 
-		jButton5.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\move.JPG")); // NOI18N
-		//jButton5.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/move.JPG"));
+		//jButton5.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\move.JPG")); // NOI18N
+		jButton5.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/move.JPG"));
 		jButton5.setToolTipText("Move");
 		jButton5.setFocusable(false);
 		jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -253,8 +253,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
 		});
 		jToolBar4.add(jButton5);
 
-		jButton7.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\delete.JPG")); // NOI18N
-		//jButton7.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/delete.JPG"));
+		//jButton7.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\delete.JPG")); // NOI18N
+		jButton7.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/delete.JPG"));
 		jButton7.setToolTipText("Delete");
 		jButton7.setFocusable(false);
 		jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -266,8 +266,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
 		});
 		jToolBar4.add(jButton7);
 
-		jButton8.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\colorConnectors.JPG")); // NOI18N
-		//jButton8.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/colorConnectors.JPG"));
+		//jButton8.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\colorConnectors.JPG")); // NOI18N
+		jButton8.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/colorConnectors.JPG"));
 		jButton8.setToolTipText("Color connectors");
 		jButton8.setFocusable(false);
 		jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -319,8 +319,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
 		});
 		jToolBar4.add(jSpinner1);
 
-		jButton6.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\rotateArrow.JPG")); // NOI18N
-		//jButton6.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/rotateArrow.JPG"));
+		//jButton6.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\Konstantinas.PC428130132326\\Desktop\\FORK\\NetBeansProjects\\GUIFormExamples\\src\\THESIS\\rotateArrow.JPG")); // NOI18N
+		jButton6.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/rotateArrow.JPG"));
 		jButton6.setToolTipText("Rotate");
 		jButton6.setFocusable(false);
 		jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
