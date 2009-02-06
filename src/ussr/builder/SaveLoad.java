@@ -1,16 +1,14 @@
 package ussr.builder;
 
+import java.awt.Color;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
-import java.io.*;
-
-import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 //SAX classes.
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -38,22 +36,14 @@ public class SaveLoad {
 	private JMESimulation simulation;
 
 	/**
-	 * @param simulation
+	 * Constructor
+	 * @param simulation, the physical simulation
 	 */
 	public SaveLoad(JMESimulation simulation){
 		this.simulation = simulation;
 	}
 
-	/*	  public static void main (String args[]) {
-
-		  writeXMLfile("module1s");
-
-}*/
-
-
-
-
-	public  void saveXMLfile(String fileDirectoryName){
+	public void saveXMLfile(String fileDirectoryName){
 		File newFile = new File (fileDirectoryName +".xml");
 		BufferedWriter out = null;
 		try {
@@ -88,22 +78,35 @@ public class SaveLoad {
 
 		int amountModules = simulation.getModules().size();
 		for (int module=0; module<amountModules;module++){
-
-			Module curentModule = simulation.getModules().get(module);
-			char[] moduleName = curentModule.getProperty("name").toCharArray();
+           
+			Module currentModule = simulation.getModules().get(module);
+			
+			char[] moduleType = currentModule.getProperty("ussr.module.type").toCharArray();
+			char[] moduleName = currentModule.getProperty("name").toCharArray();
 			//System.out.println("moduleName: "+curentModule.getProperty("name"));//For debugging
+			
+		/*	int amountColorComponents = currentModule.getColorList().size();
+			
+			for (int color=0; color<amountColorComponents;color++){
+				System.out.println("Color"+currentModule.getColorList().get(color));//For debugging
+			}*/
+			
+			
+			
+			
+			String moduleID =String.valueOf(currentModule.getID());
+			char[] moduleRotation = currentModule.getPhysics().get(0).getRotation().toString().toCharArray();
+			char[] modulePosition = currentModule.getPhysics().get(0).getPosition().toString().toCharArray();			
+			
+		    			
+			
+			int amountConnectors = currentModule.getConnectors().size();
 
-			String moduleID =String.valueOf(curentModule.getID());
-			char[] moduleRotation = curentModule.getPhysics().get(0).getRotation().toString().toCharArray();
-			char[] modulePosition = curentModule.getPhysics().get(0).getPosition().toString().toCharArray();
-
-			int amountConnectors = curentModule.getConnectors().size();
-
-			ArrayList<String> statesConnectors = new ArrayList();
-			ArrayList<String> numbersConnectors = new ArrayList();	
+			ArrayList<String> statesConnectors = new ArrayList<String>();
+			ArrayList<String> numbersConnectors = new ArrayList<String>();	
 			for (int connector=0; connector<amountConnectors;connector++){
-				boolean connectorState = curentModule.getConnectors().get(connector).isConnected();
-				String connectorNumber = curentModule.getConnectors().get(connector).getProperty("ussr.connector_number");
+				boolean connectorState = currentModule.getConnectors().get(connector).isConnected();
+				String connectorNumber = currentModule.getConnectors().get(connector).getProperty("ussr.connector_number");
 				numbersConnectors.add(connectorNumber);
 				//System.out.println("conectorNumber: "+connectorNumber);//For debugging
 				if (connectorState){
@@ -125,6 +128,10 @@ public class SaveLoad {
 				hd.startElement("","","ID",emptyAtt);
 				hd.characters(moduleID.toCharArray(),0,moduleID.toCharArray().length);
 				hd.endElement("","","ID");
+				
+				hd.startElement("","","TYPE",emptyAtt);
+				hd.characters(moduleType,0,moduleType.length);
+				hd.endElement("","","TYPE");
 
 				hd.startElement("","","NAME",emptyAtt);
 				hd.characters(moduleName,0,moduleName.length);
