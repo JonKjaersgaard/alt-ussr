@@ -38,13 +38,22 @@ public class RemoveModulePicker  extends CustomizedPicker{
 	@Override
 	protected void pickModuleComponent(JMEModuleComponent component) {
 
-		int moduleID = component.getModel().getID();		
-		int nrComponents= simulation.getModules().get(moduleID).getNumberOfComponents();
-
-		for (int com=0; com<nrComponents;com++){			
-			JMEModuleComponent moduleComponent= (JMEModuleComponent)simulation.getModules().get(moduleID).getComponent(com);			
+		int selectedModuleID = component.getModel().getID();		
+		int nrComponents= simulation.getModules().get(selectedModuleID).getNumberOfComponents();		
+		
+		for (int compon=0; compon<nrComponents;compon++){			
+			JMEModuleComponent moduleComponent= (JMEModuleComponent)simulation.getModules().get(selectedModuleID).getComponent(compon);			
 			for(DynamicPhysicsNode part: moduleComponent.getNodes()){
-				part.detachAllChildren();	            
+				int amountNodes = moduleComponent.getNodes().size();
+				for (int node=0; node<amountNodes; node++ ){ //removes bounds and visuals
+					moduleComponent.getNodes().get(node).removeFromParent();
+				}
+				part.lock();//Freezes everything			
+				part.setIsCollidable(false);
+				part.setActive(false);
+				//part.setCullMode(1);				
+				part.detachAllChildren();//removes visual
+				// LOOK INTO CREATE METHOD AND REMOVE THE LIST,lIST				
 			}        
 		}	
 	}
