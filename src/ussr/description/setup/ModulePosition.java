@@ -32,6 +32,12 @@ public class ModulePosition {
     private RotationDescription rotation;
     private Map<String, String> properties;
 
+    
+    public ModulePosition(ModulePosition mPos, String typeProperties) {
+        this(mPos.getName(),typeProperties,mPos.getPosition(),mPos.getRotation());
+    }
+    
+    
     /**
      * @param name
      * @param position
