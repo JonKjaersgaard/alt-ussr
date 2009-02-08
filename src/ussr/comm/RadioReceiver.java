@@ -16,13 +16,22 @@ import ussr.model.Module;
  * @author Modular Robots @ MMMI
  */
 public class RadioReceiver extends GenericReceiver {
+	private boolean enabled = true;
 	public RadioReceiver(Module module, Entity hardware, ReceivingDevice receiver) {
 		super(module, hardware, receiver.getType(), receiver.getBufferSize());
 		
 	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	public boolean isEnabled() {
+		return enabled;
+	}
 	public boolean canReceiveFrom(Transmitter transmitter) { 
-		if(isCompatible(transmitter.getType())) {
-			return true;
+		if(isEnabled()) {
+			if(isCompatible(transmitter.getType())) {
+				return true;
+			}
 		}
 		return false;
 	}

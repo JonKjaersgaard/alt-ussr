@@ -47,12 +47,11 @@ public class JMEATRONFactory implements ModuleFactory {
     private JMESimulation simulation;
     float pi = (float)Math.PI;
     
-  //create ATRON
+//create ATRON
     public void createModule(int module_id, Module module, Robot robot, String module_name) {
         if(!robot.getDescription().getType().startsWith("ATRON")) throw new Error("Illegal module type: "+robot.getDescription().getType());
         
         if(robot.getDescription().getModuleComponents().size()!=2) throw new RuntimeException("Not an ATRON");
-        
         createModuleComponents(module, robot, module_id, module_name);
         
         JMEModuleComponent northComponent = (JMEModuleComponent)module.getComponent(0);
@@ -67,7 +66,6 @@ public class JMEATRONFactory implements ModuleFactory {
         addProximitySensors(module);
         addCenterActuator(module, robot);
         addTiltSensors(module,northComponent.getModuleNode());
-        
     }
     
     private void setName(Module module, String module_name) {
@@ -201,7 +199,6 @@ public class JMEATRONFactory implements ModuleFactory {
             module.getTransmitters().get(channel).setMaxBufferSize(128);
         }
         if(robot.getDescription().getType().contains("radio")) {
-        	System.out.println("module has an radio");
         	int channel = 8;
         	TransmissionDevice atronRadioTrans = new TransmissionDevice(TransmissionType.RADIO,Float.MAX_VALUE);
             ReceivingDevice atronRadioRec = new ReceivingDevice(TransmissionType.RADIO,10);

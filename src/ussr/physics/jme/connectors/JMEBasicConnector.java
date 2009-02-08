@@ -387,7 +387,7 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
 	}
     
     protected void updateProximiteConnectors(float ignoreDistance) {
-		ArrayList<JMEConnector> nearbyConnectors = getNearbyConnectors(ignoreDistance);
+    	ArrayList<JMEConnector> nearbyConnectors = getNearbyConnectors(ignoreDistance);
 		proximateConnectors.clear();
 		for(JMEConnector c : nearbyConnectors) {
 			if(canConnectTo(c)&&!isSameModule(c)) {

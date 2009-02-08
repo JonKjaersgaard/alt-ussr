@@ -43,8 +43,9 @@ public class WifiCMBroadcaster implements PhysicsObserver {
 	 			ByteBuffer bb = new ByteBuffer(3);
 				bb.append(LEARNING_MESSAGE);
 				bb.append(label);
+				bb.append(stateCount);
 				bb.append(reward);
-				System.out.println("reward send = "+reward);
+				System.out.println(stateCount+": Reward send = "+reward);
 				Packet packet = new Packet(bb.toArray());
 				radio.send(packet);
 			}

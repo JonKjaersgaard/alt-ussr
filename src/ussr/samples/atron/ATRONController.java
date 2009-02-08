@@ -8,7 +8,10 @@ package ussr.samples.atron;
 
 import ussr.comm.Packet;
 import ussr.comm.PacketReceivedObserver;
+import ussr.comm.RadioReceiver;
+import ussr.comm.RadioTransmitter;
 import ussr.comm.Receiver;
+import ussr.comm.Transmitter;
 import ussr.model.ControllerImpl;
 import ussr.model.Module;
 import ussr.model.Sensor;
@@ -40,6 +43,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	 */
     public void home() { 
         this.rotateToDegreeInDegrees(180);
+    
     }
     
     /**
@@ -50,6 +54,12 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         zeroPos = module.getActuators().get(0).getEncoderValue();
         PhysicsLogger.logNonCritical("[Encoder = "+zeroPos+"]");
         if(zeroPos==Float.NaN) throw new Error("Unable to read encoder");
+        if(module.getTransmitters().get(8)!=null)  { //module has a radio
+        	if(module.getProperty("radio")!=null && module.getProperty("radio").equals("disabled")) {
+        		((RadioTransmitter) module.getTransmitters().get(8)).setEnabled(false);
+        		((RadioReceiver) module.getReceivers().get(8)).setEnabled(false);
+        	}
+        }
     }
     
     /**
@@ -251,7 +261,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	 * @see ussr.samples.atron.IATRONAPI#canConnect(int)
 	 */
     public boolean canConnect(int i) {
-    	if(isConnected(i)&&!module.getConnectors().get(i).hasProximateConnector()) System.out.println("Inconsistant connector state detected!");
+    	if(isConnected(i)&&!module.getConnectors().get(i).hasProximateConnector()) System.out.println(getName()+": Inconsistant connector state detected!");
     	return isOtherConnectorNearby(i)&&isMale(i)&&!isConnected(i);
     }
 
@@ -259,7 +269,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	 * @see ussr.samples.atron.IATRONAPI#canDisconnect(int)
 	 */
 	public boolean canDisconnect(int i) {
-		if(isConnected(i)&&!module.getConnectors().get(i).hasProximateConnector()) System.out.println("Inconsistant connector state detected!");
+		if(isConnected(i)&&!module.getConnectors().get(i).hasProximateConnector()) System.out.println(getName()+": Inconsistant connector state detected!");
     	return isMale(i)&&isConnected(i);
     }
 
@@ -359,6 +369,16 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	{
     	if(isOtherConnectorNearby(connector)&&connector<8) {
 			module.getTransmitters().get(connector).send(new Packet(message));
+			return 1;
+		}
+    	else if(connector==8) { //radio
+    		Transmitter trans =  module.getTransmitters().get(connector);
+    		if(trans!=null &&  ((RadioTransmitter)trans).isEnabled()) {
+    			trans.send(new Packet(message));
+    		}
+    		else {
+    			System.err.println("Warning: module attempts to send message over non existing/disabled radio");
+    		}
 			return 1;
 		}
 		return 0;
