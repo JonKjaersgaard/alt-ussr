@@ -90,7 +90,6 @@ public abstract class GenericSimulation {
      */
     private static WorldDescription createWorld() {
         WorldDescription world = new WorldDescription();
-        world.setNumberOfModules(10);
         world.setPlaneSize(250);
         world.setObstacles(new VectorDescription[] {
                 new VectorDescription(0,-2.5f,0),
