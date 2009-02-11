@@ -1,6 +1,5 @@
 package ussr.samples.atron.network;
 
-import ussr.model.Controller;
 import ussr.network.ModularCommanderConnection;
 import ussr.network.ModularCommanderConnection.Mapper;
 import ussr.samples.atron.ATRONController;
