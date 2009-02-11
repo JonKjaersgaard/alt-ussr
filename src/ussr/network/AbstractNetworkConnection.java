@@ -57,8 +57,8 @@ public abstract class AbstractNetworkConnection {
 	            throw new Error("Unable to open connection");
 	        }
 	    }
-	    while(activationHook(input,output,connection));
+	    while(activationHook(input,output));
 	}
 
-	public abstract boolean activationHook(InputStream input, OutputStream output, Socket connection);
+	public abstract boolean activationHook(InputStream input, OutputStream output);
 }

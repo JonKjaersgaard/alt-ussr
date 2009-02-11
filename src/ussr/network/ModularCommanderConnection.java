@@ -6,11 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-
-import ussr.model.Controller;
 
 public class ModularCommanderConnection extends AbstractNetworkConnection {
 
