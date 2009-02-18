@@ -298,7 +298,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		}
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_quick_prototyping_of_simulation_scenarios", false)) {
 			QuickPrototyping.activate(this);
-		}
+		}	
 	}
 	protected void cameraPerspective() {
 		if(cam!=null) {
@@ -860,5 +860,97 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
 	public void addGadget(SimulationGadget gadget) {
 		DebugShell.addGadget(gadget);
+	}
+	/**
+	 * Returns the state of showing normals 
+	 * @return
+	 */
+	public boolean isShowNormals() {
+		return showNormals;
+	}
+	
+	/**
+	 * Sets the state of  showing normals
+	 * @param showNormals
+	 */
+	public void setShowNormals(boolean showNormals) {
+		this.showNormals = showNormals;
+	}
+	
+	/**
+	 * Returns the state of showing bounds 
+	 * @return
+	 */
+	public boolean isShowBounds() {
+		return showBounds;
+	}
+	
+	/**
+	 * Sets the state of showing bounds
+	 * @param showBounds
+	 */
+	public void setShowBounds(boolean showBounds) {
+		this.showBounds = showBounds;
+	}
+	/**
+	 * Returns the state of showing physics 
+	 * @return
+	 */
+	public boolean isShowPhysics() {
+		return showPhysics;
+	}
+	/**
+	 * Sets the state of showing physics
+	 * @param showPhysics
+	 */
+	public void setShowPhysics(boolean showPhysics) {
+		this.showPhysics = showPhysics;
+	}
+	
+	/**
+	 * Returns the state of showing lights 
+	 * @return
+	 */
+	public LightState getLightState() {
+		return lightState;
+	}
+	
+	/**
+	 * Sets the state of showing lights
+	 * @param lightState
+	 */
+	public void setLightState(LightState lightState) {
+		this.lightState = lightState;
+	}
+	
+	/**
+	 *  Returns the state of showing wireFrame 
+	 * @return
+	 */
+	public WireframeState getWireState() {
+		return wireState;
+	}
+	/**
+	 *  Sets the state of showing wireFrame
+	 * @param wireState
+	 */
+	public void setWireState(WireframeState wireState) {
+		this.wireState = wireState;
+	}
+	
+	/**
+	 * Returns the state of simulation step
+	 * @return
+	 */
+	public boolean isSingleStep() {
+		return singleStep;
+	}
+	
+	/**
+	 * Sets the state of simulation step
+	 * @param singleStep
+	 */
+	public void setSingleStep(boolean singleStep) {
+		this.singleStep = singleStep;
 	}	
 }
