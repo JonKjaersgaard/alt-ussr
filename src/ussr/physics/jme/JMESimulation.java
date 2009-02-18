@@ -395,26 +395,12 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             ModulePosition p = positions.next();
             module.assignToModulePosition(p);
             registry.put(p.getName(), module);
-            
-            /*List<? extends PhysicsEntity> components = module.getPhysics();
-            // Reset each component
-            for(PhysicsEntity pe: components)
-                ((JMEModuleComponent)pe).reset();
-            
-            for(PhysicsEntity c1: components) { //works if CAD ATRON
-                DynamicPhysicsNode node = ((JMEModuleComponent)c1).getModuleNode();
-                node.getLocalTranslation().set(p.getPosition().getX(), p.getPosition().getY(), p.getPosition().getZ());
-                node.setLocalRotation(new Quaternion(p.getRotation().getRotation()));
-                node.clearDynamics();
-            }*/
-            /*for(Actuator actuator:  module.getActuators()) { 
-                ((PhysicsActuator)actuator.getPhysics().get(0)).reset();
-            }*/
         }
         // The following only works for mechanical connectors
         // HARDCODED: assumes one physics per connector
+        List<ModuleConnection> connections = this.worldDescription.getConnections();
         TopologyWriter writer = options.getTopologyWriter();
-        for(ModuleConnection connection: this.worldDescription.getConnections()) {
+        for(ModuleConnection connection: connections) {
             Module m1 = registry.get(connection.getModule1());
             Module m2 = registry.get(connection.getModule2());
             if(m1.getID()==m2.getID()) {
