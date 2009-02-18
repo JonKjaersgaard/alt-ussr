@@ -10,13 +10,17 @@ import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
+import ussr.samples.atron.ATRON;
+import ussr.samples.atron.simulations.ATRONSimpleVehicleController1;
 
 /**
  * Simple MTRAN simulation with a snake robot
  * 
  * @author david
- *
+ * @author Konstantinas(modified for the project called "Quick Prototyping of Simulation Scenarios")
+ * Previous name of the class was MTRANSampleSimulation1.java
  */
+//TODO CONSIDER IMPLEMENTING SEPARATE FILE WITH CREATION OF ALL POSSIBLE MR ROBOTS AND EMPTY CONTROLLERS
 public class InteractiveMtranBuilderTest1 extends MTRANSimulation { 
 
 	public static void main( String[] args ) {
@@ -35,9 +39,10 @@ public class InteractiveMtranBuilderTest1 extends MTRANSimulation {
 	}
 	
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
-		//simulation.setGravity(0.0f);
+		
+	
 	}
 	protected void constructRobot() {		
-		addModule(1,0,0,ORI2X,"leftBackSpline");		
+		addModule(6,0,0,ORI2,"leftBackSpline");//ORI1X		
 	}
 }

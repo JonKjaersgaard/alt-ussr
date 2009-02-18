@@ -20,17 +20,27 @@ import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.samples.GenericSimulation;
+import ussr.samples.atron.ATRON;
+import ussr.samples.atron.simulations.ATRONSimpleVehicleController1;
+import ussr.samples.mtran.MTRAN;
+import ussr.samples.mtran.MTRANSampleController2;
 import ussr.samples.odin.OdinBuilder;
 import ussr.samples.odin.modules.OdinBall;
+import ussr.samples.odin.modules.OdinBattery;
+import ussr.samples.odin.modules.OdinHinge;
 import ussr.samples.odin.modules.OdinMuscle;
+import ussr.samples.odin.modules.OdinSpring;
+import ussr.samples.odin.modules.OdinTube;
+import ussr.samples.odin.modules.OdinWheel;
 
 /**
  * Simple Odin simulation test setup
  * 
  * @author david
- *
+ * @author Konstantinas(modified for the project called "Quick Prototyping of Simulation Scenarios")
+ * Previous name of the class was OdinSimulation1.java
  */
-
+//TODO CONSIDER IMPLEMENTING SEPARATE FILE WITH CREATION OF ALL POSSIBLE MR ROBOTS AND EMPTY CONTROLLERS  
 public class InteractiveOdinBuilderTest1 extends GenericSimulation {
 	
     public static void main( String[] args ) {
@@ -45,17 +55,50 @@ public class InteractiveOdinBuilderTest1 extends GenericSimulation {
         simulation.setRobot(new OdinMuscle(){
         	public Controller createController() {
         		return new OdinSampleController1("OdinMuscle");
-        	}},"OdinMuscle");
-        
+        	}},"OdinMuscle");        
         simulation.setRobot(new OdinBall(){
         	public Controller createController() {
         		return new OdinSampleController1("OdinBall");
         	}},"OdinBall");
         
+//FIXME CONSIDER IMPLEMENTING SEPARATE FILE WITH CREATION OF ALL POSSIBLE MR ROBOTS AND EMPTY CONTROLLERS
+        /*Added so it is possible to load from XML file all possible types of modular robots*/
+        simulation.setRobot(new OdinHinge(){
+        	public Controller createController() {
+        		return new OdinSampleController1("OdinHinge");
+        	}},"OdinHinge");
+        
+        simulation.setRobot(new OdinBattery(){
+        	public Controller createController() {
+        		return new OdinSampleController1("OdinBattery");
+        	}},"OdinBattery");
+        
+        simulation.setRobot(new OdinSpring(){
+        	public Controller createController() {
+        		return new OdinSampleController1("OdinSpring");
+        	}},"OdinSpring");
+        simulation.setRobot(new OdinTube(){
+        	public Controller createController() {
+        		return new OdinSampleController1("OdinTube");
+        	}},"OdinTube");
+        simulation.setRobot(new OdinWheel(){
+        	public Controller createController() {
+        		return new OdinSampleController1("OdinWheel");
+        	}},"OdinWheel");        
+
+        simulation.setRobot(new MTRAN(){
+        	public Controller createController() {
+        		return new MTRANSampleController2("MTRAN");
+        	}},"MTRAN");
+        
+        simulation.setRobot(new ATRON(){
+        	public Controller createController() {
+        		return new ATRONSimpleVehicleController1();
+        	}},"default");        
+        
         if(world==null) world = createWorld();
         simulation.setWorld(world);
         simulation.setPause(startPaused);
-
         // Start
         simulation.start();
     }

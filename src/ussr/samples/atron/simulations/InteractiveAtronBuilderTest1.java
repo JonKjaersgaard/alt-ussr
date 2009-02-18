@@ -22,8 +22,10 @@ import ussr.samples.atron.GenericATRONSimulation;
 /**
  * A simulation for a two-wheeler ATRON robot
  * @author Modular Robots @ MMMI
- *
+ * @author Konstantinas(modified for the project called "Quick Prototyping of Simulation Scenarios")
+ * Previous name of the class was ATRONSimpleVehicleSimulation.jave
  */
+//TODO CONSIDER IMPLEMENTING SEPARATE FILE WITH CREATION OF ALL POSSIBLE MR ROBOTS AND EMPTY CONTROLLERS
 public class InteractiveAtronBuilderTest1 extends GenericATRONSimulation {
 
 	public static void main( String[] args ) {
@@ -45,7 +47,6 @@ public class InteractiveAtronBuilderTest1 extends GenericATRONSimulation {
 		ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
 		mPos.add(new ModulePosition("driver0", new VectorDescription(-2*ATRON.UNIT+Xoffset,-2*ATRON.UNIT+Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));		
 		return mPos ; 
-
 	}
 
 	protected void changeWorldHook(WorldDescription world) {
