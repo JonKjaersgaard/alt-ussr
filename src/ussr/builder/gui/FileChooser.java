@@ -115,7 +115,9 @@ public class FileChooser extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() {
 				//new FileChooser(type).setVisible(true);
-				new FileChooser(simulation, type).setVisible(true);
+				FileChooser fileChooser = new FileChooser(simulation, type);
+				fileChooser.setSize(580, 320);
+				fileChooser.setVisible(true);
 			}
 		});    	
 	}
