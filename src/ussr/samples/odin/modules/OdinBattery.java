@@ -47,8 +47,7 @@ public abstract class OdinBattery extends Odin {
         ModuleComponentDescription component = new ModuleComponentDescription(new GeometryDescription[] {cylinder,coneCap1,coneCap2});
         ConnectorDescription.Common common = new ConnectorDescription.Common();
         common.setType( ConnectorDescription.Type.MECHANICAL_CONNECTOR_BALL_SOCKET );
-	    SphereShape connector = new SphereShape(0.001f);
-        connector.setColor(Color.WHITE);
+        GeometryDescription connector = super.makeConnectorShape();
         common.setGeometry(new GeometryDescription[] { connector });
         final float unit = 0.06f/2f+0.035f; 
         component.setConnectors(new ConnectorDescription[] {

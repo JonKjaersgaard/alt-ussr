@@ -6,7 +6,11 @@
  */
 package ussr.samples.odin.modules;
 
+import java.awt.Color;
+
 import ussr.description.Robot;
+import ussr.description.geometry.GeometryDescription;
+import ussr.description.geometry.SphereShape;
 import ussr.description.robot.RobotDescription;
 import ussr.model.Controller;
 
@@ -16,4 +20,17 @@ import ussr.model.Controller;
  * @author david
  */
 public abstract class Odin implements Robot {
+    
+    private static float defaultConnectorSize = 0.001f; 
+    
+    public static void setDefaultConnectorSize(float size) {
+        defaultConnectorSize = size;
+    }
+    
+    protected GeometryDescription makeConnectorShape() { 
+        SphereShape connector = new SphereShape(defaultConnectorSize);
+        connector.setColor(Color.WHITE);
+        return connector;
+    }
+    
 }

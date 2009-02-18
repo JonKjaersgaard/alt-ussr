@@ -32,8 +32,7 @@ public abstract class OdinBall extends Odin {
         ball.setColor(Color.RED);
         ModuleComponentDescription moduleComponent = new ModuleComponentDescription(ball);
         ConnectorDescription.Common common = new ConnectorDescription.Common();
-	    SphereShape connector = new SphereShape(0.001f);
-        connector.setColor(Color.WHITE);
+	    GeometryDescription connector = super.makeConnectorShape();
         common.setGeometry(new GeometryDescription[] { connector });
         common.setType( ConnectorDescription.Type.MECHANICAL_CONNECTOR_BALL_SOCKET );
         final float unit = (float) (0.025f/Math.sqrt(2)); 

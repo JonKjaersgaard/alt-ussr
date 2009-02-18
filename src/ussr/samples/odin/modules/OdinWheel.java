@@ -50,8 +50,7 @@ public abstract class OdinWheel extends Odin {
         ModuleComponentDescription wheelComponent = new ModuleComponentDescription(new GeometryDescription[] {wheel});
 
         ConnectorDescription.Common common = new ConnectorDescription.Common();
-	    SphereShape connector = new SphereShape(0.001f);
-        connector.setColor(Color.WHITE);
+        GeometryDescription connector = super.makeConnectorShape();
         common.setGeometry(new GeometryDescription[] { connector });
         common.setType( ConnectorDescription.Type.MECHANICAL_CONNECTOR_BALL_SOCKET );
         float unit = 0.06f/2+0.035f; 

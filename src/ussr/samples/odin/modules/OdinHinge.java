@@ -52,8 +52,7 @@ public abstract class OdinHinge extends Odin {
         ModuleComponentDescription northComponent = new ModuleComponentDescription(new GeometryDescription[] {cylinderNorth,center,coneCap1});
         ModuleComponentDescription southComponent = new ModuleComponentDescription(new GeometryDescription[] {cylinderSouth,coneCap2});
         ConnectorDescription.Common common = new ConnectorDescription.Common();
-	    SphereShape connector = new SphereShape(0.001f);
-        connector.setColor(Color.WHITE);
+        GeometryDescription connector = super.makeConnectorShape();
         common.setGeometry(new GeometryDescription[] { connector });
         common.setType( ConnectorDescription.Type.MECHANICAL_CONNECTOR_BALL_SOCKET );
         common.setMaxConnectionDistance(6);

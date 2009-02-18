@@ -48,8 +48,7 @@ public abstract class OdinSpring extends Odin {
         ModuleComponentDescription southComponent = new ModuleComponentDescription(new GeometryDescription[] { cylinder,coneCap2 });
 
         ConnectorDescription.Common common = new ConnectorDescription.Common();
-	    SphereShape connector = new SphereShape(0.001f);
-        connector.setColor(Color.WHITE);
+        GeometryDescription connector = super.makeConnectorShape();
         common.setGeometry(new GeometryDescription[] { connector });
         common.setType( ConnectorDescription.Type.MECHANICAL_CONNECTOR_BALL_SOCKET );
         final float unit = 0.06f/2+0.035f; 
