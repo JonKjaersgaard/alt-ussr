@@ -19,6 +19,7 @@ import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
+import ussr.description.robot.RobotDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsModuleComponent;
@@ -82,6 +83,11 @@ public class Module extends Entity {
      * Indicates whether module is ready for simulation (placed in the world, properly connected, etc)
      */
     private boolean isReady = false;
+    
+    /**
+     * Self-description of the module
+     */
+    private RobotDescription description;
     
     /**
      * Construct a module 
@@ -366,4 +372,18 @@ public class Module extends Entity {
 	public void setSimulation(PhysicsSimulation simulation) {
 		this.simulation = simulation;
 	}
+
+    /**
+     * @return the description
+     */
+    public RobotDescription getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(RobotDescription description) {
+        this.description = description;
+    }
 }
