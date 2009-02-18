@@ -40,6 +40,9 @@ public class ATRONConstructionTool extends ModularRobotConstructionTool{
 		}else if(toolName.equalsIgnoreCase("OppositeRotation")){
 			SelectOperationsStrategy selectOperations = new CommonOperationsStrategy(simulation);
 			selectOperations.rotateModuleWithOppositeRotation("ATRON", selectedModuleID);
+		}else if(toolName.equalsIgnoreCase("Variation")){
+			SelectOperationsStrategy selectOperations = new CommonOperationsStrategy(simulation);
+			selectOperations.variateModule("ATRON", selectedModuleID);
 		}
 	}
 	

@@ -10,4 +10,6 @@ public interface SelectOperationsStrategy {
 	public void rotateModuleWithOppositeRotation(String modularRobotName,int selectedModuleID);
 	
 	public void rotateModuleStandardRotation(String modularRobotName,int selectedModuleID, String rotationName);
+	
+	public void variateModule(String modularRobotName,int selectedModuleID);
 }

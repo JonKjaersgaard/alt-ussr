@@ -41,6 +41,10 @@ public class MTRANConstructionTool extends ModularRobotConstructionTool{
 			}else if(toolName.equalsIgnoreCase("OppositeRotation")){
 				SelectOperationsStrategy selectOperations = new CommonOperationsStrategy(simulation);
 				selectOperations.rotateModuleWithOppositeRotation("MTRAN", selectedModuleID);
+			}else if(toolName.equalsIgnoreCase("Variation")){
+				System.out.println("IN2");
+				SelectOperationsStrategy selectOperations = new CommonOperationsStrategy(simulation);
+				selectOperations.variateModule("MTRAN", selectedModuleID);
 			}
 	}
 

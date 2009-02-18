@@ -1,17 +1,22 @@
 package ussr.builder.construction;
 
 import ussr.description.geometry.VectorDescription;
-import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
 /**
+ * The main responsibility of this class is to take care of construction functions for
+ * construction of Telescoping link(also called OdinMuscle). Here module consists of components. To be more precise
+ * OdinMuscle consists of two components(two cylinders with cones on them). Connectors are considered to be as 
+ * parts of components. OdinMuscle link module has two connectors, numbered as: 0 and 1. All methods are specific to 
+ * to design of OdinMuscle module.
  * @author Konstantinas
- *
  */
-//TODO CONSIDER TO MOVE THE SAME CODE FROM moveOdinMusleAccording() METHOD TO PARENT CLASS
+//FIXME 1) UPDATE COMMENTS
+//FIXME 2) FIX EXISTING IMPROVEMENTS
+//FIXME 3) CONSIDER TO MOVE THE SAME CODE FROM moveOdinMusleAccording() METHOD TO PARENT CLASS
 public class OdinMuscleConstructionStrategy extends OdinConstructionStrategy  {	
 
 	/**
@@ -21,15 +26,16 @@ public class OdinMuscleConstructionStrategy extends OdinConstructionStrategy  {
 	private final static float offset =0.046f;	
 
 	/**
-	 * @param connectorNr
-	 * @param selectedModule
-	 * @param newMovableModule
-	 */
+	 * Moves newMovableModule of OdinMuscle according to selected OdinBall module preconditions,
+	 * like connector, rotation of selected module,  and so on.
+	 * @param connectorNr, the connector number on selected OdinBall module
+	 * @param selectedModule,  the OdinBall module selected in simulation environment
+	 * @param newMovableModule, the new OdinMuscle module to move
+	 */	
 	public void moveOdinMusleAccording(int connectorNr, Module selectedModule,	Module newMovableModule){		
 
-		/*Get information about  selected module and connector. Usually it is OdinBall*/
-		Connector connector = selectedModule.getConnectors().get(connectorNr);		
-		VectorDescription connectorPosition = connector.getPhysics().get(0).getPosition();			
+		/*Get information about  selected module and connector. Usually it is OdinBall*/			
+		VectorDescription connectorPosition = getConnectorPosition(connectorNr,selectedModule);			
 		Quaternion rotationQuatSelectedModule = selectedModule.getComponent(0).getRotation().getRotation();
 		
 		/*Get x,y,z of selected module connector position. In USSR x axis is horizontal,
@@ -58,13 +64,12 @@ public class OdinMuscleConstructionStrategy extends OdinConstructionStrategy  {
 		}
 	}
 
-
 	/**
 	 * Updates and returns the array containing the information about all available rotations and positions
-	 * of OdinMuscle module with respect to specific connector	
-	 * @param x, the value of x coordinate of current position of component
-	 * @param y, the value of y coordinate of current position of component
-	 * @param z, the value of z coordinate of current position of component
+	 * of OdinMuscle module with respect to specific connector of OdinBall	
+	 * @param x, the amount of x coordinate of current position of component
+	 * @param y, the amount of y coordinate of current position of component
+	 * @param z, the amount of z coordinate of current position of component
 	 * @return moduleMap, updated array of objects.
 	 */
 	private ModuleMapEntry[] updateModuleMap(float x, float y, float z){
@@ -88,12 +93,12 @@ public class OdinMuscleConstructionStrategy extends OdinConstructionStrategy  {
 				new ModuleMapEntry(3,rotation00,rotation3, new Vector3f(xMinusOffset,yPlusOffset,z)),				
 				new ModuleMapEntry(4,rotation00,rotation4, new Vector3f(x,yMinusOffset,zMinusOffset)),				
 				new ModuleMapEntry(5,rotation00,rotation5, new Vector3f(x,yMinusOffset,zPlusOffset)),				
-				new ModuleMapEntry(6,rotation00,rotation5, new Vector3f(x,yPlusOffset,zMinusOffset)),				
-				new ModuleMapEntry(7,rotation00,rotation4, new Vector3f(x,yPlusOffset,zPlusOffset)),				
-				new ModuleMapEntry(8,rotation00,rotation3, new Vector3f(xPlusOffset,yMinusOffset,z)),				
-				new ModuleMapEntry(9,rotation00,rotation2, new Vector3f(xPlusOffset,y,zMinusOffset)),			
-				new ModuleMapEntry(10,rotation00,rotation1, new Vector3f(xPlusOffset,y,zPlusOffset)),				
-				new ModuleMapEntry(11,rotation00,rotation0, new Vector3f(xPlusOffset,yPlusOffset,z))				
+				new ModuleMapEntry(6,rotation00,rotation6, new Vector3f(x,yPlusOffset,zMinusOffset)),				
+				new ModuleMapEntry(7,rotation00,rotation7, new Vector3f(x,yPlusOffset,zPlusOffset)),				
+				new ModuleMapEntry(8,rotation00,rotation8, new Vector3f(xPlusOffset,yMinusOffset,z)),				
+				new ModuleMapEntry(9,rotation00,rotation9, new Vector3f(xPlusOffset,y,zMinusOffset)),			
+				new ModuleMapEntry(10,rotation00,rotation10, new Vector3f(xPlusOffset,y,zPlusOffset)),				
+				new ModuleMapEntry(11,rotation00,rotation11, new Vector3f(xPlusOffset,yPlusOffset,z))				
 		};		
 		return moduleMap;
 	}

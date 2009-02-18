@@ -16,6 +16,8 @@ import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 
 /**
+ * The main responsibility of this class is to act as Context class in Strategy pattern.
+ * Moreover define the methods common for construction of modular robots morphologies in more module oriented way. 
  * @author Konstantinas
  *
  */
@@ -55,7 +57,8 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 			/*Create the copy of selected module and define it as new movable module*/
 			Module newMovableModule = addNewCopyModule(simulation,selectedModuleID,"default");		
 			construction =  new ATRONConstructionStrategy();		
-			construction.moveModuleAccording(connectorNr, selectedModule, newMovableModule);		
+			construction.moveModuleAccording(connectorNr, selectedModule, newMovableModule);
+			
 		}else if (modularRobotName.equalsIgnoreCase("MTRAN")){
 			Module newMovableModule = addNewCopyModule(simulation,selectedModuleID,"MTRAN");
 			construction =  new MTRANConstructionStrategy();		
@@ -63,7 +66,9 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 		}else if(modularRobotName.equalsIgnoreCase("Odin")){
 
 			String selectedModuleType =selectedModule.getProperty("ussr.module.type");
-			if (selectedModuleType.equalsIgnoreCase("OdinBall")){			
+			if (selectedModuleType.equalsIgnoreCase("OdinBall")){
+				
+				//SOLUTION NR1
 				List<Color> colorsComponents = new LinkedList<Color>();
 				colorsComponents.add(Color.RED); colorsComponents.add(Color.BLUE);				
 				ArrayList<Color> colorsConectors = new ArrayList<Color>();
@@ -71,6 +76,32 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 				Module newMovableModule = addNewModule(simulation,"newMuscle","OdinMuscle",colorsComponents,colorsConectors);
 				construction =  new OdinConstructionStrategy();		
 				construction.moveModuleAccording(connectorNr, selectedModule, newMovableModule);
+				
+				//SOLUTION NR2
+				
+				/*List<Color> colorsComponents = new LinkedList<Color>();
+				colorsComponents.add(Color.RED); colorsComponents.add(Color.BLUE);				
+				ArrayList<Color> colorsConectors = new ArrayList<Color>();
+				colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);				
+				Module newMovableModule = addNewModule(simulation,"newMuscle","OdinMuscle",colorsComponents,colorsConectors);
+				construction =  new OdinConstructionStrategy();		
+				construction.moveModuleAccording(connectorNr, selectedModule, newMovableModule);
+				
+				
+				int amountModules = simulation.getModules().size();
+				Module selectedModule1 = simulation.getModules().get(amountModules-1);//Last added module;
+				List<Color> colorsComponents1 = new LinkedList<Color>();
+				colorsComponents1.add(Color.RED); 				
+				ArrayList<Color> colorsConectors2 = new ArrayList<Color>();
+				for (int connector=0;connector<12;connector++){
+					colorsConectors2.add(Color.WHITE);
+				}
+				Module newMovableModule1 = addNewModule(simulation,"newBall","OdinBall",colorsComponents1,colorsConectors2);
+				construction =  new OdinConstructionStrategy();		
+				construction.moveModuleAccording(0, selectedModule1, newMovableModule1);*/
+				
+				
+				
 			}else if(selectedModuleType.equalsIgnoreCase("OdinMuscle")){
 				List<Color> colorsComponents = new LinkedList<Color>();
 				colorsComponents.add(Color.RED); 				
@@ -78,7 +109,7 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 				for (int connector=0;connector<12;connector++){
 					colorsConectors.add(Color.WHITE);
 				}
-				Module newMovableModule = addNewModule(simulation,"newMuscle","OdinBall",colorsComponents,colorsConectors);
+				Module newMovableModule = addNewModule(simulation,"newBall","OdinBall",colorsComponents,colorsConectors);
 				construction =  new OdinConstructionStrategy();		
 				construction.moveModuleAccording(connectorNr, selectedModule, newMovableModule);				
 			}
@@ -101,7 +132,8 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 			}else if(modularRobotName.equalsIgnoreCase("Odin")){
 
 				String selectedModuleType =selectedModule.getProperty("ussr.module.type");
-				if (selectedModuleType.equalsIgnoreCase("OdinBall")){			
+				if (selectedModuleType.equalsIgnoreCase("OdinBall")){
+					// SOLUTION NR1
 					List<Color> colorsComponents = new LinkedList<Color>();
 					colorsComponents.add(Color.RED); colorsComponents.add(Color.BLUE);				
 					ArrayList<Color> colorsConectors = new ArrayList<Color>();
@@ -109,6 +141,20 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 					Module newMovableModule = addNewModule(simulation,"newMuscle","OdinMuscle",colorsComponents,colorsConectors);
 					construction =  new OdinConstructionStrategy();		
 					construction.moveModuleAccording(connectorNr, selectedModule, newMovableModule);
+					
+					// SOLUTION NR2 (Repeats)
+					/*int amountModules = simulation.getModules().size();
+					Module selectedModule1 = simulation.getModules().get(amountModules-1);//Last added module;
+					List<Color> colorsComponents1 = new LinkedList<Color>();
+					colorsComponents1.add(Color.RED); 				
+					ArrayList<Color> colorsConectors2 = new ArrayList<Color>();
+					for (int connector=0;connector<12;connector++){
+						colorsConectors2.add(Color.WHITE);
+					}
+					Module newMovableModule1 = addNewModule(simulation,"newBall","OdinBall",colorsComponents1,colorsConectors2);
+					construction =  new OdinConstructionStrategy();		
+					construction.moveModuleAccording(0, selectedModule1, newMovableModule1);*/
+					
 				}else if(selectedModuleType.equalsIgnoreCase("OdinMuscle")){
 					List<Color> colorsComponents = new LinkedList<Color>();
 					colorsComponents.add(Color.RED); 				
@@ -142,13 +188,102 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 				for(DynamicPhysicsNode part: moduleComponent.getNodes()){
 					part.detachAllChildren();				
 				}
-			}			
+			}
+			selectedModule.setProperty("ussr.module.deletionFlag", "deleted");//Flag to indicate that the information about module should not be saved in XML (Hack)
+			
 			List<Color> colorsComponents = new LinkedList<Color>();
-			colorsComponents.add(Color.RED); 				
+			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.RED); colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);  			
 			ArrayList<Color> colorsConectors = new ArrayList<Color>();
-			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);colorsConectors.add(Color.WHITE);colorsConectors.add(Color.WHITE);colorsConectors.add(Color.WHITE);colorsConectors.add(Color.WHITE);colorsConectors.add(Color.WHITE);colorsConectors.add(Color.WHITE);colorsConectors.add(Color.WHITE);colorsConectors.add(Color.WHITE);colorsConectors.add(Color.WHITE);colorsConectors.add(Color.WHITE);	
-//TODO PROBLEM IS THAT ODINBALL, ODINhinge and so  are not supported yet
-			addNewModuleOneMore(simulation,new ModulePosition("newHinge","OdinBall",modulePosition,moduleRotation),colorsComponents,colorsConectors);
+			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
+			addNewModuleOneMore(simulation,new ModulePosition("newHinge","OdinHinge",modulePosition,moduleRotation),colorsComponents,colorsConectors);			
+		}else if (selectedModuleType.equalsIgnoreCase("OdinHinge")){
+			VectorDescription modulePosition = selectedModule.getPhysics().get(0).getPosition();
+			RotationDescription moduleRotation = selectedModule.getPhysics().get(0).getRotation();
+			int amountComponents = selectedModule.getNumberOfComponents();
+			for (int component=0; component<amountComponents;component++){
+				JMEModuleComponent moduleComponent =(JMEModuleComponent) selectedModule.getComponent(component);
+				for(DynamicPhysicsNode part: moduleComponent.getNodes()){
+					part.detachAllChildren();				
+				}
+			}
+			selectedModule.setProperty("ussr.module.deletionFlag", "deleted");//Flag to indicate that the information about module should not be saved in XML (Hack)		
+			
+			List<Color> colorsComponents = new LinkedList<Color>();
+			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE); 			
+			ArrayList<Color> colorsConectors = new ArrayList<Color>();
+			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
+			addNewModuleOneMore(simulation,new ModulePosition("newBattery","OdinBattery",modulePosition,moduleRotation),colorsComponents,colorsConectors);			
+			
+		}else if (selectedModuleType.equalsIgnoreCase("OdinBattery")){
+			VectorDescription modulePosition = selectedModule.getPhysics().get(0).getPosition();
+			RotationDescription moduleRotation = selectedModule.getPhysics().get(0).getRotation();
+			int amountComponents = selectedModule.getNumberOfComponents();
+			for (int component=0; component<amountComponents;component++){
+				JMEModuleComponent moduleComponent =(JMEModuleComponent) selectedModule.getComponent(component);
+				for(DynamicPhysicsNode part: moduleComponent.getNodes()){
+					part.detachAllChildren();				
+				}
+			}
+			selectedModule.setProperty("ussr.module.deletionFlag", "deleted");//Flag to indicate that the information about module should not be saved in XML (Hack)		
+			List<Color> colorsComponents = new LinkedList<Color>();
+			colorsComponents.add(Color.BLACK); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE); 	 			
+			ArrayList<Color> colorsConectors = new ArrayList<Color>();
+			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
+			addNewModuleOneMore(simulation,new ModulePosition("newSpring","OdinSpring",modulePosition,moduleRotation),colorsComponents,colorsConectors);			
+			
+		}
+		//PROBLEM java.lang.Error: Illegal module type: OdinTubeRobotType:OdinTube
+		/*else if (selectedModuleType.equalsIgnoreCase("OdinSpring")){
+			VectorDescription modulePosition = selectedModule.getPhysics().get(0).getPosition();
+			RotationDescription moduleRotation = selectedModule.getPhysics().get(0).getRotation();
+			int amountComponents = selectedModule.getNumberOfComponents();
+			for (int component=0; component<amountComponents;component++){
+				JMEModuleComponent moduleComponent =(JMEModuleComponent) selectedModule.getComponent(component);
+				for(DynamicPhysicsNode part: moduleComponent.getNodes()){
+					part.detachAllChildren();				
+				}
+			}
+			List<Color> colorsComponents = new LinkedList<Color>();
+			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE); 	 			
+			ArrayList<Color> colorsConectors = new ArrayList<Color>();
+			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
+			addNewModuleOneMore(simulation,new ModulePosition("newTube","OdinTube",modulePosition,moduleRotation),colorsComponents,colorsConectors);			
+			
+		}*/
+	
+		else if (selectedModuleType.equalsIgnoreCase("OdinSpring")){
+			VectorDescription modulePosition = selectedModule.getPhysics().get(0).getPosition();
+			RotationDescription moduleRotation = selectedModule.getPhysics().get(0).getRotation();
+			int amountComponents = selectedModule.getNumberOfComponents();
+			for (int component=0; component<amountComponents;component++){
+				JMEModuleComponent moduleComponent =(JMEModuleComponent) selectedModule.getComponent(component);
+				for(DynamicPhysicsNode part: moduleComponent.getNodes()){
+					part.detachAllChildren();				
+				}
+			}
+			selectedModule.setProperty("ussr.module.deletionFlag", "deleted");//Flag to indicate that the information about module should not be saved in XML (Hack)		
+			List<Color> colorsComponents = new LinkedList<Color>();
+			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.BLUE);colorsComponents.add(Color.WHITE); 	colorsComponents.add(Color.WHITE); 	 			
+			ArrayList<Color> colorsConectors = new ArrayList<Color>();
+			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
+			addNewModuleOneMore(simulation,new ModulePosition("newWheel","OdinWheel",modulePosition,moduleRotation),colorsComponents,colorsConectors);			
+			
+		}else if (selectedModuleType.equalsIgnoreCase("OdinWheel")){
+			VectorDescription modulePosition = selectedModule.getPhysics().get(0).getPosition();
+			RotationDescription moduleRotation = selectedModule.getPhysics().get(0).getRotation();
+			int amountComponents = selectedModule.getNumberOfComponents();
+			for (int component=0; component<amountComponents;component++){
+				JMEModuleComponent moduleComponent =(JMEModuleComponent) selectedModule.getComponent(component);
+				for(DynamicPhysicsNode part: moduleComponent.getNodes()){
+					part.detachAllChildren();				
+				}
+			}
+			selectedModule.setProperty("ussr.module.deletionFlag", "deleted");//Flag to indicate that the information about module should not be saved in XML (Hack)		
+			List<Color> colorsComponents = new LinkedList<Color>();
+			colorsComponents.add(Color.RED); colorsComponents.add(Color.BLUE);colorsComponents.add(Color.RED); 	colorsComponents.add(Color.BLUE); 	 			
+			ArrayList<Color> colorsConectors = new ArrayList<Color>();
+			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
+			addNewModuleOneMore(simulation,new ModulePosition("newMuscle","OdinMuscle",modulePosition,moduleRotation),colorsComponents,colorsConectors);			
 			
 		}
 
@@ -162,6 +297,9 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 		}else if (modularRobotName.equalsIgnoreCase("MTRAN")){
 			ConstructionStrategy construction =  new MTRANConstructionStrategy();		
 			construction.rotateOpposite(selectedModule);
+		}else if (modularRobotName.equalsIgnoreCase("Odin")){
+			ConstructionStrategy construction =  new OdinConstructionStrategy();		
+			construction.rotateOpposite(selectedModule);
 		}
 	}
 
@@ -173,6 +311,19 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 		}else if(modularRobotName.equalsIgnoreCase("MTRAN")){
 			ConstructionStrategy construction =  new MTRANConstructionStrategy();		
 			construction.rotateSpecifically(selectedModule, rotationName);
+		}
+	}
+	
+	public void variateModule(String modularRobotName,int selectedModuleID){
+		Module selectedModule = simulation.getModules().get(selectedModuleID);
+		if (modularRobotName.equalsIgnoreCase("ATRON")){
+			ConstructionStrategy construction =  new ATRONConstructionStrategy();		
+			construction.variate(selectedModule);
+		}else if(modularRobotName.equalsIgnoreCase("MTRAN")){			
+			ConstructionStrategy construction =  new MTRANConstructionStrategy();		
+			construction.variate(selectedModule);
+		}else if(modularRobotName.equalsIgnoreCase("Odin")){
+			replaceOdinModules(selectedModuleID);
 		}
 	}
 

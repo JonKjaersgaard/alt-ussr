@@ -3,28 +3,36 @@ package ussr.builder.construction;
 import ussr.model.Module;
 
 /**
- * @author Konstantinas
- *
+ * Supports construction of morphology of modular robots,like: ATRON, MTRAN and Odin.   
+ * @author Konstantinas 
  */
-public interface ConstructionStrategy {
-	
-	
-	/**
-	 * 
-	 * @param connectorNr
-	 * @param selectedModule
-	 * @param newMovableModule
-	 */
-	public abstract void moveModuleAccording(int connectorNr, Module selectedModule, Module newMovableModule);
+//FIXME 1) UPDATE COMMENTS
+//FIXME 2) FIX EXISTING IMPROVEMENTS
+public interface ConstructionStrategy {	
 	
 	/**
-	 * @param selectedModule
+	 * Moves newMovableModule according(respectively) to selected module preconditions,
+	 * like connector number, initial rotation of selected module, and so on.
+	 * @param connectorNr, the connector number on selected module
+	 * @param selectedModule,the module selected in simulation environment
+	 * @param newMovableModule, the new module to move respectively to selected one
 	 */
-	public abstract void rotateOpposite(Module selectedModule);
+	public  void moveModuleAccording(int connectorNr, Module selectedModule, Module newMovableModule);
 	
 	/**
-	 * @param selectedModule
-	 * @param rotationName
+	 * Rotates selected module according to its initial rotation with opposite rotation.
+	 * @param selectedModule, the module selected in simulation environment
 	 */
-	public abstract void rotateSpecifically(Module selectedModule, String rotationName);
+	public void rotateOpposite(Module selectedModule);
+	
+	/**
+	 * Rotates selected  module with standard rotations, passed as a string. 
+	 * @param selectedModule, the module selected in simulation environment 
+	 * @param rotationName, the name of standard rotation of the module
+	 */
+	public void rotateSpecifically(Module selectedModule, String rotationName);
+	
+//FIXME UNDER DEVELOPMENT
+	public void variate(Module selectedModule);
+	
 }

@@ -25,7 +25,7 @@ public class ConstructionTools extends CustomizedPicker{
 	private int selectedConnectorNr = 1000;//just to avoid having default 0 value, which is also number of connector. 
 
 	/**
-	 * The connector number on module, chosen in GUI comboBox.
+	 * The connector number on the module, chosen in GUI comboBox.
 	 */
 	private int chosenConnectorNr = 1000;//just to avoid having default 0 value, which is also number of connector. 
 
@@ -189,7 +189,7 @@ public class ConstructionTools extends CustomizedPicker{
 		}else if (toolName.equalsIgnoreCase("chosenConnector")||toolName.equalsIgnoreCase("Loop")){
 			ConstructionTool constructTool =  new ATRONConstructionTool(simulation, this.toolName);
 			constructTool.setTool(this.chosenConnectorNr,this.selectedModuleID);
-		}else if (toolName.equalsIgnoreCase("AllConnectors")||toolName.equalsIgnoreCase("OppositeRotation")){
+		}else if (toolName.equalsIgnoreCase("AllConnectors")||toolName.equalsIgnoreCase("OppositeRotation")||toolName.equalsIgnoreCase("Variation")){
 			ConstructionTool constructTool =  new ATRONConstructionTool(simulation, this.toolName);
 			constructTool.setTool(this.selectedModuleID);
 		}else if(toolName.equalsIgnoreCase("StandardRotation")){
@@ -210,7 +210,7 @@ public class ConstructionTools extends CustomizedPicker{
 		}else if (toolName.equalsIgnoreCase("chosenConnector")||toolName.equalsIgnoreCase("Loop")){
 			ConstructionTool constructTool =  new MTRANConstructionTool(simulation, this.toolName);
 			constructTool.setTool(this.chosenConnectorNr,this.selectedModuleID);
-		}else if (toolName.equalsIgnoreCase("AllConnectors")||toolName.equalsIgnoreCase("OppositeRotation")){
+		}else if (toolName.equalsIgnoreCase("AllConnectors")||toolName.equalsIgnoreCase("OppositeRotation")||toolName.equalsIgnoreCase("Variation")){			
 			ConstructionTool constructTool =  new MTRANConstructionTool(simulation, this.toolName);
 			constructTool.setTool(this.selectedModuleID);
 		}else if(toolName.equalsIgnoreCase("StandardRotation")){
@@ -226,10 +226,9 @@ public class ConstructionTools extends CustomizedPicker{
 		if (toolName.equalsIgnoreCase("chosenConnector")||toolName.equalsIgnoreCase("Loop")){			
 			ConstructionTool constructTool =  new OdinConstructionTool(simulation, this.toolName);
 			constructTool.setTool(this.chosenConnectorNr,this.selectedModuleID);
-		}else if (toolName.equalsIgnoreCase("AllConnectors")||toolName.equalsIgnoreCase("OdinReplace")){			
+		}else if (toolName.equalsIgnoreCase("AllConnectors")||toolName.equalsIgnoreCase("OppositeRotation")||toolName.equalsIgnoreCase("Variation")){			
 			ConstructionTool constructTool =  new OdinConstructionTool(simulation, this.toolName);
-			constructTool.setTool(this.selectedModuleID);
-			System.out.println("In1");
+			constructTool.setTool(this.selectedModuleID);			
 		}
 
 	}

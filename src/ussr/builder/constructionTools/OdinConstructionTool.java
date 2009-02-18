@@ -38,13 +38,15 @@ public class OdinConstructionTool extends ModularRobotConstructionTool {
 	public void setTool(int selectedModuleID) {
 		if(toolName.equalsIgnoreCase("AllConnectors")){
 			SelectOperationsStrategy selectOperations = new CommonOperationsStrategy(simulation);
-			//CONNECTOR NUMBER IS NOT USED
-			System.out.println("In2");
+			//CONNECTOR NUMBER IS NOT USED		
 			selectOperations.addModulesOnAllConnectors("Odin", selectedModuleID);			
-		}else if(toolName.equalsIgnoreCase("OdinReplace")){
+		}else if(toolName.equalsIgnoreCase("Variation")){
 			//NOT PROGRAMMING INTO INTERFACE
 			CommonOperationsStrategy commonOperations = new CommonOperationsStrategy(simulation);		
-			commonOperations.replaceOdinModules(selectedModuleID); 	
+			commonOperations.variateModule("Odin", selectedModuleID);	
+		}else if(toolName.equalsIgnoreCase("OppositeRotation")){
+			SelectOperationsStrategy selectOperations = new CommonOperationsStrategy(simulation);
+			selectOperations.rotateModuleWithOppositeRotation("Odin", selectedModuleID);
 		}
 		
 	}
