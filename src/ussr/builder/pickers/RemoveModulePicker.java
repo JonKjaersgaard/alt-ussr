@@ -2,12 +2,14 @@ package ussr.builder.pickers;
 
 import com.jme.scene.Spatial;
 import com.jmex.physics.DynamicPhysicsNode;
+
+import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
 
 /**
- * Removes (Deletes) the module selected(picked) with the mouse from simulation environment
+ * Removes (Deletes) the module selected with the left side of the mouse from simulation environment
  * @author Konstantinas
  *
  */
@@ -38,8 +40,10 @@ public class RemoveModulePicker  extends CustomizedPicker{
 	@Override
 	protected void pickModuleComponent(JMEModuleComponent component) {
 
-		int selectedModuleID = component.getModel().getID();		
-		int nrComponents= simulation.getModules().get(selectedModuleID).getNumberOfComponents();		
+		int selectedModuleID = component.getModel().getID();
+		Module selectedModule = simulation.getModules().get(selectedModuleID);
+		selectedModule.setProperty("ussr.module.deletionFlag", "deleted");//Flag to indicate that the information about module should not be saved in XML (Hack)		
+		int nrComponents= selectedModule.getNumberOfComponents();
 		
 		for (int compon=0; compon<nrComponents;compon++){			
 			JMEModuleComponent moduleComponent= (JMEModuleComponent)simulation.getModules().get(selectedModuleID).getComponent(compon);			
@@ -47,7 +51,7 @@ public class RemoveModulePicker  extends CustomizedPicker{
 				int amountNodes = moduleComponent.getNodes().size();
 				for (int node=0; node<amountNodes; node++ ){ //removes bounds and visuals
 					moduleComponent.getNodes().get(node).removeFromParent();
-				}
+				}				
 				part.lock();//Freezes everything			
 				part.setIsCollidable(false);
 				part.setActive(false);

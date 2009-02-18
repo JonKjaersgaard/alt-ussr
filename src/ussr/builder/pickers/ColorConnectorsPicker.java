@@ -1,12 +1,25 @@
 package ussr.builder.pickers;
 
+import ussr.description.geometry.VectorDescription;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
 
 import java.awt.Color;
+import java.awt.Font;
 
+import jmetest.renderer.state.TestTextureState;
+
+import com.jme.math.FastMath;
+import com.jme.math.Quaternion;
+import com.jme.math.Vector3f;
+import com.jme.renderer.ColorRGBA;
 import com.jme.scene.Spatial;
+import com.jme.scene.state.LightState;
+import com.jmex.font3d.Font3D;
+import com.jmex.font3d.Text3D;
+import com.jmex.font3d.effects.Font3DTexture;
+import com.jmex.physics.DynamicPhysicsNode;
 
 //TODO CONSIDER USING LABELING INSTEAD OF COLOURS.
 /**
@@ -43,12 +56,35 @@ public class ColorConnectorsPicker extends CustomizedPicker {
 	protected void pickModuleComponent(JMEModuleComponent component) {
 
 		int moduleID = component.getModel().getID();
-		int nrConnectors = simulation.getModules().get(moduleID).getConnectors().size();
-
+		int nrConnectors = simulation.getModules().get(moduleID).getConnectors().size();		
+		
+		/*VectorDescription vd = simulation.getModules().get(moduleID).getConnectors().get(0).getPhysics().get(0).getPosition();
+		
+		 Font3D myfont;
+		 myfont = new Font3D(new Font("Arial", Font.PLAIN, 2), 0.1, true, true, true);
+		 Font3DTexture fonttexture = new Font3DTexture(TestTextureState.class.getClassLoader().getResource("jmetest/data/model/marble.bmp"));
+	     fonttexture.applyEffect(myfont);
+	     Text3D mytext = myfont.createText(
+                 "ATRON", 0.05f, 0);
+         ColorRGBA fontcolor = new ColorRGBA(1, (float) Math.random(), (float) Math.random(), 1);
+         mytext.setFontColor(fontcolor);
+         //mytext.setLocalTranslation(new Vector3f(2, 1*2, 0));
+         
+         //rootNode.attachChild(mytext);          
+         
+         
+         for(DynamicPhysicsNode part: component.getNodes()){
+        	
+        	 mytext.setLocalTranslation(new Vector3f(vd.getX(),vd.getY(),vd.getZ()));
+        	 mytext.setLocalRotation(part.getLocalRotation());
+            // System.out.println("Child name"+part.getChildren().get(1).getName());//For debugging
+        	 part.attachChild(mytext);
+         }*/
+         
 		for (int connector=0; connector<nrConnectors;connector++){
 			switch(connector){
 			case 0:
-				simulation.getModules().get(moduleID).getConnectors().get(0).setColor(Color.BLACK);
+				simulation.getModules().get(moduleID).getConnectors().get(0).setColor(Color.BLACK);				
 				break;
 			case 1:
 				simulation.getModules().get(moduleID).getConnectors().get(1).setColor(Color.BLUE);
