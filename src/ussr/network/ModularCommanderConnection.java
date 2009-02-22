@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class ModularCommanderConnection extends AbstractNetworkConnection {
     }
 
     @Override
-    public boolean activationHook(InputStream input, OutputStream output) {
+    public boolean activationHook(InputStream input, OutputStream output, Socket connection) {
         System.out.println("Modular commander controller activated for "+controller);
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         String packet;

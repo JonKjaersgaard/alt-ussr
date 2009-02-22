@@ -20,7 +20,7 @@ public class ReflectionConnection extends AbstractNetworkConnection {
         this.target = target;
     }
 
-    public boolean activationHook(InputStream input, OutputStream output) {
+    public boolean activationHook(InputStream input, OutputStream output, Socket connection) {
         System.out.println("Reflection connection activated for "+target);
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output));

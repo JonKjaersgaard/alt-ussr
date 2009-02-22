@@ -20,7 +20,7 @@ public class EventConnection extends AbstractNetworkConnection {
 		super(port);
 	}
 
-	public boolean activationHook(InputStream input, OutputStream output) {
+	public boolean activationHook(InputStream input, OutputStream output, Socket connection) {
         reader = new BufferedReader(new InputStreamReader(input));
         writer = new BufferedWriter(new OutputStreamWriter(output));
         this.connection = connection;

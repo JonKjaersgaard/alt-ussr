@@ -2,6 +2,7 @@ package ussr.network;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.Socket;
 
 public class SimpleConnection extends AbstractNetworkConnection {
 
@@ -10,7 +11,7 @@ public class SimpleConnection extends AbstractNetworkConnection {
 	}
 
 	@Override
-	public boolean activationHook(InputStream input, OutputStream output) {
+	public boolean activationHook(InputStream input, OutputStream output, Socket connection) {
 		// TODO Auto-generated method stub
 		return false;
 	}
