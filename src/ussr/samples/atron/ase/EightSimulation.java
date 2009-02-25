@@ -64,10 +64,10 @@ public class EightSimulation extends GenericATRONSimulation {
     	mPos.add(new ModulePosition("m2", ";portRC=9902;portEvent=9903;radio=disabled", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_SN));
     	mPos.add(new ModulePosition("m3", ";portRC=9904;portEvent=9905;radio=disabled", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_NS));
     	mPos.add(new ModulePosition("m4", ";portRC=9906;portEvent=9907;radio=disabled", new VectorDescription(2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_WE));
-    	//mPos.add(new ModulePosition("m5", ";portRC=9908;portEvent=9909;radio=disabled", new VectorDescription(-1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
-    	//mPos.add(new ModulePosition("m6", ";portRC=9910;portEvent=9911;radio=disabled", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_WE));
-    	//mPos.add(new ModulePosition("m7", ";portRC=9912;portEvent=9913;radio=disabled", new VectorDescription(3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
-    	//mPos.add(new ModulePosition("m8", ";portRC=9914;portEvent=9915;radio=disabled", new VectorDescription(2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("m5", ";portRC=9908;portEvent=9909;radio=disabled", new VectorDescription(-1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("m6", ";portRC=9910;portEvent=9911;radio=disabled", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_WE));
+    	mPos.add(new ModulePosition("m7", ";portRC=9912;portEvent=9913;radio=disabled", new VectorDescription(3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("m8", ";portRC=9914;portEvent=9915;radio=disabled", new VectorDescription(2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_EW));
     	return mPos;
 	}
 	protected ArrayList<ModulePosition> buildLoop4(String id) {
@@ -80,7 +80,7 @@ public class EightSimulation extends GenericATRONSimulation {
         return mPos;
 	}
 	protected ArrayList<ModulePosition> buildRobot() {
-		return buildLoop4("");
+		return buildEight();
 	}
     
     protected void changeWorldHook(WorldDescription world) {
