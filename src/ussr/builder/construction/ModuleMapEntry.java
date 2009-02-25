@@ -14,36 +14,37 @@ import ussr.description.geometry.RotationDescription;
 public class ModuleMapEntry {
 
 	/**
-	 * The connector number on the module
+	 * The connector number on the module.
 	 */	 
 	private int connectorNr;
 	
 	/**
-	 * The component number of the module
+	 * The component number of the module.
 	 */
 	private int componentNr;
 	
 	/**
-	 * Initial rotation of component(module)
+	 * Initial rotation of component(module).
 	 */
 	private RotationDescription initialRotation;
 	
 	/**
-	 * New rotation of component(module)
+	 * New rotation of component(module).
 	 */
 	private RotationDescription newRotation;
 	
 	/**
-	 * New position of component(module) 
+	 * New position of component(module). 
 	 */
 	private Vector3f newPosition;	
 	
 	/**
-	 * Constructor
-	 * @param connectorNr, the connector number on the module
-	 * @param initialRotation, the initial rotation of component(module)
-	 * @param newRotation, new rotation of component(module)
-	 * @param newPosition, new position of component(module) 
+	 * Stores information about selected module(connector number and rotation) and newly added movable module (rotation and
+	 * new position) with respect to the position of selected module.
+	 * @param connectorNr, the connector number on the module.
+	 * @param initialRotation, the initial rotation of component(module).
+	 * @param newRotation, new rotation of component(module).
+	 * @param newPosition, new position of component(module). 
 	 */
 	public ModuleMapEntry(int connectorNr, RotationDescription initialRotation, RotationDescription newRotation, Vector3f newPosition ){
 		this.connectorNr = connectorNr;
@@ -53,7 +54,8 @@ public class ModuleMapEntry {
 	}
 	
 	/**
-	 * Constructor
+	 * Stores information about selected module(connector and component number and rotation) and newly added movable module (rotation and
+	 * new position) with respect to the position of selected module. This one is useful when component number is of importance. 
 	 * @param connectorNr,the connector number on the module 
 	 * @param componentNr,the component number of the module 
 	 * @param initialRotation,the initial rotation of component(module) 

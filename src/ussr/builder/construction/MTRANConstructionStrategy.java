@@ -19,6 +19,12 @@ import ussr.samples.mtran.MTRANSimulation;
 //FIXME 2) FIX EXISTING IMPROVEMENTS
 public class MTRANConstructionStrategy extends ModularRobotConstructionStrategy {
 	
+	
+	/**
+	 * Connectors Nr 0 and 3 are special(simpler)cases than others, because they always are aligned with one of the coordinate axes 
+	 */
+	private final static int connectorNr0 =0, connectorNr3  =3;
+	
 	/**
 	 * The indexes of MTRAN module components 
 	 */
@@ -52,6 +58,9 @@ public class MTRANConstructionStrategy extends ModularRobotConstructionStrategy 
 
 	/**
 	 * The array of objects containing information about MTRAN specific rotations.
+	 * The logic is: if rotation is "0RI1", then the rotation value is MTRANSimulation.ORI1 and opposite
+	 * to this rotation is MTRANSimulation.ORI1Y and MTRANSimulation.ORI1X is specific to opposite.
+	 * (Look the first entry in array beneath).
 	 */
 	private final static ModuleRotationMapEntry[] moduleRotationMap =  {
 		new ModuleRotationMapEntry("ORI1",MTRANSimulation.ORI1,MTRANSimulation.ORI1Y,MTRANSimulation.ORI1X),
@@ -75,7 +84,6 @@ public class MTRANConstructionStrategy extends ModularRobotConstructionStrategy 
 	 * @param selectedModule,  the MTRAN module selected in simulation environment
 	 * @param newMovableModule, the new MTRAN module to move respectively to selected one
 	 */	
-	@Override
 	public void moveModuleAccording(int connectorNr, Module selectedModule, Module newMovableModule) {
 
 		/*Amount of components constituting selectedModule*/
@@ -108,7 +116,7 @@ public class MTRANConstructionStrategy extends ModularRobotConstructionStrategy 
 			 *After that move movable component, with respect to selected component of the module using
 			 *extracted information form the object describing it*/
 			for (int i=0; i<currentModuleMap.length;i++){
-				if (connectorNr ==0||connectorNr ==3){// connectors Nr 0 and 3 are special(simpler)cases than others, because they always are aligned with one of the coordinate axes 
+				if (connectorNr ==connectorNr0||connectorNr ==connectorNr3){// connectors Nr 0 and 3 are special(simpler)cases than others, because they always are aligned with one of the coordinate axes 
 					if (currentModuleMap[i].getConnectorNr()==connectorNr && currentModuleMap[i].getInitialRotation().getRotation().equals(rotationQuatComponent)){
 						moveModuleComponent(movableModuleComponent,currentModuleMap[i].getNewRotation(),currentModuleMap[i].getNewPosition());
 					}
@@ -128,7 +136,7 @@ public class MTRANConstructionStrategy extends ModularRobotConstructionStrategy 
 	 * @return moduleMap, updated array of objects.
 	 */	
 //TODO CAN BE DONE EVEN MORE
-	private  ModuleMapEntry[] updateModuleMap(float x, float y, float z){		
+	public  ModuleMapEntry[] updateModuleMap(float x, float y, float z){		
 
 		/*Different offsets along each of coordinate axes. This is done to get the position 
 		 * of newly added component of the module (movable module) with respect to selected one*/
@@ -168,7 +176,11 @@ public class MTRANConstructionStrategy extends ModularRobotConstructionStrategy 
 		float zMinusBoxOffsetNr2 = z - boxOffsetNr2;
 
 		/*Array containing the data for adding the new movable component(module) with respect to selected module.
-		 * The format of the object is: (connector number on selected module, the rotation of selected module, the rotation of new movable module, the position of new movable module*/ 
+		 * The format of the object is: (connector number on selected module, the rotation of selected module, 
+		 * the rotation of new movable module, the position of new movable module.  So the logic is, if connector
+		 * number is for example 0 and selected module rotation is MTRANSimulation.ORI2, then new module should
+		 * have rotation MTRANSimulation.ORI2 and the position of it will be new new Vector3f(xMinusOffset,y,z).
+		 * (Look the first entry in array)*/ 
 		ModuleMapEntry[] moduleMap = {
 				// Connector Nr:0
 				new ModuleMapEntry(0,MTRANSimulation.ORI2,MTRANSimulation.ORI2,new Vector3f(xMinusOffset,y,z)),
@@ -183,6 +195,10 @@ public class MTRANConstructionStrategy extends ModularRobotConstructionStrategy 
 				new ModuleMapEntry(0,MTRANSimulation.ORI3X,MTRANSimulation.ORI3X,new Vector3f(x,y,zPlusOffset)),
 				new ModuleMapEntry(0,MTRANSimulation.ORI3Y,MTRANSimulation.ORI3Y,new Vector3f(x,y,zMinusOffset)),
 				new ModuleMapEntry(0,MTRANSimulation.ORI3XY,MTRANSimulation.ORI3XY,new Vector3f(x,y,zMinusOffset)),
+				
+				/* Here the logic is changing and it is, if connector number is for example 1 and  selected module rotation is MTRANSimulation.ORI2, then the
+				 * blueBox component of MTRAN module should have rotation MTRANSimulation.ORI3 and the position of it will be new Vector3f(xMinusBoxOffsetNr1,y,zPlusBoxOffsetNr2).
+				 * (Look the first entry in array).This is quite specific to MTRAN*/
 				// Connector Nr:1. Components: 2 - blueBoxIndex, 1-linkIndex, 0 - redBoxIndex.
 				new ModuleMapEntry(1,blueBoxIndex,MTRANSimulation.ORI2,MTRANSimulation.ORI3,new Vector3f(xMinusBoxOffsetNr1,y,zPlusBoxOffsetNr2)),
 				new ModuleMapEntry(1,linkIndex,MTRANSimulation.ORI2,MTRANSimulation.ORI3,new Vector3f(xMinusSecondLinkOffset,y,zPlusLinkOffsetNr1)),
@@ -353,8 +369,7 @@ public class MTRANConstructionStrategy extends ModularRobotConstructionStrategy 
 	 * @param selectedModule,the MTRAN module selected in simulation environment	
 	 */
 //	TODO MAYBE IS NOT USEFULL IN MTRAN CASE, BECAUSE THERE IS OFTEN THE CASE THAT THE SAME ACTIVE OR PASSIVE
-//	BOXES CONNECT WITH THE SAME TYPE OF THE BOX (CONFLICT)
-	@Override
+//	BOXES CONNECT WITH THE SAME TYPE OF THE BOX (CONFLICT)	
 	public void rotateOpposite(Module selectedModule) {
 
 		/*Amount of components constituting selectedModule*/
@@ -392,8 +407,7 @@ public class MTRANConstructionStrategy extends ModularRobotConstructionStrategy 
 	 * Rotates selected MTRAN module with standard rotations,like ORI1. 
 	 * @param selectedModule,the MTRAN module selected in simulation environment	 
 	 * @param rotationName,the standard rotation name of MTRAN module 
-	 */
-	@Override
+	 */	
 	public void rotateSpecifically(Module selectedModule, String rotationName) {
 
 		/*Amount of components constituting selectedModule*/
@@ -482,7 +496,7 @@ public class MTRANConstructionStrategy extends ModularRobotConstructionStrategy 
 	}
 
 	/**
-	 * Rotates selected MTRAN module according to its initial rotation with different rotations
+	 * Rotates selected MTRAN module according to its initial rotation with different additional rotations
 	 * specific to MTRAN.	
 	 * @param selectedModule,the MTRAN module selected in simulation environment	 
 	 */	

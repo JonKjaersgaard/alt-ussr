@@ -16,7 +16,6 @@ import ussr.physics.jme.JMEModuleComponent;
  */
 //FIXME 1) UPDATE COMMENTS
 //FIXME 2) FIX EXISTING IMPROVEMENTS
-//FIXME 3) CONSIDER TO MOVE THE SAME CODE FROM moveOdinMusleAccording() METHOD TO PARENT CLASS
 public class OdinBallConstructionStrategy extends OdinConstructionStrategy  {
 	
 	/**
@@ -75,7 +74,8 @@ public class OdinBallConstructionStrategy extends OdinConstructionStrategy  {
 	 * @param z, the value of z coordinate of current position of component
 	 * @return moduleMap, updated array of objects.
 	 */
-	private ModuleMapEntry[] updateModuleMap(float x, float y, float z){
+//FIXME IS  IT A GOOD WAY TO DO THAT?
+	public ModuleMapEntry[] updateModuleMap(float x, float y, float z){
 
 		/*Different offsets along each of coordinate axes.
 		 *This is done to get the position of newly added component of the module (movable module) with respect to selected one*/
@@ -103,8 +103,6 @@ public class OdinBallConstructionStrategy extends OdinConstructionStrategy  {
 				new ModuleMapEntry(0,rotation10,rotation00, new Vector3f(xPlusOffset,y,zPlusOffset)),
 				new ModuleMapEntry(0,rotation11,rotation00, new Vector3f(xPlusOffset,yPlusOffset,z)),				
 				//Connector Nr:1
-//TODO EVERYTHING FOR CONNECTOR 1 CAN BE REMOVED IF IT IS ASSUMED THAT THE INITIALLY THERE IS ODIN BALL IN SIMULATION ENVIRONMENT
-//IN THIS WAY THE OVERLAPING OF MODULES CAN BE AVOIDED
 				new ModuleMapEntry(1,rotation0,rotation00, new Vector3f(xPlusOffset,yPlusOffset,z)),				
 				new ModuleMapEntry(1,rotation1,rotation00, new Vector3f(xPlusOffset,y,zPlusOffset)),				
 				new ModuleMapEntry(1,rotation2,rotation00, new Vector3f(xPlusOffset,y,zMinusOffset)),				

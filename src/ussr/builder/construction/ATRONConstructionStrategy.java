@@ -5,7 +5,6 @@ import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.samples.atron.ATRON;
-
 import com.jme.math.Matrix3f;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
@@ -29,6 +28,8 @@ public class ATRONConstructionStrategy extends ModularRobotConstructionStrategy 
 
 	/**
 	 * The array of objects containing information about ATRON specific rotations.
+	 * The logic is: if rotation is "EW", then the rotation value is ATRON.ROTATION_EW and opposite
+	 * to this rotation is ATRON.ROTATION_WE (Look the first entry in array beneath).
 	 */
 	private final static ModuleRotationMapEntry[] moduleRotationMap =  {
 		new ModuleRotationMapEntry("EW",ATRON.ROTATION_EW,ATRON.ROTATION_WE),
@@ -46,7 +47,6 @@ public class ATRONConstructionStrategy extends ModularRobotConstructionStrategy 
 	 * @param selectedModule,  the ATRON module selected in simulation environment
 	 * @param newMovableModule, the new ATRON module to move respectively to selected one
 	 */	
-	@Override
 	public void moveModuleAccording(int connectorNr, Module selectedModule, Module newMovableModule){	
 
 		/*Amount of components constituting selectedModule*/
@@ -92,13 +92,14 @@ public class ATRONConstructionStrategy extends ModularRobotConstructionStrategy 
 	/**
 	 * Updates and returns the array of objects containing the information about all available initial rotations 
 	 * of ATRON module and  rotations together with positions of newly added module with respect to specific 
-	 * connector number.	 
-	 * @param x, the amount of x coordinate of current position of component
-	 * @param y, the amount of y coordinate of current position of component
-	 * @param z, the amount of z coordinate of current position of component
+	 * connector number and selected module.	 
+	 * @param x, the amount of x coordinate of current position of component.
+	 * @param y, the amount of y coordinate of current position of component.
+	 * @param z, the amount of z coordinate of current position of component.
 	 * @return moduleMap, updated array of objects.
 	 */
-	private ModuleMapEntry[] updateModuleMap(float x, float y, float z){		
+//TODO CAN BE DONE EVEN MORE (TIME IS GOLD :)).
+	public ModuleMapEntry[] updateModuleMap(float x, float y, float z){		
 
 		/*Apply offset of 0.08(UNIT) for each coordinate, which is a lattice distance between two ATRON modules.
 		 * This is done to get the position of newly added component of the module (movable module) with respect 
@@ -112,7 +113,10 @@ public class ATRONConstructionStrategy extends ModularRobotConstructionStrategy 
 
 		/*Array containing the data for adding the new movable component(module) with respect to selected module.
 		 * The format of the object is: (connector number on selected module, the rotation of selected module, 
-		 * the rotation of new movable module, the position of new movable module*/ 
+		 * the rotation of new movable module, the position of new movable module. So the logic is, if connector
+		 * number is for example 0 and and selected module rotation is ATRON.ROTATION_EW, then new module should
+		 * have rotation ATRON.ROTATION_DU and the position of it will be new Vector3f(xMinusOffset,yPlusOffset,z).
+		 * (Look the first entry in array) */ 
 		ModuleMapEntry[] moduleMap = {
 				//Connector Nr:0
 				new ModuleMapEntry(0,ATRON.ROTATION_EW,ATRON.ROTATION_DU,new Vector3f(xMinusOffset,yPlusOffset,z)),
@@ -176,9 +180,8 @@ public class ATRONConstructionStrategy extends ModularRobotConstructionStrategy 
 
 	/**
 	 * Rotates selected ATRON module according to its initial rotation with opposite rotation.	
-	 * @param selectedModule,the ATRON module selected in simulation environment	
-	 */
-	@Override
+	 * @param selectedModule,the ATRON module selected in simulation environment.	
+	 */	
 	public void rotateOpposite(Module selectedModule){
 
 		/*Amount of components constituting selectedModule*/
@@ -205,8 +208,7 @@ public class ATRONConstructionStrategy extends ModularRobotConstructionStrategy 
 	 * Rotates selected ATRON module with standard rotations, like EW = east-west,WE = west-east,DU= down-up,SN= south-north and so on.
 	 * @param selectedModule,the ATRON module selected in simulation environment	 
 	 * @param rotationName,the name of standard rotation of ATRON module, like for example: "EW" = east-west, "WE" = west-east and so on. 
-	 */
-	@Override
+	 */	
 	public void rotateSpecifically(Module selectedModule, String rotationName){
 
 		/*Amount of components constituting selectedModule*/
@@ -232,14 +234,16 @@ public class ATRONConstructionStrategy extends ModularRobotConstructionStrategy 
 	 * Rotates selected ATRON module according to its initial rotation with opposite rotation.
 	 * Does the same as rotateOpposite(Module selectedModule) method.
 	 * @param selectedModule,the ATRON module selected in simulation environment	 
-	 */
-//	FIXME CONSIDER MERGING OPPOSITE ROTATION AND VARIATION INTO ONE SELECTION TOOL(method)
-//	FIXME MAYBE CAN BE FOUND MORE	
+	 */	
 	public void variate(Module selectedModule){
-		rotateOpposite(selectedModule);//Repeats, because there are no special variations for ATRON		
+		/*Repeats, because there are several special rotations for ATRON like rotation
+		 * with 90 degrees step with respect to each hemisphere, however there is no enought time
+		 * for that. This support will require much more additional rotations in updateModuleMap method, as a
+		 * result a lot of time*/
+		rotateOpposite(selectedModule);
 	}
 
-//	FIXME UNDER DEVELOPMENT	
+//	FIXME UNDER DEVELOPMENT(IN CASE OF EXTRA TIME)	
 	public void experiment(int connectorNr, Module selectedModule, Module newMovableModule){
 		/*				
 		Matrix3f globalRotation = new Matrix3f(1,0,0,0,1,0,0,0,1);
@@ -288,7 +292,7 @@ public class ATRONConstructionStrategy extends ModularRobotConstructionStrategy 
 
 		newMovableModule.setPosition(new VectorDescription(X+ATRON.UNIT,Y,Z-ATRON.UNIT));
 	}
-
+//	FIXME UNDER DEVELOPMENT	
 	private Matrix3f rotateAround(Matrix3f matrix,String coordinate, float degrees){
 
 		float cos =(float)Math.cos(degrees);

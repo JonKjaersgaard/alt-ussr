@@ -72,7 +72,8 @@ public class OdinMuscleConstructionStrategy extends OdinConstructionStrategy  {
 	 * @param z, the amount of z coordinate of current position of component
 	 * @return moduleMap, updated array of objects.
 	 */
-	private ModuleMapEntry[] updateModuleMap(float x, float y, float z){
+// TODO IS IT GOOD WAY TO DO THAT?
+	public ModuleMapEntry[] updateModuleMap(float x, float y, float z){
 
 		/*Different offsets along each of coordinate axes.
 		 *This is done to get the position of newly added component of the module (movable module) with respect to selected one*/

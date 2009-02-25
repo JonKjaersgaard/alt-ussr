@@ -2,13 +2,14 @@ package ussr.builder;
 
 import javax.swing.JToolBar;
 import com.jmex.physics.util.PhysicsPicker;
-import ussr.builder.constructionTools.ConstructionTools;
+
+import ussr.builder.construction.ConstructionToolSpecification;
+import ussr.builder.genericSelectionTools.ColorConnectorsSelectionTool;
+import ussr.builder.genericSelectionTools.NEW;
+import ussr.builder.genericSelectionTools.NEW1;
+import ussr.builder.genericSelectionTools.RemoveModuleSelectionTool;
 import ussr.builder.gui.FileChooser;
 import ussr.builder.gui.GuiUtilities;
-import ussr.builder.pickers.ColorConnectorsPicker;
-import ussr.builder.pickers.NEW;
-import ussr.builder.pickers.NEW1;
-import ussr.builder.pickers.RemoveModulePicker;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
 
@@ -646,7 +647,14 @@ public class QuickPrototyping extends javax.swing.JFrame {
     }                                          
    
     private void adaptGuiToModularRobot(){
-		String modularRobotName = JME_simulation.getModules().get(0).getProperty("ussr.module.type");
+    	String modularRobotName ="";
+    	if (JME_simulation.getModules().get(0).getProperty("ussr.module.type") == null){//Handles empty simulation
+    		// do nothing
+    	}else{
+    		modularRobotName = JME_simulation.getModules().get(0).getProperty("ussr.module.type");
+    		
+    	}
+		 
 		if (modularRobotName.contains("Odin")){
 			jComboBox1.setSelectedIndex(2);			
 		}else if (modularRobotName.contains("ATRON")){
@@ -740,7 +748,14 @@ public class QuickPrototyping extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         //System.out.println("GenericToolbar-->Move"); //for debugging 
          System.out.println("GenericToolbar-->"+jButton5.getToolTipText());//for debugging 
-         //TODO
+         //JME_simulation.worldDescription.getModulePositions().get(0).toString();
+         //System.out.println(""+ JME_simulation.worldDescription.getModulePositions().get(0).toString() ); //for debugging 
+         
+         JME_simulation.worldDescription.setModulePositions(JME_simulation.worldDescription.getModulePositions());
+         //JME_simulation.worldDescription.getConnections();
+         JME_simulation.worldDescription.setModuleConnections(JME_simulation.worldDescription.getConnections());
+         JME_simulation.placeModules();
+         
         guiUtil.passTo(jTextField1, "Select and move module");// informing user
     }                                        
 
@@ -755,14 +770,14 @@ public class QuickPrototyping extends javax.swing.JFrame {
         //System.out.println("GenericToolbar-->Delete"); //for debugging 
         System.out.println("GenericToolbar-->"+jButton7.getToolTipText());//for debugging 
         guiUtil.passTo(jTextField1, "Select module to delete");// informing user
-        JME_simulation.setPicker(new RemoveModulePicker(JME_simulation));
+        JME_simulation.setPicker(new RemoveModuleSelectionTool(JME_simulation));
     }                                        
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {                                         
          //System.out.println("GenericToolbar-->Color connectors"); //for debugging 
          System.out.println("GenericToolbar-->"+jButton8.getToolTipText());//for debugging 
          guiUtil.passTo(jTextField1, "Select module to color its connectors");// informing user
-        JME_simulation.setPicker(new ColorConnectorsPicker(JME_simulation));
+        JME_simulation.setPicker(new ColorConnectorsSelectionTool(JME_simulation));
     }                                        
 
     private void jCheckBoxMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
@@ -779,22 +794,22 @@ public class QuickPrototyping extends javax.swing.JFrame {
     }                                          
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-       JME_simulation.setPicker(new ConstructionTools(JME_simulation, this.chosenMRname,"OnConnector"));
+       JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"OnConnector"));
         guiUtil.passTo(jTextField1,"Select connector on "+ this.chosenMRname +" modular robot");
     }                                        
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-       JME_simulation.setPicker(new ConstructionTools(JME_simulation, this.chosenMRname,"AllConnectors"));
+       JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"AllConnectors"));
         guiUtil.passTo(jTextField1,"Select " +this.chosenMRname +" module");
     }                                         
     
-    ConstructionTools constructionTools = new ConstructionTools(JME_simulation, this.chosenMRname,"Loop",0);
+    ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"Loop",0);
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {                                          
          guiUtil.passTo(jTextField1,"1)Select " +this.chosenMRname +" module,2)use NEXT and BACK");
          jButton11.setEnabled(true);
         jButton12.setEnabled(true);
          this.connectorNr =0;
-	 ConstructionTools constructionToolsnew = new ConstructionTools(JME_simulation, this.chosenMRname,"Loop",this.connectorNr);
+	 ConstructionToolSpecification constructionToolsnew = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"Loop",this.connectorNr);
         this.constructionTools = constructionToolsnew;
         JME_simulation.setPicker(constructionToolsnew);
          
@@ -932,13 +947,13 @@ public class QuickPrototyping extends javax.swing.JFrame {
     }                                         
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-    JME_simulation.setPicker(new ConstructionTools(JME_simulation, this.chosenMRname,"OppositeRotation"));        
+    JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"OppositeRotation"));        
         guiUtil.passTo(jTextField1,"Select " +this.chosenMRname +" module to rotate it opposite ");
     }                                         
 
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {                                           
         this.rotationName = jComboBox6.getSelectedItem().toString();
-	JME_simulation.setPicker(new ConstructionTools(JME_simulation, this.chosenMRname,"StandardRotation",this.rotationName));		
+	JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"StandardRotation",this.rotationName));		
         guiUtil.passTo(jTextField1,"Select " +this.chosenMRname +" module to rotate with "+ rotationName+ " rotation");
     }                                          
 
@@ -956,7 +971,7 @@ public class QuickPrototyping extends javax.swing.JFrame {
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {                                           
        int connectorNumber = Integer.parseInt(jComboBox2.getSelectedItem().toString());
-	 JME_simulation.setPicker(new ConstructionTools(JME_simulation, this.chosenMRname,"chosenConnector",connectorNumber));
+	 JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"chosenConnector",connectorNumber));
         guiUtil.passTo(jTextField1,"Select " +this.chosenMRname +" module");
     }                                          
 
@@ -966,7 +981,7 @@ public class QuickPrototyping extends javax.swing.JFrame {
         }else if (this.chosenMRname.contains("Odin")){
             guiUtil.passTo(jTextField1,"Select OdinMuscle to chage it with other types of modules");
         }
-        JME_simulation.setPicker(new ConstructionTools(JME_simulation, this.chosenMRname,"Variation"));
+        JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"Variation"));
     }                                         
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {

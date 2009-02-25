@@ -1,0 +1,16 @@
+<body>
+This package contains the classes and interfaces, the main responsibility of which is construction
+of modular robots morphology. The approach is common for all supported modular robots, but 
+implementation algorithms differ. That is why Strategy pattern is used. Moreover to indicate that in order
+to support new modular robot, new implementation is needed. The code was tested on ATRON, MTRAN and Odin 
+modular robots and as a result they are supported.
+HOWTO. Support new modular robot?
+ 1)Create new class and inherit it from ModularRobotConstructionStrategy.java
+ 2)Implement inherited abstract methods, like moveModuleAccoring(), updateModuleMap()(these two at least) 
+ and so on. Use existing support of modular robots like inspiration. For example class called 
+ ATRONConstructionStrategy.java
+ 3)Scan classes: CommonOperationsStrategy.java and ConstructionToolSpecification.java for bugs
+   or missing implementation.
+ 4)set your new constructionTool from GUI or somewhere else like this:
+    JMESimulation.setPicker(new ConstructionToolSpecification(JMESimulation, "NewModularRobotName","toolName"));    
+</body>

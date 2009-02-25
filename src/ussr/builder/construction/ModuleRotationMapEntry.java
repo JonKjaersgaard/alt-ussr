@@ -45,7 +45,7 @@ public class ModuleRotationMapEntry {
 	
 	
 	/**
-	 * Constructor
+	 * Stores information about all rotations of the module. 
 	 * @param rotationName, the name of rotation of the module
 	 * @param rotation,the rotation of the module
 	 * @param rotationOpposite,opposite rotation of the module
@@ -57,7 +57,7 @@ public class ModuleRotationMapEntry {
 	}
 	
 	/**
-	 * Constructor
+	 * Stores information about all rotations of the module.
 	 * @param rotationName, the name of rotation of the module
 	 * @param rotation,the rotation of the module
 	 * @param rotationOpposite,opposite rotation of the module
@@ -71,7 +71,7 @@ public class ModuleRotationMapEntry {
 	}
 	
 	/**
-	 * Constructor
+	 * Stores information about all rotations of the module and also its components.
 	 * @param rotationName, the name of rotation of the module
 	 * @param componentNr,the component number of the module
 	 * @param rotation, new rotation of component

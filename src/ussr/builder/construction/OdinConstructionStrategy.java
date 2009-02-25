@@ -1,6 +1,8 @@
 package ussr.builder.construction;
 
 import com.jme.math.Quaternion;
+
+import ussr.builder.BuilderUtilities;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Connector;
@@ -19,7 +21,7 @@ public class OdinConstructionStrategy extends ModularRobotConstructionStrategy {
 
 	/**
 	 * A number of different rotations of Structure link, Telescoping link(also called OdinMuscle),OdinBattery,
-	 * OdinHinge,OdinSpring,OdinTube and OdinWhell with respect to connector of CCP joint (also called OdinBall).
+	 * OdinHinge,OdinSpring,OdinTube and OdinWheel with respect to connector of CCP joint (also called OdinBall).
 	 * Here:rotation0 is rotation of Structure link or Telescoping link (also called OdinMuscle) with respect to connector number 0 of CCP joint (also called OdinBall).
 	 *      rotation1 - connector number 1 
 	 *      rotation2 - connector number 2 
@@ -55,7 +57,7 @@ public class OdinConstructionStrategy extends ModularRobotConstructionStrategy {
 	/**
 	 * The array of objects containing information about OdinMuscle,OdinBattery,OdinHinge,OdinSpring,OdinTube,OdinWheel modules specific rotations.
 	 */
-	private final static ModuleRotationMapEntry[] moduleRotationMap =  {
+	private final static ModuleRotationMapEntry[] moduleRotationMap = {
 		new ModuleRotationMapEntry("rotation0",rotation0,rotation11),
 		new ModuleRotationMapEntry("rotation1",rotation1,rotation10),		
 		new ModuleRotationMapEntry("rotation2",rotation2,rotation9),
@@ -76,7 +78,6 @@ public class OdinConstructionStrategy extends ModularRobotConstructionStrategy {
 	 * @param selectedModule,  the Odin module selected in simulation environment
 	 * @param newMovableModule, the new Odin module to move
 	 */	
-	@Override
 	public void moveModuleAccording(int connectorNr, Module selectedModule,	Module newMovableModule) {
 		String selectedModuleType =selectedModule.getProperty("ussr.module.type");
 		if(selectedModuleType.equalsIgnoreCase("OdinBall")){			
@@ -86,11 +87,19 @@ public class OdinConstructionStrategy extends ModularRobotConstructionStrategy {
 			OdinBallConstructionStrategy odinBallConst = new OdinBallConstructionStrategy();
 			odinBallConst.moveOdinBallAccording(connectorNr, selectedModule, newMovableModule);
 		}
-	}	
-
-	@Override
+	}
+	
+	public ModuleMapEntry[] updateModuleMap(float x, float y, float z) {
+		/*This method is overridden in children classes */
+		return null;
+	}
+	
+	/**
+	 * Rotates Odin module selected in simulation environment with opposite rotation. This is except OdinBall.
+	 * @param selectedModule, the Odin module selected in simulation environment.	
+	 */
 	public void rotateOpposite(Module selectedModule) {
-		String selectedModuleType =selectedModule.getProperty("ussr.module.type");
+		String selectedModuleType =selectedModule.getProperty(BuilderUtilities.getModuleTypeKey());
 		if(selectedModuleType.equalsIgnoreCase("OdinBall")){//Do nothing					
 		} else{
 			/*Amount of components constituting selectedModule*/
@@ -112,14 +121,15 @@ public class OdinConstructionStrategy extends ModularRobotConstructionStrategy {
 			}		
 		}
 	}
-
-	@Override
+	
 	public void rotateSpecifically(Module selectedModule, String rotationName) {
-		// NOT RELEVANT IN ODIN CASE
+		/*This method is not relevant in Odin case because modules only have two standard(specific)
+		 * rotations, which are covered in the method above*/
 	}
-
-	@Override
-	public void variate(Module selectedModule) {		
+	
+	public void variate(Module selectedModule) {
+		/*This functionality is moved to CommonOperationsStrategy class method called replaceModules(),
+		because it is more concerned with creation of new modules, rather than rearranging the components of the module.*/
 	}
 	
 	/**
@@ -132,5 +142,5 @@ public class OdinConstructionStrategy extends ModularRobotConstructionStrategy {
 		Connector connector = selectedModule.getConnectors().get(connectorNr);		
 		VectorDescription connectorPosition = connector.getPhysics().get(0).getPosition();		
 		return connectorPosition;		
-	}
+	}	
 }

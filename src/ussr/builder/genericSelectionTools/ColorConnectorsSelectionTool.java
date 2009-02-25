@@ -1,15 +1,12 @@
-package ussr.builder.pickers;
+package ussr.builder.genericSelectionTools;
 
 import ussr.description.geometry.VectorDescription;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
-
 import java.awt.Color;
 import java.awt.Font;
-
 import jmetest.renderer.state.TestTextureState;
-
 import com.jme.math.FastMath;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
@@ -21,13 +18,15 @@ import com.jmex.font3d.Text3D;
 import com.jmex.font3d.effects.Font3DTexture;
 import com.jmex.physics.DynamicPhysicsNode;
 
-//TODO CONSIDER USING LABELING INSTEAD OF COLOURS.
+
 /**
- *  Helping tool.Colours the connectors of selected module. Currently supports up to 12 connectors coloured with different colours.
- * @author Konstantinas
+ *  Helping tool. Colours the connectors of the module selected with the left side of the mouse in simulation environment. 
+ *  Currently supports up to 12 connectors coloured with different colours.
+ *  @author Konstantinas
  *
  */
-public class ColorConnectorsPicker extends CustomizedPicker {
+//TODO CONSIDER USING LABELING INSTEAD OF COLOURS.
+public class ColorConnectorsSelectionTool extends CustomizedPicker {
 
 	/**
 	 * The physical simulation
@@ -39,17 +38,19 @@ public class ColorConnectorsPicker extends CustomizedPicker {
 	 * Constructor called in Quick Prototyping.java main window 
 	 * @param simulation, the physical simulation	 
 	 */
-	public ColorConnectorsPicker(JMESimulation simulation) {
+	public ColorConnectorsSelectionTool(JMESimulation simulation) {
 		this.simulation = simulation;		
 	}
 
-	/* Not used
+	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
+	 * Here not used, because it is enough of pickModuleComponent(JMEModuleComponent component) method (look beneath).
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickTarget(com.jme.scene.Spatial)
 	 */
 	@Override
 	protected void pickTarget(Spatial target) {	}
 
-	/*  Method executed when the module is selected with the mouse in simulation environment. Handles actual colouring of connectors.
+	/*  Method executed when the module is selected with the left side of the mouse in simulation environment. 
+	 *  Handles actual colouring of connectors.
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickModuleComponent(ussr.physics.jme.JMEModuleComponent)
 	 */
 	@Override

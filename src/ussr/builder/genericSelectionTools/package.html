@@ -1,0 +1,10 @@
+<body>
+Provides several generic selection tools, which can be primary used in static (paused) state of simulation.
+These tools can also be used during dynamic (running) state of simulation, however then the bugs should be expected. 
+Generic, means that each of these tools can be used on any type of modular robot module. Selection tools means
+that primary input device is mouse, to be more precise the click of left side of the mouse. Tools were tested on 
+ATRON, MTRAN and Odin modular robots.
+HOWTO. Set one of the selection tools?
+In order to set one of the tools do the following for example for RemoveModuleSelectionTool.
+ JMESimulation.setPicker(new RemoveModuleSelectionTool(JMESimulation));
+</body>
