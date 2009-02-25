@@ -5,8 +5,6 @@ import com.jmex.physics.util.PhysicsPicker;
 
 import ussr.builder.construction.ConstructionToolSpecification;
 import ussr.builder.genericSelectionTools.ColorConnectorsSelectionTool;
-import ussr.builder.genericSelectionTools.NEW;
-import ussr.builder.genericSelectionTools.NEW1;
 import ussr.builder.genericSelectionTools.RemoveModuleSelectionTool;
 import ussr.builder.gui.FileChooser;
 import ussr.builder.gui.GuiUtilities;
