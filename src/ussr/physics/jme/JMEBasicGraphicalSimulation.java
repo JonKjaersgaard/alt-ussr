@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
-
 import ussr.builder.QuickPrototyping;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsParameters;
@@ -21,7 +20,6 @@ import ussr.physics.SimulationGadget;
 import ussr.physics.PhysicsFactory.Options;
 import ussr.physics.jme.cameraHandlers.RobotCameraHandler;
 import ussr.util.Pair;
-
 import com.jme.app.AbstractGame;
 import com.jme.app.BaseSimpleGame;
 import com.jme.image.Texture;
@@ -42,7 +40,6 @@ import com.jme.renderer.Renderer;
 import com.jme.scene.Node;
 import com.jme.scene.SceneElement;
 import com.jme.scene.Skybox;
-import com.jme.scene.Spatial;
 import com.jme.scene.Text;
 import com.jme.scene.state.LightState;
 import com.jme.scene.state.MaterialState;
@@ -71,6 +68,9 @@ import com.jmex.terrain.TerrainBlock;
  * field that are used in JMESimulation to define the behavior of the physical simulation.
  * 
  * @author Modular Robots @ MMMI
+ * @author Konstantinas (modified for builder). In particular added code for displaying the GUI
+ * of Quick Prototyping of simulation Scenarios and getter-setter methods for showing physics, normals,
+ * bounds, lights and wireState. 
  */
 public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
@@ -862,93 +862,93 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		DebugShell.addGadget(gadget);
 	}
 	/**
-	 * Returns the state of showing normals 
-	 * @return
+	 * Returns the state of showing normals. 
+	 * @return showNormals, the state of showing normals. 
 	 */
 	public boolean isShowNormals() {
 		return showNormals;
 	}
 	
 	/**
-	 * Sets the state of  showing normals
-	 * @param showNormals
+	 * Sets the state of  showing normals.
+	 * @param showNormals, the state of  showing normals.
 	 */
 	public void setShowNormals(boolean showNormals) {
 		this.showNormals = showNormals;
 	}
 	
 	/**
-	 * Returns the state of showing bounds 
-	 * @return
+	 * Returns the state of showing bounds. 
+	 * @return showBounds, the state of showing bounds.
 	 */
 	public boolean isShowBounds() {
 		return showBounds;
 	}
 	
 	/**
-	 * Sets the state of showing bounds
-	 * @param showBounds
+	 * Sets the state of showing bounds.
+	 * @param showBounds, the state of showing bounds.
 	 */
 	public void setShowBounds(boolean showBounds) {
 		this.showBounds = showBounds;
 	}
 	/**
-	 * Returns the state of showing physics 
-	 * @return
+	 * Returns the state of showing physics. 
+	 * @return showPhysics, the state of showing physics.
 	 */
 	public boolean isShowPhysics() {
 		return showPhysics;
 	}
 	/**
-	 * Sets the state of showing physics
-	 * @param showPhysics
+	 * Sets the state of showing physics.
+	 * @param showPhysics, the state of showing physics.
 	 */
 	public void setShowPhysics(boolean showPhysics) {
 		this.showPhysics = showPhysics;
 	}
 	
 	/**
-	 * Returns the state of showing lights 
-	 * @return
+	 * Returns the state of showing lights. 
+	 * @return lightState, the state of showing lights.  
 	 */
 	public LightState getLightState() {
 		return lightState;
 	}
 	
 	/**
-	 * Sets the state of showing lights
-	 * @param lightState
+	 * Sets the state of showing lights.
+	 * @param lightState, the state of showing lights.
 	 */
 	public void setLightState(LightState lightState) {
 		this.lightState = lightState;
 	}
 	
 	/**
-	 *  Returns the state of showing wireFrame 
-	 * @return
+	 *  Returns the state of showing wireFrame.
+	 * @return wireState, the state of showing wireFrame.
 	 */
 	public WireframeState getWireState() {
 		return wireState;
 	}
 	/**
-	 *  Sets the state of showing wireFrame
-	 * @param wireState
+	 *  Sets the state of showing wireFrame.
+	 * @param wireState, the state of showing wireFrame.
 	 */
 	public void setWireState(WireframeState wireState) {
 		this.wireState = wireState;
 	}
 	
 	/**
-	 * Returns the state of simulation step
-	 * @return
+	 * Returns the state of simulation step.
+	 * @return singleStep, the state of simulation step.
 	 */
 	public boolean isSingleStep() {
 		return singleStep;
 	}
 	
 	/**
-	 * Sets the state of simulation step
-	 * @param singleStep
+	 * Sets the state of simulation step.
+	 * @param singleStep,the state of simulation step.
 	 */
 	public void setSingleStep(boolean singleStep) {
 		this.singleStep = singleStep;

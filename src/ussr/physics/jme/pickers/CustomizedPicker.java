@@ -2,33 +2,26 @@ package ussr.physics.jme.pickers;
 
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
-
 import com.jme.input.InputHandler;
-import com.jme.math.Vector3f;
 import com.jme.scene.Node;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.PhysicsSpace;
-
-import com.jme.input.InputHandler;
 import com.jme.input.action.InputAction;
 import com.jme.input.action.InputActionEvent;
 import com.jme.intersection.PickData;
 import com.jme.intersection.TrianglePickResults;
 import com.jme.math.Ray;
 import com.jme.math.Vector2f;
-import com.jme.math.Vector3f;
-import com.jme.scene.Node;
 import com.jme.scene.Spatial;
 import com.jme.system.DisplaySystem;
-import com.jmex.physics.DynamicPhysicsNode;
-import com.jmex.physics.Joint;
-import com.jmex.physics.PhysicsSpace;
 
 /**
  * A small tool to be able to pick the visual of physics nodes and move them around with the mouse.
  *
  * @author Irrisor (original code)
  * @author modified by ups to be USSR-specific
+ * @author Konstantinas (modified for builder). In particular added method called pickTarget(Spatial target),
+ * for getting geometry of picked objects. 
  */
 public abstract class CustomizedPicker implements Picker {
 
@@ -39,7 +32,6 @@ public abstract class CustomizedPicker implements Picker {
     private Node rootNode;
     private CustomizedPicker.PickAction pickAction;
     private CustomizedPicker.MoveAction moveAction;
-    /*KK*/public Spatial target;
 
     /**
      * Attach the picker to a simulation
@@ -93,7 +85,7 @@ public abstract class CustomizedPicker implements Picker {
      * Passes spatial parent geometry of picked visual object
      * @param target, the picked spatial parent geometry
      */
-    protected abstract  void pickTarget(Spatial target);
+    protected abstract void pickTarget(Spatial target);
 
     public void delete() {
         inputHandler.removeAction( pickAction );
@@ -120,7 +112,7 @@ public abstract class CustomizedPicker implements Picker {
                         PickData data = pickResults.getPickData( i );
                         if ( data.getTargetTris() != null && data.getTargetTris().size() > 0 ) {
                             Spatial target = data.getTargetMesh().getParentGeom();
-      pickTarget(target);
+                            pickTarget(target);
                             while ( target != null ) {
                                 if ( target instanceof DynamicPhysicsNode ) {
                                     DynamicPhysicsNode picked = (DynamicPhysicsNode) target;

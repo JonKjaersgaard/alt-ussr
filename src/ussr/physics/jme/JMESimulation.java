@@ -159,7 +159,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             public void performAction( InputActionEvent evt ) {
                 for(Joint j: dynamicJoints) j.detach();
                 dynamicJoints = new HashSet<Joint>();
-                if(worldDescription.getModulePositions().size()>0)
+                if(worldDescription.getModulePositions().size()>=0)
                     placeModules();
                 else
                     throw new Error("Module placement broken for random placement");
@@ -207,6 +207,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     public synchronized Module createModule(ModulePosition position, boolean assign) throws Error {
         String robotType;
         robotType = position.getType();
+        System.out.println("RobotType:"+robotType.toString());
         Robot robot = robots.get(robotType);
         if(robot==null) throw new Error("No definition for robot "+robotType);
         String module_name = position.getName();
@@ -395,6 +396,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             ModulePosition p = positions.next();
             module.assignToModulePosition(p);
             registry.put(p.getName(), module);
+            
         }
         // The following only works for mechanical connectors
         // HARDCODED: assumes one physics per connector
@@ -437,7 +439,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         writer.finish();
         for(Module module: modules)
             module.setReady(true);
-    }
+    }   
 
     public synchronized void associateGeometry(String name, TriMesh shape) {
         geometryMap.put(shape,name);
@@ -533,6 +535,14 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     public long getPhysicsSteps() { return physicsSteps; }
 
     public float getPhysicsSimulationStepSize() { return PhysicsParameters.get().getPhysicsSimulationStepSize(); }
+
+	public WorldDescription getWorldDescription() {
+		return worldDescription;
+	}
+
+	public void setModules(List<Module> modules) {
+		this.modules = modules;
+	}
 
 }
 

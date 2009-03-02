@@ -31,6 +31,8 @@
  */
 package ussr.physics.jme.pickers;
 
+import ussr.model.Module;
+import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 
 import com.jme.input.InputHandler;
@@ -57,10 +59,26 @@ import com.jmex.physics.RotationalJointAxis;
  *
  * @author Irrisor (original JME version)
  * @author Ulrik (modified for USSR)
+ * @author Konstantinas (modified for builder). In particular added functionality to pick and move modules
+ * in static (paused) state of simulation. To be more precise added method called moveStaticModules() and
+ * constructor with flag for static state.  
  */
 public class PhysicsPicker implements Picker {
     private boolean shiftIsPressed = false;
     private boolean isFlexible;
+    
+    /**
+     * The state of simulation, used as a flag to indicate that the functionality is for static state.
+     */
+    private boolean staticState = false; 
+    
+    /**
+     * Initiates picking of modules in simulation environment and moving them in desired place. 
+     * @param staticState,true for the static state of simulation.
+     */
+    public PhysicsPicker(boolean staticState){
+    	this.staticState = staticState;
+    }
 
     public class ModeAction implements InputActionInterface {
 
@@ -274,12 +292,40 @@ public class PhysicsPicker implements Picker {
                     break;
             }
 
-            if ( picked != null ) {
-                DisplaySystem.getDisplaySystem().getWorldCoordinates( mousePosition, pickedScreenPos.z, anchor );
+            if ( picked != null ) {            	
+                DisplaySystem.getDisplaySystem().getWorldCoordinates( mousePosition, pickedScreenPos.z, anchor );                
+                if (staticState){
+                	moveStaticModules();
+                }                
                 myNode.getLocalTranslation().set( anchor.subtractLocal( pickedWorldOffset ) );
                 worldJoint.setAnchor( myNode.getLocalTranslation() );
                 worldJoint.attach( myNode );
             }
+        }
+        
+        /**
+         * Moves static modules during static state of simulation.
+         */
+        private void moveStaticModules(){        	
+        	 Module pickedModule = null;
+        	/* Find  the module picked in simulation environment */
+			 for(JMEModuleComponent component: simulation.getModuleComponents()) {
+		            if(component.getNodes().contains(picked)) {			                
+		            	pickedModule = component.getModel(); 
+		            }
+		        }
+			 /*Find out how many components the module consists of and move them accordingly*/			 
+			 int amountComponents = pickedModule.getNumberOfComponents();			 
+			 	
+			 Vector3f vector = anchor.subtractLocal( pickedWorldOffset);
+			 for (int component=0;component<amountComponents;component++){				 
+				 JMEModuleComponent currentComponent = (JMEModuleComponent)pickedModule.getComponent(component);
+				 currentComponent.getModuleNode().getLocalTranslation().set(vector);
+//FIXME SOMETHING STRANGE HANPPENING WITH MTRAN (in vector)					 
+			 }      
+			 /*For moving single component*/
+        	 //Vector3f vector = anchor.subtractLocal( pickedWorldOffset);
+        	 //picked.getLocalTranslation().set(vector);
         }
     }
 }
