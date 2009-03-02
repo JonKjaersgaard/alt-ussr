@@ -13,7 +13,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * 
  * @author Konstantinas
  */
-public class GuiUtilities {
+public class GuiHelper {
 
 	/**
 	 * Changes the GUI look to generic (for all platforms)

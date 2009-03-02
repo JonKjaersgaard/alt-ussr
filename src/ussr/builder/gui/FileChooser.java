@@ -24,7 +24,7 @@ public class FileChooser extends javax.swing.JFrame {
 private boolean type;
     
     
-    private final GuiUtilities guiUtil = new GuiUtilities();
+    private final GuiHelper guiUtil = new GuiHelper();
 
 /** Creates new form FileChooser */
 public FileChooser(JMESimulation simulation, boolean type) {

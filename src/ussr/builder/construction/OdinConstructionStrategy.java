@@ -2,7 +2,7 @@ package ussr.builder.construction;
 
 import com.jme.math.Quaternion;
 
-import ussr.builder.BuilderUtilities;
+import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Connector;
@@ -99,7 +99,7 @@ public class OdinConstructionStrategy extends ModularRobotConstructionStrategy {
 	 * @param selectedModule, the Odin module selected in simulation environment.	
 	 */
 	public void rotateOpposite(Module selectedModule) {
-		String selectedModuleType =selectedModule.getProperty(BuilderUtilities.getModuleTypeKey());
+		String selectedModuleType =selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
 		if(selectedModuleType.equalsIgnoreCase("OdinBall")){//Do nothing					
 		} else{
 			/*Amount of components constituting selectedModule*/

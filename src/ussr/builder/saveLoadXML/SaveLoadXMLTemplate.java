@@ -24,7 +24,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
-import ussr.builder.BuilderUtilities;
+import ussr.builder.BuilderHelper;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 
@@ -215,7 +215,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * @return char[], the type of the module.
 	 */
 	public char[] getType(Module currentModule){    		
-		return currentModule.getProperty(BuilderUtilities.getModuleTypeKey()).toCharArray();    	
+		return currentModule.getProperty(BuilderHelper.getModuleTypeKey()).toCharArray();    	
 	}
 
 	/**
@@ -233,7 +233,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * @return char[], the name of the module
 	 */
 	public char[] getName(Module currentModule){    		
-		return currentModule.getProperty(BuilderUtilities.getModuleNameKey()).toCharArray();    	
+		return currentModule.getProperty(BuilderHelper.getModuleNameKey()).toCharArray();    	
 	}
 
 	/**
@@ -264,7 +264,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 */
 	public char[] getPosition(Module currentModule){  
 		char[] modulePosition;		
-		if(currentModule.getProperty(BuilderUtilities.getModuleTypeKey()).equalsIgnoreCase("MTRAN")){			
+		if(currentModule.getProperty(BuilderHelper.getModuleTypeKey()).equalsIgnoreCase("MTRAN")){			
 			modulePosition = currentModule.getPhysics().get(1).getPosition().toString().toCharArray();			
 		}else {
 			modulePosition = currentModule.getPhysics().get(0).getPosition().toString().toCharArray();			
@@ -279,7 +279,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 */
 	public char[] getPositionVector(Module currentModule){ 
 		String modulePositionVect = null; 
-		if(currentModule.getProperty(BuilderUtilities.getModuleTypeKey()).equalsIgnoreCase("MTRAN")){
+		if(currentModule.getProperty(BuilderHelper.getModuleTypeKey()).equalsIgnoreCase("MTRAN")){
 			modulePositionVect = currentModule.getPhysics().get(1).getPosition().getVector().toString();			
 		}else {
 			modulePositionVect = currentModule.getPhysics().get(0).getPosition().getVector().toString();			

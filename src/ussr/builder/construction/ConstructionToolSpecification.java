@@ -7,7 +7,7 @@ import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
-import ussr.builder.BuilderUtilities;
+import ussr.builder.BuilderHelper;
 
 /**
  * @author Konstantinas
@@ -174,7 +174,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * @return true, if selected module is an ATRON module
 	 */
 	private boolean isAtron(){
-		String typeofModule = this.selectedModule.getProperty(BuilderUtilities.getModuleTypeKey());		
+		String typeofModule = this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());		
 		if (typeofModule.contains(atron)){
 			return true;
 		}
@@ -186,7 +186,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * @return true, if selected module is an MTRAN module
 	 */
 	private boolean isMtran(){		
-		String typeofModule = this.selectedModule.getProperty(BuilderUtilities.getModuleTypeKey());
+		String typeofModule = this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
 		if (typeofModule.contains(mtran)){
 			return true;
 		}
@@ -198,7 +198,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * @return true, if selected module is an Odin module
 	 */
 	private boolean isOdin(){
-		String typeofModule = this.selectedModule.getProperty(BuilderUtilities.getModuleTypeKey());		
+		String typeofModule = this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());		
 		if (typeofModule.contains(odin)){			
 			return true;
 		}
@@ -226,7 +226,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 			this.selectOperations.rotateModuleWithOppositeRotation(this);
 		}else if (this.toolName.equalsIgnoreCase("Variation")){
 			this.selectOperations.variateModule(this);
-		}		
+		}	
 	}
 	
 	/**
@@ -237,7 +237,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	private boolean connectorsMatch(){		
 		int amountConnectors = this.selectedModule.getConnectors().size();
 		for (int connector=0;connector<amountConnectors;connector++){
-			String connectorNr = this.selectedModule.getConnectors().get(connector).getProperty(BuilderUtilities.getModuleConnectorNrKey());		
+			String connectorNr = this.selectedModule.getConnectors().get(connector).getProperty(BuilderHelper.getModuleConnectorNrKey());		
 			if (connectorNr== null){
 				JOptionPane.showMessageDialog(null, "Something is wrong with property called: ussr.connector_number, implemented by Ulrik Pagh Schultz. Or property is not set at all.","Error", JOptionPane.ERROR_MESSAGE);				
 			}else if(Integer.parseInt(connectorNr)==this.selectedConnectorNr){			

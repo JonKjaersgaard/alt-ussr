@@ -12,6 +12,7 @@ import ussr.samples.GenericSimulation;
 import ussr.samples.MultiRobotSimulation;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.simulations.ATRONCarController1;
+import ussr.samples.atron.simulations.ATRONSimpleVehicleController1;
 import ussr.samples.mtran.MTRAN;
 import ussr.samples.mtran.MTRANSampleController1;
 import ussr.samples.odin.modules.OdinBall;
@@ -26,9 +27,12 @@ import ussr.samples.odin.simulations.OdinSampleController1;
 public class BuilderMultiRobotSimulation extends GenericSimulation {
 
 	@Override
-	protected Robot getRobot() {
-		// TODO Auto-generated method stub
-		return Robot.NO_DEFAULT;
+	protected Robot getRobot() {		
+		return new ATRON() {
+			public Controller createController() {
+				return new ATRONControllerEmpty();
+			}
+		};
 	}
 	
 	 public static void main( String[] args ) {

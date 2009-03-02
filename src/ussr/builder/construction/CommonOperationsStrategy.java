@@ -4,13 +4,15 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import ussr.builder.BuilderUtilities;
-import ussr.builder.genericSelectionTools.RemoveModuleSelectionTool;
+import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
+import ussr.samples.atron.ATRON;
+import ussr.samples.mtran.MTRANSimulation;
+import ussr.samples.odin.modules.OdinHinge;
 
 /**
  * The main responsibility of this class is to act as Context class in Strategy pattern.
@@ -21,8 +23,8 @@ import ussr.physics.jme.JMESimulation;
  *
  */
 //TODO 1) UPDATE COMMENTS
-//       2) REFACTOR method called moveModuleOnNextConnector
-//       3) ASK ABOUT ODINTUBE
+//2) REFACTOR method called moveModuleOnNextConnector
+//3) ASK ABOUT ODINTUBE
 public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 
 	/** 
@@ -34,22 +36,22 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 	 * The interface to construction of modular robot morphology. This one is on the level of components of the module.  
 	 */
 	private ConstructionStrategy construction;
-	
+
 	/**
 	 * The name of modular robot,like for example "ATRON", "MTRAN" and "Odin"
 	 */
 	private String modularRobotName;
-	
+
 	/**
 	 * The module selected in simulation environment. 
 	 */
 	private Module selectedModule;
-	
+
 	/**
 	 *  Newly created movable module.
 	 */
 	private Module newMovableModule;
-	
+
 	/**
 	 * Construction of modular robot morphologies in more abstract module oriented way.
 	 * @param simulation,the physical simulation
@@ -57,7 +59,7 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 	public  CommonOperationsStrategy(JMESimulation simulation){
 		this.simulation = simulation;
 	}
-	
+
 	/**
 	 * Adds the new module on connector. This is for both: selected connector on the module in simulation environment
 	 * and connector passed as a variable and later selected module in simulation environment.
@@ -76,7 +78,7 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 			this.construction.moveModuleAccording(toolSpecification.getSelectedConnectorNr(), this.selectedModule, this.newMovableModule);
 		}else if (this.modularRobotName.equalsIgnoreCase("Odin")){
 			this.selectedModule = toolSpecification.getSelectedModule();
-			String selectedModuleType =this.selectedModule.getProperty(BuilderUtilities.getModuleTypeKey());
+			String selectedModuleType =this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
 			if (selectedModuleType.equalsIgnoreCase("OdinBall")){
 				this.newMovableModule = createNewOdinModule("OdinMuscle");
 				this.construction.moveModuleAccording(toolSpecification.getSelectedConnectorNr(), this.selectedModule, this.newMovableModule);
@@ -91,7 +93,7 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 			}			
 		}else throw new Error("This type of modular robot is not supported yet or the name is misspelled");		
 	}
-	
+
 	/**
 	 * Adds the new modules on all connectors of the module selected in simulation environment
 	 * @param toolSpecification,object containing information about modular robot, selected module, simulation
@@ -107,7 +109,7 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 			addNewModuleOnConnector(toolSpecification);				
 		}	
 	}
-	
+
 	/**
 	 * Rotates the module selected in simulation environment with opposite rotation
 	 * @param toolSpecification, object containing information about modular robot, selected module, simulation
@@ -118,7 +120,7 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 		this.construction = toolSpecification.getConstruction();
 		this.construction.rotateOpposite(this.selectedModule);	
 	}
-	
+
 	/**
 	 * Rotates the module selected in simulation environment with standard rotation passed as a String
 	 * @param toolSpecification, object containing information about modular robot, selected module, simulation
@@ -129,7 +131,7 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 		this.construction = toolSpecification.getConstruction();
 		this.construction.rotateSpecifically(this.selectedModule, standardRotationName);	
 	}	
-	
+
 	/**
 	 * Rotates the module selected in simulation environment with opposite rotation
 	 * @param toolSpecification,object containing information about modular robot, selected module, simulation
@@ -139,18 +141,48 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 		this.modularRobotName = toolSpecification.getModularRobotName();
 		this.selectedModule = toolSpecification.getSelectedModule();
 		if (this.modularRobotName.equalsIgnoreCase("ATRON")|| this.modularRobotName.equalsIgnoreCase("MTRAN")){		
-		this.construction = toolSpecification.getConstruction();
-		this.construction.variate(this.selectedModule);
+			this.construction = toolSpecification.getConstruction();
+			this.construction.variate(this.selectedModule);
 		}else if (this.modularRobotName.equalsIgnoreCase("Odin")){
 			replaceOdinModules(this.selectedModule);
 		}	
 	}	
-	
+
 	//TODO MOVE THE FUNCTIONALITY
 	public void moveModuleOnNextConnector(ConstructionToolSpecification specification){
-		
+
+	}
+
+
+	/**
+	 * Adds default (the first) construction module at specified position.
+	 * @param type, the type of modular robot. For example: ATRON,MTRAN or OdinBall.
+	 * @param modulePosition, the position of module in simulation environment.
+	 */
+	public void addDefaultConstructionModule(String type, VectorDescription modulePosition ){			
+
+		List<Color> colorsComponents = new LinkedList<Color>();
+		ArrayList<Color> colorsConectors = new ArrayList<Color>();
+		RotationDescription moduleRotation;		
+		if (type.equalsIgnoreCase("ATRON")){
+			colorsComponents.add(Color.BLUE);colorsComponents.add(Color.RED);
+			colorsConectors.add(Color.BLACK);colorsConectors.add(Color.WHITE);colorsConectors.add(Color.BLACK);colorsConectors.add(Color.WHITE);colorsConectors.add(Color.BLACK);colorsConectors.add(Color.WHITE);colorsConectors.add(Color.BLACK);colorsConectors.add(Color.WHITE);
+			moduleRotation = ATRON.ROTATION_EW;
+			addNewModule(new ModulePosition(type+ BuilderHelper.getRandomInt(),type,modulePosition,moduleRotation),colorsComponents,colorsConectors);
+		}else if (type.equalsIgnoreCase("MTRAN")){
+			colorsComponents.add(Color.BLUE);colorsComponents.add(Color.BLACK);colorsComponents.add(Color.RED);
+			colorsConectors.add(Color.BLACK);colorsConectors.add(Color.BLACK);colorsConectors.add(Color.BLACK);colorsConectors.add(Color.WHITE);colorsConectors.add(Color.WHITE);colorsConectors.add(Color.WHITE);
+			moduleRotation = MTRANSimulation.ORI2;
+			addNewModule(new ModulePosition(type+ BuilderHelper.getRandomInt(),type,modulePosition,moduleRotation),colorsComponents,colorsConectors);
+		}else if (type.equalsIgnoreCase("Odin")){
+			colorsComponents.add(Color.RED);			
+			for (int connector=0;connector<12;connector++){
+				colorsConectors.add(Color.WHITE);
 			}
-	
+			moduleRotation = OdinConstructionStrategy.rotation00;
+			addNewModule(new ModulePosition("OdinBall"+ BuilderHelper.getRandomInt(),"OdinBall",modulePosition,moduleRotation),colorsComponents,colorsConectors);
+		}		
+	}
 	/**
 	 * Creates new Odin modules, according to the type passed as a String.
 	 * @param type, the type of Odin module.
@@ -165,13 +197,13 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 		if (type.equalsIgnoreCase("OdinMuscle")){			
 			colorsComponents.add(Color.RED); colorsComponents.add(Color.BLUE);
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);			
-			odinModule  = addNewModule(new ModulePosition("newMuscle","OdinMuscle",modulePosition,moduleRotation),colorsComponents,colorsConectors);
+			odinModule  = addNewModule(new ModulePosition("Muscle"+ BuilderHelper.getRandomInt(),"OdinMuscle",modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		}else if(type.equalsIgnoreCase("OdinBall")){		
 			colorsComponents.add(Color.RED);			
 			for (int connector=0;connector<12;connector++){
 				colorsConectors.add(Color.WHITE);
 			}			
-			odinModule = addNewModule(new ModulePosition("newBall","OdinBall",modulePosition,moduleRotation),colorsComponents,colorsConectors);
+			odinModule = addNewModule(new ModulePosition("Ball"+BuilderHelper.getRandomInt(),"OdinBall",modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		}
 		return odinModule;
 	}
@@ -184,41 +216,41 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 	 * except the OdinBall.
 	 */
 	private void replaceOdinModules(Module selectedModule){	
-		String selectedModuleType =	selectedModule.getProperty(BuilderUtilities.getModuleTypeKey());
-		RemoveModuleSelectionTool removeModule = new RemoveModuleSelectionTool(this.simulation);
+		String selectedModuleType =	selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
+		BuilderHelper builderHelper= new BuilderHelper();
 		VectorDescription modulePosition = selectedModule.getPhysics().get(0).getPosition();
 		RotationDescription moduleRotation = selectedModule.getPhysics().get(0).getRotation();
 		List<Color> colorsComponents = new LinkedList<Color>();
 		ArrayList<Color> colorsConectors = new ArrayList<Color>();		
 		if (selectedModuleType.equalsIgnoreCase("OdinMuscle")){			
-			removeModule.deleteModule(selectedModule);			
+			builderHelper.deleteModule(selectedModule);			
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.RED); colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition("newHinge","OdinHinge",modulePosition,moduleRotation),colorsComponents,colorsConectors);			
 		}else if (selectedModuleType.equalsIgnoreCase("OdinHinge")){
-			removeModule.deleteModule(selectedModule);			
+			builderHelper.deleteModule(selectedModule);			
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition("newBattery","OdinBattery",modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		}else if (selectedModuleType.equalsIgnoreCase("OdinBattery")){
-			removeModule.deleteModule(selectedModule);			
+			builderHelper.deleteModule(selectedModule);			
 			colorsComponents.add(Color.BLACK); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition("newSpring","OdinSpring",modulePosition,moduleRotation),colorsComponents,colorsConectors);			
 		}
-//PROBLEM java.lang.Error: Illegal module type: OdinTubeRobotType:OdinTube
+//		PROBLEM java.lang.Error: Illegal module type: OdinTubeRobotType:OdinTube
 		/*else if (selectedModuleType.equalsIgnoreCase("OdinSpring")){
-			removeModule.deleteModule(selectedModule);			
+			builderHelper.deleteModule(selectedModule);			
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModuleOneMore(new ModulePosition("newTube","OdinTube",modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		}*/else if (selectedModuleType.equalsIgnoreCase("OdinSpring")){
-			removeModule.deleteModule(selectedModule);
+			builderHelper.deleteModule(selectedModule);
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.BLUE);colorsComponents.add(Color.WHITE); 	colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition("newWheel","OdinWheel",modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		}else if (selectedModuleType.equalsIgnoreCase("OdinWheel")){
-			removeModule.deleteModule(selectedModule);			
+			builderHelper.deleteModule(selectedModule);			
 			colorsComponents.add(Color.RED); colorsComponents.add(Color.BLUE);colorsComponents.add(Color.RED); 	colorsComponents.add(Color.BLUE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition("newMuscle","OdinMuscle",modulePosition,moduleRotation),colorsComponents,colorsConectors);
@@ -239,17 +271,18 @@ public class CommonOperationsStrategy implements  SelectOperationsStrategy{
 		ArrayList<Color> colorsConnectors = getColorsConnectors(selectedModule);
 		String selectedModuleName = selectedModule.getProperty("name");
 		ModulePosition modulePosition;
-		if (moduleType.equalsIgnoreCase("ATRON")||moduleType.equalsIgnoreCase("default")){
-		 modulePosition = new ModulePosition(selectedModuleName,"default",position,rotation);
-		 }else {
-			 modulePosition = new ModulePosition(selectedModuleName,moduleType,position,rotation);
-		 }
-		Module newModule = this.simulation.createModule(modulePosition,true);		
-		newModule.setColorList(colorsComponents);
+		if (moduleType.equalsIgnoreCase("ATRON")){
+
+			modulePosition = new ModulePosition(selectedModuleName+ BuilderHelper.getRandomInt(),"ATRON",position,rotation);
+		}else {
+			modulePosition = new ModulePosition(selectedModuleName+ BuilderHelper.getRandomInt(),moduleType,position,rotation);
+		}
+		Module newModule = this.simulation.createModule(modulePosition,true);				
+		newModule.setColorList(colorsComponents);		
 		setColorsConnectors(newModule,colorsConnectors);
 		return newModule;
 	}
-	
+
 	/**
 	 * Adds and returns newModule at specific position and with specific rotation. 
 	 * @param modulePosition, global starting position of the module and annotations.

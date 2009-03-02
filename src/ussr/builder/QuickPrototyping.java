@@ -1,24 +1,36 @@
 package ussr.builder;
 
-import javax.swing.JToolBar;
-import com.jmex.physics.util.PhysicsPicker;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.JToolBar;
+
+import ussr.builder.construction.CommonOperationsStrategy;
 import ussr.builder.construction.ConstructionToolSpecification;
-import ussr.builder.genericSelectionTools.ColorConnectorsSelectionTool;
-import ussr.builder.genericSelectionTools.RemoveModuleSelectionTool;
+import ussr.builder.genericSelectionTools.AssignLabel;
+import ussr.builder.genericSelectionTools.ColorConnectors;
+import ussr.builder.genericSelectionTools.RemoveModule;
+import ussr.builder.genericSelectionTools.RotateModuleComponents;
 import ussr.builder.gui.FileChooser;
-import ussr.builder.gui.GuiUtilities;
+import ussr.builder.gui.GuiHelper;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModuleConnection;
+import ussr.description.setup.ModulePosition;
+import ussr.model.Module;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
-
-
+import ussr.physics.jme.pickers.PhysicsPicker;
+import ussr.samples.atron.ATRONBuilder;
+import ussr.samples.odin.OdinBuilder;
+import ussr.samples.odin.modules.Odin;
 /**
  * The main responsibility of this class is to take care of the main GUI window for  project called
  * "Quick Prototyping of Simulation Scenarios".   
  * USER GUIDE.
  * In order to start "Quick Prototyping of Simulation Scenarios" or so called interactive builder do 
  * the following:
- * 1) Locate simulation file for one of the modular robots(MR), currently are supported:
+ * 1) Locate simulation file for one of the modular robots, currently are supported:
  *    a) "InteractiveAtronBuilderTest1.java", which can be found in package  "ussr.samples.atron.simulations";
  *    b) "InteractiveMtranBuilderTest1.java", which can be found in package "ussr.samples.mtran";
  *    c) "InteractiveOdinBuilderTest1", which can be found in package "ussr.samples.odin.simulations";
@@ -58,11 +70,9 @@ import ussr.physics.jme.JMESimulation;
  *            (in ComboBox), after that click on one of the modules in simulation
  *            environment with the left side of the mouse. As a result, new module will be rotated with
  *            chosen rotation. Particularly useful at start of construction process, when the first
- *            module limits the construction of final morphology. 
- *    NOTE: During the construction of  MR morphology follow the hits displayed at the last toolbar of
- *    "Quick Prototyping of Simulation Scenarios" window called "Assistant".         
+ *            module limits the construction of final morphology.  
  * 5) Using one of the above selection tools construct desired morphology(shape) of the modular robot and
- *    after that press "P" button on keyboard to start the simulation. *    
+ *    after that press "P" button on keyboard to start the simulation. 
  *  
  * Additional functionality is ability to save the data about the modules in simulation
  * in XML format. Just choose File-->Save, this will open File chooser, also with quite a delay. Or select "save"
@@ -74,11 +84,13 @@ import ussr.physics.jme.JMESimulation;
  * PC(for example desktop), after that load it by chosing File-->Open or "open" icon. Keep in mind that
  * if you started the simulation for ATRON (see points 1 and 2 above, for example "InteractiveAtronBuilderTest1.java")
  * you can load only ATRON related XML files, like for example ATRONcar.xml.
+ * 
+ * The Design Class Diagram(DCD) for all the code can be found in USSR directory named as:"doc\developer\DCD.JPG"
  * @author  Konstantinas
  */
 public class QuickPrototyping extends javax.swing.JFrame {
     
-        /**
+    /**
 	 * The physical simulation
 	 */	   
 	private JMESimulation JME_simulation;
@@ -91,7 +103,7 @@ public class QuickPrototyping extends javax.swing.JFrame {
 	 */
     private FileChooser fileChooserOpen;
    
-   private final GuiUtilities guiUtil = new GuiUtilities();
+   private final GuiHelper guiUtil = new GuiHelper();
    
    private String chosenMRname ="ATRON"; //MR- modular robot. Default is ATRON, just do not have the case when it is empty String
    
@@ -105,13 +117,14 @@ public class QuickPrototyping extends javax.swing.JFrame {
    
    private static final int amountOdinBallConnectors = 11;
     
-    /** Creates new form QuickPrototyping1 */
+    /** Creates new form QuickPrototyping */
     public QuickPrototyping(JMEBasicGraphicalSimulation simulation) {
         initComponents();
         //Set to generic view      
         guiUtil.changeToSetLookAndFeel(this);         
         this.JME_simulation = (JMESimulation) simulation;  
-        adaptGuiToModularRobot();// Adapt GUI to modular robot existing in simulation
+        adaptGuiToModularRobot();// Adapt GUI to modular robot existing in simulation environment
+        JME_simulation.setPicker(new PhysicsPicker(true));//set default picker
     }
     
     /** This method is called from within the constructor to
@@ -142,40 +155,49 @@ public class QuickPrototyping extends javax.swing.JFrame {
         jCheckBox8 = new javax.swing.JCheckBox();
         jTextField2 = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
-        jToolBar5 = new javax.swing.JToolBar();
+        jToolBar8 = new javax.swing.JToolBar();
         jComboBox1 = new javax.swing.JComboBox();
+        jButton20 = new javax.swing.JButton();
+        jComboBox6 = new javax.swing.JComboBox();
+        jButton14 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        jToolBar5 = new javax.swing.JToolBar();
         jButton9 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox();
         jButton10 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
-        jToolBar6 = new javax.swing.JToolBar();
-        jButton14 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
-        jComboBox6 = new javax.swing.JComboBox();
-        jToolBar2 = new javax.swing.JToolBar();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuBar8 = new javax.swing.JMenuBar();
         jMenuBar10 = new javax.swing.JMenuBar();
-        jMenuBar11 = new javax.swing.JMenuBar();
-        jMenu31 = new javax.swing.JMenu();
-        jMenuItem41 = new javax.swing.JMenuItem();
-        jMenuItem42 = new javax.swing.JMenuItem();
-        jSeparator21 = new javax.swing.JSeparator();
-        jMenuItem43 = new javax.swing.JMenuItem();
-        jMenu32 = new javax.swing.JMenu();
-        jMenu33 = new javax.swing.JMenu();
-        jCheckBoxMenuItem67 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem68 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem69 = new javax.swing.JCheckBoxMenuItem();
+        jMenuBar13 = new javax.swing.JMenuBar();
+        jToolBar7 = new javax.swing.JToolBar();
+        jButton19 = new javax.swing.JButton();
+        jTextField3 = new javax.swing.JTextField();
+        jButton17 = new javax.swing.JButton();
+        jButton18 = new javax.swing.JButton();
+        jToolBar2 = new javax.swing.JToolBar();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton16 = new javax.swing.JButton();
+        jMenuBar15 = new javax.swing.JMenuBar();
+        jMenu43 = new javax.swing.JMenu();
+        jMenuItem57 = new javax.swing.JMenuItem();
+        jMenuItem58 = new javax.swing.JMenuItem();
+        jSeparator29 = new javax.swing.JSeparator();
+        jMenuItem59 = new javax.swing.JMenuItem();
+        jMenu44 = new javax.swing.JMenu();
+        jMenu45 = new javax.swing.JMenu();
+        jCheckBoxMenuItem82 = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItem83 = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItem84 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem73 = new javax.swing.JCheckBoxMenuItem();
-        jSeparator22 = new javax.swing.JSeparator();
-        jMenuItem44 = new javax.swing.JMenuItem();
+        jCheckBoxMenuItem9 = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItem10 = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItem85 = new javax.swing.JCheckBoxMenuItem();
+        jSeparator30 = new javax.swing.JSeparator();
+        jMenuItem60 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Quick Prototyping of Simulation Scenarios");
@@ -396,8 +418,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
 
         getContentPane().add(jToolBar4);
 
-        jToolBar5.setRollover(true);
-        jToolBar5.setPreferredSize(new java.awt.Dimension(310, 35));
+        jToolBar8.setRollover(true);
+        jToolBar8.setPreferredSize(new java.awt.Dimension(310, 35));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ATRON", "MTRAN", "Odin" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -405,13 +427,64 @@ public class QuickPrototyping extends javax.swing.JFrame {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        jToolBar5.add(jComboBox1);
+        jToolBar8.add(jComboBox1);
+
+        jButton20.setFont(new java.awt.Font("Tahoma", 0, 14));
+        jButton20.setText("Module");
+        jButton20.setFocusable(false);
+        jButton20.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton20.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton20ActionPerformed(evt);
+            }
+        });
+        jToolBar8.add(jButton20);
+
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EW", "WE", "DU", "UD", "SN", "NS" }));
+        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox6ActionPerformed(evt);
+            }
+        });
+        jToolBar8.add(jComboBox6);
+
+        jButton14.setFont(new java.awt.Font("Tahoma", 0, 14));
+        jButton14.setText("Opposite");
+        jButton14.setFocusable(false);
+        jButton14.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton14.setPreferredSize(new java.awt.Dimension(60, 30));
+        jButton14.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
+        jToolBar8.add(jButton14);
+
+        jButton15.setFont(new java.awt.Font("Tahoma", 0, 14));
+        jButton15.setText("Variation");
+        jButton15.setFocusable(false);
+        jButton15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton15.setPreferredSize(new java.awt.Dimension(60, 30));
+        jButton15.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
+        jToolBar8.add(jButton15);
+
+        getContentPane().add(jToolBar8);
+
+        jToolBar5.setRollover(true);
+        jToolBar5.setPreferredSize(new java.awt.Dimension(310, 35));
 
         jButton9.setFont(new java.awt.Font("Tahoma", 0, 14));
-        jButton9.setText("Con");
         jButton9.setFocusable(false);
         jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton9.setPreferredSize(new java.awt.Dimension(31, 30));
+        jButton9.setLabel("On connnector");
+        jButton9.setPreferredSize(new java.awt.Dimension(100, 30));
         jButton9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -421,6 +494,7 @@ public class QuickPrototyping extends javax.swing.JFrame {
         jToolBar5.add(jButton9);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7" }));
+        jComboBox2.setPreferredSize(new java.awt.Dimension(20, 20));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -478,45 +552,56 @@ public class QuickPrototyping extends javax.swing.JFrame {
         jToolBar5.add(jButton12);
 
         getContentPane().add(jToolBar5);
+        getContentPane().add(jMenuBar1);
+        getContentPane().add(jMenuBar8);
+        getContentPane().add(jMenuBar10);
+        getContentPane().add(jMenuBar13);
 
-        jToolBar6.setRollover(true);
-        jToolBar6.setPreferredSize(new java.awt.Dimension(310, 35));
+        jToolBar7.setRollover(true);
+        jToolBar7.setPreferredSize(new java.awt.Dimension(300, 35));
 
-        jButton14.setFont(new java.awt.Font("Tahoma", 0, 14));
-        jButton14.setText("Opposite");
-        jButton14.setFocusable(false);
-        jButton14.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton14.setPreferredSize(new java.awt.Dimension(60, 30));
-        jButton14.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton14.addActionListener(new java.awt.event.ActionListener() {
+        jButton19.setFont(new java.awt.Font("Tahoma", 0, 14));
+        jButton19.setText("Label:");
+        jButton19.setFocusable(false);
+        jButton19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton19.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
+                jButton19ActionPerformed(evt);
             }
         });
-        jToolBar6.add(jButton14);
+        jToolBar7.add(jButton19);
 
-        jButton15.setFont(new java.awt.Font("Tahoma", 0, 14));
-        jButton15.setText("Variation");
-        jButton15.setFocusable(false);
-        jButton15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton15.setPreferredSize(new java.awt.Dimension(60, 30));
-        jButton15.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton15.addActionListener(new java.awt.event.ActionListener() {
+        jTextField3.setEditable(false);
+        jTextField3.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextField3.setToolTipText("");
+        jToolBar7.add(jTextField3);
+
+        jButton17.setFont(new java.awt.Font("Tahoma", 0, 14));
+        jButton17.setText("Assign");
+        jButton17.setFocusable(false);
+        jButton17.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton17.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton15ActionPerformed(evt);
+                jButton17ActionPerformed(evt);
             }
         });
-        jToolBar6.add(jButton15);
+        jToolBar7.add(jButton17);
 
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EW", "WE", "DU", "UD", "SN", "NS" }));
-        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
+        jButton18.setFont(new java.awt.Font("Tahoma", 0, 14));
+        jButton18.setText("Use");
+        jButton18.setFocusable(false);
+        jButton18.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton18.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox6ActionPerformed(evt);
+                jButton18ActionPerformed(evt);
             }
         });
-        jToolBar6.add(jComboBox6);
+        jToolBar7.add(jButton18);
 
-        getContentPane().add(jToolBar6);
+        getContentPane().add(jToolBar7);
 
         jToolBar2.setRollover(true);
         jToolBar2.setPreferredSize(new java.awt.Dimension(310, 35));
@@ -530,147 +615,159 @@ public class QuickPrototyping extends javax.swing.JFrame {
         jToolBar2.add(jTextField1);
 
         getContentPane().add(jToolBar2);
-        getContentPane().add(jMenuBar1);
-        getContentPane().add(jMenuBar8);
-        getContentPane().add(jMenuBar10);
 
-        jMenu31.setText("File");
+        jButton16.setText("Continue to simulation");
+        jButton16.setPreferredSize(new java.awt.Dimension(139, 30));
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton16);
 
-        jMenuItem41.setText("Open");
-        jMenuItem41.addActionListener(new java.awt.event.ActionListener() {
+        jMenu43.setText("File");
+
+        jMenuItem57.setText("Open");
+        jMenuItem57.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu31.add(jMenuItem41);
+        jMenu43.add(jMenuItem57);
 
-        jMenuItem42.setText("Save as ");
-        jMenuItem42.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem58.setText("Save as ");
+        jMenuItem58.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu31.add(jMenuItem42);
-        jMenu31.add(jSeparator21);
+        jMenu43.add(jMenuItem58);
+        jMenu43.add(jSeparator29);
 
-        jMenuItem43.setText("Exit");
-        jMenuItem43.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem59.setText("Exit");
+        jMenuItem59.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu31.add(jMenuItem43);
+        jMenu43.add(jMenuItem59);
 
-        jMenuBar11.add(jMenu31);
+        jMenuBar15.add(jMenu43);
 
-        jMenu32.setText("View");
+        jMenu44.setText("View");
 
-        jMenu33.setText("Toolbars");
+        jMenu45.setText("Toolbars");
 
-        jCheckBoxMenuItem67.setSelected(true);
-        jCheckBoxMenuItem67.setText("Simulation");
-        jCheckBoxMenuItem67.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxMenuItem82.setSelected(true);
+        jCheckBoxMenuItem82.setText("Simulation");
+        jCheckBoxMenuItem82.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu33.add(jCheckBoxMenuItem67);
+        jMenu45.add(jCheckBoxMenuItem82);
 
-        jCheckBoxMenuItem68.setSelected(true);
-        jCheckBoxMenuItem68.setText("Rendering");
-        jCheckBoxMenuItem68.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxMenuItem83.setSelected(true);
+        jCheckBoxMenuItem83.setText("Rendering");
+        jCheckBoxMenuItem83.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu33.add(jCheckBoxMenuItem68);
+        jMenu45.add(jCheckBoxMenuItem83);
 
-        jCheckBoxMenuItem69.setSelected(true);
-        jCheckBoxMenuItem69.setText(" Generic");
-        jCheckBoxMenuItem69.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxMenuItem84.setSelected(true);
+        jCheckBoxMenuItem84.setText("Module generic");
+        jCheckBoxMenuItem84.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxMenuItem7ActionPerformed(evt);
             }
         });
-        jMenu33.add(jCheckBoxMenuItem69);
+        jMenu45.add(jCheckBoxMenuItem84);
 
         jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("Specific to modular robots (MR)");
+        jCheckBoxMenuItem1.setText("Modular robot specific");
         jCheckBoxMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem1ActionPerformed2(evt);
+            }
+        });
+        jMenu45.add(jCheckBoxMenuItem1);
+
+        jCheckBoxMenuItem9.setSelected(true);
+        jCheckBoxMenuItem9.setText("Construction ");
+        jCheckBoxMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxMenuItem1ActionPerformed1(evt);
             }
         });
-        jMenu33.add(jCheckBoxMenuItem1);
+        jMenu45.add(jCheckBoxMenuItem9);
 
-        jCheckBoxMenuItem2.setSelected(true);
-        jCheckBoxMenuItem2.setText("Specific rotations of MR");
-        jCheckBoxMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxMenuItem10.setSelected(true);
+        jCheckBoxMenuItem10.setText("Behaviours");
+        jCheckBoxMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxMenuItem2ActionPerformed1(evt);
             }
         });
-        jMenu33.add(jCheckBoxMenuItem2);
+        jMenu45.add(jCheckBoxMenuItem10);
 
-        jCheckBoxMenuItem73.setSelected(true);
-        jCheckBoxMenuItem73.setText("Assistant");
-        jCheckBoxMenuItem73.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxMenuItem85.setSelected(true);
+        jCheckBoxMenuItem85.setText("Assistant");
+        jCheckBoxMenuItem85.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu33.add(jCheckBoxMenuItem73);
-        jMenu33.add(jSeparator22);
+        jMenu45.add(jCheckBoxMenuItem85);
+        jMenu45.add(jSeparator30);
 
-        jMenuItem44.setText("Customize...");
-        jMenuItem44.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem60.setText("Customize...");
+        jMenuItem60.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem8ActionPerformed(evt);
             }
         });
-        jMenu33.add(jMenuItem44);
+        jMenu45.add(jMenuItem60);
 
-        jMenu32.add(jMenu33);
+        jMenu44.add(jMenu45);
 
-        jMenuBar11.add(jMenu32);
+        jMenuBar15.add(jMenu44);
 
-        setJMenuBar(jMenuBar11);
+        setJMenuBar(jMenuBar15);
 
         pack();
     }// </editor-fold>
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-       //System.out.println("File-->Exit");//for debugging
+       //System.out.println("File-->Exit");//for debugging 
         this.dispose();
     }                                          
    
     private void adaptGuiToModularRobot(){
+    	
     	String modularRobotName ="";
-    	if (JME_simulation.getModules().get(0).getProperty("ussr.module.type") == null){//Handles empty simulation
-    		// do nothing
-    	}else{
-    		modularRobotName = JME_simulation.getModules().get(0).getProperty("ussr.module.type");
-    		
-    	}
-		 
+    	if (JME_simulation.worldDescription.getModulePositions().size()>0){
+    		modularRobotName = JME_simulation.getModules().get(0).getProperty("ussr.module.type");	
+    	}		
 		if (modularRobotName.contains("Odin")){
 			jComboBox1.setSelectedIndex(2);			
 		}else if (modularRobotName.contains("ATRON")){
-			jComboBox1.setSelectedIndex(0);			
+			jComboBox1.setSelectedIndex(0);
+			jComboBox6.setSelectedIndex(0);
 		}else if (modularRobotName.contains("MTRAN")){
-			jComboBox1.setSelectedIndex(1);			
+			jComboBox1.setSelectedIndex(1);	
+			jComboBox6.setSelectedIndex(0);
 		}
-                 jComboBox2.setSelectedIndex(0);
-		jComboBox6.setSelectedIndex(0);
-                 
+                 //Odin.setDefaultConnectorSize(0.006f);
+                 jComboBox2.setSelectedIndex(0);                 
          jButton11.setEnabled(false);
         jButton12.setEnabled(false);
          guiUtil.passTo(jTextField1,"Select one of MR names in comboBox(4th toolbar) ");// informing user
 	}
     
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        //System.out.println("File-->Save as");//for debugging            
-        //System.out.println("File-->"+jMenuItem2.getText());//for debugging 
+        //System.out.println("File-->Save as");//for debugging                
          this.fileChooserSave = new FileChooser(JME_simulation,false); 
          fileChooserSave.activate();
          guiUtil.passTo(jTextField1,"Save simulation data to XML file");// informing user
@@ -678,7 +775,6 @@ public class QuickPrototyping extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {                                           
         //System.out.println("File-->Open");//for debugging
-        //System.out.println("File-->"+jMenuItem3.getText());//for debugging 
           this.fileChooserOpen = new FileChooser(JME_simulation,true); 
          fileChooserOpen.activate();
          guiUtil.passTo(jTextField1,"Load simulation data to XML file");// informing user
@@ -687,14 +783,12 @@ public class QuickPrototyping extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
        //System.out.println("Simulation ToolBar-->Pause/Play simulation");//for debugging 
         System.out.println("Simulation ToolBar-->"+jButton1.getToolTipText());//for debugging        
-      if (JME_simulation.isPaused()==false){        
-			JME_simulation.setPause(true);
-			System.out.println("Pause on");//for debugging 
-                        guiUtil.passTo(jTextField1, "Simulation is in paused state");// informing user
+       if (JME_simulation.isPaused()==false){        
+			JME_simulation.setPause(true);			
+                        guiUtil.passTo(jTextField1, "Simulation is in static state");// informing user
 			jButton1.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/pause.JPG"));
 
-		}else{
-			System.out.println("Play"); //for debugging 
+		}else{			
                         guiUtil.passTo(jTextField1, "Simulation running");// informing user
 			jButton1.setIcon(new javax.swing.ImageIcon("resources/quickPrototyping/icons/play.JPG"));
 			JME_simulation.setPause(false);
@@ -704,14 +798,12 @@ public class QuickPrototyping extends javax.swing.JFrame {
 
     private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         //System.out.println("View-->Toolbars-->Simulation");//for debugging 
-        //System.out.println("View-->Toolbars-->"+jCheckBoxMenuItem1.getText());//for debugging        
-        this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem1, jToolBar1);        
+        this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem82, jToolBar1);        
     }                                                  
 
     private void jCheckBoxMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
-        System.out.println("View-->Toolbars-->Assistant");        
-       // System.out.println("View-->Toolbars-->"+jCheckBoxMenuItem2.getText());//for debugging     
-         this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem2, jToolBar2);  
+          System.out.println("View-->Toolbars-->Assistant");                 
+         this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem85, jToolBar2);  
     }                                                  
 
     int simulationStep =0;
@@ -738,91 +830,86 @@ public class QuickPrototyping extends javax.swing.JFrame {
     }                                        
 
     private void jCheckBoxMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
-           //System.out.println("View-->Toolbars-->Rendering");//for debugging 
-          //  System.out.println("View-->Toolbars-->"+ jCheckBoxMenuItem3.getText());//for debugging                       
-         this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem68, jToolBar3); 
+           //System.out.println("View-->Toolbars-->Rendering");//for debugging                              
+         this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem83, jToolBar3); 
     }                                                  
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        //System.out.println("GenericToolbar-->Move"); //for debugging 
-         System.out.println("GenericToolbar-->"+jButton5.getToolTipText());//for debugging 
-         //JME_simulation.worldDescription.getModulePositions().get(0).toString();
-         //System.out.println(""+ JME_simulation.worldDescription.getModulePositions().get(0).toString() ); //for debugging 
-         
-         JME_simulation.worldDescription.setModulePositions(JME_simulation.worldDescription.getModulePositions());
-         //JME_simulation.worldDescription.getConnections();
-         JME_simulation.worldDescription.setModuleConnections(JME_simulation.worldDescription.getConnections());
-         JME_simulation.placeModules();
-         
-        guiUtil.passTo(jTextField1, "Select and move module");// informing user
+        //System.out.println("Module generic toolbar-->Move"); //for debugging  
+    	JME_simulation.setPicker(new PhysicsPicker(true));
+        guiUtil.passTo(jTextField1, "Pick and move module");// informing user        
     }                                        
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // System.out.println("GenericToolbar-->Rotate"); //for debugging
-          System.out.println("GenericToolbar-->"+jButton6.getToolTipText());//for debugging 
-        //JME_simulation.setPicker(new NEW1(JME_simulation, -45.0f));
+        // System.out.println("Module generic toolbar-->Rotate"); //for debugging        
          guiUtil.passTo(jTextField1, "Select module to rotate");// informing user
+         float angle = Float.parseFloat(jTextField2.getText());
+         
+         if (jCheckBox6.isSelected()){        	 
+        	 JME_simulation.setPicker(new RotateModuleComponents("X",angle));
+         }else if (jCheckBox7.isSelected()){
+        	 JME_simulation.setPicker(new RotateModuleComponents("Y",angle));
+         }else if (jCheckBox8.isSelected()){
+        	 JME_simulation.setPicker(new RotateModuleComponents("Z",angle));
+         }         
     }                                        
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        //System.out.println("GenericToolbar-->Delete"); //for debugging 
+        //System.out.println("Module generic toolbar-->Delete"); //for debugging 
         System.out.println("GenericToolbar-->"+jButton7.getToolTipText());//for debugging 
         guiUtil.passTo(jTextField1, "Select module to delete");// informing user
-        JME_simulation.setPicker(new RemoveModuleSelectionTool(JME_simulation));
+        JME_simulation.setPicker(new RemoveModule());
     }                                        
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-         //System.out.println("GenericToolbar-->Color connectors"); //for debugging 
-         System.out.println("GenericToolbar-->"+jButton8.getToolTipText());//for debugging 
+         //System.out.println("Module generic toolbar-->Color connectors"); //for debugging         
          guiUtil.passTo(jTextField1, "Select module to color its connectors");// informing user
-        JME_simulation.setPicker(new ColorConnectorsSelectionTool(JME_simulation));
+        JME_simulation.setPicker(new ColorConnectors());        
     }                                        
 
     private void jCheckBoxMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {                                                   
          System.out.println("View-->Toolbars-->Module generic");//for debugging
-         this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem69, jToolBar4); 
-    }       
-   
+         this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem84, jToolBar4); 
+    }                                                  
+        
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-           //System.out.println("View-->Toolbars-->Customize");//for debugging 
-        //   System.out.println("View-->Toolbars-->"+jMenuItem8.getText());//for debugging
-          // resetToolBarVisibility();
+           //System.out.println("View-->Toolbars-->Customize");//for debugging         
+           resetToolBarVisibility();
            //ToolBarDisplayer toolBarDisplayer = new ToolBarDisplayer(this);
           // toolBarDisplayer.activate();
     }                                          
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-       JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"OnConnector"));
+         //System.out.println("Construction toolbar-->On connector");//for debugging    
+         JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"OnConnector"));
         guiUtil.passTo(jTextField1,"Select connector on "+ this.chosenMRname +" modular robot");
     }                                        
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-       JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"AllConnectors"));
+        //System.out.println("Construction toolbar-->All");//for debugging 
+        JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"AllConnectors"));
         guiUtil.passTo(jTextField1,"Select " +this.chosenMRname +" module");
     }                                         
     
     ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"Loop",0);
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-         guiUtil.passTo(jTextField1,"1)Select " +this.chosenMRname +" module,2)use NEXT and BACK");
+         //System.out.println("Construction toolbar-->Loop");//for debugging  
+        guiUtil.passTo(jTextField1,"1)Select " +this.chosenMRname +" module,2)use NEXT and BACK");
          jButton11.setEnabled(true);
         jButton12.setEnabled(true);
          this.connectorNr =0;
-	 ConstructionToolSpecification constructionToolsnew = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"Loop",this.connectorNr);
+         ConstructionToolSpecification constructionToolsnew = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"Loop",this.connectorNr);
         this.constructionTools = constructionToolsnew;
-        JME_simulation.setPicker(constructionToolsnew);
-         
+        JME_simulation.setPicker(constructionToolsnew);         
     }                                         
 
     private void jCheckBox5ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        System.out.println("RenderToolbar-->Lights");//for debugging
-        System.out.println("RenderToolbar-->"+jCheckBox5.getText());//for debugging
-                if (JME_simulation.getLightState().isEnabled() == false ){
-                       System.out.println("Selected");//for debugging
+        //System.out.println("RenderToolbar-->Lights");//for debugging    
+                if (JME_simulation.getLightState().isEnabled() == false ){                       
                         jCheckBox5.setSelected(true);
                         JME_simulation.getLightState().setEnabled(true);
                          guiUtil.passTo(jTextField1, "Rendering lights");// informing user
-                }else {
-                        System.out.println("De-Selected");//for debugging
+                }else {                   
                         jCheckBox5.setSelected(false);
                         JME_simulation.getLightState().setEnabled(false);
                         guiUtil.passTo(jTextField1, "Stopped rendering lights");// informing user
@@ -830,31 +917,25 @@ public class QuickPrototyping extends javax.swing.JFrame {
     }                                          
 
     private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        //System.out.println("RenderToolbar-->Normals");//for debugging
-        System.out.println("RenderToolbar-->"+jCheckBox4.getText());//for debugging        
-        if ( JME_simulation.isShowNormals() == false ){
-            System.out.println("Selected");//for debugging
+        //System.out.println("RenderToolbar-->Normals");//for debugging       
+   if ( JME_simulation.isShowNormals() == false ){            
             jCheckBox4.setSelected(true);
             JME_simulation.setShowNormals(true);
              guiUtil.passTo(jTextField1, "Rendering normals");// informing user
-        }else {
-            System.out.println("De-Selected");//for debugging
+        }else {            
             jCheckBox4.setSelected(false);
             JME_simulation.setShowNormals(false);
             guiUtil.passTo(jTextField1, "Stopped rendering normals");// informing user
-        }         
+        }    
     }                                          
 
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        //System.out.println("RenderToolbar-->Bounds");//for debugging
-        System.out.println("RenderToolbar-->"+jCheckBox3.getText());//for debugging
-        if ( JME_simulation.isShowBounds() == false ){
-            System.out.println("Selected");//for debugging
+        //System.out.println("RenderToolbar-->Bounds");//for debugging        
+          if ( JME_simulation.isShowBounds() == false ){            
             jCheckBox3.setSelected(true);
             JME_simulation.setShowBounds(true);
             guiUtil.passTo(jTextField1, "Rendering bounds");// informing user
-        }else {
-            System.out.println("De-Selected");//for debugging
+        }else {         
             jCheckBox3.setSelected(false);
             JME_simulation.setShowBounds(false);
             guiUtil.passTo(jTextField1, "Stopped rendering bounds");// informing user
@@ -862,15 +943,12 @@ public class QuickPrototyping extends javax.swing.JFrame {
     }                                          
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // System.out.println("RenderToolbar-->Wireframe");//for debugging
-        System.out.println("RenderToolbar-->"+jCheckBox2.getText());//for debugging
-        if ( JME_simulation.getWireState().isEnabled() == false ){
-          System.out.println("Selected");//for debugging
+        // System.out.println("RenderToolbar-->Wireframe");//for debugging        
+         if ( JME_simulation.getWireState().isEnabled() == false ){        
            jCheckBox2.setSelected(true);
            JME_simulation.getWireState().setEnabled(true);
            guiUtil.passTo(jTextField1, "Rendering wireframe");// informing user
-       }else {
-            System.out.println("De-Selected");//for debugging
+       }else {            
            jCheckBox2.setSelected(false);
            JME_simulation.getWireState().setEnabled(false);
            guiUtil.passTo(jTextField1, "Stopped rendering wireframe");// informing user
@@ -878,15 +956,12 @@ public class QuickPrototyping extends javax.swing.JFrame {
     }                                          
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        //System.out.println("RenderToolbar-->Physics");//for debugging
-        System.out.println("RenderToolbar-->"+jCheckBox1.getText());//for debugging
-                  if (JME_simulation.isShowPhysics() == false ){
-                             System.out.println("Selected");//for debugging
+        //System.out.println("RenderToolbar-->Physics");//for debugging        
+                     if (JME_simulation.isShowPhysics() == false ){                             
                       jCheckBox1.setSelected(true);
                       JME_simulation.setShowPhysics(true);
                       guiUtil.passTo(jTextField1, "Rendering physics");// informing user
-                  }else {
-                          System.out.println("De-Selected");//for debugging
+                  }else {                         
                       jCheckBox1.setSelected(false);
                       JME_simulation.setShowPhysics(false);
                       guiUtil.passTo(jTextField1, "Stopped rendering physics");// informing user
@@ -894,6 +969,7 @@ public class QuickPrototyping extends javax.swing.JFrame {
     }                                          
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        //System.out.println("Modular robot specific-->ComboBox with names of MR");//for debugging 
         this.chosenMRname = jComboBox1.getSelectedItem().toString();
         if (this.chosenMRname.equalsIgnoreCase("ATRON")){
         jButton9.setEnabled(true);
@@ -908,8 +984,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
            jComboBox6.setEnabled(true);
         }else if (this.chosenMRname.equalsIgnoreCase("Odin")){
             jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0","1", "2", "3","4", "5", "6","7", "8","9", "10", "11"}));
-            jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"none"}));
-            jButton9.setEnabled(false);
+            jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] {  }));
+            jButton9.setEnabled(true);
             jComboBox6.setEnabled(false);
         }
         jButton11.setEnabled(false);
@@ -918,7 +994,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
     }                                          
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-       this.connectorNr++;
+       //System.out.println("Construction toolbar-->Next");//for debugging 
+        this.connectorNr++;
        if (this.chosenMRname.equalsIgnoreCase("ATRON")){
        if (this.connectorNr>amountATRONConnectors){ this.connectorNr=0;}       
        }else if (this.chosenMRname.equalsIgnoreCase("MTRAN")){
@@ -928,28 +1005,31 @@ public class QuickPrototyping extends javax.swing.JFrame {
 		}
       //TODO NEED TO GET BACK FOR ODIN WHICH TYPE OF MODULE IS SELECTED. 
        constructionTools.moveToNextConnector(this.connectorNr);
-    /*   else if (this.chosenMRname.equalsIgnoreCase("Odin")){
+       /*else if (this.chosenMRname.equalsIgnoreCase("Odin")){
        if (this.connectorNr>amountOdinConnectors){ this.connectorNr=0;}
        }*/
        guiUtil.passTo(jTextField1,this.chosenMRname +" module is on connector number "+this.connectorNr);
     }                                         
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-         this.connectorNr--;
+        //System.out.println("Construction toolbar-->Back");//for debugging 
+        this.connectorNr--;
 		if (this.chosenMRname.equalsIgnoreCase("ATRON") && this.connectorNr<0){
 			this.connectorNr =7;//reset
 		}else if (this.chosenMRname.equalsIgnoreCase("MTRAN") && this.connectorNr<0){this.connectorNr=5;}
-		else if (this.chosenMRname.equalsIgnoreCase("Odin") && this.connectorNr<0){this.connectorNr=11;}
-		 constructionTools.moveToNextConnector(this.connectorNr);
+         else if (this.chosenMRname.equalsIgnoreCase("Odin") && this.connectorNr<0){this.connectorNr=11;}
+         constructionTools.moveToNextConnector(this.connectorNr);
        guiUtil.passTo(jTextField1,this.chosenMRname +" module is on connector number "+this.connectorNr);
     }                                         
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {                                          
-    JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"OppositeRotation"));        
+      //System.out.println("Modular robot specific-->Opposite");//for debugging 
+        JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"OppositeRotation"));        
         guiUtil.passTo(jTextField1,"Select " +this.chosenMRname +" module to rotate it opposite ");
     }                                         
 
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+       //System.out.println("Modular robot specific-->Specific rotations");//for debugging 
         this.rotationName = jComboBox6.getSelectedItem().toString();
 	JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"StandardRotation",this.rotationName));		
         guiUtil.passTo(jTextField1,"Select " +this.chosenMRname +" module to rotate with "+ rotationName+ " rotation");
@@ -968,12 +1048,14 @@ public class QuickPrototyping extends javax.swing.JFrame {
     }                                          
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-       int connectorNumber = Integer.parseInt(jComboBox2.getSelectedItem().toString());
-	 JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"chosenConnector",connectorNumber));
+      //System.out.println("Construction toolbar-->On chosen (comboBox) connector");//for debugging 
+        int connectorNumber = Integer.parseInt(jComboBox2.getSelectedItem().toString());
+	JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"chosenConnector",connectorNumber));
         guiUtil.passTo(jTextField1,"Select " +this.chosenMRname +" module");
     }                                          
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        //System.out.println("Modular robot specific-->Variation");//for debugging 
         if (this.chosenMRname.contains("ATRON")||this.chosenMRname.contains("MTRAN")){ 
         guiUtil.passTo(jTextField1,"Select " +this.chosenMRname +" module to see its variations");
         }else if (this.chosenMRname.contains("Odin")){
@@ -982,19 +1064,156 @@ public class QuickPrototyping extends javax.swing.JFrame {
         JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,"Variation"));
     }                                         
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
-    }
+    }                                           
 
-    private void jCheckBoxMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {
-            System.out.println("View-->Toolbars-->Module generic");//for debugging
-         this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem1, jToolBar5); 
-    }
+    private void jCheckBoxMenuItem1ActionPerformed1(java.awt.event.ActionEvent evt) {                                                    
+            System.out.println("View-->Toolbars-->Construction");//for debugging
+           this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem1, jToolBar5); 
+    }                                                   
 
-    private void jCheckBoxMenuItem2ActionPerformed1(java.awt.event.ActionEvent evt) {
+    private void jCheckBoxMenuItem2ActionPerformed1(java.awt.event.ActionEvent evt) {                                                    
+          System.out.println("View-->Toolbars-->Behaviours");//for debugging
+         this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem10, jToolBar7); 
+    }                                                   
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        System.out.println("Continue to simulation button");//for debugging
+        //JME_simulation.setPicker(new PhysicsPicker());
+       // JME_simulation.setPause(false);
+        //this.dispose();
+        if (JME_simulation.worldDescription.getModulePositions().size()>=0){
+        	
+         	int amountModules = JME_simulation.getModules().size();
+         	ArrayList<ModulePosition> atronModulePositions = new ArrayList<ModulePosition>();
+         	ArrayList<ModulePosition> mtranModulePositions = new ArrayList<ModulePosition>(); 
+         	ArrayList<ModulePosition> odinAllModulePositions = new ArrayList<ModulePosition>();
+         	ArrayList<ModulePosition> odinBallModulePositions = new ArrayList<ModulePosition>(); 
+         	ArrayList<ModulePosition> odinOtherModulesPositions = new ArrayList<ModulePosition>();
+         	
+         	List<Module> atronModules = new ArrayList<Module>();
+         	List<Module> mtranModules = new ArrayList<Module>();
+         	List<Module> odinAllModules = new ArrayList<Module>();
+         	
+         	for (int i=0; i<amountModules; i++){
+         		Module currentModule = JME_simulation.getModules().get(i);
+         		if (currentModule.getProperty(BuilderHelper.getModuleDeletionKey())==null){// means was not deleted
+         			String moduleName = currentModule.getProperty(BuilderHelper.getModuleNameKey());
+             		String moduleType = currentModule.getProperty(BuilderHelper.getModuleTypeKey());
+             		VectorDescription modulePosition = currentModule.getPhysics().get(0).getPosition();
+             		RotationDescription moduleRotation = currentModule.getPhysics().get(0).getRotation(); 
+             		if (moduleType.contains("ATRON")){
+             		atronModulePositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
+             		atronModules.add(currentModule);
+             		}else if (moduleType.contains("MTRAN")){
+             			mtranModulePositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
+                 		mtranModules.add(currentModule);
+             		}else if (moduleType.contains("Odin")){            		
+             			odinAllModulePositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
+                 		odinAllModules.add(currentModule);
+                 		//System.out.println("dddddd");
+                 		if (moduleType.contains("OdinBall")){
+                 			odinBallModulePositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
+                 		}else {
+                 			odinOtherModulesPositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
+                 		}
+             		}
+         		}else{
+                 // do nothing
+         		}
+         	}        	
+         	
+         	
+         	 ATRONBuilder atronbuilder = new ATRONBuilder();             
+         	 ArrayList<ModuleConnection> atronModuleConnection = atronbuilder.allConnections(atronModulePositions);        	 
+         	 JME_simulation.setModules(atronModules);
+         	 JME_simulation.worldDescription.setModulePositions(atronModulePositions);
+         	 JME_simulation.worldDescription.setModuleConnections(atronModuleConnection);                          
+              JME_simulation.placeModules();
+              
+              
+             /* OdinBuilder odinBuilder = new OdinBuilder();
+              odinBuilder.setBallPos(odinBallModulePositions);
+              odinBuilder.setModulePos(odinOtherModulesPositions);             
+         	 ArrayList<ModuleConnection> odinModuleConnection = odinBuilder.allConnections();        	 
+         	 JME_simulation.setModules(odinAllModules);
+         	 JME_simulation.worldDescription.setModulePositions(odinAllModulePositions);
+         	 JME_simulation.worldDescription.setModuleConnections(odinModuleConnection);                          
+              JME_simulation.placeModules();
+              System.out.println("Balls Size is: "+ odinBallModulePositions.size()); //for debugging
+              System.out.println("Modules Size is: "+ odinOtherModulesPositions.size()); //for debugging
+ */             
+              System.out.println("Pos Size is: "+ JME_simulation.worldDescription.getModulePositions().size()); //for debugging
+          	System.out.println("Con Size is: "+ JME_simulation.worldDescription.getConnections().size()); 
+               
+         }       
+    }                                         
+
+    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        System.out.println("Behaviours toolbar-->Assign button pressed");//for debugging        
+        JME_simulation.setPicker(new AssignLabel());
+         guiUtil.passTo(jTextField1," Select the module to assign the label named "+jTextField3.getText()+ " to");
          
-         this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem2, jToolBar6); 
+    }                                         
+
+    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        System.out.println("Behaviours toolbar -->Label button pressed");//for debugging
+        jTextField3.setEditable(true);
+        guiUtil.passTo(jTextField1," Type in the name of the label in the activated field");
+    }                                         
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+         System.out.println("Behaviours toolbar -->Use button pressed");//for debugging
+        guiUtil.passTo(jTextField1, "Select the module to program using label");
+    }                                         
+
+    private void jCheckBoxMenuItem1ActionPerformed2(java.awt.event.ActionEvent evt) {
+      System.out.println("View-->Toolbars-->Modular robot specific");//for debugging
+         this.guiUtil.changeToolBarVisibility(jCheckBoxMenuItem1, jToolBar8);         
     }
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {
+       //System.out.println("Modular robot specific-->Module");//for debugging     	
+    	CommonOperationsStrategy com = new CommonOperationsStrategy(JME_simulation);
+    	VectorDescription zeroPosition = new VectorDescription(0,0,0);
+    	VectorDescription atronPosition = new VectorDescription(0,-0.441f,0.5f);
+		VectorDescription mtranPosition = new VectorDescription(-1f,-0.4621f,0.5f);
+		VectorDescription odinPosition = new VectorDescription(1f,-0.4746f,0.5f);    	
+    	if (JME_simulation.getModules().size()>=0){    		
+    		
+        if (this.chosenMRname.equalsIgnoreCase("ATRON")&& moduleExists(atronPosition)==false ){
+    	com.addDefaultConstructionModule(this.chosenMRname, atronPosition);
+    	}else if (this.chosenMRname.equalsIgnoreCase("MTRAN")&& moduleExists(mtranPosition)==false){
+    		com.addDefaultConstructionModule(this.chosenMRname,mtranPosition );
+    	}else if (this.chosenMRname.equalsIgnoreCase("Odin")&& moduleExists(odinPosition)==false){
+    		com.addDefaultConstructionModule(this.chosenMRname, odinPosition);
+    	}else {
+    		com.addDefaultConstructionModule(this.chosenMRname, zeroPosition);
+    	}
+    	}
+    }
+    
+    private boolean moduleExists(VectorDescription assignedModulePosition ){
+    	int amountModules = JME_simulation.getModules().size();
+    	for (int module =0;module<amountModules;module++){
+    		Module currentModule =JME_simulation.getModules().get(module); 
+    		String moduleType = currentModule.getProperty(BuilderHelper.getModuleTypeKey());
+    		VectorDescription modulePosition;
+    		if (moduleType.equalsIgnoreCase("MTRAN")){
+    			modulePosition = currentModule.getPhysics().get(1).getPosition(); 
+    		}else{
+    		modulePosition = currentModule.getPhysics().get(0).getPosition();
+    		}
+    		if (modulePosition.equals(assignedModulePosition)){
+    			return true;
+    		}
+    	}
+		return false;    	
+    }
+    
+    
+    
     private void resetToolBarVisibility(){
     jToolBar1.setVisible(true);
     jToolBar2.setVisible(true);
@@ -1007,11 +1226,11 @@ public class QuickPrototyping extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-/*    public static void main(String args[]) {
+ /*   public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                QuickPrototyping3 quickPrototyping = new QuickPrototyping3(JME_simulation);
-                quickPrototyping.setSize(320, 320);
+                QuickPrototyping quickPrototyping = new QuickPrototyping(JME_simulation);
+                quickPrototyping.setSize(330, 390);
                 quickPrototyping.setVisible(true);                
             }
         });
@@ -1020,7 +1239,7 @@ public class QuickPrototyping extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				QuickPrototyping quickPrototyping = new QuickPrototyping(simulation);
-                quickPrototyping.setSize(320, 320);
+                quickPrototyping.setSize(330, 390);
                 quickPrototyping.setVisible(true); 
 			}
 		});
@@ -1053,7 +1272,12 @@ public class QuickPrototyping extends javax.swing.JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -1070,36 +1294,40 @@ public class QuickPrototyping extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox7;
     private javax.swing.JCheckBox jCheckBox8;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem67;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem68;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem69;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem73;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem10;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem82;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem83;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem84;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem85;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem9;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu31;
-    private javax.swing.JMenu jMenu32;
-    private javax.swing.JMenu jMenu33;
+    private javax.swing.JMenu jMenu43;
+    private javax.swing.JMenu jMenu44;
+    private javax.swing.JMenu jMenu45;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar10;
-    private javax.swing.JMenuBar jMenuBar11;
+    private javax.swing.JMenuBar jMenuBar13;
+    private javax.swing.JMenuBar jMenuBar15;
     private javax.swing.JMenuBar jMenuBar8;
-    private javax.swing.JMenuItem jMenuItem41;
-    private javax.swing.JMenuItem jMenuItem42;
-    private javax.swing.JMenuItem jMenuItem43;
-    private javax.swing.JMenuItem jMenuItem44;
-    private javax.swing.JSeparator jSeparator21;
-    private javax.swing.JSeparator jSeparator22;
+    private javax.swing.JMenuItem jMenuItem57;
+    private javax.swing.JMenuItem jMenuItem58;
+    private javax.swing.JMenuItem jMenuItem59;
+    private javax.swing.JMenuItem jMenuItem60;
+    private javax.swing.JSeparator jSeparator29;
+    private javax.swing.JSeparator jSeparator30;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
     private javax.swing.JToolBar jToolBar4;
     private javax.swing.JToolBar jToolBar5;
-    private javax.swing.JToolBar jToolBar6;
+    private javax.swing.JToolBar jToolBar7;
+    private javax.swing.JToolBar jToolBar8;
     // End of variables declaration
     
 }

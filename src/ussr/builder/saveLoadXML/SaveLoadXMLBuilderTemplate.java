@@ -9,7 +9,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import com.jme.math.Quaternion;
-import ussr.builder.BuilderUtilities;
+import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
@@ -108,7 +108,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 		/*For each module print out the start and end tags with relevant data*/
 		for (int module=0; module<amountModules;module++){           
 			Module currentModule = simulation.getModules().get(module);
-			if (currentModule.getProperty(BuilderUtilities.getModuleDeletionKey())==null){/*means it is not deleted in simulation environment*/				
+			if (currentModule.getProperty(BuilderHelper.getModuleDeletionKey())==null){/*means it is not deleted in simulation environment*/				
 				try {				
 					transformerHandler.startElement("","",secondTag,emptyAtt);				
 					printSubTagsWithValue(transformerHandler, idTag, getID(currentModule));				
@@ -186,14 +186,16 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 	private void createNewModule(JMESimulation simulation, String moduleName, String moduleType, VectorDescription modulePosition, RotationDescription moduleRotation, LinkedList<Color> listColorsComponents,LinkedList<Color> listColorsConnectors){
 		Module newModule;
-		if (moduleType.equalsIgnoreCase("ATRON")||moduleType.equalsIgnoreCase("default")){
-			ModulePosition modulePos= new ModulePosition(moduleName,"default",modulePosition,moduleRotation);
+		if (moduleType.contains("ATRON")||moduleType.equalsIgnoreCase("default")){
+			ModulePosition modulePos= new ModulePosition(moduleName,"ATRON",modulePosition,moduleRotation);
 			//ModulePosition modulePos= new ModulePosition(moduleName,"default",modulePosition,moduleRotation);
-			newModule = simulation.createModule(modulePos,true);
+			newModule = simulation.createModule(modulePos,true);			
 		}else{
 			ModulePosition modulePos= new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation);
-			newModule = simulation.createModule(modulePos,true);}
+			newModule = simulation.createModule(modulePos,true);			
+		}
 
+		
 		newModule.setColorList(listColorsComponents);
 
 		int amountConnentors  = newModule.getConnectors().size();

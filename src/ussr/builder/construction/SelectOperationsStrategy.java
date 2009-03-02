@@ -1,5 +1,7 @@
 package ussr.builder.construction;
 
+import ussr.description.geometry.VectorDescription;
+
 /**
  * Supports construction of modular robots morphologies on the level of modules, rather than
  * on the level of components of the modules. Also an interface to Context class in Strategy pattern, defining
@@ -17,27 +19,27 @@ public interface SelectOperationsStrategy {
 	 * @param toolSpecification, object containing information about modular robot, selected or chosen connector
 	 * number,selected module, simulation and so on. 
 	 */
-	public void addNewModuleOnConnector(ConstructionToolSpecification toolSpecification);
+	public abstract void addNewModuleOnConnector(ConstructionToolSpecification toolSpecification);
 	
 	/**
 	 * Adds the new modules on all connectors of the module selected in simulation environment.
 	 * @param toolSpecification, object containing information about modular robot, selected module, simulation
 	 * and so on.
 	 */
-	public void addModulesOnAllConnectors(ConstructionToolSpecification toolSpecification);
+	public abstract void addModulesOnAllConnectors(ConstructionToolSpecification toolSpecification);
 	
 	/**
 	 * TODO
 	 * @param toolSpecification
 	 */
-	public void moveModuleOnNextConnector(ConstructionToolSpecification toolSpecification);
+	public abstract void moveModuleOnNextConnector(ConstructionToolSpecification toolSpecification);
 	
 	/**
 	 * Rotates the module selected in simulation environment with opposite rotation.
 	 * @param toolSpecification,object containing information about modular robot, selected module, simulation
 	 * and so on.
 	 */
-	public void rotateModuleWithOppositeRotation(ConstructionToolSpecification toolSpecification);
+	public abstract void rotateModuleWithOppositeRotation(ConstructionToolSpecification toolSpecification);
 	
 	/**
 	 * Rotates the module selected in simulation environment with specific standard rotation.
@@ -45,7 +47,7 @@ public interface SelectOperationsStrategy {
 	 * and so on.
 	 * @param standardRotationName, the name of the rotation
 	 */
-	public void rotateModuleStandardRotation(ConstructionToolSpecification toolSpecification, String standardRotationName);
+	public abstract void rotateModuleStandardRotation(ConstructionToolSpecification toolSpecification, String standardRotationName);
 	
 	/**
 	 * Additional method for implementing unique properties of modular robots. Like for example
@@ -55,5 +57,13 @@ public interface SelectOperationsStrategy {
 	 * @param toolSpecification,object containing information about modular robot, selected module, simulation
 	 * and so on.
 	 */
-	public void variateModule(ConstructionToolSpecification toolSpecification);
+	public abstract void variateModule(ConstructionToolSpecification toolSpecification);
+	
+	/**
+	 * Adds default (the first) construction module at specified position.
+	 * @param type, the type of modular robot. For example: ATRON,MTRAN or OdinBall.
+	 * @param modulePosition, the position of module in simulation environment.
+	 */
+	public abstract void addDefaultConstructionModule(String type, VectorDescription modulePosition);
+	
 }
