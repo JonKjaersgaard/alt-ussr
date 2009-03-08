@@ -30,6 +30,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     private float targetPos, currentPos, zeroPos;
 	private boolean blocking;
 	private boolean locked = false;
+	private int leds=0;
 
 	/**
 	 * Instantiate ATRON controller
@@ -45,7 +46,19 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         this.rotateToDegreeInDegrees(180);
     
     }
-    
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#home()
+	 */
+    public void setLeds(int val) { 
+     	leds = val%256;
+     	System.out.println("Leds now = "+leds);
+    }
+    /**
+	 * @see ussr.samples.atron.IATRONAPI#home()
+	 */
+    public int getLeds() { 
+        return leds;    
+    }
     /**
      * @see ussr.samples.atron.IATRONAPI#setup()
      */
