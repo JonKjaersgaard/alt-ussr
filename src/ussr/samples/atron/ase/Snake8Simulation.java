@@ -23,6 +23,7 @@ import ussr.samples.atron.GenericATRONSimulation;
 import ussr.samples.atron.network.ATRONReflectionController;
 import ussr.samples.atron.network.ATRONReflectionEventController;
 import ussr.util.learning.CMTracker;
+import ussr.util.learning.RadioConnection;
 import ussr.util.learning.WifiCMBroadcaster;
 
 
@@ -31,21 +32,24 @@ import ussr.util.learning.WifiCMBroadcaster;
 public class Snake8Simulation extends GenericATRONSimulation {
 	
     private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;
-    
+    RadioConnection radioConnection;
 	public static void main( String[] args ) {
 		PhysicsParameters.get().setPlaneMaterial(Material.CONCRETE);
         PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
  		PhysicsParameters.get().setRealisticCollision(true);
 		PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
-		PhysicsParameters.get().setMaintainRotationalJointPositions(false); 
+		PhysicsParameters.get().setMaintainRotationalJointPositions(true); 
 		new Snake8Simulation().main();
     }
 	
 	protected void simulationHook(PhysicsSimulation simulation) {
 		super.simulationHook(simulation);
-		CMTracker tracker = new CMTracker(simulation);
+		/*CMTracker tracker = new CMTracker(simulation);
 		WifiCMBroadcaster broadcaster = new WifiCMBroadcaster(simulation, 7.0, tracker);
 		simulation.subscribePhysicsTimestep(broadcaster);
+		*/
+		radioConnection = new RadioConnection(simulation, 9899); //allow Modular commander to communicate with USSR 
+		radioConnection.setPackToASE(true);
 	}
 
 	
@@ -69,7 +73,7 @@ public class Snake8Simulation extends GenericATRONSimulation {
     	int x=0,y=0,z=0;
     	int portRC = 9900;
     	int portEvent = 9901;
-    	String radioStr = "";//";radio=disabled";
+    	String radioStr = "";
     	for(int i=0;i<length;i++) {
     		if(i%2==0) {
     			mPos.add(new ModulePosition(i+"", ";portRC="+portRC+";portEvent="+portEvent+""+radioStr, new VectorDescription(x*ATRON.UNIT,y*ATRON.UNIT-Yoffset,z*ATRON.UNIT), ATRON.ROTATION_EW));

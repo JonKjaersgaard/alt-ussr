@@ -36,6 +36,7 @@ public class RadioConnection {
 	BufferedWriter writer;
 	ServerSocket radioSocket;
 	int socketPort;
+	boolean packToASE = false;
 	
 	public RadioConnection(PhysicsSimulation simulation, int socketPort) {
 		this.simulation = simulation;
@@ -58,6 +59,7 @@ public class RadioConnection {
 	class ConnectThread extends Thread {
 		public void run() {
 			try {
+				System.out.println("Radio Connection waiting for socket client");
 				Socket connection = radioSocket.accept();
 				InputStream input = connection.getInputStream();
 				OutputStream output = connection.getOutputStream();
@@ -66,13 +68,18 @@ public class RadioConnection {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			System.out.println("Radio Connection made through socket");
+			
 			readFromSocket();
 		}
 		
 		public void readFromSocket() {
 			try {
-				while(reader.ready()) {
+				while(true) {
+					System.out.println("Radio connection waiting for packet");
 					String data = reader.readLine();
+					System.out.println("Radio connection got packet: "+format(data));
+					sendDataToUSSR(data.toCharArray());
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -88,7 +95,12 @@ public class RadioConnection {
 		}
 	}
 	
+	
+
 	public void sendDataToSocket(byte[] data) {
+		if(packToASE){
+			data = unPackFromASE(data);
+		}
 		for(int i=0;i<data.length;i++) {
 			try {
 				writer.append((char) data[i]);
@@ -98,9 +110,14 @@ public class RadioConnection {
 			}
 		}
 	}
-	
+
 	public void sendDataToUSSR(byte[] data) {
+		
+		if(packToASE){
+			data = packToASE(data);
+		}
 		Packet packet = new Packet(data);
+		System.out.println("Sending to ussr: "+data.length);
 		radioTrans.send(packet);
 	}
 	
@@ -110,5 +127,36 @@ public class RadioConnection {
 			byteData[i] = (byte) data[i];
 		}
 		sendDataToUSSR(byteData);
+	}
+	
+	private String format(String data) {
+		StringBuffer sb = new StringBuffer();
+		for(int i=0;i<data.length();i++){
+				sb.append(((int)data.charAt(i))+"");
+				sb.append(' ');
+		}
+		return sb.toString();
+	}
+	
+	final byte MC_MESSAGE = 6; //to make ASE know its is a msg from modular commander
+	protected byte[] packToASE(byte[] data) {
+		byte[] headData = new byte[data.length+1];
+		headData[0]=MC_MESSAGE;
+		for(int i=0;i<data.length;i++) {
+			headData[i+1]=data[i];
+		}
+		return headData;
+	}
+	
+	private byte[] unPackFromASE(byte[] data) {
+		byte[] noHeadData = new byte[data.length-1];
+		for(int i=1;i<data.length;i++) {
+			noHeadData[i-1]=data[i];
+		}
+		return noHeadData;
+	}
+	
+	public void setPackToASE(boolean packToASE) {
+		this.packToASE = packToASE;
 	}
 }

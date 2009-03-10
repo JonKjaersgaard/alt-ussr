@@ -10,6 +10,7 @@ public class ATRONReflectionEventController extends ATRONController {
     EventConnection eventConnection;
 
     public void activate() {
+    	super.setup();
         String portRCDescription = super.getModule().getProperty("portRC");
         String portEventDescription = super.getModule().getProperty("portEvent");
         if(portRCDescription==null||portEventDescription==null) {
@@ -37,7 +38,7 @@ public class ATRONReflectionEventController extends ATRONController {
     		eventConnection.sendEvent("handleMessage", new Object[]{message, messageSize, channel});
     	}
     	else {
-    		System.err.println("Event connection not ready, throw away package..");
+    		System.err.println(getName()+": Event connection not ready, throw away package..");
     	}
     }
 }
