@@ -23,12 +23,16 @@ import ussr.samples.atron.GenericATRONSimulation;
 import ussr.samples.atron.network.ATRONReflectionController;
 import ussr.samples.atron.network.ATRONReflectionEventController;
 import ussr.util.learning.CMTracker;
+import ussr.util.learning.RadioConnection;
 import ussr.util.learning.WifiCMBroadcaster;
 
 
 
 
 public class OneSimulation extends GenericATRONSimulation {
+	private boolean hasCMTracker = false;
+	private boolean hasRadioConnection = true;
+	RadioConnection radioConnection;
 	
     private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;
     
@@ -43,9 +47,15 @@ public class OneSimulation extends GenericATRONSimulation {
 	
 	protected void simulationHook(PhysicsSimulation simulation) {
 		super.simulationHook(simulation);
-		CMTracker tracker = new CMTracker(simulation);
-		WifiCMBroadcaster broadcaster = new WifiCMBroadcaster(simulation, 7.0, tracker);
-		simulation.subscribePhysicsTimestep(broadcaster);
+		if(hasCMTracker) {
+			CMTracker tracker = new CMTracker(simulation);
+			WifiCMBroadcaster broadcaster = new WifiCMBroadcaster(simulation, 7.0, tracker);
+			simulation.subscribePhysicsTimestep(broadcaster);
+		}	
+		if(hasRadioConnection) {
+			radioConnection = new RadioConnection(simulation, 9899); //allow Modular commander to communicate with USSR 
+			radioConnection.setPackToASE(true);
+		}
 	}
 
 	

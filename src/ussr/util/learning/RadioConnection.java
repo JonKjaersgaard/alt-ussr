@@ -79,7 +79,7 @@ public class RadioConnection {
 					System.out.println("Radio connection waiting for packet");
 					String data = reader.readLine();
 					System.out.println("Radio connection got packet: "+format(data));
-					sendDataToUSSR(data.toCharArray());
+					sendDataToUSSR(data.getBytes());//toCharArray()
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -131,8 +131,9 @@ public class RadioConnection {
 	
 	private String format(String data) {
 		StringBuffer sb = new StringBuffer();
+		byte[] bData = data.getBytes();
 		for(int i=0;i<data.length();i++){
-				sb.append(((int)data.charAt(i))+"");
+				sb.append(bData+"");
 				sb.append(' ');
 		}
 		return sb.toString();

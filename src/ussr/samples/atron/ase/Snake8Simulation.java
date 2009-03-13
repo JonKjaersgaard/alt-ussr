@@ -30,10 +30,13 @@ import ussr.util.learning.WifiCMBroadcaster;
 
 
 public class Snake8Simulation extends GenericATRONSimulation {
+	private boolean hasCMTracker = false;
+	private boolean hasRadioConnection = true;
+	RadioConnection radioConnection;
+	
 	
     private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;
-    RadioConnection radioConnection;
-	public static void main( String[] args ) {
+    public static void main( String[] args ) {
 		PhysicsParameters.get().setPlaneMaterial(Material.CONCRETE);
         PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
  		PhysicsParameters.get().setRealisticCollision(true);
@@ -44,12 +47,15 @@ public class Snake8Simulation extends GenericATRONSimulation {
 	
 	protected void simulationHook(PhysicsSimulation simulation) {
 		super.simulationHook(simulation);
-		/*CMTracker tracker = new CMTracker(simulation);
-		WifiCMBroadcaster broadcaster = new WifiCMBroadcaster(simulation, 7.0, tracker);
-		simulation.subscribePhysicsTimestep(broadcaster);
-		*/
-		radioConnection = new RadioConnection(simulation, 9899); //allow Modular commander to communicate with USSR 
-		radioConnection.setPackToASE(true);
+		if(hasCMTracker) {
+			CMTracker tracker = new CMTracker(simulation);
+			WifiCMBroadcaster broadcaster = new WifiCMBroadcaster(simulation, 7.0, tracker);
+			simulation.subscribePhysicsTimestep(broadcaster);
+		}	
+		if(hasRadioConnection) {
+			radioConnection = new RadioConnection(simulation, 9899); //allow Modular commander to communicate with USSR 
+			radioConnection.setPackToASE(true);
+		}
 	}
 
 	
