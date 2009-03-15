@@ -4,14 +4,12 @@ import com.jme.math.Vector3f;
 import ussr.description.geometry.RotationDescription;
 
 /**
- * The main responsibility of this class is to act as a helper class (for Strategy pattern) for storing the 
+ * The main responsibility of this class is to act as a helper class (for TEMPLATE METHOD pattern) for storing the 
  * information about  all available initial rotations of the module and  rotations together with positions of 
  * newly added module with respect to specific connector number.
  * @author Konstantinas
  */
-//FIXME 1) UPDATE COMMENTS ESSPECIALLY FOR CONSTRUCTORS
-//      2) MAYBE USE QUATERNIONS INSTEAD  
-public class ModuleMapEntry {
+public class ModuleMapEntryHelper {
 
 	/**
 	 * The connector number on the module.
@@ -46,7 +44,7 @@ public class ModuleMapEntry {
 	 * @param newRotation, new rotation of component(module).
 	 * @param newPosition, new position of component(module). 
 	 */
-	public ModuleMapEntry(int connectorNr, RotationDescription initialRotation, RotationDescription newRotation, Vector3f newPosition ){
+	public ModuleMapEntryHelper(int connectorNr, RotationDescription initialRotation, RotationDescription newRotation, Vector3f newPosition ){
 		this.connectorNr = connectorNr;
 		this.initialRotation = initialRotation;
 		this.newRotation = newRotation;
@@ -62,7 +60,7 @@ public class ModuleMapEntry {
 	 * @param newRotation, new rotation of component(module) 
 	 * @param newPosition, new position of component(module)
 	 */
-	public ModuleMapEntry(int connectorNr,int componentNr,  RotationDescription initialRotation, RotationDescription newRotation, Vector3f newPosition ){
+	public ModuleMapEntryHelper(int connectorNr,int componentNr,  RotationDescription initialRotation, RotationDescription newRotation, Vector3f newPosition ){
 		this.connectorNr = connectorNr;
 		this.componentNr = componentNr;
 		this.initialRotation = initialRotation;

@@ -1,17 +1,14 @@
 package ussr.builder.construction;
 
 import ussr.description.geometry.RotationDescription;
-
 import com.jme.math.Vector3f;
 
 /**
- * The main responsibility of this class is to act as a helper class (for Strategy pattern) for storing the 
- * information about  all available specific rotations of the module.
+ * The main responsibility of this class is to act as a helper class (for TEMPLATE METHOD pattern) for storing the 
+ * information about all available specific rotations of the module.
  * @author Konstantinas 
- */
-//FIXME 1) UPDATE COMMENTS ESSPECIALLY FOR CONSTRUCTORS
-//2) MAYBE USE QUATERNIONS INSTEAD  
-public class ModuleRotationMapEntry {
+ */  
+public class ModuleRotationMapEntryHelper {
 	
 	/**
 	 * The name of rotation a module
@@ -50,20 +47,20 @@ public class ModuleRotationMapEntry {
 	 * @param rotation,the rotation of the module
 	 * @param rotationOpposite,opposite rotation of the module
 	 */
-	public ModuleRotationMapEntry(String rotationName,RotationDescription rotation, RotationDescription rotationOpposite){
+	public ModuleRotationMapEntryHelper(String rotationName,RotationDescription rotation, RotationDescription rotationOpposite){
 		this.rotationName = rotationName;
 		this.rotation = rotation;
 		this.rotationOpposite = rotationOpposite; 
 	}
 	
 	/**
-	 * Stores information about all rotations of the module.
+	 * Stores information about all rotations of the module.This one is useful when there are several specific rotations.
 	 * @param rotationName, the name of rotation of the module
 	 * @param rotation,the rotation of the module
 	 * @param rotationOpposite,opposite rotation of the module
 	 * @param rotationSpecific, additional specific rotation of the module
 	 */
-	public ModuleRotationMapEntry(String rotationName,RotationDescription rotation, RotationDescription rotationOpposite, RotationDescription rotationSpecific){
+	public ModuleRotationMapEntryHelper(String rotationName,RotationDescription rotation, RotationDescription rotationOpposite, RotationDescription rotationSpecific){
 		this.rotationName = rotationName;
 		this.rotation = rotation;
 		this.rotationOpposite = rotationOpposite;
@@ -71,13 +68,13 @@ public class ModuleRotationMapEntry {
 	}
 	
 	/**
-	 * Stores information about all rotations of the module and also its components.
+	 * Stores information about all rotations of the module and also its components.This one is useful when component number is of importance.
 	 * @param rotationName, the name of rotation of the module
 	 * @param componentNr,the component number of the module
 	 * @param rotation, new rotation of component
 	 * @param componentNewPosition,new position of component of the module 
 	 */
-	public ModuleRotationMapEntry(String rotationName,int componentNr,RotationDescription rotation, Vector3f componentNewPosition){
+	public ModuleRotationMapEntryHelper(String rotationName,int componentNr,RotationDescription rotation, Vector3f componentNewPosition){
 		this.rotationName = rotationName;
 		this.componentNr = componentNr;
 		this.rotation = rotation;		

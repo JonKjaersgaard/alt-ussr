@@ -8,6 +8,7 @@ import ussr.description.geometry.VectorDescription;
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
+import ussr.physics.jme.JMESimulation;
 
 /**
  * The main responsibility of this class  is to support children classes with common methods
@@ -17,11 +18,17 @@ import ussr.physics.jme.JMEModuleComponent;
  */
 //FIXME 1) UPDATE COMMENTS
 //FIXME 2) FIX EXISTING IMPROVEMENTS
-public class OdinConstructionStrategy extends ModularRobotConstructionStrategy {
-
+public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {	
+	
+	/**
+	 * The numbers of connectors on the OdinBall module (12 of them) and two of them(the first) for OdinMuscle
+	 */
+	public final static int connectorNr0 = 0,connectorNr1 = 1,connectorNr2 = 2,connectorNr3 = 3,
+	                        connectorNr4 = 4, connectorNr5 = 5,connectorNr6 = 6, connectorNr7 = 7,
+	                        connectorNr8 = 8, connectorNr9 = 9, connectorNr10 = 10,connectorNr11 = 11;
 	/**
 	 * A number of different rotations of Structure link, Telescoping link(also called OdinMuscle),OdinBattery,
-	 * OdinHinge,OdinSpring,OdinTube and OdinWheel with respect to connector of CCP joint (also called OdinBall).
+	 * OdinHinge,OdinSpring,OdinTube and OdinWheel with respect to connectors of CCP joint (also called OdinBall).
 	 * Here:rotation0 is rotation of Structure link or Telescoping link (also called OdinMuscle) with respect to connector number 0 of CCP joint (also called OdinBall).
 	 *      rotation1 - connector number 1 
 	 *      rotation2 - connector number 2 
@@ -51,26 +58,38 @@ public class OdinConstructionStrategy extends ModularRobotConstructionStrategy {
 	/**
 	 * Global rotation of OdinBall (also called CCP joint)
 	 */
-	public final static RotationDescription rotation00 = new RotationDescription(0,0,0);	
-//	FIXME ABOVE ROTATIONS, MAYBE CAN BE MOVED TO ODIN.java or somewhere else
-	
+	public final static RotationDescription rotation00 = new RotationDescription(0,0,0);
+		
 	/**
 	 * The array of objects containing information about OdinMuscle,OdinBattery,OdinHinge,OdinSpring,OdinTube,OdinWheel modules specific rotations.
 	 */
-	private final static ModuleRotationMapEntry[] moduleRotationMap = {
-		new ModuleRotationMapEntry("rotation0",rotation0,rotation11),
-		new ModuleRotationMapEntry("rotation1",rotation1,rotation10),		
-		new ModuleRotationMapEntry("rotation2",rotation2,rotation9),
-		new ModuleRotationMapEntry("rotation3",rotation3,rotation8),		
-		new ModuleRotationMapEntry("rotation4",rotation4,rotation7),
-		new ModuleRotationMapEntry("rotation5",rotation5,rotation6),
-		new ModuleRotationMapEntry("rotation6",rotation6,rotation5),
-		new ModuleRotationMapEntry("rotation7",rotation7,rotation4),
-		new ModuleRotationMapEntry("rotation8",rotation8,rotation3),
-		new ModuleRotationMapEntry("rotation9",rotation9,rotation2),
-		new ModuleRotationMapEntry("rotation10",rotation10,rotation1),
-		new ModuleRotationMapEntry("rotation11",rotation11,rotation0)
+	private final static ModuleRotationMapEntryHelper[] moduleRotationMap = {
+		new ModuleRotationMapEntryHelper("rotation0",rotation0,rotation11),
+		new ModuleRotationMapEntryHelper("rotation1",rotation1,rotation10),		
+		new ModuleRotationMapEntryHelper("rotation2",rotation2,rotation9),
+		new ModuleRotationMapEntryHelper("rotation3",rotation3,rotation8),		
+		new ModuleRotationMapEntryHelper("rotation4",rotation4,rotation7),
+		new ModuleRotationMapEntryHelper("rotation5",rotation5,rotation6),
+		new ModuleRotationMapEntryHelper("rotation6",rotation6,rotation5),
+		new ModuleRotationMapEntryHelper("rotation7",rotation7,rotation4),
+		new ModuleRotationMapEntryHelper("rotation8",rotation8,rotation3),
+		new ModuleRotationMapEntryHelper("rotation9",rotation9,rotation2),
+		new ModuleRotationMapEntryHelper("rotation10",rotation10,rotation1),
+		new ModuleRotationMapEntryHelper("rotation11",rotation11,rotation0)
 	};
+	
+	/**
+	 * Tolerance used to identify if component (module) already exists in interval of space.
+	 */
+	public final static float searchTolerance = 0.0001f;
+	
+	/**
+	 * COMMENT
+	 * @param simulation
+	 */
+	public OdinConstructionTemplate(JMESimulation simulation) {
+		super(simulation);		
+	}
 
 	/**
 	 * Moves newMovableModule of Odin according to selected Odin module preconditions,like connector, rotation of selected module,  and so on.
@@ -78,56 +97,46 @@ public class OdinConstructionStrategy extends ModularRobotConstructionStrategy {
 	 * @param selectedModule,  the Odin module selected in simulation environment
 	 * @param newMovableModule, the new Odin module to move
 	 */	
-	public void moveModuleAccording(int connectorNr, Module selectedModule,	Module newMovableModule) {
-		String selectedModuleType =selectedModule.getProperty("ussr.module.type");
+	public void moveModuleComponentAccording(int connectorNr,Module selectedModule, JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent) {
+		String selectedModuleType =selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
 		if(selectedModuleType.equalsIgnoreCase("OdinBall")){			
-			OdinMuscleConstructionStrategy  odinMuscleConst = new OdinMuscleConstructionStrategy();
-			odinMuscleConst.moveOdinMusleAccording(connectorNr, selectedModule,newMovableModule);			
+			OdinMuscleConstructionTemplate  odinMuscleConst = new OdinMuscleConstructionTemplate(simulation);
+			odinMuscleConst.moveOdinMusleAccording(connectorNr, selectedModule,movableModuleComponent.getModel());			
 		} else if (selectedModuleType.equalsIgnoreCase("OdinMuscle")){
-			OdinBallConstructionStrategy odinBallConst = new OdinBallConstructionStrategy();
-			odinBallConst.moveOdinBallAccording(connectorNr, selectedModule, newMovableModule);
+			OdinBallConstructionTemplate odinBallConst = new OdinBallConstructionTemplate(simulation);
+			odinBallConst.moveOdinBallAccording(connectorNr, selectedModule, movableModuleComponent.getModel());
 		}
-	}
+	}	
 	
-	public ModuleMapEntry[] updateModuleMap(float x, float y, float z) {
-		/*This method is overridden in children classes */
-		return null;
+	public void updateModuleMap(float x, float y, float z) {
+		/*This method is overridden in children classes */		
 	}
 	
 	/**
 	 * Rotates Odin module selected in simulation environment with opposite rotation. This is except OdinBall.
-	 * @param selectedModule, the Odin module selected in simulation environment.	
+	 * @param selectedModule, the Odin module selected in simulation environment.
+	 * COMMNET	
 	 */
-	public void rotateOpposite(Module selectedModule) {
-		String selectedModuleType =selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
+	public void rotateComponentOpposite(JMEModuleComponent selectedModuleComponent,Quaternion  rotationQComponent) {
+		String selectedModuleType = selectedModuleComponent.getModel().getProperty(BuilderHelper.getModuleTypeKey());
 		if(selectedModuleType.equalsIgnoreCase("OdinBall")){//Do nothing					
-		} else{
-			/*Amount of components constituting selectedModule*/
-			int amountComponents =selectedModule.getNumberOfComponents();		
-
-			/*Loop through each component of selected module and rotate it with opposite rotation*/
-			for (int component=0; component<amountComponents;component++){
-
-				/* The current component of selected module*/
-				JMEModuleComponent selectedModuleComponent= (JMEModuleComponent)selectedModule.getComponent(component);			
-				Quaternion  rotationQselectedModuleComponent = selectedModule.getComponent(component).getRotation().getRotation();
-	      	
-				/*Locate matching rotation Quaternion and rotate with opposite Quaternion*/		
+		} else{	      	
+			/*Locate matching rotation Quaternion in moduleRotationMap and rotate with opposite rotation Quaternion
+			 * from the same entry in  moduleRotationMap*/		
 				for (int entry=0;entry<moduleRotationMap.length;entry++){
-					if (rotationQselectedModuleComponent.equals(moduleRotationMap[entry].getRotation().getRotation())){
+					if (rotationQComponent.equals(moduleRotationMap[entry].getRotation().getRotation())){
 						rotateModuleComponent(selectedModuleComponent,moduleRotationMap[entry].getRotationOppositeValue().getRotation());						
 					}
-				}				
-			}		
+				}					
 		}
 	}
 	
-	public void rotateSpecifically(Module selectedModule, String rotationName) {
+	public void rotateComponentSpecifically(JMEModuleComponent selectedModuleComponent, String rotationName) {
 		/*This method is not relevant in Odin case because modules only have two standard(specific)
 		 * rotations, which are covered in the method above*/
 	}
 	
-	public void variate(Module selectedModule) {
+	public void variateComponentProperties(JMEModuleComponent selectedModuleComponent,Quaternion  rotationQComponent) {
 		/*This functionality is moved to CommonOperationsStrategy class method called replaceModules(),
 		because it is more concerned with creation of new modules, rather than rearranging the components of the module.*/
 	}
@@ -142,5 +151,7 @@ public class OdinConstructionStrategy extends ModularRobotConstructionStrategy {
 		Connector connector = selectedModule.getConnectors().get(connectorNr);		
 		VectorDescription connectorPosition = connector.getPhysics().get(0).getPosition();		
 		return connectorPosition;		
-	}	
+	}
+
+	
 }

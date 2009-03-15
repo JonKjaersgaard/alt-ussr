@@ -3,7 +3,6 @@ package ussr.builder;
 import java.util.Random;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
-import com.jme.math.Matrix3f;
 import com.jmex.physics.DynamicPhysicsNode;
 
 /**
@@ -12,6 +11,7 @@ import com.jmex.physics.DynamicPhysicsNode;
  * @author Konstantinas
  *
  */
+//FIXME LOOK INTO XML DELETE THING
 public class BuilderHelper {
 
 	/**
@@ -33,14 +33,26 @@ public class BuilderHelper {
 	 * The module deletion key, which indicates that the module was deleted or not in static or dynamic states of simulation.
 	 * The format is:"ussr.builder.module.deletionKey". 
 	 */
-	public static final String moduleDeletionKey = builderPrefix +moduleStem + moduleDeletionSuffix;
+	public static final String moduleDeletionKey = builderPrefix + moduleStem + moduleDeletionSuffix;
 	
 	/**
 	 * The module deletion value, which indicates that the module was deleted in static or dynamic states of simulation.
 	 */
 	public static final String moduleDeletionValue = "deleted";
 	
-//MAYBE CAN BE RECEIVED FROM USSR INTERNALLY
+	/**
+	 * The key used to receive the name of the module.
+	 */
+	public static final String moduleNameKey = "name";
+	
+	
+	public static final String moduleLabelsSuffix = "labels";	
+	
+	
+	public static final String moduleLabelsKey = builderPrefix +moduleStem + moduleLabelsSuffix;	
+
+
+	//MAYBE CAN BE RECEIVED FROM USSR INTERNALLY
 	public static final String ussrPrefix = "ussr.";
 	
 	public static final String moduleTypeSuffix ="type";
@@ -55,7 +67,7 @@ public class BuilderHelper {
 	// The property called "ussr.connector_number" was implemented by Ulrik.	
 	public static final String moduleConnectorNrKey = ussrPrefix +connectorStem + connectorSuffix;
 	
-	public static final String moduleNameKey = "name";
+
 	
 	private static final Random generator = new Random();
 
@@ -92,21 +104,29 @@ public class BuilderHelper {
 		
 	}
 	
+	public static String getModuleLabelsKey() {
+		return moduleLabelsKey;
+	}
+	
 	
 	/**
 	 * Removes (deletes) the module from simulation environment
 	 * @param selectedModule, module to remove (delete)
 	 */
-	public void deleteModule(Module selectedModule){
+	public static void deleteModule(Module selectedModule){
+//FIXME MAYBE THERE IS NO NEED FOR THAT ANYMORE
 		/* Flag to indicate that the information about module should not be saved in XML*/
 		selectedModule.setProperty(BuilderHelper.getModuleDeletionKey(), BuilderHelper.getModuleDeletionValue());	
+		/*Remove the module from the list of the modules*/
+		selectedModule.getSimulation().getModules().remove(selectedModule);
 		
-		int nrComponents= selectedModule.getNumberOfComponents();		
-		for (int compon=0; compon<nrComponents;compon++){			
+		/* Indentify each component of the module and remove the visual of it*/
+		int amountComponents= selectedModule.getNumberOfComponents();		
+		for (int compon=0; compon<amountComponents;compon++){			
 			JMEModuleComponent moduleComponent= (JMEModuleComponent)selectedModule.getComponent(compon);			
 			for(DynamicPhysicsNode part: moduleComponent.getNodes()){
 				int amountNodes = moduleComponent.getNodes().size();
-				for (int node=0; node<amountNodes; node++ ){ //removes bounds and visuals
+				for (int node=0; node<amountNodes; node++ ){ //removes bounds and physics
 					moduleComponent.getNodes().get(node).removeFromParent();
 				}						
 				part.setIsCollidable(false);

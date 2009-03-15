@@ -1,7 +1,6 @@
 package ussr.builder;
 
 import ussr.description.Robot;
-import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
@@ -9,12 +8,8 @@ import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.samples.GenericSimulation;
-import ussr.samples.MultiRobotSimulation;
 import ussr.samples.atron.ATRON;
-import ussr.samples.atron.simulations.ATRONCarController1;
-import ussr.samples.atron.simulations.ATRONSimpleVehicleController1;
 import ussr.samples.mtran.MTRAN;
-import ussr.samples.mtran.MTRANSampleController1;
 import ussr.samples.odin.modules.OdinBall;
 import ussr.samples.odin.modules.OdinBattery;
 import ussr.samples.odin.modules.OdinHinge;
@@ -22,7 +17,6 @@ import ussr.samples.odin.modules.OdinMuscle;
 import ussr.samples.odin.modules.OdinSpring;
 import ussr.samples.odin.modules.OdinTube;
 import ussr.samples.odin.modules.OdinWheel;
-import ussr.samples.odin.simulations.OdinSampleController1;
 
 public class BuilderMultiRobotSimulation extends GenericSimulation {
 

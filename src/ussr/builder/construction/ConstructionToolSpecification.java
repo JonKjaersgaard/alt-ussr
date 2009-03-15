@@ -23,28 +23,18 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	/**
 	 * The interface to construction of modular robot morphology. This one is on the level of modules of modular robot.  
 	 */
-	private SelectOperationsStrategy selectOperations;
+	private SelectOperationsTemplate selectOperations;
 
 	/**
 	 * The interface to construction of modular robot morphology. This one is on the level of components of modules.  
 	 */
-	private ConstructionStrategy construction;
+	private ConstructionTemplate construction;
 
 	/**
-	 * The constant for ATRON modular robot.
+	 * Supported modular robots: ATRON, MTRAN and Odin.
 	 */
-	private static final String atron = "ATRON";
-	
-	/**
-	 * The constant for MTRAN modular robot.
-	 */
-	private static final String mtran = "MTRAN";
-	
-	/**
-	 * The constant for Odin modular robot.
-	 */
-	private static final String odin = "Odin";
-	
+	private static final String atron = "ATRON",mtran = "MTRAN", odin = "Odin";
+		
     /**
      * The module selected in simulation environment with the left side of the mouse.
      */
@@ -80,7 +70,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		this.simulation = simulation;
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
-		assignConstructionStrategy();
+		assignConstructionTemplate();
 	}
 
 	/**
@@ -95,7 +85,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
 		this.selectedConnectorNr = chosenConnectorNr;
-		assignConstructionStrategy();
+		assignConstructionTemplate();
 	}
 
 	/**
@@ -110,24 +100,8 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
 		this.standardRotationName = standardRotationName;
-		assignConstructionStrategy();
-	}
-	
-	/**
-	 * Assigns specific object for construction of modular robot morphology and object for common 
-	 * methods(operations), depending on which type of modular robot is passed in constructor. 
-	 */
-	private void assignConstructionStrategy(){
-		if 	(this.modularRobotName.equalsIgnoreCase(atron)){
-			this.construction = new ATRONConstructionStrategy();
-		}else if (this.modularRobotName.equalsIgnoreCase(mtran)){
-			this.construction = new MTRANConstructionStrategy();
-		}else if (this.modularRobotName.equalsIgnoreCase(odin)){
-			this.construction = new OdinConstructionStrategy();
-		}else throw new Error("This modular robot is not supported yet or the name of it is misspelled");
-		this.selectOperations = new CommonOperationsStrategy(this.simulation);
-	}
-	
+		assignConstructionTemplate();
+	}	
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
 	 * Here is identified the module selected in simulation environment, moreover checked if pickTarget()method
 	 * resulted in success and the call for appropriate tool is made. 
@@ -154,7 +128,25 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 				this.selectedConnectorNr= Integer.parseInt(temp[1].toString());// Take only the connector number, in above example "1" (at the end)				
 			}
 		}		
-	}	
+	}
+	
+	/**
+	 * Assigns specific object for construction of modular robot morphology and object for common 
+	 * methods(operations), depending on which type of modular robot is passed in constructor. 
+	 */
+	private void assignConstructionTemplate(){
+		if 	(this.modularRobotName.equalsIgnoreCase(atron)){
+			this.construction = new ATRONConstructionTemplate(this.simulation);
+			this.selectOperations = new ATRONCommonOperationsTemplate(this.simulation);
+		}else if (this.modularRobotName.equalsIgnoreCase(mtran)){
+			this.construction = new MTRANConstructionTemplate(this.simulation);
+			this.selectOperations = new MTRANCommonOperationsTemplate(this.simulation);
+		}else if (this.modularRobotName.equalsIgnoreCase(odin)){
+			this.construction = new OdinConstructionTemplate(this.simulation);
+			this.selectOperations = new OdinCommonOperationsTemplate(this.simulation);
+		}else throw new Error("This modular robot is not supported yet or the name of it is misspelled");
+		//this.selectOperations = new CommonOperationsTemplate(this.simulation);
+	}
 
 	/**
 	 * Checks if construction tool type is matching the module type selected in simulation environment. If
@@ -253,13 +245,13 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		Module lastAddedModule = this.simulation.getModules().get(amountModules-1);//Last module
 		Module selectedModule = this.selectedModule;//Last module
 		if (this.modularRobotName.equalsIgnoreCase(atron)){			
-			ConstructionStrategy con =  new ATRONConstructionStrategy();
+			ConstructionTemplate con =  new ATRONConstructionTemplate(this.simulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule);
 		}else if (this.modularRobotName.equalsIgnoreCase(mtran)){			
-			ConstructionStrategy con =  new MTRANConstructionStrategy();
+			ConstructionTemplate con =  new MTRANConstructionTemplate(this.simulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule);
 		}else if (this.modularRobotName.equalsIgnoreCase(odin)){
-			ConstructionStrategy con =  new OdinConstructionStrategy();
+			ConstructionTemplate con =  new OdinConstructionTemplate(this.simulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule);
 		}
 	}
@@ -276,7 +268,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * Returns the object of assigned construction strategy.  
 	 * @return construction, the object of assigned construction strategy. For example for ATRON this will be an instance of ATRONConstructionStrategy.java.
 	 */
-	public ConstructionStrategy getConstruction() {
+	public ConstructionTemplate getConstruction() {
 		return construction;
 	}
 

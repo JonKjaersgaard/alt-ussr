@@ -10,9 +10,7 @@ import com.jme.scene.Spatial;
  *  Helping tool. Colours the connectors of the module selected with the left side of the mouse in simulation environment. 
  *  Currently supports up to 12 connectors coloured with different colours.
  *  @author Konstantinas
- *
  */
-//TODO CONSIDER USING LABELING INSTEAD OF COLOURS.
 public class ColorConnectors extends CustomizedPicker {
 
 	/**
@@ -35,7 +33,7 @@ public class ColorConnectors extends CustomizedPicker {
 	 */
 	@Override
 	protected void pickModuleComponent(JMEModuleComponent component) {
-		
+		/*Get selected module and for each connector assign colour*/
 		Module selectedModule = component.getModel();
 		int nrConnectors = selectedModule.getConnectors().size();         
 		for (int connector=0; connector<nrConnectors;connector++){			

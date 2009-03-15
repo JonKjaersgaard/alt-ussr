@@ -1,8 +1,11 @@
 package ussr.builder.construction;
 
+import ussr.builder.BuilderHelper;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
+import ussr.physics.jme.JMESimulation;
+
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
@@ -17,7 +20,11 @@ import com.jme.math.Vector3f;
 //FIXME 1) UPDATE COMMENTS
 //FIXME 2) FIX EXISTING IMPROVEMENTS
 //FIXME 3) CONSIDER TO MOVE THE SAME CODE FROM moveOdinMusleAccording() METHOD TO PARENT CLASS
-public class OdinMuscleConstructionStrategy extends OdinConstructionStrategy  {	
+public class OdinMuscleConstructionTemplate extends OdinConstructionTemplate  {	
+
+	public OdinMuscleConstructionTemplate(JMESimulation simulation) {
+		super(simulation);		
+	}
 
 	/**
 	 *  Offset to move Structure Link and Telescoping(also called OdinMuscle) link with respect to CCP joint connectors(also called OdinBall).
@@ -46,7 +53,7 @@ public class OdinMuscleConstructionStrategy extends OdinConstructionStrategy  {
 		
 		/*Update the array of objects storing information about all available rotations and positions 
 		 * of OdinMuscle module with respect to specific connector of OdinBall*/
-		ModuleMapEntry[] currentModuleMap = updateModuleMap(x,y,z);						
+		 updateModuleMap(x,y,z);						
 
 		/*Amount of components constituting new movable module*/
 		int amountComponents= newMovableModule.getNumberOfComponents();		
@@ -56,9 +63,14 @@ public class OdinMuscleConstructionStrategy extends OdinConstructionStrategy  {
 		 * is Structure link or Telescoping link(also called OdinMuscle).*/
 		for (int component=0;component<amountComponents;component++){
 			JMEModuleComponent moduleComponent = (JMEModuleComponent)newMovableModule.getComponent(component);
-			for (int i=0; i<currentModuleMap.length;i++){
-				if (currentModuleMap[i].getConnectorNr()==connectorNr && currentModuleMap[i].getInitialRotation().getRotation().equals(rotationQuatSelectedModule)){
-					moveModuleComponent(moduleComponent,currentModuleMap[i].getNewRotation(),currentModuleMap[i].getNewPosition());
+			/*Loop through and locate the object matching the description of current component(also selected module).*/
+			for (int i=0; i<moduleMap.length;i++){
+				if (moduleMap[i].getConnectorNr()==connectorNr && moduleMap[i].getInitialRotation().getRotation().equals(rotationQuatSelectedModule)){
+					if (componentExitst(moduleMap[i].getNewPosition(), searchTolerance)){						
+						BuilderHelper.deleteModule(moduleComponent.getModel());											
+					}else {/*move the component to new position with new rotation*/
+					moveModuleComponent(moduleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
+					}
 				}				
 			}			
 		}
@@ -73,7 +85,7 @@ public class OdinMuscleConstructionStrategy extends OdinConstructionStrategy  {
 	 * @return moduleMap, updated array of objects.
 	 */
 // TODO IS IT GOOD WAY TO DO THAT?
-	public ModuleMapEntry[] updateModuleMap(float x, float y, float z){
+	public void updateModuleMap(float x, float y, float z){
 
 		/*Different offsets along each of coordinate axes.
 		 *This is done to get the position of newly added component of the module (movable module) with respect to selected one*/
@@ -86,21 +98,21 @@ public class OdinMuscleConstructionStrategy extends OdinConstructionStrategy  {
 
 		/*Array containing the data for adding the new movable component(module) with respect to selected module.
 		 * The format of the object is: (connector number on selected module, the rotation of selected module, the rotation of new movable module, the position of new movable module*/ 
-		ModuleMapEntry[] moduleMap = {
-				//Connectors Nr:0-11
-				new ModuleMapEntry(0,rotation00,rotation0, new Vector3f(xMinusOffset,yMinusOffset,z)),				
-				new ModuleMapEntry(1,rotation00,rotation1, new Vector3f(xMinusOffset,y,zMinusOffset)),				
-				new ModuleMapEntry(2,rotation00,rotation2, new Vector3f(xMinusOffset,y,zPlusOffset)),				
-				new ModuleMapEntry(3,rotation00,rotation3, new Vector3f(xMinusOffset,yPlusOffset,z)),				
-				new ModuleMapEntry(4,rotation00,rotation4, new Vector3f(x,yMinusOffset,zMinusOffset)),				
-				new ModuleMapEntry(5,rotation00,rotation5, new Vector3f(x,yMinusOffset,zPlusOffset)),				
-				new ModuleMapEntry(6,rotation00,rotation6, new Vector3f(x,yPlusOffset,zMinusOffset)),				
-				new ModuleMapEntry(7,rotation00,rotation7, new Vector3f(x,yPlusOffset,zPlusOffset)),				
-				new ModuleMapEntry(8,rotation00,rotation8, new Vector3f(xPlusOffset,yMinusOffset,z)),				
-				new ModuleMapEntry(9,rotation00,rotation9, new Vector3f(xPlusOffset,y,zMinusOffset)),			
-				new ModuleMapEntry(10,rotation00,rotation10, new Vector3f(xPlusOffset,y,zPlusOffset)),				
-				new ModuleMapEntry(11,rotation00,rotation11, new Vector3f(xPlusOffset,yPlusOffset,z))				
+		ModuleMapEntryHelper[] moduleMap = {
+				/*Connectors Nr0-11*/
+				new ModuleMapEntryHelper(connectorNr0,rotation00,rotation0, new Vector3f(xMinusOffset,yMinusOffset,z)),				
+				new ModuleMapEntryHelper(connectorNr1,rotation00,rotation1, new Vector3f(xMinusOffset,y,zMinusOffset)),				
+				new ModuleMapEntryHelper(connectorNr2,rotation00,rotation2, new Vector3f(xMinusOffset,y,zPlusOffset)),				
+				new ModuleMapEntryHelper(connectorNr3,rotation00,rotation3, new Vector3f(xMinusOffset,yPlusOffset,z)),				
+				new ModuleMapEntryHelper(connectorNr4,rotation00,rotation4, new Vector3f(x,yMinusOffset,zMinusOffset)),				
+				new ModuleMapEntryHelper(connectorNr5,rotation00,rotation5, new Vector3f(x,yMinusOffset,zPlusOffset)),				
+				new ModuleMapEntryHelper(connectorNr6,rotation00,rotation6, new Vector3f(x,yPlusOffset,zMinusOffset)),				
+				new ModuleMapEntryHelper(connectorNr7,rotation00,rotation7, new Vector3f(x,yPlusOffset,zPlusOffset)),				
+				new ModuleMapEntryHelper(connectorNr8,rotation00,rotation8, new Vector3f(xPlusOffset,yMinusOffset,z)),				
+				new ModuleMapEntryHelper(connectorNr9,rotation00,rotation9, new Vector3f(xPlusOffset,y,zMinusOffset)),			
+				new ModuleMapEntryHelper(connectorNr10,rotation00,rotation10, new Vector3f(xPlusOffset,y,zPlusOffset)),				
+				new ModuleMapEntryHelper(connectorNr11,rotation00,rotation11, new Vector3f(xPlusOffset,yPlusOffset,z))				
 		};		
-		return moduleMap;
+		this.moduleMap = moduleMap;
 	}
 }
