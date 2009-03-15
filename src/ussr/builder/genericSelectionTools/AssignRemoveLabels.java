@@ -10,15 +10,16 @@ import ussr.physics.jme.pickers.CustomizedPicker;
  * @author Konstantinas
  *
  */
-public class AssignLabel extends CustomizedPicker  {
+public class AssignRemoveLabels extends CustomizedPicker  {
 
-	private String label;
+	private String label;	
 	
-	private boolean remove;
+
+	private boolean remove;	
 	
-	public AssignLabel(String label, boolean remove){
+	public AssignRemoveLabels(String label, boolean remove){
 		this.label = label;
-		this.remove = remove;
+		this.remove = remove;		
 	}
 	
 	
@@ -27,12 +28,16 @@ public class AssignLabel extends CustomizedPicker  {
 		Module selectedModule = component.getModel();
 		String labels = selectedModule.getProperty(BuilderHelper.getModuleLabelsKey());
 		if (labels == null && remove == false){
-			selectedModule.setProperty(BuilderHelper.getModuleLabelsKey(), label);			
-		}else if (labels != null && labels.contains(label)){
+			selectedModule.setProperty(BuilderHelper.getModuleLabelsKey(), label +",");			
+		}else if (labels != null && remove ==true && labels.contains(label)){
 			String changedLabels = labels.replaceAll(label+",", "");
 			selectedModule.setProperty(BuilderHelper.getModuleLabelsKey(), changedLabels);
 		}else if (remove == false){
-			selectedModule.setProperty(BuilderHelper.getModuleLabelsKey(), labels+","+label);
+			if (labels.contains(label)){
+				//do nothing
+			}else{
+			selectedModule.setProperty(BuilderHelper.getModuleLabelsKey(), labels+label+",");
+			}
 		}
 		System.out.println("L:"+ selectedModule.getProperty(BuilderHelper.getModuleLabelsKey()));
 	}
@@ -41,6 +46,6 @@ public class AssignLabel extends CustomizedPicker  {
 	protected void pickTarget(Spatial target) {
 		// TODO Auto-generated method stub
 		
-	}
+	}	
 
 }

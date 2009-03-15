@@ -79,7 +79,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 	 * The name of COLORS_COMPONENTS tag(colours of components the module consists of) in XML file (third in the hierarchy).
 	 */
 	private final static String coloursComponentsTag = "COLORS_COMPONENTS";
-
+	
 	/**
 	 * The name of CONNECTORS tag(amount of connectors on the module) in XML file (third in the hierarchy).
 	 */
@@ -89,6 +89,11 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 	 * The name of COLORS_CONNECTORS tag(colours of connectors on the module) in XML file (third in the hierarchy).
 	 */
 	private final static String coloursConnectorsTag = "COLORS_CONNECTORS";
+	
+	/**
+	 * The name of LAELS tag(labels of the module) in XML file (third in the hierarchy).
+	 */
+	private final static String labelsTag = "LABELS";
 
 
 
@@ -122,6 +127,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 					printSubTagsWithValue(transformerHandler, coloursComponentsTag, getColorsComponents(currentModule));
 					printSubTagsWithValue(transformerHandler, connectorsTag, getAmountConnectors(currentModule));			
 					printSubTagsWithValue(transformerHandler, coloursConnectorsTag, getColorsConnectors(currentModule));
+					printSubTagsWithValue(transformerHandler, labelsTag, getLabels(currentModule));
 					printInfoConnectors(transformerHandler,getInfoConnectors(currentModule, true), getInfoConnectors(currentModule, false));						
 					transformerHandler.endElement("","",secondTag);
 				} catch (SAXException e) {
@@ -158,6 +164,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 				String colorsConnectors = extractTagValue(firstElmnt,coloursConnectorsTag);				
 				LinkedList<Color> listColorsConnectors= extractColoursConnectors(amountConnectors,colorsConnectors);
 
+				String labels = extractTagValue(firstElmnt,labelsTag);
 				RotationDescription rotationDescription = new RotationDescription();
 				rotationDescription.setRotation(new Quaternion(extractFromQuaternion(moduleRotationQuaternion,"X"),extractFromQuaternion(moduleRotationQuaternion,"Y"),extractFromQuaternion(moduleRotationQuaternion,"Z"),extractFromQuaternion(moduleRotationQuaternion,"W")));
 
@@ -165,7 +172,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 				vd.set(new Vector3f(extractVector(modulePositionVector,"X"),extractVector(modulePositionVector,"Y"),extractVector(modulePositionVector,"Z")));
 				 */	
 				/*Solution1*///createNewModule(simulation,moduleName,moduleType,vd/*new VectorDescription(extract(modulePosition, "X"),extract(modulePosition, "Y"),extract(modulePosition, "Z"))*/,nd ,listColorsComponents,listColorsConnectors);
-				/*Solution2*/createNewModule(simulation,moduleName,moduleType,new VectorDescription(extractFromPosition(modulePosition, "X"),extractFromPosition(modulePosition, "Y"),extractFromPosition(modulePosition, "Z")),rotationDescription ,listColorsComponents,listColorsConnectors);
+				/*Solution2*/createNewModule(simulation,moduleName,moduleType,new VectorDescription(extractFromPosition(modulePosition, "X"),extractFromPosition(modulePosition, "Y"),extractFromPosition(modulePosition, "Z")),rotationDescription ,listColorsComponents,listColorsConnectors,labels);
 
 				
 				/*	NodeList sixthNmElmntLst = fstElmnt.getElementsByTagName("CONNECTOR");
@@ -184,7 +191,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 	}
 
 
-	private void createNewModule(JMESimulation simulation, String moduleName, String moduleType, VectorDescription modulePosition, RotationDescription moduleRotation, LinkedList<Color> listColorsComponents,LinkedList<Color> listColorsConnectors){
+	private void createNewModule(JMESimulation simulation, String moduleName, String moduleType, VectorDescription modulePosition, RotationDescription moduleRotation, LinkedList<Color> listColorsComponents,LinkedList<Color> listColorsConnectors, String labels){
 		Module newModule;
 		if (moduleType.contains("ATRON")||moduleType.equalsIgnoreCase("default")){
 			ModulePosition modulePos= new ModulePosition(moduleName,"ATRON",modulePosition,moduleRotation);
@@ -195,7 +202,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 			newModule = simulation.createModule(modulePos,true);			
 		}
 
-		
+		newModule.setProperty(BuilderHelper.getModuleLabelsKey(), labels);
 		newModule.setColorList(listColorsComponents);
 
 		int amountConnentors  = newModule.getConnectors().size();
@@ -203,6 +210,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 		for (int connector =0; connector< amountConnentors; connector++ ){
 			newModule.getConnectors().get(connector).setColor(listColorsConnectors.get(connector));
 		}
+		
 		//newModule.setColorList(colorsComponents);		
 		//setColorsConnectors(simulation,newModule.getID(),colorsConnectors);		
 	}

@@ -340,6 +340,20 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 		}	 
 		return colorsConnectors.toCharArray();
 	}
+	
+	/**
+	 * Returns the labels assigned to the module.
+	 * @param currentModule, the module in simulation environment
+	 * @return char[], the labels assigned to the module.
+	 */
+	public char[] getLabels(Module currentModule){		
+		try {
+			currentModule.getProperty(BuilderHelper.getModuleLabelsKey()).toCharArray();
+		}catch(NullPointerException ev){
+		throw new Error("One of the modules do not have any label");	
+		}		
+		return currentModule.getProperty(BuilderHelper.getModuleLabelsKey()).toCharArray();    	
+	}
 
 	/**
 	 * Returns states of connectors(for example:"connected" or "disconnected") or numbers of connectors of the module.
