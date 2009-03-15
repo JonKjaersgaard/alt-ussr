@@ -26,7 +26,8 @@ import ussr.samples.GenericSimulation;
  * Abstract MTRAN simulation
  * 
  * @author david
- *
+ * @author Konstantinas (modified for builder). In particular changed the visibility
+ * of method called "allConnections(ArrayList<ModulePosition> modulePos)" from private to public
  */
 public abstract class MTRANSimulation extends GenericSimulation implements PhysicsObserver {
 	private static float unit = 0.065f*2+0.01f;
@@ -104,7 +105,7 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
     	VectorDescription pos = new VectorDescription(x*unit/2,y*unit/2-0.43f,z*unit/2);
     	modulePos.add(new ModulePosition(name,"MTRAN", pos, ori));
 	}
-    private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
+    public static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
     	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
     	//System.out.println("modulePos.size()"+modulePos.size());
     	for(int i=0;i<modulePos.size();i++) {

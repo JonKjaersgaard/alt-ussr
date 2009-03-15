@@ -22,11 +22,16 @@ import ussr.description.setup.WorldDescription;
  * Helper class for building structures of Odin modules
  * 
  * @author ups
+ * @author Konstantinas (modified for builder). In particular added setter
+ * methods called "setBallPos(ArrayList<ModulePosition> ballPos)" and "setModulePos(ArrayList<ModulePosition> modulePos)".
+ * Moreover modified method called "isConnectable(ModulePosition ball, ModulePosition module)" to look into
+ * the interval of connection distance.
+ * 
  */
 public class OdinBuilder {
     private ArrayList<ModulePosition> ballPos = new ArrayList<ModulePosition>();
-    private ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
-    private ArrayList<ModulePosition> allPos = new ArrayList<ModulePosition>();
+	private ArrayList<ModulePosition> modulePos = new ArrayList<ModulePosition>();
+	private ArrayList<ModulePosition> allPos = new ArrayList<ModulePosition>();
     private static final float unit = (float)Math.sqrt((0.18f*0.18f)/2);
     private static final float pi = (float)Math.PI;
 
@@ -115,7 +120,12 @@ public class OdinBuilder {
     }
     public static boolean isConnectable(ModulePosition ball, ModulePosition module) {
         float dist = ball.getPosition().distance(module.getPosition());
-        return dist==(float)Math.sqrt(2*unit*unit)/2;
+        float connectionDistance = (float)Math.sqrt(2*unit*unit)/2;
+        float tolerance = 1.001f;
+        if (dist==connectionDistance||dist<tolerance*connectionDistance && dist>connectionDistance){
+        	return true;
+        }
+        return false;
     }
     public static boolean isNeighorBalls(ModulePosition ball1, ModulePosition ball2) {
         float dist = ball1.getPosition().distance(ball2.getPosition());
@@ -235,5 +245,21 @@ public class OdinBuilder {
 
         return allPos;
     }
+    
+    /**
+     * Sets the positions of OdinBalls in simulation.
+     * @param ballPos, the positions of OdinBalls.
+     */
+    public void setBallPos(ArrayList<ModulePosition> ballPos) {
+		this.ballPos = ballPos;
+	}
+    
+    /**
+     * Sets the positions of Odin modules in simulation except OdinBalls.
+     * @param modulePos, the positions of Odin modules except OdinBalls.
+     */
+    public void setModulePos(ArrayList<ModulePosition> modulePos) {
+		this.modulePos = modulePos;
+	}
 
 }
