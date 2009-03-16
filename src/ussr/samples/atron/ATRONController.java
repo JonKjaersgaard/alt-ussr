@@ -67,7 +67,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         zeroPos = module.getActuators().get(0).getEncoderValue();
         PhysicsLogger.logNonCritical("[Encoder = "+zeroPos+"]");
         if(zeroPos==Float.NaN) throw new Error("Unable to read encoder");
-        if(module.getTransmitters().get(8)!=null)  { //module has a radio
+        if(module.getTransmitters().size()>8 && module.getTransmitters().get(8)!=null)  { //module has a radio
         	if(module.getProperty("radio")!=null && module.getProperty("radio").equals("disabled")) {
         		((RadioTransmitter) module.getTransmitters().get(8)).setEnabled(false);
         		((RadioReceiver) module.getReceivers().get(8)).setEnabled(false);
