@@ -1,6 +1,8 @@
 Internal MMMI instructions for getting USSR up an running from the SVN server
 -----------------------------------------------------------------------------
 
+For general documentation see README.html
+
 Note: this document assumes that Eclipse is being used to check out and compile USSR.
 USSR should run on Windows, Linux and Mac OS X.
 
