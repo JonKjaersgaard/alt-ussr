@@ -930,7 +930,7 @@ public class QuickPrototyping extends javax.swing.JFrame {
 		//this.dispose();		
 /*NOTE*/ BuilderHelper.connectAllModules(JME_simulation);
 		
-/*NOTE*/		//JME_simulation.setPicker(new New(JME_simulation, this.counter));
+      // JME_simulation.setPicker(new New(JME_simulation, this.counter));
 		
 	}                                           
 
