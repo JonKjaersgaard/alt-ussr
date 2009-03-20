@@ -4,13 +4,15 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
-import ussr.builder.construction.ATRONCommonOperationsTemplate;
+import ussr.builder.construction.ATRONOperationsTemplate;
 import ussr.builder.construction.CommonOperationsTemplate;
 import ussr.builder.construction.ConstructionToolSpecification;
-import ussr.builder.construction.MTRANCommonOperationsTemplate;
-import ussr.builder.construction.OdinCommonOperationsTemplate;
+import ussr.builder.construction.MTRANOperationsTemplate;
+import ussr.builder.construction.OdinOperationsTemplate;
+import ussr.builder.construction.SelectOperationsTemplate;
 import ussr.builder.genericSelectionTools.AssignRemoveLabels;
 import ussr.builder.genericSelectionTools.ColorConnectors;
+import ussr.builder.genericSelectionTools.New;
 import ussr.builder.genericSelectionTools.ReadLabels;
 import ussr.builder.genericSelectionTools.RemoveModule;
 import ussr.builder.genericSelectionTools.RotateModuleComponents;
@@ -224,8 +226,7 @@ public class QuickPrototyping extends javax.swing.JFrame {
 		guiUtil.changeToSetLookAndFeel(this);         
 		this.JME_simulation = (JMESimulation) simulation;  
 		adaptGuiToModularRobot();// Adapt GUI to modular robot existing in simulation environment
-		JME_simulation.setPicker(new PhysicsPicker(true));//set default picker
-		Odin.setDefaultConnectorSize(0.006f);
+		JME_simulation.setPicker(new PhysicsPicker(true, true));//set default picker		
 	}
 
 	/** This method is called from within the constructor to
@@ -839,7 +840,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
 			connectorsjComboBox.setSelectedIndex(0);
 		}
 
-		standardRotationsjComboBox.setSelectedIndex(0);                 
+		standardRotationsjComboBox.setSelectedIndex(0);
+/*NOTE*/		cartesianCoordinatejComboBox.setSelectedIndex(0);
 		nextjButton.setEnabled(false);
 		previousjButton.setEnabled(false);
 		guiUtil.passTo(AssistantjTextField,"Select one of MR names in comboBox(4th toolbar) ");// informing user
@@ -919,87 +921,17 @@ public class QuickPrototyping extends javax.swing.JFrame {
 
 	}                                                           
 
-	private void testjButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+	int counter =-1;
+	private void testjButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		this.counter++;
 		System.out.println("Continue to simulation button");//for debugging
 		//JME_simulation.setPicker(new PhysicsPicker());
 		// JME_simulation.setPause(false);
-		//this.dispose();
-		if (JME_simulation.worldDescription.getModulePositions().size()>=0){
-
-			int amountModules = JME_simulation.getModules().size();
-			ArrayList<ModulePosition> atronModulePositions = new ArrayList<ModulePosition>();
-			ArrayList<ModulePosition> mtranModulePositions = new ArrayList<ModulePosition>(); 
-			ArrayList<ModulePosition> odinAllModulePositions = new ArrayList<ModulePosition>();
-			ArrayList<ModulePosition> odinBallModulePositions = new ArrayList<ModulePosition>(); 
-			ArrayList<ModulePosition> odinOtherModulesPositions = new ArrayList<ModulePosition>();
-
-			List<Module> atronModules = new ArrayList<Module>();
-			List<Module> mtranModules = new ArrayList<Module>();
-			List<Module> odinAllModules = new ArrayList<Module>();         	
-
-
-			for (int i=0; i<amountModules; i++){
-				Module currentModule = JME_simulation.getModules().get(i);
-				if (currentModule.getProperty(BuilderHelper.getModuleDeletionKey())==null){// means was not deleted
-					String moduleName = currentModule.getProperty(BuilderHelper.getModuleNameKey());
-					String moduleType = currentModule.getProperty(BuilderHelper.getModuleTypeKey());
-
-					BuilderHelper b =  new BuilderHelper();
-
-					RotationDescription moduleRotation = currentModule.getPhysics().get(0).getRotation(); 
-					if (moduleType.contains("ATRON")){
-						VectorDescription modulePosition = currentModule.getPhysics().get(0).getPosition();
-						atronModulePositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
-						atronModules.add(currentModule);             			
-					}else if (moduleType.contains("MTRAN")){ 
-						VectorDescription modulePosition = currentModule.getPhysics().get(1).getPosition();
-						mtranModulePositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));             			
-						mtranModules.add(currentModule);             			
-					}else if (moduleType.contains("Odin")){
-						VectorDescription modulePosition = currentModule.getPhysics().get(0).getPosition();
-						odinAllModulePositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
-						odinAllModules.add(currentModule);
-
-						if (moduleType.contains("OdinBall")){
-							odinBallModulePositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
-						}else {
-							odinOtherModulesPositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
-						}
-					}
-				}else{
-					// do nothing
-				}
-			}         	
-
-			ATRONBuilder atronbuilder = new ATRONBuilder();             
-			ArrayList<ModuleConnection> atronModuleConnection = atronbuilder.allConnections(atronModulePositions);        	 
-			JME_simulation.setModules(atronModules);
-			JME_simulation.worldDescription.setModulePositions(atronModulePositions);
-			JME_simulation.worldDescription.setModuleConnections(atronModuleConnection);                          
-			JME_simulation.placeModules();
-
-			ArrayList<ModuleConnection> mtranModuleConnection =MTRANSimulation.allConnections(mtranModulePositions); 
-			JME_simulation.setModules(mtranModules);
-			JME_simulation.worldDescription.setModulePositions(mtranModulePositions);
-			JME_simulation.worldDescription.setModuleConnections(mtranModuleConnection); 
-			JME_simulation.placeModules();              
-
-			OdinBuilder odinBuilder = new OdinBuilder();
-			odinBuilder.setBallPos(odinBallModulePositions);
-			odinBuilder.setModulePos(odinOtherModulesPositions);             
-			ArrayList<ModuleConnection> odinModuleConnection = odinBuilder.allConnections();        	 
-			JME_simulation.setModules(odinAllModules);
-			JME_simulation.worldDescription.setModulePositions(odinAllModulePositions);
-			JME_simulation.worldDescription.setModuleConnections(odinModuleConnection);                          
-			JME_simulation.placeModules();
-			System.out.println("Balls Size is: "+ odinBallModulePositions.size()); //for debugging
-			System.out.println("Modules Size is: "+ odinOtherModulesPositions.size()); //for debugging
-
-			//System.out.println("Pos Size is: "+ JME_simulation.worldDescription.getModulePositions().size()); //for debugging
-			//System.out.println("Con Size is: "+ JME_simulation.worldDescription.getConnections().size()); 
-
-
-		}       
+		//this.dispose();		
+/*NOTE*/ BuilderHelper.connectAllModules(JME_simulation);
+		
+/*NOTE*/		//JME_simulation.setPicker(new New(JME_simulation, this.counter));
+		
 	}                                           
 
 	private void moduleLabelsjComboBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                      
@@ -1159,9 +1091,9 @@ public class QuickPrototyping extends javax.swing.JFrame {
 	 */	
 	private void defaultModulejButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                     
 		//System.out.println("Modular robot specific-->Module");//for debugging     	
-		CommonOperationsTemplate com = new ATRONCommonOperationsTemplate(JME_simulation);
-		CommonOperationsTemplate com1 = new MTRANCommonOperationsTemplate(JME_simulation);
-		CommonOperationsTemplate com2 = new OdinCommonOperationsTemplate(JME_simulation);
+		CommonOperationsTemplate com = new ATRONOperationsTemplate(JME_simulation);
+		CommonOperationsTemplate com1 = new MTRANOperationsTemplate(JME_simulation);
+		CommonOperationsTemplate com2 = new OdinOperationsTemplate(JME_simulation);
 
 		VectorDescription zeroPosition = new VectorDescription(0,0,0);		
 
@@ -1169,7 +1101,11 @@ public class QuickPrototyping extends javax.swing.JFrame {
 			com.addDefaultConstructionModule(this.chosenMRname, atronDefaultPosition);
 		}else if (this.chosenMRname.equalsIgnoreCase("MTRAN")&& moduleExists(mtranDefaultPosition)==false){
 			com1.addDefaultConstructionModule(this.chosenMRname,mtranDefaultPosition );
+			
+/*NOTE*/			//com1.addDefaultConstructionModule(this.chosenMRname,new VectorDescription(mtranDefaultPosition.getX()+0.2f,mtranDefaultPosition.getY(), mtranDefaultPosition.getZ()) );
+			
 		}else if (this.chosenMRname.equalsIgnoreCase("Odin")&& moduleExists(odinDefaultPosition)==false){
+/*NOTE*/			Odin.setDefaultConnectorSize(0.006f);
 			com2.addDefaultConstructionModule(this.chosenMRname, odinDefaultPosition);
 		}else {
 			//com.addDefaultConstructionModule(this.chosenMRname, zeroPosition);
@@ -1279,7 +1215,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
 	 */	
 	private void movejButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
 		//System.out.println("Module generic toolbar-->Move"); //for debugging  
-		JME_simulation.setPicker(new PhysicsPicker(true));
+		JME_simulation.setPicker(new PhysicsPicker(true, true));
+/*NOTE*/		//JME_simulation.setPicker(new PhysicsPicker(true, false));
 		guiUtil.passTo(AssistantjTextField, "Pick and move module");// informing user   
 
 	}                                           

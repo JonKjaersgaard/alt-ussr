@@ -2,7 +2,7 @@ package ussr.builder;
 
 import ussr.samples.mtran.MTRANController;
 
-public class MTRANControllerEmpty extends MTRANController {
+public class MTRANControllerDefault extends MTRANController {
 
 	@Override
 	public void activate() {

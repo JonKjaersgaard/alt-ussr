@@ -3,6 +3,8 @@ package ussr.builder.genericSelectionTools;
 import com.jme.math.Matrix3f;
 import com.jme.math.Quaternion;
 import com.jme.scene.Spatial;
+
+import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.pickers.CustomizedPicker;
@@ -47,11 +49,11 @@ public class RotateModuleComponents extends CustomizedPicker {
 		
 		Matrix3f rotationMatrix = null;
 		if (coordinate.equalsIgnoreCase("X")){
-			rotationMatrix = rotateAround(componentRot,"X",angle);
+			rotationMatrix = BuilderHelper.rotateAround(componentRot,"X",angle);
 		}else if (coordinate.equalsIgnoreCase("Y")){
-			rotationMatrix = rotateAround(componentRot,"Y",angle);
+			rotationMatrix = BuilderHelper.rotateAround(componentRot,"Y",angle);
 		}else if (coordinate.equalsIgnoreCase("Z")){
-			rotationMatrix = rotateAround(componentRot,"Z",angle);
+			rotationMatrix = BuilderHelper.rotateAround(componentRot,"Z",angle);
 		}		
 		Quaternion rotationQaut = new Quaternion();
 		rotationQaut.fromRotationMatrix(rotationMatrix);		
@@ -63,28 +65,5 @@ public class RotateModuleComponents extends CustomizedPicker {
 	 * Here not used, because it is enough of pickModuleComponent(JMEModuleComponent component) method (look above).
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickTarget(com.jme.scene.Spatial)
 	 */
-	protected void pickTarget(Spatial target) {}
-	
-	/**
-	 * Rotates the component of the module with specified angle around specific coordinate.
-	 * @param matrix, initial rotation matrix of component.
-	 * @param coordinate, one of the Cartesian coordinates, like X, Y or Z. 
-	 * @param angle, the rotation angle in degrees
-	 * @return rotationMatrix, the resulting rotation matrix.
-	 */
-	private Matrix3f rotateAround(Matrix3f matrix,String coordinate, float angle){
-
-		float cos =(float)Math.cos(angle/(180/pi));// division on 180/pi means transformation into radians 
-		float sin =(float) Math.sin(angle/(180/pi));
-
-		Matrix3f rotationMatrix = null;
-		if (coordinate.equalsIgnoreCase("X")){			
-			rotationMatrix = new Matrix3f(1,0,0,0,cos,-sin,0,sin,cos);
-		}else if(coordinate.equalsIgnoreCase("Y")){			
-			rotationMatrix = new Matrix3f(cos,0,sin,0,1,0,-sin,0,cos);
-		}else if(coordinate.equalsIgnoreCase("Z")){			
-			rotationMatrix = new Matrix3f(cos,-sin,0,sin,cos,0,0,0,1);					
-		}	
-		return rotationMatrix.mult(matrix) ;
-	} 
+	protected void pickTarget(Spatial target) {}	
 }

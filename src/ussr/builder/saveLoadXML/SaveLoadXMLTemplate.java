@@ -347,12 +347,11 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * @return char[], the labels assigned to the module.
 	 */
 	public char[] getLabels(Module currentModule){		
-		try {
-			currentModule.getProperty(BuilderHelper.getModuleLabelsKey()).toCharArray();
-		}catch(NullPointerException ev){
-		throw new Error("One of the modules do not have any label");	
-		}		
-		return currentModule.getProperty(BuilderHelper.getModuleLabelsKey()).toCharArray();    	
+		String labels = currentModule.getProperty(BuilderHelper.getModuleLabelsKey());
+		if (labels == null){// means there are no labels assigned to this module. 
+			labels = BuilderHelper.getTempLabel();
+		}
+		return labels.toCharArray();    	
 	}
 
 	/**

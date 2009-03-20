@@ -7,16 +7,18 @@ import java.util.List;
 import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
+import ussr.samples.odin.OdinBuilder;
 
-public class OdinCommonOperationsTemplate extends CommonOperationsTemplate{
+public class OdinOperationsTemplate extends CommonOperationsTemplate{
 
 	/**
 	 * @param simulation
 	 */
-	public OdinCommonOperationsTemplate(JMESimulation simulation) {
+	public OdinOperationsTemplate(JMESimulation simulation) {
 		super(simulation);		
 	}
 
@@ -139,7 +141,7 @@ public class OdinCommonOperationsTemplate extends CommonOperationsTemplate{
 		}else if (selectedModuleType.equalsIgnoreCase(odinWheel)){					
 			colorsComponents.add(Color.RED); colorsComponents.add(Color.BLUE);colorsComponents.add(Color.RED); 	colorsComponents.add(Color.BLUE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
-			addNewModule(new ModulePosition(odinMuscle,odinMuscle + BuilderHelper.getRandomInt(),modulePosition,moduleRotation),colorsComponents,colorsConectors);
+			addNewModule(new ModulePosition(odinMuscle + BuilderHelper.getRandomInt(),odinMuscle,modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		}		
 	}	
 }

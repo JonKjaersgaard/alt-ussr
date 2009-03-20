@@ -13,9 +13,10 @@ import ussr.physics.jme.pickers.CustomizedPicker;
 public class AssignRemoveLabels extends CustomizedPicker  {
 
 	private String label;	
-	
 
-	private boolean remove;	
+	private boolean remove;
+	
+	private static final String labelSeparator =",";
 	
 	public AssignRemoveLabels(String label, boolean remove){
 		this.label = label;
@@ -28,15 +29,15 @@ public class AssignRemoveLabels extends CustomizedPicker  {
 		Module selectedModule = component.getModel();
 		String labels = selectedModule.getProperty(BuilderHelper.getModuleLabelsKey());
 		if (labels == null && remove == false){
-			selectedModule.setProperty(BuilderHelper.getModuleLabelsKey(), label +",");			
+			selectedModule.setProperty(BuilderHelper.getModuleLabelsKey(), label +labelSeparator);			
 		}else if (labels != null && remove ==true && labels.contains(label)){
-			String changedLabels = labels.replaceAll(label+",", "");
+			String changedLabels = labels.replaceAll(label+labelSeparator, "");
 			selectedModule.setProperty(BuilderHelper.getModuleLabelsKey(), changedLabels);
 		}else if (remove == false){
 			if (labels.contains(label)){
 				//do nothing
 			}else{
-			selectedModule.setProperty(BuilderHelper.getModuleLabelsKey(), labels+label+",");
+			selectedModule.setProperty(BuilderHelper.getModuleLabelsKey(), labels+label+labelSeparator);
 			}
 		}
 		System.out.println("L:"+ selectedModule.getProperty(BuilderHelper.getModuleLabelsKey()));

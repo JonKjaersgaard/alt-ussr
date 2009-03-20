@@ -1,10 +1,14 @@
 package ussr.builder.construction;
 
 import ussr.builder.BuilderHelper;
+import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.atron.ATRON;
+
+import com.jme.math.Matrix3f;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
@@ -174,7 +178,7 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 			}		 		
 	}
 // FIXME FOR EXPERIMENTATION
-	/*public void moveModuleAccording(int connectorNr, Module selectedModule, Module newMovableModule){
+/*	public void moveModuleAccording(int connectorNr, Module selectedModule, Module newMovableModule){
 		experiment(connectorNr,  selectedModule,  newMovableModule);	
 	}*/
 
@@ -225,7 +229,7 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 	}
 
 //	FIXME UNDER DEVELOPMENT(IN CASE OF EXTRA TIME)	
-	/*public void experiment(int connectorNr, Module selectedModule, Module newMovableModule){
+/*	public void experiment(int connectorNr, Module selectedModule, Module newMovableModule){
 						
 		Matrix3f globalRotation = new Matrix3f(1,0,0,0,1,0,0,0,1);
 		//USSR coordinate(Theory)				
@@ -245,53 +249,32 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 		Matrix3f selectedMatrix = new  Matrix3f( );
 		selectedMatrix.set(newQ);		
 
-		float aroundX =(float) Math.asin(selectedMatrix.m20)*(180/pi);
-		float aroundY =(float) Math.atan(selectedMatrix.m10/selectedMatrix.m00)*(180/pi);
-		float aroundZ = (float)Math.atan(selectedMatrix.m21/selectedMatrix.m22)*(180/pi);
+		float aroundX =(float) Math.asin(selectedMatrix.m20);
+		float aroundY =(float) Math.atan(selectedMatrix.m10/selectedMatrix.m00);
+		float aroundZ = (float)Math.atan(selectedMatrix.m21/selectedMatrix.m22);
 
 		System.out.println("AroundX(Y):"+ (Math.asin(selectedMatrix.m20)*(180/pi)));
 		System.out.println("AroundY(Z):"+ (Math.atan(selectedMatrix.m10/selectedMatrix.m00)*(180/pi)));
 		System.out.println("AroundZ(X):"+ (Math.atan(selectedMatrix.m21/selectedMatrix.m22)*(180/pi)));
 
-				Matrix3f movableMatrix = new Matrix3f(1,0,0,0,1,0,0,0,1);
+			//	Matrix3f movableMatrix = new Matrix3f(1,0,0,0,1,0,0,0,1);
 
-		movableMatrix = rotateAround(movableMatrix,"X",aroundX);
-		movableMatrix = rotateAround(movableMatrix,"Y",aroundY);
-		movableMatrix = rotateAround(movableMatrix,"Z",aroundZ);
+		//movableMatrix = BuilderHelper.rotateAround(movableMatrix,"X",aroundX);
+		//movableMatrix = BuilderHelper.rotateAround(movableMatrix,"Y",aroundY);
+//		movableMatrix = BuilderHelper.rotateAround(movableMatrix,"Z",aroundZ);
 		 
 
 		//float tolerance =1.5f;
 		Matrix3f mf; 
-		mf = rotateAround(selectedMatrix,"X",aroundX-90);
-		mf = rotateAround(mf,"Y",aroundY+90f+0.6f); //SN 1.5 //EW0.6		
-		mf = rotateAround(mf,"Z",aroundZ+90+0.6f);//EW 0.6
-
+	    mf = BuilderHelper.rotateAround(selectedMatrix,"X",aroundX+90);
+		mf = BuilderHelper.rotateAround(mf,"Y",aroundY+90f); //SN 1.5 //EW0.6		
+		mf = BuilderHelper.rotateAround(mf,"Z",aroundZ+90);//EW 0.6		
+		
 		Quaternion newQaut = new Quaternion();
 		newQaut.fromRotationMatrix(mf);		
 
 		newMovableModule.setRotation(new RotationDescription(newQaut));
 
 		newMovableModule.setPosition(new VectorDescription(X+ATRON.UNIT,Y,Z-ATRON.UNIT));
-	}*/
-//	FIXME UNDER DEVELOPMENT	
-	/*private Matrix3f rotateAround(Matrix3f matrix,String coordinate, float degrees){
-
-		float cos =(float)Math.cos(degrees);
-		float sin =(float)Math.sin(degrees);
-
-		Matrix3f rotationMatrix = null;
-		if (coordinate.equalsIgnoreCase("X")){
-			System.out.println("Degrees:"+degrees);
-			rotationMatrix = new Matrix3f(1,0,0,0,cos,-sin,0,sin,cos);
-		}else if(coordinate.equalsIgnoreCase("Y")){
-			System.out.println("Degrees:"+degrees);
-			rotationMatrix = new Matrix3f(cos,0,sin,0,1,0,-sin,0,cos);
-
-		}else if(coordinate.equalsIgnoreCase("Z")){
-			System.out.println("Degrees:"+degrees);
-			rotationMatrix = new Matrix3f(cos,-sin,0,sin,cos,0,0,0,1);					
-		}	
-
-		return rotationMatrix.mult(matrix) ;
 	}*/
 }

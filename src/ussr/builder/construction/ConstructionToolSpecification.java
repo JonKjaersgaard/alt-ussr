@@ -137,13 +137,13 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	private void assignConstructionTemplate(){
 		if 	(this.modularRobotName.equalsIgnoreCase(atron)){
 			this.construction = new ATRONConstructionTemplate(this.simulation);
-			this.selectOperations = new ATRONCommonOperationsTemplate(this.simulation);
+			this.selectOperations = new ATRONOperationsTemplate(this.simulation);
 		}else if (this.modularRobotName.equalsIgnoreCase(mtran)){
 			this.construction = new MTRANConstructionTemplate(this.simulation);
-			this.selectOperations = new MTRANCommonOperationsTemplate(this.simulation);
+			this.selectOperations = new MTRANOperationsTemplate(this.simulation);
 		}else if (this.modularRobotName.equalsIgnoreCase(odin)){
 			this.construction = new OdinConstructionTemplate(this.simulation);
-			this.selectOperations = new OdinCommonOperationsTemplate(this.simulation);
+			this.selectOperations = new OdinOperationsTemplate(this.simulation);
 		}else throw new Error("This modular robot is not supported yet or the name of it is misspelled");
 		//this.selectOperations = new CommonOperationsTemplate(this.simulation);
 	}

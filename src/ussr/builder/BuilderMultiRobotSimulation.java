@@ -22,18 +22,15 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 
 	@Override
 	protected Robot getRobot() {		
-		return new ATRON() {
-			public Controller createController() {
-				return new ATRONControllerEmpty();
-			}
-		};
+				return null;		
 	}
 	
 	 public static void main( String[] args ) {
 	        GenericSimulation.setConnectorsAreActive(true);
 	        BuilderMultiRobotSimulation simulation = new BuilderMultiRobotSimulation();	        
 	        PhysicsParameters.get().setRealisticCollision(true);
-	        PhysicsParameters.get().setPhysicsSimulationStepSize(0.0035f);	        
+	        PhysicsParameters.get().setPhysicsSimulationStepSize(0.0035f);
+	        PhysicsParameters.get().setResolutionFactor(1);
 	        simulation.runSimulation(null,true);
 	    }
 	 
@@ -43,7 +40,7 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 	        
 	        simulation.setRobot(new OdinMuscle(){
 	            public Controller createController() {
-	                return new OdinControllerEmpty() {
+	                return new OdinControllerDefault() {
 	                    public void activate() {
 	                        delay(10000);
 	                        super.activate();
@@ -52,36 +49,36 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 	            }},"OdinMuscle");
 	        simulation.setRobot(new OdinWheel(){
 	            public Controller createController() {
-	                return new OdinControllerEmpty();
+	                return new OdinControllerDefault();
 	            }},"OdinWheel");
 	        simulation.setRobot(new OdinHinge(){
 	            public Controller createController() {
-	                return new OdinControllerEmpty();
+	                return new OdinControllerDefault();
 	            }},"OdinHinge");
 	        
 	        simulation.setRobot(new OdinBattery(){
 	            public Controller createController() {
-	                return new OdinControllerEmpty();
+	                return new OdinControllerDefault();
 	            }},"OdinBattery");
 	        
 	        simulation.setRobot(new OdinBall(){
 	            public Controller createController() {
-	                return new OdinControllerEmpty();
+	                return new OdinControllerDefault();
 	            }},"OdinBall");
 	        
 	        simulation.setRobot(new OdinSpring(){
 	        	public Controller createController() {
-	        		return new OdinControllerEmpty();
+	        		return new OdinControllerDefault();
 	        	}},"OdinSpring");
 	        
 	        simulation.setRobot(new OdinTube(){
 	        	public Controller createController() {
-	        		return new OdinControllerEmpty();
+	        		return new OdinControllerDefault();
 	        	}},"OdinTube");
 	        
 	        ATRON atron = new ATRON(){
 	            public Controller createController() {
-	                return new ATRONControllerEmpty() {
+	                return new ATRONControllerDefault(simulation) {
 	                    public void activate() {
 	                        delay(10000);
 	                        super.activate();
@@ -94,7 +91,7 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 
 	        simulation.setRobot(new MTRAN(){
 	            public Controller createController() {
-	                return new MTRANControllerEmpty() {
+	                return new MTRANControllerDefault() {
 	                  public void activate() {
 	                      delay(10000);
 	                      super.activate();
@@ -115,7 +112,7 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 	     * @return the world description
 	     */
 	    private static WorldDescription createWorld() {
-	        WorldDescription world = new WorldDescription();
+	        WorldDescription world = new WorldDescription();	        
 	        world.setPlaneSize(250);	       
 	        return world;
 	    }

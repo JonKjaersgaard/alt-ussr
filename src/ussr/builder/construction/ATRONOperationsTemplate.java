@@ -6,14 +6,16 @@ import java.util.List;
 import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.atron.ATRON;
+import ussr.samples.atron.ATRONBuilder;
 
-public class ATRONCommonOperationsTemplate extends CommonOperationsTemplate{
+public class ATRONOperationsTemplate extends CommonOperationsTemplate{
 
-	public ATRONCommonOperationsTemplate(JMESimulation simulation) {
+	public ATRONOperationsTemplate(JMESimulation simulation) {
 		super(simulation);		
 	}
 	

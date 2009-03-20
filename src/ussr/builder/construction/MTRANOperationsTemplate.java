@@ -6,14 +6,15 @@ import java.util.List;
 import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.mtran.MTRANSimulation;
 
-public class MTRANCommonOperationsTemplate extends CommonOperationsTemplate{
+public class MTRANOperationsTemplate extends CommonOperationsTemplate{
 	
-	public MTRANCommonOperationsTemplate(JMESimulation simulation) {
+	public MTRANOperationsTemplate(JMESimulation simulation) {
 		super(simulation);
 		// TODO Auto-generated constructor stub
 	}
@@ -58,5 +59,6 @@ public class MTRANCommonOperationsTemplate extends CommonOperationsTemplate{
 	@Override
 	public void variateSpecificModule(Module selectedModule) {
 		getConstruction().variateModuleProperties(selectedModule);		
-	}	
+	}
+	
 }

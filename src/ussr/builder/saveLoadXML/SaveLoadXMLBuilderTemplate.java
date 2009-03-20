@@ -91,7 +91,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 	private final static String coloursConnectorsTag = "COLORS_CONNECTORS";
 	
 	/**
-	 * The name of LAELS tag(labels of the module) in XML file (third in the hierarchy).
+	 * The name of LABELS tag(labels of the module) in XML file (third in the hierarchy).
 	 */
 	private final static String labelsTag = "LABELS";
 
@@ -113,7 +113,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 		/*For each module print out the start and end tags with relevant data*/
 		for (int module=0; module<amountModules;module++){           
 			Module currentModule = simulation.getModules().get(module);
-			if (currentModule.getProperty(BuilderHelper.getModuleDeletionKey())==null){/*means it is not deleted in simulation environment*/				
+			//if (currentModule.getProperty(BuilderHelper.getModuleDeletionKey())==null){/*means it is not deleted in simulation environment*/				
 				try {				
 					transformerHandler.startElement("","",secondTag,emptyAtt);				
 					printSubTagsWithValue(transformerHandler, idTag, getID(currentModule));				
@@ -134,7 +134,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}	
-			}
+			//}
 		}
 		printFirstEndTag(transformerHandler, firstTag);		
 	}
@@ -165,6 +165,9 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 				LinkedList<Color> listColorsConnectors= extractColoursConnectors(amountConnectors,colorsConnectors);
 
 				String labels = extractTagValue(firstElmnt,labelsTag);
+				if (labels.contains(BuilderHelper.getTempLabel())){
+					labels = labels.replaceAll(BuilderHelper.getTempLabel(), "");
+				}
 				RotationDescription rotationDescription = new RotationDescription();
 				rotationDescription.setRotation(new Quaternion(extractFromQuaternion(moduleRotationQuaternion,"X"),extractFromQuaternion(moduleRotationQuaternion,"Y"),extractFromQuaternion(moduleRotationQuaternion,"Z"),extractFromQuaternion(moduleRotationQuaternion,"W")));
 

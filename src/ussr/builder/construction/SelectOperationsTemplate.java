@@ -103,6 +103,6 @@ public interface SelectOperationsTemplate {
 	 * @param toolSpecification
 	 */
 //TODO
-	public void moveModuleOnNextConnector(ConstructionToolSpecification toolSpecification);	
-	
+	public void moveModuleOnNextConnector(ConstructionToolSpecification toolSpecification);
+		
 }

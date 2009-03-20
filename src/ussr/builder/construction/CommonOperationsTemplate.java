@@ -7,12 +7,16 @@ import java.util.List;
 import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
+import ussr.samples.atron.ATRONBuilder;
+import ussr.samples.mtran.MTRANSimulation;
+import ussr.samples.odin.OdinBuilder;
 
 /**
- * The main responsibility of this class is to act as Context class in Strategy pattern.
+ * The main responsibility of this class is to act as abstract class in Template pattern.
  * Moreover define the methods common for construction of modular robots morphologies in more 
  * abstract-module oriented way, rather than component oriented way. It is more abstract due to the 
  * fact that modules are created and moved with respect to each other here. 
@@ -26,7 +30,7 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	/** 
 	 * The physical simulation
 	 */
-	private JMESimulation simulation;	
+	public JMESimulation simulation;	
 
 	/**
 	 * The interface to construction of modular robot morphology. This one is on the level of components of the module.  
@@ -201,9 +205,7 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	 * This method is so-called "Primitive operation" for above TEMPLATE method, called "variateModule(ConstructionToolSpecification toolSpecification)".	    
 	 * @param selectedModule,the module selected in simulation environment.	
 	 */
-	public abstract void variateSpecificModule(Module selectedModule);
-
-
+	public abstract void variateSpecificModule(Module selectedModule);	
 	
 
 //	TODO MOVE THE FUNCTIONALITY
