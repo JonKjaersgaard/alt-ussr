@@ -59,9 +59,9 @@ import com.jmex.physics.RotationalJointAxis;
  *
  * @author Irrisor (original JME version)
  * @author Ulrik (modified for USSR)
- * @author Konstantinas (modified for builder). In particular added functionality to pick and move modules
- * in static (paused) state of simulation. To be more precise added method called moveStaticModules() and
- * constructor with flag for static state.  
+ * @author Konstantinas (modified for builder). In particular added functionality to pick and move modules 
+ * (also their components)in static (paused) state of simulation. To be more precise added methods called moveStaticModules() and
+ * moveStaticComponents()  and constructor with flags for staticState and modules.  
  */
 public class PhysicsPicker implements Picker {
     private boolean shiftIsPressed = false;
@@ -73,11 +73,18 @@ public class PhysicsPicker implements Picker {
     private boolean staticState = false; 
     
     /**
-     * Initiates picking of modules in simulation environment and moving them in desired place. 
-     * @param staticState,true for the static state of simulation.
+     * The flag to indicate what if going to be moved modules or their components.
      */
-    public PhysicsPicker(boolean staticState){
+    private boolean modules = true;
+    
+    /**
+     * Initiates picking of modules and components in simulation environment and moving them in desired place. 
+     * @param staticState,true for the static state of simulation.
+     * @param modules, true if modules will be moved in static state of simulation environment, otherwise the components will be moved.
+     */
+    public PhysicsPicker(boolean staticState, boolean modules){
     	this.staticState = staticState;
+    	this.modules = modules;
     }
 
     public class ModeAction implements InputActionInterface {
@@ -294,8 +301,10 @@ public class PhysicsPicker implements Picker {
 
             if ( picked != null ) {            	
                 DisplaySystem.getDisplaySystem().getWorldCoordinates( mousePosition, pickedScreenPos.z, anchor );                
-                if (staticState){
-                	moveStaticModules();
+                if (staticState && modules){
+                	moveStaticModules();                	
+                }else if (staticState && modules==false){
+                	moveStaticComponents();
                 }                
                 myNode.getLocalTranslation().set( anchor.subtractLocal( pickedWorldOffset ) );
                 worldJoint.setAnchor( myNode.getLocalTranslation() );
@@ -327,6 +336,14 @@ public class PhysicsPicker implements Picker {
         	 //Vector3f vector = anchor.subtractLocal( pickedWorldOffset);
         	 //picked.getLocalTranslation().set(vector);
         }
+        
+        /**
+         * Moves static components of the modules, during static state of simulation.
+         */
+        private void moveStaticComponents(){			 	
+			 Vector3f vector = anchor.subtractLocal( pickedWorldOffset);			
+       	     picked.getLocalTranslation().set(vector);
+       }
     }
 }
 
