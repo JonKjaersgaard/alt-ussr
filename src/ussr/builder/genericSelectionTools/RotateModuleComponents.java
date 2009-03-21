@@ -12,11 +12,6 @@ import ussr.physics.jme.pickers.CustomizedPicker;
 public class RotateModuleComponents extends CustomizedPicker {
 
 	/**
-	 * Mathematical constant pi.
-	 */
-	private final static float pi = (float)Math.PI;
-	
-	/**
 	 *  One of the Cartesian coordinates, like X, Y or Z.
 	 */
 	private String coordinate;

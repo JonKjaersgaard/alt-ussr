@@ -14,6 +14,10 @@ import ussr.samples.mtran.MTRANSimulation;
 
 public class MTRANOperationsTemplate extends CommonOperationsTemplate{
 	
+	/**
+	 * COMMENT
+	 * @param simulation
+	 */
 	public MTRANOperationsTemplate(JMESimulation simulation) {
 		super(simulation);
 		// TODO Auto-generated constructor stub

@@ -27,40 +27,40 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 	/**
 	 * The numbers of connectors on the ATRON module
 	 */
-	private final static int connectorNr0 = 0,connectorNr1 = 1,connectorNr2 = 2,connectorNr3 = 3,connectorNr4 = 4, connectorNr5 = 5,connectorNr6 = 6, connectorNr7 = 7;
+	private final static int CONNECTORnr0 = 0,CONNECTORnr1 = 1,CONNECTORnr2 = 2,CONNECTORnr3 = 3,CONNECTORnr4 = 4, CONNECTORnr5 = 5,CONNECTORnr6 = 6, CONNECTORnr7 = 7;
 	
 	/**
 	 * Supported rotations of ATRON module."EW" means east-west and so on.
 	 */
-	private final static String ew = "EW", we= "WE", sn = "SN", ns = "NS", ud = "UD", du = "DU";
+	private final static String EW = "EW", WE= "WE", SN = "SN", NS = "NS", UD = "UD", DU = "DU";
 	
 	/**
 	 * The physical lattice distance between two ATRON modules
 	 */
-	private final static float offset = ATRON.UNIT;
+	private final static float OFFSET = ATRON.UNIT;
 	
 	/**
 	 * The array of objects containing information about ATRON specific rotations.
 	 * The logic is: if rotation is "EW"(means east-west), then the rotation value is ATRON.ROTATION_EW and opposite
 	 * to this rotation is ATRON.ROTATION_WE (Look the first entry in array beneath).
 	 */
-	private final static ModuleRotationMapEntryHelper[] moduleRotationMap =  {
-		new ModuleRotationMapEntryHelper(ew,ATRON.ROTATION_EW,ATRON.ROTATION_WE),
-		new ModuleRotationMapEntryHelper(we,ATRON.ROTATION_WE,ATRON.ROTATION_EW),
-		new ModuleRotationMapEntryHelper(sn,ATRON.ROTATION_SN,ATRON.ROTATION_NS),
-		new ModuleRotationMapEntryHelper(ns,ATRON.ROTATION_NS,ATRON.ROTATION_SN),
-		new ModuleRotationMapEntryHelper(ud,ATRON.ROTATION_UD,ATRON.ROTATION_DU),
-		new ModuleRotationMapEntryHelper(du,ATRON.ROTATION_DU,ATRON.ROTATION_UD),
+	private final static ModuleRotationMapEntryHelper[] MODULE_ROTATION_MAP =  {
+		new ModuleRotationMapEntryHelper(EW,ATRON.ROTATION_EW,ATRON.ROTATION_WE),
+		new ModuleRotationMapEntryHelper(WE,ATRON.ROTATION_WE,ATRON.ROTATION_EW),
+		new ModuleRotationMapEntryHelper(SN,ATRON.ROTATION_SN,ATRON.ROTATION_NS),
+		new ModuleRotationMapEntryHelper(NS,ATRON.ROTATION_NS,ATRON.ROTATION_SN),
+		new ModuleRotationMapEntryHelper(UD,ATRON.ROTATION_UD,ATRON.ROTATION_DU),
+		new ModuleRotationMapEntryHelper(DU,ATRON.ROTATION_DU,ATRON.ROTATION_UD),
 	};
 	
 	/**
 	 * Tolerance used to identify if component (module) already exists in interval of space.
 	 */
-	private final static float searchTolerance = 0.0000001f;
+	private final static float SERACH_TOLERANCE = 0.0000001f;
 	
 	/**
-	 * COMMENT
-	 * @param simulation
+	 * Supports construction of ATRON modular robot's morphology on the level of components.
+	 * @param simulation, the physical simulation.
 	 */
 	public ATRONConstructionTemplate(JMESimulation simulation) {
 		super(simulation);
@@ -81,12 +81,12 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 		/*Apply offset of 0.08(UNIT) for each coordinate, which is a lattice distance between two ATRON modules.
 		 * This is done to get the position of newly added component of the module (movable module) with respect 
 		 * to selected one*/ 
-		float xPlusOffset = x + offset;
-		float xMinusOffset = x - offset;
-		float yPlusOffset = y + offset;
-		float yMinusOffset = y - offset;
-		float zPlusOffset = z + offset;
-		float zMinusOffset = z - offset;
+		float xPlusOffset = x + OFFSET;
+		float xMinusOffset = x - OFFSET;
+		float yPlusOffset = y + OFFSET;
+		float yMinusOffset = y - OFFSET;
+		float zPlusOffset = z + OFFSET;
+		float zMinusOffset = z - OFFSET;
 
 		/*Array containing the data for adding the new movable component(module) with respect to selected module.
 		 * The format of the object is: (connector number on selected module, the rotation of selected module, 
@@ -96,61 +96,61 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 		 * (Look the first entry in the array beneath) */ 
 		ModuleMapEntryHelper[] moduleMap = {
 				/*ConnectorNr0*/
-				new ModuleMapEntryHelper(connectorNr0,ATRON.ROTATION_EW,ATRON.ROTATION_DU,new Vector3f(xMinusOffset,yPlusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr0,ATRON.ROTATION_WE,ATRON.ROTATION_DU,new Vector3f(xPlusOffset,yPlusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr0,ATRON.ROTATION_DU,ATRON.ROTATION_SN,new Vector3f(x,yMinusOffset,zMinusOffset)),
-				new ModuleMapEntryHelper(connectorNr0,ATRON.ROTATION_UD,ATRON.ROTATION_SN,new Vector3f(x,yPlusOffset,zMinusOffset)),
-				new ModuleMapEntryHelper(connectorNr0,ATRON.ROTATION_SN,ATRON.ROTATION_WE,new Vector3f(xMinusOffset,y,zPlusOffset)),
-				new ModuleMapEntryHelper(connectorNr0,ATRON.ROTATION_NS,ATRON.ROTATION_WE,new Vector3f(xMinusOffset,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr0,ATRON.ROTATION_EW,ATRON.ROTATION_DU,new Vector3f(xMinusOffset,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr0,ATRON.ROTATION_WE,ATRON.ROTATION_DU,new Vector3f(xPlusOffset,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr0,ATRON.ROTATION_DU,ATRON.ROTATION_SN,new Vector3f(x,yMinusOffset,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr0,ATRON.ROTATION_UD,ATRON.ROTATION_SN,new Vector3f(x,yPlusOffset,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr0,ATRON.ROTATION_SN,ATRON.ROTATION_WE,new Vector3f(xMinusOffset,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr0,ATRON.ROTATION_NS,ATRON.ROTATION_WE,new Vector3f(xMinusOffset,y,zMinusOffset)),
 				/*ConnectorNr1*/
-				new ModuleMapEntryHelper(connectorNr1,ATRON.ROTATION_EW,ATRON.ROTATION_NS,new Vector3f(xMinusOffset,y,zPlusOffset)),
-				new ModuleMapEntryHelper(connectorNr1,ATRON.ROTATION_WE,ATRON.ROTATION_SN,new Vector3f(xPlusOffset,y,zMinusOffset)),
-				new ModuleMapEntryHelper(connectorNr1,ATRON.ROTATION_DU,ATRON.ROTATION_WE,new Vector3f(xMinusOffset,yMinusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr1,ATRON.ROTATION_UD,ATRON.ROTATION_EW,new Vector3f(xPlusOffset,yPlusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr1,ATRON.ROTATION_SN,ATRON.ROTATION_DU,new Vector3f(x,yPlusOffset,zPlusOffset)),
-				new ModuleMapEntryHelper(connectorNr1,ATRON.ROTATION_NS,ATRON.ROTATION_UD,new Vector3f(x,yMinusOffset,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr1,ATRON.ROTATION_EW,ATRON.ROTATION_NS,new Vector3f(xMinusOffset,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr1,ATRON.ROTATION_WE,ATRON.ROTATION_SN,new Vector3f(xPlusOffset,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr1,ATRON.ROTATION_DU,ATRON.ROTATION_WE,new Vector3f(xMinusOffset,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr1,ATRON.ROTATION_UD,ATRON.ROTATION_EW,new Vector3f(xPlusOffset,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr1,ATRON.ROTATION_SN,ATRON.ROTATION_DU,new Vector3f(x,yPlusOffset,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr1,ATRON.ROTATION_NS,ATRON.ROTATION_UD,new Vector3f(x,yMinusOffset,zMinusOffset)),
 				/*ConnectorNr2*/
-				new ModuleMapEntryHelper(connectorNr2,ATRON.ROTATION_EW,ATRON.ROTATION_UD,new Vector3f(xMinusOffset,yMinusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr2,ATRON.ROTATION_WE,ATRON.ROTATION_UD,new Vector3f(xPlusOffset,yMinusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr2,ATRON.ROTATION_DU,ATRON.ROTATION_NS,new Vector3f(x,yMinusOffset,zPlusOffset)),
-				new ModuleMapEntryHelper(connectorNr2,ATRON.ROTATION_UD,ATRON.ROTATION_NS,new Vector3f(x,yPlusOffset,zPlusOffset)),
-				new ModuleMapEntryHelper(connectorNr2,ATRON.ROTATION_SN,ATRON.ROTATION_EW,new Vector3f(xPlusOffset,y,zPlusOffset)),
-				new ModuleMapEntryHelper(connectorNr2,ATRON.ROTATION_NS,ATRON.ROTATION_EW,new Vector3f(xPlusOffset,y,zMinusOffset)),		
+				new ModuleMapEntryHelper(CONNECTORnr2,ATRON.ROTATION_EW,ATRON.ROTATION_UD,new Vector3f(xMinusOffset,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr2,ATRON.ROTATION_WE,ATRON.ROTATION_UD,new Vector3f(xPlusOffset,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr2,ATRON.ROTATION_DU,ATRON.ROTATION_NS,new Vector3f(x,yMinusOffset,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr2,ATRON.ROTATION_UD,ATRON.ROTATION_NS,new Vector3f(x,yPlusOffset,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr2,ATRON.ROTATION_SN,ATRON.ROTATION_EW,new Vector3f(xPlusOffset,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr2,ATRON.ROTATION_NS,ATRON.ROTATION_EW,new Vector3f(xPlusOffset,y,zMinusOffset)),		
 				/*ConnectorNr3*/
-				new ModuleMapEntryHelper(connectorNr3,ATRON.ROTATION_EW,ATRON.ROTATION_SN,new Vector3f(xMinusOffset,y,zMinusOffset)),
-				new ModuleMapEntryHelper(connectorNr3,ATRON.ROTATION_WE,ATRON.ROTATION_NS,new Vector3f(xPlusOffset,y,zPlusOffset)),
-				new ModuleMapEntryHelper(connectorNr3,ATRON.ROTATION_DU,ATRON.ROTATION_EW,new Vector3f(xPlusOffset,yMinusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr3,ATRON.ROTATION_UD,ATRON.ROTATION_WE,new Vector3f(xMinusOffset,yPlusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr3,ATRON.ROTATION_SN,ATRON.ROTATION_UD,new Vector3f(x,yMinusOffset,zPlusOffset)),
-				new ModuleMapEntryHelper(connectorNr3,ATRON.ROTATION_NS,ATRON.ROTATION_DU,new Vector3f(x,yPlusOffset,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr3,ATRON.ROTATION_EW,ATRON.ROTATION_SN,new Vector3f(xMinusOffset,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr3,ATRON.ROTATION_WE,ATRON.ROTATION_NS,new Vector3f(xPlusOffset,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr3,ATRON.ROTATION_DU,ATRON.ROTATION_EW,new Vector3f(xPlusOffset,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr3,ATRON.ROTATION_UD,ATRON.ROTATION_WE,new Vector3f(xMinusOffset,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr3,ATRON.ROTATION_SN,ATRON.ROTATION_UD,new Vector3f(x,yMinusOffset,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr3,ATRON.ROTATION_NS,ATRON.ROTATION_DU,new Vector3f(x,yPlusOffset,zMinusOffset)),
 				/*ConnectorNr4*/
-				new ModuleMapEntryHelper(connectorNr4,ATRON.ROTATION_EW,ATRON.ROTATION_UD,new Vector3f(xPlusOffset,yPlusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr4,ATRON.ROTATION_WE,ATRON.ROTATION_UD,new Vector3f(xMinusOffset,yPlusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr4,ATRON.ROTATION_DU,ATRON.ROTATION_NS,new Vector3f(x,yPlusOffset,zMinusOffset)),
-				new ModuleMapEntryHelper(connectorNr4,ATRON.ROTATION_UD,ATRON.ROTATION_NS,new Vector3f(x,yMinusOffset,zMinusOffset)),
-				new ModuleMapEntryHelper(connectorNr4,ATRON.ROTATION_SN,ATRON.ROTATION_EW,new Vector3f(xMinusOffset,y,zMinusOffset)),
-				new ModuleMapEntryHelper(connectorNr4,ATRON.ROTATION_NS,ATRON.ROTATION_EW,new Vector3f(xMinusOffset,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr4,ATRON.ROTATION_EW,ATRON.ROTATION_UD,new Vector3f(xPlusOffset,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr4,ATRON.ROTATION_WE,ATRON.ROTATION_UD,new Vector3f(xMinusOffset,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr4,ATRON.ROTATION_DU,ATRON.ROTATION_NS,new Vector3f(x,yPlusOffset,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr4,ATRON.ROTATION_UD,ATRON.ROTATION_NS,new Vector3f(x,yMinusOffset,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr4,ATRON.ROTATION_SN,ATRON.ROTATION_EW,new Vector3f(xMinusOffset,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr4,ATRON.ROTATION_NS,ATRON.ROTATION_EW,new Vector3f(xMinusOffset,y,zPlusOffset)),
 				/*ConnectorNr5*/
-				new ModuleMapEntryHelper(connectorNr5,ATRON.ROTATION_EW,ATRON.ROTATION_SN,new Vector3f(xPlusOffset,y,zPlusOffset)),
-				new ModuleMapEntryHelper(connectorNr5,ATRON.ROTATION_WE,ATRON.ROTATION_NS,new Vector3f(xMinusOffset,y,zMinusOffset)),
-				new ModuleMapEntryHelper(connectorNr5,ATRON.ROTATION_DU,ATRON.ROTATION_EW,new Vector3f(xMinusOffset,yPlusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr5,ATRON.ROTATION_UD,ATRON.ROTATION_WE,new Vector3f(xPlusOffset,yMinusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr5,ATRON.ROTATION_SN,ATRON.ROTATION_UD,new Vector3f(x,yPlusOffset,zMinusOffset)),
-				new ModuleMapEntryHelper(connectorNr5,ATRON.ROTATION_NS,ATRON.ROTATION_DU,new Vector3f(x,yMinusOffset,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr5,ATRON.ROTATION_EW,ATRON.ROTATION_SN,new Vector3f(xPlusOffset,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr5,ATRON.ROTATION_WE,ATRON.ROTATION_NS,new Vector3f(xMinusOffset,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr5,ATRON.ROTATION_DU,ATRON.ROTATION_EW,new Vector3f(xMinusOffset,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr5,ATRON.ROTATION_UD,ATRON.ROTATION_WE,new Vector3f(xPlusOffset,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr5,ATRON.ROTATION_SN,ATRON.ROTATION_UD,new Vector3f(x,yPlusOffset,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr5,ATRON.ROTATION_NS,ATRON.ROTATION_DU,new Vector3f(x,yMinusOffset,zPlusOffset)),
 				/*ConnectorNr6*/
-				new ModuleMapEntryHelper(connectorNr6,ATRON.ROTATION_EW,ATRON.ROTATION_DU,new Vector3f(xPlusOffset,yMinusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr6,ATRON.ROTATION_WE,ATRON.ROTATION_DU,new Vector3f(xMinusOffset,yMinusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr6,ATRON.ROTATION_DU,ATRON.ROTATION_SN,new Vector3f(x,yPlusOffset,zPlusOffset)),
-				new ModuleMapEntryHelper(connectorNr6,ATRON.ROTATION_UD,ATRON.ROTATION_SN,new Vector3f(x,yMinusOffset,zPlusOffset)),
-				new ModuleMapEntryHelper(connectorNr6,ATRON.ROTATION_SN,ATRON.ROTATION_WE,new Vector3f(xPlusOffset,y,zMinusOffset)),
-				new ModuleMapEntryHelper(connectorNr6,ATRON.ROTATION_NS,ATRON.ROTATION_WE,new Vector3f(xPlusOffset,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr6,ATRON.ROTATION_EW,ATRON.ROTATION_DU,new Vector3f(xPlusOffset,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr6,ATRON.ROTATION_WE,ATRON.ROTATION_DU,new Vector3f(xMinusOffset,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr6,ATRON.ROTATION_DU,ATRON.ROTATION_SN,new Vector3f(x,yPlusOffset,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr6,ATRON.ROTATION_UD,ATRON.ROTATION_SN,new Vector3f(x,yMinusOffset,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr6,ATRON.ROTATION_SN,ATRON.ROTATION_WE,new Vector3f(xPlusOffset,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr6,ATRON.ROTATION_NS,ATRON.ROTATION_WE,new Vector3f(xPlusOffset,y,zPlusOffset)),
 				/*ConnectorNr7*/
-				new ModuleMapEntryHelper(connectorNr7,ATRON.ROTATION_EW,ATRON.ROTATION_NS,new Vector3f(xPlusOffset,y,zMinusOffset)),
-				new ModuleMapEntryHelper(connectorNr7,ATRON.ROTATION_WE,ATRON.ROTATION_SN,new Vector3f(xMinusOffset,y,zPlusOffset)),
-				new ModuleMapEntryHelper(connectorNr7,ATRON.ROTATION_DU,ATRON.ROTATION_WE,new Vector3f(xPlusOffset,yPlusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr7,ATRON.ROTATION_UD,ATRON.ROTATION_EW,new Vector3f(xMinusOffset,yMinusOffset,z)),
-				new ModuleMapEntryHelper(connectorNr7,ATRON.ROTATION_SN,ATRON.ROTATION_DU,new Vector3f(x,yMinusOffset,zMinusOffset)),
-				new ModuleMapEntryHelper(connectorNr7,ATRON.ROTATION_NS,ATRON.ROTATION_UD,new Vector3f(x,yPlusOffset,zPlusOffset))
+				new ModuleMapEntryHelper(CONNECTORnr7,ATRON.ROTATION_EW,ATRON.ROTATION_NS,new Vector3f(xPlusOffset,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr7,ATRON.ROTATION_WE,ATRON.ROTATION_SN,new Vector3f(xMinusOffset,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr7,ATRON.ROTATION_DU,ATRON.ROTATION_WE,new Vector3f(xPlusOffset,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr7,ATRON.ROTATION_UD,ATRON.ROTATION_EW,new Vector3f(xMinusOffset,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr7,ATRON.ROTATION_SN,ATRON.ROTATION_DU,new Vector3f(x,yMinusOffset,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr7,ATRON.ROTATION_NS,ATRON.ROTATION_UD,new Vector3f(x,yPlusOffset,zPlusOffset))
 		};		
 		this.moduleMap = moduleMap;		
 	}		
@@ -169,7 +169,7 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 			for (int i=0; i<moduleMap.length;i++){				
 				if (moduleMap[i].getConnectorNr()==connectorNr && moduleMap[i].getInitialRotation().getRotation().equals(rotationQuatComponent)){
 					/*If component(module) already exists at current position, delete movableModuleComponent and newly added module.*/
-					if (componentExitst(moduleMap[i].getNewPosition(), searchTolerance)){						
+					if (componentExitst(moduleMap[i].getNewPosition(), SERACH_TOLERANCE)){						
 						BuilderHelper.deleteModule(movableModuleComponent.getModel());											
 					}else {/*move the component to new position with new rotation*/
 						moveModuleComponent(movableModuleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
@@ -191,9 +191,9 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 	public void rotateComponentOpposite(JMEModuleComponent currentModuleComponent,Quaternion  rotationQComponent){
 		/*Locate matching rotation Quaternion in moduleRotationMap (initial) and rotate with opposite rotation Quaternion
 		 * from the same entry in  moduleRotationMap*/
-		for (int entry=0;entry<moduleRotationMap.length;entry++){
-			if (rotationQComponent.equals(moduleRotationMap[entry].getRotation().getRotation())){
-				rotateModuleComponent(currentModuleComponent,moduleRotationMap[entry].getRotationOppositeValue().getRotation());
+		for (int entry=0;entry<MODULE_ROTATION_MAP.length;entry++){
+			if (rotationQComponent.equals(MODULE_ROTATION_MAP[entry].getRotation().getRotation())){
+				rotateModuleComponent(currentModuleComponent,MODULE_ROTATION_MAP[entry].getRotationOppositeValue().getRotation());
 			}
 		}		
 	}
@@ -205,9 +205,9 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * @param rotationName,the name of standard(specific) rotation of the module.	 
 	 */	
 	public void rotateComponentSpecifically(JMEModuleComponent currentModuleComponent, String rotationName){
-		for (int entry=0;entry<moduleRotationMap.length;entry++){
-			if (rotationName.equals(moduleRotationMap[entry].getRotationName())){
-				rotateModuleComponent(currentModuleComponent,moduleRotationMap[entry].getRotation().getRotation());
+		for (int entry=0;entry<MODULE_ROTATION_MAP.length;entry++){
+			if (rotationName.equals(MODULE_ROTATION_MAP[entry].getRotationName())){
+				rotateModuleComponent(currentModuleComponent,MODULE_ROTATION_MAP[entry].getRotation().getRotation());
 			}
 		}		
 	}

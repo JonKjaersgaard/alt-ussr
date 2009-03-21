@@ -14,6 +14,7 @@ import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
+import ussr.samples.atron.ATRON;
 
 public class New extends CustomizedPicker {
 
@@ -52,28 +53,67 @@ public class New extends CustomizedPicker {
 		float zConnector  = positionConnector.getZ();
 		
 		simulation.getModules().get(0).setPosition(new VectorDescription(xConnector+(xConnector-xModule),yConnector+(yConnector-yModule),zConnector+(zConnector-zModule)));
-		simulation.getModules().get(0).setRotation(selectedModule.getComponent(0).getRotation());
+		simulation.getModules().get(0).getComponent(0).setRotation(selectedModule.getComponent(0).getRotation());
+		simulation.getModules().get(0).getComponent(1).setRotation(selectedModule.getComponent(1).getRotation());
+		
 		Matrix3f m = new Matrix3f();
 		m.set(selectedModule.getComponent(0).getRotation().getRotation());
 		
 		Matrix3f m11 = new Matrix3f();
 		m11.set(selectedModule.getComponent(1).getRotation().getRotation());
+		
+		Quaternion slectQ = selectedModule.getComponent(0).getRotation().getRotation();
 	
 		Matrix3f m1= null,m2= null, m111= null, m222 = null;
-		if (selectedConnectorNr ==0||selectedConnectorNr ==2||selectedConnectorNr ==4||selectedConnectorNr ==6){
-		
-		 m1 = rotateAround(m,"X",  90);
-		 m2 = rotateAround(m1,"Z",  90);
-				
-		 m111 = rotateAround(m11,"X",  90);
-		 m222 = rotateAround(m111,"Z",  90);
-	   }else{
+		if (selectedConnectorNr ==0||selectedConnectorNr ==6){			
+			if (slectQ.equals(ATRON.ROTATION_DU.getRotation())||slectQ.equals(ATRON.ROTATION_NS.getRotation())){
+				m1 = rotateAround(m,"X",  270);				
+				 m111 = rotateAround(m11,"X",  270);
+			 
+			}else{
+				m1 = rotateAround(m,"X",  90);				
+				 m111 = rotateAround(m11,"X",  90);
+			}			 
+			 
+			 if (slectQ.equals(ATRON.ROTATION_WE.getRotation())){
+				 m2 = rotateAround(m1,"Z", -90);
+				 m222 = rotateAround(m111,"Z",  -90);			
+			 }else{				 
+				 m2 = rotateAround(m1,"Z", 90);
+				 m222 = rotateAround(m111,"Z",  90); 
+			 }			 
+			
+		}else if(selectedConnectorNr ==1||selectedConnectorNr ==7) {
 		   
 		   m1 = rotateAround(m,"X",  90);
-			 m2 = rotateAround(m1,"Y",  90);
+			 m2 = rotateAround(m1,"Y", - 90);
 			 
 			 m111 = rotateAround(m11,"X",  90);
-			 m222 = rotateAround(m111,"Y",  90);
+			 m222 = rotateAround(m111,"Y", - 90);
+		   }else if(selectedConnectorNr ==3||selectedConnectorNr ==5) {
+			   m1 = rotateAround(m,"X",  -90);
+				 m2 = rotateAround(m1,"Y",  90);
+				 
+				 m111 = rotateAround(m11,"X",  -90);
+				 m222 = rotateAround(m111,"Y",  90);
+		   }else if (selectedConnectorNr ==2||selectedConnectorNr ==4) {
+			   
+			   if (slectQ.equals(ATRON.ROTATION_UD.getRotation())||slectQ.equals(ATRON.ROTATION_NS.getRotation())){
+					m1 = rotateAround(m,"X",  270);				
+					 m111 = rotateAround(m11,"X",  270);
+				 
+				}else{
+					   m1 = rotateAround(m,"X",  90);
+					   m111 = rotateAround(m11,"X",  90);	
+				}	
+			   
+			     if (slectQ.equals(ATRON.ROTATION_WE.getRotation())){
+					 m2 = rotateAround(m1,"Z", -270);
+					 m222 = rotateAround(m111,"Z",  -270);			
+				 }else{				 
+					 m2 = rotateAround(m1,"Z",  -90);
+					 m222 = rotateAround(m111,"Z",  -90);
+				 }							   
 		   }
 		
 		
@@ -113,7 +153,7 @@ public class New extends CustomizedPicker {
 				String [] temp = null;	         
 				temp = name.split("#");// Split by #, into two parts, line describing the connector. For example "Connector 1 #1"
 				this.selectedConnectorNr= Integer.parseInt(temp[1].toString());// Take only the connector number, in above example "1" (at the end)
-				System.out.println("con:" + selectedConnectorNr );
+				System.out.println("CON:" + selectedConnectorNr );
 			}
 		}	
 	}	

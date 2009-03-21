@@ -33,7 +33,17 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	/**
 	 * Supported modular robots: ATRON, MTRAN and Odin.
 	 */
-	private static final String atron = "ATRON",mtran = "MTRAN", odin = "Odin";
+	private static final String ATRON = "ATRON",MTRAN = "MTRAN", ODIN = "Odin";
+		
+	/**
+	 * Symbol used to extract the connector number from the string.  
+	 */
+	private static final String SPLIT_SYMBOL = "#";
+	
+	/**
+	 * The identifier user to locate the string.
+	 */
+	private static final String CONNECTOR ="Connector";
 		
     /**
      * The module selected in simulation environment with the left side of the mouse.
@@ -51,9 +61,9 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	private String modularRobotName;
 
 	/**
-	 * The name of the tool from GUI. For example these can be "OnConnector", "All","Loop" and so on.
+	 * The name of the tool from GUI. For example these can be "ON_SELECTED_CONNECTOR", "ON_CHOSEN_CONNECTOR","LOOP" and so on.
 	 */
-	private String toolName;
+	private ConstructionTools toolName;	
 
 	/**
 	 * The name of rotations, which are standard to particular modular robot. For example for ATRON this can be EW, meaning east-west.
@@ -61,12 +71,12 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	private String standardRotationName;
 
 	/**
-	 * For calling tools handling construction of morphology of modular robot, in particular tools like "OnConnector" and "All". 
+	 * For calling tools handling construction of morphology of modular robot, in particular tools like "ON_SELECTED_CONNECTOR","ON_ALL_CONNECTORS" and "VARIATION". 
 	 * @param simulation, the physical simulation. 
 	 * @param modularRobotName,the name of the modular robot. For example: ATRON, MTRAN,Odin and so on.
-	 * @param toolName,the name of the tool from GUI. For example, in this case, these can be "OnConnector" or "All".
+	 * @param toolName,the name of the tool from GUI. For example, in this case, these can be "ON_SELECTED_CONNECTOR", "ON_ALL_CONNECTORS" and "VARIATION".
 	 */
-	public  ConstructionToolSpecification(JMESimulation simulation, String modularRobotName, String toolName){
+	public  ConstructionToolSpecification(JMESimulation simulation, String modularRobotName, ConstructionTools toolName){
 		this.simulation = simulation;
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
@@ -74,13 +84,13 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	}
 
 	/**
-	 * For calling tools handling construction of morphology of modular robot,in particular tools like "ChosenConnector" or "Loop".
+	 * For calling tools handling construction of morphology of modular robot,in particular tools like "ON_CHOSEN_CONNECTOR" or "LOOP".
 	 * @param simulation, the physical simulation.
 	 * @param modularRobotName,the name of the modular robot. For example: ATRON, MTRAN,Odin and so on.
 	 * @param toolName,the name of the tool from GUI. For example, in this  case, these can be "ChosenConnector" or "Loop".
-	 * @param chosenConnectorNr,the connector number on module, chosen in GUI comboBox ("ChosenConnector")or just passed as default ("Loop").
+	 * @param chosenConnectorNr,the connector number on module, chosen in GUI comboBox ("ON_CHOSEN_CONNECTOR")or just passed as default ("LOOP").
 	 */
-	public  ConstructionToolSpecification(JMESimulation simulation, String modularRobotName, String toolName,int chosenConnectorNr){
+	public  ConstructionToolSpecification(JMESimulation simulation, String modularRobotName, ConstructionTools toolName,int chosenConnectorNr){
 		this.simulation = simulation;
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
@@ -89,13 +99,13 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	}
 
 	/**
-	 * For calling tools handling construction of morphology of modular robot, in particular tools like "StandardRotation". 
+	 * For calling tools handling construction of morphology of modular robot, in particular tools like "STANDARD_ROTATION". 
 	 * @param simulation, the physical simulation.
 	 * @param modularRobotName, the name of the modular robot. For example: ATRON, MTRAN,Odin and so on.
-	 * @param toolName, the name of the tool from GUI. For example, in this case, this is "StandardRotation".
+	 * @param toolName, the name of the tool from GUI. For example, in this case, this is "STANDARD_ROTATION".
 	 * @param standardRotationName,the name of rotation, which is standard to particular modular robot. For example for ATRON this can be EW, meaning east-west.
 	 */
-	public  ConstructionToolSpecification(JMESimulation simulation, String modularRobotName, String toolName, String standardRotationName){
+	public  ConstructionToolSpecification(JMESimulation simulation, String modularRobotName, ConstructionTools toolName, String standardRotationName){
 		this.simulation = simulation;
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
@@ -121,10 +131,10 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	protected void pickTarget(Spatial target) {		
 		if(target instanceof TriMesh) {			
 			String name = simulation.getGeometryName((TriMesh)target);
-			if(name!=null && name.contains("Connector")){ 
+			if(name!=null && name.contains(CONNECTOR)){ 
 				//System.out.println("Connector: "+name);//For debugging				
 				String [] temp = null;	         
-				temp = name.split("#");// Split by #, into two parts, line describing the connector. For example "Connector 1 #1"
+				temp = name.split(SPLIT_SYMBOL);// Split by #, into two parts, line describing the connector. For example "Connector 1 #1"
 				this.selectedConnectorNr= Integer.parseInt(temp[1].toString());// Take only the connector number, in above example "1" (at the end)				
 			}
 		}		
@@ -135,17 +145,16 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * methods(operations), depending on which type of modular robot is passed in constructor. 
 	 */
 	private void assignConstructionTemplate(){
-		if 	(this.modularRobotName.equalsIgnoreCase(atron)){
+		if 	(this.modularRobotName.equalsIgnoreCase(ATRON)){
 			this.construction = new ATRONConstructionTemplate(this.simulation);
 			this.selectOperations = new ATRONOperationsTemplate(this.simulation);
-		}else if (this.modularRobotName.equalsIgnoreCase(mtran)){
+		}else if (this.modularRobotName.equalsIgnoreCase(MTRAN)){
 			this.construction = new MTRANConstructionTemplate(this.simulation);
 			this.selectOperations = new MTRANOperationsTemplate(this.simulation);
-		}else if (this.modularRobotName.equalsIgnoreCase(odin)){
+		}else if (this.modularRobotName.equalsIgnoreCase(ODIN)){
 			this.construction = new OdinConstructionTemplate(this.simulation);
 			this.selectOperations = new OdinOperationsTemplate(this.simulation);
-		}else throw new Error("This modular robot is not supported yet or the name of it is misspelled");
-		//this.selectOperations = new CommonOperationsTemplate(this.simulation);
+		}else throw new Error("This modular robot is not supported yet or the name of it is misspelled");		
 	}
 
 	/**
@@ -154,7 +163,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * and the module type selected in simulation environment is MTRAN. Then the method will complain.	 * 
 	 */
 	private void callAppropriateTool(){
-		if (this.modularRobotName.equalsIgnoreCase(atron)&& isAtron()||this.modularRobotName.equalsIgnoreCase(mtran)&& isMtran()||this.modularRobotName.equalsIgnoreCase("odin")&&isOdin()){		
+		if (this.modularRobotName.equalsIgnoreCase(ATRON)&& isAtron()||this.modularRobotName.equalsIgnoreCase(MTRAN)&& isMtran()||this.modularRobotName.equalsIgnoreCase("odin")&&isOdin()){		
 			callTool();	
 		}else{
 			JOptionPane.showMessageDialog(null, "This module is not an "+modularRobotName+" module. The chosen tool is for "+ modularRobotName+ "modules!","Error", JOptionPane.ERROR_MESSAGE);// Inform the user
@@ -167,7 +176,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 */
 	private boolean isAtron(){
 		String typeofModule = this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());		
-		if (typeofModule.contains(atron)){
+		if (typeofModule.contains(ATRON)){
 			return true;
 		}
 		return false;
@@ -179,7 +188,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 */
 	private boolean isMtran(){		
 		String typeofModule = this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
-		if (typeofModule.contains(mtran)){
+		if (typeofModule.contains(MTRAN)){
 			return true;
 		}
 		return false;
@@ -191,7 +200,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 */
 	private boolean isOdin(){
 		String typeofModule = this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());		
-		if (typeofModule.contains(odin)){			
+		if (typeofModule.contains(ODIN)){			
 			return true;
 		}
 		return false;
@@ -202,21 +211,21 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 */
 	private void callTool(){
 
-		if (this.toolName.equalsIgnoreCase("OnConnector")){
+		if (this.toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){
 			if (connectorsMatch()){
 				this.selectOperations.addNewModuleOnConnector(this);
 			}else{
 				JOptionPane.showMessageDialog(null, "Method called pickTarget failed to extract the connector number","Error", JOptionPane.ERROR_MESSAGE);
 			}			
-		}else if (this.toolName.equalsIgnoreCase("chosenConnector")||this.toolName.equalsIgnoreCase("Loop")){
+		}else if (this.toolName.equals(ConstructionTools.ON_CHOSEN_CONNECTOR)||this.toolName.equals(ConstructionTools.LOOP)){
 			this.selectOperations.addNewModuleOnConnector(this);
-		}else if (this.toolName.equalsIgnoreCase("AllConnectors")){
+		}else if (this.toolName.equals(ConstructionTools.ON_ALL_CONNECTORS)){
 			this.selectOperations.addModulesOnAllConnectors(this);		
-		}else if(this.toolName.equalsIgnoreCase("StandardRotation")){
+		}else if(this.toolName.equals(ConstructionTools.STANDARD_ROTATIONS)){
 			this.selectOperations.rotateModuleStandardRotation(this, this.standardRotationName);
-		}else if (this.toolName.equalsIgnoreCase("OppositeRotation")){			
+		}else if (this.toolName.equals(ConstructionTools.OPPOSITE_ROTATION)){			
 			this.selectOperations.rotateModuleWithOppositeRotation(this);
-		}else if (this.toolName.equalsIgnoreCase("Variation")){
+		}else if (this.toolName.equals(ConstructionTools.VARIATION)){
 			this.selectOperations.variateModule(this);
 		}	
 	}
@@ -244,13 +253,13 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		int amountModules = this.simulation.getModules().size();
 		Module lastAddedModule = this.simulation.getModules().get(amountModules-1);//Last module
 		Module selectedModule = this.selectedModule;//Last module
-		if (this.modularRobotName.equalsIgnoreCase(atron)){			
+		if (this.modularRobotName.equalsIgnoreCase(ATRON)){			
 			ConstructionTemplate con =  new ATRONConstructionTemplate(this.simulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule);
-		}else if (this.modularRobotName.equalsIgnoreCase(mtran)){			
+		}else if (this.modularRobotName.equalsIgnoreCase(MTRAN)){			
 			ConstructionTemplate con =  new MTRANConstructionTemplate(this.simulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule);
-		}else if (this.modularRobotName.equalsIgnoreCase(odin)){
+		}else if (this.modularRobotName.equalsIgnoreCase(ODIN)){
 			ConstructionTemplate con =  new OdinConstructionTemplate(this.simulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule);
 		}

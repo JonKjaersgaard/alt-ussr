@@ -13,7 +13,9 @@ import ussr.physics.jme.JMESimulation;
 /**
  * The main responsibility of this class  is to support children classes with common methods
  *  and  variables for construction of  morphology of Odin modular robot. Moreover define methods 
- *  specific for Odin modular robot. 
+ *  specific for Odin modular robot construction. Here the assumption is that construction is based
+ *  on assembly of Odin morphology from OdinBalls and OdinMuscles as default construction modules.
+ *  Later the OdinMuscles can be substituted with other OdinModules, see class named OdinOperationsTemplate.java. 
  * @author Konstantinas 
  */
 //FIXME 1) UPDATE COMMENTS
@@ -23,9 +25,9 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 	/**
 	 * The numbers of connectors on the OdinBall module (12 of them) and two of them(the first) for OdinMuscle
 	 */
-	public final static int connectorNr0 = 0,connectorNr1 = 1,connectorNr2 = 2,connectorNr3 = 3,
-	                        connectorNr4 = 4, connectorNr5 = 5,connectorNr6 = 6, connectorNr7 = 7,
-	                        connectorNr8 = 8, connectorNr9 = 9, connectorNr10 = 10,connectorNr11 = 11;
+	public final static int CONNECTORnr0 = 0,CONNECTORnr1 = 1,CONNECTORnr2 = 2,CONNECTORnr3 = 3,
+	                        CONNECTORnr4 = 4, CONNECTORnr5 = 5,CONNECTORnr6 = 6, CONNECTORnr7 = 7,
+	                        CONNECTORnr8 = 8, CONNECTORnr9 = 9, CONNECTORnr10 = 10,CONNECTORnr11 = 11;
 	/**
 	 * A number of different rotations of Structure link, Telescoping link(also called OdinMuscle),OdinBattery,
 	 * OdinHinge,OdinSpring,OdinTube and OdinWheel with respect to connectors of CCP joint (also called OdinBall).
@@ -42,50 +44,50 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 	 *      rotation10 - connector number 10
 	 *      rotation11 - connector number 11
 	 */
-	public final static RotationDescription rotation0 = new RotationDescription(0,0,pi/4);
-	public final static RotationDescription rotation1 = new RotationDescription(0,-pi/4,0);
-	public final static RotationDescription rotation2 = new RotationDescription(0,pi/4,0);										  
-	public final static RotationDescription rotation3 = new RotationDescription(0,0,-pi/4);										  
-	public final static RotationDescription rotation4 = new RotationDescription(0,5*pi/4,-5*pi/2);
-	public final static RotationDescription rotation5 = new RotationDescription(0,-5*pi/4,-5*pi/2);
-	public final static RotationDescription rotation6 = new RotationDescription(0,-pi/4,-pi/2);// rotation5 +pi for y and +2*pi for z
-	public final static RotationDescription rotation7 = new RotationDescription(0,pi/4,-pi/2);// rotation4 -pi for y and +2*pi for z
-	public final static RotationDescription rotation8 = new RotationDescription(0,0,-5*pi/4);// rotation3 +pi/2 for z	
-	public final static RotationDescription rotation9 = new RotationDescription(0,5*pi/4,0);//rotation2 +pi for y
-	public final static RotationDescription rotation10 = new RotationDescription(0,-5*pi/4,0);//rotation1 -pi for y
-	public final static RotationDescription rotation11= new RotationDescription(0,0,5*pi/4);//rotation0 + pi for z
+	public final static RotationDescription ROTATION0 = new RotationDescription(0,0,pi/4);
+	public final static RotationDescription ROTATION1 = new RotationDescription(0,-pi/4,0);
+	public final static RotationDescription ROTATION2 = new RotationDescription(0,pi/4,0);										  
+	public final static RotationDescription ROTATION3 = new RotationDescription(0,0,-pi/4);										  
+	public final static RotationDescription ROTATION4 = new RotationDescription(0,5*pi/4,-5*pi/2);
+	public final static RotationDescription ROTATION5 = new RotationDescription(0,-5*pi/4,-5*pi/2);
+	public final static RotationDescription ROTATION6 = new RotationDescription(0,-pi/4,-pi/2);// rotation5 +pi for y and +2*pi for z
+	public final static RotationDescription ROTATION7 = new RotationDescription(0,pi/4,-pi/2);// rotation4 -pi for y and +2*pi for z
+	public final static RotationDescription ROTATION8 = new RotationDescription(0,0,-5*pi/4);// rotation3 +pi/2 for z	
+	public final static RotationDescription ROTATION9 = new RotationDescription(0,5*pi/4,0);//rotation2 +pi for y
+	public final static RotationDescription ROTATION10 = new RotationDescription(0,-5*pi/4,0);//rotation1 -pi for y
+	public final static RotationDescription ROTATION11= new RotationDescription(0,0,5*pi/4);//rotation0 + pi for z
 	
 	/**
 	 * Global rotation of OdinBall (also called CCP joint)
 	 */
-	public final static RotationDescription rotation00 = new RotationDescription(0,0,0);
+	public final static RotationDescription ROTATION000 = new RotationDescription(0,0,0);
 		
 	/**
 	 * The array of objects containing information about OdinMuscle,OdinBattery,OdinHinge,OdinSpring,OdinTube,OdinWheel modules specific rotations.
 	 */
-	private final static ModuleRotationMapEntryHelper[] moduleRotationMap = {
-		new ModuleRotationMapEntryHelper("rotation0",rotation0,rotation11),
-		new ModuleRotationMapEntryHelper("rotation1",rotation1,rotation10),		
-		new ModuleRotationMapEntryHelper("rotation2",rotation2,rotation9),
-		new ModuleRotationMapEntryHelper("rotation3",rotation3,rotation8),		
-		new ModuleRotationMapEntryHelper("rotation4",rotation4,rotation7),
-		new ModuleRotationMapEntryHelper("rotation5",rotation5,rotation6),
-		new ModuleRotationMapEntryHelper("rotation6",rotation6,rotation5),
-		new ModuleRotationMapEntryHelper("rotation7",rotation7,rotation4),
-		new ModuleRotationMapEntryHelper("rotation8",rotation8,rotation3),
-		new ModuleRotationMapEntryHelper("rotation9",rotation9,rotation2),
-		new ModuleRotationMapEntryHelper("rotation10",rotation10,rotation1),
-		new ModuleRotationMapEntryHelper("rotation11",rotation11,rotation0)
+	private final static ModuleRotationMapEntryHelper[] MODULE_ROTATION_MAP = {
+		new ModuleRotationMapEntryHelper("rotation0",ROTATION0,ROTATION11),
+		new ModuleRotationMapEntryHelper("rotation1",ROTATION1,ROTATION10),		
+		new ModuleRotationMapEntryHelper("rotation2",ROTATION2,ROTATION9),
+		new ModuleRotationMapEntryHelper("rotation3",ROTATION3,ROTATION8),		
+		new ModuleRotationMapEntryHelper("rotation4",ROTATION4,ROTATION7),
+		new ModuleRotationMapEntryHelper("rotation5",ROTATION5,ROTATION6),
+		new ModuleRotationMapEntryHelper("rotation6",ROTATION6,ROTATION5),
+		new ModuleRotationMapEntryHelper("rotation7",ROTATION7,ROTATION4),
+		new ModuleRotationMapEntryHelper("rotation8",ROTATION8,ROTATION3),
+		new ModuleRotationMapEntryHelper("rotation9",ROTATION9,ROTATION2),
+		new ModuleRotationMapEntryHelper("rotation10",ROTATION10,ROTATION1),
+		new ModuleRotationMapEntryHelper("rotation11",ROTATION11,ROTATION0)
 	};
 	
 	/**
 	 * Tolerance used to identify if component (module) already exists in interval of space.
 	 */
-	public final static float searchTolerance = 0.0001f;
+	public final static float SEARCH_TOLERANCE = 0.0001f;
 	
 	/**
-	 * COMMENT
-	 * @param simulation
+	 * Supports construction of Odin modular robot's morphology on the level of components.
+	 * @param simulation, the physical simulation.
 	 */
 	public OdinConstructionTemplate(JMESimulation simulation) {
 		super(simulation);		
@@ -123,9 +125,9 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 		} else{	      	
 			/*Locate matching rotation Quaternion in moduleRotationMap and rotate with opposite rotation Quaternion
 			 * from the same entry in  moduleRotationMap*/		
-				for (int entry=0;entry<moduleRotationMap.length;entry++){
-					if (rotationQComponent.equals(moduleRotationMap[entry].getRotation().getRotation())){
-						rotateModuleComponent(selectedModuleComponent,moduleRotationMap[entry].getRotationOppositeValue().getRotation());						
+				for (int entry=0;entry<MODULE_ROTATION_MAP.length;entry++){
+					if (rotationQComponent.equals(MODULE_ROTATION_MAP[entry].getRotation().getRotation())){
+						rotateModuleComponent(selectedModuleComponent,MODULE_ROTATION_MAP[entry].getRotationOppositeValue().getRotation());						
 					}
 				}					
 		}

@@ -27,7 +27,7 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 	public JMESimulation simulation;	
 
 	/**
-	 * Mathematical constant pi
+	 * Mathematical constant PI
 	 */
 	public final static float pi = (float)Math.PI;
 
@@ -37,7 +37,8 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 	public ModuleMapEntryHelper[] moduleMap;
 
 	/**
-	 * COMMMENT
+	 * Defines template methods as well as common methods for construction of different modular
+	 * robot's morphologies.
 	 * @param simulation
 	 */
 	public ModularRobotConstructionTemplate(JMESimulation simulation){

@@ -25,18 +25,18 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 	/**
 	 * The default Odin module is OdinBall.
 	 */
-	private final static String defaultModule = "OdinBall";	
+	private final static String DEFAULT_MODULE = "OdinBall";	
 	
 	/**
 	 * The amount of connectors on default module.
 	 */
-	private final static int amountConnectors = 12;
+	private final static int AMOUNT_MODULES = 12;
 	
 	/**
 	 * Other Odin modules
 	 */
-	private final static String odinMuscle = "OdinMuscle",odinHinge = "OdinHinge",odinBattery = "OdinBattery",
-	                            odinSpring = "OdinSpring",odinWheel = "OdinWheel";
+	private final static String ODIN_MUSCLE = "OdinMuscle",ODIN_HINGE = "OdinHinge",ODIN_BATTERY = "OdinBattery",
+	                            ODIN_SPRING = "OdinSpring",ODIN_WHEEL = "OdinWheel";
 	/**
 	 * Adds default (the first) OdinBall construction module at specified position.
 	 * This method is so-called "Primitive operation" for  TEMPLATE method, called "addDefaultConstructionModule(String type, VectorDescription modulePosition)".	 
@@ -49,11 +49,11 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 	@Override
 	public void addDefaultModule(String type, VectorDescription modulePosition,	RotationDescription moduleRotation, List<Color> colorsComponents, ArrayList<Color> colorsConectors) {
 		colorsComponents.add(Color.RED);			
-		for (int connector=0;connector<amountConnectors;connector++){
+		for (int connector=0;connector<AMOUNT_MODULES;connector++){
 			colorsConectors.add(Color.WHITE);
 		}
-		moduleRotation = OdinConstructionTemplate.rotation00;
-		addNewModule(new ModulePosition(defaultModule+ BuilderHelper.getRandomInt(),defaultModule,modulePosition,moduleRotation),colorsComponents,colorsConectors);
+		moduleRotation = OdinConstructionTemplate.ROTATION000;
+		addNewModule(new ModulePosition(DEFAULT_MODULE+ BuilderHelper.getRandomInt(),DEFAULT_MODULE,modulePosition,moduleRotation),colorsComponents,colorsConectors);
 	}	
 	
 	/**
@@ -67,10 +67,10 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 	public Module createNewModule(Module selectedModule) {		
 		String selectedModuleType = selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
 		Module odinModule = null;
-		if (selectedModuleType.equalsIgnoreCase(defaultModule)){
-			odinModule = createNewOdinModule(odinMuscle);							
-		}else if (selectedModuleType.equalsIgnoreCase(odinMuscle)){
-			odinModule = createNewOdinModule(defaultModule); 			
+		if (selectedModuleType.equalsIgnoreCase(DEFAULT_MODULE)){
+			odinModule = createNewOdinModule(ODIN_MUSCLE);							
+		}else if (selectedModuleType.equalsIgnoreCase(ODIN_MUSCLE)){
+			odinModule = createNewOdinModule(DEFAULT_MODULE); 			
 		}else throw new Error("Something is wrong with the type of the module");		
 		return odinModule;
 	}
@@ -86,16 +86,16 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 		ArrayList<Color> colorsConectors = new ArrayList<Color>();
 		VectorDescription modulePosition = new VectorDescription(0,0,0);
 		RotationDescription moduleRotation = new RotationDescription(0,0,0);		
-		if (type.equalsIgnoreCase(odinMuscle)){			
+		if (type.equalsIgnoreCase(ODIN_MUSCLE)){			
 			colorsComponents.add(Color.RED); colorsComponents.add(Color.BLUE);
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);			
-			odinModule  = addNewModule(new ModulePosition(odinMuscle+ BuilderHelper.getRandomInt(),odinMuscle,modulePosition,moduleRotation),colorsComponents,colorsConectors);
-		}else if(type.equalsIgnoreCase(defaultModule)){		
+			odinModule  = addNewModule(new ModulePosition(ODIN_MUSCLE+ BuilderHelper.getRandomInt(),ODIN_MUSCLE,modulePosition,moduleRotation),colorsComponents,colorsConectors);
+		}else if(type.equalsIgnoreCase(DEFAULT_MODULE)){		
 			colorsComponents.add(Color.RED);			
-			for (int connector=0;connector<amountConnectors;connector++){
+			for (int connector=0;connector<AMOUNT_MODULES;connector++){
 				colorsConectors.add(Color.WHITE);
 			}			
-			odinModule = addNewModule(new ModulePosition(defaultModule+BuilderHelper.getRandomInt(),defaultModule,modulePosition,moduleRotation),colorsComponents,colorsConectors);
+			odinModule = addNewModule(new ModulePosition(DEFAULT_MODULE+BuilderHelper.getRandomInt(),DEFAULT_MODULE,modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		}else throw new Error("Something is wrong with the type of the module.This method supports creation of OdinMuscle and OdinBall only.");
 		return odinModule;
 	}
@@ -116,32 +116,32 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 		List<Color> colorsComponents = new LinkedList<Color>();
 		ArrayList<Color> colorsConectors = new ArrayList<Color>();
 		BuilderHelper.deleteModule(selectedModule);
-		if (selectedModuleType.equalsIgnoreCase(odinMuscle)){						
+		if (selectedModuleType.equalsIgnoreCase(ODIN_MUSCLE)){						
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.RED); colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
-			addNewModule(new ModulePosition(odinHinge+BuilderHelper.getRandomInt(),odinHinge,modulePosition,moduleRotation),colorsComponents,colorsConectors);			
-		}else if (selectedModuleType.equalsIgnoreCase(odinHinge)){			
+			addNewModule(new ModulePosition(ODIN_HINGE+BuilderHelper.getRandomInt(),ODIN_HINGE,modulePosition,moduleRotation),colorsComponents,colorsConectors);			
+		}else if (selectedModuleType.equalsIgnoreCase(ODIN_HINGE)){			
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
-			addNewModule(new ModulePosition(odinBattery+BuilderHelper.getRandomInt(),odinBattery,modulePosition,moduleRotation),colorsComponents,colorsConectors);
-		}else if (selectedModuleType.equalsIgnoreCase(odinBattery)){					
+			addNewModule(new ModulePosition(ODIN_BATTERY+BuilderHelper.getRandomInt(),ODIN_BATTERY,modulePosition,moduleRotation),colorsComponents,colorsConectors);
+		}else if (selectedModuleType.equalsIgnoreCase(ODIN_BATTERY)){					
 			colorsComponents.add(Color.BLACK); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
-			addNewModule(new ModulePosition(odinSpring+BuilderHelper.getRandomInt(),odinSpring,modulePosition,moduleRotation),colorsComponents,colorsConectors);			
+			addNewModule(new ModulePosition(ODIN_SPRING+BuilderHelper.getRandomInt(),ODIN_SPRING,modulePosition,moduleRotation),colorsComponents,colorsConectors);			
 		}
 //FIXME	 (SOFAR IS NOT NEEDED) PROBLEM java.lang.Error: Illegal module type: OdinTubeRobotType:OdinTube
 		/*else if (selectedModuleType.equalsIgnoreCase("OdinSpring")){						
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModuleOneMore(new ModulePosition("newTube","OdinTube",modulePosition,moduleRotation),colorsComponents,colorsConectors);
-		}*/else if (selectedModuleType.equalsIgnoreCase(odinSpring)){			
+		}*/else if (selectedModuleType.equalsIgnoreCase(ODIN_SPRING)){			
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.BLUE);colorsComponents.add(Color.WHITE); 	colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
-			addNewModule(new ModulePosition(odinWheel+BuilderHelper.getRandomInt(),odinWheel,modulePosition,moduleRotation),colorsComponents,colorsConectors);
-		}else if (selectedModuleType.equalsIgnoreCase(odinWheel)){					
+			addNewModule(new ModulePosition(ODIN_WHEEL+BuilderHelper.getRandomInt(),ODIN_WHEEL,modulePosition,moduleRotation),colorsComponents,colorsConectors);
+		}else if (selectedModuleType.equalsIgnoreCase(ODIN_WHEEL)){					
 			colorsComponents.add(Color.RED); colorsComponents.add(Color.BLUE);colorsComponents.add(Color.RED); 	colorsComponents.add(Color.BLUE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
-			addNewModule(new ModulePosition(odinMuscle + BuilderHelper.getRandomInt(),odinMuscle,modulePosition,moduleRotation),colorsComponents,colorsConectors);
+			addNewModule(new ModulePosition(ODIN_MUSCLE + BuilderHelper.getRandomInt(),ODIN_MUSCLE,modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		}		
 	}	
 }
