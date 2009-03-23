@@ -2,8 +2,14 @@ package ussr.builder;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
+
+import ussr.builder.assigmentLabels.LabelingToolSpecification;
+import ussr.builder.assigmentLabels.LabelingTools;
 import ussr.builder.construction.ATRONOperationsTemplate;
 import ussr.builder.construction.CommonOperationsTemplate;
 import ussr.builder.construction.ConstructionToolSpecification;
@@ -13,7 +19,8 @@ import ussr.builder.construction.OdinOperationsTemplate;
 import ussr.builder.construction.SelectOperationsTemplate;
 import ussr.builder.genericSelectionTools.AssignRemoveLabels;
 import ussr.builder.genericSelectionTools.ColorConnectors;
-import ussr.builder.genericSelectionTools.New;
+import ussr.builder.genericSelectionTools.MtranExperiment;
+import ussr.builder.genericSelectionTools.NewSelection;
 import ussr.builder.genericSelectionTools.ReadLabels;
 import ussr.builder.genericSelectionTools.RemoveModule;
 import ussr.builder.genericSelectionTools.RotateModuleComponents;
@@ -123,7 +130,7 @@ import ussr.samples.odin.modules.Odin;
  *@author  Konstantinas
  */
 
-public class QuickPrototyping extends javax.swing.JFrame {
+public class QuickPrototyping extends javax.swing.JFrame  {
 
 	/**
 	 * The physical simulation
@@ -199,6 +206,7 @@ public class QuickPrototyping extends javax.swing.JFrame {
 
 	private boolean allCheckBoxSelected;
 
+/*Note*/	private static boolean instanceFlag = false;
 
 
 	/**
@@ -227,7 +235,16 @@ public class QuickPrototyping extends javax.swing.JFrame {
 		guiUtil.changeToSetLookAndFeel(this);         
 		this.JME_simulation = (JMESimulation) simulation;  
 		adaptGuiToModularRobot();// Adapt GUI to modular robot existing in simulation environment
-		JME_simulation.setPicker(new PhysicsPicker(true, true));//set default picker		
+		JME_simulation.setPicker(new PhysicsPicker(true, true));//set default picker
+/*NOTE*/		instanceFlag = true;// the frame is instantiate
+		addWindowListener (new WindowAdapter() {
+	          public void windowClosing(WindowEvent e) {
+	        	  instanceFlag = false; // reset the flag after closing the frame
+	        	  e.getWindow().dispose();	                     
+	             }
+	          }
+	      );
+
 	}
 
 	/** This method is called from within the constructor to
@@ -301,7 +318,7 @@ public class QuickPrototyping extends javax.swing.JFrame {
 
 		getContentPane().setLayout(new java.awt.FlowLayout());
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);	
 		setTitle("Quick Prototyping of Simulation Scenarios");
 		simulationToolBar.setRollover(true);
 		simulationToolBar.setPreferredSize(new java.awt.Dimension(420, 40));
@@ -922,15 +939,20 @@ public class QuickPrototyping extends javax.swing.JFrame {
 
 	}                                                           
 
-	int counter =-1;
+	private int counter =-1;
+	public void setCounter(int counter) {
+		this.counter = counter;
+	}
+
 	private void testjButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		this.counter++;
 		System.out.println("Continue to simulation button");//for debugging
 		//JME_simulation.setPicker(new PhysicsPicker());
 		// JME_simulation.setPause(false);
+/*NOTE*/		//instanceFlag = false; 
 		//this.dispose();		
-/*NOTE*/// BuilderHelper.connectAllModules(JME_simulation);
-		 JME_simulation.setPicker(new New(JME_simulation, this.counter));
+/*NOTE*/ BuilderHelper.connectAllModules(JME_simulation);
+		 //JME_simulation.setPicker(new MtranExperiment(JME_simulation,this, this.counter));
 		
 	}                                           
 
@@ -943,18 +965,23 @@ public class QuickPrototyping extends javax.swing.JFrame {
 
 	private void readLabelsjButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
 		System.out.println("Module labels toolbar-->Read");//for debugging     
-		JME_simulation.setPicker(new ReadLabels(this));    
+		//JME_simulation.setPicker(new ReadLabels(this));
+/*NOTE*/		//JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Module",LabelingTools.READ_LABELS, this));
+		/*NOTE*/		JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Connector",LabelingTools.READ_LABELS, this));
 	}                                                 
 
 	private void removeLabeljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   
 		System.out.println("Label toolbar-->Remove");//for debugging
-		JME_simulation.setPicker(new AssignRemoveLabels(currentLabeljTextField.getText(),true));
-	}                                                  
+		//JME_simulation.setPicker(new AssignRemoveLabels(currentLabeljTextField.getText(),true));
+/*NOTE*/	//JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Module",currentLabeljTextField.getText(),LabelingTools.DELETE_LABEL));
+		/*NOTE*/				 JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Connector",currentLabeljTextField.getText(),LabelingTools.DELETE_LABEL));                 
+	}                                
 
 	private void assignLabeljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   
 		System.out.println("Label toolbar-->Assign");//for debugging
-		JME_simulation.setPicker(new AssignRemoveLabels(currentLabeljTextField.getText(),false));
-
+		//JME_simulation.setPicker(new AssignRemoveLabels(currentLabeljTextField.getText(),false));
+		/*NOTE*/ //JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Module",currentLabeljTextField.getText(),LabelingTools.LABEL_MODULE));
+		/*NOTE*/		JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Connector",currentLabeljTextField.getText(),LabelingTools.LABEL_CONNECTOR));
 	}                                                  
 /*NOTE*/	ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.LOOP,0);
 	/**
@@ -1101,8 +1128,7 @@ public class QuickPrototyping extends javax.swing.JFrame {
 			com.addDefaultConstructionModule(this.chosenMRname, atronDefaultPosition);
 		}else if (this.chosenMRname.equalsIgnoreCase("MTRAN")&& moduleExists(mtranDefaultPosition)==false){
 			com1.addDefaultConstructionModule(this.chosenMRname,mtranDefaultPosition );
-			
-/*NOTE*/			//com1.addDefaultConstructionModule(this.chosenMRname,new VectorDescription(mtranDefaultPosition.getX()+0.2f,mtranDefaultPosition.getY(), mtranDefaultPosition.getZ()) );
+/*Note*/	//com1.addDefaultConstructionModule(this.chosenMRname,new VectorDescription(mtranDefaultPosition.getX()+0.2f,mtranDefaultPosition.getY(), mtranDefaultPosition.getZ()) );
 			
 		}else if (this.chosenMRname.equalsIgnoreCase("Odin")&& moduleExists(odinDefaultPosition)==false){
 /*NOTE*/			Odin.setDefaultConnectorSize(0.006f);
@@ -1215,8 +1241,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
 	 */	
 	private void movejButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
 		//System.out.println("Module generic toolbar-->Move"); //for debugging  
-		JME_simulation.setPicker(new PhysicsPicker(true, true));
-/*NOTE*/		//JME_simulation.setPicker(new PhysicsPicker(true, false));
+		//JME_simulation.setPicker(new PhysicsPicker(true, true));
+/*NOTE*/		JME_simulation.setPicker(new PhysicsPicker(true, false));
 		guiUtil.passTo(AssistantjTextField, "Pick and move module");// informing user   
 
 	}                                           
@@ -1392,7 +1418,8 @@ public class QuickPrototyping extends javax.swing.JFrame {
 	 * @param evt, selection with left side of the mouse event (Menu item selection).     
 	 */	    
 	private void ExitjMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                              
-		//System.out.println("File-->Exit");//for debugging 
+		//System.out.println("File-->Exit");//for debugging
+		instanceFlag = false; // reset the flag
 		this.dispose();    
 	}                                             
 
@@ -1446,6 +1473,10 @@ public class QuickPrototyping extends javax.swing.JFrame {
 				quickPrototyping.setSize(windowWidth,windowHeight);
 			}
 		});
+	}
+	
+	public static boolean isInstanceFlag() {
+		return instanceFlag;
 	}
 
 	public javax.swing.JComboBox getModuleLabelsjComboBox() {
@@ -1519,5 +1550,7 @@ public class QuickPrototyping extends javax.swing.JFrame {
 	private javax.swing.JMenu viewjMenu;
 	private javax.swing.JCheckBox wireFramejCheckBox;
 	// End of variables declaration                   
+
+	
 
 }

@@ -63,8 +63,7 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * @param simulation, the physical simulation.
 	 */
 	public ATRONConstructionTemplate(JMESimulation simulation) {
-		super(simulation);
-		
+		super(simulation);		
 	}
 
 	/**
@@ -191,7 +190,7 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 	public void rotateComponentOpposite(JMEModuleComponent currentModuleComponent,Quaternion  rotationQComponent){
 		/*Locate matching rotation Quaternion in moduleRotationMap (initial) and rotate with opposite rotation Quaternion
 		 * from the same entry in  moduleRotationMap*/
-		for (int entry=0;entry<MODULE_ROTATION_MAP.length;entry++){
+		for (int entry=0;entry<MODULE_ROTATION_MAP.length;entry++){		
 			if (rotationQComponent.equals(MODULE_ROTATION_MAP[entry].getRotation().getRotation())){
 				rotateModuleComponent(currentModuleComponent,MODULE_ROTATION_MAP[entry].getRotationOppositeValue().getRotation());
 			}

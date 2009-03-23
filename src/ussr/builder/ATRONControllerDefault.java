@@ -34,7 +34,7 @@ public class ATRONControllerDefault extends ATRONController  {
                 /*Rotate around to the left*/
                 //rotateAround(labels,dir,  true);                
                 /*Rotate around to the right*/
-               // rotateAround(labels,dir,  false);          
+                //rotateAround(labels,dir,  false);          
             //driveForward (labels, dir); //for snake turns it in circules to the left
            //driveBack (labels, dir); // //for snake turns it in circules to the right        
                 

@@ -6,15 +6,23 @@ import java.util.List;
 import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
-import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.atron.ATRON;
-import ussr.samples.atron.ATRONBuilder;
 
+/**
+ * Supports construction of ATRON modular robot morphology in more abstract module oriented way.
+ * In general the main responsibility of this class is to create ATRON modules and add default ATRON
+ * construction module. 
+ * @author Konstantinas
+ */
 public class ATRONOperationsTemplate extends CommonOperationsTemplate{
 
+	/**
+	 * Supports construction of ATRON modular robot morphology in more abstract module oriented way.
+	 * @param simulation, the physical simulation.
+	 */
 	public ATRONOperationsTemplate(JMESimulation simulation) {
 		super(simulation);		
 	}
@@ -59,6 +67,17 @@ public class ATRONOperationsTemplate extends CommonOperationsTemplate{
 	 */
 	@Override
 	public void variateSpecificModule(Module selectedModule) {		
-		getConstruction().variateModuleProperties(selectedModule);		
-	}	
+		construction.variateModuleProperties(selectedModule);		
+	}
+
+	/**
+	 * Returns the lower level construction object for ATRON modular robot morphology.
+	 * The construction is on the level of components.
+	 */
+	@Override
+	public  ConstructionTemplate getConstruction() {
+		 return construction = new ATRONConstructionTemplate(simulation);		
+	}
+	
+	
 }

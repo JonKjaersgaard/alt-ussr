@@ -80,7 +80,8 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		this.simulation = simulation;
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
-		assignConstructionTemplate();
+		this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
+		this.construction = selectOperations.getConstruction();		
 	}
 
 	/**
@@ -95,7 +96,8 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
 		this.selectedConnectorNr = chosenConnectorNr;
-		assignConstructionTemplate();
+		this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
+		this.construction = selectOperations.getConstruction();	
 	}
 
 	/**
@@ -110,7 +112,8 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
 		this.standardRotationName = standardRotationName;
-		assignConstructionTemplate();
+		this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
+		this.construction = selectOperations.getConstruction();	
 	}	
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
 	 * Here is identified the module selected in simulation environment, moreover checked if pickTarget()method
@@ -140,23 +143,6 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		}		
 	}
 	
-	/**
-	 * Assigns specific object for construction of modular robot morphology and object for common 
-	 * methods(operations), depending on which type of modular robot is passed in constructor. 
-	 */
-	private void assignConstructionTemplate(){
-		if 	(this.modularRobotName.equalsIgnoreCase(ATRON)){
-			this.construction = new ATRONConstructionTemplate(this.simulation);
-			this.selectOperations = new ATRONOperationsTemplate(this.simulation);
-		}else if (this.modularRobotName.equalsIgnoreCase(MTRAN)){
-			this.construction = new MTRANConstructionTemplate(this.simulation);
-			this.selectOperations = new MTRANOperationsTemplate(this.simulation);
-		}else if (this.modularRobotName.equalsIgnoreCase(ODIN)){
-			this.construction = new OdinConstructionTemplate(this.simulation);
-			this.selectOperations = new OdinOperationsTemplate(this.simulation);
-		}else throw new Error("This modular robot is not supported yet or the name of it is misspelled");		
-	}
-
 	/**
 	 * Checks if construction tool type is matching the module type selected in simulation environment. If
 	 * yes calls appropriate tool. If no, For example: if the tool is for ATRON modular robot (modularRobotName) 

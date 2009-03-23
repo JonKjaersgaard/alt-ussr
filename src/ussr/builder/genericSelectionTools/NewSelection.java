@@ -16,7 +16,7 @@ import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
 import ussr.samples.atron.ATRON;
 
-public class New extends CustomizedPicker {
+public class NewSelection extends CustomizedPicker {
 
     private JMESimulation simulation;
 	private Module selectedModule;
@@ -28,7 +28,7 @@ public class New extends CustomizedPicker {
 	 */
 	private static final float pi = (float)Math.PI;
 	private int counter;
-	public New (JMESimulation simulation, int counter){
+	public NewSelection (JMESimulation simulation, int counter){
 		this.simulation = simulation;
 		this.counter = counter;
 		

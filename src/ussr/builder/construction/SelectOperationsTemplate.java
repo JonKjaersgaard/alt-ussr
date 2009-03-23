@@ -19,12 +19,18 @@ import ussr.model.Module;
 public interface SelectOperationsTemplate {
 	
 	/**
+	 * Returns the lower level construction object for modular robot morphology.
+	 * The construction is on the level of components.
+	 */
+	public abstract ConstructionTemplate getConstruction();
+	
+	/**
 	 * Adds default (the first) construction module at specified position.
 	 * This method is TEMPLATE method.
 	 * @param type, the type of modular robot. For example: ATRON,MTRAN or OdinBall.
 	 * @param modulePosition, the position of module in simulation environment.
 	 */
-	public void addDefaultConstructionModule(String type, VectorDescription modulePosition);	
+	public abstract void addDefaultConstructionModule(String type, VectorDescription modulePosition);	
 	
 	/**
 	 * Adds default (the first) construction module at specified position.
@@ -44,7 +50,7 @@ public interface SelectOperationsTemplate {
 	 * @param toolSpecification,object containing information about modular robot, selected or chosen connector
 	 * number,selected module, simulation and so on.  
 	 */
-	public void addNewModuleOnConnector(ConstructionToolSpecification toolSpecification);
+	public abstract void addNewModuleOnConnector(ConstructionToolSpecification toolSpecification);
 	
 	/**
 	 * Creates and returns new module, depending on which is needed: the copy module or different one. 	 
@@ -59,7 +65,7 @@ public interface SelectOperationsTemplate {
 	 * @param toolSpecification,object containing information about modular robot, selected module, simulation
 	 * and so on.
 	 */
-	public void addModulesOnAllConnectors(ConstructionToolSpecification toolSpecification);
+	public abstract void addModulesOnAllConnectors(ConstructionToolSpecification toolSpecification);
 		
 	/**
 	 * Rotates the module selected in simulation environment with opposite rotation.
@@ -67,7 +73,7 @@ public interface SelectOperationsTemplate {
 	 * @param toolSpecification, object containing information about modular robot, selected module, simulation
 	 * and so on.
 	 */
-	public void rotateModuleWithOppositeRotation(ConstructionToolSpecification toolSpecification);
+	public abstract void rotateModuleWithOppositeRotation(ConstructionToolSpecification toolSpecification);
 	
 	/**
 	 * Rotates the module selected in simulation environment with standard rotation passed as a String
@@ -75,7 +81,7 @@ public interface SelectOperationsTemplate {
 	 * @param toolSpecification, object containing information about modular robot, selected module, simulation
 	 * and so on.
 	 */
-	public void rotateModuleStandardRotation(ConstructionToolSpecification toolSpecification, String standardRotationName);
+	public abstract void rotateModuleStandardRotation(ConstructionToolSpecification toolSpecification, String standardRotationName);
 	
 	/**
 	 * Additional method for implementing unique properties of modular robots. Like for example
@@ -86,7 +92,7 @@ public interface SelectOperationsTemplate {
 	 * @param toolSpecification,object containing information about modular robot, selected module, simulation
 	 * and so on.
 	 */
-	public void variateModule(ConstructionToolSpecification toolSpecification);
+	public abstract void variateModule(ConstructionToolSpecification toolSpecification);
 	
 	/**
 	 * Additional method for implementing unique properties of modular robots. Like for example
@@ -103,6 +109,6 @@ public interface SelectOperationsTemplate {
 	 * @param toolSpecification
 	 */
 //TODO
-	public void moveModuleOnNextConnector(ConstructionToolSpecification toolSpecification);
+	public abstract void moveModuleOnNextConnector(ConstructionToolSpecification toolSpecification);
 		
 }

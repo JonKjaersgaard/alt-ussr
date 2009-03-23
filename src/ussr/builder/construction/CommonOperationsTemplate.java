@@ -35,7 +35,7 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	/**
 	 * The interface to construction of modular robot morphology. This one is on the level of components of the module.  
 	 */
-	private ConstructionTemplate construction;
+	protected ConstructionTemplate construction;
 
 	/**
 	 * The module selected in simulation environment. 
@@ -46,15 +46,26 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	 *  Newly created movable module.
 	 */
 	private Module newMovableModule;
+	
+	/**
+	 * The zero component of the module.
+	 */
+	private final static int zeroComponent = 0;
 
 	/**
-	 * Construction of modular robot morphologies in more abstract module oriented way.
+	 * Construction of modular robot morphology in more abstract module oriented way.
 	 * @param simulation,the physical simulation
 	 */
 	public  CommonOperationsTemplate(JMESimulation simulation){
 		this.simulation = simulation;
 	}	
 
+	/**
+	 * Returns the lower level construction object for modular robot morphology.
+	 * The construction is on the level of components.
+	 */
+	public abstract ConstructionTemplate getConstruction();
+	
 	/**
 	 * Adds default (the first) construction module at specified position.
 	 * This method is TEMPLATE method.
@@ -125,8 +136,8 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	 * @return newModule,the module which is the copy of selected module
 	 */
 	public Module addNewCopyModule(Module selectedModule){		
-		VectorDescription position = selectedModule.getPhysics().get(0).getPosition();       
-		RotationDescription rotation = selectedModule.getPhysics().get(0).getRotation();
+		VectorDescription position = selectedModule.getPhysics().get(zeroComponent).getPosition();       
+		RotationDescription rotation = selectedModule.getPhysics().get(zeroComponent).getRotation();
 		List<Color> colorsComponents = selectedModule.getColorList();			
 		ArrayList<Color> colorsConnectors = getColorsConnectors(selectedModule);
 		String selectedModuleName = selectedModule.getProperty(BuilderHelper.getModuleNameKey());
@@ -231,26 +242,19 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	}
 
 	/**
-	 * Colours the connectors of the module, according to the colours in ArrayList. Precondition should be that the number of connectors equals to the number of colours in ArrayList.  
+	 * Colors the connectors of the module, according to the colors in ArrayList. Precondition should be that the number of connectors equals to the number of colours in ArrayList.  
 	 * @param newModule, the module in simulation environment.
-	 * @param colorsConnectors, the colours to assign to connectors. Each index in ArrayList is colour and at the same time equals to connector number 
+	 * @param colorsConnectors, the colors to assign to connectors. Each index in ArrayList is color and at the same time equals to connector number
+	 * @throws Error, if the number of connectors on module is not matching the number of colors in ArrayList. 
 	 */
 	private void setColorsConnectors(Module newModule, ArrayList<Color> colorsConnectors){
 		int nrConnectors = newModule.getConnectors().size();
 		if (nrConnectors!=colorsConnectors.size()){	
-			throw new Error("The number of connnectors on module is not matching the number of colors in ArrayList!");			
+			throw new Error("The number of connectors on module is not matching the number of colors in ArrayList!");			
 		}else{
 			for (int connector=0;connector<nrConnectors; connector++){
 				newModule.getConnectors().get(connector).setColor(colorsConnectors.get(connector));	        	
 			}
 		}
 	}
-
-	/**
-	 * Returns current construction object. 
-	 * @return construction, current construction object.
-	 */
-	public ConstructionTemplate getConstruction() {
-		return construction;
-	}	
 }

@@ -6,21 +6,26 @@ import java.util.List;
 import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
-import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.mtran.MTRANSimulation;
 
+/**
+ * Supports construction of ATRON modular robot morphology in more abstract module oriented way.
+ * In general the main responsibility of this class is to create MTRAN modules, add default MTRAN
+ * construction module and variate the properties of it. 
+ * @author Konstantinas
+ *
+ */
 public class MTRANOperationsTemplate extends CommonOperationsTemplate{
 	
 	/**
-	 * COMMENT
-	 * @param simulation
+	 * Supports construction of MTRAN modular robot morphology in more abstract module oriented way.
+	 * @param simulation, the physical simulation.
 	 */
 	public MTRANOperationsTemplate(JMESimulation simulation) {
-		super(simulation);
-		// TODO Auto-generated constructor stub
+		super(simulation);		
 	}
 
 	/**
@@ -62,7 +67,16 @@ public class MTRANOperationsTemplate extends CommonOperationsTemplate{
 	 */
 	@Override
 	public void variateSpecificModule(Module selectedModule) {
-		getConstruction().variateModuleProperties(selectedModule);		
+		construction.variateModuleProperties(selectedModule);		
+	}
+
+	/**
+	 * Returns the lower level construction object for MTRAN modular robot morphology.
+	 * The construction is on the level of components.
+	 */
+	@Override
+	public ConstructionTemplate getConstruction() {		
+		return construction = new MTRANConstructionTemplate(simulation);
 	}
 	
 }

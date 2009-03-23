@@ -42,8 +42,16 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 */
 	protected JMESimulation simulation;
 
+	/**
+	 *  The empty attributes for the tag, in case there is no need to have attributes.
+	 */
 	public final static AttributesImpl emptyAtt = new AttributesImpl();
+	
 
+	/**
+	 * COMMENT
+	 * @param simulation, the physical simulation.
+	 */
 	public SaveLoadXMLTemplate(JMESimulation simulation){
 		this.simulation = simulation;
 	}
@@ -70,7 +78,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	}
 
 	/**
-	 * Initialises SAX 2.0 content handler and assigns it to newly created XML file.
+	 * Initializes SAX 2.0 content handler and assigns it to newly created XML file.
 	 * @param fileDirectoryName,the name of directory, like for example: "C:/newXMLfile".
 	 * @return transformerHandler, the content handler used to print out XML format. 
 	 */

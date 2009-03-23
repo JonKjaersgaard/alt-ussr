@@ -7,23 +7,29 @@ import java.util.List;
 import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
-import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
-import ussr.samples.odin.OdinBuilder;
 
+/**
+ * Supports construction of Odin modular robot morphology in more abstract module oriented way.
+ * In general the main responsibility of this class is to create Odin modules, add default Odin
+ * construction module and variate the modules. 
+ * @author Konstantinas
+ *
+ */
 public class OdinOperationsTemplate extends CommonOperationsTemplate{
 
 	/**
-	 * @param simulation
+	 * Supports construction of Odin modular robot morphology in more abstract module oriented way.
+	 * @param simulation, the physical simulation.
 	 */
 	public OdinOperationsTemplate(JMESimulation simulation) {
 		super(simulation);		
 	}
 
 	/**
-	 * The default Odin module is OdinBall.
+	 * The default construction module is OdinBall.
 	 */
 	private final static String DEFAULT_MODULE = "OdinBall";	
 	
@@ -43,8 +49,8 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 	 * @param type, the type of modular robot. In this case it is OdinBall.
 	 * @param modulePosition, the position of the OdinBall module in simulation environment.
 	 * @param moduleRotation, the rotation of the OdinBall module.
-	 * @param colorsComponents, the colours of components constituting the OdinBall module.
-	 * @param colorsConectors, the colours of connectors on the OdinBall module.
+	 * @param colorsComponents, the colors of components constituting the OdinBall module.
+	 * @param colorsConectors, the colors of connectors on the OdinBall module.
 	 */
 	@Override
 	public void addDefaultModule(String type, VectorDescription modulePosition,	RotationDescription moduleRotation, List<Color> colorsComponents, ArrayList<Color> colorsConectors) {
@@ -79,6 +85,7 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 	 * Creates new Odin modules, according to the type passed as a String.
 	 * @param type, the type of Odin module.
 	 * @return odinModule, the specific Odin module, like for example "OdinMuscle" or "OdinBall".
+	 * @throws Error, if something is wrong with the type of the module.This method supports creation of OdinMuscle and OdinBall only.
 	 */
 	private Module createNewOdinModule(String type){		
 		Module odinModule = new Module();
@@ -143,5 +150,14 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition(ODIN_MUSCLE + BuilderHelper.getRandomInt(),ODIN_MUSCLE,modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		}		
+	}
+
+	/**
+	 * Returns the lower level construction object for Odin modular robot morphology.
+	 * The construction is on the level of components.
+	 */
+	@Override
+	public ConstructionTemplate getConstruction() {		
+		return construction = new OdinConstructionTemplate(simulation);
 	}	
 }
