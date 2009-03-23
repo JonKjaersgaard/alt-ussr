@@ -297,7 +297,9 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			DebugShell.activate(this);
 		}
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_quick_prototyping_of_simulation_scenarios", false)) {
-			QuickPrototyping.activate(this);
+			if (QuickPrototyping.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
+			}else{QuickPrototyping.activate(this);}
+			
 		}	
 	}
 	protected void cameraPerspective() {
