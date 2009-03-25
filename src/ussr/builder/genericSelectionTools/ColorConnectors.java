@@ -35,7 +35,7 @@ public class ColorConnectors extends CustomizedPicker {
 	protected void pickModuleComponent(JMEModuleComponent component) {
 		/*Get selected module and for each connector assign colour*/
 		Module selectedModule = component.getModel();
-		int nrConnectors = selectedModule.getConnectors().size();         
+		int nrConnectors = selectedModule.getConnectors().size();		
 		for (int connector=0; connector<nrConnectors;connector++){			
 			selectedModule.getConnectors().get(connector).setColor(colors[connector]);			
 		}            

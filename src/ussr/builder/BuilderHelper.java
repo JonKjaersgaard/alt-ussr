@@ -16,6 +16,8 @@ import ussr.samples.mtran.MTRANSimulation;
 import ussr.samples.odin.OdinBuilder;
 
 import com.jme.math.Matrix3f;
+import com.jme.scene.Spatial;
+import com.jme.scene.TriMesh;
 import com.jmex.physics.DynamicPhysicsNode;
 
 /**
@@ -97,7 +99,17 @@ public class BuilderHelper {
 	/**
 	 * The generator used to generate random integer. 
 	 */
-	private static final Random generator = new Random();	
+	private static final Random generator = new Random();
+	
+	/**
+	 * The identifier, used to locate the string.
+	 */
+	private static final String CONNECTOR ="Connector";
+	
+	/**
+	 * Symbol used to extract the connector number from the string.  
+	 */
+	private static final String SPLIT_SYMBOL = "#";
 
 	/**
 	 * Returns the module type key.
@@ -192,7 +204,19 @@ public class BuilderHelper {
 			rotationMatrix = new Matrix3f(cos,-sin,0,sin,cos,0,0,0,1);					
 		}	
 		return rotationMatrix.mult(matrix) ;
-	}	
+	}
+	
+	/*public static int extractConnectorNr(JMESimulation simulation, Spatial target){
+		if(target instanceof TriMesh) {			
+			String name = simulation.getGeometryName((TriMesh)target);
+			if(name!=null && name.contains(CONNECTOR)){							
+				String [] temp = null;	         
+				temp = name.split(SPLIT_SYMBOL);// Split by #, into two parts, line describing the connector. For example "Connector 1 #1"
+				return Integer.parseInt(temp[1].toString());// Take only the connector number, in above example "1" (at the end)					
+			}
+		}
+		return 0;
+	}*/
 	
 //FIXME FIND BETTER PLACE FOR ME
 	public static void connectAllModules(JMESimulation simulation){

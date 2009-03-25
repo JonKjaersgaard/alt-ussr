@@ -10,8 +10,11 @@ import ussr.physics.jme.pickers.CustomizedPicker;
 import ussr.builder.BuilderHelper;
 
 /**
+ * The main responsibility of this class is to specify the tool for construction of
+ * modular robot's morphology. In order to do that, some parameters should be passed in 
+ * constructor others are extracted from simulation environment (when user selects the
+ * modules or connectors on the modules).
  * @author Konstantinas
- *
  */
 public class ConstructionToolSpecification extends CustomizedPicker{
 
@@ -21,7 +24,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	private JMESimulation simulation;
 	
 	/**
-	 * The interface to construction of modular robot morphology. This one is on the level of modules of modular robot.  
+	 * The interface to construction of modular robot morphology. This one is on the level of modules of modular robot(creation and movement of them).  
 	 */
 	private SelectOperationsTemplate selectOperations;
 
@@ -114,7 +117,8 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		this.standardRotationName = standardRotationName;
 		this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
 		this.construction = selectOperations.getConstruction();	
-	}	
+	}
+	
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
 	 * Here is identified the module selected in simulation environment, moreover checked if pickTarget()method
 	 * resulted in success and the call for appropriate tool is made. 

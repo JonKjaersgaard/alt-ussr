@@ -966,22 +966,22 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	private void readLabelsjButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
 		System.out.println("Module labels toolbar-->Read");//for debugging     
 		//JME_simulation.setPicker(new ReadLabels(this));
-/*NOTE*/		//JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Module",LabelingTools.READ_LABELS, this));
-		/*NOTE*/		JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Connector",LabelingTools.READ_LABELS, this));
+/*NOTE*/		JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Module",LabelingTools.READ_LABELS, this));
+		/*NOTE*/	//	JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Connector",LabelingTools.READ_LABELS, this));
 	}                                                 
 
 	private void removeLabeljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   
 		System.out.println("Label toolbar-->Remove");//for debugging
 		//JME_simulation.setPicker(new AssignRemoveLabels(currentLabeljTextField.getText(),true));
-/*NOTE*/	//JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Module",currentLabeljTextField.getText(),LabelingTools.DELETE_LABEL));
-		/*NOTE*/				 JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Connector",currentLabeljTextField.getText(),LabelingTools.DELETE_LABEL));                 
+/*NOTE*/	JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Module",currentLabeljTextField.getText(),LabelingTools.DELETE_LABEL));
+		/*NOTE*/		//		 JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Connector",currentLabeljTextField.getText(),LabelingTools.DELETE_LABEL));                 
 	}                                
 
 	private void assignLabeljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   
 		System.out.println("Label toolbar-->Assign");//for debugging
 		//JME_simulation.setPicker(new AssignRemoveLabels(currentLabeljTextField.getText(),false));
-		/*NOTE*/ //JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Module",currentLabeljTextField.getText(),LabelingTools.LABEL_MODULE));
-		/*NOTE*/		JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Connector",currentLabeljTextField.getText(),LabelingTools.LABEL_CONNECTOR));
+		/*NOTE*/ JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Module",currentLabeljTextField.getText(),LabelingTools.LABEL_MODULE));
+		/*NOTE*/	//	JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Connector",currentLabeljTextField.getText(),LabelingTools.LABEL_CONNECTOR));
 	}                                                  
 /*NOTE*/	ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.LOOP,0);
 	/**

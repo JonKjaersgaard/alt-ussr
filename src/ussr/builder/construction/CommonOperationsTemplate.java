@@ -53,7 +53,7 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	private final static int zeroComponent = 0;
 
 	/**
-	 * Construction of modular robot morphology in more abstract module oriented way.
+	 *  Supports construction of modular robot morphology in more abstract module oriented way.
 	 * @param simulation,the physical simulation
 	 */
 	public  CommonOperationsTemplate(JMESimulation simulation){
