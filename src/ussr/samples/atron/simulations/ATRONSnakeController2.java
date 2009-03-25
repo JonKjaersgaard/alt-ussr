@@ -29,6 +29,7 @@ public class ATRONSnakeController2 extends ATRONController {
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
+    	setup();
         while(true) {
             snakeSelfReconfigure();
         	yield();

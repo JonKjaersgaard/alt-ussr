@@ -30,6 +30,7 @@ public class ATRONTestController1 extends ATRONController {
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
+    	setup();
         while(true) {
         	if(!module.getSimulation().isPaused()) {
         		yield();

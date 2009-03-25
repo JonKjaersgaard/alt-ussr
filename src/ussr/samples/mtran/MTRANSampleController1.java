@@ -35,17 +35,17 @@ public class MTRANSampleController1 extends MTRANController {
     		double goal0 = 0.5f*Math.sin(3*module.getSimulation().getTime()+module.getID()+0.5f);
     		double cur0 =  2*(getEncoderPosition(0)-0.5);
     		if(cur0>goal0) {
-    			rotate(-1, 0);
+    			rotateContinuous(-1, 0);
     		}else {
-    			rotate(1, 0);
+    			rotateContinuous(1, 0);
     		}
     		
     		double goal1 = -0.5f*Math.sin(3*module.getSimulation().getTime()+module.getID());
     		double cur1 =  2*(getEncoderPosition(1)-0.5);
     		if(cur1>goal1) {
-    			rotate(-1, 1);
+    			rotateContinuous(-1, 1);
     		}else {
-    			rotate(1, 1);
+    			rotateContinuous(1, 1);
     		}
     		yield();
     	}

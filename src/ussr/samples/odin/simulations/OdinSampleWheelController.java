@@ -50,16 +50,17 @@ public class OdinSampleWheelController extends OdinController {
     			module.getSimulation().waitForPhysicsStep(false);
     		}
     		while(getTime()<15) {
-    			actuate(1f);
+    			actuateContinuous(1f);
     			module.getSimulation().waitForPhysicsStep(false);
     		}
     		while(getTime()<30) {
     			float x = (float)(Math.sin(getTime()));
-    			actuate((x>0)?1:-1);
+    			
+    			actuateContinuous((x>0)?1:-1);
     			module.getSimulation().waitForPhysicsStep(false);
     		}
     		while(getTime()<45) {
-    			actuate(-1f);
+    			actuateContinuous(-1f);
     			module.getSimulation().waitForPhysicsStep(false);
     		}
     		while(true) {

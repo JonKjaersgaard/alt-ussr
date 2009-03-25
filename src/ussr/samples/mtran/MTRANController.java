@@ -39,14 +39,14 @@ public abstract class MTRANController extends ControllerImpl implements PacketRe
     	this.blocking = blocking;
     }
 
-    public void rotate(int dir, int actuator) {
+    public void rotateContinuous(int vel, int actuator) {
     	if(actuator!=0&&actuator!=1) throw new RuntimeException("Only two actuators in an MTRAN");
-    	 module.getActuators().get(actuator).activate(dir);
+    	 module.getActuators().get(actuator).setDesiredVelocity(vel);
 	}
     
     public void rotateTo(float goal, int actuator) {
         do {
-            module.getActuators().get(actuator).activate(goal);
+            module.getActuators().get(actuator).setDesiredPosition(goal);
             yield();
         } while(isRotating(actuator)&&blocking);
 	}
@@ -101,9 +101,7 @@ public abstract class MTRANController extends ControllerImpl implements PacketRe
     public boolean isConnected(int i) {
     	return module.getConnectors().get(i).isConnected();
     }
-    public void rotateContinuous(float dir) {
-    	module.getActuators().get(0).activate(dir);
-    }
+    
     public void centerBrake(int actuator) {
     	module.getActuators().get(actuator).disactivate();
     }

@@ -49,8 +49,17 @@ public class Actuator extends Entity {
      * 
      * @return whether the actuator were activated
      */
-    public boolean activate(float goalValue) {
-        return physics.activate(goalValue);
+    public boolean setDesiredPosition(float goalValue) {
+        return physics.setDesiredPosition(goalValue);
+    }
+    
+    /**
+     * Activate this actuator - to go for a particular velocity value
+     * 
+     * @return whether the actuator were activated
+     */
+    public boolean setDesiredVelocity(float goalValue) {
+        return physics.setDesiredVelocity(goalValue);
     }
     
     /**

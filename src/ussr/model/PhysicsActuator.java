@@ -34,8 +34,14 @@ public interface PhysicsActuator extends PhysicsEntity {
      * 
      * @return whether the actuator were activated
      */
-	boolean activate(float goalValue);
-
+	boolean setDesiredPosition(float goalValue);
+	
+	/**
+     * Activate this actuator - to go for a particular velocity value
+     * 
+     * @return whether the actuator were activated
+     */
+	boolean setDesiredVelocity(float velValue);
 	/**
      * Set the threshold for the precision of the actuator
      * Note that too low a threshold will case the actuator newer to converge 

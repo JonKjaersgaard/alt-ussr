@@ -10,6 +10,7 @@ import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Actuator;
 import ussr.model.PhysicsActuator;
+import ussr.physics.PhysicsLogger;
 import ussr.physics.jme.JMESimulation;
 
 import com.jme.math.Vector3f;
@@ -35,6 +36,7 @@ public class JMELinearActuator implements JMEActuator {
     private String name;
 	private float maxVelocity = 0.01f;
 	private float maxError = 0.001f;
+	private boolean active = false;
 	private JointAxis axis;
 	
     public JMELinearActuator(JMESimulation world, String baseName) {
@@ -93,30 +95,52 @@ public class JMELinearActuator implements JMEActuator {
 		this.maxError = maxError;
 	}
 
+    /**
+	 * Make the actuator rotate with a given velocity [-1 to +1]
+	 * If -1 or +1 is given the actuator rotates full speed in the
+	 * corresponding direction  
+	 * @see ussr.model.PhysicsActuator#activate(float)
+	 */
+    public boolean setDesiredVelocity(float goalVel) {
+    	if(Float.isNaN(getEncoderValue())||Float.isInfinite(getEncoderValue())) {
+			PhysicsLogger.log("Linear Actuator is not yet setup!");
+			return false;
+		}
+    	if(goalVel<-1||goalVel>1){
+			PhysicsLogger.log("Linear Actuator Velocity Value out of range!");
+			return false;
+		}
+    	
+    	active = true;
+    	float desiredVel =  maxVelocity*goalVel;
+		axis.setDesiredVelocity(desiredVel);
+		return true;
+	}
+    
 	/**
 	 * Make the actuator rotate towards a goal [0-1] percent of fully expanded 
 	 * @see ussr.model.PhysicsActuator#activate(float)
 	 */
-	public boolean activate(float goal) {
-		if(Float.isNaN(axis.getPosition())) {
-			//System.out.println("Actuator is not yet setup!");
+	public boolean setDesiredPosition(float goalPos) {
+		if(Float.isNaN(getEncoderValue())||Float.isInfinite(getEncoderValue())) {
+			PhysicsLogger.log("Linear Actuator is not yet setup!");
 			return false;
 		}
-		//FIXME make a controllere here
-		float error = goal-getEncoderValue();
-		//System.out.println("error = "+error+" goal="+goal);
-		axis.setDesiredVelocity(maxVelocity*error);
-		//System.out.println("acc = "+joint.getAxes().get(0).getAvailableAcceleration());
-		//if(tempCounter%5000==0)System.out.println("{"+goal+","+getEncoderValue()+"},");
-		tempCounter++;
-		return false;
+    	if(goalPos<0||goalPos>1){
+			PhysicsLogger.log("Linear Actuator Velocity Value out of range!");
+			return false;
+		}
+		active = true;
+		float error = goalPos-getEncoderValue();
+		setDesiredVelocity(error);
+		return true;
 	}
-	long tempCounter=0;
 	/** 
 	 * Relax the linear actuator - can this be done always?
 	 * @see ussr.model.PhysicsActuator#disactivate()
 	 */
 	public void disactivate() {
+		active = false;
 		axis.setDesiredVelocity(0);
 	}
 
@@ -124,8 +148,7 @@ public class JMELinearActuator implements JMEActuator {
 	 * @see ussr.model.PhysicsActuator#isActive()
 	 */
 	public boolean isActive() {
-		// TODO Auto-generated method stub
-		return false;
+		return active;
 	}
 
 	/* (non-Javadoc)

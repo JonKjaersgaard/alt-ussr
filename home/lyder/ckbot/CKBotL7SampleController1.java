@@ -29,8 +29,8 @@ public class CKBotL7SampleController1 extends CKBotController {
 		float current = getEncoderPosition();
 		float goal = 0.5f + (0.5f*angle)/90f;
 		do {
-		  if (goal > current) module.getActuators().get(0).activate(1);
-		  else module.getActuators().get(0).activate(-1);
+		  if (goal > current) module.getActuators().get(0).setDesiredVelocity(1);
+		  else module.getActuators().get(0).setDesiredVelocity(-1);
 		  Thread.yield();
 		  current = getEncoderPosition();
 		} while(Math.abs(goal-current) > 0.001f);
@@ -43,7 +43,7 @@ public class CKBotL7SampleController1 extends CKBotController {
 	
     public void rotateTo(float goal) {
         do {
-            module.getActuators().get(0).activate(goal);
+            module.getActuators().get(0).setDesiredPosition(goal);
             yield();
         } while(isRotating()&&blocking);
 	}

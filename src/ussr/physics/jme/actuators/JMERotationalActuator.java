@@ -12,7 +12,9 @@ import ussr.model.Actuator;
 import ussr.model.PhysicsActuator;
 import ussr.physics.PIDController;
 import ussr.physics.PhysicsLogger;
+import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
+import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMESimulation;
 
 import com.jme.math.Vector3f;
@@ -129,59 +131,61 @@ public class JMERotationalActuator implements PhysicsActuator {
     	return 1f-(axis.getPositionMaximum()-axis.getPosition())/(axis.getPositionMaximum()-axis.getPositionMinimum());
     }
 
-	/**
-	 * Make the actuator rotate towards a goal [0-1] percent 
-	 * If -1 or +1 is given the actuator raotates full speed in the
+    /**
+	 * Make the actuator rotate with a given velocity [-1 to +1]
+	 * If -1 or +1 is given the actuator rotates full speed in the
 	 * corresponding direction  
 	 * @see ussr.model.PhysicsActuator#activate(float)
 	 */
-	public boolean activate(float goal) {
-		active = true;
-		axis.setAvailableAcceleration(maxAcceleration);
-		if(Float.isNaN(getEncoderValue())||Float.isInfinite(getEncoderValue())) {
-			PhysicsLogger.log("Actuator is not yet setup!");
+    public boolean setDesiredVelocity(float goalVel) {
+    	if(Float.isNaN(getEncoderValue())||Float.isInfinite(getEncoderValue())) {
+			PhysicsLogger.log("Rotational Actuator is not yet setup!");
 			return false;
 		}
-		if(goal==-1) {
-			axis.setDesiredVelocity(-maxVelocity);
+    	if(goalVel<-1||goalVel>1){
+			PhysicsLogger.log("Rotational Actuator Velocity Value out of range! "+goalVel);
+			return false;
 		}
-		else if(goal==1) {
-			axis.setDesiredVelocity(maxVelocity);
+    	
+    	active = true;
+    	axis.setAvailableAcceleration(maxAcceleration);
+		float desiredVel =  maxVelocity*goalVel;
+		if(Math.abs(axis.getVelocity())>Math.abs(desiredVel)) { //to stop from overshooting
+			desiredVel = 0;
+			axis.setAvailableAcceleration(maxStopAcceleration);
 		}
-		else { //go for position
-			float error = goal-getEncoderValue();
-			//System.out.println("goal = "+goal+" current = "+getEncoderValue()+" error = "+error);
-			if(Math.abs(error)<maxError) {
-				disactivate(); //at goal stop
-			}
-			else {
-				//TODO bug MTRAN does not work with this controller - why?
-				float output = Math.abs(controller.getOutput(goal, getEncoderValue()));
-				output = (Math.abs(error)<0.5?1:-1)*(error>0?1:-1)*(output>1?1:output);
-				float desiredVel =  maxVelocity*output;
-				if(Math.abs(axis.getVelocity())>Math.abs(desiredVel)) { //to stop from overshooting
-					desiredVel = 0;
-					//System.out.println("Stop 1");
-					axis.setAvailableAcceleration(maxStopAcceleration);
-				}
-				if(axis.getVelocity()!=0.0f&&(axis.getVelocity()/Math.abs(axis.getVelocity())!=desiredVel/Math.abs(desiredVel))) { //to stop from overshooting
-					desiredVel = 0;
-					//System.out.println("Stop 2");
-					axis.setAvailableAcceleration(maxStopAcceleration);
-				}
-				
-				axis.setDesiredVelocity(desiredVel);
-				
-				//System.out.println(node1.getName()+": POS "+output+" vs. "+((Math.abs(error)<0.5?1:-1)*error/Math.abs(error)));
-				//System.out.println(node1.getName()+": VEL "+axis.getDesiredVelocity()+" vs. "+axis.getVelocity());
-			}
-			/*else if(Math.abs(error)<0.5 ) { //go clockwise direction
-				axis.setDesiredVelocity(maxVelocity*error/Math.abs(error));
-				
-			}
-			else { //go counterclockwise direction
-				axis.setDesiredVelocity(-maxVelocity*error/Math.abs(error));
-			}*/
+		if(axis.getVelocity()!=0.0f&&(axis.getVelocity()/Math.abs(axis.getVelocity())!=desiredVel/Math.abs(desiredVel))) { //to stop from overshooting
+			desiredVel = 0;
+			axis.setAvailableAcceleration(maxStopAcceleration);
+		}
+		axis.setDesiredVelocity(desiredVel);
+		return true;
+	}
+    
+	/**
+	 * Make the actuator rotate towards a goal [0-1] percent 
+	 * @see ussr.model.PhysicsActuator#setDesiredPosition(float)
+	 */
+	public boolean setDesiredPosition(float goalPos) {
+		if(Float.isNaN(getEncoderValue())||Float.isInfinite(getEncoderValue())) {
+			PhysicsLogger.log("Rotational Actuator is not yet setup!");
+			return false;
+		}
+		if(goalPos<0||goalPos>1){
+			PhysicsLogger.log("Rotational Actuator Position Value out of range! "+goalPos);
+			return false;
+		}
+		active = true;
+		axis.setAvailableAcceleration(maxAcceleration);
+		float error = goalPos-getEncoderValue();
+		if(Math.abs(error)<maxError) {
+			disactivate(); //at goal stop
+		}
+		else {
+			//TODO bug MTRAN does not work with this controller - why?
+			float output = Math.abs(controller.getOutput(goalPos, getEncoderValue()));
+			output = (Math.abs(error)<0.5?1:-1)*(error>0?1:-1)*(output>1?1:output);
+			setDesiredVelocity(output);
 		}
 		return true;
 	}
@@ -240,5 +244,5 @@ public class JMERotationalActuator implements PhysicsActuator {
 	public void addExternalForce(float forceX, float forceY, float forceZ) {
 		node1.addForce(new Vector3f(forceX,forceY,forceZ));
 		node2.addForce(new Vector3f(forceX,forceY,forceZ));
-	}	
+	}
 }

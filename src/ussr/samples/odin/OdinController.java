@@ -47,8 +47,11 @@ public abstract class OdinController extends ControllerImpl implements PacketRec
     }   
     public void actuate(float pos) {
     	if(module.getActuators().size()!=0) {
-    		module.getActuators().get(0).activate(pos);
+    		module.getActuators().get(0).setDesiredPosition(pos);
     	}
+	}
+    public void actuateContinuous(float vel) {
+    	module.getActuators().get(0).setDesiredVelocity(vel);
 	}
     public void disactivate() {
     	if(module.getActuators().size()!=0) {

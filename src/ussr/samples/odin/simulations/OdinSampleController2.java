@@ -64,7 +64,4 @@ public class OdinSampleController2 extends ControllerImpl {
             }
     	}
     }
-	public void actuate(float pos) {
-		module.getActuators().get(0).activate(pos);
-	}
 }

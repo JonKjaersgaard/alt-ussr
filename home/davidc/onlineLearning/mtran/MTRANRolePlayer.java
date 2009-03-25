@@ -133,17 +133,17 @@ public class MTRANRolePlayer implements RolePlayer  {
 	private void goToAngles(double goal0, double goal1) {
     	double cur0 =  2*(controller.getEncoderPosition(0)-0.5);
 		if(cur0>goal0) {
-			controller.rotate(-1, 0);
+			controller.rotateContinuous(-1, 0);
 		}else {
-			controller.rotate(1, 0);
+			controller.rotateContinuous(1, 0);
 		}
 		//if(Math.abs(cur0-goal0)<0.05) controller.centerStop(0);
 
 		double cur1 =  2*(controller.getEncoderPosition(1)-0.5);
 		if(cur1>goal1) {
-			controller.rotate(-1, 1);
+			controller.rotateContinuous(-1, 1);
 		}else {
-			controller.rotate(1, 1);
+			controller.rotateContinuous(1, 1);
 		}
 		counter++;
 		//if(counter%5==0)

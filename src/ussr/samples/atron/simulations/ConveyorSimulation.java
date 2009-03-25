@@ -54,6 +54,7 @@ public class ConveyorSimulation extends GenericATRONSimulation {
 
                     @Override
                     public void activate() {
+                    	setup();
                         while(module.getSimulation().isPaused()) Thread.yield();
                         String name = this.module.getProperty("name");
                         if(name.startsWith("conveyor")) {

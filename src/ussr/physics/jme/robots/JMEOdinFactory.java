@@ -184,7 +184,7 @@ public class JMEOdinFactory implements ModuleFactory {
         wheelActuator.attach(axleNode,wheelNode);
         wheelActuator.setControlParameters(0.5f*9.82f, 5f, 0, 0);
         wheelActuator.setDirection(1, 0, 0);
-        wheelActuator.activate(10);
+        //wheelActuator.activate(10);
         
         TransmissionDevice odinTrans = new TransmissionDevice(TransmissionType.WIRE_MALE,0.01f);
         ReceivingDevice odinRec = new ReceivingDevice(TransmissionType.WIRE_MALE,10);

@@ -20,7 +20,7 @@ public class ATRONSimpleVehicleController1 extends ATRONController {
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
-        yield();
+    	setup();
         byte dir = 1;
         while(true) {
             String name = module.getProperty("name");

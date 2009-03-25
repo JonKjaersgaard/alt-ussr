@@ -32,7 +32,7 @@ public class ATRONCarController1 extends ATRONController {
      * @see ussr.model.ControllerImpl#activate()
      */
     public void activate() {
-    	yield();
+    	setup();
     	this.delay(1000); /* rotateContinuous seem to fail sometimes if we do not wait at first */
         byte dir = 1;
         float lastProx = Float.NEGATIVE_INFINITY; /* for printing out proximity data */

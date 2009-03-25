@@ -17,7 +17,6 @@ import ussr.model.Module;
 import ussr.model.Sensor;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
-import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 
 /**
@@ -27,9 +26,10 @@ import ussr.physics.PhysicsSimulation;
  */
 public abstract class ATRONController extends ControllerImpl implements PacketReceivedObserver, PhysicsObserver, IATRONAPI {
 
-    private float targetPos, currentPos, zeroPos;
+    private float targetPos, targetVel, zeroPos;
+    protected static enum CenterStates {STOPPED, BRAKED, POSCONTROL, VELCONTROL}
+    private CenterStates centerState;
 	private boolean blocking;
-	private boolean locked = false;
 	private int leds=0;
 
 	/**
@@ -43,7 +43,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	 * @see ussr.samples.atron.IATRONAPI#home()
 	 */
     public void home() { 
-        this.rotateToDegreeInDegrees(180);
+        this.rotateToDegree(0);
     
     }
     /**
@@ -51,7 +51,6 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	 */
     public void setLeds(int val) { 
      	leds = val%256;
-     	System.out.println("Leds now = "+leds);
     }
     /**
 	 * @see ussr.samples.atron.IATRONAPI#home()
@@ -63,8 +62,10 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
      * @see ussr.samples.atron.IATRONAPI#setup()
      */
     public void setup() {
-        currentPos = targetPos = 0;
+    	yield();
         zeroPos = module.getActuators().get(0).getEncoderValue();
+        setTargetPos(0);
+        centerState = CenterStates.STOPPED;
         PhysicsLogger.logNonCritical("[Encoder = "+zeroPos+"]");
         if(zeroPos==Float.NaN) throw new Error("Unable to read encoder");
         if(module.getTransmitters().size()>8 && module.getTransmitters().get(8)!=null)  { //module has a radio
@@ -99,21 +100,48 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
      * @see ussr.physics.PhysicsObserver#physicsTimeStepHook(ussr.physics.PhysicsSimulation)
      */
     public void physicsTimeStepHook(PhysicsSimulation simulation) {
-        // If the module is supposed to be at the right position, make it stay at the right position
-        if(currentPos==targetPos)
-            maintainJoint(currentPos);
+    	if(centerState == CenterStates.POSCONTROL) {
+    		posActuateJoint();
+    	}
+    	else if(centerState == CenterStates.VELCONTROL) {
+    		velActuateJoint();
+    	}
+    	else if(centerState == CenterStates.BRAKED) {
+    		relaxJoint(); //?
+    	}
+    	else if(centerState == CenterStates.STOPPED) {
+    		relaxJoint();
+    	}
     }
     
     private float readEncoderPosition() {
-        return module.getActuators().get(0).getEncoderValue();//-zeroPos;
+        float val = (module.getActuators().get(0).getEncoderValue()-zeroPos);
+        if(val<0) val = 1+val;
+        return val;
     }
-    private void actuateJoint(float target) {
-        module.getActuators().get(0).activate(target/*+zeroPos*/);
+    
+    private void setTargetVel(float target) {
+    	targetVel = target;
     }
-    private void maintainJoint(float target) {
-        //module.getActuators().get(0).maintain(target+zeroPos);
+    
+    private void setTargetPos(float target) {
+    	float val = target+zeroPos;
+    	if(val>1) val = val-1;
+    	targetPos = val;
     }
 
+    private void velActuateJoint() {
+    	module.getActuators().get(0).setDesiredVelocity(targetVel);
+    }
+    
+    private void posActuateJoint() {
+    	module.getActuators().get(0).setDesiredPosition(targetPos);
+    }
+    
+    private void relaxJoint() {
+    	module.getActuators().get(0).disactivate();
+    }
+    
     /**
 	 * @see ussr.samples.atron.IATRONAPI#isRotating()
 	 */
@@ -132,10 +160,10 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	 */
     public int getJointPosition() {
     	float encVal = readEncoderPosition();
-    	if(Math.abs(encVal-0.50)<=0.125f) return 0;
-    	if(Math.abs(encVal-0.75)<=0.125f) return 1;
-    	if(Math.abs(encVal-0)<=0.125f || Math.abs(encVal-1)<0.125f) return 2;
-    	if(Math.abs(encVal-0.25)<=0.125f) return 3;
+    	if(Math.abs(encVal-0)<=0.125f || Math.abs(encVal-1)<0.125f) return 0;
+    	if(Math.abs(encVal-0.25)<=0.125f) return 1;
+    	if(Math.abs(encVal-0.5)<=0.125f) return 2;
+    	if(Math.abs(encVal-0.75)<=0.125f) return 3;
     	PhysicsLogger.log("["+getName()+"] No ATRON rotation defined should not happend "+encVal);
     	return 0;
     }
@@ -144,48 +172,22 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	 * @see ussr.samples.atron.IATRONAPI#rotate(int)
 	 */
     public void rotate(int dir) {
-    	float goalRot = 0;
-    	locked = false;
-    	if(getJointPosition()==0) goalRot = ((dir>0)?1:3);
-    	else if(getJointPosition()==1) goalRot = ((dir>0)?2:0);
-    	else if(getJointPosition()==2) goalRot = ((dir>0)?3:1);
-    	else if(getJointPosition()==3) goalRot = ((dir>0)?0:2);
-    	
-    	PhysicsLogger.logNonCritical("["+getName()+"] RotPos "+getAngularPosition()+" go for "+goalRot/4f);
-    	module.getActuators().get(0).activate(goalRot/4f);
-    	while(isRotating()&&blocking) {
-    		module.getActuators().get(0).activate(goalRot/4f);
-    		yield();
-    	}
+    	int goal = 0;
+    	if(getJointPosition()==0) 		goal = ((dir<0)?90:270);
+    	else if(getJointPosition()==1) 	goal = ((dir<0)?180:0);
+    	else if(getJointPosition()==2) 	goal = ((dir<0)?270:90);
+    	else if(getJointPosition()==3) 	goal = ((dir<0)?0:180);
+    	rotateToDegreeInDegrees(goal);
     	PhysicsLogger.logNonCritical("["+getName()+"] Rotation done pos = "+module.getActuators().get(0).getEncoderValue());
-    	final float maintain = goalRot/4f;
-    	if(!PhysicsParameters.get().getMaintainRotationalJointPositions()) return;
-    	locked = true;
-        // Note: the following is basically a hack, should be replaced by an implementation in the
-        // physics actuator that updates at each time step
-    	(new Thread() {
-    	    public void run() { 
-    	        PhysicsLogger.logNonCritical("(locking actuator on "+this.getName()+" to maintain "+maintain+") ");
-    	        while(locked) {
-    	           module.getActuators().get(0).activate(maintain);
-                   yield();
-    	       }
-    	        PhysicsLogger.logNonCritical("(unlocking actuator on "+this.getName()+")");
-    	    }
-    	}).start();
-	}
+    }
     
     /**
 	 * @see ussr.samples.atron.IATRONAPI#rotateDegrees(int)
 	 */
     public void rotateDegrees(int degrees) {
-        locked = false;
         float rad = (float)(degrees/360.0*2*Math.PI);
         float current = this.getAngularPosition();
-        do {
-            this.rotateToDegree(current+rad);
-            Thread.yield();
-        } while(isRotating()&&blocking);
+        rotateToDegree(current+rad);
     }
 
     /**
@@ -196,31 +198,23 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         this.rotateToDegree(rad);
     }
     
+    public void rotateToViaInDegrees(int degrees, int via) {
+    	System.out.println("Function 'rotateToViaInDegrees' not implemented"); //TODO implement physics callback to actuators and doo it right 
+    	float rad = (float)(degrees/360.0*2*Math.PI);
+        this.rotateToDegree(rad);
+    }
+    
     /**
 	 * @see ussr.samples.atron.IATRONAPI#rotateToDegree(float)
 	 */
     public void rotateToDegree(float rad) {
-        locked = false;
-        float goal = (float)(rad/(Math.PI*2));
-        do {
-            module.getActuators().get(0).activate(goal);
-            yield();
-        } while(isRotating()&&blocking);
-        final float maintain = goal;
-        if(!PhysicsParameters.get().getMaintainRotationalJointPositions()) return;
-        locked = true;
-        // Note: the following is basically a hack, should be replaced by an implementation in the
-        // physics actuator that updates at each time step
-        (new Thread() {
-            public void run() { 
-                PhysicsLogger.logNonCritical("(locking actuator on "+this.getName()+")");
-                while(locked) {
-                   module.getActuators().get(0).activate(maintain);
-                   yield();
-               }
-                PhysicsLogger.logNonCritical("(unlocking actuator on "+this.getName()+")"); System.out.flush();
-            }
-        }).start();
+     	centerState = CenterStates.POSCONTROL;
+    	float target = (float)(rad/(Math.PI*2));
+    	setTargetPos(target);
+    	posActuateJoint();
+    	//System.out.println("Starting to rotate... "+target);
+        while(isRotating()&&blocking) yield();
+        //System.out.println("...done rotation "+target+" vs "+readEncoderPosition() );
     }
     
     /**
@@ -235,14 +229,14 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	 * @see ussr.samples.atron.IATRONAPI#getAngularPosition()
 	 */
     public float getAngularPosition() {
-    	return (float)(module.getActuators().get(0).getEncoderValue()*Math.PI*2);
+    	return (float)(readEncoderPosition()*Math.PI*2);
     }
     
     /**
 	 * @see ussr.samples.atron.IATRONAPI#getAngularPositionDegrees()
 	 */
     public int getAngularPositionDegrees() {
-        return (int)(module.getActuators().get(0).getEncoderValue()*360);
+    	return (int)(readEncoderPosition()*360);
     }
     
     /**
@@ -325,24 +319,27 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     /**
 	 * @see ussr.samples.atron.IATRONAPI#rotateContinuous(float)
 	 */
-    public void rotateContinuous(float dir) {
-        locked = false;
-        //System.out.println("Java: rotate cont "+dir);
-    	module.getActuators().get(0).activate(dir);
+    public void rotateContinuous(float vel) {
+    	if(vel<-1||vel>1) {
+    		PhysicsLogger.log("Velocity out of range -1 to 1");
+    		return;
+    	}
+    	centerState = CenterStates.VELCONTROL;
+    	setTargetVel(vel);
     }
     
     /**
 	 * @see ussr.samples.atron.IATRONAPI#centerBrake()
 	 */
     public void centerBrake() {
-    	module.getActuators().get(0).disactivate();
+    	centerState = CenterStates.BRAKED;
     }
     
     /**
 	 * @see ussr.samples.atron.IATRONAPI#centerStop()
 	 */
     public void centerStop() {
-    	centerBrake(); //TODO implement the difference from center brake
+     	centerState = CenterStates.STOPPED;
     }
     
     /**

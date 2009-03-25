@@ -64,7 +64,7 @@ public class CKBotSpringSampleController1 extends CKBotController {
 	
     public void rotateTo(float goal) {
         do {
-            module.getActuators().get(0).activate(goal);
+            module.getActuators().get(0).setDesiredPosition(goal);
             yield();
         } while(isRotating()&&blocking);
 	}

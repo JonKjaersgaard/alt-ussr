@@ -203,7 +203,7 @@ public class ATRONBuilder {
     }
     
     public ArrayList<ModulePosition> randomStructure(int nModules) {
-        if(true) throw new Error("Borken method");
+        if(true) throw new Error("Broken method");
         int index=0;
         Random rand = new Random(1234); 
         while(index<nModules) {
