@@ -50,7 +50,7 @@ public class ReflectionConnection extends AbstractNetworkConnection {
             String[] parts = packet.split(" ");
             if(parts.length<2) {
                 System.err.println("Warning: illegal packet received: "+packet);
-                break;
+                //break;
                 //continue;
             }
             int id = Integer.parseInt(parts[0]);
