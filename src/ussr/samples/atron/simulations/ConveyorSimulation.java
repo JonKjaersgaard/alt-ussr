@@ -144,9 +144,9 @@ public class ConveyorSimulation extends GenericATRONSimulation {
 
     protected void changeWorldHook(WorldDescription world) {
         BoxDescription[] boxes = new BoxDescription[3];
-        boxes[0] = new BoxDescription(new VectorDescription(0.3f,-0.3f,-0.01f),new VectorDescription(0.6f,0.22f,0.2f),true);
-        boxes[1] = new BoxDescription(new VectorDescription(0.3f,-0.3f,0.5f),new VectorDescription(0.6f,0.22f,0.2f),true);
-        boxes[2] = new BoxDescription(new VectorDescription(0.45f,0.07f,0.25f),new VectorDescription(0.3f,0.01f,0.1f),false);
+        boxes[0] = new BoxDescription(new VectorDescription(0.3f,-0.28f,-0.01f),new VectorDescription(0.6f,0.22f,0.2f),BoxDescription.Heaviness.VERY);
+        boxes[1] = new BoxDescription(new VectorDescription(0.3f,-0.28f,0.5f),new VectorDescription(0.6f,0.22f,0.2f),BoxDescription.Heaviness.VERY);
+        boxes[2] = new BoxDescription(new VectorDescription(1.45f,0.1f,0.25f),new VectorDescription(0.2f,0.01f,0.1f),BoxDescription.Heaviness.KINDOF);
         world.setBigObstacles(boxes);
     }
 

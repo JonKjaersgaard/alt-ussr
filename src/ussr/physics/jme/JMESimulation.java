@@ -122,10 +122,13 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             obstacleBoxes.add(helper.createBox(0.05f,0.05f,0.05f,obstacleMass,false)); //compute mass from size
         for(int i=0; i<worldDescription.getBigObstacles().size();i++) {
             VectorDescription size = worldDescription.getBigObstacles().get(i).getSize();
-            boolean isHeavy = worldDescription.getBigObstacles().get(i).getIsHeavy();
+            BoxDescription.Heaviness heaviness = worldDescription.getBigObstacles().get(i).getHeaviness();
             boolean isStatic = worldDescription.getBigObstacles().get(i).getIsStatic();
             float mass = worldDescription.getBigObstacles().get(i).getMass();
-            if(isHeavy)	obstacleBoxes.add(helper.createBox(size.getX(),size.getY(),size.getZ(),800f,isStatic));
+            if(heaviness==BoxDescription.Heaviness.VERY)
+                obstacleBoxes.add(helper.createBox(size.getX(),size.getY(),size.getZ(),800f,isStatic));
+            else if(heaviness==BoxDescription.Heaviness.KINDOF)
+                obstacleBoxes.add(helper.createBox(size.getX(),size.getY(),size.getZ(),mass*10,isStatic));
             else obstacleBoxes.add(helper.createBox(size.getX(),size.getY(),size.getZ(),mass,isStatic));
         }
         

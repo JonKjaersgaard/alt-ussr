@@ -64,9 +64,9 @@ public abstract class ATRON implements Robot {
         // Module components
         float pi = (float)Math.PI;
         MeshShape hemi1, hemi2;
-        hemi1 = new MeshShape("ATRON", smooth ? 0.5f : 0.935f, new VectorDescription(0f,0f,-0.00f),new RotationDescription(0,pi,pi/4)); //north
+        hemi1 = new MeshShape("ATRON", smooth ? 0.9f : 0.935f, new VectorDescription(0f,0f,-0.00f),new RotationDescription(0,pi,pi/4)); //north
         hemi1.setProperty("north", true);
-        hemi2 = new MeshShape("ATRON", smooth ? 0.5f : 0.935f, new VectorDescription(0f,0f,0.00f),new RotationDescription(0,0f,pi/4)); //south
+        hemi2 = new MeshShape("ATRON", smooth ? 0.9f : 0.935f, new VectorDescription(0f,0f,0.00f),new RotationDescription(0,0f,pi/4)); //south
         hemi2.setProperty("north", false);
 
         hemi1.setColor(smooth ? Color.magenta : Color.blue); hemi2.setColor(Color.RED);
