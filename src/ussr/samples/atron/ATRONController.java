@@ -6,6 +6,8 @@
  */
 package ussr.samples.atron;
 
+import java.util.Random;
+
 import ussr.comm.Packet;
 import ussr.comm.PacketReceivedObserver;
 import ussr.comm.RadioReceiver;
@@ -31,6 +33,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     private CenterStates centerState;
 	private boolean blocking;
 	private int leds=0;
+	private static int randomSeed = 0;
 
 	/**
 	 * Instantiate ATRON controller
@@ -93,6 +96,11 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
          	r.addPacketReceivedObserver(this); //packetReceived(..) will be called when a packet is received
         }
         module.getSimulation().subscribePhysicsTimestep(this);
+    }
+    
+    public int getRandomSeed(){
+    	randomSeed++;
+    	return new Random(randomSeed).nextInt();
     }
     
     /**
