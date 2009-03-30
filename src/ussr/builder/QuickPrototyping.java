@@ -17,6 +17,7 @@ import ussr.builder.construction.ConstructionTools;
 import ussr.builder.construction.MTRANOperationsTemplate;
 import ussr.builder.construction.OdinOperationsTemplate;
 import ussr.builder.construction.SelectOperationsTemplate;
+import ussr.builder.controllersLabels.AssignController;
 import ussr.builder.genericSelectionTools.AssignRemoveLabels;
 import ussr.builder.genericSelectionTools.ColorConnectors;
 import ussr.builder.genericSelectionTools.MtranExperiment;
@@ -966,8 +967,8 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	private void readLabelsjButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
 		System.out.println("Module labels toolbar-->Read");//for debugging     
 		//JME_simulation.setPicker(new ReadLabels(this));
-/*NOTE*/		JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Module",LabelingTools.READ_LABELS, this));
-		/*NOTE*/	//	JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Connector",LabelingTools.READ_LABELS, this));
+/*NOTE*/		//JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Module",LabelingTools.READ_LABELS, this));
+		/*NOTE*/		JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Connector",LabelingTools.READ_LABELS, this));
 	}                                                 
 
 	private void removeLabeljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   
@@ -1043,7 +1044,8 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void alljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
 		//System.out.println("Construction toolbar-->All");//for debugging 
-/*NOTE*/		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));
+/*NOTE*/	//	JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));
+		JME_simulation.setPicker(new AssignController());
 		guiUtil.passTo(AssistantjTextField,"Select " +this.chosenMRname +" module");
 	}                                          
 
@@ -1241,8 +1243,8 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void movejButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
 		//System.out.println("Module generic toolbar-->Move"); //for debugging  
-		//JME_simulation.setPicker(new PhysicsPicker(true, true));
-/*NOTE*/		JME_simulation.setPicker(new PhysicsPicker(true, false));
+		JME_simulation.setPicker(new PhysicsPicker(true, true));
+/*NOTE*/		//JME_simulation.setPicker(new PhysicsPicker(true, false));
 		guiUtil.passTo(AssistantjTextField, "Pick and move module");// informing user   
 
 	}                                           

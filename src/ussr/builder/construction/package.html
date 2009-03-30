@@ -1,16 +1,25 @@
 <body>
-This package contains the classes and interfaces, the main responsibility of which is construction
-of modular robots morphology. The approach is common for all supported modular robots, but 
-implementation algorithms differ. That is why Strategy pattern is used. Moreover to indicate that in order
-to support new modular robot, new implementation is needed. The code was tested on ATRON, MTRAN and Odin 
-modular robots and as a result they are supported.
+This package contains the interfaces, enumeration and classes, the main responsibility of which is
+definition of construction tools (interactive tools) for construction of modular robots morphology.
+The approach is common for all supported modular robots, but implementation algorithms slightly 
+differ.That is why TEMPLATE METHOD pattern is used. Moreover to indicate that in order
+to support new modular robot, new implementation is needed. Meaning that the core implementation
+of the template methods should not change, only the primitive operation should. The code was 
+tested on ATRON, MTRAN and Odin modular robots and as a result they are supported.
 HOWTO. Support new modular robot?
- 1)Create new class and inherit it from ModularRobotConstructionStrategy.java
- 2)Implement inherited abstract methods, like moveModuleAccoring(), updateModuleMap()(these two at least) 
- and so on. Use existing support of modular robots like inspiration. For example class called 
- ATRONConstructionStrategy.java
- 3)Scan classes: CommonOperationsStrategy.java and ConstructionToolSpecification.java for bugs
-   or missing implementation.
- 4)set your new constructionTool from GUI or somewhere else like this:
-    JMESimulation.setPicker(new ConstructionToolSpecification(JMESimulation, "NewModularRobotName","toolName"));    
+ 1)Create new class and inherit it from ModularRobotConstructionTemplate.java
+ 2)Implement inherited abstract methods, like updateModuleMap(float x, float y, float z),
+   moveModuleComponentAccording(int connectorNr,Module selectedModule, JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent)
+   and so on. Use existing support of modular robots like inspiration. For example class called 
+    ATRONConstructionTemplate.java
+ 3)Create new class and inherit it from CommonOperationsTemplate.java.
+ 4) Implement inherited abstract methods,like:
+    addDefaultModule(String type, VectorDescription modulePosition,	RotationDescription moduleRotation, List<Color> colorsComponents, ArrayList<Color> colorsConectors),
+    createNewModule(Module selectedModule) and so on.
+ 
+ 5) Scan classes: CommonOperationsTemplate.java and ConstructionToolSpecification.java for bugs
+    or missing implementation.
+ 4) set your new constructionTool from GUI or somewhere else like this:
+    JMESimulation.setPicker(new ConstructionToolSpecification(JMESimulation, "NewModularRobotName","toolName"));
+    As a toolName you can use any of names listed in enumeration called ConstructionTools.    
 </body>

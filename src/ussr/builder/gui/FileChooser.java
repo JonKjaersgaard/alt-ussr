@@ -107,6 +107,9 @@ private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {
     
 }                                             
 
+/**
+ * Starts the window of file chooser.
+ */
 public void activate(){
 	java.awt.EventQueue.invokeLater(new Runnable(){
 		public void run() {           

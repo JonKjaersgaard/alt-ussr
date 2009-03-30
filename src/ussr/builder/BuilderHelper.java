@@ -56,7 +56,7 @@ public class BuilderHelper {
 	 * The key for storing the labels of the module as property. The format is: "ussr.builder.module.labels".
 	 * Unique for builder package.
 	 */
-	public static final String moduleLabelsKey = builderPrefix +moduleStem + moduleLabelsSuffix;
+	public static final String labelsKey = builderPrefix +moduleStem + moduleLabelsSuffix;
 	
 	/**
 	 * Temporary value of labels used to indicate that the module do not have any labels.
@@ -146,10 +146,10 @@ public class BuilderHelper {
 	
 	/**
 	 * Returns the module labels key.
-	 * @return moduleLabelsKey, the module labels key in format: "ussr.builder.module.labels".
+	 * @return labelsKey, the module labels key in format: "ussr.builder.module.labels".
 	 */
-	public static String getModuleLabelsKey() {
-		return moduleLabelsKey;
+	public static String getLabelsKey() {
+		return labelsKey;
 	}
 	
 	/**
@@ -206,7 +206,13 @@ public class BuilderHelper {
 		return rotationMatrix.mult(matrix) ;
 	}
 	
-	/*public static int extractConnectorNr(JMESimulation simulation, Spatial target){
+	/**
+	 * Here the connector number is extracted from the string of TriMesh(target). Initial format of string is for example: "Connector 1 #1"
+	 * @param simulation, the physical simulation.
+	 * @param target, spatial target selected in simulation environment.
+	 * @return selected connector number if connector was selected and 1000 if something else. 
+	 */
+	public static int extractConnectorNr(JMESimulation simulation, Spatial target){
 		if(target instanceof TriMesh) {			
 			String name = simulation.getGeometryName((TriMesh)target);
 			if(name!=null && name.contains(CONNECTOR)){							
@@ -215,8 +221,8 @@ public class BuilderHelper {
 				return Integer.parseInt(temp[1].toString());// Take only the connector number, in above example "1" (at the end)					
 			}
 		}
-		return 0;
-	}*/
+		return 1000 /*means connector extraction failed*/;
+	}
 	
 //FIXME FIND BETTER PLACE FOR ME
 	public static void connectAllModules(JMESimulation simulation){

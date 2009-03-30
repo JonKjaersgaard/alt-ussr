@@ -27,20 +27,20 @@ public class AssignRemoveLabels extends CustomizedPicker  {
 	@Override
 	protected void pickModuleComponent(JMEModuleComponent component) {	
 		Module selectedModule = component.getModel();
-		String labels = selectedModule.getProperty(BuilderHelper.getModuleLabelsKey());
+		String labels = selectedModule.getProperty(BuilderHelper.getLabelsKey());
 		if (labels == null && remove == false){
-			selectedModule.setProperty(BuilderHelper.getModuleLabelsKey(), label +labelSeparator);			
+			selectedModule.setProperty(BuilderHelper.getLabelsKey(), label +labelSeparator);			
 		}else if (labels != null && remove ==true && labels.contains(label)){
 			String changedLabels = labels.replaceAll(label+labelSeparator, "");
-			selectedModule.setProperty(BuilderHelper.getModuleLabelsKey(), changedLabels);
+			selectedModule.setProperty(BuilderHelper.getLabelsKey(), changedLabels);
 		}else if (remove == false){
 			if (labels.contains(label)){
 				//do nothing
 			}else{
-			selectedModule.setProperty(BuilderHelper.getModuleLabelsKey(), labels+label+labelSeparator);
+			selectedModule.setProperty(BuilderHelper.getLabelsKey(), labels+label+labelSeparator);
 			}
 		}
-		System.out.println("L:"+ selectedModule.getProperty(BuilderHelper.getModuleLabelsKey()));
+		System.out.println("L:"+ selectedModule.getProperty(BuilderHelper.getLabelsKey()));
 	}
 
 	@Override

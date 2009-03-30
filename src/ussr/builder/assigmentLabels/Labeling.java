@@ -7,20 +7,7 @@ package ussr.builder.assigmentLabels;
  */
 public interface Labeling {
 
-	/**
-	 * Separator used to separate the labels. 
-	 */
-	public static final String LABEL_SEPARATOR =",";
 	
-	/**
-	 * Empty string used to replace the deleted label. 
-	 */
-	public static final String EMPTY ="";	
-		
-	/**
-	 *  The output used to indicate that entity do not have none labels.
-	 */
-	public static final String NONE_LABELS = "none labels";	
 	
 	
 	

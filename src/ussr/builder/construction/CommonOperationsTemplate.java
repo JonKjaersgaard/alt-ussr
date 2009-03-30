@@ -7,16 +7,12 @@ import java.util.List;
 import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
-import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
-import ussr.samples.atron.ATRONBuilder;
-import ussr.samples.mtran.MTRANSimulation;
-import ussr.samples.odin.OdinBuilder;
 
 /**
- * The main responsibility of this class is to act as abstract class in Template pattern.
+ * The main responsibility of this class is to act as abstract class in TEMPLATE METHOD pattern.
  * Moreover define the methods common for construction of modular robots morphologies in more 
  * abstract-module oriented way, rather than component oriented way. It is more abstract due to the 
  * fact that modules are created and moved with respect to each other here. 
@@ -68,7 +64,7 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	
 	/**
 	 * Adds default (the first) construction module at specified position.
-	 * This method is TEMPLATE method.
+	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
 	 * @param type, the type of modular robot. For example: ATRON,MTRAN or OdinBall.
 	 * @param modulePosition, the position of module in simulation environment.
 	 */
@@ -106,9 +102,9 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	}
 
 	/**
-	 * Adds the new module on connector. This is for both: selected connector on the module in simulation environment
+	 * Adds the new module on connector. This is for both: selected connector on the module in the simulation environment
 	 * and connector passed as a variable and later selected module in simulation environment.
-	 * This method is TEMPLATE method.
+	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
 	 * @param toolSpecification,object containing information about modular robot, selected or chosen connector
 	 * number,selected module, simulation and so on.  
 	 */
@@ -154,7 +150,7 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 
 	/**
 	 * Adds the new modules on all connectors of the module selected in simulation environment
-	 * This method is more abstract and common to children classes.
+	 * This operation is common to children classes. Operation means that it should be executed on the object.
 	 * @param toolSpecification,object containing information about modular robot, selected module, simulation
 	 * and so on.
 	 */
@@ -171,7 +167,7 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 
 	/**
 	 * Rotates the module selected in simulation environment with opposite rotation.
-	 * This method is more abstract and common to children classes.
+	 * This operation is common to children classes. Operation means that it should be executed on the object.
 	 * @param toolSpecification, object containing information about modular robot, selected module, simulation
 	 * and so on.
 	 */
@@ -183,7 +179,7 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 
 	/**
 	 * Rotates the module selected in simulation environment with standard rotation passed as a String
-	 * This method is more abstract and common to children classes.
+	 * This operation is common to children classes. Operation means that it should be executed on the object.
 	 * @param toolSpecification, object containing information about modular robot, selected module, simulation
 	 * and so on.
 	 */
@@ -198,7 +194,7 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	 * MTRAN has several more specific rotations, which are implemented to make the construction
 	 * more flexible.In Odin case this is replacement of modules by just selecting them in simulation
 	 * environment. 
-	 * This method is TEMPLATE method.   
+	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.   
 	 * @param toolSpecification,object containing information about modular robot, selected module, simulation
 	 * and so on.
 	 */
@@ -223,8 +219,6 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	public void moveModuleOnNextConnector(ConstructionToolSpecification specification){
 
 	}
-
-
 
 	/**
 	 * Returns the ArrayList, containing the colours of connectors of selected module.

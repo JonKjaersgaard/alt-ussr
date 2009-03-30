@@ -39,7 +39,7 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 	/**
 	 * Defines template methods as well as common methods for construction of different modular
 	 * robot's morphologies.
-	 * @param simulation
+	 * @param simulation, the physical simulation.
 	 */
 	public ModularRobotConstructionTemplate(JMESimulation simulation){
 		this.simulation = simulation;
@@ -48,7 +48,7 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 	/**
 	 * Moves newMovableModule according(respectively) to selected module preconditions,
 	 * like connector number, initial rotation of selected module, and so on.
-	 * This method is TEMPLATE method.
+	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
 	 * @param connectorNr, the connector number on selected module.
 	 * @param selectedModule,  the module selected in simulation environment.
 	 * @param newMovableModule, the new module to move respectively to selected one. 
@@ -117,7 +117,7 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 
 	/**
 	 * Rotates selected  module according to its initial rotation with opposite rotation.
-	 * This method is TEMPLATE method.	
+	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.	
 	 * @param selectedModule,the module selected in simulation environment.	 
 	 */	
 	public void rotateModuleOpposite(Module selectedModule){
@@ -143,7 +143,7 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 
 	/**
 	 * Rotates selected  module with standard rotations, passed as a string.
-	 * This method is TEMPLATE method.
+	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
 	 * @param selectedModule,the module selected in simulation environment.
 	 * @param rotationName,the name of standard(specific) rotation of the module.	 
 	 */
@@ -172,7 +172,7 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 	 * Additional method for implementing unique properties of modular robots modules. Like for example
 	 * MTRAN has several more specific rotations, which are implemented to make the construction
 	 * more flexible.
-	 * This method is TEMPLATE method.
+	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
 	 * @param selectedModule,the module selected in simulation environment.		
 	 */	
 	public void variateModuleProperties(Module selectedModule){

@@ -19,17 +19,17 @@ public class LabelConnector extends LabelEntity {
 		int connectorNr = specification.getSelectedConnectorNr();
 		
 		Connector connector =selectedModule.getConnectors().get(connectorNr); 
-       String labels =connector.getProperty(BuilderHelper.getModuleLabelsKey());
+       String labels =connector.getProperty(BuilderHelper.getLabelsKey());
 		
 		if (labels == null){
-			connector.setProperty(BuilderHelper.getModuleLabelsKey(), label +LABEL_SEPARATOR);			
+			connector.setProperty(BuilderHelper.getLabelsKey(), label +LABEL_SEPARATOR);			
 		}else if (labels.contains(label)){
 			// do nothin
 		}else {
-			connector.setProperty(BuilderHelper.getModuleLabelsKey(), labels+label+LABEL_SEPARATOR);
+			connector.setProperty(BuilderHelper.getLabelsKey(), labels+label+LABEL_SEPARATOR);
 			}
 		
-		System.out.println("L:"+ connector.getProperty(BuilderHelper.getModuleLabelsKey()));
+		System.out.println("L:"+ connector.getProperty(BuilderHelper.getLabelsKey()));
 		
 	}
 
@@ -40,12 +40,12 @@ public class LabelConnector extends LabelEntity {
 		String label = specification.getLabel();
 		
 		Connector connector =selectedModule.getConnectors().get(connectorNr); 
-		String labels = connector.getProperty(BuilderHelper.getModuleLabelsKey());
+		String labels = connector.getProperty(BuilderHelper.getLabelsKey());
 		 if (labels != null  && labels.contains(label)){
 		String changedLabels = labels.replaceAll(label+LABEL_SEPARATOR, EMPTY);
-		connector.setProperty(BuilderHelper.getModuleLabelsKey(), changedLabels);
+		connector.setProperty(BuilderHelper.getLabelsKey(), changedLabels);
 	}		
-		 System.out.println("L:"+ connector.getProperty(BuilderHelper.getModuleLabelsKey()));
+		 System.out.println("L:"+ connector.getProperty(BuilderHelper.getLabelsKey()));
 	}
 
 	public void readLabels(LabelingToolSpecification specification) {
@@ -54,7 +54,7 @@ public class LabelConnector extends LabelEntity {
 		QuickPrototyping quickPrototyping = specification.getQuickPrototyping();
 		
 		
-		String labels = selectedModule.getConnectors().get(connectorNr).getProperty(BuilderHelper.getModuleLabelsKey());
+		String labels = selectedModule.getConnectors().get(connectorNr).getProperty(BuilderHelper.getLabelsKey());
 		if (labels == null){
     		quickPrototyping.getModuleLabelsjComboBox().setModel(new javax.swing.DefaultComboBoxModel(new String[] {NONE_LABELS}));
     	}else{

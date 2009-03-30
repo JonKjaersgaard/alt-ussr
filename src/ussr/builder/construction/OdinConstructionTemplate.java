@@ -61,6 +61,13 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 	 * Global rotation of OdinBall (also called CCP joint)
 	 */
 	public final static RotationDescription ROTATION000 = new RotationDescription(0,0,0);
+	
+	/**
+	 * The default construction modules used to construct Odin modular robot morphology.
+	 * Default means that the morphology is initially build from OdinBall and OdinMuscle.
+	 * Later they can be swapped with other modules.  
+	 */
+	private final static String odinBall ="OdinBall",odinMuscle = "OdinMuscle";
 		
 	/**
 	 * The array of objects containing information about OdinMuscle,OdinBattery,OdinHinge,OdinSpring,OdinTube,OdinWheel modules specific rotations.
@@ -101,10 +108,10 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 	 */	
 	public void moveModuleComponentAccording(int connectorNr,Module selectedModule, JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent) {
 		String selectedModuleType =selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
-		if(selectedModuleType.equalsIgnoreCase("OdinBall")){			
+		if(selectedModuleType.equalsIgnoreCase(odinBall)){			
 			OdinMuscleConstructionTemplate  odinMuscleConst = new OdinMuscleConstructionTemplate(simulation);
 			odinMuscleConst.moveOdinMusleAccording(connectorNr, selectedModule,movableModuleComponent.getModel());			
-		} else if (selectedModuleType.equalsIgnoreCase("OdinMuscle")){
+		} else if (selectedModuleType.equalsIgnoreCase(odinMuscle)){
 			OdinBallConstructionTemplate odinBallConst = new OdinBallConstructionTemplate(simulation);
 			odinBallConst.moveOdinBallAccording(connectorNr, selectedModule, movableModuleComponent.getModel());
 		}
@@ -115,13 +122,12 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 	}
 	
 	/**
-	 * Rotates Odin module selected in simulation environment with opposite rotation. This is except OdinBall.
-	 * @param selectedModule, the Odin module selected in simulation environment.
-	 * COMMNET	
+	 * Rotates Odin module selected in simulation environment with opposite rotation. This is means all except OdinBall.
+	 * @param selectedModule, the Odin module selected in simulation environment.	
 	 */
 	public void rotateComponentOpposite(JMEModuleComponent selectedModuleComponent,Quaternion  rotationQComponent) {
 		String selectedModuleType = selectedModuleComponent.getModel().getProperty(BuilderHelper.getModuleTypeKey());
-		if(selectedModuleType.equalsIgnoreCase("OdinBall")){//Do nothing					
+		if(selectedModuleType.equalsIgnoreCase(odinBall)){//Do nothing					
 		} else{	      	
 			/*Locate matching rotation Quaternion in moduleRotationMap and rotate with opposite rotation Quaternion
 			 * from the same entry in  moduleRotationMap*/		

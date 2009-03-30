@@ -135,16 +135,8 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickTarget(com.jme.scene.Spatial)
 	 */
 	@Override
-	protected void pickTarget(Spatial target) {		
-		if(target instanceof TriMesh) {			
-			String name = simulation.getGeometryName((TriMesh)target);
-			if(name!=null && name.contains(CONNECTOR)){ 
-				//System.out.println("Connector: "+name);//For debugging				
-				String [] temp = null;	         
-				temp = name.split(SPLIT_SYMBOL);// Split by #, into two parts, line describing the connector. For example "Connector 1 #1"
-				this.selectedConnectorNr= Integer.parseInt(temp[1].toString());// Take only the connector number, in above example "1" (at the end)				
-			}
-		}		
+	protected void pickTarget(Spatial target) {
+		this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);	
 	}
 	
 	/**

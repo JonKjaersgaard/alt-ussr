@@ -23,7 +23,7 @@ public class ReadLabels extends CustomizedPicker  {
 	@Override
 	protected void pickModuleComponent(JMEModuleComponent component) {	
 		Module selectedModule = component.getModel();
-		String labels = selectedModule.getProperty(BuilderHelper.getModuleLabelsKey());	
+		String labels = selectedModule.getProperty(BuilderHelper.getLabelsKey());	
     	if (labels == null){
     		this.quickPrototyping.getModuleLabelsjComboBox().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "none labels"}));
     	}else{

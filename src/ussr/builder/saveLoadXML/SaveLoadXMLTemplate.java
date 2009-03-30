@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,7 +22,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
-
 import ussr.builder.BuilderHelper;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
@@ -46,7 +44,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 *  The empty attributes for the tag, in case there is no need to have attributes.
 	 */
 	public final static AttributesImpl emptyAtt = new AttributesImpl();
-	
+
 
 	/**
 	 * COMMENT
@@ -200,7 +198,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * @param statesConnectors, the states of connectors, for example "connected" or disconnected.
 	 * @param numbersConnectors, the numbers of connectors, for example 1,2,3 and so on.
 	 */
-//	TODO REFACTOR
+	//	TODO REFACTOR
 	public void printInfoConnectors(TransformerHandler transformerHandler,ArrayList<String> statesConnectors, ArrayList<String> numbersConnectors ){
 		AttributesImpl atts1 = new AttributesImpl();
 		for (int index=0; index<statesConnectors.size();index++){				
@@ -348,19 +346,49 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 		}	 
 		return colorsConnectors.toCharArray();
 	}
-	
+
 	/**
 	 * Returns the labels assigned to the module.
 	 * @param currentModule, the module in simulation environment
 	 * @return char[], the labels assigned to the module.
 	 */
-	public char[] getLabels(Module currentModule){		
-		String labels = currentModule.getProperty(BuilderHelper.getModuleLabelsKey());
+	public char[] getLabelsModule(Module currentModule){		
+		String labels = currentModule.getProperty(BuilderHelper.getLabelsKey());
 		if (labels == null){// means there are no labels assigned to this module. 
 			labels = BuilderHelper.getTempLabel();
 		}
 		return labels.toCharArray();    	
 	}
+
+
+	/**
+	 * @param currentModule
+	 * @return
+	 */
+	public char[] getLabelsConnectors(Module currentModule){		
+		int amountConnectors = currentModule.getConnectors().size();
+		String labels = null;
+		int counter=0;
+		for (int connector=0; connector<amountConnectors;connector++){
+			String label = currentModule.getConnectors().get(connector).getProperty(BuilderHelper.getLabelsKey());
+			if (label ==null){
+				counter++;
+				if (counter==1){
+				labels=BuilderHelper.getTempLabel()+",";
+				}else{
+					labels=labels+BuilderHelper.getTempLabel()+",";
+				}
+
+			}/*else if (labels.equalsIgnoreCase("")){
+				labels
+			}*/else{
+				labels = labels+label;
+			}			
+		}
+
+		return labels.toCharArray();    	
+	}
+
 
 	/**
 	 * Returns states of connectors(for example:"connected" or "disconnected") or numbers of connectors of the module.
@@ -389,6 +417,11 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 		}else return numbersConnectors;
 	}
 
+	/**
+	 * @param firstElmnt
+	 * @param tagName
+	 * @return
+	 */
 	public String extractTagValue(Element firstElmnt,String tagName){
 		NodeList firstNmElmntLst = firstElmnt.getElementsByTagName(tagName);		      
 		Element firstNmElmnt = (Element) firstNmElmntLst.item(0);
@@ -396,6 +429,11 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 		return ((Node) firstNm.item(0)).getNodeValue();
 	}
 
+	/**
+	 * @param amountComponents
+	 * @param colorsComponents
+	 * @return
+	 */
 	public LinkedList<Color> extractColorsComponents(int amountComponents, String colorsComponents){
 		String[] newColorsComponents = colorsComponents.split(";");
 		LinkedList<Color> listColorsComponents = new LinkedList<Color>();
@@ -411,6 +449,11 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	}
 
 
+	/**
+	 * @param amountConnectors
+	 * @param colorsConnectors
+	 * @return
+	 */
 	public LinkedList<Color> extractColoursConnectors(int amountConnectors, String colorsConnectors){
 		String[] newColorsConnectors= colorsConnectors.split(";");
 		LinkedList<Color> listColorsConnectors= new LinkedList<Color>();
@@ -425,6 +468,11 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 		return listColorsConnectors;
 	}	
 
+	/**
+	 * @param textString
+	 * @param coordinate
+	 * @return
+	 */
 	public float extractFromQuaternion(String textString, String coordinate){		
 		textString =textString.replace("]", "");
 		textString =textString.replace("x", "");

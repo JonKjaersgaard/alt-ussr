@@ -14,19 +14,13 @@ import ussr.physics.jme.JMESimulation;
 /**
  * Supports construction of Odin modular robot morphology in more abstract module oriented way.
  * In general the main responsibility of this class is to create Odin modules, add default Odin
- * construction module and variate the modules. 
+ * construction module and variate the type of modules. 
  * @author Konstantinas
  *
  */
 public class OdinOperationsTemplate extends CommonOperationsTemplate{
 
-	/**
-	 * Supports construction of Odin modular robot morphology in more abstract module oriented way.
-	 * @param simulation, the physical simulation.
-	 */
-	public OdinOperationsTemplate(JMESimulation simulation) {
-		super(simulation);		
-	}
+	
 
 	/**
 	 * The default construction module is OdinBall.
@@ -43,6 +37,15 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 	 */
 	private final static String ODIN_MUSCLE = "OdinMuscle",ODIN_HINGE = "OdinHinge",ODIN_BATTERY = "OdinBattery",
 	                            ODIN_SPRING = "OdinSpring",ODIN_WHEEL = "OdinWheel";
+		
+	/**
+	 * Supports construction of Odin modular robot morphology in more abstract module oriented way.
+	 * @param simulation, the physical simulation.
+	 */
+	public OdinOperationsTemplate(JMESimulation simulation) {
+		super(simulation);		
+	}
+	
 	/**
 	 * Adds default (the first) OdinBall construction module at specified position.
 	 * This method is so-called "Primitive operation" for  TEMPLATE method, called "addDefaultConstructionModule(String type, VectorDescription modulePosition)".	 
@@ -67,7 +70,8 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 	 * The assumption is that during initial construction are used only OdinBall and OdinBall.
 	 * This method is so-called "Primitive operation" for above TEMPLATE method, called "addNewModuleOnConnector(ConstructionToolSpecification toolSpecification)".	 
 	 * @param selectedModule,the module selected in simulation environment.
-	 * @return module, newly created Odin module.  
+	 * @return module, newly created Odin module.
+	 * @throws new Error("Something is wrong with the type of the module").  
 	 */	
 	@Override
 	public Module createNewModule(Module selectedModule) {		
@@ -121,31 +125,38 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 		VectorDescription modulePosition = selectedModule.getPhysics().get(0).getPosition();
 		RotationDescription moduleRotation = selectedModule.getPhysics().get(0).getRotation();
 		List<Color> colorsComponents = new LinkedList<Color>();
-		ArrayList<Color> colorsConectors = new ArrayList<Color>();
-		BuilderHelper.deleteModule(selectedModule);
-		if (selectedModuleType.equalsIgnoreCase(ODIN_MUSCLE)){						
+		ArrayList<Color> colorsConectors = new ArrayList<Color>();		
+		if (selectedModuleType.equalsIgnoreCase (DEFAULT_MODULE)){
+			//do nothing
+		}else if (selectedModuleType.equalsIgnoreCase(ODIN_MUSCLE)){
+			BuilderHelper.deleteModule(selectedModule);
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.RED); colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition(ODIN_HINGE+BuilderHelper.getRandomInt(),ODIN_HINGE,modulePosition,moduleRotation),colorsComponents,colorsConectors);			
-		}else if (selectedModuleType.equalsIgnoreCase(ODIN_HINGE)){			
+		}else if (selectedModuleType.equalsIgnoreCase(ODIN_HINGE)){
+			BuilderHelper.deleteModule(selectedModule);
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition(ODIN_BATTERY+BuilderHelper.getRandomInt(),ODIN_BATTERY,modulePosition,moduleRotation),colorsComponents,colorsConectors);
-		}else if (selectedModuleType.equalsIgnoreCase(ODIN_BATTERY)){					
+		}else if (selectedModuleType.equalsIgnoreCase(ODIN_BATTERY)){
+			BuilderHelper.deleteModule(selectedModule);
 			colorsComponents.add(Color.BLACK); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition(ODIN_SPRING+BuilderHelper.getRandomInt(),ODIN_SPRING,modulePosition,moduleRotation),colorsComponents,colorsConectors);			
 		}
 //FIXME	 (SOFAR IS NOT NEEDED) PROBLEM java.lang.Error: Illegal module type: OdinTubeRobotType:OdinTube
-		/*else if (selectedModuleType.equalsIgnoreCase("OdinSpring")){						
+		/*else if (selectedModuleType.equalsIgnoreCase("OdinSpring")){
+		   BuilderHelper.deleteModule(selectedModule);						
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModuleOneMore(new ModulePosition("newTube","OdinTube",modulePosition,moduleRotation),colorsComponents,colorsConectors);
-		}*/else if (selectedModuleType.equalsIgnoreCase(ODIN_SPRING)){			
+		}*/else if (selectedModuleType.equalsIgnoreCase(ODIN_SPRING)){
+			BuilderHelper.deleteModule(selectedModule);
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.BLUE);colorsComponents.add(Color.WHITE); 	colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition(ODIN_WHEEL+BuilderHelper.getRandomInt(),ODIN_WHEEL,modulePosition,moduleRotation),colorsComponents,colorsConectors);
-		}else if (selectedModuleType.equalsIgnoreCase(ODIN_WHEEL)){					
+		}else if (selectedModuleType.equalsIgnoreCase(ODIN_WHEEL)){
+			BuilderHelper.deleteModule(selectedModule);
 			colorsComponents.add(Color.RED); colorsComponents.add(Color.BLUE);colorsComponents.add(Color.RED); 	colorsComponents.add(Color.BLUE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition(ODIN_MUSCLE + BuilderHelper.getRandomInt(),ODIN_MUSCLE,modulePosition,moduleRotation),colorsComponents,colorsConectors);
