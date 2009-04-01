@@ -356,6 +356,8 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 		String labels = currentModule.getProperty(BuilderHelper.getLabelsKey());
 		if (labels == null){// means there are no labels assigned to this module. 
 			labels = BuilderHelper.getTempLabel();
+		}else if (labels.contains("none")){
+		
 		}
 		return labels.toCharArray();    	
 	}
@@ -370,9 +372,10 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 		String labels = null;
 		int counter=0;
 		for (int connector=0; connector<amountConnectors;connector++){
+			counter++;
 			String label = currentModule.getConnectors().get(connector).getProperty(BuilderHelper.getLabelsKey());
-			if (label ==null){
-				counter++;
+			if (label == null||labels==null){				
+				
 				if (counter==1){
 				labels=BuilderHelper.getTempLabel()+",";
 				}else{
@@ -382,7 +385,8 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 			}/*else if (labels.equalsIgnoreCase("")){
 				labels
 			}*/else{
-				labels = labels+label;
+				
+					labels = labels+label+",";				
 			}			
 		}
 

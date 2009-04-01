@@ -1,5 +1,7 @@
 package ussr.builder;
 
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -35,29 +37,29 @@ public class BuilderHelper {
 	 * The USSR specific prefix
 	 */
 	public static final String ussrPrefix = "ussr.";
-	
+
 	/**
 	 * The builder specific prefix, which is unique for builder package.
 	 */
 	public static final String builderPrefix = ussrPrefix+ "builder.";
-	
+
 	/**
 	 * The module stem used in both builder and all over ussr.
 	 */
 	public static final String moduleStem = "module.";	
-	
+
 	/**
 	 * The labels suffix used to create the key for storing labels of the module.
 	 * Unique for builder package.
 	 */
 	public static final String moduleLabelsSuffix = "labels";
-	
+
 	/**
 	 * The key for storing the labels of the module as property. The format is: "ussr.builder.module.labels".
 	 * Unique for builder package.
 	 */
 	public static final String labelsKey = builderPrefix +moduleStem + moduleLabelsSuffix;
-	
+
 	/**
 	 * Temporary value of labels used to indicate that the module do not have any labels.
 	 * Used for saving in XML and loading from it. 
@@ -68,44 +70,44 @@ public class BuilderHelper {
 	 * The key used to receive the name of the module.
 	 */
 	public static final String moduleNameKey = "name";	
-	
+
 	/**
 	 * The type suffix used to create the key for storing the type of the module.
 	 */
 	public static final String moduleTypeSuffix ="type";
-		
+
 	/**
 	 *  The key used to receive the type of the module. The format is: "ussr.module.type".
 	 *  Was implemented by Ulrik. 
 	 */
 	public static final String moduleTypeKey = ussrPrefix + moduleStem+ moduleTypeSuffix; 
-	
+
 	/**
 	 *  The connector stem, used to create the key for receiving the connector number of the module. 
 	 */
 	public static final String connectorStem = "connector_";
-	
+
 	/**
 	 * The number suffix, used to create the key for receiving the connector number of the module. 
 	 */
 	public static final String connectorSuffix = "number";
-	
+
 	/**
 	 * The key used to receive the connector number of the module. The format is: "ussr.connector_number".
 	 * Was implemented by Ulrik.
 	 */
 	public static final String moduleConnectorNrKey = ussrPrefix +connectorStem + connectorSuffix;
-	
+
 	/**
 	 * The generator used to generate random integer. 
 	 */
 	private static final Random generator = new Random();
-	
+
 	/**
 	 * The identifier, used to locate the string.
 	 */
 	private static final String CONNECTOR ="Connector";
-	
+
 	/**
 	 * Symbol used to extract the connector number from the string.  
 	 */
@@ -134,16 +136,16 @@ public class BuilderHelper {
 	public static String getModuleNameKey() {
 		return moduleNameKey;
 	}
-	
+
 	/**
 	 * Returns the random integer from min to max value of the system.
 	 * @return randomInt, the random integer from min to max value of the system.
 	 */
 	public static int getRandomInt(){
 		return generator.nextInt();
-		
+
 	}
-	
+
 	/**
 	 * Returns the module labels key.
 	 * @return labelsKey, the module labels key in format: "ussr.builder.module.labels".
@@ -151,7 +153,7 @@ public class BuilderHelper {
 	public static String getLabelsKey() {
 		return labelsKey;
 	}
-	
+
 	/**
 	 *  Returns temporary label for indicating that module do not have any label.
 	 * @return tempLabel, temporary label in format "none";
@@ -159,7 +161,7 @@ public class BuilderHelper {
 	public static String getTempLabel() {
 		return tempLabel;
 	}
-	
+
 	/**
 	 * Removes (deletes) the module from simulation environment
 	 * @param selectedModule, module to remove (delete)
@@ -167,7 +169,7 @@ public class BuilderHelper {
 	public static void deleteModule(Module selectedModule){
 		/*Remove the module from the internal list of the modules in USSR*/
 		selectedModule.getSimulation().getModules().remove(selectedModule);
-		
+
 		/* Identify each component of the module and remove the visual of it*/
 		int amountComponents= selectedModule.getNumberOfComponents();		
 		for (int compon=0; compon<amountComponents;compon++){			
@@ -205,7 +207,7 @@ public class BuilderHelper {
 		}	
 		return rotationMatrix.mult(matrix) ;
 	}
-	
+
 	/**
 	 * Here the connector number is extracted from the string of TriMesh(target). Initial format of string is for example: "Connector 1 #1"
 	 * @param simulation, the physical simulation.
@@ -223,26 +225,26 @@ public class BuilderHelper {
 		}
 		return 1000 /*means connector extraction failed*/;
 	}
-	
-//FIXME FIND BETTER PLACE FOR ME
+
+	//FIXME FIND BETTER PLACE FOR ME
 	public static void connectAllModules(JMESimulation simulation){
 		if (simulation.worldDescription.getModulePositions().size()>=0){
 
-		int amountModules = simulation.getModules().size();
-		ArrayList<ModulePosition> atronModulePositions = new ArrayList<ModulePosition>();
-		ArrayList<ModulePosition> mtranModulePositions = new ArrayList<ModulePosition>(); 
-		ArrayList<ModulePosition> odinAllModulePositions = new ArrayList<ModulePosition>();
-		ArrayList<ModulePosition> odinBallModulePositions = new ArrayList<ModulePosition>(); 
-		ArrayList<ModulePosition> odinOtherModulesPositions = new ArrayList<ModulePosition>();
+			int amountModules = simulation.getModules().size();
+			ArrayList<ModulePosition> atronModulePositions = new ArrayList<ModulePosition>();
+			ArrayList<ModulePosition> mtranModulePositions = new ArrayList<ModulePosition>(); 
+			ArrayList<ModulePosition> odinAllModulePositions = new ArrayList<ModulePosition>();
+			ArrayList<ModulePosition> odinBallModulePositions = new ArrayList<ModulePosition>(); 
+			ArrayList<ModulePosition> odinOtherModulesPositions = new ArrayList<ModulePosition>();
 
-		List<Module> atronModules = new ArrayList<Module>();
-		List<Module> mtranModules = new ArrayList<Module>();
-		List<Module> odinAllModules = new ArrayList<Module>();         	
+			List<Module> atronModules = new ArrayList<Module>();
+			List<Module> mtranModules = new ArrayList<Module>();
+			List<Module> odinAllModules = new ArrayList<Module>();         	
 
 
-		for (int i=0; i<amountModules; i++){
-			Module currentModule = simulation.getModules().get(i);
-			
+			for (int i=0; i<amountModules; i++){
+				Module currentModule = simulation.getModules().get(i);
+
 				String moduleName = currentModule.getProperty(BuilderHelper.getModuleNameKey());
 				String moduleType = currentModule.getProperty(BuilderHelper.getModuleTypeKey());
 
@@ -265,34 +267,78 @@ public class BuilderHelper {
 					}else {
 						odinOtherModulesPositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
 					}
-			
-			}else{
-				// do nothing
-			}
-		}         	
 
-		ATRONBuilder atronbuilder = new ATRONBuilder();             
-		ArrayList<ModuleConnection> atronModuleConnection = atronbuilder.allConnections(atronModulePositions);        	 
-		simulation.setModules(atronModules);
-		simulation.worldDescription.setModulePositions(atronModulePositions);
-		simulation.worldDescription.setModuleConnections(atronModuleConnection);                          
-		simulation.placeModules();
+				}else{
+					// do nothing
+				}
+			}         	
 
-		ArrayList<ModuleConnection> mtranModuleConnection =MTRANSimulation.allConnections(mtranModulePositions); 
-		simulation.setModules(mtranModules);
-		simulation.worldDescription.setModulePositions(mtranModulePositions);
-		simulation.worldDescription.setModuleConnections(mtranModuleConnection); 
-		simulation.placeModules();              
+			ATRONBuilder atronbuilder = new ATRONBuilder();             
+			ArrayList<ModuleConnection> atronModuleConnection = atronbuilder.allConnections(atronModulePositions);        	 
+			simulation.setModules(atronModules);
+			simulation.worldDescription.setModulePositions(atronModulePositions);
+			simulation.worldDescription.setModuleConnections(atronModuleConnection);                          
+			simulation.placeModules();
 
-		OdinBuilder odinBuilder = new OdinBuilder();
-		odinBuilder.setBallPos(odinBallModulePositions);
-		odinBuilder.setModulePos(odinOtherModulesPositions);             
-		ArrayList<ModuleConnection> odinModuleConnection = odinBuilder.allConnections();        	 
-		simulation.setModules(odinAllModules);
-		simulation.worldDescription.setModulePositions(odinAllModulePositions);
-		simulation.worldDescription.setModuleConnections(odinModuleConnection);                          
-		simulation.placeModules();
-	}       
+			ArrayList<ModuleConnection> mtranModuleConnection =MTRANSimulation.allConnections(mtranModulePositions); 
+			simulation.setModules(mtranModules);
+			simulation.worldDescription.setModulePositions(mtranModulePositions);
+			simulation.worldDescription.setModuleConnections(mtranModuleConnection); 
+			simulation.placeModules();              
+
+			OdinBuilder odinBuilder = new OdinBuilder();
+			odinBuilder.setBallPos(odinBallModulePositions);
+			odinBuilder.setModulePos(odinOtherModulesPositions);             
+			ArrayList<ModuleConnection> odinModuleConnection = odinBuilder.allConnections();        	 
+			simulation.setModules(odinAllModules);
+			simulation.worldDescription.setModulePositions(odinAllModulePositions);
+			simulation.worldDescription.setModuleConnections(odinModuleConnection);                          
+			simulation.placeModules();
+		}       
 	}
-	
+
+
+	public static Class[] getClasses(String pckgname)
+	throws ClassNotFoundException {
+		ArrayList<Class> classes = new ArrayList<Class>();
+		// Get a File object for the package
+		File directory = null;
+		try {
+			ClassLoader cld = Thread.currentThread().getContextClassLoader();
+			if (cld == null) {
+				throw new ClassNotFoundException("Can't get class loader.");
+			}
+			//String path = '/' + pckgname.replace('.', '/');
+			String path = pckgname.replace('.', '/');
+			URL resource = cld.getResource(path);
+			if (resource == null) {
+				throw new ClassNotFoundException("No resource for " + path);
+			}
+			directory = new File(resource.getFile());
+		} catch (NullPointerException x) {
+			throw new ClassNotFoundException(pckgname + " (" + directory
+					+ ") does not appear to be a valid package");
+		}
+		if (directory.exists()) {
+			// Get the list of the files contained in the package
+			String[] files = directory.list();
+			for (int i = 0; i < files.length; i++) {
+				// we are only interested in .class files
+				if (files[i].endsWith(".class")) {
+					// removes the .class extension
+					classes.add(Class.forName(pckgname + '.'
+							+ files[i].substring(0, files[i].length() - 6)));
+				}
+			}
+		} else {
+			throw new ClassNotFoundException(pckgname
+					+ " does not appear to be a valid package");
+		}
+		Class[] classesA = new Class[classes.size()];
+		classes.toArray(classesA);
+		return classesA;
+	}
+
+
+
 }

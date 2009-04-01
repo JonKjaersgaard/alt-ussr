@@ -164,9 +164,9 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 				String modulePosition = extractTagValue(firstElmnt,positionTag);
 				//String modulePositionVector = extractTagValue(firstElmnt,positionVectorTag);
 				String labelsModule = extractTagValue(firstElmnt,labelsModuleTag);
-				if (labelsModule.contains(BuilderHelper.getTempLabel())){
+			/*	if (labelsModule.contains(BuilderHelper.getTempLabel())){
 					labelsModule = labelsModule.replaceAll(BuilderHelper.getTempLabel(), "");
-				}
+				}*/
 				
 				
 				int amountComponents = Integer.parseInt(extractTagValue(firstElmnt,componentsTag));
@@ -222,10 +222,11 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 			newModule = simulation.createModule(modulePos,true);			
 		}
 
-		if(labelsModule.contains("none")){
-			newModule.setProperty(BuilderHelper.getLabelsKey(), BuilderHelper.getTempLabel());
+		if(labelsModule.contains(BuilderHelper.getTempLabel())){			
+			//do nothing
 		}else{ 	
-		newModule.setProperty(BuilderHelper.getLabelsKey(), labelsModule);}
+		newModule.setProperty(BuilderHelper.getLabelsKey(), labelsModule);
+		}
 		
 		newModule.setColorList(listColorsComponents);
 
@@ -234,8 +235,8 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 		for (int connector =0; connector< amountConnentors; connector++ ){
 			Connector currentConnector =newModule.getConnectors().get(connector); 
 			currentConnector.setColor(listColorsConnectors.get(connector));
-			if(labelsConnectors[connector].contains("none")){
-				currentConnector.setProperty(BuilderHelper.getLabelsKey(), BuilderHelper.getTempLabel());
+			if(labelsConnectors[connector].contains(BuilderHelper.getTempLabel())){
+				//do nothing
 			}else{
 			currentConnector.setProperty(BuilderHelper.getLabelsKey(), labelsConnectors[connector]);
 			}

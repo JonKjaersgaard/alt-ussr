@@ -2,31 +2,34 @@ package ussr.builder;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import java.lang.reflect.Method;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
-import ussr.builder.assigmentLabels.LabelingToolSpecification;
-import ussr.builder.assigmentLabels.LabelingTools;
-import ussr.builder.construction.ATRONOperationsTemplate;
-import ussr.builder.construction.CommonOperationsTemplate;
-import ussr.builder.construction.ConstructionToolSpecification;
-import ussr.builder.construction.ConstructionTools;
-import ussr.builder.construction.MTRANOperationsTemplate;
-import ussr.builder.construction.OdinOperationsTemplate;
-import ussr.builder.construction.SelectOperationsTemplate;
-import ussr.builder.controllersLabels.AssignController;
-import ussr.builder.genericSelectionTools.AssignRemoveLabels;
-import ussr.builder.genericSelectionTools.ColorConnectors;
-import ussr.builder.genericSelectionTools.MtranExperiment;
-import ussr.builder.genericSelectionTools.NewSelection;
-import ussr.builder.genericSelectionTools.ReadLabels;
-import ussr.builder.genericSelectionTools.RemoveModule;
-import ussr.builder.genericSelectionTools.RotateModuleComponents;
+import ussr.builder.constructionTools.ATRONOperationsTemplate;
+import ussr.builder.constructionTools.CommonOperationsTemplate;
+import ussr.builder.constructionTools.ConstructionToolSpecification;
+import ussr.builder.constructionTools.ConstructionTools;
+import ussr.builder.constructionTools.MTRANOperationsTemplate;
+import ussr.builder.constructionTools.OdinOperationsTemplate;
+import ussr.builder.constructionTools.SelectOperationsTemplate;
+import ussr.builder.controllerReassignmentTool.AssignController;
+import ussr.builder.genericTools.ColorConnectors;
+import ussr.builder.genericTools.MtranExperiment;
+import ussr.builder.genericTools.NewSelection;
+import ussr.builder.genericTools.RemoveModule;
+import ussr.builder.genericTools.RotateModuleComponents;
 import ussr.builder.gui.FileChooser;
 import ussr.builder.gui.GuiHelper;
+import ussr.builder.labelingTools.LabelingToolSpecification;
+import ussr.builder.labelingTools.LabelingTools;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModuleConnection;
@@ -171,7 +174,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	/**
 	 * The current connector number one the module
 	 */
-	private int connectorNr;
+	private int connectorNr =0;//default
 
 	/**
 	 * The amount of connectors on ATRON module
@@ -214,6 +217,14 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 * Current Cartesian coordinate (x,y or z)
 	 */
 	private String cartesianCoordinate;
+	
+	private String entityToMove = "Module";//default
+	
+	private String entityToLabel = "Module";//default
+	
+	private String controllerName;
+	
+	private static final String packageName = "ussr.builder.controllerReassignmentTool";
 
 	/**
 	 * The names of the tools for contsruction or robot morphology
@@ -236,8 +247,10 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		guiUtil.changeToSetLookAndFeel(this);         
 		this.JME_simulation = (JMESimulation) simulation;  
 		adaptGuiToModularRobot();// Adapt GUI to modular robot existing in simulation environment
-		JME_simulation.setPicker(new PhysicsPicker(true, true));//set default picker
-/*NOTE*/		instanceFlag = true;// the frame is instantiate
+		JME_simulation.setPicker(new PhysicsPicker(true, true));//set default picker(selection tool)
+		loadExistingControllers();// the existing interactive controllers
+/*NOTE*/		
+		instanceFlag = true;// the frame is instantiated
 		addWindowListener (new WindowAdapter() {
 	          public void windowClosing(WindowEvent e) {
 	        	  instanceFlag = false; // reset the flag after closing the frame
@@ -258,6 +271,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		simulationToolBar = new javax.swing.JToolBar();
 		pauseRunButton = new javax.swing.JButton();
 		stepByStepjButton = new javax.swing.JButton();
+		assignControllerjButton = new javax.swing.JButton();
 		savejButton = new javax.swing.JButton();
 		openjButton = new javax.swing.JButton();
 		renderjToolBar = new javax.swing.JToolBar();
@@ -267,6 +281,8 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		normalsjCheckBox = new javax.swing.JCheckBox();
 		lightsjCheckBox = new javax.swing.JCheckBox();
 		moduleGenericToolsJToolBar = new javax.swing.JToolBar();
+		entityForMovingjComboBox = new javax.swing.JComboBox();
+		controllersjComboBox = new javax.swing.JComboBox();
 		movejButton = new javax.swing.JButton();
 		deletejButton = new javax.swing.JButton();
 		alljCheckBox = new javax.swing.JCheckBox();
@@ -287,16 +303,18 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		loopjButton = new javax.swing.JButton();
 		nextjButton = new javax.swing.JButton();
 		previousjButton = new javax.swing.JButton();
-		labeljToolBar = new javax.swing.JToolBar();
+		assignLabeljToolBar = new javax.swing.JToolBar();
+		entityForLabeling= new javax.swing.JComboBox();
 		labelsjLabel = new javax.swing.JLabel();
 		currentLabeljTextField = new javax.swing.JTextField();
 		assignLabeljButton = new javax.swing.JButton();
 		removeLabeljButton = new javax.swing.JButton();
 		moduleLabelsToolBar = new javax.swing.JToolBar();
-		ModuleLabelsjLabel = new javax.swing.JLabel();
+		readLabelsjLabel = new javax.swing.JLabel();
 		moduleLabelsjComboBox = new javax.swing.JComboBox();
 		readLabelsjButton = new javax.swing.JButton();
 		AssistantjToolBar = new javax.swing.JToolBar();
+		controllersjToolBar = new javax.swing.JToolBar();
 		assistantjLabel = new javax.swing.JLabel();
 		AssistantjTextField = new javax.swing.JTextField();
 		testjButton = new javax.swing.JButton();
@@ -305,16 +323,18 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		OpenXMLJMenuItem = new javax.swing.JMenuItem();
 		saveAsjMenuItem = new javax.swing.JMenuItem();
 		jSeparator1 = new javax.swing.JSeparator();
+		jSeparator2 = new javax.swing.JSeparator();
 		ExitjMenuItem = new javax.swing.JMenuItem();
 		viewjMenu = new javax.swing.JMenu();
 		toolBarsjMenu = new javax.swing.JMenu();
+		controllersjCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
 		simulationjCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
 		renderjCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
 		moduleGenericToolsCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
 		modularRobotsjCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
 		constructionjCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
-		labeljCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
-		moduleLabelsjCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
+		assignLabeljCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
+		readLabelsjCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
 		assistantCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
 
 		getContentPane().setLayout(new java.awt.FlowLayout());
@@ -432,6 +452,21 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		getContentPane().add(renderjToolBar);
 
 		moduleGenericToolsJToolBar.setPreferredSize(new java.awt.Dimension(420, 40));
+		
+		/*KK*/
+		entityForMovingjComboBox.setFont(new java.awt.Font("Tahoma", 0, 12));
+		entityForMovingjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Module", "Component" }));
+		entityForMovingjComboBox.setToolTipText("Entity");
+		entityForMovingjComboBox.setPreferredSize(new java.awt.Dimension(120, 22));
+		entityForMovingjComboBox.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				entityForMovingjComboBoxActionPerformed(evt);
+			}			
+		});
+
+		moduleGenericToolsJToolBar.add(entityForMovingjComboBox);
+		
+		
 		//movejButton.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\kokuz06\\My Documents\\move.JPG"));
 		movejButton.setIcon(new javax.swing.ImageIcon(directoryForIcons + moveIcon));
 		movejButton.setToolTipText("Move");
@@ -453,18 +488,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		});
 
 		moduleGenericToolsJToolBar.add(deletejButton);
-
-		alljCheckBox.setFont(new java.awt.Font("Tahoma", 0, 12));
-		alljCheckBox.setText("all");
-		alljCheckBox.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-		alljCheckBox.setMargin(new java.awt.Insets(0, 0, 0, 0));
-		alljCheckBox.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				alljCheckBoxActionPerformed(evt);
-			}
-		});
-
-		moduleGenericToolsJToolBar.add(alljCheckBox);
+		moduleGenericToolsJToolBar.add(jSeparator2);
 
 		//colourConnectorsjButton.setIcon(new javax.swing.ImageIcon("C:\\Documents and Settings\\kokuz06\\My Documents\\colorConnectors.JPG"));
 		colourConnectorsjButton.setIcon(new javax.swing.ImageIcon(directoryForIcons + colourConnectorsIcon));
@@ -574,7 +598,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				onConnectorjButtonActionPerformed(evt);
 			}
-		});
+		});		
 
 		constructionToolBar.add(onConnectorjButton);
 
@@ -633,16 +657,27 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		constructionToolBar.add(previousjButton);
 
 		getContentPane().add(constructionToolBar);
+		
+		entityForLabeling.setFont(new java.awt.Font("Tahoma", 0, 12));
+		entityForLabeling.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Module", "Connector" }));
+		entityForLabeling.setToolTipText("Entity");
+		entityForLabeling.setPreferredSize(new java.awt.Dimension(120, 22));
+		entityForLabeling.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				entityForLabelingjComboBoxActionPerformed(evt);
+			}					
+		});
+		assignLabeljToolBar.add(entityForLabeling);
+		
 
-		labeljToolBar.setPreferredSize(new java.awt.Dimension(420, 40));
+		assignLabeljToolBar.setPreferredSize(new java.awt.Dimension(420, 40));
 		labelsjLabel.setFont(new java.awt.Font("Tahoma", 0, 12));
 		labelsjLabel.setText("Label:");
-		labeljToolBar.add(labelsjLabel);
-
+		assignLabeljToolBar.add(labelsjLabel);		
 		currentLabeljTextField.setFont(new java.awt.Font("Tahoma", 0, 12));
-		currentLabeljTextField.setText("type in label name or chose one below in comboBox");
-		labeljToolBar.add(currentLabeljTextField);
-
+		currentLabeljTextField.setText("type in label name ");
+		assignLabeljToolBar.add(currentLabeljTextField);	
+		
 		assignLabeljButton.setFont(new java.awt.Font("Tahoma", 0, 12));
 		assignLabeljButton.setText("Assign");
 		assignLabeljButton.addActionListener(new java.awt.event.ActionListener() {
@@ -651,7 +686,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 			}
 		});
 
-		labeljToolBar.add(assignLabeljButton);
+		assignLabeljToolBar.add(assignLabeljButton);
 
 		removeLabeljButton.setFont(new java.awt.Font("Tahoma", 0, 12));
 		removeLabeljButton.setText("Remove");
@@ -661,14 +696,14 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 			}
 		});
 
-		labeljToolBar.add(removeLabeljButton);
+		assignLabeljToolBar.add(removeLabeljButton);
 
-		getContentPane().add(labeljToolBar);
+		getContentPane().add(assignLabeljToolBar);
 
 		moduleLabelsToolBar.setPreferredSize(new java.awt.Dimension(420, 40));
-		ModuleLabelsjLabel.setFont(new java.awt.Font("Tahoma", 0, 12));
-		ModuleLabelsjLabel.setText("Module Labels:");
-		moduleLabelsToolBar.add(ModuleLabelsjLabel);
+		readLabelsjLabel.setFont(new java.awt.Font("Tahoma", 0, 12));
+		readLabelsjLabel.setText("Current Labels:");
+		moduleLabelsToolBar.add(readLabelsjLabel);
 
 		moduleLabelsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Labels" }));
 		moduleLabelsjComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -690,6 +725,34 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		moduleLabelsToolBar.add(readLabelsjButton);
 
 		getContentPane().add(moduleLabelsToolBar);
+		
+		
+		controllersjToolBar.setPreferredSize(new java.awt.Dimension(420, 35));
+		controllersjComboBox.setFont(new java.awt.Font("Tahoma", 0, 12));
+		controllersjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Epty",  }));
+		controllersjComboBox.setToolTipText("Entity");
+		controllersjComboBox.setPreferredSize(new java.awt.Dimension(120, 22));
+		controllersjComboBox.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				controllersjComboBoxActionPerformed(evt);
+			}
+		});	
+		
+		controllersjToolBar.add(controllersjComboBox);
+		
+		assignControllerjButton.setFont(new java.awt.Font("Tahoma", 0, 12));
+		assignControllerjButton.setText("Assign");
+		assignControllerjButton.setToolTipText("AssignController");
+		assignControllerjButton.setPreferredSize(new java.awt.Dimension(60, 43));
+		assignControllerjButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				assignControllerjButtonActionPerformed(evt);
+			}			
+		});
+		
+		controllersjToolBar.add(assignControllerjButton);
+		
+		getContentPane().add(controllersjToolBar);
 
 		AssistantjToolBar.setPreferredSize(new java.awt.Dimension(420, 35));
 		assistantjLabel.setText("Assistant:");
@@ -801,25 +864,36 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 
 		toolBarsjMenu.add(constructionjCheckBoxMenuItem);
 
-		labeljCheckBoxMenuItem.setText("Label");
-		labeljCheckBoxMenuItem.setSelected(true);
-		labeljCheckBoxMenuItem.addActionListener(new java.awt.event.ActionListener() {
+		assignLabeljCheckBoxMenuItem.setText("Assign Label");
+		assignLabeljCheckBoxMenuItem.setSelected(true);
+		assignLabeljCheckBoxMenuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				labeljCheckBoxMenuItemActionPerformed(evt);
 			}
 		});
 
-		toolBarsjMenu.add(labeljCheckBoxMenuItem);
+		toolBarsjMenu.add(assignLabeljCheckBoxMenuItem);
 
-		moduleLabelsjCheckBoxMenuItem.setText("Module Labels");
-		moduleLabelsjCheckBoxMenuItem.setSelected(true);
-		moduleLabelsjCheckBoxMenuItem.addActionListener(new java.awt.event.ActionListener() {
+		readLabelsjCheckBoxMenuItem.setText("Read Labels");
+		readLabelsjCheckBoxMenuItem.setSelected(true);
+		readLabelsjCheckBoxMenuItem.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				moduleLabelsjCheckBoxMenuItemActionPerformed(evt);
 			}
 		});
 
-		toolBarsjMenu.add(moduleLabelsjCheckBoxMenuItem);
+		toolBarsjMenu.add(readLabelsjCheckBoxMenuItem);
+		
+		
+		controllersjCheckBoxMenuItem.setText("Controllers");
+		controllersjCheckBoxMenuItem.setSelected(true);
+		controllersjCheckBoxMenuItem.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				controllersjCheckBoxMenuItemActionPerformed(evt);
+			}			
+		});
+
+		toolBarsjMenu.add(controllersjCheckBoxMenuItem);
 
 		assistantCheckBoxMenuItem.setText("Assistant");
 		assistantCheckBoxMenuItem.setSelected(true);
@@ -866,6 +940,26 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		guiUtil.passTo(AssistantjTextField,"Select one of MR names in comboBox(4th toolbar) ");// informing user
 
 	}
+	
+	private void loadExistingControllers(){
+		Class[] test=null;
+		try {
+			test = BuilderHelper.getClasses(packageName);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	Vector<String> classes = new Vector<String>();
+	for (int i=0; i<test.length;i++){
+		if (test[i].toString().contains("AssignController")){
+		//do nothing	
+		}else{
+		classes.add(test[i].toString().replace("class "+packageName+".", ""));
+		}
+	}
+	
+		controllersjComboBox.setModel(new javax.swing.DefaultComboBoxModel(classes.toArray()));
+	}
 
 	/**
 	 * Sets toolbar visible or invisible depeding on the current state of the toolbar. 
@@ -882,7 +976,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */
 	private void moduleLabelsjCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                              
 		System.out.println("View-->Toolbars-->Module labels");//for debugging
-		this.guiUtil.changeToolBarVisibility(moduleLabelsjCheckBoxMenuItem, moduleLabelsToolBar); 
+		this.guiUtil.changeToolBarVisibility(readLabelsjCheckBoxMenuItem, moduleLabelsToolBar); 
 	}                                                             
 
 	/**
@@ -891,7 +985,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */
 	private void labeljCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                       
 		System.out.println("View-->Toolbars-->Label");//for debugging
-		this.guiUtil.changeToolBarVisibility(labeljCheckBoxMenuItem, labeljToolBar);
+		this.guiUtil.changeToolBarVisibility(assignLabeljCheckBoxMenuItem, assignLabeljToolBar);
 	}                                                      
 
 	/**
@@ -922,7 +1016,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	}                                                                  
 
 	/**
-	 * Sets toolbar visible or invisible depeding on the current state of the toolbar. 
+	 * Sets toolbar visible or invisible depending on the current state of the toolbar. 
 	 * @param evt, selection with left side of the mouse event (jCheckBoxMenuItem selection).     
 	 */
 	private void renderjCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                        
@@ -931,7 +1025,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	}                                                       
 
 	/**
-	 * Sets toolbar visible or invisible depeding on the current state of the toolbar. 
+	 * Sets toolbar visible or invisible depending on the current state of the toolbar. 
 	 * @param evt, selection with left side of the mouse event (jCheckBoxMenuItem selection).     
 	 */
 	private void simulationjCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                            
@@ -957,32 +1051,29 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		
 	}                                           
 
+	
+	private void entityForLabelingjComboBoxActionPerformed(ActionEvent evt) {
+		this.entityToLabel = entityForLabeling.getSelectedItem().toString();		
+	}	
 	private void moduleLabelsjComboBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                      
 		//System.out.println("Module labels toolbar-->Labels comboBox");//for debugging
-
 		currentLabeljTextField.setText(moduleLabelsjComboBox.getSelectedItem().toString());
 	}                                                     
 
 
 	private void readLabelsjButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
 		System.out.println("Module labels toolbar-->Read");//for debugging     
-		//JME_simulation.setPicker(new ReadLabels(this));
-/*NOTE*/		//JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Module",LabelingTools.READ_LABELS, this));
-		/*NOTE*/		JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Connector",LabelingTools.READ_LABELS, this));
-	}                                                 
+		JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,LabelingTools.READ_LABELS, this));
+	}  
 
 	private void removeLabeljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   
-		System.out.println("Label toolbar-->Remove");//for debugging
-		//JME_simulation.setPicker(new AssignRemoveLabels(currentLabeljTextField.getText(),true));
-/*NOTE*/	JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Module",currentLabeljTextField.getText(),LabelingTools.DELETE_LABEL));
-		/*NOTE*/		//		 JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Connector",currentLabeljTextField.getText(),LabelingTools.DELETE_LABEL));                 
+		System.out.println("Label toolbar-->Remove");//for debugging		
+	JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,currentLabeljTextField.getText(),LabelingTools.DELETE_LABEL));				
 	}                                
 
 	private void assignLabeljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   
-		System.out.println("Label toolbar-->Assign");//for debugging
-		//JME_simulation.setPicker(new AssignRemoveLabels(currentLabeljTextField.getText(),false));
-		/*NOTE*/ JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Module",currentLabeljTextField.getText(),LabelingTools.LABEL_MODULE));
-		/*NOTE*/	//	JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Connector",currentLabeljTextField.getText(),LabelingTools.LABEL_CONNECTOR));
+		System.out.println("Label toolbar-->Assign");//for debugging		
+		 JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,currentLabeljTextField.getText(),LabelingTools.LABEL_MODULE));
 	}                                                  
 /*NOTE*/	ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.LOOP,0);
 	/**
@@ -1010,7 +1101,15 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 			this.connectorNr =7;//reset
 		}else if (this.chosenMRname.equalsIgnoreCase(secondModularRobot) && this.connectorNr<0){this.connectorNr=5;}
 		else if (this.chosenMRname.equalsIgnoreCase(thirdModularRobot) && this.connectorNr<0){this.connectorNr=11;}
-		constructionTools.moveToNextConnector(this.connectorNr);
+		
+		int amountModules = JME_simulation.getModules().size();
+		String lastModuleType = JME_simulation.getModules().get(amountModules-1).getProperty(BuilderHelper.getModuleTypeKey());
+		if (lastModuleType.equalsIgnoreCase("OdinBall")){
+			//do nothing
+		}else{
+			constructionTools.moveToNextConnector(this.connectorNr);
+		}
+		
 		guiUtil.passTo(AssistantjTextField,this.chosenMRname +" module is on connector number "+this.connectorNr);
 	}                                               
 
@@ -1029,7 +1128,13 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 			if (this.connectorNr>amountOdinBallConnectors){ this.connectorNr=0;}
 		}
 		//TODO NEED TO GET BACK FOR ODIN WHICH TYPE OF MODULE IS SELECTED. 
-		constructionTools.moveToNextConnector(this.connectorNr);
+		int amountModules = JME_simulation.getModules().size();
+		String lastModuleType = JME_simulation.getModules().get(amountModules-1).getProperty(BuilderHelper.getModuleTypeKey());
+		if (lastModuleType.equalsIgnoreCase("OdinBall")){
+			//do nothing
+		}else{
+			constructionTools.moveToNextConnector(this.connectorNr);
+		}
 		//else if (this.chosenMRname.equalsIgnoreCase("Odin")){
 		//if (this.connectorNr>amountOdinConnectors){ this.connectorNr=0;}
 		//}
@@ -1044,10 +1149,10 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void alljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
 		//System.out.println("Construction toolbar-->All");//for debugging 
-/*NOTE*/	//	JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));
-		JME_simulation.setPicker(new AssignController());
+/*NOTE*/ JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));
+		//JME_simulation.setPicker(new ModifyController());		
 		guiUtil.passTo(AssistantjTextField,"Select " +this.chosenMRname +" module");
-	}                                          
+	} 
 
 	/**
 	 * Initializes the tool for placing the modules on connector chosen in comboBox and later the module selected in simulation environment. 
@@ -1055,8 +1160,9 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void connectorsjComboBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                    
 		//System.out.println("Construction toolbar-->On chosen (comboBox) connector");//for debugging 
-		int connectorNumber = Integer.parseInt(connectorsjComboBox.getSelectedItem().toString());
-/*NOTE*/		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,connectorNumber));
+		this.connectorNr = Integer.parseInt(connectorsjComboBox.getSelectedItem().toString());
+		
+/*NOTE*/		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,this.connectorNr));
 		guiUtil.passTo(AssistantjTextField,"Select " +this.chosenMRname +" module");
 
 	}                                                   
@@ -1215,15 +1321,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		//System.out.println("Module generic toolbar-->Color connectors"); //for debugging         
 		guiUtil.passTo(AssistantjTextField, "Select module to color its connectors");// informing user
 		JME_simulation.setPicker(new ColorConnectors());
-	}                                                       
-
-	private void alljCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {                                             
-		if (alljCheckBox.isSelected()==true){
-			this.allCheckBoxSelected = true;
-		}else{
-			this.allCheckBoxSelected = false;
-		}
-	}                                            
+	}                                         
 
 	/**
 	 * Initializes the tool for deleting the modules in static state of simulation environment by 
@@ -1237,15 +1335,24 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	}                                             
 
 	/**
+	 * @param evt
+	 */
+	private void entityForMovingjComboBoxActionPerformed(ActionEvent evt) {
+		this.entityToMove = entityForMovingjComboBox.getSelectedItem().toString();		
+	}
+	/**
 	 * Initializes the tool for moving the modules in static state of simulation environment by 
 	 * selecting them with the left side of the mouse.
 	 * @param evt, selection with left side of the mouse event (jButton selection).     
 	 */	
 	private void movejButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
-		//System.out.println("Module generic toolbar-->Move"); //for debugging  
-		JME_simulation.setPicker(new PhysicsPicker(true, true));
-/*NOTE*/		//JME_simulation.setPicker(new PhysicsPicker(true, false));
-		guiUtil.passTo(AssistantjTextField, "Pick and move module");// informing user   
+		//System.out.println("Module generic toolbar-->Move"); //for debugging
+/*NOTE*/		if (this.entityToMove.equalsIgnoreCase("Module")){
+			JME_simulation.setPicker(new PhysicsPicker(true, true));
+		}else if (this.entityToMove.equalsIgnoreCase("Component")){
+			JME_simulation.setPicker(new PhysicsPicker(true, false));
+		}		
+		guiUtil.passTo(AssistantjTextField, "Pick and move "+ this.entityToMove);// informing user   
 
 	}                                           
 
@@ -1289,13 +1396,13 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void boundsjCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                
 		// System.out.println("Render toolbar-->Wireframe");//for debugging        
-		if ( JME_simulation.getWireState().isEnabled() == false ){        
+		if ( JME_simulation.isShowBounds() == false ){        
 			boundsjCheckBox.setSelected(true);
-			JME_simulation.getWireState().setEnabled(true);
+			JME_simulation.setShowBounds(true);
 			guiUtil.passTo(AssistantjTextField, "Rendering wireframe");// informing user
 		}else {            
 			boundsjCheckBox.setSelected(false);
-			JME_simulation.getWireState().setEnabled(false);
+			JME_simulation.setShowBounds(false);
 			guiUtil.passTo(AssistantjTextField, "Stopped rendering wireframe");// informing user
 		}        
 	}                                               
@@ -1423,7 +1530,25 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		//System.out.println("File-->Exit");//for debugging
 		instanceFlag = false; // reset the flag
 		this.dispose();    
-	}                                             
+	} 
+	
+	private void controllersjComboBoxActionPerformed(ActionEvent evt) {
+		this.controllerName = controllersjComboBox.getSelectedItem().toString();		
+	}	
+	
+	private void assignControllerjButtonActionPerformed(ActionEvent evt) {
+		JME_simulation.setPicker(new AssignController(packageName+"."+this.controllerName));
+		
+		
+	}
+	
+	private void controllersjCheckBoxMenuItemActionPerformed(ActionEvent evt) {
+		this.guiUtil.changeToolBarVisibility(controllersjCheckBoxMenuItem, controllersjToolBar);		
+	}
+	
+	
+
+
 
 	/**
 	 * @param args the command line arguments
@@ -1457,8 +1582,8 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();                
-				double width = screenDimension.getWidth()/2.8f;
-				double height = screenDimension.getHeight()/2.2f;
+				double width = screenDimension.getWidth()/2.5f;
+				double height = screenDimension.getHeight()/2.1f;
 				String newWidth = (width+"").replace(".","#");
 				String newHeight = (height+"").replace(".","#");
 				String[] splittedWidth  = newWidth.split("#");
@@ -1471,7 +1596,16 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 				//constructionToolBar.setSize(windowWidth,toolBarHeight);
 				//AssistantjToolBar.setSize(windowWidth,toolBarHeight);                
 				QuickPrototyping quickPrototyping = new QuickPrototyping(simulation);
-				quickPrototyping.setVisible(true);                
+				quickPrototyping.getAssistantjToolBar().setPreferredSize(new Dimension(windowWidth,toolBarHeight));
+				quickPrototyping.getControllersjToolBar().setPreferredSize(new Dimension(windowWidth,toolBarHeight));
+				quickPrototyping.getModularRoborGenericjToolBar().setPreferredSize(new Dimension(windowWidth,toolBarHeight));
+				quickPrototyping.getModuleGenericToolsJToolBar().setPreferredSize(new Dimension(windowWidth,toolBarHeight));
+				quickPrototyping.getModuleLabelsToolBar().setPreferredSize(new Dimension(windowWidth,toolBarHeight));
+				quickPrototyping.getConstructionToolBar().setPreferredSize(new Dimension(windowWidth,toolBarHeight));
+				quickPrototyping.getSimulationToolBar().setPreferredSize(new Dimension(windowWidth,toolBarHeight));
+				quickPrototyping.getLabeljToolBar().setPreferredSize(new Dimension(windowWidth,toolBarHeight));
+				quickPrototyping.getRenderjToolBar().setPreferredSize(new Dimension(windowWidth,toolBarHeight));
+				quickPrototyping.setVisible(true);				
 				quickPrototyping.setSize(windowWidth,windowHeight);
 			}
 		});
@@ -1488,12 +1622,49 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	public javax.swing.JTextField getCurrentLabeljTextField() {
 		return currentLabeljTextField;
 	}
+	
+	public javax.swing.JToolBar getAssistantjToolBar() {
+		return AssistantjToolBar;
+	}	
+
+	public javax.swing.JToolBar getConstructionToolBar() {
+		return constructionToolBar;
+	}
+
+	public javax.swing.JToolBar getModularRoborGenericjToolBar() {
+		return modularRoborGenericjToolBar;
+	}
+
+	public javax.swing.JToolBar getModuleGenericToolsJToolBar() {
+		return moduleGenericToolsJToolBar;
+	}	
+
+	public javax.swing.JToolBar getModuleLabelsToolBar() {
+		return moduleLabelsToolBar;
+	}
+	
+	public javax.swing.JToolBar getLabeljToolBar() {
+		return assignLabeljToolBar;
+	}
+
+	public javax.swing.JToolBar getRenderjToolBar() {
+		return renderjToolBar;
+	}
+
+	public javax.swing.JToolBar getSimulationToolBar() {
+		return simulationToolBar;
+	}
+
+	public javax.swing.JToolBar getControllersjToolBar() {
+		return controllersjToolBar;
+	}
 
 	// Variables declaration - do not modify                     
 	private javax.swing.JTextField AssistantjTextField;
 	private javax.swing.JToolBar AssistantjToolBar;
+	private javax.swing.JToolBar controllersjToolBar;
 	private javax.swing.JMenuItem ExitjMenuItem;
-	private javax.swing.JLabel ModuleLabelsjLabel;
+	private javax.swing.JLabel readLabelsjLabel;
 	private javax.swing.JMenuItem OpenXMLJMenuItem;
 	private javax.swing.JButton alljButton;
 	private javax.swing.JCheckBox alljCheckBox;
@@ -1502,6 +1673,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	private javax.swing.JLabel assistantjLabel;
 	private javax.swing.JCheckBox boundsjCheckBox;
 	private javax.swing.JComboBox cartesianCoordinatejComboBox;
+	private javax.swing.JComboBox controllersjComboBox;
 	private javax.swing.JButton colourConnectorsjButton;
 	private javax.swing.JComboBox connectorsjComboBox;
 	private javax.swing.JToolBar constructionToolBar;
@@ -1512,9 +1684,11 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	private javax.swing.JMenu filejMenu;
 	private javax.swing.JMenuBar jMenuBar1;
 	private javax.swing.JSeparator jSeparator1;
-	private javax.swing.JCheckBoxMenuItem labeljCheckBoxMenuItem;
-	private javax.swing.JToolBar labeljToolBar;
+	private javax.swing.JSeparator jSeparator2;
+	private javax.swing.JCheckBoxMenuItem assignLabeljCheckBoxMenuItem;
+	private javax.swing.JToolBar assignLabeljToolBar;
 	private javax.swing.JLabel labelsjLabel;
+	private javax.swing.JComboBox entityForLabeling;
 	private javax.swing.JCheckBox lightsjCheckBox;
 	private javax.swing.JButton loopjButton;
 	private javax.swing.JToolBar modularRoborGenericjToolBar;
@@ -1523,8 +1697,9 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	private javax.swing.JCheckBoxMenuItem moduleGenericToolsCheckBoxMenuItem;
 	private javax.swing.JToolBar moduleGenericToolsJToolBar;
 	private javax.swing.JToolBar moduleLabelsToolBar;
-	private javax.swing.JCheckBoxMenuItem moduleLabelsjCheckBoxMenuItem;
+	private javax.swing.JCheckBoxMenuItem readLabelsjCheckBoxMenuItem;
 	private javax.swing.JComboBox moduleLabelsjComboBox;
+	private javax.swing.JComboBox entityForMovingjComboBox;
 	private javax.swing.JButton movejButton;
 	private javax.swing.JButton nextjButton;
 	private javax.swing.JCheckBox normalsjCheckBox;
@@ -1544,15 +1719,14 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	private javax.swing.JButton savejButton;
 	private javax.swing.JToolBar simulationToolBar;
 	private javax.swing.JCheckBoxMenuItem simulationjCheckBoxMenuItem;
+	private javax.swing.JCheckBoxMenuItem controllersjCheckBoxMenuItem;
 	private javax.swing.JComboBox standardRotationsjComboBox;
 	private javax.swing.JButton stepByStepjButton;
 	private javax.swing.JButton testjButton;
+	private javax.swing.JButton assignControllerjButton;	
 	private javax.swing.JMenu toolBarsjMenu;
 	private javax.swing.JButton variatejButton;
 	private javax.swing.JMenu viewjMenu;
 	private javax.swing.JCheckBox wireFramejCheckBox;
-	// End of variables declaration                   
-
-	
-
+	// End of variables declaration
 }
