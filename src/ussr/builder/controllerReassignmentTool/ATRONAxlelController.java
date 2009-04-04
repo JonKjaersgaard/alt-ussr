@@ -3,7 +3,7 @@ package ussr.builder.controllerReassignmentTool;
 import ussr.model.Module;
 import ussr.samples.atron.ATRONController;
 
-public class ATRONWheelController {
+public class ATRONAxlelController {
 
 	private ATRONController controller;
 	
@@ -19,9 +19,6 @@ public class ATRONWheelController {
 	public void activate (Module selectedModule){
 		System.out.println("INNNNN");
 		controller = (ATRONController)selectedModule.getController();
-			controller.rotateContinuous(1);// to the right			
-		//controller.rotateContinuous(-1);// to the left		
-			//controller.rotate(20);// specific amount of degrees
-		
+			controller.rotateDegrees(20);		
 	}
 }

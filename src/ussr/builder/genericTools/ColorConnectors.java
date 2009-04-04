@@ -16,8 +16,8 @@ public class ColorConnectors extends CustomizedPicker {
 	/**
 	 * Array containing 12 colours for 12 connectors. 
 	 */
-	private static final Color colors[] = {Color.BLACK,Color.BLUE,Color.CYAN,Color.GRAY,Color.GREEN,Color.MAGENTA,
-		                                    Color.ORANGE,Color.PINK,Color.RED,Color.WHITE,Color.YELLOW,Color.LIGHT_GRAY};
+	private static final Color colors[] = {Color.BLACK,Color.RED,Color.CYAN,Color.GRAY,Color.GREEN,Color.MAGENTA,
+		                                    Color.ORANGE,Color.PINK,Color.BLUE,Color.WHITE,Color.YELLOW,Color.LIGHT_GRAY};
 	
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
 	 * Here not used, because it is enough of pickModuleComponent(JMEModuleComponent component) method (look beneath).

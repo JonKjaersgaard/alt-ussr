@@ -76,8 +76,8 @@ import ussr.samples.odin.modules.Odin;
  *         b) "Delete icon" - is the selection tool, where after selecting the module with left side of the mouse
  *            it is deleted(removed)from simulation environment;
  *         c) "C"- is the selection tool, where after selecting the module with left side of the mouse
- *            its connectors are coloured with colour coding. The format is Connector-Colour: 0-Black, 1-Blue,
- *            2-Cyan, 3-Grey, 4-Green, 5-Magenta, 6-Orange, 7-Pink, 8-Red, 9-White, 10-Yellow, 11-Light Grey.
+ *            its connectors are coloured with colour coding. The format is Connector-Colour: 0-Black, 1-Red,
+ *            2-Cyan, 3-Grey, 4-Green, 5-Magenta, 6-Orange, 7-Pink, 8-Blue, 9-White, 10-Yellow, 11-Light Grey.
  *         d) "Cartesian coordinates (in ComboBox (x,y and z))", "TextField for angle of rotation" and "Rotate Icon"
  *            are used together to rotate components of the modules with specific angle. First choose one of the cartesian
  *            coordinates in ComboBox (for example: "x"), after that enter the angle in degrees in TextField and at last select
@@ -224,7 +224,8 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	
 	private String controllerName;
 	
-	private static final String packageName = "ussr.builder.controllerReassignmentTool";
+	private static final String packageName = "ussr.builder.controllerReassignmentTool";	
+	
 
 	/**
 	 * The names of the tools for contsruction or robot morphology
@@ -937,7 +938,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 /*NOTE*/		cartesianCoordinatejComboBox.setSelectedIndex(0);
 		nextjButton.setEnabled(false);
 		previousjButton.setEnabled(false);
-		guiUtil.passTo(AssistantjTextField,"Select one of MR names in comboBox(4th toolbar) ");// informing user
+		guiUtil.passTo(AssistantjTextField,"Select one of the MR names in comboBox (4th toolbar from the top) ");// informing user
 
 	}
 	
@@ -962,7 +963,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	}
 
 	/**
-	 * Sets toolbar visible or invisible depeding on the current state of the toolbar. 
+	 * Sets toolbar visible or invisible depending on the current state of the toolbar. 
 	 * @param evt, selection with left side of the mouse event (jCheckBoxMenuItem selection).     
 	 */
 	private void assistantCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                          
@@ -971,7 +972,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	}                                                         
 
 	/**
-	 * Sets toolbar visible or invisible depeding on the current state of the toolbar. 
+	 * Sets toolbar visible or invisible depending on the current state of the toolbar. 
 	 * @param evt, selection with left side of the mouse event (jCheckBoxMenuItem selection).     
 	 */
 	private void moduleLabelsjCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                              
@@ -980,7 +981,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	}                                                             
 
 	/**
-	 * Sets toolbar visible or invisible depeding on the current state of the toolbar. 
+	 * Sets toolbar visible or invisible depending on the current state of the toolbar. 
 	 * @param evt, selection with left side of the mouse event (jCheckBoxMenuItem selection).     
 	 */
 	private void labeljCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                       
@@ -989,7 +990,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	}                                                      
 
 	/**
-	 * Sets toolbar visible or invisible depeding on the current state of the toolbar. 
+	 * Sets toolbar visible or invisible depending on the current state of the toolbar. 
 	 * @param evt, selection with left side of the mouse event (jCheckBoxMenuItem selection).     
 	 */
 	private void constructionjCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                                              
@@ -1052,28 +1053,42 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	}                                           
 
 	
+	/**
+	 *  Identifies which entity was chosen for labeling.
+	 * @param evt
+	 */
 	private void entityForLabelingjComboBoxActionPerformed(ActionEvent evt) {
 		this.entityToLabel = entityForLabeling.getSelectedItem().toString();		
 	}	
+	/**
+	 * @param evt
+	 */
 	private void moduleLabelsjComboBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                      
-		//System.out.println("Module labels toolbar-->Labels comboBox");//for debugging
+		//System.out.println("Labels toolbar-->Labels comboBox");//for debugging
 		currentLabeljTextField.setText(moduleLabelsjComboBox.getSelectedItem().toString());
 	}                                                     
 
 
+	/**
+	 *  Reads and displays the labels of the chosen entity (module or connector)
+	 * @param evt
+	 */
 	private void readLabelsjButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
-		System.out.println("Module labels toolbar-->Read");//for debugging     
+		System.out.println("Labels toolbar-->Read");//for debugging     
 		JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,LabelingTools.READ_LABELS, this));
+		guiUtil.passTo(AssistantjTextField,"Select "+ this.entityToLabel.toLowerCase()+ " to display its labels");
 	}  
 
 	private void removeLabeljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   
 		System.out.println("Label toolbar-->Remove");//for debugging		
-	JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,currentLabeljTextField.getText(),LabelingTools.DELETE_LABEL));				
+	    JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,currentLabeljTextField.getText(),LabelingTools.DELETE_LABEL));
+	    guiUtil.passTo(AssistantjTextField,"Select "+ this.entityToLabel.toLowerCase()+ " to remove the label: "+  currentLabeljTextField.getText());
 	}                                
 
 	private void assignLabeljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   
 		System.out.println("Label toolbar-->Assign");//for debugging		
 		 JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,currentLabeljTextField.getText(),LabelingTools.LABEL_MODULE));
+		 guiUtil.passTo(AssistantjTextField,"Select "+ this.entityToLabel.toLowerCase()+ " to assign to it the label: " + currentLabeljTextField.getText());
 	}                                                  
 /*NOTE*/	ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.LOOP,0);
 	/**
@@ -1246,6 +1261,8 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 			//com1.addDefaultConstructionModule(this.chosenMRname,mtranPosition );
 			//com2.addDefaultConstructionModule(this.chosenMRname,mtranPosition );
 		}
+		guiUtil.passTo(AssistantjTextField,"Now choose one of the tools in the toolbar beneath (nr 5 from the top)");        
+		
 
 	}                                                    
 
@@ -1296,7 +1313,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		}
 		nextjButton.setEnabled(false);
 		previousjButton.setEnabled(false);
-		guiUtil.passTo(AssistantjTextField,this.chosenMRname +" modular robot (MR) is chosen");        
+		guiUtil.passTo(AssistantjTextField,this.chosenMRname +" modular robot (MR) is chosen. Now press button 'Default'");        
 	}                                                     
 
 	/**
@@ -1538,7 +1555,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	
 	private void assignControllerjButtonActionPerformed(ActionEvent evt) {
 		JME_simulation.setPicker(new AssignController(packageName+"."+this.controllerName));
-		
+		guiUtil.passTo(AssistantjTextField,"Select " + this.chosenMRname +" module to assign controller: " +this.controllerName);// informing user
 		
 	}
 	

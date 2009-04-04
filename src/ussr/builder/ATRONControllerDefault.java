@@ -36,7 +36,7 @@ public class ATRONControllerDefault extends ATRONController  {
                 //Rotate around to the right
                 //rotateAround(labels,dir,  false); 
                 
-            //driveForward (labels, dir); //for snake turns it in circles to the left
+            driveForward (labels, dir); //for snake turns it in circles to the left
            //driveForward (labels, -dir); // for snake turns it in circles to the right        
                 }  
             }            
@@ -54,8 +54,8 @@ public class ATRONControllerDefault extends ATRONController  {
         if(labels.contains("wheel5")) rotateContinuous(dir);
         if(labels.contains("wheel6")) rotateContinuous(dir);
         
-       // if(labels.contains("axleFront")&& simulation.getTime()>20&&simulation.getTime()<30)rotate(45) ;
-        
+        //if(labels.contains("axleFront")) rotateDegrees(45);
+     
 	}
 	
 	private void rotateAround(String labels,byte dir, boolean toLeft){
