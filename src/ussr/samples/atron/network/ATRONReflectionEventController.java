@@ -9,8 +9,16 @@ public class ATRONReflectionEventController extends ATRONController {
     ReflectionConnection rcConnection;
     EventConnection eventConnection;
 
+    private void printTopology(){
+    	for(int i=0;i<8;i++) {
+    		if(isConnected(i)) {
+    			System.out.println("Module "+getName()+" is connected on connector "+i);
+    		}
+    	}
+    }
     public void activate() {
     	super.setup();
+    	printTopology();
         String portRCDescription = super.getModule().getProperty("portRC");
         String portEventDescription = super.getModule().getProperty("portEvent");
         if(portRCDescription==null||portEventDescription==null) {

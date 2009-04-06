@@ -78,8 +78,13 @@ public class RadioConnection {
 				while(true) {
 					System.out.println("Radio connection waiting for packet");
 					String data = reader.readLine();
-					System.out.println("Radio connection got packet: "+format(data));
-					sendDataToUSSR(data.getBytes());//toCharArray()
+					if(data!=null) {
+						System.out.println("Radio connection got packet: "+format(data));
+						sendDataToUSSR(data.getBytes());//toCharArray()
+					}
+					else {
+						System.err.println("Warning: packet was null");
+					}
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
