@@ -7,8 +7,8 @@ import java.awt.Color;
 import com.jme.scene.Spatial;
 
 /**
- *  Helping tool. Colours the connectors of the module selected with the left side of the mouse in simulation environment. 
- *  Currently supports up to 12 connectors coloured with different colours.
+ *  Helping tool. Colors the connectors of the module selected with the left side of the mouse in simulation environment. 
+ *  Currently supports up to 12 connectors colored with different colors.
  *  @author Konstantinas
  */
 public class ColorConnectors extends CustomizedPicker {

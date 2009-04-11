@@ -4,8 +4,8 @@ definition of construction tools (interactive tools) for construction of modular
 The approach is common for all supported modular robots, but implementation algorithms slightly 
 differ.That is why TEMPLATE METHOD pattern is used. Moreover to indicate that in order
 to support new modular robot, new implementation is needed. Meaning that the core implementation
-of the template methods should not change, only the primitive operation should. The code was 
-tested on ATRON, MTRAN and Odin modular robots and as a result they are supported.
+of the template methods should not change, only the primitive operation should. There is also
+involved Abstract Factory design pattern. The code was tested on ATRON, MTRAN and Odin modular robots and as a result they are supported.
 HOWTO. Support new modular robot?
  1)Create new class and inherit it from ModularRobotConstructionTemplate.java
  2)Implement inherited abstract methods, like updateModuleMap(float x, float y, float z),

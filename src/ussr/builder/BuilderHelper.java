@@ -297,7 +297,7 @@ public class BuilderHelper {
 		}       
 	}
 
-
+	//FIXME FIND BETTER PLACE FOR ME
 	public static Class[] getClasses(String pckgname)
 	throws ClassNotFoundException {
 		ArrayList<Class> classes = new ArrayList<Class>();
@@ -338,7 +338,5 @@ public class BuilderHelper {
 		classes.toArray(classesA);
 		return classesA;
 	}
-
-
 
 }

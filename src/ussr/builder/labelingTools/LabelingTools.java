@@ -2,7 +2,7 @@ package ussr.builder.labelingTools;
 
 /**
  * Tools supported by builder(Quick Prototyping of Simulation Scenarios) and 
- * used for labeling entities like for example modules and connectors in  modular robot's morphology.  
+ * used for labeling entities like for example modules and connectors in modular robot's morphology.  
  * @author Konstantinas
  */
 public enum LabelingTools {
@@ -17,5 +17,5 @@ LABEL_CONNECTOR,
 DELETE_LABEL,
 /*The tool where user selects the module or connector on the module in simulation environment and 
  * all labels assigned to it are displayed to the user*/
-READ_LABELS
+READ_LABELS; 
 }

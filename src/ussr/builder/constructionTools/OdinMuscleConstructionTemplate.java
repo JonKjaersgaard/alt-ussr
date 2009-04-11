@@ -26,7 +26,7 @@ public class OdinMuscleConstructionTemplate extends OdinConstructionTemplate  {
 	 *  Offset to move Structure Link and Telescoping(also called OdinMuscle) link with respect to CCP joint connectors(also called OdinBall).
 		0.03+0.035/2 +-0.015, means (OdinMuscle-->CylinderShape-->height/2)+(ODINMuscle-->coneCap1-->radius/2)+-tolerance
 	 */
-	private final static float offset =0.046f;	
+	private final static float OFFSET =0.046f;	
 	
 	/**
 	 * Supports OdinMuscle construction with respect to OdinBall
@@ -75,7 +75,7 @@ public class OdinMuscleConstructionTemplate extends OdinConstructionTemplate  {
 					}else {/*move the component to new position with new rotation*/
 					moveModuleComponent(moduleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
 					}
-				}				
+				}					
 			}			
 		}
 	}
@@ -88,17 +88,16 @@ public class OdinMuscleConstructionTemplate extends OdinConstructionTemplate  {
 	 * @param z, the amount of z coordinate of current position of component
 	 * @return moduleMap, updated array of objects.
 	 */
-// TODO IS IT GOOD WAY TO DO THAT?
 	public void updateModuleMap(float x, float y, float z){
 
 		/*Different offsets along each of coordinate axes.
 		 *This is done to get the position of newly added component of the module (movable module) with respect to selected one*/
-		float xPlusOffset = x+offset;
-		float xMinusOffset = x-offset;
-		float yPlusOffset = y+offset;
-		float yMinusOffset = y-offset;
-		float zPlusOffset = z+offset;
-		float zMinusOffset = z-offset;	
+		float xPlusOffset = x+OFFSET;
+		float xMinusOffset = x-OFFSET;
+		float yPlusOffset = y+OFFSET;
+		float yMinusOffset = y-OFFSET;
+		float zPlusOffset = z+OFFSET;
+		float zMinusOffset = z-OFFSET;	
 
 		/*Array containing the data for adding the new movable component(module) with respect to selected module.
 		 * The format of the object is: (connector number on selected module, the rotation of selected module, the rotation of new movable module, the position of new movable module*/ 

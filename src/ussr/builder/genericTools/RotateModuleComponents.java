@@ -3,7 +3,6 @@ package ussr.builder.genericTools;
 import com.jme.math.Matrix3f;
 import com.jme.math.Quaternion;
 import com.jme.scene.Spatial;
-
 import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.physics.jme.JMEModuleComponent;

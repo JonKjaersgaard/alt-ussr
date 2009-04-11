@@ -1,11 +1,7 @@
 package ussr.builder.constructionTools;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JOptionPane;
 import com.jme.scene.Spatial;
-import com.jme.scene.TriMesh;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
@@ -40,16 +36,6 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * Supported modular robots: ATRON, MTRAN and Odin.
 	 */
 	private static final String ATRON = "ATRON",MTRAN = "MTRAN", ODIN = "Odin";
-		
-	/**
-	 * Symbol used to extract the connector number from the string.  
-	 */
-	private static final String SPLIT_SYMBOL = "#";
-	
-	/**
-	 * The identifier user to locate the string.
-	 */
-	private static final String CONNECTOR ="Connector";
 		
     /**
      * The module selected in simulation environment with the left side of the mouse.

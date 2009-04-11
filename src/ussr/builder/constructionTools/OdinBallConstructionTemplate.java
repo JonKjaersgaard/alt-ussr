@@ -90,7 +90,6 @@ public class OdinBallConstructionTemplate extends OdinConstructionTemplate  {
 	 * @param z, the value of z coordinate of current position of component
 	 * @return moduleMap, updated array of objects.
 	 */
-//FIXME IS  IT A GOOD WAY TO DO THAT?
 	public void updateModuleMap(float x, float y, float z){
 
 		/*Different offsets along each of coordinate axes.

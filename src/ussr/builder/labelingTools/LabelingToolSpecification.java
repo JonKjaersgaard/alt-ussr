@@ -1,8 +1,8 @@
 package ussr.builder.labelingTools;
 
+import javax.swing.JOptionPane;
 import com.jme.scene.Spatial;
-import com.jme.scene.TriMesh;
-
+import ussr.builder.BuilderHelper;
 import ussr.builder.QuickPrototyping;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
@@ -11,7 +11,7 @@ import ussr.physics.jme.pickers.CustomizedPicker;
 
 /**
  * The main responsibility of this class is to specify the tool for labeling of
- * entities composing the module and module itself . In order to do that, some parameters should be passed in 
+ * entities composing the module and module itself. In order to do that, some parameters should be passed in 
  * constructor others are extracted from simulation environment (when user selects the
  * modules or connectors on the modules).
  * @author Konstantinas
@@ -22,7 +22,7 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 * The physical simulation.
 	 */
 	private JMESimulation simulation;
-	
+
 	/**
 	 * The module selected in simulation environment.
 	 */
@@ -32,38 +32,27 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 * The label to assign to entity.
 	 */
 	private String label;	
-	
+
 	/**
 	 * The name of the tool to be used.
 	 */
 	private LabelingTools toolName;	
-	
+
 	/**
 	 * The interface to labeling.
 	 */
 	private Labeling labeling;
-	
+
 	/**
 	 * The object of GUI.
 	 */
 	private QuickPrototyping quickPrototyping;
-	
+
 	/**
 	 * The connector number on the module, selected with the left side of mouse in simulation environment. 
 	 */	
 	private int selectedConnectorNr = 1000;//just to avoid having default 0 value, which is also number of connector. 
-	
-	/**
-	 * Symbol used to extract the connector number from the string.  
-	 */
-	private static final String SPLIT_SYMBOL = "#";
-	
-	/**
-	 * The identifier, used to locate the string.
-	 */
-	private static final String CONNECTOR ="Connector";
-	
-	
+
 	/**
 	 * For calling tools handling labeling of entities, in particular tools like "LABEL_MODULE","LABEL_CONNECTOR" and "DELETE_LABEL". 
 	 * @param simulation, the physical simulation.
@@ -77,7 +66,7 @@ public class LabelingToolSpecification extends CustomizedPicker {
 		this.toolName = toolName;
 		this.labeling = new LabelingFactory().getLabeling(entityToLabel);		
 	}
-	
+
 	/**
 	 * For calling tools handling labeling of entities, in particular tool called "READ_LABELS". 
 	 * @param simulation, the physical simulation.
@@ -90,7 +79,7 @@ public class LabelingToolSpecification extends CustomizedPicker {
 		this.toolName = toolName;
 		this.labeling = new LabelingFactory().getLabeling(entityToLabel);
 		this.quickPrototyping = quickPrototyping;
-		
+
 	}
 
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
@@ -102,34 +91,41 @@ public class LabelingToolSpecification extends CustomizedPicker {
 		this.selectedModule = component.getModel();
 		callSpecificTool();
 	}
-	
-	@Override
-	protected void pickTarget(Spatial target) {
-		if(target instanceof TriMesh) {			
-			String name = simulation.getGeometryName((TriMesh)target);
-			if(name!=null && name.contains(CONNECTOR)){							
-				String [] temp = null;	         
-				temp = name.split(SPLIT_SYMBOL);// Split by #, into two parts, line describing the connector. For example "Connector 1 #1"
-				this.selectedConnectorNr= Integer.parseInt(temp[1].toString());// Take only the connector number, in above example "1" (at the end)
-				System.out.println("Connector: "+this.selectedConnectorNr);//For debugging	
-			}
-		}	
-		
-	}
-	
-	/**
-	 * Calls the tool for labeling of entities. 
+
+	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
+	 * Here the connector number is extracted from the string of TriMesh. Initial format of string is for example: "Connector 1 #1"
+	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickTarget(com.jme.scene.Spatial)
 	 */
-	private void callSpecificTool(){		
-	if (toolName.equals(LabelingTools.LABEL_CONNECTOR)|| toolName.equals(LabelingTools.LABEL_MODULE) ){				
-		this.labeling.labelEntity(this);
-	}else if (toolName.equals(LabelingTools.READ_LABELS)){		
-		this.labeling.readLabels(this);
-	}else if (toolName.equals(LabelingTools.DELETE_LABEL)){		
-		this.labeling.removeLabel(this);
+	protected void pickTarget(Spatial target) {		
+		this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);		
 	}
+
+	/**
+	 * Calls specific tool for labeling of entities. 
+	 */
+	private void callSpecificTool(){
+
+		switch(toolName){
+		case LABEL_CONNECTOR:
+			if (selectedConnectorNr == 1000){// in case when user selects the module instead of connector  				
+				 JOptionPane.showMessageDialog(null, "You do not selected connector. Please zoom in and select the connector instead. ","Error", JOptionPane.ERROR_MESSAGE);				
+			}else{
+			this.labeling.labelSpecificEntity(this);
+			}
+			break;
+		case LABEL_MODULE:
+			this.labeling.labelSpecificEntity(this);
+			break;
+		case READ_LABELS:	
+			this.labeling.readLabels(this);
+			break;
+		case DELETE_LABEL:	
+			this.labeling.removeLabel(this);
+			break;
+		default: throw new Error ("The tool name:" +toolName+ ", is not supported yet");
+		}
 	}
-	
+
 	/**
 	 * Returns the module selected in simulation environment and associated with the tool.
 	 * @return selectedModule,the module selected in simulation environment and associated with the tool.
@@ -145,7 +141,7 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	public String getLabel() {
 		return label;
 	}
-	
+
 	/**
 	 * Returns the connector number selected in simulation environment and associated with the tool.
 	 * @return selectedConnectorNr, the connector number selected in simulation environment and associated with the tool.

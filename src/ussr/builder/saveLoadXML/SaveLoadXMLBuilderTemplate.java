@@ -18,12 +18,10 @@ import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 
 /**
+ * This class is responsible for current definition of the XML format of saving and loading
+ * for builder (QPSS).
  * @author Konstantinas
- *
- */
-//FIXME 1) UPDATE COMMENTS
-//FIXME 2) FIX EXISTING IMPROVEMENTS
-//      3) MORE REFACTORING    
+ */  
 public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 	/**
@@ -116,10 +114,9 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 		int amountModules = simulation.getModules().size();
 		/*For each module print out the start and end tags with relevant data*/
 		for (int module=0; module<amountModules;module++){           
-			Module currentModule = simulation.getModules().get(module);
-			//if (currentModule.getProperty(BuilderHelper.getModuleDeletionKey())==null){/*means it is not deleted in simulation environment*/				
+			Module currentModule = simulation.getModules().get(module);			
 				try {				
-					transformerHandler.startElement("","",secondTag,emptyAtt);				
+					transformerHandler.startElement("","",secondTag,EMPTY_ATT);				
 					printSubTagsWithValue(transformerHandler, idTag, getID(currentModule));				
 					printSubTagsWithValue(transformerHandler, typeTag, getType(currentModule));
 					printSubTagsWithValue(transformerHandler, nameTag, getName(currentModule));
@@ -137,10 +134,8 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 					printInfoConnectors(transformerHandler,getInfoConnectors(currentModule, true), getInfoConnectors(currentModule, false));						
 					transformerHandler.endElement("","",secondTag);
 				} catch (SAXException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
-			//}
+					throw new Error ("SAX exception appeared and named as: "+ e.toString());
+				}			
 		}
 		printFirstEndTag(transformerHandler, firstTag);		
 	}
@@ -166,14 +161,11 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 				String labelsModule = extractTagValue(firstElmnt,labelsModuleTag);
 			/*	if (labelsModule.contains(BuilderHelper.getTempLabel())){
 					labelsModule = labelsModule.replaceAll(BuilderHelper.getTempLabel(), "");
-				}*/
-				
+				}*/				
 				
 				int amountComponents = Integer.parseInt(extractTagValue(firstElmnt,componentsTag));
 				String colorsComponents = extractTagValue(firstElmnt,coloursComponentsTag);				
-				LinkedList<Color> listColorsComponents = extractColorsComponents(amountComponents, colorsComponents);
-				
-				
+				LinkedList<Color> listColorsComponents = extractColorsComponents(amountComponents, colorsComponents);				
 				
 				int amountConnectors = Integer.parseInt(extractTagValue(firstElmnt,connectorsTag));
 				String colorsConnectors = extractTagValue(firstElmnt,coloursConnectorsTag);				
@@ -191,10 +183,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 				/*Solution1*///createNewModule(simulation,moduleName,moduleType,vd/*new VectorDescription(extract(modulePosition, "X"),extract(modulePosition, "Y"),extract(modulePosition, "Z"))*/,nd ,listColorsComponents,listColorsConnectors);
 				/*Solution2*/createNewModule(simulation,moduleName,moduleType,new VectorDescription(extractFromPosition(modulePosition, "X"),extractFromPosition(modulePosition, "Y"),extractFromPosition(modulePosition, "Z")),rotationDescription ,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
 				
-						
-				
-				
-				
+//FIXME IN CASE THERE IS A NEED TO EXTRACT THE STATE OF CONNECTORS
 				/*	NodeList sixthNmElmntLst = fstElmnt.getElementsByTagName("CONNECTOR");
 				int amountConnectorNodes = sixthNmElmntLst.getLength();
 				System.out.println("amountConnectorNodes:"+amountConnectorNodes );
@@ -247,6 +236,12 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 		//setColorsConnectors(simulation,newModule.getID(),colorsConnectors);		
 	}
 
+	/**
+	 * Extracts the value of specific coordinate from the string of VectorDescription.
+	 * @param textString, the string  of VectorDescription. 
+	 * @param coordinate, the coordinate to extract.
+	 * @return the value of the coordinate.
+	 */
 	private float extractFromPosition(String textString, String coordinate){		
 		String cleanedTextString1 =textString.replace("(", "");
 		String cleanedTextString2 =cleanedTextString1.replace(")", "");
@@ -263,6 +258,12 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 		return extractedValue; 
 	}	
 
+	/**
+	 * Extracts the value of specific coordinate from the string of Vector3f.
+	 * @param textString, the string  of Vector3f. 
+	 * @param coordinate, the coordinate to extract.
+	 * @return the value of the coordinate.
+	 */
 	public float extractVector(String textString, String coordinate){
 		//String cleanedTextString1 =textString.replace("[", "");
 		textString =textString.replace("]", "");

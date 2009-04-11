@@ -3,24 +3,19 @@ package ussr.builder.controllerReassignmentTool;
 import ussr.model.Module;
 import ussr.samples.odin.OdinController;
 
-public class OdinMuscleWheelControllerNegative {
+public class OdinMuscleWheelControllerNegative extends ControllerStrategy {
 
-	private OdinController controller;
+	/**
+	 * Controller implementation for Odin modular robot.
+	 */
+	private OdinController controller;	
 	
-	/*private Module selectedModule;
-	public WheelController(Module selectedModule){
-		this.selectedModule =selectedModule;
-	}*/
-	
-	
-	
-	
-	
-	public void activate (Module selectedModule){
-		System.out.println("INNNNN");
-		controller = (OdinController)selectedModule.getController();
-		
-			controller.actuateContinuous(-0.5f);// to the right			
-		
+	/**
+	 * The method which will is activated when this class is instantiated by the tool called "AssignControllerTool"
+	 * @param selectedModule, the module selected in simulation environment
+	 */
+	public void activate (Module selectedModule){		
+		controller = (OdinController)selectedModule.getController();		
+			controller.actuateContinuous(-0.5f);// to the right				
 	}
 }

@@ -106,7 +106,7 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 	 * @param selectedModule,  the Odin module selected in simulation environment
 	 * @param newMovableModule, the new Odin module to move
 	 */	
-	public void moveModuleComponentAccording(int connectorNr,Module selectedModule, JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent,boolean loopFlag) {
+	public void moveComponentAccording(int connectorNr,Module selectedModule, JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent,boolean loopFlag) {
 		String selectedModuleType =selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
 		if(selectedModuleType.equalsIgnoreCase(odinBall)){			
 			OdinMuscleConstructionTemplate  odinMuscleConst = new OdinMuscleConstructionTemplate(simulation);

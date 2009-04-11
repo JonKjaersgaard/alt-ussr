@@ -2,7 +2,7 @@ package ussr.builder.labelingTools;
 
 /**
  * The main responsibility of this class is to act according to Factory pattern and 
- * create specific object of entities for labeling.For example: LabelModule or LabelConnector.
+ * create specific object of entities for labeling. For example: LabelModule or LabelConnector.
  * @author Konstantinas
  */
 public class LabelingFactory {

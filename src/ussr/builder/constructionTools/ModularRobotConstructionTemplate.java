@@ -58,7 +58,7 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 		String selectedModuleType =selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
 
 		if (selectedModuleType.contains("Odin")){//if it is heterogeneous like Odin
-			moveModuleComponentAccording(connectorNr,selectedModule, (JMEModuleComponent) newMovableModule.getComponent(0), null, loopFlag);
+			moveComponentAccording(connectorNr,selectedModule, (JMEModuleComponent) newMovableModule.getComponent(0), null, loopFlag);
 		}else{// else if it is homogeneous like ATRON and MTRAN
 
 			/*Amount of components constituting selectedModule*/
@@ -87,7 +87,7 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 				/*The current component of new movable module */
 				JMEModuleComponent movableModuleComponent = (JMEModuleComponent)newMovableModule.getComponent(component);
 
-				moveModuleComponentAccording(connectorNr,selectedModule, movableModuleComponent, rotationQuatComponent,loopFlag);
+				moveComponentAccording(connectorNr,selectedModule, movableModuleComponent, rotationQuatComponent,loopFlag);
 
 			}  	
 		}
@@ -113,7 +113,7 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 	 * @param movableModuleComponent, the new module component to move respectively to selected one.
 	 * @param rotationQuatComponent, the rotation of current component of selected module.	 
 	 */	
-	public abstract void moveModuleComponentAccording(int connectorNr,Module selectedModule, JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent,boolean loopFlag);
+	public abstract void moveComponentAccording(int connectorNr,Module selectedModule, JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent,boolean loopFlag);
 
 	/**
 	 * Rotates selected  module according to its initial rotation with opposite rotation.

@@ -5,59 +5,43 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.File;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
-
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
 import ussr.builder.constructionTools.CommonOperationsTemplate;
 import ussr.builder.constructionTools.ConstructionToolSpecification;
 import ussr.builder.constructionTools.ConstructionTools;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
-import ussr.builder.constructionTools.SelectOperationsTemplate;
-import ussr.builder.controllerReassignmentTool.AssignController;
+import ussr.builder.controllerReassignmentTool.AssignControllerTool;
 import ussr.builder.genericTools.ColorConnectors;
-import ussr.builder.genericTools.MtranExperiment;
-import ussr.builder.genericTools.NewSelection;
 import ussr.builder.genericTools.RemoveModule;
 import ussr.builder.genericTools.RotateModuleComponents;
 import ussr.builder.gui.FileChooser;
 import ussr.builder.gui.GuiHelper;
 import ussr.builder.labelingTools.LabelingToolSpecification;
 import ussr.builder.labelingTools.LabelingTools;
-import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
-import ussr.description.setup.ModuleConnection;
-import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
-import ussr.samples.atron.ATRONBuilder;
-import ussr.samples.mtran.MTRANSimulation;
-import ussr.samples.odin.OdinBuilder;
 import ussr.samples.odin.modules.Odin;
 
 /**
  * The main responsibility of this class is to take care of the main GUI window for  project called
- * "Quick Prototyping of Simulation Scenarios".   
+ * "Quick Prototyping of Simulation Scenarios" (QPSS).   
  * USER GUIDE.
- * In order to start "Quick Prototyping of Simulation Scenarios" or so called interactive builder do 
- * the following:
+ * In order to start QPSS or so called interactive builder do the following:
  * 1) Locate simulation file called "BuilderMultiRobotSimulation.java in the same package as this
- *    class".   
+ *    class". It can be also used any other simulation class for any supported modular robots, like ATRON,M-Trana and Odin.
+ *    However then the bugs should be expected.   
  * 2) Start  simulation for above file. The simulation should be in static state 
  * 	  (paused state),meaning that you should not press "P" button on keyboard. At least not yet.
  * 3) Press "Q" button on keyboard and wait a bit. On slow machines the "Quick Prototyping of Simulation 
  *    Scenarios" window is quite slow to respond. 
- * 4) In appeared "Quick prototyping of Simulation Scenarios" window choose one of the buttons(pickers,also
+ * 4) In appeared QPSS window choose one of the buttons(pickers,also
  *    called selection tools)in toolbars of GUI. You can identify the name of the toolbar by going to View-->
- *    Toolbars-->.... The following explanation if for each toolbar counting from the top:
+ *    Toolbars-->.... The following explanation is for each toolbar counting from the top:
  *    4.1) Simulation
  *         a) "Pause/Play" - is for starting and pausing simulation;
  *         b) "StebByStep" - is for running simulation with single execution step;
@@ -71,19 +55,19 @@ import ussr.samples.odin.modules.Odin;
  *         e) "Lights" - starts and stops rendering lights;
  *    4.3)Module generic tools
  *         a) "Move" - is the selection tool, where after selecting the module with left side of the mouse
- *            it is moved with movement of the mouse to desired location; Is added as additional supports and 
- *            its main purpose is to move default modules. 
- *         b) "Delete icon" - is the selection tool, where after selecting the module with left side of the mouse
- *            it is deleted(removed)from simulation environment;
+ *            it is moved with movement of the mouse to desired location; Is added as additional support and 
+ *            its main purpose is to move default modules. The icon on the button reminds the cross. 
+ *         b) "Delete " - is the selection tool, where after selecting the module with left side of the mouse
+ *            it is deleted(removed)from simulation environment; The icon on the button reminds the cross totated 45 degress.
  *         c) "C"- is the selection tool, where after selecting the module with left side of the mouse
- *            its connectors are coloured with colour coding. The format is Connector-Colour: 0-Black, 1-Red,
+ *            its connectors are colored with color coding. The format is Connector-Color: 0-Black, 1-Red,
  *            2-Cyan, 3-Grey, 4-Green, 5-Magenta, 6-Orange, 7-Pink, 8-Blue, 9-White, 10-Yellow, 11-Light Grey.
  *         d) "Cartesian coordinates (in ComboBox (x,y and z))", "TextField for angle of rotation" and "Rotate Icon"
  *            are used together to rotate components of the modules with specific angle. First choose one of the cartesian
- *            coordinates in ComboBox (for example: "x"), after that enter the angle in degrees in TextField and at last select
+ *            coordinates in ComboBox (for example: "x"), after that enter the angle in degrees in the TextField (let say 90) and at last select
  *            "Rotate" icon. After all that select one of the components of the module in simulation environment.
- *            This tool is experimental and should not be used at current state. *          	
- *    4.4)Modular robot
+ *            This tool is experimental and can be used for small adornments *          	
+ *    4.4)Modular robots
  *         a) "ComboBox with Modular robots names" - here choose the modular robot you would like to work with.
  *         b) "Default" - adds default construction module of modular robot. If in previous ComboBox you chosen "ATRON",
  *            then ATRON module will be added into simulation at default position.
@@ -106,15 +90,48 @@ import ussr.samples.odin.modules.Odin;
  *            and later(wait a bit) press on buttons "Next" or "Previous". As a result, new module will be moved from one 
  *            connector to another with increasing number of connector ("Next") and decreasing number of 
  *            connector ("Previous").
- *      4.6) LABELS                
- * 5) Using the above selection tools construct desired morphology(shape) of the modular robot.
- *    Easiest may is to start from toolBar called "Modular robot" by choosing modular robot name
+ *      4.6) Assign Label
+ *         a) "ComboBox with the names of  entities" is for choosing the entity to assign the label to.
+ *            Currently are supported: Module and Connector.
+ *         b) "Text field with the title :""Label" is for typing in the name of the label. The format
+ *            for entering several labels is for example: label1,label2, label3 . Notice comma is used
+ *            as separation sign. In this it is possible to assign several labels at a time.
+ *         c) "Assign" button - is for actually assigning the label to the desired entity. Execute a) and b)
+ *            above, after that press this button and the entity in simulation environment.
+ *         d) "Remove" - is for removing specific label from the labels assigned to the entity. First type in the
+ *            label name in the text field (b) and then press "remove", after that select the entity in simulation
+ *            environment for which you would like to remove specified label.
+ *            NOTICE: There should not be any comma for one label.
+ *       4.7) Read Labels
+ *         a) "comboBox with title "Current Labels" is for displaying the labels assigned to the entity. Just expand the 
+ *             the "comboBox" and see which labels are assigned. You can also choose one of them and then it will
+ *             be displayed in the textField (toolBar above, b)). After that you can reassign it to any other module.
+ *         b) "Read" is for reading the labels assigned to the entity. Just press this button and then select the 
+ *             entity in simulation environment. As a result the labels assigned to this entity will be displayed in the
+ *             comboBox above and textField (toolBar above, b)).         
+ *       4.8) Controllers
+ *         a)  "ComboBox with the names of the classes(controllers)" is for choosing the controller
+ *            you would like assign to the module. Remember the controllers you created should be
+ *            placed in the package named as "ussr.builder.controllerReassignmentTool" inherit from 
+ *            "ControllerStrategy" and have activate() method implemented. Then your new controller 
+ *            will be working  and displayed in the current comboBox.
+ *         b) "Assign"  is for assigning chosen above controller to the module selected in simulation 
+ *            environment. Press the button and select the module in simulation environment.
+ *            NOTICE: The controller should be for the same modular  robot as you are selecting. 
+ *       4.7) Assistant
+ *            This toolbar simply gives the hints what to do next. Simple version of help.
+ *            Most of the time it is reliable. However do not trust it blindly :).
+ *                                                 
+ * 5) Using the above selection tools construct desired morphology(shape) of  modular robot.
+ *    Easiest may is to start from toolBar called "Modular robots" by choosing modular robot name
  *    in comboBox and pressing "Default" button, after that choosing appropriate rotation in rotations comboBox,
  *    later shift to toolbar called "Construction". By using one of the four tools construct morphology of modular robot.
  *    There is also toolBar called Assistant, which sometimes :) displays hints what to do next. Follow it, but
- *    do not trust it 100% :).
+ *    do not trust it 100% :). Also you can assign labels to modules and so on. 
  *     When you are done with morphology press "Test before simulation" button at the bottom of GUI. If there are no errors
  *    or exceptions start simulation by pressing "Play" button in the first toolbar from the top.
+ *    Now you can assign the controllers interactively to the modules by using the toolbar 
+ *    above in the 4.8).
  *     
  *  
  * Additional functionality is ability to save the data about the modules in simulation
@@ -124,12 +141,11 @@ import ussr.samples.odin.modules.Odin;
  * quite a delay. Or select "open" icon in "Quick Prototyping of Simulation Scenarios" window.
  * There are several examples of modular robots morphologies kept in directory of USSR:
  * resources\quickPrototyping\loadXMLexamples. Just copy one of the files and paste somewhere on your
- * PC(for example desktop), after that load it by chosing File-->Open or "open" icon. Keep in mind that
- * if you started the simulation for ATRON (see points 1 and 2 above, for example "InteractiveAtronBuilderTest1.java")
- * you can load only ATRON related XML files, like for example ATRONcar.xml.
+ * PC(for example desktop), after that load it by chosing File-->Open or "open" icon.
+ * NOTICE: You can load and save the data into XML file only in the static(paused) state of simulation. 
  * 
- * In case there is the need to undersand the code deeper look for the Design Class Diagram(DCD) for all the code,
- * which can be found in USSR directory named as:"doc\developer\DCD.JPG"
+ * In case there is a need to understand the code deeper look for the Design Class Diagram(sDCD) for all the code,
+ * which can be found in USSR directory named as:"doc\developer\builderPackage"
  * 
  *@author  Konstantinas
  */
@@ -952,7 +968,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		}	
 	Vector<String> classes = new Vector<String>();
 	for (int i=0; i<test.length;i++){
-		if (test[i].toString().contains("AssignController")){
+		if (test[i].toString().contains("AssignControllerTool")||test[i].toString().contains("ControllerStrategy")){
 		//do nothing	
 		}else{
 		classes.add(test[i].toString().replace("class "+packageName+".", ""));
@@ -1086,8 +1102,15 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	}                                
 
 	private void assignLabeljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   
-		System.out.println("Label toolbar-->Assign");//for debugging		
-		 JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,currentLabeljTextField.getText(),LabelingTools.LABEL_MODULE));
+		System.out.println("Label toolbar-->Assign");//for debugging
+		LabelingTools tool = null;
+		if (this.entityToLabel.equalsIgnoreCase("Module")){
+			tool = LabelingTools.LABEL_MODULE;
+		}else if (this.entityToLabel.equalsIgnoreCase("Connector")){
+			tool = LabelingTools.LABEL_CONNECTOR;
+		}else throw new Error("The  name of the entity is misspelled or this entity is not yet supported");
+		 JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,currentLabeljTextField.getText(),tool));
+		
 		 guiUtil.passTo(AssistantjTextField,"Select "+ this.entityToLabel.toLowerCase()+ " to assign to it the label: " + currentLabeljTextField.getText());
 	}                                                  
 /*NOTE*/	ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.LOOP,0);
@@ -1498,10 +1521,16 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 * @param evt, selection with left side of the mouse event (jButton selection).     
 	 */	   
 	private void stepByStepjButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
-		//System.out.println("Simulation toolbar-->StepByStep");//for debugging               
+		System.out.println("Simulation toolbar-->StepByStep");//for debugging               
 		simulationStep++;
 		guiUtil.passTo(AssistantjTextField, "Executed simulation step Nr: "+ simulationStep);
 		JME_simulation.setSingleStep(true);
+		/*counter++;
+		JME_simulation.setPicker(new MtranExperiment(JME_simulation, this, counter));
+		if (this.counter ==1){
+			this.counter =-1;
+			System.out.println("counter:"+counter);//for debugging 
+		}*/
 	}                                                 
 
 	/**
@@ -1554,7 +1583,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	}	
 	
 	private void assignControllerjButtonActionPerformed(ActionEvent evt) {
-		JME_simulation.setPicker(new AssignController(packageName+"."+this.controllerName));
+		JME_simulation.setPicker(new AssignControllerTool(packageName+"."+this.controllerName));
 		guiUtil.passTo(AssistantjTextField,"Select " + this.chosenMRname +" module to assign controller: " +this.controllerName);// informing user
 		
 	}
@@ -1623,7 +1652,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 				quickPrototyping.getLabeljToolBar().setPreferredSize(new Dimension(windowWidth,toolBarHeight));
 				quickPrototyping.getRenderjToolBar().setPreferredSize(new Dimension(windowWidth,toolBarHeight));
 				quickPrototyping.setVisible(true);				
-				quickPrototyping.setSize(windowWidth,windowHeight);
+				quickPrototyping.setSize(windowWidth,windowHeight);				
 			}
 		});
 	}

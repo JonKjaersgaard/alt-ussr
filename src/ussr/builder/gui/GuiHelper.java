@@ -1,5 +1,7 @@
 package ussr.builder.gui;
 import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Dimension;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JCheckBoxMenuItem;
@@ -51,5 +53,5 @@ public class GuiHelper {
 	public void passTo(JTextField textField, String newString ){
 		textField.setText("");//Reset
 		textField.setText(newString);
-	}
+	}	
 }

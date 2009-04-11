@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -23,16 +22,17 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 import ussr.builder.BuilderHelper;
+import ussr.builder.labelingTools.Labeling;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 
 /**
+ * The main responsibility of this class is to host the methods common to children classes.
+ * It is following design pattern called TEMPLATE method. As a result contains Template,
+ * common and primitive methods.  
  * @author Konstantinas
  *
- */
-//FIXME 1) UPDATE COMMENTS
-//FIXME 2) FIX EXISTING IMPROVEMENTS
-//  3) MORE REFACTORING  
+ */ 
 public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 
 	/**
@@ -41,23 +41,56 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	protected JMESimulation simulation;
 
 	/**
+	 * The string representation of XML file extension.
+	 */
+	private final static String XML_EXTENSION = ".xml";
+		
+	/**
+	 * The string representation of XML encoding
+	 */
+	private final static String XML_ENCODING = "ISO-8859-1";
+	
+	/**
 	 *  The empty attributes for the tag, in case there is no need to have attributes.
 	 */
-	public final static AttributesImpl emptyAtt = new AttributesImpl();
-
-
+	public final static AttributesImpl EMPTY_ATT = new AttributesImpl();
+		
 	/**
-	 * COMMENT
+	 *  String representation of "CONNECTOR" tag. 
+	 */
+	public final static String CONNECTOR_TAG = "CONNECTOR";
+	
+	/**
+	 *  The name of the attribute for connector tag.
+	 */
+	private final static String ATT_NUMBER = "NUMBER";
+	
+	/**
+	 * Adornment of quaternion appearing when transforming  quaternion into String. 
+	 */
+	private final static String QUATERNION_ADORNMENT ="com.jme.math.Quaternion:";
+	
+	/**
+	 * Adornment of Vector3f appearing when transforming  Vector3f into String. 
+	 */
+	private final static String VECTOR3F_ADORNMENT =  "com.jme.math.Vector3f";
+	
+	/**
+	 * The states of connectors.
+	 */
+	private final static String CONNECTED = "connected", DISCONNECTED = "disconnected";
+	
+	/**
+	 *  Acts a host for common, template and primitive methods to children classes.
 	 * @param simulation, the physical simulation.
 	 */
 	public SaveLoadXMLTemplate(JMESimulation simulation){
 		this.simulation = simulation;
 	}
-
-
-	/**
-	 * TEMPLATE method in Template design pattern.
+	
+	/**	
 	 * Saves the data about simulation in chosen XML format file.
+	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
 	 * @param fileDirectoryName, the name of directory, like for example: "C:/newXMLfile". 
 	 */
 	public void saveXMLfile(String fileDirectoryName) {
@@ -65,9 +98,9 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 		printOutXML(transformerHandler);
 	}
 
-	/**
-	 * TEMPLATE method in Template design pattern. 
+	/**  
 	 * Loads the data about simulation from chosen XML file into simulation.
+	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
 	 * @param fileDirectoryName, the name of directory, like for example: "C:/newXMLfile".	 
 	 */
 	public void loadXMLfile(String fileDirectoryName){
@@ -77,16 +110,17 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 
 	/**
 	 * Initializes SAX 2.0 content handler and assigns it to newly created XML file.
+	 * This method is so-called common and at the same time "Primitive operation" for above TEMPLATE method, called "saveXMLfile(String fileDirectoryName)". 	   
 	 * @param fileDirectoryName,the name of directory, like for example: "C:/newXMLfile".
 	 * @return transformerHandler, the content handler used to print out XML format. 
 	 */
 	private TransformerHandler initializeTransformer(String fileDirectoryName) {
-		File newFile = new File (fileDirectoryName +".xml");
+		File newFile = new File (fileDirectoryName + XML_EXTENSION);
 		BufferedWriter characterWriter = null;
 		try {
 			characterWriter = new BufferedWriter(new FileWriter(newFile, true));
 		} catch (IOException e) {			
-			e.printStackTrace();
+			throw new Error ("Input Output exception for file appeared and named as: "+ e.toString());
 		}
 		StreamResult streamResult = new StreamResult(characterWriter);
 		SAXTransformerFactory transformerFactory = (SAXTransformerFactory) SAXTransformerFactory.newInstance();
@@ -95,19 +129,20 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 		try {
 			transformerHandler = transformerFactory.newTransformerHandler();
 		} catch (TransformerConfigurationException e) {
-			e.printStackTrace();
+			throw new Error ("SAX exception appeared and named as: "+ e.toString());
 		}
 		Transformer serializer = transformerHandler.getTransformer();
-		serializer.setOutputProperty(OutputKeys.ENCODING,"ISO-8859-1");		
+		serializer.setOutputProperty(OutputKeys.ENCODING,XML_ENCODING);		
 		serializer.setOutputProperty(OutputKeys.INDENT,"yes");
 		transformerHandler.setResult(streamResult);		
 		return transformerHandler;
 	}
-
+	
 	/**
-	 * COMMENT
+	 * Initializes the document object of DOM for reading xml file.
+	 * This method is so-called common and at the same time "Primitive operation" for above TEMPLATE method, called "loadXMLfile(String fileDirectoryName)". 	   
 	 * @param fileDirectoryName,the name of directory, like for example: "C:/newXMLfile".
-	 * @return
+	 * @return doc, DOM object of document.
 	 */
 	private Document initializeDocument(String fileDirectoryName) {
 		File file = new File(fileDirectoryName);
@@ -118,32 +153,29 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 			db = dbf.newDocumentBuilder();
 			doc = db.parse(file);
 			doc.getDocumentElement().normalize();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}catch (Throwable e) {
+			throw new Error ("DOM exception appeared and named as: "+ e.toString());
+		}		
 		return doc;			
 	}
 
 	/**
-	 * Abstract method for defining the format of XML to print into the xml file. In other words
-	 * what to save in the file about simulation.  
+	 * Method for defining the format of XML to print into the xml file. In other words
+	 * what to save in the file about simulation.
+	 * This method is so-called "Primitive operation" for above TEMPLATE method, called "saveXMLfile(String fileDirectoryName)". 	  
 	 * @param transformerHandler,the content handler used to print out XML format. 
 	 */
 	public abstract void printOutXML(TransformerHandler transformerHandler);
 
 	/**
-	 * COMMENT
-	 * @param document, 
+	 * Method for defining the format of reading the data from XML file.  In other words
+	 * what to read from the file into simulation.
+	 *  This method is so-called "Primitive operation" for above TEMPLATE method, called "loadXMLfile(String fileDirectoryName)". 	  
+	 * @param document,DOM object of document. 
 	 */
 	public abstract void loadInXML(Document document);
-
+	
+	
 	/**
 	 * Prints out the first start tag in the hierarchy of XML file. Now for example this is "<MODULES>".
 	 * @param transformerHandler,the content handler used to print out XML format. 
@@ -152,9 +184,9 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	public void printFirstStartTag(TransformerHandler transformerHandler, String firstStartTagName){
 		try {
 			transformerHandler.startDocument();			
-			transformerHandler.startElement("","",firstStartTagName,emptyAtt);
+			transformerHandler.startElement("","",firstStartTagName,EMPTY_ATT);
 		} catch (SAXException e) {
-			e.printStackTrace();
+			throw new Error ("SAX exception appeared and named as: "+ e.toString());
 		}
 	}
 
@@ -169,8 +201,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 			transformerHandler.endElement("","",firstEndTagName);
 			transformerHandler.endDocument();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new Error ("SAX exception appeared and named as: "+ e.toString());			
 		}		
 	}
 
@@ -183,12 +214,11 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 */
 	public void printSubTagsWithValue(TransformerHandler transformerHandler, String tagName, char[] value){
 		try {			
-			transformerHandler.startElement("","",tagName,emptyAtt);
+			transformerHandler.startElement("","",tagName,EMPTY_ATT);
 			transformerHandler.characters(value,0,value.length);
 			transformerHandler.endElement("","",tagName);
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new Error ("SAX exception appeared and named as: "+ e.toString());		
 		}	
 	}
 
@@ -197,20 +227,18 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * @param transformerHandler, the content handler used to print out XML format. 
 	 * @param statesConnectors, the states of connectors, for example "connected" or disconnected.
 	 * @param numbersConnectors, the numbers of connectors, for example 1,2,3 and so on.
-	 */
-	//	TODO REFACTOR
+	 */	
 	public void printInfoConnectors(TransformerHandler transformerHandler,ArrayList<String> statesConnectors, ArrayList<String> numbersConnectors ){
 		AttributesImpl atts1 = new AttributesImpl();
 		for (int index=0; index<statesConnectors.size();index++){				
-			atts1.addAttribute("","","NUMBER","first",numbersConnectors.get(index));
+			atts1.addAttribute("","",ATT_NUMBER,"first",numbersConnectors.get(index));
 			try {
-				transformerHandler.startElement("","","CONNECTOR",atts1);
+				transformerHandler.startElement("","",CONNECTOR_TAG,atts1);
 				char[] state = statesConnectors.get(index).toCharArray(); 
 				transformerHandler.characters(state,0,state.length);
-				transformerHandler.endElement("","","CONNECTOR");
+				transformerHandler.endElement("","",CONNECTOR_TAG);
 			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new Error ("SAX exception appeared and named as: "+ e.toString());
 			}	
 		}		
 	}
@@ -236,15 +264,15 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	/**
 	 * Returns the name of the module, which can be anything. For example: "driver","leftwheel" and so on.
 	 * @param currentModule,the module in simulation environment.
-	 * @return char[], the name of the module
+	 * @return char[], the name of the module.
 	 */
 	public char[] getName(Module currentModule){    		
 		return currentModule.getProperty(BuilderHelper.getModuleNameKey()).toCharArray();    	
 	}
 
 	/**
-	 * Return the rotation (RotationDescription) of the module in simulation environment, 
-	 * as rotation of its component.
+	 * Returns the rotation (RotationDescription) of the module in simulation environment, 
+	 * as rotation of its zero component.
 	 * @param currentModule,the module in simulation environment.
 	 * @return char[], the rotation as RotationDescription of the module.
 	 */
@@ -259,7 +287,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 */
 	public char[] getRotationQuaternion(Module currentModule){  
 		String moduleRotationQuat = currentModule.getPhysics().get(0).getRotation().getRotation().toString();
-		moduleRotationQuat = moduleRotationQuat.replace("com.jme.math.Quaternion:", "");
+		moduleRotationQuat = moduleRotationQuat.replace(QUATERNION_ADORNMENT, "");
 		return moduleRotationQuat.toCharArray();		
 	}
 
@@ -290,7 +318,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 		}else {
 			modulePositionVect = currentModule.getPhysics().get(0).getPosition().getVector().toString();			
 		}			
-		modulePositionVect = modulePositionVect.replace("com.jme.math.Vector3f", "");
+		modulePositionVect = modulePositionVect.replace(VECTOR3F_ADORNMENT, "");
 
 		return modulePositionVect.toCharArray();
 	}
@@ -349,23 +377,22 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 
 	/**
 	 * Returns the labels assigned to the module.
-	 * @param currentModule, the module in simulation environment
+	 * @param currentModule, the module in simulation environment.
 	 * @return char[], the labels assigned to the module.
 	 */
 	public char[] getLabelsModule(Module currentModule){		
 		String labels = currentModule.getProperty(BuilderHelper.getLabelsKey());
 		if (labels == null){// means there are no labels assigned to this module. 
 			labels = BuilderHelper.getTempLabel();
-		}else if (labels.contains("none")){
-		
-		}
+		}else if (labels.contains(Labeling.NONE)){/*do nothing*/}
 		return labels.toCharArray();    	
 	}
 
 
 	/**
-	 * @param currentModule
-	 * @return
+	 * Returns the labels of connectors on specific module.
+	 * @param currentModule,the module in simulation environment.
+	 * @return labels, the labels of all connectors on the module.
 	 */
 	public char[] getLabelsConnectors(Module currentModule){		
 		int amountConnectors = currentModule.getConnectors().size();
@@ -374,22 +401,16 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 		for (int connector=0; connector<amountConnectors;connector++){
 			counter++;
 			String label = currentModule.getConnectors().get(connector).getProperty(BuilderHelper.getLabelsKey());
-			if (label == null||labels==null){				
-				
-				if (counter==1){
-				labels=BuilderHelper.getTempLabel()+",";
+			if (label == null||labels==null){//module do not even have labels  assigned					
+				if (counter==1){//for 0 connector do not consider labels, because they not yet exist
+				labels=BuilderHelper.getTempLabel()+ Labeling.LABEL_SEPARATOR;
 				}else{
-					labels=labels+BuilderHelper.getTempLabel()+",";
+					labels=labels+BuilderHelper.getTempLabel()+Labeling.LABEL_SEPARATOR;
 				}
-
-			}/*else if (labels.equalsIgnoreCase("")){
-				labels
-			}*/else{
-				
-					labels = labels+label+",";				
-			}			
+			}else{				
+					labels = labels+label+Labeling.LABEL_SEPARATOR;				
+			}
 		}
-
 		return labels.toCharArray();    	
 	}
 
@@ -407,13 +428,12 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 		ArrayList<String> numbersConnectors = new ArrayList<String>();	
 		for (int connector=0; connector<amountConnectors;connector++){
 			boolean connectorState = currentModule.getConnectors().get(connector).isConnected();
-			String connectorNumber = currentModule.getConnectors().get(connector).getProperty("ussr.connector_number");
-			numbersConnectors.add(connectorNumber);
-			//System.out.println("conectorNumber: "+connectorNumber);//For debugging
+			String connectorNumber = currentModule.getConnectors().get(connector).getProperty(BuilderHelper.getModuleConnectorNrKey());
+			numbersConnectors.add(connectorNumber);			
 			if (connectorState){
-				statesConnectors.add("connected");
+				statesConnectors.add(CONNECTED);
 			}else {
-				statesConnectors.add("disconnected");	
+				statesConnectors.add(DISCONNECTED);	
 			}				
 		}
 		if (state ==true){
@@ -422,9 +442,10 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	}
 
 	/**
-	 * @param firstElmnt
-	 * @param tagName
-	 * @return
+	 * Extract the data between the start and end tags.
+	 * @param firstElmnt, first appearance of the node. 
+	 * @param tagName, the name of the tag.
+	 * @return value, the data between the start and end tags.
 	 */
 	public String extractTagValue(Element firstElmnt,String tagName){
 		NodeList firstNmElmntLst = firstElmnt.getElementsByTagName(tagName);		      
@@ -434,9 +455,10 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	}
 
 	/**
-	 * @param amountComponents
-	 * @param colorsComponents
-	 * @return
+	 *  Extracts the colors of components from the String.
+	 * @param amountComponents, the amount of components.
+	 * @param colorsComponents, the string representing the colors in RGB form.
+	 * @return listColorsComponents, the list of colors of components. 
 	 */
 	public LinkedList<Color> extractColorsComponents(int amountComponents, String colorsComponents){
 		String[] newColorsComponents = colorsComponents.split(";");
@@ -454,9 +476,10 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 
 
 	/**
-	 * @param amountConnectors
-	 * @param colorsConnectors
-	 * @return
+	 * Extracts the colors of connectors from the String.
+	 * @param amountConnectors, the amount of connectors. 
+	 * @param colorsConnectors,the string representing the colors in RGB form. 
+	 * @return listColorsConnectors, the list of colors of connectors.
 	 */
 	public LinkedList<Color> extractColoursConnectors(int amountConnectors, String colorsConnectors){
 		String[] newColorsConnectors= colorsConnectors.split(";");
@@ -473,9 +496,10 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	}	
 
 	/**
-	 * @param textString
-	 * @param coordinate
-	 * @return
+	 * Extracts the specific coordinate from Quaternion string.
+	 * @param textString, the string representing Quaternion;
+	 * @param coordinate, the coordinate to extract.
+	 * @return extractedValue, the value of coordinate.
 	 */
 	public float extractFromQuaternion(String textString, String coordinate){		
 		textString =textString.replace("]", "");

@@ -351,7 +351,7 @@ public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * @param movableModuleComponent, the new MTRAN module component to move respectively to selected one.
 	 * @param rotationQuatComponent, the rotation of current MTRAN component of selected module.	 
 	 */		
-	public void moveModuleComponentAccording(int connectorNr,Module selectedModule, JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent,boolean loopFlag) {
+	public void moveComponentAccording(int connectorNr,Module selectedModule, JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent,boolean loopFlag) {
 		componentCounter++;	
 		/*Loop through and locate the object matching the description of current component(also selected module).*/
 		for (int i=0; i<moduleMap.length;i++){			

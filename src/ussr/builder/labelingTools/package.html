@@ -1,3 +1,19 @@
 <body>
-This package is still to decide.
+This package supports the labeling of entities. Currently supports labeling of modules and connectors.
+It is following TEMPLATE method design pattern. There is also involved Factory pattern.
+HOWTO. Support the labeling of new entities?
+1) extend your new class from LabelEntity.java class and implement the method called "getCurrentEntity()";
+2) add  support for your new entity in  method called "getLabeling(String entityToLabel)" in the class
+"LabelingFactory.java";
+3) Scan the class called "LabelingToolSpecification" for missing implementation, especially
+ method called "callSpecificTool()". 
+4)Add your new tool in enumeration called "LabelingTools.java" and check that it is conforming
+with the method in point above (4).
+5) Set you new tool for use.
+
+HOWTO. Set my new tool?
+For example  we have now:
+JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,currentLabeljTextField.getText(),LabelingTools.LABEL_MODULE));
+Let say you new entity is "Sensor", then you will have:
+JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,"Sensor",currentLabeljTextField.getText(),LabelingTools.LABEL_SENSOR));   
 </body>

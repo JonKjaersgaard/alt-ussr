@@ -163,7 +163,8 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * @param movableModuleComponent, the new ATRON module component to move respectively to selected one.
 	 * @param rotationQuatComponent, the rotation of current component of selected  ATRON module.	 
 	 */	
-	public void moveModuleComponentAccording(int connectorNr,Module selectedModule, JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent, boolean loopFlag){
+	
+	public void moveComponentAccording(int connectorNr,Module selectedModule, JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent, boolean loopFlag){
 			/*Loop through and locate the object matching the description of current component(also selected module).*/
 			for (int i=0; i<moduleMap.length;i++){				
 				if (moduleMap[i].getConnectorNr()==connectorNr && moduleMap[i].getInitialRotation().getRotation().equals(rotationQuatComponent)){

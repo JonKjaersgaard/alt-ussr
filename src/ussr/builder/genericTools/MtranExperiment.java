@@ -44,7 +44,7 @@ public class MtranExperiment extends CustomizedPicker {
 		VectorDescription positionModule  = selectedModule.getComponent(1).getPosition();
 		
 		VectorDescription pos0  = selectedModule.getComponent(0).getPosition();
-		VectorDescription pos1  = selectedModule.getComponent(1).getPosition();
+		VectorDescription pos1  = selectedModule.getComponent(1).getPosition();		
 		VectorDescription pos2  = selectedModule.getComponent(2).getPosition();
 		RotationDescription rd0 =  selectedModule.getComponent(0).getRotation();
 		RotationDescription rd1 =  selectedModule.getComponent(1).getRotation();
@@ -65,7 +65,7 @@ public class MtranExperiment extends CustomizedPicker {
 		//m1.getComponent(1).setPosition(pos1.add(new VectorDescription(0.1f,0.1f,0.1f)));
 		//m1.getComponent(2).setPosition(pos2.add(new VectorDescription(0.1f,0.1f,0.1f)));
 		}else if(counter ==1){ 
-			guickPrototyping.setCounter(-1);
+			
 		VectorDescription positionConnector = selectedModule.getConnectors().get(selectedConnectorNr).getPhysics().get(0).getPosition();
 		
 		float xConnector = positionConnector.getX();
