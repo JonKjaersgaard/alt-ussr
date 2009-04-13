@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
@@ -20,6 +22,8 @@ public class DrawingCanvas extends JPanel {
 	protected int columns;
 	protected int rowHeight;
 	protected int columnWidth;
+	protected int mouseClickX;
+	protected int mouseClickY;
 	protected int[][] grid;
 	public static final int DX = 50;
 	public static final int DY = 50;
@@ -44,6 +48,22 @@ public class DrawingCanvas extends JPanel {
 	
 	public int getColumn() {
 		return columns;
+	}
+	
+	public int getMouseClickX() {
+		return mouseClickX;
+	}
+		
+	public void setMouseClickX(int mouseClickX) {
+		this.mouseClickX = mouseClickX;
+	}
+	
+	public int getMouseClickY() {
+		return mouseClickY;
+	}
+	
+	public void setMouseClickY(int mouseClickY) {
+		this.mouseClickY = mouseClickY;
 	}
 
 	public Dimension getPreferredSize() {
@@ -110,6 +130,17 @@ public class DrawingCanvas extends JPanel {
 			}
 			*/
 		}
+		//From module #0 to module #1
+		drawArrow(DX + 0 * columnWidth, DY + 0 * rowHeight, DX + 1 * columnWidth, DY + 0 * rowHeight, 1.0f);
+		//From module #1 to module #2
+		drawArrow(DX + 1 * columnWidth, DY + 1 * rowHeight, DX + 2 * columnWidth, DY + 1 * rowHeight, 1.0f);
+		//From module #2 to module #3
+		drawArrow(DX + 2 * columnWidth, DY + 2 * rowHeight, DX + 3 * columnWidth, DY + 2 * rowHeight, 1.0f);
+		//From module #3 to module #4
+		drawArrow(DX + 3 * columnWidth, DY + 3 * rowHeight, DX + 4 * columnWidth, DY + 3 * rowHeight, 1.0f);
+		//From module #5 to module 0#
+		drawArrow(DX + 5 * columnWidth, DY + 4 * rowHeight, DX + 0 * columnWidth, DY + 4 * rowHeight, 1.0f);
+
 	}
 	
 	private static int yCor(int len, double dir) {

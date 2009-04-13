@@ -20,7 +20,7 @@ public class CommunicationContainer {
 	private volatile List<Pair<Module, Module>> communicationList;
 	//private volatile Queue<Pair<Module, Module>> communicationQueue;
 	private volatile Queue<Pair<Transmitter, Receiver>> communicationQueue;
-
+	
 	public CommunicationContainer(Module module) {
 		this.module = module;		
 		packetList = new LinkedList<Packet>();

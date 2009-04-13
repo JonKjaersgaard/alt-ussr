@@ -62,6 +62,7 @@ import com.jmex.physics.PhysicsSpace;
 import com.jmex.physics.StaticPhysicsNode;
 import com.jmex.physics.impl.ode.OdePhysicsSpace;
 import com.jmex.terrain.TerrainBlock;
+import communication.gui.CommunicationVisualizerGUI;
 
 /**
  * The basic graphical and user interface elements of a simulation.  Declares certain
@@ -206,7 +207,12 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 				KeyInput.KEY_R); 
 		KeyBindingManager.getKeyBindingManager().set("display_debug_shell", KeyInput.KEY_U);
 
-		KeyBindingManager.getKeyBindingManager().set("display_quick_prototyping_of_simulation_scenarios", KeyInput.KEY_Q);		
+		KeyBindingManager.getKeyBindingManager().set("display_quick_prototyping_of_simulation_scenarios", KeyInput.KEY_Q);
+		
+		KeyBindingManager.getKeyBindingManager().set("", KeyInput.KEY_Q);
+		
+		/** Assign key K to action "visualize_module_communication". */
+		KeyBindingManager.getKeyBindingManager().set("visualize_module_communication", KeyInput.KEY_K);
 	}
 	protected void handleKeys() {        /** If toggle_pause is a valid command (via key p), change pause. */
 		if ( KeyBindingManager.getKeyBindingManager().isValidCommand(
@@ -300,7 +306,16 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			if (QuickPrototyping.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
 			}else{QuickPrototyping.activate(this);}
 			
-		}	
+		}
+		
+		if(KeyBindingManager.getKeyBindingManager().isValidCommand("visualize_module_communication", false)) {
+			if (CommunicationVisualizerGUI.getInstanceFlag()) {
+				
+			}
+			else {
+				CommunicationVisualizerGUI.activateCommunicationVisualizerGUI(this);
+			}
+		}
 	}
 	protected void cameraPerspective() {
 		if(cam!=null) {

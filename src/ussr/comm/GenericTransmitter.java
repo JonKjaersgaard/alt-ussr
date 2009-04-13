@@ -8,6 +8,8 @@ package ussr.comm;
 
 import java.util.LinkedList;
 
+import communication.filter.CommunicationContainer;
+
 import ussr.description.robot.TransmissionDevice;
 import ussr.model.Entity;
 import ussr.model.Module;
@@ -33,15 +35,38 @@ public abstract class GenericTransmitter implements Transmitter {
     TransmissionDevice transmitter;
     private Entity hardware;
     
+    //Begin Horn
+    protected CommunicationContainer communicationContainer;
+    //End Horn
+    
+    
     public GenericTransmitter(Module _module, Entity _hardware, TransmissionType _type, float _range) {
         this.module = _module; this.type = _type; this.range = _range; this.hardware = _hardware;
         transmitManager = new GenericTransmitManager(Integer.MAX_VALUE,Integer.MAX_VALUE,this);
+        //Begin Horn
+        communicationContainer = new CommunicationContainer(_module);        
+        //End Horn
     }
 
     public GenericTransmitter(Module _module, TransmissionDevice _transmitter) {
     	this.transmitter = _transmitter;
     	transmitManager = new GenericTransmitManager(Integer.MAX_VALUE,Integer.MAX_VALUE,this);
+    	//Begin Horn
+    	communicationContainer = new CommunicationContainer(_module);
+    	//End Horn
 	}
+    
+    //Begin Horn
+    public CommunicationContainer getCommunicationContainer() {
+    	return communicationContainer;
+    }    
+    //End Horn
+    
+    //Begin Horn
+    public Module getModule() {
+    	return module;
+    }
+    //End Horn
 
     public void setMaxBaud(float maxBaud) {
     	transmitManager.setMaxBaud(maxBaud);
@@ -60,7 +85,7 @@ public abstract class GenericTransmitter implements Transmitter {
 					}
 				}
 			}
-		}*/
+		}*/    	    	
 		transmitManager.addPacket(packet);
     }
 	public boolean isCompatible(TransmissionType other) {
@@ -166,6 +191,23 @@ public abstract class GenericTransmitter implements Transmitter {
 			}
 			return false;
 		}
+		
+		//Begin Horn
+		private String showPacketContent(Packet packet) {
+			StringBuilder s = new StringBuilder();
+			byte[] data = packet.getData();
+			int i;
+			for(i = 0; i < data.length; i++) {
+				byte b = data[i];
+				s.append(b);
+				if(i != data.length - 1) {
+					s.append(", ");
+				}
+			}
+			return s.toString();			
+		}
+		//End Horn
+
 		private boolean send(Packet packet) {
 			boolean sendt = false;
 			for(Module m : module.getSimulation().getModules()) { //FIXME expensive implementation
@@ -174,6 +216,12 @@ public abstract class GenericTransmitter implements Transmitter {
 						if(transmitter.canSendTo(r)&&r.canReceiveFrom(transmitter)) {
 							r.receive(packet);
 							sendt = true;
+							//Begin Horn
+							//System.out.println(showPacketContent(packet));
+							//communicationContainer.addPacket(packet);
+							//communicationContainer.addPacketToQueue(packet);
+							//System.out.println("Size of packet queue for module " + m.getID() + ": " + communicationContainer.getPacketQueue().size());
+							//End Horn
 						}
 					}
 				}

@@ -7,6 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -23,6 +26,7 @@ import javax.swing.JTextArea;
 import ussr.comm.GenericReceiver;
 import ussr.comm.GenericTransmitter;
 import ussr.comm.Packet;
+import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
@@ -103,7 +107,8 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 			}
 			while(true) {
 				for(Module m : simulation.getModules()) {
-					for(Transmitter t : m.getTransmitters()) {						
+					//System.out.println("Module " + m.getID() + " has " + m.getTransmitters().size() + " transmitters");
+					for(Transmitter t : m.getTransmitters()) {
 						CommunicationContainer comContainer = ((GenericTransmitter) t).getCommunicationContainer();
 						/*
 						VectorDescription transmitterPosition = ((GenericTransmitter) t).getHardware().getPosition();
@@ -114,21 +119,83 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 						System.out.println("Module : " + m.getID());
 						System.out.println("Transmitter position (x, y, z) = " + "(" + xPos + ", " + yPos + ", " + zPos + ")");
 						*/
-						/*
+						Thread.yield();
 						if(comContainer.hasMorePacketsInQueue()) {
 							Packet p = comContainer.removePacketFromQueue();
 							if(p != null) {
-								System.out.println("Packet content is zero");
 								System.out.println(comContainer.showPacketContent(p));
 							}
+						}						
+					}
+				}
+				System.out.println("I am listening...");
+			}						
+		}
+	}
+
+	
+	//private volatile Module module;
+	//private volatile GenericTransmitter transmitter;
+	//private volatile Receiver receiver;
+	/*
+	public synchronized void run() {		
+		while(!isSimulationRunning) {
+			try {
+				System.out.println("Waiting for simulation to start...");
+				wait();
+				System.out.println("Simulation started...");
+			}
+			catch (InterruptedException e) {
+				e.printStackTrace();
+				return;
+			}
+			while(true) {
+				for(int i = 0; i < simulation.getModules().size(); i++) {
+					Module module = simulation.getModules().get(i);
+					//System.out.println("Module");
+					Thread.yield();
+					//Thread.sleep(1000);
+					for(int j = 0; j < module.getTransmitters().size(); j++) {
+						GenericTransmitter transmitter = (GenericTransmitter) module.getTransmitters().get(j);
+						CommunicationContainer communicationContainer = transmitter.getCommunicationContainer();
+						if(communicationContainer.hasMorePacketsInQueue()) {
+							System.out.println("Transmitter");
 						}
-						*/						
+						Thread.yield();
+						
+						for(int k = 0; k < module.getReceivers().size(); k++) {
+							Receiver receiver = module.getReceivers().get(k);
+							//System.out.println("Receiver");
+							Thread.yield();
+							if(transmitter.canSendTo(receiver) && receiver.canReceiveFrom(transmitter)) {
+								System.out.println("tralala tralalala");	
+
+							}
+						}
+					}
+				}
+				for(Module m : simulation.getModules()) {					
+					for(Transmitter t : m.getTransmitters()) {
+						for(Receiver r : m.getReceivers()) {
+							if(t.canSendTo(r) && r.canReceiveFrom(t)) {
+								CommunicationContainer comContainer = ((GenericTransmitter) t).getCommunicationContainer();
+								if(comContainer.hasMorePacketsInQueue()) {
+									Packet p = comContainer.removePacketFromQueue();
+									if(p == null) {
+										System.out.println("Packet content is zero");
+										System.out.println(comContainer.showPacketContent(p));
+									}
+								}	
+							}
+						}											
 					}
 				}
 				//System.out.println("I am listening...");
 			}						
 		}
 	}
+	*/
+
 
 		
 	 //Just for test - is going to be removed
@@ -987,6 +1054,11 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 
 	private void initializeComponents() {
 		
+		canvas = new DrawingCanvas(simulation, 20, simulation.getModules().size());
+	    canvas.addMouseListener(new CanvasMouseListener());    
+
+		
+		
 		checkboxTransmitter = new JCheckBox("Transmitters");
 		checkboxReceiver = new JCheckBox("Receivers");
 		checkboxPacket = new JCheckBox("Packets");
@@ -1045,10 +1117,7 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 		//4) If it transmits data the packet should be obtained
 		//5) The moduleID of the transmitter and the receivers are extracted 
 		//6) An arrow from the transmitter module to the receiver module(s) should be drawn on the canvas
-		//7) The content of the packet should be drawn above the arrow
-		
-		
-		
+		//7) The content of the packet should be drawn above the arrow		
 	}
 	
 	private void pauseSimulationButtoAction(ActionEvent event) {
@@ -1106,7 +1175,7 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 	}
 
 	private JPanel createCanvasArea() {
-		canvas = new DrawingCanvas(simulation, 20, simulation.getModules().size());
+		//canvas = new DrawingCanvas(simulation, 20, simulation.getModules().size());
 		JScrollPane scrollPane = new JScrollPane(canvas);
 		scrollPane.setPreferredSize(new Dimension(600, 200));
 		JPanel panel = new JPanel(new BorderLayout());
@@ -1174,4 +1243,15 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 			}
 		}
 	}
+	
+	class CanvasMouseListener extends MouseAdapter{
+		  public void mousePressed(MouseEvent e){
+			canvas.setMouseClickX(e.getX());
+			canvas.setMouseClickY(e.getY());
+			int mouseX = canvas.getMouseClickX();
+			int mouseY = canvas.getMouseClickY();
+		    System.out.println("Mouse position (x, y) = " + "(" + mouseX + ", " + mouseY + ")");
+		    e.getComponent().repaint();		    
+		  }
+		}
 }
