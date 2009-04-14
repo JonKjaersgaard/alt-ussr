@@ -62,7 +62,7 @@ import com.jmex.physics.PhysicsSpace;
 import com.jmex.physics.StaticPhysicsNode;
 import com.jmex.physics.impl.ode.OdePhysicsSpace;
 import com.jmex.terrain.TerrainBlock;
-import communication.gui.CommunicationVisualizerGUI;
+//import communication.gui.CommunicationVisualizerGUI;
 
 /**
  * The basic graphical and user interface elements of a simulation.  Declares certain
@@ -309,12 +309,12 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		}
 		
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("visualize_module_communication", false)) {
-			if (CommunicationVisualizerGUI.getInstanceFlag()) {
-				
-			}
-			else {
-				CommunicationVisualizerGUI.activateCommunicationVisualizerGUI(this);
-			}
+			//if (CommunicationVisualizerGUI.getInstanceFlag()) {
+			//	
+			//}
+			//else {
+			//	CommunicationVisualizerGUI.activateCommunicationVisualizerGUI(this);
+			//}
 		}
 	}
 	protected void cameraPerspective() {

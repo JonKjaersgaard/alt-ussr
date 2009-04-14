@@ -7,10 +7,12 @@
 package ussr.comm;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import ussr.model.Entity;
 import ussr.model.Module;
 import ussr.physics.PhysicsEntity;
+import ussr.physics.PhysicsFactory;
 
 /**
  * An abstract implementation of the <tt>Receiver</tt> interface. Provides a receiver device
@@ -27,11 +29,13 @@ public abstract class GenericReceiver implements Receiver {
     protected int read_position, write_position;
     private ArrayList<PacketReceivedObserver> packetReceivedObservers = new ArrayList<PacketReceivedObserver>();
     protected int packageCounter = 0; //for debougging
+    Set<CommunicationMonitor> monitors;
     
     public GenericReceiver(Module _module, Entity _hardware, TransmissionType _type, int buffer_size) {
         this.module = _module; this.type = _type; this.hardware = _hardware;
         queue = new Packet[buffer_size];
         read_position = write_position = 0;
+        this.monitors = PhysicsFactory.getOptions().getMonitors();
     }
     
 
@@ -43,6 +47,7 @@ public abstract class GenericReceiver implements Receiver {
 	}
     
     public synchronized void receive(Packet data) {
+        if(monitors!=null) for(CommunicationMonitor monitor: monitors) monitor.packetReceived(module,this,data);
     	packageCounter++;
         queue[write_position] = data;
         write_position = (write_position+1)%queue.length;

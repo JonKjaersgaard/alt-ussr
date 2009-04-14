@@ -8,8 +8,11 @@ package ussr.physics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import ussr.comm.CommunicationMonitor;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.robots.JMEATRONFactory;
@@ -39,6 +42,7 @@ public class PhysicsFactory {
             public void addConnection(Module m1, Module m2) { ; }
             public void finish() { ; }
         };
+        private Set<CommunicationMonitor> monitors = new HashSet<CommunicationMonitor>();
 
         public Options copy() { 
             try {
@@ -61,6 +65,12 @@ public class PhysicsFactory {
         }
         public void setTopologyWriter(TopologyWriter writer) {
             this.topologyWriter = writer;
+        }
+        public void addCommunicationMonitor(CommunicationMonitor monitor) {
+            monitors.add(monitor);
+        }
+        public Set<CommunicationMonitor> getMonitors() {
+            return monitors;
         }
     }
     

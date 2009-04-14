@@ -34,4 +34,13 @@ public class Packet {
     public byte[] getData() {
         return payload;
     }
+    public String toString() {
+        StringBuffer result = new StringBuffer("[ ");
+        for(int i=0; i<payload.length; i++) {
+            result.append(payload[i]);
+            result.append(' ');
+        }
+        result.append(']');
+        return result.toString();
+    }
 }
