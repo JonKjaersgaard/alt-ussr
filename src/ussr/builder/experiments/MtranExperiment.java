@@ -1,7 +1,8 @@
-package ussr.builder.genericTools;
+package ussr.builder.experiments;
 
 import com.jme.math.Matrix3f;
 import com.jme.math.Quaternion;
+import com.jme.math.Vector3f;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
 
@@ -28,12 +29,10 @@ public class MtranExperiment extends CustomizedPicker {
 		private static final float pi = (float)Math.PI;
 		private int counter;
 		
-		private QuickPrototyping guickPrototyping;
-		public MtranExperiment (JMESimulation simulation, QuickPrototyping guickPrototyping, int counter){
+		
+		public MtranExperiment (JMESimulation simulation, int counter){
 			this.simulation = simulation;
-			this.counter = counter;
-			this.guickPrototyping = guickPrototyping;
-			
+			this.counter = counter;			
 		}	
 	
 	
@@ -60,11 +59,11 @@ public class MtranExperiment extends CustomizedPicker {
 		m1.getComponent(0).setRotation(rd0);
 		m1.getComponent(1).setRotation(rd1);
 		m1.getComponent(2).setRotation(rd2);
-		m1.setPosition(new VectorDescription(0.1f,0.1f,0.1f));
+		m1.setPosition(new VectorDescription(0,0,0));
 		//m1.getComponent(0).setPosition(pos0.add(new VectorDescription(0.1f,0.1f,0.1f)));
 		//m1.getComponent(1).setPosition(pos1.add(new VectorDescription(0.1f,0.1f,0.1f)));
 		//m1.getComponent(2).setPosition(pos2.add(new VectorDescription(0.1f,0.1f,0.1f)));
-		}else if(counter ==1){ 
+		}else if(counter ==1){ 			
 			
 		VectorDescription positionConnector = selectedModule.getConnectors().get(selectedConnectorNr).getPhysics().get(0).getPosition();
 		
@@ -73,80 +72,16 @@ public class MtranExperiment extends CustomizedPicker {
 		float zConnector  = positionConnector.getZ();
 		int lastModule = simulation.getModules().size();
 		
-		simulation.getModules().get(lastModule-1).setPosition(new VectorDescription(xConnector+(xConnector-xModule),yConnector+(yConnector-yModule),zConnector+(zConnector-zModule)));}
-		//simulation.getModules().get(0).getComponent(0).setRotation(selectedModule.getComponent(0).getRotation());
-		//simulation.getModules().get(0).getComponent(1).setRotation(selectedModule.getComponent(1).getRotation());
+		RotationDescription rd00 = simulation.getModules().get(lastModule-1).getComponent(0).getRotation();
+		RotationDescription rd11 = simulation.getModules().get(lastModule-1).getComponent(1).getRotation();
+		RotationDescription rd22 = simulation.getModules().get(lastModule-1).getComponent(2).getRotation();
 		
-		/*Matrix3f m = new Matrix3f();
-		m.set(selectedModule.getComponent(0).getRotation().getRotation());
-		
-		Matrix3f m11 = new Matrix3f();
-		m11.set(selectedModule.getComponent(1).getRotation().getRotation());
-		
-		Quaternion slectQ = selectedModule.getComponent(0).getRotation().getRotation();
-	
-		Matrix3f m1= null,m2= null, m111= null, m222 = null;
-		if (selectedConnectorNr ==0||selectedConnectorNr ==6){			
-			if (slectQ.equals(ATRON.ROTATION_DU.getRotation())||slectQ.equals(ATRON.ROTATION_NS.getRotation())){
-				m1 = rotateAround(m,"X",  270);				
-				 m111 = rotateAround(m11,"X",  270);
-			 
-			}else{
-				m1 = rotateAround(m,"X",  90);				
-				 m111 = rotateAround(m11,"X",  90);
-			}			 
-			 
-			 if (slectQ.equals(ATRON.ROTATION_WE.getRotation())){
-				 m2 = rotateAround(m1,"Z", -90);
-				 m222 = rotateAround(m111,"Z",  -90);			
-			 }else{				 
-				 m2 = rotateAround(m1,"Z", 90);
-				 m222 = rotateAround(m111,"Z",  90); 
-			 }			 
-			
-		}else if(selectedConnectorNr ==1||selectedConnectorNr ==7) {
-		   
-		   m1 = rotateAround(m,"X",  90);
-			 m2 = rotateAround(m1,"Y", - 90);
-			 
-			 m111 = rotateAround(m11,"X",  90);
-			 m222 = rotateAround(m111,"Y", - 90);
-		   }else if(selectedConnectorNr ==3||selectedConnectorNr ==5) {
-			   m1 = rotateAround(m,"X",  -90);
-				 m2 = rotateAround(m1,"Y",  90);
-				 
-				 m111 = rotateAround(m11,"X",  -90);
-				 m222 = rotateAround(m111,"Y",  90);
-		   }else if (selectedConnectorNr ==2||selectedConnectorNr ==4) {
-			   
-			   if (slectQ.equals(ATRON.ROTATION_UD.getRotation())||slectQ.equals(ATRON.ROTATION_NS.getRotation())){
-					m1 = rotateAround(m,"X",  270);				
-					 m111 = rotateAround(m11,"X",  270);
-				 
-				}else{
-					   m1 = rotateAround(m,"X",  90);
-					   m111 = rotateAround(m11,"X",  90);	
-				}	
-			   
-			     if (slectQ.equals(ATRON.ROTATION_WE.getRotation())){
-					 m2 = rotateAround(m1,"Z", -270);
-					 m222 = rotateAround(m111,"Z",  -270);			
-				 }else{				 
-					 m2 = rotateAround(m1,"Z",  -90);
-					 m222 = rotateAround(m111,"Z",  -90);
-				 }							   
-		   }
-		
-		
-		Quaternion newQaut = new Quaternion();
-		newQaut.fromRotationMatrix(m2);
-		
-		Quaternion newQaut1 = new Quaternion();
-		newQaut1.fromRotationMatrix(m222);	
-		
-		simulation.getModules().get(0).getComponent(0).setRotation(new RotationDescription(newQaut));
-		simulation.getModules().get(0).getComponent(1).setRotation(new RotationDescription(newQaut1));*/
-		
+		//simulation.getModules().get(lastModule-1).setPosition(new VectorDescription(xConnector+(xConnector-xModule),yConnector+(yConnector-yModule),zConnector+(zConnector-zModule)));//.setPosition(new VectorDescription(xConnector+(xConnector-xModule),yConnector+(yConnector-yModule),zConnector+(zConnector-zModule)));}
+		simulation.getModules().get(lastModule-1).getComponent(2).setPosition(new VectorDescription(xConnector+(xConnector-xModule),yConnector+(yConnector-yModule),zConnector+(zConnector-zModule)));
+		//simulation.getModules().get(lastModule-1).getComponent(0).setPosition(new VectorDescription(xConnector+(xConnector-xModule),yConnector+(yConnector-yModule),zConnector+(zConnector-zModule)));
+		//simulation.getModules().get(lastModule-1).getComponent(1).setRotation(rd11);
+		//simulation.getModules().get(lastModule-1).getComponent(2).setRotation(rd22);		
+		}		
 	}
 
 	@Override

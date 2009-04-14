@@ -7,6 +7,7 @@ import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
 import ussr.builder.BuilderHelper;
+import ussr.builder.SupportedModularRobots;
 
 /**
  * The main responsibility of this class is to specify the tool for construction of
@@ -53,9 +54,9 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	private int chosenConnectorNr = 1000;//just to avoid having default 0 value, which is also number of connector. 
 	
 	/**
-	 * The name of the modular robot. For example: ATRON, M-Tran, Odin and so on
+	 * The name of the modular robot. For example: ATRON, MTRAN, ODIN and so on
 	 */
-	private String modularRobotName;
+	private SupportedModularRobots modularRobotName;
 
 	/**
 	 * The name of the tool from GUI. For example these can be "ON_SELECTED_CONNECTOR", "ON_CHOSEN_CONNECTOR","LOOP" and so on.
@@ -73,7 +74,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * @param modularRobotName,the name of the modular robot. For example: ATRON, MTRAN,Odin and so on.
 	 * @param toolName,the name of the tool from GUI. For example, in this case, these can be "ON_SELECTED_CONNECTOR", "ON_ALL_CONNECTORS" and "VARIATION".
 	 */
-	public  ConstructionToolSpecification(JMESimulation simulation, String modularRobotName, ConstructionTools toolName){
+	public  ConstructionToolSpecification(JMESimulation simulation, SupportedModularRobots modularRobotName, ConstructionTools toolName){
 		this.simulation = simulation;
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
@@ -84,11 +85,11 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	/**
 	 * For calling tools handling construction of morphology of modular robot,in particular tools like "ON_CHOSEN_CONNECTOR" or "LOOP".
 	 * @param simulation, the physical simulation.
-	 * @param modularRobotName,the name of the modular robot. For example: ATRON, MTRAN,Odin and so on.
+	 * @param modularRobotName,the name of the modular robot. For example: ATRON, MTRAN,ODIN and so on.
 	 * @param toolName,the name of the tool from GUI. For example, in this  case, these can be "ChosenConnector" or "Loop".
 	 * @param chosenConnectorNr,the connector number on module, chosen in GUI comboBox ("ON_CHOSEN_CONNECTOR")or just passed as default ("LOOP").
 	 */
-	public  ConstructionToolSpecification(JMESimulation simulation, String modularRobotName, ConstructionTools toolName,int chosenConnectorNr){
+	public  ConstructionToolSpecification(JMESimulation simulation, SupportedModularRobots modularRobotName, ConstructionTools toolName,int chosenConnectorNr){
 		this.simulation = simulation;
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
@@ -100,11 +101,11 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	/**
 	 * For calling tools handling construction of morphology of modular robot, in particular tools like "STANDARD_ROTATION". 
 	 * @param simulation, the physical simulation.
-	 * @param modularRobotName, the name of the modular robot. For example: ATRON, MTRAN,Odin and so on.
+	 * @param modularRobotName, the name of the modular robot. For example: ATRON, MTRAN,ODIN and so on.
 	 * @param toolName, the name of the tool from GUI. For example, in this case, this is "STANDARD_ROTATION".
 	 * @param standardRotationName,the name of rotation, which is standard to particular modular robot. For example for ATRON this can be EW, meaning east-west.
 	 */
-	public  ConstructionToolSpecification(JMESimulation simulation, String modularRobotName, ConstructionTools toolName, String standardRotationName){
+	public  ConstructionToolSpecification(JMESimulation simulation, SupportedModularRobots modularRobotName, ConstructionTools toolName, String standardRotationName){
 		this.simulation = simulation;
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
@@ -141,7 +142,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * and the module type selected in simulation environment is MTRAN. Then the method will complain.	 * 
 	 */
 	private void callAppropriateTool(){
-		if (this.modularRobotName.equalsIgnoreCase(ATRON)&& isAtron()||this.modularRobotName.equalsIgnoreCase(MTRAN)&& isMtran()||this.modularRobotName.equalsIgnoreCase("odin")&&isOdin()){		
+		if (this.modularRobotName.equals(SupportedModularRobots.ATRON)&& isAtron()||this.modularRobotName.equals(SupportedModularRobots.MTRAN)&& isMtran()||this.modularRobotName.equals(SupportedModularRobots.ODIN)&&isOdin()){		
 			callTool();	
 		}else{
 			JOptionPane.showMessageDialog(null, "This module is not an "+modularRobotName+" module. The chosen tool is for "+ modularRobotName+ "modules!","Error", JOptionPane.ERROR_MESSAGE);// Inform the user
@@ -234,13 +235,13 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		Module lastAddedModule = simulation.getModules().get(amountModules-1);//Last module		
 		Module selectedModule = this.selectedModule;//Last module
 		
-		if (this.modularRobotName.equalsIgnoreCase(ATRON)){			
+		if (this.modularRobotName.equals(SupportedModularRobots.ATRON)){			
 			ConstructionTemplate con =  new ATRONConstructionTemplate(simulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule, true);
-		}else if (this.modularRobotName.equalsIgnoreCase(MTRAN)){			
+		}else if (this.modularRobotName.equals(SupportedModularRobots.MTRAN)){			
 			ConstructionTemplate con =  new MTRANConstructionTemplate(simulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
-		}else if (this.modularRobotName.equalsIgnoreCase(ODIN)){
+		}else if (this.modularRobotName.equals(SupportedModularRobots.ODIN)){
 			ConstructionTemplate con =  new OdinConstructionTemplate(simulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
 		}
@@ -250,7 +251,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * Returns the name of modular robot specified in selection tool
 	 * @return modularRobotName, the name of modular robot
 	 */
-	public String getModularRobotName() {
+	public SupportedModularRobots getModularRobotName() {
 		return modularRobotName;
 	}
 

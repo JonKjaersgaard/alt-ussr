@@ -1,5 +1,6 @@
 package ussr.builder.constructionTools;
 
+import ussr.builder.SupportedModularRobots;
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -22,12 +23,12 @@ public class SelectOperationsAbstractFactory {
 	 * @return selectOperations,the object of selection (common) operations.  
 	 * @throws error, if modular robot is not supported yet or the name of it is misspelled. 
 	 */
-	public SelectOperationsTemplate getSelectOperations(JMESimulation simulation, String modularRobotName){
-		if (modularRobotName.equalsIgnoreCase("ATRON")){
+	public SelectOperationsTemplate getSelectOperations(JMESimulation simulation, SupportedModularRobots modularRobotName){
+		if (modularRobotName.equals(SupportedModularRobots.ATRON)){
 			selectOperations = new ATRONOperationsTemplate(simulation);  
-		}else if (modularRobotName.equalsIgnoreCase("MTRAN")){
+		}else if (modularRobotName.equals(SupportedModularRobots.MTRAN)){
 			selectOperations = new MTRANOperationsTemplate(simulation);  
-		}else if (modularRobotName.equalsIgnoreCase("Odin")){
+		}else if (modularRobotName.equals(SupportedModularRobots.ODIN)){
 			selectOperations = new OdinOperationsTemplate(simulation);  
 		}else throw new Error("This modular robot is not supported yet or the name of it is misspelled");
 		return selectOperations;		

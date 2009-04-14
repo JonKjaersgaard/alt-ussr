@@ -56,11 +56,11 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	/**
 	 * For calling tools handling labeling of entities, in particular tools like "LABEL_MODULE","LABEL_CONNECTOR" and "DELETE_LABEL". 
 	 * @param simulation, the physical simulation.
-	 * @param entityToLabel, the entity to be labeled. For example: "Module" or "Connector".
+	 * @param entityToLabel, the entity to be labeled. For example: LabeledEntities.MODULE or LabeledEntities.CONNECTOR.
 	 * @param label, the label to be assigned. Can be any String.
 	 * @param toolName, the name of the tool to be used.
 	 */
-	public LabelingToolSpecification(JMESimulation simulation,String entityToLabel,String label, LabelingTools toolName){
+	public LabelingToolSpecification(JMESimulation simulation,LabeledEntities entityToLabel,String label, LabelingTools toolName){
 		this.simulation = simulation;		
 		this.label = label;		
 		this.toolName = toolName;
@@ -70,11 +70,11 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	/**
 	 * For calling tools handling labeling of entities, in particular tool called "READ_LABELS". 
 	 * @param simulation, the physical simulation.
-	 * @param entityToLabel, the entity to be labeled. For example: "Module" or "Connector".
+	 * @param entityToLabel, the entity to be labeled. For example: LabeledEntities.MODULE or LabeledEntities.CONNECTOR.
 	 * @param toolName, the name of the tool to be used.
 	 * @param quickPrototyping, the QuickPrototyping frame.
 	 */
-	public LabelingToolSpecification(JMESimulation simulation,String entityToLabel, LabelingTools toolName, QuickPrototyping quickPrototyping){
+	public LabelingToolSpecification(JMESimulation simulation,LabeledEntities entityToLabel, LabelingTools toolName, QuickPrototyping quickPrototyping){
 		this.simulation = simulation;				
 		this.toolName = toolName;
 		this.labeling = new LabelingFactory().getLabeling(entityToLabel);
@@ -104,14 +104,12 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 * Calls specific tool for labeling of entities. 
 	 */
 	private void callSpecificTool(){
-
+       if(this.labeling instanceof  LabelConnector && selectedConnectorNr == 1000){// the case when user selects the module  or something else instead of connector.
+    	   JOptionPane.showMessageDialog(null, "You do not selected connector. Chosen tool is for connectors. Please zoom in and select the connector instead. ","Error", JOptionPane.ERROR_MESSAGE);				
+       }else{
 		switch(toolName){
-		case LABEL_CONNECTOR:
-			if (selectedConnectorNr == 1000){// in case when user selects the module instead of connector  				
-				 JOptionPane.showMessageDialog(null, "You do not selected connector. Please zoom in and select the connector instead. ","Error", JOptionPane.ERROR_MESSAGE);				
-			}else{
-			this.labeling.labelSpecificEntity(this);
-			}
+		case LABEL_CONNECTOR:		
+			this.labeling.labelSpecificEntity(this);			
 			break;
 		case LABEL_MODULE:
 			this.labeling.labelSpecificEntity(this);
@@ -123,7 +121,8 @@ public class LabelingToolSpecification extends CustomizedPicker {
 			this.labeling.removeLabel(this);
 			break;
 		default: throw new Error ("The tool name:" +toolName+ ", is not supported yet");
-		}
+		}		
+       }
 	}
 
 	/**
