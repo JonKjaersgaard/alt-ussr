@@ -28,14 +28,18 @@ public abstract class GenericReceiver implements Receiver {
     protected Packet[] queue; 
     protected int read_position, write_position;
     private ArrayList<PacketReceivedObserver> packetReceivedObservers = new ArrayList<PacketReceivedObserver>();
-    protected int packageCounter = 0; //for debougging
+    protected int packageCounter = 0; //for debugging
+    // Begin Horn
     Set<CommunicationMonitor> monitors;
+    // End Horn
     
     public GenericReceiver(Module _module, Entity _hardware, TransmissionType _type, int buffer_size) {
         this.module = _module; this.type = _type; this.hardware = _hardware;
         queue = new Packet[buffer_size];
         read_position = write_position = 0;
+        // Begin Horn
         this.monitors = PhysicsFactory.getOptions().getMonitors();
+        // End Horn
     }
     
 
@@ -46,8 +50,14 @@ public abstract class GenericReceiver implements Receiver {
 		return hardware.getPhysics().get(0);
 	}
     
-    public synchronized void receive(Packet data) {
-        if(monitors!=null) for(CommunicationMonitor monitor: monitors) monitor.packetReceived(module,this,data);
+    public synchronized void receive(Packet data) {            
+    	// Begin Horn
+        if(monitors != null) {
+        	for(CommunicationMonitor monitor: monitors) {
+        		monitor.packetReceived(module,this,data);
+        	}
+        }
+        // End Horn
     	packageCounter++;
         queue[write_position] = data;
         write_position = (write_position+1)%queue.length;

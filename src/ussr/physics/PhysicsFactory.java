@@ -42,6 +42,11 @@ public class PhysicsFactory {
             public void addConnection(Module m1, Module m2) { ; }
             public void finish() { ; }
         };
+
+        // Begin Horn
+        //private Set<CommunicationMonitor> monitors = new HashSet<CommunicationMonitor>();
+        // End Horn
+
         private Set<CommunicationMonitor> monitors = new HashSet<CommunicationMonitor>();
 
         public Options copy() { 
@@ -63,9 +68,27 @@ public class PhysicsFactory {
         public TopologyWriter getTopologyWriter() {
             return topologyWriter;
         }
+        
         public void setTopologyWriter(TopologyWriter writer) {
             this.topologyWriter = writer;
         }
+        
+        // Begin Horn
+        /*
+        public void addCommunicationMonitor(CommunicationMonitor monitor) {
+            monitors.add(monitor);
+        }
+        */
+        // End Horn
+        
+        // Begin Horn
+        /*
+        public Set<CommunicationMonitor> getMonitors() {
+            return monitors;
+        }
+        */
+        // End Horn
+        
         public void addCommunicationMonitor(CommunicationMonitor monitor) {
             monitors.add(monitor);
         }
@@ -89,7 +112,7 @@ public class PhysicsFactory {
     }
     
     /**
-     * Create a new physics simulation.  Parameterized with the currently registered set of factories
+     * Create a new physics simulation.  Parameterized with the currently registered set of factories	
      * and the current options.
      * @return a new physics simulation
      */

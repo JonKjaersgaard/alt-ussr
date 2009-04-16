@@ -6,8 +6,6 @@
  */
 package ussr.comm;
 
-import java.util.Arrays;
-
 /**
  * A simulated packet, can be transmitted using all types of transmission
  * 
@@ -34,6 +32,8 @@ public class Packet {
     public byte[] getData() {
         return payload;
     }
+
+    // Begin Horn
     public String toString() {
         StringBuffer result = new StringBuffer("[ ");
         for(int i=0; i<payload.length; i++) {
@@ -43,4 +43,5 @@ public class Packet {
         result.append(']');
         return result.toString();
     }
+    // End Horn
 }

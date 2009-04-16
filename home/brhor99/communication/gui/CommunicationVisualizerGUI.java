@@ -10,7 +10,9 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -23,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import ussr.comm.CommunicationMonitor;
 import ussr.comm.GenericReceiver;
 import ussr.comm.GenericTransmitter;
 import ussr.comm.Packet;
@@ -30,6 +33,7 @@ import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
+import ussr.physics.PhysicsFactory;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
 
@@ -42,7 +46,7 @@ import communication.filter.CommunicationContainer;
 //4) Make customization of the size of the visualization GUI possible
 //5) Create a class/interface between the GUI visualizer and the actual simulation
 
-public class CommunicationVisualizerGUI extends JPanel implements ItemListener, Runnable {
+public class CommunicationVisualizerGUI extends JPanel implements ItemListener, Runnable, CommunicationMonitor {
 
 	private JMESimulation simulation;
 	private Thread visualizationThread;
@@ -56,6 +60,9 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 	private static boolean instanceFlag = false;
 	
 	private List<Module> modules;
+
+	Map<Packet,Module> registry = new HashMap<Packet,Module>();
+
 
 	private JTextArea textArea;
 	private DrawingCanvas canvas;
@@ -82,7 +89,8 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 		visualizationThread = new Thread(this);
 		modules = this.simulation.getModules();
 		//showTransmitterReceiverPosition();
-			
+		
+		
 		numberOfModules = simulation.getModuleComponents().size();
 		initializeComponents();
 		add(createTextArea());
@@ -90,8 +98,30 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 		add(createControllArea());
 		add(createSimulationArea());
 		instanceFlag = true;
-		visualizationThread.start();		
+		PhysicsFactory.getOptions().addCommunicationMonitor(this);
+		visualizationThread.start();
 	}
+	
+    public void packetReceived(Module module, GenericReceiver receiver, Packet data) {
+        Module from = registry.get(data);
+        if(from==null)
+            System.out.println("Unknown source for packet "+data);
+        else {
+            String fromName = formatName(from,from.getProperty("name"));
+            String toName = formatName(module,module.getProperty("name"));
+            System.out.println("["+fromName+"->"+toName+"] "+data);
+            registry.remove(data);
+        }
+    }
+
+    private String formatName(Module module, String name) {
+        return name==null ? ("<Unnamed module "+module+">") : name;
+    }
+    
+    public void packetSent(Module module, GenericTransmitter transmitter, Packet packet) {
+        registry.put(packet,module);
+    }
+
 		
 	//Consider creating the exact same loop (only the for loops) as in GenericTransmitter
 	public synchronized void run() {		
@@ -105,7 +135,7 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 				e.printStackTrace();
 				return;
 			}
-			while(true) {
+			while(true) {					
 				for(Module m : simulation.getModules()) {
 					//System.out.println("Module " + m.getID() + " has " + m.getTransmitters().size() + " transmitters");
 					for(Transmitter t : m.getTransmitters()) {

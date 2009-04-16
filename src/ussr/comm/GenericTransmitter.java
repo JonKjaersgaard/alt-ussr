@@ -9,7 +9,7 @@ package ussr.comm;
 import java.util.LinkedList;
 import java.util.Set;
 
-//import communication.filter.CommunicationContainer;
+import communication.filter.CommunicationContainer;
 
 import ussr.description.robot.TransmissionDevice;
 import ussr.model.Entity;
@@ -36,34 +36,41 @@ public abstract class GenericTransmitter implements Transmitter {
     protected float range;
     TransmissionDevice transmitter;
     private Entity hardware;
+
+    // Begin Horn
     Set<CommunicationMonitor> monitors;
+    // End Horn
     
     //Begin Horn
-    //protected CommunicationContainer communicationContainer;
+    protected CommunicationContainer communicationContainer;
     //End Horn
     
     
     public GenericTransmitter(Module _module, Entity _hardware, TransmissionType _type, float _range) {
         this.module = _module; this.type = _type; this.range = _range; this.hardware = _hardware;
         transmitManager = new GenericTransmitManager(Integer.MAX_VALUE,Integer.MAX_VALUE,this);
+
+        // Begin Horn
         this.monitors = PhysicsFactory.getOptions().getMonitors();
-        //Begin Horn
+        // End Horn
+
+        // Begin Horn
         //communicationContainer = new CommunicationContainer(_module);        
-        //End Horn
+        // End Horn
     }
 
     public GenericTransmitter(Module _module, TransmissionDevice _transmitter) {
     	this.transmitter = _transmitter;
     	transmitManager = new GenericTransmitManager(Integer.MAX_VALUE,Integer.MAX_VALUE,this);
-    	//Begin Horn
+    	// Begin Horn
     	//communicationContainer = new CommunicationContainer(_module);
-    	//End Horn
+    	// End Horn
 	}
     
     //Begin Horn
-    //public CommunicationContainer getCommunicationContainer() {
-    //	return communicationContainer;
-    //}    
+    public CommunicationContainer getCommunicationContainer() {
+    	return communicationContainer;
+    }    
     //End Horn
     
     //Begin Horn
@@ -79,7 +86,14 @@ public abstract class GenericTransmitter implements Transmitter {
     	transmitManager.setMaxBufferSize(maxBufferSize);
 	}
     public void send(Packet packet) {
-        if(monitors!=null) for(CommunicationMonitor monitor: monitors) monitor.packetSent(module,this,packet);
+    	// Begin Horn
+    	if(monitors != null) {
+    		for(CommunicationMonitor monitor : monitors) {
+    			monitor.packetSent(module, this, packet);
+    		}
+    	}
+    	// End Horn        
+
 		//TODO optimize this function 
 		//TODO make a time delay from sending to receiving which is more realistic - e.g using a timestamp 
 		/*for(Module m : module.getSimulation().getModules()) {
