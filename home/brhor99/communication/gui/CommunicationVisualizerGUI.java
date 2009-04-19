@@ -2,6 +2,7 @@ package communication.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +10,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +29,6 @@ import ussr.comm.CommunicationMonitor;
 import ussr.comm.GenericReceiver;
 import ussr.comm.GenericTransmitter;
 import ussr.comm.Packet;
-import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
@@ -46,7 +45,7 @@ import communication.filter.CommunicationContainer;
 //4) Make customization of the size of the visualization GUI possible
 //5) Create a class/interface between the GUI visualizer and the actual simulation
 
-public class CommunicationVisualizerGUI extends JPanel implements ItemListener, Runnable, CommunicationMonitor {
+public class CommunicationVisualizerGUI extends JPanel implements ItemListener /*, Runnable, CommunicationMonitor*/ {
 
 	private JMESimulation simulation;
 	private Thread visualizationThread;
@@ -61,12 +60,12 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 	
 	private List<Module> modules;
 
-	Map<Packet,Module> registry = new HashMap<Packet,Module>();
+	//Map<Packet, Module> registry = new HashMap<Packet, Module>();
 
 
 	private JTextArea textArea;
 	private DrawingCanvas canvas;
-
+	
 	private JCheckBox checkboxTransmitter;
 	private JCheckBox checkboxReceiver;
 	private JCheckBox checkboxPacket;
@@ -74,6 +73,8 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 	private JLabel labelTransmitterModules;
 	private JLabel labelReceiverModules;
 	private JLabel labelPacketModules;
+	
+	private JCheckBoxList listCheckBoxModules;
 	
 	private JComboBox comboboxTransmitterModules;
 	private JComboBox comboboxReceiverModules;
@@ -84,32 +85,70 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 	private JButton stopSimulationButton;
 
 	public CommunicationVisualizerGUI(JMEBasicGraphicalSimulation simulation) {
-		super(new GridLayout(4, 1));		
+		super(new GridLayout(5, 1));		
 		this.simulation = (JMESimulation) simulation;
-		visualizationThread = new Thread(this);
+		//visualizationThread = new Thread(this);
 		modules = this.simulation.getModules();
 		//showTransmitterReceiverPosition();
 		
 		
-		numberOfModules = simulation.getModuleComponents().size();
+		numberOfModules = modules.size();
+		
 		initializeComponents();
 		add(createTextArea());
 		add(createCanvasArea());
+		add(createFilterArea());
 		add(createControllArea());
 		add(createSimulationArea());
 		instanceFlag = true;
-		PhysicsFactory.getOptions().addCommunicationMonitor(this);
-		visualizationThread.start();
+		start();
+
+		
+		//PhysicsFactory.getOptions().addCommunicationMonitor(this);
+		//visualizationThread.start();
 	}
 	
+	public void start() {
+        canvas.start();
+    }
+    
+    public void stop() {
+        canvas.stop();
+    }
+	
+	public JTextArea getTextArea() {
+		return textArea;
+	}
+	
+	public void writeText(String text) {
+		textArea.append(text + "\n");		
+	}
+	
+	/*
     public void packetReceived(Module module, GenericReceiver receiver, Packet data) {
         Module from = registry.get(data);
-        if(from==null)
-            System.out.println("Unknown source for packet "+data);
+        if(from == null) {
+            System.out.println("Unknown source for packet " + data);
+    		textArea.append("Unknown source for packet "  + data + "\n");
+        }        
         else {
-            String fromName = formatName(from,from.getProperty("name"));
-            String toName = formatName(module,module.getProperty("name"));
-            System.out.println("["+fromName+"->"+toName+"] "+data);
+            String fromName = formatName(from, from.getProperty("name"));
+            String toName = formatName(module, module.getProperty("name"));
+            int fromID = from.getID();
+            int toID = module.getID();
+            System.out.println("[" + fromName + "->" + toName +"] "+ data);
+            if(fromID < toID) {
+            	// fromID -> toID
+            	int xFrom = canvas.DX + fromID * canvas.getColumnWidth();
+            	int yFrom = canvas.DY + fromID * canvas.getRowHeight();
+            	int xTo = canvas.DX + toID * canvas.getColumnWidth();
+            	int yTo = canvas.DY + toID * canvas.getRowHeight();
+            	canvas.drawArrow(xFrom, yFrom, xTo, yTo, 1.0f);
+
+
+            }
+            textArea.append(("[" + fromName + "->" + toName +"] "+ data + "\n"));
+            //canvas.drawArrow(xCenter, yCenter, x, y, stroke)
             registry.remove(data);
         }
     }
@@ -121,9 +160,9 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
     public void packetSent(Module module, GenericTransmitter transmitter, Packet packet) {
         registry.put(packet,module);
     }
+    */
 
-		
-	//Consider creating the exact same loop (only the for loops) as in GenericTransmitter
+	/*
 	public synchronized void run() {		
 		while(!isSimulationRunning) {
 			try {
@@ -140,15 +179,6 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 					//System.out.println("Module " + m.getID() + " has " + m.getTransmitters().size() + " transmitters");
 					for(Transmitter t : m.getTransmitters()) {
 						CommunicationContainer comContainer = ((GenericTransmitter) t).getCommunicationContainer();
-						/*
-						VectorDescription transmitterPosition = ((GenericTransmitter) t).getHardware().getPosition();
-						float xPos = transmitterPosition.getX();
-						float yPos = transmitterPosition.getY();
-						float zPos = transmitterPosition.getZ();
-						System.out.println("************************************************************************************");
-						System.out.println("Module : " + m.getID());
-						System.out.println("Transmitter position (x, y, z) = " + "(" + xPos + ", " + yPos + ", " + zPos + ")");
-						*/
 						Thread.yield();
 						if(comContainer.hasMorePacketsInQueue()) {
 							Packet p = comContainer.removePacketFromQueue();
@@ -162,69 +192,10 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 			}						
 		}
 	}
+	*/
 
 	
-	//private volatile Module module;
-	//private volatile GenericTransmitter transmitter;
-	//private volatile Receiver receiver;
-	/*
-	public synchronized void run() {		
-		while(!isSimulationRunning) {
-			try {
-				System.out.println("Waiting for simulation to start...");
-				wait();
-				System.out.println("Simulation started...");
-			}
-			catch (InterruptedException e) {
-				e.printStackTrace();
-				return;
-			}
-			while(true) {
-				for(int i = 0; i < simulation.getModules().size(); i++) {
-					Module module = simulation.getModules().get(i);
-					//System.out.println("Module");
-					Thread.yield();
-					//Thread.sleep(1000);
-					for(int j = 0; j < module.getTransmitters().size(); j++) {
-						GenericTransmitter transmitter = (GenericTransmitter) module.getTransmitters().get(j);
-						CommunicationContainer communicationContainer = transmitter.getCommunicationContainer();
-						if(communicationContainer.hasMorePacketsInQueue()) {
-							System.out.println("Transmitter");
-						}
-						Thread.yield();
-						
-						for(int k = 0; k < module.getReceivers().size(); k++) {
-							Receiver receiver = module.getReceivers().get(k);
-							//System.out.println("Receiver");
-							Thread.yield();
-							if(transmitter.canSendTo(receiver) && receiver.canReceiveFrom(transmitter)) {
-								System.out.println("tralala tralalala");	
-
-							}
-						}
-					}
-				}
-				for(Module m : simulation.getModules()) {					
-					for(Transmitter t : m.getTransmitters()) {
-						for(Receiver r : m.getReceivers()) {
-							if(t.canSendTo(r) && r.canReceiveFrom(t)) {
-								CommunicationContainer comContainer = ((GenericTransmitter) t).getCommunicationContainer();
-								if(comContainer.hasMorePacketsInQueue()) {
-									Packet p = comContainer.removePacketFromQueue();
-									if(p == null) {
-										System.out.println("Packet content is zero");
-										System.out.println(comContainer.showPacketContent(p));
-									}
-								}	
-							}
-						}											
-					}
-				}
-				//System.out.println("I am listening...");
-			}						
-		}
-	}
-	*/
+	
 
 
 		
@@ -1084,11 +1055,10 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 
 	private void initializeComponents() {
 		
-		canvas = new DrawingCanvas(simulation, 20, simulation.getModules().size());
-	    canvas.addMouseListener(new CanvasMouseListener());    
-
+		canvas = new DrawingCanvas(simulation, 20, numberOfModules);
+	    canvas.addMouseListener(new CanvasMouseListener());
 		
-		
+	    String[] items = createComboboxItems();
 		checkboxTransmitter = new JCheckBox("Transmitters");
 		checkboxReceiver = new JCheckBox("Receivers");
 		checkboxPacket = new JCheckBox("Packets");
@@ -1101,11 +1071,12 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 		labelReceiverModules = new JLabel("Modules");
 		labelPacketModules = new JLabel("Modules");
 		
-		String[] items = createComboboxItems();		
+		listCheckBoxModules = new JCheckBoxList();
+
 		comboboxTransmitterModules = new JComboBox(items);
 		comboboxReceiverModules = new JComboBox(items);
 		comboboxPacketModules = new JComboBox(items);
-				
+						
 		comboboxTransmitterModules.setEnabled(false);
 		comboboxReceiverModules.setEnabled(false);
 		comboboxPacketModules.setEnabled(false);
@@ -1135,11 +1106,11 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 
 	private synchronized void startSimulationButtonAction(ActionEvent event) {
 		isSimulationRunning = true;
-		notify();
+		//notify();
 		System.out.println("Start simulation button pressed");
 		textArea.append("Simulation started \n");
 		simulation.setPause(false);
-		fooBar();
+		//fooBar();
 		//TODO
 		//1) When the start simulation button is pressed the communication should be visualized
 		//2) For each module it should be checked if it transmits data
@@ -1193,6 +1164,16 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 		return items;		
 	}
 	
+	private Object[] createCheckboxItems() {
+		Object[] items = new Object[numberOfModules];
+		int i;
+		for(i = 0; i < numberOfModules; i++) {
+			String moduleName = "#" + i;
+			items[i] = new JCheckBox(moduleName);			
+		}
+		return items;
+	}
+	
 	private JPanel createTextArea() {
 		textArea = new JTextArea();
 		textArea.setDragEnabled(true);
@@ -1200,29 +1181,41 @@ public class CommunicationVisualizerGUI extends JPanel implements ItemListener, 
 		scrollPane.setPreferredSize(new Dimension(600, 100));
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(scrollPane, BorderLayout.CENTER);
-		panel.setBorder(BorderFactory.createTitledBorder("Text Area"));
+		panel.setBorder(BorderFactory.createTitledBorder("Status"));
 		return panel;
 	}
 
 	private JPanel createCanvasArea() {
 		//canvas = new DrawingCanvas(simulation, 20, simulation.getModules().size());
 		JScrollPane scrollPane = new JScrollPane(canvas);
-		scrollPane.setPreferredSize(new Dimension(600, 200));
+		//scrollPane.setPreferredSize(new Dimension(600, 200));
+		scrollPane.setPreferredSize(new Dimension(1000, 200));
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(scrollPane, BorderLayout.CENTER);
 		panel.setBorder(BorderFactory.createTitledBorder("Module Communication"));
 		return panel;
 	}
+	
+	private JPanel createFilterArea() {
+		JScrollPane scrollPane = new JScrollPane(listCheckBoxModules);		
+		Object[] checkboxItems = createCheckboxItems();	
+		listCheckBoxModules.setListData(checkboxItems);
+		scrollPane.setPreferredSize(new Dimension(200, 100));
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(scrollPane, BorderLayout.CENTER);
+		panel.setBorder(BorderFactory.createTitledBorder("Module Filter"));
+		return panel;
+	}
 
 	private JPanel createControllArea() {
-		JPanel panel = new JPanel(new GridLayout(3, 3));
-		panel.setPreferredSize(new Dimension(100, 100));
+		JPanel panel = new JPanel(new GridLayout(4, 4));
+		panel.setPreferredSize(new Dimension(100, 100));		
 		panel.add(checkboxTransmitter);
 		panel.add(labelTransmitterModules);
-		panel.add(comboboxTransmitterModules);
+		panel.add(comboboxTransmitterModules);		
 		panel.add(checkboxReceiver);
 		panel.add(labelReceiverModules);
-		panel.add(comboboxReceiverModules);
+		panel.add(comboboxReceiverModules);		
 		panel.add(checkboxPacket);
 		panel.add(labelPacketModules);
 		panel.add(comboboxPacketModules);
