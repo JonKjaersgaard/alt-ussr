@@ -5,23 +5,21 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.JPanel;
+
+import communication.filter.CommunicationContainer;
 
 import ussr.comm.CommunicationMonitor;
 import ussr.comm.GenericReceiver;
@@ -42,8 +40,7 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 	protected int columnWidth;
 	protected int mouseClickX;
 	protected int mouseClickY;
-
-	
+	protected int rowCount = 0;
 	protected int[][] grid;
 	public static final int DX = 50;
 	public static final int DY = 50;
@@ -51,19 +48,21 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 	public static final int DY_MODULE_OFFSET = 25;
 	public static final int DX_OFFSET = 180;
 	public static final int DY_OFFSET = 40;	
-	private Graphics2D graphic;
 	private BufferedImage communicationImage;
-	private int communicationCount = 0;
 	private static final int UPDATE_INTERVAL = 1000;  	// Milliseconds
-    private javax.swing.Timer timer;     			 	// Fires to update clock.
+    private javax.swing.Timer timer;     			 	// Fires to update canvas.
     private Calendar now = Calendar.getInstance();  	// Current time.
-	
+    
 	Map<Packet, Module> registry = new HashMap<Packet, Module>();
-	Map<ModuleCanvasPosition, Module> positionMap = new HashMap<ModuleCanvasPosition, Module>();
-	Map<Point, Module> positions = new HashMap<Point, Module>();
-	Map<Point, Point> transmitterRecieverMap = new HashMap<Point, Point>();
-	List<Pair<Point, Point>> transmitterReceiverList = new ArrayList<Pair<Point, Point>>();
-	List<Pair<Point, Point>> transmitterReceiverListBackup = new ArrayList<Pair<Point, Point>>();
+
+	//Map<Point, Module> positions = new HashMap<Point, Module>();
+	//Map<Point, Point> transmitterRecieverMap = new HashMap<Point, Point>();
+	
+	//List<Pair<Point, Point>> transmitterReceiverList = new ArrayList<Pair<Point, Point>>();
+	//List<Pair<Point, Point>> transmitterReceiverListBackup = new ArrayList<Pair<Point, Point>>();
+	CommunicationContainer transmitterReceiverContainer = new CommunicationContainer();
+	CommunicationContainer transmitterReceiverContainerBackup = new CommunicationContainer();
+	
 
 		
 	public DrawingCanvas(JMESimulation simulation, int rows, int columns) {
@@ -96,7 +95,6 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
         // Avoid creating new objects.
         now.setTimeInMillis(System.currentTimeMillis());
     }
-
 	
 	public int getRows() {
 		return rows;
@@ -134,7 +132,7 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 		return new Dimension(800, 800);
 	}
 	
-	public void packetReceived(Module module, GenericReceiver receiver, Packet data) {
+	public void packetReceived(Module module, GenericReceiver receiver, Packet data) {		
         Module from = registry.get(data);
         if(from == null) {
             System.out.println("Unknown source for packet " + data);
@@ -145,23 +143,23 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
             String toName = formatName(module, module.getProperty("name"));
             int fromID = from.getID();
             int toID = module.getID();
-            System.out.println("[" + fromName + "->" + toName +"] "+ data);
-            // fromID -> toID
-            int xFrom = DX + fromID * getColumnWidth();
-            int yFrom = DY + fromID * getRowHeight();
-            int xTo = DX + toID * getColumnWidth();
-            int yTo = DY + toID * getRowHeight();
+            
+            int xFrom = DX + fromID * columnWidth;
+            int yFrom = DY + rowCount * rowHeight;            
+            int xTo = DX + toID * columnWidth;
+            int yTo = DY + rowCount * rowHeight;
+            rowCount++;
+            
+            System.out.println("[" + fromName + "->" + toName +"] "+ data);            
+            System.out.println("From " + "(x, y)  = (" + xFrom + ", " + yFrom + ") to (x, y) = (" + xTo + ", " + yTo + ")");
             Point transmitterPoint = new Point(xFrom, yFrom);
             Point receiverPoint = new Point(xTo, yTo);            
-            transmitterReceiverList.add(new Pair<Point, Point>(transmitterPoint, receiverPoint));
-            transmitterReceiverListBackup.add(new Pair<Point, Point>(transmitterPoint, receiverPoint));
-            communicationCount++;
-            //Pair transmitterReceiverPair = new Pair<new Point(xFrom, yFrom), new Point(xTo, yTo)>();
             
-            //transmitterRecieverMap.put(transmitterPoint, receiverPoint);
-
-            //textArea.append(("[" + fromName + "->" + toName +"] "+ data + "\n"));
-            //canvas.drawArrow(xCenter, yCenter, x, y, stroke)
+            //transmitterReceiverList.add(new Pair<Point, Point>(transmitterPoint, receiverPoint));
+            //transmitterReceiverListBackup.add(new Pair<Point, Point>(transmitterPoint, receiverPoint));
+            
+            transmitterReceiverContainer.addCommunicationPair(from, module, transmitterPoint, receiverPoint);
+            transmitterReceiverContainerBackup.addCommunicationPair(from, module, transmitterPoint, receiverPoint);          
             registry.remove(data);
         }
     }
@@ -173,29 +171,7 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
     public void packetSent(Module module, GenericTransmitter transmitter, Packet packet) {
         registry.put(packet,module);
     }
-	
-	 
-	
-	/*
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
-		graphic = (Graphics2D) g;
-
-		graphic.drawRect(25, 25, 80, 30);
-		graphic.drawString("#0", DX + (0 * DX_OFFSET), DY + (0 * DY_OFFSET));
-		graphic.drawString("#3", DX + (1 * DX_OFFSET), DY + (0 * DY_OFFSET));
-		graphic.drawString("#6", DX + (2 * DX_OFFSET), DY + (0 * DY_OFFSET));
-		graphic.drawString("#7", DX + (3 * DX_OFFSET), DY + (0 * DY_OFFSET));
-		graphic.drawString("#9", DX + (4 * DX_OFFSET), DY + (0 * DY_OFFSET));
-
-		graphic.drawLine(DX + (0 * DX_OFFSET), DY + (1 * DY_OFFSET), DX + (1 * DX_OFFSET), DY + (1 * DY_OFFSET));
-		graphic.drawLine(DX + (1 * DX_OFFSET), DY + (2 * DY_OFFSET), DX + (2 * DX_OFFSET), DY + (2 * DY_OFFSET));
-		graphic.drawLine(DX + (2 * DX_OFFSET), DY + (3 * DY_OFFSET), DX + (3 * DX_OFFSET), DY + (3 * DY_OFFSET));
-		graphic.drawLine(DX + (3 * DX_OFFSET), DY + (4 * DY_OFFSET), DX + (4 * DX_OFFSET), DY + (4 * DY_OFFSET));
-	}
-	*/
-	
+		 	
     public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
@@ -208,17 +184,12 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 			communicationImage = (BufferedImage) (this.createImage(d.width, d.height));
 			Graphics2D g2a = communicationImage.createGraphics();
             g2a.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-    		int i, j;		
-    		/*
-    		for(i = 1; i <  rows; i++) {
-    			g.drawLine(0, i * rowHeight, d.width, i * rowHeight);
-    		}
-    		*/
-    		int k = 0;
+    		int i;
+    		int j;    		
+    		i = 0;
     		for(Module m : simulation.getModules()) {    			    			
-    			drawModuleID(g2a, m, k * columnWidth + DX_MODULE_OFFSET, DY_MODULE_OFFSET);
-    			k++;
+    			drawModuleID(g2a, m, i * columnWidth + DX_MODULE_OFFSET, DY_MODULE_OFFSET);
+    			i++;
     		}
     		
     		for(j = 0; j < columns; j++) {
@@ -227,82 +198,65 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 		}
 		g2.drawImage(communicationImage, null, 0, 0);
 		
+		//drawReferenceCommunication(g2);
 		
 		// If new packet - drawArrow from transmitter module to receiver module
 		// Draw communication at runtime 
+		// List draw
+		
+		/*
 		if (!transmitterReceiverList.isEmpty()) {
 			for (Pair<Point, Point> transmitterReceiverPair : transmitterReceiverList) {
 				int xFrom = (int) transmitterReceiverPair.fst().getX();
 				int yFrom = (int) transmitterReceiverPair.fst().getY();
 				int xTo = (int) transmitterReceiverPair.snd().getX();
 				int yTo = (int) transmitterReceiverPair.snd().getY();
-				// g2.drawLine(xFrom, yFrom, xTo, yTo);
 				drawArrow(g2, xFrom, yFrom, xTo, yTo, 1.0f);
 			}
 			transmitterReceiverList.remove(0);
 		}
+		*/
 		// Use backup communication list to keep canvas updated after the communication has stopped
-		else {
-			System.out.println("nu er jeg tom");
-		}
-		
+		// List backup draw
 		/*
-		int cnt = 0;
-		while(!transmitterReceiverList.isEmpty()) {
-			System.out.println(cnt);
-			int xFrom = (int) transmitterReceiverList.get(0).fst().getX();
-			int yFrom = (int) transmitterReceiverList.get(0).fst().getY();
-			int xTo = (int) transmitterReceiverList.get(0).snd().getX();
-			int yTo = (int) transmitterReceiverList.get(0).snd().getY();
-			transmitterReceiverList.remove(0);
-			//drawArrow(g2, xFrom, yFrom, xTo, yTo, 1.0f);
-			g2.drawLine(xFrom, yFrom, xTo, yTo);
-			cnt++;
+		else {
+			for (Pair<Point, Point> transmitterReceiverPair : transmitterReceiverListBackup) {
+				int xFrom = (int) transmitterReceiverPair.fst().getX();
+				int yFrom = (int) transmitterReceiverPair.fst().getY();
+				int xTo = (int) transmitterReceiverPair.snd().getX();
+				int yTo = (int) transmitterReceiverPair.snd().getY();
+				drawArrow(g2, xFrom, yFrom, xTo, yTo, 1.0f);
+			}
 		}
 		*/
-		
+		// Container draw
+		if(!transmitterReceiverContainer.getCommunicationMap().isEmpty()) {
+			Pair<Point, Point> key = null;
+			for(Map.Entry<Pair<Point, Point>, Pair<Module, Module>> entry : transmitterReceiverContainer.getCommunicationMap().entrySet()) {
+				key = entry.getKey();
+				int xFrom = (int) entry.getKey().fst().getX();
+				int yFrom = (int) entry.getKey().fst().getY();
+				int xTo = (int) entry.getKey().snd().getX();
+				int yTo = (int) entry.getKey().snd().getY();
+				drawArrow(g2, xFrom, yFrom, xTo, yTo, 1.0f);
+			}	
+			if(transmitterReceiverContainerBackup.getCommunicationMap().containsKey(key)) {
+				transmitterReceiverContainer.getCommunicationMap().remove(key);
+			}
+		}
+		// Container backup draw
+		else {
+			for(Map.Entry<Pair<Point, Point>, Pair<Module, Module>> entry : transmitterReceiverContainerBackup.getCommunicationMap().entrySet()) {
+				int xFrom = (int) entry.getKey().fst().getX();
+				int yFrom = (int) entry.getKey().fst().getY();
+				int xTo = (int) entry.getKey().snd().getX();
+				int yTo = (int) entry.getKey().snd().getY();
+				drawArrow(g2, xFrom, yFrom, xTo, yTo, 1.0f);							
+			}
+		}		
 		//g2.dispose();
 	}
-	
-	/*
-	public void paint(Graphics g) {
-		super.paint(g);
-		graphic = (Graphics2D) g;
-		Dimension d = getSize();
-		rowHeight = d.height / rows;
-		columnWidth = d.width / columns;		
-		int i, j;		
-	
-		int k = 0;
-		for(Module m : simulation.getModules()) {
-			int x = k * columnWidth + DX_MODULE_OFFSET;
-			int y = DY_MODULE_OFFSET;
-			
-			
-			drawModuleID(m, k * columnWidth + DX_MODULE_OFFSET, DY_MODULE_OFFSET);
-			k++;
-		}
 		
-		for(j = 0; j < columns; j++) {
-			g.drawLine(j * columnWidth + DX, DY, j * columnWidth + DX, d.height);
-
-		}
-		
-		//If new packet - drawArrow from transmitter module to receiver module
-		int cnt = 0;
-		if(!transmitterReceiverList.isEmpty()) {
-			System.out.println(cnt);
-			int xfrom = (int) transmitterReceiverList.get(0).fst().getX();
-			int yfrom = (int) transmitterReceiverList.get(0).fst().getY();
-			int xto = (int) transmitterReceiverList.get(0).snd().getX();
-			int yto = (int) transmitterReceiverList.get(0).snd().getY();
-			transmitterReceiverList.remove(0);
-			drawArrow(xfrom, yfrom, xto, yto, 1.0f);
-			cnt++;
-		}
-	}
-*/
-	
 	private static int yCor(int len, double dir) {
 		return (int)(len * Math.cos(dir));
 	}
@@ -311,45 +265,22 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 		return (int)(len * Math.sin(dir));
 	}
 		
-	public void drawArrow(int xCenter, int yCenter, int x, int y, float stroke) {
-	      double aDir = Math.atan2(xCenter - x, yCenter - y);
-	      graphic.drawLine(x, y, xCenter, yCenter);
-	      graphic.setStroke(new BasicStroke(1f));			// make the arrow head solid even if dash pattern has been specified
+	public void drawArrow(Graphics2D g2, int x1, int y1, int x2, int y2, float stroke) {
+	      double aDir = Math.atan2(x1 - x2, y1 - y2);
+	      g2.drawLine(x2, y2, x1, y1);
+	      g2.setStroke(new BasicStroke(1f));			
 	      Polygon tmpPoly = new Polygon();
 	      int i1 = 12 + (int)(stroke * 2);
-	      int i2 = 6 + (int)stroke;							// make the arrow head the same size regardless of the length
-	      tmpPoly.addPoint(x, y);							// arrow tip
-	      tmpPoly.addPoint(x + xCor(i1, aDir +.5), y + yCor(i1, aDir + .5));
-	      tmpPoly.addPoint(x + xCor(i2, aDir), y + yCor(i2, aDir));
-	      tmpPoly.addPoint(x + xCor(i1, aDir -.5), y +yCor(i1, aDir - .5));
-	      tmpPoly.addPoint(x, y);							// arrow tip
-	      graphic.drawPolygon(tmpPoly);
-	      graphic.fillPolygon(tmpPoly);						// remove this line to leave arrow head unpainted
-	      //repaint();
-	   }
-	
-	public void drawArrow(Graphics2D g2, int xCenter, int yCenter, int x, int y, float stroke) {
-	      double aDir = Math.atan2(xCenter - x, yCenter - y);
-	      g2.drawLine(x, y, xCenter, yCenter);
-	      g2.setStroke(new BasicStroke(1f));			// make the arrow head solid even if dash pattern has been specified
-	      Polygon tmpPoly = new Polygon();
-	      int i1 = 12 + (int)(stroke * 2);
-	      int i2 = 6 + (int)stroke;							// make the arrow head the same size regardless of the length
-	      tmpPoly.addPoint(x, y);							// arrow tip
-	      tmpPoly.addPoint(x + xCor(i1, aDir +.5), y + yCor(i1, aDir + .5));
-	      tmpPoly.addPoint(x + xCor(i2, aDir), y + yCor(i2, aDir));
-	      tmpPoly.addPoint(x + xCor(i1, aDir -.5), y +yCor(i1, aDir - .5));
-	      tmpPoly.addPoint(x, y);							// arrow tip
+	      int i2 = 6 + (int)stroke;			
+	      tmpPoly.addPoint(x2, y2);			
+	      tmpPoly.addPoint(x2 + xCor(i1, aDir +.5), y2 + yCor(i1, aDir + .5));
+	      tmpPoly.addPoint(x2 + xCor(i2, aDir), y2 + yCor(i2, aDir));
+	      tmpPoly.addPoint(x2 + xCor(i1, aDir -.5), y2 + yCor(i1, aDir - .5));
+	      tmpPoly.addPoint(x2, y2);			
 	      g2.drawPolygon(tmpPoly);
-	      g2.fillPolygon(tmpPoly);						// remove this line to leave arrow head unpainted
+	      g2.fillPolygon(tmpPoly);			
 	      //repaint();
 	   }
-		
-	public void drawModuleID(Module module, int x, int y) {
-		String moduleID = "#" + Integer.toString(module.getID());
-		graphic.drawString(moduleID, x, y);
-		repaint();
-	}
 	
 	public void drawModuleID(Graphics2D g2, Module module, int x, int y) {
 		String moduleID = "#" + Integer.toString(module.getID());
@@ -357,42 +288,113 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 		//repaint();
 	}
 	
-	/*
-	public void drawLine(int x1, int y1, int x2, int y2) {
-		graphic.drawLine(x1, y1, x2, y2);
-		repaint();
-	}
-	*/
-
-	public void drawPacket(String s, int x, int y, int width, int height) {
-		graphic.drawRect(x, y, width, height);
-		graphic.drawString(s, x, y);
+	public void drawPacket(Graphics2D g2, String s, int x, int y, int width, int height) {
+		g2.drawRect(x, y, width, height);
+		g2.drawString(s, x, y);
 		//repaint();
 	}
-	
-	private void drawSomeArrows() {
-		//From module #0 to module #1
-		drawArrow(DX + 0 * columnWidth, DY + 0 * rowHeight, DX + 1 * columnWidth, DY + 0 * rowHeight, 1.0f);
-		//From module #1 to module #2
-		drawArrow(DX + 1 * columnWidth, DY + 1 * rowHeight, DX + 2 * columnWidth, DY + 1 * rowHeight, 1.0f);
-		//From module #2 to module #3
-		drawArrow(DX + 2 * columnWidth, DY + 2 * rowHeight, DX + 3 * columnWidth, DY + 2 * rowHeight, 1.0f);
-		//From module #3 to module #4
-		drawArrow(DX + 3 * columnWidth, DY + 3 * rowHeight, DX + 4 * columnWidth, DY + 3 * rowHeight, 1.0f);
-		//From module #5 to module 0#
-		drawArrow(DX + 5 * columnWidth, DY + 4 * rowHeight, DX + 0 * columnWidth, DY + 4 * rowHeight, 1.0f);		
-	}
-	
-	private class ModuleCanvasPosition {
-		private Module module;
-		private int modulePositionX;
-		private int modulePositionY;
 		
-		public ModuleCanvasPosition(Module module, int modulePositionX, int modulePositionY) {
-			this.module = module;
-			this.modulePositionX = modulePositionX;
-			this.modulePositionY = modulePositionY;
-		}		
+	private void drawReferenceCommunication(Graphics2D g2) {
+		//From module #0 to module #1 (Message 0)
+		drawArrow(g2, DX + 0 * columnWidth, DY + 0 * rowHeight, DX + 1 * columnWidth, DY + 0 * rowHeight, 1.0f);
+		//From module #1 to module #3 (Message 1)
+		drawArrow(g2, DX + 1 * columnWidth, DY + 1 * rowHeight, DX + 3 * columnWidth, DY + 1 * rowHeight, 1.0f);
+		//From module #3 to module #5 (Message 2)
+		drawArrow(g2, DX + 3 * columnWidth, DY + 2 * rowHeight, DX + 5 * columnWidth, DY + 2 * rowHeight, 1.0f);
+		//From module #5 to module #6 (Message 3)
+		drawArrow(g2, DX + 5 * columnWidth, DY + 3 * rowHeight, DX + 6 * columnWidth, DY + 3 * rowHeight, 1.0f);
+		//From module #6 to module #4 (Message 4)
+		drawArrow(g2, DX + 6 * columnWidth, DY + 4 * rowHeight, DX + 4 * columnWidth, DY + 4 * rowHeight, 1.0f);		
+		//From module #4 to module #3 (Message 5)
+		drawArrow(g2, DX + 4 * columnWidth, DY + 5 * rowHeight, DX + 3 * columnWidth, DY + 5 * rowHeight, 1.0f);		
+		//From module #3 to module #1 (Message 6)
+		drawArrow(g2, DX + 3 * columnWidth, DY + 6 * rowHeight, DX + 1 * columnWidth, DY + 6 * rowHeight, 1.0f);		
+		//From module #1 to module #3 (Message 7)
+		drawArrow(g2, DX + 1 * columnWidth, DY + 7 * rowHeight, DX + 3 * columnWidth, DY + 7 * rowHeight, 1.0f);		
+		//From module #3 to module #5 (Message 8)
+		drawArrow(g2, DX + 3 * columnWidth, DY + 8 * rowHeight, DX + 5 * columnWidth, DY + 8 * rowHeight, 1.0f);		
+		//From module #5 to module #6 (Message 9)
+		drawArrow(g2, DX + 5 * columnWidth, DY + 9 * rowHeight, DX + 6 * columnWidth, DY + 9 * rowHeight, 1.0f);		
+		//From module #6 to module #4 (Message 10)
+		drawArrow(g2, DX + 6 * columnWidth, DY + 10 * rowHeight, DX + 4 * columnWidth, DY + 10 * rowHeight, 1.0f);		
+		//From module #4 to module #6 (Message 11)
+		drawArrow(g2, DX + 4 * columnWidth, DY + 11 * rowHeight, DX + 6 * columnWidth, DY + 11 * rowHeight, 1.0f);		
+		//From module #6 to module #4 (Message 12)
+		drawArrow(g2, DX + 6 * columnWidth, DY + 12 * rowHeight, DX + 4 * columnWidth, DY + 12 * rowHeight, 1.0f);		
+		//From module #4 to module #3 (Message 13)
+		drawArrow(g2, DX + 4 * columnWidth, DY + 13 * rowHeight, DX + 3 * columnWidth, DY + 13 * rowHeight, 1.0f);		
+		//From module #4 to module #3 (Message 14)
+		drawArrow(g2, DX + 3 * columnWidth, DY + 14 * rowHeight, DX + 1 * columnWidth, DY + 14 * rowHeight, 1.0f);		
+		//From module #1 to module #0 (Message 15)
+		drawArrow(g2, DX + 1 * columnWidth, DY + 15 * rowHeight, DX + 0 * columnWidth, DY + 15 * rowHeight, 1.0f);		
+		//From module #0 to module #6 (Message 16)
+		drawArrow(g2, DX + 0 * columnWidth, DY + 16 * rowHeight, DX + 6 * columnWidth, DY + 16 * rowHeight, 1.0f);		
+		//From module #6 to module #0 (Message 17)
+		drawArrow(g2, DX + 6 * columnWidth, DY + 17 * rowHeight, DX + 0 * columnWidth, DY + 17 * rowHeight, 1.0f);		
+		//From module #0 to module #1 (Message 18)
+		drawArrow(g2, DX + 0 * columnWidth, DY + 18 * rowHeight, DX + 1 * columnWidth, DY + 18 * rowHeight, 1.0f);		
+		//From module #1 to module #0 (Message 19)
+		drawArrow(g2, DX + 1 * columnWidth, DY + 19 * rowHeight, DX + 0 * columnWidth, DY + 19 * rowHeight, 1.0f);		
+		//From module #0 to module #1 (Message 20)
+		drawArrow(g2, DX + 0 * columnWidth, DY + 20 * rowHeight, DX + 1 * columnWidth, DY + 20 * rowHeight, 1.0f);		
+		//From module #1 to module #3 (Message 21)
+		drawArrow(g2, DX + 1 * columnWidth, DY + 21 * rowHeight, DX + 3 * columnWidth, DY + 21 * rowHeight, 1.0f);		
+		//From module #3 to module #5 (Message 22)
+		drawArrow(g2, DX + 3 * columnWidth, DY + 22 * rowHeight, DX + 5 * columnWidth, DY + 22 * rowHeight, 1.0f);		
+		//From module #5 to module #3 (Message 23)
+		drawArrow(g2, DX + 5 * columnWidth, DY + 23 * rowHeight, DX + 3 * columnWidth, DY + 23 * rowHeight, 1.0f);		
+		//From module #3 to module #2 (Message 24)
+		drawArrow(g2, DX + 3 * columnWidth, DY + 24 * rowHeight, DX + 2 * columnWidth, DY + 24 * rowHeight, 1.0f);		
+		//From module #2 to module #3 (Message 25)
+		drawArrow(g2, DX + 2 * columnWidth, DY + 25 * rowHeight, DX + 3 * columnWidth, DY + 25 * rowHeight, 1.0f);		
+		//From module #3 to module #1 (Message 26)
+		drawArrow(g2, DX + 3 * columnWidth, DY + 26 * rowHeight, DX + 1 * columnWidth, DY + 26 * rowHeight, 1.0f);		
+		//From module #1 to module #4 (Message 27)
+		drawArrow(g2, DX + 1 * columnWidth, DY + 27 * rowHeight, DX + 4 * columnWidth, DY + 27 * rowHeight, 1.0f);		
+		//From module #4 to module #1 (Message 28)
+		drawArrow(g2, DX + 4 * columnWidth, DY + 28 * rowHeight, DX + 1 * columnWidth, DY + 28 * rowHeight, 1.0f);		
+		//From module #1 to module #3 (Message 39)
+		drawArrow(g2, DX + 1 * columnWidth, DY + 29 * rowHeight, DX + 3 * columnWidth, DY + 29 * rowHeight, 1.0f);		
+		//From module #3 to module #5 (Message 30)
+		drawArrow(g2, DX + 3 * columnWidth, DY + 30 * rowHeight, DX + 5 * columnWidth, DY + 30 * rowHeight, 1.0f);		
+		//From module #5 to module #6 (Message 31)
+		drawArrow(g2, DX + 5 * columnWidth, DY + 31 * rowHeight, DX + 6 * columnWidth, DY + 31 * rowHeight, 1.0f);		
+		//From module #6 to module #0 (Message 32)
+		drawArrow(g2, DX + 6 * columnWidth, DY + 32 * rowHeight, DX + 0 * columnWidth, DY + 32 * rowHeight, 1.0f);		
+		//From module #0 to module #1 (Message 33)
+		drawArrow(g2, DX + 0 * columnWidth, DY + 33 * rowHeight, DX + 1 * columnWidth, DY + 33 * rowHeight, 1.0f);		
+		//From module #1 to module #0 (Message 34)
+		drawArrow(g2, DX + 1 * columnWidth, DY + 34 * rowHeight, DX + 0 * columnWidth, DY + 34 * rowHeight, 1.0f);		
+		//From module #0 to module #6 (Message 35)
+		drawArrow(g2, DX + 0 * columnWidth, DY + 35 * rowHeight, DX + 6 * columnWidth, DY + 35 * rowHeight, 1.0f);		
+		//From module #6 to module #5 (Message 36)
+		drawArrow(g2, DX + 6 * columnWidth, DY + 36 * rowHeight, DX + 5 * columnWidth, DY + 36 * rowHeight, 1.0f);		
+		//From module #5 to module #3 (Message 37)
+		drawArrow(g2, DX + 5 * columnWidth, DY + 37 * rowHeight, DX + 3 * columnWidth, DY + 37 * rowHeight, 1.0f);		
+		//From module #3 to module #5 (Message 38)
+		drawArrow(g2, DX + 3 * columnWidth, DY + 38 * rowHeight, DX + 5 * columnWidth, DY + 38 * rowHeight, 1.0f);		
+		//From module #5 to module #6 (Message 39)
+		drawArrow(g2, DX + 5 * columnWidth, DY + 39 * rowHeight, DX + 6 * columnWidth, DY + 39 * rowHeight, 1.0f);		
+		//From module #6 to module #0 (Message 40)
+		drawArrow(g2, DX + 6 * columnWidth, DY + 40 * rowHeight, DX + 0 * columnWidth, DY + 40 * rowHeight, 1.0f);		
+		//From module #0 to module #1 (Message 41)
+		drawArrow(g2, DX + 0 * columnWidth, DY + 41 * rowHeight, DX + 1 * columnWidth, DY + 41 * rowHeight, 1.0f);		
+		//From module #1 to module #3 (Message 42)
+		drawArrow(g2, DX + 1 * columnWidth, DY + 42 * rowHeight, DX + 3 * columnWidth, DY + 42 * rowHeight, 1.0f);		
+		//From module #3 to module #1 (Message 43)
+		drawArrow(g2, DX + 3 * columnWidth, DY + 43 * rowHeight, DX + 1 * columnWidth, DY + 43 * rowHeight, 1.0f);		
+		//From module #1 to module #0 (Message 44)
+		drawArrow(g2, DX + 1 * columnWidth, DY + 44 * rowHeight, DX + 0 * columnWidth, DY + 44 * rowHeight, 1.0f);		
+		//From module #1 to module #4 (Message 45)
+		drawArrow(g2, DX + 1 * columnWidth, DY + 45 * rowHeight, DX + 4 * columnWidth, DY + 45 * rowHeight, 1.0f);		
+		//From module #1 to module #3 (Message 46)
+		drawArrow(g2, DX + 1 * columnWidth, DY + 46 * rowHeight, DX + 3 * columnWidth, DY + 46 * rowHeight, 1.0f);		
+		//From module #0 to module #6 (Message 47)
+		drawArrow(g2, DX + 0 * columnWidth, DY + 47 * rowHeight, DX + 6 * columnWidth, DY + 47 * rowHeight, 1.0f);		
+		//From module #6 to module #5 (Message 48)
+		drawArrow(g2, DX + 6 * columnWidth, DY + 48 * rowHeight, DX + 5 * columnWidth, DY + 48 * rowHeight, 1.0f);		
+		//From module #6 to module #2 (Message 49)
+		drawArrow(g2, DX + 6 * columnWidth, DY + 49 * rowHeight, DX + 2 * columnWidth, DY + 49 * rowHeight, 1.0f);		
 	}
 }	
 
