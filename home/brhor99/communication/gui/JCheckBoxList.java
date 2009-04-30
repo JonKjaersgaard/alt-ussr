@@ -24,7 +24,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 
-
 public class JCheckBoxList extends JList implements ListSelectionListener {
 	
 	private static final long serialVersionUID = 1L;
@@ -170,68 +169,6 @@ public class JCheckBoxList extends JList implements ListSelectionListener {
 		}
 	}
 	
-	
-
-	public void valueChanged(ListSelectionEvent e) {
-		ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-		int firstIndex = e.getFirstIndex();
-		int lastIndex = e.getLastIndex();
-		boolean isAdjusting = e.getValueIsAdjusting();
-		
-		
-		
-		
-		if (!e.getValueIsAdjusting()) {
-			System.out.println("Selecting...");
-			removeListSelectionListener(this);
-			int size = getModel().getSize();
-			int i;
-			for (i = 0; i < size; i++) {
-				Integer selectionIndex = new Integer(i);
-				if (getSelectionModel().isSelectedIndex(i)) {					
-					if (!selectionCache.contains(selectionIndex)) {
-						System.out.println("Adding " + selectionIndex.intValue());
-						selectionCache.add(selectionIndex);
-					}
-				}
-			}
-			addListSelectionListener(this);
-		}
-
-		if (e.getValueIsAdjusting()) {
-			System.out.println("Removing...");
-			removeListSelectionListener(this);
-			int size = getModel().getSize();
-			int i;
-			for (i = 0; i < size; i++) {
-				Integer selectionIndex = new Integer(i);
-				if (!getSelectionModel().isSelectedIndex(i)) {					
-					if (selectionCache.contains(selectionIndex)) {
-						System.out.println("Removing " + selectionIndex.intValue());
-					}
-				}
-			}
-			addListSelectionListener(this);
-		}		
-		System.out.println(selectionCache.toString());		
-	}
-
-
-					
-				
-					
-			
-			
-
-
-	
-	
-	
-	
-	
-	
-	
-	/*
 	public void valueChanged(ListSelectionEvent e) {
 		if (!e.getValueIsAdjusting()) {
 			removeListSelectionListener(this);
@@ -274,8 +211,6 @@ public class JCheckBoxList extends JList implements ListSelectionListener {
 			addListSelectionListener(this);
 		}
 	}
-	*/
-
 	
 	protected class CheckBoxCellRenderer implements ListCellRenderer {
 		
@@ -293,8 +228,6 @@ public class JCheckBoxList extends JList implements ListSelectionListener {
 			return checkbox;
 		}
 	}
-
-
 
 	public static void main(String args[]) {
 		JFrame frame = new JFrame();

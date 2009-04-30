@@ -11,10 +11,8 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.JPanel;
@@ -41,7 +39,6 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 	protected int mouseClickX;
 	protected int mouseClickY;
 	protected int rowCount = 0;
-	protected int[][] grid;
 	public static final int DX = 50;
 	public static final int DY = 50;
 	public static final int DX_MODULE_OFFSET = 45;
@@ -53,23 +50,20 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
     private javax.swing.Timer timer;     			 	// Fires to update canvas.
     private Calendar now = Calendar.getInstance();  	// Current time.
     
+    private boolean drawPackets = false;
+	private boolean drawNormalPackets = false;
+	private boolean drawDecimalPackets = false;
+	private boolean drawHexaDecimalPackets = false;	
+    
 	Map<Packet, Module> registry = new HashMap<Packet, Module>();
-
-	//Map<Point, Module> positions = new HashMap<Point, Module>();
-	//Map<Point, Point> transmitterRecieverMap = new HashMap<Point, Point>();
-	
-	//List<Pair<Point, Point>> transmitterReceiverList = new ArrayList<Pair<Point, Point>>();
-	//List<Pair<Point, Point>> transmitterReceiverListBackup = new ArrayList<Pair<Point, Point>>();
-	CommunicationContainer transmitterReceiverContainer = new CommunicationContainer();
-	CommunicationContainer transmitterReceiverContainerBackup = new CommunicationContainer();
-	
-
-		
+    private Map<Integer, Integer> modulesToDrawMap = new HashMap<Integer, Integer>();    	
+	private CommunicationContainer transmitterReceiverContainer = new CommunicationContainer();
+	private CommunicationContainer transmitterReceiverContainerBackup = new CommunicationContainer();
+			
 	public DrawingCanvas(JMESimulation simulation, int rows, int columns) {
 		this.simulation = simulation;
 		this.rows = rows;
 		this.columns = columns;
-		grid = new int[rows][columns];
 		setSize(getPreferredSize());
 		DrawingCanvas.this.setBackground(Color.white);
 		setOpaque(true);
@@ -129,14 +123,53 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 	}
 
 	public Dimension getPreferredSize() {
-		return new Dimension(800, 800);
+		return new Dimension(800, 2000);
+	}
+	
+	public boolean getDrawPackes() {
+		return drawPackets;
+	}
+	
+	public void setDrawPackes(boolean draw) {
+		drawPackets = draw;
+	}
+		
+	public boolean getDrawNormalPackets() {
+		return drawNormalPackets;
+	}
+	
+	public void setDrawNormalPackets(boolean draw) {
+		drawNormalPackets = draw;
+	}
+	
+	public boolean getDrawDecimalPackets() {
+		return drawDecimalPackets;
+	}
+	
+	public void setDrawDecimalPackets(boolean draw) {
+		drawDecimalPackets = draw;
+	}
+	
+	public boolean getDrawHexaDecimalPackets() {
+		return drawHexaDecimalPackets;
+	}
+	
+	public void setDrawHexaDecimalPackets(boolean draw) {
+		drawHexaDecimalPackets = draw;
+	}
+	
+	public Map<Integer, Integer> getModuleToDraw() {
+		return modulesToDrawMap;
+	}
+		
+	public void addModuleToDraw(Integer moduleIndex) {
+		modulesToDrawMap.put(moduleIndex, moduleIndex);
 	}
 	
 	public void packetReceived(Module module, GenericReceiver receiver, Packet data) {		
         Module from = registry.get(data);
         if(from == null) {
             System.out.println("Unknown source for packet " + data);
-    		//textArea.append("Unknown source for packet "  + data + "\n");
         }        
         else {
             String fromName = formatName(from, from.getProperty("name"));
@@ -144,8 +177,13 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
             int fromID = from.getID();
             int toID = module.getID();
             
+            if (modulesToDrawMap.containsKey(new Integer(fromID)) || modulesToDrawMap.containsKey(new Integer(toID))) {
+            	System.out.println("Drawing from module #" + fromID + " to #" + toID);
+            
+            
+            
             int xFrom = DX + fromID * columnWidth;
-            int yFrom = DY + rowCount * rowHeight;            
+            int yFrom = DY + rowCount * rowHeight;
             int xTo = DX + toID * columnWidth;
             int yTo = DY + rowCount * rowHeight;
             rowCount++;
@@ -154,12 +192,12 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
             System.out.println("From " + "(x, y)  = (" + xFrom + ", " + yFrom + ") to (x, y) = (" + xTo + ", " + yTo + ")");
             Point transmitterPoint = new Point(xFrom, yFrom);
             Point receiverPoint = new Point(xTo, yTo);            
-            
-            //transmitterReceiverList.add(new Pair<Point, Point>(transmitterPoint, receiverPoint));
-            //transmitterReceiverListBackup.add(new Pair<Point, Point>(transmitterPoint, receiverPoint));
-            
+                        
             transmitterReceiverContainer.addCommunicationPair(from, module, transmitterPoint, receiverPoint);
-            transmitterReceiverContainerBackup.addCommunicationPair(from, module, transmitterPoint, receiverPoint);          
+            transmitterReceiverContainerBackup.addCommunicationPair(from, module, transmitterPoint, receiverPoint);
+            transmitterReceiverContainer.addPacket(data, transmitterPoint, receiverPoint);
+            transmitterReceiverContainerBackup.addPacket(data, transmitterPoint, receiverPoint);
+            }
             registry.remove(data);
         }
     }
@@ -176,14 +214,16 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		Dimension d = getSize();		
-		rowHeight = d.height / rows;
+		Dimension d = getSize();
+		
+		rowHeight = d.height / rows;		
 		columnWidth = d.width / columns;
 		
 		if(communicationImage == null) {
 			communicationImage = (BufferedImage) (this.createImage(d.width, d.height));
 			Graphics2D g2a = communicationImage.createGraphics();
             g2a.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2a.setStroke(new BasicStroke(2f));
     		int i;
     		int j;    		
     		i = 0;
@@ -199,36 +239,7 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 		g2.drawImage(communicationImage, null, 0, 0);
 		
 		//drawReferenceCommunication(g2);
-		
-		// If new packet - drawArrow from transmitter module to receiver module
-		// Draw communication at runtime 
-		// List draw
-		
-		/*
-		if (!transmitterReceiverList.isEmpty()) {
-			for (Pair<Point, Point> transmitterReceiverPair : transmitterReceiverList) {
-				int xFrom = (int) transmitterReceiverPair.fst().getX();
-				int yFrom = (int) transmitterReceiverPair.fst().getY();
-				int xTo = (int) transmitterReceiverPair.snd().getX();
-				int yTo = (int) transmitterReceiverPair.snd().getY();
-				drawArrow(g2, xFrom, yFrom, xTo, yTo, 1.0f);
-			}
-			transmitterReceiverList.remove(0);
-		}
-		*/
-		// Use backup communication list to keep canvas updated after the communication has stopped
-		// List backup draw
-		/*
-		else {
-			for (Pair<Point, Point> transmitterReceiverPair : transmitterReceiverListBackup) {
-				int xFrom = (int) transmitterReceiverPair.fst().getX();
-				int yFrom = (int) transmitterReceiverPair.fst().getY();
-				int xTo = (int) transmitterReceiverPair.snd().getX();
-				int yTo = (int) transmitterReceiverPair.snd().getY();
-				drawArrow(g2, xFrom, yFrom, xTo, yTo, 1.0f);
-			}
-		}
-		*/
+				
 		// Container draw
 		if(!transmitterReceiverContainer.getCommunicationMap().isEmpty()) {
 			Pair<Point, Point> key = null;
@@ -237,12 +248,37 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 				int xFrom = (int) entry.getKey().fst().getX();
 				int yFrom = (int) entry.getKey().fst().getY();
 				int xTo = (int) entry.getKey().snd().getX();
-				int yTo = (int) entry.getKey().snd().getY();
-				drawArrow(g2, xFrom, yFrom, xTo, yTo, 1.0f);
+				int yTo = (int) entry.getKey().snd().getY();					
+				drawArrow(g2, xFrom, yFrom, xTo, yTo, 1.0f);				
 			}	
-			if(transmitterReceiverContainerBackup.getCommunicationMap().containsKey(key)) {
+			if (transmitterReceiverContainerBackup.getCommunicationMap().containsKey(key)) {
 				transmitterReceiverContainer.getCommunicationMap().remove(key);
 			}
+			Pair<Point, Point> packetKey = null;
+			for (Map.Entry<Pair<Point, Point>, Packet> entry : transmitterReceiverContainer.getPacketMap().entrySet()) {
+				packetKey = entry.getKey();
+				int xFrom = (int) entry.getKey().fst().getX();
+				int yFrom = (int) entry.getKey().fst().getY();
+				int xTo = (int) entry.getKey().snd().getX();
+				int yTo = (int) entry.getKey().snd().getY();
+				int xPacket = 0;
+				int yPacket = 0;
+				if (xFrom < xTo) {
+					xPacket = xFrom + Math.abs(xFrom - xTo) / 2;
+					yPacket = yFrom + Math.abs(yFrom - yTo) / 2;
+				}
+				else {
+					xPacket = xTo + Math.abs(xFrom - xTo) / 2;
+					yPacket = yTo + Math.abs(yFrom - yTo) / 2;
+				}				
+				Packet p = entry.getValue();
+				drawPacket(g2, p, xPacket, yPacket);
+			}
+			if (transmitterReceiverContainerBackup.getPacketMap().containsKey(packetKey)) {
+				transmitterReceiverContainer.getPacketMap().remove(packetKey);
+			}
+			
+			
 		}
 		// Container backup draw
 		else {
@@ -251,11 +287,27 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 				int yFrom = (int) entry.getKey().fst().getY();
 				int xTo = (int) entry.getKey().snd().getX();
 				int yTo = (int) entry.getKey().snd().getY();
-				drawArrow(g2, xFrom, yFrom, xTo, yTo, 1.0f);							
+				drawArrow(g2, xFrom, yFrom, xTo, yTo, 1.0f);
 			}
 		}		
-		//g2.dispose();
 	}
+       
+    private static String convertToHex(Packet packet) {
+		StringBuffer buf = new StringBuffer();
+		byte[] data = packet.getData();
+		for (int i = 0; i < data.length; i++) {
+			int halfbyte = (data[i] >>> 4) & 0x0F;
+			int two_halfs = 0;
+			do {
+				if ((0 <= halfbyte) && (halfbyte <= 9))
+					buf.append((char) ('0' + halfbyte));
+				else
+					buf.append((char) ('a' + (halfbyte - 10)));
+				halfbyte = data[i] & 0x0F;
+			} while (two_halfs++ < 1);
+		}
+		return buf.toString();
+	} 
 		
 	private static int yCor(int len, double dir) {
 		return (int)(len * Math.cos(dir));
@@ -279,21 +331,32 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 	      tmpPoly.addPoint(x2, y2);			
 	      g2.drawPolygon(tmpPoly);
 	      g2.fillPolygon(tmpPoly);			
-	      //repaint();
 	   }
 	
 	public void drawModuleID(Graphics2D g2, Module module, int x, int y) {
 		String moduleID = "#" + Integer.toString(module.getID());
 		g2.drawString(moduleID, x, y);
-		//repaint();
 	}
 	
-	public void drawPacket(Graphics2D g2, String s, int x, int y, int width, int height) {
-		g2.drawRect(x, y, width, height);
-		g2.drawString(s, x, y);
-		//repaint();
+	public void drawPacket(Graphics2D g2, Packet packet, int x, int y) {
+		if (drawPackets) {
+			return;
+		}
+		else if (drawNormalPackets) {
+			String rawString = packet.getData().toString();
+			g2.drawString(rawString, x, y);
+		}
+		else if (drawDecimalPackets) {
+			String decimalString = packet.toString();
+			g2.drawString(decimalString, x, y);
+		}
+		else if (drawHexaDecimalPackets) {
+			String hexaDecimalString = convertToHex(packet);
+			g2.drawString(hexaDecimalString, x, y);
+		}
 	}
-		
+	
+	/*
 	private void drawReferenceCommunication(Graphics2D g2) {
 		//From module #0 to module #1 (Message 0)
 		drawArrow(g2, DX + 0 * columnWidth, DY + 0 * rowHeight, DX + 1 * columnWidth, DY + 0 * rowHeight, 1.0f);
@@ -396,5 +459,6 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 		//From module #6 to module #2 (Message 49)
 		drawArrow(g2, DX + 6 * columnWidth, DY + 49 * rowHeight, DX + 2 * columnWidth, DY + 49 * rowHeight, 1.0f);		
 	}
+	*/
 }	
 
