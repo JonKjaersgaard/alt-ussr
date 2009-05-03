@@ -2,7 +2,7 @@ package ussr.builder.labelingTools;
 
 /**
  * Entities supported by builder(Quick Prototyping of Simulation Scenarios) for labeling
- * them with tools for labeling.  
+ * them with the tools for labeling.  
  * @author Konstantinas
  */
 public enum LabeledEntities {

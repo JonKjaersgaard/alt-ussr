@@ -86,18 +86,13 @@ private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {
 	if(command.equalsIgnoreCase("ApproveSelection") && this.type == false){//Save dialog
 		System.out.println("Save pressed"); //For debugging        
 		String fileDirectoryName = jFileChooser1.getSelectedFile().toString();
-		System.out.println("fileDirectoryName:"+fileDirectoryName); //For debugging     
-		//SaveLoad saveLoad = new SaveLoad(simulation);
-		//saveLoad.saveXMLfile(fileDiretoryName);
-		saveLoadXML.saveXMLfile(fileDirectoryName);	
-		
+		System.out.println("fileDirectoryName:"+fileDirectoryName); //For debugging	
+		saveLoadXML.saveXMLfile(fileDirectoryName);			
 		this.dispose();
 	}else if(command.equalsIgnoreCase("ApproveSelection") && this.type == true ){//Open dialog
 		System.out.println("Open pressed");//For debugging        
 		String fileDirectoryName = jFileChooser1.getSelectedFile().toString();
-		System.out.println("fileDiretoryName:"+fileDirectoryName); //For debugging     
-        //SaveLoad saveLoad = new SaveLoad(simulation);
-		//saveLoad.loadXMLfile(fileDiretoryName);
+		System.out.println("fileDiretoryName:"+fileDirectoryName); //For debugging  
 		saveLoadXML.loadXMLfile(fileDirectoryName);	
 		this.dispose();       
 	}else if (command.equalsIgnoreCase("CancelSelection")){

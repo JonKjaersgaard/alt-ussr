@@ -3,10 +3,7 @@ package ussr.builder.controllerReassignmentTool;
 import ussr.model.Module;
 import ussr.samples.atron.ATRONController;
 
-/**
- * @author Konstantinas
- */
-public class ATRONAxleController extends ControllerStrategy {
+public class ATRONWheelControllerNegative extends ControllerStrategy {
 
 	/**
 	 * The controller class providing the ATRON API
@@ -17,8 +14,9 @@ public class ATRONAxleController extends ControllerStrategy {
 	 * The method which will is activated when this class is instantiated by the tool called "AssignControllerTool"
 	 * @param selectedModule, the module selected in simulation environment
 	 */
-	public void activate (Module selectedModule){		
+	public void activate (Module selectedModule){	
 		controller = (ATRONController)selectedModule.getController();
-			controller.rotateDegrees(20);		
+			controller.rotateContinuous(-1);// to the right			
+			
 	}
 }

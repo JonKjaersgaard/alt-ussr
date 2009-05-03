@@ -137,10 +137,12 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 		List<Color> colorsComponents = selectedModule.getColorList();			
 		ArrayList<Color> colorsConnectors = getColorsConnectors(selectedModule);
 		String selectedModuleName = selectedModule.getProperty(BuilderHelper.getModuleNameKey());
-		String moduleType = selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
-		if (moduleType.equalsIgnoreCase("ATRON gentle")){
-			moduleType = "ATRON";
+		String moduleType;
+		moduleType = selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
+		if (moduleType.contains("ATRON")||moduleType.contains("default")){
+			moduleType = "default";
 		}
+		System.out.println("sss:"+moduleType);
 		ModulePosition modulePosition = new ModulePosition(selectedModuleName+ BuilderHelper.getRandomInt(),moduleType,position,rotation);	
 		Module newModule = this.simulation.createModule(modulePosition,true);				
 		newModule.setColorList(colorsComponents);		

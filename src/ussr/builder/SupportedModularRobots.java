@@ -6,7 +6,7 @@ package ussr.builder;
  * @author Konstantinas
  */
 public enum SupportedModularRobots {
-	/*ATRON is homogeneous*/
+	/*ATRON is homogeneous */
 	ATRON,
 	/*MTRAN is homogeneous*/
 	MTRAN,

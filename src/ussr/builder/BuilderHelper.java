@@ -244,7 +244,7 @@ public class BuilderHelper {
 
 			for (int i=0; i<amountModules; i++){
 				Module currentModule = simulation.getModules().get(i);
-
+				//currentModule.reset();
 				String moduleName = currentModule.getProperty(BuilderHelper.getModuleNameKey());
 				String moduleType = currentModule.getProperty(BuilderHelper.getModuleTypeKey());
 

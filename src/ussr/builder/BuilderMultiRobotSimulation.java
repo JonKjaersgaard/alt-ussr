@@ -8,6 +8,7 @@ import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.samples.GenericSimulation;
+import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 import ussr.samples.mtran.MTRAN;
 import ussr.samples.odin.modules.OdinBall;
@@ -19,18 +20,25 @@ import ussr.samples.odin.modules.OdinTube;
 import ussr.samples.odin.modules.OdinWheel;
 
 /**
- * The main responsibility of this class is to start the simulation
+ * The main responsibility of this class is to start default simulation
  * for ATRON,MTRAN and Odin modular robots.
  * @author Konstantinas
  */
 public class BuilderMultiRobotSimulation extends GenericSimulation {
 
+	
+	/**
+	 * The obstacle generator for generating line of box obstacles
+	 */
+	protected static ObstacleGenerator.ObstacleType obstacleType = ObstacleGenerator.ObstacleType.LINE;
+	
+	
 	/**
 	 * Returns the robot in the simulation.
 	 */
 	@Override
 	protected Robot getRobot() {		
-		return null;// do not return any robot.		
+		return null;
 	}
 
 	/**
@@ -73,6 +81,7 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 		};
 		atron.setGentle();// Currently builder supports only this type of ATRON
 		simulation.setRobot(atron,"ATRON");
+		simulation.setRobot(atron,"default");
 		
 		/*Set MTRAN robot to simulation and assign default controller to it*/
 		simulation.setRobot(new MTRAN(){
@@ -138,8 +147,14 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 	 */
 	private static WorldDescription createWorld() {
 		WorldDescription world = new WorldDescription();	        
-		world.setPlaneSize(100);	       
+		world.setPlaneSize(100);	
+		
+		  ObstacleGenerator generator = new ObstacleGenerator();
+	       // generator.obstacalize(obstacleType, world); // activate to add obstacles
+	       // world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 		return world;
 	}
+	
+	
 
 }
