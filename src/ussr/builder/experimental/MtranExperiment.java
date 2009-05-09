@@ -1,4 +1,4 @@
-package ussr.builder.experiments;
+package ussr.builder.experimental;
 
 import com.jme.math.Matrix3f;
 import com.jme.math.Quaternion;

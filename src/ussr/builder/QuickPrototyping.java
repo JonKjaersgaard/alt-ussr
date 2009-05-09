@@ -13,7 +13,8 @@ import ussr.builder.constructionTools.ConstructionTools;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
 import ussr.builder.controllerReassignmentTool.AssignControllerTool;
-import ussr.builder.experiments.MtranExperiment;
+import ussr.builder.experimental.MtranExperiment;
+import ussr.builder.experimental.NewSelection;
 import ussr.builder.genericTools.ColorConnectors;
 import ussr.builder.genericTools.RemoveModule;
 import ussr.builder.genericTools.RotateModulesComponents;
@@ -291,7 +292,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		simulationToolBar = new javax.swing.JToolBar();
 		pauseRunButton = new javax.swing.JButton();
 		stepByStepjButton = new javax.swing.JButton();
-		assignControllerjButton = new javax.swing.JButton();
+		//assignControllerjButton = new javax.swing.JButton();
 		savejButton = new javax.swing.JButton();
 		openjButton = new javax.swing.JButton();
 		renderjToolBar = new javax.swing.JToolBar();
@@ -304,15 +305,14 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		entityForMovingorRotatingjComboBox = new javax.swing.JComboBox();
 		controllersjComboBox = new javax.swing.JComboBox();
 		movejButton = new javax.swing.JButton();
-		deletejButton = new javax.swing.JButton();
-		alljCheckBox = new javax.swing.JCheckBox();
+		deletejButton = new javax.swing.JButton();	
 		colourConnectorsjButton = new javax.swing.JButton();
 		cartesianCoordinatejComboBox = new javax.swing.JComboBox();
 		rotationAnglejTextField = new javax.swing.JTextField();
 		rotateComponentjButton = new javax.swing.JButton();
 		modularRoborGenericjToolBar = new javax.swing.JToolBar();
 		modularRobotjComboBox = new javax.swing.JComboBox();
-		defaultModulejButton = new javax.swing.JButton();
+		newModulejButton = new javax.swing.JButton();
 		standardRotationsjComboBox = new javax.swing.JComboBox();
 		oppositeRotationjButton = new javax.swing.JButton();
 		variatejButton = new javax.swing.JButton();
@@ -339,7 +339,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		controllersjToolBar = new javax.swing.JToolBar();
 		assistantjLabel = new javax.swing.JLabel();
 		AssistantjTextField = new javax.swing.JTextField();
-		testjButton = new javax.swing.JButton();
+		/*testjButton = new javax.swing.JButton();*/
 		jMenuBar1 = new javax.swing.JMenuBar();
 		filejMenu = new javax.swing.JMenu();
 		OpenXMLJMenuItem = new javax.swing.JMenuItem();
@@ -477,7 +477,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		moduleGenericToolsJToolBar.setPreferredSize(new java.awt.Dimension(420, 40));
 
 		entityForMovingorRotatingjComboBox.setFont(new java.awt.Font("Tahoma", 0, 12));
-		entityForMovingorRotatingjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Module", "Component" }));
+		entityForMovingorRotatingjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose entity","Module", "Component" }));
 		entityForMovingorRotatingjComboBox.setToolTipText("Entity to Move or Rotate");
 		entityForMovingorRotatingjComboBox.setPreferredSize(new java.awt.Dimension(120, 22));
 		entityForMovingorRotatingjComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -520,7 +520,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		moduleGenericToolsJToolBar.add(colourConnectorsjButton);
 
 		cartesianCoordinatejComboBox.setFont(new java.awt.Font("Tahoma", 0, 12));
-		cartesianCoordinatejComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "x", "y", "z" }));
+		cartesianCoordinatejComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Axis","x", "y", "z" }));
 		cartesianCoordinatejComboBox.setToolTipText("Coordinate Axis");
 		cartesianCoordinatejComboBox.setPreferredSize(new java.awt.Dimension(70, 22));
 		cartesianCoordinatejComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -549,9 +549,9 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		getContentPane().add(moduleGenericToolsJToolBar);
 
 		modularRoborGenericjToolBar.setPreferredSize(new java.awt.Dimension(420, 40));
-		modularRobotjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ATRON", "MTRAN", "Odin" }));
+		modularRobotjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Choose modular robot beneath...", "ATRON", "MTRAN", "Odin" }));
 		modularRobotjComboBox.setToolTipText("Supported Modular Robots");
-		modularRobotjComboBox.setPreferredSize(new java.awt.Dimension(30, 43));
+		modularRobotjComboBox.setPreferredSize(new java.awt.Dimension(20, 43));
 		modularRobotjComboBox.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				modularRobotjComboBoxActionPerformed(evt);
@@ -560,19 +560,19 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 
 		modularRoborGenericjToolBar.add(modularRobotjComboBox);
 
-		defaultModulejButton.setFont(new java.awt.Font("Tahoma", 0, 12));
-		defaultModulejButton.setText("Default");
-		defaultModulejButton.setToolTipText("Add Default Construction Module");
-		defaultModulejButton.setPreferredSize(new java.awt.Dimension(60, 43));
-		defaultModulejButton.addActionListener(new java.awt.event.ActionListener() {
+		newModulejButton.setFont(new java.awt.Font("Tahoma", 0, 12));
+		newModulejButton.setText("New Module");
+		newModulejButton.setToolTipText("Add New Module of Chosen Modular Robot");
+		newModulejButton.setPreferredSize(new java.awt.Dimension(80, 43));
+		newModulejButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				defaultModulejButtonActionPerformed(evt);
+				newModulejButtonActionPerformed(evt);
 			}
 		});
 
-		modularRoborGenericjToolBar.add(defaultModulejButton);
+		modularRoborGenericjToolBar.add(newModulejButton);
 
-		standardRotationsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EW", "WE", "UD", "DU", "SN", "NS" }));
+		standardRotationsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Choose module rotation", "EW", "WE", "UD", "DU", "SN", "NS" }));
 		standardRotationsjComboBox.setToolTipText("Standard Rotations of the Module");
 		standardRotationsjComboBox.setPreferredSize(new java.awt.Dimension(30, 22));
 		standardRotationsjComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -619,7 +619,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 
 		constructionToolBar.add(onConnectorjButton);
 
-		connectorsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7" }));
+		connectorsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...","0", "1", "2", "3", "4", "5", "6", "7" }));
 		connectorsjComboBox.setPreferredSize(new java.awt.Dimension(30, 22));
 		connectorsjComboBox.setToolTipText("Add New Module on Specific Connector");
 		connectorsjComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -687,7 +687,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		getContentPane().add(constructionToolBar);
 
 		entityForLabeling.setFont(new java.awt.Font("Tahoma", 0, 12));
-		entityForLabeling.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Module", "Connector" }));
+		entityForLabeling.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose entity","Module", "Connector" }));
 		entityForLabeling.setToolTipText("Entity to Label");
 		entityForLabeling.setPreferredSize(new java.awt.Dimension(120, 22));
 		entityForLabeling.addActionListener(new java.awt.event.ActionListener() {
@@ -774,7 +774,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 
 		controllersjToolBar.add(controllersjComboBox);
 
-		assignControllerjButton.setFont(new java.awt.Font("Tahoma", 0, 12));
+	/*	assignControllerjButton.setFont(new java.awt.Font("Tahoma", 0, 12));
 		assignControllerjButton.setText("Assign");
 		assignControllerjButton.setToolTipText("AssignController");
 		assignControllerjButton.setPreferredSize(new java.awt.Dimension(60, 43));
@@ -784,7 +784,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 			}			
 		});
 
-		controllersjToolBar.add(assignControllerjButton);
+		controllersjToolBar.add(assignControllerjButton);*/
 
 		getContentPane().add(controllersjToolBar);
 
@@ -797,7 +797,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 
 		getContentPane().add(AssistantjToolBar);
 
-		testjButton.setFont(new java.awt.Font("Tahoma", 0, 12));
+	/*	testjButton.setFont(new java.awt.Font("Tahoma", 0, 12));
 		testjButton.setText("Test before simulation");
 		testjButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -805,7 +805,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 			}
 		});
 
-		getContentPane().add(testjButton);
+		getContentPane().add(testjButton);*/
 
 		filejMenu.setText("File");
 		filejMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -958,19 +958,19 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 			modularRobotName = JME_simulation.getModules().get(0).getProperty("ussr.module.type");	
 		}		
 		if (modularRobotName.contains("Odin")){
-			modularRobotjComboBox.setSelectedIndex(2);			
+			modularRobotjComboBox.setSelectedIndex(3);			
 		}else if (modularRobotName.contains("ATRON")){
-			modularRobotjComboBox.setSelectedIndex(0);                        
+			modularRobotjComboBox.setSelectedIndex(1);                        
 			connectorsjComboBox.setSelectedIndex(0);
 			standardRotationsjComboBox.setSelectedIndex(0);
 		}else if (modularRobotName.contains("MTRAN")){
-			modularRobotjComboBox.setSelectedIndex(1);	
+			modularRobotjComboBox.setSelectedIndex(2);	
 			connectorsjComboBox.setSelectedIndex(0);
 			standardRotationsjComboBox.setSelectedIndex(1);
 		}
 
 		
-		/*NOTE*/		cartesianCoordinatejComboBox.setSelectedIndex(0);
+		cartesianCoordinatejComboBox.setSelectedIndex(0);
 		nextjButton.setEnabled(false);
 		previousjButton.setEnabled(false);
 		guiHelper.passTo(AssistantjTextField,"Choose one of the modular robot's names in the first comboBox of the 4th toolbar from the top ");// informing the user
@@ -991,6 +991,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 
 		/*Loop through the classes and take only controllers, but not the classes defining the tool*/
 		Vector<String> classesOfControllers = new Vector<String>();
+		classesOfControllers.add("Choose controller beneath...");// informing the user
 		for (int i=0; i<classes.length;i++){
 			if (classes[i].toString().contains("AssignControllerTool")||classes[i].toString().contains("ControllerStrategy")){
 				//do nothing	
@@ -1074,19 +1075,16 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 
 	} 	
 
-	/**
-	 * Initializes the connectivity of modules and resets the simulation environment
-	 * @param evt, selection with left side of the mouse event (testjButton selection)
-	 */
-	private void testjButtonActionPerformed(java.awt.event.ActionEvent evt) {	
+	
+/*	private void testjButtonActionPerformed(java.awt.event.ActionEvent evt) {	
 		//JME_simulation.setPicker(new PhysicsPicker());
 		// JME_simulation.setPause(false);
-		/*NOTE*/		//instanceFlag = false; 
+		NOTE		//instanceFlag = false; 
 		//this.dispose();		
-		/*NOTE*/ BuilderHelper.connectAllModules(JME_simulation);
+		NOTE //BuilderHelper.connectAllModules(JME_simulation);
 		//JME_simulation.setPicker(new MtranExperiment(JME_simulation,this, this.counter));
 
-	}                                           
+	}     */                                      
 
 
 	/**
@@ -1110,7 +1108,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		guiHelper.passTo(AssistantjTextField,entityLabelsjComboBox.getSelectedItem().toString()+ " label is chosen." + "Press ASSIGN button");// informing the user
 	}                                                     
 
-/*STOPPED*/
+
 	/**
 	 *  Reads and displays the labels of the chosen entity (module or connector)
 	 * @param evt
@@ -1139,7 +1137,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 
 		guiHelper.passTo(AssistantjTextField,"Select "+ this.entityToLabel.toString().toLowerCase()+ " to assign to it the label: " + currentLabeljTextField.getText());
 	}                                                  
-	/*NOTE*/	ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.LOOP,0);
+		ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.LOOP,0);
 	/**
 	 * Initializes the tool for placing the modules on connector and later  moving it on the another. 
 	 * @param evt, selection with left side of the mouse event (jButton selection).     
@@ -1183,8 +1181,8 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 			nrCounter=-1;
 		}
 		nrCounter++;
-
-		JME_simulation.setPicker(new MtranExperiment(JME_simulation,nrCounter));
+      //experimental
+		JME_simulation.setPicker(new NewSelection(JME_simulation,nrCounter));
 
 	}
 
@@ -1224,8 +1222,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void alljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
 		//System.out.println("Construction toolbar-->All");//for debugging 
-		/*NOTE*/ JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));
-		//JME_simulation.setPicker(new ModifyController());		
+		 JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));	
 		guiHelper.passTo(AssistantjTextField,"Select " +this.chosenMRname +" module");
 	} 
 
@@ -1236,8 +1233,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	private void connectorsjComboBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                    
 		//System.out.println("Construction toolbar-->On chosen (comboBox) connector");//for debugging 
 		this.connectorNr = Integer.parseInt(connectorsjComboBox.getSelectedItem().toString());
-
-		/*NOTE*/		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,this.connectorNr));
+		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,this.connectorNr));
 		guiHelper.passTo(AssistantjTextField,"Select " +this.chosenMRname +" module");
 
 	}                                                   
@@ -1248,9 +1244,8 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void onConnectorjButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   
 		//System.out.println("Construction toolbar-->On connector");//for debugging    
-		/*note*/		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
+	    JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
 		guiHelper.passTo(AssistantjTextField,"Select connector on "+ this.chosenMRname +" modular robot");
-
 	}                                                  
 
 	/**
@@ -1291,32 +1286,29 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 * @param evt, selection with left side of the mouse event (jButton selection).     
 	 */	
 	private void standardRotationsjComboBoxActionPerformed(java.awt.event.ActionEvent evt) {     
-		/*NOTE*/		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.STANDARD_ROTATIONS,standardRotationsjComboBox.getSelectedItem().toString()));		
+		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.STANDARD_ROTATIONS,standardRotationsjComboBox.getSelectedItem().toString()));		
 		guiHelper.passTo(AssistantjTextField,"Select " +this.chosenMRname +"default module to rotate with "+ rotationName+ " rotation");
-
 	}                                                          
 
 	/**
 	 * Adds default construction module at default position in simulation environmment.
 	 * @param evt, selection with left side of the mouse event (jButton selection).     
 	 */	
-	private void defaultModulejButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                     
-		//System.out.println("Modular robot specific-->Module");//for debugging     	
-		CommonOperationsTemplate com = new ATRONOperationsTemplate(JME_simulation);
-		CommonOperationsTemplate com1 = new MTRANOperationsTemplate(JME_simulation);
-		CommonOperationsTemplate com2 = new OdinOperationsTemplate(JME_simulation);
+	private void newModulejButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                     
+		//System.out.println("Modular robot specific--> New Module");//for debugging     	
+		CommonOperationsTemplate comATRON = new ATRONOperationsTemplate(JME_simulation);
+		CommonOperationsTemplate comMTRAN = new MTRANOperationsTemplate(JME_simulation);
+		CommonOperationsTemplate comOdin = new OdinOperationsTemplate(JME_simulation);
 
 		VectorDescription zeroPosition = new VectorDescription(0,0,0);		
 
 		if (this.chosenMRname.equals(SupportedModularRobots.ATRON)&& moduleExists(atronDefaultPosition)==false ){
-			com.addDefaultConstructionModule(/*this.chosenMRname.toString()*/"default", atronDefaultPosition);
+			comATRON.addDefaultConstructionModule(/*this.chosenMRname.toString()*/"default", atronDefaultPosition);
 		}else if (this.chosenMRname.equals(SupportedModularRobots.MTRAN)&& moduleExists(mtranDefaultPosition)==false){
-			com1.addDefaultConstructionModule(this.chosenMRname.toString(),mtranDefaultPosition );
-			/*Note*/	//com1.addDefaultConstructionModule(this.chosenMRname,new VectorDescription(mtranDefaultPosition.getX()+0.2f,mtranDefaultPosition.getY(), mtranDefaultPosition.getZ()) );
-
+			comMTRAN.addDefaultConstructionModule(this.chosenMRname.toString(),mtranDefaultPosition );
 		}else if (this.chosenMRname.equals(SupportedModularRobots.ODIN)&& moduleExists(odinDefaultPosition)==false){
-			/*NOTE*/			Odin.setDefaultConnectorSize(0.006f);
-			com2.addDefaultConstructionModule(this.chosenMRname.toString(), odinDefaultPosition);
+			Odin.setDefaultConnectorSize(0.006f);// make connector bigger in order to select them sucessfuly with "on Connector tool"
+			comOdin.addDefaultConstructionModule(this.chosenMRname.toString(), odinDefaultPosition);
 		}else {
 			//com.addDefaultConstructionModule(this.chosenMRname, zeroPosition);
 			//com1.addDefaultConstructionModule(this.chosenMRname,mtranPosition );
@@ -1355,26 +1347,35 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 * @param evt, selection with left side of the mouse event (jButton selection).     
 	 */	
 	private void modularRobotjComboBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                      
-		//System.out.println("Modular robot specific-->ComboBox with names of MR");//for debugging 
+		//System.out.println("Modular robot specific-->ComboBox with names of MR");//for debugging
+		String chosenModularRobot = modularRobotjComboBox.getSelectedItem().toString();
+		if (chosenModularRobot.contains("Choose")){
+			
+		}else{
 		this.chosenMRname = SupportedModularRobots.valueOf(modularRobotjComboBox.getSelectedItem().toString().toUpperCase());
 		if (this.chosenMRname.equals(SupportedModularRobots.ATRON)){
 			standardRotationsjComboBox.setEnabled(true);        
-			connectorsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0","1", "2", "3","4", "5", "6","7"}));
-			standardRotationsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EW", "WE", "DU", "UD", "SN", "NS" }));
+			connectorsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...","0","1", "2", "3","4", "5", "6","7"}));
+			standardRotationsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose module rotation","EW", "WE", "DU", "UD", "SN", "NS" }));
 
 		}else if (this.chosenMRname.equals(SupportedModularRobots.MTRAN)){
 			standardRotationsjComboBox.setEnabled(true);
-			connectorsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0","1", "2", "3","4", "5"}));
-			standardRotationsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ORI1", "ORI1X", "ORI1Y", "ORI1XY", "ORI2", "ORI2X", "ORI2Y", "ORI2XY", "ORI3", "ORI3X", "ORI3Y", "ORI3XY" }));
+			connectorsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...", "0","1", "2", "3","4", "5"}));
+			standardRotationsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose module rotation","ORI1", "ORI1X", "ORI1Y", "ORI1XY", "ORI2", "ORI2X", "ORI2Y", "ORI2XY", "ORI3", "ORI3X", "ORI3Y", "ORI3XY" }));
 
 		}else if (this.chosenMRname.equals(SupportedModularRobots.ODIN)){
 			standardRotationsjComboBox.setEnabled(false);
-			connectorsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0","1", "2", "3","4", "5", "6","7", "8","9", "10", "11"}));
+			connectorsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...","0","1", "2", "3","4", "5", "6","7", "8","9", "10", "11"}));
 			standardRotationsjComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] {  }));            
 		}
+		
 		nextjButton.setEnabled(false);
 		previousjButton.setEnabled(false);
-		guiHelper.passTo(AssistantjTextField,this.chosenMRname +" modular robot (MR) is chosen. Now press button 'Default'");        
+		newModulejButtonActionPerformed(evt); //Add default construction module
+		// Set default construction tool to be "On connector"
+		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));		
+		guiHelper.passTo(AssistantjTextField,this.chosenMRname +" modular robot (MR) is chosen. Now continue selecting connectors on the modules until robot is ready.");
+		}
 	}                                                     
 
 	/**
@@ -1594,22 +1595,29 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		// TODO add your handling code here:
 	}                                         
 
-
+	int timesPressed =0;
 	/**
 	 * Pauses or starts running the simulation, depending on the current state of simulation.    
 	 * @param evt, selection with left side of the mouse event (Button selection).     
 	 */	
 	private void pauseRunButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
+		
 		//System.out.println("Simulation and Rendering toolbar -->Pause/Play");//for debugging              
 		if (JME_simulation.isPaused()==false){ 
 			guiHelper.passTo(AssistantjTextField, "Simulation is in static state");// informing user
 			JME_simulation.setPause(true);                       
 			pauseRunButton.setIcon(new javax.swing.ImageIcon(directoryForIcons + pauseIcon));
 
-		}else{			
+		}else{
+			timesPressed++;
+			if (timesPressed ==1){ // First time is pressed connect all the modules in the morphology
+				BuilderHelper.connectAllModules(JME_simulation);
+			}
 			guiHelper.passTo(AssistantjTextField, "Simulation running");// informing user
 			pauseRunButton.setIcon(new javax.swing.ImageIcon(directoryForIcons + playIcon));
 			JME_simulation.setPause(false);
+			
+			
 		}
 	}                                              
 
@@ -1624,14 +1632,21 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	} 
 
 	private void controllersjComboBoxActionPerformed(ActionEvent evt) {
-		this.controllerName = controllersjComboBox.getSelectedItem().toString();		
+		this.controllerName = controllersjComboBox.getSelectedItem().toString();
+		if (this.controllerName.contains("Choose")){
+			
+		}else{
+		
+		JME_simulation.setPicker(new AssignControllerTool(packageName+"."+this.controllerName));
+		guiHelper.passTo(AssistantjTextField,"Select " + this.chosenMRname +" module to assign controller: " +this.controllerName);// informing user
+		}
 	}	
 
-	private void assignControllerjButtonActionPerformed(ActionEvent evt) {
+	/*private void assignControllerjButtonActionPerformed(ActionEvent evt) {
 		JME_simulation.setPicker(new AssignControllerTool(packageName+"."+this.controllerName));
 		guiHelper.passTo(AssistantjTextField,"Select " + this.chosenMRname +" module to assign controller: " +this.controllerName);// informing user
 
-	}
+	}*/
 
 	private void controllersjCheckBoxMenuItemActionPerformed(ActionEvent evt) {
 		this.guiHelper.changeToolBarVisibility(controllersjCheckBoxMenuItem, controllersjToolBar);		
@@ -1657,7 +1672,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 				//int windowWidth =Integer.parseInt(splittedWidth[0].toString()); 
 				//int windowHeight =Integer.parseInt(splittedHeight[0].toString());
 				int windowWidth = 620; 
-				int windowHeight =500;
+				int windowHeight =480;
 				int toolBarHeight = 40;
 				//constructionToolBar.setSize(windowWidth,toolBarHeight);
 				//AssistantjToolBar.setSize(windowWidth,toolBarHeight);                
@@ -1732,8 +1747,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	private javax.swing.JMenuItem ExitjMenuItem;
 	private javax.swing.JLabel readLabelsjLabel;
 	private javax.swing.JMenuItem OpenXMLJMenuItem;
-	private javax.swing.JButton alljButton;
-	private javax.swing.JCheckBox alljCheckBox;
+	private javax.swing.JButton alljButton;	
 	private javax.swing.JButton assignLabeljButton;
 	private javax.swing.JCheckBoxMenuItem assistantCheckBoxMenuItem;
 	private javax.swing.JLabel assistantjLabel;
@@ -1745,7 +1759,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	private javax.swing.JToolBar constructionToolBar;
 	private javax.swing.JCheckBoxMenuItem constructionjCheckBoxMenuItem;
 	private javax.swing.JTextField currentLabeljTextField;
-	private javax.swing.JButton defaultModulejButton;
+	private javax.swing.JButton newModulejButton;
 	private javax.swing.JButton deletejButton;
 	private javax.swing.JMenu filejMenu;
 	private javax.swing.JMenuBar jMenuBar1;
@@ -1790,8 +1804,8 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	private javax.swing.JCheckBoxMenuItem controllersjCheckBoxMenuItem;
 	private javax.swing.JComboBox standardRotationsjComboBox;
 	private javax.swing.JButton stepByStepjButton;
-	private javax.swing.JButton testjButton;
-	private javax.swing.JButton assignControllerjButton;	
+	/*private javax.swing.JButton testjButton;*/
+	//private javax.swing.JButton assignControllerjButton;	
 	private javax.swing.JMenu toolBarsjMenu;
 	private javax.swing.JButton variatejButton;
 	private javax.swing.JMenu viewjMenu;

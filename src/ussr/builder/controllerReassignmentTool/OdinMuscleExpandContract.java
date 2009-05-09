@@ -3,7 +3,7 @@ package ussr.builder.controllerReassignmentTool;
 import ussr.model.Module;
 import ussr.samples.odin.OdinController;
 
-public class OdinMuscleWheelControllerNegative extends ControllerStrategy {
+public class OdinMuscleExpandContract extends ControllerStrategy {
 
 	/**
 	 * Controller implementation for Odin modular robot.
@@ -15,9 +15,7 @@ public class OdinMuscleWheelControllerNegative extends ControllerStrategy {
 	 * @param selectedModule, the module selected in simulation environment
 	 */
 	public void activate (Module selectedModule){		
-		controller = (OdinController)selectedModule.getController();		
-			controller.actuateContinuous(-0.5f);// to the right				
+		controller = (OdinController)selectedModule.getController();
+		controller.exractContract();
 	}
-	
-	
 }

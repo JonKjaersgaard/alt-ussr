@@ -1,4 +1,4 @@
-package ussr.builder.experiments;
+package ussr.builder.experimental;
 
 import java.util.ArrayList;
 

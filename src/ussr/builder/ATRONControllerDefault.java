@@ -44,10 +44,10 @@ public class ATRONControllerDefault extends ATRONController  {
 	 */
 	@Override
 	public void activate() {		
-		yield();
+		/*yield();
 		this.delay(1000); // rotateContinuous seem to fail sometimes if we do not wait at first 
 		
-		float lastProx = Float.NEGATIVE_INFINITY; /* for printing out proximity data */
+		float lastProx = Float.NEGATIVE_INFINITY;  for printing out proximity data 
 		boolean firstTime = true;
 		
 		while(true) {
@@ -60,9 +60,9 @@ public class ATRONControllerDefault extends ATRONController  {
 			if(firstTime) {
 				firstTime = false;
 				if (labels ==null){}else{
-					/*Rotate around to the left*/
+					Rotate around to the left
 					//rotateAround(labels,dir,  true);                
-					/*Rotate around to the right*/
+					Rotate around to the right
 					//rotateAround(labels,dir,  false);                
 					drive(labels, initialSpeed); //for snake turns it in circles to the left
 					//driveForward (labels, -dir); // for snake turns it in circles to the right        
@@ -79,7 +79,7 @@ public class ATRONControllerDefault extends ATRONController  {
 			}			
 		
 
-			if(labels.contains("wheel")/*&& Math.abs(lastProx-max_prox)>0.01*/) {
+			if(labels.contains("wheel")&& Math.abs(lastProx-max_prox)>0.01) {
 				//System.out.println("Proximity "+" max = "+max_prox);
 				lastProx = max_prox;
 				//sendMessageOnConnectedConnectors(module,1);
@@ -94,7 +94,7 @@ public class ATRONControllerDefault extends ATRONController  {
 			}	
 			// Always call yield sometimes
 			yield();
-		}
+		}*/
 
 	}
 
