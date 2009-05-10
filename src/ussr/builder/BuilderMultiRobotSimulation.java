@@ -99,7 +99,7 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 			public Controller createController() {
 				return new OdinControllerDefault() {
 					public void activate() {
-						delay(10000);
+						//delay(10000);
 						super.activate();
 					}
 				};

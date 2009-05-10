@@ -12,7 +12,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- * 
+ *  Provides the GUI with some methods which are used frequently in different 
+ *  windows (frames).
  * @author Konstantinas
  */
 public class GuiHelper {

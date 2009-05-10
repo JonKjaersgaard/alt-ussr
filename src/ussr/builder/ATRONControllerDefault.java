@@ -2,6 +2,11 @@ package ussr.builder;
 
 import java.util.ArrayList;
 
+import ussr.builder.labelingTools.Label;
+import ussr.builder.labelingTools.LabelModule;
+import ussr.builder.labelingTools.Labeling;
+import ussr.builder.labelingTools.Labels;
+import ussr.builder.labelingTools.ModuleLabel;
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.model.Sensor;
@@ -43,7 +48,26 @@ public class ATRONControllerDefault extends ATRONController  {
 	 * Initiates the controller in separate thread
 	 */
 	@Override
-	public void activate() {		
+	public void activate() {
+		
+		/*1 PART FOR USING LABELS ON 2,4,6 AND SO ON WHEELERS(JUST DRIVES FORWARD)*/
+		
+		/*First solution*/
+	/*	Labels labels =  new ModuleLabel(module);
+		driveForward (labels,0.9f);*/
+		
+		/*Second solution*/
+		//float speed = 0.9f;
+		//if(labels.has("wheel")&& labels.has("right")) rotateContinuous(speed);
+		//if(labels.has("wheel")&& labels.has("left")) rotateContinuous(-speed);
+		
+		
+		
+		
+		
+		
+		
+		
 		/*yield();
 		this.delay(1000); // rotateContinuous seem to fail sometimes if we do not wait at first 
 		
@@ -98,50 +122,23 @@ public class ATRONControllerDefault extends ATRONController  {
 
 	}
 
+	
 	/**
-	 * Supports ATRON car morphology with driving forward behavior. Is based on using labels.
-	 * @param labels, the labels assigned to the module(s).
-	 * @param dir, direction of rotation.
+	 * @param labels
+	 * @param dir
 	 */
-	private void drive (String labels, float dir){
-		if(labels.contains("wheel1")) rotateContinuous(dir);
-		if(labels.contains("wheel2")) rotateContinuous(dir);
-		if(labels.contains("wheel3")) rotateContinuous(dir);
-		if(labels.contains("wheel4")) rotateContinuous(dir);
-		if(labels.contains("wheel5")) rotateContinuous(dir);
-		if(labels.contains("wheel6")) rotateContinuous(dir);        
-		//if(labels.contains("axleFront")) rotateDegrees(45);
+	private void driveForward (Labels labels, float dir){
+		if(labels.has("wheel")&& labels.has("right")) rotateContinuous(dir);
+		if(labels.has("wheel")&& labels.has("left")) rotateContinuous(-dir);			
 	}
 	
-	private void stop(String labels, float dir){
-		if(labels.contains("wheel1")) centerStop();
-		if(labels.contains("wheel2")) centerStop();
-		if(labels.contains("wheel3")) centerStop();
-		if(labels.contains("wheel4")) centerStop();
-		if(labels.contains("wheel5")) centerStop();
-		if(labels.contains("wheel6")) centerStop();   
-	}
-	
-	private ArrayList<Integer>  getConnectedConnectors(Module module){
-		ArrayList<Integer>  connectedConnectors=  new ArrayList<Integer>();
-		int amountConnectors = module.getConnectors().size();
-		for (int connector = 0; connector<amountConnectors;amountConnectors++ ){
-			boolean connectionState = module.getConnectors().get(connector).isConnected();
-			if (connectionState ==true){
-				connectedConnectors.add(connector);
-			}
-			
-		}		
-		return connectedConnectors;		
-	}
-	
-	private void sendMessageOnConnectedConnectors(Module module, int message){
-		ArrayList<Integer>  connectedConnectors =  getConnectedConnectors(module);
-		for (int connector =0; connector<connectedConnectors.size(); connector++){
-			byte conNr = connectedConnectors.get(connector).byteValue();
-			sendMessage((message+"").getBytes(), (byte)4, conNr);
-		}
-	}
+	/**
+	 * @param labels
+	 * @param dir
+	 */
+	private void stopWheels(Labels labels, float dir){
+		if(labels.has("wheel")) centerStop();		 
+	}	
 
 	/**
 	 * Rotates the ATRON car morphology to the left or to the right.
@@ -149,7 +146,7 @@ public class ATRONControllerDefault extends ATRONController  {
 	 * @param dir, direction of rotation.
 	 * @param toLeft, true if the ATRON car should turn to the left, else it will turn to the right. 
 	 */
-	private void rotateAround(String labels,byte dir, boolean toLeft){
+/*	private void rotateAround(String labels,byte dir, boolean toLeft){
 		if (toLeft){
 			if(labels.contains("wheel1")) rotateContinuous(dir);
 			if(labels.contains("wheel2")) rotateContinuous(-dir);
@@ -166,6 +163,6 @@ public class ATRONControllerDefault extends ATRONController  {
 			if(labels.contains("wheel6")) rotateContinuous(dir);             
 		}
 
-	}
+	}*/
 
 }

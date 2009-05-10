@@ -5,25 +5,21 @@ import java.util.ArrayList;
 import ussr.samples.odin.OdinController;
 
 /**
- * Default controller for Odin modular robot, which is expanding and contracting 
- * OdinMuscles in the morphology of the modular robot. Solution is dependent on the time,
- * but not on the physical dimensions of the OdinMuscle.
+ * Default controller for Odin modular robot.
  * @author Konstantinas *
  */
-public class OdinControllerDefault extends OdinController {
+public class OdinControllerExpandContract extends OdinController {
 
+
+	
 	ArrayList<Float> time = new  ArrayList<Float>(); 
 	int counter = -1;
 	float actuationSpeed = 0.3f;
-	float timeDiffrence = 1;//between contraction and expansion
-	
+	float timeDiffrence = 1;//between contraction and expansion	
 	
 	@Override
 	public void activate() {
-		expandContract();
-	}
 	
-	private void expandContract(){
 		counter++;
 		yield();
 		this.delay(1000); 
@@ -44,6 +40,6 @@ public class OdinControllerDefault extends OdinController {
 		}
 		yield();
 		this.activate();
-		
-	}
+		}	 
+	    
 }

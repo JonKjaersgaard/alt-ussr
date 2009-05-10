@@ -1,5 +1,6 @@
 package ussr.builder.labelingTools;
 
+import ussr.builder.BuilderHelper;
 import ussr.model.Entity;
 import ussr.model.Module;
 
