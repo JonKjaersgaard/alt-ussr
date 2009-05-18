@@ -8,19 +8,20 @@ package ussr.samples.atron.ase;
 
 import java.util.ArrayList;
 
+import ussr.comm.monitors.StatisticalMonitor;
 import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
+import ussr.physics.PhysicsFactory;
+import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsParameters.Material;
-import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.GenericATRONSimulation;
-import ussr.samples.atron.network.ATRONReflectionController;
 import ussr.samples.atron.network.ATRONReflectionEventController;
 import ussr.util.learning.CMTracker;
 import ussr.util.learning.RadioConnection;
@@ -29,14 +30,16 @@ import ussr.util.learning.WifiCMBroadcaster;
 
 
 
-public class Snake8Simulation extends GenericATRONSimulation {
-	private boolean hasCMTracker = false;
+public class Snake8Simulation extends GenericATRONSimulation implements PhysicsObserver {
+	private boolean hasCMTracker = true;
 	private boolean hasRadioConnection = true;
 	RadioConnection radioConnection;
-	
+	static StatisticalMonitor commMonitor;
 	
     private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;
     public static void main( String[] args ) {
+    	commMonitor = new StatisticalMonitor(1.0f);
+    	PhysicsFactory.getOptions().addCommunicationMonitor(commMonitor);
 		PhysicsParameters.get().setPlaneMaterial(Material.CONCRETE);
         PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
  		PhysicsParameters.get().setRealisticCollision(true);
@@ -56,6 +59,8 @@ public class Snake8Simulation extends GenericATRONSimulation {
 			radioConnection = new RadioConnection(simulation, 9899); //allow Modular commander to communicate with USSR 
 			radioConnection.setPackToASE(true);
 		}
+		simulation.subscribePhysicsTimestep(this);
+		
 	}
 
 	
@@ -103,4 +108,20 @@ public class Snake8Simulation extends GenericATRONSimulation {
 		world.setHasBackgroundScenery(false);
     	startPaused = false;
     }
+
+    int count = 0;
+	public void physicsTimeStepHook(PhysicsSimulation simulation) {
+		count ++;
+		if(count%100==0) {
+			int nModules = 8;
+			for(int id=0;id<nModules;id++) {
+				for(int channel=0;channel<=8;channel++) {
+					int bitpersec = commMonitor.getBitOutWindow(id, channel);
+					if(bitpersec>512) {
+						//System.out.println("Module "+id+" sends "+bitpersec+" bits/sec on channel "+channel);
+					}
+				}
+			}
+		}
+	}
 }

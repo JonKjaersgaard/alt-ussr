@@ -41,7 +41,7 @@ public class WalkerSimulation extends GenericATRONSimulation {
 	protected void simulationHook(PhysicsSimulation simulation) {
 		super.simulationHook(simulation);
 		CMTracker tracker = new CMTracker(simulation);
-		WifiCMBroadcaster broadcaster = new WifiCMBroadcaster(simulation, 7.0, tracker);
+		WifiCMBroadcaster broadcaster = new WifiCMBroadcaster(simulation, 20.0, tracker);
 		simulation.subscribePhysicsTimestep(broadcaster);
 	}
 	protected Robot getRobot() {
@@ -69,9 +69,22 @@ public class WalkerSimulation extends GenericATRONSimulation {
     	mPos.add(new ModulePosition("8", ";portRC=9914;portEvent=9915", new VectorDescription(3*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_DU));
         return mPos;
 	}
+	protected ArrayList<ModulePosition> buildWalker2(String id) {
+    	float Yoffset = 0.25f;
+    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>(); 
+    	mPos.add(new ModulePosition("1", ";portRC=9900;portEvent=9901", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
+    	mPos.add(new ModulePosition("2", ";portRC=9902;portEvent=9903", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_SN));
+    	mPos.add(new ModulePosition("3", ";portRC=9904;portEvent=9905", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_NS));
+    	mPos.add(new ModulePosition("4", ";portRC=9906;portEvent=9907", new VectorDescription(2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_WE));
+    	mPos.add(new ModulePosition("5", ";portRC=9908;portEvent=9909", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_DU));
+    	mPos.add(new ModulePosition("6", ";portRC=9910;portEvent=9911", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_UD));
+    	mPos.add(new ModulePosition("7", ";portRC=9912;portEvent=9913", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_UD));
+    	mPos.add(new ModulePosition("8", ";portRC=9914;portEvent=9915", new VectorDescription(3*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_DU));
+        return mPos;
+	}
 	
 	protected ArrayList<ModulePosition> buildRobot() {
-		return buildWalker1("");
+		return buildWalker2("");
 	}
     
     protected void changeWorldHook(WorldDescription world) {

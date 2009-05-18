@@ -104,7 +104,7 @@ public class JMEATRONFactory implements ModuleFactory {
     		northNode.setMaterial(Material.ICE); // A bit more smooth
             southNode.setMaterial(Material.ICE);
     	} else {
-			northNode.setMaterial(Material.RUBBER); // Better traction for driving experiments
+    		northNode.setMaterial(Material.RUBBER); // Better traction for driving experiments
 			southNode.setMaterial(Material.RUBBER);
         }
 		
@@ -129,8 +129,8 @@ public class JMEATRONFactory implements ModuleFactory {
 		contactDetails.setMu(1f);
 		contactDetails.setMuOrthogonal(1f);
 		contactDetails.setMinimumBounceVelocity(100);
-		contactDetails.setSlip(new Vector2f(0.01f,0.01f));
-		//contactDetails.setSlip(new Vector2f(0,0)); //djc do not commit
+		//contactDetails.setSlip(new Vector2f(0.01f,0.01f));
+		contactDetails.setSlip(new Vector2f(0,0)); //djc do not commit
 		//contactDetails.setSlip(new Vector2f(0.0f,0.0f));
 		//contactDetails.setSlip(new Vector2f( 0.001f, 0.001f));
 		//contactDetails.setSlip(new Vector2f(100f,100f));
