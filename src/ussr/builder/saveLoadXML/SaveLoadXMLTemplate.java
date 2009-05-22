@@ -22,7 +22,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 import ussr.builder.BuilderHelper;
-import ussr.builder.labelingTools.Labeling;
+import ussr.builder.labelingTools.LabelingTemplate;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 
@@ -384,7 +384,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 		String labels = currentModule.getProperty(BuilderHelper.getLabelsKey());
 		if (labels == null){// means there are no labels assigned to this module. 
 			labels = BuilderHelper.getTempLabel();
-		}else if (labels.contains(Labeling.NONE)){/*do nothing*/}
+		}else if (labels.contains(LabelingTemplate.NONE)){/*do nothing*/}
 		return labels.toCharArray();    	
 	}
 
@@ -403,12 +403,12 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 			String label = currentModule.getConnectors().get(connector).getProperty(BuilderHelper.getLabelsKey());
 			if (label == null||labels==null){//module do not even have labels  assigned					
 				if (counter==1){//for 0 connector do not consider labels, because they not yet exist
-				labels=BuilderHelper.getTempLabel()+ Labeling.LABEL_SEPARATOR;
+				labels=BuilderHelper.getTempLabel()+ LabelingTemplate.LABEL_SEPARATOR;
 				}else{
-					labels=labels+BuilderHelper.getTempLabel()+Labeling.LABEL_SEPARATOR;
+					labels=labels+BuilderHelper.getTempLabel()+LabelingTemplate.LABEL_SEPARATOR;
 				}
 			}else{				
-					labels = labels+label+Labeling.LABEL_SEPARATOR;				
+					labels = labels+label+LabelingTemplate.LABEL_SEPARATOR;				
 			}
 		}
 		return labels.toCharArray();    	

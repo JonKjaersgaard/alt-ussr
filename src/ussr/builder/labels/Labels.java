@@ -1,4 +1,4 @@
-package ussr.builder.labelingTools;
+package ussr.builder.labels;
 
 public interface Labels {
 

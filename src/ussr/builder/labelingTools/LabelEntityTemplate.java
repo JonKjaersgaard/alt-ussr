@@ -11,7 +11,7 @@ import ussr.model.Entity;
  * @author Konstantinas
  *
  */
-public abstract class LabelEntity implements Labeling {	
+public abstract class LabelEntityTemplate implements LabelingTemplate {	
 	
 	/**
 	 * Separator used to separate the labels. 

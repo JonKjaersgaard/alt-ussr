@@ -5,7 +5,7 @@ package ussr.builder.labelingTools;
  * modules and connectors.
  * @author Konstantinas
  */
-public interface Labeling {	
+public interface LabelingTemplate {	
 		
 	/**
 	 * Separator used to separate the labels. 

@@ -1,4 +1,4 @@
-package ussr.builder.labelingTools;
+package ussr.builder.labels;
 
 import ussr.builder.BuilderHelper;
 import ussr.model.Connector;

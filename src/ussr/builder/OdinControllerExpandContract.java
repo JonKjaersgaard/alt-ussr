@@ -12,7 +12,7 @@ public class OdinControllerExpandContract extends OdinController {
 
 
 	
-	ArrayList<Float> time = new  ArrayList<Float>(); 
+	ArrayList<Float> timeValues = new  ArrayList<Float>(); 
 	int counter = -1;
 	float actuationSpeed = 0.3f;
 	float timeDiffrence = 1;//between contraction and expansion	
@@ -20,26 +20,24 @@ public class OdinControllerExpandContract extends OdinController {
 	@Override
 	public void activate() {
 	
-		counter++;
-		yield();
-		this.delay(1000); 
-		if (module.getProperty(BuilderHelper.getModuleTypeKey()).contains("Muscle")){
-			if (counter==0){
-				actuateContinuous(actuationSpeed);
-				time.add(getTime());
-			}else{
-				time.add(getTime());
-				if (time.size()>2){
-					if ((time.get(counter)-time.get(counter-1)>timeDiffrence)){						
-						actuateContinuous(-actuationSpeed);
-						time.removeAll(time);//reset
-						this.counter =-1;//reset
+		while (true){
+			counter++;		
+			this.delay(1000); 
+			if (module.getProperty(BuilderHelper.getModuleTypeKey()).contains("Muscle")){
+				if (counter==0){
+					actuateContinuous(actuationSpeed);
+					timeValues.add(getTime());
+				}else{
+					timeValues.add(getTime());
+					if (timeValues.size()==2){
+						if ((timeValues.get(counter)-timeValues.get(counter-1)>timeDiffrence)){						
+							actuateContinuous(-actuationSpeed);
+							timeValues.removeAll(timeValues);//reset
+							this.counter =-1;//reset
+						}
 					}
 				}
-			}
-		}
-		yield();
-		this.activate();
-		}	 
+			}	
+		}}
 	    
 }

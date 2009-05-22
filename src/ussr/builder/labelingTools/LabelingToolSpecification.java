@@ -41,7 +41,7 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	/**
 	 * The interface to labeling.
 	 */
-	private Labeling labeling;
+	private LabelingTemplate labeling;
 
 	/**
 	 * The object of GUI.
@@ -104,7 +104,7 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 * Calls specific tool for labeling of entities. 
 	 */
 	private void callSpecificTool(){
-       if(this.labeling instanceof  LabelConnector && selectedConnectorNr == 1000){// the case when user selects the module  or something else instead of connector.
+       if(this.labeling instanceof  LabelConnectorTemplate && selectedConnectorNr == 1000){// the case when user selects the module  or something else instead of connector.
     	   JOptionPane.showMessageDialog(null, "You do not selected connector. Chosen tool is for connectors. Please zoom in and select the connector instead. ","Error", JOptionPane.ERROR_MESSAGE);				
        }else{
 		switch(toolName){

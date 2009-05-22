@@ -8,7 +8,7 @@ import ussr.model.Entity;
  * the connector is selected with the mouse in simulation environment.
  * @author Konstantinas
  */
-public class LabelConnector extends LabelEntity {
+public class LabelConnectorTemplate extends LabelEntityTemplate {
 	
 	/**
 	 * Returns the connector number selected on the module in simulation environment.

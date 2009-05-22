@@ -1,4 +1,6 @@
-package ussr.builder.labelingTools;
+package ussr.builder.labels;
+
+
 
 
 public abstract class Label implements Labels {

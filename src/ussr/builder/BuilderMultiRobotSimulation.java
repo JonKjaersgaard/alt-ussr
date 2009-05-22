@@ -71,7 +71,7 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 		/*Set ATRON robot to simulation and assign default controller to it*/
 		ATRON atron = new ATRON(){
 			public Controller createController() {
-				return new ATRONControllerDefault(simulation) {
+				return new ATRONControllerDefault() {
 					public void activate() {
 						//delay(10000);
 						super.activate();
@@ -147,14 +147,10 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 	 */
 	private static WorldDescription createWorld() {
 		WorldDescription world = new WorldDescription();	        
-		world.setPlaneSize(100);	
-		
-		  ObstacleGenerator generator = new ObstacleGenerator();
-	       // generator.obstacalize(obstacleType, world); // activate to add obstacles
-	       // world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
+		world.setPlaneSize(100);		
+	  //	ObstacleGenerator generator = new ObstacleGenerator();
+	  //  generator.obstacalize(obstacleType, world); // activate to add obstacles
+	    // world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 		return world;
 	}
-	
-	
-
 }

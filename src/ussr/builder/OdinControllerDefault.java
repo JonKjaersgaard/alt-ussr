@@ -12,38 +12,54 @@ import ussr.samples.odin.OdinController;
  */
 public class OdinControllerDefault extends OdinController {
 
-	ArrayList<Float> time = new  ArrayList<Float>(); 
+	ArrayList<Float> timeValues = new  ArrayList<Float>(); 
 	int counter = -1;
-	float actuationSpeed = 0.3f;
-	float timeDiffrence = 1;//between contraction and expansion
-	
+	/*Following values were found empirically*/
+	float actuationSpeed = 0.3f;//for about 100% contraction-expansion
+	float timeDiffrence = 1;//between contraction and expansion(for about 100% contraction-expansion)
+	//float actuationSpeed = 0.1f;//for about 50% contraction-expansion	
+	//float timeDiffrence = 0.0000001f;//for about 50% contraction-expansion
 	
 	@Override
 	public void activate() {
-		expandContract();
+		expand();
+	 //expandContract();
 	}
 	
 	private void expandContract(){
-		counter++;
-		yield();
+		while (true){
+		counter++;		
 		this.delay(1000); 
 		if (module.getProperty(BuilderHelper.getModuleTypeKey()).contains("Muscle")){
 			if (counter==0){
 				actuateContinuous(actuationSpeed);
-				time.add(getTime());
+				timeValues.add(getTime());
 			}else{
-				time.add(getTime());
-				if (time.size()>2){
-					if ((time.get(counter)-time.get(counter-1)>timeDiffrence)){						
+				timeValues.add(getTime());
+				if (timeValues.size()==2){
+					if ((timeValues.get(counter)-timeValues.get(counter-1)>timeDiffrence)){						
 						actuateContinuous(-actuationSpeed);
-						time.removeAll(time);//reset
+						timeValues.removeAll(timeValues);//reset
 						this.counter =-1;//reset
-					}
+					}					
 				}
 			}
+		}	
 		}
+	}
+	
+	private void expand(){
 		yield();
-		this.activate();
+		
+		while (true){
+			this.delay(1000); 
+		if (module.getProperty(BuilderHelper.getModuleTypeKey()).contains("Muscle")){
+	
+				actuateContinuous(actuationSpeed);			
+		
+			}
+		yield(); 
+		}
 		
 	}
 }

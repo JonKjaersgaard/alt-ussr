@@ -986,7 +986,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		try {
 			classes = BuilderHelper.getClasses(packageName);
 		} catch (ClassNotFoundException e) {
-			throw new Error ("Tha package named as: "+ packageName + "was not found in the directory of USSR");			
+			throw new Error ("The package named as: "+ packageName + "was not found in the directory of USSR");			
 		}		
 
 		/*Loop through the classes and take only controllers, but not the classes defining the tool*/
@@ -1611,7 +1611,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		}else{
 			timesPressed++;
 			if (timesPressed ==1){ // First time is pressed connect all the modules in the morphology
-				BuilderHelper.connectAllModules(JME_simulation);
+				BuilderHelper.connectAllModules(JME_simulation);		
 			}
 			guiHelper.passTo(AssistantjTextField, "Simulation running");// informing user
 			pauseRunButton.setIcon(new javax.swing.ImageIcon(directoryForIcons + playIcon));

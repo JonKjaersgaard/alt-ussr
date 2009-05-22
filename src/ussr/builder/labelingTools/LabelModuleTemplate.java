@@ -1,6 +1,5 @@
 package ussr.builder.labelingTools;
 
-import ussr.builder.BuilderHelper;
 import ussr.model.Entity;
 import ussr.model.Module;
 
@@ -10,7 +9,7 @@ import ussr.model.Module;
  * the module is selected with the mouse in simulation environment.
  * @author Konstantinas
  */
-public class LabelModule extends LabelEntity {
+public class LabelModuleTemplate extends LabelEntityTemplate {
 	
 	/**
 	 * Returns the method selected in simulation environment.
