@@ -79,8 +79,11 @@ public class RadioConnection {
 					System.out.println("Radio connection waiting for packet");
 					String data = reader.readLine();
 					if(data!=null) {
-						System.out.println("Radio connection got packet: "+format(data));
-						sendDataToUSSR(data.getBytes());//toCharArray()
+						System.out.println("Radio connection got packet: "+data);
+						//System.out.println("Radio connection got packet: "+format(data));
+						byte[] byteData = stringToByte(data);
+						sendDataToUSSR(byteData);
+						//sendDataToUSSR(data.getBytes());//toCharArray()
 					}
 					else {
 						System.err.println("Warning: packet was null");
@@ -91,7 +94,15 @@ public class RadioConnection {
 			}
 		}
 	}
-		
+	private byte[] stringToByte(String data) {
+		String[] stringValues = data.split(",");
+    	byte[] byteValues = new byte[stringValues.length]; 
+    	for(int j=0;j<stringValues.length;j++) {
+    		byteValues[j] = Byte.parseByte(stringValues[j]);	
+    	}
+    	return byteValues;
+	}
+	
 	public void sendDataToSocket(char[] data) {
 		try {
 			writer.write(data);
@@ -138,7 +149,7 @@ public class RadioConnection {
 		StringBuffer sb = new StringBuffer();
 		byte[] bData = data.getBytes();
 		for(int i=0;i<data.length();i++){
-				sb.append(bData+"");
+				sb.append(bData[i]+"");
 				sb.append(' ');
 		}
 		return sb.toString();

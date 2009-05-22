@@ -8,6 +8,15 @@ package ussr.samples.atron.ase;
 
 import java.util.ArrayList;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 import ussr.comm.monitors.StatisticalMonitor;
 import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
@@ -31,7 +40,7 @@ import ussr.util.learning.WifiCMBroadcaster;
 
 
 public class Snake8Simulation extends GenericATRONSimulation implements PhysicsObserver {
-	private boolean hasCMTracker = true;
+	private boolean hasCMTracker = false;
 	private boolean hasRadioConnection = true;
 	RadioConnection radioConnection;
 	static StatisticalMonitor commMonitor;
@@ -44,8 +53,10 @@ public class Snake8Simulation extends GenericATRONSimulation implements PhysicsO
         PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
  		PhysicsParameters.get().setRealisticCollision(true);
 		PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
-		PhysicsParameters.get().setMaintainRotationalJointPositions(true); 
+		PhysicsParameters.get().setMaintainRotationalJointPositions(true);
+		initXYscatterPlot();
 		new Snake8Simulation().main();
+		
     }
 	
 	protected void simulationHook(PhysicsSimulation simulation) {
@@ -117,11 +128,66 @@ public class Snake8Simulation extends GenericATRONSimulation implements PhysicsO
 			for(int id=0;id<nModules;id++) {
 				for(int channel=0;channel<=8;channel++) {
 					int bitpersec = commMonitor.getBitOutWindow(id, channel);
-					if(bitpersec>512) {
+					//if(bitpersec>512) 
+					{
+						if(bitpersec==Integer.MIN_VALUE) {
+							bitpersec=0;
+						}
+						addToXYscatterPlot(simulation.getTime(), bitpersec);
 						//System.out.println("Module "+id+" sends "+bitpersec+" bits/sec on channel "+channel);
 					}
 				}
 			}
 		}
+	}
+		
+	static XYSeries series1;
+	public static void addToXYscatterPlot(float x, float y) {
+		series1.add(x, y);
+	}
+	
+	public static void initXYscatterPlot() {
+		 // create a dataset...
+        series1 = new XYSeries("Series 1");
+        XYDataset dataset = new XYSeriesCollection(series1);
+        
+        JFreeChart chart = ChartFactory.createXYLineChart(
+        	    "Communication Load",  // chart title
+                "Time (sec)",
+                "Communication (bits/sec)",
+                dataset,         // data
+                PlotOrientation.VERTICAL,
+                true,            // include legend
+                true,            // tooltips
+                false            // urls
+            );
+        
+        // create the chart...
+        /*JFreeChart chart = ChartFactory.createScatterPlot(
+            "Line Plot",  // chart title
+            "Time (sec)",
+            "Communication (bits/sec)",
+            dataset,         // data
+            PlotOrientation.VERTICAL,
+            true,            // include legend
+            true,            // tooltips
+            false            // urls
+        );*/
+        
+        /*JFreeChart chart = ChartFactory.createTimeSeriesChart(
+            "Line Plot",  // chart title
+            "Time (sec)",
+            "Communication (bits/sec)",
+            dataset,         // data
+            //PlotOrientation.VERTICAL,
+            true,            // include legend
+            true,            // tooltips
+            false            // urls
+        );*/
+        
+     // 	create and display a frame...
+		ChartFrame frame = new ChartFrame("Communicaiton Chart", chart);
+		frame.pack();
+		frame.setVisible(true);
 	}
 }

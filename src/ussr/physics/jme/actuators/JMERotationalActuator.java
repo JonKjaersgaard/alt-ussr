@@ -115,7 +115,6 @@ public class JMERotationalActuator implements PhysicsActuator {
     }
 	public void setErrorThreshold(float maxError) {
 		this.maxError = maxError;
-		
 	}
     public void reset() {
     	disactivate();
