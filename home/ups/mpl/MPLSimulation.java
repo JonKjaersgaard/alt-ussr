@@ -1,7 +1,13 @@
 package mpl;
 
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import ussr.description.Robot;
 import ussr.description.geometry.RotationDescription;
@@ -26,10 +32,41 @@ import ussr.samples.atron.ATRONBuilder.Namer;
  */
 public class MPLSimulation extends GenericATRONSimulation {
 
-    public static void main(String argv[]) {
-        PhysicsParameters.get().setResolutionFactor(1);
-        MPLSimulation main = new MPLSimulation();
-        main.main();
+    private static final String COUNTERCW_TAG = "cc_";
+    private static final String CLOCKWISE_TAG = "cw_";
+    private static final String CONVEYOR_TAG = "conveyor_";
+    private static final String ATRON_SMOOTH = "ATRON smooth";
+    private static final String ATRON_CONVEYOR = "ATRON conveyor";
+
+    public enum ConveyorElement {
+        PLAIN, ROTATING_CLOCKWISE, ROTATING_COUNTERCW;
+        static ConveyorElement fromChar(char c) {
+            switch(c) {
+            case 'P': return PLAIN;
+            case 'R': return ROTATING_CLOCKWISE;
+            case 'r': return ROTATING_COUNTERCW;
+            default: throw new Error("Undefined conveyor element: "+c);
+            }
+        }
+    }
+
+    private List<ConveyorElement> layout;
+
+    public MPLSimulation(String geneFileName) {
+        try {
+            File file = new File(geneFileName);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            layout = new ArrayList<ConveyorElement>();
+            while(true) {
+                int nextChar = reader.read();
+                if(nextChar==-1) break;
+                if(Character.isWhitespace(nextChar)) continue;
+                layout.add(ConveyorElement.fromChar((char)nextChar));
+            }
+            System.out.println("Read gene string of length "+layout.size());
+        } catch(IOException exception) {
+            throw new Error("Unable to open gene file "+geneFileName+": "+exception);
+        }
     }
 
     protected Robot getRobot() {
@@ -41,95 +78,98 @@ public class MPLSimulation extends GenericATRONSimulation {
      * 
      * @author ups
      */
-    private static class ConveyorATRON extends ATRON {
-        public ConveyorATRON() {
-            this.setSuper();
-        }
-        public Controller createController() {
-            return new ATRONController() {
+    private static class PassiveATRON extends ATRON {
+        public Controller createController() { return new PassiveController(); }
+        protected static class PassiveController extends ATRONController {
 
-                @Override
-                public void activate() {
-                    yield();
-                    setup();
-                    String name = this.module.getProperty("name");
-                    if(name.startsWith("conveyor")) {
-                        System.out.println("Disconnecting "+name);
-                        this.dodisconnect(0);
-                        this.dodisconnect(2);
-                        this.dodisconnect(4);
-                        //this.dodisconnect(6);
-                        this.rotateContinuous(1);
-                    } else {
-                        try {
-                            Thread.sleep(Long.MAX_VALUE);
-                        } catch(InterruptedException e) {
-                            throw new Error("foo!");
-                        }
-                    }
+            @Override
+            public void activate() { 
+                try {
+                    Thread.sleep(Long.MAX_VALUE);
+                } catch(InterruptedException e) {
+                    throw new Error("passive controller interrupted");
                 }
+            }
 
-                void dodisconnect(int connector) {
-                    this.sendMessage(new byte[] { (byte)87 }, (byte)1, (byte)connector);
-                    this.disconnect(connector);
-                    try {
-                        Thread.sleep(100);
-                    } catch(InterruptedException e) {
-                        throw new Error("foo!");
-                    }
-                }
+            /* (non-Javadoc)
+             * @see ussr.samples.atron.ATRONController#handleMessage(byte[], int, int)
+             */
+            @Override
+            public void handleMessage(byte[] message, int messageSize, int channel) {
+                if(message.length==1 && message[0]==87)
+                    this.disconnect(channel);
+            }
 
-                /* (non-Javadoc)
-                 * @see ussr.samples.atron.ATRONController#handleMessage(byte[], int, int)
-                 */
-                @Override
-                public void handleMessage(byte[] message, int messageSize, int channel) {
-                    if(message.length==1 && message[0]==87)
-                        this.disconnect(channel);
-                }
+        };
+    }
 
-            };
+    private static class ConveyorATRON extends PassiveATRON {
+
+        public Controller createController() { return new ConveyorController(); }
+
+        protected class ConveyorController extends PassiveController {
+
+            @Override
+            public void activate() {
+                String name = this.module.getProperty("name");
+                System.out.println("Disconnecting "+name);
+                this.dodisconnect(0);
+                this.dodisconnect(1);
+                this.dodisconnect(2);
+                this.dodisconnect(3);
+                if(name.indexOf(CLOCKWISE_TAG)>0)
+                    System.out.println("#"+name+" clockwise");
+                else
+                    System.out.println("#"+name+" counter clockwise");
+            }
+
+            void dodisconnect(int connector) {
+                this.sendMessage(new byte[] { (byte)87 }, (byte)1, (byte)connector);
+                this.disconnect(connector);
+            }
+
         }
     }
 
     protected void simulationHook(PhysicsSimulation simulation) {
-        ATRON smooth = new ConveyorATRON();
+        ATRON conveyor = new ConveyorATRON();
+        conveyor.setRubberRing();
+        simulation.setRobot(conveyor, ATRON_CONVEYOR);
+        ATRON smooth = new PassiveATRON();
         smooth.setSmooth();
-        simulation.setRobot(smooth, "ATRON smooth");
+        simulation.setRobot(smooth, ATRON_SMOOTH);
     }
-
 
     protected ArrayList<ModulePosition> buildRobot() {
         ArrayList<ModulePosition> positions = new ATRONBuilder().buildAsNamedLattice(100,0,5,1,3,0,10, new ATRONBuilder.Namer() {
-            //private boolean everyOther = false;
             private int count = 0;
-            public String name(int number, VectorDescription pos, RotationDescription rot) {
-                if(Math.abs(pos.getZ()-0.25)<0.02) {
-                    String result;
-                    if(count>0 && count<4)
-                        result = "conveyor"+number;
-                    else
-                        result = "--passive"+number;
-                    count++;
-                    //everyOther = !everyOther;
-                    return result;
-                } else
-                    return "--plain"+number;
+            public String name(int number, VectorDescription pos, RotationDescription rot, int lx, int ly, int lz) {
+                if(ly==2) {
+                    ConveyorElement element = count<layout.size() ? layout.get(count++) : ConveyorElement.PLAIN;
+                    if(element==ConveyorElement.ROTATING_CLOCKWISE)
+                        return CONVEYOR_TAG+CLOCKWISE_TAG+number;
+                    else if(element==ConveyorElement.ROTATING_COUNTERCW)
+                        return CONVEYOR_TAG+COUNTERCW_TAG+number;
+                }
+                return "--plain"+number;
             }
         }, new ATRONBuilder.ModuleSelector() {
-            public String select(String name, int index, VectorDescription pos, RotationDescription rot) {
-                /*if(!name.startsWith("conveyor")) {
-                    if(Math.abs(pos.getZ())<0.02 || Math.abs(pos.getZ())>0.4)
-                        return null;
-                    return "ATRON smooth";
-                }*/
-                return null;
+            public String select(String name, int index, VectorDescription pos, RotationDescription rot, int lx, int ly, int lz) {
+                if(name.startsWith(CONVEYOR_TAG))
+                    return ATRON_CONVEYOR;
+                return ATRON_SMOOTH;
             }
         },ATRON.UNIT, new VectorDescription(0,-0.5f,0),false);
         return positions;
     }
 
     protected void changeWorldHook(WorldDescription world) {
+    }
+
+    public static void main(String argv[]) {
+        PhysicsParameters.get().setResolutionFactor(1);
+        MPLSimulation main = new MPLSimulation("home/ups/mpl/test.gene");
+        main.main();
     }
 
 }
