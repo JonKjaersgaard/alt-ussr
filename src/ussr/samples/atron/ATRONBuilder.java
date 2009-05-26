@@ -148,10 +148,14 @@ public class ATRONBuilder {
     }
     
     public ArrayList<ModulePosition> buildAsNamedLattice(int nModules, int xMax, int yMax, int zMax, Namer namer, ModuleSelector selector, float placement_unit) {
+        return this.buildAsNamedLattice(nModules, 0, xMax, 0, yMax, 0, zMax, namer, selector, placement_unit, new VectorDescription(0,0,0), true);
+    }
+    
+    public ArrayList<ModulePosition> buildAsNamedLattice(int nModules, int xMin, int xMax, int yMin, int yMax, int zMin, int zMax, Namer namer, ModuleSelector selector, float placement_unit, VectorDescription offset, boolean dense_middle_layer) {
         int index=0;
-        for(int x=0;x<xMax;x++) {
-            for(int y=0;y<yMax;y++) {
-                for(int z=0;z<zMax;z++) {
+        for(int x=xMin;x<xMax;x++) {
+            for(int y=yMin;y<yMax;y++) {
+                for(int z=zMin;z<zMax;z++) {
                     VectorDescription pos = null;
                     RotationDescription rot = ATRON.ROTATION_NS;
                     if(y%2==0&&z%2==0) {
@@ -166,10 +170,12 @@ public class ATRONBuilder {
                         pos = new VectorDescription(2*x*placement_unit+placement_unit,y*placement_unit,z*placement_unit);
                         rot = ATRON.ROTATION_UD;
                     }
-                    else if(y%2==1&&z%2==1) {
+                    else if(dense_middle_layer&&y%2==1&&z%2==1) {
                         pos = new VectorDescription(2*x*placement_unit,y*placement_unit,z*placement_unit);
                         rot = ATRON.ROTATION_NS;
                     }
+                    else continue;
+                    if(pos!=null) pos.add(offset);
                     if(index<nModules) {
                         String name = namer.name(index,pos,rot);
                         String robotNameMaybe = selector.select(name,index,pos,rot);
