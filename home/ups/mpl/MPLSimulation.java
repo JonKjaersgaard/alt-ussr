@@ -51,6 +51,7 @@ public class MPLSimulation extends GenericATRONSimulation {
     }
 
     private List<ConveyorElement> layout;
+    private ItemGenerator itemGenerator = new ItemGenerator();
 
     public MPLSimulation(String geneFileName) {
         try {
@@ -117,10 +118,11 @@ public class MPLSimulation extends GenericATRONSimulation {
                 this.dodisconnect(1);
                 this.dodisconnect(2);
                 this.dodisconnect(3);
+                while(isConnected(0)||isConnected(1)||isConnected(2)||isConnected(3)) yield();
                 if(name.indexOf(CLOCKWISE_TAG)>0)
-                    System.out.println("#"+name+" clockwise");
+                    this.rotateContinuous(1);
                 else
-                    System.out.println("#"+name+" counter clockwise");
+                    this.rotateContinuous(-1);
             }
 
             void dodisconnect(int connector) {
@@ -138,6 +140,7 @@ public class MPLSimulation extends GenericATRONSimulation {
         ATRON smooth = new PassiveATRON();
         smooth.setSmooth();
         simulation.setRobot(smooth, ATRON_SMOOTH);
+        simulation.subscribePhysicsTimestep(itemGenerator);
     }
 
     protected ArrayList<ModulePosition> buildRobot() {
@@ -159,11 +162,12 @@ public class MPLSimulation extends GenericATRONSimulation {
                     return ATRON_CONVEYOR;
                 return ATRON_SMOOTH;
             }
-        },ATRON.UNIT, new VectorDescription(0,-0.5f,0),false);
+        },ATRON.UNIT, new VectorDescription(0,-0.54f,0),false);
         return positions;
     }
 
     protected void changeWorldHook(WorldDescription world) {
+        itemGenerator.prepareWorld(world);
     }
 
     public static void main(String argv[]) {
