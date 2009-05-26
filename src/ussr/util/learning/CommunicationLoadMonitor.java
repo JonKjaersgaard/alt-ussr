@@ -11,80 +11,68 @@ import org.jfree.data.xy.XYSeriesCollection;
 import ussr.comm.Packet;
 import ussr.comm.RadioTransmitter;
 import ussr.comm.TransmissionType;
+import ussr.comm.monitors.StatisticalMonitor;
 import ussr.model.Module;
+import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsSimulation;
 
 import com.jme.math.Vector3f;
 import com.sun.corba.se.impl.ior.ByteBuffer;
 
-public class WifiCMBroadcaster implements PhysicsObserver {
-	final byte LEARNING_MESSAGE = 4;
-	final byte label = 1;
+public class CommunicationLoadMonitor implements PhysicsObserver {
 	PhysicsSimulation simulation;
-	double deltaT;
+	XYSeries series1;
 	double nextT;
-	CMTracker tracker;
-	RadioTransmitter radio;
-	Vector3f oldPos;
-	byte stateCount;
-	public WifiCMBroadcaster(PhysicsSimulation simulation, double deltaT, CMTracker tracker) {
+	double deltaT;
+	StatisticalMonitor commMonitor;
+	public CommunicationLoadMonitor(PhysicsSimulation simulation, double deltaT) {
 		this.simulation = simulation;
 		this.deltaT = deltaT;
-		this.tracker = tracker;
-		Module dummyModule = new Module();
-		dummyModule.setSimulation(simulation);
-		radio = new RadioTransmitter(dummyModule, dummyModule,TransmissionType.RADIO, Float.MAX_VALUE);
+		commMonitor = new StatisticalMonitor(1.0f);
+		PhysicsFactory.getOptions().addCommunicationMonitor(commMonitor);
 		nextT = simulation.getTime()+deltaT;
-		oldPos = tracker.getRobotCM();
-		stateCount = 0;
 		initXYscatterPlot();
 	}
 	
-	/**
-	 * Transmit robots movement over wifi 
-	 */
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
 		if(nextT<simulation.getTime()) {
-			float dist = tracker.getRobotCM().distance(oldPos);
-			addToXYscatterPlot(simulation.getTime(), dist/7.0f*100);
-			byte reward = (byte)(250*dist);
-			if(!Float.isNaN(dist)) {				
-	 			ByteBuffer bb = new ByteBuffer(3);
-				bb.append(LEARNING_MESSAGE);
-				bb.append(label);
-				bb.append(stateCount);
-				bb.append(reward);
-				System.out.println(stateCount+": Reward send = "+reward);
-				Packet packet = new Packet(bb.toArray());
-				radio.send(packet);
+			for(int id=0;id<simulation.getModules().size();id++) {
+				for(int channel=0;channel<=8;channel++) {
+					int bitpersec = commMonitor.getBitOutWindow(id, channel);
+					if(bitpersec==Integer.MIN_VALUE) {
+						bitpersec=0;
+					}
+					addToXYscatterPlot(simulation.getTime(), bitpersec);
+					//System.out.println("Module "+id+" sends "+bitpersec+" bits/sec on channel "+channel);
+				}
 			}
 			nextT += deltaT;
-			stateCount++;
-			oldPos = tracker.getRobotCM();
 		}
 	}
-	static XYSeries series1;
-	public static void addToXYscatterPlot(float x, float y) {
+	
+	public void addToXYscatterPlot(float x, float y) {
 		series1.add(x, y);
 	}
 	
-	public static void initXYscatterPlot() {
+	public void initXYscatterPlot() {
 		 // create a dataset...
         series1 = new XYSeries("Series 1");
         XYDataset dataset = new XYSeriesCollection(series1);
         
         JFreeChart chart = ChartFactory.createXYLineChart(
-        	    "Fitness Chart",  // chart title
+        	    "Communication Load",  // chart title
                 "Time (sec)",
-                "Reward (cm/sec)",
+                "Communication (bits/sec)",
                 dataset,         // data
                 PlotOrientation.VERTICAL,
                 true,            // include legend
                 true,            // tooltips
                 false            // urls
             );
-		ChartFrame frame = new ChartFrame("Reward Chart", chart);
+        
+        // 	create and display a frame...
+		ChartFrame frame = new ChartFrame("Communicaiton Chart", chart);
 		frame.pack();
 		frame.setVisible(true);
 	}

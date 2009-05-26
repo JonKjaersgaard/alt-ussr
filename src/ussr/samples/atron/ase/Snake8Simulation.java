@@ -8,22 +8,13 @@ package ussr.samples.atron.ase;
 
 import java.util.ArrayList;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+import mc.ModularCommander;
 
-import ussr.comm.monitors.StatisticalMonitor;
 import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
-import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
@@ -33,6 +24,7 @@ import ussr.samples.atron.ATRON;
 import ussr.samples.atron.GenericATRONSimulation;
 import ussr.samples.atron.network.ATRONReflectionEventController;
 import ussr.util.learning.CMTracker;
+import ussr.util.learning.CommunicationLoadMonitor;
 import ussr.util.learning.RadioConnection;
 import ussr.util.learning.WifiCMBroadcaster;
 
@@ -40,21 +32,23 @@ import ussr.util.learning.WifiCMBroadcaster;
 
 
 public class Snake8Simulation extends GenericATRONSimulation implements PhysicsObserver {
-	private boolean hasCMTracker = false;
+	private boolean hasCMTracker = true;
 	private boolean hasRadioConnection = true;
+	private boolean hasCommunicationMonitor = true;
+	private boolean hasModularCommander = true;
+	
 	RadioConnection radioConnection;
-	static StatisticalMonitor commMonitor;
 	
     private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;
     public static void main( String[] args ) {
-    	commMonitor = new StatisticalMonitor(1.0f);
-    	PhysicsFactory.getOptions().addCommunicationMonitor(commMonitor);
+    	
 		PhysicsParameters.get().setPlaneMaterial(Material.CONCRETE);
         PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
  		PhysicsParameters.get().setRealisticCollision(true);
 		PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
 		PhysicsParameters.get().setMaintainRotationalJointPositions(true);
-		initXYscatterPlot();
+		
+		new ModularCommander(); 
 		new Snake8Simulation().main();
 		
     }
@@ -65,10 +59,14 @@ public class Snake8Simulation extends GenericATRONSimulation implements PhysicsO
 			CMTracker tracker = new CMTracker(simulation);
 			WifiCMBroadcaster broadcaster = new WifiCMBroadcaster(simulation, 7.0, tracker);
 			simulation.subscribePhysicsTimestep(broadcaster);
-		}	
+		}
 		if(hasRadioConnection) {
 			radioConnection = new RadioConnection(simulation, 9899); //allow Modular commander to communicate with USSR 
 			radioConnection.setPackToASE(true);
+		}
+		if(hasCommunicationMonitor) {
+			CommunicationLoadMonitor commMonitor = new CommunicationLoadMonitor(simulation, 1.0);
+			simulation.subscribePhysicsTimestep(commMonitor);
 		}
 		simulation.subscribePhysicsTimestep(this);
 		
@@ -120,74 +118,8 @@ public class Snake8Simulation extends GenericATRONSimulation implements PhysicsO
     	startPaused = false;
     }
 
-    int count = 0;
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
-		count ++;
-		if(count%100==0) {
-			int nModules = 8;
-			for(int id=0;id<nModules;id++) {
-				for(int channel=0;channel<=8;channel++) {
-					int bitpersec = commMonitor.getBitOutWindow(id, channel);
-					//if(bitpersec>512) 
-					{
-						if(bitpersec==Integer.MIN_VALUE) {
-							bitpersec=0;
-						}
-						addToXYscatterPlot(simulation.getTime(), bitpersec);
-						//System.out.println("Module "+id+" sends "+bitpersec+" bits/sec on channel "+channel);
-					}
-				}
-			}
-		}
-	}
 		
-	static XYSeries series1;
-	public static void addToXYscatterPlot(float x, float y) {
-		series1.add(x, y);
 	}
-	
-	public static void initXYscatterPlot() {
-		 // create a dataset...
-        series1 = new XYSeries("Series 1");
-        XYDataset dataset = new XYSeriesCollection(series1);
-        
-        JFreeChart chart = ChartFactory.createXYLineChart(
-        	    "Communication Load",  // chart title
-                "Time (sec)",
-                "Communication (bits/sec)",
-                dataset,         // data
-                PlotOrientation.VERTICAL,
-                true,            // include legend
-                true,            // tooltips
-                false            // urls
-            );
-        
-        // create the chart...
-        /*JFreeChart chart = ChartFactory.createScatterPlot(
-            "Line Plot",  // chart title
-            "Time (sec)",
-            "Communication (bits/sec)",
-            dataset,         // data
-            PlotOrientation.VERTICAL,
-            true,            // include legend
-            true,            // tooltips
-            false            // urls
-        );*/
-        
-        /*JFreeChart chart = ChartFactory.createTimeSeriesChart(
-            "Line Plot",  // chart title
-            "Time (sec)",
-            "Communication (bits/sec)",
-            dataset,         // data
-            //PlotOrientation.VERTICAL,
-            true,            // include legend
-            true,            // tooltips
-            false            // urls
-        );*/
-        
-     // 	create and display a frame...
-		ChartFrame frame = new ChartFrame("Communicaiton Chart", chart);
-		frame.pack();
-		frame.setVisible(true);
-	}
+
 }
