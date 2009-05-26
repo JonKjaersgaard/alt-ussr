@@ -2,6 +2,7 @@ package ussr.builder;
 
 import java.util.ArrayList;
 
+import ussr.model.Module;
 import ussr.samples.odin.OdinController;
 
 /**
@@ -22,15 +23,17 @@ public class OdinControllerDefault extends OdinController {
 	
 	@Override
 	public void activate() {
-		expand();
+		//expand();
 	 //expandContract();
 	}
 	
-	private void expandContract(){
+	private void expandContract() {
+		yield();
+		String moduleType = module.getProperty(BuilderHelper.getModuleTypeKey());
 		while (true){
 		counter++;		
 		this.delay(1000); 
-		if (module.getProperty(BuilderHelper.getModuleTypeKey()).contains("Muscle")){
+		if (moduleType.contains("Muscle")){
 			if (counter==0){
 				actuateContinuous(actuationSpeed);
 				timeValues.add(getTime());
@@ -45,6 +48,12 @@ public class OdinControllerDefault extends OdinController {
 				}
 			}
 		}	
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		}
 	}
 	

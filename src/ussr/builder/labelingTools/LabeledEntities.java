@@ -9,5 +9,7 @@ public enum LabeledEntities {
  /*Module of any modular robot*/	
  MODULE,
  /*Connector on any module of any modular robot*/
- CONNECTOR;
+ CONNECTOR,
+ /*Sensor on the connector of the module*/
+ SENSOR;
 }

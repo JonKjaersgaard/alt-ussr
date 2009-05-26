@@ -18,7 +18,7 @@ public class LabelModuleTemplate extends LabelEntityTemplate {
 	 * @return selectedModule, the module selected in simulation environment. 
 	 */
 	public Entity getCurrentEntity(LabelingToolSpecification specification) {
-		Module selectedModule = specification.getSelectedModule(); 
+		Module selectedModule = specification.getSelectedModule();		
 		return selectedModule;
 	}
 		

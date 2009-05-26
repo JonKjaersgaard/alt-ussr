@@ -687,7 +687,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		getContentPane().add(constructionToolBar);
 
 		entityForLabeling.setFont(new java.awt.Font("Tahoma", 0, 12));
-		entityForLabeling.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose entity","Module", "Connector" }));
+		entityForLabeling.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose entity","Module", "Connector", "Sensor"}));
 		entityForLabeling.setToolTipText("Entity to Label");
 		entityForLabeling.setPreferredSize(new java.awt.Dimension(120, 22));
 		entityForLabeling.addActionListener(new java.awt.event.ActionListener() {
@@ -1132,7 +1132,10 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 			tool = LabelingTools.LABEL_MODULE;
 		}else if (this.entityToLabel.equals(LabeledEntities.CONNECTOR)){
 			tool = LabelingTools.LABEL_CONNECTOR;
-		}else throw new Error("The  name of the entity is misspelled or this entity is not yet supported");
+		}else if (this.entityToLabel.equals(LabeledEntities.SENSOR)){
+			tool = LabelingTools.LABEL_SENSOR;
+		}
+		else throw new Error("The  name of the entity is misspelled or this entity is not yet supported");
 		JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,currentLabeljTextField.getText(),tool));
 
 		guiHelper.passTo(AssistantjTextField,"Select "+ this.entityToLabel.toString().toLowerCase()+ " to assign to it the label: " + currentLabeljTextField.getText());
@@ -1232,7 +1235,11 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void connectorsjComboBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                    
 		//System.out.println("Construction toolbar-->On chosen (comboBox) connector");//for debugging 
-		this.connectorNr = Integer.parseInt(connectorsjComboBox.getSelectedItem().toString());
+		
+		if (connectorsjComboBox.getSelectedItem().toString().contains("Choose")){}
+		else{
+			this.connectorNr = Integer.parseInt(connectorsjComboBox.getSelectedItem().toString());
+		}
 		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,this.connectorNr));
 		guiHelper.passTo(AssistantjTextField,"Select " +this.chosenMRname +" module");
 

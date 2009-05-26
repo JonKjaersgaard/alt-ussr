@@ -9,10 +9,7 @@ public class ModuleLabel extends Label {
 	
 	public ModuleLabel(Module module){
 	this.module = module;	
-	}
-
-	
-	
+	}	
 	
 	public String getLabels(){
 		String labels = module.getProperty(BuilderHelper.getLabelsKey());
@@ -21,9 +18,6 @@ public class ModuleLabel extends Label {
 		}
 		return labels;
 	}
-
-
-
 
 	@Override
 	public boolean has(String label) {

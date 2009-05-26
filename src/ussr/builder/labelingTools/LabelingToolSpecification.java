@@ -114,6 +114,9 @@ public class LabelingToolSpecification extends CustomizedPicker {
 		case LABEL_MODULE:
 			this.labeling.labelSpecificEntity(this);
 			break;
+		case LABEL_SENSOR:
+			this.labeling.labelSpecificEntity(this);
+			break;
 		case READ_LABELS:	
 			this.labeling.readLabels(this);
 			break;

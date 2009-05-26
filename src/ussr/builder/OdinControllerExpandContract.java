@@ -6,7 +6,7 @@ import ussr.samples.odin.OdinController;
 
 /**
  * Default controller for Odin modular robot.
- * @author Konstantinas *
+ * @author Konstantinas 
  */
 public class OdinControllerExpandContract extends OdinController {
 
@@ -20,24 +20,24 @@ public class OdinControllerExpandContract extends OdinController {
 	@Override
 	public void activate() {
 	
+		expand();
+	}
+	
+	private void expand(){
+		yield();
+		
 		while (true){
-			counter++;		
 			this.delay(1000); 
-			if (module.getProperty(BuilderHelper.getModuleTypeKey()).contains("Muscle")){
-				if (counter==0){
-					actuateContinuous(actuationSpeed);
-					timeValues.add(getTime());
-				}else{
-					timeValues.add(getTime());
-					if (timeValues.size()==2){
-						if ((timeValues.get(counter)-timeValues.get(counter-1)>timeDiffrence)){						
-							actuateContinuous(-actuationSpeed);
-							timeValues.removeAll(timeValues);//reset
-							this.counter =-1;//reset
-						}
-					}
-				}
-			}	
-		}}
+		if (module.getProperty(BuilderHelper.getModuleTypeKey()).contains("Muscle")){
+	
+				actuateContinuous(actuationSpeed);			
+		
+			}
+		yield(); 
+		}
+		
+	}
+	
+	
 	    
 }

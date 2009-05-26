@@ -3,20 +3,21 @@ package ussr.builder.labels;
 import ussr.builder.BuilderHelper;
 import ussr.model.Connector;
 import ussr.model.Module;
+import ussr.model.Sensor;
 
-public class ConnectorLabel extends Label {
+public class SensorLabel extends Label {
 	
-	private Connector connector;
+	private Sensor sensor;
 	
-	public ConnectorLabel(Connector connector){
-	this.connector = connector;	
+	public SensorLabel(Sensor sensor){
+	this.sensor = sensor;	
 	}
 
 	
 	
 	
 	public String getLabels(){
-		String labels = connector.getProperty(BuilderHelper.getLabelsKey());
+		String labels = sensor.getProperty(BuilderHelper.getLabelsKey());
 		if (labels ==null){
 			return "none";
 		}

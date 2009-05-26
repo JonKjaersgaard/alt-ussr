@@ -20,6 +20,7 @@ public class LabelingFactory {
 	private final static LabelingFactoryMapHelper[] labelingMap = {
 		new LabelingFactoryMapHelper(LabeledEntities.MODULE, new LabelModuleTemplate()),
 		new LabelingFactoryMapHelper(LabeledEntities.CONNECTOR, new LabelConnectorTemplate()),
+		new LabelingFactoryMapHelper(LabeledEntities.SENSOR, new LabelSensorTemplate()),
 		// add here newly supported entity to label 
 	};
 	
