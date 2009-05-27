@@ -72,14 +72,22 @@ public class MPLSimulation extends GenericATRONSimulation {
     private int magicGlobalLiftingModuleCounter = 0;
     private Object magicGlobalLiftingModuleSignal = new Object();
 
-    public MPLSimulation(String geneFileName, String targetFileName, String outputFileName) {
+    public MPLSimulation(String geneSpec, String targetFileName, String outputFileName) {
         try {
-            readGeneFromFile(geneFileName);
+            if(geneSpec.startsWith("@"))
+                parseGeneFromFile(geneSpec);
+            else
+                readGeneFromFile(geneSpec);
             VectorDescription target = readTargetFromFile(targetFileName);
             itemGenerator = new EventGenerator(target, outputFileName);
         } catch(IOException exception) {
-            throw new Error("Unable to open gene file "+geneFileName+": "+exception);
+            throw new Error("Unable to initialize: "+exception);
         }
+    }
+
+    private void parseGeneFromFile(String geneSpec) {
+        GeneParser p = new GeneParser(1,new char[] { 'P', 'r'});
+        layout = p.parse(geneSpec.substring(1));
     }
 
     private VectorDescription readTargetFromFile(String targetFileName) throws FileNotFoundException, IOException {
@@ -286,6 +294,8 @@ public class MPLSimulation extends GenericATRONSimulation {
         String inputGene = parseParam(argv,"gene","home/ups/mpl/test.gene");
         String targetPos = parseParam(argv,"target","home/ups/mpl/test.goal");
         String outputFile = parseParam(argv,"output","home/ups/mpl/test.output");
+        String homeDir = parseParam(argv,"home",null); 
+        if(homeDir!=null) PhysicsFactory.getOptions().setResourceDirectory(homeDir);
         MPLSimulation main = new MPLSimulation(inputGene,targetPos,outputFile);
         main.main();
     }

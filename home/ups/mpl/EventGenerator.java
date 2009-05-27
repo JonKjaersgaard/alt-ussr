@@ -44,11 +44,14 @@ public class EventGenerator implements PhysicsObserver {
     }
 
     public EventGenerator(final VectorDescription target, final String outputFileName) {
+        events.add(new Event(0) { public void perform(PhysicsSimulation sim) {
+            writeToFile(outputFileName,0);
+        } });
         events.add(new Event(20.0f) { public void perform(PhysicsSimulation sim) {
             List<VectorDescription> obstaclePositions = sim.getObstaclePositions();
             VectorDescription vector = obstaclePositions.get(0);
             System.out.println("Box position: "+vector);
-            float result = target.distance(vector);
+            float result = (1/target.distance(vector))*10;
             System.out.println("Distance: "+result);
             writeToFile(outputFileName,result);
             System.err.println("QUIT");
@@ -62,6 +65,7 @@ public class EventGenerator implements PhysicsObserver {
             PrintWriter writer = new PrintWriter(new FileWriter(file));
             writer.println(result);
             writer.flush();
+            writer.close();
         } catch (IOException e) {
             throw new Error("Unable to write output");
         }
