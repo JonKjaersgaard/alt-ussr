@@ -30,7 +30,7 @@ public class ATRONBuilder {
      * @author ups
      */
     public interface Namer {
-        public String name(int number, VectorDescription pos, RotationDescription rot);
+        public String name(int number, VectorDescription pos, RotationDescription rot, int lx, int ly, int lz);
     }
 
     /**
@@ -39,7 +39,7 @@ public class ATRONBuilder {
      * @author ups
      */
     public interface ModuleSelector {
-        String select(String name, int index, VectorDescription pos, RotationDescription rot);
+        String select(String name, int index, VectorDescription pos, RotationDescription rot, int lx, int ly, int lz);
     }
 
     public void setConncetionAcceptanceRange(float range) {
@@ -136,12 +136,12 @@ public class ATRONBuilder {
     
     public ArrayList<ModulePosition> buildAsLattice(int nModules, int xMax, int yMax, int zMax) {
         return this.buildAsNamedLattice(nModules, xMax, yMax, zMax, new Namer() {
-            public String name(int number, VectorDescription pos, RotationDescription rot) {
+            public String name(int number, VectorDescription pos, RotationDescription rot, int lx, int ly, int lz) {
                 return "module"+Integer.toString(number);
             }
                 
         }, new ModuleSelector() {
-            public String select(String name, int index, VectorDescription pos, RotationDescription rot) {
+            public String select(String name, int index, VectorDescription pos, RotationDescription rot, int lx, int ly, int lz) {
                 return null;
             }
         }, ATRON.UNIT);
@@ -177,8 +177,8 @@ public class ATRONBuilder {
                     else continue;
                     if(pos!=null) pos.add(offset);
                     if(index<nModules) {
-                        String name = namer.name(index,pos,rot);
-                        String robotNameMaybe = selector.select(name,index,pos,rot);
+                        String name = namer.name(index,pos,rot,x,y,z);
+                        String robotNameMaybe = selector.select(name,index,pos,rot,x,y,z);
                         ModulePosition mpos;
                         if(robotNameMaybe==null)
                             mpos = new ModulePosition(name, pos, rot);
