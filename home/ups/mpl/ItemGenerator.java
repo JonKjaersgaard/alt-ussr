@@ -54,7 +54,7 @@ public class ItemGenerator implements PhysicsObserver {
 
     public void prepareWorld(WorldDescription world) {
         BoxDescription[] boxes = new BoxDescription[] { 
-                new BoxDescription(new VectorDescription(0.1f,-0.3f,0.4f), new VectorDescription(0.2f,0.01f,0.2f), new RotationDescription(0,0,0), 10f)
+                new BoxDescription(new VectorDescription(0.1f,-0.25f,0.4f), new VectorDescription(0.2f,0.06f,0.2f), new RotationDescription(0,0,0), 10f)
         };
         world.setBigObstacles(boxes);
     }

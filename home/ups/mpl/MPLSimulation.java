@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import ussr.description.Robot;
@@ -32,19 +33,29 @@ import ussr.samples.atron.ATRONBuilder.Namer;
  */
 public class MPLSimulation extends GenericATRONSimulation {
 
-    private static final String COUNTERCW_TAG = "cc_";
-    private static final String CLOCKWISE_TAG = "cw_";
+    // Naming of modules (used to control behavior)
+    private static final String COUNTERCW_TAG = "#cc#_";
+    private static final String CLOCKWISE_TAG = "#cw#_";
+    private static final String BLOCKER_TAG = "#block#_";
     private static final String CONVEYOR_TAG = "conveyor_";
     private static final String ATRON_SMOOTH = "ATRON smooth";
     private static final String ATRON_CONVEYOR = "ATRON conveyor";
 
+    // Messages
+    private static final byte[] MSG_DISCONNECT_HERE = new byte[] { (byte)87 };
+    private static final byte MSG_DISCONNECT_HERE_SIZE = 1;
+    private static final byte[] MSG_LIFT_ME = new byte[] { (byte)29 };
+    private static final byte MSG_LIFT_ME_SIZE = 1;
+    private static final byte LIFTING_CONNECTOR = 4;
+
     public enum ConveyorElement {
-        PLAIN, ROTATING_CLOCKWISE, ROTATING_COUNTERCW;
+        PLAIN, ROTATING_CLOCKWISE, ROTATING_COUNTERCW, BLOCKER;
         static ConveyorElement fromChar(char c) {
             switch(c) {
             case 'P': return PLAIN;
             case 'R': return ROTATING_CLOCKWISE;
             case 'r': return ROTATING_COUNTERCW;
+            case 'b': return BLOCKER;
             default: throw new Error("Undefined conveyor element: "+c);
             }
         }
@@ -52,6 +63,8 @@ public class MPLSimulation extends GenericATRONSimulation {
 
     private List<ConveyorElement> layout;
     private ItemGenerator itemGenerator = new ItemGenerator();
+    private int magicGlobalLiftingModuleCounter = 0;
+    private Object magicGlobalLiftingModuleSignal = new Object();
 
     public MPLSimulation(String geneFileName) {
         try {
@@ -79,17 +92,53 @@ public class MPLSimulation extends GenericATRONSimulation {
      * 
      * @author ups
      */
-    private static class PassiveATRON extends ATRON {
+    private class PassiveATRON extends ATRON {
         public Controller createController() { return new PassiveController(); }
-        protected static class PassiveController extends ATRONController {
+        protected class PassiveController extends ATRONController {
+            private int lift = -1;
 
             @Override
-            public void activate() { 
-                try {
-                    Thread.sleep(Long.MAX_VALUE);
-                } catch(InterruptedException e) {
-                    throw new Error("passive controller interrupted");
+            public void activate() {
+                yield();
+                while(true) {
+                    synchronized(this) {
+                        try {
+                            this.wait();
+                        } catch(InterruptedException e) {
+                            throw new Error("passive controller interrupted");
+                        }
+                    }
+                    if(lift>-1) {
+                        System.out.println("Lift requested from port "+lift);
+                        disconnectOthersSameHemi(lift);
+                        this.rotateDegrees(-90);
+                        magicGlobalLiftingModuleCounter--;
+                        synchronized(magicGlobalLiftingModuleSignal) {
+                            magicGlobalLiftingModuleSignal.notifyAll();
+                        }
+                        lift = -1;
+                    }
                 }
+            }
+
+            protected void disconnectOthersSameHemi(int connector) {
+                int c_min, c_max;
+                if(connector<4) { c_min = 0; c_max = 3; }
+                else { c_min = 4; c_max = 7; }
+                for(int c = c_min; c<=c_max; c++)
+                    if(c!=connector) this.symmetricDisconnect(c);
+                boolean allDisconnected = false;
+                while(!allDisconnected) {
+                    allDisconnected = true;
+                    for(int c = c_min; c<=c_max; c++)
+                        if(c!=connector && this.isConnected(c)) allDisconnected = false;
+                    yield();
+                }
+            }
+
+            protected void symmetricDisconnect(int connector) {
+                this.sendMessage(MSG_DISCONNECT_HERE, MSG_DISCONNECT_HERE_SIZE, (byte)connector);
+                this.disconnect(connector);
             }
 
             /* (non-Javadoc)
@@ -97,14 +146,20 @@ public class MPLSimulation extends GenericATRONSimulation {
              */
             @Override
             public void handleMessage(byte[] message, int messageSize, int channel) {
-                if(message.length==1 && message[0]==87)
+                if(Arrays.equals(message,MSG_DISCONNECT_HERE))
                     this.disconnect(channel);
+                else if(Arrays.equals(message, MSG_LIFT_ME)) {
+                    System.out.println("Blocking behavior received");
+                    lift = channel;
+                    synchronized(this) { this.notify(); }
+                } else
+                    System.err.println("Unknown message received");
             }
 
         };
     }
 
-    private static class ConveyorATRON extends PassiveATRON {
+    private class ConveyorATRON extends PassiveATRON {
 
         public Controller createController() { return new ConveyorController(); }
 
@@ -112,22 +167,37 @@ public class MPLSimulation extends GenericATRONSimulation {
 
             @Override
             public void activate() {
+                yield();
                 String name = this.module.getProperty("name");
                 System.out.println("Disconnecting "+name);
-                this.dodisconnect(0);
-                this.dodisconnect(1);
-                this.dodisconnect(2);
-                this.dodisconnect(3);
+                this.symmetricDisconnect(0);
+                this.symmetricDisconnect(1);
+                this.symmetricDisconnect(2);
+                this.symmetricDisconnect(3);
                 while(isConnected(0)||isConnected(1)||isConnected(2)||isConnected(3)) yield();
-                if(name.indexOf(CLOCKWISE_TAG)>0)
-                    this.rotateContinuous(1);
-                else
-                    this.rotateContinuous(-1);
+                if(name.indexOf(CLOCKWISE_TAG)>0 || name.indexOf(COUNTERCW_TAG)>0) {
+                    synchronized(magicGlobalLiftingModuleSignal) {
+                        while(magicGlobalLiftingModuleCounter>0)
+                            try {
+                                magicGlobalLiftingModuleSignal.wait();
+                            } catch(InterruptedException exn) {
+                                throw new Error("Unexpected interruption");
+                            }
+                    }
+                    if(name.indexOf(CLOCKWISE_TAG)>0)
+                        this.rotateContinuous(1);
+                    else
+                        this.rotateContinuous(-1);
+                }
+                else if(name.indexOf(BLOCKER_TAG)>0)
+                    blockingBehavior();
+                else throw new Error("No behavior for "+name);
             }
 
-            void dodisconnect(int connector) {
-                this.sendMessage(new byte[] { (byte)87 }, (byte)1, (byte)connector);
-                this.disconnect(connector);
+            private void blockingBehavior() {
+                System.out.println("Blocking behavior activated");
+                this.disconnectOthersSameHemi(LIFTING_CONNECTOR);
+                this.sendMessage(MSG_LIFT_ME, MSG_LIFT_ME_SIZE, LIFTING_CONNECTOR);
             }
 
         }
@@ -153,6 +223,11 @@ public class MPLSimulation extends GenericATRONSimulation {
                         return CONVEYOR_TAG+CLOCKWISE_TAG+number;
                     else if(element==ConveyorElement.ROTATING_COUNTERCW)
                         return CONVEYOR_TAG+COUNTERCW_TAG+number;
+                    else if(element==ConveyorElement.BLOCKER) {
+                        magicGlobalLiftingModuleCounter++;
+                        return CONVEYOR_TAG+BLOCKER_TAG+number;
+                    } else if(!(element==ConveyorElement.PLAIN))
+                        throw new Error("Unknown element type: "+element);
                 }
                 return "--plain"+number;
             }
