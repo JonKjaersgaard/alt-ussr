@@ -37,6 +37,8 @@ public class MPLSimulation extends GenericATRONSimulation {
     private static final String COUNTERCW_TAG = "#cc#_";
     private static final String CLOCKWISE_TAG = "#cw#_";
     private static final String BLOCKER_TAG = "#block#_";
+    private static final String SPINNER_TAG = "#spin#_";
+    private static final String COUNTER_SPINNER_TAG = "#counterspin#_";
     private static final String CONVEYOR_TAG = "conveyor_";
     private static final String ATRON_SMOOTH = "ATRON smooth";
     private static final String ATRON_CONVEYOR = "ATRON conveyor";
@@ -49,13 +51,15 @@ public class MPLSimulation extends GenericATRONSimulation {
     private static final byte LIFTING_CONNECTOR = 4;
 
     public enum ConveyorElement {
-        PLAIN, ROTATING_CLOCKWISE, ROTATING_COUNTERCW, BLOCKER;
+        PLAIN, ROTATING_CLOCKWISE, ROTATING_COUNTERCW, BLOCKER, SPINNER, COUNTER_SPINNER;
         static ConveyorElement fromChar(char c) {
             switch(c) {
             case 'P': return PLAIN;
             case 'R': return ROTATING_CLOCKWISE;
             case 'r': return ROTATING_COUNTERCW;
             case 'b': return BLOCKER;
+            case 's': return SPINNER;
+            case 'S': return COUNTER_SPINNER;
             default: throw new Error("Undefined conveyor element: "+c);
             }
         }
@@ -112,6 +116,7 @@ public class MPLSimulation extends GenericATRONSimulation {
                         System.out.println("Lift requested from port "+lift);
                         disconnectOthersSameHemi(lift);
                         this.rotateDegrees(-90);
+                        while(this.isRotating()) yield();
                         magicGlobalLiftingModuleCounter--;
                         synchronized(magicGlobalLiftingModuleSignal) {
                             magicGlobalLiftingModuleSignal.notifyAll();
@@ -190,13 +195,17 @@ public class MPLSimulation extends GenericATRONSimulation {
                         this.rotateContinuous(-1);
                 }
                 else if(name.indexOf(BLOCKER_TAG)>0)
-                    blockingBehavior();
+                    blockingBehavior(name);
                 else throw new Error("No behavior for "+name);
             }
 
-            private void blockingBehavior() {
+            private void blockingBehavior(String name) {
                 System.out.println("Blocking behavior activated");
                 this.disconnectOthersSameHemi(LIFTING_CONNECTOR);
+                if(name.indexOf(SPINNER_TAG)>0)
+                    this.rotateContinuous(1);
+                else if(name.indexOf(COUNTER_SPINNER_TAG)>0)
+                    this.rotateContinuous(-1);
                 this.sendMessage(MSG_LIFT_ME, MSG_LIFT_ME_SIZE, LIFTING_CONNECTOR);
             }
 
@@ -226,6 +235,12 @@ public class MPLSimulation extends GenericATRONSimulation {
                     else if(element==ConveyorElement.BLOCKER) {
                         magicGlobalLiftingModuleCounter++;
                         return CONVEYOR_TAG+BLOCKER_TAG+number;
+                    } else if(element==ConveyorElement.SPINNER) { 
+                        magicGlobalLiftingModuleCounter++;
+                        return CONVEYOR_TAG+BLOCKER_TAG+SPINNER_TAG+number;
+                    } else if(element==ConveyorElement.COUNTER_SPINNER) { 
+                        magicGlobalLiftingModuleCounter++;
+                        return CONVEYOR_TAG+BLOCKER_TAG+COUNTER_SPINNER_TAG+number;
                     } else if(!(element==ConveyorElement.PLAIN))
                         throw new Error("Unknown element type: "+element);
                 }
