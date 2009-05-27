@@ -49,6 +49,7 @@ public class PhysicsFactory {
 
         private Set<CommunicationMonitor> monitors = new HashSet<CommunicationMonitor>();
         private boolean startPaused = true;
+        private String resourceDirectory;
 
         public Options copy() { 
             try {
@@ -103,6 +104,14 @@ public class PhysicsFactory {
         
         public boolean getStartPaused() {
             return startPaused;
+        }
+
+        public void setResourceDirectory(String homeDir) {
+            resourceDirectory = homeDir;
+        }
+        
+        public String getResourceDirectory() {
+            return resourceDirectory;
         }
     }
     
