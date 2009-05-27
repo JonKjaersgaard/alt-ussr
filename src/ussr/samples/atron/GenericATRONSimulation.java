@@ -13,6 +13,7 @@ import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
+import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
 import ussr.samples.GenericSimulation;
 
@@ -25,8 +26,6 @@ import ussr.samples.GenericSimulation;
  */
 public abstract class GenericATRONSimulation extends GenericSimulation {
 	
-	public static boolean startPaused = true;
-    
     public void main() {
         this.setupPhysicsHook();
         setConnectorsAreActive(true);
@@ -42,7 +41,7 @@ public abstract class GenericATRONSimulation extends GenericSimulation {
 
         this.changeWorldHook(world);
         
-        this.runSimulation(world,startPaused);
+        this.runSimulation(world,PhysicsFactory.getOptions().getStartPaused());
     }
     
     protected void setupPhysicsHook() { ; }
