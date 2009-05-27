@@ -1,6 +1,11 @@
 package mpl;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 
 import com.jmex.physics.DynamicPhysicsNode;
@@ -15,7 +20,7 @@ import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEGeometryHelper;
 import ussr.physics.jme.JMESimulation;
 
-public class ItemGenerator implements PhysicsObserver {
+public class EventGenerator implements PhysicsObserver {
 
     public static abstract class Event implements Comparable<Event> {
         private float time;
@@ -38,18 +43,28 @@ public class ItemGenerator implements PhysicsObserver {
             events.poll().perform(simulation);
     }
 
-    public ItemGenerator() {
-        //events.add(new Event(2.0f) { public void perform(PhysicsSimulation s) { addBox(s); } });
+    public EventGenerator(final VectorDescription target, final String outputFileName) {
+        events.add(new Event(20.0f) { public void perform(PhysicsSimulation sim) {
+            List<VectorDescription> obstaclePositions = sim.getObstaclePositions();
+            VectorDescription vector = obstaclePositions.get(0);
+            System.out.println("Box position: "+vector);
+            float result = target.distance(vector);
+            System.out.println("Distance: "+result);
+            writeToFile(outputFileName,result);
+            System.err.println("QUIT");
+            System.exit(0);
+        } });
     }
     
-    public void addBox(PhysicsSimulation s) {
-        JMESimulation jmes = (JMESimulation)s;
-        JMEGeometryHelper helper = (JMEGeometryHelper)jmes.getHelper();
-        DynamicPhysicsNode node = (DynamicPhysicsNode)helper.createBox(0.1f, 0.01f, 0.1f, 1f, false);
-        node.getLocalTranslation().set(0,1f,0);
-        node.getLocalRotation().set(0,0,0,1);
-        node.clearDynamics();
-        jmes.getObstacles().add(node);
+    protected void writeToFile(String outputFileName, float result) {
+        File file = new File(outputFileName);
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter(file));
+            writer.println(result);
+            writer.flush();
+        } catch (IOException e) {
+            throw new Error("Unable to write output");
+        }
     }
 
     public void prepareWorld(WorldDescription world) {

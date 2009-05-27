@@ -4,6 +4,7 @@ package mpl;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import ussr.description.setup.BoxDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
+import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.samples.atron.ATRON;
@@ -66,25 +68,43 @@ public class MPLSimulation extends GenericATRONSimulation {
     }
 
     private List<ConveyorElement> layout;
-    private ItemGenerator itemGenerator = new ItemGenerator();
+    private EventGenerator itemGenerator;
     private int magicGlobalLiftingModuleCounter = 0;
     private Object magicGlobalLiftingModuleSignal = new Object();
 
-    public MPLSimulation(String geneFileName) {
+    public MPLSimulation(String geneFileName, String targetFileName, String outputFileName) {
         try {
-            File file = new File(geneFileName);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            layout = new ArrayList<ConveyorElement>();
-            while(true) {
-                int nextChar = reader.read();
-                if(nextChar==-1) break;
-                if(Character.isWhitespace(nextChar)) continue;
-                layout.add(ConveyorElement.fromChar((char)nextChar));
-            }
-            System.out.println("Read gene string of length "+layout.size());
+            readGeneFromFile(geneFileName);
+            VectorDescription target = readTargetFromFile(targetFileName);
+            itemGenerator = new EventGenerator(target, outputFileName);
         } catch(IOException exception) {
             throw new Error("Unable to open gene file "+geneFileName+": "+exception);
         }
+    }
+
+    private VectorDescription readTargetFromFile(String targetFileName) throws FileNotFoundException, IOException {
+        File file = new File(targetFileName);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+        float[] target = new float[3];
+        for(int i=0; i<3; i++) {
+            String line = reader.readLine();
+            if(line==null) throw new Error("Missing number");
+            target[i] = Float.parseFloat(line);
+        }
+        return new VectorDescription(target[0],target[1],target[2]);
+    }
+
+    private void readGeneFromFile(String geneFileName) throws FileNotFoundException, IOException {
+        File file = new File(geneFileName);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+        layout = new ArrayList<ConveyorElement>();
+        while(true) {
+            int nextChar = reader.read();
+            if(nextChar==-1) break;
+            if(Character.isWhitespace(nextChar)) continue;
+            layout.add(ConveyorElement.fromChar((char)nextChar));
+        }
+        System.out.println("Read gene string of length "+layout.size());
     }
 
     protected Robot getRobot() {
@@ -262,8 +282,21 @@ public class MPLSimulation extends GenericATRONSimulation {
 
     public static void main(String argv[]) {
         PhysicsParameters.get().setResolutionFactor(1);
-        MPLSimulation main = new MPLSimulation("home/ups/mpl/test.gene");
+        PhysicsFactory.getOptions().setStartPaused(false);
+        String inputGene = parseParam(argv,"gene","home/ups/mpl/test.gene");
+        String targetPos = parseParam(argv,"target","home/ups/mpl/test.goal");
+        String outputFile = parseParam(argv,"output","home/ups/mpl/test.output");
+        MPLSimulation main = new MPLSimulation(inputGene,targetPos,outputFile);
         main.main();
     }
 
+    private static String parseParam(String[] argv, String name, String defaultValue) {
+        for(int i=0; i<argv.length; i++) {
+            if(argv[i].startsWith(name+'=')) {
+                return argv[i].substring(argv[i].indexOf('=')+1);
+            }
+        }
+        return defaultValue;
+    }
+    
 }
