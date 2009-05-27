@@ -547,5 +547,14 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 		this.modules = modules;
 	}
 
+    public List<VectorDescription> getObstaclePositions() {
+        ArrayList<VectorDescription> positions = new ArrayList<VectorDescription>();
+        for(PhysicsNode node: this.obstacleBoxes) {
+            Vector3f pos = node.getLocalTranslation();
+            positions.add(new VectorDescription(pos.x,pos.y,pos.z));
+        }
+        return positions;
+    }
+
 }
 

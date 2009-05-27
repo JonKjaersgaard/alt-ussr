@@ -170,6 +170,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public JMEBasicGraphicalSimulation(Options options) {
 	    this.options = options;
 		exitOnQuit = options.getExitOnQuit();
+		pause = options.getStartPaused();
 	}
 	protected void assignKeys() {       
 		/** Assign key P to action "toggle_pause". */

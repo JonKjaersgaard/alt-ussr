@@ -48,6 +48,7 @@ public class PhysicsFactory {
         // End Horn
 
         private Set<CommunicationMonitor> monitors = new HashSet<CommunicationMonitor>();
+        private boolean startPaused = true;
 
         public Options copy() { 
             try {
@@ -94,6 +95,14 @@ public class PhysicsFactory {
         }
         public Set<CommunicationMonitor> getMonitors() {
             return monitors;
+        }
+
+        public void setStartPaused(boolean startPaused) {
+            this.startPaused = startPaused;
+        }
+        
+        public boolean getStartPaused() {
+            return startPaused;
         }
     }
     

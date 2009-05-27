@@ -9,6 +9,7 @@ package ussr.physics;
 import java.util.List;
 
 import ussr.description.Robot;
+import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Module;
 
@@ -144,4 +145,9 @@ public interface PhysicsSimulation {
      * @param gadget The gadget to add
      */
     public void addGadget(SimulationGadget gadget);
+    
+    /**
+     * Get the positions of all obstacles
+     */
+    public List<VectorDescription> getObstaclePositions();
 }
