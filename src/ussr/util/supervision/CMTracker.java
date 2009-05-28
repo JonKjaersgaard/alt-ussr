@@ -1,4 +1,4 @@
-package ussr.util.learning;
+package ussr.util.supervision;
 
 import com.jme.math.Vector3f;
 

@@ -24,10 +24,10 @@ import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.GenericATRONSimulation;
 import ussr.samples.atron.network.ATRONReflectionEventController;
-import ussr.util.learning.CMTracker;
-import ussr.util.learning.CommunicationLoadMonitor;
-import ussr.util.learning.RadioConnection;
-import ussr.util.learning.WifiCMBroadcaster;
+import ussr.util.supervision.CMTracker;
+import ussr.util.supervision.CommunicationLoadMonitor;
+import ussr.util.supervision.RadioConnection;
+import ussr.util.supervision.WifiCMBroadcaster;
 
 
 
@@ -48,6 +48,7 @@ public class Snake8Simulation extends GenericATRONSimulation implements PhysicsO
  		PhysicsParameters.get().setRealisticCollision(true);
 		PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
 		PhysicsParameters.get().setMaintainRotationalJointPositions(true);
+		PhysicsFactory.getOptions().setStartPaused(true);
 		
 		if(hasModularCommander) {
 			new ModularCommander();
@@ -72,12 +73,10 @@ public class Snake8Simulation extends GenericATRONSimulation implements PhysicsO
 			simulation.subscribePhysicsTimestep(commMonitor);
 		}
 		simulation.subscribePhysicsTimestep(this);
-		
 	}
 
 	
 	protected Robot getRobot() {
-
         ATRON robot = new ATRON() {
             public Controller createController() {
                 return new ATRONReflectionEventController();
@@ -118,7 +117,6 @@ public class Snake8Simulation extends GenericATRONSimulation implements PhysicsO
     protected void changeWorldHook(WorldDescription world) {
     	world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 		world.setHasBackgroundScenery(false);
-		PhysicsFactory.getOptions().setStartPaused(false);
     }
 
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {

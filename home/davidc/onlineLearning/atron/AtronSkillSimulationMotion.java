@@ -8,6 +8,7 @@ import onlineLearning.skills.SkillQ;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.model.Module;
+import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsSimulation;
 import ussr.samples.atron.GenericATRONSimulation;
@@ -60,7 +61,7 @@ public class AtronSkillSimulationMotion extends AtronSkillSimulation implements 
 			}
 		}
 		System.out.println("***** Starting Simulation Trial "+trialID+" **********");
-		GenericATRONSimulation.startPaused=startPaused;
+		PhysicsFactory.getOptions().setStartPaused(startPaused);
 		new AtronSkillSimulationMotion().main();
 		
     }

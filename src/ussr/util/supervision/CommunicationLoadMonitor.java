@@ -1,7 +1,8 @@
-package ussr.util.learning;
+package ussr.util.supervision;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYDataset;
@@ -66,14 +67,17 @@ public class CommunicationLoadMonitor implements PhysicsObserver {
                 "Communication (bits/sec)",
                 dataset,         // data
                 PlotOrientation.VERTICAL,
-                true,            // include legend
+                false,            // include legend
                 true,            // tooltips
                 false            // urls
             );
         
         // 	create and display a frame...
-		ChartFrame frame = new ChartFrame("Communicaiton Chart", chart);
+        //ChartPanel panel = new ChartPanel(chart);
+		ChartFrame frame = new ChartFrame("Communication Chart", chart);
 		frame.pack();
+		//System.out.println(frame.getSize());
+		frame.setSize(2*690/3, 2*450/3);
 		frame.setVisible(true);
 	}
 }

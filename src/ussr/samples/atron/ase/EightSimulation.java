@@ -22,8 +22,8 @@ import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.atron.GenericATRONSimulation;
 import ussr.samples.atron.network.ATRONReflectionEventController;
-import ussr.util.learning.CMTracker;
-import ussr.util.learning.WifiCMBroadcaster;
+import ussr.util.supervision.CMTracker;
+import ussr.util.supervision.WifiCMBroadcaster;
 
 
  

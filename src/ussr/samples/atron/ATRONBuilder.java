@@ -55,12 +55,16 @@ public class ATRONBuilder {
         for(int i=0;i<modulePos.size();i++) {
             for(int j=i+1;j<modulePos.size();j++) {
                 if(isConnectable(modulePos.get(i), modulePos.get(j))) {
-                    System.out.println("Found connection from module "+modulePos.get(i).getName()+" to "+modulePos.get(j).getName());
+                    System.out.println("Found connection from module "+modulePos.get(i).getName()+" to "+modulePos.get(j).getName()+" dist "+Math.abs(getModuleDist(modulePos.get(i), modulePos.get(j))-0.11313708f));
                     connections.add(new ModuleConnection(modulePos.get(i).getName(),modulePos.get(j).getName()));
                 }
             }
         }
         return connections;
+    }
+    public float getModuleDist(ModulePosition m1, ModulePosition m2) {
+    	float dist = m1.getPosition().distance(m2.getPosition());
+    	return dist;
     }
     public boolean isConnectable(ModulePosition m1, ModulePosition m2) {
         float dist = m1.getPosition().distance(m2.getPosition());
@@ -168,7 +172,7 @@ public class ATRONBuilder {
                     }
                     else if(y%2==1&&z%2==0) {
                         pos = new VectorDescription(2*x*placement_unit+placement_unit,y*placement_unit,z*placement_unit);
-                        rot = ATRON.ROTATION_UD;
+                      	rot = ATRON.ROTATION_UD;
                     }
                     else if(dense_middle_layer&&y%2==1&&z%2==1) {
                         pos = new VectorDescription(2*x*placement_unit,y*placement_unit,z*placement_unit);

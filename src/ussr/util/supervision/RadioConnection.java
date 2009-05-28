@@ -1,4 +1,4 @@
-package ussr.util.learning;
+package ussr.util.supervision;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

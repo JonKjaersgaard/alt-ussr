@@ -1,4 +1,4 @@
-package ussr.util.learning;
+package ussr.util.supervision;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
@@ -86,6 +86,7 @@ public class WifiCMBroadcaster implements PhysicsObserver {
             );
 		ChartFrame frame = new ChartFrame("Reward Chart", chart);
 		frame.pack();
+		frame.setSize(2*690/3, 2*450/3);
 		frame.setVisible(true);
 	}
 }
