@@ -34,7 +34,8 @@ public class EventGenerator implements PhysicsObserver {
         }
     }
     
-    PriorityQueue<Event> events = new PriorityQueue<Event>();
+    private PriorityQueue<Event> events = new PriorityQueue<Event>();
+    private VectorDescription initialBoxPosition;
     
     public void physicsTimeStepHook(PhysicsSimulation simulation) {
         if(events.size()==0) return;
@@ -45,19 +46,27 @@ public class EventGenerator implements PhysicsObserver {
 
     public EventGenerator(final VectorDescription target, final String outputFileName) {
         events.add(new Event(0) { public void perform(PhysicsSimulation sim) {
-            writeToFile(outputFileName,0);
+            initialBoxPosition = getBoxPosition(sim);
+            writeToFile(outputFileName,GeneAndFitness.FITNESS_SIMULATION_FAILED);
         } });
         events.add(new Event(20.0f) { public void perform(PhysicsSimulation sim) {
-            List<VectorDescription> obstaclePositions = sim.getObstaclePositions();
-            VectorDescription vector = obstaclePositions.get(0);
+            VectorDescription vector = getBoxPosition(sim);
             System.out.println("Box position: "+vector);
-            float result = (1/target.distance(vector))*10;
-            System.out.println("Distance: "+result);
+            float result = GeneAndFitness.computeFitness(initialBoxPosition,vector,target);
+            System.out.println("Fitness: "+result);
             writeToFile(outputFileName,result);
             System.err.println("QUIT");
             System.exit(0);
-        } });
+        }});
     }
+    
+
+
+    private VectorDescription getBoxPosition(PhysicsSimulation sim) {
+        List<VectorDescription> obstaclePositions = sim.getObstaclePositions();
+        VectorDescription vector = obstaclePositions.get(0);
+        return vector;
+    } 
     
     protected void writeToFile(String outputFileName, float result) {
         File file = new File(outputFileName);

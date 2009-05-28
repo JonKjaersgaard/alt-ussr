@@ -86,7 +86,7 @@ public class MPLSimulation extends GenericATRONSimulation {
     }
 
     private void parseGeneFromFile(String geneSpec) {
-        GeneParser p = new GeneParser(1,new char[] { 'P', 'r'});
+        GeneParser p = GeneAndFitness.createGeneParser();
         layout = p.parse(geneSpec.substring(1));
     }
 
