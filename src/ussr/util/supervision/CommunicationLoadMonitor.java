@@ -23,7 +23,7 @@ import com.sun.corba.se.impl.ior.ByteBuffer;
 
 public class CommunicationLoadMonitor implements PhysicsObserver {
 	PhysicsSimulation simulation;
-	XYSeries series1;
+	XYSeries series1;  
 	double nextT;
 	double deltaT;
 	StatisticalMonitor commMonitor;
