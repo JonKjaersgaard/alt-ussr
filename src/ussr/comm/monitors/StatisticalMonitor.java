@@ -24,8 +24,8 @@ public class StatisticalMonitor implements CommunicationMonitor {
 		float timestamp;
 		int bits;
 	}
-	public StatisticalMonitor(float timeWindow) {
-		this.timeWindow =timeWindow; 
+	public StatisticalMonitor(double  deltaT) {
+		this.timeWindow = (float) deltaT; 
 	}
 	private void handlePackage(List<MsgStat> list, int id, int channel, int byteSize, float currentTime) {
 		MsgStat msgStat = new MsgStat(); 

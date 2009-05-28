@@ -30,7 +30,7 @@ public class CommunicationLoadMonitor implements PhysicsObserver {
 	public CommunicationLoadMonitor(PhysicsSimulation simulation, double deltaT) {
 		this.simulation = simulation;
 		this.deltaT = deltaT;
-		commMonitor = new StatisticalMonitor(1.0f);
+		commMonitor = new StatisticalMonitor(deltaT);
 		PhysicsFactory.getOptions().addCommunicationMonitor(commMonitor);
 		nextT = simulation.getTime()+deltaT;
 		initXYscatterPlot();
@@ -38,28 +38,46 @@ public class CommunicationLoadMonitor implements PhysicsObserver {
 	
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
 		if(nextT<simulation.getTime()) {
+			int maxbps = 0;
+			int bpsSum = 0;
+			int channelCount=0;
 			for(int id=0;id<simulation.getModules().size();id++) {
-				for(int channel=0;channel<=8;channel++) {
+				for(int channel=0;channel<8;channel++) {
 					int bitpersec = commMonitor.getBitOutWindow(id, channel);
 					if(bitpersec==Integer.MIN_VALUE) {
 						bitpersec=0;
 					}
-					addToXYscatterPlot(simulation.getTime(), bitpersec);
+					if(bitpersec>maxbps) {
+						maxbps = bitpersec;
+					}
+					if(simulation.getModules().get(id).getConnectors().get(channel).hasProximateConnector()) {
+						channelCount++;
+						bpsSum +=bitpersec;
+					}
 					//System.out.println("Module "+id+" sends "+bitpersec+" bits/sec on channel "+channel);
 				}
 			}
+			addMaxToXYscatterPlot(simulation.getTime(), maxbps);
+			addMeanToXYscatterPlot(simulation.getTime(), ((float)bpsSum)/channelCount);
 			nextT += deltaT;
 		}
 	}
 	
-	public void addToXYscatterPlot(float x, float y) {
+	public void addMaxToXYscatterPlot(float x, float y) {
 		series1.add(x, y);
 	}
-	
+	public void addMeanToXYscatterPlot(float x, float y) {
+		series2.add(x, y);
+	}
+	XYSeries series2;
 	public void initXYscatterPlot() {
 		 // create a dataset...
-        series1 = new XYSeries("Series 1");
-        XYDataset dataset = new XYSeriesCollection(series1);
+        series1 = new XYSeries("Max");
+        series2 = new XYSeries("Mean");
+        
+        XYSeriesCollection dataset = new XYSeriesCollection(); 
+        dataset.addSeries(series1);
+        dataset.addSeries(series2);
         
         JFreeChart chart = ChartFactory.createXYLineChart(
         	    "Communication Load",  // chart title
@@ -67,11 +85,10 @@ public class CommunicationLoadMonitor implements PhysicsObserver {
                 "Communication (bits/sec)",
                 dataset,         // data
                 PlotOrientation.VERTICAL,
-                false,            // include legend
-                true,            // tooltips
+                true,            // include legend
+                false,            // tooltips
                 false            // urls
             );
-        
         // 	create and display a frame...
         //ChartPanel panel = new ChartPanel(chart);
 		ChartFrame frame = new ChartFrame("Communication Chart", chart);

@@ -46,6 +46,7 @@ public class WifiCMBroadcaster implements PhysicsObserver {
 	 */
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
 		if(nextT<simulation.getTime()) {
+			Long before = System.currentTimeMillis();
 			float dist = tracker.getRobotCM().distance(oldPos);
 			addToXYscatterPlot(simulation.getTime(), dist/7.0f*100);
 			byte reward = (byte)(250*dist);
@@ -62,6 +63,8 @@ public class WifiCMBroadcaster implements PhysicsObserver {
 			nextT += deltaT;
 			stateCount++;
 			oldPos = tracker.getRobotCM();
+			Long after = System.currentTimeMillis();
+			System.out.println("Time to compute: "+(after-before));
 		}
 	}
 	static XYSeries series1;
@@ -75,18 +78,20 @@ public class WifiCMBroadcaster implements PhysicsObserver {
         XYDataset dataset = new XYSeriesCollection(series1);
         
         JFreeChart chart = ChartFactory.createXYLineChart(
-        	    "Fitness Chart",  // chart title
+        	    "Locomotion Velocity",  // chart title
                 "Time (sec)",
                 "Reward (cm/sec)",
                 dataset,         // data
                 PlotOrientation.VERTICAL,
-                true,            // include legend
-                true,            // tooltips
+                false,            // include legend
+                false,            // tooltips
                 false            // urls
             );
 		ChartFrame frame = new ChartFrame("Reward Chart", chart);
 		frame.pack();
+		
 		frame.setSize(2*690/3, 2*450/3);
+		//frame.setLocation(x, y);
 		frame.setVisible(true);
 	}
 }
