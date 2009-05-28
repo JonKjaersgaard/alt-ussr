@@ -13,6 +13,7 @@ import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
+import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsParameters.Material;
@@ -91,6 +92,6 @@ public class WalkerSimulation extends GenericATRONSimulation {
         //new ObstacleGenerator().obstacalize(obstacle, world);
     	world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 		world.setHasBackgroundScenery(false);
-    	startPaused = false;
+		PhysicsFactory.getOptions().setStartPaused(false);
     }
 }

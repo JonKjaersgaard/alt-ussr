@@ -15,6 +15,7 @@ import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
+import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
@@ -32,10 +33,10 @@ import ussr.util.learning.WifiCMBroadcaster;
 
 
 public class Snake8Simulation extends GenericATRONSimulation implements PhysicsObserver {
-	private boolean hasCMTracker = true;
-	private boolean hasRadioConnection = true;
-	private boolean hasCommunicationMonitor = true;
-	private boolean hasModularCommander = true;
+	private static boolean hasCMTracker = true;
+	private static boolean hasRadioConnection = true;
+	private static boolean hasCommunicationMonitor = true;
+	private static boolean hasModularCommander = false;
 	
 	RadioConnection radioConnection;
 	
@@ -48,7 +49,9 @@ public class Snake8Simulation extends GenericATRONSimulation implements PhysicsO
 		PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
 		PhysicsParameters.get().setMaintainRotationalJointPositions(true);
 		
-		new ModularCommander(); 
+		if(hasModularCommander) {
+			new ModularCommander();
+		}
 		new Snake8Simulation().main();
 		
     }
@@ -115,7 +118,7 @@ public class Snake8Simulation extends GenericATRONSimulation implements PhysicsO
     protected void changeWorldHook(WorldDescription world) {
     	world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 		world.setHasBackgroundScenery(false);
-    	startPaused = false;
+		PhysicsFactory.getOptions().setStartPaused(false);
     }
 
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
