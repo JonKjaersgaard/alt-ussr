@@ -41,14 +41,14 @@ public class Snake8Simulation extends GenericATRONSimulation implements PhysicsO
 	RadioConnection radioConnection;
 	
     private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;
-    public static void main( String[] args ) {
+    public static void main( String[] args ) { 
     	
 		PhysicsParameters.get().setPlaneMaterial(Material.CONCRETE);
         PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
  		PhysicsParameters.get().setRealisticCollision(true);
 		PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
 		PhysicsParameters.get().setMaintainRotationalJointPositions(true);
-		PhysicsFactory.getOptions().setStartPaused(true);
+		PhysicsFactory.getOptions().setStartPaused(false);
 		
 		if(hasModularCommander) {
 			new ModularCommander();
