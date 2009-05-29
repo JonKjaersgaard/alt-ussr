@@ -7,6 +7,7 @@
 package ussr.physics.jme;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,6 +20,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
+
+import org.lwjgl.opengl.Display;
 
 import ussr.description.Robot;
 import ussr.description.geometry.RotationDescription;
@@ -43,6 +46,7 @@ import ussr.physics.jme.connectors.JMEConnector;
 import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.physics.jme.pickers.Picker;
 import ussr.util.TopologyWriter;
+import ussr.util.WindowSaver;
 
 import com.jme.input.InputHandler;
 import com.jme.input.KeyInput;
@@ -53,6 +57,7 @@ import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.scene.TriMesh;
 import com.jme.system.DisplaySystem;
+import com.jme.system.lwjgl.LWJGLDisplaySystem;
 import com.jme.util.LoggingSystem;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
@@ -61,6 +66,7 @@ import com.jmex.physics.contact.ContactCallback;
 import com.jmex.physics.contact.PendingContact;
 import com.jmex.physics.impl.ode.OdePhysicsSpace;
 import com.jmex.physics.impl.ode.geometry.OdeMesh;
+import com.sun.java.swing.plaf.windows.resources.windows;
 
 /**
  * The physical simulation: initialization and main loop, references to all simulated entities. 
@@ -334,6 +340,15 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
        
         if (getDisplay() != null)
             getDisplay().reset();
+        
+        if(options.getSaveWindowSettingOnExit()) {
+        	try {
+        		Display.setLocation(0,0);
+				WindowSaver.saveSettings();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        }
         display.close();
         waitForPhysicsStep(true);
        	quit();

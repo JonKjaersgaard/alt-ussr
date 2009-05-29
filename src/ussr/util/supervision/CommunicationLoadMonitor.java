@@ -1,25 +1,20 @@
 package ussr.util.supervision;
 
+import java.awt.AWTEvent;
+import java.awt.Toolkit;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import ussr.comm.Packet;
-import ussr.comm.RadioTransmitter;
-import ussr.comm.TransmissionType;
 import ussr.comm.monitors.StatisticalMonitor;
-import ussr.model.Module;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsSimulation;
-
-import com.jme.math.Vector3f;
-import com.sun.corba.se.impl.ior.ByteBuffer;
+import ussr.util.WindowSaver;
 
 public class CommunicationLoadMonitor implements PhysicsObserver {
 	PhysicsSimulation simulation;

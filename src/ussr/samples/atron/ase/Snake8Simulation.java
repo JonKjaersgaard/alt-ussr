@@ -6,6 +6,8 @@
  */
 package ussr.samples.atron.ase;
 
+import java.awt.AWTEvent;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import mc.ModularCommander;
@@ -24,6 +26,7 @@ import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.GenericATRONSimulation;
 import ussr.samples.atron.network.ATRONReflectionEventController;
+import ussr.util.WindowSaver;
 import ussr.util.supervision.CMTracker;
 import ussr.util.supervision.CommunicationLoadMonitor;
 import ussr.util.supervision.RadioConnection;
@@ -42,13 +45,14 @@ public class Snake8Simulation extends GenericATRONSimulation implements PhysicsO
 	
     private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;
     public static void main( String[] args ) { 
-    	
-		PhysicsParameters.get().setPlaneMaterial(Material.CONCRETE);
+    	PhysicsParameters.get().setPlaneMaterial(Material.CONCRETE);
         PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
  		PhysicsParameters.get().setRealisticCollision(true);
 		PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
 		PhysicsParameters.get().setMaintainRotationalJointPositions(true);
 		PhysicsFactory.getOptions().setStartPaused(false);
+		PhysicsFactory.getOptions().setHeadless(false);
+		PhysicsFactory.getOptions().setSaveWindowSettingOnExit(true);
 		
 		if(hasModularCommander) {
 			new ModularCommander();

@@ -12,7 +12,7 @@ public class Configuration {
     public static final boolean PASSIVE_MODULE_SMOOTH_ATRON = true;
     
     // Size and position of 2D ATRON plane
-    public static final int PLANE_MAX_MODULES = 100;
+    public static final int PLANE_MAX_MODULES = 50;
     public static final int PLANE_MAX_X = 5;
     public static final int PLANE_MAX_Z = 10;
     public static final VectorDescription PLANE_POSITION = new VectorDescription(0,-0.54f,0);

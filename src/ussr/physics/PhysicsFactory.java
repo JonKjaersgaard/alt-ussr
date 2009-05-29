@@ -49,7 +49,9 @@ public class PhysicsFactory {
 
         private Set<CommunicationMonitor> monitors = new HashSet<CommunicationMonitor>();
         private boolean startPaused = true;
+        private boolean headless = false;
         private String resourceDirectory;
+        private boolean saveWindowSettingOnExit = false;
 
         public Options copy() { 
             try {
@@ -105,7 +107,19 @@ public class PhysicsFactory {
         public boolean getStartPaused() {
             return startPaused;
         }
+        
+        /**
+		 * If headless the simulator will not draw graphics
+		 */
+        public void setHeadless(boolean headless) {
+            this.headless = headless;
+        }
+        
+        public boolean getHeadless() {
+            return headless;
+        }
 
+        
         public void setResourceDirectory(String homeDir) {
             resourceDirectory = homeDir;
         }
@@ -113,6 +127,13 @@ public class PhysicsFactory {
         public String getResourceDirectory() {
             return resourceDirectory;
         }
+
+        public void setSaveWindowSettingOnExit(boolean saveWindowSettingOnExit) {
+			this.saveWindowSettingOnExit = saveWindowSettingOnExit;
+		}
+		public boolean getSaveWindowSettingOnExit() {
+			return saveWindowSettingOnExit;
+		}
     }
     
     private static final ModuleFactory[] INITIAL_FACTORIES = new ModuleFactory[] { new JMEATRONFactory(), new JMEOdinFactory(), new JMEMTRANFactory(), new JMECKBotFactory() };

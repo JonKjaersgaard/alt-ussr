@@ -8,10 +8,14 @@ package ussr.physics.jme;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
+
+import org.lwjgl.opengl.Display;
+
 import ussr.builder.QuickPrototyping;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsParameters;
@@ -20,6 +24,8 @@ import ussr.physics.SimulationGadget;
 import ussr.physics.PhysicsFactory.Options;
 import ussr.physics.jme.cameraHandlers.RobotCameraHandler;
 import ussr.util.Pair;
+import ussr.util.WindowSaver;
+
 import com.jme.app.AbstractGame;
 import com.jme.app.BaseSimpleGame;
 import com.jme.image.Texture;
@@ -49,6 +55,7 @@ import com.jme.scene.state.WireframeState;
 import com.jme.scene.state.ZBufferState;
 import com.jme.system.DisplaySystem;
 import com.jme.system.JmeException;
+import com.jme.system.lwjgl.LWJGLDisplaySystem;
 import com.jme.util.GameTaskQueue;
 import com.jme.util.GameTaskQueueManager;
 import com.jme.util.LoggingSystem;
@@ -172,6 +179,9 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		exitOnQuit = options.getExitOnQuit();
 		pause = options.getStartPaused();
 		if(options.getResourceDirectory()!=null) setResourcePathPrefix(options.getResourceDirectory());
+		if(options.getSaveWindowSettingOnExit()) {
+			WindowSaver.init();
+        }
 	}
 	protected void assignKeys() {       
 		/** Assign key P to action "toggle_pause". */
@@ -665,13 +675,15 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			display.createWindow( properties.getWidth(), properties.getHeight(),
 					properties.getDepth(), properties.getFreq(), properties
 					.getFullscreen() );
+			
+			
 			/**
 			 * Create a camera specific to the DisplaySystem that works with the
 			 * display's width and height
 			 */
 			cam = display.getRenderer().createCamera( display.getWidth(),
 					display.getHeight() );
-
+			
 		} catch ( JmeException e ) {
 			/**
 			 * If the displaysystem can't be initialized correctly, exit
@@ -697,7 +709,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		cam.update();
 		/** Assign the camera to this renderer. */
 		display.getRenderer().setCamera( cam );
-
 		/** Create a basic input controller. */
 		FirstPersonHandler firstPersonHandler = new FirstPersonHandler( cam, 1f, 1 );
 		input = firstPersonHandler;
@@ -709,9 +720,12 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		 * information.
 		 */
 		display.getRenderer().enableStatistics( true );
-
-
-
+		
+		/**
+		 * If headless the simulator will not draw graphics
+		 */
+		display.getRenderer().setHeadless(options.getHeadless());
+			
 		assignKeys();
 
 		/** Create a basic input controller. */
