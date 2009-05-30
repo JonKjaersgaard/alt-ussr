@@ -41,6 +41,7 @@ public class MPLSimulation extends GenericATRONSimulation {
     private static final String CONVEYOR_TAG = "conveyor_";
     private static final String ATRON_PASSIVE = "ATRON smooth";
     private static final String ATRON_CONVEYOR = "ATRON conveyor";
+    private static final String ATRON_BASE = "ATRON base";
 
     // Messages
     static final byte[] MSG_DISCONNECT_HERE = new byte[] { (byte)87 };
@@ -109,6 +110,8 @@ public class MPLSimulation extends GenericATRONSimulation {
         passive = new PassiveATRON(this);
         if(Configuration.PASSIVE_MODULE_SMOOTH_ATRON) passive.setSmooth();
         simulation.setRobot(passive, ATRON_PASSIVE);
+        ATRON base = new PassiveATRON(this);
+        simulation.setRobot(base, ATRON_BASE);
         simulation.subscribePhysicsTimestep(itemGenerator);
     }
 
@@ -140,7 +143,10 @@ public class MPLSimulation extends GenericATRONSimulation {
             public String select(String name, int index, VectorDescription pos, RotationDescription rot, int lx, int ly, int lz) {
                 if(name.startsWith(CONVEYOR_TAG))
                     return ATRON_CONVEYOR;
-                return ATRON_PASSIVE;
+                else if(ly==1)
+                    return ATRON_BASE;
+                else
+                    return ATRON_PASSIVE;
             }
         },ATRON.UNIT, Configuration.PLANE_POSITION,false);
         return positions;
@@ -153,6 +159,7 @@ public class MPLSimulation extends GenericATRONSimulation {
     public static void main(String argv[]) {
         PhysicsParameters.get().setResolutionFactor(1);
         PhysicsFactory.getOptions().setStartPaused(false);
+        PhysicsParameters.get().setPhysicsSimulationStepSize(Configuration.TIME_STEP_SIZE);
         String inputGene = parseParam(argv,"gene","home/ups/mpl/test.gene");
         String targetPos = parseParam(argv,"target","home/ups/mpl/test.goal");
         String outputFile = parseParam(argv,"output","home/ups/mpl/test.output");

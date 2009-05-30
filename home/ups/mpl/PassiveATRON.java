@@ -38,16 +38,20 @@ class PassiveATRON extends ATRON {
                     }
                 }
                 if(lift>-1) {
-                    System.out.println("Lift requested from port "+lift);
-                    disconnectOthersSameHemi(lift);
+                    //System.out.println("Lift requested from port "+lift);
+                    this.disconnectOthersSameHemi(lift);
                     this.rotateDegrees(-90);
                     while(this.isRotating()) yield();
-                    PassiveATRON.this.simulation.setMagicGlobalLiftingModuleCounter(PassiveATRON.this.simulation.getMagicGlobalLiftingModuleCounter() - 1);
-                    synchronized(PassiveATRON.this.simulation.getMagicGlobalLiftingModuleSignal()) {
-                        PassiveATRON.this.simulation.getMagicGlobalLiftingModuleSignal().notifyAll();
-                    }
+                    decrementMagicCounter();
                     lift = -1;
                 }
+            }
+        }
+
+        protected void decrementMagicCounter() {
+            synchronized(PassiveATRON.this.simulation.getMagicGlobalLiftingModuleSignal()) {
+                PassiveATRON.this.simulation.setMagicGlobalLiftingModuleCounter(PassiveATRON.this.simulation.getMagicGlobalLiftingModuleCounter() - 1);
+                PassiveATRON.this.simulation.getMagicGlobalLiftingModuleSignal().notifyAll();
             }
         }
 
@@ -79,7 +83,7 @@ class PassiveATRON extends ATRON {
             if(Arrays.equals(message,MPLSimulation.MSG_DISCONNECT_HERE))
                 this.disconnect(channel);
             else if(Arrays.equals(message, MPLSimulation.MSG_LIFT_ME)) {
-                System.out.println("Blocking behavior received");
+                //System.out.println("Blocking behavior received");
                 lift = channel;
                 synchronized(this) { this.notify(); }
             } else

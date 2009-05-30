@@ -49,7 +49,7 @@ public class EventGenerator implements PhysicsObserver {
             initialBoxPosition = getBoxPosition(sim);
             writeToFile(outputFileName,Configuration.FITNESS_SIMULATION_FAILED);
         } });
-        events.add(new Event(20.0f) { public void perform(PhysicsSimulation sim) {
+        events.add(new Event(Configuration.SIMULATION_DURATION) { public void perform(PhysicsSimulation sim) {
             VectorDescription vector = getBoxPosition(sim);
             float result = Configuration.computeFitness(initialBoxPosition,vector,target);
             writeToFile(outputFileName,result);

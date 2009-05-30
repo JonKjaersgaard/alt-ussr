@@ -30,7 +30,7 @@ public class GeneParser {
         if(value<traits.length)
             return traits[value];
         else
-            throw new Error("Region value out of range: "+substring);
+            return traits[0];
     }
 
 }
