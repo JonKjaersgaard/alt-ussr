@@ -48,6 +48,7 @@ import ussr.physics.jme.pickers.Picker;
 import ussr.util.TopologyWriter;
 import ussr.util.WindowSaver;
 
+import com.jme.app.AbstractGame;
 import com.jme.input.InputHandler;
 import com.jme.input.KeyInput;
 import com.jme.input.MouseInput;
@@ -283,20 +284,19 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     	}
 	}
 
-    public final void start() { 
-    	 if(true) {
-    		 System.out.println("Nu slukkes logger");
-    		 Logger.getLogger(PhysicsSpace.LOGGER_NAME).info("Nu slukkes logger");
-    		 Logger.getLogger(PhysicsSpace.LOGGER_NAME).setLevel(Level.SEVERE);
-    		 System.out.println(Logger.getLogger(PhysicsSpace.LOGGER_NAME).getLevel().intValue());
-    		 Logger.getLogger(PhysicsSpace.LOGGER_NAME).info("virker det?");
-         }
-        try {
+    public final void start() {
+    	Logger.getLogger(PhysicsSpace.LOGGER_NAME).setLevel(Level.OFF); //FIXME unable to turn off logger (JME_2.0 still uses LoggingSystem which can not be accessed)
+    	//One way to turn off logging is to modify the logging.properties file in the java installation directory 
+    	Logger.getLogger("jme").setLevel(Level.OFF);
+    	//Logger.getLogger(AbstractGame.class.getName()).setLevel(Level.OFF);
+    	try {
             getAttributes();
 
             if (!finished) {
+            	System.out.println("Available Display Modes: ");
             	org.lwjgl.opengl.DisplayMode[] modes = Display.getAvailableDisplayModes();
-            	for(int i=0;i<modes.length;i++) System.out.println("mode "+i+" = "+modes[i]);
+            	for(int i=0;i<modes.length;i++) System.out.println(" Mode "+i+" = "+modes[i]);
+            	
                 initSystem();
                 assertDisplayCreated();
         		initGame();
@@ -352,6 +352,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         if(options.getSaveWindowSettingOnExit()) {
         	try {
         		Display.setLocation(0,0);
+        		
 				WindowSaver.saveSettings();
 			} catch (IOException e) {
 				e.printStackTrace();

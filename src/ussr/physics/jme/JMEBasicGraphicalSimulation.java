@@ -7,10 +7,13 @@
 package ussr.physics.jme;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.lwjgl.opengl.Display;
 
 import ussr.builder.QuickPrototyping;
 import ussr.description.setup.WorldDescription;
@@ -663,7 +666,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 				e.printStackTrace();
 				throw new Error("Unable to link native libraries");
 			}
-
 			display.setMinDepthBits( depthBits );
 			display.setMinStencilBits( stencilBits );
 			display.setMinAlphaBits( alphaBits );
@@ -672,14 +674,16 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			display.createWindow( properties.getWidth(), properties.getHeight(),
 					properties.getDepth(), properties.getFreq(), properties
 					.getFullscreen() );
+			//display.moveWindowTo(600, 400);
 			
-			
+						
 			/**
 			 * Create a camera specific to the DisplaySystem that works with the
 			 * display's width and height
 			 */
 			cam = display.getRenderer().createCamera( display.getWidth(),
 					display.getHeight() );
+			
 			
 		} catch ( JmeException e ) {
 			/**
@@ -716,7 +720,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		 * Signal to the renderer that it should keep track of rendering
 		 * information.
 		 */
-		
 		//StatListener statlistener = new StatListener();
 		//TODO JME2 add StatCollector 
 		//display.getRenderer().enableStatistics( true );
