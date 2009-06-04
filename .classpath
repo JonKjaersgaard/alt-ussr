@@ -24,17 +24,17 @@
 	<classpathentry kind="lib" path="zoo2/jME_2.0/lib/jinput.jar"/>
 	<classpathentry kind="lib" path="zoo2/jME_2.0/lib/jogl.jar"/>
 	<classpathentry kind="lib" path="zoo2/jME_2.0/lib/jorbis-0.0.17.jar"/>
+	<classpathentry kind="lib" path="zoo2/jME_2.0/lib/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="ussr/zoo2/jME_2.0/lib/natives"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="zoo2/jME_2.0/lib/lwjgl_util_applet.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="ussr/zoo2/jME_2.0/lib/natives"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="zoo2/jME_2.0/lib/lwjgl_util.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="ussr/zoo2/jME_2.0/lib/natives"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="zoo2/jME_2.0/lib/lwjgl.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="ussr/zoo2/jME_2.0/lib/natives"/>
 		</attributes>

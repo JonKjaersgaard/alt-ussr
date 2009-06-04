@@ -24,7 +24,7 @@ import ussr.samples.atron.GenericATRONSimulation;
  * Port of the eight-to-car simulation to Java.  Classical ATRON self-reconfiguration example.
  * 
  * @author ups
- */
+ */ 
 public class EightToCarSimulationJ extends GenericATRONSimulation {
 
     public static final boolean USE_BLOCKING_ROTATE = true;
@@ -32,7 +32,7 @@ public class EightToCarSimulationJ extends GenericATRONSimulation {
     public static final boolean VERIFY_OPERATIONS = false;
 
     public static void main(String argv[]) {
-        new EightToCarSimulationJ().main();
+        new EightToCarSimulationJ().main(); 
     }
 
     @Override
