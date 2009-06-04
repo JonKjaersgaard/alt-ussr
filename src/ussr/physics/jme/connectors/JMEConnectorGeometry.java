@@ -7,20 +7,23 @@
 package ussr.physics.jme.connectors;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.List;
 
 import ussr.description.geometry.GeometryDescription;
 import ussr.description.robot.ConnectorDescription;
-import ussr.description.robot.RobotDescription;
 import ussr.physics.jme.JMEGeometryHelper;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
-import com.jme.scene.SceneElement;
+import com.jme.scene.Node;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
+import com.jme.scene.Spatial.CullHint;
+import com.jmex.font3d.Font3D;
+import com.jmex.font3d.Text3D;
 import com.jmex.physics.DynamicPhysicsNode;
 
 /**
@@ -42,9 +45,20 @@ public class JMEConnectorGeometry {
         assert geometry.size()==1; // Only tested with size 1 geometry
         for(GeometryDescription element: geometry) {
         	mesh = JMEGeometryHelper.createShape(node, "Connector mesh for "+name, element);
-            mesh.getLocalTranslation().set( mesh.getLocalTranslation().add(new Vector3f(position)) );
+        	mesh.getLocalTranslation().set( mesh.getLocalTranslation().add(new Vector3f(position)) );
             //TODO Mesh is already rotated - change this to here 
             node.attachChild( mesh );
+        	
+        /*	Font3D fond =  new Font3D(new Font("Arial", Font.PLAIN, 2), 0.1, true, true, true);
+        	Node textNode = new Text3D(fond,"0",0.050f);
+        	textNode.setIsCollidable(false);
+        	textNode.getLocalTranslation().set( textNode.getLocalTranslation().add(new Vector3f(position)) );
+        	
+        	Spatial textNode2 = (new Font2D()).createText("1234", 1f, 0);
+        	textNode2.getLocalTranslation().set( mesh.getLocalTranslation().add(new Vector3f(position)) );
+            node.attachChild(textNode);*/
+        	
+        	
             component.getComponentGeometries().add(mesh);
             world.associateGeometry(name, mesh);
             world.getHelper().setColor(mesh, element.getColor());
@@ -73,10 +87,10 @@ public class JMEConnectorGeometry {
     
     public void setConnectorVisibility(boolean visible) {
 		if(visible) {
-			mesh.setCullMode(SceneElement.CULL_DYNAMIC);
+			mesh.setCullHint(CullHint.Dynamic);
 		}
 		else {
-			mesh.setCullMode(SceneElement.CULL_ALWAYS);
+			mesh.setCullHint(CullHint.Always);
 		}
 	}
 

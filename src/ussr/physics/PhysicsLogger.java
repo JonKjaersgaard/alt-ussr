@@ -6,9 +6,6 @@
  */
 package ussr.physics;
 
-import java.util.logging.Level;
-
-import com.jme.util.LoggingSystem;
 
 /**
  * Container for various logging-related functionality in the simulator.
@@ -42,7 +39,7 @@ public class PhysicsLogger {
      * Set the logging level to the default level
      */
     public static void setDefaultLoggingLevel() {
-        LoggingSystem.getLogger().setLevel( Level.WARNING );
+        //TODO: changed thereLoggingSystem.getLogger().setLevel( Level.WARNING );
     }
 
     /**

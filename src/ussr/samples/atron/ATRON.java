@@ -43,7 +43,7 @@ public abstract class ATRON implements Robot {
     public static final RotationDescription ROTATION_EW = new RotationDescription(new VectorDescription(eigth,0,0),new VectorDescription(0,quart,0));
     public static final RotationDescription ROTATION_DU = new RotationDescription(-quart,eigth,0);
     public static final RotationDescription ROTATION_UD = new RotationDescription(quart,eigth+quart,0);
-    public static final RotationDescription ROTATION_SN = new RotationDescription(0,half,eigth);
+    public static final RotationDescription ROTATION_SN = new RotationDescription(0,half,eigth+quart); //JME2 added (0,0,+quart)
     public static final RotationDescription ROTATION_NS_BROKEN = new RotationDescription(0,0,eigth+3*quart);
     public static final RotationDescription ROTATION_NS = new RotationDescription(0,0,eigth+quart);
 
@@ -81,6 +81,8 @@ public abstract class ATRON implements Robot {
         // Connectors
         ConnectorDescription.Common common = new ConnectorDescription.Common();
         common.setGeometry(new GeometryDescription[] { new ConeShape(2.5f*0.005f,0.05f) });
+        //common.setGeometry(new GeometryDescription[] { new SphereShape(0.01f) });
+        
         common.setType(ConnectorDescription.Type.MECHANICAL_CONNECTOR_RIGID);
         common.setMaxConnectionDistance(0.03f);
 
@@ -88,9 +90,21 @@ public abstract class ATRON implements Robot {
         final float h = (float)Math.sqrt(2);
         Color[] colors = new Color[]{Color.black,Color.white,Color.black,Color.white};
         VectorDescription[] northPos = new VectorDescription[]{new VectorDescription(unit,unit,-h*unit),new VectorDescription( -unit,  unit, -h*unit ),new VectorDescription( -unit, -unit, -h*unit ),new VectorDescription(  unit, -unit, -h*unit )};
-        Quaternion[] northRotQ = new Quaternion[]{new Quaternion(new float[]{0,-pi/4,pi/4}),new Quaternion(new float[]{0,pi/4,-pi/4}),new Quaternion(new float[]{0,pi/4,pi/4}),new Quaternion(new float[]{0,-pi/4,-pi/4})};
+        //Quaternion[] northRotQ = new Quaternion[]{new Quaternion(new float[]{0,-pi/4,pi/4}),new Quaternion(new float[]{0,pi/4,-pi/4}),new Quaternion(new float[]{0,pi/4,pi/4}),new Quaternion(new float[]{0,-pi/4,-pi/4})};
+        Quaternion[] northRotQ = new Quaternion[]{
+        		new Quaternion().fromAngleAxis(pi/4, new Vector3f(1,-1,0)),
+        		new Quaternion().fromAngleAxis(pi/4, new Vector3f(1,1,0)),
+        		new Quaternion().fromAngleAxis(pi/4, new Vector3f(-1,1,0)),
+        		new Quaternion().fromAngleAxis(pi/4, new Vector3f(-1,-1,0))};
+      
         VectorDescription[] southPos = new VectorDescription[]{new VectorDescription(unit,unit,h*unit),new VectorDescription(-unit,unit,h*unit),new VectorDescription(-unit,-unit,h*unit),new VectorDescription(unit,-unit,h*unit)};
-        Quaternion[] southRotQ = new Quaternion[]{new Quaternion(new float[]{pi,pi/4,pi/4}),new Quaternion(new float[]{pi,-pi/4,-pi/4}),new Quaternion(new float[]{pi,-pi/4,pi/4}),new Quaternion(new float[]{pi,pi/4,-pi/4})};
+        //Quaternion[] southRotQ = new Quaternion[]{new Quaternion(new float[]{pi,pi/4,pi/4}),new Quaternion(new float[]{pi,-pi/4,-pi/4}),new Quaternion(new float[]{pi,-pi/4,pi/4}),new Quaternion(new float[]{pi,pi/4,-pi/4})};
+        Quaternion[] southRotQ = new Quaternion[]{
+        		new Quaternion().fromAngleAxis(3*pi/4, new Vector3f(1,-1,0)),
+        		new Quaternion().fromAngleAxis(3*pi/4, new Vector3f(1,1,0)),
+        		new Quaternion().fromAngleAxis(3*pi/4, new Vector3f(-1,1,0)),
+        		new Quaternion().fromAngleAxis(3*pi/4, new Vector3f(-1,-1,0))};
+        
         ConnectorDescription[] northConnectors = new ConnectorDescription[4];
         ConnectorDescription[] southConnectors = new ConnectorDescription[4];
         for(int i=0; i<4; i++)

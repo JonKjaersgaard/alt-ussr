@@ -19,7 +19,8 @@ import com.jme.math.Quaternion;
 public class RotationDescription {
     private Quaternion rotation = new Quaternion();
     public RotationDescription(float x, float y, float z) {
-        rotation.fromAngles(x, y, z);
+    	//TODO there was a bug in fromAngles JME 1.0 fixed in JME 2.0 therefore some modules/connectors and other shapes might be rotated wrongly in the new version of ussr
+        rotation.fromAngles(x, y, z); 
     }
     public RotationDescription(Quaternion q) {
         rotation.set(q);

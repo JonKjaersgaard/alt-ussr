@@ -106,12 +106,12 @@ public abstract class CustomizedPicker implements Picker {
                 pickResults.setCheckDistance( true );
                 rootNode.findPick( pickRay, pickResults );
                 /* To avoid using overly large amount of memory on interactive clicking, clear the collision tree */
-                rootNode.clearCollisionTree();
+                //rootNode.clearCollisionTree();//TODO JME2 uncommented
                 loopResults:
                     for ( int i = 0; i < pickResults.getNumber(); i++ ) {
                         PickData data = pickResults.getPickData( i );
                         if ( data.getTargetTris() != null && data.getTargetTris().size() > 0 ) {
-                            Spatial target = data.getTargetMesh().getParentGeom();
+                            Spatial target = data.getTargetMesh().getParent(); //TODO JME2 changed from getParentGeom();
                             pickTarget(target);
                             while ( target != null ) {
                                 if ( target instanceof DynamicPhysicsNode ) {

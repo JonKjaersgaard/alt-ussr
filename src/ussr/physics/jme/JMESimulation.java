@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.lwjgl.opengl.Display;
 
@@ -32,7 +33,6 @@ import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.ActBasedController;
 import ussr.model.Connector;
-import ussr.model.Controller;
 import ussr.model.Module;
 import ussr.physics.ModuleFactory;
 import ussr.physics.PhysicsFactory;
@@ -57,16 +57,16 @@ import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.scene.TriMesh;
 import com.jme.system.DisplaySystem;
-import com.jme.system.lwjgl.LWJGLDisplaySystem;
-import com.jme.util.LoggingSystem;
+import com.jme.system.GameSettings;
+import com.jme.system.PropertiesGameSettings;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
 import com.jmex.physics.PhysicsNode;
+import com.jmex.physics.PhysicsSpace;
 import com.jmex.physics.contact.ContactCallback;
 import com.jmex.physics.contact.PendingContact;
 import com.jmex.physics.impl.ode.OdePhysicsSpace;
 import com.jmex.physics.impl.ode.geometry.OdeMesh;
-import com.sun.java.swing.plaf.windows.resources.windows;
 
 /**
  * The physical simulation: initialization and main loop, references to all simulated entities. 
@@ -277,17 +277,26 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     }
     
     private void setPhysicsErrorParameters(float cfm, float erp) {
-    	((OdePhysicsSpace)getPhysicsSpace()).getODEJavaWorld().setConstraintForceMix(cfm); //default = 10E-5f, typical = [10E-9, 1]
-		((OdePhysicsSpace)getPhysicsSpace()).getODEJavaWorld().setErrorReductionParameter(erp); //default = 0.2, typical = [0.1,0.8]
+    	if(getPhysicsSpace() instanceof OdePhysicsSpace)  {
+	    	((OdePhysicsSpace)getPhysicsSpace()).getODEJavaWorld().setConstraintForceMix(cfm); //default = 10E-5f, typical = [10E-9, 1]
+			((OdePhysicsSpace)getPhysicsSpace()).getODEJavaWorld().setErrorReductionParameter(erp); //default = 0.2, typical = [0.1,0.8]
+    	}
 	}
 
-    public final void start() {
-        LoggingSystem.getLogger().log(Level.INFO, "Application started.");
-        
+    public final void start() { 
+    	 if(true) {
+    		 System.out.println("Nu slukkes logger");
+    		 Logger.getLogger(PhysicsSpace.LOGGER_NAME).info("Nu slukkes logger");
+    		 Logger.getLogger(PhysicsSpace.LOGGER_NAME).setLevel(Level.SEVERE);
+    		 System.out.println(Logger.getLogger(PhysicsSpace.LOGGER_NAME).getLevel().intValue());
+    		 Logger.getLogger(PhysicsSpace.LOGGER_NAME).info("virker det?");
+         }
         try {
             getAttributes();
 
             if (!finished) {
+            	org.lwjgl.opengl.DisplayMode[] modes = Display.getAvailableDisplayModes();
+            	for(int i=0;i<modes.length;i++) System.out.println("mode "+i+" = "+modes[i]);
                 initSystem();
                 assertDisplayCreated();
         		initGame();
@@ -335,8 +344,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         }
         stop();
         cleanup();
-        LoggingSystem.getLogger().log(Level.INFO, "Application ending.");
-
+     
        
         if (getDisplay() != null)
             getDisplay().reset();
@@ -570,6 +578,13 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         }
         return positions;
     }
+
+	protected GameSettings getNewSettings() {
+		PropertiesGameSettings setting = new PropertiesGameSettings("properties.cfg");
+		setting.load();
+		setting.setFrequency(50);
+		return setting;
+	}
 
 }
 

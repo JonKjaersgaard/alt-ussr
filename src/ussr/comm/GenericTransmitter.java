@@ -204,8 +204,9 @@ public abstract class GenericTransmitter implements Transmitter {
 			float byteCapacity = maxBytePerTimeStep*timeStepsSinceLastSend;
 			if(byteCapacity>p.getByteSize()||maxBytePerTimeStep==Float.POSITIVE_INFINITY) {
 				if(!send(p)) {
-				    PhysicsLogger.logNonCritical(module.getID()+": Trying to send a package but no one is there to receive it... removing it from buffer");
+					PhysicsLogger.logNonCritical(module.getID()+": Trying to send a package but no one is there to receive it... removing it from buffer");
 				}
+				
 				return true;
 			}
 			return false;

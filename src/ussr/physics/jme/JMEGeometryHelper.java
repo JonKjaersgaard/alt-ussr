@@ -27,11 +27,11 @@ import ussr.comm.TransmissionType;
 import ussr.comm.Transmitter;
 import ussr.comm.WiredReceiver;
 import ussr.comm.WiredTransmitter;
-import ussr.description.geometry.MeshShape;
 import ussr.description.geometry.BoxShape;
 import ussr.description.geometry.ConeShape;
 import ussr.description.geometry.CylinderShape;
 import ussr.description.geometry.GeometryDescription;
+import ussr.description.geometry.MeshShape;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.SphereShape;
 import ussr.description.geometry.VectorDescription;
@@ -53,11 +53,10 @@ import com.jme.bounding.BoundingSphere;
 import com.jme.image.Texture;
 import com.jme.math.Quaternion;
 import com.jme.math.Triangle;
+import com.jme.math.Vector2f;
 import com.jme.math.Vector3f;
 import com.jme.renderer.ColorRGBA;
 import com.jme.scene.Node;
-import com.jme.scene.SceneElement;
-import com.jme.scene.SharedMesh;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
 import com.jme.scene.shape.Box;
@@ -70,7 +69,7 @@ import com.jme.scene.state.TextureState;
 import com.jme.util.TextureManager;
 import com.jme.util.export.binary.BinaryImporter;
 import com.jme.util.geom.BufferUtils;
-import com.jmex.model.XMLparser.Converters.MaxToJme;
+import com.jmex.model.converters.MaxToJme;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.PhysicsNode;
 import com.jmex.physics.StaticPhysicsNode;
@@ -113,7 +112,8 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
         	    shape = constructAtronModel(name, half);
         	else throw new Error("Mesh shape not supported: "+half.getName());
         	shape.setModelBound(new BoundingSphere());
-    		shape.getBatch(0).setIsCollidable(true);
+    		//TODO JME2 Change impordant? shape.getBatch(0).setIsCollidable(true);
+    		
     		shape.setIsCollidable(true);
     		
         	//shape.setIsCollidable(false);      	
@@ -127,7 +127,8 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
         	shape.setModelBound( new BoundingSphere() );
         }
         else if(element instanceof CylinderShape) {
-        	shape = new Cylinder(name, resolutionfactor*2, resolutionfactor*8, ((CylinderShape)element).getRadius(),((CylinderShape)element).getHeight(),true); 
+        	//shape = new Cylinder(name, resolutionfactor*2, resolutionfactor*8, ((CylinderShape)element).getRadius(),((CylinderShape)element).getHeight(),true);
+        	shape = new Cylinder(name, resolutionfactor*4, resolutionfactor*8, ((CylinderShape)element).getRadius(),((CylinderShape)element).getHeight(),true);
         	shape.setModelBound(new BoundingBox()); //BoundingBox makes the simulation "unstable?"
         	//TODO can not control cap color of cylinder??? 
         }
@@ -181,17 +182,17 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
     }
     
     public void setColor(Object object, Color color) {
-        this.setColor((SceneElement)object, color);
+        this.setColor((Spatial)object, color);
     }
 
-    public void setColor(SceneElement object, Color color) {
+    public void setColor(Spatial object, Color color) {
         if(color==null) return;
         object.setRenderState(simulation.color2jme(color));
         
         object.updateRenderState();
     }
     public Color getColor(Object element) {
-        ColorRGBA color = ((MaterialState)((SceneElement)element).getRenderState(RenderState.RS_MATERIAL)).getDiffuse();
+        ColorRGBA color = ((MaterialState)((Spatial)element).getRenderState(RenderState.StateType.Material)).getDiffuse();
         return new Color(color.r,color.g,color.b);
     }
 
@@ -201,7 +202,7 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
         Sphere meshSphere = new Sphere( oldSphere.getName(), 9, 9, oldSphere.radius);
         meshSphere.setLocalTranslation(oldSphere.getLocalTranslation());
         meshSphere.setLocalRotation(oldSphere.getLocalRotation());
-        RenderState state = oldSphere.getRenderState(RenderState.RS_MATERIAL);
+        RenderState state = oldSphere.getRenderState(RenderState.StateType.Material);
         if(state!=null) meshSphere.setRenderState(state);
         meshSphere.setModelBound( new BoundingSphere() );
         meshSphere.updateModelBound();
@@ -211,7 +212,7 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
 	private synchronized static TriMesh constructAtronModel(String name, MeshShape half) {
 		if(atronModel==null) loadAtronModel(half.getRadius());
 		//SharedMesh atronMesh = new SharedMesh(name,atronModel,true);
-		TriMesh atronMesh = new TriMesh(atronModel.getName(),atronModel.getVertexBuffer(0),atronModel.getNormalBuffer(0),atronModel.getColorBuffer(0),atronModel.getTextureBuffer(0,0),atronModel.getIndexBuffer(0));
+		TriMesh atronMesh = new TriMesh(atronModel.getName(),atronModel.getVertexBuffer(),atronModel.getNormalBuffer(),atronModel.getColorBuffer(),atronModel.getTextureCoords(0),atronModel.getIndexBuffer());
 		atronMesh.setLocalScale(half.getRadius()*atronModel.getLocalScale().x);
 		atronMesh.setName("ATRON Mesh");
 		atronMesh.setIsCollidable(true);
@@ -225,20 +226,21 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
 		try {
 			MaxToJme C1 = new MaxToJme();
 			ByteArrayOutputStream BO = new ByteArrayOutputStream();
-			String[] fileNames = {"ATRON.3DS","simpleATRON.3ds","mediumATRON.3ds","goodATRON.3ds"};
+			String[] fileNames = {"ATRON.3ds","simpleATRON.3ds","mediumATRON.3ds","goodATRON.3ds"};
 			InputStream maxStream = new FileInputStream(JMEBasicGraphicalSimulation.setupPath("resources/"+fileNames[2]));
 			C1.convert(new BufferedInputStream(maxStream),BO);
 			Node atronNode = (Node)BinaryImporter.getInstance().load(new ByteArrayInputStream(BO.toByteArray()));
 			System.out.println("ATRON CAD Model loaded - nTriangles = "+atronNode.getVertexCount());
 			atronModel = (TriMesh) getTriMesh(atronNode);
-			Triangle[] ts = atronModel.getMeshAsTriangles(0, null);
+			Triangle[] ts = atronModel.getMeshAsTriangles(null);
 			Vector3f[] normals = new Vector3f[ts.length];
 			for(int i=0;i<ts.length;i++) {
 				ts[i].calculateNormal();
 				normals[i] = ts[i].getNormal();
 			}
 			FloatBuffer ns = BufferUtils.createFloatBuffer(normals);
-			atronModel.getBatch(0).setNormalBuffer(ns);
+			//TODO JME2 change impordant? atronModel.getBatch(0).setNormalBuffer(ns);
+			atronModel.setNormalBuffer(ns);
 			atronModel.setLocalScale(0.012f*radius);
 			//atronModel.setLocalScale(0.092f*radius); //for "ATRON.3DS"
 			atronModel.setName("ATRON CAD Model");
@@ -334,11 +336,11 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
         simulation.rootNode.attachChild( planeNode );
         planeNode.generatePhysicsGeometry();
         planeNode.setMaterial(description2material(PhysicsParameters.get().getPlaneMaterial()));
-        Texture tex = TextureManager.loadTexture(JMEBasicGraphicalSimulation.setupPath(texture.getFileName()),Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
-        tex.setWrap(Texture.WM_WRAP_S_WRAP_T);
+        Texture tex = TextureManager.loadTexture(JMEBasicGraphicalSimulation.setupPath(texture.getFileName()),Texture.MinificationFilter.Trilinear,Texture.MagnificationFilter.Bilinear);
+        tex.setWrap(Texture.WrapMode.Repeat);
         VectorDescription texScale = texture.getScale(size);
         tex.setScale(new Vector3f(texScale.getX(),texScale.getY(),texScale.getZ()));
-        tex.setApply(Texture.AM_REPLACE);
+        tex.setApply(Texture.ApplyMode.Replace);
         TextureState ts = simulation.getDisplay().getRenderer().createTextureState();
         ts.setTexture(tex, 0);
 
@@ -373,7 +375,7 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
     		Vector3f terrainScale = new Vector3f(1, 0.003f, 1);
     		// create a terrainblock
     		simulation.tb = new TerrainBlock("Terrain", heightMap.getSize(), terrainScale,
-    				heightMap.getHeightMap(), new Vector3f(-32, -1, -32), false);
+    				heightMap.getHeightMap(), new Vector3f(-32, -1, -32));
     		simulation.tb.setModelBound(new BoundingBox());
     		simulation.tb.updateModelBound();
      
@@ -391,16 +393,16 @@ public class JMEGeometryHelper implements PhysicsSimulationHelper {
         				384);
         		pt.createTexture(32);
 	    		Texture t1 = TextureManager.loadTexture(pt.getImageIcon().getImage(),
-	    				Texture.MM_LINEAR_LINEAR, Texture.FM_LINEAR, true);
+	    				Texture.MinificationFilter.Trilinear, Texture.MagnificationFilter.Bilinear, true);
 	    		ts.setTexture(t1, 0);
     		}
     		else {
-    			Texture tex = TextureManager.loadTexture(textureDescription.getFileName(),Texture.MM_LINEAR_LINEAR,Texture.FM_LINEAR);
-            	tex.setWrap(Texture.WM_WRAP_S_WRAP_T);
+    			Texture tex = TextureManager.loadTexture(textureDescription.getFileName(),Texture.MinificationFilter.Trilinear,Texture.MagnificationFilter.Bilinear);
+            	tex.setWrap(Texture.WrapMode.Repeat);
                 VectorDescription texScale = textureDescription.getScale(size);
                 tex.setScale(new Vector3f(texScale.getX(),texScale.getY(),texScale.getZ()));
                 //tex.setScale(new Vector3f(50f*powerSize/4,50f*powerSize/4,0f));
-                tex.setApply(Texture.AM_REPLACE);
+                tex.setApply(Texture.ApplyMode.Replace);
                 ts.setTexture(tex, 0);
            }
                 		

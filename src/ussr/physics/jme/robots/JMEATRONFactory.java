@@ -6,11 +6,8 @@
  */
 package ussr.physics.jme.robots;
 
-import java.awt.Color;
-
 import ussr.comm.TransmissionType;
 import ussr.description.Robot;
-import ussr.description.geometry.MeshShape;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.robot.ModuleComponentDescription;
 import ussr.description.robot.ReceivingDevice;
@@ -19,23 +16,19 @@ import ussr.model.Actuator;
 import ussr.model.Module;
 import ussr.model.Sensor;
 import ussr.physics.ModuleFactory;
-import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEGeometryHelper;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.actuators.JMERotationalActuator;
-import ussr.physics.jme.connectors.JMEConnector;
 import ussr.physics.jme.connectors.JMEMechanicalConnector;
 import ussr.physics.jme.sensors.JMEProximitySensor;
 import ussr.physics.jme.sensors.JMETiltSensor;
 
-import com.jme.math.Quaternion;
 import com.jme.math.Vector2f;
 import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.contact.MutableContactInfo;
-import com.jmex.physics.material.Material;
 
 /**
  * Factory for creating ATRON modules
@@ -101,11 +94,11 @@ public class JMEATRONFactory implements ModuleFactory {
     	DynamicPhysicsNode northNode = ((JMEModuleComponent) module.getComponent(0)).getModuleNode();
         DynamicPhysicsNode southNode = ((JMEModuleComponent) module.getComponent(1)).getModuleNode();
     	if(true||robot.getDescription().getType().contains("smooth")) {
-    		northNode.setMaterial(Material.ICE); // A bit more smooth
-            southNode.setMaterial(Material.ICE);
+    		northNode.setMaterial(com.jmex.physics.material.Material.ICE); // A bit more smooth
+            southNode.setMaterial(com.jmex.physics.material.Material.ICE);
     	} else {
-    		northNode.setMaterial(Material.RUBBER); // Better traction for driving experiments
-			southNode.setMaterial(Material.RUBBER);
+    		northNode.setMaterial(com.jmex.physics.material.Material.RUBBER); // Better traction for driving experiments
+			southNode.setMaterial(com.jmex.physics.material.Material.RUBBER);
         }
 		
 		southNode.getMaterial().putContactHandlingDetails(simulation.getStaticPlane().getMaterial(), getDefaultATRONContactDetails());

@@ -43,21 +43,24 @@ public class IRTransmitter extends GenericTransmitter {
 			return false;
 		}
 	}
-
-	private boolean withinAngle(Receiver receiver) {
+	private float computeAngle(Receiver receiver) {
 		Quaternion rRot = ((PhysicsEntity)receiver.getHardware()).getRotation().getRotation();
 		Quaternion tRot= ((PhysicsEntity)getHardware()).getRotation().getRotation();
-		float angle = rRot.inverse().mult(tRot).toAngleAxis(new Vector3f());
-		//System.out.println("Angle "+((angle-Math.PI)*180/(Math.PI))+" vs spread angle "+(spreadAngle*180/(Math.PI)));
+		return rRot.inverse().mult(tRot).toAngleAxis(new Vector3f());
+	}
+	public boolean withinAngle(Receiver receiver) {
+		float angle = computeAngle(receiver);
 		if(Math.abs(angle-Math.PI)>spreadAngle/2) return false;
 		return true;
 	}
-
-	private boolean withinRange(Receiver receiver) {
+	public float computeDistance(Receiver receiver) {
 		VectorDescription rPos= ((PhysicsEntity)receiver.getHardware()).getPosition();
 		VectorDescription tPos  = ((PhysicsEntity)getHardware()).getPosition();
-		float distance = tPos.distance(rPos); 
-		if(distance>range) {
+		return tPos.distance(rPos); 
+	}
+	public boolean withinRange(Receiver receiver) {
+		float distance = computeDistance(receiver); 
+		if(distance>range) { 
 			return false;
 		}
 		return true;

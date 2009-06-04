@@ -38,7 +38,7 @@ public class JMERotationalActuator implements PhysicsActuator {
     private DynamicPhysicsNode node1;
     private DynamicPhysicsNode node2;
     private JMESimulation world;
-    private OdeJoint joint;
+    private Joint joint;
     private String name;
     private PIDController controller;
 	private float maxVelocity = 0.01f;
@@ -95,7 +95,9 @@ public class JMERotationalActuator implements PhysicsActuator {
     public void attach(DynamicPhysicsNode d1, DynamicPhysicsNode d2) {
     	node1=d1; node2=d2;
     	if(joint==null)  {
-    		joint = (OdeJoint)((OdePhysicsSpace)world.getPhysicsSpace()).createJoint();
+    		
+    		joint = world.getPhysicsSpace().createJoint();
+    		//TODO JME2 change joint = (OdeJoint)((OdePhysicsSpace)world.getPhysicsSpace()).createJoint();
     		
     		axis = joint.createRotationalAxis();
     		

@@ -6,6 +6,8 @@
  */
 package ussr.physics;
 
+import com.jmex.physics.material.Material;
+
 import ussr.util.TopologyWriter;
 
 /**

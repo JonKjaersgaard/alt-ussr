@@ -100,6 +100,6 @@ public class OneSimulation extends GenericATRONSimulation {
     protected void changeWorldHook(WorldDescription world) {
     	world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 		world.setHasBackgroundScenery(false);
-		PhysicsFactory.getOptions().setStartPaused(false);
+		PhysicsFactory.getOptions().setStartPaused(true);
     }
 }

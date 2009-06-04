@@ -8,13 +8,9 @@ package ussr.physics.jme;
 
 import java.awt.Color;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-
-import org.lwjgl.opengl.Display;
 
 import ussr.builder.QuickPrototyping;
 import ussr.description.setup.WorldDescription;
@@ -44,21 +40,20 @@ import com.jme.renderer.Camera;
 import com.jme.renderer.ColorRGBA;
 import com.jme.renderer.Renderer;
 import com.jme.scene.Node;
-import com.jme.scene.SceneElement;
 import com.jme.scene.Skybox;
+import com.jme.scene.Spatial;
 import com.jme.scene.Text;
+import com.jme.scene.Spatial.CullHint;
 import com.jme.scene.state.LightState;
 import com.jme.scene.state.MaterialState;
 import com.jme.scene.state.RenderState;
-import com.jme.scene.state.TextureState;
 import com.jme.scene.state.WireframeState;
 import com.jme.scene.state.ZBufferState;
 import com.jme.system.DisplaySystem;
 import com.jme.system.JmeException;
-import com.jme.system.lwjgl.LWJGLDisplaySystem;
+import com.jme.system.PropertiesIO;
 import com.jme.util.GameTaskQueue;
 import com.jme.util.GameTaskQueueManager;
-import com.jme.util.LoggingSystem;
 import com.jme.util.TextureManager;
 import com.jme.util.Timer;
 import com.jme.util.geom.Debugger;
@@ -67,6 +62,7 @@ import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.PhysicsDebugger;
 import com.jmex.physics.PhysicsSpace;
 import com.jmex.physics.StaticPhysicsNode;
+import com.jmex.physics.impl.jbullet.JBulletPhysicsSpace;
 import com.jmex.physics.impl.ode.OdePhysicsSpace;
 import com.jmex.terrain.TerrainBlock;
 import communication.gui.CommunicationVisualizerGUI;
@@ -83,7 +79,7 @@ import communication.gui.CommunicationVisualizerGUI;
 public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
 	protected static final Color[] obstacleColors = { Color.GRAY,
-		Color.LIGHT_GRAY, Color.PINK, Color.YELLOW };
+		Color.LIGHT_GRAY, Color.PINK, Color.YELLOW }; 
 	/**
 	 * Location of the font for jME's text at the bottom
 	 */
@@ -434,7 +430,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	protected final void render(float interpolation) {
 		Renderer r = display.getRenderer();
 		/** Reset display's tracking information for number of triangles/vertexes */
-		r.clearStatistics();
+		//TODO important? JME2 upgrade r.clearStatistics();
 		/** Clears the previously rendered information. */
 		r.clearBuffers();
 
@@ -451,7 +447,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
 		if ( showDepth ) {
 			r.renderQueue();
-			Debugger.drawBuffer( Texture.RTT_SOURCE_DEPTH, Debugger.NORTHEAST, r );
+			Debugger.drawBuffer( Texture.RenderToTextureType.Depth, Debugger.NORTHEAST, r );
 		}
 
 		doDebug(r);
@@ -474,7 +470,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
 		if (showDepth) {
 			r.renderQueue();
-			Debugger.drawBuffer(Texture.RTT_SOURCE_DEPTH, Debugger.NORTHEAST, r);
+			Debugger.drawBuffer(Texture.RenderToTextureType.Depth, Debugger.NORTHEAST, r);
 		}
 	}
 
@@ -499,24 +495,24 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		 */
 		ZBufferState buf = display.getRenderer().createZBufferState();
 		buf.setEnabled( true );
-		buf.setFunction( ZBufferState.CF_LEQUAL );
+		buf.setFunction( ZBufferState.TestFunction.LessThanOrEqualTo  );
 		rootNode.setRenderState( buf );
 
 
 		// Then our font Text object.
 		/** This is what will actually have the text at the bottom. */
 		fps = Text.createDefaultTextLabel( "FPS label" );
-		fps.setCullMode( SceneElement.CULL_NEVER );
-		fps.setTextureCombineMode( TextureState.REPLACE );
+		fps.setCullHint( CullHint.Never );
+		fps.setTextureCombineMode( Spatial.TextureCombineMode.Replace );
 		//fps.setLocalScale(0.9f);
 
 
 		// Finally, a stand alone node (not attached to root on purpose)
 		fpsNode = new Node( "FPS node" );
-		fpsNode.setRenderState( fps.getRenderState( RenderState.RS_ALPHA ) );
-		fpsNode.setRenderState( fps.getRenderState( RenderState.RS_TEXTURE ) );
+		//TODO JME2 UPGRADE fpsNode.setRenderState( fps.getRenderState( RenderState.RS_ALPHA ) );
+		fpsNode.setRenderState( fps.getRenderState( RenderState.StateType.Texture ) );
 		fpsNode.attachChild( fps );
-		fpsNode.setCullMode( SceneElement.CULL_NEVER );
+		fpsNode.setCullHint( CullHint.Never );
 
 		// ---- LIGHTS
 		/** Set up a basic, default light. */
@@ -584,7 +580,10 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		// input.update(tpf); //TODO if problems with key inputs this may be the cause?
 		input.update(getPhysicsSimulationStepSize());
 
-		if(cameraInputHandler instanceof FirstPersonHandler) cameraInputHandler.setEnabled(MouseInput.get().isButtonDown( 1 ) );
+		if(cameraInputHandler instanceof FirstPersonHandler) {
+			cameraInputHandler.setEnabled(MouseInput.get().isButtonDown( 1 ) );
+			((FirstPersonHandler) cameraInputHandler).getKeyboardLookHandler().setMoveSpeed(250/timer.getFrameRate());
+		}
 		else cameraInputHandler.setEnabled(true);
 		rootNode.updateGeometricState(tpf, true );
 
@@ -620,28 +619,28 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		Texture north,south,east,west,up,down;
 		boolean clouds=world.hasBackgroundScenery();
 		if(clouds) {
-			north = TextureManager.loadTexture(setupPath("resources/north.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
-			south = TextureManager.loadTexture(setupPath("resources/south.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
-			east = TextureManager.loadTexture(setupPath("resources/east.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
-			west = TextureManager.loadTexture(setupPath("resources/west.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
-			up = TextureManager.loadTexture(setupPath("resources/top.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
-			down = TextureManager.loadTexture(setupPath("resources/bottom.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
+			north = TextureManager.loadTexture(setupPath("resources/north.jpg"),Texture.MinificationFilter.BilinearNearestMipMap,Texture.MagnificationFilter.Bilinear);
+			south = TextureManager.loadTexture(setupPath("resources/south.jpg"),Texture.MinificationFilter.BilinearNearestMipMap,Texture.MagnificationFilter.Bilinear);
+			east = TextureManager.loadTexture(setupPath("resources/east.jpg"),Texture.MinificationFilter.BilinearNearestMipMap,Texture.MagnificationFilter.Bilinear);
+			west = TextureManager.loadTexture(setupPath("resources/west.jpg"),Texture.MinificationFilter.BilinearNearestMipMap,Texture.MagnificationFilter.Bilinear);
+			up = TextureManager.loadTexture(setupPath("resources/top.jpg"),Texture.MinificationFilter.BilinearNearestMipMap,Texture.MagnificationFilter.Bilinear);
+			down = TextureManager.loadTexture(setupPath("resources/bottom.jpg"),Texture.MinificationFilter.BilinearNearestMipMap,Texture.MagnificationFilter.Bilinear);
 		}
 		else {
-			north = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
-			south = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
-			east = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
-			west = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
-			up = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
-			down = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MM_LINEAR,Texture.FM_LINEAR);
+			north = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MinificationFilter.BilinearNearestMipMap,Texture.MagnificationFilter.Bilinear);
+			south = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MinificationFilter.BilinearNearestMipMap,Texture.MagnificationFilter.Bilinear);
+			east = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MinificationFilter.BilinearNearestMipMap,Texture.MagnificationFilter.Bilinear);
+			west = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MinificationFilter.BilinearNearestMipMap,Texture.MagnificationFilter.Bilinear);
+			up = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MinificationFilter.BilinearNearestMipMap,Texture.MagnificationFilter.Bilinear);
+			down = TextureManager.loadTexture(setupPath("resources/white.jpg"),Texture.MinificationFilter.BilinearNearestMipMap,Texture.MagnificationFilter.Bilinear);
 		}
 
-		skybox.setTexture(Skybox.NORTH, north);
-		skybox.setTexture(Skybox.WEST, west);
-		skybox.setTexture(Skybox.SOUTH, south);
-		skybox.setTexture(Skybox.EAST, east);
-		skybox.setTexture(Skybox.UP, up);
-		skybox.setTexture(Skybox.DOWN, down);
+		skybox.setTexture(Skybox.Face.North, north);
+		skybox.setTexture(Skybox.Face.West, west);
+		skybox.setTexture(Skybox.Face.South, south);
+		skybox.setTexture(Skybox.Face.East, east);
+		skybox.setTexture(Skybox.Face.Up, up);
+		skybox.setTexture(Skybox.Face.Down, down);
 		skybox.preloadTextures();
 
 		rootNode.attachChild( skybox );
@@ -649,9 +648,9 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		return null;
 	}
 	protected void initSystem() {
-
-		LoggingSystem.getLogger().log( Level.INFO, getVersion());
 		try {
+			PropertiesIO properties = new PropertiesIO("properties.cfg");
+			properties.load();
 			/**
 			 * Get a DisplaySystem acording to the renderer selected in the
 			 * startup box.
@@ -659,7 +658,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			display = DisplaySystem.getDisplaySystem( properties.getRenderer() );
 			try {
 				String displayInfo = display.getAdapter();
-				LoggingSystem.getLogger().log( Level.INFO, "Running on: "+displayInfo+"\nDriver version: "+display.getDriverVersion());
 			} catch(UnsatisfiedLinkError e) { 
 				System.err.println("Unable to link native libraries, path = "+System.getProperty("java.library.path"));
 				e.printStackTrace();
@@ -670,7 +668,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			display.setMinStencilBits( stencilBits );
 			display.setMinAlphaBits( alphaBits );
 			display.setMinSamples( samples );
-
 			/** Create a window with the startup box's information. */
 			display.createWindow( properties.getWidth(), properties.getHeight(),
 					properties.getDepth(), properties.getFreq(), properties
@@ -719,7 +716,10 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		 * Signal to the renderer that it should keep track of rendering
 		 * information.
 		 */
-		display.getRenderer().enableStatistics( true );
+		
+		//StatListener statlistener = new StatListener();
+		//TODO JME2 add StatCollector 
+		//display.getRenderer().enableStatistics( true );
 		
 		/**
 		 * If headless the simulator will not draw graphics
@@ -729,7 +729,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		assignKeys();
 
 		/** Create a basic input controller. */
-		cameraInputHandler = new FirstPersonHandler( cam, 1f, 1 );
+		cameraInputHandler = new FirstPersonHandler( cam, 0.1f, 1 ); //TODO Make camera velocity relative to framerate
 		input = new InputHandler();
 		input.addToAttachedHandlers( cameraInputHandler );
 
@@ -740,10 +740,17 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
 		/** Get a high resolution timer for FPS updates. */
 		timer = Timer.getTimer();
+		//PhysicsSpace.chooseImplementation("JBullet");
 		setPhysicsSpace( PhysicsSpace.create() );
-		((OdePhysicsSpace) getPhysicsSpace()).setStepSize(PhysicsParameters.get().getPhysicsSimulationStepSize());
-		((OdePhysicsSpace) getPhysicsSpace()).setUpdateRate(1f/PhysicsParameters.get().getPhysicsSimulationStepSize());
-		((OdePhysicsSpace) getPhysicsSpace()).setStepFunction(OdePhysicsSpace.SF_STEP_QUICK); //OdePhysicsSpace.SF_STEP_FAST or OdePhysicsSpace.SF_STEP_QUICK  or OdePhysicsSpace.SF_STEP_SIMULATION  
+		
+		if(getPhysicsSpace() instanceof OdePhysicsSpace)  {
+			((OdePhysicsSpace) getPhysicsSpace()).setStepSize(PhysicsParameters.get().getPhysicsSimulationStepSize());
+			((OdePhysicsSpace) getPhysicsSpace()).setUpdateRate(1f/PhysicsParameters.get().getPhysicsSimulationStepSize());
+			((OdePhysicsSpace) getPhysicsSpace()).setStepFunction(OdePhysicsSpace.SF_STEP_QUICK); //OdePhysicsSpace.SF_STEP_FAST or OdePhysicsSpace.SF_STEP_QUICK  or OdePhysicsSpace.SF_STEP_SIMULATION
+		}
+		if(getPhysicsSpace() instanceof JBulletPhysicsSpace)  {
+			getPhysicsSpace().setAccuracy(PhysicsParameters.get().getPhysicsSimulationStepSize());
+		}
 
 		input.addAction( new InputAction() {
 			public void performAction( InputActionEvent evt ) {
@@ -856,8 +863,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		return physicsSpace;
 	}
 	protected void cleanup() {
-		LoggingSystem.getLogger().log( Level.INFO, "Cleaning up resources." );
-
+		
 		TextureManager.doTextureCleanup();
 		KeyInput.destroyIfInitalized();
 		MouseInput.destroyIfInitalized();
