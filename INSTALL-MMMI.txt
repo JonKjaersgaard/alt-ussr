@@ -31,3 +31,11 @@ USSR should run on Windows, Linux and Mac OS X.
     up, so long as the errors come from the "home" source folders).  Once the graphical window
     showing the simulation pops up, press "P" to unpause the simulation and see the ATRON car
     drive towards the box obstacles.
+
+(5) If USSR does not work. 
+	USSR should work directly when checked out. If not make sure that all *.jar in sub-directories 
+	of the "zoo" directory is included in the project's build path, except for "swt.jar" which causes strange 
+	GUI problems on MACs. For "lwjgl.jar" set the native library location to "ussr/zoo/jME_2.0/lib/natives".
+	Also add the source folders: "zoo/jME_physics/src", "zoo/jME_physics/impl/ode/src" and "zoo/jME_physics/impl/jbullet/src". 
+	If USSR complies but crashes during startup try deleting "properties.cfg" in the "ussr" folder.
+	

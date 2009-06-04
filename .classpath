@@ -33,7 +33,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="ussr/zoo/jME_2.0/lib/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="zoo/jME_2.0/lib/swt.jar"/>
 	<classpathentry kind="lib" path="zoo/jME_2.0/jME_2.0.jar"/>
 	<classpathentry kind="lib" path="zoo/jME_physics/impl/jbullet/lib/jbullet.jar"/>
 	<classpathentry kind="lib" path="zoo/jME_physics/impl/jbullet/lib/stack-alloc.jar"/>
