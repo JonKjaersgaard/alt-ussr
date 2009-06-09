@@ -46,9 +46,9 @@ public class WifiCMBroadcaster implements PhysicsObserver {
 	 */
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
 		if(nextT<simulation.getTime()) {
-			Long before = System.currentTimeMillis();
+			//Long before = System.currentTimeMillis();
 			float dist = tracker.getRobotCM().distance(oldPos);
-			addToXYscatterPlot(simulation.getTime(), dist/7.0f*100);
+			addToXYscatterPlot(simulation.getTime(), dist/deltaT*100);
 			byte reward = (byte)(250*dist);
 			if(!Float.isNaN(dist)) {				
 	 			ByteBuffer bb = new ByteBuffer(3);
@@ -63,12 +63,12 @@ public class WifiCMBroadcaster implements PhysicsObserver {
 			nextT += deltaT;
 			stateCount++;
 			oldPos = tracker.getRobotCM();
-			Long after = System.currentTimeMillis();
-			System.out.println("Time to compute: "+(after-before));
+			//Long after = System.currentTimeMillis();
+			//System.out.println("Time to compute: "+(after-before));
 		}
 	}
 	static XYSeries series1;
-	public static void addToXYscatterPlot(float x, float y) {
+	public static void addToXYscatterPlot(double x, double y) {
 		series1.add(x, y);
 	}
 	
