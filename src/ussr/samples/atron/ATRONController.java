@@ -29,7 +29,7 @@ import ussr.physics.PhysicsSimulation;
 public abstract class ATRONController extends ControllerImpl implements PacketReceivedObserver, PhysicsObserver, IATRONAPI {
 
     private float targetPos, targetVel, zeroPos;
-    protected static enum CenterStates {STOPPED, BRAKED, POSCONTROL, VELCONTROL}
+    protected static enum CenterStates {STOPPED, BRAKED, POSCONTROL, VELCONTROL, POSVELCONTROL}
     private CenterStates centerState;
 	private boolean blocking;
 	private int leds=0;
@@ -114,6 +114,9 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     	else if(centerState == CenterStates.VELCONTROL) {
     		velActuateJoint();
     	}
+    	else if(centerState == CenterStates.POSVELCONTROL) {
+    		posVelActuateJoint();
+    	}
     	else if(centerState == CenterStates.BRAKED) {
     		relaxJoint(); //?
     	}
@@ -137,13 +140,30 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     	if(val>1) val = val-1;
     	targetPos = val;
     }
+    private float getTargetErrorAbs() {
+    	float error = Math.abs(targetPos-module.getActuators().get(0).getEncoderValue());
+    	return error;
+    }
+    
 
+    
     private void velActuateJoint() {
     	module.getActuators().get(0).setDesiredVelocity(targetVel);
     }
     
     private void posActuateJoint() {
     	module.getActuators().get(0).setDesiredPosition(targetPos);
+    }
+    
+    private void posVelActuateJoint() {
+    	float error = getTargetErrorAbs();//Math.abs(targetPos-readEncoderPosition());
+    	if(error>0.5) error = 1-error;
+    	if(error<0.1) {
+    		centerState = CenterStates.POSCONTROL;
+    	}
+    	else {
+    		module.getActuators().get(0).setDesiredVelocity(targetVel);
+    	}
     }
     
     private void relaxJoint() {
@@ -211,7 +231,14 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     	float rad = (float)(degrees/360.0*2*Math.PI);
         this.rotateToDegree(rad);
     }
-    
+    public void rotateDirToInDegrees(int degrees, int dir) {
+     	centerState = CenterStates.POSVELCONTROL;
+     	float target = (float)(degrees/360.0);
+     	setTargetPos(target);
+    	setTargetVel(dir);
+    	posVelActuateJoint();
+        while(isRotating()&&blocking) yield();
+    }
     /**
 	 * @see ussr.samples.atron.IATRONAPI#rotateToDegree(float)
 	 */
