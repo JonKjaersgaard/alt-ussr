@@ -112,7 +112,9 @@ public abstract class CustomizedPicker implements Picker {
                         PickData data = pickResults.getPickData( i );
                         if ( data.getTargetTris() != null && data.getTargetTris().size() > 0 ) {
                             Spatial target = data.getTargetMesh().getParent(); //TODO JME2 changed from getParentGeom();
-                            pickTarget(target);
+                            //System.out.println("target="+data.getTargetMesh());
+                            //pickTarget(target);
+                            pickTarget(data.getTargetMesh()); //TODO JME2 changed to fix builder bug 
                             while ( target != null ) {
                                 if ( target instanceof DynamicPhysicsNode ) {
                                     DynamicPhysicsNode picked = (DynamicPhysicsNode) target;
