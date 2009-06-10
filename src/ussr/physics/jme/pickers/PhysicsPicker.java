@@ -244,12 +244,12 @@ public class PhysicsPicker implements Picker {
                 pickResults.setCheckDistance( true );
                 rootNode.findPick( pickRay, pickResults );
                 /* To avoid using overly large amount of memory on interactive clicking, clear the collision tree */
-                //rootNode.clearCollisionTree(); //TODO JME2 uncommented
+                rootNode.clearCollisionTree();
                 loopResults:
                 for ( int i = 0; i < pickResults.getNumber(); i++ ) {
                     PickData data = pickResults.getPickData( i );
                     if ( data.getTargetTris() != null && data.getTargetTris().size() > 0 ) {
-                        Spatial target = data.getTargetMesh().getParent();  //TODO JME2 changed from getParentGeom();
+                        Spatial target = data.getTargetMesh().getParentGeom();
                         if(target instanceof TriMesh) {
                             String name = simulation.getGeometryName((TriMesh)target);
                             if(name!=null) System.out.println("Initial click on: "+name);

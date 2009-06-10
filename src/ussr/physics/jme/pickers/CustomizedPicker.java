@@ -13,6 +13,7 @@ import com.jme.intersection.TrianglePickResults;
 import com.jme.math.Ray;
 import com.jme.math.Vector2f;
 import com.jme.scene.Spatial;
+import com.jme.scene.batch.GeomBatch;
 import com.jme.system.DisplaySystem;
 
 /**
@@ -85,7 +86,7 @@ public abstract class CustomizedPicker implements Picker {
      * Passes spatial parent geometry of picked visual object
      * @param target, the picked spatial parent geometry
      */
-    protected abstract void pickTarget(Spatial target);
+    protected abstract void pickTarget(GeomBatch target);
 
     public void delete() {
         inputHandler.removeAction( pickAction );
@@ -106,15 +107,13 @@ public abstract class CustomizedPicker implements Picker {
                 pickResults.setCheckDistance( true );
                 rootNode.findPick( pickRay, pickResults );
                 /* To avoid using overly large amount of memory on interactive clicking, clear the collision tree */
-                //rootNode.clearCollisionTree();//TODO JME2 uncommented
+                rootNode.clearCollisionTree();
                 loopResults:
                     for ( int i = 0; i < pickResults.getNumber(); i++ ) {
                         PickData data = pickResults.getPickData( i );
                         if ( data.getTargetTris() != null && data.getTargetTris().size() > 0 ) {
-                            Spatial target = data.getTargetMesh().getParent(); //TODO JME2 changed from getParentGeom();
-                            //System.out.println("target="+data.getTargetMesh());
-                            //pickTarget(target);
-                            pickTarget(data.getTargetMesh()); //TODO JME2 changed to fix builder bug 
+                            Spatial target = data.getTargetMesh().getParentGeom();                       
+                            pickTarget(data.getTargetMesh()); 
                             while ( target != null ) {
                                 if ( target instanceof DynamicPhysicsNode ) {
                                     DynamicPhysicsNode picked = (DynamicPhysicsNode) target;

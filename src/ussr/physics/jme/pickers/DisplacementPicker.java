@@ -1,13 +1,9 @@
 package ussr.physics.jme.pickers;
 
 import ussr.physics.jme.JMEModuleComponent;
-
-import com.jme.input.InputHandler;
 import com.jme.math.Vector3f;
-import com.jme.scene.Node;
-import com.jme.scene.Spatial;
+import com.jme.scene.batch.GeomBatch;
 import com.jmex.physics.DynamicPhysicsNode;
-import com.jmex.physics.PhysicsSpace;
 
 public class DisplacementPicker extends CustomizedPicker {
 
@@ -21,9 +17,8 @@ public class DisplacementPicker extends CustomizedPicker {
     }
 
 	@Override
-	protected void pickTarget(Spatial target) {
+	protected void pickTarget(GeomBatch target) {
 		// TODO Auto-generated method stub
 		
-	}
-
+	}	
 }
