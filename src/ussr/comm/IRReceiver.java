@@ -6,13 +6,9 @@
  */
 package ussr.comm;
 
-import ussr.description.geometry.RotationDescription;
-import ussr.description.geometry.VectorDescription;
 import ussr.description.robot.ReceivingDevice;
 import ussr.model.Entity;
 import ussr.model.Module;
-import ussr.physics.PhysicsConnector;
-import ussr.physics.PhysicsEntity;
 
 /**
  * An infrared receiver, which in currently means that it has a spreading angle of 30 degrees.
@@ -27,7 +23,16 @@ public class IRReceiver extends GenericReceiver {
 		super(module, hardware, receiver.getType(), receiver.getBufferSize());
 		spreadAngle = (float)(30*2*Math.PI/360f);
 	}
-	public boolean canReceiveFrom(Transmitter transmitter) { //howto handle JME specific things?
+	public boolean canReceiveFrom(Transmitter transmitter) {
+		if(!getFullDuplex()) {
+			if(getTransmitter().isSending()) {
+				//System.out.println("Communication Collision Detected...");
+				return false;
+			}
+			else {
+				//System.out.println("No Collision...");
+			}
+		}
 		return true;
 	}
 }

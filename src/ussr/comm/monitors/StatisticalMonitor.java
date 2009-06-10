@@ -14,10 +14,10 @@ import ussr.physics.PhysicsSimulation;
 public class StatisticalMonitor implements CommunicationMonitor {
 	List<MsgStat> in = Collections.synchronizedList(new LinkedList<MsgStat>());
 	List<MsgStat> out = Collections.synchronizedList(new LinkedList<MsgStat>());
+	List<MsgStat> lost = Collections.synchronizedList(new LinkedList<MsgStat>());
 	float timeWindow;
 	PhysicsSimulation simulator = null;
-//	boolean inTaken = false;
-//	boolean outTaken = false;
+
 	private class MsgStat {
 		int moduleID;
 		int channel;
@@ -56,51 +56,37 @@ public class StatisticalMonitor implements CommunicationMonitor {
 	public void packetReceived(Module module, GenericReceiver receiver, Packet packet) {
 		if(simulator==null) simulator = module.getSimulation();
 		int channel = module.getReceivers().indexOf(receiver);
-	//	if(inTaken==false) {
-	//		inTaken = true;
-			handlePackage(in, module.getID(), channel, packet.getByteSize(), simulator.getTime());
-	//		inTaken = false;
-	//	}
-	//	else { }//ignore package to avoid crach
+		handlePackage(in, module.getID(), channel, packet.getByteSize(), simulator.getTime());
 	}
 	
 	public void packetSent(Module module, GenericTransmitter transmitter, Packet packet) {
 		if(simulator==null) simulator = module.getSimulation();
 		int channel = module.getTransmitters().indexOf(transmitter);
 		//System.out.println("msg "+packet.getByteSize()+"bytes send on channel "+channel+" on module "+module.getID()+" at time "+ simulator.getTime());
-	//	if(outTaken==false) {
-	//		outTaken = true;
-			handlePackage(out, module.getID(), channel, packet.getByteSize(), simulator.getTime());
-	//		outTaken = false;
-	//	}
-	//	else { }//ignore package to avoid crach
+		handlePackage(out, module.getID(), channel, packet.getByteSize(), simulator.getTime());
+	}
+	public void packetLost(Module module, GenericTransmitter transmitter, Packet packet) {
+		if(simulator==null) simulator = module.getSimulation();
+		int channel = module.getTransmitters().indexOf(transmitter);
+		handlePackage(lost, module.getID(), channel, packet.getByteSize(), simulator.getTime());		
+	}
+	
+	private int getBitGeneric(List<MsgStat> buffer, int moduleID, int channel) {
+		if(simulator==null) return Integer.MIN_VALUE;
+		cleanStat(buffer, simulator.getTime(), timeWindow);
+		int bits = sumUpBits(buffer, moduleID, channel);
+		return bits;
+	}
+	
+	public int getBitLostWindow(int moduleID, int channel) {
+		return getBitGeneric(lost, moduleID, channel);
 	}
 	
 	public int getBitOutWindow(int moduleID, int channel) {
-		if(simulator==null) return Integer.MIN_VALUE;
-	//	if(outTaken ==false) {
-	//		outTaken = true;
-			cleanStat(out, simulator.getTime(), timeWindow);
-			int bits = sumUpBits(out, moduleID, channel);
-	//		outTaken = false;
-			return bits;
-	//	}
-	//	else {
-	//		return Integer.MIN_VALUE;
-	//	}
+		return getBitGeneric(out, moduleID, channel);
 	}
 	
 	public int getBitInWindow(int moduleID, int channel) {
-		if(simulator==null) return Integer.MIN_VALUE;
-	//	if(inTaken ==false) {
-	//		inTaken = true;
-			cleanStat(in, simulator.getTime(), timeWindow);
-			int bits = sumUpBits(in, moduleID, channel);
-	//		inTaken = false;
-			return bits;
-	//	}
-	//	else {
-	//		return Integer.MIN_VALUE;
-	//	}
+		return getBitGeneric(in, moduleID, channel);
 	}
 }

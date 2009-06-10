@@ -12,13 +12,13 @@ import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsSimulation;
 
-public class CommunicationLoadMonitor implements PhysicsObserver {
+public class CommunicationLostMonitor implements PhysicsObserver {
 	PhysicsSimulation simulation;
 	XYSeries max, mean;  
 	double nextT;
 	double deltaT;
 	StatisticalMonitor commMonitor;
-	public CommunicationLoadMonitor(PhysicsSimulation simulation, double deltaT) {
+	public CommunicationLostMonitor(PhysicsSimulation simulation, double deltaT) {
 		this.simulation = simulation;
 		this.deltaT = deltaT;
 		commMonitor = new StatisticalMonitor(deltaT);
@@ -29,27 +29,37 @@ public class CommunicationLoadMonitor implements PhysicsObserver {
 	
 	public void physicsTimeStepHook(PhysicsSimulation simulation) {
 		if(nextT<simulation.getTime()) {
-			int maxbps = 0;
-			int bpsSum = 0;
+			float max_lost_percent = 0;
+			float mean_lost_percent = 0;
+			
 			int channelCount=0;
 			for(int id=0;id<simulation.getModules().size();id++) {
 				for(int channel=0;channel<8;channel++) {
-					int bitpersec = commMonitor.getBitOutWindow(id, channel);
-					if(bitpersec==Integer.MIN_VALUE) {
-						bitpersec=0;
+					float sendt_bps= (float) commMonitor.getBitOutWindow(id, channel);
+					float lost_bps = (float) commMonitor.getBitLostWindow(id, channel);
+					if(sendt_bps==Integer.MIN_VALUE) sendt_bps=0;
+					if(lost_bps==Integer.MIN_VALUE) lost_bps=0;
+					
+					float lost_percent;
+					if(sendt_bps!=0) {
+						lost_percent = lost_bps/sendt_bps*100.0f;
 					}
-					if(bitpersec>maxbps) {
-						maxbps = bitpersec;
+					else {
+						lost_percent=0;
+					}
+					
+					if(lost_percent>max_lost_percent) {
+						max_lost_percent = lost_percent;
 					}
 					if(simulation.getModules().get(id).getConnectors().get(channel).hasProximateConnector()) {
 						channelCount++;
-						bpsSum +=bitpersec;
+						mean_lost_percent +=lost_percent;
 					}
 					//System.out.println("Module "+id+" sends "+bitpersec+" bits/sec on channel "+channel);
 				}
 			}
-			addMaxToXYscatterPlot(simulation.getTime(), maxbps);
-			addMeanToXYscatterPlot(simulation.getTime(), ((float)bpsSum)/channelCount);
+			addMaxToXYscatterPlot(simulation.getTime(), max_lost_percent);
+			addMeanToXYscatterPlot(simulation.getTime(), mean_lost_percent/channelCount);
 			nextT += deltaT;
 		}
 	}
@@ -71,9 +81,9 @@ public class CommunicationLoadMonitor implements PhysicsObserver {
         dataset.addSeries(mean);
         
         JFreeChart chart = ChartFactory.createXYLineChart(
-        	    "Communication Load",  // chart title
+        	    "Communication Lost",  // chart title
                 "Time (sec)",
-                "Communication (bits/sec)",
+                "Communication Lost (percent)",
                 dataset,         // data
                 PlotOrientation.VERTICAL,
                 true,            // include legend
@@ -82,7 +92,7 @@ public class CommunicationLoadMonitor implements PhysicsObserver {
             );
         // 	create and display a frame...
         //ChartPanel panel = new ChartPanel(chart);
-		ChartFrame frame = new ChartFrame("Communication Chart", chart);
+		ChartFrame frame = new ChartFrame("Communication Lost Chart", chart);
 		frame.pack();
 		//System.out.println(frame.getSize());
 		frame.setSize(2*690/3, 2*450/3);

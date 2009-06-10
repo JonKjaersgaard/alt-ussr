@@ -6,15 +6,8 @@
  */
 package ussr.samples.atron.ase;
 
-import java.awt.AWTEvent;
-import java.awt.Toolkit;
-import java.util.ArrayList;
-
 import mc.ModularCommander;
-
 import ussr.description.Robot;
-import ussr.description.geometry.VectorDescription;
-import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
@@ -26,9 +19,9 @@ import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.GenericATRONSimulation;
 import ussr.samples.atron.network.ATRONReflectionEventController;
-import ussr.util.WindowSaver;
 import ussr.util.supervision.CMTracker;
 import ussr.util.supervision.CommunicationLoadMonitor;
+import ussr.util.supervision.CommunicationLostMonitor;
 import ussr.util.supervision.RadioConnection;
 import ussr.util.supervision.WifiCMBroadcaster;
 
@@ -36,15 +29,18 @@ import ussr.util.supervision.WifiCMBroadcaster;
 
 
 public abstract class GenericASESimulation extends GenericATRONSimulation implements PhysicsObserver {
+	
 	protected static boolean hasCMTracker = true; 
 	protected static float TIME_PER_CM_UPDATE = 10.0f;
 	
+	
 	protected static boolean hasRadioConnection = true; 
-	protected static boolean hasCommunicationMonitor = true;
+	protected static boolean hasCommunicationLoadMonitor = true;
+	protected static boolean hasCommunicationLostMonitor = true;
 	protected static boolean hasModularCommander = false;
+	protected static boolean hasHalfDuplex= true;
 	
-	RadioConnection radioConnection;
-	
+	protected static RadioConnection radioConnection;
     private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;
     
     public static void initASE( ) { 
@@ -73,8 +69,12 @@ public abstract class GenericASESimulation extends GenericATRONSimulation implem
 			radioConnection = new RadioConnection(simulation, 9899); //allow Modular commander to communicate with USSR 
 			radioConnection.setPackToASE(true);
 		}
-		if(hasCommunicationMonitor) {
+		if(hasCommunicationLoadMonitor) {
 			CommunicationLoadMonitor commMonitor = new CommunicationLoadMonitor(simulation, 1.0);
+			simulation.subscribePhysicsTimestep(commMonitor);
+		}
+		if(hasCommunicationLostMonitor) {
+			CommunicationLostMonitor commMonitor = new CommunicationLostMonitor(simulation, 1.0);
 			simulation.subscribePhysicsTimestep(commMonitor);
 		}
 		simulation.subscribePhysicsTimestep(this);
@@ -89,6 +89,7 @@ public abstract class GenericASESimulation extends GenericATRONSimulation implem
         };
         
         robot.setRealistic();
+        if(hasHalfDuplex) robot.setHalfDuplex();
         if(hasRadioConnection) robot.setRadio();
 
         return robot;

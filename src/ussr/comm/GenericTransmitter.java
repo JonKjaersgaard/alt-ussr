@@ -130,6 +130,19 @@ public abstract class GenericTransmitter implements Transmitter {
 		}
 		return count;
     }
+    public boolean isSending() {
+    	return transmitManager.isSending();
+    }
+    
+    private void signalPacketLost(Packet packet) {
+    	if(monitors != null) {
+    		for(CommunicationMonitor monitor : monitors) {
+    			monitor.packetLost(module, this, packet);
+    		}
+    	}
+    }
+    
+    
 	private class GenericTransmitManager implements PhysicsObserver {
 		volatile LinkedList<Packet> packets; 
 		volatile int maxBytes;
@@ -169,6 +182,7 @@ public abstract class GenericTransmitter implements Transmitter {
 				return true;
 			}
 			else {
+				System.err.println("Warning: Buffer overflow in communication...");
 				return false;
 			}
 		}
@@ -184,6 +198,11 @@ public abstract class GenericTransmitter implements Transmitter {
 				subscribing = subscribe;
 			}
 		}
+		
+		public boolean isSending() {
+			return subscribing; //should be equvivalent to the "sending time"
+		}
+		
 		public synchronized void physicsTimeStepHook(PhysicsSimulation simulation) {
 			Packet p = packets.peek();
 			if(p!=null) {
@@ -204,9 +223,9 @@ public abstract class GenericTransmitter implements Transmitter {
 			float byteCapacity = maxBytePerTimeStep*timeStepsSinceLastSend;
 			if(byteCapacity>p.getByteSize()||maxBytePerTimeStep==Float.POSITIVE_INFINITY) {
 				if(!send(p)) {
+					signalPacketLost(p);
 					PhysicsLogger.logNonCritical(module.getID()+": Trying to send a package but no one is there to receive it... removing it from buffer");
 				}
-				
 				return true;
 			}
 			return false;

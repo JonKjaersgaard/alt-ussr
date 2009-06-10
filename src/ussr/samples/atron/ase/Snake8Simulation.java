@@ -35,63 +35,30 @@ import ussr.util.supervision.WifiCMBroadcaster;
 
 
 
-public class Snake8Simulation extends GenericATRONSimulation implements PhysicsObserver {
-	private static boolean hasCMTracker = true;
-	private static boolean hasRadioConnection = true;
-	private static boolean hasCommunicationMonitor = true;
-	private static boolean hasModularCommander = false;
+public class Snake8Simulation extends GenericASESimulation implements PhysicsObserver {
 	
-	RadioConnection radioConnection;
-	
-    private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;
-    public static void main( String[] args ) { 
-    	PhysicsParameters.get().setPlaneMaterial(Material.CONCRETE);
-        PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
- 		PhysicsParameters.get().setRealisticCollision(true);
-		PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
-		PhysicsParameters.get().setMaintainRotationalJointPositions(true);
-		PhysicsFactory.getOptions().setStartPaused(false);
-		PhysicsFactory.getOptions().setHeadless(false);
-		PhysicsFactory.getOptions().setSaveWindowSettingOnExit(true);
-		
-		if(hasModularCommander) {
-			new ModularCommander();
-		}
+	public static void main( String[] args ) {
+		initASE();
 		new Snake8Simulation().main();
-		
     }
-	
-	protected void simulationHook(PhysicsSimulation simulation) {
-		super.simulationHook(simulation);
-		if(hasCMTracker) {
-			CMTracker tracker = new CMTracker(simulation);
-			WifiCMBroadcaster broadcaster = new WifiCMBroadcaster(simulation, 7.0, tracker);
-			simulation.subscribePhysicsTimestep(broadcaster);
-		}
-		if(hasRadioConnection) {
-			radioConnection = new RadioConnection(simulation, 9899); //allow Modular commander to communicate with USSR 
-			radioConnection.setPackToASE(true);
-		}
-		if(hasCommunicationMonitor) {
-			CommunicationLoadMonitor commMonitor = new CommunicationLoadMonitor(simulation, 1.0);
-			simulation.subscribePhysicsTimestep(commMonitor);
-		}
-		simulation.subscribePhysicsTimestep(this);
+	protected ArrayList<ModulePosition> buildWalker3(String id) {
+		float Yoffset = 0.25f;
+    	ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
+    	mPos.add(new ModulePosition("1", ";portRC=9900;portEvent=9901", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW)); //spline
+    	
+    	mPos.add(new ModulePosition("2", ";portRC=9902;portEvent=9903", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS)); //fa1
+    	mPos.add(new ModulePosition("3", ";portRC=9904;portEvent=9905", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN)); //fa2
+
+    	mPos.add(new ModulePosition("4", ";portRC=9906;portEvent=9907", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU)); //fl1
+    	mPos.add(new ModulePosition("5", ";portRC=9908;portEvent=9909", new VectorDescription(1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU)); //fl2
+
+    	mPos.add(new ModulePosition("6", ";portRC=9910;portEvent=9911", new VectorDescription(-1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS)); //ba1
+    	mPos.add(new ModulePosition("7", ";portRC=9912;portEvent=9913", new VectorDescription(-1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN)); //ba2
+
+    	mPos.add(new ModulePosition("8", ";portRC=9914;portEvent=9915", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,-2*ATRON.UNIT), ATRON.ROTATION_DU)); //bl1
+    	mPos.add(new ModulePosition("9", ";portRC=9916;portEvent=9917", new VectorDescription(-1*ATRON.UNIT,-1*ATRON.UNIT-Yoffset,2*ATRON.UNIT), ATRON.ROTATION_DU)); //bl2
+        return mPos;
 	}
-
-	
-	protected Robot getRobot() {
-        ATRON robot = new ATRON() {
-            public Controller createController() {
-                return new ATRONReflectionEventController();
-            }
-        };
-        
-        robot.setRealistic();
-        robot.setRadio();
-
-        return robot;
-    }
 	
 	protected ArrayList<ModulePosition> buildSnake(int length) {
     	float Yoffset = 0.4f;
@@ -117,14 +84,4 @@ public class Snake8Simulation extends GenericATRONSimulation implements PhysicsO
 	protected ArrayList<ModulePosition> buildRobot() {
 		return buildSnake(8);
 	}
-    
-    protected void changeWorldHook(WorldDescription world) {
-    	world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
-		world.setHasBackgroundScenery(false);
-    }
-
-	public void physicsTimeStepHook(PhysicsSimulation simulation) {
-		
-	}
-
 }

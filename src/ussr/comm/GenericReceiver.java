@@ -26,6 +26,8 @@ public abstract class GenericReceiver implements Receiver {
     protected Entity hardware;
     protected TransmissionType type;
     protected Packet[] queue; 
+    protected boolean fullDuplex = true;
+    protected Transmitter transmitter; 
     protected int read_position, write_position;
     private ArrayList<PacketReceivedObserver> packetReceivedObservers = new ArrayList<PacketReceivedObserver>();
     protected int packageCounter = 0; //for debugging
@@ -91,4 +93,18 @@ public abstract class GenericReceiver implements Receiver {
     public void removePacketReceivedObserver(PacketReceivedObserver pro) {
 		packetReceivedObservers.remove(pro);
     }
+    
+    public void setFullDuplex(Transmitter transmitter, boolean fullDuplex) {
+    	this.fullDuplex = fullDuplex;
+    	this.transmitter = transmitter;
+    }
+    
+    public boolean getFullDuplex() {
+    	return fullDuplex;
+    }
+    
+    public Transmitter getTransmitter() {
+    	return transmitter;
+    }
+    
 }

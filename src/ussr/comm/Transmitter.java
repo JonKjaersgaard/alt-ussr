@@ -28,6 +28,9 @@ public interface Transmitter {
 	 */
 	public boolean canSendTo(Receiver receiver);
 	
+	
+	public boolean isSending();
+	
 	/**
 	 * Counts the number of communication channels that are within communication range  
 	 * @return number of communication channels within range
@@ -35,6 +38,7 @@ public interface Transmitter {
 	public int withinRangeCount();
 	public void setMaxBaud(float maxBaud);
     public void setMaxBufferSize(int maxBufferSize);
+    
     
     /**
      * Get a reference to the simulated hardware entity that represents the transmission device

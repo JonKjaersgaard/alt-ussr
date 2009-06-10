@@ -6,8 +6,6 @@
  */
 package ussr.comm;
 
-import java.awt.Color;
-
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Entity;
 import ussr.model.Module;

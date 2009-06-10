@@ -355,6 +355,11 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 			g2.drawString(hexaDecimalString, x, y);
 		}
 	}
+
+	public void packetLost(Module module, GenericTransmitter transmitter, Packet packet) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	/*
 	private void drawReferenceCommunication(Graphics2D g2) {

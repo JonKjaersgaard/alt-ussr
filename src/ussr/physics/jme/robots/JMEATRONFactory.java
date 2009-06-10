@@ -93,7 +93,7 @@ public class JMEATRONFactory implements ModuleFactory {
 	private void setMaterials(Module module, Robot robot, String module_name) {
     	DynamicPhysicsNode northNode = ((JMEModuleComponent) module.getComponent(0)).getModuleNode();
         DynamicPhysicsNode southNode = ((JMEModuleComponent) module.getComponent(1)).getModuleNode();
-    	if(true||robot.getDescription().getType().contains("smooth")) {
+    	if(robot.getDescription().getType().contains("smooth")) {
     		northNode.setMaterial(com.jmex.physics.material.Material.ICE); // A bit more smooth
             southNode.setMaterial(com.jmex.physics.material.Material.ICE);
     	} else {
@@ -190,6 +190,9 @@ public class JMEATRONFactory implements ModuleFactory {
             module.addReceivingDevice(JMEGeometryHelper.createReceiver(module, module.getConnectors().get(channel),atronRec));
             module.getTransmitters().get(channel).setMaxBaud(19200);
             module.getTransmitters().get(channel).setMaxBufferSize(128);
+            if(robot.getDescription().getType().contains("halfDuplex")) {
+            	module.getReceivers().get(channel).setFullDuplex(module.getTransmitters().get(channel), false); //make optional?
+            }
         }
         if(robot.getDescription().getType().contains("radio")) {
         	int channel = 8;

@@ -54,6 +54,11 @@ public class CommunicationDemo extends EightToCarSimulationJ {
             registry.put(packet,module);
         }
 
+		public void packetLost(Module module, GenericTransmitter transmitter, Packet packet) {
+			// TODO Auto-generated method stub
+			
+		}
+
     }
 
     public static void main(String argv[]) {

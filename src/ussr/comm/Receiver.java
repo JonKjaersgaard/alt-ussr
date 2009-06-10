@@ -69,6 +69,11 @@ public interface Receiver {
      */
     public TransmissionType getType();
     
+    public void setFullDuplex(Transmitter transmitter, boolean fullDuplex);
+    public boolean getFullDuplex();
+    
+    
+    
     /**
      * Add a packet receiver observer which will be notified (called) every time a packet is delivered to this receiver
      * device.

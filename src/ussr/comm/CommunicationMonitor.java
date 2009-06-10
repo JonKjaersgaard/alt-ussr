@@ -8,4 +8,6 @@ public interface CommunicationMonitor {
 
     void packetSent(Module module, GenericTransmitter transmitter, Packet packet);
 
+	void packetLost(Module module, GenericTransmitter transmitter, Packet packet);
+
 }
