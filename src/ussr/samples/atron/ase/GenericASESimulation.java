@@ -56,6 +56,7 @@ public abstract class GenericASESimulation extends GenericATRONSimulation implem
 		if(hasModularCommander) {
 			new ModularCommander();
 		}
+		
     }
 	
 	protected void simulationHook(PhysicsSimulation simulation) {

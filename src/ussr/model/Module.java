@@ -97,6 +97,9 @@ public class Module extends Entity {
             uniqueID = idCounter++;
         }
     }
+    public Module(int id) {
+    	uniqueID = id;
+    }
 
     /**
      * Set the physics for the module

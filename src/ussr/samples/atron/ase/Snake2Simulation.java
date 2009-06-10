@@ -6,11 +6,7 @@
  */
 package ussr.samples.atron.ase;
 
-import java.awt.AWTEvent;
-import java.awt.Toolkit;
 import java.util.ArrayList;
-
-import mc.ModularCommander;
 
 import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
@@ -18,28 +14,27 @@ import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
-import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsParameters.Material;
+import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.GenericATRONSimulation;
+import ussr.samples.atron.network.ATRONReflectionController;
 import ussr.samples.atron.network.ATRONReflectionEventController;
-import ussr.util.WindowSaver;
 import ussr.util.supervision.CMTracker;
-import ussr.util.supervision.CommunicationLoadMonitor;
 import ussr.util.supervision.RadioConnection;
 import ussr.util.supervision.WifiCMBroadcaster;
 
 
 
 
-public class Snake8Simulation extends GenericASESimulation implements PhysicsObserver {
-	
+public class Snake2Simulation extends GenericASESimulation {
+
 	public static void main( String[] args ) {
 		initASE();
-		new Snake8Simulation().main();
+		new Snake2Simulation().main();
     }
 	
 	protected ArrayList<ModulePosition> buildSnake(int length) {
@@ -64,6 +59,7 @@ public class Snake8Simulation extends GenericASESimulation implements PhysicsObs
 	}
 
 	protected ArrayList<ModulePosition> buildRobot() {
-		return buildSnake(8);
+		return buildSnake(2);
 	}
+	
 }
