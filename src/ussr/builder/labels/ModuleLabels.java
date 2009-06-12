@@ -10,7 +10,7 @@ import ussr.model.Module;
  * @author Konstantinas
  *
  */
-public class ModuleLabels extends Label {
+public class ModuleLabels extends EntityLabels {
 	
 	/**
 	 * The module as an entity in simulation.
@@ -33,21 +33,41 @@ public class ModuleLabels extends Label {
 	 * @return true, if passed label was assigned to the module, false - if not. 
 	 */
 	@Override
-	public boolean has(String label) {
-		
+	public boolean has(String label) {		
 		if (getLabels(module).contains(label)){
 			return true;
 		}
 		return false;		
 	}
 	
-	public  void sendMessage(/*Connector connector, Packet packet*/){
+	public void sendMessage(int connectorNr, Packet packet){
+		//if(module.getConnectors().get(connectorNr).isConnected()){
 		int amountTransmitters = module.getTransmitters().size();
-		System.out.println("AmountTransmitters: " + amountTransmitters );
-	/*	for (int i=0;i<amountTransmitters; i++){
-			module.getTransmitters().get(i).send(packet);
-
-		}*/
+		if (connectorNr>=0 && connectorNr<=amountTransmitters-1){
+			module.getTransmitters().get(connectorNr).send(packet);			
+			System.out.println("Send it");
+		}else throw new Error ("Some");
+		
+			
+			
+		//} else throw new Error("Message can not be send because connector Nr:"+ connectorNr+" is not connected");			
+	}
+	
+	public String receiveMessage(int connectorNr){
+		//module.getReceivers().get(connectorNr).getData().toString();
+		//System.out.println("RECEIVED DATA:"+ module.getReceivers().get(connectorNr).getData().toString());
+		
+		//if(module.getConnectors().get(connectorNr).isConnected()){
+			//System.out.println("Connected");
+		//if (module.getReceivers().get(connectorNr).canReceiveFrom(module.getTransmitters().get(5))){
+			//System.out.println("CAN Receive:");
+		//}
+		
+		//}
+		
+		// else throw new Error("Message can not be send because connector Nr:"+ connectorNr+" is not connected");
+		
+		return module.getReceivers().get(connectorNr).getData().toString();
 	}
 
 }

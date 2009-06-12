@@ -9,7 +9,7 @@ import ussr.model.Entity;
  * @author Konstantinas
  *
  */
-public abstract class Label implements Labels {
+public abstract class EntityLabels implements Labels {
 	
 	/**
 	 * Returns the labels assigned to the entity.

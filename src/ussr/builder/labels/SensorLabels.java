@@ -1,5 +1,6 @@
 package ussr.builder.labels;
 
+import ussr.comm.Packet;
 import ussr.model.Sensor;
 
 /**
@@ -8,7 +9,7 @@ import ussr.model.Sensor;
  * @author Konstantinas
  *
  */
-public class SensorLabels extends Label {
+public class SensorLabels extends EntityLabels {
 	
 	/**
 	 * The sensor as an entity in simulation.
@@ -36,6 +37,18 @@ public class SensorLabels extends Label {
 			return true;
 		}
 		return false;		
+	}
+
+	@Override
+	public void sendMessage(int connectorNr, Packet packet) {
+		
+	}
+
+	@Override
+	public String receiveMessage(int connectorNr) {
+		return null;
+		// TODO Auto-generated method stub
+		
 	}	
 	
 }

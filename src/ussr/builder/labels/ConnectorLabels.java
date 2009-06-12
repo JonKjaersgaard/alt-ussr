@@ -1,5 +1,6 @@
 package ussr.builder.labels;
 
+import ussr.comm.Packet;
 import ussr.model.Connector;
 
 /**
@@ -7,7 +8,7 @@ import ussr.model.Connector;
  * previously assigned to the connector;
  * @author Konstantinas
  */
-public class ConnectorLabels extends Label {
+public class ConnectorLabels extends EntityLabels {
 	
 	/**
 	 * The connector as an entity in simulation.
@@ -35,6 +36,19 @@ public class ConnectorLabels extends Label {
 			return true;
 		}
 		return false;		
+	}
+
+	@Override
+	public void sendMessage(int connectorNr, Packet packet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String receiveMessage(int connectorNr) {
+		return null;
+		// TODO Auto-generated method stub
+		
 	}		
 	
 }
