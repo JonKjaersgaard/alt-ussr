@@ -46,6 +46,10 @@ public abstract class ControllerImpl implements Controller {
     	return module;
     }
     
+    public int getModuleID() {
+    	return module.getID();
+    }
+    
     /**
      * Wait for an event to be signalled on the module object, using Java's built-in
      * notify operation.

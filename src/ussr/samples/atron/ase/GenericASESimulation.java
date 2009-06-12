@@ -30,15 +30,19 @@ import ussr.util.supervision.WifiCMBroadcaster;
 
 public abstract class GenericASESimulation extends GenericATRONSimulation implements PhysicsObserver {
 	
+	
+	/*Monitors*/
 	protected static boolean hasCMTracker = true; 
-	protected static float TIME_PER_CM_UPDATE = 10.0f;
+	protected static float TIME_PER_CM_UPDATE = 5.0f;
 	
 	
-	protected static boolean hasRadioConnection = true; 
-	protected static boolean hasCommunicationLoadMonitor = true;
-	protected static boolean hasCommunicationLostMonitor = true;
+	protected static boolean hasCommunicationLoadMonitor = false;
+	protected static boolean hasCommunicationLostMonitor = false;
 	protected static boolean hasModularCommander = false;
-	protected static boolean hasHalfDuplex= true;
+	
+	/*Communicaiton*/
+	protected static boolean hasRadioConnection = true;
+	protected static boolean hasHalfDuplex= false;
 	
 	protected static RadioConnection radioConnection;
     private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;

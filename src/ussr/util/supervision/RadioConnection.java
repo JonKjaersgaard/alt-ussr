@@ -133,7 +133,7 @@ public class RadioConnection {
 			data = packToASE(data);
 		}
 		Packet packet = new Packet(data);
-		System.out.println("Sending to ussr: "+data.length);
+		System.out.println("Sending to ussr "+data.length+" stk.  bytes");
 		radioTrans.send(packet);
 	}
 	
