@@ -52,10 +52,12 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 		/* Specify realistic collision*/
 		PhysicsParameters.get().setRealisticCollision(true);
 		/* Specify simulation step*/
-		PhysicsParameters.get().setPhysicsSimulationStepSize(0.0035f);
+		//PhysicsParameters.get().setPhysicsSimulationStepSize(0.0035f);
 		/* Specify smallest resolution factor so that simulation can handle more modules.
 		 * This is done in order to "in a way" avoid stack overflow */
 		PhysicsParameters.get().setResolutionFactor(1);
+		
+		//PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);	
 		simulation.runSimulation(null,true);
 	}
 	/**
@@ -79,9 +81,10 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 				};
 			}
 		};
-		atron.setGentle();// Currently builder supports only this type of ATRON
+		atron.setGentle();		
 		simulation.setRobot(atron,"ATRON");
-		simulation.setRobot(atron,"default");
+		//simulation.setRobot(atron,"ATRON super");
+	    simulation.setRobot(atron,"default");
 		
 		/*Set MTRAN robot to simulation and assign default controller to it*/
 		simulation.setRobot(new MTRAN(){

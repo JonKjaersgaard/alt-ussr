@@ -1266,7 +1266,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		}else if (this.chosenMRname.equals(SupportedModularRobots.MTRAN)){
 			guiHelper.passTo(AssistantjTextField,"Select OdinMuscle to chage it with other types of modules");
 		}
-		/*NOTE*/		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.VARIATION));
+		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.VARIATION));
 	}                                              
 
 	/**
@@ -1275,7 +1275,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void oppositeRotationjButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                        
 		//System.out.println("Modular robot generic toolbar-->Opposite");//for debugging 
-		/*note*/		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.OPPOSITE_ROTATION));        
+		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.OPPOSITE_ROTATION));        
 		guiHelper.passTo(AssistantjTextField,"Select " +this.chosenMRname +" module to rotate it opposite ");       
 	}                                                       
 

@@ -20,6 +20,7 @@ import ussr.samples.odin.OdinBuilder;
 import com.jme.math.Matrix3f;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
+import com.jme.scene.batch.GeomBatch;
 import com.jmex.physics.DynamicPhysicsNode;
 
 /**
@@ -109,9 +110,9 @@ public class BuilderHelper {
 	private static final String CONNECTOR ="Connector";
 
 	/**
-	 * Symbol used to extract the connector number from the string.  
+	 * Symbols used to extract the connector number from the string.  
 	 */
-	private static final String SPLIT_SYMBOL = "#";
+	private static final String SPLIT_SYMBOL1 = "#",SPLIT_SYMBOL2 =":";
 
 	/**
 	 * Returns the module type key.
@@ -214,15 +215,15 @@ public class BuilderHelper {
 	 * @param target, spatial target selected in simulation environment.
 	 * @return selected connector number if connector was selected and 1000 if something else. 
 	 */
-	public static int extractConnectorNr(JMESimulation simulation, Spatial target){
-		if(target instanceof TriMesh) {			
-			String name = simulation.getGeometryName((TriMesh)target);
-			if(name!=null && name.contains(CONNECTOR)){							
-				String [] temp = null;	         
-				temp = name.split(SPLIT_SYMBOL);// Split by #, into two parts, line describing the connector. For example "Connector 1 #1"
-				return Integer.parseInt(temp[1].toString());// Take only the connector number, in above example "1" (at the end)					
-			}
-		}
+	public static int extractConnectorNr(JMESimulation simulation, GeomBatch target){
+		System.out.println("Hereee:" +target );					
+			String targetName = target.toString();
+			if(targetName!=null && targetName.contains(CONNECTOR)){							
+				String [] temp1 = null,temp2 = null;	         
+				temp1 = targetName.split(SPLIT_SYMBOL1);// Split by #, into two parts, line describing the connector. For example "Connector mesh for Connector 0 #4: Batch 0"
+				temp2 = temp1[1].toString().split(SPLIT_SYMBOL2);// Take second part and split it by ":".				
+				return Integer.parseInt(temp2[0].toString());// Take only the connector number, in above example "4" (after "#" sign)					
+			}		
 		return 1000 /*means connector extraction failed*/;
 	}
 
