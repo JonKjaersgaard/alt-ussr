@@ -1,4 +1,4 @@
-package ussr.builder.labels.atron;
+package ussr.builder.labels.atronLabels;
 
 import ussr.model.Module;
 import ussr.samples.atron.ATRONController;

@@ -1,24 +1,18 @@
 package ussr.builder;
 
-import java.awt.Color;
-
 import ussr.builder.labels.Labels;
 import ussr.builder.labels.ModuleLabels;
 import ussr.builder.labels.SensorLabels;
-import ussr.builder.labels.atron.AllWheels;
-import ussr.builder.labels.atron.Axle;
-import ussr.builder.labels.atron.FrontAxle;
-import ussr.builder.labels.atron.LeftWheels;
-import ussr.builder.labels.atron.ModulesLabeledAsWheels;
-import ussr.builder.labels.atron.RearAxle;
-import ussr.builder.labels.atron.RightWheels;
-import ussr.builder.labels.atron.Wheel;
-import ussr.comm.GenericReceiver;
-import ussr.comm.Packet;
-import ussr.comm.Receiver;
-import ussr.comm.Transmitter;
-import ussr.model.Connector;
-import ussr.model.Module;
+import ussr.builder.labels.atronLabels.AllWheels;
+import ussr.builder.labels.atronLabels.Axle;
+import ussr.builder.labels.atronLabels.FrontAxle;
+import ussr.builder.labels.atronLabels.LeftFrontSensor;
+import ussr.builder.labels.atronLabels.LeftWheels;
+import ussr.builder.labels.atronLabels.ProximitySensor;
+import ussr.builder.labels.atronLabels.ProximitySensors;
+import ussr.builder.labels.atronLabels.RearAxle;
+import ussr.builder.labels.atronLabels.RightWheels;
+import ussr.builder.labels.atronLabels.Wheel;
 import ussr.model.Sensor;
 import ussr.samples.atron.ATRONController;
 
@@ -33,8 +27,8 @@ public class ATRONControllerDefault extends ATRONController  {
 	private final static float  //distanceSensitivity = 0.000000001f;// for 6 wheeler
 	distanceSensitivity = 0.0001f; // for 2 and 4 wheeler
 
-	private final static float // initialSpeed = 0.3f;// for 6 wheeler
-	initialSpeed = 0.8f; // for 2 and 4 wheeler
+	private final static float  initialSpeed = 0.3f;// for 6 wheeler
+	//initialSpeed = 0.8f; // for 2 and 4 wheeler
 
 	private final static float maximumSpeed = 1 ;
 
@@ -43,10 +37,9 @@ public class ATRONControllerDefault extends ATRONController  {
 	 */
 	@Override
 	public void activate() {
-		/*1*///avoidObstacles1();//uncomment for obstacle avoidance,directly involving labels
-		/*2*/avoidObstacles2();//
-		
-		/*3*///communicate();
+		//avoidObstacles();
+		avoidObstacles1();
+		//communicate();
 	}
 
 	/**
@@ -54,7 +47,7 @@ public class ATRONControllerDefault extends ATRONController  {
 	 * wheelers (meets obstacles and avoids them by turning to the left).Don't forget to uncomment 
 	 * the source code for obstacles in BuilderMultiRobotSimulation.java LOCs 151-152.  
 	 */
-	private void avoidObstacles1(){		
+	private void avoidObstacles(){		
 		yield();
 		/*Get labels of the module*/
 		Labels moduleLabels = new ModuleLabels(module);
@@ -78,37 +71,6 @@ public class ATRONControllerDefault extends ATRONController  {
 			}			
 		}		
 	}
-	
-	private void avoidObstacles2(){		
-		yield();
-		
-		while (true){
-			Wheel leftWheels = new LeftWheels((ATRONController)module.getController(),module);
-			Wheel rightWheels = new RightWheels((ATRONController)module.getController(),module);
-			Wheel allWheels = new AllWheels((ATRONController)module.getController(),module);
-			
-			Axle rearAxle = new RearAxle((ATRONController)module.getController(),module);
-			Axle frontAxle = new FrontAxle((ATRONController)module.getController(),module);
-			
-			//all wheels(left and right) rotate in the same direction
-			leftWheels.rotateContinuously(maximumSpeed);
-			rightWheels.rotateContinuously(-maximumSpeed);
-			
-			//rotate left and right wheels in opposite directions
-			//allWheels.rotateContinuously(1);
-			
-			//rearAxle.turnAngle(15);
-			//frontAxle.turnAngle(15);
-			
-			
-		}		
-	}
-	
-	
-	
-	
-	
-	
 
 	/**
 	 * Rotates wheel modules in appropriate directions for specific amount of time
@@ -121,55 +83,86 @@ public class ATRONControllerDefault extends ATRONController  {
 		if(labels.has("wheel")&& labels.has("left")) rotateContinuous(-dir);
 		if(time>0) try { Thread.sleep(time); } catch(InterruptedException 
 				exn) { ; }
-	}
+	}	
+	
+	
+	private final static float distanceSensitivity1 = 0.9f;
+	/**
+	 * 
+	 */
+	private void avoidObstacles1(){		
+		yield();	
+		
+		/*Define objects of entities to manipulate, which where previously labeled*/
+		
+		//Wheel allWheels = new AllWheels(module);
+		Wheel leftWheels = new LeftWheels(module);
+		Wheel rightWheels = new RightWheels(module);
+		Axle frontAxle = new FrontAxle(module);
+		Axle rearAxle = new RearAxle(module);		
+		ProximitySensor leftFrontSensor = new LeftFrontSensor(module); 
+		ProximitySensor rightFrontSensor = new LeftFrontSensor(module);
+		
+		while (true){			
 
-	private void communicate(){
-		yield();
-		while(true) {
+			leftWheels.rotateContinuously(-maximumSpeed);
+			rightWheels.rotateContinuously(maximumSpeed);
+			sleep(100000);
+			leftWheels.stop();
+			rightWheels.stop();
+			sleep(100000);
+			frontAxle.turnAngle(-5);
+			rearAxle.turnAngle(5);
+			sleep(100000);
+			leftWheels.rotateContinuously(maximumSpeed);
+			rightWheels.rotateContinuously(-maximumSpeed);
+			sleep(100000);
+			leftWheels.stop();
+			rightWheels.stop();
+			sleep(100000);
+			frontAxle.turnAngle(5);
+			rearAxle.turnAngle(-5);
+			sleep(100000);
+			//
 			
-			/*Labels moduleLabels = new ModuleLabels(module);
-			if (moduleLabels.has("wheel")){
-				int amountConnectors =  module.getConnectors().size();
-				for (int connector=0;connector<amountConnectors;connector++){
-					Connector  currentConnector = module.getConnectors().get(connector);
-					if (currentConnector.isConnected()){						
-					byte[] data= {(byte)module.getID(),(byte)connector};				     
-					sendMessage(data, (byte)data.length, (byte)connector);
-					System.out.println("SendMessage: " + data[0]+","+data[1]);
-					}}}
-			if (moduleLabels.has("axle")){
+			
+			
+			float leftSensorValue =leftFrontSensor.getValue();
+			float rightSensorValue = rightFrontSensor.getValue();
+			
+	/*		if (leftSensorValue < distanceSensitivity1|| rightSensorValue < distanceSensitivity1){
+				System.out.println("LeftSensor Value" + leftSensorValue);
+				System.out.println("RightSensor Value" + rightSensorValue);
+				leftWheels.stop();
+				rightWheels.stop();
+				sleep(100000);
 				
-			};*/
-			
-			Labels moduleLabels = new ModuleLabels(module);
-			if (moduleLabels.has("wheel")){			
-				int amountTrasmitters =  module.getTransmitters().size();
-				//System.out.println("Amount of transmitters:" + amountTrasmitters);
-				for (int t=0;t<amountTrasmitters;t++){
-					Transmitter transmitter = module.getTransmitters().get(t);
-					transmitter.send(new Packet(module.getID()));
-					//System.out.println(module.getID()+" Message send");
-				}
-			}
-			
-			if (moduleLabels.has("axle")){
-				int amountReceivers =  module.getReceivers().size();
-				//System.out.println("Amount of receivers:" + amountReceivers);
-				for (int i=0; i<amountReceivers;i++){
-					Receiver receiver = module.getReceivers().get(i);					
-					if(receiver.hasData()) {						
-						Packet data = receiver.getData();
-						module.setColor(Color.RED);
-						System.out.println(module.getID()+" Message recieved from "+data.get(0));
-					}
-				}
-			}
+				
+				//leftWheels.rotateContinuously(maximumSpeed);
+				//rightWheels.rotateContinuously(-maximumSpeed);
+				//sleep(1000);
+				//rearAxle.turnAngle(-10);
+				//drive (false,maximumSpeed);
+				
+				//rearAxle.turnAngle(10);
+				//frontAxle.turnAngle(20);
+			}else if (leftSensorValue==0f||leftSensorValue==1f||rightSensorValue==0f||rightSensorValue==1f){
+				
+			}*/		
 		}
-	}
-	  public void handleMessage(byte[] message, int messageSize, int channel) {
-		  System.out.println("Message:"+ message);
-	    }
-
-
-
+	}	
+	
+	private void sleep(int time){		
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	} 
+	
+	private void communicate(){
+		
+	}	
 }

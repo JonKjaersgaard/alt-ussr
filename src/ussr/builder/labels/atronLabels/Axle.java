@@ -1,4 +1,4 @@
-package ussr.builder.labels.atron;
+package ussr.builder.labels.atronLabels;
 
 public interface Axle {
 	

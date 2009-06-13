@@ -1,15 +1,10 @@
-package ussr.builder.labels.atron;
+package ussr.builder.labels.atronLabels;
 
-import ussr.builder.labels.Labels;
-import ussr.builder.labels.ModuleLabels;
 import ussr.model.Module;
-import ussr.samples.atron.ATRONController;
 
 public abstract class ModulesLabeledAsWheels implements Wheel {
 
 	public float  speedOfRotation;
-
-	public ATRONController atronController;
 
 	public Module module;
 	

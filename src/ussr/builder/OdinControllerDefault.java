@@ -62,10 +62,13 @@ public class OdinControllerDefault extends OdinController {
 		
 		while (true){
 			this.delay(1000); 
-		if (module.getProperty(BuilderHelper.getModuleTypeKey()).contains("Muscle")){	
-				actuateContinuous(actuationSpeed);		
+		if (module.getProperty(BuilderHelper.getModuleTypeKey()).contains("Muscle")){
+	
+				actuateContinuous(actuationSpeed);			
+		
 			}
 		yield(); 
-		}		
+		}
+		
 	}
 }

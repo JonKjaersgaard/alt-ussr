@@ -1,7 +1,9 @@
-package ussr.builder.labels.atron;
+package ussr.builder.labels.atronLabels;
 
 public interface Wheel {
 	
 	public void rotateContinuously(float speed);
+	
+	public void stop();
 
 }
