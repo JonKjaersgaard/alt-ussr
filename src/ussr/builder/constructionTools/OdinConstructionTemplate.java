@@ -46,15 +46,15 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 	public final static RotationDescription ROTATION0 = new RotationDescription(0,0,pi/4);
 	public final static RotationDescription ROTATION1 = new RotationDescription(0,-pi/4,0);
 	public final static RotationDescription ROTATION2 = new RotationDescription(0,pi/4,0);										  
-	public final static RotationDescription ROTATION3 = new RotationDescription(0,0,-pi/4);										  
-	public final static RotationDescription ROTATION4 = new RotationDescription(0,5*pi/4,-5*pi/2);
-	public final static RotationDescription ROTATION5 = new RotationDescription(0,-5*pi/4,-5*pi/2);
-	public final static RotationDescription ROTATION6 = new RotationDescription(0,-pi/4,-pi/2);// rotation5 +pi for y and +2*pi for z
-	public final static RotationDescription ROTATION7 = new RotationDescription(0,pi/4,-pi/2);// rotation4 -pi for y and +2*pi for z
-	public final static RotationDescription ROTATION8 = new RotationDescription(0,0,-5*pi/4);// rotation3 +pi/2 for z	
-	public final static RotationDescription ROTATION9 = new RotationDescription(0,5*pi/4,0);//rotation2 +pi for y
-	public final static RotationDescription ROTATION10 = new RotationDescription(0,-5*pi/4,0);//rotation1 -pi for y
-	public final static RotationDescription ROTATION11= new RotationDescription(0,0,5*pi/4);//rotation0 + pi for z
+	public final static RotationDescription ROTATION3 = new RotationDescription(0,0,-pi/4);	
+	public final static RotationDescription ROTATION4 = new RotationDescription(0,-pi/2,pi/4);
+	public final static RotationDescription ROTATION5 = new RotationDescription(0,pi/2,pi/4);
+	public final static RotationDescription ROTATION6 = new RotationDescription(0,-pi/2,-pi/4);
+	public final static RotationDescription ROTATION7 = new RotationDescription(0,pi/2,-pi/4);
+	public final static RotationDescription ROTATION8 = new RotationDescription(0,0,-5*pi/4);
+	public final static RotationDescription ROTATION9 = new RotationDescription(0,5*pi/4,0);
+	public final static RotationDescription ROTATION10 = new RotationDescription(0,-5*pi/4,0);
+	public final static RotationDescription ROTATION11= new RotationDescription(0,0,5*pi/4);
 	
 	/**
 	 * Global rotation of OdinBall (also called CCP joint)

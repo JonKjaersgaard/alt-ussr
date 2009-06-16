@@ -1,5 +1,7 @@
 package ussr.builder;
 
+import java.util.HashMap;
+import java.util.Map;
 import ussr.builder.labels.Labels;
 import ussr.builder.labels.ModuleLabels;
 import ussr.builder.labels.SensorLabels;
@@ -13,6 +15,11 @@ import ussr.builder.labels.atronLabels.ProximitySensors;
 import ussr.builder.labels.atronLabels.RearAxle;
 import ussr.builder.labels.atronLabels.RightWheels;
 import ussr.builder.labels.atronLabels.Wheel;
+import ussr.comm.CommunicationMonitor;
+import ussr.comm.GenericReceiver;
+import ussr.comm.GenericTransmitter;
+import ussr.comm.Packet;
+import ussr.model.Module;
 import ussr.model.Sensor;
 import ussr.samples.atron.ATRONController;
 
@@ -22,7 +29,7 @@ import ussr.samples.atron.ATRONController;
  * @author Konstantinas
  *
  */
-public class ATRONControllerDefault extends ATRONController  {
+public class ATRONControllerDefault extends ATRONController{
 
 	private final static float  //distanceSensitivity = 0.000000001f;// for 6 wheeler
 	distanceSensitivity = 0.0001f; // for 2 and 4 wheeler
@@ -37,8 +44,8 @@ public class ATRONControllerDefault extends ATRONController  {
 	 */
 	@Override
 	public void activate() {
-		//avoidObstacles();
-		avoidObstacles1();
+		avoidObstacles();
+		//avoidObstacles1();
 		//communicate();
 	}
 
@@ -84,17 +91,15 @@ public class ATRONControllerDefault extends ATRONController  {
 		if(time>0) try { Thread.sleep(time); } catch(InterruptedException 
 				exn) { ; }
 	}	
-	
-	
+
+
 	private final static float distanceSensitivity1 = 0.9f;
 	/**
 	 * 
 	 */
 	private void avoidObstacles1(){		
-		yield();	
-		
+		yield();
 		/*Define objects of entities to manipulate, which where previously labeled*/
-		
 		//Wheel allWheels = new AllWheels(module);
 		Wheel leftWheels = new LeftWheels(module);
 		Wheel rightWheels = new RightWheels(module);
@@ -102,7 +107,7 @@ public class ATRONControllerDefault extends ATRONController  {
 		Axle rearAxle = new RearAxle(module);		
 		ProximitySensor leftFrontSensor = new LeftFrontSensor(module); 
 		ProximitySensor rightFrontSensor = new LeftFrontSensor(module);
-		
+
 		while (true){			
 
 			leftWheels.rotateContinuously(-maximumSpeed);
@@ -123,46 +128,69 @@ public class ATRONControllerDefault extends ATRONController  {
 			frontAxle.turnAngle(5);
 			rearAxle.turnAngle(-5);
 			sleep(100000);
-			//
-			
-			
-			
 			float leftSensorValue =leftFrontSensor.getValue();
 			float rightSensorValue = rightFrontSensor.getValue();
-			
-	/*		if (leftSensorValue < distanceSensitivity1|| rightSensorValue < distanceSensitivity1){
+
+			/*		if (leftSensorValue < distanceSensitivity1|| rightSensorValue < distanceSensitivity1){
 				System.out.println("LeftSensor Value" + leftSensorValue);
 				System.out.println("RightSensor Value" + rightSensorValue);
 				leftWheels.stop();
 				rightWheels.stop();
 				sleep(100000);
-				
-				
+
+
 				//leftWheels.rotateContinuously(maximumSpeed);
 				//rightWheels.rotateContinuously(-maximumSpeed);
 				//sleep(1000);
 				//rearAxle.turnAngle(-10);
 				//drive (false,maximumSpeed);
-				
+
 				//rearAxle.turnAngle(10);
 				//frontAxle.turnAngle(20);
 			}else if (leftSensorValue==0f||leftSensorValue==1f||rightSensorValue==0f||rightSensorValue==1f){
-				
+
 			}*/		
 		}
 	}	
-	
+
 	private void sleep(int time){		
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	} 
-	
+
+	Map<Packet,Module> registry = new HashMap<Packet,Module>();
+
 	private void communicate(){
-		
-	}	
+		yield();
+
+		while (true){
+			int amountConnectors = module.getConnectors().size();
+			for (int connector=0; connector<amountConnectors; connector++){
+				if (module.getConnectors().get(connector).isConnected()){
+					byte[] message = new byte[] {(byte)module.getID()};
+					sendMessage(message, (byte)message.length, (byte)connector);					
+					module.getReceivers().size();
+					
+				}				
+			}
+			for (int connector=0; connector<amountConnectors; connector++){
+				if (module.getConnectors().get(connector).isConnected()){
+			packetReceived(module.getReceivers().get(connector));
+				}
+			}
+			
+		}
+
+	}
+
+	public void handleMessage(byte[] incoming, int messageSize, int channel) {
+		System.out.println("Message:"+ incoming[0]);
+
+	}
+
 }

@@ -2,6 +2,7 @@ package ussr.builder.constructionTools;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
@@ -67,7 +68,21 @@ public class ATRONOperationsTemplate extends CommonOperationsTemplate{
 	 */
 	@Override
 	public void variateSpecificModule(Module selectedModule) {		
-		construction.variateModuleProperties(selectedModule);		
+		//construction.variateModuleProperties(selectedModule);
+		String selectedModuleType =	selectedModule.getProperty(BuilderHelper.getModuleTypeKey());		
+		VectorDescription modulePosition = selectedModule.getPhysics().get(0).getPosition();
+		RotationDescription moduleRotation = selectedModule.getPhysics().get(0).getRotation();
+		List<Color> colorsComponents = new LinkedList<Color>();
+		ArrayList<Color> colorsConectors = new ArrayList<Color>();		
+		if (selectedModuleType.equalsIgnoreCase ("ATRON gentle")){
+			
+			BuilderHelper.deleteModule(selectedModule);
+			colorsComponents.add(Color.RED); colorsComponents.add(Color.BLUE);
+			colorsConectors.add(Color.BLACK); colorsConectors.add(Color.WHITE);colorsConectors.add(Color.BLACK); colorsConectors.add(Color.WHITE);colorsConectors.add(Color.BLACK); colorsConectors.add(Color.WHITE);colorsConectors.add(Color.BLACK); colorsConectors.add(Color.WHITE);
+			addNewModule(new ModulePosition("ATRON rubberRing gentle"+BuilderHelper.getRandomInt(),"ATRON rubberRing gentle",modulePosition,moduleRotation),colorsComponents,colorsConectors);			
+		}else if (selectedModuleType.equalsIgnoreCase("ATRON rubberRing gentle")){
+			
+		}		
 	}
 
 	/**

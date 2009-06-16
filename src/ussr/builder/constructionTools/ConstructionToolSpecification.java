@@ -121,7 +121,8 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 */
 	@Override
 	protected void pickModuleComponent(JMEModuleComponent component) {		
-		this.selectedModule = component.getModel();		
+		this.selectedModule = component.getModel();
+		System.out.println("HERE:" + selectedModule.getProperty(BuilderHelper.getModuleTypeKey()));
 		callAppropriateTool();
 	}
 
@@ -133,6 +134,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	protected void pickTarget(Spatial target) {
 		if (toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){
 		this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);
+		System.out.println("HERE1:" + selectedConnectorNr);
 		}
 	}
 	
