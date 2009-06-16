@@ -27,7 +27,9 @@ import ussr.samples.GenericSimulation;
  * 
  * @author david
  * @author Konstantinas (modified for builder). In particular changed the visibility
- * of method called "allConnections(ArrayList<ModulePosition> modulePos)" from private to public
+ * of method called "allConnections(ArrayList<ModulePosition> modulePos)" from private to public and
+ * modified rotations ORI1Y and ORI1XY by rotating by pi around z axis. The last was done
+ * during transition from jME1.0 to jME2.0.
  */
 public abstract class MTRANSimulation extends GenericSimulation implements PhysicsObserver {
 	private static float unit = 0.065f*2+0.01f;
@@ -85,8 +87,8 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
     public static final RotationDescription ORI3 = new RotationDescription(-pi/2,pi/2,0);
     public static final RotationDescription ORI3X = new RotationDescription(pi,pi/2,0);
     
-    public static final RotationDescription ORI1Y = new RotationDescription(-pi/2,pi,pi/2);
-	public static final RotationDescription ORI1XY = new RotationDescription(pi,pi,pi/2);
+    public static final RotationDescription ORI1Y = new RotationDescription(-pi/2,0,pi/2+pi);
+	public static final RotationDescription ORI1XY = new RotationDescription(pi,0,pi/2+pi);
         
     public static final RotationDescription ORI2Y = new RotationDescription(pi/2+pi,pi,0);
     public static final RotationDescription ORI2XY = new RotationDescription(pi,pi,0);
