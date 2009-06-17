@@ -5,17 +5,10 @@ import java.util.Map;
 import ussr.builder.labels.Labels;
 import ussr.builder.labels.ModuleLabels;
 import ussr.builder.labels.SensorLabels;
-import ussr.builder.labels.atronLabels.ATRONWheelModule;
-import ussr.builder.labels.atronLabels.AllWheels;
-import ussr.builder.labels.atronLabels.Axle;
-import ussr.builder.labels.atronLabels.FrontAxle;
-import ussr.builder.labels.atronLabels.LeftFrontSensor;
-import ussr.builder.labels.atronLabels.LeftWheels;
-import ussr.builder.labels.atronLabels.ProximitySensor;
-import ussr.builder.labels.atronLabels.ProximitySensors;
-import ussr.builder.labels.atronLabels.RearAxle;
-import ussr.builder.labels.atronLabels.RightWheels;
-import ussr.builder.labels.atronLabels.Wheel;
+import ussr.builder.labels.abstractLabels.ATRONWheelLabeledModule;
+import ussr.builder.labels.abstractLabels.Axle;
+import ussr.builder.labels.abstractLabels.ATRONAxleLabeledModule;
+import ussr.builder.labels.abstractLabels.Wheel;
 import ussr.comm.Packet;
 import ussr.model.Module;
 import ussr.model.Sensor;
@@ -98,14 +91,17 @@ public class ATRONControllerDefault extends ATRONController{
 		/*Define objects of entities to manipulate, which where previously labeled*/
 		//Wheel allWheels = new AllWheels(module);
 		//Wheel leftWheels = new LeftWheels(module);
-		Wheel leftWheels =  new ATRONWheelModule(module);
+		Wheel leftWheels =  new ATRONWheelLabeledModule(module);
 		leftWheels.addLabel("wheel");
 		leftWheels.addLabel("left");
 		
-		Wheel rightWheels = new ATRONWheelModule(module);
+		Wheel rightWheels = new ATRONWheelLabeledModule(module);
 		rightWheels.addLabel("wheel");
 		rightWheels.addLabel("right");
 		
+		Axle frontAxle = new ATRONAxleLabeledModule(module);
+		frontAxle.addLabel("axle");
+		frontAxle.addLabel("front");
 		
 		//Wheel rightWheels = new RightWheels(module);
 		//Axle frontAxle = new FrontAxle(module);
@@ -121,18 +117,18 @@ public class ATRONControllerDefault extends ATRONController{
 			leftWheels.stop();
 			rightWheels.stop();
 			sleep(100000);
-			//frontAxle.turnAngle(-10);
+			frontAxle.turnAngle(-10);
 			//rearAxle.turnAngle(10);
-			//sleep(100000);			
+			sleep(100000);			
 			leftWheels.rotateContinuously(maximumSpeed);			
 			rightWheels.rotateContinuously(-maximumSpeed);
 			sleep(100000);
 			leftWheels.stop();			
 		    rightWheels.stop();
 			sleep(100000);
-			//frontAxle.turnAngle(10);
+			frontAxle.turnAngle(10);
 			//rearAxle.turnAngle(-10);
-			//sleep(100000);
+			sleep(100000);
 			//float leftSensorValue =leftFrontSensor.getValue();
 			//float rightSensorValue = rightFrontSensor.getValue();
 
