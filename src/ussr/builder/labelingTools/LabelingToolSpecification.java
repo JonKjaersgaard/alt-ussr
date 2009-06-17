@@ -1,7 +1,7 @@
 package ussr.builder.labelingTools;
 
 import javax.swing.JOptionPane;
-import com.jme.scene.Spatial;
+import com.jme.scene.Geometry;
 import ussr.builder.BuilderHelper;
 import ussr.builder.QuickPrototyping;
 import ussr.model.Module;
@@ -96,7 +96,7 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 * Here the connector number is extracted from the string of TriMesh. Initial format of string is for example: "Connector 1 #1"
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickTarget(com.jme.scene.Spatial)
 	 */
-	protected void pickTarget(Spatial target) {		
+	protected void pickTarget(Geometry target) {		
 		this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);		
 	}
 

@@ -3,9 +3,8 @@ package ussr.builder.experimental;
 import com.jme.math.Matrix3f;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
-import com.jme.scene.Spatial;
+import com.jme.scene.Geometry;
 import com.jme.scene.TriMesh;
-
 import ussr.builder.QuickPrototyping;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.description.geometry.RotationDescription;
@@ -85,7 +84,7 @@ public class MtranExperiment extends CustomizedPicker {
 	}
 
 	@Override
-	protected void pickTarget(Spatial target) {
+	protected void pickTarget(Geometry target) {
 		if(target instanceof TriMesh) {			
 			String name = simulation.getGeometryName((TriMesh)target);
 			if(name!=null && name.contains("Connector")){ 

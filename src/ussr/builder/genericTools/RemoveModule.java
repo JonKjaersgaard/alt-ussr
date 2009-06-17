@@ -1,6 +1,6 @@
 package ussr.builder.genericTools;
 
-import com.jme.scene.Spatial;
+import com.jme.scene.Geometry;
 import ussr.builder.BuilderHelper;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
@@ -16,7 +16,7 @@ public class RemoveModule  extends CustomizedPicker{
 	 * Here not used, because it is enough of pickModuleComponent(JMEModuleComponent component) method (look beneath).
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickTarget(com.jme.scene.Spatial)
 	 */
-	protected void pickTarget(Spatial target) {	}
+	protected void pickTarget(Geometry target) {	}
 
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
 	 * Handles identification of selected module and removal of its components. 

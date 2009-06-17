@@ -3,9 +3,8 @@ package ussr.builder.genericTools;
 import com.jme.math.Matrix3f;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
-import com.jme.scene.Spatial;
+import com.jme.scene.Geometry;
 import com.jmex.physics.DynamicPhysicsNode;
-
 import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
@@ -73,7 +72,7 @@ public class RotateModulesComponents extends CustomizedPicker {
 	 * Here not used, because it is enough of pickModuleComponent(JMEModuleComponent component) method (look above).
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickTarget(com.jme.scene.Spatial)
 	 */
-	protected void pickTarget(Spatial target) {}
+	protected void pickTarget(Geometry target) {}
 
 	/**
 	 * @param component

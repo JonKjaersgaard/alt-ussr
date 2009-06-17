@@ -1,10 +1,10 @@
 package ussr.builder.experimental;
 
 import java.util.ArrayList;
-
 import com.jme.math.Matrix3f;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
+import com.jme.scene.Geometry;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
 
@@ -145,7 +145,7 @@ public class NewSelection extends CustomizedPicker {
 	}	
 
 	@Override
-	protected void pickTarget(Spatial target) {
+	protected void pickTarget(Geometry target) {
 		if(target instanceof TriMesh) {			
 			String name = simulation.getGeometryName((TriMesh)target);
 			if(name!=null && name.contains("Connector")){ 

@@ -1,7 +1,7 @@
 package ussr.builder.constructionTools;
 
 import javax.swing.JOptionPane;
-import com.jme.scene.Spatial;
+import com.jme.scene.Geometry;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
@@ -131,7 +131,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickTarget(com.jme.scene.Spatial)
 	 */
 	@Override
-	protected void pickTarget(Spatial target) {
+	protected void pickTarget(Geometry target) {
 		if (toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){
 		this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);
 		System.out.println("HERE1:" + selectedConnectorNr);

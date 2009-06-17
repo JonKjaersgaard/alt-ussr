@@ -4,6 +4,8 @@ import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.pickers.CustomizedPicker;
 import java.awt.Color;
+
+import com.jme.scene.Geometry;
 import com.jme.scene.Spatial;
 
 /**
@@ -24,7 +26,7 @@ public class ColorConnectors extends CustomizedPicker {
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickTarget(com.jme.scene.Spatial)
 	 */
 	@Override
-	protected void pickTarget(Spatial target) {	}
+	protected void pickTarget(Geometry target) {	}
 	
 
 	/*  Method executed when the module is selected with the left side of the mouse in simulation environment. 
