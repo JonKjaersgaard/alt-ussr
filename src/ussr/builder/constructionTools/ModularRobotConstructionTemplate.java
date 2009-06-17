@@ -127,9 +127,9 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 		/*Loop through each component of selected module and rotate it with opposite rotation.*/
 		for (int component=0; component<amountComponents;component++){
 			/* The current component of selected module*/
-			JMEModuleComponent selectedModuleComponent= (JMEModuleComponent)selectedModule.getComponent(component);			
+			JMEModuleComponent currentModuleComponent= (JMEModuleComponent)selectedModule.getComponent(component);			
 			Quaternion  rotationQComponent = selectedModule.getComponent(component).getRotation().getRotation();			
-			rotateComponentOpposite(selectedModuleComponent,rotationQComponent);				
+			rotateComponentOpposite(currentModuleComponent,rotationQComponent);				
 		}
 	}	
 

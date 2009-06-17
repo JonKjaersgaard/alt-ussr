@@ -36,7 +36,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	/**
 	 * Supported modular robots: ATRON, MTRAN and Odin.
 	 */
-	private static final String ATRON = "ATRON",MTRAN = "MTRAN", ODIN = "Odin";
+	private static final String ATRON = "ATRON",MTRAN = "MTRAN", ODIN = "Odin",CKBotStandard = "CKBotStandard";
 		
     /**
      * The module selected in simulation environment with the left side of the mouse.
@@ -121,8 +121,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 */
 	@Override
 	protected void pickModuleComponent(JMEModuleComponent component) {		
-		this.selectedModule = component.getModel();
-		System.out.println("HERE:" + selectedModule.getProperty(BuilderHelper.getModuleTypeKey()));
+		this.selectedModule = component.getModel();		
 		callAppropriateTool();
 	}
 
@@ -134,7 +133,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	protected void pickTarget(Geometry target) {
 		if (toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){
 		this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);
-		System.out.println("HERE1:" + selectedConnectorNr);
+		System.out.println("Connector:"+selectedConnectorNr );
 		}
 	}
 	
@@ -144,7 +143,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * and the module type selected in simulation environment is MTRAN. Then the method will complain.	 * 
 	 */
 	private void callAppropriateTool(){
-		if (this.modularRobotName.equals(SupportedModularRobots.ATRON)&& isAtron()||this.modularRobotName.equals(SupportedModularRobots.MTRAN)&& isMtran()||this.modularRobotName.equals(SupportedModularRobots.ODIN)&&isOdin()){		
+		if (this.modularRobotName.equals(SupportedModularRobots.ATRON)&& isAtron()||this.modularRobotName.equals(SupportedModularRobots.MTRAN)&& isMtran()||this.modularRobotName.equals(SupportedModularRobots.ODIN)&&isOdin()||this.modularRobotName.equals(SupportedModularRobots.CKBOTSTANDARD)&&isCKBotStandard()){		
 			callTool();	
 		}else{
 			JOptionPane.showMessageDialog(null, "This module is not an "+modularRobotName+" module. The chosen tool is for "+ modularRobotName+ "modules!","Error", JOptionPane.ERROR_MESSAGE);// Inform the user
@@ -182,6 +181,18 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	private boolean isOdin(){
 		String typeofModule = this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());		
 		if (typeofModule.contains(ODIN)){			
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the module selected in simulation environment is an CKBotStandard module 
+	 * @return true, if selected module is an CKBotStandard module
+	 */
+	private boolean isCKBotStandard(){
+		String typeofModule = this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());		
+		if (typeofModule.contains(CKBotStandard)){			
 			return true;
 		}
 		return false;

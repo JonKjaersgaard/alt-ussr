@@ -177,10 +177,6 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 				}
 			}		 		
 	}
-// FIXME FOR EXPERIMENTATION
-/*	public void moveModuleAccording(int connectorNr, Module selectedModule, Module newMovableModule){
-		experiment(connectorNr,  selectedModule,  newMovableModule);	
-	}*/
 
 	/**
 	 * Rotates selected ATRON module component according to its initial rotation with opposite rotation.
@@ -227,54 +223,4 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 		 * result a lot of time*/
 		rotateComponentOpposite(selectedModuleComponent,rotationQComponent);
 	}
-
-//	FIXME UNDER DEVELOPMENT(IN CASE OF EXTRA TIME)	
-/*	public void experiment(int connectorNr, Module selectedModule, Module newMovableModule){
-						
-		Matrix3f globalRotation = new Matrix3f(1,0,0,0,1,0,0,0,1);
-		//USSR coordinate(Theory)				
-		System.out.println("GAroundX(Y):"+ (Math.asin(globalRotation.m20)*(180/pi)));
-		System.out.println("GAroundY(Z):"+ (Math.atan(globalRotation.m10/globalRotation.m00)*(180/pi)));
-		System.out.println("GAroundZ(X):"+ (Math.atan(globalRotation.m21/globalRotation.m22)*(180/pi)));		
-		 		
-		Quaternion newQ = selectedModule.getPhysics().get(0).getRotation().getRotation();
-
-		VectorDescription vd = selectedModule.getConnectors().get(connectorNr).getPhysics().get(0).getPosition();
-		System.out.println("ConnectorPostion"+ vd.toString() );
-
-		float  X = selectedModule.getPhysics().get(0).getPosition().getX();
-		float  Y = selectedModule.getPhysics().get(0).getPosition().getY();
-		float  Z = selectedModule.getPhysics().get(0).getPosition().getZ();
-
-		Matrix3f selectedMatrix = new  Matrix3f( );
-		selectedMatrix.set(newQ);		
-
-		float aroundX =(float) Math.asin(selectedMatrix.m20);
-		float aroundY =(float) Math.atan(selectedMatrix.m10/selectedMatrix.m00);
-		float aroundZ = (float)Math.atan(selectedMatrix.m21/selectedMatrix.m22);
-
-		System.out.println("AroundX(Y):"+ (Math.asin(selectedMatrix.m20)*(180/pi)));
-		System.out.println("AroundY(Z):"+ (Math.atan(selectedMatrix.m10/selectedMatrix.m00)*(180/pi)));
-		System.out.println("AroundZ(X):"+ (Math.atan(selectedMatrix.m21/selectedMatrix.m22)*(180/pi)));
-
-			//	Matrix3f movableMatrix = new Matrix3f(1,0,0,0,1,0,0,0,1);
-
-		//movableMatrix = BuilderHelper.rotateAround(movableMatrix,"X",aroundX);
-		//movableMatrix = BuilderHelper.rotateAround(movableMatrix,"Y",aroundY);
-//		movableMatrix = BuilderHelper.rotateAround(movableMatrix,"Z",aroundZ);
-		 
-
-		//float tolerance =1.5f;
-		Matrix3f mf; 
-	    mf = BuilderHelper.rotateAround(selectedMatrix,"X",aroundX+90);
-		mf = BuilderHelper.rotateAround(mf,"Y",aroundY+90f); //SN 1.5 //EW0.6		
-		mf = BuilderHelper.rotateAround(mf,"Z",aroundZ+90);//EW 0.6		
-		
-		Quaternion newQaut = new Quaternion();
-		newQaut.fromRotationMatrix(mf);		
-
-		newMovableModule.setRotation(new RotationDescription(newQaut));
-
-		newMovableModule.setPosition(new VectorDescription(X+ATRON.UNIT,Y,Z-ATRON.UNIT));
-	}*/
 }

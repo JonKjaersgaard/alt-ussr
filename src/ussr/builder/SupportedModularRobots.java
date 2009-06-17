@@ -11,5 +11,7 @@ public enum SupportedModularRobots {
 	/*MTRAN is homogeneous*/
 	MTRAN,
 	/*ODIN is heterogeneous*/
-	ODIN;
+	ODIN,
+	/*CKBOT is homogeneous*/
+	CKBOTSTANDARD; //PARTIALLY SUPPORTED
 }

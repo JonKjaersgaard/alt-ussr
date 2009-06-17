@@ -30,6 +30,8 @@ public class SelectOperationsAbstractFactory {
 			selectOperations = new MTRANOperationsTemplate(simulation);  
 		}else if (modularRobotName.equals(SupportedModularRobots.ODIN)){
 			selectOperations = new OdinOperationsTemplate(simulation);  
+		}else if (modularRobotName.equals(SupportedModularRobots.CKBOTSTANDARD)){
+			selectOperations = new CKBotOperationsTemplate(simulation);
 		}else throw new Error("This modular robot is not supported yet or the name of it is misspelled");
 		return selectOperations;		
 	}

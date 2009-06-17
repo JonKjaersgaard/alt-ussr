@@ -1,5 +1,6 @@
 package ussr.builder;
 
+import ckbot.CKBotStandard;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
@@ -133,7 +134,12 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 		simulation.setRobot(new OdinTube(){
 			public Controller createController() {
 				return new OdinControllerDefault();
-			}},"OdinTube");		
+			}},"OdinTube");	
+		 simulation.setRobot(new CKBotStandard(){
+	        	public Controller createController() {
+	        		return new CKBotControllerDefault();
+	        	}},"CKBotStandard");
+		
         /*Create the world description of simulation and set it to simulation*/
 		if(world==null) world = createWorld();
 		simulation.setWorld(world);
@@ -150,8 +156,8 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 	private static WorldDescription createWorld() {
 		WorldDescription world = new WorldDescription();	        
 		world.setPlaneSize(100);		
-	  	ObstacleGenerator generator = new ObstacleGenerator();
-	    generator.obstacalize(obstacleType, world); // activate to add obstacles
+	  	//ObstacleGenerator generator = new ObstacleGenerator();
+	    //generator.obstacalize(obstacleType, world); // activate to add obstacles
 	    // world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 		return world;
 	}

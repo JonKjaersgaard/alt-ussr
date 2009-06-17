@@ -19,8 +19,6 @@ import ussr.physics.jme.JMESimulation;
  * @author Konstantinas
  *
  */
-//TODO 1) UPDATE COMMENTS
-//2) REFACTOR method called moveModuleOnNextConnector
 public abstract class CommonOperationsTemplate implements  SelectOperationsTemplate{
 
 	/** 

@@ -71,34 +71,7 @@ public class ATRONOperationsTemplate extends CommonOperationsTemplate{
 	 */
 	@Override
 	public void variateSpecificModule(Module selectedModule) {		
-		//construction.variateModuleProperties(selectedModule);
-		String selectedModuleType =	selectedModule.getProperty(BuilderHelper.getModuleTypeKey());		
-		VectorDescription modulePosition = selectedModule.getPhysics().get(0).getPosition();
-		RotationDescription moduleRotation = selectedModule.getPhysics().get(0).getRotation();
-		List<Color> colorsComponents = new LinkedList<Color>();
-		ArrayList<Color> colorsConectors = new ArrayList<Color>();		
-		if (selectedModuleType.equalsIgnoreCase ("ATRON gentle")){
-			
-			ATRON atron = new ATRON(){
-				public Controller createController() {
-					return new ATRONControllerDefault() {
-						public void activate() {
-							//delay(10000);
-							super.activate();
-						}
-					};
-				}
-			};
-			atron.setRubberRing();
-			selectedModule.getSimulation().setRobot(atron);
-			
-			BuilderHelper.deleteModule(selectedModule);
-			colorsComponents.add(Color.RED); colorsComponents.add(Color.BLUE);
-			colorsConectors.add(Color.BLACK); colorsConectors.add(Color.WHITE);colorsConectors.add(Color.BLACK); colorsConectors.add(Color.WHITE);colorsConectors.add(Color.BLACK); colorsConectors.add(Color.WHITE);colorsConectors.add(Color.BLACK); colorsConectors.add(Color.WHITE);
-			addNewModule(new ModulePosition("ATRON"+BuilderHelper.getRandomInt(),"ATRON",modulePosition,moduleRotation),colorsComponents,colorsConectors);			
-		}else if (selectedModuleType.equalsIgnoreCase("ATRON rubberRing gentle")){
-			
-		}		
+		construction.variateModuleProperties(selectedModule);		
 	}
 
 	/**
