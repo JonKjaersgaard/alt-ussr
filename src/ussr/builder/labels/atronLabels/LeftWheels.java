@@ -1,35 +1,43 @@
 package ussr.builder.labels.atronLabels;
 
+import java.util.ArrayList;
+
 import ussr.builder.labels.Labels;
 import ussr.builder.labels.ModuleLabels;
-import ussr.model.Controller;
 import ussr.model.Module;
 import ussr.samples.atron.ATRONController;
 
 public class LeftWheels extends ModulesLabeledAsWheels {	
+     	
 	
-	public LeftWheels( Module module){		
+	public LeftWheels(Module module){		
 		super.module= module;
-		}
+		addLabel(wheelLabel);
+		addLabel("left");		
+		}	
 	
 	@Override
-	public void rotateContinuously(float speed) {
+	public void rotateContinuously(float speed) {	
+		
 		/*Get labels of the module*/
-		Labels moduleLabels = new ModuleLabels(module);
-		if(moduleLabels.has("wheel")&&moduleLabels.has("left")){
-			ATRONController atronController   = (ATRONController)module.getController();
-			atronController.rotateContinuous(speed);			
-		}		
+		Labels currentModuleLabels = new ModuleLabels(module);		
+		if (checkExistanceLabels(currentModuleLabels,moduleLabels)){
+			rotateWheelContinuously(speed);
+		}			
 	}
 
 	@Override
 	public void stop() {
 		/*Get labels of the module*/
-		Labels moduleLabels = new ModuleLabels(module);
-		if(moduleLabels.has("wheel")&&moduleLabels.has("left")){
-			ATRONController atronController   = (ATRONController)module.getController();
-			atronController.rotateDegrees(1);			
+		Labels currentModuleLabels = new ModuleLabels(module);
+		if(checkExistanceLabels(currentModuleLabels,moduleLabels)){
+			stopWheel();
 		}
 		
 	}
+	
+	
+	
+
+	
 }

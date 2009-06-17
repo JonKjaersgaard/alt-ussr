@@ -17,6 +17,8 @@ public interface Labels {
 	 */
 	public boolean has(String label);
 	
+	public String getLabels();
+	
 	public void sendMessage(int connectorNr, Packet packet);
 	
 	public String receiveMessage(int connectorNr);

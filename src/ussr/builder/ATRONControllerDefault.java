@@ -5,6 +5,7 @@ import java.util.Map;
 import ussr.builder.labels.Labels;
 import ussr.builder.labels.ModuleLabels;
 import ussr.builder.labels.SensorLabels;
+import ussr.builder.labels.atronLabels.ATRONWheelModule;
 import ussr.builder.labels.atronLabels.AllWheels;
 import ussr.builder.labels.atronLabels.Axle;
 import ussr.builder.labels.atronLabels.FrontAxle;
@@ -15,9 +16,6 @@ import ussr.builder.labels.atronLabels.ProximitySensors;
 import ussr.builder.labels.atronLabels.RearAxle;
 import ussr.builder.labels.atronLabels.RightWheels;
 import ussr.builder.labels.atronLabels.Wheel;
-import ussr.comm.CommunicationMonitor;
-import ussr.comm.GenericReceiver;
-import ussr.comm.GenericTransmitter;
 import ussr.comm.Packet;
 import ussr.model.Module;
 import ussr.model.Sensor;
@@ -31,21 +29,20 @@ import ussr.samples.atron.ATRONController;
  */
 public class ATRONControllerDefault extends ATRONController{
 
-	private final static float  //distanceSensitivity = 0.000000001f;// for 6 wheeler
-	distanceSensitivity = 0.0001f; // for 2 and 4 wheeler
-
-	private final static float  initialSpeed = 0.3f;// for 6 wheeler
-	//initialSpeed = 0.8f; // for 2 and 4 wheeler
-
-	private final static float maximumSpeed = 1 ;
+	private final static float distanceSensitivity = 1.0f; // for 2  4 and 6 wheelers
+	private final static float  //initialSpeed = 0.3f;// for 6 wheeler
+	initialSpeed = 0.8f; // for 2 and 4 wheeler
+	private final static float maximumSpeed = 1 ;// for 2  4 and 6 wheelers
 
 	/**
 	 * Initiates the controller in separate thread
 	 */
 	@Override
 	public void activate() {
-		avoidObstacles();
-		//avoidObstacles1();
+		/*In order for ATRON car wheels to drive hack the diameter of the north hemisphere
+		 *from 0.935 to 0.9352 in package "ussr.samples.atron" class ATRON, line of code 69*/
+		//avoidObstacles();//with direct use of labels.
+		avoidObstacles1();// with more abstract use of labels
 		//communicate();
 	}
 
@@ -56,6 +53,7 @@ public class ATRONControllerDefault extends ATRONController{
 	 */
 	private void avoidObstacles(){		
 		yield();
+		sleep(1000);
 		/*Get labels of the module*/
 		Labels moduleLabels = new ModuleLabels(module);
 		while (true){
@@ -66,7 +64,8 @@ public class ATRONControllerDefault extends ATRONController{
 				if(sesorLabels.has("front")) {
 					float sensorValue = sensor.readValue();
 					/*if the modules are close to the obstacles*/
-					if (sensorValue>distanceSensitivity) {
+					System.out.println("SensorValue:"+ sensorValue);
+					if (sensorValue<distanceSensitivity &&sensorValue!=0 ) {
 						/*if it is left wheel module*/
 						if(moduleLabels.has("wheel") && moduleLabels.has("left"))
 							rotateWheels(moduleLabels,-maximumSpeed,1000);
@@ -88,12 +87,9 @@ public class ATRONControllerDefault extends ATRONController{
 	private void rotateWheels (Labels labels, float dir, int time){
 		if(labels.has("wheel")&& labels.has("right")) rotateContinuous(dir);
 		if(labels.has("wheel")&& labels.has("left")) rotateContinuous(-dir);
-		if(time>0) try { Thread.sleep(time); } catch(InterruptedException 
-				exn) { ; }
+		if(time>0) sleep(time) ;
 	}	
-
-
-	private final static float distanceSensitivity1 = 0.9f;
+	
 	/**
 	 * 
 	 */
@@ -101,35 +97,44 @@ public class ATRONControllerDefault extends ATRONController{
 		yield();
 		/*Define objects of entities to manipulate, which where previously labeled*/
 		//Wheel allWheels = new AllWheels(module);
-		Wheel leftWheels = new LeftWheels(module);
-		Wheel rightWheels = new RightWheels(module);
-		Axle frontAxle = new FrontAxle(module);
-		Axle rearAxle = new RearAxle(module);		
-		ProximitySensor leftFrontSensor = new LeftFrontSensor(module); 
-		ProximitySensor rightFrontSensor = new LeftFrontSensor(module);
+		//Wheel leftWheels = new LeftWheels(module);
+		Wheel leftWheels =  new ATRONWheelModule(module);
+		leftWheels.addLabel("wheel");
+		leftWheels.addLabel("left");
+		
+		Wheel rightWheels = new ATRONWheelModule(module);
+		rightWheels.addLabel("wheel");
+		rightWheels.addLabel("right");
+		
+		
+		//Wheel rightWheels = new RightWheels(module);
+		//Axle frontAxle = new FrontAxle(module);
+		//Axle rearAxle = new RearAxle(module);		
+		//ProximitySensor leftFrontSensor = new LeftFrontSensor(module); 
+		//ProximitySensor rightFrontSensor = new LeftFrontSensor(module);
 
 		while (true){			
 
-			leftWheels.rotateContinuously(-maximumSpeed);
+			leftWheels.rotateContinuously(-maximumSpeed);			
 			rightWheels.rotateContinuously(maximumSpeed);
 			sleep(100000);
 			leftWheels.stop();
 			rightWheels.stop();
 			sleep(100000);
-			frontAxle.turnAngle(-5);
-			rearAxle.turnAngle(5);
-			sleep(100000);
-			leftWheels.rotateContinuously(maximumSpeed);
+			//frontAxle.turnAngle(-10);
+			//rearAxle.turnAngle(10);
+			//sleep(100000);			
+			leftWheels.rotateContinuously(maximumSpeed);			
 			rightWheels.rotateContinuously(-maximumSpeed);
 			sleep(100000);
-			leftWheels.stop();
-			rightWheels.stop();
+			leftWheels.stop();			
+		    rightWheels.stop();
 			sleep(100000);
-			frontAxle.turnAngle(5);
-			rearAxle.turnAngle(-5);
-			sleep(100000);
-			float leftSensorValue =leftFrontSensor.getValue();
-			float rightSensorValue = rightFrontSensor.getValue();
+			//frontAxle.turnAngle(10);
+			//rearAxle.turnAngle(-10);
+			//sleep(100000);
+			//float leftSensorValue =leftFrontSensor.getValue();
+			//float rightSensorValue = rightFrontSensor.getValue();
 
 			/*		if (leftSensorValue < distanceSensitivity1|| rightSensorValue < distanceSensitivity1){
 				System.out.println("LeftSensor Value" + leftSensorValue);

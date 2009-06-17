@@ -33,7 +33,7 @@ public class SensorLabels extends EntityLabels {
 	 */
 	@Override
 	public boolean has(String label) {		
-		if (getLabels(sensor).contains(label)){
+		if (getEntityLabels(sensor).contains(label)){
 			return true;
 		}
 		return false;		
@@ -49,6 +49,11 @@ public class SensorLabels extends EntityLabels {
 		return null;
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String getLabels() {	
+		return  getEntityLabels(sensor);
 	}	
 	
 }

@@ -32,7 +32,7 @@ public class ConnectorLabels extends EntityLabels {
 	 */
 	@Override
 	public boolean has(String label) {		
-		if (getLabels(connector).contains(label)){
+		if (getEntityLabels(connector).contains(label)){
 			return true;
 		}
 		return false;		
@@ -49,6 +49,11 @@ public class ConnectorLabels extends EntityLabels {
 		return null;
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public String getLabels() {
+		return getEntityLabels(connector);		
 	}		
 	
 }

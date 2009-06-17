@@ -82,7 +82,7 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 		atron.setGentle();// Currently builder supports only this type of ATRON
 		//atron.setRubberRing();
 		simulation.setRobot(atron,"ATRON");
-		//simulation.setRobot(atron,"ATRON rubberRing gentle");
+		simulation.setRobot(atron,"ATRON rubberRing gentle");
 		simulation.setRobot(atron,"default");
 		
 		/*Set MTRAN robot to simulation and assign default controller to it*/
@@ -150,8 +150,8 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 	private static WorldDescription createWorld() {
 		WorldDescription world = new WorldDescription();	        
 		world.setPlaneSize(100);		
-	  	//ObstacleGenerator generator = new ObstacleGenerator();
-	    //generator.obstacalize(obstacleType, world); // activate to add obstacles
+	  	ObstacleGenerator generator = new ObstacleGenerator();
+	    generator.obstacalize(obstacleType, world); // activate to add obstacles
 	    // world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 		return world;
 	}

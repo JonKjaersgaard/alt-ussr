@@ -17,7 +17,7 @@ public abstract class EntityLabels implements Labels {
 	 * @param entity, the entity to get the labels from
 	 * @return labels, all labels of the entity separated by comma
 	 */
-	public  String getLabels(Entity entity){
+	public  String getEntityLabels(Entity entity){
 		String labels = entity.getProperty(BuilderHelper.getLabelsKey());
 		if (labels ==null){
 			return "none";
@@ -33,4 +33,8 @@ public abstract class EntityLabels implements Labels {
 	 * @return true, if passed label was assigned, false - if not. 
 	 */
 	public abstract boolean has(String label);
+	
+	
+	public abstract String getLabels();
+	
 }

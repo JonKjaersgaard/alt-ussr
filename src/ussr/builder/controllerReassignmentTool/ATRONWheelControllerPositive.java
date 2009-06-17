@@ -16,7 +16,7 @@ public class ATRONWheelControllerPositive extends ControllerStrategy {
 	 */
 	public void activate (Module selectedModule){	
 		controller = (ATRONController)selectedModule.getController();
-			controller.rotateContinuous(1f);// to the right			
+			controller.rotateContinuous(1f);		
 			
 	}
 }

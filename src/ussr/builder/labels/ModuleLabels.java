@@ -34,11 +34,12 @@ public class ModuleLabels extends EntityLabels {
 	 */
 	@Override
 	public boolean has(String label) {		
-		if (getLabels(module).contains(label)){
+		if (getEntityLabels(module).contains(label)){
 			return true;
 		}
 		return false;		
-	}
+	}	
+	
 	
 	public void sendMessage(int connectorNr, Packet packet){
 		//if(module.getConnectors().get(connectorNr).isConnected()){
@@ -68,6 +69,11 @@ public class ModuleLabels extends EntityLabels {
 		// else throw new Error("Message can not be send because connector Nr:"+ connectorNr+" is not connected");
 		
 		return module.getReceivers().get(connectorNr).getData().toString();
+	}
+
+	@Override
+	public String getLabels() {		
+		return getEntityLabels(module);
 	}
 
 }
