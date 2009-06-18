@@ -18,8 +18,6 @@ import ussr.samples.mtran.MTRANSimulation;
  * 0,1,2,3,4 and 5. All methods are specific to MTRAN module design.
  * @author Konstantinas
  */
-//FIXME 1) UPDATE COMMENTS
-//FIXME 2) FIX EXISTING IMPROVEMENTS
 public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate {
 
 	/**
@@ -394,7 +392,7 @@ public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * @param rotationQComponent,the rotation of selected component.	 
 	 */
 //	TODO MAYBE IS NOT USEFULL IN MTRAN CASE, BECAUSE THERE IS OFTEN THE CASE THAT THE SAME ACTIVE OR PASSIVE
-//	BOXES CONNECT WITH THE SAME TYPE OF THE BOX (CONFLICT). TOO MUCH FLEXIBILITY TO USER.	
+//	BOXES CONNECT WITH THE SAME TYPE OF THE BOX (CONFLICT). TOO MUCH FLEXIBILITY FOR THE USER.	
 	public void rotateComponentOpposite(JMEModuleComponent selectedModuleComponent,Quaternion  rotationQComponent) {
 		/*Locate matching rotation Quaternion in moduleRotationMap and rotate with opposite rotation Quaternion
 		 * from the same entry in  moduleRotationMap*/

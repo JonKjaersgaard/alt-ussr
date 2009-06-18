@@ -18,7 +18,6 @@ import ussr.samples.atron.ATRONController;
  * Default controller assigned to ATRON modules in simulation environment.
  * Also includes experimentation with labels.
  * @author Konstantinas
- *
  */
 public class ATRONControllerDefault extends ATRONController{
 

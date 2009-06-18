@@ -18,7 +18,6 @@ import ussr.builder.BuilderHelper;
  * (algorithms) common to children classes. 
  * @author Konstantinas 
  */
-//FIXME 1) UPDATE COMMENTS
 public abstract class ModularRobotConstructionTemplate implements ConstructionTemplate {	
 
 	/**
@@ -243,7 +242,7 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 			for (int component = 0; component<amountComponents; component++ ){
 				curretComponentPosition= currentModule.getComponent(component).getPosition().getVector();
 			}            
-			/*Check exact position and in interval */
+			/*Check exacted position and in interval */
 			if (curretComponentPosition.x == componentPosition.x ||curretComponentPosition.x < componentPosition.x+tolerance && curretComponentPosition.x > componentPosition.x-tolerance){								
 				if (curretComponentPosition.y ==componentPosition.y||curretComponentPosition.y < componentPosition.y+tolerance && curretComponentPosition.y > componentPosition.y-tolerance){					//System.out.println("IN2");
 					if (curretComponentPosition.z ==componentPosition.z||curretComponentPosition.z < componentPosition.z+tolerance && curretComponentPosition.z > componentPosition.z-tolerance){					

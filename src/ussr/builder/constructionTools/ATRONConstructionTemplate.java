@@ -1,14 +1,10 @@
 package ussr.builder.constructionTools;
 
 import ussr.builder.BuilderHelper;
-import ussr.description.geometry.RotationDescription;
-import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.atron.ATRON;
-
-import com.jme.math.Matrix3f;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
@@ -20,8 +16,6 @@ import com.jme.math.Vector3f;
  * specific to ATRON module design.
  * @author Konstantinas
  */
-//FIXME 1) UPDATE COMMENTS
-//FIXME 2) FIX EXISTING IMPROVEMENTS
 public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate  {	
 
 	/**
@@ -162,8 +156,7 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * @param selectedModule,  the ATRON module selected in simulation environment.
 	 * @param movableModuleComponent, the new ATRON module component to move respectively to selected one.
 	 * @param rotationQuatComponent, the rotation of current component of selected  ATRON module.	 
-	 */	
-	
+	 */		
 	public void moveComponentAccording(int connectorNr,Module selectedModule, JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent, boolean loopFlag){
 			/*Loop through and locate the object matching the description of current component(also selected module).*/
 			for (int i=0; i<moduleMap.length;i++){				

@@ -1,8 +1,6 @@
 package ussr.builder.constructionTools;
 
-import com.jme.math.Quaternion;
 import ussr.model.Module;
-import ussr.physics.jme.JMEModuleComponent;
 
 /**
  * Currently supports construction of morphology of modular robots,like: ATRON, MTRAN and Odin, however
@@ -11,8 +9,6 @@ import ussr.physics.jme.JMEModuleComponent;
  * with emphasis on components. Is introducing operations implemented according to TEMPLATE method pattern.    
  * @author Konstantinas 
  */
-//FIXME 1) UPDATE COMMENTS
-//FIXME 2) WORK ON IMPROVEMENTS
 public interface ConstructionTemplate {	
 	
 	/**

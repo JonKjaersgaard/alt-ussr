@@ -17,8 +17,7 @@ import ussr.physics.jme.JMESimulation;
  * All methods are specific to OdinBall module design.
  * @author Konstantinas
  */
-//FIXME 1) UPDATE COMMENTS
-//FIXME 2) FIX EXISTING IMPROVEMENTS
+
 public class OdinBallConstructionTemplate extends OdinConstructionTemplate  {	
 
 	/**

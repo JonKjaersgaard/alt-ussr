@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModuleConnection;
@@ -16,6 +15,7 @@ import ussr.physics.jme.JMESimulation;
 import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.mtran.MTRANSimulation;
 import ussr.samples.odin.OdinBuilder;
+import ckbot.CKBotSimulation;
 
 import com.jme.math.Matrix3f;
 import com.jme.scene.Spatial;
@@ -226,7 +226,7 @@ public class BuilderHelper {
 		return 1000 /*means connector extraction failed*/;
 	}
 
-	//FIXME FIND BETTER PLACE FOR ME
+	//FIXME FIND BETTER PLACE FOR ME + REFACTOR
 	public static void connectAllModules(JMESimulation simulation){
 		if (simulation.worldDescription.getModulePositions().size()>=0){
 
@@ -236,10 +236,12 @@ public class BuilderHelper {
 			ArrayList<ModulePosition> odinAllModulePositions = new ArrayList<ModulePosition>();
 			ArrayList<ModulePosition> odinBallModulePositions = new ArrayList<ModulePosition>(); 
 			ArrayList<ModulePosition> odinOtherModulesPositions = new ArrayList<ModulePosition>();
+			ArrayList<ModulePosition> ckbotModulePositions = new ArrayList<ModulePosition>();
 
 			List<Module> atronModules = new ArrayList<Module>();
 			List<Module> mtranModules = new ArrayList<Module>();
-			List<Module> odinAllModules = new ArrayList<Module>();         	
+			List<Module> odinAllModules = new ArrayList<Module>();
+			List<Module> ckbotModules = new ArrayList<Module>();
 
 
 			for (int i=0; i<amountModules; i++){
@@ -267,8 +269,13 @@ public class BuilderHelper {
 					}else {
 						odinOtherModulesPositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
 					}
-
-				}else{
+				}else if (moduleType.contains("CKBotStandard")){
+					System.out.println("INN");
+					VectorDescription modulePosition = currentModule.getPhysics().get(0).getPosition();
+					ckbotModulePositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
+					ckbotModules.add(currentModule);    
+				}
+				else {
 					// do nothing
 				}
 			}         	
@@ -293,6 +300,12 @@ public class BuilderHelper {
 			simulation.setModules(odinAllModules);
 			simulation.worldDescription.setModulePositions(odinAllModulePositions);
 			simulation.worldDescription.setModuleConnections(odinModuleConnection);                          
+			simulation.placeModules();			
+		            
+			ArrayList<ModuleConnection> ckbotModuleConnection = CKBotSimulation.allConnections(ckbotModulePositions);        	 
+			simulation.setModules(ckbotModules);
+			simulation.worldDescription.setModulePositions(ckbotModulePositions);
+			simulation.worldDescription.setModuleConnections(ckbotModuleConnection);                          
 			simulation.placeModules();
 		}       
 	}

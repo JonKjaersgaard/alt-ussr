@@ -1,7 +1,6 @@
 package ussr.builder.labels;
 
 import ussr.comm.Packet;
-import ussr.model.Connector;
 import ussr.model.Module;
 
 /**

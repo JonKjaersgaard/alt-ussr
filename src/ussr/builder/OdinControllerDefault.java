@@ -1,15 +1,13 @@
 package ussr.builder;
 
 import java.util.ArrayList;
-
-import ussr.model.Module;
 import ussr.samples.odin.OdinController;
 
 /**
  * Default controller for Odin modular robot, which is expanding and contracting 
  * OdinMuscles in the morphology of the modular robot. Solution is dependent on the time,
  * but not on the physical dimensions of the OdinMuscle.
- * @author Konstantinas *
+ * @author Konstantinas 
  */
 public class OdinControllerDefault extends OdinController {
 
@@ -62,10 +60,8 @@ public class OdinControllerDefault extends OdinController {
 		
 		while (true){
 			this.delay(1000); 
-		if (module.getProperty(BuilderHelper.getModuleTypeKey()).contains("Muscle")){
-	
-				actuateContinuous(actuationSpeed);			
-		
+		if (module.getProperty(BuilderHelper.getModuleTypeKey()).contains("Muscle")){	
+				actuateContinuous(actuationSpeed);		
 			}
 		yield(); 
 		}

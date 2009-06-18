@@ -1,11 +1,7 @@
 package ussr.builder.constructionTools;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
-import ussr.model.Module;
+
 
 /**
  * Supports construction of modular robots morphologies on the level of modules, rather than
@@ -13,8 +9,6 @@ import ussr.model.Module;
  * Currently supports ATRON,MTRAN and Odin modular robots.
  * @author Konstantinas
  */
-//TODO 1) UPDATE COMMENTS
-//     2) REFACTOR moveModuleOnNextConnector() METHOD
 public interface SelectOperationsTemplate {
 	
 	/**

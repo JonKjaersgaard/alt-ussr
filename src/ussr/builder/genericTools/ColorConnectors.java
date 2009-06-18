@@ -4,9 +4,8 @@ import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.pickers.CustomizedPicker;
 import java.awt.Color;
-
 import com.jme.scene.Geometry;
-import com.jme.scene.Spatial;
+
 
 /**
  *  Helping tool. Colors the connectors of the module selected with the left side of the mouse in simulation environment. 

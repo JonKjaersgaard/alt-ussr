@@ -1,5 +1,6 @@
 package ussr.builder.constructionTools;
 
+import ussr.builder.BuilderHelper;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
@@ -9,6 +10,12 @@ import ckbot.CKBotStandard;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
+/**
+ * Supports construction of CKBot modular robot morphology in more abstract module oriented way.
+ * In general the main responsibility of this class is to create CKBot modules and add default CKBot
+ * construction module. 
+ * @author Konstantinas
+ */
 public class CKBotConstructionTemplate extends ModularRobotConstructionTemplate {
 
 	/**
@@ -16,11 +23,16 @@ public class CKBotConstructionTemplate extends ModularRobotConstructionTemplate 
 	 */
 	private final static int CONNECTORnr0 = 0,CONNECTORnr1 = 1,CONNECTORnr2 = 2,CONNECTORnr3 = 3;
 
-
 	/**
 	 * The physical lattice distance between two CKBot modules
 	 */
-	private final static float OFFSET = CKBotStandard.UNIT;
+	private final static float OFFSET = CKBotStandard.UNIT+0.0001f;// The increase on 0.0001 in needed to avoid stack overflow. The exception usually looks something like that:"java.lang.StackOverflowError: The ODE step function could not allocate enough stack memory to compute the time step!
+	                                                                                                                                                                            //This is usually caused by low stack size or by too many applied contacts respectively (number of contacts in this step was 743).
+			
+	/**
+	 * Tolerance used to identify if component (module) already exists in interval of space.
+	 */
+	private final static float SERACH_TOLERANCE = 0.06f;
 
 	/**
 	 * The array of objects containing information about CKBot specific rotations.
@@ -28,18 +40,18 @@ public class CKBotConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * to this rotation is CKBotStandard.ROTATION_0_OPPOSITE (Look the first entry in array beneath).
 	 */
 	private final static ModuleRotationMapEntryHelper[] MODULE_ROTATION_MAP =  {
-		new ModuleRotationMapEntryHelper("ROTATION_0",CKBotStandard.ROTATION_0,CKBotStandard.ROTATION_0_OPPOSITE),
-		new ModuleRotationMapEntryHelper("ROTATION_0_OPPOSITE",CKBotStandard.ROTATION_0_OPPOSITE,CKBotStandard.ROTATION_0),
-		new ModuleRotationMapEntryHelper("ROTATION_0_90Z",CKBotStandard.ROTATION_0_90Z,CKBotStandard.ROTATION_0_OPPOSITE_90Z),
-		new ModuleRotationMapEntryHelper("ROTATION_0_OPPOSITE_90Z",CKBotStandard.ROTATION_0_OPPOSITE_90Z,CKBotStandard.ROTATION_0_90Z),
-		new ModuleRotationMapEntryHelper("ROTATION_0_90X",CKBotStandard.ROTATION_0_90X,CKBotStandard.ROTATION_0_MINUS90X),
-		new ModuleRotationMapEntryHelper("ROTATION_0_MINUS90X",CKBotStandard.ROTATION_0_MINUS90X,CKBotStandard.ROTATION_0_90X),
-		new ModuleRotationMapEntryHelper("ROTATION_0_90X_90Y",CKBotStandard.ROTATION_0_90X_90Y,CKBotStandard.ROTATION_0_270X_90Y),
-		new ModuleRotationMapEntryHelper("ROTATION_0_270X_90Y",CKBotStandard.ROTATION_0_270X_90Y,CKBotStandard.ROTATION_0_90X_90Y),
-		new ModuleRotationMapEntryHelper("ROTATION_0_90Y",CKBotStandard.ROTATION_0_90Y,CKBotStandard.ROTATION_0_MINUS90Y),
-		new ModuleRotationMapEntryHelper("ROTATION_0_MINUS90Y",CKBotStandard.ROTATION_0_MINUS90Y,CKBotStandard.ROTATION_0_90Y),
-		new ModuleRotationMapEntryHelper("ROTATION_0_90X_MINUS90Z",CKBotStandard.ROTATION_0_90X_MINUS90Z,CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z),
-		new ModuleRotationMapEntryHelper("ROTATION_0_MINUS90X_MINUS90Z",CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z,CKBotStandard.ROTATION_0_90X_MINUS90Z)
+		new ModuleRotationMapEntryHelper("ROTATION_0",CKBotStandard.ROTATION_0,CKBotStandard.ROTATION_0_OPPOSITE,CKBotStandard.ROTATION_0_90Z),
+		new ModuleRotationMapEntryHelper("ROTATION_0_OPPOSITE",CKBotStandard.ROTATION_0_OPPOSITE,CKBotStandard.ROTATION_0,CKBotStandard.ROTATION_0_OPPOSITE_90Z),
+		new ModuleRotationMapEntryHelper("ROTATION_0_90Z",CKBotStandard.ROTATION_0_90Z,CKBotStandard.ROTATION_0_OPPOSITE_90Z,CKBotStandard.ROTATION_0),
+		new ModuleRotationMapEntryHelper("ROTATION_0_OPPOSITE_90Z",CKBotStandard.ROTATION_0_OPPOSITE_90Z,CKBotStandard.ROTATION_0_90Z,CKBotStandard.ROTATION_0_OPPOSITE),
+		new ModuleRotationMapEntryHelper("ROTATION_0_90X",CKBotStandard.ROTATION_0_90X,CKBotStandard.ROTATION_0_MINUS90X,CKBotStandard.ROTATION_0_90X_90Y),
+		new ModuleRotationMapEntryHelper("ROTATION_0_MINUS90X",CKBotStandard.ROTATION_0_MINUS90X,CKBotStandard.ROTATION_0_90X,CKBotStandard.ROTATION_0_270X_90Y),
+		new ModuleRotationMapEntryHelper("ROTATION_0_90X_90Y",CKBotStandard.ROTATION_0_90X_90Y,CKBotStandard.ROTATION_0_270X_90Y,CKBotStandard.ROTATION_0_90X),
+		new ModuleRotationMapEntryHelper("ROTATION_0_270X_90Y",CKBotStandard.ROTATION_0_270X_90Y,CKBotStandard.ROTATION_0_90X_90Y,CKBotStandard.ROTATION_0_MINUS90X),
+		new ModuleRotationMapEntryHelper("ROTATION_0_90Y",CKBotStandard.ROTATION_0_90Y,CKBotStandard.ROTATION_0_MINUS90Y,CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z),
+		new ModuleRotationMapEntryHelper("ROTATION_0_MINUS90Y",CKBotStandard.ROTATION_0_MINUS90Y,CKBotStandard.ROTATION_0_90Y,CKBotStandard.ROTATION_0_90X_MINUS90Z),
+		new ModuleRotationMapEntryHelper("ROTATION_0_90X_MINUS90Z",CKBotStandard.ROTATION_0_90X_MINUS90Z,CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z,CKBotStandard.ROTATION_0_MINUS90Y),
+		new ModuleRotationMapEntryHelper("ROTATION_0_MINUS90X_MINUS90Z",CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z,CKBotStandard.ROTATION_0_90X_MINUS90Z,CKBotStandard.ROTATION_0_90Y)
 	};
 
 
@@ -51,22 +63,37 @@ public class CKBotConstructionTemplate extends ModularRobotConstructionTemplate 
 		super(simulation);		
 	}
 
+	/**
+	 * Moves newMovableModuleComponent of CKBot module according(respectively) to selected CKBot module preconditions,
+	 * like connector number, initial rotation of selected module component, and so on.
+	 * This method is so-called "Primitive operation" for TEMPLATE method,called "moveModuleAccording(int connectorNr, Module selectedModule, Module newMovableModule)". 
+	 * @param connectorNr, the connector number on selected CKBot module.
+	 * @param selectedModule,  the CKBot module selected in simulation environment.
+	 * @param movableModuleComponent, the new CKBot module component to move respectively to selected one.
+	 * @param rotationQuatComponent, the rotation of current component of selected  CKBot module.	 
+	 */		
 	@Override
 	public void moveComponentAccording(int connectorNr, Module selectedModule,JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent, boolean loopFlag) {
 		/*Loop through and locate the object matching the description of current component(also selected module).*/
 		for (int i=0; i<moduleMap.length;i++){				
 			if (moduleMap[i].getConnectorNr()==connectorNr && moduleMap[i].getInitialRotation().getRotation().equals(rotationQuatComponent)){
 				/*If component(module) already exists at current position, delete movableModuleComponent and newly added module.*/
-				//if (componentExitst(moduleMap[i].getNewPosition(), SERACH_TOLERANCE)&& loopFlag== false){						
-				//BuilderHelper.deleteModule(movableModuleComponent.getModel());											
-				//}else {/*move the component to new position with new rotation*/
+				if (componentExitst(moduleMap[i].getNewPosition(), SERACH_TOLERANCE)&& loopFlag== false){						
+				BuilderHelper.deleteModule(movableModuleComponent.getModel());											
+				}else {/*move the component to new position with new rotation*/
 				moveModuleComponent(movableModuleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
-				//}
+				}
 			}
 		}		 
 
 	}
 
+	/**
+	 * Rotates selected CKBot module component according to its initial rotation with opposite rotation.
+	 * This method is so-called "Primitive operation" for TEMPLATE method, called "rotateModuleOpposite(Module selectedModule)". 	
+	 * @param selectedModuleComponent,the module component selected in simulation environment.
+	 * @param rotationQComponent,the rotation of selected component.	 
+	 */	
 	@Override
 	public void rotateComponentOpposite(JMEModuleComponent currentModuleComponent,Quaternion rotationQComponent) {
 		/*Locate matching rotation Quaternion in moduleRotationMap (initial) and rotate with opposite rotation Quaternion
@@ -79,13 +106,30 @@ public class CKBotConstructionTemplate extends ModularRobotConstructionTemplate 
 
 	}
 
+	/**
+	 * Rotates selected module component with standard rotations, passed as a string.
+	 * This method is so-called "Primitive Operation" for TEMPLATE method, called "rotateModuleSpecifically(Module selectedModule,String rotationName)". 
+	 * @param selectedModuleComponent,the module component selected in simulation environment.	 
+	 * @param rotationName,the name of standard(specific) rotation of the module.	 
+	 */	
 	@Override
-	public void rotateComponentSpecifically(
-			JMEModuleComponent selectedModuleComponent, String rotationName) {
-		// TODO Auto-generated method stub
-
+	public void rotateComponentSpecifically(JMEModuleComponent currentModuleComponent, String rotationName) {
+		for (int entry=0;entry<MODULE_ROTATION_MAP.length;entry++){
+			if (rotationName.equals(MODULE_ROTATION_MAP[entry].getRotationName())){
+				rotateModuleComponent(currentModuleComponent,MODULE_ROTATION_MAP[entry].getRotation().getRotation());
+			}
+		}	
 	}
 
+	/**
+	 * Updates the array of objects containing the information about all available initial rotations 
+	 * of  CKBot modular robot module and  rotations together with positions of newly added CKBot module with respect to specific 
+	 * connector number on selected CKBot module and selected module itself.
+	 * This method is so-called "Primitive operation" for TEMPLATE method, called "moveModuleAccording(int connectorNr, Module selectedModule, Module newMovableModule)".	 
+	 * @param x, the amount of x coordinate of current position of CKBot component.
+	 * @param y, the amount of y coordinate of current position of CKBot component.
+	 * @param z, the amount of z coordinate of current position of CKBot component. 
+	 */
 	@Override
 	public void updateModuleMap(float x, float y, float z) {
 		/*Apply offset of 0.06(UNIT) for each coordinate, which is a lattice distance between two CKBot modules.
@@ -173,12 +217,19 @@ public class CKBotConstructionTemplate extends ModularRobotConstructionTemplate 
 		this.moduleMap = moduleMap;	
 	}
 
+	/**
+	 * Additional method for implementing unique properties of modular robots  components of the modules. 
+	 * Here rotates the module 90 degrees around its axis (the axis is going along the module).
+	 * This method is so-called "Primitive operation" for above TEMPLATE method, called "variateModuleProperties(Module selectedModule)". 	
+	 * @param selectedModuleComponent,the module component selected in simulation environment.
+	 * @param rotationQComponent,the rotation of selected component.	 
+	 */
 	@Override
-	public void variateComponentProperties(
-			JMEModuleComponent selectedModuleComponent,
-			Quaternion rotationQComponent) {
-		// TODO Auto-generated method stub
-
+	public void variateComponentProperties(JMEModuleComponent selectedModuleComponent,Quaternion rotationQComponent) {
+		for (int entry=0;entry<MODULE_ROTATION_MAP.length;entry++){
+			if (rotationQComponent.equals(MODULE_ROTATION_MAP[entry].getRotation().getRotation())){
+				rotateModuleComponent(selectedModuleComponent,MODULE_ROTATION_MAP[entry].getRotationAroundAxisValue().getRotation());
+			}
+		}
 	}
-
-}
+	}

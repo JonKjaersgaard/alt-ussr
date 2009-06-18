@@ -2,15 +2,11 @@ package ussr.builder.constructionTools;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-
-import ussr.builder.ATRONControllerDefault;
 import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
-import ussr.model.Controller;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.atron.ATRON;

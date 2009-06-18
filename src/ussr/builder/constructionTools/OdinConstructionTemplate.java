@@ -17,8 +17,7 @@ import ussr.physics.jme.JMESimulation;
  *  Later the OdinMuscles can be substituted with other OdinModules, see class named OdinOperationsTemplate.java. 
  * @author Konstantinas 
  */
-//FIXME 1) UPDATE COMMENTS
-//FIXME 2) FIX EXISTING IMPROVEMENTS
+
 public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {	
 	
 	/**
