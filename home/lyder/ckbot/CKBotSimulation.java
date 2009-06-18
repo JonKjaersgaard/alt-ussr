@@ -26,6 +26,8 @@ import ussr.samples.GenericSimulation;
  * Abstract MTRAN simulation
  * 
  * @author david
+ * @author Konstantinas. To be more specific changed the visibility of
+ * method called allConnections from private to public.  
  *
  */
 public abstract class CKBotSimulation extends GenericSimulation implements PhysicsObserver {
@@ -114,7 +116,7 @@ public abstract class CKBotSimulation extends GenericSimulation implements Physi
     	constructIndex++;
 	}
 
-    private static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
+    public static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
     	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
     	System.out.println("modulePos.size()"+modulePos.size());
     	for(int i=0;i<modulePos.size();i++) {

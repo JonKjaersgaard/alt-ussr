@@ -38,7 +38,7 @@ public class CKBotSampleSimulation1 extends CKBotSimulation {
 		//simulation.setGravity(0.0f);
 	}
 	protected void constructRobot() {
-		addModule("CKBotStandard",0,0,0,new RotationDescription(0f,0f,(float)Math.PI/2));
+		addModule("CKBotStandard",0,0,0,new RotationDescription(0f,0f,(float)Math.PI/2));		
 		addModule("CKBotStandard",0,0,1,new RotationDescription(0f,0f,(float)Math.PI/2));
 		addModule("CKBotStandard",0,0,2,new RotationDescription(0f,0f,(float)Math.PI/2));
 		addModule("CKBotStandard",0,0,3,new RotationDescription(0f,0f,(float)Math.PI/2));

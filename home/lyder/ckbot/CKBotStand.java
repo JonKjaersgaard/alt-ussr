@@ -28,6 +28,8 @@ import ussr.physics.PhysicsParameters;
  * @author lyder
  */
 public abstract class CKBotStand extends CKBot {
+	
+
     
     /**
      * @see ussr.description.Robot#getDescription()

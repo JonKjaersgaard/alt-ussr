@@ -26,9 +26,33 @@ import ussr.physics.PhysicsParameters;
  * Preliminary implementation of the CKBot robot
  * 
  * @author lyder
+ * @author Konstantinas. To be more precise added different rotations of CKBotStandard
+ * in order to use them in "builder" package. These are (from "ROTATION_0" to "ROTATION_0_MINUS90X_MINUS90Z" ).
+ * Please reuse there rotations. Then your simulations should be compatible with QPSS.
+ * Removal of these rotations will result in bugs in the "builder" package. 
  */
 public abstract class CKBotStandard extends CKBot {
+	
+	private final static float pi = (float)Math.PI;
     
+	public final static RotationDescription ROTATION_0 = new RotationDescription(0f,0f,0f);
+	public final static RotationDescription ROTATION_0_OPPOSITE = new RotationDescription(pi,0f,0f);	
+	public final static RotationDescription ROTATION_0_90Z = new RotationDescription(0f,0f,pi/2);
+	public final static RotationDescription ROTATION_0_OPPOSITE_90Z = new RotationDescription(pi,0f,pi/2);	
+	
+	public final static RotationDescription ROTATION_0_90X = new RotationDescription(pi/2,0f,0f);
+	public final static RotationDescription ROTATION_0_MINUS90X = new RotationDescription(-pi/2,0f,0f);
+	public final static RotationDescription ROTATION_0_90X_90Y = new RotationDescription(pi/2,pi/2,0f);
+	public final static RotationDescription ROTATION_0_270X_90Y = new RotationDescription(3*pi/2,pi/2,0f);
+	
+	public final static RotationDescription ROTATION_0_90Y = new RotationDescription(0f,pi/2,0f);	
+	public final static RotationDescription ROTATION_0_MINUS90Y = new RotationDescription(0f,-pi/2,0f);	
+	public final static RotationDescription ROTATION_0_90X_MINUS90Z = new RotationDescription(pi/2,0f,-pi/2);	
+	public final static RotationDescription ROTATION_0_MINUS90X_MINUS90Z = new RotationDescription(-pi/2,0f,-pi/2);
+	
+	public final static float UNIT = 0.060f; 
+	
+	
     /**
      * @see ussr.description.Robot#getDescription()
      */
