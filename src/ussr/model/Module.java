@@ -114,8 +114,8 @@ public class Module extends Entity {
      */
     public int getID() {
         return uniqueID;
-    }
-    
+    } 
+     
     /**
      * Add a connector to the module
      * @param connector the connector to add to the module

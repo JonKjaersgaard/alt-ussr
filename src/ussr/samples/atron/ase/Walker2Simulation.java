@@ -29,7 +29,7 @@ import ussr.util.supervision.RadioConnection;
 import ussr.util.supervision.WifiCMBroadcaster;
 
 
- 
+
 
 public class Walker2Simulation extends GenericASESimulation {
 	

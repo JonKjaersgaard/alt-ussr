@@ -38,7 +38,7 @@ import ussr.util.supervision.WifiCMBroadcaster;
 public class Snake8Simulation extends GenericASESimulation implements PhysicsObserver {
 	
 	public static void main( String[] args ) {
-		initASE();
+		initASE(); 
 		new Snake8Simulation().main();
     }
 	
