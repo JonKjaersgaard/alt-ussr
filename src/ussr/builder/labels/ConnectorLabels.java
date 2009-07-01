@@ -38,13 +38,13 @@ public class ConnectorLabels extends EntityLabels {
 		return false;		
 	}
 
-	@Override
+	// @Override JDK 1.5
 	public void sendMessage(int connectorNr, Packet packet) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	// @Override JDK 1.5
 	public String receiveMessage(int connectorNr) {
 		return null;
 		// TODO Auto-generated method stub
