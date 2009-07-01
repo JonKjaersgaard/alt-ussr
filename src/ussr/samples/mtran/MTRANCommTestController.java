@@ -16,7 +16,9 @@ import java.util.Random;
  */
 public class MTRANCommTestController extends MTRANController {
 	
-	static Random rand = new Random(System.currentTimeMillis());
+	private static final float MTRAN_POS_0 = 0.01f;
+	private static final float MTRAN_POS_1 = 1-MTRAN_POS_0;
+    static Random rand = new Random(System.currentTimeMillis());
     float timeOffset=0;
     byte[] msg = {0};
     int color = 0;
@@ -26,34 +28,30 @@ public class MTRANCommTestController extends MTRANController {
 	/**
      * @see ussr.model.ControllerImpl#activate()
      */
+    private boolean gotMessage = false;
     public void activate() {
-    	while(module.getSimulation().isPaused()) yield();
     	yield();
     	
     	System.out.println("MTRAN RUNNING "+module.getID());
-    	while(true) {
-    		double goal0 = 0.5f*Math.sin(3*module.getSimulation().getTime()+module.getID()+0.5f);
-    		double cur0 =  2*(getEncoderPosition(0)-0.5);
-    		if(cur0>goal0) {
-    			rotateContinuous(-1, 0);
-    		}else {
-    			rotateContinuous(1, 0);
-    		}
-    		
-    		double goal1 = -0.5f*Math.sin(3*module.getSimulation().getTime()+module.getID());
-    		double cur1 =  2*(getEncoderPosition(1)-0.5);
-    		if(cur1>goal1) {
-    			rotateContinuous(-1, 1);
-    		}else {
-    			rotateContinuous(1, 1);
-    		}
-    		yield();
-    		for(byte i=0; i<6; i++)
-    		    super.sendMessage(new byte[] { 87 }, (byte)1, i);
+    	    	
+    	switch(module.getID()) {
+    	case 1:
+    	    this.rotateTo(MTRAN_POS_0, 1);
+    	    while(this.isRotating(1)) yield();
+    	    for(byte i=0; i<6; i++) this.sendMessage(new byte[] { 34 }, (byte)1, i);
+    	    break;  
+    	case 0:
+    	    module.setColor(java.awt.Color.YELLOW);
+    	    while(!gotMessage) yield();
+    	    System.out.println("0 rotating");
+    	    this.rotateTo(MTRAN_POS_0, 0);
+    	    this.rotateTo(MTRAN_POS_0,1);
+    	    break;
     	}
 	}
     
     public void handleMessage(byte[] message, int messageSize, int channel) {
-        System.out.println("Whee, got message");
+        System.out.println("Module "+module.getID()+" got message");
+        gotMessage = true;
    	}
 }
