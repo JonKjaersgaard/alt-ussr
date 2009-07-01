@@ -69,6 +69,7 @@ public class JMEMTRANFactory implements ModuleFactory {
         addActuators(module, northNode, southNode, centerNode);
         
         addConnectors(module);
+        addCommunication(module,robot);
     }
     
     private void setName(Module module, String module_name) {
@@ -191,4 +192,14 @@ public class JMEMTRANFactory implements ModuleFactory {
         this.simulation = (JMESimulation)simulation;
     }
 
+    private void addCommunication(Module module, Robot robot) {
+        TransmissionDevice mtranTrans = new TransmissionDevice(TransmissionType.IR,0.05f);
+        ReceivingDevice mtranRec = new ReceivingDevice(TransmissionType.IR,10);
+        for(int channel=0;channel<6;channel++) {
+            module.addTransmissionDevice(JMEGeometryHelper.createTransmitter(module, module.getConnectors().get(channel),mtranTrans)); //use connector hardware for communication!
+            module.addReceivingDevice(JMEGeometryHelper.createReceiver(module, module.getConnectors().get(channel),mtranRec));
+            module.getTransmitters().get(channel).setMaxBaud(19200);
+            module.getTransmitters().get(channel).setMaxBufferSize(128);
+        }
+    }
 }

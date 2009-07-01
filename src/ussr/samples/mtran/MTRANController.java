@@ -126,14 +126,14 @@ public abstract class MTRANController extends ControllerImpl implements PacketRe
     
     public byte sendMessage(byte[] message, byte messageSize, byte connector) 
 	{
-		if(isOtherConnectorNearby(connector)&&connector<8) {
+		if(isOtherConnectorNearby(connector)&&connector<6) {
 			module.getTransmitters().get(connector).send(new Packet(message));
 			return 1;
 		}
 		return 0;
 	}
     public void packetReceived(Receiver device) {
-    	for(int i=0;i<8;i++) {
+    	for(int i=0;i<6;i++) {
     		if(module.getReceivers().get(i).equals(device)) {
     			byte[] data = device.getData().getData();
     			handleMessage(data,data.length,i);
