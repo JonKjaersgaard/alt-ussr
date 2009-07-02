@@ -44,6 +44,12 @@ public abstract class MTRANController extends ControllerImpl implements PacketRe
     	 module.getActuators().get(actuator).setDesiredVelocity(vel);
 	}
     
+    public void rotateToThroughMidpoint(float goal, int actuator) {
+        float pos = this.getEncoderPosition(actuator);
+        float middle = (goal+pos)/2;
+        this.rotateTo(middle, actuator);
+        this.rotateTo(goal, actuator);
+    }
     public void rotateTo(float goal, int actuator) {
         do {
             module.getActuators().get(actuator).setDesiredPosition(goal);
