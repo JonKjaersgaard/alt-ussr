@@ -39,6 +39,7 @@ public class MTRANCommTestController extends MTRANController {
     	    case 1: behavior_1(); break;
     	    case 2: behavior_2(); break;
     	    case 6: behavior_6(); break;
+    	    case 7: behavior_7(); break;
     	    default: defaultAction();
     	    }
     	}
@@ -53,12 +54,25 @@ public class MTRANCommTestController extends MTRANController {
         case 3:
             System.out.println("Trying connect "+isConnected(0));
             this.connect(0);
+            if(!this.isConnected(0)) break;
+            setState(4);
+            break;
         default:
             defaultAction();
         }
     }
 
-    public void behavior_1() { }
+    public void behavior_1() { 
+        switch(state) {
+        case 4:
+            this.disconnect(0);
+            while(this.isConnected(0)) yield();
+            setState(5);
+            break;
+        default:
+            defaultAction();
+        }
+    }
 
     public void behavior_2() {
         switch(state) {
@@ -67,6 +81,11 @@ public class MTRANCommTestController extends MTRANController {
             doRotateTo(0, 1);
     	    setState(2);
     	    break;
+        case 5:
+            doRotateTo(0.5f, 0);
+            doRotateTo(0.5f, 1);
+            setState(6);
+            break;
         default:
             defaultAction();
         }
@@ -79,6 +98,19 @@ public class MTRANCommTestController extends MTRANController {
             doRotateTo(0,1);
             while(this.isRotating(0)||this.isRotating(1)) yield();
             setState(3);
+            break;
+        case 6:
+            doRotateTo(0.5f,0);
+            doRotateTo(0.5f,1);
+            setState(7);
+            break;
+        default:
+            defaultAction();
+        }
+    }
+    
+    public void behavior_7() {
+        switch(state) {
         default:
             defaultAction();
         }
