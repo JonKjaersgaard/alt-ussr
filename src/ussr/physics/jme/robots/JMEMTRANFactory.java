@@ -70,6 +70,7 @@ public class JMEMTRANFactory implements ModuleFactory {
         
         addConnectors(module);
         addCommunication(module,robot);
+        setConnectorAlignment(module);
     }
     
     private void setName(Module module, String module_name) {
@@ -183,6 +184,30 @@ public class JMEMTRANFactory implements ModuleFactory {
         	else c.setConnectorType(JMEMechanicalConnector.FEMALE);
         }
 	}
+
+	private void setConnectorAlignment(Module module) {
+        float maxAlignmentForce = 10;
+        float maxAlignmentDistance = 0.02f;
+        float epsilonAlignmentDistance = 0.01f;
+        JMEModuleComponent northComponent =  (JMEModuleComponent) module.getComponent(0);
+        Vector3f[] northAlignPos1 = new Vector3f[]{new Vector3f(0.0377124f,0.0377124f,-0.0266667f),new Vector3f(-0.0377124f,0.0377124f,-0.0266667f),new Vector3f(-0.0377124f,-0.0377124f,-0.0266667f),new Vector3f(0.0377124f,-0.0377124f,-0.0266667f)};
+        Vector3f[] northAlignPos2 = new Vector3f[]{new Vector3f(0.0226274f,0.0226274f,-0.048f),new Vector3f(-0.0226274f,0.0226274f,-0.048f),new Vector3f(-0.0226274f,-0.0226274f,-0.048f),new Vector3f(0.0226274f,-0.0226274f,-0.048f)};
+        for(int i=0;i<3;i++) {
+            //northComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(northAlignPos1[i], 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance);
+            //northComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(northAlignPos2[i], 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance);
+            //northComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(northComponent.getConnector(i).getPosRel(), 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance);
+        }
+       
+        JMEModuleComponent southComponent =  (JMEModuleComponent) module.getComponent(2);
+        Vector3f[] southAlignPos1 = new Vector3f[]{new Vector3f(0.0377124f,0.0377124f,0.0266667f),new Vector3f(-0.0377124f,0.0377124f,0.0266667f),new Vector3f(-0.0377124f,-0.0377124f,0.0266667f),new Vector3f(0.0377124f,-0.0377124f,0.0266667f)};
+        Vector3f[] southAlignPos2 = new Vector3f[]{new Vector3f(0.0226274f,0.0226274f,0.048f),new Vector3f(-0.0226274f,0.0226274f,0.048f),new Vector3f(-0.0226274f,-0.0226274f,0.048f),new Vector3f(0.0226274f,-0.0226274f,0.048f)};
+        for(int i=0;i<3;i++) {
+            //southComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(southAlignPos1[i], 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance, epsilonAlignmentDistance);
+            //southComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(southAlignPos2[i], 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance);
+            //southComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(southComponent.getConnector(i).getPosRel(), 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance);
+        }
+        
+    }
 
 	public String getModulePrefix() {
         return "MTRAN";
