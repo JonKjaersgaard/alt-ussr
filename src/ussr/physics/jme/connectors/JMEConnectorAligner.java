@@ -19,6 +19,7 @@ import ussr.physics.jme.JMEGeometryHelper;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 
+import com.jme.intersection.Distance;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.scene.TriMesh;
@@ -41,10 +42,14 @@ public class JMEConnectorAligner {
 		this.component = component;
 	}
 	public void addAlignmentPoint(Vector3f pos, int type, int sex, float maxForce, float maxDist, float epsilonDist) {
+		addAlignmentPoint(pos, type, sex, maxForce, maxDist, epsilonDist, false);
+	}
+	public void addAlignmentPoint(Vector3f pos, int type, int sex, float maxForce, float maxDist, float epsilonDist, boolean addGeometry) {
 		AlignmentPoint aPoint = new AlignmentPoint(pos, type, sex, maxForce, maxDist, epsilonDist, connector.getNode(),this); 
 		aPoints.add(aPoint);
-		//addGeometry(pos, type, sex);
+		if(addGeometry) addGeometry(pos, type, sex);
 	}
+
 	private void addGeometry(Vector3f pos, int type, int sex) {
 		GeometryDescription[] shapes = new GeometryDescription[]{new SphereShape(0.001f), new BoxShape(0.001f),new CylinderShape(0.001f,0.001f)};
 		Color[] colors = new Color[]{Color.green, Color.red, Color.blue};
@@ -85,7 +90,7 @@ public class JMEConnectorAligner {
 		JMEConnectorAligner aligner = c.getConnectorAligner();
 		for(AlignmentPoint p1 : aligner.getAlignmentPoints()) {
 			AlignmentPoint p2 = getNearestCompatible(p1);
-			//System.out.println(p1.distance(p2)+" Aligning "+p1+" toward "+p2);
+			//System.out.println(p1.distance(p2)+" Aligning "+p1+" toward "+p2+" is Aligened? "+isAligned(c));
 			Vector3f direction = p2.getPos().subtract(p1.getPos()).normalize();
 			connector.getNode().addForce(direction.mult(-p2.getMaxForce()), p2.getPosRel());
 			c.getNode().addForce(direction.mult(p1.getMaxForce()), p1.getPosRel());

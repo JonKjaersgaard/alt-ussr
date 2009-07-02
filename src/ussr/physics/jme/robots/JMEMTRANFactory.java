@@ -15,6 +15,7 @@ import ussr.description.geometry.BoxShape;
 import ussr.description.geometry.CylinderShape;
 import ussr.description.geometry.GeometryDescription;
 import ussr.description.geometry.RotationDescription;
+import ussr.description.geometry.VectorDescription;
 import ussr.description.robot.ModuleComponentDescription;
 import ussr.description.robot.ReceivingDevice;
 import ussr.description.robot.TransmissionDevice;
@@ -178,6 +179,7 @@ public class JMEMTRANFactory implements ModuleFactory {
 		for(int i=0;i<3;i++) {
         	JMEMechanicalConnector c = (JMEMechanicalConnector)component.getConnector(i);
         	c.setUpdateFrequency(10);
+        	
         	c.setTimeToConnect(3.0f);
         	c.setTimeToDisconnect(2.0f);
         	if(male) c.setConnectorType(JMEMechanicalConnector.MALE);
@@ -187,24 +189,37 @@ public class JMEMTRANFactory implements ModuleFactory {
 
 	private void setConnectorAlignment(Module module) {
         float maxAlignmentForce = 10;
-        float maxAlignmentDistance = 0.02f;
-        float epsilonAlignmentDistance = 0.01f;
+        float maxAlignmentDistance = 0.03f;
+        float epsilonAlignmentDistance = 0.005f;
+        final float unit = 0.065f/2f;
+        boolean addGeometry = true;
         JMEModuleComponent northComponent =  (JMEModuleComponent) module.getComponent(0);
-        Vector3f[] northAlignPos1 = new Vector3f[]{new Vector3f(0.0377124f,0.0377124f,-0.0266667f),new Vector3f(-0.0377124f,0.0377124f,-0.0266667f),new Vector3f(-0.0377124f,-0.0377124f,-0.0266667f),new Vector3f(0.0377124f,-0.0377124f,-0.0266667f)};
-        Vector3f[] northAlignPos2 = new Vector3f[]{new Vector3f(0.0226274f,0.0226274f,-0.048f),new Vector3f(-0.0226274f,0.0226274f,-0.048f),new Vector3f(-0.0226274f,-0.0226274f,-0.048f),new Vector3f(0.0226274f,-0.0226274f,-0.048f)};
+        Vector3f[] northAlignPos1 = new Vector3f[]{new Vector3f(-unit,unit/3,0),new Vector3f(unit/3, -unit, 0 ),new Vector3f(unit/3, unit, 0 )};
+        Vector3f[] northAlignPos2 = new Vector3f[]{new Vector3f(-unit,-unit/3,0),new Vector3f(-unit/3, -unit, 0 ),new Vector3f(-unit/3, unit, 0 )};
+        Vector3f[] northAlignPos3 = new Vector3f[]{new Vector3f(-unit,0,unit/3),new Vector3f(0, -unit, unit/3 ),new Vector3f(0, unit, unit/3 )};
+        Vector3f[] northAlignPos4 = new Vector3f[]{new Vector3f(-unit,0,-unit/3),new Vector3f(0, -unit, -unit/3 ),new Vector3f(0, unit, -unit/3 )};
+  
         for(int i=0;i<3;i++) {
-            //northComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(northAlignPos1[i], 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance);
-            //northComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(northAlignPos2[i], 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance);
-            //northComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(northComponent.getConnector(i).getPosRel(), 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance);
+            northComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(northAlignPos1[i], 1, 2, maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance,addGeometry);
+            northComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(northAlignPos2[i], 1, 2, maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance,addGeometry);
+            northComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(northAlignPos3[i], 1, 2, maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance,addGeometry);
+            northComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(northAlignPos4[i], 1, 2, maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance,addGeometry);
+            
+        	northComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(northComponent.getConnector(i).getPosRel(), 1, 1, maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance,addGeometry);
         }
-       
+        Vector3f[] southAlignPos1 = new Vector3f[]{new Vector3f(unit,unit/3,0),new Vector3f(unit/3, -unit, 0 ),new Vector3f(unit/3, unit, 0 )};
+        Vector3f[] southAlignPos2 = new Vector3f[]{new Vector3f(unit,-unit/3,0),new Vector3f(-unit/3, -unit, 0 ),new Vector3f(-unit/3, unit, 0 )};
+        Vector3f[] southAlignPos3 = new Vector3f[]{new Vector3f(unit,0,unit/3),new Vector3f(0, -unit, unit/3 ),new Vector3f(0, unit, unit/3 )};
+        Vector3f[] southAlignPos4 = new Vector3f[]{new Vector3f(unit,0,-unit/3),new Vector3f(0, -unit, -unit/3 ),new Vector3f(0, unit, -unit/3 )};
+  
         JMEModuleComponent southComponent =  (JMEModuleComponent) module.getComponent(2);
-        Vector3f[] southAlignPos1 = new Vector3f[]{new Vector3f(0.0377124f,0.0377124f,0.0266667f),new Vector3f(-0.0377124f,0.0377124f,0.0266667f),new Vector3f(-0.0377124f,-0.0377124f,0.0266667f),new Vector3f(0.0377124f,-0.0377124f,0.0266667f)};
-        Vector3f[] southAlignPos2 = new Vector3f[]{new Vector3f(0.0226274f,0.0226274f,0.048f),new Vector3f(-0.0226274f,0.0226274f,0.048f),new Vector3f(-0.0226274f,-0.0226274f,0.048f),new Vector3f(0.0226274f,-0.0226274f,0.048f)};
         for(int i=0;i<3;i++) {
-            //southComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(southAlignPos1[i], 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance, epsilonAlignmentDistance);
-            //southComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(southAlignPos2[i], 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance);
-            //southComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(southComponent.getConnector(i).getPosRel(), 1, (i%2+1), maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance);
+            southComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(southAlignPos1[i], 1, 1, maxAlignmentForce, maxAlignmentDistance, epsilonAlignmentDistance,addGeometry);
+            southComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(southAlignPos2[i], 1, 1, maxAlignmentForce, maxAlignmentDistance, epsilonAlignmentDistance,addGeometry);
+            southComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(southAlignPos3[i], 1, 1, maxAlignmentForce, maxAlignmentDistance, epsilonAlignmentDistance,addGeometry);
+            southComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(southAlignPos4[i], 1, 1, maxAlignmentForce, maxAlignmentDistance, epsilonAlignmentDistance,addGeometry);
+            
+            southComponent.getConnector(i).getConnectorAligner().addAlignmentPoint(southComponent.getConnector(i).getPosRel(), 1, 2, maxAlignmentForce, maxAlignmentDistance,epsilonAlignmentDistance,addGeometry);
         }
         
     }

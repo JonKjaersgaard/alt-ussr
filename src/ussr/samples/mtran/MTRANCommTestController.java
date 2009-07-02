@@ -51,7 +51,7 @@ public class MTRANCommTestController extends MTRANController {
             setState(1);
             break;
         case 3:
-            System.out.println("Trying connect");
+            System.out.println("Trying connect "+isConnected(0));
             this.connect(0);
         default:
             defaultAction();
