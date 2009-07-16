@@ -6,31 +6,12 @@
  */
 package ussr.samples.atron.ase;
 
-import java.awt.AWTEvent;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 
-import mc.ModularCommander;
-
-import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
-import ussr.description.setup.WorldDescription;
-import ussr.model.Controller;
-import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsObserver;
-import ussr.physics.PhysicsParameters;
-import ussr.physics.PhysicsSimulation;
-import ussr.physics.PhysicsParameters.Material;
-import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
-import ussr.samples.atron.GenericATRONSimulation;
-import ussr.samples.atron.network.ATRONReflectionEventController;
-import ussr.util.WindowSaver;
-import ussr.util.supervision.CMTracker;
-import ussr.util.supervision.CommunicationLoadMonitor;
-import ussr.util.supervision.RadioConnection;
-import ussr.util.supervision.WifiCMBroadcaster;
 
 
 

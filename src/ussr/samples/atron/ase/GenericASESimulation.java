@@ -6,7 +6,6 @@
  */
 package ussr.samples.atron.ase;
 
-import mc.ModularCommander;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
@@ -38,7 +37,6 @@ public abstract class GenericASESimulation extends GenericATRONSimulation implem
 	
 	protected static boolean hasCommunicationLoadMonitor = false;
 	protected static boolean hasCommunicationLostMonitor = false;
-	protected static boolean hasModularCommander = false;
 	
 	/*Communicaiton*/
 	protected static boolean hasRadioConnection = true;
@@ -57,9 +55,6 @@ public abstract class GenericASESimulation extends GenericATRONSimulation implem
 		PhysicsFactory.getOptions().setHeadless(false);
 		PhysicsFactory.getOptions().setSaveWindowSettingOnExit(true);
 		
-		if(hasModularCommander) {
-			new ModularCommander();
-		}
 		
     }
 	
