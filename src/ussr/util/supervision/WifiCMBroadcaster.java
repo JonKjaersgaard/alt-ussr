@@ -51,12 +51,13 @@ public class WifiCMBroadcaster implements PhysicsObserver {
 			addToXYscatterPlot(simulation.getTime(), dist/deltaT*100);
 			byte reward = (byte)(250*dist);
 			if(!Float.isNaN(dist)) {				
-	 			ByteBuffer bb = new ByteBuffer(3);
+	 			ByteBuffer bb = new ByteBuffer(1);
 				bb.append(LEARNING_MESSAGE);
 				bb.append(label);
 				bb.append(stateCount);
 				bb.append(reward);
-				System.out.println(stateCount+": Reward send = "+reward);
+				bb.trimToSize();
+				System.out.println(stateCount+": Reward send = "+reward+" msg length "+bb.toArray().length);
 				Packet packet = new Packet(bb.toArray());
 				radio.send(packet);
 			}

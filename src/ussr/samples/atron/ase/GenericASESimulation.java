@@ -32,7 +32,7 @@ public abstract class GenericASESimulation extends GenericATRONSimulation implem
 	
 	/*Monitors*/
 	protected static boolean hasCMTracker = true; 
-	protected static float TIME_PER_CM_UPDATE = 5.0f;
+	protected static float TIME_PER_CM_UPDATE = 20.0f;
 	
 	
 	protected static boolean hasCommunicationLoadMonitor = false;
@@ -47,9 +47,9 @@ public abstract class GenericASESimulation extends GenericATRONSimulation implem
     
     public static void initASE( ) { 
     	PhysicsParameters.get().setPlaneMaterial(Material.CONCRETE);
-        PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f);
+        PhysicsParameters.get().setPhysicsSimulationStepSize(0.025f);
  		PhysicsParameters.get().setRealisticCollision(true);
-		PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
+		//PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
 		PhysicsParameters.get().setMaintainRotationalJointPositions(true);
 		PhysicsFactory.getOptions().setStartPaused(false);
 		PhysicsFactory.getOptions().setHeadless(false);
