@@ -25,6 +25,9 @@ public abstract class MTRANController extends ControllerImpl implements PacketRe
         super();
         setBlocking(true);
     }
+    public void setup() {
+        ;
+    }
     public void setModule(Module module) {
     	super.setModule(module);
         for(Receiver r: module.getReceivers()) { 
@@ -61,7 +64,7 @@ public abstract class MTRANController extends ControllerImpl implements PacketRe
     }
     
     public int getAngularPositionDegrees(int actuator) {
-        return (int)(module.getActuators().get(actuator).getEncoderValue()*360);
+        return (int)(module.getActuators().get(actuator).getEncoderValue()*180);
     }
     
 

@@ -103,10 +103,17 @@ public abstract class MTRANSimulation extends GenericSimulation implements Physi
     	if(printContrutionProgram) System.out.println("addBall("+x+", "+y+", "+z+");");
     	constructIndex++;
 	}
+    
     protected static void addModule(float x, float y, float z, RotationDescription ori, String name) {
     	VectorDescription pos = new VectorDescription(x*unit/2,y*unit/2-0.43f,z*unit/2);
     	modulePos.add(new ModulePosition(name,"MTRAN", pos, ori));
 	}
+
+    protected static void addModule(float x, float y, float z, RotationDescription ori, String name, String property) {
+        VectorDescription pos = new VectorDescription(x*unit/2,y*unit/2-0.43f,z*unit/2);
+        modulePos.add(new ModulePosition(name,"MTRAN"+property, pos, ori));
+    }
+    
     public static ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
     	ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
     	//System.out.println("modulePos.size()"+modulePos.size());
