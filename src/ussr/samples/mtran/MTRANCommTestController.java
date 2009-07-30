@@ -23,7 +23,7 @@ public class MTRANCommTestController extends MTRANController {
 	private float goal0 = 0.5f, goal1 = 0.5f;
     
     public MTRANCommTestController(String type) {
-    	//setBlocking(true);
+    	setBlocking(true);
     }
 	/**
      * @see ussr.model.ControllerImpl#activate()
@@ -77,13 +77,13 @@ public class MTRANCommTestController extends MTRANController {
     public void behavior_2() {
         switch(state) {
         case 1:
-            doRotateTo(1, 0);
-            doRotateTo(0, 1);
-    	    setState(2);
+            doRotateTo(1, 0, true);
+            doRotateTo(0, 1, false);
+            setState(2);
     	    break;
         case 5:
-            doRotateTo(0.5f, 0);
-            doRotateTo(0.5f, 1);
+            doRotateTo(0.5f, 0, false);
+            doRotateTo(0.5f, 1, true);
             setState(6);
             break;
         default:
@@ -94,14 +94,14 @@ public class MTRANCommTestController extends MTRANController {
     public void behavior_6() {
         switch(state) {
         case 2:
-            doRotateTo(1,0);
-            doRotateTo(0,1);
+            doRotateTo(1,0,true);
+            doRotateTo(0,1,false);
             while(this.isRotating(0)||this.isRotating(1)) yield();
             setState(3);
             break;
         case 6:
-            doRotateTo(0.5f,0);
-            doRotateTo(0.5f,1);
+            doRotateTo(0.5f,0,false);
+            doRotateTo(0.5f,1,true);
             setState(7);
             break;
         default:
@@ -122,15 +122,21 @@ public class MTRANCommTestController extends MTRANController {
             super.sendMessage(new byte[] { 87, (byte)state }, (byte)2, c);
     }
 
-    public void doRotateTo(float goal, int actuator) {
+    public void doRotateTo(float goal, int actuator, boolean clockwise) {
         if(actuator==0) goal0 = goal;
         else if(actuator==1) goal1 = goal;
-        this.rotateToThroughMidpoint(goal, actuator);
+        this.rotateClockwiseTo(goal,actuator,clockwise);
+        if(true) return;
+/*        do {
+            this.rotateTowards(goal, actuator);
+            System.out.println("["+state+"] "+(this.getEncoderPosition(actuator)-goal));
+        } while(Math.abs(this.getEncoderPosition(actuator)-goal)>0.001f);*/
     }
 
     public void defaultAction() {
-        this.rotateToThroughMidpoint(goal0, 0);
-        this.rotateToThroughMidpoint(goal1, 1);
+        //this.lockActuators();
+        //this.rotateToThroughMidpoint(goal0, 0);
+        //this.rotateToThroughMidpoint(goal1, 1);
     }
     
     public void handleMessage(byte[] message, int messageSize, int incoming) {

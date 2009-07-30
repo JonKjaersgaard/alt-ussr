@@ -6,6 +6,7 @@
  */
 package ussr.samples.mtran;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import ussr.description.Robot;
@@ -13,6 +14,7 @@ import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
+import ussr.model.Entity;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
@@ -26,19 +28,17 @@ import ussr.samples.atron.network.ATRONReflectionEventController;
 import ussr.util.supervision.CMTracker;
 import ussr.util.supervision.WifiCMBroadcaster;
 
-
-
+/**
+ * Snake simulation using ASE for control
+ * 
+ * @author ups
+ */
 
 public class ASESnakeSimulation extends MTRANSimulation {
 	
 	public static void main( String[] args ) {
 	    new ASESnakeSimulation().runSimulation(null, true);
     }
-	
-	protected void simulationHook(PhysicsSimulation simulation) {
-
-	}
-
 	
 	protected Robot getRobot() {
 
@@ -52,7 +52,7 @@ public class ASESnakeSimulation extends MTRANSimulation {
     }
 	
     protected void constructRobot() {
-        addModule(0,0,0,ORI2,"M0",makeProperty(0));
+        addModule(0,0,0,ORI2,"M0",makeProperty(0)+Entity.mkprop(Entity.PROPERTY_COLOR,Color.YELLOW.getRGB()));
         addModule(2,0,0,ORI2,"M1",makeProperty(1));
         addModule(4,0,0,ORI2,"M2",makeProperty(2));
         addModule(6,0,0,ORI2,"M3",makeProperty(3));
@@ -63,7 +63,7 @@ public class ASESnakeSimulation extends MTRANSimulation {
     }
 
     private String makeProperty(int id) {
-        return ";portRC="+(9900+id*2)+";portEvent="+(9900+id*2+1);
+        return Entity.mkprop(Entity.PROPERTY_PORTRC, 9900+id*2)+Entity.mkprop(Entity.PROPERTY_PORTEVENT, 9900+id*2+1);
     }
     
     @Override

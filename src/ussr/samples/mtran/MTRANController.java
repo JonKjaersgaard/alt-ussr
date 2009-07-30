@@ -12,6 +12,9 @@ import ussr.comm.Receiver;
 import ussr.model.ControllerImpl;
 import ussr.model.Module;
 import ussr.model.Sensor;
+import ussr.model.Actuator.Direction;
+import ussr.physics.PhysicsObserver;
+import ussr.physics.PhysicsSimulation;
 
 /**
  * Controller for the MTRAN robot
@@ -20,14 +23,16 @@ import ussr.model.Sensor;
  */
 public abstract class MTRANController extends ControllerImpl implements PacketReceivedObserver {
 
-	boolean blocking;
+	private boolean blocking = false;
+	
     public MTRANController() {
         super();
-        setBlocking(true);
+        setBlocking(true); // Currently works best this way due to bug
     }
+    
     public void setup() {
-        ;
     }
+    
     public void setModule(Module module) {
     	super.setModule(module);
         for(Receiver r: module.getReceivers()) { 
@@ -46,19 +51,18 @@ public abstract class MTRANController extends ControllerImpl implements PacketRe
     	if(actuator!=0&&actuator!=1) throw new RuntimeException("Only two actuators in an MTRAN");
     	 module.getActuators().get(actuator).setDesiredVelocity(vel);
 	}
-    
-    public void rotateToThroughMidpoint(float goal, int actuator) {
-        float pos = this.getEncoderPosition(actuator);
-        float middle = (goal+pos)/2;
-        this.rotateTo(middle, actuator);
-        this.rotateTo(goal, actuator);
+
+    public void rotateClockwiseTo(float goal, int actuator, boolean clockwise) {
+        rotateTo(goal,actuator,clockwise ? Direction.POSITIVE : Direction.NEGATIVE);
     }
-    public void rotateTo(float goal, int actuator) {
+
+    public void rotateTo(float goal, int actuator, Direction dir) {
         do {
-            module.getActuators().get(actuator).setDesiredPosition(goal);
+            module.getActuators().get(actuator).setDesiredPosition(goal, dir);
             yield();
         } while(isRotating(actuator)&&blocking);
 	}
+
     public float getEncoderPosition(int actuator) {
     	return (float)(module.getActuators().get(actuator).getEncoderValue());
     }
@@ -67,7 +71,6 @@ public abstract class MTRANController extends ControllerImpl implements PacketRe
         return (int)(module.getActuators().get(actuator).getEncoderValue()*180);
     }
     
-
     public void disconnectAll() {
     	for(int i=0;i<8;i++) {
     		if(isConnected(i)) {
