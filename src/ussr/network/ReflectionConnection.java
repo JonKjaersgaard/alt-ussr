@@ -97,6 +97,8 @@ public class ReflectionConnection extends AbstractNetworkConnection {
                     	arguments[i] = Byte.parseByte(parts[2+i]);
                     else if(parameters[i]==Character.TYPE)
                     	arguments[i] = parts[2+i].toCharArray()[0];
+                    else if(parameters[i]==Boolean.TYPE)
+                        arguments[i] = Boolean.parseBoolean(parts[2+i]);
                     else if(parameters[i].getCanonicalName().equals("byte[]")) {
                     	String[] stringValues = ((String)parts[2+i]).split(",");
                     	byte[] byteValues = new byte[stringValues.length]; 
