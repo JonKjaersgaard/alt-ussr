@@ -70,7 +70,4 @@ public class OdinSampleWheelController extends OdinController {
     	}
     }
     
-    public float getTime() {
-    	return module.getSimulation().getTime();
-	}
 }

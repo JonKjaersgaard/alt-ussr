@@ -64,7 +64,4 @@ public class OdinSampleHingeController extends OdinController {
     	}
     }
     
-    public float getTime() {
-    	return module.getSimulation().getTime();
-	}
 }

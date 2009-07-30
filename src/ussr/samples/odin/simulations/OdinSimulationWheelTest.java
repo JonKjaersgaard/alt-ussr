@@ -89,7 +89,7 @@ public class OdinSimulationWheelTest extends GenericSimulation {
      */
     private static WorldDescription createWorld() {
     	WorldDescription world = new WorldDescription();
-        world.setPlaneSize(1);
+        world.setPlaneSize(2);
         OdinBuilder builder = new OdinBuilder();
         int nBalls=3, xMax=3, yMax=2,zMax=2;
         VectorDescription offset = new VectorDescription(0,-0.46f,0);
