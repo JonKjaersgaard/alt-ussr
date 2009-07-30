@@ -6,7 +6,6 @@
  */
 package ussr.samples.atron;
 
-import java.util.Random;
 
 import ussr.comm.Packet;
 import ussr.comm.PacketReceivedObserver;
@@ -33,8 +32,6 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     private CenterStates centerState;
 	private boolean blocking;
 	private int leds=0;
-	private static int randomSeed = 0;
-
 	/**
 	 * Instantiate ATRON controller
 	 */
@@ -80,13 +77,6 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     }
     
     /**
-	 * @see ussr.samples.atron.IATRONAPI#getName()
-	 */
-    public String getName() {
-        return module.getProperty("name");
-    }
-    
-    /**
      * 
      * @see ussr.model.ControllerImpl#setModule(ussr.model.Module)
      */
@@ -96,11 +86,6 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
          	r.addPacketReceivedObserver(this); //packetReceived(..) will be called when a packet is received
         }
         module.getSimulation().subscribePhysicsTimestep(this);
-    }
-    
-    public int getRandomSeed(){
-    	randomSeed++;
-    	return new Random(randomSeed).nextInt();
     }
     
     /**
@@ -250,14 +235,6 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     	//System.out.println("Starting to rotate... "+target);
         while(isRotating()&&blocking) yield();
         //System.out.println("...done rotation "+target+" vs "+readEncoderPosition() );
-    }
-    
-    /**
-	 * @see ussr.samples.atron.IATRONAPI#getTime()
-	 */
-    public float getTime() {
-    	//TODO local version of this instead of global and syncronized
-    	return getModule().getSimulation().getTime();
     }
     
     /**
