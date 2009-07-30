@@ -10,6 +10,7 @@ import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Actuator;
 import ussr.model.PhysicsActuator;
+import ussr.model.Actuator.Direction;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.jme.JMESimulation;
 
@@ -117,7 +118,11 @@ public class JMELinearActuator implements JMEActuator {
 		return true;
 	}
     
-	/**
+    public boolean setDesiredPosition(float goalPos, Direction direction) {
+        if(direction!=Direction.ANY) throw new Error("Direction argument not supported for linear actuator: "+direction);
+        return setDesiredPosition(goalPos);
+    }
+        /**
 	 * Make the actuator rotate towards a goal [0-1] percent of fully expanded 
 	 * @see ussr.model.PhysicsActuator#activate(float)
 	 */

@@ -23,6 +23,11 @@ import ussr.physics.PhysicsEntity;
  */
 public abstract class Entity {
 
+    public static final String PROPERTY_NAME = "name";
+    public static final String PROPERTY_COLOR = "color";
+    public static final String PROPERTY_PORTRC = "portRC";
+    public static final String PROPERTY_PORTEVENT = "portEvent";
+    
     /**
      * Properties associated with this entity, may be null meaning no properties are set
      */
@@ -86,5 +91,14 @@ public abstract class Entity {
     public void setProperties(Map<String, String> otherProperties) {
         for(Map.Entry<String, String> prop: otherProperties.entrySet())
             this.setProperty(prop.getKey(), prop.getValue());
+    }
+
+    
+    public static String mkprop(String propertyName, int value) {
+        return mkprop(propertyName,Integer.toString(value));
+    }
+
+    public static String mkprop(String propertyName, String value) {
+        return ";"+propertyName+"="+value;
     }
 }

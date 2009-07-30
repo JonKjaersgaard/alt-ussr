@@ -36,6 +36,15 @@ public interface PhysicsActuator extends PhysicsEntity {
      */
 	boolean setDesiredPosition(float goalValue);
 	
+    /**
+     * Activate this actuator - to go for a particular goal value
+     * 
+     * @param goalValue is the goal value to aim for
+     * @param direction defines the direction the actuator should take to reach the goal value
+     * @return whether the actuator were activated
+     */
+    boolean setDesiredPosition(float goalValue, Actuator.Direction direction);
+    
 	/**
      * Activate this actuator - to go for a particular velocity value
      * 

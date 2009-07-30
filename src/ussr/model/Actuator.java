@@ -23,6 +23,11 @@ import ussr.physics.PhysicsEntity;
 public class Actuator extends Entity {
 
     /**
+     * Direction in which an actuator should rotate
+     */
+    public static enum Direction { POSITIVE, NEGATIVE, ANY }
+
+    /**
      * The physics model for the actuator
      */
     private PhysicsActuator physics;
@@ -51,6 +56,15 @@ public class Actuator extends Entity {
      */
     public boolean setDesiredPosition(float goalValue) {
         return physics.setDesiredPosition(goalValue);
+    }
+    
+    /**
+     * Activate this actuator - to go for a particular goal value moving in a specific direction
+     * 
+     * @return whether the actuator were activated
+     */
+    public boolean setDesiredPosition(float goalValue, Direction direction) {
+        return physics.setDesiredPosition(goalValue,direction);
     }
     
     /**

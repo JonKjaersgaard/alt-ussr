@@ -6,6 +6,8 @@
  */
 package ussr.model;
 
+import java.util.Random;
+
 /**
  * Abstract class providing a default implementation of the Controller interface.
  * The class maintain a reference to the module and provides a convenience "wait
@@ -16,6 +18,8 @@ package ussr.model;
  */
 
 public abstract class ControllerImpl implements Controller {
+
+    private static int randomSeed = 0;
 
     /**
      * Reference to the module controlled by this controller 
@@ -87,5 +91,27 @@ public abstract class ControllerImpl implements Controller {
     	module.getSimulation().waitForPhysicsStep(false);	
 	}
 
+    private static synchronized int internalGetRandomSeed() {
+    	randomSeed++;
+    	return new Random(randomSeed).nextInt();
+    }
 
+    public int getRandomSeed() {
+        return internalGetRandomSeed();
+    }
+
+    /**
+     * @see ussr.samples.atron.IATRONAPI#getName()
+     */
+    public String getName() {
+        return module.getProperty("name");
+    }
+
+    /**
+     * @see ussr.samples.atron.IATRONAPI#getTime()
+     */
+    public float getTime() {
+    	//TODO local version of this instead of global and syncronized
+    	return getModule().getSimulation().getTime();
+    }
 }

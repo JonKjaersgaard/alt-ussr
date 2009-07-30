@@ -10,6 +10,7 @@ import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Actuator;
 import ussr.model.PhysicsActuator;
+import ussr.model.Actuator.Direction;
 import ussr.physics.PIDController;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
@@ -170,11 +171,19 @@ public class JMERotationalActuator implements PhysicsActuator {
 		return true;
 	}
     
-	/**
-	 * Make the actuator rotate towards a goal [0-1] percent 
+    /**
+     * Make the actuator rotate towards a goal [0-1] percent 
+     * @see ussr.model.PhysicsActuator#setDesiredPosition(float)
+     */
+    public boolean setDesiredPosition(float goalPos) {
+        return setDesiredPosition(goalPos,Direction.ANY); 
+    }
+
+    /**
+	 * Make the actuator rotate towards a goal [0-1] percent going in a specific direction 
 	 * @see ussr.model.PhysicsActuator#setDesiredPosition(float)
 	 */
-	public boolean setDesiredPosition(float goalPos) {
+	public boolean setDesiredPosition(float goalPos, Direction direction) {
 		if(Float.isNaN(getEncoderValue())||Float.isInfinite(getEncoderValue())) {
 			PhysicsLogger.log("Rotational Actuator is not yet setup!");
 			return false;
@@ -190,9 +199,13 @@ public class JMERotationalActuator implements PhysicsActuator {
 			disactivate(); //at goal stop
 		}
 		else {
-			//TODO bug MTRAN does not work with this controller - why?
+			//TODO bug MTRAN does not work reliably with this controller - why?
 			float output = Math.abs(controller.getOutput(goalPos, getEncoderValue()));
 			output = (Math.abs(error)<0.5?1:-1)*(error>0?1:-1)*(output>1?1:output);
+			if(direction==Direction.NEGATIVE)
+			    output = -Math.abs(output);
+			else if(direction==Direction.POSITIVE)
+			    output = Math.abs(output);
 			setDesiredVelocity(output);
 		}
 		return true;

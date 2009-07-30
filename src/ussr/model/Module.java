@@ -77,6 +77,9 @@ public class Module extends Entity {
      */
     private List<Receiver> receivers = new ArrayList<Receiver>();
 
+    /**
+     * Simulation in which this module exists
+     */
     PhysicsSimulation simulation;
     
     /**
@@ -312,6 +315,9 @@ public class Module extends Entity {
 		
 		for(Sensor s: getSensors())
             s.reset();
+
+		String color = this.getProperty(Entity.PROPERTY_COLOR);
+		if(color!=null) this.setColor(Color.decode(color));
 	}
 
 	
