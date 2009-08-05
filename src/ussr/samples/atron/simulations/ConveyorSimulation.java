@@ -110,7 +110,7 @@ public class ConveyorSimulation extends GenericATRONSimulation {
         ArrayList<ModulePosition> positions = new ATRONBuilder().buildAsNamedLattice(100,6,1,7, new ATRONBuilder.Namer() {
             //private boolean everyOther = false;
             private int count = 0;
-            public String name(int number, VectorDescription pos, RotationDescription rot) {
+            public String name(int number, VectorDescription pos, RotationDescription rot, int lx, int ly, int lz) {
                 if(Math.abs(pos.getZ()-0.25)<0.02) {
                     String result;
                     if(count>0 && count<4)
@@ -124,7 +124,7 @@ public class ConveyorSimulation extends GenericATRONSimulation {
                     return "--plain"+number;
             }
         }, new ATRONBuilder.ModuleSelector() {
-            public String select(String name, int index, VectorDescription pos, RotationDescription rot) {
+            public String select(String name, int index, VectorDescription pos, RotationDescription rot, int lx, int ly, int lz) {
                 if(!name.startsWith("conveyor")) {
                     if(Math.abs(pos.getZ())<0.02 || Math.abs(pos.getZ())>0.4)
                         return null;
