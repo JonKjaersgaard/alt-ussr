@@ -23,7 +23,7 @@ import ussr.samples.atron.ATRON;
 public class SnakeCarDemo extends EightToCarSimulationJ {
 
     public static void main(String argv[]) {
-        new CopyOfSnakeCarDemo().main();
+        new SnakeCarDemo().main();
     }
 
     protected void changeWorldHook(WorldDescription world) {
