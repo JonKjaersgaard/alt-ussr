@@ -1,4 +1,0 @@
-#!/bin/sh
-./appX -port=9900 -host=localhost
-./appX -port=9901 -host=localhost
-./appX -port=9902 -host=localhost

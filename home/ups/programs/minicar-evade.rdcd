@@ -1,9 +1,0 @@
-role Head extends Module {
-  a = $EAST_WEST;
-  b = 2;
-  (a > b);
-}
-role Wheel extends Module { }
-role LeftWheel extends Wheel { }
-role RightWheel extends Wheel { }
-deployment { Head }
