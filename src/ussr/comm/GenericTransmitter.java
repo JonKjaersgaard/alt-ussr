@@ -9,8 +9,8 @@ package ussr.comm;
 import java.util.LinkedList;
 import java.util.Set;
 
-import communication.filter.CommunicationContainer;
 
+import ussr.comm.monitors.trackergui.CommunicationContainer;
 import ussr.description.robot.TransmissionDevice;
 import ussr.model.Entity;
 import ussr.model.Module;

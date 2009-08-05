@@ -16,6 +16,7 @@ import java.util.List;
 import org.lwjgl.opengl.Display;
 
 import ussr.builder.QuickPrototyping;
+import ussr.comm.monitors.trackergui.CommunicationVisualizerGUI;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
@@ -68,7 +69,6 @@ import com.jmex.physics.StaticPhysicsNode;
 import com.jmex.physics.impl.jbullet.JBulletPhysicsSpace;
 import com.jmex.physics.impl.ode.OdePhysicsSpace;
 import com.jmex.terrain.TerrainBlock;
-import communication.gui.CommunicationVisualizerGUI;
 
 /**
  * The basic graphical and user interface elements of a simulation.  Declares certain

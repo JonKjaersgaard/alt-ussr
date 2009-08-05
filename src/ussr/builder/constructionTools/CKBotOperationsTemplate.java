@@ -3,13 +3,13 @@ package ussr.builder.constructionTools;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import ckbot.CKBotStandard;
 import ussr.builder.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
+import ussr.samples.ckbot.CKBotStandard;
 
 /**
  * Supports construction of CKBot modular robot morphology in more abstract module oriented way.

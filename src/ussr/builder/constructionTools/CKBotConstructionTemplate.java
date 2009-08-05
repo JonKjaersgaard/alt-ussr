@@ -4,8 +4,8 @@ import ussr.builder.BuilderHelper;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
+import ussr.samples.ckbot.CKBotStandard;
 
-import ckbot.CKBotStandard;
 
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;

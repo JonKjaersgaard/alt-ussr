@@ -13,9 +13,9 @@ import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.atron.ATRONBuilder;
+import ussr.samples.ckbot.CKBotSimulation;
 import ussr.samples.mtran.MTRANSimulation;
 import ussr.samples.odin.OdinBuilder;
-import ckbot.CKBotSimulation;
 
 import com.jme.math.Matrix3f;
 import com.jme.scene.Spatial;

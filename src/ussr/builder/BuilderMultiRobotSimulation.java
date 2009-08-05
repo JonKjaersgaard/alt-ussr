@@ -1,6 +1,5 @@
 package ussr.builder;
 
-import ckbot.CKBotStandard;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
@@ -11,6 +10,7 @@ import ussr.physics.PhysicsSimulation;
 import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
+import ussr.samples.ckbot.CKBotStandard;
 import ussr.samples.mtran.MTRAN;
 import ussr.samples.odin.modules.OdinBall;
 import ussr.samples.odin.modules.OdinBattery;
