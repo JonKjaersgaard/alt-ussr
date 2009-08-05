@@ -23,7 +23,7 @@ import ussr.samples.atron.ATRON;
 public class SnakeCarDemo extends EightToCarSimulationJ {
 
     public static void main(String argv[]) {
-        new SnakeCarDemo().main();
+        new CopyOfSnakeCarDemo().main();
     }
 
     protected void changeWorldHook(WorldDescription world) {
@@ -31,9 +31,9 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
         world.setHasBackgroundScenery(false);
         world.setHeavyObstacles(true);
         ObstacleGenerator generator = new ObstacleGenerator();
-        generator.setNumberOfCircleObstacles(64);
+        generator.setNumberOfCircleObstacles(54);
         generator.setNumberOfCircleLayers(1);
-        generator.setCircleObstacleRadius(0.5f);
+        generator.setCircleObstacleRadius(0.4f);
         generator.setObstacleY(-0.4f);
         generator.setObstacleIncY(0.15f);
         generator.setObstacleSize(0.015f);
@@ -41,11 +41,13 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
     }
     @Override
     protected Robot getRobot() {
-        return new ATRON() {
+        ATRON atron = new ATRON() {
             public Controller createController() {
                 return new CarStuffController();
             }
         };
+        atron.setRubberRing();
+        return atron;
     }
 
     public static final byte NO_CONNECTOR = 8;
@@ -104,7 +106,7 @@ public class SnakeCarDemo extends EightToCarSimulationJ {
                     nextState(8,ALL_MODULES);
                     break;
                 case 8: /* all modules */
-                    super.delay(5000);
+                    super.delay(3000);
                     return;
                 case 9: /* module 2 */
                     //this.rotate(1);
