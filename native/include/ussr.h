@@ -1,6 +1,8 @@
 #ifndef USSR_H_
 #define USSR_H_
 
+#include <stdint.h>
+
 #ifdef USSR
 
 typedef struct {
@@ -25,7 +27,9 @@ void controllerIterationSimulatorHook(USSREnv *env, unsigned char waitForEvent);
 #    define USSRONLYC(x)
 #    define controllerIterationSimulatorHook(x,y)
 
+#ifndef __ATRON_API__
 extern uint8_t getRole();
+#endif
 
 #  endif /* USSR */
 

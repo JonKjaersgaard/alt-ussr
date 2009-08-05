@@ -31,7 +31,15 @@ void delay(USSRONLYC(USSREnv *env) int amount);
 
 #else
 
+#ifdef EMPTY_ATRON_API
+
+#include "atron.h"
+
+#else
+
 #include <api/API.h>
+
+#endif
 
 #endif
 
