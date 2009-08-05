@@ -58,12 +58,6 @@ public abstract class OdinController extends ControllerImpl implements PacketRec
     		module.getActuators().get(0).disactivate();
     	}
 	}
-    public float getTime() {
-    	return getModule().getSimulation().getTime();
-    }
-    public String getName() {
-        return module.getProperty("name");
-    }
     
     public void setColor(float r, float g, float b) {
     	if(type=="OdinBattery") {
