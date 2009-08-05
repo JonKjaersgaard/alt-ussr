@@ -22,7 +22,7 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * The numbers of connectors on the ATRON module
 	 */
 	private final static int CONNECTORnr0 = 0,CONNECTORnr1 = 1,CONNECTORnr2 = 2,CONNECTORnr3 = 3,CONNECTORnr4 = 4, CONNECTORnr5 = 5,CONNECTORnr6 = 6, CONNECTORnr7 = 7;
-	
+
 	/**
 	 * Supported rotations of ATRON module."EW" means east-west and so on.
 	 */
