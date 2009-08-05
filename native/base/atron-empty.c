@@ -90,11 +90,11 @@ void delay(USSRONLYC(USSREnv *env) int amount) {
   printf("<delay(%d)>", amount);
 }
 
-void setup(USSREnv *env) {
+void setup(USSRONLY(USSREnv *env)) {
   printf("setup()\n");
 }
 
-void home(USSREnv *env) {
+void home(USSRONLY(USSREnv *env)) {
   printf("home()\n");
 }
 
