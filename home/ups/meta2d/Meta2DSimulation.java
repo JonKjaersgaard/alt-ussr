@@ -21,6 +21,7 @@ import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.BoxDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
+import ussr.description.setup.WorldDescription.TextureDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
@@ -110,6 +111,8 @@ public class Meta2DSimulation extends GenericATRONSimulation {
     }
 
     protected void changeWorldHook(WorldDescription world) {
+        world.setHasBackgroundScenery(false);
+        world.setPlaneTexture(WorldDescription.GREY_GRID_TEXTURE);
     }
 
     public static final byte MSG_MetaPositionSet = 1;

@@ -75,6 +75,7 @@ public class MetaController extends ATRONController {
             if(programStep>MetaController.active_program.getStatements().length) throw new Error("PC out of bounds");
             Statement statement = MetaController.active_program.getStatements()[programStep-1];
             if(statement.evaluate(this)) {
+                this.delay(2000);
                 programStep++;
                 if(!statement.isGroupStatement()) this.localCall(-1, Meta2DSimulation.MSG_NorthEastMetaStep, 0, programStep);
             }

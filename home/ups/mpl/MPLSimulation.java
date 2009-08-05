@@ -44,11 +44,14 @@ public class MPLSimulation extends GenericATRONSimulation {
     private static final String ATRON_BASE = "ATRON base";
 
     // Messages
-    static final byte[] MSG_DISCONNECT_HERE = new byte[] { (byte)87 };
+    static final byte[] MSG_DISCONNECT_HERE = new byte[] { 87 };
     static final byte MSG_DISCONNECT_HERE_SIZE = 1;
-    static final byte[] MSG_LIFT_ME = new byte[] { (byte)29 };
+    static final byte[] MSG_LIFT_ME = new byte[] { 29 };
     static final byte MSG_LIFT_ME_SIZE = 1;
     static final byte LIFTING_CONNECTOR = 4;
+    public static final byte[] MSG_IS_ACTIVE_QUERY = new byte[] { 13 };
+    public static final byte[] MSG_CONFIRM_ACTIVE = new byte[] { 7 };
+    public static final byte[] MSG_CONFIRM_PASSIVE = new byte[] { 9 };
 
     private List<Element> layout;
     private EventGenerator itemGenerator;

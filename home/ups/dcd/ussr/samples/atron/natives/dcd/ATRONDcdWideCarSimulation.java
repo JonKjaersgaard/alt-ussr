@@ -41,7 +41,8 @@ public class ATRONDcdWideCarSimulation extends ATRONDCDCarSimulation {
         return new VectorDescription(x*ATRON.UNIT, y*ATRON.UNIT-Yoffset, z*ATRON.UNIT);
     }
     
-    protected ArrayList<ModulePosition> buildCar() {
+    @Override
+    protected ArrayList<ModulePosition> buildRobot() {
         return new ATRONBuilder().buildWideCar(new VectorDescription(0,-0.25f,0));
     }
 

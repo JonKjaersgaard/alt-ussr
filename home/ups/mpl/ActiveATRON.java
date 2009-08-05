@@ -3,12 +3,15 @@
  */
 package mpl;
 
+import java.util.Arrays;
+
 import ussr.model.Controller;
 
 class ActiveATRON extends PassiveATRON {
 
     ActiveATRON(MPLSimulation simulation) {
         super(simulation);
+        isActive = true;
     }
 
     public Controller createController() { return new ActiveController(); }
@@ -19,6 +22,13 @@ class ActiveATRON extends PassiveATRON {
         public void activate() {
             yield();
             String name = this.module.getProperty("name");
+            if(hasActiveNeighbor()) {
+                System.out.println("Safety: aborting active behavior due to overcrowding for "+name);
+                if(name.indexOf(MPLSimulation.BLOCKER_TAG)>0)
+                    decrementMagicCounter();
+                return;
+            }
+            System.out.println("Activating "+name);
             //System.out.println("Disconnecting "+name);
             if(isConnected(4)||isConnected(5)||isConnected(6)||isConnected(7)) {
                 this.symmetricDisconnect(0);
@@ -50,8 +60,45 @@ class ActiveATRON extends PassiveATRON {
             }
         }
 
+        private int unknownNeighborCount = 0;
+        private int activeNeighborCount = 0;
+        private boolean hasActiveNeighbor() {
+            for(int c=0; c<8; c++) {
+                if(this.isConnected(c)) {
+                    this.sendMessage(MPLSimulation.MSG_IS_ACTIVE_QUERY, (byte)1, (byte)c);
+                    unknownNeighborCount++;
+                }
+            }
+            while(unknownNeighborCount>0) {
+                synchronized(this) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        throw new Error("Unexpected interruption");
+                    }
+                }
+            }
+            return activeNeighborCount >0;
+        }
+
+        @Override
+        protected void handleMessageHook(byte[] message, int c) {
+            if(Arrays.equals(message,MPLSimulation.MSG_CONFIRM_ACTIVE)) {
+                synchronized(this) {
+                    activeNeighborCount++;
+                    unknownNeighborCount--;
+                    this.notify();
+                }
+            } else if(Arrays.equals(message,MPLSimulation.MSG_CONFIRM_PASSIVE)) {
+                synchronized(this) {
+                    unknownNeighborCount--;
+                    this.notify();
+                }
+            } else
+                throw new Error("Unknown message received");
+        }
+        
         private void blockingBehavior(String name) {
-            System.out.println("Blocking behavior activated");
             this.disconnectOthersSameHemi(MPLSimulation.LIFTING_CONNECTOR);
             if(name.indexOf(MPLSimulation.SPINNER_TAG)>0)
                 this.rotateContinuous(1);

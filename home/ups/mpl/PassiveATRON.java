@@ -16,6 +16,7 @@ class PassiveATRON extends ATRON {
      * 
      */
     protected final MPLSimulation simulation;
+    protected boolean isActive = false;
     /**
      * @param simulation
      */
@@ -86,8 +87,17 @@ class PassiveATRON extends ATRON {
                 //System.out.println("Blocking behavior received");
                 lift = channel;
                 synchronized(this) { this.notify(); }
+            } else if(Arrays.equals(message, MPLSimulation.MSG_IS_ACTIVE_QUERY)) { 
+                if(isActive)
+                    this.sendMessage(MPLSimulation.MSG_CONFIRM_ACTIVE, (byte)1, (byte)channel);
+                else
+                    this.sendMessage(MPLSimulation.MSG_CONFIRM_PASSIVE, (byte)1, (byte)channel);
             } else
-                System.err.println("Unknown message received");
+                handleMessageHook(message,channel);
+        }
+        
+        protected void handleMessageHook(byte[] message, int channel) {
+            throw new Error("Unknown message received");
         }
 
     };

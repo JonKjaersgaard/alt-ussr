@@ -31,7 +31,7 @@ public class ATRONDCDSimpleVehicleSimulation extends ATRONDCDCarSimulation {
     }
 	
 	protected ArrayList<ModulePosition> buildRobot() {
-		return new ATRONBuilder().buildCar(2, new VectorDescription(0,-0.25f,0));
+		return new ATRONBuilder().buildCar(2, new VectorDescription(2,-0.25f,0));
 	}
     
     protected void changeWorldHook(WorldDescription world) {
