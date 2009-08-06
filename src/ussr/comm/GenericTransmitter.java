@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.Set;
 
 
-import ussr.comm.monitors.trackergui.CommunicationContainer;
+import ussr.comm.monitors.visualtracker.CommunicationContainer;
 import ussr.description.robot.TransmissionDevice;
 import ussr.model.Entity;
 import ussr.model.Module;

@@ -1,4 +1,4 @@
-package ussr.comm.monitors.trackergui;
+package ussr.comm.monitors.visualtracker;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

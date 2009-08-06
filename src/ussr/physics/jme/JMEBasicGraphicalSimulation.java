@@ -16,7 +16,7 @@ import java.util.List;
 import org.lwjgl.opengl.Display;
 
 import ussr.builder.QuickPrototyping;
-import ussr.comm.monitors.trackergui.CommunicationVisualizerGUI;
+import ussr.comm.monitors.visualtracker.CommunicationVisualizerGUI;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;

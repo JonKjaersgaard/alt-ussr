@@ -1,4 +1,4 @@
-package ussr.comm.monitors.trackergui;
+package ussr.comm.monitors.visualtracker;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -229,58 +229,4 @@ public class JCheckBoxList extends JList implements ListSelectionListener {
 		}
 	}
 
-	public static void main(String args[]) {
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BorderLayout());
-
-		JCheckBoxList cbList = new JCheckBoxList();
-		JScrollPane scrollPane = new JScrollPane(cbList);
-
-		Object[] cbArray = new Object[10];
-		cbArray[0] = new JCheckBox("Module 0");
-		cbArray[1] = new JCheckBox("Module 1");
-		cbArray[2] = new JCheckBox("Module 2");
-		cbArray[3] = new JCheckBox("Module 3");
-		cbArray[4] = new JCheckBox("Module 4");
-		cbArray[5] = new JCheckBox("Module 5");
-		cbArray[6] = new JCheckBox("Module 6");
-		cbArray[7] = new JCheckBox("Module 7");
-		cbArray[8] = new JCheckBox("Module 8");
-		cbArray[9] = new JCheckBox("Module 9");
-		cbList.setListData(cbArray);
-		//cbList.selectAllEntries();
-		
-		/*
-		cbList.setSelectedIndex(0);
-		cbList.setSelectedIndex(2);
-		cbList.setSelectedIndex(4);
-		cbList.setSelectedIndex(6);
-		cbList.setSelectedIndex(8);
-		System.out.println(cbList.isSelectedIndex(0));
-		System.out.println(cbList.isSelectedIndex(1));
-		System.out.println(cbList.isSelectedIndex(2));
-		System.out.println(cbList.isSelectedIndex(3));
-		System.out.println(cbList.isSelectedIndex(4));
-		System.out.println(cbList.isSelectedIndex(5));
-		System.out.println(cbList.isSelectedIndex(6));
-		System.out.println(cbList.isSelectedIndex(7));
-		System.out.println(cbList.isSelectedIndex(8));
-		System.out.println(cbList.isSelectedIndex(9));
-
-		int[] a = cbList.getSelectedIndices();
-		System.out.println(a.length);
-		System.out.println(cbList.getMaxSelectionIndex());
-		System.out.println(cbList.getMinSelectionIndex());
-		System.out.println(cbList.getSelectedIndex());
-		System.out.println(cbList.isSelectionEmpty());
-		int[] b = {1, 3, 5, 7, 9};
-		cbList.setSelectedIndices(b);
-		cbList.clearSelection();
-		*/
-
-		frame.getContentPane().add(scrollPane);
-		frame.pack();
-		frame.setVisible(true);
-	}
 }
