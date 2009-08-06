@@ -38,26 +38,7 @@ public class CommunicationVisualizerGUI extends JPanel {
 	private JButton startSimulationButton;
 	private JButton modulesButton;
 	private JButton packetsButton;
-	
-	/*
-	public CommunicationVisualizerGUI(JMEBasicGraphicalSimulation simulation) {
-		//super(new GridLayout(5, 1));
-		super(new GridLayout(5, 0));
-		this.simulation = (JMESimulation) simulation;
-		modules = this.simulation.getModules();				
-		numberOfModules = modules.size();		
-		initializeComponents();
-		add(createTextArea());
-		add(createCanvasArea());
-		add(createFilterArea());
-		add(createPluginArea());
-		//add(createControllArea());
-		add(createSimulationArea());
-		instanceFlag = true;
-		start();
-	}
-	*/
-	
+		
 	public CommunicationVisualizerGUI(JFrame frame, JMEBasicGraphicalSimulation simulation) {
 		super(new GridLayout(2, 0));
 		this.frame = frame;
@@ -68,10 +49,17 @@ public class CommunicationVisualizerGUI extends JPanel {
 		add(createCanvasArea());
 		add(createPluginArea());
 		instanceFlag = true;
+		initializeDefaultSettings();
 		start();
 	}
 	
-	public JMESimulation getSimulation() {
+	private void initializeDefaultSettings() {
+        for(Module module: modules)
+            canvas.getModuleToDraw().add(module.getID());
+        canvas.setDrawDecimalPackets(true);
+    }
+
+    public JMESimulation getSimulation() {
 		return simulation;
 	}
 	

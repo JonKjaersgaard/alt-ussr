@@ -13,7 +13,9 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JPanel;
 
@@ -55,7 +57,7 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 	private boolean drawHexaDecimalPackets = false;	
     
 	Map<Packet, Module> registry = new HashMap<Packet, Module>();
-    private Map<Integer, Integer> modulesToDrawMap = new HashMap<Integer, Integer>();    	
+    private Set<Integer> modulesToDraw = new HashSet<Integer>();    	
 	private CommunicationContainer transmitterReceiverContainer = new CommunicationContainer();
 	private CommunicationContainer transmitterReceiverContainerBackup = new CommunicationContainer();
 			
@@ -157,12 +159,12 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 		drawHexaDecimalPackets = draw;
 	}
 	
-	public Map<Integer, Integer> getModuleToDraw() {
-		return modulesToDrawMap;
+	public Set<Integer> getModuleToDraw() {
+		return modulesToDraw;
 	}
 		
 	public void addModuleToDraw(Integer moduleIndex) {
-		modulesToDrawMap.put(moduleIndex, moduleIndex);
+		modulesToDraw.add(moduleIndex);
 	}
 	
 	public void packetReceived(Module module, GenericReceiver receiver, Packet data) {		
@@ -176,7 +178,7 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
             int fromID = from.getID();
             int toID = module.getID();
             
-            if (modulesToDrawMap.containsKey(new Integer(fromID)) || modulesToDrawMap.containsKey(new Integer(toID))) {
+            if (modulesToDraw.contains(fromID) || modulesToDraw.contains(toID)) {
             	System.out.println("Drawing from module #" + fromID + " to #" + toID);
             
             
@@ -359,110 +361,6 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	/*
-	private void drawReferenceCommunication(Graphics2D g2) {
-		//From module #0 to module #1 (Message 0)
-		drawArrow(g2, DX + 0 * columnWidth, DY + 0 * rowHeight, DX + 1 * columnWidth, DY + 0 * rowHeight, 1.0f);
-		//From module #1 to module #3 (Message 1)
-		drawArrow(g2, DX + 1 * columnWidth, DY + 1 * rowHeight, DX + 3 * columnWidth, DY + 1 * rowHeight, 1.0f);
-		//From module #3 to module #5 (Message 2)
-		drawArrow(g2, DX + 3 * columnWidth, DY + 2 * rowHeight, DX + 5 * columnWidth, DY + 2 * rowHeight, 1.0f);
-		//From module #5 to module #6 (Message 3)
-		drawArrow(g2, DX + 5 * columnWidth, DY + 3 * rowHeight, DX + 6 * columnWidth, DY + 3 * rowHeight, 1.0f);
-		//From module #6 to module #4 (Message 4)
-		drawArrow(g2, DX + 6 * columnWidth, DY + 4 * rowHeight, DX + 4 * columnWidth, DY + 4 * rowHeight, 1.0f);		
-		//From module #4 to module #3 (Message 5)
-		drawArrow(g2, DX + 4 * columnWidth, DY + 5 * rowHeight, DX + 3 * columnWidth, DY + 5 * rowHeight, 1.0f);		
-		//From module #3 to module #1 (Message 6)
-		drawArrow(g2, DX + 3 * columnWidth, DY + 6 * rowHeight, DX + 1 * columnWidth, DY + 6 * rowHeight, 1.0f);		
-		//From module #1 to module #3 (Message 7)
-		drawArrow(g2, DX + 1 * columnWidth, DY + 7 * rowHeight, DX + 3 * columnWidth, DY + 7 * rowHeight, 1.0f);		
-		//From module #3 to module #5 (Message 8)
-		drawArrow(g2, DX + 3 * columnWidth, DY + 8 * rowHeight, DX + 5 * columnWidth, DY + 8 * rowHeight, 1.0f);		
-		//From module #5 to module #6 (Message 9)
-		drawArrow(g2, DX + 5 * columnWidth, DY + 9 * rowHeight, DX + 6 * columnWidth, DY + 9 * rowHeight, 1.0f);		
-		//From module #6 to module #4 (Message 10)
-		drawArrow(g2, DX + 6 * columnWidth, DY + 10 * rowHeight, DX + 4 * columnWidth, DY + 10 * rowHeight, 1.0f);		
-		//From module #4 to module #6 (Message 11)
-		drawArrow(g2, DX + 4 * columnWidth, DY + 11 * rowHeight, DX + 6 * columnWidth, DY + 11 * rowHeight, 1.0f);		
-		//From module #6 to module #4 (Message 12)
-		drawArrow(g2, DX + 6 * columnWidth, DY + 12 * rowHeight, DX + 4 * columnWidth, DY + 12 * rowHeight, 1.0f);		
-		//From module #4 to module #3 (Message 13)
-		drawArrow(g2, DX + 4 * columnWidth, DY + 13 * rowHeight, DX + 3 * columnWidth, DY + 13 * rowHeight, 1.0f);		
-		//From module #4 to module #3 (Message 14)
-		drawArrow(g2, DX + 3 * columnWidth, DY + 14 * rowHeight, DX + 1 * columnWidth, DY + 14 * rowHeight, 1.0f);		
-		//From module #1 to module #0 (Message 15)
-		drawArrow(g2, DX + 1 * columnWidth, DY + 15 * rowHeight, DX + 0 * columnWidth, DY + 15 * rowHeight, 1.0f);		
-		//From module #0 to module #6 (Message 16)
-		drawArrow(g2, DX + 0 * columnWidth, DY + 16 * rowHeight, DX + 6 * columnWidth, DY + 16 * rowHeight, 1.0f);		
-		//From module #6 to module #0 (Message 17)
-		drawArrow(g2, DX + 6 * columnWidth, DY + 17 * rowHeight, DX + 0 * columnWidth, DY + 17 * rowHeight, 1.0f);		
-		//From module #0 to module #1 (Message 18)
-		drawArrow(g2, DX + 0 * columnWidth, DY + 18 * rowHeight, DX + 1 * columnWidth, DY + 18 * rowHeight, 1.0f);		
-		//From module #1 to module #0 (Message 19)
-		drawArrow(g2, DX + 1 * columnWidth, DY + 19 * rowHeight, DX + 0 * columnWidth, DY + 19 * rowHeight, 1.0f);		
-		//From module #0 to module #1 (Message 20)
-		drawArrow(g2, DX + 0 * columnWidth, DY + 20 * rowHeight, DX + 1 * columnWidth, DY + 20 * rowHeight, 1.0f);		
-		//From module #1 to module #3 (Message 21)
-		drawArrow(g2, DX + 1 * columnWidth, DY + 21 * rowHeight, DX + 3 * columnWidth, DY + 21 * rowHeight, 1.0f);		
-		//From module #3 to module #5 (Message 22)
-		drawArrow(g2, DX + 3 * columnWidth, DY + 22 * rowHeight, DX + 5 * columnWidth, DY + 22 * rowHeight, 1.0f);		
-		//From module #5 to module #3 (Message 23)
-		drawArrow(g2, DX + 5 * columnWidth, DY + 23 * rowHeight, DX + 3 * columnWidth, DY + 23 * rowHeight, 1.0f);		
-		//From module #3 to module #2 (Message 24)
-		drawArrow(g2, DX + 3 * columnWidth, DY + 24 * rowHeight, DX + 2 * columnWidth, DY + 24 * rowHeight, 1.0f);		
-		//From module #2 to module #3 (Message 25)
-		drawArrow(g2, DX + 2 * columnWidth, DY + 25 * rowHeight, DX + 3 * columnWidth, DY + 25 * rowHeight, 1.0f);		
-		//From module #3 to module #1 (Message 26)
-		drawArrow(g2, DX + 3 * columnWidth, DY + 26 * rowHeight, DX + 1 * columnWidth, DY + 26 * rowHeight, 1.0f);		
-		//From module #1 to module #4 (Message 27)
-		drawArrow(g2, DX + 1 * columnWidth, DY + 27 * rowHeight, DX + 4 * columnWidth, DY + 27 * rowHeight, 1.0f);		
-		//From module #4 to module #1 (Message 28)
-		drawArrow(g2, DX + 4 * columnWidth, DY + 28 * rowHeight, DX + 1 * columnWidth, DY + 28 * rowHeight, 1.0f);		
-		//From module #1 to module #3 (Message 39)
-		drawArrow(g2, DX + 1 * columnWidth, DY + 29 * rowHeight, DX + 3 * columnWidth, DY + 29 * rowHeight, 1.0f);		
-		//From module #3 to module #5 (Message 30)
-		drawArrow(g2, DX + 3 * columnWidth, DY + 30 * rowHeight, DX + 5 * columnWidth, DY + 30 * rowHeight, 1.0f);		
-		//From module #5 to module #6 (Message 31)
-		drawArrow(g2, DX + 5 * columnWidth, DY + 31 * rowHeight, DX + 6 * columnWidth, DY + 31 * rowHeight, 1.0f);		
-		//From module #6 to module #0 (Message 32)
-		drawArrow(g2, DX + 6 * columnWidth, DY + 32 * rowHeight, DX + 0 * columnWidth, DY + 32 * rowHeight, 1.0f);		
-		//From module #0 to module #1 (Message 33)
-		drawArrow(g2, DX + 0 * columnWidth, DY + 33 * rowHeight, DX + 1 * columnWidth, DY + 33 * rowHeight, 1.0f);		
-		//From module #1 to module #0 (Message 34)
-		drawArrow(g2, DX + 1 * columnWidth, DY + 34 * rowHeight, DX + 0 * columnWidth, DY + 34 * rowHeight, 1.0f);		
-		//From module #0 to module #6 (Message 35)
-		drawArrow(g2, DX + 0 * columnWidth, DY + 35 * rowHeight, DX + 6 * columnWidth, DY + 35 * rowHeight, 1.0f);		
-		//From module #6 to module #5 (Message 36)
-		drawArrow(g2, DX + 6 * columnWidth, DY + 36 * rowHeight, DX + 5 * columnWidth, DY + 36 * rowHeight, 1.0f);		
-		//From module #5 to module #3 (Message 37)
-		drawArrow(g2, DX + 5 * columnWidth, DY + 37 * rowHeight, DX + 3 * columnWidth, DY + 37 * rowHeight, 1.0f);		
-		//From module #3 to module #5 (Message 38)
-		drawArrow(g2, DX + 3 * columnWidth, DY + 38 * rowHeight, DX + 5 * columnWidth, DY + 38 * rowHeight, 1.0f);		
-		//From module #5 to module #6 (Message 39)
-		drawArrow(g2, DX + 5 * columnWidth, DY + 39 * rowHeight, DX + 6 * columnWidth, DY + 39 * rowHeight, 1.0f);		
-		//From module #6 to module #0 (Message 40)
-		drawArrow(g2, DX + 6 * columnWidth, DY + 40 * rowHeight, DX + 0 * columnWidth, DY + 40 * rowHeight, 1.0f);		
-		//From module #0 to module #1 (Message 41)
-		drawArrow(g2, DX + 0 * columnWidth, DY + 41 * rowHeight, DX + 1 * columnWidth, DY + 41 * rowHeight, 1.0f);		
-		//From module #1 to module #3 (Message 42)
-		drawArrow(g2, DX + 1 * columnWidth, DY + 42 * rowHeight, DX + 3 * columnWidth, DY + 42 * rowHeight, 1.0f);		
-		//From module #3 to module #1 (Message 43)
-		drawArrow(g2, DX + 3 * columnWidth, DY + 43 * rowHeight, DX + 1 * columnWidth, DY + 43 * rowHeight, 1.0f);		
-		//From module #1 to module #0 (Message 44)
-		drawArrow(g2, DX + 1 * columnWidth, DY + 44 * rowHeight, DX + 0 * columnWidth, DY + 44 * rowHeight, 1.0f);		
-		//From module #1 to module #4 (Message 45)
-		drawArrow(g2, DX + 1 * columnWidth, DY + 45 * rowHeight, DX + 4 * columnWidth, DY + 45 * rowHeight, 1.0f);		
-		//From module #1 to module #3 (Message 46)
-		drawArrow(g2, DX + 1 * columnWidth, DY + 46 * rowHeight, DX + 3 * columnWidth, DY + 46 * rowHeight, 1.0f);		
-		//From module #0 to module #6 (Message 47)
-		drawArrow(g2, DX + 0 * columnWidth, DY + 47 * rowHeight, DX + 6 * columnWidth, DY + 47 * rowHeight, 1.0f);		
-		//From module #6 to module #5 (Message 48)
-		drawArrow(g2, DX + 6 * columnWidth, DY + 48 * rowHeight, DX + 5 * columnWidth, DY + 48 * rowHeight, 1.0f);		
-		//From module #6 to module #2 (Message 49)
-		drawArrow(g2, DX + 6 * columnWidth, DY + 49 * rowHeight, DX + 2 * columnWidth, DY + 49 * rowHeight, 1.0f);		
-	}
-	*/
+
 }	
 

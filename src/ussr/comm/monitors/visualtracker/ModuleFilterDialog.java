@@ -7,8 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -27,7 +28,7 @@ public class ModuleFilterDialog extends JDialog {
 	private CommunicationVisualizerGUI communicationVisualizer;
 	private JScrollPane scrollPane;
 	private List<JCheckBox> checkboxList = new ArrayList<JCheckBox>();
-	private Map<Integer, Integer> modulesToBeDrawnMap = new HashMap<Integer, Integer>();
+	private Set<Integer> modulesToBeDrawn = new HashSet<Integer>();
 	private JButton doneButton;
 	
 	
@@ -66,36 +67,32 @@ public class ModuleFilterDialog extends JDialog {
 		return panel;
 	}
 			
+	public Set<Integer> getModulesDrawnSet() {
+	    return this.modulesToBeDrawn;
+	}
+	
     class ModuleSelectListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
         	int i;
     		for (i = 0; i < checkboxList.size(); i++) {
     			JCheckBox checkbox = checkboxList.get(i);
     			if (checkbox.isSelected()) {
-    				
-    				if (!communicationVisualizer.getDrawingCanvas().getModuleToDraw().containsKey(new Integer(i))) {
-    					communicationVisualizer.getDrawingCanvas().addModuleToDraw(new Integer(i)); 
-    				}
-
-    				if(!modulesToBeDrawnMap.containsKey(new Integer(i))) {
-    					modulesToBeDrawnMap.put(new Integer(i), new Integer(i));
-    				}    				
+    			    communicationVisualizer.getDrawingCanvas().addModuleToDraw(i); 
+    				modulesToBeDrawn.add(i);
     			}    		    			
     			else {
     				communicationVisualizer.getDrawingCanvas().getModuleToDraw().remove(new Integer(i));
-    				modulesToBeDrawnMap.remove(new Integer(i));
+    				modulesToBeDrawn.remove(i);
     			}
     		}    		
-    		System.out.println(modulesToBeDrawnMap.toString());
-    		System.out.println(modulesToBeDrawnMap.keySet().toString());
+    		System.out.println(modulesToBeDrawn.toString());
     		System.out.println(communicationVisualizer.getDrawingCanvas().getModuleToDraw().toString());
-    		System.out.println(communicationVisualizer.getDrawingCanvas().getModuleToDraw().keySet().toString());
         }        
     }
     
     class DrawModuleListener implements ActionListener {
     	public void actionPerformed(ActionEvent e) {
-    		if (modulesToBeDrawnMap.isEmpty()) {
+    		if (modulesToBeDrawn.isEmpty()) {
     			System.out.println("Nothing to draw");
     		}
     		else {
@@ -105,7 +102,7 @@ public class ModuleFilterDialog extends JDialog {
     			//module id's that specify which modules to draw. Provide
     			//a method to access this list (set) from the outside
     			//
-    			System.out.println(modulesToBeDrawnMap.keySet().toString());
+    			System.out.println(modulesToBeDrawn.toString());
     		}
     		dispose();
     	}
