@@ -5,6 +5,7 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="ussr/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="sandbox"/>
 	<classpathentry kind="src" path="zoo/jME_physics/impl/ode/src"/>
 	<classpathentry kind="src" path="zoo/jME_physics/impl/jbullet/src"/>
 	<classpathentry kind="src" path="zoo/jME_physics/src"/>

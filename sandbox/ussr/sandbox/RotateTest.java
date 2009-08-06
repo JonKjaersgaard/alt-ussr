@@ -3,7 +3,6 @@ package ussr.sandbox;
 import java.util.logging.Level;
 
 import com.jme.math.Vector3f;
-import com.jme.util.LoggingSystem;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.Joint;
 import com.jmex.physics.JointAxis;
@@ -57,7 +56,6 @@ public class RotateTest extends SimplePhysicsGame {
 
 
     public static void main( String[] args ) {
-        LoggingSystem.getLogger().setLevel( Level.WARNING );
         new RotateTest().start();
     }
 }
