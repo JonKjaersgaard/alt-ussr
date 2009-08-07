@@ -15,6 +15,7 @@ import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Connector;
 import ussr.model.Module;
+import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -22,7 +23,7 @@ import ussr.physics.jme.JMESimulation;
  * for builder (QPSS).
  * @author Konstantinas
  */  
-public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
+public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 	/**
 	 * The name of the first tag in XML file (first in the hierarchy).
@@ -100,8 +101,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 	private final static String labelsConnectorsTag = "LABELS_CONNECTORS";
 
 
-	public SaveLoadXMLBuilderTemplate(JMESimulation simulation) {
-		super(simulation);	
+	public SaveLoadXMLBuilderTemplate() {
 	}
 
 	/**
@@ -111,10 +111,10 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 	 */
 	public void printOutXML(TransformerHandler transformerHandler) {		
 		printFirstStartTag(transformerHandler, firstTag);
-		int amountModules = simulation.getModules().size();
+		int amountModules = numberOfSimulatedModules();
 		/*For each module print out the start and end tags with relevant data*/
 		for (int module=0; module<amountModules;module++){           
-			Module currentModule = simulation.getModules().get(module);			
+			Module currentModule = getModuleByIndex(module);			
 				try {				
 					transformerHandler.startElement("","",secondTag,EMPTY_ATT);				
 					printSubTagsWithValue(transformerHandler, idTag, getID(currentModule));				
@@ -140,9 +140,11 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 		printFirstEndTag(transformerHandler, firstTag);		
 	}
 
+	protected abstract Module getModuleByIndex(int module);
 
+    protected abstract int numberOfSimulatedModules();
 
-	public void loadInXML(Document document) {
+    public void loadInXML(Document document) {
 		NodeList nodeList = document.getElementsByTagName(secondTag);
 
 		for (int node = 0; node < nodeList.getLength(); node++) {
@@ -177,11 +179,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 				RotationDescription rotationDescription = new RotationDescription();
 				rotationDescription.setRotation(new Quaternion(extractFromQuaternion(moduleRotationQuaternion,"X"),extractFromQuaternion(moduleRotationQuaternion,"Y"),extractFromQuaternion(moduleRotationQuaternion,"Z"),extractFromQuaternion(moduleRotationQuaternion,"W")));
 
-				/*	VectorDescription vd = new VectorDescription();
-				vd.set(new Vector3f(extractVector(modulePositionVector,"X"),extractVector(modulePositionVector,"Y"),extractVector(modulePositionVector,"Z")));
-				 */	
-				/*Solution1*///createNewModule(simulation,moduleName,moduleType,vd/*new VectorDescription(extract(modulePosition, "X"),extract(modulePosition, "Y"),extract(modulePosition, "Z"))*/,nd ,listColorsComponents,listColorsConnectors);
-				/*Solution2*/createNewModule(simulation,moduleName,moduleType,new VectorDescription(extractFromPosition(modulePosition, "X"),extractFromPosition(modulePosition, "Y"),extractFromPosition(modulePosition, "Z")),rotationDescription ,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
+				createNewModule(moduleName,moduleType,new VectorDescription(extractFromPosition(modulePosition, "X"),extractFromPosition(modulePosition, "Y"),extractFromPosition(modulePosition, "Z")),rotationDescription ,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
 				
 //FIXME IN CASE THERE IS A NEED TO EXTRACT THE STATE OF CONNECTORS
 				/*	NodeList sixthNmElmntLst = fstElmnt.getElementsByTagName("CONNECTOR");
@@ -199,42 +197,7 @@ public class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 		}	
 	}
 
-
-	private void createNewModule(JMESimulation simulation, String moduleName, String moduleType, VectorDescription modulePosition, RotationDescription moduleRotation, LinkedList<Color> listColorsComponents,LinkedList<Color> listColorsConnectors, String labelsModule, String[] labelsConnectors){
-		Module newModule;
-		if (moduleType.contains("ATRON")||moduleType.equalsIgnoreCase("default")){
-			ModulePosition modulePos= new ModulePosition(moduleName,"ATRON",modulePosition,moduleRotation);
-			//ModulePosition modulePos= new ModulePosition(moduleName,"default",modulePosition,moduleRotation);
-			newModule = simulation.createModule(modulePos,true);			
-		}else{
-			ModulePosition modulePos= new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation);
-			newModule = simulation.createModule(modulePos,true);			
-		}
-
-		if(labelsModule.contains(BuilderHelper.getTempLabel())){			
-			//do nothing
-		}else{ 	
-		newModule.setProperty(BuilderHelper.getLabelsKey(), labelsModule);
-		}
-		
-		newModule.setColorList(listColorsComponents);
-
-		int amountConnentors  = newModule.getConnectors().size();
-
-		for (int connector =0; connector< amountConnentors; connector++ ){
-			Connector currentConnector =newModule.getConnectors().get(connector); 
-			currentConnector.setColor(listColorsConnectors.get(connector));
-			if(labelsConnectors[connector].contains(BuilderHelper.getTempLabel())){
-				//do nothing
-			}else{
-			currentConnector.setProperty(BuilderHelper.getLabelsKey(), labelsConnectors[connector]);
-			}
-		}
-		
-		
-		//newModule.setColorList(colorsComponents);		
-		//setColorsConnectors(simulation,newModule.getID(),colorsConnectors);		
-	}
+    protected abstract void createNewModule(String moduleName, String moduleType, VectorDescription modulePosition, RotationDescription moduleRotation, LinkedList<Color> listColorsComponents,LinkedList<Color> listColorsConnectors, String labelsModule, String[] labelsConnectors);
 
 	/**
 	 * Extracts the value of specific coordinate from the string of VectorDescription.

@@ -7,6 +7,7 @@
 package ussr.samples.atron;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import ussr.description.geometry.RotationDescription;
@@ -46,11 +47,11 @@ public class ATRONBuilder {
         this.connection_acceptance_range = range;
     }
     
-    public ArrayList<ModuleConnection> allConnections() {
+    public List<ModuleConnection> allConnections() {
         return allConnections(mPos);
     }
 
-    public ArrayList<ModuleConnection> allConnections(ArrayList<ModulePosition> modulePos) {
+    public ArrayList<ModuleConnection> allConnections(List<ModulePosition> modulePos) {
         ArrayList<ModuleConnection> connections = new ArrayList<ModuleConnection>();
         for(int i=0;i<modulePos.size();i++) {
             for(int j=i+1;j<modulePos.size();j++) {

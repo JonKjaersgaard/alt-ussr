@@ -25,7 +25,7 @@ import ussr.samples.odin.modules.OdinWheel;
  * for ATRON,MTRAN and Odin modular robots.
  * @author Konstantinas
  */
-public class BuilderMultiRobotSimulation extends GenericSimulation {
+public class Builder extends GenericSimulation {
 
 	
 	/**
@@ -49,7 +49,7 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 	public static void main( String[] args ) {
 		/*Activate connectors*/
 		GenericSimulation.setConnectorsAreActive(true);
-		BuilderMultiRobotSimulation simulation = new BuilderMultiRobotSimulation();
+		Builder simulation = new Builder();
 		/* Specify realistic collision*/
 		PhysicsParameters.get().setRealisticCollision(true);
 		/* Specify simulation step*/

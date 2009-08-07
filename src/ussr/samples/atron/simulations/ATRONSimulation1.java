@@ -47,7 +47,7 @@ public class ATRONSimulation1 extends GenericSimulation {
         // modulePos = Arrays.asList(new WorldDescription.ModulePosition[] { new WorldDescription.ModulePosition("hermit", new VectorDescription(2*0*unit,0*unit,0*unit), rotation_EW) });
         world.setModulePositions(modulePos);
         
-        ArrayList<ModuleConnection> connections = builder.allConnections();
+        List<ModuleConnection> connections = builder.allConnections();
         world.setModuleConnections(connections);
         
         this.runSimulation(world,true);

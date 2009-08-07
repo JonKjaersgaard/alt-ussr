@@ -1,5 +1,6 @@
 package ussr.builder.gui;
 
+import ussr.builder.saveLoadXML.InSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
 import ussr.physics.jme.JMESimulation;
@@ -33,7 +34,7 @@ public FileChooser(JMESimulation simulation, boolean type) {
       initComponents();        
       changeOpenSaveDialog(type);
      guiUtil.changeToSetLookAndFeel(this);
-     this.saveLoadXML =  new SaveLoadXMLBuilderTemplate(this.simulation); 
+     this.saveLoadXML =  new InSimulationXMLSerializer(this.simulation); 
 }
   
 /** This method is called from within the constructor to

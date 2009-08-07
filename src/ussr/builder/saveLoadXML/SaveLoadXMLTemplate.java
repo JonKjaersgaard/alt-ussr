@@ -24,6 +24,7 @@ import org.xml.sax.helpers.AttributesImpl;
 import ussr.builder.BuilderHelper;
 import ussr.builder.labelingTools.LabelingTemplate;
 import ussr.model.Module;
+import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -34,11 +35,6 @@ import ussr.physics.jme.JMESimulation;
  *
  */ 
 public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
-
-	/**
-	 * The physical simulation
-	 */
-	protected JMESimulation simulation;
 
 	/**
 	 * The string representation of XML file extension.
@@ -84,8 +80,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 *  Acts a host for common, template and primitive methods to children classes.
 	 * @param simulation, the physical simulation.
 	 */
-	public SaveLoadXMLTemplate(JMESimulation simulation){
-		this.simulation = simulation;
+	public SaveLoadXMLTemplate(){
 	}
 	
 	/**	

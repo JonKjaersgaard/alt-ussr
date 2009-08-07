@@ -150,4 +150,8 @@ public class ModulePosition {
 		pos.addLocal(translation);
 		position.set(pos);
 	}
+	
+	public String toString() {
+	    return "ModulePosition["+name+","+type+"]";
+	}
 }

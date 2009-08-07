@@ -423,7 +423,6 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             ModulePosition p = positions.next();
             module.assignToModulePosition(p);
             registry.put(p.getName(), module);
-            
         }
         // The following only works for mechanical connectors
         // HARDCODED: assumes one physics per connector
@@ -432,6 +431,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         for(ModuleConnection connection: connections) {
             Module m1 = registry.get(connection.getModule1());
             Module m2 = registry.get(connection.getModule2());
+            if(m1==null) throw new Error("Undefined module for connection "+connection.getModule1());
+            if(m2==null) throw new Error("Undefined module for connection "+connection.getModule2());
             if(m1.getID()==m2.getID()) {
                 throw new RuntimeException("Module("+m1.getID()+") can not connect to itself("+m2.getID()+")");
             }

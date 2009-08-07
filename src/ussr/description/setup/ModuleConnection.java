@@ -63,4 +63,8 @@ public class ModuleConnection {
     	if(!other.module2.equals(module2)) return false;
     	return true;
     }
+    
+    public String toString() {
+        return "ModuleConnection<"+module1+","+module2+">";
+    }
 }
