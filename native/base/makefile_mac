@@ -12,7 +12,7 @@ BIN=$(SRC:.c=.o)
 CC=gcc
 
 all: nativeController.jnilib
-	cp nativeController.jnilib $(BASEDIR)/lib/lib$(CONTROLLERNAME).jnilib
+	cp nativeController.jnilib $(BASEDIR)/lib/lib$(CONTROLLER).jnilib
 $(BASEDIR)/native/include/nativeController.h: $(BASEDIR)/bin/ussr/samples/atron/natives/ATRONNativeController.class
 	javah -jni -classpath $(BASEDIR)/bin -o $(BASEDIR)/native/include/nativeController.h ussr.samples.atron.natives.ATRONNativeController
 nativeController.jnilib: $(BASEDIR)/native/include/nativeController.h $(BIN)
