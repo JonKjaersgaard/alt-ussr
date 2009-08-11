@@ -23,6 +23,8 @@ void VM_alarmStart(uint32_t moduleID, uint32_t dt) {
 
 extern void main();
 
-void activate(USSRONLY(USSREnv *env)) { main(); }
+void activate(USSRONLY(USSREnv *env)) { 
+	main_87();
+}
 
 int32_t initialize(USSRONLY(USSREnv *env)) { }
