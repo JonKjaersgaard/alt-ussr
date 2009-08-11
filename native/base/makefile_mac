@@ -7,7 +7,8 @@ LDFLAGS=-dynamiclib -framework JavaVM -fPIC
 # General variables
 NATIVECONTROLLER=$(BASEDIR)/native/base/nativeController.c
 APIFILE=$(BASEDIR)/native/base/$(API).c
-SRC=$(NATIVECONTROLLER) $(APIFILE) $(CONTROLLER).c $(FILES)
+USSR_ATOMICS=$(BASEDIR)/native/base/ussr_atomic_functions.c
+SRC=$(NATIVECONTROLLER) $(APIFILE) $(USSR_ATOMICS) $(CONTROLLER).c $(FILES)
 BIN=$(SRC:.c=.o)
 CC=gcc
 

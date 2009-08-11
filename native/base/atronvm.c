@@ -29,21 +29,3 @@ void activate(USSRONLY(USSREnv *env)) {
 }
 
 int32_t initialize(USSRONLY(USSREnv *env)) { }
-
-
-typedef uint8_t __nesc_atomic_t;
-
-/* Saves current interrupt mask state and disables interrupts. */
-inline __nesc_atomic_t 
-__nesc_atomic_start(void) 
-{
-  //todo
-  return 0;
-}
-
-/* Restores interrupt mask to original state. */
-inline void 
-__nesc_atomic_end(__nesc_atomic_t original_SREG) 
-{
-  //todo
-}
