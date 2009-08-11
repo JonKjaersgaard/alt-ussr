@@ -1,5 +1,6 @@
 # Customizable variables: name of controller and api files (both excluding extension)
 CONTROLLER=snakeController
+CONTROLLERNAME=$(CONTROLLER)
 API=atron
 
 # Local config file defines paths and includes the platform-specific generic makefile
