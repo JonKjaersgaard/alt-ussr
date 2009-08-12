@@ -1,4 +1,4 @@
-#include <atron.h>
+#include <atron_tinyos.h>
 #include <ussr_internal.h>
 
 #include <nativeController.h>
@@ -31,3 +31,11 @@ void activate(USSRONLY(USSREnv *env)) {
 }
 
 int32_t initialize(USSRONLY(USSREnv *env)) { }
+
+// temporary here to experiment
+char sendMessage(USSREnv *env, unsigned char *message, unsigned char messageSize, unsigned char connector) {
+  jbyteArray array = ussr_charArray2byteArray(env, message, messageSize);
+  char result = ussr_call_byte_controller_method(env, "sendMessage", "([BBB)B", array, messageSize, connector);
+  ussr_releaseByteArray(env, array);
+  return result;
+}

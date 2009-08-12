@@ -1,5 +1,5 @@
-#ifndef ATRON_H_
-#define ATRON_H_
+#ifndef ATRON_TINYOS_H_
+#define ATRON_TINYOS_H_
 
 #include <ussr.h>
 
@@ -7,7 +7,9 @@
 
 #ifdef USSR
 
-// ?
+/* the plain C version of the ATRON TinyOS API */
+
+char sendMessage(USSRONLYC(USSREnv *env) unsigned char *message, unsigned char messageSize, unsigned char connector);
 
 #else
 
@@ -24,4 +26,4 @@
 #endif
 
 
-#endif /*ATRON_H_*/
+#endif /*ATRON_TINYOS_H_*/
