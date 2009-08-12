@@ -83,7 +83,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     private List<JMEModuleComponent> moduleComponents = new ArrayList<JMEModuleComponent>();
     private List<Module> modules = new ArrayList<Module>();
     private Map<TriMesh,String> geometryMap = new HashMap<TriMesh,String>();
-    private ArrayList<Thread> moduleThreads = new ArrayList<Thread>();
+    private ArrayList<Thread> moduleControlThreads = new ArrayList<Thread>();
     
     protected long physicsSteps = 0;
     protected float physicsSimulationStepSize; // Set from ussr.physics.SimulationParameters = 0.005f; // 0.001f  // 0.0005f; //0.001f; // 
@@ -158,7 +158,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                         }
                 }
             };
-            moduleThreads.add(actThread);
+            moduleControlThreads.add(actThread);
             actThread.start();
         }
         
@@ -232,7 +232,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 actControllers.notifyAll();
             }
         else {
-            Thread moduleThread = new Thread() {
+            Thread moduleControlThread = new Thread() {
                 public void run() {
                     module.waitForReady();
                     module.getController().activate();
@@ -243,8 +243,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             };
             //moduleThread.setPriority(Thread.NORM_PRIORITY-1);
 
-            moduleThreads.add(moduleThread);
-            moduleThread.start();
+            moduleControlThreads.add(moduleControlThread);
+            moduleControlThread.start();
         }
         
         if(assign) {
