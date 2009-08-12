@@ -11,7 +11,7 @@ import java.util.Random;
 /**
  * Abstract class providing a default implementation of the Controller interface.
  * The class maintain a reference to the module and provides a convenience "wait
- * for an event to be signalled on the module" method.
+ * for an event to be signaled on the module" method.
  * 
  * @author ups
  *
