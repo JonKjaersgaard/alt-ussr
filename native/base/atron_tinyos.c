@@ -27,7 +27,7 @@ extern void main();
 void activate(USSRONLY(USSREnv *env)) {
   int moduleId = ussr_call_int_controller_method(env, "getRole", "()I");/* the old "role" */
   if (moduleId == 1)
-    main_1();
+    main_1(env);
 }
 
 int32_t initialize(USSRONLY(USSREnv *env)) { }
