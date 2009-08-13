@@ -40,8 +40,7 @@ public class RadioConnection {
 	
 	public RadioConnection(PhysicsSimulation simulation, int socketPort) {
 		this.simulation = simulation;
-		Module dummyModule = new Module(-1);
-		dummyModule.setSimulation(simulation);
+		Module dummyModule = new Module(simulation,-1);
 		radioTrans = new RadioTransmitter(dummyModule, dummyModule,TransmissionType.RADIO, Float.MAX_VALUE);
 		radioRec = new RadioReceiver(dummyModule,dummyModule,new ReceivingDevice(TransmissionType.RADIO,100));
         radioTrans.setMaxBaud(19200);

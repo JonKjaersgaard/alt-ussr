@@ -23,6 +23,7 @@ import ussr.description.robot.RobotDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.physics.PhysicsEntity;
 import ussr.physics.PhysicsModuleComponent;
+import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsSimulationHelper;
 
@@ -80,7 +81,7 @@ public class Module extends Entity {
     /**
      * Simulation in which this module exists
      */
-    PhysicsSimulation simulation;
+    private PhysicsSimulation simulation;
     
     /**
      * Indicates whether module is ready for simulation (placed in the world, properly connected, etc)
@@ -91,19 +92,37 @@ public class Module extends Entity {
      * Self-description of the module
      */
     private RobotDescription description;
+
+    /**
+     * Event queue (if any) for this module 
+     */
+    private ModuleEventQueue eventQueue;
     
     /**
      * Construct a module 
      */
-    public Module() {
-        synchronized(this) {
+    public Module(PhysicsSimulation simulation) {
+        this.simulation = simulation;
+        synchronized(Module.class) {
             uniqueID = idCounter++;
         }
+        initializeModule();
     }
-    public Module(int id) {
+    
+    public Module(PhysicsSimulation simulation, int id) {
+        this.simulation = simulation;
     	uniqueID = id;
+    	initializeModule();
     }
 
+    /**
+     * Initialize module
+     */
+    public void initializeModule() {
+        if(PhysicsParameters.get().useModuleEventQueue()) 
+            eventQueue = new ModuleEventQueue(this);
+    }
+    
     /**
      * Set the physics for the module
      * @param components the physics components represented by this module
@@ -394,5 +413,13 @@ public class Module extends Entity {
      */
     public void setDescription(RobotDescription description) {
         this.description = description;
+    }
+    
+    /**
+     * Get the event queue for this object if it exists, return an error otherwise
+     */
+    public ModuleEventQueue getModuleEventsQueue() {
+        if(this.eventQueue!=null) return eventQueue;
+        throw new Error("Event queue is null");
     }
 }

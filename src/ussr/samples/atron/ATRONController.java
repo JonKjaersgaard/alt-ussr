@@ -16,8 +16,10 @@ import ussr.comm.Transmitter;
 import ussr.model.ControllerImpl;
 import ussr.model.Module;
 import ussr.model.Sensor;
+import ussr.model.ModuleEventQueue.Event;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
+import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 
 /**
@@ -413,8 +415,14 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     public void packetReceived(Receiver device) {
     	for(int i=0;i<module.getReceivers().size();i++) {
     		if(module.getReceivers().get(i).equals(device)) {
-    			byte[] data = device.getData().getData();
-    			handleMessage(data,data.length,i);
+    			final byte[] data = device.getData().getData();
+    			final int index = i;
+    			if(PhysicsParameters.get().useModuleEventQueue())
+    			    module.getModuleEventsQueue().addEvent(new Event(0) {
+                        @Override public void trigger() { handleMessage(data,data.length,index); }
+    			    });
+    			else
+    			    handleMessage(data,data.length,index);
     			return;
     		}
     	}

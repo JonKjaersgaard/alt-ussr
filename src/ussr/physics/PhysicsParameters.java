@@ -45,6 +45,7 @@ public class PhysicsParameters {
     private float worldDampingLinearVelocity = 0.0f;
     private float worldDampingAngularVelocity = 0.0f;
     private int resolutionFactor = 5;
+    private boolean useModuleEventQueue = false;
     
     
     public float getWorldDampingLinearVelocity() {
@@ -182,5 +183,11 @@ public class PhysicsParameters {
     }
     public void setResolutionFactor(int resolutionFactor) {
         this.resolutionFactor = resolutionFactor;
+    }
+    public boolean useModuleEventQueue() {
+        return useModuleEventQueue;
+    }
+    public void setUseModuleEventQueue(boolean use) {
+        this.useModuleEventQueue  = use;
     }
 }

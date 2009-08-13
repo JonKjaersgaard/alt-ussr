@@ -32,8 +32,7 @@ public class WifiCMBroadcaster implements PhysicsObserver {
 		this.simulation = simulation;
 		this.deltaT = deltaT;
 		this.tracker = tracker;
-		Module dummyModule = new Module(-1);
-		dummyModule.setSimulation(simulation);
+		Module dummyModule = new Module(simulation,-1);
 		radio = new RadioTransmitter(dummyModule, dummyModule,TransmissionType.RADIO, Float.MAX_VALUE);
 		nextT = simulation.getTime()+deltaT;
 		oldPos = tracker.getRobotCM();
