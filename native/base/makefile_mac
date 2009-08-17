@@ -12,16 +12,20 @@ CFLAGS += -I$(APIDIR)
 ALLINCLUDE += -I$(APIDIR)
 USSR_ATOMICS=$(BASEDIR)/native/base/ussr_atomic_functions.c
 
+# select your controler class!
+#NATIVE_CONTROLLER_CLASS = ATRONNativeController
+NATIVE_CONTROLLER_CLASS = ATRONNativeTinyOSController
+
 SRC=$(NATIVECONTROLLER) $(APIFILE) $(USSR_ATOMICS) $(CONTROLLER).c $(FILES)
-include $(APIDIR)/api_makefile
+#include $(APIDIR)/api_makefile
 
 BIN=$(SRC:.c=.o)
 CC=gcc
 
 all: nativeController.jnilib
 	cp nativeController.jnilib $(BASEDIR)/lib/lib$(CONTROLLERNAME).jnilib
-$(BASEDIR)/native/include/nativeController.h: $(BASEDIR)/bin/ussr/samples/atron/natives/ATRONNativeController.class
-	javah -jni -classpath $(BASEDIR)/bin -o $(BASEDIR)/native/include/nativeController.h ussr.samples.atron.natives.ATRONNativeController
+$(BASEDIR)/native/include/nativeController.h: $(BASEDIR)/bin/ussr/samples/atron/natives/$(NATIVE_CONTROLLER_CLASS).class
+	javah -jni -classpath $(BASEDIR)/bin -o $(BASEDIR)/native/include/nativeController.h ussr.samples.atron.natives.$(NATIVE_CONTROLLER_CLASS)
 nativeController.jnilib: $(BASEDIR)/native/include/nativeController.h $(BIN)
 	gcc $(LDFLAGS) -o nativeController.jnilib $(BIN)
 clean:
