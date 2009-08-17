@@ -1,4 +1,4 @@
-SRC += $(APIDIR)/Send.c
+#SRC += $(APIDIR)/Send.c
 
 ATRON_TINYOS_DIR = $(ATRON_SDK)/$(ATRON_SDK_VERSION)/tinybotics-modular/tos/platforms/atronFamily/atron/ussr
 

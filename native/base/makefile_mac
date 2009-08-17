@@ -9,6 +9,7 @@ NATIVECONTROLLER=$(BASEDIR)/native/base/nativeController.c
 APIFILE=$(BASEDIR)/native/base/$(API).c
 APIDIR=$(BASEDIR)/native/base/$(API)
 CFLAGS += -I$(APIDIR)
+ALLINCLUDE += -I$(APIDIR)
 USSR_ATOMICS=$(BASEDIR)/native/base/ussr_atomic_functions.c
 
 SRC=$(NATIVECONTROLLER) $(APIFILE) $(USSR_ATOMICS) $(CONTROLLER).c $(FILES)
