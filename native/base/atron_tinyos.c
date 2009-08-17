@@ -17,10 +17,10 @@ void JNICALL Java_ussr_samples_atron_natives_ATRONNativeController_nativeHandleM
   printf("handleMessage(&env, buffer, messageSize, channel);\n");
 }
 
-//   _AlarmUssrImplP__VM_alarmStart
-void VM_alarmStart(uint32_t moduleID, uint32_t dt) {
-  printf("VM_alarmStart(%d,%d)\n", moduleID, dt);
-}
+/* //   _AlarmUssrImplP__VM_alarmStart */
+/* void VM_alarmStart(uint32_t moduleID, uint32_t dt) { */
+/*   printf("VM_alarmStart(%d,%d)\n", moduleID, dt); */
+/* } */
 
 extern void main();
 
@@ -32,10 +32,10 @@ void activate(USSRONLY(USSREnv *env)) {
 
 int32_t initialize(USSRONLY(USSREnv *env)) { }
 
-// temporary here to experiment
-char sendMessage(USSREnv *env, unsigned char *message, unsigned char messageSize, unsigned char connector) {
-  jbyteArray array = ussr_charArray2byteArray(env, message, messageSize);
-  char result = ussr_call_byte_controller_method(env, "sendMessage", "([BBB)B", array, messageSize, connector);
-  ussr_releaseByteArray(env, array);
-  return result;
-}
+/* // temporarily here to experiment */
+/* char sendMessage(USSREnv *env, unsigned char *message, unsigned char messageSize, unsigned char connector) { */
+/*   jbyteArray array = ussr_charArray2byteArray(env, message, messageSize); */
+/*   char result = ussr_call_byte_controller_method(env, "sendMessage", "([BBB)B", array, messageSize, connector); */
+/*   ussr_releaseByteArray(env, array); */
+/*   return result; */
+/* } */
