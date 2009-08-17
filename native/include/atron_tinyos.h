@@ -7,9 +7,7 @@
 
 #ifdef USSR
 
-/* the plain C version of the ATRON TinyOS API */
-
-char sendMessage(USSRONLYC(USSREnv *env) unsigned char *message, unsigned char messageSize, unsigned char connector);
+/* TinyOS includes, eventually customized for non-nesc compilation */
 
 #else
 
