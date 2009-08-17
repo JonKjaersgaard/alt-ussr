@@ -1,10 +1,10 @@
-#SRC += $(APIDIR)/Send.c
+SRC += $(APIDIR)/nesc_nx.c
+SRC += $(APIDIR)/Send.c
 
 ATRON_TINYOS_DIR = $(ATRON_SDK)/$(ATRON_SDK_VERSION)/tinybotics-modular/tos/platforms/atronFamily/atron/ussr
 
 #various needed includes, added on a need basis
-CFLAGS += -I$(APIDIR)
-CFLAGS += -I$(TOSDIR)/types
-CFLAGS += -I$(TOSDIR)/lib/serial
-CFLAGS += -I$(ATRON_TINYOS_DIR)
+API_EXTRA_INCLUDES += -I$(APIDIR) -I$(TOSDIR)/types -I$(TOSDIR)/lib/serial -I$(ATRON_TINYOS_DIR)
+CFLAGS += $(API_EXTRA_INCLUDES)
+ALLINCLUDE += -I$(API_EXTRA_INCLUDES)
 

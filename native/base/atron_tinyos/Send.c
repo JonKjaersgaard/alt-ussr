@@ -1,3 +1,5 @@
+#include "atron_tinyos.h"
+
 /* Send commands */
 error_t send(message_t* msg, uint8_t len) {
 }
