@@ -3,7 +3,15 @@
 
 #include <ussr.h>
 
+//TODO: link it to TOSH_DATA_LENGTH
 #define ATRON_MAX_MESSAGE_SIZE 128
+
+/* TinyOS stuff stripped down for compilation by gcc */
+#define nx_struct struct
+#define nx_union union
+#include "nesc_nx.h"
+#include "TinyError.h"
+#include "message.h"
 
 #ifdef USSR
 
