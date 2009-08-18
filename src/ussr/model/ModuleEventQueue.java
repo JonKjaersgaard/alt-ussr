@@ -73,7 +73,11 @@ public class ModuleEventQueue extends Thread implements PhysicsObserver {
     // If any events are applicable, notify the event execution thread
     public void physicsTimeStepHook(PhysicsSimulation simulation) {
         float time = simulation.getTime();
-        if(events.size()>0 && events.element().getTime()<time) synchronized(eventsAvailableSignal) { eventsAvailableSignal.notify(); }
+        if(events.size()>0) {
+            synchronized(events) {
+                if(events.size()>0 && events.element().getTime()<time) synchronized(eventsAvailableSignal) { eventsAvailableSignal.notify(); }
+            }   
+        }
     }
  
     /**
