@@ -27,6 +27,7 @@ public class JMEVelcroConnector extends JMEMagneticConnector {
     @Override
     protected void updateHook() {
         if((!isActivelyConnecting) || super.isConnected()) return;
+        this.updateConnectorProximity();
         if(this.proximateConnectors.size()>0) {
             for(JMEConnector other: proximateConnectors) {
                 if(!handler.connectToProximateConnector(this.getModel(), other.getModel())) continue;

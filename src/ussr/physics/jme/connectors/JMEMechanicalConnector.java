@@ -39,6 +39,10 @@ public abstract class JMEMechanicalConnector extends JMEBasicConnector  {
     	this.maxConnectDistance = description.getMaxConnectionDistance();
     }
 
+    protected void updateConnectorProximity() {
+        updateProximiteConnectors(maxConnectDistance);
+    }
+    
     /*
      * Update the state of the connector 
      * 1) Which nearby connectors can be connected to
@@ -46,7 +50,7 @@ public abstract class JMEMechanicalConnector extends JMEBasicConnector  {
      * 3) Update the color to reflect its state
      */
     public synchronized void update() {
-    	updateProximiteConnectors(maxConnectDistance);
+    	//updateProximiteConnectors(maxConnectDistance);
     	updateConnectorsIntegrity();
 		updateColor();
 		updateHook();

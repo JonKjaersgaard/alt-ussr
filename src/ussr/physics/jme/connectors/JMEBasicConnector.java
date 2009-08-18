@@ -162,6 +162,7 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
      * @see ussr.physics.jme.JMEConnector#connect(ussr.physics.PhysicsConnector)
      */
     public synchronized void connect() {
+        this.updateConnectorProximity();
     	if(!connectedConnectors.equals(proximateConnectors)&&!connecting) {
     		connecting = true;
     		if(!proximateConnectors.isEmpty())
@@ -343,6 +344,7 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
      * @see ussr.physics.jme.JMEConnector#hasProximateConnector()
      */
     public boolean hasProximateConnector() {
+        this.updateConnectorProximity();
         return !proximateConnectors.isEmpty();
     }
     /* (non-Javadoc)
@@ -438,4 +440,7 @@ public abstract class JMEBasicConnector implements JMEConnector, PhysicsObserver
     public void setConnectorBehaviorHandler(ConnectorBehaviorHandler handler) {
         throw new Error("Setting connection behavior handler not supported for connectors of type "+this.getClass().getName());
     }
+    
+    protected abstract void updateConnectorProximity();
+
 }

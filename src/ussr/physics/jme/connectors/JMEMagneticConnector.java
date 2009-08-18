@@ -75,6 +75,7 @@ public class JMEMagneticConnector extends JMEMechanicalConnector {
     @Override
     protected void updateHook() {
         if((!isActivelyConnecting) || isConnected()) return;
+        this.updateConnectorProximity();
         if(this.proximateConnectors.size()>0) {
             System.out.println("Proximate connectors: "+proximateConnectors.size());
             for(JMEConnector other: proximateConnectors) {
