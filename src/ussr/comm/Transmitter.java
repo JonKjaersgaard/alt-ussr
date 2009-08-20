@@ -18,8 +18,9 @@ public interface Transmitter {
     /**
      * Send a data packet on the transmission device
      * @param packet the data to send
+     * @return whether the packet has been correctly enqueued for sending
      */
-	public void send(Packet packet);
+	public boolean send(Packet packet);
 	
 	/**
 	 * Test whether this transmitter can transmit to (is within range of) the designated receiver device 
@@ -50,4 +51,17 @@ public interface Transmitter {
       * @return the transmission type
       */
     public TransmissionType getType();
+    
+    /**
+     * Add a packet sent observer which will be notified (called) every time a packet is sent from this transmitter
+     * device.
+     * @param pso the packet sent observer to add
+     */
+    public void addPacketSentObserver(PacketSentObserver pso);
+    
+    /**
+     * Remove a packet sent observer that has already been subscribed
+     * @param pso the packet sent observer to remove
+     */
+    public void removePacketSentObserver(PacketSentObserver pso);
 }

@@ -6,6 +6,7 @@
  */
 package ussr.comm;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -20,6 +21,7 @@ import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
+import ussr.samples.atron.IATRONTinyOSAPI;
 
 /**
  * An abstract implementation of the <tt>Transmitter</tt> interface.  Provides a transmission device
@@ -36,6 +38,7 @@ public abstract class GenericTransmitter implements Transmitter {
     protected float range;
     TransmissionDevice transmitter;
     private Entity hardware;
+    private ArrayList<PacketSentObserver> packetSentObservers = new ArrayList<PacketSentObserver>();
 
     // Begin Horn
     Set<CommunicationMonitor> monitors;
@@ -44,7 +47,13 @@ public abstract class GenericTransmitter implements Transmitter {
     //Begin Horn
     protected CommunicationContainer communicationContainer;
     //End Horn
-    
+  
+    public void addPacketSentObserver(PacketSentObserver pso) {
+		packetSentObservers.add(pso);
+    }
+    public void removePacketSentObserver(PacketSentObserver pso) {
+		packetSentObservers.remove(pso);
+    }
     
     public GenericTransmitter(Module _module, Entity _hardware, TransmissionType _type, float _range) {
         this.module = _module; this.type = _type; this.range = _range; this.hardware = _hardware;
@@ -85,10 +94,12 @@ public abstract class GenericTransmitter implements Transmitter {
     public void setMaxBufferSize(int maxBufferSize) {
     	transmitManager.setMaxBufferSize(maxBufferSize);
 	}
-    public void send(Packet packet) {
+    public boolean send(Packet packet) {
     	// Begin Horn
     	if(monitors != null) {
     		for(CommunicationMonitor monitor : monitors) {
+    			//note: we are telling the monitor that the packet has been sent when
+    			//it has in fact just been enqueued to be sent ...
     			monitor.packetSent(module, this, packet);
     		}
     	}
@@ -105,7 +116,7 @@ public abstract class GenericTransmitter implements Transmitter {
 				}
 			}
 		}*/    	    	
-		transmitManager.addPacket(packet);
+    	return transmitManager.addPacket(packet);
     }
 	public boolean isCompatible(TransmissionType other) {
         return this.type == other;
@@ -182,7 +193,7 @@ public abstract class GenericTransmitter implements Transmitter {
 				return true;
 			}
 			else {
-				System.err.println("Warning: Buffer overflow in communication...");
+				System.err.println("Warning: Buffer overflow in communication...");				
 				return false;
 			}
 		}
@@ -207,9 +218,13 @@ public abstract class GenericTransmitter implements Transmitter {
 			Packet p = packets.peek();
 			if(p!=null) {
 				if(sendIfTime(p,timeStepsSinceLastSend)) {
-					packets.removeFirst();
+					Packet sentPacket = packets.removeFirst();
 					currentBytes-=p.getByteSize();
 					timeStepsSinceLastSend=0;
+					//signal the packet sent to the subscribed observers with success error code
+					//(no matter whether the packet has been received by somebody, it exited the comm queue)
+			        for(PacketSentObserver pso: transmitter.packetSentObservers) //TODO do not do this here (can block communicating neighbor module)
+			        	pso.packetSent(transmitter, sentPacket, IATRONTinyOSAPI.SUCCESS);
 				}
 				else {
 					timeStepsSinceLastSend++;

@@ -14,6 +14,7 @@ package ussr.comm;
 public class Packet {
     
     byte[] payload;
+    private int connector;
 
     public Packet(int data) {
         payload = new byte[] { (byte)data };
@@ -22,6 +23,12 @@ public class Packet {
     	byte[] dataCopy= new byte[data.length];
     	for(int i=0;i<data.length;i++) dataCopy[i] = data[i];
         payload = dataCopy;
+    }
+    public Packet(byte[] data, int conn) {
+    	byte[] dataCopy= new byte[data.length];
+    	for(int i=0;i<data.length;i++) dataCopy[i] = data[i];
+        payload = dataCopy;
+        this.setConnector(conn);
     }
     public int getByteSize() {
         return payload.length; 
@@ -44,4 +51,10 @@ public class Packet {
         return result.toString();
     }
     // End Horn
+	public void setConnector(int connector) {
+		this.connector = connector;
+	}
+	public int getConnector() {
+		return connector;
+	}
 }
