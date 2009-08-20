@@ -12,10 +12,18 @@ extern "C" {
 /*
  * Class:     ussr_samples_atron_natives_ATRONNativeTinyOSController
  * Method:    nativeSendDone
- * Signature: ([BI)V
+ * Signature: (III)V
  */
 JNIEXPORT void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSController_nativeSendDone
-  (JNIEnv *, jobject, jbyteArray, jint);
+  (JNIEnv *, jobject, jint, jint, jint);
+
+/*
+ * Class:     ussr_samples_atron_natives_ATRONNativeTinyOSController
+ * Method:    nativeHandleMessage
+ * Signature: (I[BII)V
+ */
+JNIEXPORT void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSController_nativeHandleMessage
+  (JNIEnv *, jobject, jint, jbyteArray, jint, jint);
 
 #ifdef __cplusplus
 }

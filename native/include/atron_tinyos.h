@@ -6,13 +6,9 @@
 //TODO: link it to TOSH_DATA_LENGTH
 #define ATRON_MAX_MESSAGE_SIZE 128
 
-char sendMessage(USSRONLYC(USSREnv *env) unsigned char *message, unsigned char messageSize, unsigned char connector);
-
-
 #ifdef USSR
 
-/* TinyOS includes, eventually customized for non-nesc compilation */
-
+uint32_t sendMessage(USSRONLYC(USSREnv *env) uint8_t *message, int32_t messageSize, int32_t connector);
 
 #else
 
