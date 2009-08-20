@@ -17,7 +17,9 @@ __AUTO_GENERATED_DISPATCHER_MAIN__
 
 }
 
-int32_t initialize(USSRONLY(USSREnv *env)) { }
+int32_t initialize(USSRONLY(USSREnv *env)) {
+  return 0;/*initializationContext (could we use it to disambiguate controllers in lieu of the role?)*/
+}
 
 /* API downcalls/commands */
 uint32_t sendMessage(USSREnv *env, uint8_t *message, int32_t messageSize, int32_t connector) {
