@@ -1,8 +1,10 @@
 #-*-Makefile-*- vim:syntax=make
 
+CWD = $(shell pwd)
+
 # OS-specific variables
 JAVAINCLUDE=-I/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Headers
-ALLINCLUDE=$(JAVAINCLUDE) -I$(BASEDIR)/native/include
+ALLINCLUDE=$(JAVAINCLUDE) -I$(BASEDIR)/native/include -I$(CWD)/build/ussr
 CFLAGS=-fPIC -DUSSR $(JAVAINCLUDE) $(ALLINCLUDE) -Wall -pedantic
 LDFLAGS=-dynamiclib -framework JavaVM -fPIC
 
@@ -37,7 +39,7 @@ nativeController.jnilib: $(BASEDIR)/native/include/nativeController.h $(BIN)
 phonyJnilib: $(BASEDIR)/native/include/nativeController.h $(BIN) forceJnilib
 	gcc $(LDFLAGS) -o nativeController.jnilib $(BIN) build/ussr/main_*.exe
 forceJnilib:
-	
+	echo
 clean:
 	rm -f .depends nativeController.jnilib $(BIN)
 cleanh:
