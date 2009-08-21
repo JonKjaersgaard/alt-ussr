@@ -104,6 +104,7 @@ void ussr_call_void_controller_method(USSREnv *env, char *name, char *signature,
 
 MAKE_USSR_CALL_ANY_CONTROLLER_METHOD(int,ussr_call_int_controller_method)
 MAKE_USSR_CALL_ANY_CONTROLLER_METHOD(char,ussr_call_byte_controller_method)
+MAKE_USSR_CALL_ANY_CONTROLLER_METHOD(int64_t,ussr_call_long_controller_method)
 
 jbyteArray ussr_charArray2byteArray(USSREnv *env, unsigned char *message, unsigned char messageSize) {
   READ_USSR_ENV(jniEnv,self);
