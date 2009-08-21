@@ -22,7 +22,7 @@ int32_t initialize(USSRONLY(USSREnv *env)) {
 }
 
 /* API downcalls/commands */
-uint32_t sendMessage(USSREnv *env, uint8_t *message, int32_t messageSize, int32_t connector) {
+int32_t sendMessage(USSREnv *env, uint8_t *message, int32_t messageSize, int32_t connector) {
   jbyteArray array = ussr_charArray2byteArray(env, message, messageSize);
   int32_t result = ussr_call_int_controller_method(env, "sendMessage", "([BII)I", array, messageSize, connector);
   ussr_releaseByteArray(env, array);
