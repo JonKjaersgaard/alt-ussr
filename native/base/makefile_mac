@@ -30,6 +30,7 @@ CC=gcc
 
 controller_lib: phonyJnilib
 	cp nativeController.jnilib $(BASEDIR)/lib/lib$(CONTROLLER_LIBRARY).jnilib
+	rm $(BASEDIR)/native/base/atron_tinyos.o
 all: nativeController.jnilib
 	cp nativeController.jnilib $(BASEDIR)/lib/lib$(CONTROLLER_LIBRARY).jnilib
 $(BASEDIR)/native/include/nativeController.h: $(BASEDIR)/bin/ussr/samples/atron/natives/$(NATIVE_CONTROLLER_CLASS).class
