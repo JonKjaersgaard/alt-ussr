@@ -39,7 +39,7 @@ nativeController.jnilib: $(BASEDIR)/native/include/nativeController.h $(BIN)
 phonyJnilib: $(BASEDIR)/native/include/nativeController.h $(BIN) forceJnilib
 	gcc $(LDFLAGS) -o nativeController.jnilib $(BIN) build/ussr/main_*.exe
 forceJnilib:
-	echo
+	@echo
 clean:
 	rm -f .depends nativeController.jnilib $(BIN)
 cleanh:
