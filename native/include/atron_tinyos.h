@@ -8,7 +8,7 @@
 
 #ifdef USSR
 
-uint32_t sendMessage(USSRONLYC(USSREnv *env) uint8_t *message, int32_t messageSize, int32_t connector);
+int32_t sendMessage(USSRONLYC(USSREnv *env) uint8_t *message, int32_t messageSize, int32_t connector);
 
 #else
 
