@@ -116,7 +116,7 @@ public abstract class ATRONTinyOSController extends ControllerImpl implements Pa
      */
     public void packetSent(Transmitter device, Packet pkt, int errorCode) {
     	if(PhysicsParameters.get().useModuleEventQueue()) {
-			final byte[] data = pkt.getData();
+    		final byte[] data = pkt.getData();
 			final int error = errorCode;
 			final int connector = pkt.getConnector();
 		    module.getModuleEventsQueue().addEvent(new Event(0) {
