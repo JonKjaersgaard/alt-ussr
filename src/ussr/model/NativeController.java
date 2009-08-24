@@ -75,7 +75,7 @@ public class NativeController implements Controller {
                     throw new Error("Error: interrupted while waiting");
                 }
             }
-        }
+        }     
         do { Thread.yield(); } while(controller.getModule().getSimulation().isPaused());
         while(controller.getModule().getSimulation().isPaused()) Thread.yield();
         controller.getModule().getSimulation().waitForPhysicsStep(false);   
