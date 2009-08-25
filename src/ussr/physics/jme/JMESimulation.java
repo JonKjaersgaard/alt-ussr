@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CyclicBarrier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -100,6 +101,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     private PhysicsFactory.Options options;
     private Picker picker;
     
+    public CyclicBarrier controlSyncBarrier;
+              
     public JMESimulation(ModuleFactory[] factories, PhysicsFactory.Options options) {
         super(options);
         this.options = options; 
@@ -110,7 +113,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     }
     
     protected void simpleInitGame() {
-        // Create underlying plane or terrain
+    	 // Create underlying plane or terrain
         if(worldDescription.theWorldIsFlat())
           setStaticPlane(helper.createPlane(worldDescription.getPlaneSize(),worldDescription.getPlaneTexture()));
         else
@@ -159,7 +162,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 }
             };
             moduleControlThreads.add(actThread);
-            actThread.start();
+            //actThread.start();
         }
         
         //showPhysics = true;
@@ -244,7 +247,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             //moduleThread.setPriority(Thread.NORM_PRIORITY-1);
 
             moduleControlThreads.add(moduleControlThread);
-            moduleControlThread.start();
+            //moduleControlThread.start();
         }
         
         if(assign) {
@@ -302,20 +305,36 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         		initGame();
                 readWorldParameters();
 
+              
+                controlSyncBarrier = new CyclicBarrier(moduleControlThreads.size() + 1/*the sim itself*/);
                 // main loop
                 long startTime = System.currentTimeMillis();
+                               
+                //start here the control threads, otherwise they might run for long
+                //before the actual simulation is started by unpausing it
+                for(Thread t: moduleControlThreads)
+                	t.start();
+                
                 while (!finished && !getDisplay().isClosing()) {
                     //if(!pause) Thread.sleep(100);
                 	boolean physicsStep = false;
                     if ( !pause ||singleStep ) {
-                        physicsCallBack();
+                    	physicsCallBack();
                         synchronized(this) {
                             physicsStep(); // 1 call to = 32ms (one example setup)
                             physicsStep = true;
                         }
-                    	//waitForPhysicsStep(true);
-                    	unlockModules();
-                    	//System.out.println(getTime()+" : "+(System.currentTimeMillis()-startTime)/1000.0);
+                        //waitForPhysicsStep(true);
+                         
+                        //full sync
+                        if(PhysicsParameters.get().syncWithControllers()) {
+                        	controlSyncBarrier.await();
+                        }
+                        //this instead assumes that the module controllers finish faster than the sim step
+                        else {
+                        	unlockModules();
+                        }
+                        
                     }
                     
                
@@ -493,9 +512,9 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     	waitingModules.remove(module);
     	startedModules.add(module);
     }
-    public void unlockModules() {
+    public void unlockModules() {   	
        	int waitingModuleCount =  waitingModules.size();
-    	waitForPhysicsStep(true);
+       	waitForPhysicsStep(true);
     	while(startedModules.size()<waitingModuleCount&&!isStopped()) {
     		//System.out.println(startedModules.size()+" vs "+waitingModuleCount);
     		Thread.yield();
