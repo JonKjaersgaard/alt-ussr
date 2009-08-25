@@ -2,6 +2,9 @@ package ussr.samples.atron.natives;
 
 import ussr.model.NativeController;
 import ussr.model.NativeControllerProvider;
+import ussr.physics.PhysicsLogger;
+import ussr.physics.PhysicsParameters;
+import ussr.physics.PhysicsSimulation;
 import ussr.samples.atron.ATRONTinyOSController;
 
 public class ATRONNativeTinyOSController extends NativeController {
@@ -11,6 +14,14 @@ public class ATRONNativeTinyOSController extends NativeController {
 		public void activate() {
 			ATRONNativeTinyOSController.this.activate();
 		}
+	    public void physicsTimeStepHook(PhysicsSimulation simulation) {
+	    	//we issue a callback to the controller every 1ms for the timer/counter
+	    	//for the moment, this implies a timestepSize == 1ms
+	    	if(PhysicsParameters.get().getPhysicsSimulationStepSize() != 0.001f)
+	    		PhysicsLogger.log("PhysicsStepSize does not allow for accurate simulation!");
+	    	nativeMillisecondElapsed(getInitializationContext());
+
+	    }
 		public int getRole() { return ATRONNativeTinyOSController.this.getRole(); }
 		
 		//making the callbacks/events synchronized is equivalent
@@ -65,4 +76,6 @@ public class ATRONNativeTinyOSController extends NativeController {
 	
     private native void nativeHandleMessage(int context, byte[] message, int messageSize, int channel);
 
+    private native void nativeMillisecondElapsed(int context);
+ 
 }
