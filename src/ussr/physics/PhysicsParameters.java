@@ -46,6 +46,7 @@ public class PhysicsParameters {
     private float worldDampingAngularVelocity = 0.0f;
     private int resolutionFactor = 5;
     private boolean useModuleEventQueue = /*true*/ false ;
+    private boolean syncWithControllers = /*true*/ false ;
     
     
     public float getWorldDampingLinearVelocity() {
@@ -190,4 +191,11 @@ public class PhysicsParameters {
     public void setUseModuleEventQueue(boolean use) {
         this.useModuleEventQueue  = use;
     }
+    public boolean syncWithControllers() {
+        return syncWithControllers;
+    }
+    public void setSyncWithControllers(boolean sync) {
+        this.syncWithControllers  = sync;
+    }
+
 }
