@@ -1,5 +1,9 @@
 package ussr.builder;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ussr.builder.helpers.ControllerFactory;
 import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
 import ussr.description.Robot;
@@ -13,8 +17,12 @@ import ussr.samples.GenericModuleConnectorHelper;
 import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
+import ussr.samples.atron.ATRONController;
+import ussr.samples.ckbot.CKBotController;
 import ussr.samples.ckbot.CKBotStandard;
 import ussr.samples.mtran.MTRAN;
+import ussr.samples.mtran.MTRANController;
+import ussr.samples.odin.OdinController;
 import ussr.samples.odin.modules.OdinBall;
 import ussr.samples.odin.modules.OdinBattery;
 import ussr.samples.odin.modules.OdinHinge;
@@ -30,6 +38,7 @@ import ussr.samples.odin.modules.OdinWheel;
  */
 public class Loader extends GenericSimulation {
     private static String fileName;
+    private static List<String> controllerNames = new ArrayList<String>();
 	
 	/**
 	 * Returns the robot in the simulation.
@@ -44,8 +53,10 @@ public class Loader extends GenericSimulation {
 	 * @param args, passed arguments.
 	 */
 	public static void main( String[] args ) {
-	    if(args.length!=1) throw new Error("Usage: provide robot definition xml file");
+	    if(args.length!=2) throw new Error("Usage: provide robot definition xml file and name of the Java controller class(es)");
 	    fileName=args[0];
+	    for(int i=1; i<args.length; i++)
+	        controllerNames.add(args[i]);
 	    runSimulationFromFile();
 	}
 	
@@ -72,12 +83,18 @@ public class Loader extends GenericSimulation {
 		/* Create the simulation*/
 		final PhysicsSimulation simulation = PhysicsFactory.createSimulator();
 		
+		/**
+		 * Find the controller(s)
+		 */
+		final ControllerFactory controllerFactory = new ControllerFactory(controllerNames);
+		
 		/*Set ATRON robot to simulation and assign default controller to it*/
 		ATRON atron = new ATRON(){
 			public Controller createController() {
+			    if(controllerFactory.has(ATRONController.class))
+			        return controllerFactory.create(ATRONController.class);
 				return new ATRONControllerDefault() {
 					public void activate() {
-						//delay(10000);
 						super.activate();
 					}
 				};
@@ -92,6 +109,8 @@ public class Loader extends GenericSimulation {
 		/*Set MTRAN robot to simulation and assign default controller to it*/
 		simulation.setRobot(new MTRAN(){
 			public Controller createController() {
+                if(controllerFactory.has(MTRANController.class))
+                    return controllerFactory.create(MTRANController.class);
 				return new MTRANControllerDefault() {
 					public void activate() {
 						//delay(10000);
@@ -103,44 +122,41 @@ public class Loader extends GenericSimulation {
 		/*Set different Odin modules  to simulation and assign default controllers to them */
 		simulation.setRobot(new OdinMuscle(){
 			public Controller createController() {
-				return new OdinControllerDefault() {
-					public void activate() {
-						//delay(10000);
-						super.activate();
-					}
-				};
+                return getDefaultOdinController(controllerFactory);
 			}},"OdinMuscle");
 		simulation.setRobot(new OdinWheel(){
 			public Controller createController() {
-				return new OdinControllerDefault();
+				return getDefaultOdinController(controllerFactory);
 			}},"OdinWheel");
 		simulation.setRobot(new OdinHinge(){
 			public Controller createController() {
-				return new OdinControllerDefault();
+				return getDefaultOdinController(controllerFactory);
 			}},"OdinHinge");
 
 		simulation.setRobot(new OdinBattery(){
 			public Controller createController() {
-				return new OdinControllerDefault();
+				return getDefaultOdinController(controllerFactory);
 			}},"OdinBattery");
 
 		simulation.setRobot(new OdinBall(){
 			public Controller createController() {
-				return new OdinControllerDefault();
+				return getDefaultOdinController(controllerFactory);
 			}},"OdinBall");
 
 		simulation.setRobot(new OdinSpring(){
 			public Controller createController() {
-				return new OdinControllerDefault();
+				return getDefaultOdinController(controllerFactory);
 			}},"OdinSpring");
 
 		simulation.setRobot(new OdinTube(){
 			public Controller createController() {
-				return new OdinControllerDefault();
+				return getDefaultOdinController(controllerFactory);
 			}},"OdinTube");	
 		 simulation.setRobot(new CKBotStandard(){
 	        	public Controller createController() {
-	        		return new CKBotControllerDefault();
+	        	    if(controllerFactory.has(CKBotController.class))
+	                    return controllerFactory.create(CKBotController.class);
+	        	    return new CKBotControllerDefault();
 	        	}},"CKBotStandard");
 		
         /*Create the world description of simulation and set it to simulation*/
@@ -157,7 +173,13 @@ public class Loader extends GenericSimulation {
 		simulation.start();
 	}
 
-	/**
+	private Controller getDefaultOdinController(final ControllerFactory controllerFactory) {
+        if(controllerFactory.has(OdinController.class))
+            return controllerFactory.create(OdinController.class);
+        return new OdinControllerDefault();
+    }
+
+    /**
 	 * Create a world description for simulation.
 	 * @return world, the world description.
 	 */

@@ -34,8 +34,9 @@ public class ATRONControllerDefault extends ATRONController{
 		/*In order for ATRON car wheels to drive hack the diameter of the north hemisphere
 		 *from 0.935 to 0.9352 in package "ussr.samples.atron" class ATRON, line of code 69*/
 		//avoidObstacles();//with direct use of labels.
-		avoidObstacles1();// with more abstract use of labels
+		//avoidObstacles1();// with more abstract use of labels
 		//communicate();
+	    System.err.println("Warning: empty controller");
 	}
 
 	/**
