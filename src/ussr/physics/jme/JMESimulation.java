@@ -319,7 +319,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                     //if(!pause) Thread.sleep(100);
                 	boolean physicsStep = false;
                     if ( !pause ||singleStep ) {
-                    	physicsCallBack();
+                    	if(PhysicsParameters.get().syncWithControllers() == false)
+                    		physicsCallBack();
                         synchronized(this) {
                             physicsStep(); // 1 call to = 32ms (one example setup)
                             physicsStep = true;
@@ -329,6 +330,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                         //full sync
                         if(PhysicsParameters.get().syncWithControllers()) {
                         	controlSyncBarrier.await();
+                        	physicsCallBack();
                         }
                         //this instead assumes that the module controllers finish faster than the sim step
                         else {

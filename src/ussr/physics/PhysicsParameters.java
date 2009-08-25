@@ -33,7 +33,7 @@ public class PhysicsParameters {
     // Use e.g. PhysicsParameters.get().setPhysicsSimulationStepSize(0.0001f);
     // This can be called from the main method of your simulation 
     private float physicsSimulationStepSize = 0.005f;
-    private float physicsSimulationControllerStepFactor = 0.01f;//1 means that each module is roughly as powerful as the CPU the sim is running on
+    private float physicsSimulationControllerStepFactor = 0.1f;//the bigger, the more computationally powerful each module is
     private boolean realisticCollision = true; // true = less likely to cause trouble, more user friendly
     private float gravity =-9.82f;
     private Material planeMaterial = Material.RUBBER;
