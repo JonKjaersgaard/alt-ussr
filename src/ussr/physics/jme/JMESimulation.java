@@ -306,7 +306,10 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 readWorldParameters();
 
               
-                controlSyncBarrier = new CyclicBarrier(moduleControlThreads.size() + 1/*the sim itself*/);
+                controlSyncBarrier = new CyclicBarrier(moduleControlThreads.size() + 1/*the sim itself*/, new Runnable() {
+                    public void run() { physicsCallBack(); }
+                });                
+                
                 // main loop
                 long startTime = System.currentTimeMillis();
                                
@@ -330,7 +333,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                         //full sync
                         if(PhysicsParameters.get().syncWithControllers()) {
                         	controlSyncBarrier.await();
-                        	physicsCallBack();
+                        	//physicsCallBack() is performed by the barrier before releasing the threads
                         }
                         //this instead assumes that the module controllers finish faster than the sim step
                         else {
