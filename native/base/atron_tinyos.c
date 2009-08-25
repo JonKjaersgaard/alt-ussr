@@ -57,3 +57,15 @@ __AUTO_GENERATED_DISPATCHER_HANDLEMESSAGE__
 
 }
 
+void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSController_nativeMillisecondElapsed(JNIEnv *jniENV, jobject self, jint initializationContext) {
+  int moduleId;
+  USSREnv env;
+  env.jnienv = jniENV;
+  env.controller = self;
+  env.context = initializationContext;
+
+  moduleId = ussr_call_int_controller_method(&env, "getRole", "()I");/* the old "role" */
+
+__AUTO_GENERATED_DISPATCHER_MILLISECONDELAPSED__
+
+}
