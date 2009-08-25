@@ -25,6 +25,14 @@ JNIEXPORT void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSControll
 JNIEXPORT void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSController_nativeHandleMessage
   (JNIEnv *, jobject, jint, jbyteArray, jint, jint);
 
+/*
+ * Class:     ussr_samples_atron_natives_ATRONNativeTinyOSController
+ * Method:    nativeMillisecondElapsed
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSController_nativeMillisecondElapsed
+  (JNIEnv *, jobject, jint);
+
 #ifdef __cplusplus
 }
 #endif
