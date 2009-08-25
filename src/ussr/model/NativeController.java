@@ -6,8 +6,14 @@
  */
 package ussr.model;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.BrokenBarrierException;
+
+import ussr.physics.PhysicsParameters;
+import ussr.physics.jme.JMESimulation;
 
 /**
  * A controller with a native implementation, bridged to a controller implementing
@@ -26,6 +32,10 @@ public class NativeController implements Controller {
     private Controller controller;
     private final int initializationContext;
 
+    private ThreadMXBean threadMXBean;
+    long lastYieldTime;
+    long SimStepSizeNanoSec;
+    
     private static synchronized void loadLibrary(String nativeLibraryName) {
         if(libraryRegistry.contains(nativeLibraryName)) return;
         try {
@@ -42,6 +52,8 @@ public class NativeController implements Controller {
     public NativeController(String nativeLibraryName) {
         loadLibrary(nativeLibraryName);
         initializationContext = this.nativeInitialize();
+        this.SimStepSizeNanoSec = (long) (PhysicsParameters.get().getPhysicsSimulationStepSize() * PhysicsParameters.get().getPhysicsSimulationControllerStepFactor() * 1000000000);
+        this.threadMXBean = ManagementFactory.getThreadMXBean();	
     }
     
     public void setInternalController(NativeControllerProvider controller) {
@@ -65,8 +77,9 @@ public class NativeController implements Controller {
     private synchronized native int nativeInitialize();
     
     void iterationSimulatorHook(boolean isActive) {
+    	    	
         if(!isActive && idleLevel++>sleepThreshold) {
-            idleLevel = 0;
+        	idleLevel = 0;
             eventLock = new Object();
             synchronized(eventLock) {
                 try {
@@ -76,9 +89,28 @@ public class NativeController implements Controller {
                 }
             }
         }     
-        do { Thread.yield(); } while(controller.getModule().getSimulation().isPaused());
+        //do { Thread.yield(); } while(controller.getModule().getSimulation().isPaused());
         while(controller.getModule().getSimulation().isPaused()) Thread.yield();
-        controller.getModule().getSimulation().waitForPhysicsStep(false);   
+
+        long elapsed = threadMXBean.getCurrentThreadUserTime() - lastYieldTime;
+
+        //need a certain accuracy: on OS X is ok, check on linux/win
+    	if(elapsed > SimStepSizeNanoSec) {
+    		lastYieldTime = threadMXBean.getCurrentThreadUserTime();
+            
+            if(PhysicsParameters.get().syncWithControllers()) {
+            	try {
+					( (JMESimulation) controller.getModule().getSimulation() ).controlSyncBarrier.await();
+            	} catch (InterruptedException e) {
+					e.printStackTrace();
+					System.out.println("native ctrl interrupted");
+				} catch (BrokenBarrierException e) {
+					e.printStackTrace();
+				}	
+            }
+            else
+            	controller.getModule().getSimulation().waitForPhysicsStep(false);
+    	}
     }
 
     //quick hack mehtod
