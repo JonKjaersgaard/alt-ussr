@@ -24,6 +24,38 @@ import ussr.samples.atron.ATRONController.CenterStates;
 public abstract class ATRONTinyOSController extends ControllerImpl implements PacketSentObserver, PacketReceivedObserver, PhysicsObserver, IATRONTinyOSAPI {
 
 	protected boolean sendBusy = false;
+
+	private boolean led1;
+	private boolean led2;
+	private boolean led3;
+
+	private void print() {
+		if(led1)
+			System.out.print(System.getProperty("line.separator") + "o ");			
+		else
+			System.out.print(System.getProperty("line.separator") + "  ");
+		if(led2)
+			System.out.print("o ");			
+		else
+			System.out.print("  ");
+		if(led3)
+			System.out.print("o");			
+		else
+			System.out.print(" ");
+	}
+	
+	public void print_1() {
+		led1 = !led1;
+		print();
+	}
+	public void print_2() {
+		led2 = !led2;
+		print();
+	}
+	public void print_3() {
+		led3 = !led3;
+		print();
+	}
 	
 	public int sendMessage(byte[] message, int messageSize, int connector) {
 		
@@ -89,7 +121,7 @@ public abstract class ATRONTinyOSController extends ControllerImpl implements Pa
      * 
      * @see ussr.physics.PhysicsObserver#physicsTimeStepHook(ussr.physics.PhysicsSimulation)
      */
-    public void physicsTimeStepHook(PhysicsSimulation simulation) {
+    public synchronized void physicsTimeStepHook(PhysicsSimulation simulation) {
     	// copy-pasted from AtronController
     	/*
     	if(centerState == CenterStates.POSCONTROL) {
@@ -114,7 +146,7 @@ public abstract class ATRONTinyOSController extends ControllerImpl implements Pa
      * Called when a packet has been sent by the module
      * @param device the device that sent the outgoing packet 
      */
-    public void packetSent(Transmitter device, Packet pkt, int errorCode) {
+    public synchronized void packetSent(Transmitter device, Packet pkt, int errorCode) {
     	if(PhysicsParameters.get().useModuleEventQueue()) {
     		final byte[] data = pkt.getData();
 			final int error = errorCode;
@@ -132,7 +164,7 @@ public abstract class ATRONTinyOSController extends ControllerImpl implements Pa
     /**
 	 * @see ussr.samples.atron.IATRONTinyOSAPI#sendDone(byte[] msg, int error);
 	 */
-    public void sendDone(byte[] msg, int error, int connector) {
+    public synchronized void sendDone(byte[] msg, int error, int connector) {
         PhysicsLogger.log("Message sent but no sendDone implemented in "+this);
     }
 	
@@ -140,7 +172,7 @@ public abstract class ATRONTinyOSController extends ControllerImpl implements Pa
      * Called when a packet is received by the module
      * @param device the device that received an incoming packet 
      */
-    public void packetReceived(Receiver device) {
+    public synchronized void packetReceived(Receiver device) {
     	for(int i=0;i<module.getReceivers().size();i++) {
     		if(module.getReceivers().get(i).equals(device)) {
     			final byte[] data = device.getData().getData();
@@ -156,7 +188,7 @@ public abstract class ATRONTinyOSController extends ControllerImpl implements Pa
     	}
     }
     
-    public void handleMessage(byte[] message, int messageSize, int connector) {
+    public synchronized void handleMessage(byte[] message, int messageSize, int connector) {
         PhysicsLogger.log("Message received but no handleMessage implemented in "+this);
     }
     
