@@ -22,8 +22,8 @@ int32_t initialize(USSRONLY(USSREnv *env)) {
 }
 
 /* API downcalls/commands */
-void printf_to_system_out_print(USSREnv *env, char** buf) {
-  jstring str = ussr_charArray2string(env, *buf);
+void printf_to_system_out_print(USSREnv *env, char* buf) {
+  jstring str = ussr_charArray2string(env, buf);
   ussr_call_void_controller_method(env, "printfFromC", "(Ljava/lang/String;)V", str);
 }
 int32_t sendMessage(USSREnv *env, uint8_t *message, int32_t messageSize, int32_t connector) {
