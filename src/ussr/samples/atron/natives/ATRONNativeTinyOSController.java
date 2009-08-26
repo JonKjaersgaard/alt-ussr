@@ -11,10 +11,10 @@ public class ATRONNativeTinyOSController extends NativeController {
 
 	protected class Link extends ATRONTinyOSController implements NativeControllerProvider {
 		@Override
-		public void activate() {
+		public synchronized void activate() {
 			ATRONNativeTinyOSController.this.activate();
 		}
-	    public void physicsTimeStepHook(PhysicsSimulation simulation) {
+	    public synchronized void physicsTimeStepHook(PhysicsSimulation simulation) {
 	    	//we issue a callback to the controller every 1ms for the timer/counter
 	    	//for the moment, this implies a timestepSize == 1ms
 	    	if(PhysicsParameters.get().getPhysicsSimulationStepSize() != 0.001f)
