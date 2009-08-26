@@ -12,5 +12,6 @@ extern int64_t ussr_call_long_controller_method(USSREnv *env, char *name, char *
 extern jbyteArray ussr_charArray2byteArray(USSREnv *env, unsigned char *message, unsigned char messageSize);
 extern void ussr_byteArray2charArray(USSREnv *env, jbyteArray message, unsigned char messageSize, unsigned char *buffer);
 extern void ussr_releaseByteArray(USSREnv *env, jbyteArray array);
+extern jstring ussr_charArray2string(USSREnv *env, char *message);
 
 #endif /* _USSR_INTERNAL_H_ */
