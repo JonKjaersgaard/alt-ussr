@@ -25,36 +25,8 @@ public abstract class ATRONTinyOSController extends ControllerImpl implements Pa
 
 	protected boolean sendBusy = false;
 
-	private boolean led1;
-	private boolean led2;
-	private boolean led3;
-
-	private void print() {
-		if(led1)
-			System.out.print(System.getProperty("line.separator") + "o ");			
-		else
-			System.out.print(System.getProperty("line.separator") + "  ");
-		if(led2)
-			System.out.print("o ");			
-		else
-			System.out.print("  ");
-		if(led3)
-			System.out.print("o");			
-		else
-			System.out.print(" ");
-	}
-	
-	public void print_1() {
-		led1 = !led1;
-		print();
-	}
-	public void print_2() {
-		led2 = !led2;
-		print();
-	}
-	public void print_3() {
-		led3 = !led3;
-		print();
+	public void printfFromC(String str) {
+		System.out.print(str);
 	}
 	
 	public int sendMessage(byte[] message, int messageSize, int connector) {
