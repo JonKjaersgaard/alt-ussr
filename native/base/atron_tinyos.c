@@ -22,12 +22,17 @@ int32_t initialize(USSRONLY(USSREnv *env)) {
 }
 
 /* API downcalls/commands */
+void printf_to_system_out_print(USSREnv *env, char** buf) {
+  jstring str = ussr_charArray2string(env, *buf);
+  ussr_call_void_controller_method(env, "printfFromC", "(Ljava/lang/String;)V", str);
+}
 int32_t sendMessage(USSREnv *env, uint8_t *message, int32_t messageSize, int32_t connector) {
   jbyteArray array = ussr_charArray2byteArray(env, message, messageSize);
   int32_t result = ussr_call_int_controller_method(env, "sendMessage", "([BII)I", array, messageSize, connector);
   ussr_releaseByteArray(env, array);
   return result;
 }
+
 /* API upcalls/event */
 void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSController_nativeSendDone(JNIEnv *jniENV, jobject self, jint initializationContext, /**/jint error, jint connector) {
   int moduleId;

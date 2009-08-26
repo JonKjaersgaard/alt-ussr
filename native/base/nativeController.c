@@ -151,6 +151,16 @@ void ussr_byteArray2charArray(USSREnv *env, jbyteArray message, unsigned char me
   (*jniEnv)->ReleasePrimitiveArrayCritical(jniEnv, message, tmp_buffer, 0);
 }
 
+jstring ussr_charArray2string(USSREnv *env, char *message) {
+	READ_USSR_ENV(jniEnv,self);
+	jstring str = (*jniEnv)->NewStringUTF(jniEnv, message);
+	if(str==NULL) {
+		reportError(jniEnv,"Failed to allocate memory for string", "ussr_charArray2string", "<>");
+		return NULL;
+	}
+	return str;
+}
+
 /* Simulator API */
 
 void controllerIterationSimulatorHook(USSREnv *env, unsigned char waitForEvent) {
