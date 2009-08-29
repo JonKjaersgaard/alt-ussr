@@ -13,6 +13,7 @@ import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
+import ussr.physics.jme.actuators.JMERotationalActuator;
 import ussr.samples.atron.ATRONController.CenterStates;
 
 /**
@@ -27,6 +28,33 @@ public abstract class ATRONTinyOSController extends ControllerImpl implements Pa
 
 	public void printfFromC(String str) {
 		System.out.print(str);
+	}
+    public boolean isConnected(int i) {
+    	return module.getConnectors().get(i).isConnected();
+    }
+    public boolean isDisconnected(int i) {
+        return !isConnected(i);
+    }
+    public void connect(int i) {
+    	module.getConnectors().get(i).connect();
+    }
+    public void disconnect(int i) {
+    	module.getConnectors().get(i).disconnect();
+    }
+	public void setPositionCentralJoint(int position) {
+		module.getActuators().get(0).setDesiredPosition(((float)position) / 432);
+	}
+	public void setSpeedCentralJoint(int speed) {
+		//for the ATRON, 1 is almost max speed (1rad/s ~ 1rev in 6 sec)
+		//we use the tinyos api convention of 100 being the max speed
+		module.getActuators().get(0).setDesiredVelocity(((float)speed) / 100);
+	}
+	public int getCentralJointEncoderValueInt() {
+		/* we stick to the conventional low res 432 ticks encoder (which means values from 0 to 431)*/
+		int retValue = (int)(module.getActuators().get(0).getEncoderValue()*432);
+		if(retValue == 432)
+			retValue = 0;
+		return retValue;
 	}
 	
 	public int sendMessage(byte[] message, int messageSize, int connector) {
@@ -94,24 +122,7 @@ public abstract class ATRONTinyOSController extends ControllerImpl implements Pa
      * @see ussr.physics.PhysicsObserver#physicsTimeStepHook(ussr.physics.PhysicsSimulation)
      */
     public synchronized void physicsTimeStepHook(PhysicsSimulation simulation) {
-    	// copy-pasted from AtronController
-    	/*
-    	if(centerState == CenterStates.POSCONTROL) {
-    		posActuateJoint();
-    	}
-    	else if(centerState == CenterStates.VELCONTROL) {
-    		velActuateJoint();
-    	}
-    	else if(centerState == CenterStates.POSVELCONTROL) {
-    		posVelActuateJoint();
-    	}
-    	else if(centerState == CenterStates.BRAKED) {
-    		relaxJoint(); //?
-    	}
-    	else if(centerState == CenterStates.STOPPED) {
-    		relaxJoint();
-    	}
-    	 */
+    	// we don't really do anything here, it's mostly for the native one
     }
     
     /**
