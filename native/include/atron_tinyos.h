@@ -17,6 +17,7 @@ uint8_t isConnected(USSREnv *env, uint8_t connector);
 uint8_t isDisconnected(USSREnv *env, uint8_t connector);
 void connect(USSREnv *env, uint8_t connector);
 void disconnect(USSREnv *env, uint8_t connector);
+int32_t readProximitySensor(USSREnv *env, uint8_t connector);
 
 #else
 

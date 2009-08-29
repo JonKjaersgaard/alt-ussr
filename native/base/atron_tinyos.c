@@ -64,6 +64,9 @@ void connect(USSREnv *env, uint8_t connector) {
 void disconnect(USSREnv *env, uint8_t connector) {
   ussr_call_void_controller_method(env, "disconnect", "(I)V", connector);
 }
+int32_t readProximitySensor(USSREnv *env, uint8_t connector) {
+  return ussr_call_int_controller_method(env, "readProximitySensor", "(I)I", connector);
+}
 
 /* API upcalls/event */
 void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSController_nativeSendDone(JNIEnv *jniENV, jobject self, jint initializationContext, /**/jint error, jint connector) {
