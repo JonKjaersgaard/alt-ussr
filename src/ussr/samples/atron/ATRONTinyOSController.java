@@ -8,6 +8,7 @@ import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
 import ussr.model.ControllerImpl;
 import ussr.model.Module;
+import ussr.model.Sensor;
 import ussr.model.ModuleEventQueue.Event;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
@@ -29,6 +30,14 @@ public abstract class ATRONTinyOSController extends ControllerImpl implements Pa
 	public void printfFromC(String str) {
 		System.out.print(str);
 	}
+	
+	// work in progress on the prox sensor ...
+	/*other modules are NOT sensed*/
+	/*stick to the TinyOS convention: returns 0 for closest objects, 10 for farthest away ones (~8cm to infinity)*/
+    public int readProximitySensor(int connector) {
+    	return ((int)(module.getSensors().get(connector).readValue()*10));
+    }
+    
     public boolean isConnected(int i) {
     	return module.getConnectors().get(i).isConnected();
     }
