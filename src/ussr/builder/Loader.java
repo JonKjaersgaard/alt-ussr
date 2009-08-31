@@ -61,6 +61,12 @@ public class Loader extends GenericSimulation {
 	}
 	
 	public static void runSimulationFromFile() {
+	    /* Set up home */
+	    String home = System.getenv("USSRHOME"); 
+	    if(home!=null) {
+	        System.out.println("Setting home to "+home);
+	        PhysicsFactory.getOptions().setResourceDirectory(home+"/");
+	    }
 		/*Activate connectors*/
 		GenericSimulation.setConnectorsAreActive(true);
 		Loader simulation = new Loader();
