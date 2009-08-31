@@ -51,7 +51,19 @@ public abstract class ControllerImpl implements Controller {
     }
     
     public int getModuleID() {
+        if(getModuleRole()!=-1)
+            return getModuleRole();
     	return module.getID();
+    }
+    
+    public int getModuleRole() {
+        String roleMaybe = this.getModule().getProperty("roleid");
+        if(roleMaybe!=null) try {
+            return Integer.parseInt(roleMaybe);
+        } catch(NumberFormatException exn) {
+            return -1;
+        }
+        return -1;
     }
     
     /**

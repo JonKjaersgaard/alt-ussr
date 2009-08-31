@@ -89,10 +89,21 @@ public abstract class Entity {
     }
 
     public void setProperties(Map<String, String> otherProperties) {
-        for(Map.Entry<String, String> prop: otherProperties.entrySet())
+        for(Map.Entry<String, String> prop: otherProperties.entrySet()) {
             this.setProperty(prop.getKey(), prop.getValue());
+        }
+        System.out.println("properties set on "+this);
     }
 
+    public String toString() {
+        StringBuffer result = new StringBuffer("{ ");
+        if(properties!=null) {
+            for(Map.Entry<String, String> entry: properties.entrySet())
+                result.append(entry.getKey()+"="+entry.getValue()+" ");
+        }
+        result.append('}');
+        return result.toString();
+    }
     
     public static String mkprop(String propertyName, int value) {
         return mkprop(propertyName,Integer.toString(value));

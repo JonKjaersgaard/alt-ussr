@@ -50,7 +50,7 @@ public abstract class JMEMechanicalConnector extends JMEBasicConnector  {
      * 3) Update the color to reflect its state
      */
     public synchronized void update() {
-    	//updateProximiteConnectors(maxConnectDistance);
+    	updateProximiteConnectors(maxConnectDistance);
     	updateConnectorsIntegrity();
 		updateColor();
 		updateHook();
@@ -88,7 +88,7 @@ public abstract class JMEMechanicalConnector extends JMEBasicConnector  {
     }
     
     protected void updateColor() {
-    	if(isConnected()) {
+    	if(isConnected()||world.showAllConnectors()) {
     		connectorGeometry.setConnectorVisibility(true);
     		connectorGeometry.resetColor();
     	}

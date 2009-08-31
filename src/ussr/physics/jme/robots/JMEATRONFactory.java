@@ -94,8 +94,8 @@ public class JMEATRONFactory implements ModuleFactory {
     	DynamicPhysicsNode northNode = ((JMEModuleComponent) module.getComponent(0)).getModuleNode();
         DynamicPhysicsNode southNode = ((JMEModuleComponent) module.getComponent(1)).getModuleNode();
     	if(robot.getDescription().getType().contains("smooth")) {
-    		northNode.setMaterial(com.jmex.physics.material.Material.ICE); // A bit more smooth
-            southNode.setMaterial(com.jmex.physics.material.Material.ICE);
+    		northNode.setMaterial(com.jmex.physics.material.Material.GLASS); // A bit more smooth
+            southNode.setMaterial(com.jmex.physics.material.Material.GLASS);
     	} else {
     		northNode.setMaterial(com.jmex.physics.material.Material.RUBBER); // Better traction for driving experiments
 			southNode.setMaterial(com.jmex.physics.material.Material.RUBBER);

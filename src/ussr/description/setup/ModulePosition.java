@@ -128,6 +128,7 @@ public class ModulePosition {
     public void setProperties(Map<String, String> properties) {
         this.properties = properties;
     }
+    
     private Matrix4f toMatrix(Vector3f pos, Quaternion q) {
     	Matrix4f m = new Matrix4f();
 		m.setRotationQuaternion(q);

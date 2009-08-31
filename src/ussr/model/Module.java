@@ -15,6 +15,7 @@ import com.jme.math.Matrix4f;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
+import ussr.builder.BuilderHelper;
 import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
 import ussr.description.geometry.RotationDescription;
@@ -421,5 +422,9 @@ public class Module extends Entity {
     public ModuleEventQueue getModuleEventsQueue() {
         if(this.eventQueue!=null) return eventQueue;
         throw new Error("Event queue is null");
+    }
+    
+    public String toString() {
+        return "Module("+this.uniqueID+")"+super.toString();
     }
 }

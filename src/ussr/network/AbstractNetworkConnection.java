@@ -28,7 +28,7 @@ import ussr.samples.atron.ATRONController;
 public abstract class AbstractNetworkConnection {
 	private ServerSocket socket;
 	private int port;
-	boolean debug = false;
+	boolean debug = true;
 	public AbstractNetworkConnection(int port) {
 	    this.port = port;
 		try {

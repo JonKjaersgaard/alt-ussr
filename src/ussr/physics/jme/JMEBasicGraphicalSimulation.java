@@ -173,6 +173,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	private StaticPhysicsNode staticPlane;
 	private boolean exitOnQuit;
 	protected Options options;
+	private boolean showAllConnectors = false;
 	public JMEBasicGraphicalSimulation(Options options) {
 	    this.options = options;
 		exitOnQuit = options.getExitOnQuit();
@@ -219,11 +220,11 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		KeyBindingManager.getKeyBindingManager().set("display_debug_shell", KeyInput.KEY_U);
 
 		KeyBindingManager.getKeyBindingManager().set("display_quick_prototyping_of_simulation_scenarios", KeyInput.KEY_Q);
-		
-		KeyBindingManager.getKeyBindingManager().set("", KeyInput.KEY_Q);
-		
+				
 		/** Assign key K to action "visualize_module_communication". */
 		KeyBindingManager.getKeyBindingManager().set("visualize_module_communication", KeyInput.KEY_K);
+		
+		KeyBindingManager.getKeyBindingManager().set("toggle_connectors_always_visible", KeyInput.KEY_J);
 	}
 	protected void handleKeys() {        /** If toggle_pause is a valid command (via key p), change pause. */
 		if ( KeyBindingManager.getKeyBindingManager().isValidCommand(
@@ -327,6 +328,9 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 				CommunicationVisualizerGUI.activateCommunicationVisualizerGUI(this);
 			}
 		}
+		
+		if(KeyBindingManager.getKeyBindingManager().isValidCommand("toggle_connectors_always_visible"))
+		    this.showAllConnectors = !this.showAllConnectors;
 	}
 	protected void cameraPerspective() {
 		if(cam!=null) {
@@ -995,4 +999,9 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public void setSingleStep(boolean singleStep) {
 		this.singleStep = singleStep;
 	}	
+
+    public boolean showAllConnectors() {
+        return showAllConnectors;
+    }
+
 }

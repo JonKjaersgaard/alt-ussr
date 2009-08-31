@@ -2,6 +2,7 @@ package ussr.builder.saveLoadXML;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import ussr.builder.BuilderHelper;
@@ -49,7 +50,19 @@ public class PreSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate {
         if(labelsModule.contains(BuilderHelper.getTempLabel())){            
             //do nothing
         }else{  
-            PhysicsLogger.log("Warning: labels not transferred");
+            // Store labels in module properties, plus extract @-prefixed labels and define as properties
+            HashMap<String,String> properties = new HashMap<String,String>();
+            properties.put(BuilderHelper.getLabelsKey(), labelsModule);
+            modulePos.setProperties(properties);
+            String[] labels = labelsModule.split(",");
+            for(int i=0; i<labels.length; i++) {
+                if(labels[i].startsWith("@") && labels[i].indexOf('=')>1) {
+                    String key = labels[i].split("=")[0].substring(1);
+                    String value = labels[i].split("=")[1];
+                    properties.put(key, value);
+                    System.out.println("Setting property "+key+" to "+value);
+                }
+            }
         }
         
         PhysicsLogger.log("Warning: colors not transferred"); //newModule.setColorList(listColorsComponents);
