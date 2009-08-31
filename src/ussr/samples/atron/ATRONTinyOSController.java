@@ -26,9 +26,15 @@ import ussr.samples.atron.ATRONController.CenterStates;
 public abstract class ATRONTinyOSController extends ControllerImpl implements PacketSentObserver, PacketReceivedObserver, PhysicsObserver, IATRONTinyOSAPI {
 
 	protected boolean sendBusy = false;
-
+	
 	public void printfFromC(String str) {
 		System.out.print(str);
+	}
+	
+	public int getRandomNumber() {
+		//Math.random() return a double between 0 and 1
+		//we approx it to int16_t positive precision
+		return (int)(Math.random()*30000);
 	}
 	
 	// work in progress on the prox sensor ...
