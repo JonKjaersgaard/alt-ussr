@@ -45,6 +45,9 @@ clean:
 	rm -f .depends nativeController.jnilib $(BIN)
 cleanh:
 	rm -f $(BASEDIR)/include/nativeController.h
+#hack not to have gcc -M complain about the absence of the header (generated later)
 .depends: $(BASEDIR)/native/include/nativeController.h
+	@echo > $(BASEDIR)/native/include/auto_generated_dispatcher_macros.h
 	gcc -DUSSR $(ALLINCLUDE) -M $(SRC) > .depends
+	@rm $(BASEDIR)/native/include/auto_generated_dispatcher_macros.h
 include .depends
