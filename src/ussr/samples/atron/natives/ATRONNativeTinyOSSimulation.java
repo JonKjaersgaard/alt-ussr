@@ -11,6 +11,10 @@ import ussr.physics.PhysicsParameters;
 import ussr.samples.atron.ATRON;
 import ussr.samples.atron.GenericATRONSimulation;
 
+
+/* before running this compile the tinyos controller from a shell with
+ * 'make atronSouth ussr_mod,x', where x is the number of simulated modules */
+
 public class ATRONNativeTinyOSSimulation extends GenericATRONSimulation {
 
     private static final float eigth = (float)(0.25*Math.PI);
