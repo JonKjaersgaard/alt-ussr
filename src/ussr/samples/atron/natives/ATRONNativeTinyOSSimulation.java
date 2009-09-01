@@ -9,6 +9,7 @@ import ussr.description.setup.ModulePosition;
 import ussr.model.Controller;
 import ussr.physics.PhysicsParameters;
 import ussr.samples.atron.ATRON;
+import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.atron.GenericATRONSimulation;
 
 
@@ -44,7 +45,7 @@ public class ATRONNativeTinyOSSimulation extends GenericATRONSimulation {
 	@Override
 	protected ArrayList<ModulePosition> buildRobot() {
 		//return new ATRONBuilder().buildCar(2, new VectorDescription(0,-0.25f,0));
-		//return new ATRONBuilder().buildSnake(4);
+		//return new ATRONBuilder().buildSnake(2);
 		//return new ATRONBuilder().buildCar(4, new VectorDescription(0,-0.25f,0));
 		
 		
