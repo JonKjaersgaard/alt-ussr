@@ -26,7 +26,10 @@ void printf_to_system_out_print(USSREnv *env, char* buf) {
   jstring str = ussr_charArray2string(env, buf);
   ussr_call_void_controller_method(env, "printfFromC", "(Ljava/lang/String;)V", str);
 }
-
+int getRandomNumber(USSREnv *env) {
+  int random = ussr_call_int_controller_method(env, "getRandomNumber", "()I");
+  return random;
+}
 
 //this does not really work ... !
 void setPositionCentralJoint(USSREnv *env, int32_t position) {
@@ -47,16 +50,13 @@ int32_t getCentralJointEncoderValue(USSREnv *env) {
   int result = ussr_call_int_controller_method(env, "getCentralJointEncoderValueInt", "()I");
   return result;
 }
-uint8_t isConnected(USSREnv *env, uint8_t connector) {
-  int result = ussr_call_int_controller_method(env, "isConnected", "(I)Z", connector);
+int32_t isConnected(USSREnv *env, uint8_t connector) {
+  int result = ussr_call_int_controller_method(env, "isConnected", "(I)I", connector);
   return result;
 }
-uint8_t isDisconnected(USSREnv *env, uint8_t connector) {
-  int result = ussr_call_int_controller_method(env, "isConnected", "(I)Z", connector);
-  if(result)
-    return 0;
-  else
-    return 1;
+int32_t isDisconnected(USSREnv *env, uint8_t connector) {
+  int result = ussr_call_int_controller_method(env, "isDisconnected", "(I)I", connector);
+  return result;
 }
 void connect(USSREnv *env, uint8_t connector) {
   ussr_call_void_controller_method(env, "connect", "(I)V", connector);
