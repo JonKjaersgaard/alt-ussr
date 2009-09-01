@@ -44,11 +44,17 @@ public abstract class ATRONTinyOSController extends ControllerImpl implements Pa
     	return ((int)(module.getSensors().get(connector).readValue()*10));
     }
     
-    public boolean isConnected(int i) {
-    	return module.getConnectors().get(i).isConnected();
+    public int isConnected(int i) {
+    	if(module.getConnectors().get(i).isConnected() == true)
+    		return 1;
+    	else
+    		return 0;
     }
-    public boolean isDisconnected(int i) {
-        return !isConnected(i);
+    public int isDisconnected(int i) {
+    	if(module.getConnectors().get(i).isConnected() == false)
+    		return 1;
+    	else
+    		return 0;
     }
     public void connect(int i) {
     	module.getConnectors().get(i).connect();
