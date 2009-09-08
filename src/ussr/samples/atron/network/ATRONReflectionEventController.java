@@ -1,9 +1,9 @@
 package ussr.samples.atron.network;
 
-import ussr.model.Module;
+import java.awt.Color;
+
 import ussr.network.EventConnection;
 import ussr.network.ReflectionConnection;
-import ussr.physics.PhysicsLogger;
 import ussr.samples.ReflectionEventController;
 import ussr.samples.ReflectionEventHelper;
 import ussr.samples.atron.ATRONController;

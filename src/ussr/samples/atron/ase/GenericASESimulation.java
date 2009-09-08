@@ -45,9 +45,9 @@ public abstract class GenericASESimulation extends GenericATRONSimulation implem
 	protected static RadioConnection radioConnection;
     private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;
     
-    public static void initASE( ) { 
+    public static void initASE( ) {
     	PhysicsParameters.get().setPlaneMaterial(Material.CONCRETE);
-        PhysicsParameters.get().setPhysicsSimulationStepSize(0.025f);
+        PhysicsParameters.get().setPhysicsSimulationStepSize(0.015f);
  		PhysicsParameters.get().setRealisticCollision(true);
 		//PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
 		PhysicsParameters.get().setMaintainRotationalJointPositions(true);
@@ -84,7 +84,9 @@ public abstract class GenericASESimulation extends GenericATRONSimulation implem
 	protected Robot getRobot() {
         ATRON robot = new ATRON() {
             public Controller createController() {
-                return new ATRONReflectionEventController();
+            	ATRONReflectionEventController c = new ATRONReflectionEventController();
+            	c.setHasGlobalTime(false);
+                return c; 
             }
         };
         

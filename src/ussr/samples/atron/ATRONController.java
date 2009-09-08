@@ -33,12 +33,14 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     protected static enum CenterStates {STOPPED, BRAKED, POSCONTROL, VELCONTROL, POSVELCONTROL}
     private CenterStates centerState;
 	private boolean blocking;
+	private boolean globalTime;
 	private int leds=0;
 	/**
 	 * Instantiate ATRON controller
 	 */
     public ATRONController() {
         setBlocking(false);
+        setHasGlobalTime(true);
     }
     
     /**
@@ -75,6 +77,9 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         		((RadioTransmitter) module.getTransmitters().get(8)).setEnabled(false);
         		((RadioReceiver) module.getReceivers().get(8)).setEnabled(false);
         	}
+        }
+        if(!globalTime){
+        	setLocalTimeOffset(getRandom().nextFloat()*10.0f); //all modules are started within 10 seconds
         }
     }
     
@@ -169,6 +174,9 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	 */
     public void setBlocking(boolean blocking) {
     	this.blocking = blocking;
+    }
+    public void setHasGlobalTime(boolean globalTime) {
+    	this.globalTime = globalTime;
     }
     /**
 	 * @see ussr.samples.atron.IATRONAPI#getJointPosition()

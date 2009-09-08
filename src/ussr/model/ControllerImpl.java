@@ -20,7 +20,9 @@ import java.util.Random;
 public abstract class ControllerImpl implements Controller {
 
     private static int randomSeed = 0;
-
+    private static Random rand;
+    private float localTimeOffset;
+    
     /**
      * Reference to the module controlled by this controller 
      */
@@ -107,7 +109,12 @@ public abstract class ControllerImpl implements Controller {
     	randomSeed++;
     	return new Random(randomSeed).nextInt();
     }
-
+    
+    protected static Random getRandom() {
+    	if(rand==null) rand = new Random(internalGetRandomSeed());
+    	return rand;
+    }
+    
     public int getRandomSeed() {
         return internalGetRandomSeed();
     }
@@ -124,6 +131,13 @@ public abstract class ControllerImpl implements Controller {
      */
     public float getTime() {
     	//TODO local version of this instead of global and syncronized
-    	return getModule().getSimulation().getTime();
+    	return getModule().getSimulation().getTime() + localTimeOffset;
+    }
+    
+    /**
+     * Set offset to something random to simulate that the modules do not have a shared timer
+     */
+    public void setLocalTimeOffset(float offset) {
+    	localTimeOffset = offset;
     }
 }
