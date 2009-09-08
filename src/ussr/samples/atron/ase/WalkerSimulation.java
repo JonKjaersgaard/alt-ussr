@@ -19,6 +19,7 @@ public class WalkerSimulation extends GenericASESimulation {
 	
     
 	public static void main( String[] args ) {
+		hasCMTracker = false;
 		initASE();
 		new WalkerSimulation().main();
     }
