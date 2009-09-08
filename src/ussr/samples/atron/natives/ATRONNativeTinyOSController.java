@@ -1,5 +1,7 @@
 package ussr.samples.atron.natives;
 
+import com.jme.scene.shape.Arrow;
+
 import ussr.model.NativeController;
 import ussr.model.NativeControllerProvider;
 import ussr.physics.PhysicsLogger;
@@ -20,7 +22,14 @@ public class ATRONNativeTinyOSController extends NativeController {
 	    	if(PhysicsParameters.get().getPhysicsSimulationStepSize() != 0.001f)
 	    		PhysicsLogger.log("PhysicsStepSize does not allow for accurate simulation!");
 	    	nativeMillisecondElapsed(getInitializationContext());
-
+	    	
+	    	//this retrieves the rotation
+	    	//if(this.getName().contains("0"))
+	    		//System.out.println(this.module.referenceNode.getLocalRotation().w + " " + this.module.referenceNode.getLocalRotation().x + " " + this.module.referenceNode.getLocalRotation().y + " " + this.module.referenceNode.getLocalRotation().z);
+	    	//this retrieves the translation
+	    	//if(this.getName().contains("5"))
+	    		//System.out.println(this.module.referenceNode.getLocalTranslation().x + " " + this.module.referenceNode.getLocalTranslation().y + " " + this.module.referenceNode.getLocalTranslation().z);
+	    	
 	    }
 		public int getRole() { return ATRONNativeTinyOSController.this.getRole(); }
 		

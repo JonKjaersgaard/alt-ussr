@@ -77,8 +77,8 @@ public class ATRONBuilder {
         float Yoffset = position.getY();
         if(numberOfWheels==2) {
             mPos.add(new ModulePosition("driver0", new VectorDescription(-2*ATRON.UNIT+Xoffset,-2*ATRON.UNIT+Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
-            mPos.add(new ModulePosition("RearRightWheel", new VectorDescription(-1*ATRON.UNIT+Xoffset,-2*ATRON.UNIT+Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
-            mPos.add(new ModulePosition("RearLeftWheel", new VectorDescription(-1*ATRON.UNIT+Xoffset,-2*ATRON.UNIT+Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
+            mPos.add(new ModulePosition("RearRightWheel1", new VectorDescription(-1*ATRON.UNIT+Xoffset,-2*ATRON.UNIT+Yoffset,1*ATRON.UNIT), ATRON.ROTATION_SN));
+            mPos.add(new ModulePosition("RearLeftWheel2", new VectorDescription(-1*ATRON.UNIT+Xoffset,-2*ATRON.UNIT+Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_NS));
         } else if(numberOfWheels==4) {
             System.out.println("4 wheeler");
             mPos.add(new ModulePosition("driver0", new VectorDescription(2*0*ATRON.UNIT+Xoffset,0*ATRON.UNIT+Yoffset,0*ATRON.UNIT), ATRON.ROTATION_EW));
