@@ -15,6 +15,7 @@ import ussr.description.robot.ConnectorDescription;
 import ussr.physics.jme.JMEGeometryHelper;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
+import ussr.visualization.VisualizationParameters;
 
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
@@ -86,7 +87,11 @@ public class JMEConnectorGeometry {
     }
     
     public void setConnectorVisibility(boolean visible) {
-		if(visible) {
+    	if(VisualizationParameters.get().getShowPhysicalModules() == false) {
+    		mesh.setCullHint(CullHint.Always);
+    		return;
+    	}
+    	if(visible) {
 			mesh.setCullHint(CullHint.Dynamic);
 		}
 		else {

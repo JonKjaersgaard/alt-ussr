@@ -31,14 +31,17 @@ import ussr.physics.jme.connectors.JMEBallSocketConnector;
 import ussr.physics.jme.connectors.JMEConnector;
 import ussr.physics.jme.connectors.JMEHingeMechanicalConnector;
 import ussr.physics.jme.connectors.JMEMagneticConnector;
+import ussr.physics.jme.connectors.JMEMechanicalConnector;
 import ussr.physics.jme.connectors.JMERigidMechanicalConnector;
 import ussr.physics.jme.connectors.JMEVelcroConnector;
+import ussr.visualization.VisualizationParameters;
 
 import com.jme.math.Matrix4f;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
+import com.jme.scene.Spatial.CullHint;
 import com.jme.scene.shape.Sphere;
 import com.jmex.physics.DynamicPhysicsNode;
 
@@ -99,6 +102,10 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
             world.getHelper().setColor(shape,geometry.getColor());
             moduleNode.setIsCollidable(true);
             moduleNode.generatePhysicsGeometry(geometry.getAccurateCollisionDetection());
+        	if(VisualizationParameters.get().getShowPhysicalModules() == false) {
+        		shape.setCullHint( CullHint.Always );
+        	}
+            
         }
         // Attach to the world
    		world.getRootNode().attachChild( moduleNode );   
