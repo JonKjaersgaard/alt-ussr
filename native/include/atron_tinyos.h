@@ -19,6 +19,10 @@ int32_t isDisconnected(USSREnv *env, uint8_t connector);
 void connect(USSREnv *env, uint8_t connector);
 void disconnect(USSREnv *env, uint8_t connector);
 int32_t readProximitySensor(USSREnv *env, uint8_t connector);
+float getSouthRotationW(USSREnv *env);
+float getSouthRotationX(USSREnv *env);
+float getSouthRotationY(USSREnv *env);
+float getSouthRotationZ(USSREnv *env);
 
 #else
 

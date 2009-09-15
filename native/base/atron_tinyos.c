@@ -68,6 +68,22 @@ int32_t readProximitySensor(USSREnv *env, uint8_t connector) {
   return ussr_call_int_controller_method(env, "readProximitySensor", "(I)I", connector);
 }
 
+float getSouthRotationW(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getSouthRotationW", "()F");
+}
+
+float getSouthRotationX(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getSouthRotationX", "()F");
+}
+
+float getSouthRotationY(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getSouthRotationY", "()F");
+}
+
+float getSouthRotationZ(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getSouthRotationZ", "()F");
+}
+
 /* API upcalls/event */
 void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSController_nativeSendDone(JNIEnv *jniENV, jobject self, jint initializationContext, /**/jint error, jint connector) {
   int moduleId;
