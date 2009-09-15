@@ -22,6 +22,9 @@ int32_t initialize(USSRONLY(USSREnv *env)) {
 }
 
 /* API downcalls/commands */
+void ussr_stub(USSREnv *env) {
+  ussr_call_void_controller_method(env, "stubCall", "()V");
+}
 void printf_to_system_out_print(USSREnv *env, char* buf) {
   jstring str = ussr_charArray2string(env, buf);
   ussr_call_void_controller_method(env, "printfFromC", "(Ljava/lang/String;)V", str);
