@@ -23,6 +23,9 @@ float getSouthRotationW(USSREnv *env);
 float getSouthRotationX(USSREnv *env);
 float getSouthRotationY(USSREnv *env);
 float getSouthRotationZ(USSREnv *env);
+float getSouthTranslationX(USSREnv *env);
+float getSouthTranslationY(USSREnv *env);
+float getSouthTranslationZ(USSREnv *env);
 
 #else
 

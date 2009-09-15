@@ -84,6 +84,18 @@ float getSouthRotationZ(USSREnv *env) {
   return ussr_call_float_controller_method(env, "getSouthRotationZ", "()F");
 }
 
+float getSouthTranslationX(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getSouthTranslationX", "()F");
+}
+
+float getSouthTranslationY(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getSouthTranslationY", "()F");
+}
+
+float getSouthTranslationZ(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getSouthTranslationZ", "()F");
+}
+
 /* API upcalls/event */
 void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSController_nativeSendDone(JNIEnv *jniENV, jobject self, jint initializationContext, /**/jint error, jint connector) {
   int moduleId;
