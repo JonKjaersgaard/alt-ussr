@@ -138,6 +138,38 @@ MAKE_USSR_CALL_INT_CONTROLLER_METHOD(int64_t,ussr_call_long_controller_method)
 
 MAKE_USSR_CALL_FLOAT_CONTROLLER_METHOD(ussr_call_float_controller_method)
 
+#define MAKE_USSR_CALL_DOUBLE_CONTROLLER_METHOD(METHODNAME) double METHODNAME(USSREnv *env, char *name, char *signature, ...) {\
+  READ_USSR_ENV(jniEnv,self);\
+  va_list parameters;\
+  jmethodID get_internal_controller_mid;\
+  jobject controller;\
+  jclass holderClass = (*jniEnv)->GetObjectClass(jniEnv,self);\
+  get_internal_controller_mid = (*jniEnv)->GetMethodID(jniEnv,holderClass,"getInternalController","()Lussr/model/Controller;");\
+  if(get_internal_controller_mid==NULL) {\
+  	reportError(jniEnv,"Could not find method for getting internal controller","getInternalController","()Lussr/model/Controller;");\
+  }\
+  controller = (*jniEnv)->CallObjectMethod(jniEnv, self, get_internal_controller_mid);\
+  CHECK_EXN;\
+  if(controller == NULL) {\
+  	reportError(jniEnv,"Lookup of controller gave NULL", "getInternalController","()Lussr/model/Controller;");\
+  }\
+  jclass controllerClass = (*jniEnv)->GetObjectClass(jniEnv, controller);\
+  jmethodID mid = (*jniEnv)->GetMethodID(jniEnv, controllerClass, name, signature);\
+  if (mid == NULL) {\
+    reportError(jniEnv,"Failed to locate method in controller class", name, signature);\
+  }\
+  va_start(parameters, signature);\
+  double result = (*jniEnv)->CallDoubleMethodV(jniEnv, controller, mid, parameters);\
+  if((*jniEnv)->ExceptionCheck(jniEnv)) {\
+    (*jniEnv)->ExceptionDescribe(jniEnv);\
+    (*jniEnv)->ExceptionClear(jniEnv);\
+    reportError(jniEnv,"Exception occurred during method evaluation", name, signature);\
+  }\
+  return result;\
+}
+
+MAKE_USSR_CALL_DOUBLE_CONTROLLER_METHOD(ussr_call_double_controller_method)
+
 jbyteArray ussr_charArray2byteArray(USSREnv *env, unsigned char *message, unsigned char messageSize) {
   READ_USSR_ENV(jniEnv,self);
   jbyte *buffer;
