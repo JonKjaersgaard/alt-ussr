@@ -140,3 +140,16 @@ void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSController_nativeM
 __AUTO_GENERATED_DISPATCHER_MILLISECONDELAPSED__
 
 }
+
+void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSController_native_1stub(JNIEnv *jniENV, jobject self, jint initializationContext) {
+  int moduleId;
+  USSREnv env;
+  env.jnienv = jniENV;
+  env.controller = self;
+  env.context = initializationContext;
+
+  moduleId = ussr_call_int_controller_method(&env, "getRole", "()I");/* the old "role" */
+
+__AUTO_GENERATED_DISPATCHER_NATIVESTUB__
+
+}
