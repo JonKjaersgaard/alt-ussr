@@ -26,7 +26,13 @@ float getSouthRotationZ(USSREnv *env);
 float getSouthTranslationX(USSREnv *env);
 float getSouthTranslationY(USSREnv *env);
 float getSouthTranslationZ(USSREnv *env);
-
+float getNorthRotationW(USSREnv *env);
+float getNorthRotationX(USSREnv *env);
+float getNorthRotationY(USSREnv *env);
+float getNorthRotationZ(USSREnv *env);
+float getNorthTranslationX(USSREnv *env);
+float getNorthTranslationY(USSREnv *env);
+float getNorthTranslationZ(USSREnv *env);
 #else
 
 #ifdef EMPTY_ATRON_API

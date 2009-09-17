@@ -99,6 +99,34 @@ float getSouthTranslationZ(USSREnv *env) {
   return ussr_call_float_controller_method(env, "getSouthTranslationZ", "()F");
 }
 
+float getNorthRotationW(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getNorthRotationW", "()F");
+}
+
+float getNorthRotationX(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getNorthRotationX", "()F");
+}
+
+float getNorthRotationY(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getNorthRotationY", "()F");
+}
+
+float getNorthRotationZ(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getNorthRotationZ", "()F");
+}
+
+float getNorthTranslationX(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getNorthTranslationX", "()F");
+}
+
+float getNorthTranslationY(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getNorthTranslationY", "()F");
+}
+
+float getNorthTranslationZ(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getNorthTranslationZ", "()F");
+}
+
 /* API upcalls/event */
 void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSController_nativeSendDone(JNIEnv *jniENV, jobject self, jint initializationContext, /**/jint error, jint connector) {
   int moduleId;
