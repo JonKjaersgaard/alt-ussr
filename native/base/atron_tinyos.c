@@ -127,6 +127,11 @@ float getNorthTranslationZ(USSREnv *env) {
   return ussr_call_float_controller_method(env, "getNorthTranslationZ", "()F");
 }
 
+/* x -> comp=1   y -> comp=2   z -> comp=3*/
+float getGlobalPosition(USSREnv *env, int conn, int comp) {
+  return ussr_call_float_controller_method(env, "getGlobalPosition", "(II)F", conn, comp);
+}
+
 /* API upcalls/event */
 void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSController_nativeSendDone(JNIEnv *jniENV, jobject self, jint initializationContext, /**/jint error, jint connector) {
   int moduleId;

@@ -33,6 +33,7 @@ float getNorthRotationZ(USSREnv *env);
 float getNorthTranslationX(USSREnv *env);
 float getNorthTranslationY(USSREnv *env);
 float getNorthTranslationZ(USSREnv *env);
+float getGlobalPosition(USSREnv *env, int conn, int comp);
 #else
 
 #ifdef EMPTY_ATRON_API
