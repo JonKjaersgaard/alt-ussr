@@ -32,7 +32,7 @@ public class ATRONKinematicModel {
 																									new Vector3f(-1, 0, 1),
 																									new Vector3f( 0,-1, 1),
 																									new Vector3f( 1, 0, 1) );
-	/* TODO: define the scaling vector to relate the two displacement and encapsulate it in a function with the 45deg rotation */
+
 	/* The quantity to divide the displacement for to get the normalized one */
 	public static float atronNorm = ATRON.UNIT / 2;
 	/* The rotation to apply to the displacement to get the aligned one */
@@ -49,16 +49,26 @@ public class ATRONKinematicModel {
 	public static Node getSouthHemisphereNode(Module mod) {
 		return ((JMEModuleComponent)(mod.getComponent(1))).getModuleNode();
 	}
+	
+	//to be tested!!
+	public static Quaternion getSouthAlignedLocalRotation(Module mod) {
+		return getSouthHemisphereNode(mod).getLocalRotation().mult(alignmentRotation);
+	}
 
 	/* That's the ground truth, as it is computed using the translation/rotation obtained directly from JME */
+	/* (tested!) */
 	public static List<Vector3f> getGlobalPosition(Module mod) {
 		Node south = getSouthHemisphereNode(mod);
 		Node north = getNorthHemisphereNode(mod);
 		List<Vector3f> connectors = new ArrayList<Vector3f>();
+		/* conn 0-3 are on the north hemi */
 		for(int i=0; i<4; i++) {
+			/* important: first rotate, then translate */
 			connectors.add( i, north.getLocalTranslation().add(north.getLocalRotation().mult(connectorsRelativeDisplacement.get(i))) );
 		}
+		/* conn 4-7 are on the south hemi */
 		for(int i=4; i<8; i++) {
+			/* important: first rotate, then translate */
 			connectors.add( i, south.getLocalTranslation().add(south.getLocalRotation().mult(connectorsRelativeDisplacement.get(i))) );
 		}
 		return connectors;		
