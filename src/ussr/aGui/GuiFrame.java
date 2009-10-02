@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -16,8 +15,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public abstract class GuiFrame extends javax.swing.JFrame {
 
-    
-     private Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+     public Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     
 
      /**
