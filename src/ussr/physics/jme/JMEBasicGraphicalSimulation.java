@@ -7,14 +7,21 @@
 package ussr.physics.jme;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.lwjgl.opengl.Display;
+import javax.swing.JFrame;
 
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+
+import ussr.aGui.Gui;
+import ussr.aGui.MainFrame;
 import ussr.builder.QuickPrototyping;
 import ussr.comm.monitors.visualtracker.CommunicationVisualizerGUI;
 import ussr.description.setup.WorldDescription;
@@ -220,6 +227,8 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		KeyBindingManager.getKeyBindingManager().set("display_debug_shell", KeyInput.KEY_U);
 
 		KeyBindingManager.getKeyBindingManager().set("display_quick_prototyping_of_simulation_scenarios", KeyInput.KEY_Q);
+		
+		KeyBindingManager.getKeyBindingManager().set("display_main_frame", KeyInput.KEY_O);
 				
 		/** Assign key K to action "visualize_module_communication". */
 		KeyBindingManager.getKeyBindingManager().set("visualize_module_communication", KeyInput.KEY_K);
@@ -316,8 +325,13 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		}
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_quick_prototyping_of_simulation_scenarios", false)) {
 			if (QuickPrototyping.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
-			}else{QuickPrototyping.activate(this);}
-			
+			}else{QuickPrototyping.activate(this);}			
+		}
+		
+
+		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_main_frame", false)) {	
+			Gui gui = new MainFrame();
+			gui.activate();
 		}
 		
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("visualize_module_communication", false)) {
@@ -678,8 +692,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			display.createWindow( properties.getWidth(), properties.getHeight(),
 					properties.getDepth(), properties.getFreq(), properties
 					.getFullscreen() );
-			//display.moveWindowTo(600, 400);
-			
+			//display.moveWindowTo(600, 400);	
 						
 			/**
 			 * Create a camera specific to the DisplaySystem that works with the
@@ -720,6 +733,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
 		/** Sets the title of our display. */
 		display.setTitle( "USSR - Unified Simulator for Self-Reconfigurable Robots" );
+		
 		/**
 		 * Signal to the renderer that it should keep track of rendering
 		 * information.
