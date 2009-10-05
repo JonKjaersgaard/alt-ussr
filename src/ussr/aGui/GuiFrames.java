@@ -13,16 +13,23 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Konstantinas
  */
-public abstract class GuiFrame extends javax.swing.JFrame {
+public abstract class GuiFrames extends javax.swing.JFrame implements Gui {
 
-     public Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-    
+		
+	 /**
+	 * The dimension of the screen of display
+	 */
+	 public Dimension SCREEN_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
+         
+     public final int TOOLBAR_HEIGHT = 30;
+     
+     public final int PADDING = 30;    
 
      /**
 	 * Sets the size of the frame equal to the screen size
 	 */
-     public  void setSizeEqualToScreen(javax.swing.JFrame frame){         
-         frame.setSize((int)dimension.getWidth(),(int) dimension.getHeight());
+     public  void setSizeFullScreen(javax.swing.JFrame frame){         
+         frame.setSize((int)SCREEN_DIMENSION.getWidth(),(int) SCREEN_DIMENSION.getHeight());
      }
 
 
@@ -30,13 +37,13 @@ public abstract class GuiFrame extends javax.swing.JFrame {
 	 * Sets the size of the frame equal to the half of the screen size
 	 */
      public  void setSizeHalfScreen(javax.swing.JFrame frame){
-         frame.setSize((int)dimension.getWidth()/2,(int) dimension.getHeight()/2);
+         frame.setSize((int)SCREEN_DIMENSION.getWidth()/2,(int) SCREEN_DIMENSION.getHeight()/2);
      }
      
      
      /**
  	 * Changes the look of component to generic (for all platforms)
- 	 * @param awtComponent, the component for example frame
+ 	 * @param awtComponent, the GUI component for example frame
  	 */
  	public void changeToSetLookAndFeel(Component awtComponent){
  		try {
@@ -52,7 +59,13 @@ public abstract class GuiFrame extends javax.swing.JFrame {
  			Logger.getLogger(awtComponent.getName()).log(Level.SEVERE, null, ex);
  		}
  	}
-     
+ 	
+ 	/**
+ 	 * Displays the window (frame)
+ 	 */
+ 	public abstract void activate();
+ 	
+ 	protected abstract void initComponents();
   
 }
 
