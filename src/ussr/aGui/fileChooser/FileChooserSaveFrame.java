@@ -1,16 +1,30 @@
-package ussr.aGui;
+package ussr.aGui.fileChooser;
 
-public class FileChooserSave extends FileChooser  {
+/**
+ * Manages the file chooser in the form of Save dialog.
+ * @author Konstantinas
+ */
+public class FileChooserSaveFrame extends FileChooserFrame  {
 	
-	public FileChooserSave() {	
+	
+	/**
+	 * Manages the file chooser in the form of Save dialog.
+	 */
+	public FileChooserSaveFrame(String fileExtension) {	
+		this.fileExtension = fileExtension;
 		initComponents();
-		changeToSaveDialog();			
+		changeToSaveDialog();
+		setFilesToFilter(fileExtension);
 	}
 	
+	/**
+	 * Changes several components of file chooser so that it is Save dialog.
+	 */
 	private void changeToSaveDialog(){
-		jFileChooser1.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-		jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
+		jFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+		jFileChooser.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				
 				jFileChooser1ActionPerformed(evt);
 			}
 		});
@@ -19,12 +33,12 @@ public class FileChooserSave extends FileChooser  {
 	
 	
 	/**
-	 * Starts the window of file chooser in the form of open dialog.
+	 * Starts the window of file chooser in the form of Save dialog.
 	 */
 	public void activate(){
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() { 
-				new FileChooserSave();
+				new FileChooserSaveFrame(fileExtension);
 				setVisible(true);
 			}
 		});    	
@@ -33,7 +47,7 @@ public class FileChooserSave extends FileChooser  {
 	private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {                                              
 		String command = evt.getActionCommand();//Selected button command
 		if(command.equalsIgnoreCase("ApproveSelection")  ){		        
-			String fileDirectoryName = jFileChooser1.getSelectedFile().toString();
+			String fileDirectoryName = jFileChooser.getSelectedFile().toString();
 			System.out.println("File(Save):"+ fileDirectoryName);
 			//saveLoadXML.saveXMLfile(fileDirectoryName);			
 			this.dispose();//close the frame(window)			

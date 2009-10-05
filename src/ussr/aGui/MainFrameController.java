@@ -1,17 +1,10 @@
 package ussr.aGui;
 
-import java.lang.reflect.Method;
-
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
 
-import ussr.builder.BuilderHelper;
-import ussr.builder.BuilderMultiRobotSimulation;
-import ussr.physics.jme.JMEBasicGraphicalSimulation;
-import ussr.physics.jme.JMESimulation;
+import ussr.aGui.fileChooser.FileChooserOpenFrame;
+import ussr.aGui.fileChooser.FileChooserSaveFrame;
 import ussr.samples.atron.simulations.ATRONSnakeSimulation;
 
 public class MainFrameController {
@@ -34,7 +27,7 @@ public class MainFrameController {
 	 * @param evt
 	 */
 	public static void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {
-		gui= new FileChooserOpen();
+		gui = new FileChooserOpenFrame(".xml");		
 		gui.activate(); 
     }
 	
@@ -43,7 +36,7 @@ public class MainFrameController {
 	 * @param evt
 	 */
 	public static void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {
-		gui= new FileChooserSave();
+		gui= new FileChooserSaveFrame(".xml");
 		gui.activate(); 
     }
 	

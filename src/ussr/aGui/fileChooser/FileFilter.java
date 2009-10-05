@@ -1,8 +1,8 @@
-package ussr.aGui;
+package ussr.aGui.fileChooser;
 import java.io.File;
 
 /**
- * This class is responsible to act as a file filter for fileChooser.
+ * Acts as a file filter for fileChooser.
  * Just set the instance of this class for your file chooser with specific file extension
  * to filter out. For example:  jFileChooser1.setFileFilter(new FileFilter (".xml")); 
  * @author Konstantinas

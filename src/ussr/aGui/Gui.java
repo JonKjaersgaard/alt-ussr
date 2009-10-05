@@ -2,9 +2,12 @@ package ussr.aGui;
 
 
 
+/**
+ * @author Konstantinas
+ *
+ */
 public interface Gui {
 	
-		
 	/**
 	 * The directory for keeping jpg icons used in the GUI design.
 	 */
@@ -22,7 +25,8 @@ public interface Gui {
 	public void changeToSetLookAndFeel(Component awtComponent);*/
 	
 	/**
- 	 * Displays the window (frame)
+ 	 * Starts the windows(frames) of GUI.
+ 	 * Follows strategy pattern. 
  	 */
  	public abstract void activate();
 	

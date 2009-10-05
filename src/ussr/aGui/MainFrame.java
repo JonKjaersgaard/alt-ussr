@@ -215,9 +215,14 @@ public class MainFrame extends GuiFrames {
 
 	/**
 	 * @param args
-	 *//*
+	 */
 	public static void main(String[] args) {
-	    mainFrame = new MainFrame();		
-	}*/
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				mainFrame = new MainFrame();
+				mainFrame.setVisible(true);
+			}
+		});
+	}
 
 }

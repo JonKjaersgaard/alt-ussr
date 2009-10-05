@@ -61,10 +61,15 @@ public abstract class GuiFrames extends javax.swing.JFrame implements Gui {
  	}
  	
  	/**
- 	 * Displays the window (frame)
+ 	 * Starts the windows(frames) of GUI.
+ 	 * Follows strategy pattern. 
  	 */
  	public abstract void activate();
  	
+ 	/**
+ 	 * Initializes visual appearance of the frames(windows).
+ 	 * Follows Strategy pattern.
+ 	 */
  	protected abstract void initComponents();
   
 }
