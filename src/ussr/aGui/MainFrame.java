@@ -29,7 +29,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	/**
 	 * The physical simulation
 	 */	   
-	private JMESimulation JMESimulation;
+	private JMESimulation jmeSimulation;
 	
 	private ArrayList<JToolBar> toolBars = new ArrayList<JToolBar>() ;
 
@@ -52,6 +52,8 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem5;
+	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem6;
+	
 	 
 	private javax.swing.JSeparator jSeparator1;
 	private javax.swing.JSeparator jSeparator2;
@@ -97,8 +99,8 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	 * This can be achieved by pressing "O" on keyboard. 
 	 * @param JMESimulation, the physical simulation
 	 */
-	public MainFrame(JMEBasicGraphicalSimulation JMESimulation){
-		this.JMESimulation = (JMESimulation) JMESimulation;
+	public MainFrame(JMEBasicGraphicalSimulation jmeSimulation){
+		this.jmeSimulation = (JMESimulation) jmeSimulation;
 		
 		initComponents();		
 		instanceFlag = true;// the frame is instantiated
@@ -148,6 +150,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
         jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem4 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem5 = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItem6 = new javax.swing.JCheckBoxMenuItem();
 
 		jToolBar1 = new javax.swing.JToolBar();
 		jToolBar2 = new javax.swing.JToolBar();
@@ -179,7 +182,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jButton1.setPreferredSize(new java.awt.Dimension(30, 30));      
 		jButton1.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jButton1ActionPerformed(jButton1);        	  
+				MainFrameController.jButton1ActionPerformed(jButton1, jmeSimulation);        	  
 			}
 		});
 		jToolBar2.add(jButton1);       
@@ -268,26 +271,62 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jMenuBar1.add(jMenu2);  
 		
 		
-		jMenu3.setText("Rendering");
-		jCheckBoxMenuItem1.setSelected(true);
+		jMenu3.setText("Render");
+		jCheckBoxMenuItem1.setSelected(false);
 		jCheckBoxMenuItem1.setText("Physics");
+		jCheckBoxMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	MainFrameController.jCheckBoxMenuItem1ActionPerformed(jCheckBoxMenuItem1,jmeSimulation);
+            }
+        });
 		jMenu3.add(jCheckBoxMenuItem1);
 		
-		jCheckBoxMenuItem2.setSelected(true);
-        jCheckBoxMenuItem2.setText("WireFrame");
+		jCheckBoxMenuItem2.setSelected(false);
+        jCheckBoxMenuItem2.setText("Wire Frame");
+        jCheckBoxMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	MainFrameController.jCheckBoxMenuItem2ActionPerformed(jCheckBoxMenuItem2,jmeSimulation);
+            }
+        });
         jMenu3.add(jCheckBoxMenuItem2);
 
-        jCheckBoxMenuItem3.setSelected(true);
+        jCheckBoxMenuItem3.setSelected(false);
         jCheckBoxMenuItem3.setText("Bounds");
+        jCheckBoxMenuItem3.setText("Bounds");
+        jCheckBoxMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	MainFrameController.jCheckBoxMenuItem3ActionPerformed(jCheckBoxMenuItem3,jmeSimulation);
+            }
+        });
         jMenu3.add(jCheckBoxMenuItem3);
 
-        jCheckBoxMenuItem4.setSelected(true);
+        jCheckBoxMenuItem4.setSelected(false);
         jCheckBoxMenuItem4.setText("Normals");
+        jCheckBoxMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	MainFrameController.jCheckBoxMenuItem4ActionPerformed(jCheckBoxMenuItem4,jmeSimulation);
+            }
+        });
         jMenu3.add(jCheckBoxMenuItem4);
 
         jCheckBoxMenuItem5.setSelected(true);
         jCheckBoxMenuItem5.setText("Lights");
+        jCheckBoxMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	MainFrameController.jCheckBoxMenuItem5ActionPerformed(jCheckBoxMenuItem5,jmeSimulation);
+            }
+        });
         jMenu3.add(jCheckBoxMenuItem5);
+        
+        jCheckBoxMenuItem6.setSelected(false);
+        jCheckBoxMenuItem6.setText("Buffer Depth");
+        jCheckBoxMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	MainFrameController.jCheckBoxMenuItem6ActionPerformed(jCheckBoxMenuItem6,jmeSimulation);
+            }
+        });
+        
+        jMenu3.add(jCheckBoxMenuItem6);
 
 		jMenuBar1.add(jMenu3);
 
