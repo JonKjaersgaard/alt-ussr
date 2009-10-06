@@ -75,7 +75,7 @@ import com.jmex.terrain.TerrainBlock;
  * @author Modular Robots @ MMMI
  * @author Konstantinas (modified for builder). In particular added code for displaying the GUI
  * of Quick Prototyping of simulation Scenarios and getter-setter methods for showing physics, normals,
- * bounds, lights and wireState. 
+ * bounds, lights, wireState and buffer depth. 
  */
 public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
@@ -126,8 +126,10 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 * True if the renderer should display the depth buffer.
 	 */
 	protected boolean showDepth = false;
+	
+
 	/**
-	 * True if the rnederer should display normals.
+	 * True if the rendered should display normals.
 	 */
 	protected boolean showNormals = false;
 	protected boolean showPhysics;
@@ -149,7 +151,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 */
 	protected StringBuffer updateBuffer = new StringBuffer(30);
 	/**
-	 * A wirestate to turn on and off for the rootNode
+	 * A wire state to turn on and off for the rootNode
 	 */
 	protected WireframeState wireState;
 	/**
@@ -990,6 +992,22 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 */
 	public void setWireState(WireframeState wireState) {
 		this.wireState = wireState;
+	}
+	
+	/**
+	 * Returns the state of showing the depth of the buffer.
+	 * @return showDepth, the state of showing the depth of the buffer.
+	 */
+	public boolean isShowDepth() {
+		return showDepth;
+	}
+	
+	/**
+	 *  Sets the state of showing the depth of the buffer.
+	 * @param showDepth, the state of showing the depth of the buffer.
+	 */
+	public void setShowDepth(boolean showDepth) {
+		this.showDepth = showDepth;
 	}
 	
 	/**
