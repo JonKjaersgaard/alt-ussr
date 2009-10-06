@@ -66,6 +66,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	private javax.swing.JToolBar jToolBar2;
 
 	private javax.swing.JButton jButton1;
+	private javax.swing.JButton jButton2;
 
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JTextField jTextField1;
@@ -161,6 +162,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jTabbedPane4 = new javax.swing.JTabbedPane();
 
 		jButton1 = new javax.swing.JButton();
+		jButton2 = new javax.swing.JButton();
 
 		jLabel1 = new javax.swing.JLabel();
 		jTextField1 = new javax.swing.JTextField();       
@@ -176,7 +178,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jToolBar2.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING,TOOLBAR_HEIGHT));
 
 		jButton1.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PLAY));
-		jButton1.setToolTipText("Play/Pause");
+		jButton1.setToolTipText("Play/Pause simulation");
 		jButton1.setBorder(javax.swing.BorderFactory.createEtchedBorder());//On Vista does not work(test it)
 		jButton1.setFocusable(false);    
 		jButton1.setPreferredSize(new java.awt.Dimension(30, 30));      
@@ -185,7 +187,21 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 				MainFrameController.jButton1ActionPerformed(jButton1, jmeSimulation);        	  
 			}
 		});
-		jToolBar2.add(jButton1);       
+		jToolBar2.add(jButton1);
+		
+		jButton2.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + STEP_BY_STEP));
+		jButton2.setToolTipText("Step by Step simulation");
+		jButton2.setBorder(javax.swing.BorderFactory.createEtchedBorder());//On Vista does not work(test it)
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setPreferredSize(new java.awt.Dimension(30, 30));
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	MainFrameController.jButton2ActionPerformed(jmeSimulation);
+            }
+        });
+        jToolBar2.add(jButton2);
 
 		getContentPane().add(jToolBar2);
 

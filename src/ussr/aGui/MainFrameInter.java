@@ -12,7 +12,7 @@ public interface MainFrameInter {
 	/**
 	 * The names of the icons used in GUI
 	 */
-	public final String PLAY = "play.jpg", PAUSE = "pause.jpg";
+	public final String PLAY = "play.jpg", PAUSE = "pause.jpg", STEP_BY_STEP ="stepByStep.jpg";
 	
 	
 	/**

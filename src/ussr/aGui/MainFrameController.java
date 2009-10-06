@@ -207,6 +207,18 @@ public class MainFrameController {
 		}  
 		
 	}
+	
+	
+	/**
+	 * Initial simulation step
+	 */
+	private static int simulationStep =0;
+	
+	public static void jButton2ActionPerformed(JMESimulation jmeSimulation) {       
+		simulationStep++;
+		//guiHelper.passTo(AssistantjTextField, "Executed simulation step Nr: "+ simulationStep);
+		jmeSimulation.setSingleStep(true);
+	    }
 
 
 }
