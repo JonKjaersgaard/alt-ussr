@@ -6,7 +6,7 @@ package ussr.aGui;
  * @author Konstantinas
  *
  */
-public interface Gui {
+public interface GuiInter {
 	
 	/**
 	 * The directory for keeping jpg icons used in the GUI design.

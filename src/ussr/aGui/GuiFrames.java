@@ -13,7 +13,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Konstantinas
  */
-public abstract class GuiFrames extends javax.swing.JFrame implements Gui {
+public abstract class GuiFrames extends javax.swing.JFrame implements GuiInter {
 
 		
 	 /**
@@ -62,7 +62,7 @@ public abstract class GuiFrames extends javax.swing.JFrame implements Gui {
  	
  	/**
  	 * Starts the windows(frames) of GUI.
- 	 * Follows strategy pattern. 
+ 	 * Follows Strategy pattern. 
  	 */
  	public abstract void activate();
  	

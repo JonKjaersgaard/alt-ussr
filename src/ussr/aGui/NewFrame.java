@@ -4,13 +4,13 @@ public class NewFrame extends GuiFrames {
 
 	@Override
 	public void activate() {
-		// TODO Auto-generated method stub
+		// TODO Write your code here
 		
 	}
 
 	@Override
 	protected void initComponents() {
-		// TODO Auto-generated method stub
+		// TODO Write your code here
 		
 	}
 

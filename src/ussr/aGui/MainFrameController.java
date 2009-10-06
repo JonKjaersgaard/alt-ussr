@@ -1,15 +1,24 @@
 package ussr.aGui;
 
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-import ussr.aGui.fileChooser.FileChooserOpenFrame;
-import ussr.aGui.fileChooser.FileChooserSaveFrame;
+import ussr.aGui.fileChooser.appearance.FileChooserOpenFrame;
+import ussr.aGui.fileChooser.appearance.FileChooserSaveFrame;
+import ussr.aGui.fileChooser.controller.FileChooserControllerInter;
+import ussr.aGui.fileChooser.controller.FileChooserXMLController;
+import ussr.aGui.fileChooser.controller.NewFileChooserController;
 import ussr.samples.atron.simulations.ATRONSnakeSimulation;
 
 public class MainFrameController {
 
-	private static Gui gui;	
+	private static GuiInter gui;	
+	
+	private static ArrayList <String> fileExtensions = new ArrayList<String>();
+	
+	
 	
 	/**
 	 * Executes closing of main window(frame)
@@ -22,12 +31,23 @@ public class MainFrameController {
 	} 
 	
 	
+	
 	/**
 	 * Opens file chooser in the form of Open dialog
 	 * @param evt
 	 */
 	public static void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {
-		gui = new FileChooserOpenFrame(".xml");		
+		fileExtensions.add(".xml");//Repeating code
+		//fileExtensions.add(".txt");//For debugging
+		
+		FileChooserControllerInter fcXMLController = new FileChooserXMLController();//Repeating code
+		//FileChooserControllerInter fcNEWController = new NewFileChooserController();
+		
+		ArrayList<FileChooserControllerInter> fcControllers = new ArrayList<FileChooserControllerInter>();
+		fcControllers.add(fcXMLController);
+		//fcControllers.add(fcNEWController);//For debugging
+		
+		gui = new FileChooserOpenFrame(fileExtensions,fcControllers);		
 		gui.activate(); 
     }
 	
@@ -36,7 +56,17 @@ public class MainFrameController {
 	 * @param evt
 	 */
 	public static void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {
-		gui= new FileChooserSaveFrame(".xml");
+		fileExtensions.add(".xml");//Repeating code
+		//fileExtensions.add(".txt");//For debugging
+		
+		FileChooserControllerInter fcXMLController = new FileChooserXMLController();//Repeating code
+		//FileChooserControllerInter fcNEWController = new NewFileChooserController();//For debugging
+		
+		ArrayList<FileChooserControllerInter> fcControllers = new ArrayList<FileChooserControllerInter>();
+		fcControllers.add(fcXMLController);
+		//fcControllers.add(fcNEWController);//For debugging
+		
+		gui= new FileChooserSaveFrame(fileExtensions,fcControllers);
 		gui.activate(); 
     }
 	
@@ -49,10 +79,10 @@ public class MainFrameController {
 	 public static void jButton1ActionPerformed(JButton jButton1) {
 		 timesPressed++;        
 		if (timesPressed == 1){
-			jButton1.setIcon(new javax.swing.ImageIcon(Gui.DIRECTORY_ICONS + Gui.PAUSE));
+			jButton1.setIcon(new javax.swing.ImageIcon(GuiInter.DIRECTORY_ICONS + GuiInter.PAUSE));
 			
 		}else if (timesPressed ==2){
-			jButton1.setIcon(new javax.swing.ImageIcon(Gui.DIRECTORY_ICONS + Gui.PLAY));
+			jButton1.setIcon(new javax.swing.ImageIcon(GuiInter.DIRECTORY_ICONS + GuiInter.PLAY));
 		}
 		 
 		 /*if (JME_simulation.isPaused()==false){ 
@@ -76,50 +106,7 @@ public class MainFrameController {
 		 //BuilderMultiRobotSimulation.main(null);
 		ATRONSnakeSimulation.main(null);
 			
-	 }
-		 
-		/* SwingUtilities.invokeLater(new Runnable()
-	      {
-			 public void run()
-
-	        {
-
-				 BuilderMultiRobotSimulation.main(null);        
-
-	        }
-
-	      });*/
-		 
-		 
-		
-
-		 
-		 //BuilderMultiRobotSimulation bd = new BuilderMultiRobotSimulation();
-			//bd.main(null);
-		 
-		 /*private void some;
-		 SwingWorker worker = new SwingWorker(){
-
-			 
-		
-				@Override
-				protected void doInBackground() throws Exception {
-					
-						
-						return BuilderMultiRobotSimulation.main(null);
-				   
-
-				
-				}
-				
-			}; */
-			
-			
-		 
-		 
-		 
-		 
-			            	     
+	 }     
 	 
 		 
 	    
