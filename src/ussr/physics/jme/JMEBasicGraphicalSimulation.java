@@ -7,21 +7,12 @@
 package ussr.physics.jme;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.JFrame;
-
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-
-import ussr.aGui.Gui;
 import ussr.aGui.MainFrame;
+import ussr.aGui.MainFrameInter;
 import ussr.builder.QuickPrototyping;
 import ussr.comm.monitors.visualtracker.CommunicationVisualizerGUI;
 import ussr.description.setup.WorldDescription;
@@ -329,9 +320,12 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		}
 		
 
-		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_main_frame", false)) {	
-			Gui gui = new MainFrame();
-			gui.activate();
+		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_main_frame", false)) {			 
+			if (MainFrame.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
+			}else{
+			MainFrameInter mainFrame = new MainFrame();
+			mainFrame.activateDuringSimulation(this);
+			}			
 		}
 		
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("visualize_module_communication", false)) {
