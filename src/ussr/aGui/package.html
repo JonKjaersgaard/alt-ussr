@@ -9,8 +9,22 @@ TODO:<br />
 3) Move rendering of physics, wire state and so on into menu Bar (DONE)<br />
 4) David: Possibility to add new tabs by means of the code(programmer perspective) and GUI<br />
 5) Run: fast, real-time. <br />
-6)Control Visibility of the tabs from GUI<br /> 
-7) Make everything unnecessary disabled<br />
+6) Control Visibility of the tabs from GUI Menu bar (FORGET ABOUT IT, because there are several problems in Swing with that)<br /> 
+7) Make everything unnecessary disabled in construction Tab<br />
+8) Run GUI window: 1) stand alone(TODO) and 2)during simulation(DONE)<br /><br /> 
 
 <img src ="https://svn.mip.sdu.dk/ussr/ussr/doc/developer/aGui_PackageDCD.jpg" title = "DCD" alt="DCD" style = "border:1px solid black"/>
+<h1> 1) How to ...? </h1>
+<h2> 1.1) Start MainFrame (main GUI window)? </h2>
+A) During simulation.<br />
+            <code>  ArrayList<String> namesTabs =  new ArrayList<String>();//The names of the tabs displayed in the main GUI window<br />
+		    namesTabs.add("1 Step: Construct Robot"); //Build in tab <br />
+			namesTabs.add("2 Step: Assign Behaviour");//Build in tab <br />
+			//namesTabs.add("New"); //Your new tab <br />
+			MainFrameInter mainFrame = new MainFrame();<br />			
+			mainFrame.activateDuringSimulation(this,namesTabs); </ code><br /> <br />
+B) Stand alone <br />
+   Run MainFrame.java <br />
+<h2> 1.2) Design my own tab ? </h2>
 </body>
+

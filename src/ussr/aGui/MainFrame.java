@@ -36,11 +36,6 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	 */	   
 	private JMESimulation jmeSimulation;
 	
-	
-	private  MainFrameTabs tabs; 
-	
-	private ArrayList<JToolBar> toolBars = new ArrayList<JToolBar>() ;
-	
 	private ArrayList<String> namesTabs = new ArrayList<String>() ;
 
 	private static MainFrame mainFrame;
@@ -266,7 +261,6 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jToolBar1.setRollover(true);// the buttons inside are roll over
 		jToolBar1.setToolTipText("Command Line Interface");
 		jToolBar1.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING,TOOLBAR_HEIGHT));
-		toolBars.add(jToolBar1);
 		getContentPane().add(jToolBar1);       
 
 		jLabel1.setText(" CLI ");
