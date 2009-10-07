@@ -325,8 +325,12 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_main_frame", false)) {			 
 			if (MainFrame.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
 			}else{
-			MainFrameInter mainFrame = new MainFrame();
-			mainFrame.activateDuringSimulation(this);
+		    ArrayList<String> namesTabs =  new ArrayList<String>();//The names of the tabs displayed in main GUI
+		    namesTabs.add("1 Step: Construct Robot");//Build in tab
+			namesTabs.add("2 Step: Assign Behaviour");//Build in tab
+			//namesTabs.add("New");//Your new tab
+			MainFrameInter mainFrame = new MainFrame();			
+			mainFrame.activateDuringSimulation(this,namesTabs);
 			}			
 		}
 		
