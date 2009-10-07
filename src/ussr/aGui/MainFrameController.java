@@ -12,6 +12,9 @@ import ussr.aGui.fileChooser.controller.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controller.FileChooserXMLController;
 import ussr.aGui.fileChooser.controller.NewFileChooserController;
 import ussr.builder.BuilderHelper;
+import ussr.builder.SupportedModularRobots;
+import ussr.builder.constructionTools.ConstructionToolSpecification;
+import ussr.builder.constructionTools.ConstructionTools;
 import ussr.builder.gui.FileChooser;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.atron.simulations.ATRONSnakeSimulation;
@@ -23,29 +26,13 @@ public class MainFrameController {
 	 */
 	private static GuiInter gui;
 	
-	private static GuiInter fcOpenFrame;
-	
-	private static GuiInter fcSaveFrame;
+
 	
 
 	//private static ArrayList <String> fileExtensions = new ArrayList<String>();
 
 
-	/**
-	 * Initializes file choosers in two forms: 1)Open and 2)Save dialog.
-	 */
-	public static void initFileChoosers () {	
-		ArrayList <String> fileExtensions = new ArrayList<String>();
-		fileExtensions.add(".xml");//Repeating code
-		
-		FileChooserControllerInter fcXMLController = new FileChooserXMLController();//Repeating code
-		ArrayList<FileChooserControllerInter> fcControllers = new ArrayList<FileChooserControllerInter>();
-		fcControllers.add(fcXMLController);
-		
-		fcOpenFrame = new FileChooserOpenFrame(fileExtensions,fcControllers);	
-		fcSaveFrame = new FileChooserSaveFrame(fileExtensions,fcControllers);
-		
-	}
+	
 	
 
 	/**
@@ -62,7 +49,7 @@ public class MainFrameController {
 	 * Opens file chooser in the form of Open dialog
 	 * 
 	 */
-	public static void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {
+	public static void jMenuItem2ActionPerformed(GuiInter fcOpenFrame) {
 		fcOpenFrame.activate();
 	}
 
@@ -70,7 +57,7 @@ public class MainFrameController {
 	 * Opens file chooser in the form of Save dialog
 	 * 
 	 */
-	public static void jMenuItem3ActionPerformed(JMESimulation jmeSimulation) {
+	public static void jMenuItem3ActionPerformed(GuiInter fcSaveFrame, JMESimulation jmeSimulation) {
 		fcSaveFrame.activate();		
 	}
 
@@ -221,6 +208,17 @@ public class MainFrameController {
 		//guiHelper.passTo(AssistantjTextField, "Executed simulation step Nr: "+ simulationStep);
 		jmeSimulation.setSingleStep(true);
 	    }
-
+	
+	public static void jCheckBoxMenuItemActionPerformedNew(javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemNew, javax.swing.JTabbedPane jTabbedPaneNew ) {
+		
+		jTabbedPaneNew.setFocusable(true);
+		//jCheckBoxMenuItemNew.setSelected(false);
+		//jTabbedPaneNew.getComponent(0).setEnabled(false);
+		/*   if (jCheckBoxMenuItemNew.isSelected()){
+        	jTabbedPaneNew.setVisible(true);
+        }else{
+        	jTabbedPaneNew.setVisible(false);
+        }*/
+    }
 
 }

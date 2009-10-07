@@ -13,6 +13,11 @@ import javax.swing.JFrame;
 import javax.swing.JToolBar;
 import javax.swing.SwingWorker;
 
+import ussr.aGui.fileChooser.appearance.FileChooserOpenFrame;
+import ussr.aGui.fileChooser.appearance.FileChooserSaveFrame;
+import ussr.aGui.fileChooser.controller.FileChooserControllerInter;
+import ussr.aGui.fileChooser.controller.FileChooserXMLController;
+import ussr.aGui.tabs.ConstructionTab;
 import ussr.builder.BuilderMultiRobotSimulation;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
@@ -31,63 +36,27 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	 */	   
 	private JMESimulation jmeSimulation;
 	
+	
+	private  MainFrameTabs tabs; 
+	
 	private ArrayList<JToolBar> toolBars = new ArrayList<JToolBar>() ;
+	
+	private ArrayList<String> namesTabs = new ArrayList<String>() ;
 
 	private static MainFrame mainFrame;
 
-	private javax.swing.JMenuBar jMenuBar1;
-	
-	private javax.swing.JMenu jMenu1;
-	private javax.swing.JMenu jMenu2;
-	private javax.swing.JMenu jMenu3;
-	
-	
-	private javax.swing.JMenuItem jMenuItem1;
-	private javax.swing.JMenuItem jMenuItem2;
-	private javax.swing.JMenuItem jMenuItem3;
-	private javax.swing.JMenuItem jMenuItem4;
-	
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem5;
-	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem6;
-	
-	 
-	private javax.swing.JSeparator jSeparator1;
-	private javax.swing.JSeparator jSeparator2;
-	
-	
-	
-	
-	/*TOOL_BARS*/
-	private javax.swing.JToolBar jToolBar1;
-	private javax.swing.JToolBar jToolBar2;
 
-	private javax.swing.JButton jButton1;
-	private javax.swing.JButton jButton2;
-	private javax.swing.JButton jButton3;
+   private  GuiInter fcOpenFrame;
+	
+	private  GuiInter fcSaveFrame;
+	
+	
+	
 
-	private javax.swing.JLabel jLabel1;
-	private javax.swing.JTextField jTextField1;
-
-	private javax.swing.JTabbedPane jTabbedPane1;
-	private javax.swing.JTabbedPane jTabbedPane2;
-	private javax.swing.JTabbedPane jTabbedPane3;
-	private javax.swing.JTabbedPane jTabbedPane4;
-
-	private boolean constructionDisplayed;
-	//private boolean controllerDisplayed;
-
-	public MainFrame() {
-		initComponents();				
-	}
-
-	public MainFrame(boolean constructionDisplayed) {
-		this.constructionDisplayed = constructionDisplayed;
-		initComponents();				
-	}
+	public MainFrame() {		
+		initFileChoosers();
+		initComponents();		
+	}	
 	
 	
 	/**
@@ -98,14 +67,17 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	/**
 	 * 
 	 * Starts the main GUI window (frame) during the simulation.
-	 * This can be achieved by pressing "O" on keyboard. 
+	 * This can be achieved by pressing "O" on keyboard after starting the simulation. 
 	 * @param JMESimulation, the physical simulation
 	 */
-	public MainFrame(JMEBasicGraphicalSimulation jmeSimulation){
+	public MainFrame(JMEBasicGraphicalSimulation jmeSimulation, ArrayList<String> namesTabs){
 		this.jmeSimulation = (JMESimulation) jmeSimulation;
-		
+		this.namesTabs = namesTabs;
+		//this.tabs = tabs;
+		initFileChoosers();		
 		initComponents();
-		MainFrameController.initFileChoosers();
+		
+		
 		instanceFlag = true;// the frame is instantiated
 		// Overrides event for closing the frame, in order for the frame to do not open several times with several times pressing on the button "O" on keyboard.
 		addWindowListener (new WindowAdapter() {			
@@ -117,7 +89,21 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		);		
 	}
 	
-	
+	/**
+	 * Initializes file choosers in two forms: 1)Open and 2)Save dialog.
+	 */
+	private  void initFileChoosers () {	
+		ArrayList <String> fileExtensions = new ArrayList<String>();
+		fileExtensions.add(".xml");
+		
+		FileChooserControllerInter fcXMLController = new FileChooserXMLController();
+		ArrayList<FileChooserControllerInter> fcControllers = new ArrayList<FileChooserControllerInter>();
+		fcControllers.add(fcXMLController);
+		
+		fcOpenFrame = new FileChooserOpenFrame(fileExtensions,fcControllers);	
+		fcSaveFrame = new FileChooserSaveFrame(fileExtensions,fcControllers);
+		
+	}
 	
 	/**
 	 * Returns true if the frame(main GUI window) is already instantiated.
@@ -144,10 +130,16 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jMenu1 = new javax.swing.JMenu();
 		jMenu2 = new javax.swing.JMenu();
 		jMenu3 = new javax.swing.JMenu();
+		jMenu4 = new javax.swing.JMenu();
 		
 		
 		jMenuItem2 = new javax.swing.JMenuItem();
 		jMenuItem4 = new javax.swing.JMenuItem();
+		//jMenuItem5 = new javax.swing.JMenuItem();
+       // jMenuItem6 = new javax.swing.JMenuItem();
+		
+		
+		
 		jSeparator2 = new javax.swing.JSeparator();
 		jMenuItem3 = new javax.swing.JMenuItem();
 		jSeparator1 = new javax.swing.JSeparator();
@@ -164,9 +156,9 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jToolBar2 = new javax.swing.JToolBar();
 
 		jTabbedPane1 = new javax.swing.JTabbedPane();
-		jTabbedPane2 = new javax.swing.JTabbedPane();
-		jTabbedPane3 = new javax.swing.JTabbedPane();
-		jTabbedPane4 = new javax.swing.JTabbedPane();
+		//jTabbedPane2 = new javax.swing.JTabbedPane();
+		//jTabbedPane3 = new javax.swing.JTabbedPane();
+		//jTabbedPane4 = new javax.swing.JTabbedPane();
 
 		jButton1 = new javax.swing.JButton();
 		jButton2 = new javax.swing.JButton();
@@ -219,26 +211,53 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	MainFrameController.jMenuItem3ActionPerformed(jmeSimulation);
+            	MainFrameController.jMenuItem3ActionPerformed(fcSaveFrame,jmeSimulation);
             }
         });
         jToolBar2.add(jButton3);
 
 		getContentPane().add(jToolBar2);
 
-
+		jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 		jTabbedPane1.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING, 200));
+		
+	/*	jTabbedPaneNew = new javax.swing.JTabbedPane();
+		jTabbedPane1.addTab("New", jTabbedPaneNew);
+		
+		jCheckBoxMenuItemNew = new javax.swing.JCheckBoxMenuItem();
+		jCheckBoxMenuItemNew.setSelected(true);
+		jCheckBoxMenuItemNew.setText("New");
+		jCheckBoxMenuItemNew.addActionListener(new java.awt.event.ActionListener() {
+	            public void actionPerformed(java.awt.event.ActionEvent evt) {
+	                MainFrameController.jCheckBoxMenuItemActionPerformedNew(jCheckBoxMenuItemNew, jTabbedPaneNew);
+	            }
+	        });
+		jMenu4.add(jCheckBoxMenuItemNew);*/
+		
+		
+		for (int index =0; index < namesTabs.size(); index++){
+		    jTabbedPaneNew = new javax.swing.JTabbedPane();
+		    if(namesTabs.get(index).contains("Construct")){
+		    	new ConstructionTab(jTabbedPane1,namesTabs.get(index), jmeSimulation );		    	
+		    	
+		    } else{
+			jTabbedPane1.addTab(namesTabs.get(index), jTabbedPaneNew);
 
-		jTabbedPane1.addTab("1 Step: Contruct Robot", jTabbedPane2);
-		if (constructionDisplayed){		
-
-			jTabbedPane2.setFocusable(true);
-		}
-		//if (controllerDisplayed){
-		jTabbedPane1.addTab("2 Step: Assign Behavior", jTabbedPane3);
-		//}
-		//jTabbedPane1.addTab("tab3", jTabbedPane4);'
-
+		    }
+		
+			
+			//jCheckBoxMenuItemNew = new javax.swing.JCheckBoxMenuItem();
+			//jCheckBoxMenuItemNew.setSelected(true);
+			//jCheckBoxMenuItemNew.setText(namesTabs.get(index));
+			/*jCheckBoxMenuItemNew.addActionListener(new java.awt.event.ActionListener() {
+		            public void actionPerformed(java.awt.event.ActionEvent evt) {
+		                MainFrameController.jCheckBoxMenuItemActionPerformedNew(jCheckBoxMenuItemNew, jTabbedPaneNew);
+		            }
+		        });*/
+			//jMenu4.add(jCheckBoxMenuItemNew);
+			
+		}		
+	
 
 		getContentPane().add(jTabbedPane1);       
 
@@ -268,7 +287,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jMenuItem2.setText("Open");
 		jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jMenuItem2ActionPerformed(evt);
+				MainFrameController.jMenuItem2ActionPerformed(fcOpenFrame);
 			}
 		});
 
@@ -287,7 +306,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jMenuItem3.setText("Save");
 		jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jMenuItem3ActionPerformed(jmeSimulation);
+				MainFrameController.jMenuItem3ActionPerformed(fcSaveFrame, jmeSimulation);
 			}
 		});
 
@@ -305,6 +324,16 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jMenuBar1.add(jMenu1);
 
 		jMenu2.setText("View");
+		jMenu4.setText("Tabs");
+
+  //      jMenuItem5.setText("Construct");
+//        jMenu4.add(jMenuItem5);
+
+        //jMenuItem6.setText("Assign");
+       // jMenu4.add(jMenuItem6);
+
+        jMenu2.add(jMenu4);
+		
 		jMenuBar1.add(jMenu2);  
 		
 		
@@ -375,10 +404,9 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		changeToSetLookAndFeel(this);// makes troubles with the borders of the buttons 
 	}
 
-
-	public javax.swing.JTabbedPane getJTabbedPane1() {
-		return jTabbedPane1;
-	}
+    public void addTab(String tabName){
+    	namesTabs.add(tabName);
+    }
 
 	public  void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {
 		//BuilderMultiRobotSimulation.main(null);
@@ -414,10 +442,10 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	 * This can be achieved by pressing "O" on keyboard.
 	 * @param simulation, the basic graphical simulation.
 	 */
-	public void activateDuringSimulation(final JMEBasicGraphicalSimulation simulation){
+	public void activateDuringSimulation(final JMEBasicGraphicalSimulation simulation,final ArrayList<String> namesTabs ){
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {            	
-				mainFrame = new MainFrame(simulation);
+				mainFrame = new MainFrame(simulation,namesTabs);
 				mainFrame.setVisible(true);
 			}
 		});
@@ -434,10 +462,54 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				//mainFrame = new MainFrame();
-				mainFrame = new MainFrame(false);				
+				mainFrame = new MainFrame();				
 				mainFrame.setVisible(true);
 			}
 		});
 	}
+	
+	
+	
+	/*Declaration of MainFrame components*/
+    private javax.swing.JMenuBar jMenuBar1;
+	
+	private javax.swing.JMenu jMenu1;
+	private javax.swing.JMenu jMenu2;
+	private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;	
+	
+	private javax.swing.JMenuItem jMenuItem1;
+	private javax.swing.JMenuItem jMenuItem2;
+	private javax.swing.JMenuItem jMenuItem3;
+	private javax.swing.JMenuItem jMenuItem4;
+	//private javax.swing.JMenuItem jMenuItem5;
+//	private javax.swing.JMenuItem jMenuItem6;
+	
+	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
+	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
+	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
+	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem5;
+	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem6;	
+	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemNew;
+	 
+	private javax.swing.JSeparator jSeparator1;
+	private javax.swing.JSeparator jSeparator2;
+	
+	private javax.swing.JToolBar jToolBar1;
+	private javax.swing.JToolBar jToolBar2;
+
+	private javax.swing.JButton jButton1;
+	private javax.swing.JButton jButton2;
+	private javax.swing.JButton jButton3;
+
+	private javax.swing.JLabel jLabel1;
+	private javax.swing.JTextField jTextField1;
+
+	private javax.swing.JTabbedPane jTabbedPane1;
+	private javax.swing.JTabbedPane jTabbedPaneNew;
+	/*private javax.swing.JTabbedPane jTabbedPane2;
+	private javax.swing.JTabbedPane jTabbedPane3;
+	private javax.swing.JTabbedPane jTabbedPane4;*/
 
 }
