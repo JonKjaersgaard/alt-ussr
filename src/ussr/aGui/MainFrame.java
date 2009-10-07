@@ -67,6 +67,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 
 	private javax.swing.JButton jButton1;
 	private javax.swing.JButton jButton2;
+	private javax.swing.JButton jButton3;
 
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JTextField jTextField1;
@@ -103,7 +104,8 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	public MainFrame(JMEBasicGraphicalSimulation jmeSimulation){
 		this.jmeSimulation = (JMESimulation) jmeSimulation;
 		
-		initComponents();		
+		initComponents();
+		MainFrameController.initFileChoosers();
 		instanceFlag = true;// the frame is instantiated
 		// Overrides event for closing the frame, in order for the frame to do not open several times with several times pressing on the button "O" on keyboard.
 		addWindowListener (new WindowAdapter() {			
@@ -115,6 +117,8 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		);		
 	}
 	
+	
+	
 	/**
 	 * Returns true if the frame(main GUI window) is already instantiated.
 	 * @return true, if the frame(main GUI window) is already instantiated.
@@ -122,6 +126,9 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	public static boolean isInstanceFlag() {
 		return instanceFlag;
 	}
+	
+	
+	
 
 	/*	public MainFrame(boolean constructionDisplayed, boolean controllerDisplayed) {
 		this.constructionDisplayed = constructionDisplayed;
@@ -163,6 +170,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 
 		jButton1 = new javax.swing.JButton();
 		jButton2 = new javax.swing.JButton();
+		jButton3 = new javax.swing.JButton();
 
 		jLabel1 = new javax.swing.JLabel();
 		jTextField1 = new javax.swing.JTextField();       
@@ -202,6 +210,19 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
             }
         });
         jToolBar2.add(jButton2);
+        
+        jButton3.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + SAVE));
+        jButton3.setToolTipText("Save simulation");
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setPreferredSize(new java.awt.Dimension(30, 30));
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	MainFrameController.jMenuItem3ActionPerformed(jmeSimulation);
+            }
+        });
+        jToolBar2.add(jButton3);
 
 		getContentPane().add(jToolBar2);
 
@@ -266,7 +287,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jMenuItem3.setText("Save");
 		jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jMenuItem3ActionPerformed(evt);
+				MainFrameController.jMenuItem3ActionPerformed(jmeSimulation);
 			}
 		});
 

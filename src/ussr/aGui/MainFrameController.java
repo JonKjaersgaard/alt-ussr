@@ -12,16 +12,41 @@ import ussr.aGui.fileChooser.controller.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controller.FileChooserXMLController;
 import ussr.aGui.fileChooser.controller.NewFileChooserController;
 import ussr.builder.BuilderHelper;
+import ussr.builder.gui.FileChooser;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.atron.simulations.ATRONSnakeSimulation;
 
 public class MainFrameController {
 
-	private static GuiInter gui;	
+	/**
+	 * Interface for gui;
+	 */
+	private static GuiInter gui;
+	
+	private static GuiInter fcOpenFrame;
+	
+	private static GuiInter fcSaveFrame;
+	
 
-	private static ArrayList <String> fileExtensions = new ArrayList<String>();
+	//private static ArrayList <String> fileExtensions = new ArrayList<String>();
 
 
+	/**
+	 * Initializes file choosers in two forms: 1)Open and 2)Save dialog.
+	 */
+	public static void initFileChoosers () {	
+		ArrayList <String> fileExtensions = new ArrayList<String>();
+		fileExtensions.add(".xml");//Repeating code
+		
+		FileChooserControllerInter fcXMLController = new FileChooserXMLController();//Repeating code
+		ArrayList<FileChooserControllerInter> fcControllers = new ArrayList<FileChooserControllerInter>();
+		fcControllers.add(fcXMLController);
+		
+		fcOpenFrame = new FileChooserOpenFrame(fileExtensions,fcControllers);	
+		fcSaveFrame = new FileChooserSaveFrame(fileExtensions,fcControllers);
+		
+	}
+	
 
 	/**
 	 * Executes closing of main window(frame)
@@ -35,40 +60,18 @@ public class MainFrameController {
 
 	/**
 	 * Opens file chooser in the form of Open dialog
-	 * @param evt
+	 * 
 	 */
 	public static void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {
-		fileExtensions.add(".xml");//Repeating code
-		//fileExtensions.add(".txt");//For debugging
-
-		FileChooserControllerInter fcXMLController = new FileChooserXMLController();//Repeating code
-		//FileChooserControllerInter fcNEWController = new NewFileChooserController();
-
-		ArrayList<FileChooserControllerInter> fcControllers = new ArrayList<FileChooserControllerInter>();
-		fcControllers.add(fcXMLController);
-		//fcControllers.add(fcNEWController);//For debugging
-
-		gui = new FileChooserOpenFrame(fileExtensions,fcControllers);		
-		gui.activate(); 
+		fcOpenFrame.activate();
 	}
 
 	/**
 	 * Opens file chooser in the form of Save dialog
-	 * @param evt
+	 * 
 	 */
-	public static void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {
-		fileExtensions.add(".xml");//Repeating code
-		//fileExtensions.add(".txt");//For debugging
-
-		FileChooserControllerInter fcXMLController = new FileChooserXMLController();//Repeating code
-		//FileChooserControllerInter fcNEWController = new NewFileChooserController();//For debugging
-
-		ArrayList<FileChooserControllerInter> fcControllers = new ArrayList<FileChooserControllerInter>();
-		fcControllers.add(fcXMLController);
-		//fcControllers.add(fcNEWController);//For debugging
-
-		gui= new FileChooserSaveFrame(fileExtensions,fcControllers);
-		gui.activate(); 
+	public static void jMenuItem3ActionPerformed(JMESimulation jmeSimulation) {
+		fcSaveFrame.activate();		
 	}
 
 	public static void jTextField1FocusGained(JTextField jTextField1) {
@@ -86,7 +89,7 @@ public class MainFrameController {
 		}else{
 			timesPressed++;
 			if (timesPressed ==1){ // First time is pressed connect all the modules in the morphology
-				BuilderHelper.connectAllModules(jmeSimulation);		
+				BuilderHelper.connectAllModules(jmeSimulation);				
 			}
 			//guiHelper.passTo(AssistantjTextField, "Simulation running");// informing user
 			jButton1.setIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.PLAY));
@@ -207,7 +210,6 @@ public class MainFrameController {
 		}  
 		
 	}
-	
 	
 	/**
 	 * Initial simulation step
