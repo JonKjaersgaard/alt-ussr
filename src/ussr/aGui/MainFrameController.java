@@ -204,12 +204,10 @@ public class MainFrameController {
 	public static void jCheckBoxMenuItem5ActionPerformed(JCheckBoxMenuItem jCheckBoxMenuItem5, JMESimulation jmeSimulation) {   
 		if (jmeSimulation.getLightState().isEnabled() == false ){                       
 			jCheckBoxMenuItem5.setSelected(true);
-			jmeSimulation.getLightState().setEnabled(true);
-			//guiHelper.passTo(AssistantjTextField, "Rendering lights");// informing user
+			jmeSimulation.getLightState().setEnabled(true);			
 		}else {                   
 			jCheckBoxMenuItem5.setSelected(false);
-			jmeSimulation.getLightState().setEnabled(false);
-			//guiHelper.passTo(AssistantjTextField, "Stopped rendering lights");// informing user
+			jmeSimulation.getLightState().setEnabled(false);			
 		}  
 	}
 

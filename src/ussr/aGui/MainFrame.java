@@ -404,7 +404,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
         });
         jMenu3.add(jCheckBoxMenuItem4);
 
-        jCheckBoxMenuItem5.setSelected(true);
+        jCheckBoxMenuItem5.setSelected(false);
         jCheckBoxMenuItem5.setText("Lights");
         jCheckBoxMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
