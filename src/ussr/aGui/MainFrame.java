@@ -247,7 +247,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 
 		jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 		jTabbedPane1.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING, 200));
-		
+		jTabbedPane1.setFocusable(false);
 	/*	jTabbedPaneNew = new javax.swing.JTabbedPane();
 		jTabbedPane1.addTab("New", jTabbedPaneNew);
 		
@@ -261,29 +261,33 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	        });
 		jMenu4.add(jCheckBoxMenuItemNew);*/
 		
-		
+		final ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems = new ArrayList<javax.swing.JCheckBoxMenuItem>();
 		for (int index =0; index < specificationTabs.getTabTitles().size(); index++){
 		    jTabbedPaneNew = new javax.swing.JTabbedPane();		  
 		    TabsInter currentTab = specificationTabs.getTabs().get(index); 
-		    jTabbedPane1. add(specificationTabs.getTabTitles().get(index),currentTab.getJPanel1000());
-		      //TabsInter tab = new ConstructionTab(/*namesTabs.get(index),*/ jmeSimulation );
-		      //jTabbedPane1.add(namesTabs.get(index),tab.getJPanel1000());
-		    	
-		
-		
-			
-		/*	jCheckBoxMenuItemNew = new javax.swing.JCheckBoxMenuItem();
+		    jTabbedPane1.add(specificationTabs.getTabTitles().get(index),currentTab.getJPanel1000());
+		    		    
+			jCheckBoxMenuItemNew = new javax.swing.JCheckBoxMenuItem();
 			jCheckBoxMenuItemNew.setSelected(true);
-			jCheckBoxMenuItemNew.setText(namesTabs.get(index));
+			jCheckBoxMenuItemNew.setText(specificationTabs.getTabTitles().get(index));
+			checkBoxMenuItems.add(jCheckBoxMenuItemNew);
 			jCheckBoxMenuItemNew.addActionListener(new java.awt.event.ActionListener() {
 		            public void actionPerformed(java.awt.event.ActionEvent evt) {
-		                MainFrameController.jCheckBoxMenuItemActionPerformedNew(jCheckBoxMenuItemNew, jTabbedPane1);
+		                MainFrameController.jCheckBoxMenuItemActionPerformedNew(/*jCheckBoxMenuItemNew,*/ checkBoxMenuItems, jTabbedPane1,specificationTabs);
 		            }
 		        });
-			jMenu4.add(jCheckBoxMenuItemNew);*/
+			jMenu4.add(jCheckBoxMenuItemNew);			
+		}
+		
+	/*	for (int index=0; index <checkBoxMenuItems.size();index++){
 			
-		}		
-	
+			 checkBoxMenuItems.get(index).addActionListener(new java.awt.event.ActionListener() {
+	            public void actionPerformed(java.awt.event.ActionEvent evt) {
+	                MainFrameController.jCheckBoxMenuItemActionPerformedNew(checkBoxMenuItems.get(index), checkBoxMenuItems, jTabbedPane1,specificationTabs);
+	            }
+	        });
+		}*/
+		
 
 		getContentPane().add(jTabbedPane1);       
 

@@ -12,6 +12,7 @@ import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
 import ussr.aGui.fileChooser.controllers.NewFileChooserController;
 import ussr.aGui.tabs.ConstructionTab;
+import ussr.aGui.tabs.SpecificationTabs;
 import ussr.builder.BuilderHelper;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.constructionTools.ConstructionToolSpecification;
@@ -26,15 +27,15 @@ public class MainFrameController {
 	 * Interface for gui;
 	 */
 	private static GuiInter gui;
-	
 
-	
+
+
 
 	//private static ArrayList <String> fileExtensions = new ArrayList<String>();
 
 
-	
-	
+
+
 
 	/**
 	 * Executes closing of main window(frame)
@@ -59,7 +60,7 @@ public class MainFrameController {
 	 * 
 	 */
 	public static void jMenuItem3ActionPerformed(GuiInter fcSaveFrame) {				
-			fcSaveFrame.activate();				
+		fcSaveFrame.activate();				
 	}
 
 	public static void jTextField1FocusGained(JTextField jTextField1) {
@@ -71,7 +72,7 @@ public class MainFrameController {
 	 * Used to keep track when run button(real time or fast) is pressed first time.
 	 */
 	private static int timesPressed =0;
-	
+
 	/**
 	 * Connects all modules (connectors), when the run button(real time or fast) is pressed first time. 
 	 * @param jmeSimulation
@@ -86,7 +87,7 @@ public class MainFrameController {
 		MainFrame.setSaveOpenEnabled(false);
 		//ConstructionTab.setEnabled(false);
 	};
-	
+
 	/**
 	 * Controls running simulation in real time.
 	 * @param jmeSimulation
@@ -100,9 +101,9 @@ public class MainFrameController {
 		}
 		connectConnectors(jmeSimulation);// first time button pressed connect connectors on modules
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Controls running simulation in fast time.
 	 * @param jmeSimulation
@@ -177,40 +178,40 @@ public class MainFrameController {
 			//guiHelper.passTo(AssistantjTextField, "Stopped rendering wireframe");// informing user
 		}   
 	}
-	
-	 /**
-	  * Renders or stops rendering the normals during simulation.
+
+	/**
+	 * Renders or stops rendering the normals during simulation.
 	 * @param jCheckBoxMenuItem4
 	 * @param jmeSimulation
 	 */
 	public static void jCheckBoxMenuItem4ActionPerformed(JCheckBoxMenuItem jCheckBoxMenuItem4, JMESimulation jmeSimulation) {    
-			if ( jmeSimulation.isShowNormals() == false ){            
-				jCheckBoxMenuItem4.setSelected(true);
-				jmeSimulation.setShowNormals(true);
-				//guiHelper.passTo(AssistantjTextField, "Rendering normals");// informing user
-			}else {            
-				jCheckBoxMenuItem4.setSelected(false);
-				jmeSimulation.setShowNormals(false);
-				//guiHelper.passTo(AssistantjTextField, "Stopped rendering normals");// informing user
-			}      
-	    }
-	  
-	  /**
-	   * Renders or stops rendering the lights during simulation.
+		if ( jmeSimulation.isShowNormals() == false ){            
+			jCheckBoxMenuItem4.setSelected(true);
+			jmeSimulation.setShowNormals(true);
+			//guiHelper.passTo(AssistantjTextField, "Rendering normals");// informing user
+		}else {            
+			jCheckBoxMenuItem4.setSelected(false);
+			jmeSimulation.setShowNormals(false);
+			//guiHelper.passTo(AssistantjTextField, "Stopped rendering normals");// informing user
+		}      
+	}
+
+	/**
+	 * Renders or stops rendering the lights during simulation.
 	 * @param jCheckBoxMenuItem5
 	 * @param jmeSimulation
 	 */
 	public static void jCheckBoxMenuItem5ActionPerformed(JCheckBoxMenuItem jCheckBoxMenuItem5, JMESimulation jmeSimulation) {   
-			if (jmeSimulation.getLightState().isEnabled() == false ){                       
-				jCheckBoxMenuItem5.setSelected(true);
-				jmeSimulation.getLightState().setEnabled(true);
-				//guiHelper.passTo(AssistantjTextField, "Rendering lights");// informing user
-			}else {                   
-				jCheckBoxMenuItem5.setSelected(false);
-				jmeSimulation.getLightState().setEnabled(false);
-				//guiHelper.passTo(AssistantjTextField, "Stopped rendering lights");// informing user
-			}  
-	    }
+		if (jmeSimulation.getLightState().isEnabled() == false ){                       
+			jCheckBoxMenuItem5.setSelected(true);
+			jmeSimulation.getLightState().setEnabled(true);
+			//guiHelper.passTo(AssistantjTextField, "Rendering lights");// informing user
+		}else {                   
+			jCheckBoxMenuItem5.setSelected(false);
+			jmeSimulation.getLightState().setEnabled(false);
+			//guiHelper.passTo(AssistantjTextField, "Stopped rendering lights");// informing user
+		}  
+	}
 
 	/**
 	 * Renders or stops rendering the depth of the buffer during simulation.
@@ -228,10 +229,10 @@ public class MainFrameController {
 			jmeSimulation.setShowDepth(false);
 			//guiHelper.passTo(AssistantjTextField, "Stopped rendering lights");// informing user
 		}  
-		
+
 	}
-	
-	
+
+
 	/**
 	 * Controls running simulation in step by step fashion.
 	 * @param jmeSimulation
@@ -239,28 +240,45 @@ public class MainFrameController {
 	public static void jButton2ActionPerformed(JMESimulation jmeSimulation) {       	
 		jmeSimulation.setPause(true);
 		jmeSimulation.setSingleStep(true);
-	    }
-	
+	}
 
-	
+
+
 	/**
 	 * Controls pausing of running simulation.
 	 * @param jmeSimulation
 	 */
 	public static void jButton7ActionPerformed(JMESimulation jmeSimulation) {       	
 		if (jmeSimulation.isPaused()==false)
-		jmeSimulation.setPause(true);
-	    }
-	
-	
-	
-	public static void jCheckBoxMenuItemActionPerformedNew(javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemNew, javax.swing.JTabbedPane jTabbedPane1 ) {
-		
-		
-	/*	for (int index = 1; index<jTabbedPane1.getTabCount(); index++ ){
-			jTabbedPane1.getTabComponentAt(0).setVisible(false);
-		}*/
-     
-    }
+			jmeSimulation.setPause(true);
+	}
 
-}
+	private ArrayList<Integer> removedIndexes = new  ArrayList<Integer>();
+    static int i;
+
+	public static void jCheckBoxMenuItemActionPerformedNew(/*javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemNew,*/ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems, javax.swing.JTabbedPane jTabbedPane1, SpecificationTabs specificationTabs ) {
+
+		for (int index = 0; index<specificationTabs.getTabTitles().size(); index++ ){
+			if ( (checkBoxMenuItems.get(index).getText().equalsIgnoreCase(specificationTabs.getTabTitles().get(index)))&&checkBoxMenuItems.get(index).isSelected()==false){
+				checkBoxMenuItems.get(index).setSelected(false);
+				//jTabbedPane1.setEnabledAt(index, false);
+			 	if(jTabbedPane1.getTabCount()-1<index){
+					i++;
+                   System.out.println("Here;" +i);
+				}else{
+					jTabbedPane1.remove(index);
+				}
+				
+				
+			}else if((checkBoxMenuItems.get(index).getText().equalsIgnoreCase(specificationTabs.getTabTitles().get(index)))&&checkBoxMenuItems.get(index).isSelected()==true){
+				checkBoxMenuItems.get(index).setSelected(true);
+				//jTabbedPane1.setEnabledAt(index, true);			
+					jTabbedPane1.add(specificationTabs.getTabTitles().get(index),specificationTabs.getTabs().get(index).getJPanel1000());				
+
+			}
+			}
+		
+
+		}
+
+	}
