@@ -341,11 +341,13 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 				titlesTabs.add("1 Step: Construct Robot");//Build in tab
 				titlesTabs.add("2 Step: Assign Behaviour");//Build in tab
 				titlesTabs.add("YOUR NEW TAB");//YOUR NEW TAB
+				titlesTabs.add("YOUR NEW TAB1");//YOUR NEW TAB
 
 				ArrayList<TabsInter> tabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI
 				tabs.add(new ConstructionTab(simulation));//Build in tab
 				tabs.add(new AssignBehaviours(simulation));//Build in tab
 				tabs.add(new NewTab(simulation));//YOUR NEW TAB
+				tabs.add(new NewTab(simulation));//YOUR NEW TAB1
 
 				SpecificationTabs specificationTabs = new  SpecificationTabs(titlesTabs, tabs);
 
