@@ -161,6 +161,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jButton2 = new javax.swing.JButton();
 		jButton3 = new javax.swing.JButton();
 		jButton6 = new javax.swing.JButton();
+		jButton7 = new javax.swing.JButton();
 
 		jLabel1 = new javax.swing.JLabel();
 		jTextField1 = new javax.swing.JTextField();       
@@ -212,6 +213,17 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
             }
         });
         jToolBar2.add(jButton2);
+        
+        jButton7.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PAUSE));
+        jButton7.setToolTipText("Pause");
+        jButton7.setFocusable(false);   
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	MainFrameController.jButton7ActionPerformed(jmeSimulation);
+            }
+        });
+        jToolBar2.add(jButton7);
+        
         
         jButton3.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + SAVE));
         jButton3.setToolTipText("Save");
@@ -512,6 +524,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	private javax.swing.JButton jButton2;
 	private javax.swing.JButton jButton3;
 	private javax.swing.JButton jButton6;
+	private javax.swing.JButton jButton7;
 
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JTextField jTextField1;

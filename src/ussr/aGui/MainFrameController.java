@@ -227,10 +227,27 @@ public class MainFrameController {
 	}
 	
 	
+	/**
+	 * Controls running simulation in step by step fashion.
+	 * @param jmeSimulation
+	 */
 	public static void jButton2ActionPerformed(JMESimulation jmeSimulation) {       	
 		jmeSimulation.setPause(true);
 		jmeSimulation.setSingleStep(true);
 	    }
+	
+
+	
+	/**
+	 * Controls pausing of running simulation.
+	 * @param jmeSimulation
+	 */
+	public static void jButton7ActionPerformed(JMESimulation jmeSimulation) {       	
+		if (jmeSimulation.isPaused()==false)
+		jmeSimulation.setPause(true);
+	    }
+	
+	
 	
 	public static void jCheckBoxMenuItemActionPerformedNew(javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemNew, javax.swing.JTabbedPane jTabbedPane1 ) {
 		
