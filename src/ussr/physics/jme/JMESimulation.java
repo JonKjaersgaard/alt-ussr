@@ -286,7 +286,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 			((OdePhysicsSpace)getPhysicsSpace()).getODEJavaWorld().setErrorReductionParameter(erp); //default = 0.2, typical = [0.1,0.8]
     	}
 	}
-
+    long stop, start = System.currentTimeMillis();;
     public final void start() {
     	Logger.getLogger(PhysicsSpace.LOGGER_NAME).setLevel(Level.OFF); //FIXME unable to turn off logger (JME_2.0 still uses LoggingSystem which can not be accessed)
     	//One way to turn off logging is to modify the logging.properties file in the java installation directory 
@@ -311,7 +311,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 });                
                 
                 // main loop
-                long startTime = System.currentTimeMillis();
+                long realTimeReference = System.currentTimeMillis();
                                
                 //start here the control threads, otherwise they might run for long
                 //before the actual simulation is started by unpausing it
@@ -346,7 +346,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             	   
                     KeyInput.get().update();
             	   //if(mainLoopCounter%5==0 ||singleStep) { // 1 call to = 16ms (same example setup)
-                    float fps = 10;
+                    float fps = 25;
                     float loopsPerSecond = 1.0f/getPhysicsSimulationStepSize();
                     int loopsPerUpdate = (int)(loopsPerSecond/fps);
                     if(mainLoopCounter%loopsPerUpdate==0 ||singleStep) { // 1 call to = 16ms (same example setup)
@@ -358,9 +358,31 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 	                    }
                 		getDisplay().getRenderer().displayBackBuffer();// swap buffers
                     }
-                   mainLoopCounter++;
-                   Thread.yield();
-                   if(singleStep&&physicsStep) singleStep = false;
+                    mainLoopCounter++;
+					Thread.yield();
+					if(singleStep&&physicsStep) singleStep = false;
+			
+					if(realtime && !pause) {
+						long realTime = (System.currentTimeMillis()-realTimeReference);
+						long simTime = (long)(1000*getTime());
+						long diffTime = simTime-realTime;
+						if(diffTime>0) {
+							if(diffTime>100) {
+								System.out.println(" ... Way Ahead "+(simTime-realTime));
+								System.out.println(" ... Catching down... ");
+								realTimeReference = System.currentTimeMillis()-simTime+100;
+								diffTime = 100;
+							}
+							Thread.sleep(diffTime);
+						}
+						else {
+							if(diffTime<-100) {
+								System.out.println(" ... Way behind "+(simTime-realTime));
+								System.out.println(" ... Catching up... ");
+								realTimeReference = System.currentTimeMillis()-simTime-100;
+							}
+						}	
+					}
                 }
             }
         } catch (Throwable t) {
