@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import ussr.aGui.GuiFrames;
 
 import ussr.aGui.fileChooser.FileFilter;
-import ussr.aGui.fileChooser.controller.FileChooserControllerInter;
+import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 
 /**
  * Manages the FileChooser in two dialog forms: Open and Save.

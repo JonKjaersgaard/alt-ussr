@@ -1,7 +1,8 @@
 package ussr.aGui.fileChooser.appearance;
 
 import java.util.ArrayList;
-import ussr.aGui.fileChooser.controller.FileChooserControllerInter;
+
+import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 
 /**
  * Manages the file chooser in the form of Open dialog.

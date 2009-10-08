@@ -8,9 +8,9 @@ import javax.swing.JTextField;
 
 import ussr.aGui.fileChooser.appearance.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.appearance.FileChooserSaveFrame;
-import ussr.aGui.fileChooser.controller.FileChooserControllerInter;
-import ussr.aGui.fileChooser.controller.FileChooserXMLController;
-import ussr.aGui.fileChooser.controller.NewFileChooserController;
+import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
+import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
+import ussr.aGui.fileChooser.controllers.NewFileChooserController;
 import ussr.builder.BuilderHelper;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.constructionTools.ConstructionToolSpecification;
@@ -66,22 +66,50 @@ public class MainFrameController {
 	}
 
 
-	static int timesPressed =0;
-	public static void jButton1ActionPerformed(JButton jButton1, JMESimulation jmeSimulation) {		 
-		if (jmeSimulation.isPaused()==false){ 
-			//guiHelper.passTo(AssistantjTextField, "Simulation is in static state");// informing user
-			jmeSimulation.setPause(true);                       
-			jButton1.setIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.PAUSE));
-
-		}else{
-			timesPressed++;
-			if (timesPressed ==1){ // First time is pressed connect all the modules in the morphology
-				BuilderHelper.connectAllModules(jmeSimulation);				
-			}
-			//guiHelper.passTo(AssistantjTextField, "Simulation running");// informing user
-			jButton1.setIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.PLAY));
-			jmeSimulation.setPause(false);
+	/**
+	 * Used to keep track when run button(real time or fast) is pressed first time.
+	 */
+	private static int timesPressed =0;
+	
+	/**
+	 * Connects all modules (connectors), when the run button(real time or fast) is pressed first time. 
+	 * @param jmeSimulation
+	 */
+	private static void connectConnectors(JMESimulation jmeSimulation){
+		timesPressed++;
+		if (timesPressed ==1){ // First time is pressed connect all modules in the morphology
+			BuilderHelper.connectAllModules(jmeSimulation);				
+		}		
+	};
+	
+	/**
+	 * Controls running simulation in real time.
+	 * @param jmeSimulation
+	 */
+	public static void jButton1ActionPerformed(JMESimulation jmeSimulation) {		 
+		if (jmeSimulation.isPaused()){// Start simulation in real time, if simulation is in paused state
+			jmeSimulation.setRealtime(true);
+			jmeSimulation.setPause(false);				
+		}else if (jmeSimulation.isRealtime()==false){//if simulation is running fast, then run it in real time
+			jmeSimulation.setRealtime(true);
 		}
+		connectConnectors(jmeSimulation);// first time button pressed connect connectors on modules
+	}
+	
+	
+	
+	/**
+	 * Controls running simulation in fast time.
+	 * @param jmeSimulation
+	 */
+	public static void jButton6ActionPerformed(JMESimulation jmeSimulation) {		 
+		if (jmeSimulation.isPaused()){// Start simulation  fast, if simulation is in paused state
+			jmeSimulation.setRealtime(false);
+			jmeSimulation.setPause(false);				
+		}else if (jmeSimulation.isRealtime()==true){//if simulation in real time, then run it fast
+			jmeSimulation.setRealtime(false);
+		}
+		connectConnectors(jmeSimulation);// first time button pressed connect connectors on modules
 	}
 
 
@@ -198,27 +226,19 @@ public class MainFrameController {
 		
 	}
 	
-	/**
-	 * Initial simulation step
-	 */
-	private static int simulationStep =0;
 	
-	public static void jButton2ActionPerformed(JMESimulation jmeSimulation) {       
-		simulationStep++;
-		//guiHelper.passTo(AssistantjTextField, "Executed simulation step Nr: "+ simulationStep);
+	public static void jButton2ActionPerformed(JMESimulation jmeSimulation) {       	
+		jmeSimulation.setPause(true);
 		jmeSimulation.setSingleStep(true);
 	    }
 	
-	public static void jCheckBoxMenuItemActionPerformedNew(javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemNew, javax.swing.JTabbedPane jTabbedPaneNew ) {
+	public static void jCheckBoxMenuItemActionPerformedNew(javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemNew, javax.swing.JTabbedPane jTabbedPane1 ) {
 		
-		jTabbedPaneNew.setFocusable(true);
-		//jCheckBoxMenuItemNew.setSelected(false);
-		//jTabbedPaneNew.getComponent(0).setEnabled(false);
-		/*   if (jCheckBoxMenuItemNew.isSelected()){
-        	jTabbedPaneNew.setVisible(true);
-        }else{
-        	jTabbedPaneNew.setVisible(false);
-        }*/
+		
+	/*	for (int index = 1; index<jTabbedPane1.getTabCount(); index++ ){
+			jTabbedPane1.getTabComponentAt(0).setVisible(false);
+		}*/
+     
     }
 
 }

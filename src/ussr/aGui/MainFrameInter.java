@@ -14,7 +14,7 @@ public interface MainFrameInter {
 	/**
 	 * The names of the icons used in GUI
 	 */
-	public final String PLAY = "play.jpg", PAUSE = "pause.jpg", STEP_BY_STEP ="stepByStep.jpg",
+	public final String RUN_REAL_TIME = "runRealTime.jpg",RUN_FAST = "runFast.jpg", PAUSE = "pause.jpg", STEP_BY_STEP ="stepByStep.jpg",
 	                    SAVE ="save.jpg";
 	
 	

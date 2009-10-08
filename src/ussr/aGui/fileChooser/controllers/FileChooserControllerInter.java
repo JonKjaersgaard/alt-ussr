@@ -1,4 +1,4 @@
-package ussr.aGui.fileChooser.controller;
+package ussr.aGui.fileChooser.controllers;
 
 public interface FileChooserControllerInter {
 	

@@ -1,31 +1,22 @@
 package ussr.aGui.tabs;
 
-import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
 
-public class ConstructionTab {
+public class ConstructionTab extends Tabs {
 
-	private javax.swing.JTabbedPane jTabbedPane;
-	private String tabName;
 
 	private static javax.swing.JComboBox jComboBox2;
 	
 	private static javax.swing.JComboBox jComboBox3;
-
-
-
-	public static javax.swing.JComboBox getJComboBox3() {
-		return jComboBox3;
-	}
 
 	/**
 	 * The physical simulation
 	 */	   
 	private JMESimulation jmeSimulation;
 
-	public ConstructionTab(javax.swing.JTabbedPane jTabbedPane, String tabName,JMESimulation jmeSimulation){
+	public ConstructionTab(javax.swing.JTabbedPane jTabbedPane, String tabTitle,JMESimulation jmeSimulation){
 		this.jTabbedPane = jTabbedPane;	
-		this.tabName = tabName;
+		this.tabTitle = tabTitle;
 		this.jmeSimulation = jmeSimulation;
 		initComponents();
 	}
@@ -132,15 +123,20 @@ public class ConstructionTab {
 		});
 		jPanel1000.add(jButton7);*/
 
-		jTabbedPane.addTab(tabName, jPanel1000);
-		
-		
+		jTabbedPane.addTab(tabTitle, jPanel1000);	
+	}
+	
+	public void setVisible(boolean state){
 		
 		
 	}
 
 	public static javax.swing.JComboBox getJComboBox2() {
 		return jComboBox2;
+	}
+	
+	public static javax.swing.JComboBox getJComboBox3() {
+		return jComboBox3;
 	}
 
 
