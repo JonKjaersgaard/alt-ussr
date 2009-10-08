@@ -168,6 +168,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	protected Timer timer;
 	protected boolean pause;
 	protected boolean singleStep = false;
+	protected boolean realtime = true;
 	int tip_plane_axis = 1;
 	protected PhysicsSpace physicsSpace;
 	private StaticPhysicsNode staticPlane;
