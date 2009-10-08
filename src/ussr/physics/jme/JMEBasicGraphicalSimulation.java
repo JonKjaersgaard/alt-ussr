@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import ussr.aGui.MainFrame;
 import ussr.aGui.MainFrameInter;
+import ussr.aGui.tabs.TabsInter;
 import ussr.builder.QuickPrototyping;
 import ussr.comm.monitors.visualtracker.CommunicationVisualizerGUI;
 import ussr.description.setup.WorldDescription;
@@ -125,8 +126,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	/**
 	 * True if the renderer should display the depth buffer.
 	 */
-	protected boolean showDepth = false;
-	
+	protected boolean showDepth = false;	
 
 	/**
 	 * True if the rendered should display normals.
@@ -168,7 +168,12 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	protected Timer timer;
 	protected boolean pause;
 	protected boolean singleStep = false;
+	/**
+	 * True for simulation to run in real-time and false for running simulation fast. 
+	 */
 	protected boolean realtime = true;
+	
+
 	int tip_plane_axis = 1;
 	protected PhysicsSpace physicsSpace;
 	private StaticPhysicsNode staticPlane;
@@ -326,12 +331,13 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_main_frame", false)) {			 
 			if (MainFrame.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
 			}else{
-		    ArrayList<String> namesTabs =  new ArrayList<String>();//The names of the tabs displayed in main GUI
-		    namesTabs.add("1 Step: Construct Robot");//Build in tab
-			namesTabs.add("2 Step: Assign Behaviour");//Build in tab
+				
+		    ArrayList<String> titlesTabs =  new ArrayList<String>();//The names of the tabs displayed in main GUI
+		    titlesTabs.add("1 Step: Construct Robot");//Build in tab
+			titlesTabs.add("2 Step: Assign Behaviour");//Build in tab
 			//namesTabs.add("New");//Your new tab
 			MainFrameInter mainFrame = new MainFrame();			
-			mainFrame.activateDuringSimulation(this,namesTabs);
+			mainFrame.activateDuringSimulation(this,titlesTabs);
 			}			
 		}
 		
@@ -1030,6 +1036,25 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public void setSingleStep(boolean singleStep) {
 		this.singleStep = singleStep;
 	}	
+	
+	
+	/**
+	 * Returns the state of running simulation (in real time - true, fast - false).
+	 * @return realtime, the state of simulation(in real time - true, fast - false).
+	 */
+	public boolean isRealtime() {
+		return realtime;
+	}
+	
+	/**
+	 * Sets the state of running simulation (in real time - true, fast - false).
+	 * @param singleStep,the state of running simulation.
+	 */
+	public void setRealtime(boolean realtime) {
+		this.realtime = realtime;
+	}
+	
+
 
     public boolean showAllConnectors() {
         return showAllConnectors;
