@@ -13,6 +13,10 @@ import java.util.LinkedList;
 import java.util.List;
 import ussr.aGui.MainFrame;
 import ussr.aGui.MainFrameInter;
+import ussr.aGui.tabs.AssignBehaviours;
+import ussr.aGui.tabs.ConstructionTab;
+import ussr.aGui.tabs.NewTab;
+import ussr.aGui.tabs.SpecificationTabs;
 import ussr.aGui.tabs.TabsInter;
 import ussr.builder.QuickPrototyping;
 import ussr.comm.monitors.visualtracker.CommunicationVisualizerGUI;
@@ -172,7 +176,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 * True for simulation to run in real-time and false for running simulation fast. 
 	 */
 	protected boolean realtime = true;
-	
+
 
 	int tip_plane_axis = 1;
 	protected PhysicsSpace physicsSpace;
@@ -181,13 +185,13 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	protected Options options;
 	private boolean showAllConnectors = false;
 	public JMEBasicGraphicalSimulation(Options options) {
-	    this.options = options;
+		this.options = options;
 		exitOnQuit = options.getExitOnQuit();
 		pause = options.getStartPaused();
 		if(options.getResourceDirectory()!=null) setResourcePathPrefix(options.getResourceDirectory());
 		if(options.getSaveWindowSettingOnExit()) {
 			WindowSaver.init();
-        }
+		}
 	}
 	protected void assignKeys() {       
 		/** Assign key P to action "toggle_pause". */
@@ -226,12 +230,12 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		KeyBindingManager.getKeyBindingManager().set("display_debug_shell", KeyInput.KEY_U);
 
 		KeyBindingManager.getKeyBindingManager().set("display_quick_prototyping_of_simulation_scenarios", KeyInput.KEY_Q);
-		
+
 		KeyBindingManager.getKeyBindingManager().set("display_main_frame", KeyInput.KEY_O);
-				
+
 		/** Assign key K to action "visualize_module_communication". */
 		KeyBindingManager.getKeyBindingManager().set("visualize_module_communication", KeyInput.KEY_K);
-		
+
 		KeyBindingManager.getKeyBindingManager().set("toggle_connectors_always_visible", KeyInput.KEY_J);
 	}
 	protected void handleKeys() {        /** If toggle_pause is a valid command (via key p), change pause. */
@@ -326,32 +330,41 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			if (QuickPrototyping.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
 			}else{QuickPrototyping.activate(this);}			
 		}
-		
+
 
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_main_frame", false)) {			 
 			if (MainFrame.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
 			}else{
-				
-		    ArrayList<String> titlesTabs =  new ArrayList<String>();//The names of the tabs displayed in main GUI
-		    titlesTabs.add("1 Step: Construct Robot");//Build in tab
-			titlesTabs.add("2 Step: Assign Behaviour");//Build in tab
-			//namesTabs.add("New");//Your new tab
-			MainFrameInter mainFrame = new MainFrame();			
-			mainFrame.activateDuringSimulation(this,titlesTabs);
+				JMESimulation simulation = (JMESimulation)this;
+
+				ArrayList<String> titlesTabs =  new ArrayList<String>();//The titles of the tabs displayed in main GUI
+				titlesTabs.add("1 Step: Construct Robot");//Build in tab
+				titlesTabs.add("2 Step: Assign Behaviour");//Build in tab
+				titlesTabs.add("YOUR NEW TAB");//YOUR NEW TAB
+
+				ArrayList<TabsInter> tabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI
+				tabs.add(new ConstructionTab(simulation));//Build in tab
+				tabs.add(new AssignBehaviours(simulation));//Build in tab
+				tabs.add(new NewTab(simulation));//YOUR NEW TAB
+
+				SpecificationTabs specificationTabs = new  SpecificationTabs(titlesTabs, tabs);
+
+				MainFrameInter mainFrame = new MainFrame(this,specificationTabs);			
+				mainFrame.activateDuringSimulation();
 			}			
 		}
-		
+
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("visualize_module_communication", false)) {
 			if (CommunicationVisualizerGUI.getInstanceFlag()) {
-				
+
 			}
 			else {
 				CommunicationVisualizerGUI.activateCommunicationVisualizerGUI(this);
 			}
 		}
-		
+
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("toggle_connectors_always_visible"))
-		    this.showAllConnectors = !this.showAllConnectors;
+			this.showAllConnectors = !this.showAllConnectors;
 	}
 	protected void cameraPerspective() {
 		if(cam!=null) {
@@ -700,15 +713,15 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 					properties.getDepth(), properties.getFreq(), properties
 					.getFullscreen() );
 			//display.moveWindowTo(600, 400);	
-						
+
 			/**
 			 * Create a camera specific to the DisplaySystem that works with the
 			 * display's width and height
 			 */
 			cam = display.getRenderer().createCamera( display.getWidth(),
 					display.getHeight() );
-			
-			
+
+
 		} catch ( JmeException e ) {
 			/**
 			 * If the displaysystem can't be initialized correctly, exit
@@ -740,7 +753,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
 		/** Sets the title of our display. */
 		display.setTitle( "USSR - Unified Simulator for Self-Reconfigurable Robots" );
-		
+
 		/**
 		 * Signal to the renderer that it should keep track of rendering
 		 * information.
@@ -748,12 +761,12 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		//StatListener statlistener = new StatListener();
 		//TODO JME2 add StatCollector 
 		//display.getRenderer().enableStatistics( true );
-		
+
 		/**
 		 * If headless the simulator will not draw graphics
 		 */
 		display.getRenderer().setHeadless(options.getHeadless());
-			
+
 		assignKeys();
 
 		/** Create a basic input controller. */
@@ -770,7 +783,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		timer = Timer.getTimer();
 		//PhysicsSpace.chooseImplementation("JBullet");
 		setPhysicsSpace( PhysicsSpace.create() );
-		
+
 		if(getPhysicsSpace() instanceof OdePhysicsSpace)  {
 			((OdePhysicsSpace) getPhysicsSpace()).setStepSize(PhysicsParameters.get().getPhysicsSimulationStepSize());
 			((OdePhysicsSpace) getPhysicsSpace()).setUpdateRate(1f/PhysicsParameters.get().getPhysicsSimulationStepSize());
@@ -891,7 +904,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		return physicsSpace;
 	}
 	protected void cleanup() {
-		
+
 		TextureManager.doTextureCleanup();
 		KeyInput.destroyIfInitalized();
 		MouseInput.destroyIfInitalized();
@@ -935,7 +948,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public boolean isShowNormals() {
 		return showNormals;
 	}
-	
+
 	/**
 	 * Sets the state of  showing normals.
 	 * @param showNormals, the state of  showing normals.
@@ -943,7 +956,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public void setShowNormals(boolean showNormals) {
 		this.showNormals = showNormals;
 	}
-	
+
 	/**
 	 * Returns the state of showing bounds. 
 	 * @return showBounds, the state of showing bounds.
@@ -951,7 +964,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public boolean isShowBounds() {
 		return showBounds;
 	}
-	
+
 	/**
 	 * Sets the state of showing bounds.
 	 * @param showBounds, the state of showing bounds.
@@ -973,7 +986,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public void setShowPhysics(boolean showPhysics) {
 		this.showPhysics = showPhysics;
 	}
-	
+
 	/**
 	 * Returns the state of showing lights. 
 	 * @return lightState, the state of showing lights.  
@@ -981,7 +994,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public LightState getLightState() {
 		return lightState;
 	}
-	
+
 	/**
 	 * Sets the state of showing lights.
 	 * @param lightState, the state of showing lights.
@@ -989,7 +1002,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public void setLightState(LightState lightState) {
 		this.lightState = lightState;
 	}
-	
+
 	/**
 	 *  Returns the state of showing wireFrame.
 	 * @return wireState, the state of showing wireFrame.
@@ -1004,7 +1017,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public void setWireState(WireframeState wireState) {
 		this.wireState = wireState;
 	}
-	
+
 	/**
 	 * Returns the state of showing the depth of the buffer.
 	 * @return showDepth, the state of showing the depth of the buffer.
@@ -1012,7 +1025,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public boolean isShowDepth() {
 		return showDepth;
 	}
-	
+
 	/**
 	 *  Sets the state of showing the depth of the buffer.
 	 * @param showDepth, the state of showing the depth of the buffer.
@@ -1020,7 +1033,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public void setShowDepth(boolean showDepth) {
 		this.showDepth = showDepth;
 	}
-	
+
 	/**
 	 * Returns the state of simulation step.
 	 * @return singleStep, the state of simulation step.
@@ -1028,7 +1041,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public boolean isSingleStep() {
 		return singleStep;
 	}
-	
+
 	/**
 	 * Sets the state of simulation step.
 	 * @param singleStep,the state of simulation step.
@@ -1036,8 +1049,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public void setSingleStep(boolean singleStep) {
 		this.singleStep = singleStep;
 	}	
-	
-	
+
 	/**
 	 * Returns the state of running simulation (in real time - true, fast - false).
 	 * @return realtime, the state of simulation(in real time - true, fast - false).
@@ -1045,7 +1057,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public boolean isRealtime() {
 		return realtime;
 	}
-	
+
 	/**
 	 * Sets the state of running simulation (in real time - true, fast - false).
 	 * @param singleStep,the state of running simulation.
@@ -1053,11 +1065,11 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public void setRealtime(boolean realtime) {
 		this.realtime = realtime;
 	}
-	
 
 
-    public boolean showAllConnectors() {
-        return showAllConnectors;
-    }
+
+	public boolean showAllConnectors() {
+		return showAllConnectors;
+	}
 
 }
