@@ -1,33 +1,39 @@
 package ussr.aGui.tabs;
 
+import java.util.ArrayList;
+
+import javax.swing.JTabbedPane;
+
 import ussr.physics.jme.JMESimulation;
 
 public class ConstructionTab extends Tabs {
 
-
-	private static javax.swing.JComboBox jComboBox2;
+	private static ArrayList<javax.swing.JComboBox> comboBoxes =  new ArrayList<javax.swing.JComboBox>();
 	
-	private static javax.swing.JComboBox jComboBox3;
 
-	/**
-	 * The physical simulation
-	 */	   
-	private JMESimulation jmeSimulation;
-
-	public ConstructionTab(javax.swing.JTabbedPane jTabbedPane, String tabTitle,JMESimulation jmeSimulation){
-		this.jTabbedPane = jTabbedPane;	
-		this.tabTitle = tabTitle;
+	public ConstructionTab(/*String tabTitle,*/JMESimulation jmeSimulation){
+		//this.jTabbedPane = jTabbedPane;
+		//this.jTabbedPane = new javax.swing.JTabbedPane();
+		this.jPanel1000 = new javax.swing.JPanel();
+		//this.tabTitle = tabTitle;
 		this.jmeSimulation = jmeSimulation;
 		initComponents();
 	}
 
+	/* (non-Javadoc)
+	 * @see ussr.aGui.tabs.Tabs#initComponents()
+	 */
 	public void initComponents(){
 		jComboBox2 = new javax.swing.JComboBox();
-		jComboBox3 = new javax.swing.JComboBox(); 
+		comboBoxes.add(jComboBox2);
+		jComboBox3 = new javax.swing.JComboBox();		
+		comboBoxes.add(jComboBox3);
 
-		javax.swing.JLabel jLabel1000 = new javax.swing.JLabel();
-		javax.swing.JPanel jPanel1000 = new javax.swing.JPanel();
-		final javax.swing.JComboBox jComboBox1000 = new javax.swing.JComboBox(); 
+		jLabel1000 = new javax.swing.JLabel();
+		jPanel1000 = new javax.swing.JPanel();
+		
+		jComboBox1000 = new javax.swing.JComboBox();
+		comboBoxes.add(jComboBox1000);
 
 		jLabel1000.setText("1) Choose modular robot:");
 		jPanel1000.add(jLabel1000);
@@ -123,11 +129,13 @@ public class ConstructionTab extends Tabs {
 		});
 		jPanel1000.add(jButton7);*/
 
-		jTabbedPane.addTab(tabTitle, jPanel1000);	
+		//this.jTabbedPane.add(jPanel1000);
 	}
 	
-	public void setVisible(boolean state){
-		
+	public static void setEnabled(boolean state){
+		for (int index=0; index<comboBoxes.size(); index++){
+			comboBoxes.get(index).setEnabled(false);
+		}
 		
 	}
 
@@ -138,6 +146,15 @@ public class ConstructionTab extends Tabs {
 	public static javax.swing.JComboBox getJComboBox3() {
 		return jComboBox3;
 	}
+
+	
+	/*Declaration of tab components*/
+    private static javax.swing.JComboBox jComboBox2;	
+	private static javax.swing.JComboBox jComboBox3;
+	private static javax.swing.JLabel jLabel1000;
+	private static javax.swing.JComboBox jComboBox1000;
+
+
 
 
 }

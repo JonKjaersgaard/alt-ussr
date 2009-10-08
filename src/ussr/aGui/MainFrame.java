@@ -18,6 +18,7 @@ import ussr.aGui.fileChooser.appearance.FileChooserSaveFrame;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
 import ussr.aGui.tabs.ConstructionTab;
+import ussr.aGui.tabs.SpecificationTabs;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.TabsInter;
 import ussr.builder.BuilderMultiRobotSimulation;
@@ -38,7 +39,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	 */	   
 	private JMESimulation jmeSimulation;
 	
-	private ArrayList<String> namesTabs = new ArrayList<String>() ;
+	//private ArrayList<String> namesTabs = new ArrayList<String>() ;
 
 	private static MainFrame mainFrame;
 
@@ -47,14 +48,32 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	
 	private  GuiInter fcSaveFrame;
 	
-	
+	private SpecificationTabs specificationTabs;
 	
 
 	public MainFrame() {		
 		initFileChoosers();
 		initComponents();		
-	}	
+	}
 	
+	
+	
+	
+	/**
+	 * 
+	 * Starts the main GUI window (frame) during the simulation.
+	 * This can be achieved by pressing "O" on keyboard after starting the simulation. 
+	 * @param JMESimulation, the physical simulation
+	 */
+	public MainFrame(JMEBasicGraphicalSimulation jmeSimulation, SpecificationTabs specificationTabs /*ArrayList<String> namesTabs*/){
+		this.jmeSimulation = (JMESimulation) jmeSimulation;
+		this.specificationTabs =specificationTabs;
+		//this.namesTabs = namesTabs;
+		//this.tabs = tabs;
+		initFileChoosers();		
+		initComponents();
+		checkInstance();		
+	}
 	
 	/**
 	 * Instance flag for current frame, used to keep track that only one instance of the frame is instantiated.
@@ -63,18 +82,8 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	
 	/**
 	 * 
-	 * Starts the main GUI window (frame) during the simulation.
-	 * This can be achieved by pressing "O" on keyboard after starting the simulation. 
-	 * @param JMESimulation, the physical simulation
 	 */
-	public MainFrame(JMEBasicGraphicalSimulation jmeSimulation, ArrayList<String> namesTabs){
-		this.jmeSimulation = (JMESimulation) jmeSimulation;
-		this.namesTabs = namesTabs;
-		//this.tabs = tabs;
-		initFileChoosers();		
-		initComponents();
-		
-		
+	private void checkInstance(){
 		instanceFlag = true;// the frame is instantiated
 		// Overrides event for closing the frame, in order for the frame to do not open several times with several times pressing on the button "O" on keyboard.
 		addWindowListener (new WindowAdapter() {			
@@ -83,8 +92,10 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 				event.getWindow().dispose();	                     
 			}
 		}
-		);		
+		);	
 	}
+	
+	
 	
 	/**
 	 * Initializes file choosers in two forms: 1)Open and 2)Save dialog.
@@ -102,13 +113,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		
 	}
 	
-	/**
-	 * Returns true if the frame(main GUI window) is already instantiated.
-	 * @return true, if the frame(main GUI window) is already instantiated.
-	 */
-	public static boolean isInstanceFlag() {
-		return instanceFlag;
-	}
+	
 	
 	
 	
@@ -233,7 +238,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	MainFrameController.jMenuItem3ActionPerformed(fcSaveFrame,jmeSimulation);
+            	MainFrameController.jMenuItem3ActionPerformed(fcSaveFrame);
             }
         });
         jToolBar2.add(jButton3);
@@ -257,15 +262,14 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jMenu4.add(jCheckBoxMenuItemNew);*/
 		
 		
-		for (int index =0; index < namesTabs.size(); index++){
-		    jTabbedPaneNew = new javax.swing.JTabbedPane();
-		    if(namesTabs.get(index).contains("Construct")){
-		      new ConstructionTab(jTabbedPane1,namesTabs.get(index), jmeSimulation );
+		for (int index =0; index < specificationTabs.getTabTitles().size(); index++){
+		    jTabbedPaneNew = new javax.swing.JTabbedPane();		  
+		    TabsInter currentTab = specificationTabs.getTabs().get(index); 
+		    jTabbedPane1. add(specificationTabs.getTabTitles().get(index),currentTab.getJPanel1000());
+		      //TabsInter tab = new ConstructionTab(/*namesTabs.get(index),*/ jmeSimulation );
+		      //jTabbedPane1.add(namesTabs.get(index),tab.getJPanel1000());
 		    	
-		    } else{
-			jTabbedPane1.addTab(namesTabs.get(index), jTabbedPaneNew);
-			
-		    }
+		
 		
 			
 		/*	jCheckBoxMenuItemNew = new javax.swing.JCheckBoxMenuItem();
@@ -317,7 +321,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jMenuItem4.setText("Open default");
 		jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				/*MainFrameController.*/jMenuItem4ActionPerformed(evt);
+				/*MainFrameController.*///jMenuItem4ActionPerformed(evt);
 			}
 		});
 		jMenu1.add(jMenuItem4);      
@@ -327,7 +331,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jMenuItem3.setText("Save");
 		jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jMenuItem3ActionPerformed(fcSaveFrame, jmeSimulation);
+				MainFrameController.jMenuItem3ActionPerformed(fcSaveFrame);
 			}
 		});
 
@@ -424,25 +428,16 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		setSizeHalfScreen(this);
 		changeToSetLookAndFeel(this);// makes troubles with the borders of the buttons 
 	}
-
-    public void addTab(String tabName){
-    	namesTabs.add(tabName);
-    }
-
-	public  void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {
-		//BuilderMultiRobotSimulation.main(null);
-
-		/*Robot robot = null;
-	try {
-		robot = new Robot();
-	} catch (AWTException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	robot.keyPress(KeyEvent.VK_O);
-	robot.keyRelease(KeyEvent.VK_O);*/
-	}
-
+	
+	/**
+	 * Enables and disables menu components opening file choosers. 
+	 * @param state
+	 */
+	public static void setSaveOpenEnabled (boolean state){
+		jButton3.setEnabled(state);
+		jMenuItem2.setEnabled(state);
+		jMenuItem3.setEnabled(state);		
+	} 
 	
 	/**
  	 * Starts the main GUI window (frame).
@@ -463,10 +458,10 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	 * This can be achieved by pressing "O" on keyboard.
 	 * @param simulation, the basic graphical simulation.
 	 */
-	public void activateDuringSimulation(final JMEBasicGraphicalSimulation simulation,final ArrayList<String> namesTabs ){
+	public void activateDuringSimulation(/*final JMEBasicGraphicalSimulation simulation,final ArrayList<String> namesTabs */){
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {            	
-				mainFrame = new MainFrame(simulation,namesTabs);
+				mainFrame = new MainFrame(jmeSimulation,specificationTabs);
 				mainFrame.setVisible(true);
 			}
 		});
@@ -476,19 +471,25 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	
 
 	/**
-	 * Starts the main GUI window (frame).
+	 * Starts the main GUI window (frame) stand alone.
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				//mainFrame = new MainFrame();
 				mainFrame = new MainFrame();				
 				mainFrame.setVisible(true);
 			}
 		});
 	}
 	
+	/**
+	 * Returns true if the frame(main GUI window) is already instantiated.
+	 * @return true, if the frame(main GUI window) is already instantiated.
+	 */
+	public static boolean isInstanceFlag() {
+		return instanceFlag;
+	}
 	
 	
 	/*Declaration of MainFrame components*/
@@ -500,11 +501,9 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
     private javax.swing.JMenu jMenu4;	
 	
 	private javax.swing.JMenuItem jMenuItem1;
-	private javax.swing.JMenuItem jMenuItem2;
-	private javax.swing.JMenuItem jMenuItem3;
+	private static javax.swing.JMenuItem jMenuItem2;
+	private static javax.swing.JMenuItem jMenuItem3;
 	private javax.swing.JMenuItem jMenuItem4;
-	//private javax.swing.JMenuItem jMenuItem5;
-//	private javax.swing.JMenuItem jMenuItem6;
 	
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
@@ -522,7 +521,8 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 
 	private javax.swing.JButton jButton1;
 	private javax.swing.JButton jButton2;
-	private javax.swing.JButton jButton3;
+	private static javax.swing.JButton jButton3;
+
 	private javax.swing.JButton jButton6;
 	private javax.swing.JButton jButton7;
 
@@ -531,8 +531,4 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 
 	private javax.swing.JTabbedPane jTabbedPane1;
 	private javax.swing.JTabbedPane jTabbedPaneNew;
-	/*private javax.swing.JTabbedPane jTabbedPane2;
-	private javax.swing.JTabbedPane jTabbedPane3;
-	private javax.swing.JTabbedPane jTabbedPane4;*/
-
 }

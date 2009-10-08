@@ -11,6 +11,7 @@ import ussr.aGui.fileChooser.appearance.FileChooserSaveFrame;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
 import ussr.aGui.fileChooser.controllers.NewFileChooserController;
+import ussr.aGui.tabs.ConstructionTab;
 import ussr.builder.BuilderHelper;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.constructionTools.ConstructionToolSpecification;
@@ -50,15 +51,15 @@ public class MainFrameController {
 	 * 
 	 */
 	public static void jMenuItem2ActionPerformed(GuiInter fcOpenFrame) {
-		fcOpenFrame.activate();
+		fcOpenFrame.activate();		
 	}
 
 	/**
 	 * Opens file chooser in the form of Save dialog
 	 * 
 	 */
-	public static void jMenuItem3ActionPerformed(GuiInter fcSaveFrame, JMESimulation jmeSimulation) {
-		fcSaveFrame.activate();		
+	public static void jMenuItem3ActionPerformed(GuiInter fcSaveFrame) {				
+			fcSaveFrame.activate();				
 	}
 
 	public static void jTextField1FocusGained(JTextField jTextField1) {
@@ -79,7 +80,11 @@ public class MainFrameController {
 		timesPressed++;
 		if (timesPressed ==1){ // First time is pressed connect all modules in the morphology
 			BuilderHelper.connectAllModules(jmeSimulation);				
-		}		
+		}
+		/*Disable GUI components responsible for opening file choosers, because it is possible to load
+		 *simulation from XML file only in static state of simulation.*/ 
+		MainFrame.setSaveOpenEnabled(false);
+		//ConstructionTab.setEnabled(false);
 	};
 	
 	/**
