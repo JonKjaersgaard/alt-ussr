@@ -319,7 +319,6 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 	t.start();
                 
                 while (!finished && !getDisplay().isClosing()) {
-                    //if(!pause) Thread.sleep(100);
                 	boolean physicsStep = false;
                     if ( !pause ||singleStep ) {
                     	if(PhysicsParameters.get().syncWithControllers() == false)
@@ -383,6 +382,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 							}
 						}	
 					}
+					if(pause) Thread.sleep(10);
                 }
             }
         } catch (Throwable t) {
