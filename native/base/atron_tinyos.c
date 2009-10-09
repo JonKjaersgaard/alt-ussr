@@ -49,6 +49,9 @@ int32_t sendMessage(USSREnv *env, uint8_t *message, int32_t messageSize, int32_t
   ussr_releaseByteArray(env, array);
   return result;
 }
+float getCentralJointEncoderValueFloat(USSREnv *env) {
+  return ussr_call_float_controller_method(env, "getCentralJointEncoderValueFloat", "()F");
+}
 int32_t getCentralJointEncoderValue(USSREnv *env) {
   int result = ussr_call_int_controller_method(env, "getCentralJointEncoderValueInt", "()I");
   return result;
