@@ -473,7 +473,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 			//System.out.println("height:"+heightComponents.get(index).getHeight());
 		}
 		
-		setDimensionsOf(this,(int)SCREEN_DIMENSION.getWidth()/2,windowHeight+PADDING);
+		setDimensionsOf(this,(int)SCREEN_DIMENSION.getWidth()/2,windowHeight+2*PADDING);
 		//setSizeFullScreen(this);
 		//setSizeHalfScreen(this);
 		changeToSetLookAndFeel(this);// makes troubles with the borders of the buttons 
