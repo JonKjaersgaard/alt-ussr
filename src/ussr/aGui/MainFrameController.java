@@ -2,40 +2,15 @@ package ussr.aGui;
 
 import java.util.ArrayList;
 
-import javax.swing.JButton;
+
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTextField;
-
-import ussr.aGui.fileChooser.appearance.FileChooserOpenFrame;
-import ussr.aGui.fileChooser.appearance.FileChooserSaveFrame;
-import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
-import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
-import ussr.aGui.fileChooser.controllers.NewFileChooserController;
-import ussr.aGui.tabs.ConstructionTab;
-import ussr.aGui.tabs.SpecificationTabs;
+import ussr.aGui.tabs.TabsInter;
 import ussr.builder.BuilderHelper;
-import ussr.builder.SupportedModularRobots;
-import ussr.builder.constructionTools.ConstructionToolSpecification;
-import ussr.builder.constructionTools.ConstructionTools;
-import ussr.builder.gui.FileChooser;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.atron.simulations.ATRONSnakeSimulation;
 
 public class MainFrameController {
-
-	/**
-	 * Interface for gui;
-	 */
-	private static GuiInter gui;
-
-
-
-
-	//private static ArrayList <String> fileExtensions = new ArrayList<String>();
-
-
-
-
 
 	/**
 	 * Executes closing of main window(frame)
@@ -251,13 +226,13 @@ public class MainFrameController {
 			jmeSimulation.setPause(true);
 	}
 
-	private ArrayList<Integer> removedIndexes = new  ArrayList<Integer>();
+
     static int i;
 
-	public static void jCheckBoxMenuItemActionPerformedNew(/*javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemNew,*/ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems, javax.swing.JTabbedPane jTabbedPane1, SpecificationTabs specificationTabs ) {
+	public static void jCheckBoxMenuItemActionPerformedNew(ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems, javax.swing.JTabbedPane jTabbedPane1, ArrayList<TabsInter> tabs ) {
 
-		for (int index = 0; index<specificationTabs.getTabTitles().size(); index++ ){
-			if ( (checkBoxMenuItems.get(index).getText().equalsIgnoreCase(specificationTabs.getTabTitles().get(index)))&&checkBoxMenuItems.get(index).isSelected()==false){
+		for (int index = 0; index<tabs.size(); index++ ){
+			if ( (checkBoxMenuItems.get(index).getText().equalsIgnoreCase(tabs.get(index).getTabTitle()))&&checkBoxMenuItems.get(index).isSelected()==false){
 				checkBoxMenuItems.get(index).setSelected(false);
 				//jTabbedPane1.setEnabledAt(index, false);
 			 	if(jTabbedPane1.getTabCount()-1<index){
@@ -268,10 +243,10 @@ public class MainFrameController {
 				}
 				
 				
-			}else if((checkBoxMenuItems.get(index).getText().equalsIgnoreCase(specificationTabs.getTabTitles().get(index)))&&checkBoxMenuItems.get(index).isSelected()==true){
+			}else if((checkBoxMenuItems.get(index).getText().equalsIgnoreCase(tabs.get(index).getTabTitle()))&&checkBoxMenuItems.get(index).isSelected()==true){
 				checkBoxMenuItems.get(index).setSelected(true);
 				//jTabbedPane1.setEnabledAt(index, true);			
-					jTabbedPane1.add(specificationTabs.getTabTitles().get(index),specificationTabs.getTabs().get(index).getJPanel1000());				
+					jTabbedPane1.add(tabs.get(index).getTabTitle(),tabs.get(index).getJPanel1000());				
 
 			}
 			}

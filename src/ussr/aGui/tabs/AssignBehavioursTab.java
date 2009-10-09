@@ -3,19 +3,18 @@ package ussr.aGui.tabs;
 import ussr.physics.jme.JMESimulation;
 
 /**
- * Defines visual appearance of NEW tab implemented by YOU. Please leave this class alone for
- * future developers and use the copy of it.  
+ * Defines visual appearance of the tab called "Assign Behaviours".  
  * @author Konstantinas
  */
-public class NewTab extends Tabs {
+public class AssignBehavioursTab extends Tabs {
 
-	public NewTab(String tabTitle,JMESimulation jmeSimulation){
+	public AssignBehavioursTab(String tabTitle,JMESimulation jmeSimulation){
 		this.tabTitle = tabTitle;
 		this.jPanel1000 = new javax.swing.JPanel();
 		this.jmeSimulation = jmeSimulation;
 		initComponents();
 	}
-
+	
 	/**
      * Initializes the visual appearance of all components in the panel.
      * Follows Strategy  pattern.
@@ -24,10 +23,5 @@ public class NewTab extends Tabs {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
-
-
-	
 
 }

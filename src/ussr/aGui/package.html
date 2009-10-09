@@ -1,8 +1,8 @@
 <body>
 Contains GUI source code. For implementation was used MVC(Model-View-Controller) and Strategy patterns.<br />
 User Guide:<br />
-Run MainFrame.java class or start any simulation and press "O" on keyboard.<br /><br />
-DCD of the source code look below <br /> 
+Run MainFrame.java class(Not yet) or start any simulation and press "O" on keyboard.<br /><br />
+DCD of the source code look beneath <br /> 
 TODO:<br />
 1) When connector is not selected, then freezing (avoid that) <br />
 2) Run simulation(XML): a) from GUI and b) from console(DONE-LOADER) <br />
@@ -17,14 +17,27 @@ TODO:<br />
 <h1> 1) How to ...? </h1>
 <h2> 1.1) Start MainFrame (main GUI window)? </h2>
 A) During simulation.<br />
-            <code>  ArrayList<String> namesTabs =  new ArrayList<String>();//The names of the tabs displayed in the main GUI window<br />
-		    namesTabs.add("1 Step: Construct Robot"); //Build in tab <br />
-			namesTabs.add("2 Step: Assign Behaviour");//Build in tab <br />
-			//namesTabs.add("New"); //Your new tab <br />
-			MainFrameInter mainFrame = new MainFrame();<br />			
-			mainFrame.activateDuringSimulation(this,namesTabs); </ code><br /> <br />
+            <code>  JMESimulation simulation = (JMESimulation)this;<br />
+				ArrayList<TabsInter> tabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI <br />
+				tabs.add(new ConstructionTab("1 Step: Construct Robot",simulation));//Build in tab <br />
+				tabs.add(new AssignBehavioursTab("2 Step: Assign Behaviour",simulation));//Build in tab <br />
+				tabs.add(new NewTab("YOUR NEW TAB",simulation));//YOUR NEW TAB <br />
+				tabs.add(new NewTab("YOUR NEW TAB1",simulation));//YOUR NEW TAB1 <br />	
+				MainFrameInter mainFrame = new MainFrame(this,tabs); <br />			
+				mainFrame.activateDuringSimulation(); </ code><br /> <br />
+				The same code can be located in package "ussr.physics.jme", class "JMEBasicGraphicalSimulation.java", lines of code(LOCs) around (310 - 400)<br /><br /> 
 B) Stand alone <br />
    Run MainFrame.java <br />
-<h2> 1.2) Design my own tab ? </h2>
+<h2> 1.2) Design my own tab ? </h2><br />
+Look the DCD beneath (you new tab class is highlighted with purple colour) <br />
+A) During simulation <br />
+1)Locate the package "ussr.aGui.tabs" and class "NewTab"<br />
+2) Copy  and paste the class,rename it for your convenience (in the same package) <br />
+3)Implement the method called "initComponents()". For inspiration look class "ConstructionTab.java"<br />
+4) Do not forget to instantiate and add you NEW tab in the class called "JMEBasicGraphicalSimulation.java",package "ussr.physics.jme", LOCs around (310 - 400)<br />
+Look how it is done in previous section.<br /> <br /> 
+<img src ="https://svn.mip.sdu.dk/ussr/ussr/doc/developer/focusOnTabs.jpg" title = "DCD" alt="DCD" style = "border:1px solid black"/><br /><br />
+
+
 </body>
 

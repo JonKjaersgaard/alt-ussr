@@ -1,41 +1,42 @@
 package ussr.aGui.tabs;
 
-import java.util.ArrayList;
-
-import javax.swing.JTabbedPane;
-
 import ussr.physics.jme.JMESimulation;
 
+/**
+ * Defines visual appearance of the tab called "1 Step: Construct Robot".  
+ * @author Konstantinas
+ */
 public class ConstructionTab extends Tabs {
 
-	private static ArrayList<javax.swing.JComboBox> comboBoxes =  new ArrayList<javax.swing.JComboBox>();
-	
-
-	public ConstructionTab(/*String tabTitle,*/JMESimulation jmeSimulation){
-		//this.jTabbedPane = jTabbedPane;
-		//this.jTabbedPane = new javax.swing.JTabbedPane();
-		this.jPanel1000 = new javax.swing.JPanel();
-		//this.tabTitle = tabTitle;
+	/**
+	 * Defines visual appearance of the tab called "1 Step: Construct Robot".
+	 * @param tabTitle, the title of the tab
+	 * @param jmeSimulation, the physical simulation.
+	 */
+	public ConstructionTab(String tabTitle,JMESimulation jmeSimulation){
+		this.tabTitle = tabTitle;
 		this.jmeSimulation = jmeSimulation;
+		/*instantiate new panel, which will be the container for all components situated in the tab*/		
+		this.jPanel1000 = new javax.swing.JPanel();
 		initComponents();
 	}
 
-	/* (non-Javadoc)
-	 * @see ussr.aGui.tabs.Tabs#initComponents()
-	 */
+	/**
+     * Initializes the visual appearance of all components in the panel.
+     * Follows Strategy  pattern.
+     */
 	public void initComponents(){
-		jComboBox2 = new javax.swing.JComboBox();
-		comboBoxes.add(jComboBox2);
-		jComboBox3 = new javax.swing.JComboBox();		
-		comboBoxes.add(jComboBox3);
-
-		jLabel1000 = new javax.swing.JLabel();
-		jPanel1000 = new javax.swing.JPanel();
 		
+		/*Instantiation of tab components*/
+		jComboBox2 = new javax.swing.JComboBox();		
+		jComboBox3 = new javax.swing.JComboBox();		
 		jComboBox1000 = new javax.swing.JComboBox();
-		comboBoxes.add(jComboBox1000);
 
+		jLabel1000 = new javax.swing.JLabel();	
+		
+		/*Definition of visual appearance for each instantiated component*/
 		jLabel1000.setText("1) Choose modular robot:");
+		/*Add your component into panel.*/
 		jPanel1000.add(jLabel1000);
 
 		jComboBox1000.setToolTipText("Supported modular robots");
@@ -128,16 +129,8 @@ public class ConstructionTab extends Tabs {
 			}
 		});
 		jPanel1000.add(jButton7);*/
-
-		//this.jTabbedPane.add(jPanel1000);
 	}
 	
-	public static void setEnabled(boolean state){
-		for (int index=0; index<comboBoxes.size(); index++){
-			comboBoxes.get(index).setEnabled(false);
-		}
-		
-	}
 
 	public static javax.swing.JComboBox getJComboBox2() {
 		return jComboBox2;

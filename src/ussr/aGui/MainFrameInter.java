@@ -1,9 +1,5 @@
 package ussr.aGui;
 
-import java.util.ArrayList;
-
-import ussr.physics.jme.JMEBasicGraphicalSimulation;
-
 public interface MainFrameInter {
 
 	/**
@@ -23,6 +19,8 @@ public interface MainFrameInter {
 	 * This can be achieved by pressing "O" on keyboard.
 	 */
 	public void activateDuringSimulation( );
+	
+	public javax.swing.JTabbedPane getJTabbedPane1();
 
 	
 }
