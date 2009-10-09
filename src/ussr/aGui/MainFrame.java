@@ -4,7 +4,11 @@ package ussr.aGui;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.util.ArrayList;
+
+import javax.tools.JavaCompiler;
+
 import ussr.aGui.fileChooser.appearance.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.appearance.FileChooserSaveFrame;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
@@ -18,7 +22,7 @@ import ussr.physics.jme.JMESimulation;
  *
  * @author Konstantinas
  */
-public class MainFrame extends GuiFrames implements MainFrameInter{
+public class MainFrame extends GuiFrames implements MainFrameInter {
 
 	/**
 	 * The physical simulation
@@ -35,7 +39,10 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	private  GuiInter fcSaveFrame;
 
 	private ArrayList<TabsInter> tabs;
+	
+	private ArrayList<javax.swing.JComponent> components = new ArrayList<javax.swing.JComponent>();  
 
+	private int windowHeight=0;
 
 	public MainFrame() {		
 		initFileChoosers();
@@ -58,8 +65,32 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		//this.tabs = tabs;
 		initFileChoosers();		
 		initComponents();
-		checkInstance();		
+		changeInstanceFlag();		
+		
+		this.addWindowStateListener (new WindowAdapter() {	
+			    public void windowStateChanged(WindowEvent e) {
+			    	System.out.println(
+			          "All:"+e);
+			    	int newState = e.getNewState();
+			    	System.out.println( "State:"+e.getNewState());
+			    	if (newState == 6){//MAXIMIZED
+			    		System.out.println( "YES");
+			    		for(int index=0;index<components.size();index++){
+			    			components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING/2,components.get(index).getHeight()));
+			    		}			    		
+			    	}else if(newState == 0){//Restore down
+			    		System.out.println( "YES1");
+			    		for(int index=0;index<components.size();index++){
+			    			components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING,components.get(index).getHeight()));
+			    		}
+			    	}
+			    }
+			    
+			    
+		}
+		);		
 	}
+	
 
 	/**
 	 * Instance flag for current frame, used to keep track that only one instance of the frame is instantiated.
@@ -67,18 +98,18 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	private static boolean instanceFlag = false;
 
 	/**
-	 * 
+	 * Changes the flag for window instantiation. If it was once instantiated it is true. When the window closes the flag is reset to false.
 	 */
-	private void checkInstance(){
+	private void changeInstanceFlag(){
 		instanceFlag = true;// the frame is instantiated
-		// Overrides event for closing the frame, in order for the frame to do not open several times with several times pressing on the button "O" on keyboard.
+		// Overrides event for closing the frame, in order for the frame to do not open several times with several times pressing on the button on keyboard.		
 		addWindowListener (new WindowAdapter() {			
 			public void windowClosing(WindowEvent event) {
-				instanceFlag = false; // reset the flag after closing the frame
+				instanceFlag = false; // reset the flag after closing the frame event appears
 				event.getWindow().dispose();	                     
-			}
+			}			
 		}
-		);	
+		);		
 	}
 
 
@@ -113,9 +144,9 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	 * @see ussr.aGui.GuiFrames#initComponents()
 	 */
 	protected void initComponents() {
-		
+	
 		/*Instantiation of MainFrame components*/
-		jMenuBar1 = new javax.swing.JMenuBar();
+		jMenuBar1 = new javax.swing.JMenuBar();		
 
 		jMenu1 = new javax.swing.JMenu();
 		jMenu2 = new javax.swing.JMenu();
@@ -153,9 +184,11 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jTextField1 = new javax.swing.JTextField(); 
 		
 		jScrollPane1 = new javax.swing.JScrollPane();
-		jTextArea1 = new javax.swing.JTextArea();
-
+		jTextArea1 = new javax.swing.JTextArea();	
+		
+		
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		setUSSRicon(this);
 		setTitle("Unified Simulator for Self-Reconfigurable Robots");
 		getContentPane().setLayout(new java.awt.FlowLayout());
 
@@ -164,6 +197,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		jToolBar2.setRollover(true);
 		jToolBar2.setToolTipText("Simulation Control");
 		jToolBar2.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING,TOOLBAR_HEIGHT));
+		//jToolBar2.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING,TOOLBAR_HEIGHT));
 
 		jButton1.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RUN_REAL_TIME));
 		jButton1.setToolTipText("Run real time");
@@ -230,7 +264,8 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		getContentPane().add(jToolBar2);
 
 		jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-		jTabbedPane1.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING, 200));
+		jTabbedPane1.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING, TAB_PANE_HEIGHT1));
+		//jTabbedPane1.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING,TAB_PANE_HEIGHT1));
 		jTabbedPane1.setFocusable(false);
 		/*	jTabbedPaneNew = new javax.swing.JTabbedPane();
 		jTabbedPane1.addTab("New", jTabbedPaneNew);
@@ -280,6 +315,11 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 		//jScrollPane1.setViewportView(jTextArea1);
 
 		//getContentPane().add(jScrollPane1);
+		
+		jTabbedPane3.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+		jTabbedPane3.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING, TAB_PANE_HEIGHT2));
+		//jTabbedPane3.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING,TAB_PANE_HEIGHT1));
+        getContentPane().add(jTabbedPane3);
 
 
 		jToolBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -420,9 +460,22 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 
 		setJMenuBar(jMenuBar1);
 		pack();   
-
+		
+		
+		components.add(jMenuBar1);
+		components.add(jToolBar2);
+		components.add(jTabbedPane1);
+		components.add(jTabbedPane3);
+		components.add(jToolBar1);
+		
+		for (int  index =0;index<components.size();index++){
+			windowHeight = windowHeight+ components.get(index).getHeight();
+			//System.out.println("height:"+heightComponents.get(index).getHeight());
+		}
+		
+		setDimensionsOf(this,(int)SCREEN_DIMENSION.getWidth()/2,windowHeight+PADDING);
 		//setSizeFullScreen(this);
-		setSizeHalfScreen(this);
+		//setSizeHalfScreen(this);
 		changeToSetLookAndFeel(this);// makes troubles with the borders of the buttons 
 	}
 
@@ -531,8 +584,10 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JTextField jTextField1;
 
-	private static javax.swing.JTabbedPane jTabbedPane1  = new javax.swing.JTabbedPane();	;
+	private static javax.swing.JTabbedPane jTabbedPane1  = new javax.swing.JTabbedPane();
+	private static javax.swing.JTabbedPane jTabbedPane3 = new javax.swing.JTabbedPane();
 
 	private javax.swing.JTextArea jTextArea1;
 	private javax.swing.JScrollPane jScrollPane1;
+
 }

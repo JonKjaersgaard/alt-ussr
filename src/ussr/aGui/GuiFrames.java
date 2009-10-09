@@ -23,7 +23,13 @@ public abstract class GuiFrames extends javax.swing.JFrame implements GuiInter {
          
      public final int TOOLBAR_HEIGHT = 30;
      
-     public final int PADDING = 30;    
+     public final int PADDING = 30;
+     
+     public final int TAB_PANE_HEIGHT1 = 200;
+     public final int TAB_PANE_HEIGHT2 = 100;
+     
+    
+     
 
      /**
 	 * Sets the size of the frame equal to the screen size
@@ -38,6 +44,15 @@ public abstract class GuiFrames extends javax.swing.JFrame implements GuiInter {
 	 */
      public  void setSizeHalfScreen(javax.swing.JFrame frame){
          frame.setSize((int)SCREEN_DIMENSION.getWidth()/2,(int) SCREEN_DIMENSION.getHeight()/2);
+     }
+     
+     
+     public void setDimensionsOf(javax.swing.JFrame frame,int width, int height){
+    	 frame.setSize(width,height);
+     }
+     
+     public void setUSSRicon(javax.swing.JFrame frame){
+    	 frame.setIconImage(Toolkit.getDefaultToolkit().getImage(DIRECTORY_USSR_ICON));
      }
      
      

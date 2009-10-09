@@ -31,6 +31,7 @@ public class FileChooserSaveFrame extends FileChooserFrame  {
 	 * Changes several components of file chooser so that it is Save dialog.
 	 */
 	private void changeToSaveDialog(){
+		setUSSRicon(this);
 		setTitle("Save simulation in the file");
 		jFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);		
 		jFileChooser.addActionListener(new java.awt.event.ActionListener() {

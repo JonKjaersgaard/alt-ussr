@@ -32,6 +32,7 @@ public class FileChooserOpenFrame extends FileChooserFrame  {
 	 * Changes several components of file chooser so that it is Open dialog and calls controllers for file extensions.
 	 */
 	private void changeToOpenDialog(){
+		setUSSRicon(this);
 		setTitle("Load simulation from the file");
 		jFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);	
 		

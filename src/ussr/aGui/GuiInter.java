@@ -9,6 +9,11 @@ package ussr.aGui;
 public interface GuiInter {
 	
 	
+	/**
+	 * USSR icon.
+	 */
+	public final String DIRECTORY_USSR_ICON = "resources/mainFrame/icons/jpg/ussrIcon.jpg";
+	
 	
 /*	*//**
 	 * Changes the look of component to generic (for all platforms)
