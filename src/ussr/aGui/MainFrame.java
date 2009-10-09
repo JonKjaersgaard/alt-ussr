@@ -332,6 +332,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 
 		jMenu1.add(jSeparator2);
 
+		jMenuItem3.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+SAVE_SMALL));
 		jMenuItem3.setText("Save");
 		jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
