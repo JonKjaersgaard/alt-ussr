@@ -341,7 +341,8 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 
 		jMenu1.add(jMenuItem3);
 		jMenu1.add(jSeparator1);
-
+         
+		jMenuItem1.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+EXIT));
 		jMenuItem1.setText("Exit");
 		jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -467,6 +468,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter{
 			public void run() {            	
 				mainFrame = new MainFrame(jmeSimulation,specificationTabs);
 				mainFrame.setVisible(true);
+				jmeSimulation.setPause(true);
 			}
 		});
 	}
