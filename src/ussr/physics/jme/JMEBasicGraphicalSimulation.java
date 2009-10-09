@@ -13,10 +13,9 @@ import java.util.LinkedList;
 import java.util.List;
 import ussr.aGui.MainFrame;
 import ussr.aGui.MainFrameInter;
-import ussr.aGui.tabs.AssignBehaviours;
+import ussr.aGui.tabs.AssignBehavioursTab;
 import ussr.aGui.tabs.ConstructionTab;
 import ussr.aGui.tabs.NewTab;
-import ussr.aGui.tabs.SpecificationTabs;
 import ussr.aGui.tabs.TabsInter;
 import ussr.builder.QuickPrototyping;
 import ussr.comm.monitors.visualtracker.CommunicationVisualizerGUI;
@@ -336,23 +335,16 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			if (MainFrame.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
 			}else{
 				JMESimulation simulation = (JMESimulation)this;
-
-				ArrayList<String> titlesTabs =  new ArrayList<String>();//The titles of the tabs displayed in main GUI
-				titlesTabs.add("1 Step: Construct Robot");//Build in tab
-				titlesTabs.add("2 Step: Assign Behaviour");//Build in tab
-				titlesTabs.add("YOUR NEW TAB");//YOUR NEW TAB
-				titlesTabs.add("YOUR NEW TAB1");//YOUR NEW TAB
-
 				ArrayList<TabsInter> tabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI
-				tabs.add(new ConstructionTab(simulation));//Build in tab
-				tabs.add(new AssignBehaviours(simulation));//Build in tab
-				tabs.add(new NewTab(simulation));//YOUR NEW TAB
-				tabs.add(new NewTab(simulation));//YOUR NEW TAB1
+				tabs.add(new ConstructionTab("1 Step: Construct Robot",simulation));//Build in tab
+				tabs.add(new AssignBehavioursTab("2 Step: Assign Behaviour",simulation));//Build in tab
+				tabs.add(new NewTab("YOUR NEW TAB",simulation));//YOUR NEW TAB
+				tabs.add(new NewTab("YOUR NEW TAB1",simulation));//YOUR NEW TAB1				
 
-				SpecificationTabs specificationTabs = new  SpecificationTabs(titlesTabs, tabs);
-
-				MainFrameInter mainFrame = new MainFrame(this,specificationTabs);			
+				MainFrameInter mainFrame = new MainFrame(this,tabs);
+				//mainFrame.getJTabbedPane1().setVisible(false);
 				mainFrame.activateDuringSimulation();
+				//mainFrame.getJTabbedPane1().setVisible(false);
 			}			
 		}
 
