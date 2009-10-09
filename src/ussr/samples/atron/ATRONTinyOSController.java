@@ -1,5 +1,9 @@
 package ussr.samples.atron;
 
+import com.jme.math.Quaternion;
+import com.jme.math.Vector3f;
+import com.jme.scene.Node;
+
 import ussr.comm.Packet;
 import ussr.comm.PacketReceivedObserver;
 import ussr.comm.PacketSentObserver;
@@ -14,6 +18,7 @@ import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
+import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.actuators.JMERotationalActuator;
 import ussr.samples.atron.ATRONController.CenterStates;
 
@@ -26,6 +31,75 @@ import ussr.samples.atron.ATRONController.CenterStates;
 public abstract class ATRONTinyOSController extends ControllerImpl implements PacketSentObserver, PacketReceivedObserver, PhysicsObserver, IATRONTinyOSAPI {
 
 	protected boolean sendBusy = false;
+	
+	public float getSouthRotationW() {
+		return ATRONKinematicModel.getSouthHemisphereNode(module).getLocalRotation().w;
+	}
+	
+	public float getSouthRotationX() {
+		return ATRONKinematicModel.getSouthHemisphereNode(module).getLocalRotation().x;
+	}
+
+	public float getSouthRotationY() {
+		return ATRONKinematicModel.getSouthHemisphereNode(module).getLocalRotation().y;
+	}
+
+	public float getSouthRotationZ() {
+		return ATRONKinematicModel.getSouthHemisphereNode(module).getLocalRotation().z;
+	}
+
+	public float getSouthTranslationX() {
+		return ATRONKinematicModel.getSouthHemisphereNode(module).getLocalTranslation().x;
+	}
+
+	public float getSouthTranslationY() {
+		return ATRONKinematicModel.getSouthHemisphereNode(module).getLocalTranslation().y;
+	}
+
+	public float getSouthTranslationZ() {
+		return ATRONKinematicModel.getSouthHemisphereNode(module).getLocalTranslation().z;
+	}
+	
+		/* ----------------------- */
+	
+	public float getNorthRotationW() {
+		return ATRONKinematicModel.getNorthHemisphereNode(module).getLocalRotation().w;
+	}
+	
+	public float getNorthRotationX() {
+		return ATRONKinematicModel.getNorthHemisphereNode(module).getLocalRotation().x;
+	}
+
+	public float getNorthRotationY() {
+		return ATRONKinematicModel.getNorthHemisphereNode(module).getLocalRotation().y;
+	}
+
+	public float getNorthRotationZ() {
+		return ATRONKinematicModel.getNorthHemisphereNode(module).getLocalRotation().z;
+	}
+
+	public float getNorthTranslationX() {
+		return ATRONKinematicModel.getNorthHemisphereNode(module).getLocalTranslation().x;
+	}
+
+	public float getNorthTranslationY() {
+		return ATRONKinematicModel.getNorthHemisphereNode(module).getLocalTranslation().y;
+	}
+
+	public float getNorthTranslationZ() {
+		return ATRONKinematicModel.getNorthHemisphereNode(module).getLocalTranslation().z;
+	}
+
+	public float getGlobalPosition(int connector, int component) {
+		if(component == 1)
+			return ATRONKinematicModel.getGlobalPosition(module).get(connector).x;
+		else if(component == 2)
+			return ATRONKinematicModel.getGlobalPosition(module).get(connector).y;
+		else if(component == 3)
+			return ATRONKinematicModel.getGlobalPosition(module).get(connector).z;
+		//we should never reach this point
+		return 0;
+	}
 	
 	public void printfFromC(String str) {
 		System.out.print(str);
@@ -70,12 +144,18 @@ public abstract class ATRONTinyOSController extends ControllerImpl implements Pa
 		//we use the tinyos api convention of 100 being the max speed
 		module.getActuators().get(0).setDesiredVelocity(((float)speed) / 100);
 	}
+	public float getCentralJointEncoderValueFloat() {
+		return module.getActuators().get(0).getEncoderValue();
+	}	
 	public int getCentralJointEncoderValueInt() {
 		/* we stick to the conventional low res 432 ticks encoder (which means values from 0 to 431)*/
 		int retValue = (int)(module.getActuators().get(0).getEncoderValue()*432);
 		if(retValue == 432)
 			retValue = 0;
 		return retValue;
+	}
+	public double getPreciseCentralJoint() {
+		return ( ( (1.5f-module.getActuators().get(0).getEncoderValue() )%1.0 ) *2*Math.PI);
 	}
 	
 	public int sendMessage(byte[] message, int messageSize, int connector) {

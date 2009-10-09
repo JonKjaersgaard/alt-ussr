@@ -1,5 +1,7 @@
 package ussr.samples.atron.natives;
 
+import com.jme.math.Vector3f;
+import com.jme.scene.Node;
 import com.jme.scene.shape.Arrow;
 
 import ussr.model.NativeController;
@@ -7,11 +9,28 @@ import ussr.model.NativeControllerProvider;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
+import ussr.physics.jme.JMEModuleComponent;
 import ussr.samples.atron.ATRONTinyOSController;
 
 public class ATRONNativeTinyOSController extends NativeController {
 
 	protected class Link extends ATRONTinyOSController implements NativeControllerProvider {
+
+		//Node north = ((JMEModuleComponent)(module.getComponent(0))).getModuleNode();
+		//Node south = ((JMEModuleComponent)(module.getComponent(1))).getModuleNode();
+		Vector3f conn0relativeDisplacement = new Vector3f((float) ( 1/ Math.sqrt(2)), (float) ( 1/ Math.sqrt(2)), -1);
+		Vector3f conn1relativeDisplacement = new Vector3f((float) (-1/ Math.sqrt(2)), (float) ( 1/ Math.sqrt(2)), -1);
+		Vector3f conn2relativeDisplacement = new Vector3f((float) (-1/ Math.sqrt(2)), (float) (-1/ Math.sqrt(2)), -1);
+		Vector3f conn3relativeDisplacement = new Vector3f((float) ( 1/ Math.sqrt(2)), (float) (-1/ Math.sqrt(2)), -1);
+		Vector3f conn4relativeDisplacement = new Vector3f((float) ( 1/ Math.sqrt(2)), (float) ( 1/ Math.sqrt(2)), 1);
+		Vector3f conn5relativeDisplacement = new Vector3f((float) (-1/ Math.sqrt(2)), (float) ( 1/ Math.sqrt(2)), 1);
+		Vector3f conn6relativeDisplacement = new Vector3f((float) (-1/ Math.sqrt(2)), (float) (-1/ Math.sqrt(2)), 1);
+		Vector3f conn7relativeDisplacement = new Vector3f((float) ( 1/ Math.sqrt(2)), (float) (-1/ Math.sqrt(2)), 1);
+
+		public void stubCall() {
+			/* need to get something from the simulation? */
+		}
+		
 		@Override
 		public synchronized void activate() {
 			ATRONNativeTinyOSController.this.activate();
@@ -22,14 +41,6 @@ public class ATRONNativeTinyOSController extends NativeController {
 	    	if(PhysicsParameters.get().getPhysicsSimulationStepSize() != 0.001f)
 	    		PhysicsLogger.log("PhysicsStepSize does not allow for accurate simulation!");
 	    	nativeMillisecondElapsed(getInitializationContext());
-	    	
-	    	//this retrieves the rotation
-	    	//if(this.getName().contains("0"))
-	    		//System.out.println(this.module.referenceNode.getLocalRotation().w + " " + this.module.referenceNode.getLocalRotation().x + " " + this.module.referenceNode.getLocalRotation().y + " " + this.module.referenceNode.getLocalRotation().z);
-	    	//this retrieves the translation
-	    	//if(this.getName().contains("5"))
-	    		//System.out.println(this.module.referenceNode.getLocalTranslation().x + " " + this.module.referenceNode.getLocalTranslation().y + " " + this.module.referenceNode.getLocalTranslation().z);
-	    	
 	    }
 		public int getRole() { return ATRONNativeTinyOSController.this.getRole(); }
 		
@@ -48,7 +59,6 @@ public class ATRONNativeTinyOSController extends NativeController {
 	            }
 	        }
 	        this.sendBusy = false;	        
-	        //uncomment once implemented!
 			nativeSendDone(getInitializationContext(), error, connector);
 		}
 		
@@ -86,5 +96,7 @@ public class ATRONNativeTinyOSController extends NativeController {
     private native void nativeHandleMessage(int context, byte[] message, int messageSize, int channel);
 
     private native void nativeMillisecondElapsed(int context);
- 
+     
+    // as ussr_stub called from within tinyos code, this can be used for general sync purposes
+    public native void native_stub(int context);
 }
