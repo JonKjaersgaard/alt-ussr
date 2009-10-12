@@ -2,101 +2,138 @@ package ussr.aGui;
 
 
 import java.awt.Dimension;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import java.util.ArrayList;
+
+import com.jme.input.KeyInput;
+import com.jme.system.DisplaySystem;
+import com.jme.system.canvas.JMECanvasImplementor;
+import com.jme.system.lwjgl.LWJGLSystemProvider;
+import com.jmex.awt.input.AWTMouseInput;
+import com.jmex.awt.lwjgl.LWJGLAWTCanvasConstructor;
+import com.jmex.awt.lwjgl.LWJGLCanvas;
+
 import ussr.aGui.fileChooser.appearance.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.appearance.FileChooserSaveFrame;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
+import ussr.aGui.tabs.AssignBehavioursTab;
+import ussr.aGui.tabs.ConstructionTab;
+import ussr.aGui.tabs.NewTab;
 import ussr.aGui.tabs.TabsInter;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
 
-
 /**
- *
+ * Defines visual appearance of main GUI window. 
  * @author Konstantinas
  */
 public class MainFrame extends GuiFrames implements MainFrameInter {
 
 	/**
-	 * The physical simulation
-	 */	   
-	private JMESimulation jmeSimulation;
-
-	//private ArrayList<String> namesTabs = new ArrayList<String>() ;
-
-	private static MainFrame mainFrame;
-
-
-	private  GuiInter fcOpenFrame;
-
-	private  GuiInter fcSaveFrame;
-
-	private ArrayList<TabsInter> tabs;
-
-	private ArrayList<javax.swing.JComponent> components = new ArrayList<javax.swing.JComponent>();  
-
-	private int windowHeight=0;
-
-	public MainFrame() {		
-		initFileChoosers();
-		initComponents();		
-	}
-
-
-
+	 * WHAT IS THAT?
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
-	 * Starts the main GUI window (frame) during the simulation.
+	 * The main GUI window.
+	 */
+	private static MainFrame mainFrame;	
+
+	/**
+	 * The physical simulation.
+	 */	   
+	private JMESimulation jmeSimulation;	
+
+	/**
+	 * File chooser in the form of Open dialog.
+	 */
+	private  GuiInter fcOpenFrame;
+
+	/**
+	 * File chooser in the form of Save dialog.
+	 */
+	private  GuiInter fcSaveFrame;
+
+	/**
+	 * Container for keeping tabs pluged-in the main GUI window(MainFrame).
+	 */
+	private  ArrayList<TabsInter> tabs = new ArrayList <TabsInter>();
+
+	/**
+	 * Container for keeping main GUI window components, the height of which determine the height of the window.  
+	 */
+	private ArrayList<javax.swing.JComponent> components = new ArrayList<javax.swing.JComponent>();  
+
+	/**
+	 * Canvas for integrating JME simulation window into Swing GUI. 
+	 */
+	private  LWJGLCanvas canvas = null;
+
+	/**
+	 * Implementation of JME canvas.
+	 */
+	private JMECanvasImplementor impl;
+
+	/**
+	 * Used to indicate that the main window is started stand alone (not during the simulation).
+	 */
+	private boolean standAlone;
+
+	/**
+	 * Starts the main GUI window before the simulation is started(stand alone).
+	 * @param standAlone, Used to indicate that the main window is started stand alone (not during the simulation). 
+	 */
+	public MainFrame(boolean standAlone) {
+		this.standAlone = standAlone;
+		initFileChoosers();// initialize visual appearance of file choosers. Why here, because then they are responding faster to user generated events. 
+		setDefaultAppearanceOfTabs();// add default tabs
+		initComponents();//initialize visual appearance of main GUI window.	
+		//setSizeFullScreen(this);
+	}
+
+	/**
+	 * Adds default tabs into container. 
+	 */
+	private void setDefaultAppearanceOfTabs(){
+		/*MORE HERE, THINK ABOUT DEFAULT SIMULATION*/
+		//tabs.add(new ConstructionTab("1 Step: Construct Robot (Interactive User Guide)",jmeSimulationDefault));//Build in tab
+		//tabs.add(new AssignBehavioursTab("2 Step: Assign Behaviour (Interactive User Guide)",jmeSimulationDefault));//Build in tab
+		tabs.add(new NewTab("YOUR NEW TAB",null));//YOUR NEW TAB
+		tabs.add(new NewTab("YOUR NEW TAB1",null));//YOUR NEW TAB1				
+	}
+
+	/**
+	 * Starts the main GUI window (frame) during simulation. Simulation starts first and after that main GUI window is started.
 	 * This can be achieved by pressing "O" on keyboard after starting the simulation. 
-	 * @param JMESimulation, the physical simulation
+	 * @param jmeSimulation, the physical simulation.
+	 * @param tabs, the tabs to plug in into main window's tabbed pane.
 	 */
 	public MainFrame(JMEBasicGraphicalSimulation jmeSimulation, ArrayList<TabsInter> tabs){
 		this.jmeSimulation = (JMESimulation) jmeSimulation;
 		this.tabs = tabs;
-		//this.namesTabs = namesTabs;
-		//this.tabs = tabs;
-		initFileChoosers();		
-		initComponents();
-		changeInstanceFlag();		
-
-		this.addWindowStateListener (new WindowAdapter() {	
-			public void windowStateChanged(WindowEvent e) {
-				System.out.println(
-						"All:"+e);
-				int newState = e.getNewState();
-				System.out.println( "State:"+e.getNewState());
-				if (newState == 6){//MAXIMIZED
-					System.out.println( "YES");
-					for(int index=0;index<components.size();index++){
-						components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING/2,components.get(index).getHeight()));
-					}			    		
-				}else if(newState == 0){//Restore down
-					System.out.println( "YES1");
-					for(int index=0;index<components.size();index++){
-						components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING,components.get(index).getHeight()));
-					}
-				}
-			}
-
-
-		}
-		);		
+		initFileChoosers();// initialize visual appearance of file choosers. Why here, because then they are responding faster to user generated events. 		
+		initComponents();//initialize visual appearance of main GUI window.	
+		changeInstanceFlagListener();//Change the instance flag to true. Meaning the window is once instantiated.
+		windowResizingListener();//Resize the main GUI window according to dimension of it's components, if user is maximizing or restoring it down.
 	}
-
 
 	/**
 	 * Instance flag for current frame, used to keep track that only one instance of the frame is instantiated.
+	 * This is for running the main GUI window during simulation.
 	 */
 	private static boolean instanceFlag = false;
 
 	/**
-	 * Changes the flag for window instantiation. If it was once instantiated it is true. When the window closes the flag is reset to false.
+	 * Changes the flag for window instantiation. If it was once instantiated it is true. When the window closes the flag is reset to false, 
+	 * so that the window can be activated again.
 	 */
-	private void changeInstanceFlag(){
+	private void changeInstanceFlagListener(){
 		instanceFlag = true;// the frame is instantiated
 		// Overrides event for closing the frame, in order for the frame to do not open several times with several times pressing on the button on keyboard.		
 		addWindowListener (new WindowAdapter() {			
@@ -108,7 +145,27 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		);		
 	}
 
+	/**
+	 * 
+	 */
+	private void windowResizingListener(){
+		this.addWindowStateListener (new WindowAdapter() {	
+			public void windowStateChanged(WindowEvent event) {
 
+				int newState = event.getNewState();
+				if (newState == 6){//Window maximized
+					for(int index=0;index<components.size();index++){
+						components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING/2,components.get(index).getHeight()));
+					}			    		
+				}else if(newState == 0){//Window restored down to its initial dimension.
+					for(int index=0;index<components.size();index++){
+						components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING,components.get(index).getHeight()));
+					}
+				}
+			}
+		}
+		);		
+	} 
 
 	/**
 	 * Initializes file choosers in two forms: 1)Open and 2)Save dialog.
@@ -123,21 +180,11 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 
 		fcOpenFrame = new FileChooserOpenFrame(fileExtensions,fcControllers);	
 		fcSaveFrame = new FileChooserSaveFrame(fileExtensions,fcControllers);
-
 	}
 
-
-
-
-
-
-	/*	public MainFrame(boolean constructionDisplayed, boolean controllerDisplayed) {
-		this.constructionDisplayed = constructionDisplayed;
-		this.controllerDisplayed = controllerDisplayed;
-	}*/
-
-	/* (non-Javadoc)
-	 * @see ussr.aGui.GuiFrames#initComponents()
+	/**
+	 * Initializes the visual appearance of all components in the main GUI window.
+	 * Follows Strategy  pattern.
 	 */
 	protected void initComponents() {
 
@@ -149,14 +196,14 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		jMenu3 = new javax.swing.JMenu();
 		jMenu4 = new javax.swing.JMenu();
 
-
 		jMenuItem2 = new javax.swing.JMenuItem();
 		jMenuItem4 = new javax.swing.JMenuItem();
 
-		jSeparator2 = new javax.swing.JSeparator();
-		jMenuItem3 = new javax.swing.JMenuItem();
-		jSeparator1 = new javax.swing.JSeparator();
 		jMenuItem1 = new javax.swing.JMenuItem();		
+		jMenuItem3 = new javax.swing.JMenuItem();
+
+		jSeparator1 = new javax.swing.JSeparator();
+		jSeparator2 = new javax.swing.JSeparator();			
 
 		jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
 		jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
@@ -166,84 +213,85 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		jCheckBoxMenuItem6 = new javax.swing.JCheckBoxMenuItem();
 
 		jToolBar1 = new javax.swing.JToolBar();
-		jToolBar2 = new javax.swing.JToolBar();
+		jToolBarSimulationControl = new javax.swing.JToolBar();
 
-
-
-		jButton1 = new javax.swing.JButton();
-		jButton2 = new javax.swing.JButton();
+		jButtonRunRealTime = new javax.swing.JButton();
+		jButtonRunStepByStep = new javax.swing.JButton();
 		jButton3 = new javax.swing.JButton();
 		jButton4 = new javax.swing.JButton();
-		jButton6 = new javax.swing.JButton();
-		jButton7 = new javax.swing.JButton();
+		jButtonRunFast = new javax.swing.JButton();
+		jButtonPause = new javax.swing.JButton();
 
 		jLabel1 = new javax.swing.JLabel();
+		jLabel3 = new javax.swing.JLabel();
+		jLabel5 = new javax.swing.JLabel();
+
 		jTextField1 = new javax.swing.JTextField(); 
 
 		jScrollPane1 = new javax.swing.JScrollPane();
-		jTextArea1 = new javax.swing.JTextArea();	
+		jTextArea1 = new javax.swing.JTextArea();
 
+		jSplitPane1 = new javax.swing.JSplitPane();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setUSSRicon(this);
 		setTitle("Unified Simulator for Self-Reconfigurable Robots");
-		getContentPane().setLayout(new java.awt.FlowLayout());
+		getContentPane().setLayout(new java.awt.FlowLayout());	
 
-
-		jToolBar2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBar2.setRollover(true);
-		jToolBar2.setFloatable(false);
-		jToolBar2.setToolTipText("Simulation Control");
-		jToolBar2.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING,TOOLBAR_HEIGHT));
+		jToolBarSimulationControl.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarSimulationControl.setRollover(true);
+		jToolBarSimulationControl.setFloatable(false);
+		jToolBarSimulationControl.setToolTipText("Simulation Control");
+		jToolBarSimulationControl.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING,TOOLBAR_HEIGHT));
 		//jToolBar2.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING,TOOLBAR_HEIGHT));
 
-		jButton1.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RUN_REAL_TIME));
-		jButton1.setToolTipText("Run real time");
-		jButton1.setBorder(javax.swing.BorderFactory.createEtchedBorder());//On Vista does not work(test it)
-		jButton1.setFocusable(false);    
-		jButton1.setPreferredSize(new java.awt.Dimension(30, 30));      
-		jButton1.addActionListener(new java.awt.event.ActionListener() {
+		jButtonRunRealTime.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RUN_REAL_TIME));
+		jButtonRunRealTime.setToolTipText("Run real time");
+		jButtonRunRealTime.setBorder(javax.swing.BorderFactory.createEtchedBorder());//On Vista does not work(test it)
+		jButtonRunRealTime.setFocusable(false);    
+		jButtonRunRealTime.setPreferredSize(new java.awt.Dimension(30, 30));      
+		jButtonRunRealTime.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameController.jButton1ActionPerformed(jmeSimulation);        	  
 			}
 		});
-		jToolBar2.add(jButton1);
+		jToolBarSimulationControl.add(jButtonRunRealTime);
 
-		jButton6.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RUN_FAST));
-		jButton6.setToolTipText("Run fast");
-		jButton6.setFocusable(false);
-		jButton6.setPreferredSize(new java.awt.Dimension(30, 30));      
-		jButton6.addActionListener(new java.awt.event.ActionListener() {
+		jButtonRunFast.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RUN_FAST));
+		jButtonRunFast.setToolTipText("Run fast");
+		jButtonRunFast.setFocusable(false);
+		jButtonRunFast.setPreferredSize(new java.awt.Dimension(30, 30));      
+		jButtonRunFast.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jButton6ActionPerformed(jmeSimulation);        	  
+				MainFrameController.jButtonRunFastActionPerformed(jmeSimulation);        	  
 			}
 		});
 
-		jToolBar2.add(jButton6);
+		jToolBarSimulationControl.add(jButtonRunFast);
 
-		jButton2.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + STEP_BY_STEP));
-		jButton2.setToolTipText("Run step by step");
-		jButton2.setBorder(javax.swing.BorderFactory.createEtchedBorder());//On Vista does not work(test it)
-		jButton2.setFocusable(false);
-		jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButton2.setPreferredSize(new java.awt.Dimension(30, 30));
-		jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButton2.addActionListener(new java.awt.event.ActionListener() {
+		jButtonRunStepByStep.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + STEP_BY_STEP));
+		jButtonRunStepByStep.setToolTipText("Run step by step");
+		jButtonRunStepByStep.setBorder(javax.swing.BorderFactory.createEtchedBorder());//On Vista does not work(test it)
+		jButtonRunStepByStep.setFocusable(false);
+		jButtonRunStepByStep.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jButtonRunStepByStep.setPreferredSize(new java.awt.Dimension(30, 30));
+		jButtonRunStepByStep.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jButtonRunStepByStep.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jButton2ActionPerformed(jmeSimulation);
+				MainFrameController.jButtonRunStepByStepActionPerformed(jmeSimulation);
 			}
 		});
-		jToolBar2.add(jButton2);
+		jToolBarSimulationControl.add(jButtonRunStepByStep);
 
-		jButton7.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PAUSE));
-		jButton7.setToolTipText("Pause");
-		jButton7.setFocusable(false);   
-		jButton7.addActionListener(new java.awt.event.ActionListener() {
+		jButtonPause.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PAUSE));
+		jButtonPause.setToolTipText("Pause");
+		jButtonPause.setFocusable(false);   
+		jButtonPause.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameController.jButton7ActionPerformed(jmeSimulation);
 			}
 		});
-		jToolBar2.add(jButton7);
+		jToolBarSimulationControl.add(jButtonPause);
 
 
 		jButton3.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + SAVE));
@@ -257,39 +305,33 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 				MainFrameController.jMenuItem3ActionPerformed(fcSaveFrame);
 			}
 		});
-		jToolBar2.add(jButton3);
+		jToolBarSimulationControl.add(jButton3);
 
-		
+
 		jButton4.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPEN));
+		jButton4.setFocusable(true);
 		jButton4.setToolTipText("Open");
 		jButton4.setFocusable(false);		
 		jButton4.setPreferredSize(new java.awt.Dimension(30, 30));
-		 jButton4.addActionListener(new java.awt.event.ActionListener() {
-	            public void actionPerformed(java.awt.event.ActionEvent evt) {
-	            	MainFrameController.jMenuItem2ActionPerformed(fcOpenFrame);
-	            }
-	        });
-		jToolBar2.add(jButton4);
+		jButton4.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameController.jMenuItem2ActionPerformed(fcOpenFrame);
+			}
+		});
+		jToolBarSimulationControl.add(jButton4);
 
-		getContentPane().add(jToolBar2);
+		getContentPane().add(jToolBarSimulationControl);
+
+
+
+		//jLabel3.setText("Interaction-Input");
+		// getContentPane().add(jLabel3);
 
 		jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 		jTabbedPane1.setToolTipText("Interaction with simulation environment");
 		jTabbedPane1.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING, TAB_PANE_HEIGHT1));
 		//jTabbedPane1.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING,TAB_PANE_HEIGHT1));
-		jTabbedPane1.setFocusable(false);
-		/*	jTabbedPaneNew = new javax.swing.JTabbedPane();
-		jTabbedPane1.addTab("New", jTabbedPaneNew);
-
-		jCheckBoxMenuItemNew = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItemNew.setSelected(true);
-		jCheckBoxMenuItemNew.setText("New");
-		jCheckBoxMenuItemNew.addActionListener(new java.awt.event.ActionListener() {
-	            public void actionPerformed(java.awt.event.ActionEvent evt) {
-	                MainFrameController.jCheckBoxMenuItemActionPerformedNew(jCheckBoxMenuItemNew, jTabbedPaneNew);
-	            }
-	        });
-		jMenu4.add(jCheckBoxMenuItemNew);*/
+		jTabbedPane1.setFocusable(false);		
 
 		final ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems = new ArrayList<javax.swing.JCheckBoxMenuItem>();
 		for (int index =0; index < tabs.size(); index++){					  
@@ -308,7 +350,19 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 			jMenu4.add(jCheckBoxMenuItemNew);			
 		}
 
-		getContentPane().add(jTabbedPane1); 
+		getContentPane().add(jTabbedPane1);		
+
+
+		if (standAlone){// before simulation
+			jSplitPane1.setLeftComponent(jTabbedPane1);
+			jSplitPane1.setRightComponent(initJmeSimulationCanvas());
+			getContentPane().add(jSplitPane1);
+		}else{// During simulation
+			getContentPane().add(jTabbedPane1);
+		}
+
+
+
 
 		//jTextArea1.setColumns(20);
 		//jTextArea1.setRows(5);
@@ -390,12 +444,6 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		jMenu2.setText("View");
 		jMenu4.setText("Tabs");
 
-		//      jMenuItem5.setText("Construct");
-		//        jMenu4.add(jMenuItem5);
-
-		//jMenuItem6.setText("Assign");
-		// jMenu4.add(jMenuItem6);
-
 		jMenu2.add(jMenu4);
 
 		jMenuBar1.add(jMenu2);  
@@ -461,32 +509,76 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		jMenuBar1.add(jMenu3);
 
 		setJMenuBar(jMenuBar1);
+
 		pack();   
 
-
+        /*Keep all components which should be expanded in width when the window is resized to full screen or restored down (height of components)*/
 		components.add(jMenuBar1);
-		components.add(jToolBar2);
-		components.add(jTabbedPane1);
+		components.add(jToolBarSimulationControl);
 		components.add(jTabbedPane3);
 		components.add(jToolBar1);
 
-		for (int  index =0;index<components.size();index++){
-			windowHeight = windowHeight+ components.get(index).getHeight();
+	//	for (int  index =0;index<components.size();index++){
+		//	windowHeight = windowHeight+ components.get(index).getHeight();
 			//System.out.println("height:"+heightComponents.get(index).getHeight());
-		}
+//		}
 
-		setDimensionsOf(this,(int)SCREEN_DIMENSION.getWidth()/2,windowHeight+2*PADDING);
-		//setSizeFullScreen(this);
-		//setSizeHalfScreen(this);
+		//setDimensionsOf(this,(int)SCREEN_DIMENSION.getWidth()/2,windowHeight+2*PADDING);
+		
+		
+		if (standAlone){
+			components.add(jSplitPane1);
+			setSizeFullScreen(this, components);	
+		}else{
+			components.add(jTabbedPane1);
+			setSizeAccordingComponents(this, components); 
+		}
+		//Move the window to the center.
+		//setLocationRelativeTo(null);
 		changeToSetLookAndFeel(this);// makes troubles with the borders of the buttons 
+	}
+
+
+	/**
+	 * Initializes JME simulation canvas.
+	 */
+	private LWJGLCanvas initJmeSimulationCanvas(){
+		// make the canvas:
+		DisplaySystem display = DisplaySystem.getDisplaySystem(LWJGLSystemProvider.LWJGL_SYSTEM_IDENTIFIER);
+		display.registerCanvasConstructor("AWT", LWJGLAWTCanvasConstructor.class);
+		canvas = (LWJGLCanvas)display.createCanvas(200, 200);
+		canvas.setUpdateInput(true);
+		canvas.setTargetRate(60);		
+
+		// add a listener... if window is resized, we can do something about
+		// it.
+		canvas.addComponentListener(new ComponentAdapter() {
+			public void componentResized(ComponentEvent ce) {
+				//doResize();
+			}
+		});
+
+		// Setup key and mouse input
+		KeyInput.setProvider(KeyInput.INPUT_AWT);
+		KeyListener kl = (KeyListener) KeyInput.get();
+		canvas.addKeyListener(kl);
+		AWTMouseInput.setup(canvas, false);
+
+		// Important! Here is where we add the guts to the panel:
+		impl = new MyImplementor(200, 200);
+		canvas.setImplementor(impl);
+
+		canvas.setBounds(0, 0, 200, 200);
+		//canvase
+		//canvas.setFocusable(true);
+
+		//getContentPane().add(canvas);
+		return canvas;
 	}
 
 	public javax.swing.JTabbedPane getJTabbedPane1() {
 		return jTabbedPane1;
 	}
-
-
-
 
 	/**
 	 * Enables and disables menu components opening file choosers. 
@@ -499,6 +591,9 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		jButton4.setEnabled(state);
 	} 
 
+
+
+
 	/**
 	 * Starts the main GUI window (frame).
 	 * Follows strategy pattern. 
@@ -506,7 +601,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 	public void activate(){
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {            	
-				mainFrame = new MainFrame();
+				mainFrame = new MainFrame(true);
 				mainFrame.setVisible(true);
 
 			}
@@ -523,7 +618,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 			public void run() {            	
 				mainFrame = new MainFrame(jmeSimulation,tabs);
 				mainFrame.setVisible(true);
-				jmeSimulation.setPause(true);
+				jmeSimulation.setPause(true);// Force pausing of simulation
 			}
 		});
 	}	
@@ -535,7 +630,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 	public static void main(String[] args) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				mainFrame = new MainFrame();				
+				mainFrame = new MainFrame(true);				
 				mainFrame.setVisible(true);
 			}
 		});
@@ -575,17 +670,19 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 	private javax.swing.JSeparator jSeparator2;
 
 	private javax.swing.JToolBar jToolBar1;
-	private javax.swing.JToolBar jToolBar2;
+	private javax.swing.JToolBar jToolBarSimulationControl;
 
-	private javax.swing.JButton jButton1;
-	private javax.swing.JButton jButton2;
+	private javax.swing.JButton jButtonRunRealTime;
+	private javax.swing.JButton jButtonRunStepByStep;
 	private static javax.swing.JButton jButton3;
 	private static javax.swing.JButton jButton4;
 
-	private javax.swing.JButton jButton6;
-	private javax.swing.JButton jButton7;
+	private javax.swing.JButton jButtonRunFast;
+	private javax.swing.JButton jButtonPause;
 
 	private javax.swing.JLabel jLabel1;
+	private javax.swing.JLabel jLabel3;
+	private javax.swing.JLabel jLabel5;
 	private javax.swing.JTextField jTextField1;
 
 	private static javax.swing.JTabbedPane jTabbedPane1  = new javax.swing.JTabbedPane();
@@ -594,4 +691,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 	private javax.swing.JTextArea jTextArea1;
 	private javax.swing.JScrollPane jScrollPane1;
 
+	private javax.swing.JSplitPane jSplitPane1;
+
 }
+

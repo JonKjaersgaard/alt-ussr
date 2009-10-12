@@ -83,7 +83,7 @@ public class MainFrameController {
 	 * Controls running simulation in fast time.
 	 * @param jmeSimulation
 	 */
-	public static void jButton6ActionPerformed(JMESimulation jmeSimulation) {		 
+	public static void jButtonRunFastActionPerformed(JMESimulation jmeSimulation) {		 
 		if (jmeSimulation.isPaused()){// Start simulation  fast, if simulation is in paused state
 			jmeSimulation.setRealtime(false);
 			jmeSimulation.setPause(false);				
@@ -210,7 +210,7 @@ public class MainFrameController {
 	 * Controls running simulation in step by step fashion.
 	 * @param jmeSimulation
 	 */
-	public static void jButton2ActionPerformed(JMESimulation jmeSimulation) {       	
+	public static void jButtonRunStepByStepActionPerformed(JMESimulation jmeSimulation) {       	
 		jmeSimulation.setPause(true);
 		jmeSimulation.setSingleStep(true);
 	}
