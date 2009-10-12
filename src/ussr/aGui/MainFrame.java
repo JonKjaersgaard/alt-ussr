@@ -35,7 +35,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 	private  GuiInter fcSaveFrame;
 
 	private ArrayList<TabsInter> tabs;
-	
+
 	private ArrayList<javax.swing.JComponent> components = new ArrayList<javax.swing.JComponent>();  
 
 	private int windowHeight=0;
@@ -62,31 +62,31 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		initFileChoosers();		
 		initComponents();
 		changeInstanceFlag();		
-		
+
 		this.addWindowStateListener (new WindowAdapter() {	
-			    public void windowStateChanged(WindowEvent e) {
-			    	System.out.println(
-			          "All:"+e);
-			    	int newState = e.getNewState();
-			    	System.out.println( "State:"+e.getNewState());
-			    	if (newState == 6){//MAXIMIZED
-			    		System.out.println( "YES");
-			    		for(int index=0;index<components.size();index++){
-			    			components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING/2,components.get(index).getHeight()));
-			    		}			    		
-			    	}else if(newState == 0){//Restore down
-			    		System.out.println( "YES1");
-			    		for(int index=0;index<components.size();index++){
-			    			components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING,components.get(index).getHeight()));
-			    		}
-			    	}
-			    }
-			    
-			    
+			public void windowStateChanged(WindowEvent e) {
+				System.out.println(
+						"All:"+e);
+				int newState = e.getNewState();
+				System.out.println( "State:"+e.getNewState());
+				if (newState == 6){//MAXIMIZED
+					System.out.println( "YES");
+					for(int index=0;index<components.size();index++){
+						components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING/2,components.get(index).getHeight()));
+					}			    		
+				}else if(newState == 0){//Restore down
+					System.out.println( "YES1");
+					for(int index=0;index<components.size();index++){
+						components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING,components.get(index).getHeight()));
+					}
+				}
+			}
+
+
 		}
 		);		
 	}
-	
+
 
 	/**
 	 * Instance flag for current frame, used to keep track that only one instance of the frame is instantiated.
@@ -140,7 +140,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 	 * @see ussr.aGui.GuiFrames#initComponents()
 	 */
 	protected void initComponents() {
-	
+
 		/*Instantiation of MainFrame components*/
 		jMenuBar1 = new javax.swing.JMenuBar();		
 
@@ -168,21 +168,22 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		jToolBar1 = new javax.swing.JToolBar();
 		jToolBar2 = new javax.swing.JToolBar();
 
-		
+
 
 		jButton1 = new javax.swing.JButton();
 		jButton2 = new javax.swing.JButton();
 		jButton3 = new javax.swing.JButton();
+		jButton4 = new javax.swing.JButton();
 		jButton6 = new javax.swing.JButton();
 		jButton7 = new javax.swing.JButton();
 
 		jLabel1 = new javax.swing.JLabel();
 		jTextField1 = new javax.swing.JTextField(); 
-		
+
 		jScrollPane1 = new javax.swing.JScrollPane();
 		jTextArea1 = new javax.swing.JTextArea();	
-		
-		
+
+
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setUSSRicon(this);
 		setTitle("Unified Simulator for Self-Reconfigurable Robots");
@@ -191,6 +192,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 
 		jToolBar2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBar2.setRollover(true);
+		jToolBar2.setFloatable(false);
 		jToolBar2.setToolTipText("Simulation Control");
 		jToolBar2.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING,TOOLBAR_HEIGHT));
 		//jToolBar2.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING,TOOLBAR_HEIGHT));
@@ -257,9 +259,22 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		});
 		jToolBar2.add(jButton3);
 
+		
+		jButton4.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPEN));
+		jButton4.setToolTipText("Open");
+		jButton4.setFocusable(false);		
+		jButton4.setPreferredSize(new java.awt.Dimension(30, 30));
+		 jButton4.addActionListener(new java.awt.event.ActionListener() {
+	            public void actionPerformed(java.awt.event.ActionEvent evt) {
+	            	MainFrameController.jMenuItem2ActionPerformed(fcOpenFrame);
+	            }
+	        });
+		jToolBar2.add(jButton4);
+
 		getContentPane().add(jToolBar2);
 
 		jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+		jTabbedPane1.setToolTipText("Interaction with simulation environment");
 		jTabbedPane1.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING, TAB_PANE_HEIGHT1));
 		//jTabbedPane1.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING,TAB_PANE_HEIGHT1));
 		jTabbedPane1.setFocusable(false);
@@ -293,16 +308,6 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 			jMenu4.add(jCheckBoxMenuItemNew);			
 		}
 
-		/*	for (int index=0; index <checkBoxMenuItems.size();index++){
-
-			 checkBoxMenuItems.get(index).addActionListener(new java.awt.event.ActionListener() {
-	            public void actionPerformed(java.awt.event.ActionEvent evt) {
-	                MainFrameController.jCheckBoxMenuItemActionPerformedNew(checkBoxMenuItems.get(index), checkBoxMenuItems, jTabbedPane1,specificationTabs);
-	            }
-	        });
-		}*/
-
-
 		getContentPane().add(jTabbedPane1); 
 
 		//jTextArea1.setColumns(20);
@@ -311,11 +316,11 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		//jScrollPane1.setViewportView(jTextArea1);
 
 		//getContentPane().add(jScrollPane1);
-		
+
 		jTabbedPane3.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 		jTabbedPane3.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING, TAB_PANE_HEIGHT2));
 		//jTabbedPane3.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING,TAB_PANE_HEIGHT1));
-        getContentPane().add(jTabbedPane3);
+		getContentPane().add(jTabbedPane3);
 
 
 		jToolBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -340,6 +345,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 
 		jMenu1.setText("File");
 
+		jMenuItem2.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+OPEN_SMALL));
 		jMenuItem2.setText("Open");
 		jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -456,19 +462,19 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 
 		setJMenuBar(jMenuBar1);
 		pack();   
-		
-		
+
+
 		components.add(jMenuBar1);
 		components.add(jToolBar2);
 		components.add(jTabbedPane1);
 		components.add(jTabbedPane3);
 		components.add(jToolBar1);
-		
+
 		for (int  index =0;index<components.size();index++){
 			windowHeight = windowHeight+ components.get(index).getHeight();
 			//System.out.println("height:"+heightComponents.get(index).getHeight());
 		}
-		
+
 		setDimensionsOf(this,(int)SCREEN_DIMENSION.getWidth()/2,windowHeight+2*PADDING);
 		//setSizeFullScreen(this);
 		//setSizeHalfScreen(this);
@@ -489,7 +495,8 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 	public static void setSaveOpenEnabled (boolean state){
 		jButton3.setEnabled(state);
 		jMenuItem2.setEnabled(state);
-		jMenuItem3.setEnabled(state);		
+		jMenuItem3.setEnabled(state);	
+		jButton4.setEnabled(state);
 	} 
 
 	/**
@@ -573,6 +580,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 	private javax.swing.JButton jButton1;
 	private javax.swing.JButton jButton2;
 	private static javax.swing.JButton jButton3;
+	private static javax.swing.JButton jButton4;
 
 	private javax.swing.JButton jButton6;
 	private javax.swing.JButton jButton7;
