@@ -7,6 +7,7 @@
 package ussr.physics.jme;
 
 import java.awt.Color;
+import java.awt.Frame;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -64,6 +65,8 @@ import com.jme.util.TextureManager;
 import com.jme.util.Timer;
 import com.jme.util.geom.Debugger;
 import com.jmex.awt.input.AWTMouseInput;
+import com.jmex.awt.lwjgl.LWJGLAWTCanvasConstructor;
+import com.jmex.awt.lwjgl.LWJGLCanvas;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.PhysicsDebugger;
 import com.jmex.physics.PhysicsSpace;
@@ -78,8 +81,8 @@ import com.jmex.terrain.TerrainBlock;
  * 
  * @author Modular Robots @ MMMI
  * @author Konstantinas (modified for builder). In particular added code for displaying the GUI
- * of Quick Prototyping of simulation Scenarios and getter-setter methods for showing physics, normals,
- * bounds, lights, wireState and buffer depth. 
+ * of Quick Prototyping of simulation Scenarios, main GUI window and getter-setter methods for showing physics, normals,
+ * bounds, lights, wireState, buffer depth, running simulation in real time and fast. 
  */
 public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
@@ -335,13 +338,13 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			if (MainFrame.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
 			}else{
 				JMESimulation simulation = (JMESimulation)this;
-				ArrayList<TabsInter> tabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI
-				tabs.add(new ConstructionTab("1 Step: Construct Robot",simulation));//Build in tab
-				tabs.add(new AssignBehavioursTab("2 Step: Assign Behaviour",simulation));//Build in tab
-				tabs.add(new NewTab("YOUR NEW TAB",simulation));//YOUR NEW TAB
-				tabs.add(new NewTab("YOUR NEW TAB1",simulation));//YOUR NEW TAB1				
+				ArrayList<TabsInter> interactionTabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI
+				interactionTabs.add(new ConstructionTab("1 Step: Construct Robot (Interactive User Guide)",simulation));//Build in tab
+				interactionTabs.add(new AssignBehavioursTab("2 Step: Assign Behaviour (Interactive User Guide)",simulation));//Build in tab
+				interactionTabs.add(new NewTab("YOUR NEW TAB",simulation));//YOUR NEW TAB
+				interactionTabs.add(new NewTab("YOUR NEW TAB1",simulation));//YOUR NEW TAB1				
 
-				MainFrameInter mainFrame = new MainFrame(this,tabs);
+				MainFrameInter mainFrame = new MainFrame(this,interactionTabs);
 				//mainFrame.getJTabbedPane1().setVisible(false);
 				mainFrame.activateDuringSimulation();
 				//mainFrame.getJTabbedPane1().setVisible(false);
@@ -698,14 +701,22 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 				e.printStackTrace();
 				throw new Error("Unable to link native libraries");
 			}
+			
+		/*	display.registerCanvasConstructor("AWT", LWJGLAWTCanvasConstructor.class);
+			LWJGLCanvas canvas = (LWJGLCanvas)display.createCanvas(800, 800);
+			canvas.setUpdateInput(true);
+	        canvas.setTargetRate(60);*/
+
+
 			display.setMinDepthBits( depthBits );
 			display.setMinStencilBits( stencilBits );
 			display.setMinAlphaBits( alphaBits );
 			display.setMinSamples( samples );
 			/** Create a window with the startup box's information. */
-			display.createWindow( properties.getWidth(), properties.getHeight(),
+		   display.createWindow( properties.getWidth(), properties.getHeight(),
 					properties.getDepth(), properties.getFreq(), properties
-					.getFullscreen() );
+					.getFullscreen() );			
+			
 			//display.moveWindowTo(600, 400);	
 
 			/**
