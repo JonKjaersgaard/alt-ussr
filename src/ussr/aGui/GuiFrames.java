@@ -21,6 +21,7 @@ public abstract class GuiFrames extends javax.swing.JFrame implements GuiInter {
 	 * The dimension of the screen of display
 	 */
 	public Dimension SCREEN_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
+	
 
 	public final int TOOLBAR_HEIGHT = 30;
 

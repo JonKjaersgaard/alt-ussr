@@ -23,6 +23,7 @@ import ussr.aGui.fileChooser.appearance.FileChooserSaveFrame;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
 import ussr.aGui.tabs.AssignBehavioursTab;
+import ussr.aGui.tabs.ConsoleTab;
 import ussr.aGui.tabs.ConstructionTab;
 import ussr.aGui.tabs.NewTab;
 import ussr.aGui.tabs.TabsInter;
@@ -39,11 +40,12 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 	 * WHAT IS THAT?
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
 	 * The main GUI window.
 	 */
 	private static MainFrame mainFrame;	
+	
 
 	/**
 	 * The physical simulation.
@@ -61,9 +63,13 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 	private  GuiInter fcSaveFrame;
 
 	/**
-	 * Container for keeping tabs pluged-in the main GUI window(MainFrame).
+	 * Container for keeping all tabs pluged-in the main GUI window(MainFrame).
 	 */
-	private  ArrayList<TabsInter> interactionTabs = new ArrayList <TabsInter>();
+	private  ArrayList<TabsInter> tabs = new ArrayList <TabsInter>();
+	
+	private  ArrayList<TabsInter> tabsFirstTabbedPane = new ArrayList <TabsInter>();
+	
+	private  ArrayList<TabsInter> tabsSecondTabbedPane = new ArrayList <TabsInter>();
 
 	/**
 	 * Container for keeping main GUI window components, the height of which determine the height of the window.  
@@ -103,23 +109,34 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		/*MORE HERE, THINK ABOUT DEFAULT SIMULATION*/
 		//tabs.add(new ConstructionTab("1 Step: Construct Robot (Interactive User Guide)",jmeSimulationDefault));//Build in tab
 		//tabs.add(new AssignBehavioursTab("2 Step: Assign Behaviour (Interactive User Guide)",jmeSimulationDefault));//Build in tab
-		interactionTabs.add(new NewTab("YOUR NEW TAB",null));//YOUR NEW TAB
-		interactionTabs.add(new NewTab("YOUR NEW TAB1",null));//YOUR NEW TAB1				
+		tabsSecondTabbedPane.add(new ConsoleTab(false,"Console", null));
+		tabsFirstTabbedPane.add(new NewTab(true,"YOUR NEW TAB",null));//YOUR NEW TAB
+		tabsFirstTabbedPane.add(new NewTab(true,"YOUR NEW TAB1",null));//YOUR NEW TAB1
+		
 	}
 
 	/**
 	 * Starts the main GUI window (frame) during simulation. Simulation starts first and after that main GUI window is started.
 	 * This can be achieved by pressing "O" on keyboard after starting the simulation. 
 	 * @param jmeSimulation, the physical simulation.
-	 * @param tabs, the tabs to plug in into main window's tabbed pane.
+	 * @param tabs, the tabs to plug in into main window's tabbed panes.
 	 */
-	public MainFrame(JMEBasicGraphicalSimulation jmeSimulation, ArrayList<TabsInter> interactionTabs){
+	public MainFrame(JMEBasicGraphicalSimulation jmeSimulation, ArrayList<TabsInter> tabs){
 		this.jmeSimulation = (JMESimulation) jmeSimulation;
-		this.interactionTabs = interactionTabs;
-		initFileChoosers();// initialize visual appearance of file choosers. Why here, because then they are responding faster to user generated events. 		
+		this.tabs = tabs;
+		initFileChoosers();// initialize visual appearance of file choosers. Why here, because then they are responding faster to user generated events.
+		//TODO MOVE ME INTO METHOD		
+		for (int index=0; index<tabs.size();index++){
+		if (tabs.get(index).isFirstTabbedPane()){
+			tabsFirstTabbedPane.add(tabs.get(index));	
+		}else {
+			tabsSecondTabbedPane.add(tabs.get(index));
+		}
+	}
 		initComponents();//initialize visual appearance of main GUI window.	
 		changeInstanceFlagListener();//Change the instance flag to true. Meaning the window is once instantiated.
 		windowResizingListener();//Resize the main GUI window according to dimension of it's components, if user is maximizing or restoring it down.
+
 	}
 
 	/**
@@ -326,7 +343,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		jTabbedPaneInteraction.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING, TAB_PANE_HEIGHT1));
 		//jTabbedPane1.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING,TAB_PANE_HEIGHT1));
 		jTabbedPaneInteraction.setFocusable(false);		
-		initTabsAndCheckBoxes(interactionTabs,jTabbedPaneInteraction,jMenuIntearctionTabs);//Plug in tabs in tabbed pane and check boxes in menu bar		
+		initTabsAndCheckBoxes(tabsFirstTabbedPane,jTabbedPaneInteraction,jMenuIntearctionTabs);//Plug in tabs in tabbed pane and check boxes in menu bar		
 
 		getContentPane().add(jTabbedPaneInteraction);
 
@@ -343,7 +360,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		//jTabbedPane3.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING,TAB_PANE_HEIGHT1));
 		
         //jTabbedPane3.addTab("tab1", jPanel3);
-		
+		initTabsAndCheckBoxes(tabsSecondTabbedPane,jTabbedPane3,jMenu5);//Plug in tabs in tabbed pane and check boxes in menu bar		
 		getContentPane().add(jTabbedPane3);
 
 
@@ -591,7 +608,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 	public void activateDuringSimulation(){
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {            	
-				mainFrame = new MainFrame(jmeSimulation,interactionTabs);
+				mainFrame = new MainFrame(jmeSimulation,tabs);
 				mainFrame.setVisible(true);
 				jmeSimulation.setPause(true);// Force pausing of simulation
 			}

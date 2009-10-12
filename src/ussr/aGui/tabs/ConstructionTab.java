@@ -12,8 +12,10 @@ public class ConstructionTab extends Tabs {
 	 * Defines visual appearance of the tab called "1 Step: Construct Robot".
 	 * @param tabTitle, the title of the tab
 	 * @param jmeSimulation, the physical simulation.
+	 * @param firstTabbedPane,
 	 */
-	public ConstructionTab(String tabTitle,JMESimulation jmeSimulation){
+	public ConstructionTab(boolean firstTabbedPane,String tabTitle,JMESimulation jmeSimulation){
+		this.firstTabbedPane = firstTabbedPane;
 		this.tabTitle = tabTitle;
 		this.jmeSimulation = jmeSimulation;
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		

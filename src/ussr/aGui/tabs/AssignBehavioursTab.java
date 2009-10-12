@@ -8,7 +8,8 @@ import ussr.physics.jme.JMESimulation;
  */
 public class AssignBehavioursTab extends Tabs {
 
-	public AssignBehavioursTab(String tabTitle,JMESimulation jmeSimulation){
+	public AssignBehavioursTab(boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation){
+		this.firstTabbedPane = firstTabbedPane;
 		this.tabTitle = tabTitle;
 		this.jPanel1000 = new javax.swing.JPanel();
 		this.jmeSimulation = jmeSimulation;

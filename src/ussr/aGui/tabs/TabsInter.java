@@ -16,6 +16,9 @@ public interface TabsInter {
 	 * @return tabTitle, the title of the tab.
 	 */
 	public String getTabTitle();
+	
+	
+	public boolean isFirstTabbedPane();
 
 
 }

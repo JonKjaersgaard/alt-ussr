@@ -21,6 +21,8 @@ public interface MainFrameInter {
 	public void activateDuringSimulation( );
 	
 	public javax.swing.JTabbedPane getJTabbedPane1();
+	
+	
 
 	
 }

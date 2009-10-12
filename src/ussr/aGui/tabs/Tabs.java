@@ -8,6 +8,13 @@ import ussr.physics.jme.JMESimulation;
  */
 public abstract class Tabs implements TabsInter {
 	
+	protected boolean firstTabbedPane;
+	
+	
+	public boolean isFirstTabbedPane() {
+		return firstTabbedPane;
+	}
+
 	/**
 	 * The title of the tab.
 	 */
