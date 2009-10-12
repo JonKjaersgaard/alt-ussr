@@ -15,6 +15,7 @@ import java.util.List;
 import ussr.aGui.MainFrame;
 import ussr.aGui.MainFrameInter;
 import ussr.aGui.tabs.AssignBehavioursTab;
+import ussr.aGui.tabs.ConsoleTab;
 import ussr.aGui.tabs.ConstructionTab;
 import ussr.aGui.tabs.NewTab;
 import ussr.aGui.tabs.TabsInter;
@@ -338,13 +339,15 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			if (MainFrame.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
 			}else{
 				JMESimulation simulation = (JMESimulation)this;
-				ArrayList<TabsInter> interactionTabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI
-				interactionTabs.add(new ConstructionTab("1 Step: Construct Robot (Interactive User Guide)",simulation));//Build in tab
-				interactionTabs.add(new AssignBehavioursTab("2 Step: Assign Behaviour (Interactive User Guide)",simulation));//Build in tab
-				interactionTabs.add(new NewTab("YOUR NEW TAB",simulation));//YOUR NEW TAB
-				interactionTabs.add(new NewTab("YOUR NEW TAB1",simulation));//YOUR NEW TAB1				
+				ArrayList<TabsInter> tabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI
+				tabs.add(new ConstructionTab(true,"1 Step: Construct Robot (Interactive User Guide)",simulation));//Build in tab
+				tabs.add(new AssignBehavioursTab(true,"2 Step: Assign Behaviour (Interactive User Guide)",simulation));//Build in tab
+				tabs.add(new NewTab(true, "YOUR NEW TAB",simulation));//YOUR NEW TAB
+				tabs.add(new NewTab(true, "YOUR NEW TAB1",simulation));//YOUR NEW TAB1
+				
+				tabs.add(new ConsoleTab(false,"Console", null));
 
-				MainFrameInter mainFrame = new MainFrame(this,interactionTabs);
+				MainFrameInter mainFrame = new MainFrame(this,tabs);
 				//mainFrame.getJTabbedPane1().setVisible(false);
 				mainFrame.activateDuringSimulation();
 				//mainFrame.getJTabbedPane1().setVisible(false);
