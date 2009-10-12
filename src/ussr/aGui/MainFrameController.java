@@ -26,7 +26,7 @@ public class MainFrameController {
 	 * Opens file chooser in the form of Open dialog
 	 * 
 	 */
-	public static void jMenuItem2ActionPerformed(GuiInter fcOpenFrame) {
+	public static void openActionPerformed(GuiInter fcOpenFrame) {
 		fcOpenFrame.activate();		
 	}
 
@@ -34,7 +34,7 @@ public class MainFrameController {
 	 * Opens file chooser in the form of Save dialog
 	 * 
 	 */
-	public static void jMenuItem3ActionPerformed(GuiInter fcSaveFrame) {				
+	public static void saveActionPerformed(GuiInter fcSaveFrame) {				
 		fcSaveFrame.activate();				
 	}
 
@@ -221,7 +221,7 @@ public class MainFrameController {
 	 * Controls pausing of running simulation.
 	 * @param jmeSimulation
 	 */
-	public static void jButton7ActionPerformed(JMESimulation jmeSimulation) {       	
+	public static void jButtonPauseActionPerformed(JMESimulation jmeSimulation) {       	
 		if (jmeSimulation.isPaused()==false)
 			jmeSimulation.setPause(true);
 	}
