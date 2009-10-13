@@ -206,9 +206,8 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		if (this.toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){
 			if (connectorsMatch()){
 				this.selectOperations.addNewModuleOnConnector(this);
-			}else{
-				JOptionPane.showMessageDialog(null, "Method called pickTarget failed to extract the connector number","Error", JOptionPane.ERROR_MESSAGE);
-			}			
+			}else{//Just skip(connector number will be 1000) 		
+			}
 		}else if (this.toolName.equals(ConstructionTools.ON_CHOSEN_CONNECTOR)||this.toolName.equals(ConstructionTools.LOOP)){
 			this.selectOperations.addNewModuleOnConnector(this);
 		}else if (this.toolName.equals(ConstructionTools.ON_ALL_CONNECTORS)){
