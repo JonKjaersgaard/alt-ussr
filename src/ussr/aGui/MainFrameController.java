@@ -246,7 +246,7 @@ public class MainFrameController {
 			}else if((checkBoxMenuItems.get(index).getText().equalsIgnoreCase(tabs.get(index).getTabTitle()))&&checkBoxMenuItems.get(index).isSelected()==true){
 				checkBoxMenuItems.get(index).setSelected(true);
 				//jTabbedPane1.setEnabledAt(index, true);			
-					jTabbedPane1.add(tabs.get(index).getTabTitle(),tabs.get(index).getJPanel1000());				
+					jTabbedPane1.add(tabs.get(index).getTabTitle(),tabs.get(index).getJComponent());				
 
 			}
 			}

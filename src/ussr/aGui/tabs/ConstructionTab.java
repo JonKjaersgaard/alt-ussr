@@ -19,7 +19,7 @@ public class ConstructionTab extends Tabs {
 		this.tabTitle = tabTitle;
 		this.jmeSimulation = jmeSimulation;
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
-		this.jPanel1000 = new javax.swing.JPanel();
+		this.jComponent = new javax.swing.JPanel();
 		initComponents();
 	}
 
@@ -39,7 +39,7 @@ public class ConstructionTab extends Tabs {
 		/*Definition of visual appearance for each instantiated component*/
 		jLabel1000.setText("1) Choose modular robot:");
 		/*Add your component into panel.*/
-		jPanel1000.add(jLabel1000);
+		jComponent.add(jLabel1000);
 
 		jComboBox1000.setToolTipText("Supported modular robots");
 		jComboBox1000.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ATRON", "ODIN", "MTRAN", "CKBOT" }));
@@ -48,15 +48,15 @@ public class ConstructionTab extends Tabs {
 				ConstructionTabController.jComboBox1ActionPerformed(jComboBox1000,jmeSimulation);
 			}
 		});
-		jPanel1000.add(jComboBox1000);
+		jComponent.add(jComboBox1000);
 
 		javax.swing.JLabel jLabel999 = new javax.swing.JLabel();
 		jLabel999.setText(" and locate it in the simulation environment;");
-		jPanel1000.add(jLabel999);
+		jComponent.add(jLabel999);
 
 		javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
 		jLabel3.setText("2) Choose module rotation (in the one of the following three components)");
-		jPanel1000.add(jLabel3);       
+		jComponent.add(jLabel3);       
 
 		jComboBox2.setToolTipText("Standard rotations of modules");
 		jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "" }));
@@ -66,7 +66,7 @@ public class ConstructionTab extends Tabs {
 				ConstructionTabController.jComboBox2ActionPerformed(jmeSimulation);
 			}
 		});
-		jPanel1000.add(jComboBox2);
+		jComponent.add(jComboBox2);
 
 		javax.swing.JButton jButton5 = new javax.swing.JButton();
 		jButton5.setToolTipText("Rotate opposite");        
@@ -76,7 +76,7 @@ public class ConstructionTab extends Tabs {
 				ConstructionTabController.jButton5ActionPerformed(jmeSimulation);
 			}
 		});
-		jPanel1000.add(jButton5);
+		jComponent.add(jButton5);
 
 		javax.swing.JButton jButton6 = new javax.swing.JButton();
 		jButton6.setToolTipText("Variation of module rotations");
@@ -86,15 +86,15 @@ public class ConstructionTab extends Tabs {
 				ConstructionTabController.jButton6ActionPerformed(jmeSimulation);
 			}
 		});
-		jPanel1000.add(jButton6);
+		jComponent.add(jButton6);
 
 		javax.swing.JLabel jLabel998 = new javax.swing.JLabel();
 		jLabel998.setText(" and select the module in the simulation environment to apply it to;");
-		jPanel1000.add(jLabel998);
+		jComponent.add(jLabel998);
 
 		javax.swing.JLabel jLabel997 = new javax.swing.JLabel();
 		jLabel997.setText(" 3)Choose one of the following three construction tools:");
-		jPanel1000.add(jLabel997);
+		jComponent.add(jLabel997);
 		
 		javax.swing.JButton jButton7 = new javax.swing.JButton();
 		jButton7.setToolTipText("Variation of module rotations");
@@ -104,11 +104,11 @@ public class ConstructionTab extends Tabs {
 				ConstructionTabController.jButton7ActionPerformed(jmeSimulation);
 			}
 		});
-		jPanel1000.add(jButton7);
+		jComponent.add(jButton7);
 		
 		javax.swing.JLabel jLabel996 = new javax.swing.JLabel();
 		jLabel996.setText("here select connector on the module(white or black geometric shapes) ");
-		jPanel1000.add(jLabel996);
+		jComponent.add(jLabel996);
 		
 		
 		jComboBox3.setToolTipText("Numbers of connectors on the module");
@@ -119,7 +119,7 @@ public class ConstructionTab extends Tabs {
 				//ConstructionTabController.jComboBox3ActionPerformed(jComboBox1000,jmeSimulation);
 			}
 		});
-		jPanel1000.add(jComboBox3);
+		jComponent.add(jComboBox3);
 		
 		
 		/*javax.swing.JButton jButton8 = new javax.swing.JButton();

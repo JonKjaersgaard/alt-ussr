@@ -31,6 +31,10 @@ public abstract class GuiFrames extends javax.swing.JFrame implements GuiInter {
 	public final int TAB_PANE_HEIGHT2 = 100;
 
 
+	/**
+	 *  Width of window. 
+	 */
+	//public static int windowWidth = 0;
 
 
 	/**
@@ -41,6 +45,7 @@ public abstract class GuiFrames extends javax.swing.JFrame implements GuiInter {
 		for (int index =0;index<components.size();index++ ){
 			components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING,components.get(index).getHeight()));
 		}
+		//windowWidth =(int)SCREEN_DIMENSION.getWidth()-PADDING; 
 	}
 
 
@@ -57,15 +62,18 @@ public abstract class GuiFrames extends javax.swing.JFrame implements GuiInter {
 	}
 	
 	/**
-	 * Initial height of  window. 
+	 *  Height of window. 
 	 */
 	private int windowHeight=0;
+	
+	
 	
 	public void setSizeAccordingComponents(javax.swing.JFrame frame, ArrayList<javax.swing.JComponent> components){
 		for (int  index =0;index<components.size();index++){
 			windowHeight = windowHeight + components.get(index).getHeight();			
      	}
 		frame.setSize((int)SCREEN_DIMENSION.getWidth()/2,windowHeight+2*PADDING);
+		
 	}
 
 	/**

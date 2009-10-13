@@ -515,7 +515,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		final ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems = new ArrayList<javax.swing.JCheckBoxMenuItem>();
 		for (int index =0; index < tabs.size(); index++){					  
 			TabsInter currentTab = tabs.get(index); 
-			jTabbedPane.add(tabs.get(index).getTabTitle(),currentTab.getJPanel1000());
+			jTabbedPane.add(tabs.get(index).getTabTitle(),currentTab.getJComponent());
 
 			jCheckBoxMenuItemNew = new javax.swing.JCheckBoxMenuItem();
 			jCheckBoxMenuItemNew.setSelected(true);

@@ -27,9 +27,10 @@ public abstract class Tabs implements TabsInter {
 	
 	/**
 	 * The panel, which is the container for all components situated in the tab. 
-	 * In other words, tab contains panel and panel contains other components.		
+	 * In other words, tab contains panel and panel contains other components.
+	 * UPDATE		
 	 */
-	protected javax.swing.JPanel jPanel1000;	
+	protected javax.swing.JComponent jComponent;	
 	
     /**
      * Initializes the visual appearance of all components in the panel.
@@ -39,9 +40,10 @@ public abstract class Tabs implements TabsInter {
     
     /**
      * Getter method common for all tabs and is used by GUI during addition of new tab.
+     * UPDATE
      */
-    public  javax.swing.JPanel getJPanel1000() {
-		return jPanel1000;
+    public  javax.swing.JComponent getJComponent() {
+		return jComponent;
 	}
     
 	/**
