@@ -6,6 +6,7 @@ import ussr.aGui.GuiFrames;
 
 import ussr.aGui.fileChooser.FileFilter;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
+import ussr.physics.jme.JMESimulation;
 
 /**
  * Manages the FileChooser in two dialog forms: Open and Save.
@@ -28,8 +29,8 @@ public abstract class FileChooserFrame extends GuiFrames{
 	/**
 	 * The controllers for each file extension.
 	 */
-	protected ArrayList<FileChooserControllerInter> fileChooserControllers;	
-
+	protected ArrayList<FileChooserControllerInter> fileChooserControllers;
+	
 	/** 
 	 * This method is called from within the constructor to initialize the form(frame) of the file chooser.
 	 */	

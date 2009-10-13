@@ -18,7 +18,7 @@ public class NewTab extends Tabs {
 	}
 
 	/**
-     * Initializes the visual appearance of all components in the panel.
+     * Initializes the visual appearance of all components in the tab.
      * Follows Strategy  pattern.
      */
 	public void initComponents() {

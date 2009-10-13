@@ -3,6 +3,7 @@ package ussr.aGui.fileChooser.appearance;
 import java.util.ArrayList;
 
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
+import ussr.physics.jme.JMESimulation;
 
 /**
  * Manages the file chooser in the form of Open dialog.
@@ -22,7 +23,7 @@ public class FileChooserOpenFrame extends FileChooserFrame  {
 	 */
 	public FileChooserOpenFrame(ArrayList<String> fileExtensions, ArrayList<FileChooserControllerInter> fileChooserControllers) {
 		this.fileExtensions = fileExtensions;
-		this.fileChooserControllers = fileChooserControllers; 
+		this.fileChooserControllers = fileChooserControllers;
 		initComponents();
 		changeToOpenDialog();
 		setFilesToFilter(fileExtensions);

@@ -1,5 +1,7 @@
 package ussr.aGui.fileChooser.controllers;
 
+import ussr.physics.jme.JMESimulation;
+
 public interface FileChooserControllerInter {
 	
     /**

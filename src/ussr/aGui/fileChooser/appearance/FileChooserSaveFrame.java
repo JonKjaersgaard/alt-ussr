@@ -3,6 +3,7 @@ package ussr.aGui.fileChooser.appearance;
 import java.util.ArrayList;
 
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
+import ussr.physics.jme.JMESimulation;
 
 /**
  * Manages the file chooser in the form of Save dialog.
@@ -17,6 +18,7 @@ public class FileChooserSaveFrame extends FileChooserFrame  {
 	 * Manages the file chooser in the form of Save dialog.
 	 * @param fileExtensions,extensions of the files, which will be available to filter out by the file chooser.
 	 * @param fileChooserControllers, the controllers for each file extension.
+	 * @param jmeSimulation,
 	 */
 	public FileChooserSaveFrame(ArrayList<String> fileExtensions,ArrayList<FileChooserControllerInter> fileChooserControllers) {	
 		this.fileExtensions = fileExtensions;

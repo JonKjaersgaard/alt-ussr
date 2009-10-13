@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
+import ussr.physics.jme.JMESimulation;
+
 public class NewFileChooserController extends FileChooserController {
 
 	@Override

@@ -190,7 +190,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		ArrayList <String> fileExtensions = new ArrayList<String>();
 		fileExtensions.add(".xml");
 
-		FileChooserControllerInter fcXMLController = new FileChooserXMLController();
+		FileChooserControllerInter fcXMLController = new FileChooserXMLController(this.jmeSimulation);
 		ArrayList<FileChooserControllerInter> fcControllers = new ArrayList<FileChooserControllerInter>();
 		fcControllers.add(fcXMLController);
 

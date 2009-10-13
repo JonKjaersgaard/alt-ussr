@@ -3,6 +3,8 @@ package ussr.aGui.tabs;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
@@ -18,19 +20,19 @@ import ussr.physics.jme.JMESimulation;
  */
 public class ConsoleTab extends Tabs {
 	
-	private GridBagConstraints gridBagConstraints = new GridBagConstraints();
+	
 
 
 	public ConsoleTab(boolean firstTabbedPane, String tabTitle, JMESimulation jmeSimulation){
 		this.firstTabbedPane = firstTabbedPane;
 		this.tabTitle = tabTitle;		
 		this.jmeSimulation = jmeSimulation;
-		this.jComponent = new javax.swing.JScrollPane();
+		this.jComponent = new javax.swing.JScrollPane();//JComponent, which will be added to the tab in the main Window.
 		initComponents();
 	}
 
 	/**
-     * Initializes the visual appearance of all components in the panel.
+     * Initializes the visual appearance of all components in the tab.
      * Follows Strategy  pattern.
      */
 	public void initComponents() {
@@ -40,7 +42,11 @@ public class ConsoleTab extends Tabs {
 		
 		jTextArea1.setColumns(10);		
 		//
-		jTextArea1.setRows(100);
+		jTextArea1.setRows(1000);
+		
+		
+		
+		//System.S
         
      /*   gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		//jTextArea1.setPreferredSize(new Dimension(jPanel1000.getWidth(),jPanel1000.getHeight()));
@@ -50,10 +56,22 @@ public class ConsoleTab extends Tabs {
 
 		((JScrollPane) jComponent).setViewportView(jTextArea1);
 		
+		//PrintStream printStream = new PrintStream();
 		
 		
+		//System.set
 		
-		//PrintStream printStream = new PrintStream(/*new FileOutputStream(jTextArea1)*/);
+	/*	String s = "";
+		PrintStream printStream = null;
+	try {
+		 printStream = new PrintStream();
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		
+	}
+	System.setOut();
+	jTextArea1.setText(s);*/
         //jPanel1000.add(jTextArea1,gridBagConstraints);
 		//System.set
 	}
