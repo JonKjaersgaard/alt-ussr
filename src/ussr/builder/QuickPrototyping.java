@@ -1529,6 +1529,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		this.fileChooserSave = new FileChooser(JME_simulation,false); 
 		this.fileChooserSave.activate(); 	
 		guiHelper.passTo(AssistantjTextField, "Save construction  data in XML file");
+		System.out.println("Save pressed");
 
 	}                                           
 
@@ -1601,9 +1602,10 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 * @param evt, selection with left side of the mouse event (Menu item selection).     
 	 */	    
 	private void ExitjMenuItemActionPerformed(java.awt.event.ActionEvent evt) {                                              
-		//System.out.println("File-->Exit");//for debugging
+		System.out.println("File-->Exit");//for debugging
 		instanceFlag = false; // reset the flag
-		this.dispose();    
+		this.dispose();
+		
 	} 
 
 	private void controllersjComboBoxActionPerformed(ActionEvent evt) {

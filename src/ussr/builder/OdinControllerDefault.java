@@ -22,7 +22,7 @@ public class OdinControllerDefault extends OdinController {
 	@Override
 	public void activate() {
 		//expand();
-	 //expandContract();
+	 expandContract();
 	}
 	
 	private void expandContract() {
