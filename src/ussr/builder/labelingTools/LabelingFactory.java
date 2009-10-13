@@ -1,5 +1,7 @@
 package ussr.builder.labelingTools;
 
+import ussr.builder.helpers.LabelingFactoryMapHelper;
+
 /**
  * The main responsibility of this class is to act according to Factory pattern and 
  * create specific object of entities for labeling. For example: LabelModule() for entity LabeledEntities.MODULE  
