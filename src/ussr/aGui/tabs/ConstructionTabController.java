@@ -12,9 +12,12 @@ import ussr.builder.constructionTools.ConstructionToolSpecification;
 import ussr.builder.constructionTools.ConstructionTools;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
+import ussr.builder.genericTools.ColorConnectors;
+import ussr.builder.genericTools.RemoveModule;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
+import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.samples.odin.modules.Odin;
 
 public class ConstructionTabController {
@@ -37,6 +40,10 @@ public class ConstructionTabController {
 	public static void jButtonGroupActionPerformed(AbstractButton button,JMESimulation jmeSimulation ) {
 		ConstructionTab.getJLabel1000().setVisible(true);
 		ConstructionTab.getJLabel10001().setVisible(true);
+		ConstructionTab.getButton10().setEnabled(true);
+		ConstructionTab.getButton11().setEnabled(true);
+		ConstructionTab.getButton12().setEnabled(true);
+		
 		
 		 String chosenModularRobot = button.getText(); 
 			
@@ -159,6 +166,18 @@ public class ConstructionTabController {
 	 */	
 	public static void jButton7ActionPerformed(JMESimulation jmeSimulation) {		
 		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
+    }
+	
+	public static void jButton10ActionPerformed(JMESimulation jmeSimulation) {	
+		jmeSimulation.setPicker(new RemoveModule());		
+    }
+	
+	public static void jButton11ActionPerformed(JMESimulation jmeSimulation) {	
+		jmeSimulation.setPicker(new PhysicsPicker(true, true));		
+    }
+	
+	public static void jButton12ActionPerformed(JMESimulation jmeSimulation) {	
+		jmeSimulation.setPicker(new ColorConnectors());		
     }
 	    
 }

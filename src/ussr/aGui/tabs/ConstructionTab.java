@@ -1,6 +1,7 @@
 package ussr.aGui.tabs;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -46,8 +47,12 @@ public class ConstructionTab extends Tabs {
 	 * Follows Strategy  pattern.
 	 */
 	public void initComponents(){
-
-
+        
+		/*Instantiation of components*/
+		jToolBar1 = new javax.swing.JToolBar();
+		
+		
+		
 		jLabel10002 = new javax.swing.JLabel();		
 		jLabel10002.setText("Shortcut:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -143,7 +148,92 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.gridy = 4;
 		jComponent.add(jLabel10003,gridBagConstraints);
    
+		jLabel10004 = new javax.swing.JLabel();		
+		jLabel10004.setText("Generic functionality:");
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridy = 5;
+		jComponent.add(jLabel10004,gridBagConstraints);		
+		
+		jToolBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBar1.setFloatable(false);//user can not make the tool bar to float
+		jToolBar1.setRollover(true);// the buttons inside are roll over
+		jToolBar1.setToolTipText("Generic tools");
+		jToolBar1.setPreferredSize(new Dimension(100,40));
+		
+		gridBagConstraints.fill = GridBagConstraints.LINE_END;
+		gridBagConstraints.gridx = 3;		
+		gridBagConstraints.gridy = 5;
+		//jComponent.add(button11,gridBagConstraints);	
+		
+		button11 =   new javax.swing.JButton();
+		button11.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOVE_MODULE));
+		button11.setToolTipText("Move module");
+		button11.setFocusable(false); 
+		button11.setEnabled(false);
+		button11.setPreferredSize(new java.awt.Dimension(30, 30));	
+		button11.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructionTabController.jButton11ActionPerformed(jmeSimulation);
+			}
+		});
+		jToolBar1.add(button11);
+		
+		button10 =   new javax.swing.JButton();
+		button10.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE_MODULE));
+		button10.setToolTipText("Delete module");
+		button10.setFocusable(false);
+		button10.setEnabled(false);
+		button10.setPreferredSize(new java.awt.Dimension(30, 30));
+		button10.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructionTabController.jButton10ActionPerformed(jmeSimulation);
+			}
+		});
+		//gridBagConstraints.fill = GridBagConstraints.LINE_END;
+		//gridBagConstraints.gridx = 3;
+		//gridBagConstraints.gridwidth = 1; 
+		//gridBagConstraints.gridy = 5;
+		jToolBar1.add(button10);
+		
+		button12 =   new javax.swing.JButton();
+		button12.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + COLOUR_CONNECTORS));
+		button12.setToolTipText("Colour connectors");
+		button12.setFocusable(false);
+		button12.setEnabled(false);
+		button12.setPreferredSize(new java.awt.Dimension(30, 30));
+		button12.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructionTabController.jButton12ActionPerformed(jmeSimulation);
+			}
+		});
+		//gridBagConstraints.fill = GridBagConstraints.LINE_END;
+		//gridBagConstraints.gridx = 4;
+		//gridBagConstraints.gridwidth = 1; 
+		//gridBagConstraints.gridy = 5;
+		//jComponent.add(button12,gridBagConstraints);
+		jToolBar1.add(button12);
+		jComponent.add(jToolBar1,gridBagConstraints);
+		
+		
+			
+		
 
+		
+		
+		
+		
+		
+		
+		/*button10 =   new javax.swing.JButton();
+		button10.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE_MODULE));
+		button10.setToolTipText("Delete module");
+		button10.setFocusable(false);    
+		button10.setPreferredSize(new java.awt.Dimension(30, 30));   
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 2;
+		gridBagConstraints.gridy = 5;
+		jComponent.add(button10,gridBagConstraints);*/
 
 		//javax.swing.AbstractButton button =  new JButton();
 
@@ -252,6 +342,7 @@ public class ConstructionTab extends Tabs {
 
 	}
 
+	/*Getters*/
 
 	public static javax.swing.JComboBox getJComboBox2() {
 		return jComboBox2;
@@ -272,6 +363,18 @@ public class ConstructionTab extends Tabs {
 	public static javax.swing.JLabel getJLabel10001() {
 		return jLabel10001;
 	}
+	
+	public static javax.swing.JButton getButton10() {
+		return button10;
+	}
+	
+	public static javax.swing.JButton getButton11() {
+		return button11;
+	}
+
+	public static javax.swing.JButton getButton12() {
+		return button12;
+	}
 
 	/*Declaration of tab components*/
 	private static javax.swing.JComboBox jComboBox2;	
@@ -282,13 +385,22 @@ public class ConstructionTab extends Tabs {
 	private static javax.swing.JLabel jLabel10001;
 	private static javax.swing.JLabel jLabel10002;
 	private static javax.swing.JLabel jLabel10003;
-	
+	private static javax.swing.JLabel jLabel10004;
 
 	private static javax.swing.JComboBox jComboBox1000;
 
 	private static  javax.swing.AbstractButton button1;
+	
+	
+	private  static javax.swing.JButton button10;
+	private  static javax.swing.JButton button11;
+	private  static javax.swing.JButton button12;
+	
+	private javax.swing.JToolBar jToolBar1;
 
+	
 
+	
 
 
 

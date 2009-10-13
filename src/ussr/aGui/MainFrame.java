@@ -338,8 +338,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 
 		getContentPane().add(jToolBarSimulationControl);
 
-		jTabbedPaneInteraction.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-		jTabbedPaneInteraction.setToolTipText("Interaction with simulation environment");
+		jTabbedPaneInteraction.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);		
 		jTabbedPaneInteraction.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING, TAB_PANE_HEIGHT1));
 		//jTabbedPane1.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING,TAB_PANE_HEIGHT1));
 		jTabbedPaneInteraction.setFocusable(false);		
