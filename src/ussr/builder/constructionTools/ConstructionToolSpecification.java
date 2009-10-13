@@ -6,6 +6,7 @@ import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
+import ussr.aGui.tabs.ConstructionTab;
 import ussr.builder.BuilderHelper;
 import ussr.builder.SupportedModularRobots;
 
@@ -143,10 +144,14 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * and the module type selected in simulation environment is MTRAN. Then the method will complain.	 * 
 	 */
 	private void callAppropriateTool(){
-		if (this.modularRobotName.equals(SupportedModularRobots.ATRON)&& isAtron()||this.modularRobotName.equals(SupportedModularRobots.MTRAN)&& isMtran()||this.modularRobotName.equals(SupportedModularRobots.ODIN)&&isOdin()||this.modularRobotName.equals(SupportedModularRobots.CKBOTSTANDARD)&&isCKBotStandard()){		
+	    if (this.modularRobotName.equals(SupportedModularRobots.ATRON)&& isAtron()||this.modularRobotName.equals(SupportedModularRobots.MTRAN)&& isMtran()||this.modularRobotName.equals(SupportedModularRobots.ODIN)&&isOdin()||this.modularRobotName.equals(SupportedModularRobots.CKBOTSTANDARD)&&isCKBotStandard()){		
 			callTool();	
-		}else{
-			JOptionPane.showMessageDialog(null, "This module is not an "+modularRobotName+" module. The chosen tool is for "+ modularRobotName+ "modules!","Error", JOptionPane.ERROR_MESSAGE);// Inform the user
+		}/*else if (isAtron()||isMtran()||isOdin()||isCKBotStandard()){
+			
+			ConstructionTab.getButton1().setSelected(true);
+			
+		}*/else{
+			JOptionPane.showMessageDialog(null, "Wrong tool","Error", JOptionPane.ERROR_MESSAGE);// Inform the user
 		}
 	}
 

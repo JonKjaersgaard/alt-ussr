@@ -1,6 +1,7 @@
 package ussr.builder.constructionTools;
 
 import ussr.builder.BuilderHelper;
+import ussr.builder.helpers.ModuleMapEntryHelper;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;

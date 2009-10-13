@@ -10,6 +10,7 @@ import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;
 import ussr.builder.BuilderHelper;
+import ussr.builder.helpers.ModuleMapEntryHelper;
 
 /**
  * The main responsibility of this class  is to support children classes with common methods for 

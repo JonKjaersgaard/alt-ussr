@@ -1,6 +1,8 @@
 package ussr.builder.constructionTools;
 
 import ussr.builder.BuilderHelper;
+import ussr.builder.helpers.ModuleMapEntryHelper;
+import ussr.builder.helpers.ModuleRotationMapEntryHelper;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;

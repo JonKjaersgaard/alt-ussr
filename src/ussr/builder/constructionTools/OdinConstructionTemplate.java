@@ -2,6 +2,7 @@ package ussr.builder.constructionTools;
 
 import com.jme.math.Quaternion;
 import ussr.builder.BuilderHelper;
+import ussr.builder.helpers.ModuleRotationMapEntryHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Connector;
