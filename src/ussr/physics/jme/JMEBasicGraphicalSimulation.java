@@ -340,7 +340,8 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			}else{
 				JMESimulation simulation = (JMESimulation)this;
 				ArrayList<TabsInter> tabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI
-				tabs.add(new ConstructionTab(true,"1 Step: Construct Robot (Interactive User Guide)",simulation));//Build in tab
+				//tabs.add(new ConstructionTab(true,"1 Step: Construct Robot (Interactive User Guide)",simulation));//Build in tab
+				tabs.add(new ConstructionTab(true,"1 Step: Construct Robot",simulation));//Build in tab
 				tabs.add(new AssignBehavioursTab(true,"2 Step: Assign Behaviour (Interactive User Guide)",simulation));//Build in tab
 				tabs.add(new NewTab(true, "YOUR NEW TAB",simulation));//YOUR NEW TAB
 				tabs.add(new NewTab(true, "YOUR NEW TAB1",simulation));//YOUR NEW TAB1
