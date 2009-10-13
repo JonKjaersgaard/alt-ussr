@@ -2,7 +2,7 @@ package ussr.builder.saveLoadXML;
 
 /**
  * Supports saving and loading of data in XML format.
- * In  based on SAX and DOM. Follows design pattern called TEMPLATE METHOD.
+ * Is  based on SAX and DOM. Follows design pattern called TEMPLATE METHOD.
  * @author Konstantinas
  */
 public interface SaveLoadXMLFileTemplate {
