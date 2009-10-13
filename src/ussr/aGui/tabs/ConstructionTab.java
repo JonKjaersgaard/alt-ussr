@@ -3,6 +3,7 @@ package ussr.aGui.tabs;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -17,10 +18,10 @@ import ussr.physics.jme.JMESimulation;
  */
 public class ConstructionTab extends Tabs {
 
-	
-	
+
+
 	private GridBagConstraints gridBagConstraints = new GridBagConstraints();
-	
+
 	/**
 	 * Defines visual appearance of the tab called "1 Step: Construct Robot".
 	 * @param tabTitle, the title of the tab
@@ -33,8 +34,12 @@ public class ConstructionTab extends Tabs {
 		this.jmeSimulation = jmeSimulation;
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		this.jComponent = new javax.swing.JPanel(new GridBagLayout());
+		//this.gridBagConstraints =  new GridBagConstraints();
+		//gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		initComponents();
 	}
+
+
 
 	/**
 	 * Initializes the visual appearance of all components in the tab.
@@ -43,52 +48,54 @@ public class ConstructionTab extends Tabs {
 	public void initComponents(){
 
 
-/*		jLabel1000 = new javax.swing.JLabel();		
-		jLabel1000.setText("Choose supported modular robot:");
-		jComponent.add(jLabel1000);*/
-	
-		ButtonGroup buttonGroup = new ButtonGroup() ;
-
-		javax.swing.AbstractButton button1 =  new JRadioButton();
-		button1.setText("ATRON");
-		
-		button1.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//ConstructionTabController.jComboBox1ActionPerformed(jComboBox1000,jmeSimulation);
-			}
-		});
+		jLabel10002 = new javax.swing.JLabel();		
+		jLabel10002.setText("Shortcut:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
-		//gridBagConstraints.ipady = 10; 
-		jComponent.add(button1,gridBagConstraints);
-		buttonGroup.add(button1);
+		jComponent.add(jLabel10002,gridBagConstraints);
 
-		javax.swing.AbstractButton button2 =  new JRadioButton();
-		button2.setText("Odin");
-		button2.addActionListener(new java.awt.event.ActionListener() {
+		final ButtonGroup buttonGroup = new ButtonGroup() ;
+
+		button1 =  new JRadioButton();
+		button1.setText("ATRON");		
+		button1.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//ConstructionTabController.jComboBox1ActionPerformed(jComboBox1000,jmeSimulation);
+				ConstructionTabController.jButtonGroupActionPerformed(button1,jmeSimulation);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
-		gridBagConstraints.gridy = 0;
+		gridBagConstraints.gridy = 1;
+		//gridBagConstraints.ipady = 10; 
+		jComponent.add(button1,gridBagConstraints);
+		buttonGroup.add(button1);
+
+		final javax.swing.AbstractButton button2 =  new JRadioButton();
+		button2.setText("Odin");
+		button2.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructionTabController.jButtonGroupActionPerformed(button2,jmeSimulation);
+			}
+		});
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 2;
+		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 10; 
 		jComponent.add(button2,gridBagConstraints);
 		buttonGroup.add(button2);
 
 
-		javax.swing.AbstractButton button3 =  new JRadioButton();
-		button3.setText("M-Tran");
+		final javax.swing.AbstractButton button3 =  new JRadioButton();
+		button3.setText("MTran");
 		button3.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//ConstructionTabController.jComboBox1ActionPerformed(jComboBox1000,jmeSimulation);
+				ConstructionTabController.jButtonGroupActionPerformed(button3,jmeSimulation);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 2;
-		gridBagConstraints.gridy = 0;
+		gridBagConstraints.gridx = 3;
+		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 10; 
 		jComponent.add(button3,gridBagConstraints);
 		buttonGroup.add(button3);
@@ -97,24 +104,45 @@ public class ConstructionTab extends Tabs {
 		button4.setText("CKbot");
 		button4.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//ConstructionTabController.jComboBox1ActionPerformed(jComboBox1000,jmeSimulation);
+				ConstructionTabController.jButtonGroupActionPerformed(button1,jmeSimulation);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 3;
-		gridBagConstraints.gridy = 0;
+		gridBagConstraints.gridx = 4;
+		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 40; 
 		jComponent.add(button4,gridBagConstraints);
-		buttonGroup.add(button4);
+		buttonGroup.add(button4);		
+
+		jLabel1000 = new javax.swing.JLabel();		
+		jLabel1000.setText("Next select connectors (black and white geometric shapes).");
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridy = 2;
+		gridBagConstraints.gridwidth = 4;
+		gridBagConstraints.insets = new Insets(5,0,0,0);  //top padding
+		//gridBagConstraints.weighty = 0.5;   //request any extra vertical space
+		jComponent.add(jLabel1000,gridBagConstraints);
+		jLabel1000.setVisible(false);		
+
+
+		jLabel10001 = new javax.swing.JLabel();		
+		jLabel10001.setText("When done with constructing, go to the next tab.");
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridy = 3;
+		gridBagConstraints.gridwidth = 4;
+		jComponent.add(jLabel10001,gridBagConstraints);
+		jLabel10001.setVisible(false);
 		
-	    jLabel1000 = new javax.swing.JLabel();		
-		jLabel1000.setText("Hint: Next select connector on the module (black and white geometric shapes)");
+		
+		jLabel10003 = new javax.swing.JLabel();		
+		jLabel10003.setText("Additional:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 1;
-		gridBagConstraints.gridwidth = 4;
-		jComponent.add(jLabel1000,gridBagConstraints);
-
+		gridBagConstraints.gridy = 4;
+		jComponent.add(jLabel10003,gridBagConstraints);
+   
 
 
 		//javax.swing.AbstractButton button =  new JButton();
@@ -233,12 +261,34 @@ public class ConstructionTab extends Tabs {
 		return jComboBox3;
 	}
 
+	public static javax.swing.AbstractButton getButton1() {
+		return button1;
+	}
+	
+	public static javax.swing.JLabel getJLabel1000() {
+		return jLabel1000;
+	}
+	
+	public static javax.swing.JLabel getJLabel10001() {
+		return jLabel10001;
+	}
 
 	/*Declaration of tab components*/
 	private static javax.swing.JComboBox jComboBox2;	
 	private static javax.swing.JComboBox jComboBox3;
 	private static javax.swing.JLabel jLabel1000;
+	
+
+	private static javax.swing.JLabel jLabel10001;
+	private static javax.swing.JLabel jLabel10002;
+	private static javax.swing.JLabel jLabel10003;
+	
+
 	private static javax.swing.JComboBox jComboBox1000;
+
+	private static  javax.swing.AbstractButton button1;
+
+
 
 
 

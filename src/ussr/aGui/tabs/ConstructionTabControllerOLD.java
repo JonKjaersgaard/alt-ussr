@@ -1,8 +1,5 @@
 package ussr.aGui.tabs;
 
-import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
-
 import ussr.builder.BuilderHelper;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
@@ -17,7 +14,7 @@ import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.odin.modules.Odin;
 
-public class ConstructionTabController {
+public class ConstructionTabControllerOLD {
 
 	
 	/**
@@ -34,36 +31,34 @@ public class ConstructionTabController {
 	private static SupportedModularRobots chosenMRname = SupportedModularRobots.ATRON; //MR- modular robot. Default is ATRON, just do not have the case when it is empty String
 	
 	
-	public static void jButtonGroupActionPerformed(AbstractButton button,JMESimulation jmeSimulation ) {
-		ConstructionTab.getJLabel1000().setVisible(true);
-		ConstructionTab.getJLabel10001().setVisible(true);
+	public static void jComboBox1ActionPerformed(javax.swing.JComboBox jComboBox1000,JMESimulation jmeSimulation ) {
 		
-		 String chosenModularRobot = button.getText(); 
+		 String chosenModularRobot = jComboBox1000.getSelectedItem().toString(); 
 			
-				chosenMRname = SupportedModularRobots.valueOf(chosenModularRobot.toUpperCase());
+				chosenMRname = SupportedModularRobots.valueOf(jComboBox1000.getSelectedItem().toString().toUpperCase());
 				if (chosenMRname.equals(SupportedModularRobots.ATRON)){
-					//ConstructionTab.getJComboBox2().setEnabled(true);
-					//ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EW", "WE", "DU", "UD", "SN", "NS" }));
-					//ConstructionTab.getJComboBox3().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...","0","1", "2", "3","4", "5", "6","7"}));
+					ConstructionTab.getJComboBox2().setEnabled(true);
+					ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EW", "WE", "DU", "UD", "SN", "NS" }));
+					ConstructionTab.getJComboBox3().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...","0","1", "2", "3","4", "5", "6","7"}));
 					
-					//System.out.println("Chosen:"+chosenModularRobot);
+					System.out.println("Chosen:"+chosenModularRobot);
 				}else if (chosenMRname.equals(SupportedModularRobots.MTRAN)){
-					//ConstructionTab.getJComboBox2().setEnabled(true);
-					//ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ORI1", "ORI1X", "ORI1Y", "ORI1XY", "ORI2", "ORI2X", "ORI2Y", "ORI2XY", "ORI3", "ORI3X", "ORI3Y", "ORI3XY" }));
-					//ConstructionTab.getJComboBox3().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...", "0","1", "2", "3","4", "5"}));
+					ConstructionTab.getJComboBox2().setEnabled(true);
+					ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ORI1", "ORI1X", "ORI1Y", "ORI1XY", "ORI2", "ORI2X", "ORI2Y", "ORI2XY", "ORI3", "ORI3X", "ORI3Y", "ORI3XY" }));
+					ConstructionTab.getJComboBox3().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...", "0","1", "2", "3","4", "5"}));
 					
-					//System.out.println("Chosen:"+chosenModularRobot);
+					System.out.println("Chosen:"+chosenModularRobot);
 				}else if (chosenMRname.equals(SupportedModularRobots.ODIN)){
-					//ConstructionTab.getJComboBox2().setEnabled(false);
-					//ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(new String[] {  }));
-					//ConstructionTab.getJComboBox3().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...","0","1", "2", "3","4", "5", "6","7", "8","9", "10", "11"}));
+					ConstructionTab.getJComboBox2().setEnabled(false);
+					ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(new String[] {  }));
+					ConstructionTab.getJComboBox3().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...","0","1", "2", "3","4", "5", "6","7", "8","9", "10", "11"}));
 					
-					//System.out.println("Chosen:"+chosenModularRobot);
+					System.out.println("Chosen:"+chosenModularRobot);
 				}else if (chosenMRname.equals(SupportedModularRobots.CKBOTSTANDARD)){
 					//ConstructionTab.getJComboBox2().setEnabled(true);
 					//ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...","0","1", "2", "3"}));
 					//ConstructionTab.getJComboBox3().setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Choose module rotation","ROTATION_0", "ROTATION_0_OPPOSITE", "ROTATION_0_90Z", "ROTATION_0_OPPOSITE_90Z", "ROTATION_0_90X", "ROTATION_0_MINUS90X", "ROTATION_0_90X_90Y", "ROTATION_0_270X_90Y", "ROTATION_0_90Y", "ROTATION_0_MINUS90Y", "ROTATION_0_90X_MINUS90Z", "ROTATION_0_MINUS90X_MINUS90Z"  }));
-					//System.out.println("Chosen:"+chosenModularRobot);
+					System.out.println("Chosen:"+chosenModularRobot);
 				}
 
 				//nextjButton.setEnabled(false);
@@ -73,9 +68,6 @@ public class ConstructionTabController {
 				jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));		
 				
 			}
-	
-	
-	
 	
 	
 	public static void addNewDefaultConstructionModule(JMESimulation jmeSimulation){
