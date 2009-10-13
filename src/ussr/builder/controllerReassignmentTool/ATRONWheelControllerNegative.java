@@ -16,7 +16,6 @@ public class ATRONWheelControllerNegative extends ControllerStrategy {
 	 */
 	public void activate (Module selectedModule){	
 		controller = (ATRONController)selectedModule.getController();
-			controller.rotateContinuous(-1);		
-			
+			controller.rotateContinuous(-1);			
 	}
 }

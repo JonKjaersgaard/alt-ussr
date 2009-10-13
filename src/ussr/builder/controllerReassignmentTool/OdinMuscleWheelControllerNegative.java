@@ -17,7 +17,5 @@ public class OdinMuscleWheelControllerNegative extends ControllerStrategy {
 	public void activate (Module selectedModule){		
 		controller = (OdinController)selectedModule.getController();		
 			controller.actuateContinuous(-0.5f);// to the right				
-	}
-	
-	
+	}	
 }

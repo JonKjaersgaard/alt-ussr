@@ -44,7 +44,8 @@ public class AssignControllerTool extends CustomizedPicker  {
 				method.invoke(controller, selectedModule);				
 			}catch (Throwable e) {				
 				throw new Error ("For package and class named as: "+packageClassName+", appeared exception called: "+ e.toString() );
-			}			
+			}
+			System.out.println("Assigned");
 	}
 
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
