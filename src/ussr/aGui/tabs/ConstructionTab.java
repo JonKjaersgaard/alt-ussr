@@ -77,38 +77,38 @@ public class ConstructionTab extends Tabs {
 		jComponent.add(radionButtonATRON,gridBagConstraints);
 		buttonGroup.add(radionButtonATRON);
 
-		final javax.swing.AbstractButton button2 =  new JRadioButton();
-		button2.setText("Odin");
-		button2.addActionListener(new java.awt.event.ActionListener() {
+		radionButtonODIN =  new JRadioButton();
+		radionButtonODIN.setText("Odin");
+		radionButtonODIN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jButtonGroupActionPerformed(button2,jmeSimulation);
+				ConstructionTabController.jButtonGroupActionPerformed(radionButtonODIN,jmeSimulation);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 10; 
-		jComponent.add(button2,gridBagConstraints);
-		buttonGroup.add(button2);
+		jComponent.add(radionButtonODIN,gridBagConstraints);
+		buttonGroup.add(radionButtonODIN);
 
 
-		final javax.swing.AbstractButton button3 =  new JRadioButton();
-		button3.setText("MTran");
-		button3.addActionListener(new java.awt.event.ActionListener() {
+		radioButtonMTRAN =  new JRadioButton();
+		radioButtonMTRAN.setText("MTran");
+		radioButtonMTRAN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jButtonGroupActionPerformed(button3,jmeSimulation);
+				ConstructionTabController.jButtonGroupActionPerformed(radioButtonMTRAN,jmeSimulation);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 3;
 		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 10; 
-		jComponent.add(button3,gridBagConstraints);
-		buttonGroup.add(button3);
+		jComponent.add(radioButtonMTRAN,gridBagConstraints);
+		buttonGroup.add(radioButtonMTRAN);
 
-		javax.swing.AbstractButton button4 =  new JRadioButton();
-		button4.setText("CKbot");
-		button4.addActionListener(new java.awt.event.ActionListener() {
+		 radionButtonCKBOTSTANDARD =  new JRadioButton();
+		radionButtonCKBOTSTANDARD.setText("CKbot");
+		radionButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructionTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
 			}
@@ -117,8 +117,8 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.gridx = 4;
 		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 40; 
-		jComponent.add(button4,gridBagConstraints);
-		buttonGroup.add(button4);		
+		jComponent.add(radionButtonCKBOTSTANDARD,gridBagConstraints);
+		buttonGroup.add(radionButtonCKBOTSTANDARD);		
 
 		jLabel1000 = new javax.swing.JLabel();		
 		jLabel1000.setText("Next select connectors (black and white geometric shapes).");
@@ -343,6 +343,21 @@ public class ConstructionTab extends Tabs {
 
 	}
 	
+	public static void adjustToSelectedModularRobot(SupportedModularRobots supportedModularRobot){
+		if (supportedModularRobot.toString().equalsIgnoreCase("ATRON")){
+			radionButtonATRON.setSelected(true);
+			//ADD MORE HERE AND MAYBE ELIMINATE ABOVE LINE
+		}else if (supportedModularRobot.toString().equalsIgnoreCase("MTRAN")){
+			radioButtonMTRAN.setSelected(true);
+			//ADD MORE HERE AND MAYBE ELIMINATE ABOVE LINE
+		}else if (supportedModularRobot.toString().equalsIgnoreCase("ODIN")){
+			radionButtonODIN.setSelected(true);
+			//ADD MORE HERE AND MAYBE ELIMINATE ABOVE LINE
+		}else if (supportedModularRobot.toString().equalsIgnoreCase("CKBOTSTANDARD")){
+			radionButtonCKBOTSTANDARD.setSelected(true);	
+			//ADD MORE HERE AND MAYBE ELIMINATE ABOVE LINE
+		}
+	}
 	/*Getters*/
 
 	public static javax.swing.JComboBox getJComboBox2() {
@@ -391,6 +406,9 @@ public class ConstructionTab extends Tabs {
 	private static javax.swing.JComboBox jComboBox1000;
 
 	private static  javax.swing.AbstractButton radionButtonATRON;
+	private static javax.swing.AbstractButton  radioButtonMTRAN;
+	private static javax.swing.AbstractButton radionButtonODIN;
+	private static javax.swing.AbstractButton radionButtonCKBOTSTANDARD;
 	
 	
 	private  static javax.swing.JButton button10;
