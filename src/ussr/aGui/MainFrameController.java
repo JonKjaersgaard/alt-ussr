@@ -5,8 +5,11 @@ import java.util.ArrayList;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTextField;
+
+import ussr.aGui.tabs.ConstructionTab;
 import ussr.aGui.tabs.TabsInter;
-import ussr.builder.BuilderHelper;
+import ussr.builder.SupportedModularRobots;
+import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.atron.simulations.ATRONSnakeSimulation;
 
@@ -250,8 +253,30 @@ public class MainFrameController {
 
 			}
 			}
-		
-
 		}
+	/**
+	 * Adapts the visual appearance of the tab called "Construction tab" to the first module type discovered in the simulation environment.
+	 * @param jmeSimulation 
+	 */
+	public static void adaptGuiToModularRobot(JMESimulation jmeSimulation){
+
+		String modularRobotName ="";
+		if (jmeSimulation.worldDescription.getModulePositions().size()>0){
+			modularRobotName = jmeSimulation.getModules().get(0).getProperty(BuilderHelper.getModuleTypeKey());
+					
+			if (modularRobotName.contains("ATRON")){
+				ConstructionTab.adjustToSelectedModularRobot(SupportedModularRobots.ATRON);
+			}else if (modularRobotName.contains("MTRAN")){
+				ConstructionTab.adjustToSelectedModularRobot(SupportedModularRobots.MTRAN);
+				
+			}else if (modularRobotName.contains("Odin")){
+				
+				ConstructionTab.adjustToSelectedModularRobot(SupportedModularRobots.ODIN);					
+				
+			}else if (modularRobotName.contains("CKBotStandard")){
+				ConstructionTab.adjustToSelectedModularRobot(SupportedModularRobots.CKBOTSTANDARD);
+			}
+		}
+	}
 
 	}

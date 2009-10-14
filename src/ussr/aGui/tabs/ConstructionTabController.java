@@ -3,7 +3,6 @@ package ussr.aGui.tabs;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 
-import ussr.builder.BuilderHelper;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
 import ussr.builder.constructionTools.CKBotOperationsTemplate;
@@ -14,6 +13,7 @@ import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
 import ussr.builder.genericTools.ColorConnectors;
 import ussr.builder.genericTools.RemoveModule;
+import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;

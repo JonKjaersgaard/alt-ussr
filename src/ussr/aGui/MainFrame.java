@@ -22,13 +22,13 @@ import ussr.aGui.fileChooser.appearance.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.appearance.FileChooserSaveFrame;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
-import ussr.aGui.tabs.AssignBehavioursTab;
+import ussr.aGui.tabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.ConsoleTab;
 import ussr.aGui.tabs.ConstructionTab;
 import ussr.aGui.tabs.NewTab;
 import ussr.aGui.tabs.TabsInter;
-import ussr.builder.BuilderHelper;
 import ussr.builder.SupportedModularRobots;
+import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
 
@@ -139,7 +139,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		initComponents();//initialize visual appearance of main GUI window.	
 		changeInstanceFlagListener();//Change the instance flag to true. Meaning the window is once instantiated.
 		windowResizingListener();//Resize the main GUI window according to dimension of it's components, if user is maximizing or restoring it down.
-		adaptGuiToModularRobot();// Adapts the tab called "Construction" to the first module discovered in the simulation environment
+		MainFrameController.adaptGuiToModularRobot(this.jmeSimulation);// Adapts the tab called "Construction" to the first module discovered in the simulation environment
 
 	}
 
@@ -202,31 +202,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		fcSaveFrame = new FileChooserSaveFrame(fileExtensions,fcControllers);
 	}
 	
-	/**
-	 * Adapts the visual appearance of the tab called "Construction tab" to the first module type discovered in the simulation environment. 
-	 */
-	private void adaptGuiToModularRobot(){
-
-		String modularRobotName ="";
-		if (jmeSimulation.worldDescription.getModulePositions().size()>0){
-			modularRobotName = jmeSimulation.getModules().get(0).getProperty(BuilderHelper.getModuleTypeKey());
-					
-			if (modularRobotName.contains("ATRON")){
-				ConstructionTab.adjustToSelectedModularRobot(SupportedModularRobots.ATRON);
-			}else if (modularRobotName.contains("MTRAN")){
-				ConstructionTab.adjustToSelectedModularRobot(SupportedModularRobots.MTRAN);
-				
-			}else if (modularRobotName.contains("Odin")){
-				
-				ConstructionTab.adjustToSelectedModularRobot(SupportedModularRobots.ODIN);					
-				
-			}else if (modularRobotName.contains("CKBotStandard")){
-				ConstructionTab.adjustToSelectedModularRobot(SupportedModularRobots.CKBOTSTANDARD);
-			}
-		}		
-		
-
-	}
+	
 
 	/**
 	 * Initializes the visual appearance of all components in the main GUI window.

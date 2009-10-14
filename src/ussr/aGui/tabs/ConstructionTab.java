@@ -20,24 +20,24 @@ import ussr.physics.jme.JMESimulation;
  */
 public class ConstructionTab extends Tabs {
 
-
-
+	/**
+	 * The constants of grid bag layout used during design of the tab.
+	 */
 	private GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
 	/**
 	 * Defines visual appearance of the tab called "1 Step: Construct Robot".
+	 * @param firstTabbedPane,
 	 * @param tabTitle, the title of the tab
 	 * @param jmeSimulation, the physical simulation.
-	 * @param firstTabbedPane,
+	 * 
 	 */
 	public ConstructionTab(boolean firstTabbedPane,String tabTitle,JMESimulation jmeSimulation){
 		this.firstTabbedPane = firstTabbedPane;
 		this.tabTitle = tabTitle;
 		this.jmeSimulation = jmeSimulation;
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
-		this.jComponent = new javax.swing.JPanel(new GridBagLayout());
-		//this.gridBagConstraints =  new GridBagConstraints();
-		//gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		this.jComponent = new javax.swing.JPanel(new GridBagLayout());		
 		initComponents();
 	}
 

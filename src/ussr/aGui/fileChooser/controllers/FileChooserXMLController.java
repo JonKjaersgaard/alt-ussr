@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
+import ussr.aGui.MainFrameController;
 import ussr.builder.saveLoadXML.InSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
@@ -40,7 +41,7 @@ public class FileChooserXMLController extends FileChooserController {
 	  			String fileDirectoryName = fileChooser.getSelectedFile().toString();// get the directory of selected file	  			
 	  			saveLoadXML = new InSimulationXMLSerializer(this.jmeSimulation);
 	  			saveLoadXML.loadXMLfile(fileDirectoryName);	
-	  			fileChooserFrame.dispose(); //close the frame(window)	  			
+	  			fileChooserFrame.dispose(); //close the frame(window)
 	  		}else if (command.equalsIgnoreCase(ActionCommands.CANCELSELECTION.toString())){//Cancel pressed			
 	  			fileChooserFrame.dispose();//close the frame(window) 	  			
 	  		}	
