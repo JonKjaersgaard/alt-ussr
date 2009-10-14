@@ -14,8 +14,6 @@ import java.util.Map;
 import com.jme.math.Matrix4f;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
-
-import ussr.builder.BuilderHelper;
 import ussr.comm.Receiver;
 import ussr.comm.Transmitter;
 import ussr.description.geometry.RotationDescription;
