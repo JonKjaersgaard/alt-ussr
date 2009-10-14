@@ -1,6 +1,6 @@
 package ussr.builder.labels;
 
-import ussr.builder.BuilderHelper;
+import ussr.builder.helpers.BuilderHelper;
 import ussr.model.Entity;
 
 /**

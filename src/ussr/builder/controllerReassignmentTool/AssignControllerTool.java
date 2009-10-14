@@ -2,6 +2,8 @@ package ussr.builder.controllerReassignmentTool;
 
 import java.lang.reflect.Method;
 import com.jme.scene.Geometry;
+
+import ussr.aGui.tabs.AssignBehaviorsTab;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.pickers.CustomizedPicker;
@@ -45,7 +47,10 @@ public class AssignControllerTool extends CustomizedPicker  {
 			}catch (Throwable e) {				
 				throw new Error ("For package and class named as: "+packageClassName+", appeared exception called: "+ e.toString() );
 			}
-			System.out.println("Assigned");
+			/*IS IT A GOOD PLACE FOR YOU?*/
+			
+			AssignBehaviorsTab.getJLabel10005().setVisible(true);
+			AssignBehaviorsTab.getJLabel10005().setText("Controller was assigned successfully to module with ID: "+selectedModule.getID());
 	}
 
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.

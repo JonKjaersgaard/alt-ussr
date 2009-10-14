@@ -2,8 +2,8 @@ package ussr.builder.labelingTools;
 
 import javax.swing.JOptionPane;
 import com.jme.scene.Geometry;
-import ussr.builder.BuilderHelper;
 import ussr.builder.QuickPrototyping;
+import ussr.builder.helpers.BuilderHelper;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;

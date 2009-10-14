@@ -9,7 +9,8 @@ import ussr.physics.jme.JMESimulation;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;
-import ussr.builder.BuilderHelper;
+
+import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.ModuleMapEntryHelper;
 
 /**

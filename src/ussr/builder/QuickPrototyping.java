@@ -21,6 +21,7 @@ import ussr.builder.genericTools.RemoveModule;
 import ussr.builder.genericTools.RotateModulesComponents;
 import ussr.builder.gui.FileChooser;
 import ussr.builder.gui.GuiHelper;
+import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.labelingTools.LabeledEntities;
 import ussr.builder.labelingTools.LabelingToolSpecification;
 import ussr.builder.labelingTools.LabelingTools;
