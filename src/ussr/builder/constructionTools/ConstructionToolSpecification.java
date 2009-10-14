@@ -167,12 +167,13 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 				new SelectedModuleTypeMapHelper(SupportedModularRobots.ODIN,isOdin()),
 				new SelectedModuleTypeMapHelper(SupportedModularRobots.CKBOTSTANDARD,isCKBotStandard())
 		};
-        /*Identifies selected module and readjusts tools accordingly, also calls for GUI readjustment*/
+        /*Identifies selected module and readjusts tools accordingly, also calls for GUI re-adjustment*/
 		for(int index =0;index<selectModulesTypes.length;index++){
 			if(selectModulesTypes[index].isSelected()==true){
 				this.modularRobotName = selectModulesTypes[index].getModularRobotName();
 				this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
 				this.construction = selectOperations.getConstruction();
+				ConstructionTab.adjustToSelectedModularRobot(this.modularRobotName);//Adapt GUI to selected module(modular robot) type
 			}
 		}
 	}
