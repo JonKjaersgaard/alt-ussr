@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import ussr.aGui.MainFrame;
 import ussr.aGui.MainFrameInter;
-import ussr.aGui.tabs.AssignBehavioursTab;
+import ussr.aGui.tabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.ConsoleTab;
 import ussr.aGui.tabs.ConstructionTab;
 import ussr.aGui.tabs.NewTab;
@@ -342,7 +342,8 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 				ArrayList<TabsInter> tabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI
 				//tabs.add(new ConstructionTab(true,"1 Step: Construct Robot (Interactive User Guide)",simulation));//Build in tab
 				tabs.add(new ConstructionTab(true,"1 Step: Construct Robot",simulation));//Build in tab
-				tabs.add(new AssignBehavioursTab(true,"2 Step: Assign Behaviour (Interactive User Guide)",simulation));//Build in tab
+				tabs.add(new AssignBehaviorsTab(true,"2 Step: Assign Behaviour (Controller)",simulation));//Build in tab
+				//tabs.add(new AssignBehavioursTab(true,"2 Step: Assign Behaviour (Interactive User Guide)",simulation));//Build in tab
 				tabs.add(new NewTab(true, "YOUR NEW TAB",simulation));//YOUR NEW TAB
 				tabs.add(new NewTab(true, "YOUR NEW TAB1",simulation));//YOUR NEW TAB1
 				
