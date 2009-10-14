@@ -9,6 +9,7 @@ import ussr.physics.jme.pickers.CustomizedPicker;
 import ussr.aGui.tabs.ConstructionTab;
 import ussr.builder.BuilderHelper;
 import ussr.builder.SupportedModularRobots;
+import ussr.builder.helpers.SelectedModuleTypeMapHelper;
 
 /**
  * The main responsibility of this class is to specify the tool for construction of
@@ -23,7 +24,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * The physical simulation.
 	 */
 	private JMESimulation simulation;
-	
+
 	/**
 	 * The interface to construction of modular robot morphology. This one is on the level of modules of modular robot(creation and movement of them).  
 	 */
@@ -38,12 +39,12 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * Supported modular robots: ATRON, MTRAN and Odin.
 	 */
 	private static final String ATRON = "ATRON",MTRAN = "MTRAN", ODIN = "Odin",CKBotStandard = "CKBotStandard";
-		
-    /**
-     * The module selected in simulation environment with the left side of the mouse.
-     */
-    private Module selectedModule;    
-    
+
+	/**
+	 * The module selected in simulation environment with the left side of the mouse.
+	 */
+	private Module selectedModule;    
+
 	/**
 	 * The connector number on the module, selected with the left side of mouse in simulation environment.
 	 */	
@@ -53,7 +54,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * The connector number on the module chosen in GUI comboBox.
 	 */	
 	private int chosenConnectorNr = 1000;//just to avoid having default 0 value, which is also number of connector. 
-	
+
 	/**
 	 * The name of the modular robot. For example: ATRON, MTRAN, ODIN and so on
 	 */
@@ -114,7 +115,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
 		this.construction = selectOperations.getConstruction();	
 	}
-	
+
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
 	 * Here is identified the module selected in simulation environment, moreover checked if pickTarget()method
 	 * resulted in success and the call for appropriate tool is made. 
@@ -133,25 +134,46 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	@Override
 	protected void pickTarget(Geometry target) {
 		if (toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){
-		this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);
-		System.out.println("Connector:"+selectedConnectorNr );
+			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);
+			System.out.println("Connector:"+selectedConnectorNr );
 		}
 	}
-	
+
 	/**
 	 * Checks if construction tool type is matching the module type selected in simulation environment. If
 	 * yes calls appropriate tool. If no, For example: if the tool is for ATRON modular robot (modularRobotName) 
 	 * and the module type selected in simulation environment is MTRAN. Then the method will complain.	 * 
 	 */
 	private void callAppropriateTool(){
-	    if (this.modularRobotName.equals(SupportedModularRobots.ATRON)&& isAtron()||this.modularRobotName.equals(SupportedModularRobots.MTRAN)&& isMtran()||this.modularRobotName.equals(SupportedModularRobots.ODIN)&&isOdin()||this.modularRobotName.equals(SupportedModularRobots.CKBOTSTANDARD)&&isCKBotStandard()){		
+		if (this.modularRobotName.equals(SupportedModularRobots.ATRON)&& isAtron()||this.modularRobotName.equals(SupportedModularRobots.MTRAN)&& isMtran()||this.modularRobotName.equals(SupportedModularRobots.ODIN)&&isOdin()||this.modularRobotName.equals(SupportedModularRobots.CKBOTSTANDARD)&&isCKBotStandard()){		
 			callTool();	
-		}/*else if (isAtron()||isMtran()||isOdin()||isCKBotStandard()){
-			
-			ConstructionTab.getButton1().setSelected(true);
-			
-		}*/else{
-			JOptionPane.showMessageDialog(null, "Wrong tool","Error", JOptionPane.ERROR_MESSAGE);// Inform the user
+		}else{
+			reAdjustUserInput();
+		}
+	}
+
+
+	/**
+	 * Makes the tools more "generic", in a sense that each tool is working for all Supported modular robots, without the need to
+	 * specify it explicitly in the GUI.
+	 * Also makes feedback calls to GUI to adapt to the modular robot the user is working with right now. 
+	 */
+	private void reAdjustUserInput(){
+		
+		/*Keeps and updates the data about the module type currently selected in simulation environment*/
+		SelectedModuleTypeMapHelper[] selectModulesTypes = {
+				new SelectedModuleTypeMapHelper(SupportedModularRobots.ATRON,isAtron()),
+				new SelectedModuleTypeMapHelper(SupportedModularRobots.MTRAN,isMtran()),
+				new SelectedModuleTypeMapHelper(SupportedModularRobots.ODIN,isOdin()),
+				new SelectedModuleTypeMapHelper(SupportedModularRobots.CKBOTSTANDARD,isCKBotStandard())
+		};
+        /*Identifies selected module and readjusts tools accordingly, also calls for GUI readjustment*/
+		for(int index =0;index<selectModulesTypes.length;index++){
+			if(selectModulesTypes[index].isSelected()==true){
+				this.modularRobotName = selectModulesTypes[index].getModularRobotName();
+				this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
+				this.construction = selectOperations.getConstruction();
+			}
 		}
 	}
 
@@ -190,7 +212,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Checks if the module selected in simulation environment is an CKBotStandard module 
 	 * @return true, if selected module is an CKBotStandard module
@@ -225,7 +247,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 			this.selectOperations.variateModule(this);
 		}	
 	}
-	
+
 	/**
 	 * Checks for match between the number of connector extracted from TriMesh(method pickTarget()) string and existing connectors of the module 
 	 * @return true, if pickTarget() method resulted in success with extraction of connector number from trimesh string and there is such number
@@ -243,15 +265,15 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		}		
 		return false;		
 	} 
-	
-//	TODO SHOULD BE IN SOME WAY MOVED TO CommonOperations class How should I do that?
-// Strange exception appears now;
+
+	//	TODO SHOULD BE IN SOME WAY MOVED TO CommonOperations class How should I do that?
+	// Strange exception appears now;
 	public void moveToNextConnector(int connectorNr){		
 		int amountModules = simulation.getModules().size();
-		
+
 		Module lastAddedModule = simulation.getModules().get(amountModules-1);//Last module		
 		Module selectedModule = this.selectedModule;//Last module
-		
+
 		if (this.modularRobotName.equals(SupportedModularRobots.ATRON)){			
 			ConstructionTemplate con =  new ATRONConstructionTemplate(simulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule, true);
@@ -303,9 +325,9 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	public void setSelectedConnectorNr(int selectedConnectorNr) {
 		this.selectedConnectorNr = selectedConnectorNr;
 	}
-	
+
 	public int getSelectedConnectorNr() {
 		return selectedConnectorNr;
 	}	
-	
+
 }
