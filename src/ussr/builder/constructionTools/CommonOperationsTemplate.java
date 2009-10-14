@@ -140,7 +140,6 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 		if (moduleType.contains("ATRON")||moduleType.contains("default")){
 			moduleType = "default";
 		}
-		System.out.println("sss:"+moduleType);
 		ModulePosition modulePosition = new ModulePosition(selectedModuleName+ BuilderHelper.getRandomInt(),moduleType,position,rotation);	
 		Module newModule = this.simulation.createModule(modulePosition,true);				
 		newModule.setColorList(colorsComponents);		

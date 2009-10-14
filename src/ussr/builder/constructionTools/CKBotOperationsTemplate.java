@@ -30,11 +30,11 @@ public class CKBotOperationsTemplate extends CommonOperationsTemplate {
 	/**
 	 * Adds default (the first) CKBot construction module at specified position.
 	 * This method is so-called "Primitive operation" for  TEMPLATE method, called "addDefaultConstructionModule(String type, VectorDescription modulePosition)".	 
-	 * @param type, the type of modular robot. In this cas it is ATRON.
+	 * @param type, the type of modular robot. In this case it is ATRON.
 	 * @param modulePosition, the position of the ATRON module in simulation environment.
 	 * @param moduleRotation, the rotation of the ATRON module.
-	 * @param colorsComponents, the colours of components constituting the ATRON module.
-	 * @param colorsConectors, the colours of connectors on the ATRON module.
+	 * @param colorsComponents, the colors of components constituting the ATRON module.
+	 * @param colorsConectors, the colors of connectors on the ATRON module.
 	 */
 	@Override
 	public void addDefaultModule(String type, VectorDescription modulePosition,RotationDescription moduleRotation, List<Color> colorsComponents,ArrayList<Color> colorsConectors) {

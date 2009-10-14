@@ -11,6 +11,7 @@ import ussr.physics.PhysicsSimulation;
 import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
+import ussr.samples.ckbot.CKBotStandard;
 import ussr.samples.mtran.MTRAN;
 import ussr.samples.odin.modules.OdinBall;
 import ussr.samples.odin.modules.OdinBattery;
@@ -135,10 +136,10 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 			public Controller createController() {
 				return new OdinControllerDefault();
 			}},"OdinTube");	
-/*		 simulation.setRobot(new CKBotStandard(){
+		 simulation.setRobot(new CKBotStandard(){
 	        	public Controller createController() {
 	        		return new CKBotControllerDefault();
-	        	}},"CKBotStandard");*/
+	        	}},"CKBotStandard");
 		
         /*Create the world description of simulation and set it to simulation*/
 		if(world==null) world = createWorld()

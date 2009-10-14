@@ -125,6 +125,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	protected void pickModuleComponent(JMEModuleComponent component) {		
 		this.selectedModule = component.getModel();		
 		callAppropriateTool();
+		System.out.println("Out:"+ component.getModel().getProperty(BuilderHelper.getModuleTypeKey()));
 	}
 
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
