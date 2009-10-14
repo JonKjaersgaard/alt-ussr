@@ -43,7 +43,7 @@ public class FileChooserXMLController extends FileChooserController {
 	  			fileChooserFrame.dispose(); //close the frame(window)	  			
 	  		}else if (command.equalsIgnoreCase(ActionCommands.CANCELSELECTION.toString())){//Cancel pressed			
 	  			fileChooserFrame.dispose();//close the frame(window) 	  			
-	  		}		
+	  		}	
 	}
 
 	@Override

@@ -48,6 +48,7 @@ public class ConstructionTabController {
 		 String chosenModularRobot = button.getText(); 
 			
 				chosenMRname = SupportedModularRobots.valueOf(chosenModularRobot.toUpperCase());
+				System.out.println("oo:"+chosenMRname);
 				if (chosenMRname.equals(SupportedModularRobots.ATRON)){
 					//ConstructionTab.getJComboBox2().setEnabled(true);
 					//ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EW", "WE", "DU", "UD", "SN", "NS" }));

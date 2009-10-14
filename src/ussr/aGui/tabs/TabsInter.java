@@ -20,7 +20,6 @@ public interface TabsInter {
 	
 	/**
      * Getter method common for all tabs and is used by GUI during addition of new tab.
-     * UPDATE
      */
 	public javax.swing.JComponent getJComponent();
 	

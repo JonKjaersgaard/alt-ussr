@@ -106,11 +106,11 @@ public class ConstructionTab extends Tabs {
 		jComponent.add(radioButtonMTRAN,gridBagConstraints);
 		buttonGroup.add(radioButtonMTRAN);
 
-		 radionButtonCKBOTSTANDARD =  new JRadioButton();
-		radionButtonCKBOTSTANDARD.setText("CKbot");
+		radionButtonCKBOTSTANDARD =  new JRadioButton();
+		radionButtonCKBOTSTANDARD.setText("CKBotStandard");
 		radionButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
+				ConstructionTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD,jmeSimulation);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -342,7 +342,7 @@ public class ConstructionTab extends Tabs {
 
 
 	}
-	
+	/*MORE WORK HERE*/
 	public static void adjustToSelectedModularRobot(SupportedModularRobots supportedModularRobot){
 		if (supportedModularRobot.toString().equalsIgnoreCase("ATRON")){
 			radionButtonATRON.setSelected(true);
