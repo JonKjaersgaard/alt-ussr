@@ -11,6 +11,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 
+import ussr.builder.SupportedModularRobots;
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -62,19 +63,19 @@ public class ConstructionTab extends Tabs {
 
 		final ButtonGroup buttonGroup = new ButtonGroup() ;
 
-		button1 =  new JRadioButton();
-		button1.setText("ATRON");		
-		button1.addActionListener(new java.awt.event.ActionListener() {
+		radionButtonATRON =  new JRadioButton();
+		radionButtonATRON.setText("ATRON");		
+		radionButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jButtonGroupActionPerformed(button1,jmeSimulation);
+				ConstructionTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 10; 
-		jComponent.add(button1,gridBagConstraints);
-		buttonGroup.add(button1);
+		jComponent.add(radionButtonATRON,gridBagConstraints);
+		buttonGroup.add(radionButtonATRON);
 
 		final javax.swing.AbstractButton button2 =  new JRadioButton();
 		button2.setText("Odin");
@@ -109,7 +110,7 @@ public class ConstructionTab extends Tabs {
 		button4.setText("CKbot");
 		button4.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jButtonGroupActionPerformed(button1,jmeSimulation);
+				ConstructionTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -341,7 +342,7 @@ public class ConstructionTab extends Tabs {
 
 
 	}
-
+	
 	/*Getters*/
 
 	public static javax.swing.JComboBox getJComboBox2() {
@@ -353,7 +354,7 @@ public class ConstructionTab extends Tabs {
 	}
 
 	public static javax.swing.AbstractButton getButton1() {
-		return button1;
+		return radionButtonATRON;
 	}
 	
 	public static javax.swing.JLabel getJLabel1000() {
@@ -389,7 +390,7 @@ public class ConstructionTab extends Tabs {
 
 	private static javax.swing.JComboBox jComboBox1000;
 
-	private static  javax.swing.AbstractButton button1;
+	private static  javax.swing.AbstractButton radionButtonATRON;
 	
 	
 	private  static javax.swing.JButton button10;
