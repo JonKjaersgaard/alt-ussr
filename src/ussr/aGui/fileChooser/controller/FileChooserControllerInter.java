@@ -1,4 +1,4 @@
-package ussr.aGui.fileChooser.controllers;
+package ussr.aGui.fileChooser.controller;
 
 import ussr.physics.jme.JMESimulation;
 

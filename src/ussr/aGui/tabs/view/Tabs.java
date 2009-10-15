@@ -1,4 +1,4 @@
-package ussr.aGui.tabs;
+package ussr.aGui.tabs.view;
 
 import ussr.physics.jme.JMESimulation;
 
@@ -26,9 +26,8 @@ public abstract class Tabs implements TabsInter {
 	protected JMESimulation jmeSimulation;
 	
 	/**
-	 * The panel, which is the container for all components situated in the tab. 
-	 * In other words, tab contains panel and panel contains other components.
-	 * UPDATE		
+	 * The main component, which is the container for all components situated in the tab. 
+	 * For example panel. In other words, tab contains panel and panel contains other components.	
 	 */
 	protected javax.swing.JComponent jComponent;	
 	

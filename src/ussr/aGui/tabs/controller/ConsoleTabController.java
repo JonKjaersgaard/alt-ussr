@@ -1,4 +1,4 @@
-package ussr.aGui.tabs;
+package ussr.aGui.tabs.controller;
 
 public class ConsoleTabController {
 

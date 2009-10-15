@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTextField;
 
-import ussr.aGui.tabs.ConstructionTab;
-import ussr.aGui.tabs.TabsInter;
+import ussr.aGui.tabs.view.ConstructionTab;
+import ussr.aGui.tabs.view.TabsInter;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;

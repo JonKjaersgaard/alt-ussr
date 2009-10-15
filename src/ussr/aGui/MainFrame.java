@@ -18,15 +18,15 @@ import com.jmex.awt.input.AWTMouseInput;
 import com.jmex.awt.lwjgl.LWJGLAWTCanvasConstructor;
 import com.jmex.awt.lwjgl.LWJGLCanvas;
 
-import ussr.aGui.fileChooser.appearance.FileChooserOpenFrame;
-import ussr.aGui.fileChooser.appearance.FileChooserSaveFrame;
-import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
-import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
-import ussr.aGui.tabs.AssignBehaviorsTab;
-import ussr.aGui.tabs.ConsoleTab;
-import ussr.aGui.tabs.ConstructionTab;
-import ussr.aGui.tabs.NewTab;
-import ussr.aGui.tabs.TabsInter;
+import ussr.aGui.fileChooser.controller.FileChooserControllerInter;
+import ussr.aGui.fileChooser.controller.FileChooserXMLController;
+import ussr.aGui.fileChooser.view.FileChooserOpenFrame;
+import ussr.aGui.fileChooser.view.FileChooserSaveFrame;
+import ussr.aGui.tabs.view.AssignBehaviorsTab;
+import ussr.aGui.tabs.view.ConsoleTab;
+import ussr.aGui.tabs.view.ConstructionTab;
+import ussr.aGui.tabs.view.NewTab;
+import ussr.aGui.tabs.view.TabsInter;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
@@ -314,7 +314,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 
 		jButtonSave.setToolTipText("Save");
 		jButtonSave.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + SAVE));
-		jButtonSave.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OFF_LINE));	
+		jButtonSave.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));	
 		
 		jButtonSave.setFocusable(false);
 		jButtonSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -329,7 +329,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 
 		jButtonOpen.setToolTipText("Open");
 		jButtonOpen.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPEN));
-		jButtonOpen.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OFF_LINE));
+		jButtonOpen.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));
 		jButtonOpen.setFocusable(true);		
 		jButtonOpen.setFocusable(false);		
 		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));
@@ -393,7 +393,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 
 		jMenuItemOpen.setText("Open");
 		jMenuItemOpen.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+OPEN_SMALL));
-		jMenuItemOpen.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OFF_LINE_SMALL));		
+		//jMenuItemOpen.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OFF_LINE_SMALL));		
 		jMenuItemOpen.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameController.openActionPerformed(fcOpenFrame);
@@ -406,7 +406,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 
 		jMenuItemSave.setText("Save");
 		jMenuItemSave.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+SAVE_SMALL));
-		jMenuItemSave.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OFF_LINE_SMALL));		
+		//jMenuItemSave.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OFF_LINE_SMALL));		
 		jMenuItemSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameController.saveActionPerformed(fcSaveFrame);

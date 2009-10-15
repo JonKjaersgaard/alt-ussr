@@ -1,11 +1,11 @@
-package ussr.aGui.fileChooser.appearance;
+package ussr.aGui.fileChooser.view;
 
 import java.util.ArrayList;
 
 import ussr.aGui.GuiFrames;
 
 import ussr.aGui.fileChooser.FileFilter;
-import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
+import ussr.aGui.fileChooser.controller.FileChooserControllerInter;
 import ussr.physics.jme.JMESimulation;
 
 /**

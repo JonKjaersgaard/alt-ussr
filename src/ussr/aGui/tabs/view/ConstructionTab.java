@@ -1,4 +1,4 @@
-package ussr.aGui.tabs;
+package ussr.aGui.tabs.view;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -13,6 +13,7 @@ import javax.swing.JRadioButton;
 
 import ussr.aGui.MainFrame;
 import ussr.aGui.MainFrameInter;
+import ussr.aGui.tabs.controller.ConstructionTabController;
 import ussr.builder.SupportedModularRobots;
 import ussr.physics.jme.JMESimulation;
 
@@ -181,7 +182,7 @@ public class ConstructionTab extends Tabs {
 			
 		button11.setToolTipText("Move module");
 		button11.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOVE_MODULE));
-		button11.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.OFF_LINE));
+		button11.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));
 		button11.setFocusable(false); 
 		button11.setEnabled(false);
 		button11.setPreferredSize(new java.awt.Dimension(30, 30));	
@@ -194,7 +195,7 @@ public class ConstructionTab extends Tabs {
 				
 		button10.setToolTipText("Delete module");
 		button10.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE_MODULE));
-		button10.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.OFF_LINE));		
+		button10.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
 		button10.setFocusable(false);
 		button10.setEnabled(false);
 		button10.setPreferredSize(new java.awt.Dimension(30, 30));
@@ -211,7 +212,7 @@ public class ConstructionTab extends Tabs {
 		
 		button12.setToolTipText("Colour connectors");
 		button12.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + COLOUR_CONNECTORS));
-		button12.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.OFF_LINE));		
+		button12.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
 		button12.setFocusable(false);
 		button12.setEnabled(false);
 		button12.setPreferredSize(new java.awt.Dimension(30, 30));

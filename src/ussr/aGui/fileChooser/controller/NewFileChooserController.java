@@ -1,4 +1,4 @@
-package ussr.aGui.fileChooser.controllers;
+package ussr.aGui.fileChooser.controller;
 
 import java.awt.event.ActionEvent;
 

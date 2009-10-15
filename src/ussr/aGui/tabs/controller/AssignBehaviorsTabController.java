@@ -1,9 +1,10 @@
-package ussr.aGui.tabs;
+package ussr.aGui.tabs.controller;
 
 import java.util.Vector;
 
 import javax.swing.JRadioButton;
 
+import ussr.aGui.tabs.view.AssignBehaviorsTab;
 import ussr.builder.controllerReassignmentTool.AssignControllerTool;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;

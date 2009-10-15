@@ -1,4 +1,4 @@
-package ussr.aGui.tabs;
+package ussr.aGui.tabs.view;
 
 
 /**
@@ -17,7 +17,8 @@ public interface TabsInter {
 	 * The names of the icons used in tabs
 	 */
 	public final String DELETE_MODULE = "deleteModule.jpg", MOVE_MODULE = "moveModule.jpg", COLOUR_CONNECTORS = "colourConnectors.jpg",
-	                    ATTENTION = "attention.jpg", CONSTRUCTION = "construction.jpg", BEHAVIOR = "behavior.jpg";
+	                    ATTENTION = "attention.jpg", CONSTRUCTION = "construction.jpg", BEHAVIOR = "behavior.jpg",
+	                    ERROR = "error.jpg";
 	
 	/**
      * Getter method common for all tabs and is used by GUI during addition of new tab.

@@ -1,4 +1,4 @@
-package ussr.aGui.tabs;
+package ussr.aGui.tabs.view;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -9,6 +9,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 
+import ussr.aGui.tabs.controller.AssignBehaviorsTabController;
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -25,10 +26,10 @@ public class AssignBehaviorsTab extends Tabs {
 	/**
 	 * The dimensions of the List component.
 	 */
-	private int jListWidth = 250, jListHeight = 200;
+	private final int J_LIST_WIDTH = 250, J_LIST_HEIGHT = 200;
 	
 	
-	private int jToolBar1Width = 125;
+	private final int jToolBar1Width = 125;
 	
 	/**
 	 * Defines visual appearance of the tab called "2 Step: Assign Behaviors".
@@ -42,6 +43,7 @@ public class AssignBehaviorsTab extends Tabs {
 		this.tabTitle = tabTitle;		
 		this.jmeSimulation = jmeSimulation;
 		this.imageIconDirectory = imageIconDirectory;
+		
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		this.jComponent = new javax.swing.JPanel(new GridBagLayout());	
 		initComponents();
@@ -84,7 +86,7 @@ public class AssignBehaviorsTab extends Tabs {
 		jComponent.add(jLabel10003,gridBagConstraints);		
 		
 		jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-		jList1.setPreferredSize(new java.awt.Dimension(jListWidth, jListHeight));				
+		jList1.setPreferredSize(new java.awt.Dimension(J_LIST_WIDTH, J_LIST_HEIGHT));				
 		AssignBehaviorsTabController.loadExistingControllers(jList1);
 		
 		jList1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -103,7 +105,7 @@ public class AssignBehaviorsTab extends Tabs {
 		jToolBar1.setFloatable(false);//user can not make the tool bar to float
 		jToolBar1.setRollover(true);// the buttons inside are roll over
 		jToolBar1.setToolTipText("Generic tools");
-		jToolBar1.setPreferredSize(new Dimension(jToolBar1Width,jListHeight-70));
+		jToolBar1.setPreferredSize(new Dimension(jToolBar1Width,J_LIST_HEIGHT-70));
 		jToolBar1.setOrientation(JToolBar.VERTICAL);
 		
 		

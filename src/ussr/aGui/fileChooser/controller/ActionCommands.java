@@ -1,4 +1,4 @@
-package ussr.aGui.fileChooser.controllers;
+package ussr.aGui.fileChooser.controller;
 
 /**
  * Commands supported by file chooser. ApproveSelection command is for Open or Save button, depending
