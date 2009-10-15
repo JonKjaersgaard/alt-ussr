@@ -235,8 +235,12 @@ public class MainFrameController {
 	public static void jCheckBoxMenuItemActionPerformedNew(ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems, javax.swing.JTabbedPane jTabbedPane1, ArrayList<TabsInter> tabs ) {
 
 		for (int index = 0; index<tabs.size(); index++ ){
-			if ( (checkBoxMenuItems.get(index).getText().equalsIgnoreCase(tabs.get(index).getTabTitle()))&&checkBoxMenuItems.get(index).isSelected()==false){
-				checkBoxMenuItems.get(index).setSelected(false);
+			javax.swing.JCheckBoxMenuItem currentJCheckBoxMenuItem =checkBoxMenuItems.get(index);
+			String currentTabTitle = tabs.get(index).getTabTitle();
+			
+			
+			if ( (currentJCheckBoxMenuItem.getText().equalsIgnoreCase(currentTabTitle))&&currentJCheckBoxMenuItem.isSelected()==false){
+				currentJCheckBoxMenuItem.setSelected(false);
 				//jTabbedPane1.setEnabledAt(index, false);
 			 	if(jTabbedPane1.getTabCount()-1<index){
 					i++;
@@ -246,10 +250,15 @@ public class MainFrameController {
 				}
 				
 				
-			}else if((checkBoxMenuItems.get(index).getText().equalsIgnoreCase(tabs.get(index).getTabTitle()))&&checkBoxMenuItems.get(index).isSelected()==true){
-				checkBoxMenuItems.get(index).setSelected(true);
-				//jTabbedPane1.setEnabledAt(index, true);			
-					jTabbedPane1.add(tabs.get(index).getTabTitle(),tabs.get(index).getJComponent());				
+			}else if((currentJCheckBoxMenuItem.getText().equalsIgnoreCase(currentTabTitle))&&currentJCheckBoxMenuItem.isSelected()==true){
+				currentJCheckBoxMenuItem.setSelected(true);
+				//jTabbedPane1.setEnabledAt(index, true);
+				if (tabs.get(index).getImageIconDirectory()==null){
+					jTabbedPane1.addTab(currentTabTitle,tabs.get(index).getJComponent());				
+				}else{
+					jTabbedPane1.addTab(currentTabTitle,new javax.swing.ImageIcon(tabs.get(index).getImageIconDirectory()),tabs.get(index).getJComponent());				
+				}
+					
 
 			}
 			}

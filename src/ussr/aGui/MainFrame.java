@@ -222,7 +222,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		jMenuItem4 = new javax.swing.JMenuItem();
 
 		jMenuItemExit = new javax.swing.JMenuItem();		
-		jMenuItem3 = new javax.swing.JMenuItem();
+		jMenuItemSave = new javax.swing.JMenuItem();
 
 		jSeparator1 = new javax.swing.JSeparator();
 		jSeparator2 = new javax.swing.JSeparator();			
@@ -312,9 +312,10 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		});
 		jToolBarSimulationControl.add(jButtonPause);
 
-
-		jButtonSave.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + SAVE));
 		jButtonSave.setToolTipText("Save");
+		jButtonSave.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + SAVE));
+		jButtonSave.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OFF_LINE));	
+		
 		jButtonSave.setFocusable(false);
 		jButtonSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 		jButtonSave.setPreferredSize(new java.awt.Dimension(30, 30));
@@ -326,10 +327,10 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		});
 		jToolBarSimulationControl.add(jButtonSave);
 
-
-		jButtonOpen.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPEN));
-		jButtonOpen.setFocusable(true);
 		jButtonOpen.setToolTipText("Open");
+		jButtonOpen.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPEN));
+		jButtonOpen.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OFF_LINE));
+		jButtonOpen.setFocusable(true);		
 		jButtonOpen.setFocusable(false);		
 		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));
 		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
@@ -390,8 +391,9 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 
 		jMenuFile.setText("File");
 
-		jMenuItemOpen.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+OPEN_SMALL));
 		jMenuItemOpen.setText("Open");
+		jMenuItemOpen.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+OPEN_SMALL));
+		jMenuItemOpen.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OFF_LINE_SMALL));		
 		jMenuItemOpen.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameController.openActionPerformed(fcOpenFrame);
@@ -402,15 +404,16 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 
 		jMenuFile.add(jSeparator2);
 
-		jMenuItem3.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+SAVE_SMALL));
-		jMenuItem3.setText("Save");
-		jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+		jMenuItemSave.setText("Save");
+		jMenuItemSave.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+SAVE_SMALL));
+		jMenuItemSave.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OFF_LINE_SMALL));		
+		jMenuItemSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameController.saveActionPerformed(fcSaveFrame);
 			}
 		});
 
-		jMenuFile.add(jMenuItem3);
+		jMenuFile.add(jMenuItemSave);
 		jMenuFile.add(jSeparator1);
 
 		jMenuItemExit.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+EXIT));
@@ -587,7 +590,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 	public static void setSaveOpenEnabled (boolean state){
 		jButtonSave.setEnabled(state);
 		jMenuItemOpen.setEnabled(state);
-		jMenuItem3.setEnabled(state);	
+		jMenuItemSave.setEnabled(state);	
 		jButtonOpen.setEnabled(state);
 	} 
 
@@ -657,7 +660,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 
 	private javax.swing.JMenuItem jMenuItemExit;
 	private static javax.swing.JMenuItem jMenuItemOpen;
-	private static javax.swing.JMenuItem jMenuItem3;
+	private static javax.swing.JMenuItem jMenuItemSave;
 	private javax.swing.JMenuItem jMenuItem4;
 
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;

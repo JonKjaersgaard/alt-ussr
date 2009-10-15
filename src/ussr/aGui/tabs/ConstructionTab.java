@@ -11,6 +11,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 
+import ussr.aGui.MainFrame;
+import ussr.aGui.MainFrameInter;
 import ussr.builder.SupportedModularRobots;
 import ussr.physics.jme.JMESimulation;
 
@@ -55,9 +57,16 @@ public class ConstructionTab extends Tabs {
 		/*Instantiation of components*/
 		jToolBar1 = new javax.swing.JToolBar();
 		
+		button10 =   new javax.swing.JButton();
+		button11 =   new javax.swing.JButton();	
+		button12 =   new javax.swing.JButton();
+		
+		jLabel10002 = new javax.swing.JLabel();
 		
 		
-		jLabel10002 = new javax.swing.JLabel();		
+		
+		
+		
 		jLabel10002.setText("Shortcut:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
@@ -169,10 +178,10 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.gridx = 3;		
 		gridBagConstraints.gridy = 5;
 		//jComponent.add(button11,gridBagConstraints);	
-		
-		button11 =   new javax.swing.JButton();
-		button11.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOVE_MODULE));
+			
 		button11.setToolTipText("Move module");
+		button11.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOVE_MODULE));
+		button11.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.OFF_LINE));
 		button11.setFocusable(false); 
 		button11.setEnabled(false);
 		button11.setPreferredSize(new java.awt.Dimension(30, 30));	
@@ -182,10 +191,10 @@ public class ConstructionTab extends Tabs {
 			}
 		});
 		jToolBar1.add(button11);
-		
-		button10 =   new javax.swing.JButton();
-		button10.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE_MODULE));
+				
 		button10.setToolTipText("Delete module");
+		button10.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE_MODULE));
+		button10.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.OFF_LINE));		
 		button10.setFocusable(false);
 		button10.setEnabled(false);
 		button10.setPreferredSize(new java.awt.Dimension(30, 30));
@@ -198,11 +207,11 @@ public class ConstructionTab extends Tabs {
 		//gridBagConstraints.gridx = 3;
 		//gridBagConstraints.gridwidth = 1; 
 		//gridBagConstraints.gridy = 5;
-		jToolBar1.add(button10);
+		jToolBar1.add(button10);		
 		
-		button12 =   new javax.swing.JButton();
-		button12.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + COLOUR_CONNECTORS));
 		button12.setToolTipText("Colour connectors");
+		button12.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + COLOUR_CONNECTORS));
+		button12.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.OFF_LINE));		
 		button12.setFocusable(false);
 		button12.setEnabled(false);
 		button12.setPreferredSize(new java.awt.Dimension(30, 30));
