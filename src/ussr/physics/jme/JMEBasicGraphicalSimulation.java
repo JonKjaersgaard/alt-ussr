@@ -14,11 +14,12 @@ import java.util.LinkedList;
 import java.util.List;
 import ussr.aGui.MainFrame;
 import ussr.aGui.MainFrameInter;
-import ussr.aGui.tabs.AssignBehaviorsTab;
-import ussr.aGui.tabs.ConsoleTab;
-import ussr.aGui.tabs.ConstructionTab;
-import ussr.aGui.tabs.NewTab;
-import ussr.aGui.tabs.TabsInter;
+import ussr.aGui.tabs.view.AssignBehaviorsTab;
+import ussr.aGui.tabs.view.CommunicationVisualizer;
+import ussr.aGui.tabs.view.ConsoleTab;
+import ussr.aGui.tabs.view.ConstructionTab;
+import ussr.aGui.tabs.view.NewTab;
+import ussr.aGui.tabs.view.TabsInter;
 import ussr.builder.QuickPrototyping;
 import ussr.comm.monitors.visualtracker.CommunicationVisualizerGUI;
 import ussr.description.setup.WorldDescription;
@@ -343,6 +344,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 				//tabs.add(new ConstructionTab(true,"1 Step: Construct Robot (Interactive User Guide)",simulation));//Build in tab
 				tabs.add(new ConstructionTab(true,"1 Step: Construct Robot",simulation,TabsInter.DIRECTORY_ICONS+TabsInter.CONSTRUCTION));//Build in tab
 				tabs.add(new AssignBehaviorsTab(true,"2 Step: Assign Behaviour (Controller)",simulation,TabsInter.DIRECTORY_ICONS+TabsInter.BEHAVIOR));//Build in tab
+				tabs.add(new CommunicationVisualizer(true,"Communication Visualiser",simulation,TabsInter.DIRECTORY_ICONS+TabsInter.BEHAVIOR));//Build in tab
 				//tabs.add(new AssignBehavioursTab(true,"2 Step: Assign Behaviour (Interactive User Guide)",simulation));//Build in tab
 				tabs.add(new NewTab(true, "YOUR NEW TAB",simulation));//YOUR NEW TAB
 				tabs.add(new NewTab(true, "YOUR NEW TAB1",simulation));//YOUR NEW TAB1
