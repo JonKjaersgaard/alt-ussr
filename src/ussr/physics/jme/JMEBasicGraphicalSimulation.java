@@ -706,13 +706,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 				e.printStackTrace();
 				throw new Error("Unable to link native libraries");
 			}
-			
-		/*	display.registerCanvasConstructor("AWT", LWJGLAWTCanvasConstructor.class);
-			LWJGLCanvas canvas = (LWJGLCanvas)display.createCanvas(800, 800);
-			canvas.setUpdateInput(true);
-	        canvas.setTargetRate(60);*/
-
-
+		
 			display.setMinDepthBits( depthBits );
 			display.setMinStencilBits( stencilBits );
 			display.setMinAlphaBits( alphaBits );
