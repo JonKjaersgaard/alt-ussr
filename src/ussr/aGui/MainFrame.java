@@ -248,9 +248,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		jLabel3 = new javax.swing.JLabel();
 		jLabel5 = new javax.swing.JLabel();
 
-		jTextField1 = new javax.swing.JTextField(); 
-
-	
+		jTextField1 = new javax.swing.JTextField(); 	
 
 		jSplitPane1 = new javax.swing.JSplitPane();
 
@@ -259,7 +257,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		setTitle("Unified Simulator for Self-Reconfigurable Robots");
 		getContentPane().setLayout(new java.awt.FlowLayout());	
 
-		jToolBarSimulationControl.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarSimulationControl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarSimulationControl.setRollover(true);
 		jToolBarSimulationControl.setFloatable(false);
 		jToolBarSimulationControl.setToolTipText("Simulation Control");
@@ -343,7 +341,8 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 
 		getContentPane().add(jToolBarSimulationControl);
 
-		jTabbedPaneInteraction.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);		
+		jTabbedPaneInteraction.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+		jTabbedPaneInteraction.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jTabbedPaneInteraction.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING, TAB_PANE_HEIGHT1));
 		//jTabbedPane1.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING,TAB_PANE_HEIGHT1));
 		jTabbedPaneInteraction.setFocusable(false);		
@@ -361,6 +360,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 
 		jTabbedPane3.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 		jTabbedPane3.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING, TAB_PANE_HEIGHT2));
+		
 		//jTabbedPane3.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING,TAB_PANE_HEIGHT1));
 		
         //jTabbedPane3.addTab("tab1", jPanel3);
@@ -519,10 +519,10 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		final ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems = new ArrayList<javax.swing.JCheckBoxMenuItem>();
 		for (int index =0; index < tabs.size(); index++){					  
 			TabsInter currentTab = tabs.get(index);
-			if (tabs.get(index).getTabTitle().contains("Construct Robot")){
-				jTabbedPane.addTab(tabs.get(index).getTabTitle(),new javax.swing.ImageIcon(TabsInter.DIRECTORY_ICONS + TabsInter.CONSTRUCTION),currentTab.getJComponent());
+			if (tabs.get(index).getImageIconDirectory()==null){
+				jTabbedPane.addTab(currentTab.getTabTitle(),currentTab.getJComponent());				
 			}else{
-			jTabbedPane.addTab(tabs.get(index).getTabTitle(),currentTab.getJComponent());
+				jTabbedPane.addTab(currentTab.getTabTitle(),new javax.swing.ImageIcon(currentTab.getImageIconDirectory()),currentTab.getJComponent());
 			}
 
 			jCheckBoxMenuItemNew = new javax.swing.JCheckBoxMenuItem();

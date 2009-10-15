@@ -34,14 +34,16 @@ public class AssignBehaviorsTab extends Tabs {
 	 * Defines visual appearance of the tab called "2 Step: Assign Behaviors".
 	 * @param firstTabbedPane,
 	 * @param tabTitle, the title of the tab
-	 * @param jmeSimulation, the physical simulation. 
+	 * @param jmeSimulation, the physical simulation.
+	 * @param imageIconDirectory
 	 */
-	public AssignBehaviorsTab(boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation){
+	public AssignBehaviorsTab(boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
 		this.firstTabbedPane = firstTabbedPane;
-		this.tabTitle = tabTitle;
+		this.tabTitle = tabTitle;		
+		this.jmeSimulation = jmeSimulation;
+		this.imageIconDirectory = imageIconDirectory;
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		this.jComponent = new javax.swing.JPanel(new GridBagLayout());	
-		this.jmeSimulation = jmeSimulation;
 		initComponents();
 	}
 

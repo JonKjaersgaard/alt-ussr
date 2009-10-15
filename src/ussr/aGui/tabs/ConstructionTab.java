@@ -30,12 +30,15 @@ public class ConstructionTab extends Tabs {
 	 * @param firstTabbedPane,
 	 * @param tabTitle, the title of the tab
 	 * @param jmeSimulation, the physical simulation.
-	 * 
+	 * @param imageIconDirectory,
 	 */
-	public ConstructionTab(boolean firstTabbedPane,String tabTitle,JMESimulation jmeSimulation){
+	public ConstructionTab(boolean firstTabbedPane,String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
+		
 		this.firstTabbedPane = firstTabbedPane;
 		this.tabTitle = tabTitle;
 		this.jmeSimulation = jmeSimulation;
+		this.imageIconDirectory = imageIconDirectory; 
+		
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		this.jComponent = new javax.swing.JPanel(new GridBagLayout());		
 		initComponents();

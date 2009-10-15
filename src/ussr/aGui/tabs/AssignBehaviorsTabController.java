@@ -84,9 +84,9 @@ public class AssignBehaviorsTabController {
 			  tempClassesOfControllers.add(classesOfControllers.get(index));
 		  }
 	  }
-	  if (tempClassesOfControllers.isEmpty()){
-		  tempClassesOfControllers.add("Not supported yet");
-	  }
+/*	  if (tempClassesOfControllers.isEmpty()){
+		  tempClassesOfControllers.add(filterValue + "is not supported yet");
+	  }*/
 	return tempClassesOfControllers;
 	  
   }

@@ -10,10 +10,10 @@ public abstract class Tabs implements TabsInter {
 	
 	protected boolean firstTabbedPane;
 	
+	protected String imageIconDirectory;
 	
-	public boolean isFirstTabbedPane() {
-		return firstTabbedPane;
-	}
+	
+	
 
 	/**
 	 * The title of the tab.
@@ -53,4 +53,12 @@ public abstract class Tabs implements TabsInter {
 	public String getTabTitle() {
 		return tabTitle;
 	}    
+	
+	public String getImageIconDirectory() {
+		return imageIconDirectory;
+	}
+
+	public boolean isFirstTabbedPane() {
+		return firstTabbedPane;
+	}
 }
