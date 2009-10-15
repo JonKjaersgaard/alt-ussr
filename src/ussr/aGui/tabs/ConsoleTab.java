@@ -56,6 +56,18 @@ public class ConsoleTab extends Tabs {
 
 		((JScrollPane) jComponent).setViewportView(jTextArea1);
 		
+		
+/*		  File f2 = new File("resources/mainFrame/HERE.txt");
+		  PrintStream newps = null;
+		  try {
+			 newps = new PrintStream(new FileOutputStream(f2));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.setOut(newps);
+       System.out.println("Some");*/
+		 
 		//PrintStream printStream = new PrintStream();
 		
 		

@@ -44,6 +44,7 @@ public class ConstructionTabController {
 		ConstructionTab.getButton11().setEnabled(true);
 		ConstructionTab.getButton12().setEnabled(true);
 		
+		System.out.println("Some");
 		
 		 String chosenModularRobot = button.getText(); 
 			

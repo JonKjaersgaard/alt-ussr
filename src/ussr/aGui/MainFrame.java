@@ -114,7 +114,6 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 		tabsSecondTabbedPane.add(new ConsoleTab(false,"Console", null));
 		tabsFirstTabbedPane.add(new NewTab(true,"YOUR NEW TAB",null));//YOUR NEW TAB
 		tabsFirstTabbedPane.add(new NewTab(true,"YOUR NEW TAB1",null));//YOUR NEW TAB1
-		
 	}
 
 	/**
@@ -519,8 +518,12 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 	private void initTabsAndCheckBoxes(final ArrayList<TabsInter>tabs ,final javax.swing.JTabbedPane jTabbedPane,javax.swing.JMenu jMenu){
 		final ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems = new ArrayList<javax.swing.JCheckBoxMenuItem>();
 		for (int index =0; index < tabs.size(); index++){					  
-			TabsInter currentTab = tabs.get(index); 
-			jTabbedPane.add(tabs.get(index).getTabTitle(),currentTab.getJComponent());
+			TabsInter currentTab = tabs.get(index);
+			if (tabs.get(index).getTabTitle().contains("Construct Robot")){
+				jTabbedPane.addTab(tabs.get(index).getTabTitle(),new javax.swing.ImageIcon(TabsInter.DIRECTORY_ICONS + TabsInter.CONSTRUCTION),currentTab.getJComponent());
+			}else{
+			jTabbedPane.addTab(tabs.get(index).getTabTitle(),currentTab.getJComponent());
+			}
 
 			jCheckBoxMenuItemNew = new javax.swing.JCheckBoxMenuItem();
 			jCheckBoxMenuItemNew.setSelected(true);
