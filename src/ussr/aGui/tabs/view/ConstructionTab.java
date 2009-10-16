@@ -64,8 +64,10 @@ public class ConstructionTab extends Tabs {
 		button10 =   new javax.swing.JButton();
 		button11 =   new javax.swing.JButton();	
 		button12 =   new javax.swing.JButton();
+		button14 =   new javax.swing.JButton();
 		
-		jLabel10002 = new javax.swing.JLabel();		
+		jLabel10002 = new javax.swing.JLabel();	
+		jLabel10003 = new javax.swing.JLabel();	
 	
 		
 		jLabel10002.setText("Shortcut:");
@@ -136,7 +138,7 @@ public class ConstructionTab extends Tabs {
 
 		jLabel1000 = new javax.swing.JLabel();
 		jLabel1000.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + INFORMATION));		
-		jLabel1000.setText("Next select connectors (black and white geometric shapes).");
+		jLabel1000.setText("Now select connectors (black or white geometric shapes).");
 		jLabel1000.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
@@ -146,22 +148,32 @@ public class ConstructionTab extends Tabs {
 		jLabel1000.setVisible(false);
 		//gridBagConstraints.weighty = 0.5;   //request any extra vertical space
 		super.jComponent.add(jLabel1000,gridBagConstraints);
-				
 
-
-		jLabel10001 = new javax.swing.JLabel();		
-		jLabel10001.setText("When done with constructing, go to the next tab.");
+		/*jLabel10001 = new javax.swing.JLabel();		
+		jLabel10001.setText("When done with constructing press ready button");
 		jLabel10001.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));
+		jLabel10001.setVisible(false);
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 3;
 		gridBagConstraints.gridwidth = 4;
 		gridBagConstraints.insets = new Insets(0,30,0,0);  //left padding
-		super.jComponent.add(jLabel10001,gridBagConstraints);
-		jLabel10001.setVisible(false);
+		super.jComponent.add(jLabel10001,gridBagConstraints);*/
 		
-		
-		jLabel10003 = new javax.swing.JLabel();		
+		button14.setText("Robot Ready");
+		button14.setToolTipText("Robot is ready");		
+		button14.setFocusable(false); 
+		button14.setPreferredSize(new java.awt.Dimension(30, 30));	
+		button14.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructionTabController.jButton14ActionPerformed(jmeSimulation, button14 );
+			}
+		});
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 4;
+		gridBagConstraints.gridy = 3;
+		super.jComponent.add(button14,gridBagConstraints);		
+			
 		jLabel10003.setText("Additional:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
@@ -180,11 +192,10 @@ public class ConstructionTab extends Tabs {
 		jToolBar1.setFloatable(false);//user can not make the tool bar to float
 		jToolBar1.setRollover(true);// the buttons inside are roll over
 		jToolBar1.setToolTipText("Generic tools");
-		jToolBar1.setPreferredSize(new Dimension(100,40));
-		
+		jToolBar1.setPreferredSize(new Dimension(100,40));		
 		gridBagConstraints.fill = GridBagConstraints.LINE_END;
 		gridBagConstraints.gridx = 3;		
-		gridBagConstraints.gridy = 5;
+		gridBagConstraints.gridy = 5;		
 		//jComponent.add(button11,gridBagConstraints);	
 			
 		button11.setToolTipText("Move module");
@@ -432,6 +443,7 @@ public class ConstructionTab extends Tabs {
 	private  static javax.swing.JButton button10;
 	private  static javax.swing.JButton button11;
 	private  static javax.swing.JButton button12;
+	private  static javax.swing.JButton button14;
 	
 	private javax.swing.JToolBar jToolBar1;
 

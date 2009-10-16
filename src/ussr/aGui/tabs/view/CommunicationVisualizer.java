@@ -58,9 +58,11 @@ public class CommunicationVisualizer extends Tabs {
 		/*Instantiation of components*/		
 		jScrollPane = new JScrollPane();
 		
-		this.jButtonRun = new JButton();
-		
 		this.jToolBar1 = new JToolBar();
+		
+		jButtonRun = new JButton();
+		jButtonReset = new JButton();
+		
 		
 		jLabel1000 = new javax.swing.JLabel();
 		jLabel1001 = new javax.swing.JLabel();
@@ -89,14 +91,20 @@ public class CommunicationVisualizer extends Tabs {
 		
 		super.jComponent.add(jScrollPane,gridBagConstraints);
 	    
-	    jToolBar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-	    jToolBar1.setRollover(true);
-	    jToolBar1.setFloatable(false);
-	    jToolBar1.setToolTipText("Visualizer Control");
-	    jToolBar1.setPreferredSize(new Dimension(30,30));	   
-	  
+	    this.jToolBar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+	    this.jToolBar1.setRollover(true);
+	    this.jToolBar1.setFloatable(false);
+	    this.jToolBar1.setToolTipText("Visualizer Control");
+	    this.jToolBar1.setPreferredSize(new Dimension(30,30));	   
+	    gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.anchor = GridBagConstraints.PAGE_END;
+		gridBagConstraints.ipady = 10;//make it tall
+		//gridBagConstraints.ipadx = 300;//make it wide
 
-	    jButtonRun.setIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.RUN_REAL_TIME));
+		jButtonRun.setIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.RUN_REAL_TIME));
+		jButtonRun.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));
 	    jButtonRun.setPreferredSize(new Dimension(30,30));
 	    jButtonRun.setToolTipText("Run");
 	    jButtonRun.setFocusable(true);
@@ -106,14 +114,23 @@ public class CommunicationVisualizer extends Tabs {
             }
         });
 	    
-	    jToolBar1.add(jButtonRun);
+	    this.jToolBar1.add(jButtonRun);
 	    
-	    gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 1;
-		gridBagConstraints.anchor = GridBagConstraints.PAGE_END;
-		gridBagConstraints.ipady = 10;//make it tall
-		//gridBagConstraints.ipadx = 300;//make it wide
+	 /*   //this.jButtonUpdate.setIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.RUN_REAL_TIME));
+	    jButtonReset.setText("Reset");
+	    jButtonReset.setPreferredSize(new Dimension(30,30));
+	    jButtonReset.setToolTipText("Reset Display Area");
+	    jButtonReset.setFocusable(true);
+	    jButtonReset.setEnabled(false);
+	    jButtonReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	CommunicationVisualizerController.jButtonResetActionPerformed( jmeSimulation, jScrollPane);
+            }
+        });
+	    
+	    this.jToolBar1.add(jButtonReset);	*/    
+	    
+	  
 		super.jComponent.add(jToolBar1,gridBagConstraints);	    
 	    
 	    
@@ -168,19 +185,29 @@ public class CommunicationVisualizer extends Tabs {
 		return jLabel1001;
 	}
 	
+	public static javax.swing.JButton getJButtonRun() {
+		return jButtonRun;
+	}
+	
+	public static javax.swing.JButton getJButtonReset() {
+		return jButtonReset;
+	}
+	
+	
+	
 	
 	/*Declaration of components*/
 	private  javax.swing.JButton  modulesButton;
 	private  javax.swing.JButton  packetsButton;
 	
-	private  javax.swing.JButton  jButtonRun;
-	
+	private  static javax.swing.JButton  jButtonRun;
+	private  static javax.swing.JButton  jButtonReset;
+
 	private static javax.swing.JScrollPane  jScrollPane;	
 
 	private javax.swing.JToolBar jToolBar1;
 	
-	private static javax.swing.JLabel jLabel1000;
-	
+	private static javax.swing.JLabel jLabel1000;	
 	private static javax.swing.JLabel jLabel1001;
 	
 }

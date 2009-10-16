@@ -2,7 +2,9 @@ package ussr.aGui.tabs.controller;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 
+import ussr.aGui.MainFrame;
 import ussr.aGui.tabs.view.ConstructionTab;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
@@ -40,7 +42,7 @@ public class ConstructionTabController {
 	
 	public static void jButtonGroupActionPerformed(AbstractButton button,JMESimulation jmeSimulation ) {
 		ConstructionTab.getJLabel1000().setVisible(true);
-		ConstructionTab.getJLabel10001().setVisible(true);
+		//ConstructionTab.getJLabel10001().setVisible(true);
 		ConstructionTab.getButton10().setEnabled(true);
 		ConstructionTab.getButton11().setEnabled(true);
 		ConstructionTab.getButton12().setEnabled(true);
@@ -182,5 +184,16 @@ public class ConstructionTabController {
 	public static void jButton12ActionPerformed(JMESimulation jmeSimulation) {	
 		jmeSimulation.setPicker(new ColorConnectors());		
     }
+	
+	/**
+	 * Connects all modules (connectors), when the run button(real time or fast) is pressed first time. 
+	 * @param jmeSimulation
+	 */
+	public static void jButton14ActionPerformed(JMESimulation jmeSimulation,JButton jButton14) {
+		jButton14.setEnabled(false);
+		BuilderHelper.connectAllModules(jmeSimulation);	
+		//TODO Disable whole tab
+    }
+	
 	    
 }

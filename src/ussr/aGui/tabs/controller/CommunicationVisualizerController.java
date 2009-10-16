@@ -27,6 +27,8 @@ public class CommunicationVisualizerController {
 	private final static int CANVAS_ROWS = 55;
 
 	public static void jButtonRunActionPerformed(JMESimulation jmeSimulation,JScrollPane jScrollPane) {
+		CommunicationVisualizer.getJButtonRun().setEnabled(false);
+		CommunicationVisualizer.getJButtonReset().setEnabled(true);
 		modules = jmeSimulation.getModules();	 
 		numberOfModules = modules.size();
 		
@@ -54,8 +56,22 @@ public class CommunicationVisualizerController {
 			jScrollPane.setViewportView(drawingCanvas); //add canvas to scroll pane
 		}
 
-		//jComponent.add(jScrollPane);
-
+	}
+	
+	
+	public static void jButtonResetActionPerformed(JMESimulation jmeSimulation,JScrollPane jScrollPane) {
+		modules = jmeSimulation.getModules();	 
+		numberOfModules = modules.size();
+		
+			if (drawingCanvas == null){
+				drawingCanvas = getDrawingCanvas( jmeSimulation, jScrollPane);
+				drawingCanvas.start();
+			}else{
+				drawingCanvas.stop();
+				drawingCanvas = getDrawingCanvas( jmeSimulation, jScrollPane);
+				drawingCanvas.start();
+			}
+			jScrollPane.setViewportView(drawingCanvas); //add canvas to scroll pane
 	}
 
 	private static DrawingCanvas getDrawingCanvas(JMESimulation jmeSimulation,JScrollPane jScrollPane){

@@ -44,28 +44,7 @@ public class MainFrameController {
 	public static void jTextField1FocusGained(JTextField jTextField1) {
 		jTextField1.setText("");
 	}
-
-
-	/**
-	 * Used to keep track when run button(real time or fast) is pressed first time.
-	 */
-	private static int timesPressed =0;
-
-	/**
-	 * Connects all modules (connectors), when the run button(real time or fast) is pressed first time. 
-	 * @param jmeSimulation
-	 */
-	private static void connectConnectors(JMESimulation jmeSimulation){
-		timesPressed++;
-		if (timesPressed ==1){ // First time is pressed connect all modules in the morphology
-			BuilderHelper.connectAllModules(jmeSimulation);				
-		}
-		/*Disable GUI components responsible for opening file choosers, because it is possible to load
-		 *simulation from XML file only in static state of simulation.*/ 
-		MainFrame.setSaveOpenEnabled(false);
-		//ConstructionTab.setEnabled(false);
-	};
-
+	
 	/**
 	 * Controls running simulation in real time.
 	 * @param jmeSimulation
@@ -76,8 +55,11 @@ public class MainFrameController {
 			jmeSimulation.setPause(false);				
 		}else if (jmeSimulation.isRealtime()==false){//if simulation is running fast, then run it in real time
 			jmeSimulation.setRealtime(true);
-		}
-		connectConnectors(jmeSimulation);// first time button pressed connect connectors on modules
+		}	
+		/*Disable GUI components responsible for opening file choosers, because it is possible to load
+		 *simulation from XML file only in static state of simulation.*/ 
+		MainFrame.setSaveOpenEnabled(false);
+		//ConstructionTab.setEnabled(false);
 	}
 
 
@@ -93,7 +75,10 @@ public class MainFrameController {
 		}else if (jmeSimulation.isRealtime()==true){//if simulation in real time, then run it fast
 			jmeSimulation.setRealtime(false);
 		}
-		connectConnectors(jmeSimulation);// first time button pressed connect connectors on modules
+		/*Disable GUI components responsible for opening file choosers, because it is possible to load
+		 *simulation from XML file only in static state of simulation.*/ 
+		MainFrame.setSaveOpenEnabled(false);
+		//ConstructionTab.setEnabled(false);
 	}
 
 
@@ -216,6 +201,10 @@ public class MainFrameController {
 	public static void jButtonRunStepByStepActionPerformed(JMESimulation jmeSimulation) {       	
 		jmeSimulation.setPause(true);
 		jmeSimulation.setSingleStep(true);
+		/*Disable GUI components responsible for opening file choosers, because it is possible to load
+		 *simulation from XML file only in static state of simulation.*/ 
+		MainFrame.setSaveOpenEnabled(false);
+		//ConstructionTab.setEnabled(false);
 	}
 
 
