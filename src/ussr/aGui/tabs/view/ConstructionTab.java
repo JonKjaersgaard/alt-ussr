@@ -62,11 +62,8 @@ public class ConstructionTab extends Tabs {
 		button11 =   new javax.swing.JButton();	
 		button12 =   new javax.swing.JButton();
 		
-		jLabel10002 = new javax.swing.JLabel();
-		
-		
-		
-		
+		jLabel10002 = new javax.swing.JLabel();		
+	
 		
 		jLabel10002.setText("Shortcut:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -133,7 +130,9 @@ public class ConstructionTab extends Tabs {
 		jComponent.add(radionButtonCKBOTSTANDARD,gridBagConstraints);
 		buttonGroup.add(radionButtonCKBOTSTANDARD);		
 
-		jLabel1000 = new javax.swing.JLabel();		
+		jLabel1000 = new javax.swing.JLabel();
+		javax.swing.ImageIcon informationIcon =  new javax.swing.ImageIcon(DIRECTORY_ICONS + INFORMATION);
+		jLabel1000.setIcon(informationIcon);
 		jLabel1000.setText("Next select connectors (black and white geometric shapes).");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
@@ -151,6 +150,7 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 3;
 		gridBagConstraints.gridwidth = 4;
+		gridBagConstraints.insets = new Insets(0,30,0,0);  //left padding
 		jComponent.add(jLabel10001,gridBagConstraints);
 		jLabel10001.setVisible(false);
 		
@@ -160,6 +160,7 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 4;
+		gridBagConstraints.insets = new Insets(0,0,0,30);  //bring padding back
 		jComponent.add(jLabel10003,gridBagConstraints);
    
 		jLabel10004 = new javax.swing.JLabel();		
