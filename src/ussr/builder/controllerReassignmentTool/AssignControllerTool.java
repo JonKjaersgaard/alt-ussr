@@ -51,6 +51,7 @@ public class AssignControllerTool extends CustomizedPicker  {
 			
 			AssignBehaviorsTab.getJLabel10005().setVisible(true);
 			AssignBehaviorsTab.getJLabel10005().setText("Controller was assigned successfully to module with ID: "+selectedModule.getID());
+			AssignBehaviorsTab.getJLabel1000().setVisible(true);
 	}
 
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
