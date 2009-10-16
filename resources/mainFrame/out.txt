@@ -1,0 +1,2 @@
+Some
+Position: com.jme.math.Vector3f [X=0.0, Y=0.0, Z=-100.0]
