@@ -2,9 +2,13 @@ package ussr.aGui.tabs.view;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.font.TextAttribute;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -27,7 +31,7 @@ public class ConstructionTab extends Tabs {
 	 * The constants of grid bag layout used during design of the tab.
 	 */
 	private GridBagConstraints gridBagConstraints = new GridBagConstraints();
-
+	
 	/**
 	 * Defines visual appearance of the tab called "1 Step: Construct Robot".
 	 * @param firstTabbedPane,
@@ -36,14 +40,13 @@ public class ConstructionTab extends Tabs {
 	 * @param imageIconDirectory,
 	 */
 	public ConstructionTab(boolean firstTabbedPane,String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
-		
-		this.firstTabbedPane = firstTabbedPane;
-		this.tabTitle = tabTitle;
-		this.jmeSimulation = jmeSimulation;
-		this.imageIconDirectory = imageIconDirectory; 
+		super(firstTabbedPane,tabTitle,jmeSimulation);
+	
+		super.imageIconDirectory = imageIconDirectory; 
 		
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
-		this.jComponent = new javax.swing.JPanel(new GridBagLayout());		
+		super.jComponent = new javax.swing.JPanel(new GridBagLayout());	
+		super.fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		initComponents();
 	}
 
@@ -69,11 +72,12 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
-		jComponent.add(jLabel10002,gridBagConstraints);
+		super.jComponent.add(jLabel10002,gridBagConstraints);
 
 		final ButtonGroup buttonGroup = new ButtonGroup() ;
 
 		radionButtonATRON =  new JRadioButton();
+		radionButtonATRON.setFocusable(true);// direct the user to what should be done first
 		radionButtonATRON.setText("ATRON");		
 		radionButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,7 +88,7 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 10; 
-		jComponent.add(radionButtonATRON,gridBagConstraints);
+		super.jComponent.add(radionButtonATRON,gridBagConstraints);
 		buttonGroup.add(radionButtonATRON);
 
 		radionButtonODIN =  new JRadioButton();
@@ -98,7 +102,7 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 10; 
-		jComponent.add(radionButtonODIN,gridBagConstraints);
+		super.jComponent.add(radionButtonODIN,gridBagConstraints);
 		buttonGroup.add(radionButtonODIN);
 
 
@@ -113,7 +117,7 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.gridx = 3;
 		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 10; 
-		jComponent.add(radioButtonMTRAN,gridBagConstraints);
+		super.jComponent.add(radioButtonMTRAN,gridBagConstraints);
 		buttonGroup.add(radioButtonMTRAN);
 
 		radionButtonCKBOTSTANDARD =  new JRadioButton();
@@ -127,31 +131,33 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.gridx = 4;
 		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 40; 
-		jComponent.add(radionButtonCKBOTSTANDARD,gridBagConstraints);
+		super.jComponent.add(radionButtonCKBOTSTANDARD,gridBagConstraints);
 		buttonGroup.add(radionButtonCKBOTSTANDARD);		
 
 		jLabel1000 = new javax.swing.JLabel();
-		javax.swing.ImageIcon informationIcon =  new javax.swing.ImageIcon(DIRECTORY_ICONS + INFORMATION);
-		jLabel1000.setIcon(informationIcon);
+		jLabel1000.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + INFORMATION));		
 		jLabel1000.setText("Next select connectors (black and white geometric shapes).");
+		jLabel1000.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 2;
 		gridBagConstraints.gridwidth = 4;
 		gridBagConstraints.insets = new Insets(5,0,0,0);  //top padding
+		jLabel1000.setVisible(false);
 		//gridBagConstraints.weighty = 0.5;   //request any extra vertical space
-		jComponent.add(jLabel1000,gridBagConstraints);
-		jLabel1000.setVisible(false);		
+		super.jComponent.add(jLabel1000,gridBagConstraints);
+				
 
 
 		jLabel10001 = new javax.swing.JLabel();		
 		jLabel10001.setText("When done with constructing, go to the next tab.");
+		jLabel10001.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 3;
 		gridBagConstraints.gridwidth = 4;
 		gridBagConstraints.insets = new Insets(0,30,0,0);  //left padding
-		jComponent.add(jLabel10001,gridBagConstraints);
+		super.jComponent.add(jLabel10001,gridBagConstraints);
 		jLabel10001.setVisible(false);
 		
 		
@@ -161,14 +167,14 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 4;
 		gridBagConstraints.insets = new Insets(0,0,0,30);  //bring padding back
-		jComponent.add(jLabel10003,gridBagConstraints);
+		super.jComponent.add(jLabel10003,gridBagConstraints);
    
 		jLabel10004 = new javax.swing.JLabel();		
 		jLabel10004.setText("Generic functionality:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 5;
-		jComponent.add(jLabel10004,gridBagConstraints);		
+		super.jComponent.add(jLabel10004,gridBagConstraints);		
 		
 		jToolBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBar1.setFloatable(false);//user can not make the tool bar to float
@@ -228,7 +234,7 @@ public class ConstructionTab extends Tabs {
 		//gridBagConstraints.gridy = 5;
 		//jComponent.add(button12,gridBagConstraints);
 		jToolBar1.add(button12);
-		jComponent.add(jToolBar1,gridBagConstraints);
+		super.jComponent.add(jToolBar1,gridBagConstraints);
 		
 		
 			
@@ -416,8 +422,6 @@ public class ConstructionTab extends Tabs {
 	private static javax.swing.JLabel jLabel10002;
 	private static javax.swing.JLabel jLabel10003;
 	private static javax.swing.JLabel jLabel10004;
-
-	private static javax.swing.JComboBox jComboBox1000;
 
 	private static  javax.swing.AbstractButton radionButtonATRON;
 	private static javax.swing.AbstractButton  radioButtonMTRAN;

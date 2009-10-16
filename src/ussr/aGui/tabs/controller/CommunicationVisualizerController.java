@@ -4,10 +4,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import ussr.aGui.tabs.additional.CanvasMouseListener;
+import ussr.aGui.tabs.view.AssignBehaviorsTab;
 import ussr.aGui.tabs.view.CommunicationVisualizer;
 import ussr.aGui.tabs.view.TabsInter;
 import ussr.comm.monitors.visualtracker.DrawingCanvas;
@@ -27,11 +29,20 @@ public class CommunicationVisualizerController {
 	public static void jButtonRunActionPerformed(JMESimulation jmeSimulation,JScrollPane jScrollPane) {
 		modules = jmeSimulation.getModules();	 
 		numberOfModules = modules.size();
-		if (numberOfModules == 0||numberOfModules <= 2){
-			//STOPPED HERE WRITE THW CLASS: "OptionPane.java"
-			//JPanel panel = new	JPanel();			
-			//jScrollPane.setViewport(new javax.swing.ImageIcon(TabsInter.DIRECTORY_ICONS + TabsInter.ERROR));
+		
+	/*	
+        if(jmeSimulation.isPaused()==false){
+        	jLabel1000.setVisible(true);
+			jLabel1000.setText("Simulation is running ");
+			jScrollPane.setViewportView(jLabel1000);
+			
+		}else */if (numberOfModules == 0||numberOfModules <= 2){
+			// WOULD BE GOOD TO CHECK: 1) IF THERE IS TWO THE SAME MODULE TYPES AND 2)COMMUNICATION IS IN PROGRESS
+			CommunicationVisualizer.getJLabel1000().setVisible(true);
+			CommunicationVisualizer.getJLabel1000().setText("In simulation environment should be at lest two modules. Now there are "+ numberOfModules + " modules.");
+			jScrollPane.setViewportView(CommunicationVisualizer.getJLabel1000());
 		}else{
+			CommunicationVisualizer.getJLabel1001().setVisible(false);
 			if (drawingCanvas == null){
 				drawingCanvas = getDrawingCanvas( jmeSimulation, jScrollPane);
 				drawingCanvas.start();
@@ -48,6 +59,7 @@ public class CommunicationVisualizerController {
 	}
 
 	private static DrawingCanvas getDrawingCanvas(JMESimulation jmeSimulation,JScrollPane jScrollPane){
+		
 		jmeSimulation.setPause(false);	
 
 		DrawingCanvas drawingCanvasNew = new DrawingCanvas(jmeSimulation, CANVAS_ROWS, numberOfModules);

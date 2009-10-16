@@ -1,5 +1,9 @@
 package ussr.aGui.tabs.view;
 
+import java.awt.font.TextAttribute;
+import java.util.HashMap;
+import java.util.Map;
+
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -12,7 +16,7 @@ public abstract class Tabs implements TabsInter {
 	
 	protected String imageIconDirectory;
 	
-	
+	protected Map<TextAttribute, Integer> fontAttributes = new HashMap<TextAttribute, Integer>();
 	
 
 	/**
@@ -35,7 +39,19 @@ public abstract class Tabs implements TabsInter {
      * Initializes the visual appearance of all components in the panel.
      * Follows Strategy pattern.
      */
-    public abstract void initComponents();
+    protected abstract void initComponents();
+    
+    /**
+     * @param firstTabbedPane
+     * @param tabTitle
+     * @param jmeSimulation
+     */
+    protected Tabs(boolean firstTabbedPane, String tabTitle, JMESimulation jmeSimulation){
+    	this.firstTabbedPane = firstTabbedPane;
+    	this.tabTitle = tabTitle;
+    	this.jmeSimulation = jmeSimulation; 
+    	
+    }
     
     /**
      * Getter method common for all tabs and is used by GUI during addition of new tab.

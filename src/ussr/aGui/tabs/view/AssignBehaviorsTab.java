@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.font.TextAttribute;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
@@ -39,13 +41,12 @@ public class AssignBehaviorsTab extends Tabs {
 	 * @param imageIconDirectory
 	 */
 	public AssignBehaviorsTab(boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
-		this.firstTabbedPane = firstTabbedPane;
-		this.tabTitle = tabTitle;		
-		this.jmeSimulation = jmeSimulation;
+		super(firstTabbedPane,tabTitle,jmeSimulation);	
 		this.imageIconDirectory = imageIconDirectory;
 		
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
-		this.jComponent = new javax.swing.JPanel(new GridBagLayout());	
+		this.jComponent = new javax.swing.JPanel(new GridBagLayout());
+		super.fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		initComponents();
 	}
 
@@ -59,48 +60,36 @@ public class AssignBehaviorsTab extends Tabs {
 		jToolBar1 = new javax.swing.JToolBar();
 		
 		jLabel10002 = new javax.swing.JLabel();
-		jLabel10003 = new javax.swing.JLabel();	
+		jLabel10003 = new javax.swing.JLabel();
+		jLabel1000 = new javax.swing.JLabel();
+		jLabel10004 = new javax.swing.JLabel();	
+		jLabel10005 = new javax.swing.JLabel();	
 		
 		jList1 = new javax.swing.JList();
 		
-		jScrollPane2 = new javax.swing.JScrollPane();
+		jScrollPane2 = new javax.swing.JScrollPane();		
+		/*Instantiation of components*/
 		
-		jLabel10004 = new javax.swing.JLabel();		
+		
+		/*Description of appearance*/
 		jLabel10004.setText("Shortcut:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
-		jComponent.add(jLabel10004,gridBagConstraints);		
+		super.jComponent.add(jLabel10004,gridBagConstraints);		
 		
-		
-		jLabel10002.setText("Choose controller beneath and select module:");
+		jLabel10003.setText("Filter out for:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
-		jComponent.add(jLabel10002,gridBagConstraints);			
-			
-		jLabel10003.setText("Filter out for:");
+		super.jComponent.add(jLabel10003,gridBagConstraints);
+		
+		jLabel10002.setText("Choose controller beneath and select module(s).When done run simulation.");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 1;
-		jComponent.add(jLabel10003,gridBagConstraints);		
+		super.jComponent.add(jLabel10002,gridBagConstraints);
 		
-		jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-		jList1.setPreferredSize(new java.awt.Dimension(J_LIST_WIDTH, J_LIST_HEIGHT));				
-		AssignBehaviorsTabController.loadExistingControllers(jList1);
-		
-		jList1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-            	AssignBehaviorsTabController.jList1MouseReleased( jList1,jmeSimulation);
-            }
-        });
-		jScrollPane2.setViewportView(jList1);
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 1;
-		gridBagConstraints.gridy = 2;		
-
-		jComponent.add(jScrollPane2,gridBagConstraints);		
-				
 		jToolBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBar1.setFloatable(false);//user can not make the tool bar to float
 		jToolBar1.setRollover(true);// the buttons inside are roll over
@@ -111,8 +100,9 @@ public class AssignBehaviorsTab extends Tabs {
 		
 		final ButtonGroup buttonGroup = new ButtonGroup() ;
 
-		radionButtonATRON =  new JRadioButton();
-		radionButtonATRON.setText("ATRON");		
+		radionButtonATRON =  new JRadioButton();		
+		radionButtonATRON.setText("ATRON");	
+		radionButtonATRON.setFocusable(true);// direct the user to what should be done first
 		radionButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				AssignBehaviorsTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
@@ -157,20 +147,43 @@ public class AssignBehaviorsTab extends Tabs {
 		buttonGroup.add(radionButtonCKBOTSTANDARD);		
 		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridy = 2;
+		super.jComponent.add(jToolBar1,gridBagConstraints);			
+		
+		jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+		jList1.setPreferredSize(new java.awt.Dimension(J_LIST_WIDTH, J_LIST_HEIGHT));	
+		AssignBehaviorsTabController.loadExistingControllers(jList1);
+		
+		jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+            	AssignBehaviorsTabController.jList1MouseReleased( jList1,jmeSimulation);
+            }
+        });
+		jScrollPane2.setViewportView(jList1);
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 2;
-		jComponent.add(jToolBar1,gridBagConstraints);
-		
-		jLabel10005 = new javax.swing.JLabel();		
+		super.jComponent.add(jScrollPane2,gridBagConstraints);				
+			
 		jLabel10005.setText("Controller was assigned successfully.");
 		jLabel10005.setFont( new Font("Times New Roman", Font.BOLD, 12));
 		jLabel10005.setVisible(false);
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 3;
 		jLabel10005.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + ATTENTION));		
+		super.jComponent.add(jLabel10005,gridBagConstraints);		
 		
-		jComponent.add(jLabel10005,gridBagConstraints);	
+		jLabel1000.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + INFORMATION));		
+		jLabel1000.setText("It also possible to assign controllers during simulation run time.");
+		jLabel1000.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 2;
+		gridBagConstraints.gridy = 4;
+		jLabel1000.setVisible(false);
+		//gridBagConstraints.weighty = 0.5;   //request any extra vertical space
+		super.jComponent.add(jLabel1000,gridBagConstraints);
 		
 		/*jLabel10005 = new javax.swing.JLabel();		
 		jLabel10005.setText("Assign them in simulation run time.");
@@ -193,11 +206,14 @@ public class AssignBehaviorsTab extends Tabs {
 	public static javax.swing.JLabel getJLabel10005() {
 		return jLabel10005;
 	}
-	
+	public static javax.swing.JLabel getJLabel1000() {
+		return jLabel1000;
+	}
 
-	private static javax.swing.JList jList1;
+
 	
-	
+	/*Declaration of components*/
+	private static javax.swing.JList jList1;	
 
 	private javax.swing.JScrollPane jScrollPane2;
 	
@@ -206,6 +222,7 @@ public class AssignBehaviorsTab extends Tabs {
 	private static javax.swing.JLabel jLabel10003;
 	private static javax.swing.JLabel jLabel10004;
 	private static javax.swing.JLabel jLabel10005;
+	private static javax.swing.JLabel jLabel1000;	
 
 	/*Radio Buttons*/
 	private static  javax.swing.AbstractButton radionButtonATRON;

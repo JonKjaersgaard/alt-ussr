@@ -21,13 +21,11 @@ import ussr.physics.jme.JMESimulation;
 public class ConsoleTab extends Tabs {
 	
 	
-
-
 	public ConsoleTab(boolean firstTabbedPane, String tabTitle, JMESimulation jmeSimulation){
-		this.firstTabbedPane = firstTabbedPane;
-		this.tabTitle = tabTitle;		
-		this.jmeSimulation = jmeSimulation;
-		this.jComponent = new javax.swing.JScrollPane();//JComponent, which will be added to the tab in the main Window.
+		super(firstTabbedPane,tabTitle,jmeSimulation);
+	
+		/*JComponent, which will be added to the tab in the main Window.*/
+		super.jComponent = new javax.swing.JScrollPane();
 		initComponents();
 	}
 
@@ -38,11 +36,11 @@ public class ConsoleTab extends Tabs {
 	public void initComponents() {
 		
 		//jScrollPane1 = new javax.swing.JScrollPane();
-		jTextArea1 = new javax.swing.JTextArea();
+		this.jTextArea1 = new javax.swing.JTextArea();
 		
-		jTextArea1.setColumns(10);		
+		this.jTextArea1.setColumns(10);		
 		//
-		jTextArea1.setRows(1000);
+		this.jTextArea1.setRows(1000);
 		
 		
 		
@@ -54,7 +52,7 @@ public class ConsoleTab extends Tabs {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;*/
 
-		((JScrollPane) jComponent).setViewportView(jTextArea1);
+		((JScrollPane) super.jComponent).setViewportView(jTextArea1);
 		
 		
 /*		  File f2 = new File("resources/mainFrame/HERE.txt");
