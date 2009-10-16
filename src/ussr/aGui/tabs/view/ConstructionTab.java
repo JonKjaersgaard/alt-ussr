@@ -7,12 +7,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.font.TextAttribute;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 
 import ussr.aGui.MainFrame;
@@ -26,6 +28,10 @@ import ussr.physics.jme.JMESimulation;
  * @author Konstantinas
  */
 public class ConstructionTab extends Tabs {
+
+	
+	private static ArrayList<JComponent> jCompnents =  new ArrayList<JComponent>() ;
+	
 
 	/**
 	 * The constants of grid bag layout used during design of the tab.
@@ -45,7 +51,7 @@ public class ConstructionTab extends Tabs {
 		super.imageIconDirectory = imageIconDirectory; 
 		
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
-		super.jComponent = new javax.swing.JPanel(new GridBagLayout());	
+		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
 		super.fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		initComponents();
 	}
@@ -166,14 +172,14 @@ public class ConstructionTab extends Tabs {
 		button14.setPreferredSize(new java.awt.Dimension(30, 30));	
 		button14.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jButton14ActionPerformed(jmeSimulation, button14 );
+				ConstructionTabController.jButton14ActionPerformed(jmeSimulation, button14);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 4;
 		gridBagConstraints.gridy = 3;
 		super.jComponent.add(button14,gridBagConstraints);		
-			
+		
 		jLabel10003.setText("Additional:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
@@ -245,8 +251,12 @@ public class ConstructionTab extends Tabs {
 		//gridBagConstraints.gridy = 5;
 		//jComponent.add(button12,gridBagConstraints);
 		jToolBar1.add(button12);
+	
 		super.jComponent.add(jToolBar1,gridBagConstraints);
 		
+		for (int index =0; index < super.jComponent.getComponentCount();index++){
+			jCompnents.add((JComponent) super.jComponent.getComponent(index));
+		}
 		
 			
 		
@@ -389,7 +399,27 @@ public class ConstructionTab extends Tabs {
 			//ADD MORE HERE AND MAYBE ELIMINATE ABOVE LINE
 		}
 	}
+	
+	
+	public void setEnabled(){
+		super.jComponent.setEnabled(false);
+	}
+	
+	
 	/*Getters*/
+	
+	public static ArrayList<JComponent> getJCompnents() {
+		return jCompnents;
+	}
+	
+	public static void setEnabledAllComponents(boolean enabled){
+		for (int index=0; index<getJCompnents().size(); index++){
+			getJCompnents().get(index).setEnabled(enabled);
+		}
+		//FIXME WHY TOOL BAR IS NOT ADDED AUTOMATICALLY INTO ARRAY?
+		jToolBar1.setEnabled(enabled);
+		
+	}
 
 	public static javax.swing.JComboBox getJComboBox2() {
 		return jComboBox2;
@@ -445,7 +475,7 @@ public class ConstructionTab extends Tabs {
 	private  static javax.swing.JButton button12;
 	private  static javax.swing.JButton button14;
 	
-	private javax.swing.JToolBar jToolBar1;
+	private static javax.swing.JToolBar jToolBar1;
 
 	
 

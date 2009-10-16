@@ -3,9 +3,11 @@ package ussr.aGui.tabs.controller;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 
 import ussr.aGui.MainFrame;
 import ussr.aGui.tabs.view.ConstructionTab;
+import ussr.aGui.tabs.view.TabsInter;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
 import ussr.builder.constructionTools.CKBotOperationsTemplate;
@@ -188,8 +190,10 @@ public class ConstructionTabController {
 	/**
 	 * Connects all modules (connectors), when the run button(real time or fast) is pressed first time. 
 	 * @param jmeSimulation
+	 * @param component 
 	 */
 	public static void jButton14ActionPerformed(JMESimulation jmeSimulation,JButton jButton14) {
+		ConstructionTab.setEnabledAllComponents(false);
 		jButton14.setEnabled(false);
 		BuilderHelper.connectAllModules(jmeSimulation);	
 		//TODO Disable whole tab
