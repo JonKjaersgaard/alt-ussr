@@ -1,1 +1,87 @@
+Somesssss1
 Some
+ROOO:
+BOOO:
+RobotType:default
+ATRON CAD Model loaded - nTriangles = 37
+properties set on Module(0){ name=default166510286 ussr.module.type=ATRON gentle }
+Some
+ROOO:
+BOOO:
+RobotType:OdinBall
+Creating module module#1.0
+properties set on Module(1){ name=OdinBall35287587 ussr.module.type=OdinBall }
+Some
+ROOO:
+BOOO:
+RobotType:MTRAN
+0.2
+properties set on Module(2){ name=MTRAN-1918757958 ussr.module.type=MTRAN }
+Some
+ROOO:
+BOOO:
+RobotType:CKBotStandard
+Creating CKBot Standard Module
+properties set on Module(3){ name=CKBOTSTANDARD-340459238 ussr.module.type=CKBotStandard }
+Some
+ROOO:
+BOOO:
+RobotType:default
+ATRON CAD Model loaded - nTriangles = 37
+properties set on Module(0){ name=default188611193 ussr.module.type=ATRON gentle }
+Some
+ROOO:
+BOOO:
+RobotType:OdinBall
+Creating module module#1.0
+properties set on Module(1){ name=OdinBall-91994583 ussr.module.type=OdinBall }
+Some
+ROOO:
+BOOO:
+RobotType:MTRAN
+0.2
+properties set on Module(2){ name=MTRAN-687185792 ussr.module.type=MTRAN }
+Some
+ROOO:
+BOOO:
+RobotType:CKBotStandard
+Creating CKBot Standard Module
+properties set on Module(3){ name=CKBOTSTANDARD-401792936 ussr.module.type=CKBotStandard }
+Some
+ROOO:
+BOOO:
+RobotType:default
+ATRON CAD Model loaded - nTriangles = 37
+properties set on Module(0){ name=default-2133090493 ussr.module.type=ATRON gentle }
+Some
+ROOO:
+BOOO:
+RobotType:OdinBall
+Creating module module#1.0
+properties set on Module(1){ name=OdinBall1098284405 ussr.module.type=OdinBall }
+Some
+ROOO:
+BOOO:
+RobotType:MTRAN
+0.2
+properties set on Module(2){ name=MTRAN1536700468 ussr.module.type=MTRAN }
+Some
+ROOO:
+BOOO:
+RobotType:CKBotStandard
+Creating CKBot Standard Module
+properties set on Module(3){ name=CKBOTSTANDARD1224444916 ussr.module.type=CKBotStandard }
+INN
+properties set on Module(0){ name=default-2133090493 ussr.module.type=ATRON gentle }
+properties set on Module(2){ name=MTRAN1536700468 ussr.module.type=MTRAN }
+properties set on Module(1){ name=OdinBall1098284405 ussr.module.type=OdinBall }
+modulePos.size()1
+properties set on Module(3){ name=CKBOTSTANDARD1224444916 ussr.module.type=CKBotStandard }
+ ... Way behind -49772
+ ... Catching up... 
+ ... Way behind -127
+ ... Catching up... 
+ ... Way behind -105
+ ... Catching up... 
+ ... Way behind -695
+ ... Catching up... 
