@@ -11,6 +11,8 @@ import java.awt.event.WindowEvent;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+
 import com.jme.input.KeyInput;
 import com.jme.system.DisplaySystem;
 import com.jme.system.canvas.JMECanvasImplementor;
@@ -23,6 +25,7 @@ import ussr.aGui.fileChooser.controller.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controller.FileChooserXMLController;
 import ussr.aGui.fileChooser.view.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.view.FileChooserSaveFrame;
+import ussr.aGui.tabs.additionalResources.RedirectSystemOutput;
 import ussr.aGui.tabs.view.AssignBehaviorsTab;
 import ussr.aGui.tabs.view.ConsoleTab;
 import ussr.aGui.tabs.view.ConstructionTab;
@@ -637,7 +640,7 @@ public class MainFrame extends GuiFrames implements MainFrameInter {
 				mainFrame = new MainFrame(true);				
 				mainFrame.setVisible(true);
 			}
-		});
+		});		
 	}
 
 	/**
