@@ -1,6 +1,6 @@
 package ussr.aGui;
 
-public class MainFrameDebug extends MainFrame {
+public class NewMainFrameDebug extends MainFrame {
 
 	/**
 	 * WHAT IS THAT?
@@ -9,6 +9,12 @@ public class MainFrameDebug extends MainFrame {
 
 	@Override
 	public void initComponents() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void activate() {
 		// TODO Auto-generated method stub
 		
 	}

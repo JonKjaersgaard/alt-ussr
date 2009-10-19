@@ -42,7 +42,7 @@ public abstract class FileChooserFrame extends GuiFrames{
 		getContentPane().add(jFileChooser);
 		jFileChooser.setAcceptAllFileFilterUsed(false);		
 		pack();
-		changeToSetLookAndFeel(this);// for all platforms
+		changeToLookAndFeel(this);// for all platforms
 		setSize(580,450);//THINK MORE HERE
 	}	
 

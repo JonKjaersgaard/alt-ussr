@@ -17,7 +17,12 @@ public class MainFrameSeparate extends MainFrame {
 	private static final long serialVersionUID = 1L;
 	
 
-
+	/**
+	 * Starts the main GUI window (frame) during simulation. Simulation starts first and after that main GUI window is started.
+	 * This can be achieved by pressing "O" on keyboard after starting the simulation. 
+	 * @param jmeSimulation, the physical simulation.
+	 * @param tabs, the tabs to plug in into main window's tabbed panes.
+	 */
 	public MainFrameSeparate(JMEBasicGraphicalSimulation jmeSimulation, ArrayList<TabsInter> tabs){
 		this.jmeSimulation = (JMESimulation) jmeSimulation;	
 		this.tabs = tabs;
@@ -46,13 +51,13 @@ public class MainFrameSeparate extends MainFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		initFrameProperties();
 		initJMenuBar();
-		initJToolbarSimulationControl((int)SCREEN_DIMENSION.getWidth()/2,TOOLBAR_HEIGHT);//TODO CHANGE null with default simulation
+		initJToolbarSimulationControl((int)SCREEN_DIMENSION.getWidth()/2,TOOLBARS_HEIGHT);//TODO CHANGE null with default simulation
 		
 		initFirstTabbbedPane();
 		initSecondTabbedPane((int)SCREEN_DIMENSION.getWidth()/2, TAB_PANE_HEIGHT2);
 		
 		pack(); 
-		changeToSetLookAndFeel(this);
+		changeToLookAndFeel(this);
 		
 		components.add(jMenuBarMain);
 		components.add(jToolBarSimulationControl);
@@ -60,8 +65,6 @@ public class MainFrameSeparate extends MainFrame {
 		components.add(jTabbedPane3);
 		
 		setFrameHeightAccordingComponents(this,(int)SCREEN_DIMENSION.getWidth()/2+PADDING,components); 
-		
-		setVisible(true);
 	}
 	
 	
@@ -116,6 +119,22 @@ public class MainFrameSeparate extends MainFrame {
 			}
 		}
 		);		
-	} 
+	}
+
+
+	@Override
+	public void activate() {
+			java.awt.EventQueue.invokeLater(new Runnable() {
+		public void run() {            	
+			mainFrame = new MainFrameSeparate(jmeSimulation,tabs);
+			mainFrame.setVisible(true);
+
+		}
+	});
+		
+	}
+
+
+	
 
 }

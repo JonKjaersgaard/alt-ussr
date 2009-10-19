@@ -29,7 +29,7 @@ public class MainFrameController {
 	 * Opens file chooser in the form of Open dialog
 	 * 
 	 */
-	public static void openActionPerformed(GuiInter fcOpenFrame) {
+	public static void openActionPerformed(FramesInter fcOpenFrame) {
 		fcOpenFrame.activate();		
 	}
 
@@ -37,7 +37,7 @@ public class MainFrameController {
 	 * Opens file chooser in the form of Save dialog
 	 * 
 	 */
-	public static void saveActionPerformed(GuiInter fcSaveFrame) {				
+	public static void saveActionPerformed(FramesInter fcSaveFrame) {				
 		fcSaveFrame.activate();				
 	}
 

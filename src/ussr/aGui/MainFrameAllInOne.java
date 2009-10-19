@@ -47,7 +47,7 @@ public class MainFrameAllInOne extends MainFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		initFrameProperties();
 		initJMenuBar();
-		initJToolbarSimulationControl((int)SCREEN_DIMENSION.getWidth()-PADDING,TOOLBAR_HEIGHT);//TODO CHANGE null with default simulation
+		initJToolbarSimulationControl((int)SCREEN_DIMENSION.getWidth()-PADDING,TOOLBARS_HEIGHT);//TODO CHANGE null with default simulation
 		
 		jSplitPane1 = new javax.swing.JSplitPane();
 		jSplitPane1.setLeftComponent(initFirstTabbbedPane());
@@ -56,7 +56,7 @@ public class MainFrameAllInOne extends MainFrame {
 		
 		initSecondTabbedPane((int)SCREEN_DIMENSION.getWidth()-PADDING, TAB_PANE_HEIGHT2);	
 		pack(); 
-		changeToSetLookAndFeel(this);
+		changeToLookAndFeel(this);
 		
 		components.add(jMenuBarMain);
 		components.add(jToolBarSimulationControl);
@@ -128,5 +128,10 @@ public class MainFrameAllInOne extends MainFrame {
 
 		//getContentPane().add(canvas);
 		return canvas;
+	}
+
+	@Override
+	public void activate() {
+	 main(null);		
 	}	
 }
