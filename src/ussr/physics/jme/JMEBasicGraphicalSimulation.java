@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import ussr.aGui.MainFrame;
 import ussr.aGui.MainFrameInter;
+import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.tabs.view.AssignBehaviorsTab;
 import ussr.aGui.tabs.view.CommunicationVisualizer;
 import ussr.aGui.tabs.view.ConsoleTab;
@@ -197,6 +198,10 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			WindowSaver.init();
 		}
 	}
+	
+	
+	ArrayList<TabsInter> tabs; 
+	
 	protected void assignKeys() {       
 		/** Assign key P to action "toggle_pause". */
 		//KeyBindingManager.getKeyBindingManager().set( "toggle_pause",
@@ -337,24 +342,26 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
 
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_main_frame", false)) {			 
-			if (MainFrame.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
+			if (MainFrameSeparate.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
 			}else{
 				JMESimulation simulation = (JMESimulation)this;
-				ArrayList<TabsInter> tabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI
+				tabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI
+				tabs.clear();
+				
+				/*Tabs of the first tabbed pane*/
 				//tabs.add(new ConstructionTab(true,"1 Step: Construct Robot (Interactive User Guide)",simulation));//Build in tab
 				tabs.add(new ConstructionTab(true,"1 Step: Construct Robot",simulation,TabsInter.DIRECTORY_ICONS+TabsInter.CONSTRUCTION));//Build in tab
 				tabs.add(new AssignBehaviorsTab(true,"2 Step: Assign Behaviour (Controller)",simulation,TabsInter.DIRECTORY_ICONS+TabsInter.BEHAVIOR));//Build in tab
 				tabs.add(new CommunicationVisualizer(true,"Communication Visualiser",simulation,TabsInter.DIRECTORY_ICONS+TabsInter.VISUALIZER));//Build in tab
 				//tabs.add(new AssignBehavioursTab(true,"2 Step: Assign Behaviour (Interactive User Guide)",simulation));//Build in tab
-				tabs.add(new NewTab(true, "YOUR NEW TAB",simulation));//YOUR NEW TAB
-				tabs.add(new NewTab(true, "YOUR NEW TAB1",simulation));//YOUR NEW TAB1
+				tabs.add(new NewTab(true, "YOUR NEW TAB",simulation,null));//YOUR NEW TAB
+				tabs.add(new NewTab(true, "YOUR NEW TAB1",simulation,null));//YOUR NEW TAB1
 				
-				tabs.add(new ConsoleTab(false,"Console", null));
-
-				MainFrameInter mainFrame = new MainFrame(this,tabs);
-				//mainFrame.getJTabbedPane1().setVisible(false);
+				/*Tabs of the second tabbed pane*/
+				tabs.add(new ConsoleTab(false,"Console", null, TabsInter.DIRECTORY_ICONS+TabsInter.CONSOLE));
+				MainFrameInter mainFrame = new MainFrameSeparate(this,tabs);				
 				mainFrame.activateDuringSimulation();
-				//mainFrame.getJTabbedPane1().setVisible(false);
+				
 			}			
 		}
 
