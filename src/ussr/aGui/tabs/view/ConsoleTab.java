@@ -12,9 +12,9 @@ import ussr.physics.jme.JMESimulation;
 public class ConsoleTab extends Tabs  {
 	
 	
-	public ConsoleTab(boolean firstTabbedPane, String tabTitle, JMESimulation jmeSimulation){
-		super(firstTabbedPane,tabTitle,jmeSimulation);
-	
+	public ConsoleTab(boolean firstTabbedPane, String tabTitle, JMESimulation jmeSimulation,String imageIconDirectory){
+		super(firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
+		
 		/*JComponent, which will be added to the tab in the main Window.*/
 		super.jComponent = new javax.swing.JScrollPane();
 		initComponents();		

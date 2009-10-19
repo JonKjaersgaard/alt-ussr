@@ -1,7 +1,7 @@
 package ussr.aGui;
 
 public interface MainFrameInter {
-
+	
 	/**
 	 * The directory for keeping jpg icons used in the GUI design.
 	 */
@@ -13,13 +13,14 @@ public interface MainFrameInter {
 	public final String RUN_REAL_TIME = "runRealTime.jpg",RUN_FAST = "runFast.jpg", PAUSE = "pause.jpg", STEP_BY_STEP ="stepByStep.jpg",
 	                    SAVE ="save.jpg",SAVE_SMALL ="saveSmall.jpg", EXIT = "exit.jpg", OPEN = "open.jpg",OPEN_SMALL ="openSmall.jpg",
 	                    NO_ENTRANCE ="noEntrance.jpg"; 
-	/**
-	 * Starts the main GUI window (frame) during the simulation.
-	 * This can be achieved by pressing "O" on keyboard.
-	 */
-	public void activateDuringSimulation( );
 	
-	public javax.swing.JTabbedPane getJTabbedPane1();
+	/**
+	 * Starts the main GUI window (frame) during  simulation.
+	 * This can be achieved by means of pressing "O" on keyboard.
+	 */
+	public void activateDuringSimulation();
+	
+	//public javax.swing.JTabbedPane getJTabbedPane1();
 	
 	
 	

@@ -18,7 +18,7 @@ public interface TabsInter {
 	 */
 	public final String DELETE_MODULE = "deleteModule.jpg", MOVE_MODULE = "moveModule.jpg", COLOUR_CONNECTORS = "colourConnectors.jpg",
 	                    ATTENTION = "attention.jpg", CONSTRUCTION = "construction.jpg", BEHAVIOR = "behavior.jpg",
-	                    ERROR = "error.jpg", INFORMATION ="information.jpg", VISUALIZER = "visualizer.jpg";
+	                    ERROR = "error.jpg", INFORMATION ="information.jpg", VISUALIZER = "visualizer.jpg", CONSOLE = "console.jpg";
 	
 	/**
      * Getter method common for all tabs and is used by GUI during addition of new tab.

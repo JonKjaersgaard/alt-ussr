@@ -49,12 +49,12 @@ public class ConstructionTabController {
 		ConstructionTab.getButton11().setEnabled(true);
 		ConstructionTab.getButton12().setEnabled(true);
 		
-		System.out.println("Some");
+	
 		
 		 String chosenModularRobot = button.getText(); 
 			
 				chosenMRname = SupportedModularRobots.valueOf(chosenModularRobot.toUpperCase());
-				System.out.println("ROOO:");
+			
 				if (chosenMRname.equals(SupportedModularRobots.ATRON)){
 					//ConstructionTab.getJComboBox2().setEnabled(true);
 					//ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EW", "WE", "DU", "UD", "SN", "NS" }));
@@ -79,7 +79,7 @@ public class ConstructionTabController {
 					//ConstructionTab.getJComboBox3().setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Choose module rotation","ROTATION_0", "ROTATION_0_OPPOSITE", "ROTATION_0_90Z", "ROTATION_0_OPPOSITE_90Z", "ROTATION_0_90X", "ROTATION_0_MINUS90X", "ROTATION_0_90X_90Y", "ROTATION_0_270X_90Y", "ROTATION_0_90Y", "ROTATION_0_MINUS90Y", "ROTATION_0_90X_MINUS90Z", "ROTATION_0_MINUS90X_MINUS90Z"  }));
 					//System.out.println("Chosen:"+chosenModularRobot);
 				}
-				System.out.println("BOOO:");
+		
 				//nextjButton.setEnabled(false);
 				//previousjButton.setEnabled(false);
 				addNewDefaultConstructionModule(jmeSimulation); //Add default construction module

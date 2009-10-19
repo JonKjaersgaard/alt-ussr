@@ -66,13 +66,15 @@ public abstract class GuiFrames extends javax.swing.JFrame implements GuiInter {
 	 */
 	private int windowHeight=0;
 	
+
 	
 	
-	public void setSizeAccordingComponents(javax.swing.JFrame frame, ArrayList<javax.swing.JComponent> components){
+	public void setFrameHeightAccordingComponents(javax.swing.JFrame frame,int width, ArrayList<javax.swing.JComponent> components){
+	
 		for (int  index =0;index<components.size();index++){
 			windowHeight = windowHeight + components.get(index).getHeight();			
      	}
-		frame.setSize((int)SCREEN_DIMENSION.getWidth()/2,windowHeight+2*PADDING);
+		frame.setSize(width,windowHeight+2*PADDING);
 		
 	}
 

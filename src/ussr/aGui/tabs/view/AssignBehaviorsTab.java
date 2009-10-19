@@ -41,8 +41,7 @@ public class AssignBehaviorsTab extends Tabs {
 	 * @param imageIconDirectory
 	 */
 	public AssignBehaviorsTab(boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
-		super(firstTabbedPane,tabTitle,jmeSimulation);	
-		this.imageIconDirectory = imageIconDirectory;
+		super(firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);	
 		
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		this.jComponent = new javax.swing.JPanel(new GridBagLayout());

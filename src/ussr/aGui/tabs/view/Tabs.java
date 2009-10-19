@@ -46,10 +46,11 @@ public abstract class Tabs implements TabsInter {
      * @param tabTitle
      * @param jmeSimulation
      */
-    protected Tabs(boolean firstTabbedPane, String tabTitle, JMESimulation jmeSimulation){
+    protected Tabs(boolean firstTabbedPane, String tabTitle, JMESimulation jmeSimulation,String imageIconDirectory){
     	this.firstTabbedPane = firstTabbedPane;
     	this.tabTitle = tabTitle;
-    	this.jmeSimulation = jmeSimulation; 
+    	this.jmeSimulation = jmeSimulation;
+    	this.imageIconDirectory = imageIconDirectory; 
     	
     }
     

@@ -9,8 +9,8 @@ import ussr.physics.jme.JMESimulation;
  */
 public class NewTab extends Tabs {
 
-	public NewTab(boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation){
-		super(firstTabbedPane,tabTitle,jmeSimulation);
+	public NewTab(boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation, String imageIconDirectory){
+		super(firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
 		
 		super.jComponent = new javax.swing.JPanel();
 		initComponents();

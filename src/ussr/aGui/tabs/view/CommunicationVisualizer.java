@@ -39,8 +39,7 @@ public class CommunicationVisualizer extends Tabs {
 	
 		
 	public CommunicationVisualizer(boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
-		super(firstTabbedPane,tabTitle,jmeSimulation);		
-		super.imageIconDirectory =imageIconDirectory; 
+		super(firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);		
 		
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
