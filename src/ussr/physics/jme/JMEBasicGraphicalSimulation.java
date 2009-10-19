@@ -12,6 +12,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import ussr.aGui.FramesInter;
 import ussr.aGui.MainFrame;
 import ussr.aGui.MainFrameInter;
 import ussr.aGui.MainFrameSeparate;
@@ -359,8 +361,8 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 				
 				/*Tabs of the second tabbed pane*/
 				tabs.add(new ConsoleTab(false,"Console", null, TabsInter.DIRECTORY_ICONS+TabsInter.CONSOLE));
-				MainFrameInter mainFrame = new MainFrameSeparate(this,tabs);				
-				mainFrame.activateDuringSimulation();
+				FramesInter mainFrame = new MainFrameSeparate(this,tabs);				
+				mainFrame.activate();
 				
 			}			
 		}
