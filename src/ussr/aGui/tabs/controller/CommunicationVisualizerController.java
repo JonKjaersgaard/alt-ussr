@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import ussr.aGui.tabs.additional.CanvasMouseListener;
+import ussr.aGui.tabs.additionalResources.CanvasMouseListener;
 import ussr.aGui.tabs.view.AssignBehaviorsTab;
 import ussr.aGui.tabs.view.CommunicationVisualizer;
 import ussr.aGui.tabs.view.TabsInter;
