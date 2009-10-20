@@ -5,7 +5,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
-import ussr.aGui.tabs.view.TabsInter;
+import ussr.aGui.tabs.views.TabsInter;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
 
@@ -60,8 +60,8 @@ public class MainFrameSeparate extends MainFrame {
 		changeToLookAndFeel(this);
 		
 		components.add(jMenuBarMain);
-		components.add(jToolBarSimulationControl);
-		components.add(jTabbedPaneInteraction);
+		components.add(jToolBarGeneralControl);
+		components.add(jTabbedPaneFirst);
 		components.add(jTabbedPane3);
 		
 		setFrameHeightAccordingComponents(this,(int)SCREEN_DIMENSION.getWidth()/2+PADDING,components); 

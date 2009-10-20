@@ -3,11 +3,11 @@ package ussr.aGui;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
-import ussr.aGui.fileChooser.controller.FileChooserControllerInter;
-import ussr.aGui.fileChooser.controller.FileChooserXMLController;
-import ussr.aGui.fileChooser.view.FileChooserOpenFrame;
-import ussr.aGui.fileChooser.view.FileChooserSaveFrame;
-import ussr.aGui.tabs.view.TabsInter;
+import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
+import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
+import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
+import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
+import ussr.aGui.tabs.views.TabsInter;
 
 import ussr.physics.jme.JMESimulation;
 
@@ -240,30 +240,34 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 	}
 	
 	/**
-	 * Initializes the tool bar for simulation control
+	 * Initializes the tool bar for general control
 	 * @param width, tool bar width.
 	 * @param height, tool bar height.
 	 */
 	public void initJToolbarSimulationControl(int width,int height){
-		jToolBarSimulationControl = new javax.swing.JToolBar();
+		
+		/*Description of toolbar*/
+		jToolBarGeneralControl = new javax.swing.JToolBar();
+		jToolBarGeneralControl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarGeneralControl.setRollover(true);
+		jToolBarGeneralControl.setFloatable(false);
+		jToolBarGeneralControl.setToolTipText("General Control");
+		jToolBarGeneralControl.setPreferredSize(new Dimension(width,height));
 
+		/*Instantiation of components*/
 		jButtonRunRealTime = new javax.swing.JButton();
-		jButtonRunStepByStep = new javax.swing.JButton();
-		jButtonSave = new javax.swing.JButton();
-		jButtonOpen = new javax.swing.JButton();
+		jButtonRunStepByStep = new javax.swing.JButton();		
 		jButtonRunFast = new javax.swing.JButton();
 		jButtonPause = new javax.swing.JButton();
+		jSeparator3 = new javax.swing.JToolBar.Separator();
+		jButtonSave = new javax.swing.JButton();
+		jButtonOpen = new javax.swing.JButton();		
+		jSeparator4 = new javax.swing.JToolBar.Separator();
+		jButtonConstructRobot = new javax.swing.JButton();
 		
-		jToolBarSimulationControl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBarSimulationControl.setRollover(true);
-		jToolBarSimulationControl.setFloatable(false);
-		jToolBarSimulationControl.setToolTipText("Simulation Control");
-		jToolBarSimulationControl.setPreferredSize(new Dimension(width,height));
-		
-
+		/*Description of components*/
 		jButtonRunRealTime.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RUN_REAL_TIME));
-		jButtonRunRealTime.setToolTipText("Run real time");
-		//jButtonRunRealTime.setBorder(javax.swing.BorderFactory.createEtchedBorder());//On Vista does not work(test it)
+		jButtonRunRealTime.setToolTipText("Run real time");		
 		jButtonRunRealTime.setFocusable(false);    
 		jButtonRunRealTime.setPreferredSize(new java.awt.Dimension(30, 30));      
 		jButtonRunRealTime.addActionListener(new java.awt.event.ActionListener() {
@@ -271,7 +275,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 				MainFrameController.jButton1ActionPerformed(jmeSimulation);        	  
 			}
 		});
-		jToolBarSimulationControl.add(jButtonRunRealTime);
+		jToolBarGeneralControl.add(jButtonRunRealTime);
 
 		jButtonRunFast.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RUN_FAST));
 		jButtonRunFast.setToolTipText("Run fast");
@@ -283,7 +287,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 			}
 		});
 
-		jToolBarSimulationControl.add(jButtonRunFast);
+		jToolBarGeneralControl.add(jButtonRunFast);
 
 		jButtonRunStepByStep.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + STEP_BY_STEP));
 		jButtonRunStepByStep.setToolTipText("Run step by step");
@@ -297,7 +301,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 				MainFrameController.jButtonRunStepByStepActionPerformed(jmeSimulation);
 			}
 		});
-		jToolBarSimulationControl.add(jButtonRunStepByStep);
+		jToolBarGeneralControl.add(jButtonRunStepByStep);
 
 		jButtonPause.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PAUSE));
 		jButtonPause.setToolTipText("Pause");
@@ -307,12 +311,14 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 				MainFrameController.jButtonPauseActionPerformed(jmeSimulation);
 			}
 		});
-		jToolBarSimulationControl.add(jButtonPause);
+		jToolBarGeneralControl.add(jButtonPause);
+		
+		jSeparator3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarGeneralControl.add(jSeparator3);
 
 		jButtonSave.setToolTipText("Save");
 		jButtonSave.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + SAVE));
-		jButtonSave.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));	
-		
+		jButtonSave.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));		
 		jButtonSave.setFocusable(false);
 		jButtonSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 		jButtonSave.setPreferredSize(new java.awt.Dimension(30, 30));
@@ -322,12 +328,11 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 				MainFrameController.saveActionPerformed(fcSaveFrame);
 			}
 		});
-		jToolBarSimulationControl.add(jButtonSave);
+		jToolBarGeneralControl.add(jButtonSave);
 
 		jButtonOpen.setToolTipText("Open");
 		jButtonOpen.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPEN));
-		jButtonOpen.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));
-		jButtonOpen.setFocusable(true);		
+		jButtonOpen.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));	
 		jButtonOpen.setFocusable(false);		
 		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));
 		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
@@ -335,60 +340,98 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 				MainFrameController.openActionPerformed(fcOpenFrame);
 			}
 		});
-		jToolBarSimulationControl.add(jButtonOpen);
-
-		getContentPane().add(jToolBarSimulationControl);
-	}
-
-	
-	
-	public javax.swing.JTabbedPane initFirstTabbbedPane( ){
-		jTabbedPaneInteraction  = new javax.swing.JTabbedPane();
-		jTabbedPaneInteraction.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-		jTabbedPaneInteraction.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jTabbedPaneInteraction.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2, TAB_PANE_HEIGHT1));		
-		jTabbedPaneInteraction.setFocusable(false);		
-		initTabsAndCheckBoxes(tabsFirstTabbedPane,jTabbedPaneInteraction,jMenuIntearctionTabs);//Plug in tabs in tabbed pane and check boxes in menu bar		
-
-		getContentPane().add(jTabbedPaneInteraction);
-		return jTabbedPaneInteraction;
-	}
-	
-	private void initTabsAndCheckBoxes(final ArrayList<TabsInter>tabs ,final javax.swing.JTabbedPane jTabbedPane,javax.swing.JMenu jMenu){
-		final ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems = new ArrayList<javax.swing.JCheckBoxMenuItem>();
-		for (int index =0; index < tabs.size(); index++){					  
-			TabsInter currentTab = tabs.get(index);
-			if (tabs.get(index).getImageIconDirectory()==null){
-				jTabbedPane.addTab(currentTab.getTabTitle(),currentTab.getJComponent());				
-			}else{
-				jTabbedPane.addTab(currentTab.getTabTitle(),new javax.swing.ImageIcon(currentTab.getImageIconDirectory()),currentTab.getJComponent());
+		jToolBarGeneralControl.add(jButtonOpen);
+		
+		jSeparator4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarGeneralControl.add(jSeparator4);
+		
+		
+		jButtonConstructRobot.setToolTipText("Construct Robot");
+		jButtonConstructRobot.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + CONSTRUCT_ROBOT ));
+		jButtonConstructRobot.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));
+		jButtonConstructRobot.setFocusable(false);		
+		jButtonConstructRobot.setPreferredSize(new java.awt.Dimension(30, 30));
+		jButtonConstructRobot.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameController.constructRobotActionPerformed(jButtonConstructRobot,jTabbedPaneFirst, tabs, checkBoxMenuItems );
 			}
+		});
+		jToolBarGeneralControl.add(jButtonConstructRobot);	
+		
 
+		getContentPane().add(jToolBarGeneralControl);
+	}
+
+	
+	
+	/**
+	 * @return
+	 */
+	public javax.swing.JTabbedPane initFirstTabbbedPane( ){
+		jTabbedPaneFirst  = new javax.swing.JTabbedPane();
+		jTabbedPaneFirst.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+		jTabbedPaneFirst.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jTabbedPaneFirst.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2, TAB_PANE_HEIGHT1));		
+		jTabbedPaneFirst.setFocusable(false);		
+		initTabsAndCheckBoxes(true,tabsFirstTabbedPane,jTabbedPaneFirst,jMenuIntearctionTabs);//Plug in tabs in tabbed pane and check boxes in menu bar		
+
+		getContentPane().add(jTabbedPaneFirst);
+		return jTabbedPaneFirst;
+	}
+    
+	ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems = new ArrayList<javax.swing.JCheckBoxMenuItem>();
+	
+	private void initTabsAndCheckBoxes(boolean first,final ArrayList<TabsInter> tabsContainer ,final javax.swing.JTabbedPane jTabbedPane,javax.swing.JMenu jMenu){
+		
+		for (int index =0; index < tabsContainer.size(); index++){				  
+			TabsInter currentTab = tabsContainer.get(index);
+			if (currentTab.getImageIconDirectory()==null){			
+				jTabbedPane.addTab(currentTab.getTabTitle(),currentTab.getJComponent());				
+			}else{				
+				jTabbedPane.addTab(currentTab.getTabTitle(),new javax.swing.ImageIcon(currentTab.getImageIconDirectory()),currentTab.getJComponent());
+			}		
+			
 			jCheckBoxMenuItemNew = new javax.swing.JCheckBoxMenuItem();
 			jCheckBoxMenuItemNew.setSelected(true);
-			jCheckBoxMenuItemNew.setText(tabs.get(index).getTabTitle());
+			jCheckBoxMenuItemNew.setText(tabsContainer.get(index).getTabTitle());
 			checkBoxMenuItems.add(jCheckBoxMenuItemNew);
 			jCheckBoxMenuItemNew.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent evt) {
-					MainFrameController.jCheckBoxMenuItemActionPerformedNew(checkBoxMenuItems, jTabbedPane,tabs);
+					MainFrameController.jCheckBoxMenuItemActionPerformedNew(checkBoxMenuItems, jTabbedPane,tabsContainer);
 				}
 			});
 			jMenu.add(jCheckBoxMenuItemNew);			
+		}	
+		
+		if (first){//Initially remove tabs for constructing robot
+			checkBoxMenuItems.get(1).setSelected(false);
+			jTabbedPane.removeTabAt(1);
+			checkBoxMenuItems.get(0).setSelected(false);			
+			jTabbedPane.removeTabAt(0);		
 		}
+		
+		
+
+	}
+	
+	
+	
+	private void intitJCheckBoxMenuItem(javax.swing.JMenu jMenu){
+		
 	}
 	
 	public void initSecondTabbedPane(int width, int height){
 		jTabbedPane3 = new javax.swing.JTabbedPane();
 		jTabbedPane3.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 		jTabbedPane3.setPreferredSize(new Dimension(width, height));
-		initTabsAndCheckBoxes(tabsSecondTabbedPane,jTabbedPane3,jMenu5);//Plug in tabs in tabbed pane and check boxes in menu bar		
+		initTabsAndCheckBoxes(false, tabsSecondTabbedPane,jTabbedPane3,jMenu5);//Plug in tabs in tabbed pane and check boxes in menu bar		
 		getContentPane().add(jTabbedPane3);
 	}
    
 	
 
 	public javax.swing.JTabbedPane getJTabbedPane1() {
-		return jTabbedPaneInteraction;
+		return jTabbedPaneFirst;
 	}
 
 	/**
@@ -443,14 +486,18 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 
 	public javax.swing.JSeparator jSeparator1;
 	public javax.swing.JSeparator jSeparator2;
+	
+	public javax.swing.JToolBar.Separator jSeparator3;
+	public javax.swing.JToolBar.Separator jSeparator4;
 
 	public javax.swing.JToolBar jToolBar1;
-	public javax.swing.JToolBar jToolBarSimulationControl;
+	public javax.swing.JToolBar jToolBarGeneralControl;
 
 	public javax.swing.JButton jButtonRunRealTime;
 	public javax.swing.JButton jButtonRunStepByStep;
 	public static javax.swing.JButton jButtonSave;
 	public static javax.swing.JButton jButtonOpen;
+	public javax.swing.JButton jButtonConstructRobot;
 
 	public javax.swing.JButton jButtonRunFast;
 	public javax.swing.JButton jButtonPause;
@@ -460,7 +507,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 	public javax.swing.JLabel jLabel5;
 	public javax.swing.JTextField jTextField1;
 
-	public static javax.swing.JTabbedPane jTabbedPaneInteraction;
+	public static javax.swing.JTabbedPane jTabbedPaneFirst;
 	public static javax.swing.JTabbedPane jTabbedPane3;
 
 

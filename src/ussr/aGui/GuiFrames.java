@@ -54,7 +54,7 @@ public abstract class GuiFrames extends javax.swing.JFrame implements FramesInte
 	 * Changes the look of component to generic (for all platforms).
 	 * @param awtComponent, the GUI component for example frame.
 	 */
-	public void changeToLookAndFeel(Component awtComponent){
+	public static void changeToLookAndFeel(Component awtComponent){
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			SwingUtilities.updateComponentTreeUI(awtComponent);

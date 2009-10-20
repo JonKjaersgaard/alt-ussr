@@ -3,11 +3,13 @@ package ussr.aGui;
 import java.util.ArrayList;
 
 
+import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import ussr.aGui.tabs.view.ConstructionTab;
-import ussr.aGui.tabs.view.TabsInter;
+import ussr.aGui.tabs.views.ConstructionTab;
+import ussr.aGui.tabs.views.TabsInter;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;
@@ -235,7 +237,7 @@ public class MainFrameController {
 					i++;
                    System.out.println("Here;" +i);
 				}else{
-					jTabbedPane1.remove(index);
+					jTabbedPane1.removeTabAt(index);
 				}
 				
 				
@@ -275,6 +277,17 @@ public class MainFrameController {
 				ConstructionTab.adjustToSelectedModularRobot(SupportedModularRobots.CKBOTSTANDARD);
 			}
 		}
+	}
+
+
+
+	public static void constructRobotActionPerformed(JButton jButtonConstructRobot, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs,ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems ) {
+		jTabbedPaneFirst.addTab(tabs.get(0).getTabTitle(),new javax.swing.ImageIcon(tabs.get(0).getImageIconDirectory()),tabs.get(0).getJComponent());
+		jTabbedPaneFirst.addTab(tabs.get(1).getTabTitle(),new javax.swing.ImageIcon(tabs.get(1).getImageIconDirectory()),tabs.get(1).getJComponent());
+		jButtonConstructRobot.setEnabled(false);
+		checkBoxMenuItems.get(0).setSelected(true);
+		checkBoxMenuItems.get(1).setSelected(true);
+		MainFrame.changeToLookAndFeel(jTabbedPaneFirst);
 	}
 
 	}
