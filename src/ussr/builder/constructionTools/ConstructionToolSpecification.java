@@ -134,8 +134,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	@Override
 	protected void pickTarget(Geometry target) {
 		if (toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){
-			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);
-			System.out.println("Connector:"+selectedConnectorNr );
+			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);			
 		}
 	}
 
@@ -147,34 +146,6 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	private void callAppropriateTool(){
 		if (this.modularRobotName.equals(SupportedModularRobots.ATRON)&& isAtron()||this.modularRobotName.equals(SupportedModularRobots.MTRAN)&& isMtran()||this.modularRobotName.equals(SupportedModularRobots.ODIN)&&isOdin()||this.modularRobotName.equals(SupportedModularRobots.CKBOTSTANDARD)&&isCKBotStandard()){		
 			callTool();	
-		}else{
-			reAdjustUserInput();
-		}
-	}
-
-
-	/**
-	 * Makes the tools more "generic", in a sense that each tool is working for all Supported modular robots, without the need to
-	 * specify it explicitly in the GUI.
-	 * Also makes feedback calls to GUI to adapt to the modular robot the user is working with right now. 
-	 */
-	private void reAdjustUserInput(){
-		
-		/*Keeps and updates the data about the module type currently selected in simulation environment*/
-		SelectedModuleTypeMapHelper[] selectModulesTypes = {
-				new SelectedModuleTypeMapHelper(SupportedModularRobots.ATRON,isAtron()),
-				new SelectedModuleTypeMapHelper(SupportedModularRobots.MTRAN,isMtran()),
-				new SelectedModuleTypeMapHelper(SupportedModularRobots.ODIN,isOdin()),
-				new SelectedModuleTypeMapHelper(SupportedModularRobots.CKBOTSTANDARD,isCKBotStandard())
-		};
-        /*Identifies selected module and readjusts tools accordingly, also calls for GUI re-adjustment*/
-		for(int index =0;index<selectModulesTypes.length;index++){
-			if(selectModulesTypes[index].isSelected()==true){
-				this.modularRobotName = selectModulesTypes[index].getModularRobotName();
-				this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
-				this.construction = selectOperations.getConstruction();
-				ConstructionTab.adjustToSelectedModularRobot(this.modularRobotName);//Adapt GUI to selected module(modular robot) type
-			}
 		}
 	}
 
