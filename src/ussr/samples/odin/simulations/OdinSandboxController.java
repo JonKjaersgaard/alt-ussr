@@ -33,7 +33,7 @@ public class OdinSandboxController extends OdinController {
     public void activate() {
     	while(module.getSimulation().isPaused()) Thread.yield();
     	delay(1000);
-    	if(type=="OdinSSRlinearActuator") muscleControl();
+    	if(type=="OdinSSRlinearActuator" || type=="OdinMuscle") muscleControl();
     	if(type=="OdinBall") ballControl();
 	}
     public void muscleControl() {

@@ -52,6 +52,11 @@ public class OdinSandboxSimulation extends GenericSimulation {
         		return new OdinSandboxController("OdinBall");
         	}},"OdinBall");
         
+        simulation.setRobot(new OdinMuscle(){
+        	public Controller createController() {
+        		return new OdinSandboxController("OdinMuscle");
+        	}},"OdinMuscle");
+        
         if(world==null) world = createWorld();
         simulation.setWorld(world);
         simulation.setPause(startPaused);
