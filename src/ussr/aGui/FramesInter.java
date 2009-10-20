@@ -22,9 +22,15 @@ public interface FramesInter {
 	public Dimension SCREEN_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	/**
-	 * Height of tool bars.
+	 * Dominating(common) height of most components.
 	 */
-	public final int TOOLBARS_HEIGHT = 30;
+	public final int COMMON_HEIGHT = 30;
+	
+	
+	/**
+	 * Width and height of buttons.
+	 */
+	public final int BUTTONS_WIDTH =30;
 	
 	/**
 	 * Padding for adding space around components of the JFrame. 

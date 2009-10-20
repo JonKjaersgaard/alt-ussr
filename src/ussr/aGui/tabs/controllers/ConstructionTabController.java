@@ -49,7 +49,10 @@ public class ConstructionTabController {
 		
 		ConstructionTab.setRadioButtonsEnabled(false);
 		ConstructionTab.getJComboBox1().setEnabled(true);
-		ConstructionTab.setEnableRotationToolBar(true);	
+		ConstructionTab.setEnabledRotationToolBar(true);
+		ConstructionTab.setEnabledGenericToolBar(true);
+		
+
 		
 	
 		
@@ -204,10 +207,10 @@ public class ConstructionTabController {
 	public static void jComboBox1ActionPerformed(JComboBox jComboBox1,JMESimulation jmeSimulation) {
 		   chosenItem = jComboBox1.getSelectedItem().toString();
 		if (chosenItem.equalsIgnoreCase("Module") ){
-			ConstructionTab.enableGenericToolBar(true);
+			ConstructionTab.setEnabledGenericToolBar(true);
 		}else if(chosenItem.equalsIgnoreCase("Robot")){
 			//TODO Support it
-			ConstructionTab.enableGenericToolBar(false);
+			ConstructionTab.setEnabledGenericToolBar(false);
 		}		
 	}
 
@@ -221,5 +224,15 @@ public class ConstructionTabController {
 	public static void jButton15ActionPerformed(JMESimulation jmeSimulation) {
 		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.OPPOSITE_ROTATION));        
     }
+
+
+
+
+
+	public static void jComboBox2ActionPerformed(JComboBox comboBox2,
+			JMESimulation jmeSimulation) {
+		// TODO Auto-generated method stub
+		
+	}
 	    
 }

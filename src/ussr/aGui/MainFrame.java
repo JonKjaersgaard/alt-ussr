@@ -30,7 +30,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 	/**
 	 * Height of the first tabbed pane.
 	 */
-	public final int TAB_PANE_HEIGHT1 = (int)(SCREEN_DIMENSION.getHeight()-TOOLBARS_HEIGHT-TAB_PANE_HEIGHT2-4*PADDING);
+	public final int TAB_PANE_HEIGHT1 = (int)(SCREEN_DIMENSION.getHeight()-COMMON_HEIGHT-TAB_PANE_HEIGHT2-4*PADDING);
 	
 	/**
 	 * The main GUI window.
