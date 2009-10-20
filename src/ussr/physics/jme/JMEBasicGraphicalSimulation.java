@@ -17,12 +17,12 @@ import ussr.aGui.FramesInter;
 import ussr.aGui.MainFrame;
 import ussr.aGui.MainFrameInter;
 import ussr.aGui.MainFrameSeparate;
-import ussr.aGui.tabs.view.AssignBehaviorsTab;
-import ussr.aGui.tabs.view.CommunicationVisualizer;
-import ussr.aGui.tabs.view.ConsoleTab;
-import ussr.aGui.tabs.view.ConstructionTab;
-import ussr.aGui.tabs.view.NewTab;
-import ussr.aGui.tabs.view.TabsInter;
+import ussr.aGui.tabs.view.visualizer.ModuleCommunicationVisualizer;
+import ussr.aGui.tabs.views.AssignBehaviorsTab;
+import ussr.aGui.tabs.views.ConsoleTab;
+import ussr.aGui.tabs.views.ConstructionTab;
+import ussr.aGui.tabs.views.NewTab;
+import ussr.aGui.tabs.views.TabsInter;
 import ussr.builder.QuickPrototyping;
 import ussr.comm.monitors.visualtracker.CommunicationVisualizerGUI;
 import ussr.description.setup.WorldDescription;
@@ -347,18 +347,18 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			if (MainFrameSeparate.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
 			}else{
 				JMESimulation simulation = (JMESimulation)this;
+				simulation.setPause(true); // pause simulation.
+				
 				tabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI
-				tabs.clear();
+			
 				
 				/*Tabs of the first tabbed pane*/
 				//tabs.add(new ConstructionTab(true,"1 Step: Construct Robot (Interactive User Guide)",simulation));//Build in tab
-				tabs.add(new ConstructionTab(true,"1 Step: Construct Robot",simulation,TabsInter.DIRECTORY_ICONS+TabsInter.CONSTRUCTION));//Build in tab
-				tabs.add(new AssignBehaviorsTab(true,"2 Step: Assign Behaviour (Controller)",simulation,TabsInter.DIRECTORY_ICONS+TabsInter.BEHAVIOR));//Build in tab
-				tabs.add(new CommunicationVisualizer(true,"Communication Visualiser",simulation,TabsInter.DIRECTORY_ICONS+TabsInter.VISUALIZER));//Build in tab
+				tabs.add(new ConstructionTab(true,"1 Step: Construct Robot",simulation,MainFrameInter.DIRECTORY_ICONS+MainFrameInter.CONSTRUCT_ROBOT));//Build in tab
+				tabs.add(new AssignBehaviorsTab(true,"2 Step: Assign Behaviour (Controller)",simulation,MainFrameInter.DIRECTORY_ICONS+MainFrameInter.CONSTRUCT_ROBOT));//Build in tab
+				tabs.add(new ModuleCommunicationVisualizer(true,"Communication Visualiser",simulation,TabsInter.DIRECTORY_ICONS+TabsInter.VISUALIZER));//Build in tab
 				//tabs.add(new AssignBehavioursTab(true,"2 Step: Assign Behaviour (Interactive User Guide)",simulation));//Build in tab
-				tabs.add(new NewTab(true, "YOUR NEW TAB",simulation,null));//YOUR NEW TAB
-				tabs.add(new NewTab(true, "YOUR NEW TAB1",simulation,null));//YOUR NEW TAB1
-				
+				tabs.add(new NewTab(true, "YOUR NEW TAB",simulation,null));//YOUR NEW TAB				
 				/*Tabs of the second tabbed pane*/
 				tabs.add(new ConsoleTab(false,"Console", null, TabsInter.DIRECTORY_ICONS+TabsInter.CONSOLE));
 				FramesInter mainFrame = new MainFrameSeparate(this,tabs);				
