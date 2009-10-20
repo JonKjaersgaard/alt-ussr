@@ -41,8 +41,7 @@ public class MainFrameSeparate extends MainFrame {
 		
 	    initComponents();
 	    changeInstanceFlagListener();//Change the instance flag to true. Meaning the window is once instantiated.
-		windowResizingListener();//Resize the main GUI window according to dimension of it's components, if user is maximizing or restoring it down.
-		MainFrameController.adaptGuiToModularRobot(this.jmeSimulation);// Adapts the tab called "Construction" to the first module discovered in the simulation environment
+		windowResizingListener();//Resize the main GUI window according to dimension of it's components, if user is maximizing or restoring it down.		
 	}	
 	
 	

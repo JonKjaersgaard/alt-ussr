@@ -7,18 +7,27 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.font.TextAttribute;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.AbstractButton;
+import javax.swing.Action;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 
-import ussr.aGui.MainFrame;
+
+
+import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFrameInter;
+
 import ussr.aGui.tabs.controllers.ConstructionTabController;
 import ussr.builder.SupportedModularRobots;
 import ussr.physics.jme.JMESimulation;
@@ -32,6 +41,7 @@ public class ConstructionTab extends Tabs {
 	
 	private static ArrayList<JComponent> jCompnents =  new ArrayList<JComponent>() ;
 	
+	private static ArrayList<AbstractButton> jRadioButtons =  new ArrayList<AbstractButton>() ;
 
 	/**
 	 * The constants of grid bag layout used during design of the tab.
@@ -60,6 +70,9 @@ public class ConstructionTab extends Tabs {
 	 * Initializes the visual appearance of all components in the tab.
 	 * Follows Strategy  pattern.
 	 */
+	/* (non-Javadoc)
+	 * @see ussr.aGui.tabs.views.Tabs#initComponents()
+	 */
 	public void initComponents(){
         
 		/*Instantiation of components*/
@@ -72,16 +85,18 @@ public class ConstructionTab extends Tabs {
 		
 		jLabel10002 = new javax.swing.JLabel();	
 		jLabel10003 = new javax.swing.JLabel();	
+		
+		jComboBox1 = new javax.swing.JComboBox();
 	
 		
-		jLabel10002.setText("Add module:");
+		jLabel10002.setText("Choose modular robot:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
 		super.jComponent.add(jLabel10002,gridBagConstraints);
 
 		final ButtonGroup buttonGroup = new ButtonGroup() ;
-
+		
 		radionButtonATRON =  new JRadioButton();
 		radionButtonATRON.setFocusable(true);// direct the user to what should be done first
 		radionButtonATRON.setText("ATRON");		
@@ -96,9 +111,11 @@ public class ConstructionTab extends Tabs {
 		//gridBagConstraints.ipady = 10; 
 		super.jComponent.add(radionButtonATRON,gridBagConstraints);
 		buttonGroup.add(radionButtonATRON);
+		jRadioButtons.add(radionButtonATRON);
 
 		radionButtonODIN =  new JRadioButton();
 		radionButtonODIN.setText("Odin");
+		radionButtonODIN.setFocusable(false);
 		radionButtonODIN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructionTabController.jButtonGroupActionPerformed(radionButtonODIN,jmeSimulation);
@@ -110,10 +127,11 @@ public class ConstructionTab extends Tabs {
 		//gridBagConstraints.ipady = 10; 
 		super.jComponent.add(radionButtonODIN,gridBagConstraints);
 		buttonGroup.add(radionButtonODIN);
-
+		jRadioButtons.add(radionButtonODIN);
 
 		radioButtonMTRAN =  new JRadioButton();
 		radioButtonMTRAN.setText("MTran");
+		radioButtonMTRAN.setFocusable(false);
 		radioButtonMTRAN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructionTabController.jButtonGroupActionPerformed(radioButtonMTRAN,jmeSimulation);
@@ -125,9 +143,11 @@ public class ConstructionTab extends Tabs {
 		//gridBagConstraints.ipady = 10; 
 		super.jComponent.add(radioButtonMTRAN,gridBagConstraints);
 		buttonGroup.add(radioButtonMTRAN);
+		jRadioButtons.add(radioButtonMTRAN);
 
 		radionButtonCKBOTSTANDARD =  new JRadioButton();
 		radionButtonCKBOTSTANDARD.setText("CKBotStandard");
+		radionButtonCKBOTSTANDARD.setFocusable(false);
 		radionButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructionTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD,jmeSimulation);
@@ -138,9 +158,10 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 40; 
 		super.jComponent.add(radionButtonCKBOTSTANDARD,gridBagConstraints);
-		buttonGroup.add(radionButtonCKBOTSTANDARD);		
+		buttonGroup.add(radionButtonCKBOTSTANDARD);	
+		jRadioButtons.add(radionButtonCKBOTSTANDARD);
 
-		jLabel1000 = new javax.swing.JLabel();
+	/*	jLabel1000 = new javax.swing.JLabel();
 		jLabel1000.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + INFORMATION));		
 		jLabel1000.setText("Now select connectors (black or white geometric shapes).");
 		jLabel1000.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));
@@ -151,7 +172,7 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.insets = new Insets(5,0,0,0);  //top padding
 		jLabel1000.setVisible(false);
 		//gridBagConstraints.weighty = 0.5;   //request any extra vertical space
-		super.jComponent.add(jLabel1000,gridBagConstraints);
+		super.jComponent.add(jLabel1000,gridBagConstraints);*/
 
 		/*jLabel10001 = new javax.swing.JLabel();		
 		jLabel10001.setText("When done with constructing press ready button");
@@ -164,7 +185,7 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.insets = new Insets(0,30,0,0);  //left padding
 		super.jComponent.add(jLabel10001,gridBagConstraints);*/
 		
-		button14.setText("Robot Ready");		
+/*		button14.setText("Robot Ready");		
 		button14.setToolTipText("Robot is ready");		
 		button14.setFocusable(false); 
 		button14.setPreferredSize(new java.awt.Dimension(30, 30));	
@@ -176,34 +197,47 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 4;
 		gridBagConstraints.gridy = 3;
-		super.jComponent.add(button14,gridBagConstraints);		
+		super.jComponent.add(button14,gridBagConstraints);	*/	
 		
-		jLabel10003.setText("Additional:");
+		jLabel10003.setText("Generic funtionality for:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 4;
-		gridBagConstraints.insets = new Insets(0,0,0,30);  //bring padding back
-		super.jComponent.add(jLabel10003,gridBagConstraints);
+		gridBagConstraints.gridy = 2;
+		gridBagConstraints.insets = new Insets(0,0,0,5);  //bring padding back
+		super.jComponent.add(jLabel10003,gridBagConstraints);		
+		
+		jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Module", "Robot" }));
+		jComboBox1.setPreferredSize(new java.awt.Dimension(59, GuiFrames.TOOLBARS_HEIGHT));
+		jComboBox1.setEnabled(false);
+		jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructionTabController.jComboBox1ActionPerformed(jComboBox1,jmeSimulation);
+			}
+		});
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridy = 3;
+		super.jComponent.add(jComboBox1,gridBagConstraints);
    
-		jLabel10004 = new javax.swing.JLabel();		
+	/*	jLabel10004 = new javax.swing.JLabel();		
 		jLabel10004.setText("Generic functionality:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 5;
-		super.jComponent.add(jLabel10004,gridBagConstraints);		
+		super.jComponent.add(jLabel10004,gridBagConstraints);	*/	
 		
 		jToolBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBar1.setFloatable(false);//user can not make the tool bar to float
 		jToolBar1.setRollover(true);// the buttons inside are roll over
 		jToolBar1.setToolTipText("Generic tools");
-		jToolBar1.setPreferredSize(new Dimension(100,40));		
-		gridBagConstraints.fill = GridBagConstraints.LINE_END;
-		gridBagConstraints.gridx = 3;		
-		gridBagConstraints.gridy = 5;		
-		//jComponent.add(button11,gridBagConstraints);	
-			
-		button11.setToolTipText("Move module");		
-		button11.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOVE_MODULE));
+		jToolBar1.setPreferredSize(new Dimension(190,GuiFrames.TOOLBARS_HEIGHT));		
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 2;		
+		gridBagConstraints.gridy = 3;
+		gridBagConstraints.gridwidth = 3;		
+		
+		button11.setToolTipText("Move");		
+		button11.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOVE));
 		button11.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));
 		button11.setFocusable(false); 
 		button11.setEnabled(false);
@@ -215,8 +249,8 @@ public class ConstructionTab extends Tabs {
 		});
 		jToolBar1.add(button11);
 				
-		button10.setToolTipText("Delete module");
-		button10.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE_MODULE));
+		button10.setToolTipText("Delete");
+		button10.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE));
 		button10.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
 		button10.setFocusable(false);
 		button10.setEnabled(false);
@@ -247,8 +281,11 @@ public class ConstructionTab extends Tabs {
 		//gridBagConstraints.gridx = 4;
 		//gridBagConstraints.gridwidth = 1; 
 		//gridBagConstraints.gridy = 5;
-		//jComponent.add(button12,gridBagConstraints);
-		jToolBar1.add(button12);
+		//jComponent.add(button12,gridBagConstraints);	
+		
+		
+		jToolBar1.add(button12);	
+		
 	
 		super.jComponent.add(jToolBar1,gridBagConstraints);
 		
@@ -257,152 +294,19 @@ public class ConstructionTab extends Tabs {
 		}
 		
 			
-		
-
-		
-		
-		
-		
-		
-		
-		/*button10 =   new javax.swing.JButton();
-		button10.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE_MODULE));
-		button10.setToolTipText("Delete module");
-		button10.setFocusable(false);    
-		button10.setPreferredSize(new java.awt.Dimension(30, 30));   
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 2;
-		gridBagConstraints.gridy = 5;
-		jComponent.add(button10,gridBagConstraints);*/
-
-		//javax.swing.AbstractButton button =  new JButton();
-
-
-
-		//button.setText("ODIN");
-
-		//buttonGroup.add(button);
-		//buttonGroup.add(button1);
-
-		//jComponent.add(buttonGroup);
-
-		/*Instantiation of tab components
-		jComboBox2 = new javax.swing.JComboBox();		
-		jComboBox3 = new javax.swing.JComboBox();		
-		jComboBox1000 = new javax.swing.JComboBox();
-
-		jLabel1000 = new javax.swing.JLabel();	
-
-		Definition of visual appearance for each instantiated component
-		jLabel1000.setText("1) Choose modular robot:");
-		Add your component into panel.
-		jComponent.add(jLabel1000);
-
-		jComboBox1000.setToolTipText("Supported modular robots");
-		jComboBox1000.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ATRON", "ODIN", "MTRAN", "CKBOT" }));
-		jComboBox1000.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jComboBox1ActionPerformed(jComboBox1000,jmeSimulation);
-			}
-		});
-		jComponent.add(jComboBox1000);
-
-		javax.swing.JLabel jLabel999 = new javax.swing.JLabel();
-		jLabel999.setText(" and locate it in the simulation environment;");
-		jComponent.add(jLabel999);
-
-		javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
-		jLabel3.setText("2) Choose module rotation (in the one of the following three components)");
-		jComponent.add(jLabel3);       
-
-		jComboBox2.setToolTipText("Standard rotations of modules");
-		jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "" }));
-		jComboBox2.setEnabled(false);
-		jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jComboBox2ActionPerformed(jmeSimulation);
-			}
-		});
-		jComponent.add(jComboBox2);
-
-		javax.swing.JButton jButton5 = new javax.swing.JButton();
-		jButton5.setToolTipText("Rotate opposite");        
-		jButton5.setText("Opposite");        
-		jButton5.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jButton5ActionPerformed(jmeSimulation);
-			}
-		});
-		jComponent.add(jButton5);
-
-		javax.swing.JButton jButton6 = new javax.swing.JButton();
-		jButton6.setToolTipText("Variation of module rotations");
-		jButton6.setText("Variation");
-		jButton6.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jButton6ActionPerformed(jmeSimulation);
-			}
-		});
-		jComponent.add(jButton6);
-
-		javax.swing.JLabel jLabel998 = new javax.swing.JLabel();
-		jLabel998.setText(" and select the module in the simulation environment to apply it to;");
-		jComponent.add(jLabel998);
-
-		javax.swing.JLabel jLabel997 = new javax.swing.JLabel();
-		jLabel997.setText(" 3)Choose one of the following three construction tools:");
-		jComponent.add(jLabel997);
-
-		javax.swing.JButton jButton7 = new javax.swing.JButton();
-		jButton7.setToolTipText("Variation of module rotations");
-		jButton7.setText("On Selected Connector");
-		jButton7.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jButton7ActionPerformed(jmeSimulation);
-			}
-		});
-		jComponent.add(jButton7);
-
-		javax.swing.JLabel jLabel996 = new javax.swing.JLabel();
-		jLabel996.setText("here select connector on the module(white or black geometric shapes) ");
-		jComponent.add(jLabel996);
-
-
-		jComboBox3.setToolTipText("Numbers of connectors on the module");
-		jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "" }));
-		jComboBox3.setEnabled(false);
-		jComboBox3.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//ConstructionTabController.jComboBox3ActionPerformed(jComboBox1000,jmeSimulation);
-			}
-		});
-		jComponent.add(jComboBox3);*/
-
-
-
 	}
-	/*MORE WORK HERE*/
-	public static void adjustToSelectedModularRobot(SupportedModularRobots supportedModularRobot){
-		if (supportedModularRobot.toString().equalsIgnoreCase("ATRON")){
-			radionButtonATRON.setSelected(true);
-			//ADD MORE HERE AND MAYBE ELIMINATE ABOVE LINE
-		}else if (supportedModularRobot.toString().equalsIgnoreCase("MTRAN")){
-			radioButtonMTRAN.setSelected(true);
-			//ADD MORE HERE AND MAYBE ELIMINATE ABOVE LINE
-		}else if (supportedModularRobot.toString().equalsIgnoreCase("ODIN")){
-			radionButtonODIN.setSelected(true);
-			//ADD MORE HERE AND MAYBE ELIMINATE ABOVE LINE
-		}else if (supportedModularRobot.toString().equalsIgnoreCase("CKBOTSTANDARD")){
-			radionButtonCKBOTSTANDARD.setSelected(true);	
-			//ADD MORE HERE AND MAYBE ELIMINATE ABOVE LINE
-		}
-	}
+	
 	
 	
 	public void setEnabled(){
 		super.jComponent.setEnabled(false);
 	}
 	
+	public static void setRadioButtonsEnabled(boolean enabled){
+		for (AbstractButton radioButton: jRadioButtons ){
+			radioButton.setEnabled(enabled);
+		}
+	}
 	
 	/*Getters*/
 	
@@ -419,12 +323,17 @@ public class ConstructionTab extends Tabs {
 		
 	}
 
-	public static javax.swing.JComboBox getJComboBox2() {
-		return jComboBox2;
-	}
 
-	public static javax.swing.JComboBox getJComboBox3() {
-		return jComboBox3;
+	
+	public static void enableGenericToolBar(boolean enable){
+		button10.setEnabled(enable);
+		button11.setEnabled(enable);
+		button12.setEnabled(enable);
+	}
+	
+
+	public static javax.swing.JComboBox getJComboBox1() {
+		return jComboBox1;
 	}
 
 	public static javax.swing.AbstractButton getButton1() {
@@ -452,7 +361,7 @@ public class ConstructionTab extends Tabs {
 	}
 
 	/*Declaration of tab components*/
-	private static javax.swing.JComboBox jComboBox2;	
+	private static javax.swing.JComboBox jComboBox1;	
 	private static javax.swing.JComboBox jComboBox3;
 	private static javax.swing.JLabel jLabel1000;
 	

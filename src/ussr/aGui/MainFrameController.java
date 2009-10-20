@@ -47,21 +47,21 @@ public class MainFrameController {
 		jTextField1.setText("");
 	}
 	
+	private static int timesSelected =0;
+	
 	/**
 	 * Controls running simulation in real time.
 	 * @param jmeSimulation
 	 */
-	public static void jButton1ActionPerformed(JMESimulation jmeSimulation) {		 
+	public static void jButtonRunRealTimeActionPerformed(JMESimulation jmeSimulation) {
+		timesSelected++;
 		if (jmeSimulation.isPaused()){// Start simulation in real time, if simulation is in paused state
 			jmeSimulation.setRealtime(true);
 			jmeSimulation.setPause(false);				
 		}else if (jmeSimulation.isRealtime()==false){//if simulation is running fast, then run it in real time
 			jmeSimulation.setRealtime(true);
 		}	
-		/*Disable GUI components responsible for opening file choosers, because it is possible to load
-		 *simulation from XML file only in static state of simulation.*/ 
-		MainFrame.setSaveOpenEnabled(false);
-		//ConstructionTab.setEnabled(false);
+		disableComponets(jmeSimulation);
 	}
 
 
@@ -76,11 +76,18 @@ public class MainFrameController {
 			jmeSimulation.setPause(false);				
 		}else if (jmeSimulation.isRealtime()==true){//if simulation in real time, then run it fast
 			jmeSimulation.setRealtime(false);
-		}
-		/*Disable GUI components responsible for opening file choosers, because it is possible to load
-		 *simulation from XML file only in static state of simulation.*/ 
-		MainFrame.setSaveOpenEnabled(false);
-		//ConstructionTab.setEnabled(false);
+		}		
+		disableComponets(jmeSimulation);
+	}
+	
+	private static void disableComponets(JMESimulation jmeSimulation){
+		if (timesSelected==1){
+			BuilderHelper.connectAllModules(jmeSimulation);	
+			/*Disable GUI components responsible for opening file choosers, because it is possible to load
+			 *simulation from XML file only in static state of simulation.*/ 
+			MainFrame.setSaveOpenEnabled(false);
+			MainFrame.setConstructionEnabled(false);
+		}		
 	}
 
 
@@ -202,11 +209,8 @@ public class MainFrameController {
 	 */
 	public static void jButtonRunStepByStepActionPerformed(JMESimulation jmeSimulation) {       	
 		jmeSimulation.setPause(true);
-		jmeSimulation.setSingleStep(true);
-		/*Disable GUI components responsible for opening file choosers, because it is possible to load
-		 *simulation from XML file only in static state of simulation.*/ 
-		MainFrame.setSaveOpenEnabled(false);
-		//ConstructionTab.setEnabled(false);
+		jmeSimulation.setSingleStep(true);		
+		disableComponets(jmeSimulation);
 	}
 
 
@@ -254,33 +258,7 @@ public class MainFrameController {
 			}
 			}
 		}
-	/**
-	 * Adapts the visual appearance of the tab called "Construction tab" to the first module type discovered in the simulation environment.
-	 * @param jmeSimulation 
-	 */
-	public static void adaptGuiToModularRobot(JMESimulation jmeSimulation){
-
-		String modularRobotName ="";
-		if (jmeSimulation.worldDescription.getModulePositions().size()>0){
-			modularRobotName = jmeSimulation.getModules().get(0).getProperty(BuilderHelper.getModuleTypeKey());
-					
-			if (modularRobotName.contains("ATRON")){
-				ConstructionTab.adjustToSelectedModularRobot(SupportedModularRobots.ATRON);
-			}else if (modularRobotName.contains("MTRAN")){
-				ConstructionTab.adjustToSelectedModularRobot(SupportedModularRobots.MTRAN);
-				
-			}else if (modularRobotName.contains("Odin")){
-				
-				ConstructionTab.adjustToSelectedModularRobot(SupportedModularRobots.ODIN);					
-				
-			}else if (modularRobotName.contains("CKBotStandard")){
-				ConstructionTab.adjustToSelectedModularRobot(SupportedModularRobots.CKBOTSTANDARD);
-			}
-		}
-	}
-
-
-
+	
 	public static void constructRobotActionPerformed(JButton jButtonConstructRobot, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs,ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems ) {
 		jTabbedPaneFirst.addTab(tabs.get(0).getTabTitle(),new javax.swing.ImageIcon(tabs.get(0).getImageIconDirectory()),tabs.get(0).getJComponent());
 		jTabbedPaneFirst.addTab(tabs.get(1).getTabTitle(),new javax.swing.ImageIcon(tabs.get(1).getImageIconDirectory()),tabs.get(1).getJComponent());

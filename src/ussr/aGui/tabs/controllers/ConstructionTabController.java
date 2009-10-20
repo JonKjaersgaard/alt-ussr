@@ -3,6 +3,7 @@ package ussr.aGui.tabs.controllers;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 
 import ussr.aGui.MainFrame;
@@ -28,6 +29,8 @@ import ussr.samples.odin.modules.Odin;
 public class ConstructionTabController {
 
 	
+	private static String chosenItem ="Module" ;
+	
 	/**
 	 * Default positions of default construction modules for each modular robot
 	 */
@@ -43,8 +46,10 @@ public class ConstructionTabController {
 	
 	
 	public static void jButtonGroupActionPerformed(AbstractButton button,JMESimulation jmeSimulation ) {
-		ConstructionTab.getJLabel1000().setVisible(true);
-		//ConstructionTab.getJLabel10001().setVisible(true);
+		
+		ConstructionTab.setRadioButtonsEnabled(false);
+		ConstructionTab.getJComboBox1().setEnabled(true);
+	
 		ConstructionTab.getButton10().setEnabled(true);
 		ConstructionTab.getButton11().setEnabled(true);
 		ConstructionTab.getButton12().setEnabled(true);
@@ -155,7 +160,7 @@ public class ConstructionTabController {
 	 * @param evt, selection with left side of the mouse event (jButton selection).     
 	 */	
 	public static void jComboBox2ActionPerformed(JMESimulation jmeSimulation) {
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.STANDARD_ROTATIONS,ConstructionTab.getJComboBox2().getSelectedItem().toString()));		
+		//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.STANDARD_ROTATIONS,ConstructionTab.getJComboBox2().getSelectedItem().toString()));		
     }
 		
 	/**
@@ -175,29 +180,47 @@ public class ConstructionTabController {
 		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
     }
 	
-	public static void jButton10ActionPerformed(JMESimulation jmeSimulation) {	
-		jmeSimulation.setPicker(new RemoveModule());		
+	public static void jButton10ActionPerformed(JMESimulation jmeSimulation) {
+		if (chosenItem.equalsIgnoreCase("Module")){
+			jmeSimulation.setPicker(new RemoveModule());
+			}else if (chosenItem.equalsIgnoreCase("Robot")){
+				//TODO
+			}
+				
     }
 	
 	public static void jButton11ActionPerformed(JMESimulation jmeSimulation) {	
-		jmeSimulation.setPicker(new PhysicsPicker(true, true));		
+		if (chosenItem.equalsIgnoreCase("Module")){
+		jmeSimulation.setPicker(new PhysicsPicker(true, true));
+		}else if (chosenItem.equalsIgnoreCase("Robot")){
+			//TODO
+		}
     }
 	
 	public static void jButton12ActionPerformed(JMESimulation jmeSimulation) {	
-		jmeSimulation.setPicker(new ColorConnectors());		
+		if (chosenItem.equalsIgnoreCase("Module")){
+			jmeSimulation.setPicker(new ColorConnectors());	
+			}else if (chosenItem.equalsIgnoreCase("Robot")){
+				//TODO
+			}
+			
     }
+
+
+
+
+
+	public static void jComboBox1ActionPerformed(JComboBox jComboBox1,JMESimulation jmeSimulation) {
+		   chosenItem = jComboBox1.getSelectedItem().toString();
+		if (chosenItem.equalsIgnoreCase("Module") ){
+			ConstructionTab.enableGenericToolBar(true);
+		}else if(chosenItem.equalsIgnoreCase("Robot")){
+			//TODO Support it
+			ConstructionTab.enableGenericToolBar(false);
+		}		
+	}
 	
-	/**
-	 * Connects all modules (connectors), when the run button(real time or fast) is pressed first time. 
-	 * @param jmeSimulation
-	 * @param component 
-	 */
-	public static void jButton14ActionPerformed(JMESimulation jmeSimulation,JButton jButton14) {
-		ConstructionTab.setEnabledAllComponents(false);
-		jButton14.setEnabled(false);
-		BuilderHelper.connectAllModules(jmeSimulation);	
-		//TODO Disable whole tab
-    }
+
 	
 	    
 }

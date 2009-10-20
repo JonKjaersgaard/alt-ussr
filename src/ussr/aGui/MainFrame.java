@@ -272,7 +272,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 		jButtonRunRealTime.setPreferredSize(new java.awt.Dimension(30, 30));      
 		jButtonRunRealTime.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jButton1ActionPerformed(jmeSimulation);        	  
+				MainFrameController.jButtonRunRealTimeActionPerformed(jmeSimulation);        	  
 			}
 		});
 		jToolBarGeneralControl.add(jButtonRunRealTime);
@@ -379,7 +379,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 		return jTabbedPaneFirst;
 	}
     
-	ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems = new ArrayList<javax.swing.JCheckBoxMenuItem>();
+	static ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems = new ArrayList<javax.swing.JCheckBoxMenuItem>();
 	
 	private void initTabsAndCheckBoxes(boolean first,final ArrayList<TabsInter> tabsContainer ,final javax.swing.JTabbedPane jTabbedPane,javax.swing.JMenu jMenu){
 		
@@ -444,6 +444,10 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 		jMenuItemSave.setEnabled(state);	
 		jButtonOpen.setEnabled(state);
 	} 
+	
+	public static void setConstructionEnabled(boolean enabled){
+		jButtonConstructRobot.setEnabled(false);		
+	}
 
 
 
@@ -497,7 +501,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 	public javax.swing.JButton jButtonRunStepByStep;
 	public static javax.swing.JButton jButtonSave;
 	public static javax.swing.JButton jButtonOpen;
-	public javax.swing.JButton jButtonConstructRobot;
+	public static javax.swing.JButton jButtonConstructRobot;
 
 	public javax.swing.JButton jButtonRunFast;
 	public javax.swing.JButton jButtonPause;
