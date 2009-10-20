@@ -65,6 +65,36 @@ public class OdinBuilder {
         allPos.addAll(ballPos);
         return allPos;
     }
+    public ArrayList<ModulePosition> buildDenseBlobSSRlinearActuator(int nBalls, int xMax, int yMax, int zMax) {
+        int index=0;
+        for(int x=0;x<xMax;x++) {
+            for(int y=0;y<yMax;y++) {
+                for(int z=0;z<zMax;z++) {
+                    if((x+y+z)%2==0) {
+                        VectorDescription pos = new VectorDescription(x*unit,y*unit,z*unit);
+                        if(index<nBalls) {
+                            ballPos.add(new ModulePosition(Integer.toString(index),"OdinBall", pos, new RotationDescription(0,0,0)));
+                        }
+                        index++;
+                    }
+                }
+            }
+        }
+        for(int i=0;i<ballPos.size();i++) {
+            for(int j=i+1;j<ballPos.size();j++) {
+                if(isNeighorBalls(ballPos.get(i),ballPos.get(j))) {
+                    VectorDescription pos = posFromBalls(ballPos.get(i),ballPos.get(j));
+                    RotationDescription rot = rotFromBalls(ballPos.get(i),ballPos.get(j));
+                    System.out.println("Module created: pos="+pos+" rot="+rot);
+                    modulePos.add(new ModulePosition(Integer.toString(index),"OdinSSRlinearActuator", pos, rot));
+                    index++;
+                }
+            }
+        }
+        allPos.addAll(modulePos);
+        allPos.addAll(ballPos);
+        return allPos;
+    }
     public void addBall(int x, int y, int z, int index) {
         if((x+y+z)%2==0) {
         	VectorDescription pos = new VectorDescription(x*unit,y*unit,z*unit);
