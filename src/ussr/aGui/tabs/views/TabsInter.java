@@ -17,7 +17,8 @@ public interface TabsInter {
 	 * The names of the icons used in tabs
 	 */
 	public final String DELETE = "delete.jpg", MOVE = "move.jpg", COLOUR_CONNECTORS = "colourConnectors.jpg",
-	                    ATTENTION = "attention.jpg", ERROR = "error.jpg", INFORMATION ="information.jpg", VISUALIZER = "visualizer.jpg", CONSOLE = "console.jpg";
+	                    ATTENTION = "attention.jpg", ERROR = "error.jpg", INFORMATION ="information.jpg", 
+	                    VISUALIZER = "visualizer.jpg", CONSOLE = "console.jpg", OPPOSITE = "opposite.jpg";
 	
 	/**
      * Getter method common for all tabs and is used by GUI during addition of new tab.

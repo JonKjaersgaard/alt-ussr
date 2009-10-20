@@ -49,14 +49,11 @@ public class ConstructionTabController {
 		
 		ConstructionTab.setRadioButtonsEnabled(false);
 		ConstructionTab.getJComboBox1().setEnabled(true);
-	
-		ConstructionTab.getButton10().setEnabled(true);
-		ConstructionTab.getButton11().setEnabled(true);
-		ConstructionTab.getButton12().setEnabled(true);
+		ConstructionTab.setEnableRotationToolBar(true);	
 		
 	
 		
-		 String chosenModularRobot = button.getText(); 
+		        String chosenModularRobot = button.getText(); 
 			
 				chosenMRname = SupportedModularRobots.valueOf(chosenModularRobot.toUpperCase());
 			
@@ -147,13 +144,7 @@ public class ConstructionTabController {
 		return false;    	
 	}
 	
-	/**
-	 * Initializes the tool for rotating modules selected in simulation environment with opposite rotation. 
-	 * @param evt, selection with left side of the mouse event (jButton selection).     
-	 */	
-	public static void jButton5ActionPerformed(JMESimulation jmeSimulation) {
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.OPPOSITE_ROTATION));        
-    }
+	
 	
 	/**
 	 * Initializes the tool for rotating default modules selected in simulation environment with standard rotations. 
@@ -219,8 +210,16 @@ public class ConstructionTabController {
 			ConstructionTab.enableGenericToolBar(false);
 		}		
 	}
-	
+
 
 	
+
+	/**
+	 * Initializes the tool for rotating modules selected in simulation environment with opposite rotation. 
+	 * @param evt, selection with left side of the mouse event (jButton selection).     
+	 */	
+	public static void jButton15ActionPerformed(JMESimulation jmeSimulation) {
+		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.OPPOSITE_ROTATION));        
+    }
 	    
 }
