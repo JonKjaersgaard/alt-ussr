@@ -116,7 +116,7 @@ public class OdinBuilder {
         else if(x1-x2<0&&y1-y2<0) return new RotationDescription(0,0,pi/4);
         else if(x1-x2<0&&y1-y2>0) return new RotationDescription(0,0,-pi/4);
         else if(y1-y2<0&&z1-z2<0) return new RotationDescription(0,pi/2,-pi/4); // changed when JME 1.0->2.0 from (0,pi/4,-pi/2)
-        else if(y1-y2<0&&z1-z2>0) return new RotationDescription(0,-pi/4,-pi/2); //TODO change as well?
+        else if(y1-y2<0&&z1-z2>0) return new RotationDescription(0,-pi/2,-pi/4);//changed as well
         System.out.println("("+(x1-x2)+","+(y1-y2)+","+(z1-z2)+")");
         return new RotationDescription(0,0,0);
     }
