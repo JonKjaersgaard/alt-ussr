@@ -158,8 +158,8 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 	private static WorldDescription createWorld() {
 		WorldDescription world = new WorldDescription();	        
 		world.setPlaneSize(100);		
-	  	ObstacleGenerator generator = new ObstacleGenerator();
-	    generator.obstacalize(obstacleType, world); // activate to add obstacles
+	  	//ObstacleGenerator generator = new ObstacleGenerator();
+	    //generator.obstacalize(obstacleType, world); // activate to add obstacles
 	    // world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
 		return world;
 	}

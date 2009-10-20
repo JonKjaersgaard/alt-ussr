@@ -6,7 +6,7 @@ import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
-import ussr.aGui.tabs.view.ConstructionTab;
+import ussr.aGui.tabs.views.ConstructionTab;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.SelectedModuleTypeMapHelper;
@@ -124,8 +124,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	@Override
 	protected void pickModuleComponent(JMEModuleComponent component) {		
 		this.selectedModule = component.getModel();		
-		callAppropriateTool();
-		System.out.println("Out:"+ component.getModel().getProperty(BuilderHelper.getModuleTypeKey()));
+		callAppropriateTool();		
 	}
 
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
