@@ -33,7 +33,7 @@ public class OdinSandboxController extends OdinController {
     public void activate() {
     	while(module.getSimulation().isPaused()) Thread.yield();
     	delay(1000);
-    	if(type=="OdinMuscle") muscleControl();
+    	if(type=="OdinSSRlinearActuator") muscleControl();
     	if(type=="OdinBall") ballControl();
 	}
     public void muscleControl() {
@@ -41,17 +41,24 @@ public class OdinSandboxController extends OdinController {
     	while(true) {
             if(!GenericSimulation.getActuatorsAreActive()) { yield(); continue; }
     		float time = module.getSimulation().getTime()+timeOffset;
-    		actuate((float)(Math.sin(time)+1)/2f);
-			module.getSimulation().waitForPhysicsStep(false);
-			if((lastTime+1)<module.getSimulation().getTime()) {
-				if(color==0) msg[0] = 'r';
-				if(color==1) msg[0] = 'g';
-				if(color==2) msg[0] = 'b';
-				color=(color+1)%3;
-				sendMessage(msg, (byte)msg.length,(byte)0);
-		    	sendMessage(msg, (byte)msg.length,(byte)1);
-		    	lastTime = module.getSimulation().getTime();
-			}
+    		//actuate((float)(Math.sin(time)+1)/2f);
+    		//balls are named 6-11
+    		if(module.getProperty("name").contains(Integer.toString(6))) {
+    			actuate(1f);	//range: 0-1 (float)
+    		}
+    		else {
+    			actuate(0);
+    		}
+    		module.getSimulation().waitForPhysicsStep(false);
+//			if((lastTime+1)<module.getSimulation().getTime()) {
+//				if(color==0) msg[0] = 'r';
+//				if(color==1) msg[0] = 'g';
+//				if(color==2) msg[0] = 'b';
+//				color=(color+1)%3;
+//				sendMessage(msg, (byte)msg.length,(byte)0);
+//		    	sendMessage(msg, (byte)msg.length,(byte)1);
+//		    	lastTime = module.getSimulation().getTime();
+//			}
         }
     }
     public void ballControl() {

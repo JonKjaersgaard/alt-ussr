@@ -23,6 +23,7 @@ import ussr.samples.GenericSimulation;
 import ussr.samples.odin.OdinBuilder;
 import ussr.samples.odin.modules.OdinBall;
 import ussr.samples.odin.modules.OdinMuscle;
+import ussr.samples.odin.modules.OdinSSRlinearActuator;
 
 /**
  * Simple Odin simulation test setup
@@ -33,7 +34,7 @@ import ussr.samples.odin.modules.OdinMuscle;
 public class OdinSandboxSimulation extends GenericSimulation {
 	
     public static void main( String[] args ) {
-    	new OdinSimulation1().runSimulation(null,true);
+    	new OdinSandboxSimulation().runSimulation(null,true);
     }
     
     public void runSimulation(WorldDescription world, boolean startPaused) {
@@ -41,10 +42,10 @@ public class OdinSandboxSimulation extends GenericSimulation {
         final PhysicsSimulation simulation = PhysicsFactory.createSimulator();
         PhysicsParameters.get().setResolutionFactor(2); // Needed for large Odin structures 
         
-        simulation.setRobot(new OdinMuscle(){
+        simulation.setRobot(new OdinSSRlinearActuator(){
         	public Controller createController() {
-        		return new OdinSandboxController("OdinMuscle");
-        	}},"OdinMuscle");
+        		return new OdinSandboxController("OdinSSRlinearActuator");
+        	}},"OdinSSRlinearActuator");
         
         simulation.setRobot(new OdinBall(){
         	public Controller createController() {
@@ -70,7 +71,8 @@ public class OdinSandboxSimulation extends GenericSimulation {
         world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
         OdinBuilder builder = new OdinBuilder();
         int nBalls=4, xMax=3, yMax=2,zMax=2;
-        ArrayList<ModulePosition> modulePos = builder.buildDenseBlob(nBalls,xMax,yMax,zMax);
+        //ArrayList<ModulePosition> modulePos = builder.buildDenseBlob(nBalls,xMax,yMax,zMax);
+        ArrayList<ModulePosition> modulePos = builder.buildDenseBlobSSRlinearActuator(nBalls,xMax,yMax,zMax);
         world.setModulePositions(modulePos);
         world.setModuleConnections(builder.allConnections());
         System.out.println("#Total         = "+modulePos.size());
