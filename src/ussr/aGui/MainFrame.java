@@ -88,7 +88,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 	 * Initializes the visual appearance the main GUI windows.
 	 * Follows Strategy  pattern.
 	 */
-	protected abstract void initComponents();	
+	public abstract void initComponents();	
 	
 	/**
 	 * Initializes the basic properties of the Frame common to all MainFrame instances.
@@ -97,7 +97,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 	public void initFrameProperties(){		
 		setUSSRicon(this);
 		setTitle("Unified Simulator for Self-Reconfigurable Robots");
-		getContentPane().setLayout(new java.awt.FlowLayout());	
+		getContentPane().setLayout(new java.awt.FlowLayout());		
 	}
 	
 	
@@ -346,7 +346,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 		jTabbedPaneInteraction  = new javax.swing.JTabbedPane();
 		jTabbedPaneInteraction.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 		jTabbedPaneInteraction.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jTabbedPaneInteraction.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING/2, TAB_PANE_HEIGHT1));		
+		jTabbedPaneInteraction.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2, TAB_PANE_HEIGHT1));		
 		jTabbedPaneInteraction.setFocusable(false);		
 		initTabsAndCheckBoxes(tabsFirstTabbedPane,jTabbedPaneInteraction,jMenuIntearctionTabs);//Plug in tabs in tabbed pane and check boxes in menu bar		
 

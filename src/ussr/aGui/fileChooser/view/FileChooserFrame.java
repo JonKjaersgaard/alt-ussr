@@ -34,12 +34,12 @@ public abstract class FileChooserFrame extends GuiFrames{
 	/** 
 	 * This method is called from within the constructor to initialize the form(frame) of the file chooser.
 	 */	
-	protected void initComponents() {
+	public void initComponents() {
 
 		jFileChooser = new javax.swing.JFileChooser();
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);		
 		getContentPane().setLayout(new java.awt.FlowLayout());		
-		getContentPane().add(jFileChooser);
+		getContentPane().add(jFileChooser);// MAC HAS PROBLEMS WITH THAT
 		jFileChooser.setAcceptAllFileFilterUsed(false);		
 		pack();
 		changeToLookAndFeel(this);// for all platforms

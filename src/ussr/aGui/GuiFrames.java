@@ -73,7 +73,7 @@ public abstract class GuiFrames extends javax.swing.JFrame implements FramesInte
 	 * Initializes visual appearance of the frames(windows).
 	 * Follows Strategy pattern.
 	 */
-	protected abstract void initComponents();
+	public abstract void initComponents();
 	
 	/**
 	 * Starts the windows(frames) of GUI.

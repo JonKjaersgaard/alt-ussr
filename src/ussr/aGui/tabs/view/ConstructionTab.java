@@ -74,7 +74,7 @@ public class ConstructionTab extends Tabs {
 		jLabel10003 = new javax.swing.JLabel();	
 	
 		
-		jLabel10002.setText("Shortcut:");
+		jLabel10002.setText("Add module:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
@@ -164,7 +164,7 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.insets = new Insets(0,30,0,0);  //left padding
 		super.jComponent.add(jLabel10001,gridBagConstraints);*/
 		
-		button14.setText("Robot Ready");
+		button14.setText("Robot Ready");		
 		button14.setToolTipText("Robot is ready");		
 		button14.setFocusable(false); 
 		button14.setPreferredSize(new java.awt.Dimension(30, 30));	
@@ -202,7 +202,7 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.gridy = 5;		
 		//jComponent.add(button11,gridBagConstraints);	
 			
-		button11.setToolTipText("Move module");
+		button11.setToolTipText("Move module");		
 		button11.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOVE_MODULE));
 		button11.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));
 		button11.setFocusable(false); 

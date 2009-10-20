@@ -20,8 +20,7 @@ public class RedirectSystemOutput{
     private JTextArea jTextArea;
 
     PrintStream aPrintStream  = new PrintStream(new FilteredStream(new ByteArrayOutputStream()));
-    
-    public static String newline = System.getProperty("line.separator");
+ 
 
     /** Creates a new RedirectFrame.
      *  From the moment it is created,
