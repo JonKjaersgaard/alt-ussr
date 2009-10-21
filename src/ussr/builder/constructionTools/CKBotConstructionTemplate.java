@@ -38,22 +38,22 @@ public class CKBotConstructionTemplate extends ModularRobotConstructionTemplate 
 
 	/**
 	 * The array of objects containing information about CKBot specific rotations.
-	 * The logic is: if rotation is "ROTATION_0", then the rotation value is CKBotStandard.ROTATION_0 and opposite
-	 * to this rotation is CKBotStandard.ROTATION_0_OPPOSITE (Look the first entry in array beneath).
+	 * The logic is: if rotation is "ROT_0", then the rotation value is CKBotStandard.ROTATION_0 and opposite
+	 * to this rotation is CKBotStandard.ROT_0_OPPOS (Look the first entry in array beneath).
 	 */
 	private final static ModuleRotationMapEntryHelper[] MODULE_ROTATION_MAP =  {
-		new ModuleRotationMapEntryHelper("ROTATION_0",CKBotStandard.ROTATION_0,CKBotStandard.ROTATION_0_OPPOSITE,CKBotStandard.ROTATION_0_90Z),
-		new ModuleRotationMapEntryHelper("ROTATION_0_OPPOSITE",CKBotStandard.ROTATION_0_OPPOSITE,CKBotStandard.ROTATION_0,CKBotStandard.ROTATION_0_OPPOSITE_90Z),
-		new ModuleRotationMapEntryHelper("ROTATION_0_90Z",CKBotStandard.ROTATION_0_90Z,CKBotStandard.ROTATION_0_OPPOSITE_90Z,CKBotStandard.ROTATION_0),
-		new ModuleRotationMapEntryHelper("ROTATION_0_OPPOSITE_90Z",CKBotStandard.ROTATION_0_OPPOSITE_90Z,CKBotStandard.ROTATION_0_90Z,CKBotStandard.ROTATION_0_OPPOSITE),
-		new ModuleRotationMapEntryHelper("ROTATION_0_90X",CKBotStandard.ROTATION_0_90X,CKBotStandard.ROTATION_0_MINUS90X,CKBotStandard.ROTATION_0_90X_90Y),
-		new ModuleRotationMapEntryHelper("ROTATION_0_MINUS90X",CKBotStandard.ROTATION_0_MINUS90X,CKBotStandard.ROTATION_0_90X,CKBotStandard.ROTATION_0_270X_90Y),
-		new ModuleRotationMapEntryHelper("ROTATION_0_90X_90Y",CKBotStandard.ROTATION_0_90X_90Y,CKBotStandard.ROTATION_0_270X_90Y,CKBotStandard.ROTATION_0_90X),
-		new ModuleRotationMapEntryHelper("ROTATION_0_270X_90Y",CKBotStandard.ROTATION_0_270X_90Y,CKBotStandard.ROTATION_0_90X_90Y,CKBotStandard.ROTATION_0_MINUS90X),
-		new ModuleRotationMapEntryHelper("ROTATION_0_90Y",CKBotStandard.ROTATION_0_90Y,CKBotStandard.ROTATION_0_MINUS90Y,CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z),
-		new ModuleRotationMapEntryHelper("ROTATION_0_MINUS90Y",CKBotStandard.ROTATION_0_MINUS90Y,CKBotStandard.ROTATION_0_90Y,CKBotStandard.ROTATION_0_90X_MINUS90Z),
-		new ModuleRotationMapEntryHelper("ROTATION_0_90X_MINUS90Z",CKBotStandard.ROTATION_0_90X_MINUS90Z,CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z,CKBotStandard.ROTATION_0_MINUS90Y),
-		new ModuleRotationMapEntryHelper("ROTATION_0_MINUS90X_MINUS90Z",CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z,CKBotStandard.ROTATION_0_90X_MINUS90Z,CKBotStandard.ROTATION_0_90Y)
+		new ModuleRotationMapEntryHelper("ROT_0",CKBotStandard.ROT_0,CKBotStandard.ROT_0_OPPOS,CKBotStandard.ROT_0_90Z),
+		new ModuleRotationMapEntryHelper("ROT_0_OPPOS",CKBotStandard.ROT_0_OPPOS,CKBotStandard.ROT_0,CKBotStandard.ROT_0_OPPOS_90Z),
+		new ModuleRotationMapEntryHelper("ROT_0_90Z",CKBotStandard.ROT_0_90Z,CKBotStandard.ROT_0_OPPOS_90Z,CKBotStandard.ROT_0),
+		new ModuleRotationMapEntryHelper("ROT_0_OPPOS_90Z",CKBotStandard.ROT_0_OPPOS_90Z,CKBotStandard.ROT_0_90Z,CKBotStandard.ROT_0_OPPOS),
+		new ModuleRotationMapEntryHelper("ROT_0_90X",CKBotStandard.ROT_0_90X,CKBotStandard.ROT_0_MIN90X,CKBotStandard.ROT_0_90X_90Y),
+		new ModuleRotationMapEntryHelper("ROT_0_MIN90X",CKBotStandard.ROT_0_MIN90X,CKBotStandard.ROT_0_90X,CKBotStandard.ROT_0_270X_90Y),
+		new ModuleRotationMapEntryHelper("ROT_0_90X_90Y",CKBotStandard.ROT_0_90X_90Y,CKBotStandard.ROT_0_270X_90Y,CKBotStandard.ROT_0_90X),
+		new ModuleRotationMapEntryHelper("ROT_0_270X_90Y",CKBotStandard.ROT_0_270X_90Y,CKBotStandard.ROT_0_90X_90Y,CKBotStandard.ROT_0_MIN90X),
+		new ModuleRotationMapEntryHelper("ROT_0_90Y",CKBotStandard.ROT_0_90Y,CKBotStandard.ROT_0_MIN90Y,CKBotStandard.ROT_0_MIN90X_MINUS90Z),
+		new ModuleRotationMapEntryHelper("ROT_0_MIN90Y",CKBotStandard.ROT_0_MIN90Y,CKBotStandard.ROT_0_90Y,CKBotStandard.ROT_0_90X_MIN90Z),
+		new ModuleRotationMapEntryHelper("ROT_0_90X_MIN90Z",CKBotStandard.ROT_0_90X_MIN90Z,CKBotStandard.ROT_0_MIN90X_MINUS90Z,CKBotStandard.ROT_0_MIN90Y),
+		new ModuleRotationMapEntryHelper("ROT_0_MIN90X_MIN90Z",CKBotStandard.ROT_0_MIN90X_MINUS90Z,CKBotStandard.ROT_0_90X_MIN90Z,CKBotStandard.ROT_0_90Y)
 	};
 
 
@@ -152,68 +152,68 @@ public class CKBotConstructionTemplate extends ModularRobotConstructionTemplate 
 		 * (Look the first entry in the array beneath) */ 
 		ModuleMapEntryHelper[] moduleMap = {
 				/*ConnectorNr0*/
-				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROTATION_0,CKBotStandard.ROTATION_0,new Vector3f(x,y,zPlusOffset)),
-				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROTATION_0_OPPOSITE,CKBotStandard.ROTATION_0_OPPOSITE,new Vector3f(x,y,zMinusOffset)),
-				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROTATION_0_90Z,CKBotStandard.ROTATION_0_90Z,new Vector3f(x,y,zPlusOffset)),
-				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROTATION_0_OPPOSITE_90Z,CKBotStandard.ROTATION_0_OPPOSITE_90Z,new Vector3f(x,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROT_0,CKBotStandard.ROT_0,new Vector3f(x,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROT_0_OPPOS,CKBotStandard.ROT_0_OPPOS,new Vector3f(x,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROT_0_90Z,CKBotStandard.ROT_0_90Z,new Vector3f(x,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROT_0_OPPOS_90Z,CKBotStandard.ROT_0_OPPOS_90Z,new Vector3f(x,y,zMinusOffset)),
 
-				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROTATION_0_90X,CKBotStandard.ROTATION_0_90X,new Vector3f(x,yPlusOffset,z)),
-				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROTATION_0_MINUS90X,CKBotStandard.ROTATION_0_MINUS90X,new Vector3f(x,yPlusOffset,z)),
-				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROTATION_0_90X_90Y,CKBotStandard.ROTATION_0_90X_90Y,new Vector3f(x,yMinusOffset,z)),
-				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROTATION_0_270X_90Y,CKBotStandard.ROTATION_0_270X_90Y,new Vector3f(x,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROT_0_90X,CKBotStandard.ROT_0_90X,new Vector3f(x,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROT_0_MIN90X,CKBotStandard.ROT_0_MIN90X,new Vector3f(x,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROT_0_90X_90Y,CKBotStandard.ROT_0_90X_90Y,new Vector3f(x,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROT_0_270X_90Y,CKBotStandard.ROT_0_270X_90Y,new Vector3f(x,yPlusOffset,z)),
 
-				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROTATION_0_90Y,CKBotStandard.ROTATION_0_90Y,new Vector3f(xPlusOffset,y,z)),
-				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROTATION_0_MINUS90Y,CKBotStandard.ROTATION_0_MINUS90Y,new Vector3f(xMinusOffset,y,z)),
-				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROTATION_0_90X_MINUS90Z,CKBotStandard.ROTATION_0_90X_MINUS90Z,new Vector3f(xMinusOffset,y,z)),
-				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z,CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z,new Vector3f(xPlusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROT_0_90Y,CKBotStandard.ROT_0_90Y,new Vector3f(xPlusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROT_0_MIN90Y,CKBotStandard.ROT_0_MIN90Y,new Vector3f(xMinusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROT_0_90X_MIN90Z,CKBotStandard.ROT_0_90X_MIN90Z,new Vector3f(xMinusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr0,CKBotStandard.ROT_0_MIN90X_MINUS90Z,CKBotStandard.ROT_0_MIN90X_MINUS90Z,new Vector3f(xPlusOffset,y,z)),
 
 				/*ConnectorNr1*/
-				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROTATION_0,CKBotStandard.ROTATION_0_MINUS90X,new Vector3f(x,yPlusOffset,z)),
-				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROTATION_0_OPPOSITE,CKBotStandard.ROTATION_0_90X,new Vector3f(x,yMinusOffset,z)),
-				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROTATION_0_90Z,CKBotStandard.ROTATION_0_90X_MINUS90Z,new Vector3f(xMinusOffset,y,z)),
-				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROTATION_0_OPPOSITE_90Z,CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z,new Vector3f(xPlusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROT_0,CKBotStandard.ROT_0_MIN90X,new Vector3f(x,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROT_0_OPPOS,CKBotStandard.ROT_0_90X,new Vector3f(x,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROT_0_90Z,CKBotStandard.ROT_0_90X_MIN90Z,new Vector3f(xMinusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROT_0_OPPOS_90Z,CKBotStandard.ROT_0_MIN90X_MINUS90Z,new Vector3f(xPlusOffset,y,z)),
 
-				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROTATION_0_90X,CKBotStandard.ROTATION_0,new Vector3f(x,y,zPlusOffset)),
-				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROTATION_0_MINUS90X,CKBotStandard.ROTATION_0_OPPOSITE,new Vector3f(x,y,zMinusOffset)),
-				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROTATION_0_90X_90Y,CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z,new Vector3f(xPlusOffset,y,z)),
-				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROTATION_0_270X_90Y,CKBotStandard.ROTATION_0_MINUS90Y,new Vector3f(xMinusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROT_0_90X,CKBotStandard.ROT_0,new Vector3f(x,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROT_0_MIN90X,CKBotStandard.ROT_0_OPPOS,new Vector3f(x,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROT_0_90X_90Y,CKBotStandard.ROT_0_MIN90X_MINUS90Z,new Vector3f(xPlusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROT_0_270X_90Y,CKBotStandard.ROT_0_MIN90Y,new Vector3f(xMinusOffset,y,z)),
 
-				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROTATION_0_90Y,CKBotStandard.ROTATION_0_270X_90Y,new Vector3f(x,yPlusOffset,z)),
-				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROTATION_0_MINUS90Y,CKBotStandard.ROTATION_0_270X_90Y,new Vector3f(x,yPlusOffset,z)),
-				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROTATION_0_90X_MINUS90Z,CKBotStandard.ROTATION_0_90Z,new Vector3f(x,y,zPlusOffset)),
-				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z,CKBotStandard.ROTATION_0_OPPOSITE_90Z,new Vector3f(x,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROT_0_90Y,CKBotStandard.ROT_0_270X_90Y,new Vector3f(x,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROT_0_MIN90Y,CKBotStandard.ROT_0_270X_90Y,new Vector3f(x,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROT_0_90X_MIN90Z,CKBotStandard.ROT_0_90Z,new Vector3f(x,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr1,CKBotStandard.ROT_0_MIN90X_MINUS90Z,CKBotStandard.ROT_0_OPPOS_90Z,new Vector3f(x,y,zMinusOffset)),
 
 				/*ConnectorNr2*/
-				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROTATION_0,CKBotStandard.ROTATION_0_90X,new Vector3f(x,yMinusOffset,z)),
-				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROTATION_0_OPPOSITE,CKBotStandard.ROTATION_0_MINUS90X,new Vector3f(x,yPlusOffset,z)),
-				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROTATION_0_90Z,CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z,new Vector3f(xPlusOffset,y,z)),
-				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROTATION_0_OPPOSITE_90Z,CKBotStandard.ROTATION_0_90X_MINUS90Z,new Vector3f(xMinusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROT_0,CKBotStandard.ROT_0_90X,new Vector3f(x,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROT_0_OPPOS,CKBotStandard.ROT_0_MIN90X,new Vector3f(x,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROT_0_90Z,CKBotStandard.ROT_0_MIN90X_MINUS90Z,new Vector3f(xPlusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROT_0_OPPOS_90Z,CKBotStandard.ROT_0_90X_MIN90Z,new Vector3f(xMinusOffset,y,z)),
 
-				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROTATION_0_90X,CKBotStandard.ROTATION_0_OPPOSITE,new Vector3f(x,y,zMinusOffset)),
-				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROTATION_0_MINUS90X,CKBotStandard.ROTATION_0,new Vector3f(x,y,zPlusOffset)),
-				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROTATION_0_90X_90Y,CKBotStandard.ROTATION_0_90X_MINUS90Z,new Vector3f(xMinusOffset,y,z)),
-				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROTATION_0_270X_90Y,CKBotStandard.ROTATION_0_90Y,new Vector3f(xPlusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROT_0_90X,CKBotStandard.ROT_0_OPPOS,new Vector3f(x,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROT_0_MIN90X,CKBotStandard.ROT_0,new Vector3f(x,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROT_0_90X_90Y,CKBotStandard.ROT_0_90X_MIN90Z,new Vector3f(xMinusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROT_0_270X_90Y,CKBotStandard.ROT_0_90Y,new Vector3f(xPlusOffset,y,z)),
 
-				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROTATION_0_90Y,CKBotStandard.ROTATION_0_90X_90Y,new Vector3f(x,yMinusOffset,z)),
-				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROTATION_0_MINUS90Y,CKBotStandard.ROTATION_0_90X_90Y,new Vector3f(x,yMinusOffset,z)),
-				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROTATION_0_90X_MINUS90Z,CKBotStandard.ROTATION_0_OPPOSITE_90Z,new Vector3f(x,y,zMinusOffset)),
-				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z,CKBotStandard.ROTATION_0_90Z,new Vector3f(x,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROT_0_90Y,CKBotStandard.ROT_0_90X_90Y,new Vector3f(x,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROT_0_MIN90Y,CKBotStandard.ROT_0_90X_90Y,new Vector3f(x,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROT_0_90X_MIN90Z,CKBotStandard.ROT_0_OPPOS_90Z,new Vector3f(x,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr2,CKBotStandard.ROT_0_MIN90X_MINUS90Z,CKBotStandard.ROT_0_90Z,new Vector3f(x,y,zPlusOffset)),
 
 				/*ConnectorNr3*/
-				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROTATION_0,CKBotStandard.ROTATION_0,new Vector3f(x,y,zMinusOffset)),
-				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROTATION_0_OPPOSITE,CKBotStandard.ROTATION_0_OPPOSITE,new Vector3f(x,y,zPlusOffset)),
-				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROTATION_0_90Z,CKBotStandard.ROTATION_0_90Z,new Vector3f(x,y,zMinusOffset)),
-				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROTATION_0_OPPOSITE_90Z,CKBotStandard.ROTATION_0_OPPOSITE_90Z,new Vector3f(x,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROT_0,CKBotStandard.ROT_0,new Vector3f(x,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROT_0_OPPOS,CKBotStandard.ROT_0_OPPOS,new Vector3f(x,y,zPlusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROT_0_90Z,CKBotStandard.ROT_0_90Z,new Vector3f(x,y,zMinusOffset)),
+				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROT_0_OPPOS_90Z,CKBotStandard.ROT_0_OPPOS_90Z,new Vector3f(x,y,zPlusOffset)),
 
-				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROTATION_0_90X,CKBotStandard.ROTATION_0_90X,new Vector3f(x,yPlusOffset,z)),
-				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROTATION_0_MINUS90X,CKBotStandard.ROTATION_0_MINUS90X,new Vector3f(x,yMinusOffset,z)),
-				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROTATION_0_90X_90Y,CKBotStandard.ROTATION_0_90X_90Y,new Vector3f(x,yPlusOffset,z)),
-				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROTATION_0_270X_90Y,CKBotStandard.ROTATION_0_270X_90Y,new Vector3f(x,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROT_0_90X,CKBotStandard.ROT_0_90X,new Vector3f(x,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROT_0_MIN90X,CKBotStandard.ROT_0_MIN90X,new Vector3f(x,yMinusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROT_0_90X_90Y,CKBotStandard.ROT_0_90X_90Y,new Vector3f(x,yPlusOffset,z)),
+				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROT_0_270X_90Y,CKBotStandard.ROT_0_270X_90Y,new Vector3f(x,yMinusOffset,z)),
 
-				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROTATION_0_90Y,CKBotStandard.ROTATION_0_90Y,new Vector3f(xMinusOffset,y,z)),
-				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROTATION_0_MINUS90Y,CKBotStandard.ROTATION_0_MINUS90Y,new Vector3f(xPlusOffset,y,z)),
-				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROTATION_0_90X_MINUS90Z,CKBotStandard.ROTATION_0_90X_MINUS90Z,new Vector3f(xPlusOffset,y,z)),
-				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z,CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z,new Vector3f(xMinusOffset,y,z))
+				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROT_0_90Y,CKBotStandard.ROT_0_90Y,new Vector3f(xMinusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROT_0_MIN90Y,CKBotStandard.ROT_0_MIN90Y,new Vector3f(xPlusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROT_0_90X_MIN90Z,CKBotStandard.ROT_0_90X_MIN90Z,new Vector3f(xPlusOffset,y,z)),
+				new ModuleMapEntryHelper(CONNECTORnr3,CKBotStandard.ROT_0_MIN90X_MINUS90Z,CKBotStandard.ROT_0_MIN90X_MINUS90Z,new Vector3f(xMinusOffset,y,z))
 
 		};		
 		this.moduleMap = moduleMap;	

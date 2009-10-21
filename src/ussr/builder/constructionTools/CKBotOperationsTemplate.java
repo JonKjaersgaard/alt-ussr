@@ -42,7 +42,7 @@ public class CKBotOperationsTemplate extends CommonOperationsTemplate {
 		colorsComponents.add(Color.RED);colorsComponents.add(Color.BLUE);
 		colorsConectors.add(Color.WHITE);colorsConectors.add(Color.WHITE);
 		colorsConectors.add(Color.WHITE);colorsConectors.add(Color.WHITE);
-		moduleRotation = CKBotStandard.ROTATION_0_MINUS90X_MINUS90Z;
+		moduleRotation = CKBotStandard.ROT_0_MIN90X_MINUS90Z;
 		addNewModule(new ModulePosition(type+ BuilderHelper.getRandomInt(),"CKBotStandard",modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		
 	}
