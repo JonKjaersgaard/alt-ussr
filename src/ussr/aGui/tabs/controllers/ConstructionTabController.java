@@ -7,7 +7,6 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 
 import ussr.aGui.MainFrame;
-import ussr.aGui.tabs.views.ConstructionTab;
 import ussr.aGui.tabs.views.TabsInter;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
@@ -25,6 +24,11 @@ import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.samples.odin.modules.Odin;
+
+import ussr.aGui.tabs.views.constructionTab.ATRONStandardRotations;
+import ussr.aGui.tabs.views.constructionTab.CKBotStandardRotations;
+import ussr.aGui.tabs.views.constructionTab.ConstructionTab;
+import ussr.aGui.tabs.views.constructionTab.MTRANStandardRotations;
 
 public class ConstructionTabController {
 
@@ -47,41 +51,40 @@ public class ConstructionTabController {
 	
 	public static void jButtonGroupActionPerformed(AbstractButton button,JMESimulation jmeSimulation ) {
 		
+		/*Disable and enable available components*/
 		ConstructionTab.setRadioButtonsEnabled(false);
 		ConstructionTab.getJComboBox1().setEnabled(true);
 		ConstructionTab.setEnabledRotationToolBar(true);
 		ConstructionTab.setEnabledGenericToolBar(true);
 		
-
-		
-	
-		
-		        String chosenModularRobot = button.getText(); 
-			
+		        String chosenModularRobot = button.getText();			
 				chosenMRname = SupportedModularRobots.valueOf(chosenModularRobot.toUpperCase());
 			
+				/*Adapt tab to chosen modular robot*/
 				if (chosenMRname.equals(SupportedModularRobots.ATRON)){
-					//ConstructionTab.getJComboBox2().setEnabled(true);
-					//ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EW", "WE", "DU", "UD", "SN", "NS" }));
+					 
+					ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(ATRONStandardRotations.values()));
 					//ConstructionTab.getJComboBox3().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...","0","1", "2", "3","4", "5", "6","7"}));
 					
 					//System.out.println("Chosen:"+chosenModularRobot);
 				}else if (chosenMRname.equals(SupportedModularRobots.MTRAN)){
-					//ConstructionTab.getJComboBox2().setEnabled(true);
-					//ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ORI1", "ORI1X", "ORI1Y", "ORI1XY", "ORI2", "ORI2X", "ORI2Y", "ORI2XY", "ORI3", "ORI3X", "ORI3Y", "ORI3XY" }));
+					
+					ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(MTRANStandardRotations.values()));
 					//ConstructionTab.getJComboBox3().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...", "0","1", "2", "3","4", "5"}));
 					
 					//System.out.println("Chosen:"+chosenModularRobot);
 				}else if (chosenMRname.equals(SupportedModularRobots.ODIN)){
-					//ConstructionTab.getJComboBox2().setEnabled(false);
+					ConstructionTab.getJComboBox2().setEnabled(false);
 					//ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(new String[] {  }));
 					//ConstructionTab.getJComboBox3().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...","0","1", "2", "3","4", "5", "6","7", "8","9", "10", "11"}));
 					
 					//System.out.println("Chosen:"+chosenModularRobot);
 				}else if (chosenMRname.equals(SupportedModularRobots.CKBOTSTANDARD)){
-					//ConstructionTab.getJComboBox2().setEnabled(true);
+					ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel( CKBotStandardRotations.values() ));
+					
+					
 					//ConstructionTab.getJComboBox2().setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose connector nr. beneath...","0","1", "2", "3"}));
-					//ConstructionTab.getJComboBox3().setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Choose module rotation","ROTATION_0", "ROTATION_0_OPPOSITE", "ROTATION_0_90Z", "ROTATION_0_OPPOSITE_90Z", "ROTATION_0_90X", "ROTATION_0_MINUS90X", "ROTATION_0_90X_90Y", "ROTATION_0_270X_90Y", "ROTATION_0_90Y", "ROTATION_0_MINUS90Y", "ROTATION_0_90X_MINUS90Z", "ROTATION_0_MINUS90X_MINUS90Z"  }));
+					
 					//System.out.println("Chosen:"+chosenModularRobot);
 				}
 		
@@ -149,13 +152,7 @@ public class ConstructionTabController {
 	
 	
 	
-	/**
-	 * Initializes the tool for rotating default modules selected in simulation environment with standard rotations. 
-	 * @param evt, selection with left side of the mouse event (jButton selection).     
-	 */	
-	public static void jComboBox2ActionPerformed(JMESimulation jmeSimulation) {
-		//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.STANDARD_ROTATIONS,ConstructionTab.getJComboBox2().getSelectedItem().toString()));		
-    }
+
 		
 	/**
 	 *  Initializes the tool for variating the properties of modules selected in simulation environment. 
@@ -229,10 +226,14 @@ public class ConstructionTabController {
 
 
 
-	public static void jComboBox2ActionPerformed(JComboBox comboBox2,
-			JMESimulation jmeSimulation) {
-		// TODO Auto-generated method stub
-		
-	}
+
+	
+	/**
+	 * Initializes the tool for rotating default modules selected in simulation environment with standard rotations. 
+	 * @param evt, selection with left side of the mouse event (jButton selection).     
+	 */	
+	public static void jComboBox2ActionPerformed(JMESimulation jmeSimulation) {
+		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.STANDARD_ROTATIONS,ConstructionTab.getJComboBox2().getSelectedItem().toString()));		
+    }
 	    
 }

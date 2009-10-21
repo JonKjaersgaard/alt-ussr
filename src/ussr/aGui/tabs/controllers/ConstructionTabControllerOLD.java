@@ -1,6 +1,6 @@
 package ussr.aGui.tabs.controllers;
 
-import ussr.aGui.tabs.views.ConstructionTab;
+import ussr.aGui.tabs.views.constructionTab.ConstructionTab;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
 import ussr.builder.constructionTools.CKBotOperationsTemplate;

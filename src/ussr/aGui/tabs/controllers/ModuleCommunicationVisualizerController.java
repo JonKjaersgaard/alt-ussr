@@ -10,8 +10,8 @@ import javax.swing.JScrollPane;
 
 import ussr.aGui.tabs.additionalResources.CanvasMouseListener;
 import ussr.aGui.tabs.view.visualizer.ModuleCommunicationVisualizer;
-import ussr.aGui.tabs.views.AssignBehaviorsTab;
 import ussr.aGui.tabs.views.TabsInter;
+import ussr.aGui.tabs.views.constructionTab.AssignBehaviorsTab;
 import ussr.comm.monitors.visualtracker.DrawingCanvas;
 import ussr.comm.monitors.visualtracker.ModuleFilterDialog;
 import ussr.model.Module;

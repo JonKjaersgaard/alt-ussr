@@ -8,8 +8,8 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import ussr.aGui.tabs.views.ConstructionTab;
 import ussr.aGui.tabs.views.TabsInter;
+import ussr.aGui.tabs.views.constructionTab.ConstructionTab;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;

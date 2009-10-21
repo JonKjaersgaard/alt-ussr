@@ -1,4 +1,4 @@
-package ussr.aGui.tabs.views;
+package ussr.aGui.tabs.views.constructionTab;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -12,6 +12,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
+import ussr.aGui.tabs.views.Tabs;
 import ussr.physics.jme.JMESimulation;
 
 /**
