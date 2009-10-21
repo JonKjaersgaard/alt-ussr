@@ -19,7 +19,9 @@ public interface TabsInter {
 	public final String DELETE = "delete.jpg", MOVE = "move.jpg", COLOUR_CONNECTORS = "colourConnectors.jpg",
 	                    ATTENTION = "attention.jpg", ERROR = "error.jpg", INFORMATION ="information.jpg", 
 	                    VISUALIZER = "visualizer.jpg", CONSOLE = "console.jpg", OPPOSITE = "opposite.jpg",
-	                    ON_SELECTED_CONNECTOR ="onSelectedConnector.jpg";
+	                    ON_SELECTED_CONNECTOR ="onSelectedConnector.jpg", CONNECT_ALL_MODULES = "connectAllModules.jpg",
+	                    JUMP_FROM_CONN_TO_CONNECTOR = "jumpFromConnToConnector.jpg", NEXT = "next.jpg",
+	                    PREVIOUS = "previous.jpg";
 	
 	/**
      * Getter method common for all tabs and is used by GUI during addition of new tab.

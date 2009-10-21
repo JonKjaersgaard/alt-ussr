@@ -53,8 +53,8 @@ public class ConstructionTab extends Tabs {
 	 * The constants of grid bag layout used during design of the tab.
 	 */
 	private GridBagConstraints gridBagConstraints = new GridBagConstraints();	
-	
-	
+
+
 	/**
 	 * Defines visual appearance of the tab called "1 Step: Construct Robot".
 	 * @param firstTabbedPane,
@@ -64,7 +64,7 @@ public class ConstructionTab extends Tabs {
 	 */
 	public ConstructionTab(boolean firstTabbedPane,String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
 		super(firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
-		
+
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
 		super.fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
@@ -92,7 +92,11 @@ public class ConstructionTab extends Tabs {
 		jButtonColorConnetors =   new javax.swing.JButton();
 		button14 =   new javax.swing.JButton();
 		jButtonOppositeRotation =   new javax.swing.JButton();
-		jButtonOnSelectedConnector =   new javax.swing.JButton();	
+		jButtonOnSelectedConnector =   new javax.swing.JButton();
+		jButtonConnectAllModules = new javax.swing.JButton();
+		jButtonJumpFromConnToConnector = new javax.swing.JButton();
+		jButtonOnNextConnector = new javax.swing.JButton();
+		jButtonOnPreviousConnector = new javax.swing.JButton();
 
 		jLabel1000 = new javax.swing.JLabel();
 		jLabel10002 = new javax.swing.JLabel();	
@@ -102,7 +106,10 @@ public class ConstructionTab extends Tabs {
 		jComboBoxStandardRotations = new javax.swing.JComboBox();
 		jComboBoxNrConnectorsConstructionTool = new javax.swing.JComboBox();
 
-        
+		jSeparator1 = new javax.swing.JToolBar.Separator();
+		jSeparator2 = new javax.swing.JToolBar.Separator();
+
+
 		/*Description of components */
 		jLabel10002.setText("Add initial module:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -352,12 +359,12 @@ public class ConstructionTab extends Tabs {
 		jToolBarConstructionTools.setFloatable(false);//user can not make the tool bar to float
 		jToolBarConstructionTools.setRollover(true);// the buttons inside are roll over
 		jToolBarConstructionTools.setToolTipText("Construction tools");
-		jToolBarConstructionTools.setPreferredSize(new Dimension(195,GuiFrames.COMMON_HEIGHT));		
+		jToolBarConstructionTools.setPreferredSize(new Dimension(195,GuiFrames.COMMON_HEIGHT+2));		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;		
 		gridBagConstraints.gridy = 7;
 		gridBagConstraints.gridwidth = 4;		
-		
+
 		jButtonOnSelectedConnector.setToolTipText("Select connector");
 		jButtonOnSelectedConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + ON_SELECTED_CONNECTOR));
 		jButtonOnSelectedConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
@@ -368,23 +375,77 @@ public class ConstructionTab extends Tabs {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructionTabController.jButtonOnSelectedConnectorActionPerformed(jmeSimulation);
 			}
-		});
-		jToolBarConstructionTools.add(jButtonOnSelectedConnector);		
-		
-		jComboBoxNrConnectorsConstructionTool.setToolTipText("Select connector Nr to connect new module to");
+		});				
+
+		jComboBoxNrConnectorsConstructionTool.setToolTipText("Select connector Nr to connect new module to and then select module");
 		jComboBoxNrConnectorsConstructionTool.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
-		jComboBoxNrConnectorsConstructionTool.setPreferredSize(new java.awt.Dimension(40, GuiFrames.COMMON_HEIGHT-3));
+		jComboBoxNrConnectorsConstructionTool.setPreferredSize(new java.awt.Dimension(40, GuiFrames.COMMON_HEIGHT-4));
 		jComboBoxNrConnectorsConstructionTool.setEnabled(false);
 		jComboBoxNrConnectorsConstructionTool.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructionTabController.jComboBoxNrConnectorsConstructionToolActionPerformed(jComboBoxNrConnectorsConstructionTool,jmeSimulation);
 			}
 		});
-		
+
+		jButtonConnectAllModules.setToolTipText("Connect all modules");
+		jButtonConnectAllModules.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + CONNECT_ALL_MODULES));
+		jButtonConnectAllModules.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
+		jButtonConnectAllModules.setFocusable(false);
+		jButtonConnectAllModules.setEnabled(false);
+		jButtonConnectAllModules.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
+		jButtonConnectAllModules.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructionTabController.jButtonConnectAllModulesActionPerformed(jmeSimulation);
+			}
+		});	
+
+		jSeparator1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jSeparator1.setPreferredSize(new Dimension(6,30));
+
+
+		jButtonJumpFromConnToConnector.setToolTipText("Jump from one connector to the next connector(loop)");
+		jButtonJumpFromConnToConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + JUMP_FROM_CONN_TO_CONNECTOR));
+		jButtonJumpFromConnToConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
+		jButtonJumpFromConnToConnector.setFocusable(false);
+		jButtonJumpFromConnToConnector.setEnabled(false);
+		jButtonJumpFromConnToConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
+		jButtonJumpFromConnToConnector.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructionTabController.jButtonJumpFromConnToConnectorActionPerformed(jmeSimulation);
+			}
+		});	
+
+		jButtonOnNextConnector.setToolTipText("On next connector");
+		jButtonOnNextConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NEXT));
+		jButtonOnNextConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
+		jButtonOnNextConnector.setFocusable(false);
+		jButtonOnNextConnector.setEnabled(false);
+		jButtonOnNextConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
+		jButtonOnNextConnector.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructionTabController.jButtonOnNextConnectorActionPerformed(jmeSimulation);
+			}
+		});	
+		//TODO	
+		jButtonOnPreviousConnector.setToolTipText("On previous connector");
+		jButtonOnPreviousConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PREVIOUS));
+		jButtonOnPreviousConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
+		jButtonOnPreviousConnector.setFocusable(false);
+		jButtonOnPreviousConnector.setEnabled(false);
+		jButtonOnPreviousConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
+		jButtonOnPreviousConnector.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructionTabController.jButtonOnPreviousConnectorActionPerformed(jmeSimulation);
+			}
+		});
+
+		jSeparator2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jSeparator2.setPreferredSize(new Dimension(6,30));
+
+
 		/*Internal layout of the toolbar*/
 		GroupLayout jToolBarConstructionToolsLayout = new GroupLayout(jToolBarConstructionTools);
 		jToolBarConstructionTools.setLayout(jToolBarConstructionToolsLayout);
-
 
 		jToolBarConstructionToolsLayout.setHorizontalGroup(
 				jToolBarConstructionToolsLayout.createSequentialGroup()
@@ -393,6 +454,21 @@ public class ConstructionTab extends Tabs {
 						GroupLayout.PREFERRED_SIZE)
 						.addComponent(jComboBoxNrConnectorsConstructionTool,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE)				
+								.addComponent(jButtonConnectAllModules,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+										.addComponent(jSeparator1,GroupLayout.PREFERRED_SIZE, 6,
+												GroupLayout.PREFERRED_SIZE)
+												.addComponent(jButtonJumpFromConnToConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+														.addComponent(jButtonOnPreviousConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE)
+														.addComponent(jButtonOnNextConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE)
+														.addComponent(jSeparator2,GroupLayout.PREFERRED_SIZE, 6,
+																GroupLayout.PREFERRED_SIZE)
+																
+
+
 		);
 
 		jToolBarConstructionToolsLayout.setVerticalGroup(
@@ -401,13 +477,26 @@ public class ConstructionTab extends Tabs {
 						.addComponent(jButtonOnSelectedConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE)
 								.addComponent(jComboBoxNrConnectorsConstructionTool,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE))						
+										GroupLayout.PREFERRED_SIZE)
+										.addComponent(jButtonConnectAllModules,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
+												.addComponent(jSeparator1,GroupLayout.PREFERRED_SIZE, 28,
+														GroupLayout.PREFERRED_SIZE)
+														.addComponent(jButtonJumpFromConnToConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+																.addComponent(jButtonOnPreviousConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE)
+																.addComponent(jButtonOnNextConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE)
+																.addComponent(jSeparator2,GroupLayout.PREFERRED_SIZE, 28,
+																		GroupLayout.PREFERRED_SIZE))
+																		
 		);
-		
+
 		super.jComponent.add(jToolBarConstructionTools,gridBagConstraints);
 
 
-//TODO
+		//TODO
 		for (int index =0; index < super.jComponent.getComponentCount();index++){
 			jCompnents.add((JComponent) super.jComponent.getComponent(index));
 		}
@@ -449,10 +538,20 @@ public class ConstructionTab extends Tabs {
 		jButtonMove.setEnabled(enable);
 		jButtonColorConnetors.setEnabled(enable);
 	}
-	
+
+	public static javax.swing.JButton getJButtonMove() {
+		return jButtonMove;
+	}
+
+
+
 	public static void setEnabledConstructionToolsToolBar(boolean enable){
 		jButtonOnSelectedConnector.setEnabled(enable);
 		jComboBoxNrConnectorsConstructionTool.setEnabled(enable);
+		jButtonConnectAllModules.setEnabled(enable);
+		jButtonJumpFromConnToConnector.setEnabled(enable);
+		jButtonOnNextConnector.setEnabled(enable);
+		jButtonOnPreviousConnector.setEnabled(enable);
 	}
 
 
@@ -478,13 +577,21 @@ public class ConstructionTab extends Tabs {
 	public static javax.swing.JLabel getJLabel10001() {
 		return jLabel10001;
 	}
-	
+
 	public static javax.swing.JComboBox getjComboBoxStandardRotations() {
 		return jComboBoxStandardRotations;
 	}
-	
+
 	public static javax.swing.JComboBox getJComboBoxNrConnectorsConstructionTool() {
 		return jComboBoxNrConnectorsConstructionTool;
+	}
+	
+	public static javax.swing.JButton getJButtonOnNextConnector() {
+		return jButtonOnNextConnector;
+	}
+	
+	public static javax.swing.JButton getJButtonOnPreviousConnector() {
+		return jButtonOnPreviousConnector;
 	}
 
 	/*Declaration of tab components*/
@@ -492,7 +599,7 @@ public class ConstructionTab extends Tabs {
 	private static javax.swing.JComboBox jComboBoxStandardRotations;
 	private static javax.swing.JComboBox jComboBoxNrConnectorsConstructionTool;
 
-	
+
 
 	private static javax.swing.JLabel jLabel1000;
 	private static javax.swing.JLabel jLabel10001;
@@ -506,18 +613,27 @@ public class ConstructionTab extends Tabs {
 	private static javax.swing.AbstractButton radionButtonCKBOTSTANDARD;
 
 
+
 	private  static javax.swing.JButton jButtonDelete;
 	private  static javax.swing.JButton jButtonMove;
 	private  static javax.swing.JButton jButtonColorConnetors;
 	private  static javax.swing.JButton button14;
 	private  static javax.swing.JButton jButtonOppositeRotation;
 	private  static javax.swing.JButton jButtonOnSelectedConnector;
+	private  static javax.swing.JButton jButtonConnectAllModules;
+	private  static javax.swing.JButton jButtonJumpFromConnToConnector;
+	private  static javax.swing.JButton jButtonOnNextConnector;
+	
+
+	private  static javax.swing.JButton jButtonOnPreviousConnector;
+
 
 	private static javax.swing.JToolBar jToolBarGenericTools;
 	private static javax.swing.JToolBar jToolBarRotationTools;
 	private static javax.swing.JToolBar jToolBarConstructionTools;
 
-
+	private javax.swing.JToolBar.Separator  jSeparator1;
+	private javax.swing.JToolBar.Separator  jSeparator2;
 
 
 

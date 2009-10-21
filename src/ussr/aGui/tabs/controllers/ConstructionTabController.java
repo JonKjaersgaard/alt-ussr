@@ -31,6 +31,8 @@ public class ConstructionTabController {
 
 
 	private static String chosenItem ="Module" ;
+	
+	private static JMESimulation jmeSimulationLocal;
 
 	/**
 	 * Default positions of default construction modules for each modular robot
@@ -47,13 +49,18 @@ public class ConstructionTabController {
 
 
 	public static void jButtonGroupActionPerformed(AbstractButton button,JMESimulation jmeSimulation ) {
-
+		jmeSimulationLocal = jmeSimulation;
+		
 		/*Disable and enable available components*/
 		ConstructionTab.setRadioButtonsEnabled(false);
 		ConstructionTab.getJComboBox1().setEnabled(true);
 		ConstructionTab.setEnabledRotationToolBar(true);
 		ConstructionTab.setEnabledGenericToolBar(true);
+		
 		ConstructionTab.setEnabledConstructionToolsToolBar(true);
+		ConstructionTab.getJButtonOnNextConnector().setEnabled(false);
+		ConstructionTab.getJButtonOnPreviousConnector().setEnabled(false);
+		
 
 		String chosenModularRobot = button.getText();			
 		chosenMRname = SupportedModularRobots.valueOf(chosenModularRobot.toUpperCase());
@@ -65,12 +72,12 @@ public class ConstructionTabController {
 			ConstructionTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ATRON_CONNECTORS));
 
 		}else if (chosenMRname.equals(SupportedModularRobots.MTRAN)){
-
+			ConstructionTab.getJButtonMove().setEnabled(false);
 			ConstructionTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.MTRANStandardRotations.values()));
 			ConstructionTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.MTRAN_CONNECTORS));
 
 		}else if (chosenMRname.equals(SupportedModularRobots.ODIN)){
-			ConstructionTab.getjComboBoxStandardRotations().setEnabled(false);// for Odin not yet relevant
+			ConstructionTab.setEnabledRotationToolBar(false);// for Odin not yet relevant
 			ConstructionTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ODIN_CONNECTORS));
 
 			
@@ -157,10 +164,10 @@ public class ConstructionTabController {
 	/**
 	 * Initializes the tool for placing the modules on connectors selected with left side of the mouse in simulation environment. 
 	 * @param evt, selection with left side of the mouse event (jButton selection).     
-	 */	
+	 *//*	
 	public static void jButton7ActionPerformed(JMESimulation jmeSimulation) {		
 		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
-	}
+	}*/
 
 	public static void jButton10ActionPerformed(JMESimulation jmeSimulation) {
 		if (chosenItem.equalsIgnoreCase("Module")){
@@ -247,6 +254,87 @@ public class ConstructionTabController {
 	
 	jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,chosenConnectorNr));
 		
+	}
+
+
+
+
+
+	public static void jButtonConnectAllModulesActionPerformed(
+			JMESimulation jmeSimulation) {
+		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));	
+		
+	}
+
+
+
+	static ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(jmeSimulationLocal, chosenMRname,ConstructionTools.LOOP,0);
+	static int connectorNr;
+
+	public static void jButtonJumpFromConnToConnectorActionPerformed(
+			JMESimulation jmeSimulation) {
+		/*Enable buttons for jumping from one connector to another*/
+		ConstructionTab.getJButtonOnNextConnector().setEnabled(true);
+		ConstructionTab.getJButtonOnPreviousConnector().setEnabled(true);
+		
+		
+		connectorNr =0;
+		ConstructionToolSpecification constructionToolsnew = new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.LOOP,connectorNr);
+		constructionTools = constructionToolsnew;
+		jmeSimulation.setPicker(constructionToolsnew); 
+		
+	}
+
+
+
+
+
+	public static void jButtonOnNextConnectorActionPerformed(
+			JMESimulation jmeSimulation) {
+		
+	  connectorNr++;
+		if (chosenMRname.equals(SupportedModularRobots.ATRON)){
+			if (connectorNr>TabsInter.ATRON_CONNECTORS.length){ connectorNr=0;}       
+		}else if (chosenMRname.equals(SupportedModularRobots.MTRAN)){
+			if (connectorNr>TabsInter.MTRAN_CONNECTORS.length){ connectorNr=0;}
+		}else if (chosenMRname.equals(SupportedModularRobots.ODIN)){
+			if (connectorNr>12){ connectorNr=0;}// OdinBall
+		}else if(chosenMRname.equals(SupportedModularRobots.CKBOTSTANDARD)){
+			if (connectorNr>TabsInter.CKBOT_CONNECTORS.length){ connectorNr=0;}
+		}
+		//TODO NEED TO GET BACK FOR ODIN WHICH TYPE OF MODULE IS SELECTED. 
+		int amountModules = jmeSimulation.getModules().size();
+		String lastModuleType = jmeSimulation.getModules().get(amountModules-1).getProperty(BuilderHelper.getModuleTypeKey());
+		if (lastModuleType.equalsIgnoreCase("OdinBall")){
+			//do nothing
+		}else{
+			constructionTools.moveToNextConnector(connectorNr);
+		}
+		
+		//TODO CHECK IF THE MODULE IS ALREADY ON CONNECTOR AND THEN DO NOT PLACE NEW ONE THERE
+	}
+
+
+
+
+
+	public static void jButtonOnPreviousConnectorActionPerformed(
+			JMESimulation jmeSimulation) {
+		connectorNr--;
+		if (chosenMRname.equals(SupportedModularRobots.ATRON) && connectorNr<0){
+			connectorNr =TabsInter.ATRON_CONNECTORS.length-1;//reset
+		}else if (chosenMRname.equals(SupportedModularRobots.MTRAN) && connectorNr<0){connectorNr=TabsInter.MTRAN_CONNECTORS.length-1;}
+		else if (chosenMRname.equals(SupportedModularRobots.ODIN) && connectorNr<0){connectorNr=11;
+		}else if (chosenMRname.equals(SupportedModularRobots.CKBOTSTANDARD) && connectorNr<0){connectorNr= TabsInter.CKBOT_CONNECTORS.length-1;}
+
+		int amountModules = jmeSimulation.getModules().size();
+		String lastModuleType = jmeSimulation.getModules().get(amountModules-1).getProperty(BuilderHelper.getModuleTypeKey());
+		if (lastModuleType.equalsIgnoreCase("OdinBall")){
+			//do nothing
+		}else{
+			constructionTools.moveToNextConnector(connectorNr);
+		}
+		//TODO CHECK IF THE MODULE IS ALREADY ON CONNECTOR AND THEN DO NOT PLACE NEW ONE THERE
 	}
 
 
