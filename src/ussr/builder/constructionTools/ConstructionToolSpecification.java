@@ -285,6 +285,9 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		}else if (this.modularRobotName.equals(SupportedModularRobots.ODIN)){
 			ConstructionTemplate con =  new OdinConstructionTemplate(simulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
+		}else if (this.modularRobotName.equals(SupportedModularRobots.CKBOTSTANDARD)){
+			ConstructionTemplate con =  new CKBotConstructionTemplate(simulation);
+			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
 		}
 	}
 
