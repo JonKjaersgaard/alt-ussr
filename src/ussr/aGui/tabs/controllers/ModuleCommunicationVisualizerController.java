@@ -8,9 +8,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.additionalResources.CanvasMouseListener;
 import ussr.aGui.tabs.view.visualizer.ModuleCommunicationVisualizer;
-import ussr.aGui.tabs.views.TabsInter;
 import ussr.aGui.tabs.views.constructionTab.AssignBehaviorsTab;
 import ussr.comm.monitors.visualtracker.DrawingCanvas;
 import ussr.comm.monitors.visualtracker.ModuleFilterDialog;

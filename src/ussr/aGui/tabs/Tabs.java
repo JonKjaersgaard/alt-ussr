@@ -1,4 +1,4 @@
-package ussr.aGui.tabs.views;
+package ussr.aGui.tabs;
 
 import java.awt.font.TextAttribute;
 import java.util.HashMap;

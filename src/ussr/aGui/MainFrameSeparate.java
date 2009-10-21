@@ -5,7 +5,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
-import ussr.aGui.tabs.views.TabsInter;
+import ussr.aGui.tabs.TabsInter;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
 

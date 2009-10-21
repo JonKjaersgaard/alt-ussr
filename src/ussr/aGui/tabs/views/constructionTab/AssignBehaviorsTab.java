@@ -11,8 +11,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 
+import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
-import ussr.aGui.tabs.views.Tabs;
 import ussr.physics.jme.JMESimulation;
 
 /**

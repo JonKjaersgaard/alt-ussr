@@ -7,7 +7,7 @@ import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
-import ussr.aGui.tabs.views.TabsInter;
+import ussr.aGui.tabs.TabsInter;
 
 import ussr.physics.jme.JMESimulation;
 

@@ -33,8 +33,8 @@ import ussr.aGui.FramesInter;
 import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFrameInter;
 
+import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.ConstructionTabController;
-import ussr.aGui.tabs.views.Tabs;
 import ussr.builder.SupportedModularRobots;
 import ussr.physics.jme.JMESimulation;
 
@@ -83,27 +83,32 @@ public class ConstructionTab extends Tabs {
 	public void initComponents(){
 
 		/*Instantiation of components*/
-		jToolBar1 = new javax.swing.JToolBar();
-		jToolBar2 = new javax.swing.JToolBar();
+		jToolBarGenericTools = new javax.swing.JToolBar();
+		jToolBarRotationTools = new javax.swing.JToolBar();
+		jToolBarConstructionTools = new javax.swing.JToolBar();
 
 		jButtonDelete =   new javax.swing.JButton();
 		jButtonMove =   new javax.swing.JButton();	
 		jButtonColorConnetors =   new javax.swing.JButton();
 		button14 =   new javax.swing.JButton();
-		jButton15 =   new javax.swing.JButton();
+		jButtonOppositeRotation =   new javax.swing.JButton();
+		jButtonOnSelectedConnector =   new javax.swing.JButton();	
 
 		jLabel1000 = new javax.swing.JLabel();
 		jLabel10002 = new javax.swing.JLabel();	
 		jLabel10003 = new javax.swing.JLabel();	
 
-		jComboBox1 = new javax.swing.JComboBox();
-		jComboBox2 = new javax.swing.JComboBox();
+		jComboBoxEntity = new javax.swing.JComboBox();
+		jComboBoxStandardRotations = new javax.swing.JComboBox();
+		jComboBoxNrConnectorsConstructionTool = new javax.swing.JComboBox();
 
-
+        
+		/*Description of components */
 		jLabel10002.setText("Add initial module:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
+		gridBagConstraints.insets = new Insets(0,0,10,0);
 		super.jComponent.add(jLabel10002,gridBagConstraints);
 
 		final ButtonGroup buttonGroup = new ButtonGroup() ;
@@ -170,18 +175,7 @@ public class ConstructionTab extends Tabs {
 		//gridBagConstraints.ipady = 40; 
 		super.jComponent.add(radionButtonCKBOTSTANDARD,gridBagConstraints);
 		buttonGroup.add(radionButtonCKBOTSTANDARD);	
-		jRadioButtons.add(radionButtonCKBOTSTANDARD);	
-
-		/*jLabel10001 = new javax.swing.JLabel();		
-		jLabel10001.setText("When done with constructing press ready button");
-		jLabel10001.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));
-		jLabel10001.setVisible(false);
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 1;
-		gridBagConstraints.gridy = 3;
-		gridBagConstraints.gridwidth = 4;
-		gridBagConstraints.insets = new Insets(0,30,0,0);  //left padding
-		super.jComponent.add(jLabel10001,gridBagConstraints);*/
+		jRadioButtons.add(radionButtonCKBOTSTANDARD);		
 
 		/*		button14.setText("Robot Ready");		
 		button14.setToolTipText("Robot is ready");		
@@ -200,14 +194,15 @@ public class ConstructionTab extends Tabs {
 		jLabel1000.setText("Apply rotation:");		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 2;		
+		gridBagConstraints.gridy = 2;
+		gridBagConstraints.insets = new Insets(0,0,10,10);  //make some space at the bootm
 		super.jComponent.add(jLabel1000,gridBagConstraints);
 
-		jToolBar2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBar2.setFloatable(false);//user can not make the tool bar to float
-		jToolBar2.setRollover(true);// the components inside are roll over
-		jToolBar2.setToolTipText("Rotation tools");
-		jToolBar2.setPreferredSize(new Dimension(185,GuiFrames.COMMON_HEIGHT+2));
+		jToolBarRotationTools.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarRotationTools.setFloatable(false);//user can not make the tool bar to float
+		jToolBarRotationTools.setRollover(true);// the components inside are roll over
+		jToolBarRotationTools.setToolTipText("Rotation tools");
+		jToolBarRotationTools.setPreferredSize(new Dimension(185,GuiFrames.COMMON_HEIGHT+2));
 		/*External layout of the toolbar in the panel*/
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;		
@@ -215,73 +210,73 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.gridwidth = 4;	
 
 
-		jButton15.setToolTipText("Opposite");		
-		jButton15.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE));
-		jButton15.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));
-		jButton15.setFocusable(false); 
-		jButton15.setEnabled(false);
-		jButton15.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
-		jButton15.addActionListener(new java.awt.event.ActionListener() {
+		jButtonOppositeRotation.setToolTipText("Opposite");		
+		jButtonOppositeRotation.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE));
+		jButtonOppositeRotation.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));
+		jButtonOppositeRotation.setFocusable(false); 
+		jButtonOppositeRotation.setEnabled(false);
+		jButtonOppositeRotation.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
+		jButtonOppositeRotation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructionTabController.jButton15ActionPerformed(jmeSimulation);
 			}
 		});
 
-		jComboBox2.setToolTipText("Specific");
-		jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
-		jComboBox2.setPreferredSize(new java.awt.Dimension(140, GuiFrames.COMMON_HEIGHT-3));
-		jComboBox2.setEnabled(false);
-		jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+		jComboBoxStandardRotations.setToolTipText("Standard");
+		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
+		jComboBoxStandardRotations.setPreferredSize(new java.awt.Dimension(140, GuiFrames.COMMON_HEIGHT-3));
+		jComboBoxStandardRotations.setEnabled(false);
+		jComboBoxStandardRotations.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructionTabController.jComboBox2ActionPerformed(jmeSimulation);
 			}
 		});
 
 		/*Internal layout of the toolbar*/
-		GroupLayout jToolBar2Layout = new GroupLayout(jToolBar2);
-		jToolBar2.setLayout(jToolBar2Layout);
+		GroupLayout jToolBarRotationToolsLayout = new GroupLayout(jToolBarRotationTools);
+		jToolBarRotationTools.setLayout(jToolBarRotationToolsLayout);
 
 
-		jToolBar2Layout.setHorizontalGroup(
-				jToolBar2Layout.createSequentialGroup()
+		jToolBarRotationToolsLayout.setHorizontalGroup(
+				jToolBarRotationToolsLayout.createSequentialGroup()
 				//Forces preferred side of component
-				.addComponent(jButton15,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+				.addComponent(jButtonOppositeRotation,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 						GroupLayout.PREFERRED_SIZE)
-						.addComponent(jComboBox2,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+						.addComponent(jComboBoxStandardRotations,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE)				
 		);
 
-		jToolBar2Layout.setVerticalGroup(
-				jToolBar2Layout.createSequentialGroup()
-				.addGroup(jToolBar2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(jButton15,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+		jToolBarRotationToolsLayout.setVerticalGroup(
+				jToolBarRotationToolsLayout.createSequentialGroup()
+				.addGroup(jToolBarRotationToolsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(jButtonOppositeRotation,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE)
-								.addComponent(jComboBox2,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								.addComponent(jComboBoxStandardRotations,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE))						
 		);
 
-		super.jComponent.add(jToolBar2,gridBagConstraints);
+		super.jComponent.add(jToolBarRotationTools,gridBagConstraints);
 
 		jLabel10003.setText("Generic funtionality for:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 4;
 		gridBagConstraints.gridwidth = 1;// reset grid width
-		gridBagConstraints.insets = new Insets(0,0,0,5);  //bring padding back
+		gridBagConstraints.insets = new Insets(0,0,10,10);  //bring padding back and make some space at boom
 		super.jComponent.add(jLabel10003,gridBagConstraints);		
 
-		jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Module", "Robot" }));
-		jComboBox1.setPreferredSize(new java.awt.Dimension(59, GuiFrames.COMMON_HEIGHT));
-		jComboBox1.setEnabled(false);
-		jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+		jComboBoxEntity.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Module", "Robot" }));
+		jComboBoxEntity.setPreferredSize(new java.awt.Dimension(59, GuiFrames.COMMON_HEIGHT));
+		jComboBoxEntity.setEnabled(false);
+		jComboBoxEntity.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jComboBox1ActionPerformed(jComboBox1,jmeSimulation);
+				ConstructionTabController.jComboBox1ActionPerformed(jComboBoxEntity,jmeSimulation);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 5;
-		super.jComponent.add(jComboBox1,gridBagConstraints);
+		super.jComponent.add(jComboBoxEntity,gridBagConstraints);
 
 		/*	jLabel10004 = new javax.swing.JLabel();		
 		jLabel10004.setText("Generic functionality:");
@@ -290,11 +285,11 @@ public class ConstructionTab extends Tabs {
 		gridBagConstraints.gridy = 5;
 		super.jComponent.add(jLabel10004,gridBagConstraints);	*/	
 
-		jToolBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBar1.setFloatable(false);//user can not make the tool bar to float
-		jToolBar1.setRollover(true);// the buttons inside are roll over
-		jToolBar1.setToolTipText("Generic tools");
-		jToolBar1.setPreferredSize(new Dimension(195,GuiFrames.COMMON_HEIGHT));		
+		jToolBarGenericTools.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarGenericTools.setFloatable(false);//user can not make the tool bar to float
+		jToolBarGenericTools.setRollover(true);// the buttons inside are roll over
+		jToolBarGenericTools.setToolTipText("Generic tools");
+		jToolBarGenericTools.setPreferredSize(new Dimension(195,GuiFrames.COMMON_HEIGHT));		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 2;		
 		gridBagConstraints.gridy = 5;
@@ -311,7 +306,7 @@ public class ConstructionTab extends Tabs {
 				ConstructionTabController.jButton11ActionPerformed(jmeSimulation);
 			}
 		});
-		jToolBar1.add(jButtonMove);
+		jToolBarGenericTools.add(jButtonMove);
 
 		jButtonDelete.setToolTipText("Delete");
 		jButtonDelete.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE));
@@ -325,11 +320,11 @@ public class ConstructionTab extends Tabs {
 			}
 		});
 
-		jToolBar1.add(jButtonDelete);		
+		jToolBarGenericTools.add(jButtonDelete);		
 
 		jButtonColorConnetors.setToolTipText("Color Connectors");
 		jButtonColorConnetors.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + COLOUR_CONNECTORS));
-		jButtonColorConnetors.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + FramesInter.COMMON_HEIGHT));		
+		jButtonColorConnetors.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
 		jButtonColorConnetors.setFocusable(false);
 		jButtonColorConnetors.setEnabled(false);
 		jButtonColorConnetors.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH));
@@ -339,17 +334,80 @@ public class ConstructionTab extends Tabs {
 			}
 		});
 
-		jToolBar1.add(jButtonColorConnetors);
+		jToolBarGenericTools.add(jButtonColorConnetors);	
 
-		super.jComponent.add(jToolBar1,gridBagConstraints);
-
-
+		super.jComponent.add(jToolBarGenericTools,gridBagConstraints);
 
 
+		jLabel10001 = new javax.swing.JLabel();		
+		jLabel10001.setText("Choose construction tool:");
+		//jLabel10001.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));		
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 6;
+		gridBagConstraints.insets = new Insets(0,0,10,10);  //make some space at the bottom and right
+		super.jComponent.add(jLabel10001,gridBagConstraints);
+
+		jToolBarConstructionTools.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarConstructionTools.setFloatable(false);//user can not make the tool bar to float
+		jToolBarConstructionTools.setRollover(true);// the buttons inside are roll over
+		jToolBarConstructionTools.setToolTipText("Construction tools");
+		jToolBarConstructionTools.setPreferredSize(new Dimension(195,GuiFrames.COMMON_HEIGHT));		
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 1;		
+		gridBagConstraints.gridy = 7;
+		gridBagConstraints.gridwidth = 4;		
+		
+		jButtonOnSelectedConnector.setToolTipText("Select connector");
+		jButtonOnSelectedConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + ON_SELECTED_CONNECTOR));
+		jButtonOnSelectedConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
+		jButtonOnSelectedConnector.setFocusable(false);
+		jButtonOnSelectedConnector.setEnabled(false);
+		jButtonOnSelectedConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
+		jButtonOnSelectedConnector.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructionTabController.jButtonOnSelectedConnectorActionPerformed(jmeSimulation);
+			}
+		});
+		jToolBarConstructionTools.add(jButtonOnSelectedConnector);		
+		
+		jComboBoxNrConnectorsConstructionTool.setToolTipText("Select connector Nr to connect new module to");
+		jComboBoxNrConnectorsConstructionTool.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
+		jComboBoxNrConnectorsConstructionTool.setPreferredSize(new java.awt.Dimension(40, GuiFrames.COMMON_HEIGHT-3));
+		jComboBoxNrConnectorsConstructionTool.setEnabled(false);
+		jComboBoxNrConnectorsConstructionTool.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructionTabController.jComboBoxNrConnectorsConstructionToolActionPerformed(jComboBoxNrConnectorsConstructionTool,jmeSimulation);
+			}
+		});
+		
+		/*Internal layout of the toolbar*/
+		GroupLayout jToolBarConstructionToolsLayout = new GroupLayout(jToolBarConstructionTools);
+		jToolBarConstructionTools.setLayout(jToolBarConstructionToolsLayout);
 
 
+		jToolBarConstructionToolsLayout.setHorizontalGroup(
+				jToolBarConstructionToolsLayout.createSequentialGroup()
+				//Forces preferred side of component
+				.addComponent(jButtonOnSelectedConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+						GroupLayout.PREFERRED_SIZE)
+						.addComponent(jComboBoxNrConnectorsConstructionTool,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)				
+		);
+
+		jToolBarConstructionToolsLayout.setVerticalGroup(
+				jToolBarConstructionToolsLayout.createSequentialGroup()
+				.addGroup(jToolBarConstructionToolsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(jButtonOnSelectedConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+								.addComponent(jComboBoxNrConnectorsConstructionTool,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE))						
+		);
+		
+		super.jComponent.add(jToolBarConstructionTools,gridBagConstraints);
 
 
+//TODO
 		for (int index =0; index < super.jComponent.getComponentCount();index++){
 			jCompnents.add((JComponent) super.jComponent.getComponent(index));
 		}
@@ -369,7 +427,7 @@ public class ConstructionTab extends Tabs {
 		}
 	}
 
-	/*Getters*/
+	/*Getters and setters*/
 
 	public static ArrayList<JComponent> getJCompnents() {
 		return jCompnents;
@@ -380,7 +438,7 @@ public class ConstructionTab extends Tabs {
 			getJCompnents().get(index).setEnabled(enabled);
 		}
 		//FIXME WHY TOOL BAR IS NOT ADDED AUTOMATICALLY INTO ARRAY?
-		jToolBar1.setEnabled(enabled);
+		jToolBarGenericTools.setEnabled(enabled);
 
 	}
 
@@ -391,19 +449,24 @@ public class ConstructionTab extends Tabs {
 		jButtonMove.setEnabled(enable);
 		jButtonColorConnetors.setEnabled(enable);
 	}
+	
+	public static void setEnabledConstructionToolsToolBar(boolean enable){
+		jButtonOnSelectedConnector.setEnabled(enable);
+		jComboBoxNrConnectorsConstructionTool.setEnabled(enable);
+	}
 
 
 
 	public static void setEnabledRotationToolBar(boolean enable){
-		jButton15.setEnabled(enable);
-		jComboBox2.setEnabled(enable);
+		jButtonOppositeRotation.setEnabled(enable);
+		jComboBoxStandardRotations.setEnabled(enable);
 		//jButtonMove.setEnabled(enable);
 		//jButtonColorConnetors.setEnabled(enable);
 	}
 
 
 	public static javax.swing.JComboBox getJComboBox1() {
-		return jComboBox1;
+		return jComboBoxEntity;
 	}
 
 	public static javax.swing.AbstractButton getButton1() {
@@ -416,17 +479,22 @@ public class ConstructionTab extends Tabs {
 		return jLabel10001;
 	}
 	
-	public static javax.swing.JComboBox getJComboBox2() {
-		return jComboBox2;
+	public static javax.swing.JComboBox getjComboBoxStandardRotations() {
+		return jComboBoxStandardRotations;
+	}
+	
+	public static javax.swing.JComboBox getJComboBoxNrConnectorsConstructionTool() {
+		return jComboBoxNrConnectorsConstructionTool;
 	}
 
 	/*Declaration of tab components*/
-	private static javax.swing.JComboBox jComboBox1;
-	private static javax.swing.JComboBox jComboBox2;
+	private static javax.swing.JComboBox jComboBoxEntity;
+	private static javax.swing.JComboBox jComboBoxStandardRotations;
+	private static javax.swing.JComboBox jComboBoxNrConnectorsConstructionTool;
+
+	
 
 	private static javax.swing.JLabel jLabel1000;
-
-
 	private static javax.swing.JLabel jLabel10001;
 	private static javax.swing.JLabel jLabel10002;
 	private static javax.swing.JLabel jLabel10003;
@@ -442,11 +510,12 @@ public class ConstructionTab extends Tabs {
 	private  static javax.swing.JButton jButtonMove;
 	private  static javax.swing.JButton jButtonColorConnetors;
 	private  static javax.swing.JButton button14;
-	private  static javax.swing.JButton jButton15;
+	private  static javax.swing.JButton jButtonOppositeRotation;
+	private  static javax.swing.JButton jButtonOnSelectedConnector;
 
-	private static javax.swing.JToolBar jToolBar1;
-	private static javax.swing.JToolBar jToolBar2;
-
+	private static javax.swing.JToolBar jToolBarGenericTools;
+	private static javax.swing.JToolBar jToolBarRotationTools;
+	private static javax.swing.JToolBar jToolBarConstructionTools;
 
 
 

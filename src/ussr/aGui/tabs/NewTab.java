@@ -1,4 +1,4 @@
-package ussr.aGui.tabs.views;
+package ussr.aGui.tabs;
 
 import ussr.physics.jme.JMESimulation;
 

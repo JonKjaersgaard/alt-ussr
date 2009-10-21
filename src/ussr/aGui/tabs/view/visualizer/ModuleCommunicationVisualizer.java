@@ -22,8 +22,8 @@ import javax.swing.JToolBar;
 import javax.swing.border.TitledBorder;
 
 import ussr.aGui.MainFrameInter;
+import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
-import ussr.aGui.tabs.views.Tabs;
 import ussr.comm.monitors.visualtracker.DrawingCanvas;
 import ussr.comm.monitors.visualtracker.ModuleFilterDialog;
 import ussr.model.Module;
