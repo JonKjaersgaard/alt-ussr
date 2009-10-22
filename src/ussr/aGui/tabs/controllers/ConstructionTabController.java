@@ -24,7 +24,7 @@ import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.samples.odin.modules.Odin;
-import ussr.aGui.tabs.views.constructionTab.ConstructionTab;
+import ussr.aGui.tabs.views.constructionTab.ConstructRobotTab;
 
 
 public class ConstructionTabController {
@@ -52,14 +52,14 @@ public class ConstructionTabController {
 		jmeSimulationLocal = jmeSimulation;
 		
 		/*Disable and enable available components*/
-		ConstructionTab.setRadioButtonsEnabled(false);
-		ConstructionTab.getJComboBox1().setEnabled(true);
-		ConstructionTab.setEnabledRotationToolBar(true);
-		ConstructionTab.setEnabledGenericToolBar(true);
+		ConstructRobotTab.setRadioButtonsEnabled(false);
+		ConstructRobotTab.getJComboBox1().setEnabled(true);
+		ConstructRobotTab.setEnabledRotationToolBar(true);
+		ConstructRobotTab.setEnabledGenericToolBar(true);
 		
-		ConstructionTab.setEnabledConstructionToolsToolBar(true);
-		ConstructionTab.getJButtonOnNextConnector().setEnabled(false);
-		ConstructionTab.getJButtonOnPreviousConnector().setEnabled(false);
+		ConstructRobotTab.setEnabledConstructionToolsToolBar(true);
+		ConstructRobotTab.getJButtonOnNextConnector().setEnabled(false);
+		ConstructRobotTab.getJButtonOnPreviousConnector().setEnabled(false);
 		
 
 		String chosenModularRobot = button.getText();			
@@ -68,22 +68,22 @@ public class ConstructionTabController {
 		/*Adapt tab to chosen modular robot*/
 		if (chosenMRname.equals(SupportedModularRobots.ATRON)){
 
-			ConstructionTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ATRONStandardRotations.values()));
-			ConstructionTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ATRON_CONNECTORS));
+			ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ATRONStandardRotations.values()));
+			ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ATRON_CONNECTORS));
 
 		}else if (chosenMRname.equals(SupportedModularRobots.MTRAN)){
-			ConstructionTab.getJButtonMove().setEnabled(false);
-			ConstructionTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.MTRANStandardRotations.values()));
-			ConstructionTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.MTRAN_CONNECTORS));
+			ConstructRobotTab.getJButtonMove().setEnabled(false);
+			ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.MTRANStandardRotations.values()));
+			ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.MTRAN_CONNECTORS));
 
 		}else if (chosenMRname.equals(SupportedModularRobots.ODIN)){
-			ConstructionTab.setEnabledRotationToolBar(false);// for Odin not yet relevant
-			ConstructionTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ODIN_CONNECTORS));
+			ConstructRobotTab.setEnabledRotationToolBar(false);// for Odin not yet relevant
+			ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ODIN_CONNECTORS));
 
 			
 		}else if (chosenMRname.equals(SupportedModularRobots.CKBOTSTANDARD)){
-			ConstructionTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel( TabsInter.CKBotStandardRotations.values() ));
-			ConstructionTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.CKBOT_CONNECTORS));
+			ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel( TabsInter.CKBotStandardRotations.values() ));
+			ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.CKBOT_CONNECTORS));
 		}
 
 		//nextjButton.setEnabled(false);
@@ -186,7 +186,7 @@ public class ConstructionTabController {
 		}
 	}
 
-	public static void jButton12ActionPerformed(JMESimulation jmeSimulation) {	
+	public static void jButtonColorConnectorsActionPerformed(JMESimulation jmeSimulation) {	
 		if (chosenItem.equalsIgnoreCase("Module")){
 			jmeSimulation.setPicker(new ColorConnectors());	
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
@@ -202,10 +202,10 @@ public class ConstructionTabController {
 	public static void jComboBox1ActionPerformed(JComboBox jComboBox1,JMESimulation jmeSimulation) {
 		chosenItem = jComboBox1.getSelectedItem().toString();
 		if (chosenItem.equalsIgnoreCase("Module") ){
-			ConstructionTab.setEnabledGenericToolBar(true);
+			ConstructRobotTab.setEnabledGenericToolBar(true);
 		}else if(chosenItem.equalsIgnoreCase("Robot")){
 			//TODO Support it
-			ConstructionTab.setEnabledGenericToolBar(false);
+			ConstructRobotTab.setEnabledGenericToolBar(false);
 		}		
 	}
 
@@ -220,50 +220,46 @@ public class ConstructionTabController {
 		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.OPPOSITE_ROTATION));        
 	}
 
-
-
-
-
-
-
 	/**
 	 * Initializes the tool for rotating default modules selected in simulation environment with standard rotations. 
 	 *  
 	 */	
 	public static void jComboBox2ActionPerformed(JMESimulation jmeSimulation) {
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.STANDARD_ROTATIONS,ConstructionTab.getjComboBoxStandardRotations().getSelectedItem().toString()));		
+		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.STANDARD_ROTATIONS,ConstructRobotTab.getjComboBoxStandardRotations().getSelectedItem().toString()));		
 	}
-
-
-
 
 	/**
-	 * Initializes the tool for placing the modules on connectors selected with left side of the mouse in simulation environment. 
-	 *      
-	 */	
+	 * Initializes the tool for placing new modules on selected connectors of the module in interest in simulation environment. 
+	 * @param jmeSimulation, the physical simulation.
+	 */
 	public static void jButtonOnSelectedConnectorActionPerformed(JMESimulation jmeSimulation) {
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
+		ConstructRobotTab.setEnabledRotationToolBar(false);
+		ConstructRobotTab.getJButtonMove().setEnabled(false);
+		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));		
 	}
 
-
-
-
-
+	/**
+	 * Initializes the tool for adding new modules on connector chosen in combo box(GUI) by user. Later user selects the module to apply it to.
+	 * @param comboBoxNrConnectorsConstructionTool, JComboBox containing the number of connectors.
+	 * @param jmeSimulation, the physical simulation.
+	 */
 	public static void jComboBoxNrConnectorsConstructionToolActionPerformed(JComboBox comboBoxNrConnectorsConstructionTool,JMESimulation jmeSimulation) {
-		int chosenConnectorNr = Integer.parseInt(comboBoxNrConnectorsConstructionTool.getSelectedItem().toString());
-	
-	jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,chosenConnectorNr));
+		ConstructRobotTab.setEnabledRotationToolBar(false);
+		ConstructRobotTab.getJButtonMove().setEnabled(false);
 		
+		int chosenConnectorNr = Integer.parseInt(comboBoxNrConnectorsConstructionTool.getSelectedItem().toString());
+	    jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,chosenConnectorNr));
 	}
 
-
-
-
-
-	public static void jButtonConnectAllModulesActionPerformed(
-			JMESimulation jmeSimulation) {
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));	
+	/**
+	 * Initializes the tool for adding new modules to all connectors of selected module.
+	 * @param jmeSimulation, the physical simulation.
+	 */
+	public static void jButtonConnectAllModulesActionPerformed(JMESimulation jmeSimulation) {
+		ConstructRobotTab.setEnabledRotationToolBar(false);
+		ConstructRobotTab.getJButtonMove().setEnabled(false);
 		
+		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));	
 	}
 
 
@@ -271,11 +267,18 @@ public class ConstructionTabController {
 	static ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(jmeSimulationLocal, chosenMRname,ConstructionTools.LOOP,0);
 	static int connectorNr;
 
-	public static void jButtonJumpFromConnToConnectorActionPerformed(
-			JMESimulation jmeSimulation) {
+	/**
+	 * Initializes the tool for moving new module from connector to another connector.
+	 * @param jmeSimulation, the physical simulation.
+	 */
+	public static void jButtonJumpFromConnToConnectorActionPerformed(JMESimulation jmeSimulation) {
+		
+		ConstructRobotTab.setEnabledRotationToolBar(false);
+		ConstructRobotTab.getJButtonMove().setEnabled(false);
+		
 		/*Enable buttons for jumping from one connector to another*/
-		ConstructionTab.getJButtonOnNextConnector().setEnabled(true);
-		ConstructionTab.getJButtonOnPreviousConnector().setEnabled(true);
+		ConstructRobotTab.getJButtonOnNextConnector().setEnabled(true);
+		ConstructRobotTab.getJButtonOnPreviousConnector().setEnabled(true);
 		
 		
 		connectorNr =0;
@@ -336,11 +339,5 @@ public class ConstructionTabController {
 		}
 		//TODO CHECK IF THE MODULE IS ALREADY ON CONNECTOR AND THEN DO NOT PLACE NEW ONE THERE
 	}
-
-
-
-
-
-	
 
 }

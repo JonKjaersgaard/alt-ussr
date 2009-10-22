@@ -1,33 +1,15 @@
 package ussr.aGui.tabs.views.constructionTab;
 
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.font.TextAttribute;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.AbstractButton;
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
-
-
 
 import ussr.aGui.FramesInter;
 import ussr.aGui.GuiFrames;
@@ -35,18 +17,17 @@ import ussr.aGui.MainFrameInter;
 
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.ConstructionTabController;
-import ussr.builder.SupportedModularRobots;
 import ussr.physics.jme.JMESimulation;
 
 /**
  * Defines visual appearance of the tab called "1 Step: Construct Robot".  
  * @author Konstantinas
  */
-public class ConstructionTab extends Tabs {
+public class ConstructRobotTab extends Tabs {
 
-
-	private static ArrayList<JComponent> jCompnents =  new ArrayList<JComponent>() ;
-
+	/**
+	 * The container for radio buttons of supported modular robots (ATRON,Odin and so on).
+	 */
 	private static ArrayList<AbstractButton> jRadioButtons =  new ArrayList<AbstractButton>() ;
 
 	/**
@@ -57,17 +38,17 @@ public class ConstructionTab extends Tabs {
 
 	/**
 	 * Defines visual appearance of the tab called "1 Step: Construct Robot".
-	 * @param firstTabbedPane,
+	 * @param firstTabbedPane, location of the tab in the main GUI frame. True if it is the first tabbed pane.
 	 * @param tabTitle, the title of the tab
 	 * @param jmeSimulation, the physical simulation.
-	 * @param imageIconDirectory,
+	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
 	 */
-	public ConstructionTab(boolean firstTabbedPane,String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
+	public ConstructRobotTab(boolean firstTabbedPane,String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
 		super(firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
 
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
-		super.fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+		//super.fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		initComponents();
 	}
 
@@ -90,7 +71,6 @@ public class ConstructionTab extends Tabs {
 		jButtonDelete =   new javax.swing.JButton();
 		jButtonMove =   new javax.swing.JButton();	
 		jButtonColorConnetors =   new javax.swing.JButton();
-		button14 =   new javax.swing.JButton();
 		jButtonOppositeRotation =   new javax.swing.JButton();
 		jButtonOnSelectedConnector =   new javax.swing.JButton();
 		jButtonConnectAllModules = new javax.swing.JButton();
@@ -337,7 +317,7 @@ public class ConstructionTab extends Tabs {
 		jButtonColorConnetors.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH));
 		jButtonColorConnetors.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jButton12ActionPerformed(jmeSimulation);
+				ConstructionTabController.jButtonColorConnectorsActionPerformed(jmeSimulation);
 			}
 		});
 
@@ -426,7 +406,7 @@ public class ConstructionTab extends Tabs {
 				ConstructionTabController.jButtonOnNextConnectorActionPerformed(jmeSimulation);
 			}
 		});	
-		//TODO	
+		
 		jButtonOnPreviousConnector.setToolTipText("On previous connector");
 		jButtonOnPreviousConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PREVIOUS));
 		jButtonOnPreviousConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
@@ -456,6 +436,7 @@ public class ConstructionTab extends Tabs {
 								GroupLayout.PREFERRED_SIZE)				
 								.addComponent(jButtonConnectAllModules,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE)
+										//Forces preferred side of component and also specifies it explicitly. For instance:6. 
 										.addComponent(jSeparator1,GroupLayout.PREFERRED_SIZE, 6,
 												GroupLayout.PREFERRED_SIZE)
 												.addComponent(jButtonJumpFromConnToConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
@@ -480,6 +461,7 @@ public class ConstructionTab extends Tabs {
 										GroupLayout.PREFERRED_SIZE)
 										.addComponent(jButtonConnectAllModules,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 												GroupLayout.PREFERRED_SIZE)
+												//Forces preferred side of component and also specifies it explicitly. For instance:28. 
 												.addComponent(jSeparator1,GroupLayout.PREFERRED_SIZE, 28,
 														GroupLayout.PREFERRED_SIZE)
 														.addComponent(jButtonJumpFromConnToConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
@@ -494,20 +476,12 @@ public class ConstructionTab extends Tabs {
 		);
 
 		super.jComponent.add(jToolBarConstructionTools,gridBagConstraints);
-
-
-		//TODO
-		for (int index =0; index < super.jComponent.getComponentCount();index++){
-			jCompnents.add((JComponent) super.jComponent.getComponent(index));
-		}
-
-
 	}
 
 
 
-	public void setEnabled(){
-		super.jComponent.setEnabled(false);
+	public  void setEnabled(){
+		jComponent.setEnabled(false);
 	}
 
 	public static void setRadioButtonsEnabled(boolean enabled){
@@ -518,21 +492,10 @@ public class ConstructionTab extends Tabs {
 
 	/*Getters and setters*/
 
-	public static ArrayList<JComponent> getJCompnents() {
-		return jCompnents;
-	}
-
-	public static void setEnabledAllComponents(boolean enabled){
-		for (int index=0; index<getJCompnents().size(); index++){
-			getJCompnents().get(index).setEnabled(enabled);
-		}
-		//FIXME WHY TOOL BAR IS NOT ADDED AUTOMATICALLY INTO ARRAY?
-		jToolBarGenericTools.setEnabled(enabled);
-
-	}
-
-
-
+	/**
+	 * Enables and disables the tool bar containing generic tools for manipulating modules.
+	 * @param enable,true for tool bar to be disabled. 
+	 */
 	public static void setEnabledGenericToolBar(boolean enable){
 		jButtonDelete.setEnabled(enable);
 		jButtonMove.setEnabled(enable);
@@ -544,7 +507,10 @@ public class ConstructionTab extends Tabs {
 	}
 
 
-
+	/**
+	 * Enables and disables the tool bar containing the tools for constructing the shape(morphology) of modular robot.
+	 * @param enable,true for tool bar to be disabled. 
+	 */
 	public static void setEnabledConstructionToolsToolBar(boolean enable){
 		jButtonOnSelectedConnector.setEnabled(enable);
 		jComboBoxNrConnectorsConstructionTool.setEnabled(enable);
@@ -554,13 +520,13 @@ public class ConstructionTab extends Tabs {
 		jButtonOnPreviousConnector.setEnabled(enable);
 	}
 
-
-
+	/**
+	 * Enables and disables tool bar containing tools for applying rotation to module(s).
+	 * @param enable, true for tool bar to be disabled.
+	 */
 	public static void setEnabledRotationToolBar(boolean enable){
 		jButtonOppositeRotation.setEnabled(enable);
-		jComboBoxStandardRotations.setEnabled(enable);
-		//jButtonMove.setEnabled(enable);
-		//jButtonColorConnetors.setEnabled(enable);
+		jComboBoxStandardRotations.setEnabled(enable);	
 	}
 
 
@@ -571,9 +537,7 @@ public class ConstructionTab extends Tabs {
 	public static javax.swing.AbstractButton getButton1() {
 		return radionButtonATRON;
 	}
-
-
-
+	
 	public static javax.swing.JLabel getJLabel10001() {
 		return jLabel10001;
 	}
@@ -598,35 +562,26 @@ public class ConstructionTab extends Tabs {
 	private static javax.swing.JComboBox jComboBoxEntity;
 	private static javax.swing.JComboBox jComboBoxStandardRotations;
 	private static javax.swing.JComboBox jComboBoxNrConnectorsConstructionTool;
-
-
-
+	
 	private static javax.swing.JLabel jLabel1000;
 	private static javax.swing.JLabel jLabel10001;
 	private static javax.swing.JLabel jLabel10002;
 	private static javax.swing.JLabel jLabel10003;
-	private static javax.swing.JLabel jLabel10004;
 
 	private static  javax.swing.AbstractButton radionButtonATRON;
 	private static javax.swing.AbstractButton  radioButtonMTRAN;
 	private static javax.swing.AbstractButton radionButtonODIN;
 	private static javax.swing.AbstractButton radionButtonCKBOTSTANDARD;
 
-
-
 	private  static javax.swing.JButton jButtonDelete;
 	private  static javax.swing.JButton jButtonMove;
-	private  static javax.swing.JButton jButtonColorConnetors;
-	private  static javax.swing.JButton button14;
+	private  static javax.swing.JButton jButtonColorConnetors;	
 	private  static javax.swing.JButton jButtonOppositeRotation;
 	private  static javax.swing.JButton jButtonOnSelectedConnector;
 	private  static javax.swing.JButton jButtonConnectAllModules;
 	private  static javax.swing.JButton jButtonJumpFromConnToConnector;
 	private  static javax.swing.JButton jButtonOnNextConnector;
-	
-
 	private  static javax.swing.JButton jButtonOnPreviousConnector;
-
 
 	private static javax.swing.JToolBar jToolBarGenericTools;
 	private static javax.swing.JToolBar jToolBarRotationTools;
@@ -634,9 +589,5 @@ public class ConstructionTab extends Tabs {
 
 	private javax.swing.JToolBar.Separator  jSeparator1;
 	private javax.swing.JToolBar.Separator  jSeparator2;
-
-
-
-
 
 }
