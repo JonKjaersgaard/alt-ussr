@@ -25,7 +25,7 @@ import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.samples.odin.modules.Odin;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
-import ussr.aGui.tabs.views.constructionTab.ConstructRobotTab;
+import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 
 
 public class ConstructionTabController {
@@ -220,7 +220,7 @@ public class ConstructionTabController {
 	 * Initializes the tool for rotating modules selected in simulation environment with opposite rotation. 
 	 * @param evt, selection with left side of the mouse event (jButton selection).     
 	 */	
-	public static void jButton15ActionPerformed(JMESimulation jmeSimulation) {
+	public static void jButtonOppositeRotationActionPerformed(JMESimulation jmeSimulation) {
 		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.OPPOSITE_ROTATION));        
 	}
 

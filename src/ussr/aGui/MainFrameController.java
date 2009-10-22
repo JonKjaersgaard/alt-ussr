@@ -9,7 +9,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import ussr.aGui.tabs.TabsInter;
-import ussr.aGui.tabs.views.constructionTab.ConstructRobotTab;
+import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;

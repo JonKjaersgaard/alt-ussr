@@ -9,6 +9,7 @@ public interface HintPanelInter {
 
 		DEFAULT,// just dummy for initialization
 		ATTENTION,
-		INFORMATION
+		INFORMATION, 
+		ERROR;
 	}
 }

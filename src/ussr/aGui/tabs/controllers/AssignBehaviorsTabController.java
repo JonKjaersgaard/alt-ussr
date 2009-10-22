@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import javax.swing.JRadioButton;
 
-import ussr.aGui.tabs.views.constructionTab.AssignBehaviorsTab;
+import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.builder.controllerReassignmentTool.AssignControllerTool;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;
