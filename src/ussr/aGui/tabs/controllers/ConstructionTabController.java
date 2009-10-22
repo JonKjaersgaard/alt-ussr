@@ -24,6 +24,7 @@ import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.samples.odin.modules.Odin;
+import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.views.constructionTab.ConstructRobotTab;
 
 
@@ -53,7 +54,7 @@ public class ConstructionTabController {
 		
 		/*Disable and enable available components*/
 		ConstructRobotTab.setRadioButtonsEnabled(false);
-		ConstructRobotTab.getJComboBox1().setEnabled(true);
+		ConstructRobotTab.getJComboBoxEntity().setEnabled(true);
 		ConstructRobotTab.setEnabledRotationToolBar(true);
 		ConstructRobotTab.setEnabledGenericToolBar(true);
 		
@@ -90,8 +91,11 @@ public class ConstructionTabController {
 		//previousjButton.setEnabled(false);
 		addNewDefaultConstructionModule(jmeSimulation); //Add default construction module
 		// Set default construction tool to be "On selected  connector"
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));		
-
+		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
+		
+		ConstructRobotTab.getHintPanel().setType(HintPanelInter.HintPanelTypesOfIcons.ATTENTION);
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[0]);
+ 
 	}
 
 

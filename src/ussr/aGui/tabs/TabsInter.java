@@ -17,7 +17,7 @@ public interface TabsInter {
 	 * The names of the icons used in tabs
 	 */
 	public final String DELETE = "delete.jpg", MOVE = "move.jpg", COLOUR_CONNECTORS = "colourConnectors.jpg",
-	                    ATTENTION = "attention.jpg", ERROR = "error.jpg", INFORMATION ="information.jpg", 
+	                    ERROR = "error.jpg", INFORMATION ="information.jpg", 
 	                    VISUALIZER = "visualizer.jpg", CONSOLE = "console.jpg", OPPOSITE = "opposite.jpg",
 	                    ON_SELECTED_CONNECTOR ="onSelectedConnector.jpg", CONNECT_ALL_MODULES = "connectAllModules.jpg",
 	                    JUMP_FROM_CONN_TO_CONNECTOR = "jumpFromConnToConnector.jpg", NEXT = "next.jpg",

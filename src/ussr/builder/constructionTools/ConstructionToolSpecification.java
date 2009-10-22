@@ -6,6 +6,7 @@ import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
+import ussr.aGui.tabs.views.constructionTab.ConstructRobotTab;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.SelectedModuleTypeMapHelper;
@@ -122,9 +123,9 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 */
 	@Override
 	protected void pickModuleComponent(JMEModuleComponent component) {		
-		this.selectedModule = component.getModel();		
+		this.selectedModule = component.getModel();
 		callAppropriateTool();
-		System.out.println("Out:"+ component.getModel().getProperty(BuilderHelper.getModuleTypeKey()));
+		
 	}
 
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
@@ -136,6 +137,8 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		if (toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){
 			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);
 			System.out.println("Connector:"+selectedConnectorNr );
+			ConstructRobotTab.setEnabledRotationToolBar(false);
+			ConstructRobotTab.getJButtonMove().setEnabled(false);
 		}
 	}
 

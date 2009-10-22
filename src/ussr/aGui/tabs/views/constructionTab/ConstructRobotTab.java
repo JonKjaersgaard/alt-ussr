@@ -16,6 +16,7 @@ import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFrameInter;
 
 import ussr.aGui.tabs.Tabs;
+import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.controllers.ConstructionTabController;
 import ussr.physics.jme.JMESimulation;
 
@@ -88,7 +89,8 @@ public class ConstructRobotTab extends Tabs {
 
 		jSeparator1 = new javax.swing.JToolBar.Separator();
 		jSeparator2 = new javax.swing.JToolBar.Separator();
-
+		
+		hintPanel  = new HintPanel();//custom panel
 
 		/*Description of components */
 		jLabel10002.setText("Add initial module:");
@@ -111,7 +113,6 @@ public class ConstructRobotTab extends Tabs {
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
-		//gridBagConstraints.ipady = 10; 
 		super.jComponent.add(radionButtonATRON,gridBagConstraints);
 		buttonGroup.add(radionButtonATRON);
 		jRadioButtons.add(radionButtonATRON);
@@ -250,6 +251,7 @@ public class ConstructRobotTab extends Tabs {
 		gridBagConstraints.gridy = 4;
 		gridBagConstraints.gridwidth = 1;// reset grid width
 		gridBagConstraints.insets = new Insets(0,0,10,10);  //bring padding back and make some space at boom
+		
 		super.jComponent.add(jLabel10003,gridBagConstraints);		
 
 		jComboBoxEntity.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Module", "Robot" }));
@@ -263,14 +265,8 @@ public class ConstructRobotTab extends Tabs {
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 5;
+		
 		super.jComponent.add(jComboBoxEntity,gridBagConstraints);
-
-		/*	jLabel10004 = new javax.swing.JLabel();		
-		jLabel10004.setText("Generic functionality:");
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 1;
-		gridBagConstraints.gridy = 5;
-		super.jComponent.add(jLabel10004,gridBagConstraints);	*/	
 
 		jToolBarGenericTools.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGenericTools.setFloatable(false);//user can not make the tool bar to float
@@ -447,9 +443,7 @@ public class ConstructRobotTab extends Tabs {
 																		GroupLayout.PREFERRED_SIZE)
 														.addComponent(jSeparator2,GroupLayout.PREFERRED_SIZE, 6,
 																GroupLayout.PREFERRED_SIZE)
-																
-
-
+							
 		);
 
 		jToolBarConstructionToolsLayout.setVerticalGroup(
@@ -474,8 +468,15 @@ public class ConstructRobotTab extends Tabs {
 																		GroupLayout.PREFERRED_SIZE))
 																		
 		);
-
 		super.jComponent.add(jToolBarConstructionTools,gridBagConstraints);
+		
+		hintPanel.setPreferredSize(new Dimension(400,80));
+		hintPanel.setBorderTitle("Display for hints");		
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 0;		
+		gridBagConstraints.gridy = 8;
+		gridBagConstraints.gridwidth = 5;
+		super.jComponent.add(hintPanel,gridBagConstraints);
 	}
 
 
@@ -530,14 +531,10 @@ public class ConstructRobotTab extends Tabs {
 	}
 
 
-	public static javax.swing.JComboBox getJComboBox1() {
+	public static javax.swing.JComboBox getJComboBoxEntity() {
 		return jComboBoxEntity;
 	}
 
-	public static javax.swing.AbstractButton getButton1() {
-		return radionButtonATRON;
-	}
-	
 	public static javax.swing.JLabel getJLabel10001() {
 		return jLabel10001;
 	}
@@ -556,6 +553,10 @@ public class ConstructRobotTab extends Tabs {
 	
 	public static javax.swing.JButton getJButtonOnPreviousConnector() {
 		return jButtonOnPreviousConnector;
+	}
+	
+	public static HintPanel getHintPanel() {
+		return hintPanel;
 	}
 
 	/*Declaration of tab components*/
@@ -589,5 +590,6 @@ public class ConstructRobotTab extends Tabs {
 
 	private javax.swing.JToolBar.Separator  jSeparator1;
 	private javax.swing.JToolBar.Separator  jSeparator2;
-
+	
+	private static HintPanel hintPanel;
 }

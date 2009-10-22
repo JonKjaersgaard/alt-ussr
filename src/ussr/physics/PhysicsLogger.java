@@ -56,7 +56,7 @@ public class PhysicsLogger {
      * @see #displayInfo
      */
     public static void setDisplayInfo(boolean display) {
-        displayInfo = display;
+        displayInfo = display;        
     }
 
 }

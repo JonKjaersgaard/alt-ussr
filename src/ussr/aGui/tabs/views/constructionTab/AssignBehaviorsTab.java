@@ -172,7 +172,7 @@ public class AssignBehaviorsTab extends Tabs {
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 3;
-		jLabel10005.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + ATTENTION));		
+		//jLabel10005.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + ATTENTION));		
 		super.jComponent.add(jLabel10005,gridBagConstraints);		
 		
 		jLabel1000.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + INFORMATION));		
