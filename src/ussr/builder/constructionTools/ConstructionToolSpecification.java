@@ -124,7 +124,12 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	@Override
 	protected void pickModuleComponent(JMEModuleComponent component) {		
 		this.selectedModule = component.getModel();
+		
+       if (this.toolName.equals(ConstructionTools.LOOP)){
+		ConstructRobotTab.setEnabledButtonsArrows(true);	
+		}
 		callAppropriateTool();
+		
 		
 	}
 
