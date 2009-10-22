@@ -20,7 +20,8 @@ import ussr.aGui.MainFrameInter;
 
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.HintPanel;
-import ussr.aGui.tabs.controllers.ConstructionTabController;
+import ussr.aGui.tabs.additionalResources.HintPanelInter;
+import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -95,10 +96,10 @@ public class ConstructRobotTab extends Tabs {
 		jSeparator1 = new javax.swing.JToolBar.Separator();
 		jSeparator2 = new javax.swing.JToolBar.Separator();
 		
-		hintPanel  = new HintPanel();//custom panel
+		hintPanel  = new HintPanel(400,120);//custom panel
 
 		/*Description of components */
-		jLabel10002.setText("Add initial module:");
+		jLabel10002.setText("Choose modular robot:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
@@ -112,7 +113,7 @@ public class ConstructRobotTab extends Tabs {
 		radionButtonATRON.setText("ATRON");		
 		radionButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
+				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -127,7 +128,7 @@ public class ConstructRobotTab extends Tabs {
 		radionButtonODIN.setFocusable(false);
 		radionButtonODIN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jButtonGroupActionPerformed(radionButtonODIN,jmeSimulation);
+				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonODIN,jmeSimulation);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -143,7 +144,7 @@ public class ConstructRobotTab extends Tabs {
 		radioButtonMTRAN.setFocusable(false);
 		radioButtonMTRAN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jButtonGroupActionPerformed(radioButtonMTRAN,jmeSimulation);
+				ConstructRobotTabController.jButtonGroupActionPerformed(radioButtonMTRAN,jmeSimulation);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -159,7 +160,7 @@ public class ConstructRobotTab extends Tabs {
 		radionButtonCKBOTSTANDARD.setFocusable(false);
 		radionButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
-				ConstructionTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD,jmeSimulation);
+				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD,jmeSimulation);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -211,9 +212,8 @@ public class ConstructRobotTab extends Tabs {
 		jButtonOppositeRotation.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
 		jButtonOppositeRotation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection();
-				jButtonOppositeRotation.setSelected(true);
-				ConstructionTabController.jButtonOppositeRotationActionPerformed(jmeSimulation);
+				controlSelectionDeselection(jButtonOppositeRotation);
+				ConstructRobotTabController.jButtonOppositeRotationActionPerformed(jmeSimulation);
 			}
 		});
 		jButtons.add(jButtonOppositeRotation);
@@ -224,7 +224,7 @@ public class ConstructRobotTab extends Tabs {
 		jComboBoxStandardRotations.setEnabled(false);
 		jComboBoxStandardRotations.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
-				ConstructionTabController.jComboBox2ActionPerformed(jmeSimulation);
+				ConstructRobotTabController.jComboBox2ActionPerformed(jmeSimulation);
 			}
 		});
 
@@ -267,7 +267,7 @@ public class ConstructRobotTab extends Tabs {
 		jComboBoxEntity.setEnabled(false);
 		jComboBoxEntity.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jComboBox1ActionPerformed(jComboBoxEntity,jmeSimulation);
+				ConstructRobotTabController.jComboBoxEntityActionPerformed(jComboBoxEntity,jmeSimulation);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -294,9 +294,8 @@ public class ConstructRobotTab extends Tabs {
 		jButtonMove.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT));	
 		jButtonMove.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection();
-				jButtonMove.setSelected(true);
-				ConstructionTabController.jButton11ActionPerformed(jmeSimulation);
+				controlSelectionDeselection(jButtonMove);
+				ConstructRobotTabController.jButton11ActionPerformed(jmeSimulation);
 			}
 		});
 		jButtons.add(jButtonMove);
@@ -310,9 +309,8 @@ public class ConstructRobotTab extends Tabs {
 		jButtonDelete.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT));
 		jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection();
-				jButtonDelete.setSelected(true);
-				ConstructionTabController.jButton10ActionPerformed(jmeSimulation);
+				controlSelectionDeselection(jButtonDelete);
+				ConstructRobotTabController.jButtonDeleteActionPerformed(jmeSimulation);
 			}
 		});
 		jButtons.add(jButtonDelete);
@@ -326,9 +324,8 @@ public class ConstructRobotTab extends Tabs {
 		jButtonColorConnetors.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH));
 		jButtonColorConnetors.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection();
-				jButtonColorConnetors.setSelected(true);
-				ConstructionTabController.jButtonColorConnectorsActionPerformed(jmeSimulation);
+				controlSelectionDeselection(jButtonColorConnetors);
+				ConstructRobotTabController.jButtonColorConnectorsActionPerformed(jmeSimulation);
 			}
 		});
 
@@ -365,9 +362,8 @@ public class ConstructRobotTab extends Tabs {
 		jButtonOnSelectedConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
 		jButtonOnSelectedConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection();
-				jButtonOnSelectedConnector.setSelected(true);
-				ConstructionTabController.jButtonOnSelectedConnectorActionPerformed(jmeSimulation);
+				controlSelectionDeselection(jButtonOnSelectedConnector);
+				ConstructRobotTabController.jButtonOnSelectedConnectorActionPerformed(jmeSimulation);
 			}
 		});	
 		jButtons.add(jButtonOnSelectedConnector);
@@ -378,7 +374,7 @@ public class ConstructRobotTab extends Tabs {
 		jComboBoxNrConnectorsConstructionTool.setEnabled(false);
 		jComboBoxNrConnectorsConstructionTool.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jComboBoxNrConnectorsConstructionToolActionPerformed(jComboBoxNrConnectorsConstructionTool,jmeSimulation);
+				ConstructRobotTabController.jComboBoxNrConnectorsConstructionToolActionPerformed(jComboBoxNrConnectorsConstructionTool,jmeSimulation);
 			}
 		});		
 
@@ -390,9 +386,8 @@ public class ConstructRobotTab extends Tabs {
 		jButtonConnectAllModules.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
 		jButtonConnectAllModules.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection();
-				jButtonConnectAllModules.setSelected(true);
-				ConstructionTabController.jButtonConnectAllModulesActionPerformed(jmeSimulation);
+				controlSelectionDeselection(jButtonConnectAllModules);
+				ConstructRobotTabController.jButtonConnectAllModulesActionPerformed(jmeSimulation);
 			}
 		});	
 		jButtons.add(jButtonConnectAllModules);
@@ -400,6 +395,18 @@ public class ConstructRobotTab extends Tabs {
 		jSeparator1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jSeparator1.setPreferredSize(new Dimension(6,30));
 
+		jButtonOnPreviousConnector.setToolTipText("On previous connector");
+		jButtonOnPreviousConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PREVIOUS));
+		jButtonOnPreviousConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
+		jButtonOnPreviousConnector.setFocusable(false);
+		jButtonOnPreviousConnector.setEnabled(false);
+		jButtonOnPreviousConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
+		jButtonOnPreviousConnector.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				controlSelectionDeselection(jButtonOnPreviousConnector);				
+				ConstructRobotTabController.jButtonOnPreviousConnectorActionPerformed(jmeSimulation);
+			}
+		});		
 
 		jButtonJumpFromConnToConnector.setToolTipText("Jump from one connector to the next connector(loop)");
 		jButtonJumpFromConnToConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + JUMP_FROM_CONN_TO_CONNECTOR));
@@ -409,9 +416,8 @@ public class ConstructRobotTab extends Tabs {
 		jButtonJumpFromConnToConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
 		jButtonJumpFromConnToConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection();
-				jButtonJumpFromConnToConnector.setSelected(true);
-				ConstructionTabController.jButtonJumpFromConnToConnectorActionPerformed(jmeSimulation);
+				controlSelectionDeselection(jButtonJumpFromConnToConnector);
+				ConstructRobotTabController.jButtonJumpFromConnToConnectorActionPerformed(jmeSimulation);
 			}
 		});	
 		jButtons.add(jButtonJumpFromConnToConnector);
@@ -424,26 +430,13 @@ public class ConstructRobotTab extends Tabs {
 		jButtonOnNextConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
 		jButtonOnNextConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection();
-				jButtonOnNextConnector.setSelected(true);
-				ConstructionTabController.jButtonOnNextConnectorActionPerformed(jmeSimulation);
+				controlSelectionDeselection(jButtonOnNextConnector);
+				ConstructRobotTabController.jButtonOnNextConnectorActionPerformed(jmeSimulation);
 			}
 		});
 		jButtons.add(jButtonOnNextConnector);
 		
-		jButtonOnPreviousConnector.setToolTipText("On previous connector");
-		jButtonOnPreviousConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PREVIOUS));
-		jButtonOnPreviousConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
-		jButtonOnPreviousConnector.setFocusable(false);
-		jButtonOnPreviousConnector.setEnabled(false);
-		jButtonOnPreviousConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
-		jButtonOnPreviousConnector.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection();
-				jButtonOnPreviousConnector.setSelected(true);
-				ConstructionTabController.jButtonOnPreviousConnectorActionPerformed(jmeSimulation);
-			}
-		});
+		
 
 		jSeparator2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jSeparator2.setPreferredSize(new Dimension(6,30));
@@ -465,9 +458,9 @@ public class ConstructRobotTab extends Tabs {
 										//Forces preferred side of component and also specifies it explicitly. For instance:6. 
 										.addComponent(jSeparator1,GroupLayout.PREFERRED_SIZE, 6,
 												GroupLayout.PREFERRED_SIZE)
-												.addComponent(jButtonJumpFromConnToConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												.addComponent(jButtonOnPreviousConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 														GroupLayout.PREFERRED_SIZE)
-														.addComponent(jButtonOnPreviousConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+														.addComponent(jButtonJumpFromConnToConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 																		GroupLayout.PREFERRED_SIZE)
 														.addComponent(jButtonOnNextConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 																		GroupLayout.PREFERRED_SIZE)
@@ -490,9 +483,9 @@ public class ConstructRobotTab extends Tabs {
 														GroupLayout.PREFERRED_SIZE)
 														.addComponent(jButtonJumpFromConnToConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
-																.addComponent(jButtonOnPreviousConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.PREFERRED_SIZE)
 																.addComponent(jButtonOnNextConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE)
+																.addComponent(jButtonOnPreviousConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 																				GroupLayout.PREFERRED_SIZE)
 																.addComponent(jSeparator2,GroupLayout.PREFERRED_SIZE, 28,
 																		GroupLayout.PREFERRED_SIZE))
@@ -500,7 +493,8 @@ public class ConstructRobotTab extends Tabs {
 		);
 		super.jComponent.add(jToolBarConstructionTools,gridBagConstraints);
 		
-		hintPanel.setPreferredSize(new Dimension(400,80));
+		
+		hintPanel.setText(HintPanelInter.builInHints[0]);
 		hintPanel.setBorderTitle("Display for hints");		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;		
@@ -522,7 +516,7 @@ public class ConstructRobotTab extends Tabs {
 		}
 	}
 
-	private void controlSelectionDeselection(){
+	private void controlSelectionDeselection(javax.swing.JButton  jButton){
      for(int index =0;index<jComponent.getComponents().length; index++ ){
 			
 			String className = jComponent.getComponent(index).getClass().toString();
@@ -540,6 +534,13 @@ public class ConstructRobotTab extends Tabs {
 				}					
 			}
 		}
+     
+     jButton.setSelected(true);
+	}
+	
+	public static void setEnabledButtonsArrows(boolean enabled){
+		jButtonOnNextConnector.setEnabled(enabled);
+		jButtonOnPreviousConnector.setEnabled(enabled);
 	}
 	
 	
@@ -600,13 +601,13 @@ public class ConstructRobotTab extends Tabs {
 		return jComboBoxNrConnectorsConstructionTool;
 	}
 	
-	public static javax.swing.JButton getJButtonOnNextConnector() {
+/*	public static javax.swing.JButton getJButtonOnNextConnector() {
 		return jButtonOnNextConnector;
 	}
 	
 	public static javax.swing.JButton getJButtonOnPreviousConnector() {
 		return jButtonOnPreviousConnector;
-	}
+	}*/
 	
 	public static HintPanel getHintPanel() {
 		return hintPanel;

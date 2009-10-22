@@ -13,6 +13,7 @@ import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;
+import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.samples.atron.simulations.ATRONSnakeSimulation;
 
 public class MainFrameController {
@@ -62,6 +63,7 @@ public class MainFrameController {
 			jmeSimulation.setRealtime(true);
 		}	
 		disableComponets(jmeSimulation);
+		jmeSimulation.setPicker(new PhysicsPicker());
 	}
 
 
@@ -78,6 +80,7 @@ public class MainFrameController {
 			jmeSimulation.setRealtime(false);
 		}		
 		disableComponets(jmeSimulation);
+		jmeSimulation.setPicker(new PhysicsPicker());
 	}
 	
 	private static void disableComponets(JMESimulation jmeSimulation){

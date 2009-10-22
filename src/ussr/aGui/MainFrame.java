@@ -244,7 +244,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 	 * @param width, tool bar width.
 	 * @param height, tool bar height.
 	 */
-	public void initJToolbarSimulationControl(int width,int height){
+	public void initJToolbarGeneralControl(int width,int height){
 		
 		/*Description of toolbar*/
 		jToolBarGeneralControl = new javax.swing.JToolBar();

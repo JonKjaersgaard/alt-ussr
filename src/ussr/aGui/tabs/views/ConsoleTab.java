@@ -1,9 +1,7 @@
 package ussr.aGui.tabs.views;
 
 import javax.swing.JScrollPane;
-
 import ussr.aGui.tabs.Tabs;
-import ussr.aGui.tabs.additionalResources.RedirectSystemOutput;
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -33,14 +31,6 @@ public class ConsoleTab extends Tabs  {
 		
 	}
 	
-	
-
-	
-	private javax.swing.JTextArea jTextArea1;
-
-	
-
-
-	
+	private javax.swing.JTextArea jTextArea1;	
 
 }

@@ -50,7 +50,7 @@ public class MainFrameSeparate extends MainFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		initFrameProperties();
 		initJMenuBar();
-		initJToolbarSimulationControl((int)SCREEN_DIMENSION.getWidth()/2,COMMON_HEIGHT);//TODO CHANGE null with default simulation
+		initJToolbarGeneralControl((int)SCREEN_DIMENSION.getWidth()/2,COMMON_HEIGHT);//TODO CHANGE null with default simulation
 		
 		initFirstTabbbedPane();
 		initSecondTabbedPane((int)SCREEN_DIMENSION.getWidth()/2, TAB_PANE_HEIGHT2);

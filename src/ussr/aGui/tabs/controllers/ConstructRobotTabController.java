@@ -28,7 +28,7 @@ import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 
 
-public class ConstructionTabController {
+public class ConstructRobotTabController {
 
 
 	private static String chosenItem ="Module" ;
@@ -59,8 +59,8 @@ public class ConstructionTabController {
 		ConstructRobotTab.setEnabledGenericToolBar(true);
 		
 		ConstructRobotTab.setEnabledConstructionToolsToolBar(true);
-		ConstructRobotTab.getJButtonOnNextConnector().setEnabled(false);
-		ConstructRobotTab.getJButtonOnPreviousConnector().setEnabled(false);
+		ConstructRobotTab.setEnabledButtonsArrows(false);
+		
 		
 
 		String chosenModularRobot = button.getText();			
@@ -93,8 +93,8 @@ public class ConstructionTabController {
 		// Set default construction tool to be "On selected  connector"
 		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
 		
-		ConstructRobotTab.getHintPanel().setType(HintPanelInter.HintPanelTypesOfIcons.ATTENTION);
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[0]);
+		
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[1]);//Informing user
  
 	}
 
@@ -173,7 +173,7 @@ public class ConstructionTabController {
 		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
 	}*/
 
-	public static void jButton10ActionPerformed(JMESimulation jmeSimulation) {
+	public static void jButtonDeleteActionPerformed(JMESimulation jmeSimulation) {
 		if (chosenItem.equalsIgnoreCase("Module")){
 			jmeSimulation.setPicker(new RemoveModule());
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
@@ -203,7 +203,7 @@ public class ConstructionTabController {
 
 
 
-	public static void jComboBox1ActionPerformed(JComboBox jComboBox1,JMESimulation jmeSimulation) {
+	public static void jComboBoxEntityActionPerformed(JComboBox jComboBox1,JMESimulation jmeSimulation) {
 		chosenItem = jComboBox1.getSelectedItem().toString();
 		if (chosenItem.equalsIgnoreCase("Module") ){
 			ConstructRobotTab.setEnabledGenericToolBar(true);
@@ -280,9 +280,6 @@ public class ConstructionTabController {
 		ConstructRobotTab.setEnabledRotationToolBar(false);
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
 		
-		/*Enable buttons for jumping from one connector to another*/
-		ConstructRobotTab.getJButtonOnNextConnector().setEnabled(true);
-		ConstructRobotTab.getJButtonOnPreviousConnector().setEnabled(true);
 		
 		
 		connectorNr =0;
