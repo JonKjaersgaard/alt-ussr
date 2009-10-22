@@ -6,7 +6,7 @@ import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
-import ussr.aGui.tabs.views.constructionTab.ConstructRobotTab;
+import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.SelectedModuleTypeMapHelper;

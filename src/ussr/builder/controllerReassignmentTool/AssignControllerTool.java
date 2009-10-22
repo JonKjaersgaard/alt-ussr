@@ -3,7 +3,7 @@ package ussr.builder.controllerReassignmentTool;
 import java.lang.reflect.Method;
 import com.jme.scene.Geometry;
 
-import ussr.aGui.tabs.views.constructionTab.AssignBehaviorsTab;
+import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.pickers.CustomizedPicker;
