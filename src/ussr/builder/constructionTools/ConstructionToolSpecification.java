@@ -6,6 +6,7 @@ import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
+import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
@@ -180,11 +181,11 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 			if(selectModulesTypes[index].isSelected()==true){
 				this.modularRobotName = selectModulesTypes[index].getModularRobotName();
 				this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
-				this.construction = selectOperations.getConstruction();
-				//TODO
-				//ConstructionTab.adjustToSelectedModularRobot(this.modularRobotName);//Adapt GUI to selected module(modular robot) type
+				this.construction = selectOperations.getConstruction();				
 			}
 		}
+		
+		ConstructRobotTabController.adjustGUItoSelectedModule(this.modularRobotName);//Adapt GUI to selected module(modular robot) type
 	}
 
 	/**
