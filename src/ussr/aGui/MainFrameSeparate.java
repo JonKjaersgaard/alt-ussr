@@ -24,19 +24,20 @@ public class MainFrameSeparate extends MainFrame {
 	 * @param tabs, the tabs to plug in into main window's tabbed panes.
 	 */
 	public MainFrameSeparate(JMEBasicGraphicalSimulation jmeSimulation, ArrayList<TabsInter> tabs){
-		this.jmeSimulation = (JMESimulation) jmeSimulation;	
-		this.tabs = tabs;
+		super.jmeSimulation = (JMESimulation) jmeSimulation;	
+		super.tabs = tabs;
 		
 		initFileChoosers();// initialize visual appearance of file choosers. Why here, because then they are responding faster to user generated events, because they are compiled earlier).
 		
 		//TODO MOVE ME
 		// add tabs
-		for (int index=0; index<tabs.size();index++){
-			if (tabs.get(index).isFirstTabbedPane()){
-				tabsFirstTabbedPane.add(tabs.get(index));	
+		for (int index=0; index<super.tabs.size();index++){
+			if (super.tabs.get(index).isFirstTabbedPane()){
+				super.tabsFirstTabbedPane.add(super.tabs.get(index));	
 			}else {
-				tabsSecondTabbedPane.add(tabs.get(index));
+				super.tabsSecondTabbedPane.add(super.tabs.get(index));
 			}
+			//System.out.println("Some");
 		}
 		
 	    initComponents();

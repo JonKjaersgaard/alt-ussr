@@ -1,7 +1,6 @@
 package ussr.aGui.tabs.views.constructionTabs;
 
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -72,22 +71,22 @@ public class AssignBehaviorsTab extends Tabs {
 		
 		
 		/*Description of appearance*/
-		jLabel10004.setText("Shortcut:");
+		/*jLabel10004.setText("Shortcut:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
-		super.jComponent.add(jLabel10004,gridBagConstraints);		
+		super.jComponent.add(jLabel10004,gridBagConstraints);	*/	
 		
 		jLabel10003.setText("Filter out for:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 1;
-		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 0;
 		super.jComponent.add(jLabel10003,gridBagConstraints);
 		
 		jLabel10002.setText("Choose controller beneath and select module(s).When done run simulation.");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 2;
-		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridy = 0;
 		super.jComponent.add(jLabel10002,gridBagConstraints);
 		
 		jToolBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -147,8 +146,9 @@ public class AssignBehaviorsTab extends Tabs {
 		buttonGroup.add(radionButtonCKBOTSTANDARD);		
 		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 1;
-		gridBagConstraints.gridy = 2;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.insets = new Insets(0,0,0,5); // some space on the right
 		super.jComponent.add(jToolBar1,gridBagConstraints);			
 		
 		jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -162,20 +162,20 @@ public class AssignBehaviorsTab extends Tabs {
         });
 		jScrollPane2.setViewportView(jList1);
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 2;
-		gridBagConstraints.gridy = 2;
+		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridy = 1;
 		super.jComponent.add(jScrollPane2,gridBagConstraints);				
 			
-		jLabel10005.setText("Controller was assigned successfully.");
+/*		jLabel10005.setText("Controller was assigned successfully.");
 		jLabel10005.setFont( new Font("Times New Roman", Font.BOLD, 12));
 		jLabel10005.setVisible(false);
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 3;
 		//jLabel10005.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + ATTENTION));		
-		super.jComponent.add(jLabel10005,gridBagConstraints);		
+		super.jComponent.add(jLabel10005,gridBagConstraints);	*/	
 		
-		jLabel1000.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + INFORMATION));		
+		/*jLabel1000.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + INFORMATION));		
 		jLabel1000.setText("It also possible to assign controllers during simulation run time.");
 		jLabel1000.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -183,7 +183,7 @@ public class AssignBehaviorsTab extends Tabs {
 		gridBagConstraints.gridy = 4;
 		jLabel1000.setVisible(false);
 		//gridBagConstraints.weighty = 0.5;   //request any extra vertical space
-		super.jComponent.add(jLabel1000,gridBagConstraints);
+		super.jComponent.add(jLabel1000,gridBagConstraints);*/
 		
 		/*jLabel10005 = new javax.swing.JLabel();		
 		jLabel10005.setText("Assign them in simulation run time.");

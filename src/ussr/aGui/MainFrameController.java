@@ -47,9 +47,9 @@ public class MainFrameController {
 	public static void jTextField1FocusGained(JTextField jTextField1) {
 		jTextField1.setText("");
 	}
-	
+
 	private static int timesSelected =0;
-	
+
 	/**
 	 * Controls running simulation in real time.
 	 * @param jmeSimulation
@@ -82,7 +82,7 @@ public class MainFrameController {
 		disableComponets(jmeSimulation);
 		jmeSimulation.setPicker(new PhysicsPicker());
 	}
-	
+
 	private static void disableComponets(JMESimulation jmeSimulation){
 		if (timesSelected==1){
 			BuilderHelper.connectAllModules(jmeSimulation);	
@@ -195,12 +195,10 @@ public class MainFrameController {
 			JCheckBoxMenuItem jCheckBoxMenuItem6, JMESimulation jmeSimulation) {
 		if (jmeSimulation.isShowDepth() == false ){                       
 			jCheckBoxMenuItem6.setSelected(true);
-			jmeSimulation.setShowDepth(true);
-			//guiHelper.passTo(AssistantjTextField, "Rendering lights");// informing user
+			jmeSimulation.setShowDepth(true);			
 		}else {                   
 			jCheckBoxMenuItem6.setSelected(false);
-			jmeSimulation.setShowDepth(false);
-			//guiHelper.passTo(AssistantjTextField, "Stopped rendering lights");// informing user
+			jmeSimulation.setShowDepth(false);			
 		}  
 
 	}
@@ -227,48 +225,72 @@ public class MainFrameController {
 			jmeSimulation.setPause(true);
 	}
 
-
-    static int i;
-
-	public static void jCheckBoxMenuItemActionPerformedNew(ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems, javax.swing.JTabbedPane jTabbedPane1, ArrayList<TabsInter> tabs ) {
-
-		for (int index = 0; index<tabs.size(); index++ ){
-			javax.swing.JCheckBoxMenuItem currentJCheckBoxMenuItem =checkBoxMenuItems.get(index);
-			String currentTabTitle = tabs.get(index).getTabTitle();
-			
-			
-			if ( (currentJCheckBoxMenuItem.getText().equalsIgnoreCase(currentTabTitle))&&currentJCheckBoxMenuItem.isSelected()==false){
-				currentJCheckBoxMenuItem.setSelected(false);
-				//jTabbedPane1.setEnabledAt(index, false);
-			 	if(jTabbedPane1.getTabCount()-1<index){
-					i++;
-                   System.out.println("Here;" +i);
-				}else{
-					jTabbedPane1.removeTabAt(index);
-				}
-				
-				
-			}else if((currentJCheckBoxMenuItem.getText().equalsIgnoreCase(currentTabTitle))&&currentJCheckBoxMenuItem.isSelected()==true){
-				currentJCheckBoxMenuItem.setSelected(true);
-				//jTabbedPane1.setEnabledAt(index, true);
-				if (tabs.get(index).getImageIconDirectory()==null){
-					jTabbedPane1.addTab(currentTabTitle,tabs.get(index).getJComponent());				
-				}else{
-					jTabbedPane1.addTab(currentTabTitle,new javax.swing.ImageIcon(tabs.get(index).getImageIconDirectory()),tabs.get(index).getJComponent());				
-				}
-					
-
-			}
-			}
-		}
+    
 	
-	public static void constructRobotActionPerformed(JButton jButtonConstructRobot, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs,ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems ) {
-		jTabbedPaneFirst.addTab(tabs.get(0).getTabTitle(),new javax.swing.ImageIcon(tabs.get(0).getImageIconDirectory()),tabs.get(0).getJComponent());
-		jTabbedPaneFirst.addTab(tabs.get(1).getTabTitle(),new javax.swing.ImageIcon(tabs.get(1).getImageIconDirectory()),tabs.get(1).getJComponent());
-		jButtonConstructRobot.setEnabled(false);
-		checkBoxMenuItems.get(0).setSelected(true);
-		checkBoxMenuItems.get(1).setSelected(true);
-		MainFrame.changeToLookAndFeel(jTabbedPaneFirst);
+
+	public static void jCheckBoxMenuItemActionPerformedNew(java.awt.event.ActionEvent evt,ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems, javax.swing.JTabbedPane jTabbedPane1, ArrayList<TabsInter> tabs ) {
+		
+		
+//FIXME MAYBE BETTER SOLUTION //ADD ADING OF TABS
+		for (int in=0; in < checkBoxMenuItems.size(); in++){
+			 //System.out.println("SizeCheck: "+checkBoxMenuItems.size());
+			if (checkBoxMenuItems.get(in).isSelected()==false){
+				for (int index=0; index < jTabbedPane1.getTabCount(); index++){
+					if (checkBoxMenuItems.get(in).getText().equalsIgnoreCase(jTabbedPane1.getTitleAt(index))){
+						jTabbedPane1.removeTabAt(index);
+						MainFrame.getCheckBoxMenuItems().get(in).setSelected(false);												
+					};
+				}
+				}
+		}		
+		
 	}
+		
+		public static void constructRobotActionPerformed(JButton jButtonConstructRobot, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs,ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems ) {
+			jTabbedPaneFirst.addTab(tabs.get(0).getTabTitle(),new javax.swing.ImageIcon(tabs.get(0).getImageIconDirectory()),tabs.get(0).getJComponent());
+			jTabbedPaneFirst.addTab(tabs.get(1).getTabTitle(),new javax.swing.ImageIcon(tabs.get(1).getImageIconDirectory()),tabs.get(1).getJComponent());
+			jButtonConstructRobot.setEnabled(false);
+			//checkBoxMenuItems.get(0).setSelected(true);
+			//checkBoxMenuItems.get(1).setSelected(true);
+			
+			MainFrame.getAssignBehavior().setSelected(true);
+			MainFrame.getConstructRobot().setSelected(true);
+			MainFrame.getCheckBoxMenuItems().get(0).setSelected(true);
+			MainFrame.getCheckBoxMenuItems().get(1).setSelected(true);
+			
+			
+			MainFrame.changeToLookAndFeel(jTabbedPaneFirst);
+		}
+
+
+
+		public static void jCheckBoxMenuItemWasSelected() {
+			// TODO Auto-generated method stub
+			System.out.println("selected");
+		}
+
+
+
+		public static void jCheckBoxMenuItemWasDeSelected(javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem,javax.swing.JTabbedPane jTabbedPane ) {
+			//for (int in=0; in < checkBoxMenuItems.size(); in++){
+				 //System.out.println("SizeCheck: "+checkBoxMenuItems.size());
+				//if (checkBoxMenuItems.get(in).isSelected()==false){
+					for (int index=0; index < jTabbedPane.getTabCount(); index++){
+						if (jCheckBoxMenuItem.getText().equalsIgnoreCase(jTabbedPane.getTitleAt(index))){
+							jTabbedPane.removeTabAt(index);
+							//MainFrame.getCheckBoxMenuItems().get(in).setSelected(false);
+						};
+					//}
+
+				//}
+				
+			}
+					System.out.println("Deselected");
+			
+		}
+
+
+
+	
 
 	}

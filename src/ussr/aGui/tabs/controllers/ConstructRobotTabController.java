@@ -65,7 +65,18 @@ public class ConstructRobotTabController {
 
 		String chosenModularRobot = button.getText();			
 		chosenMRname = SupportedModularRobots.valueOf(chosenModularRobot.toUpperCase());
-
+		adjustGUItoChosenMR(chosenMRname);
+		
+		addNewDefaultConstructionModule(jmeSimulation); //Add default construction module
+		// Set default construction tool to be "On selected  connector"
+		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
+		
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[1]);//Informing user
+ 
+	}
+	
+	
+	private static void adjustGUItoChosenMR(SupportedModularRobots chosenMRname ){
 		/*Adapt tab to chosen modular robot*/
 		if (chosenMRname.equals(SupportedModularRobots.ATRON)){
 
@@ -77,7 +88,7 @@ public class ConstructRobotTabController {
 			ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.MTRANStandardRotations.values()));
 			ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.MTRAN_CONNECTORS));
 
-		}else if (chosenMRname.equals(SupportedModularRobots.ODIN)){
+		}else if (chosenMRname.equals(SupportedModularRobots.ODIN)){			
 			ConstructRobotTab.setEnabledRotationToolBar(false);// for Odin not yet relevant
 			ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ODIN_CONNECTORS));
 
@@ -86,16 +97,6 @@ public class ConstructRobotTabController {
 			ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel( TabsInter.CKBotStandardRotations.values() ));
 			ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.CKBOT_CONNECTORS));
 		}
-
-		//nextjButton.setEnabled(false);
-		//previousjButton.setEnabled(false);
-		addNewDefaultConstructionModule(jmeSimulation); //Add default construction module
-		// Set default construction tool to be "On selected  connector"
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
-		
-		
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[1]);//Informing user
- 
 	}
 
 
@@ -350,5 +351,22 @@ public class ConstructRobotTabController {
 		}
 		//TODO CHECK IF THE MODULE IS ALREADY ON CONNECTOR AND THEN DO NOT PLACE NEW ONE THERE
 	}
+	
+	public static void adjustGUItoSelectedModule(SupportedModularRobots supportedModularRobot){
+		ConstructRobotTab.setRadioButtonsEnabled(true);
+		if (supportedModularRobot.equals(SupportedModularRobots.ATRON)){
+			ConstructRobotTab.getRadionButtonATRON().setSelected(true);			
+		}else if (supportedModularRobot.equals(SupportedModularRobots.ODIN)){
+			ConstructRobotTab.getRadionButtonODIN().setSelected(true);
+		}else if (supportedModularRobot.equals(SupportedModularRobots.MTRAN)){			
+			ConstructRobotTab.getRadioButtonMTRAN().setSelected(true);
+		}else if (supportedModularRobot.equals(SupportedModularRobots.CKBOTSTANDARD)){
+			ConstructRobotTab.getRadionButtonCKBOTSTANDARD().setSelected(true);
+		}
+		adjustGUItoChosenMR(supportedModularRobot);
+		ConstructRobotTab.setRadioButtonsEnabled(false);
+	}
+		
+	
 
 }

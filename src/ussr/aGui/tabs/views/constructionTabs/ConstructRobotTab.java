@@ -5,19 +5,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
-
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
-
 import ussr.aGui.FramesInter;
 import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFrameInter;
-
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
@@ -33,8 +29,8 @@ public class ConstructRobotTab extends Tabs {
 	/**
 	 * The container for radio buttons of supported modular robots (ATRON,Odin and so on).
 	 */
-	private static ArrayList<AbstractButton> jRadioButtons =  new ArrayList<AbstractButton>() ;
-	
+	private static ArrayList<AbstractButton> jRadioButtons =  new ArrayList<AbstractButton>() ;	
+
 	private static ArrayList<javax.swing.JButton> jButtons =  new ArrayList<javax.swing.JButton>() ;
 
 	/**
@@ -106,7 +102,7 @@ public class ConstructRobotTab extends Tabs {
 		gridBagConstraints.insets = new Insets(0,0,10,0);
 		super.jComponent.add(jLabel10002,gridBagConstraints);
 
-		final ButtonGroup buttonGroup = new ButtonGroup() ;
+		buttonGroup = new ButtonGroup() ;
 
 		radionButtonATRON =  new JRadioButton();
 		radionButtonATRON.setFocusable(true);// direct the user to what should be done first
@@ -263,7 +259,7 @@ public class ConstructRobotTab extends Tabs {
 		super.jComponent.add(jLabel10003,gridBagConstraints);		
 
 		jComboBoxEntity.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Module", "Robot" }));
-		jComboBoxEntity.setPreferredSize(new java.awt.Dimension(59, GuiFrames.COMMON_HEIGHT));
+		jComboBoxEntity.setPreferredSize(new java.awt.Dimension(65, GuiFrames.COMMON_HEIGHT));
 		jComboBoxEntity.setEnabled(false);
 		jComboBoxEntity.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -370,7 +366,7 @@ public class ConstructRobotTab extends Tabs {
 
 		jComboBoxNrConnectorsConstructionTool.setToolTipText("Select connector Nr to connect new module to and then select module");
 		jComboBoxNrConnectorsConstructionTool.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
-		jComboBoxNrConnectorsConstructionTool.setPreferredSize(new java.awt.Dimension(40, GuiFrames.COMMON_HEIGHT-4));
+		jComboBoxNrConnectorsConstructionTool.setPreferredSize(new java.awt.Dimension(60, GuiFrames.COMMON_HEIGHT-4));
 		jComboBoxNrConnectorsConstructionTool.setEnabled(false);
 		jComboBoxNrConnectorsConstructionTool.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -582,8 +578,7 @@ public class ConstructRobotTab extends Tabs {
 	public static void setEnabledRotationToolBar(boolean enable){
 		jButtonOppositeRotation.setEnabled(enable);
 		jComboBoxStandardRotations.setEnabled(enable);	
-	}
-
+	}	
 
 	public static javax.swing.JComboBox getJComboBoxEntity() {
 		return jComboBoxEntity;
@@ -601,13 +596,25 @@ public class ConstructRobotTab extends Tabs {
 		return jComboBoxNrConnectorsConstructionTool;
 	}
 	
-/*	public static javax.swing.JButton getJButtonOnNextConnector() {
-		return jButtonOnNextConnector;
+	
+
+	
+	public static javax.swing.AbstractButton getRadionButtonATRON() {
+		return radionButtonATRON;
 	}
 	
-	public static javax.swing.JButton getJButtonOnPreviousConnector() {
-		return jButtonOnPreviousConnector;
-	}*/
+	public static javax.swing.AbstractButton getRadioButtonMTRAN() {
+		return radioButtonMTRAN;
+	}
+	
+	public static javax.swing.AbstractButton getRadionButtonODIN() {
+		return radionButtonODIN;
+	}
+	
+	public static javax.swing.AbstractButton getRadionButtonCKBOTSTANDARD() {
+		return radionButtonCKBOTSTANDARD;
+	}
+
 	
 	public static HintPanel getHintPanel() {
 		return hintPanel;
@@ -622,11 +629,14 @@ public class ConstructRobotTab extends Tabs {
 	private static javax.swing.JLabel jLabel10001;
 	private static javax.swing.JLabel jLabel10002;
 	private static javax.swing.JLabel jLabel10003;
+	
+	private static ButtonGroup buttonGroup;	
 
 	private static  javax.swing.AbstractButton radionButtonATRON;
 	private static javax.swing.AbstractButton  radioButtonMTRAN;
-	private static javax.swing.AbstractButton radionButtonODIN;
+	private static javax.swing.AbstractButton radionButtonODIN;	
 	private static javax.swing.AbstractButton radionButtonCKBOTSTANDARD;
+
 
 	private  static javax.swing.JButton jButtonDelete;
 	private  static javax.swing.JButton jButtonMove;
@@ -644,6 +654,7 @@ public class ConstructRobotTab extends Tabs {
 
 	private javax.swing.JToolBar.Separator  jSeparator1;
 	private javax.swing.JToolBar.Separator  jSeparator2;
+
 	
 	private static HintPanel hintPanel;
 }

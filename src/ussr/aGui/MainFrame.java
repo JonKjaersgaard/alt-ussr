@@ -3,6 +3,11 @@ package ussr.aGui;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
@@ -372,54 +377,81 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 		jTabbedPaneFirst.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 		jTabbedPaneFirst.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jTabbedPaneFirst.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2, TAB_PANE_HEIGHT1));		
-		jTabbedPaneFirst.setFocusable(false);		
+		jTabbedPaneFirst.setFocusable(false);
 		initTabsAndCheckBoxes(true,tabsFirstTabbedPane,jTabbedPaneFirst,jMenuIntearctionTabs);//Plug in tabs in tabbed pane and check boxes in menu bar		
-
+	
 		getContentPane().add(jTabbedPaneFirst);
 		return jTabbedPaneFirst;
 	}
     
 	static ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems = new ArrayList<javax.swing.JCheckBoxMenuItem>();
 	
-	private void initTabsAndCheckBoxes(boolean first,final ArrayList<TabsInter> tabsContainer ,final javax.swing.JTabbedPane jTabbedPane,javax.swing.JMenu jMenu){
+	private void  initTabsAndCheckBoxes(boolean first,final ArrayList<TabsInter> tabsContainer ,final javax.swing.JTabbedPane jTabbedPane,javax.swing.JMenu jMenu){
 		
-		for (int index =0; index < tabsContainer.size(); index++){				  
-			TabsInter currentTab = tabsContainer.get(index);
+		for (int index =0; index < tabsContainer.size(); index++){
+		//	System.out.println("S:" +tabsContainer.size());
+			TabsInter currentTab = tabsContainer.get(index);	
+			
+			
+		
+			
 			if (currentTab.getImageIconDirectory()==null){			
 				jTabbedPane.addTab(currentTab.getTabTitle(),currentTab.getJComponent());				
 			}else{				
 				jTabbedPane.addTab(currentTab.getTabTitle(),new javax.swing.ImageIcon(currentTab.getImageIconDirectory()),currentTab.getJComponent());
 			}		
 			
+			
+
 			jCheckBoxMenuItemNew = new javax.swing.JCheckBoxMenuItem();
 			jCheckBoxMenuItemNew.setSelected(true);
-			jCheckBoxMenuItemNew.setText(tabsContainer.get(index).getTabTitle());
+			jCheckBoxMenuItemNew.setText(currentTab.getTabTitle());
 			checkBoxMenuItems.add(jCheckBoxMenuItemNew);
 			jCheckBoxMenuItemNew.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent evt) {
-					MainFrameController.jCheckBoxMenuItemActionPerformedNew(checkBoxMenuItems, jTabbedPane,tabsContainer);
+					
+					MainFrameController.jCheckBoxMenuItemActionPerformedNew(evt,checkBoxMenuItems, jTabbedPane,tabsContainer);
+					
 				}
 			});
-			jMenu.add(jCheckBoxMenuItemNew);			
+			jMenu.add(jCheckBoxMenuItemNew);
+		//	System.out.println("Sss:" +checkBoxMenuItems.size());
+			
 		}	
 		
+		
+		
 		if (first){//Initially remove tabs for constructing robot
+			AssignBehavior = (JCheckBoxMenuItem)jMenu.getMenuComponent(1);
+			AssignBehavior.setSelected(false);
 			checkBoxMenuItems.get(1).setSelected(false);
 			jTabbedPane.removeTabAt(1);
+			
+			ConstructRobot = (JCheckBoxMenuItem)jMenu.getMenuComponent(0);
+			ConstructRobot.setSelected(false);
 			checkBoxMenuItems.get(0).setSelected(false);			
-			jTabbedPane.removeTabAt(0);		
+			jTabbedPane.removeTabAt(0);
+			
 		}
-		
-		
+		//System.out.println("First:" +tabsFirstTabbedPane.size());
+		//System.out.println("Second:" +tabsSecondTabbedPane.size());
+	}
+	
+	public static ArrayList<javax.swing.JCheckBoxMenuItem> getCheckBoxMenuItems() {
+		return checkBoxMenuItems;
+	}
 
+	private static JCheckBoxMenuItem AssignBehavior;
+	private static JCheckBoxMenuItem ConstructRobot;
+	
+	public static JCheckBoxMenuItem getAssignBehavior() {
+		return AssignBehavior;
 	}
-	
-	
-	
-	private void intitJCheckBoxMenuItem(javax.swing.JMenu jMenu){
-		
+
+	public static JCheckBoxMenuItem getConstructRobot() {
+		return ConstructRobot;
 	}
-	
+
 	public void initSecondTabbedPane(int width, int height){
 		jTabbedPane3 = new javax.swing.JTabbedPane();
 		jTabbedPane3.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -502,6 +534,8 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 	public static javax.swing.JButton jButtonSave;
 	public static javax.swing.JButton jButtonOpen;
 	public static javax.swing.JButton jButtonConstructRobot;
+	
+	private javax.swing.JButton jTabButton;
 
 	public javax.swing.JButton jButtonRunFast;
 	public javax.swing.JButton jButtonPause;
