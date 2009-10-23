@@ -179,15 +179,16 @@ public class ConstructRobotTabController {
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
 			//TODO
 		}
-
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[5]); //Informing user
 	}
 
-	public static void jButton11ActionPerformed(JMESimulation jmeSimulation) {	
+	public static void jButtonMoveActionPerformed(JMESimulation jmeSimulation) {	
 		if (chosenItem.equalsIgnoreCase("Module")){
 			jmeSimulation.setPicker(new PhysicsPicker(true, true));
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
 			//TODO
 		}
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[3]);//Informing user
 	}
 
 	public static void jButtonColorConnectorsActionPerformed(JMESimulation jmeSimulation) {	
@@ -196,6 +197,7 @@ public class ConstructRobotTabController {
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
 			//TODO
 		}
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[6]);//Informing user
 
 	}
 
@@ -221,7 +223,8 @@ public class ConstructRobotTabController {
 	 * @param evt, selection with left side of the mouse event (jButton selection).     
 	 */	
 	public static void jButtonOppositeRotationActionPerformed(JMESimulation jmeSimulation) {
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.OPPOSITE_ROTATION));        
+		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.OPPOSITE_ROTATION));
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[2]);//Informing user
 	}
 
 	/**
@@ -239,7 +242,9 @@ public class ConstructRobotTabController {
 	public static void jButtonOnSelectedConnectorActionPerformed(JMESimulation jmeSimulation) {
 		ConstructRobotTab.setEnabledRotationToolBar(false);
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));		
+		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
+		
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[7]); //Informing user
 	}
 
 	/**
@@ -253,6 +258,8 @@ public class ConstructRobotTabController {
 		
 		int chosenConnectorNr = Integer.parseInt(comboBoxNrConnectorsConstructionTool.getSelectedItem().toString());
 	    jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,chosenConnectorNr));
+	    
+	    ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[8]); //Informing user
 	}
 
 	/**
@@ -263,7 +270,9 @@ public class ConstructRobotTabController {
 		ConstructRobotTab.setEnabledRotationToolBar(false);
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
 		
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));	
+		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[9]); //Informing user
+		
 	}
 
 
@@ -287,6 +296,7 @@ public class ConstructRobotTabController {
 		constructionTools = constructionToolsnew;
 		jmeSimulation.setPicker(constructionToolsnew); 
 		
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[10]); //Informing user
 	}
 
 

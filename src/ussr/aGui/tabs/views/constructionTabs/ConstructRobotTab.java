@@ -295,7 +295,7 @@ public class ConstructRobotTab extends Tabs {
 		jButtonMove.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				controlSelectionDeselection(jButtonMove);
-				ConstructRobotTabController.jButton11ActionPerformed(jmeSimulation);
+				ConstructRobotTabController.jButtonMoveActionPerformed(jmeSimulation);
 			}
 		});
 		jButtons.add(jButtonMove);
