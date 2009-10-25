@@ -29,11 +29,11 @@ CC=gcc
 
 controller_lib: phonyJnilib
 	cp nativeController.jnilib $(BASEDIR)/lib/lib$(CONTROLLER_LIBRARY).jnilib
-	rm $(BASEDIR)/native/base/atron_tinyos.o
+	rm $(BASEDIR)/native/base/$(PLATFORM)_tinyos.o
 all: nativeController.jnilib
 	cp nativeController.jnilib $(BASEDIR)/lib/lib$(CONTROLLER_LIBRARY).jnilib
-$(BASEDIR)/native/include/nativeController.h: $(BASEDIR)/bin/ussr/samples/atron/natives/$(NATIVE_CONTROLLER_CLASS).class
-	javah -jni -classpath $(BASEDIR)/bin -o $(BASEDIR)/native/include/nativeController.h ussr.samples.atron.natives.$(NATIVE_CONTROLLER_CLASS)
+$(BASEDIR)/native/include/nativeController.h: $(BASEDIR)/bin/ussr/samples/$(PLATFORM)/natives/$(NATIVE_CONTROLLER_CLASS).class
+	javah -jni -classpath $(BASEDIR)/bin -o $(BASEDIR)/native/include/nativeController.h ussr.samples.$(PLATFORM).natives.$(NATIVE_CONTROLLER_CLASS)
 nativeController.jnilib: $(BASEDIR)/native/include/nativeController.h $(BIN)
 	gcc $(LDFLAGS) -o nativeController.jnilib $(BIN) build/$(PLATFORM)_ussr/main_*.exe
 phonyJnilib: $(BASEDIR)/native/include/nativeController.h $(BIN) forceJnilib

@@ -74,6 +74,62 @@ int32_t readProximitySensor(USSREnv *env, uint8_t connector) {
   return ussr_call_int_controller_method(env, "readProximitySensor", "(I)I", connector);
 }
 
+float getSouthRotationWmodNo(USSREnv *env, int modNo) {
+  return ussr_call_float_controller_method(env, "getSouthRotationW", "(I)F", modNo);
+}
+
+float getSouthRotationXmodNo(USSREnv *env, int modNo) {
+  return ussr_call_float_controller_method(env, "getSouthRotationX", "(I)F", modNo);
+}
+
+float getSouthRotationYmodNo(USSREnv *env, int modNo) {
+  return ussr_call_float_controller_method(env, "getSouthRotationY", "(I)F", modNo);
+}
+
+float getSouthRotationZmodNo(USSREnv *env, int modNo) {
+  return ussr_call_float_controller_method(env, "getSouthRotationZ", "(I)F", modNo);
+}
+
+float getSouthTranslationXmodNo(USSREnv *env, int modNo) {
+  return ussr_call_float_controller_method(env, "getSouthTranslationX", "(I)F", modNo);
+}
+
+float getSouthTranslationYmodNo(USSREnv *env, int modNo) {
+  return ussr_call_float_controller_method(env, "getSouthTranslationY", "(I)F", modNo);
+}
+
+float getSouthTranslationZmodNo(USSREnv *env, int modNo) {
+  return ussr_call_float_controller_method(env, "getSouthTranslationZ", "(I)F", modNo);
+}
+
+float getNorthRotationWmodNo(USSREnv *env, int modNo) {
+  return ussr_call_float_controller_method(env, "getNorthRotationW", "(I)F", modNo);
+}
+
+float getNorthRotationXmodNo(USSREnv *env, int modNo) {
+  return ussr_call_float_controller_method(env, "getNorthRotationX", "(I)F", modNo);
+}
+
+float getNorthRotationYmodNo(USSREnv *env, int modNo) {
+  return ussr_call_float_controller_method(env, "getNorthRotationY", "(I)F", modNo);
+}
+
+float getNorthRotationZmodNo(USSREnv *env, int modNo) {
+  return ussr_call_float_controller_method(env, "getNorthRotationZ", "(I)F", modNo);
+}
+
+float getNorthTranslationXmodNo(USSREnv *env, int modNo) {
+  return ussr_call_float_controller_method(env, "getNorthTranslationX", "(I)F", modNo);
+}
+
+float getNorthTranslationYmodNo(USSREnv *env, int modNo) {
+  return ussr_call_float_controller_method(env, "getNorthTranslationY", "(I)F", modNo);
+}
+
+float getNorthTranslationZmodNo(USSREnv *env, int modNo) {
+  return ussr_call_float_controller_method(env, "getNorthTranslationZ", "(I)F", modNo);
+}
+
 float getSouthRotationW(USSREnv *env) {
   return ussr_call_float_controller_method(env, "getSouthRotationW", "()F");
 }
