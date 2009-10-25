@@ -4,7 +4,7 @@ CWD = $(shell pwd)
 
 # OS-specific variables
 JAVAINCLUDE=-I/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Headers
-ALLINCLUDE=$(JAVAINCLUDE) -I$(BASEDIR)/native/include -I$(CWD)/build/ussr
+ALLINCLUDE=$(JAVAINCLUDE) -I$(BASEDIR)/native/include -I$(CWD)/build/$(PLATFORM)_ussr
 CFLAGS=-fPIC -DUSSR $(JAVAINCLUDE) $(ALLINCLUDE) -Wall -pedantic
 LDFLAGS=-dynamiclib -framework JavaVM -fPIC
 
@@ -36,9 +36,9 @@ all: nativeController.jnilib
 $(BASEDIR)/native/include/nativeController.h: $(BASEDIR)/bin/ussr/samples/atron/natives/$(NATIVE_CONTROLLER_CLASS).class
 	javah -jni -classpath $(BASEDIR)/bin -o $(BASEDIR)/native/include/nativeController.h ussr.samples.atron.natives.$(NATIVE_CONTROLLER_CLASS)
 nativeController.jnilib: $(BASEDIR)/native/include/nativeController.h $(BIN)
-	gcc $(LDFLAGS) -o nativeController.jnilib $(BIN) build/ussr/main_*.exe
+	gcc $(LDFLAGS) -o nativeController.jnilib $(BIN) build/$(PLATFORM)_ussr/main_*.exe
 phonyJnilib: $(BASEDIR)/native/include/nativeController.h $(BIN) forceJnilib
-	gcc $(LDFLAGS) -o nativeController.jnilib $(BIN) build/ussr/main_*.exe
+	gcc $(LDFLAGS) -o nativeController.jnilib $(BIN) build/$(PLATFORM)_ussr/main_*.exe
 forceJnilib:
 	@echo
 clean:
