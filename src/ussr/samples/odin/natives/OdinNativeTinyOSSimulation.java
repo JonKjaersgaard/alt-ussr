@@ -27,6 +27,7 @@ public class OdinNativeTinyOSSimulation extends GenericSimulation {
 		VisualizationParameters.get().setUseDataDumper(true);
 		
 		//PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
+		PhysicsParameters.get().setRealtime(false);
 		PhysicsParameters.get().setRealisticCollision(true);
 		PhysicsParameters.get().setUseModuleEventQueue(true);
 		PhysicsParameters.get().setSyncWithControllers(true);

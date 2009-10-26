@@ -49,6 +49,8 @@ public class PhysicsParameters {
     private boolean useModuleEventQueue = /*true*/ false ;
     private boolean syncWithControllers = /*true*/ false ;
     
+    private boolean realtime = true;
+    
     
     public float getWorldDampingLinearVelocity() {
         return worldDampingLinearVelocity;
@@ -204,6 +206,12 @@ public class PhysicsParameters {
 	}
 	public float getPhysicsSimulationControllerStepFactor() {
 		return physicsSimulationControllerStepFactor;
+	}
+	public boolean isRealtime() {
+		return realtime;
+	}
+	public void setRealtime(boolean realtime) {
+		this.realtime = realtime;
 	}
 
 }
