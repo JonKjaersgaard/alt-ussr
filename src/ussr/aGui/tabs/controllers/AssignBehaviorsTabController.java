@@ -5,6 +5,7 @@ import java.util.Vector;
 import javax.swing.JRadioButton;
 
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
+import ussr.builder.SupportedModularRobots;
 import ussr.builder.controllerReassignmentTool.AssignControllerTool;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;
@@ -13,8 +14,9 @@ public class AssignBehaviorsTabController {
 
 	private static Object[] strings;
 	
-	private static  Vector<String> classesOfControllers ;
-	
+	private static  Vector<String> classesOfControllers ;	
+
+
 	private static  Vector<String> tempClassesOfControllers =  new Vector<String> ()  ;
 	
 	//private static javax.swing.JList tempjList1;
@@ -51,8 +53,12 @@ public class AssignBehaviorsTabController {
 		/*Update the list with newly loaded names of controllers*/
 		
 	}
+	
+	public static Vector<String> getClassesOfControllers() {
+		return classesOfControllers;
+	}
 
-	private static void updateList(javax.swing.JList jList1,final Vector<String> controllers ){
+	public static void updateList(javax.swing.JList jList1,final Vector<String> controllers ){
 		jList1.setModel(new javax.swing.AbstractListModel() {
 			Object[] strings =  controllers.toArray();
 			public int getSize() { return strings.length; }
@@ -66,7 +72,7 @@ public class AssignBehaviorsTabController {
 	}
 
   public static void jButtonGroupActionPerformed(javax.swing.AbstractButton radionButton,JMESimulation jmeSimulation){
-
+  
 	  if (radionButton.getText().contains("ATRON")){		  
 		  updateList(AssignBehaviorsTab.getJList1(),filterOut("ATRON"));
 	  }else if (radionButton.getText().contains("Odin")){
@@ -78,10 +84,10 @@ public class AssignBehaviorsTabController {
 	  }
   }
   
-  private static Vector<String> filterOut(String filterValue){
+  public static Vector<String> filterOut(String modularRobotName){
 	  tempClassesOfControllers.removeAllElements();
 	  for (int index=0; index<classesOfControllers.size();index++){
-		  if (classesOfControllers.get(index).contains(filterValue)){
+		  if (classesOfControllers.get(index).contains(modularRobotName.toString())){
 			  tempClassesOfControllers.add(classesOfControllers.get(index));
 		  }
 	  }

@@ -12,6 +12,7 @@ import javax.swing.JToolBar;
 
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
+import ussr.builder.SupportedModularRobots;
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -102,6 +103,7 @@ public class AssignBehaviorsTab extends Tabs {
 		radionButtonATRON =  new JRadioButton();		
 		radionButtonATRON.setText("ATRON");	
 		radionButtonATRON.setFocusable(true);// direct the user to what should be done first
+		radionButtonATRON.setSelected(true);//set initially selected so that jList will containe already filtered out controllers
 		radionButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				AssignBehaviorsTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
@@ -122,7 +124,6 @@ public class AssignBehaviorsTab extends Tabs {
 		jToolBar1.add(radionButtonODIN);
 		buttonGroup.add(radionButtonODIN);
 
-
 		radioButtonMTRAN =  new JRadioButton();
 		radioButtonMTRAN.setText("MTran");
 		radioButtonMTRAN.addActionListener(new java.awt.event.ActionListener() {
@@ -138,7 +139,7 @@ public class AssignBehaviorsTab extends Tabs {
 		radionButtonCKBOTSTANDARD.setText("CKBotStandard");
 		radionButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//AssignBehaviorsTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD,jmeSimulation);
+				AssignBehaviorsTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD,jmeSimulation);
 			}
 		});
 		
@@ -164,7 +165,11 @@ public class AssignBehaviorsTab extends Tabs {
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
-		super.jComponent.add(jScrollPane2,gridBagConstraints);				
+		super.jComponent.add(jScrollPane2,gridBagConstraints);	
+		
+		/*Initially update the list with controllers available for ATRON*/
+		AssignBehaviorsTabController.updateList(jList1, AssignBehaviorsTabController.filterOut("ATRON"));
+		
 			
 /*		jLabel10005.setText("Controller was assigned successfully.");
 		jLabel10005.setFont( new Font("Times New Roman", Font.BOLD, 12));
