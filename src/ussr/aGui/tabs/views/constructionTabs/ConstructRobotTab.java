@@ -101,12 +101,12 @@ public class ConstructRobotTab extends Tabs {
 		jSeparator1 = new javax.swing.JToolBar.Separator();
 		jSeparator2 = new javax.swing.JToolBar.Separator();
 		
-		hintPanel  = new HintPanel(400,120);//custom panel
+		hintPanel  = new HintPanel(430,120);//custom panel
 
 		/*Description of components */		
 		jButton1.setText("Start new robot");
 		jButton1.setFocusable(true);
-		jButton1.setPreferredSize(new Dimension(120,GuiFrames.COMMON_HEIGHT+2));
+		jButton1.setPreferredSize(new Dimension(110,GuiFrames.COMMON_HEIGHT+2));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {            	
             	ConstructRobotTabController.jButton1ActionPerformed(evt);            	
@@ -115,7 +115,7 @@ public class ConstructRobotTab extends Tabs {
         gridBagConstraints.fill = GridBagConstraints.FIRST_LINE_START;// position on the first line start
         gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
-		gridBagConstraints.insets = new Insets(0,0,10,50);  //make some space on the right so that button moves to the left and at the bottom (not so crowded)
+		gridBagConstraints.insets = new Insets(0,0,15,50);  //make some space on the right so that button moves to the left and at the bottom (not so crowded)
 		super.jComponent.add(jButton1,gridBagConstraints);
 	
 		jToolBarSaveLoad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -126,12 +126,13 @@ public class ConstructRobotTab extends Tabs {
 		gridBagConstraints.fill = GridBagConstraints.FIRST_LINE_END;
 		gridBagConstraints.gridx = 4;
 		gridBagConstraints.gridy = 0;
-		gridBagConstraints.insets = new Insets(0,0,10,0);  //make some space at the bottom and reset rest values
-		super.jComponent.add(jToolBarSaveLoad,gridBagConstraints);
- 
+		gridBagConstraints.insets = new Insets(0,0,15,-25);  
+		
 		/*Reuse the buttons for saving and loading  already initialized in the main window*/
 		jToolBarSaveLoad.add(MainFrame.initSaveButton());
-		jToolBarSaveLoad.add(MainFrame.initOpenButton());		
+		jToolBarSaveLoad.add(MainFrame.initOpenButton());
+		
+		super.jComponent.add(jToolBarSaveLoad,gridBagConstraints);				
 		
 		radionButtonATRON.setFocusable(false);
 		radionButtonATRON.setText("ATRON");
@@ -144,6 +145,7 @@ public class ConstructRobotTab extends Tabs {
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
+		gridBagConstraints.insets = new Insets(0,0,0,0);//reset
 		super.jComponent.add(radionButtonATRON,gridBagConstraints);
 		buttonGroup.add(radionButtonATRON);
 		jRadioButtons.add(radionButtonATRON);
@@ -197,38 +199,28 @@ public class ConstructRobotTab extends Tabs {
 		buttonGroup.add(radionButtonCKBOTSTANDARD);	
 		jRadioButtons.add(radionButtonCKBOTSTANDARD);		
 
-		/*		button14.setText("Robot Ready");		
-		button14.setToolTipText("Robot is ready");		
-		button14.setFocusable(false); 
-		button14.setPreferredSize(new java.awt.Dimension(30, 30));	
-		button14.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructionTabController.jButton14ActionPerformed(jmeSimulation, button14);
-			}
-		});
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 4;
-		gridBagConstraints.gridy = 3;
-		super.jComponent.add(button14,gridBagConstraints);	*/	
-
-		jLabel1000.setText("Apply rotation:");		
+		jLabel10003.setText("Operations on existing modules:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 2;
-		gridBagConstraints.insets = new Insets(0,0,10,10);  //make some space at the bootm
-		super.jComponent.add(jLabel1000,gridBagConstraints);
-
+		gridBagConstraints.gridwidth = 1;// reset grid width
+		gridBagConstraints.insets = new Insets(0,0,10,0);  
+		
+		super.jComponent.add(jLabel10003,gridBagConstraints);
+		
 		jToolBarRotationTools.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarRotationTools.setFloatable(false);//user can not make the tool bar to float
 		jToolBarRotationTools.setRollover(true);// the components inside are roll over
 		jToolBarRotationTools.setToolTipText("Rotation tools");
-		jToolBarRotationTools.setPreferredSize(new Dimension(185,GuiFrames.COMMON_HEIGHT+2));
+		jToolBarRotationTools.setPreferredSize(new Dimension(100,GuiFrames.COMMON_HEIGHT+2));
+		
 		/*External layout of the toolbar in the panel*/
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;		
 		gridBagConstraints.gridy = 3;
-		gridBagConstraints.gridwidth = 4;	
-
+		gridBagConstraints.gridwidth = 4;
+		gridBagConstraints.insets = new Insets(0,3,10,18);  
+		
 
 		jButtonOppositeRotation.setToolTipText("Opposite");		
 		jButtonOppositeRotation.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE));
@@ -278,16 +270,7 @@ public class ConstructRobotTab extends Tabs {
 		);
 
 		super.jComponent.add(jToolBarRotationTools,gridBagConstraints);
-
-		jLabel10003.setText("Operations on existing modules:");
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 4;
-		gridBagConstraints.gridwidth = 1;// reset grid width
-		gridBagConstraints.insets = new Insets(0,0,10,10);  //bring padding back and make some space at boom
 		
-		super.jComponent.add(jLabel10003,gridBagConstraints);		
-
 		jComboBoxEntity.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Module", "Robot" }));
 		jComboBoxEntity.setPreferredSize(new java.awt.Dimension(65, GuiFrames.COMMON_HEIGHT));
 		jComboBoxEntity.setEnabled(false);
@@ -298,7 +281,9 @@ public class ConstructRobotTab extends Tabs {
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
-		gridBagConstraints.gridy = 5;
+		gridBagConstraints.gridy = 4;
+		gridBagConstraints.gridwidth = 1;
+		gridBagConstraints.insets = new Insets(0,0,0,0); 
 		
 		super.jComponent.add(jComboBoxEntity,gridBagConstraints);
 
@@ -309,8 +294,9 @@ public class ConstructRobotTab extends Tabs {
 		jToolBarGenericTools.setPreferredSize(new Dimension(195,GuiFrames.COMMON_HEIGHT));		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 2;		
-		gridBagConstraints.gridy = 5;
-		gridBagConstraints.gridwidth = 3;		
+		gridBagConstraints.gridy = 4;
+		gridBagConstraints.gridwidth = 3;
+		gridBagConstraints.insets = new Insets(8,3,10,18);  
 
 		jButtonMove.setToolTipText("Move");		
 		jButtonMove.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOVE));
@@ -378,7 +364,8 @@ public class ConstructRobotTab extends Tabs {
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;		
 		gridBagConstraints.gridy = 7;
-		gridBagConstraints.gridwidth = 4;		
+		gridBagConstraints.gridwidth = 4;
+		gridBagConstraints.insets = new Insets(0,0,10,18);  
 
 		jButtonOnSelectedConnector.setToolTipText("Select connector");
 		jButtonOnSelectedConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + ON_SELECTED_CONNECTOR));
