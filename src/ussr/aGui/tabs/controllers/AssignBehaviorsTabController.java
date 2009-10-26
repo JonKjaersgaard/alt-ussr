@@ -77,7 +77,7 @@ public class AssignBehaviorsTabController {
 		  updateList(AssignBehaviorsTab.getJList1(),filterOut("ATRON"));
 	  }else if (radionButton.getText().contains("Odin")){
 		  updateList(AssignBehaviorsTab.getJList1(),filterOut("Odin"));
-	  }else if (radionButton.getText().contains("MTRAN")){
+	  }else if (radionButton.getText().contains("MTran")){
 		  updateList(AssignBehaviorsTab.getJList1(),filterOut("MTRAN"));
 	  }else if (radionButton.getText().contains("CKBotStandard")){
 		  updateList(AssignBehaviorsTab.getJList1(),filterOut("CKBotStandard"));
