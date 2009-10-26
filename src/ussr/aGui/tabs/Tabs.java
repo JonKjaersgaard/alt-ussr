@@ -3,8 +3,6 @@ package ussr.aGui.tabs;
 import java.awt.font.TextAttribute;
 import java.util.HashMap;
 import java.util.Map;
-
-import ussr.aGui.MainFrameInter;
 import ussr.physics.jme.JMESimulation;
 
 /**

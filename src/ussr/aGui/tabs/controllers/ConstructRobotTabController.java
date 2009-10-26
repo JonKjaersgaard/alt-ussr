@@ -375,6 +375,7 @@ public class ConstructRobotTabController {
 	public static void jButtonStartNewRobotActionPerformed(ActionEvent evt) {
 		ConstructRobotTab.setRadioButtonsEnabled(true);
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[11]); //Informing user
+		
 		//ConstructRobotTab.getRadionButtonATRON().requestFocus(true);
 
 	}

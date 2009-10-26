@@ -72,18 +72,21 @@ public class MainFrameController {
 	 * Controls running simulation in fast time.
 	 * @param jmeSimulation
 	 */
-	public static void jButtonRunFastActionPerformed(JMESimulation jmeSimulation) {		 
+	public static void jButtonRunFastActionPerformed(JMESimulation jmeSimulation) {
+		
 		if (jmeSimulation.isPaused()){// Start simulation  fast, if simulation is in paused state
 			jmeSimulation.setRealtime(false);
 			jmeSimulation.setPause(false);				
 		}else if (jmeSimulation.isRealtime()==true){//if simulation in real time, then run it fast
 			jmeSimulation.setRealtime(false);
-		}		
+		}	
+		timesSelected++;
 		disableComponets(jmeSimulation);
 		jmeSimulation.setPicker(new PhysicsPicker());
 	}
 
 	private static void disableComponets(JMESimulation jmeSimulation){
+		
 		if (timesSelected==1){
 			BuilderHelper.connectAllModules(jmeSimulation);	
 			/*Disable GUI components responsible for opening file choosers, because it is possible to load

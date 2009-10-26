@@ -212,7 +212,7 @@ public class ConstructRobotTab extends Tabs {
 		jToolBarRotationTools.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarRotationTools.setFloatable(false);//user can not make the tool bar to float
 		jToolBarRotationTools.setRollover(true);// the components inside are roll over
-		jToolBarRotationTools.setToolTipText("Rotation tools");
+		jToolBarRotationTools.setToolTipText("Module rotation tools");
 		jToolBarRotationTools.setPreferredSize(new Dimension(100,GuiFrames.COMMON_HEIGHT+2));
 		
 		/*External layout of the toolbar in the panel*/
@@ -223,7 +223,7 @@ public class ConstructRobotTab extends Tabs {
 		gridBagConstraints.insets = new Insets(0,3,10,18);  
 		
 
-		jButtonOppositeRotation.setToolTipText("Opposite");		
+		jButtonOppositeRotation.setToolTipText("Rotate opposite");		
 		jButtonOppositeRotation.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE));
 		jButtonOppositeRotation.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));
 		jButtonOppositeRotation.setFocusable(false); 
@@ -237,7 +237,7 @@ public class ConstructRobotTab extends Tabs {
 		});
 		jButtons.add(jButtonOppositeRotation);
 
-		jComboBoxStandardRotations.setToolTipText("Standard");
+		jComboBoxStandardRotations.setToolTipText("Rotate with standard rotation");
 		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 		jComboBoxStandardRotations.setPreferredSize(new java.awt.Dimension(140, GuiFrames.COMMON_HEIGHT-3));
 		jComboBoxStandardRotations.setEnabled(false);
@@ -368,7 +368,7 @@ public class ConstructRobotTab extends Tabs {
 		gridBagConstraints.gridwidth = 4;
 		gridBagConstraints.insets = new Insets(0,0,10,18);  
 
-		jButtonOnSelectedConnector.setToolTipText("Select connector");
+		jButtonOnSelectedConnector.setToolTipText("On selected connector (select connector)");
 		jButtonOnSelectedConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + ON_SELECTED_CONNECTOR));
 		jButtonOnSelectedConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
 		jButtonOnSelectedConnector.setFocusable(false);
@@ -382,7 +382,7 @@ public class ConstructRobotTab extends Tabs {
 		});	
 		jButtons.add(jButtonOnSelectedConnector);
 
-		jComboBoxNrConnectorsConstructionTool.setToolTipText("Select connector Nr to connect new module to and then select module");
+		jComboBoxNrConnectorsConstructionTool.setToolTipText("On chosen connector number (select module)");
 		jComboBoxNrConnectorsConstructionTool.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 		jComboBoxNrConnectorsConstructionTool.setPreferredSize(new java.awt.Dimension(60, GuiFrames.COMMON_HEIGHT-4));
 		jComboBoxNrConnectorsConstructionTool.setEnabled(false);
@@ -392,7 +392,7 @@ public class ConstructRobotTab extends Tabs {
 			}
 		});		
 
-		jButtonConnectAllModules.setToolTipText("Connect all modules");
+		jButtonConnectAllModules.setToolTipText("To all connectors(select module)");
 		jButtonConnectAllModules.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + CONNECT_ALL_MODULES));
 		jButtonConnectAllModules.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
 		jButtonConnectAllModules.setFocusable(false);
@@ -529,6 +529,7 @@ public class ConstructRobotTab extends Tabs {
 			radioButton.setEnabled(enabled);
 		}
 	}
+
 
 	private void controlSelectionDeselection(javax.swing.JButton  jButton){
      for(int index =0;index<jComponent.getComponents().length; index++ ){
