@@ -48,6 +48,8 @@ import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.physics.jme.pickers.Picker;
 import ussr.util.TopologyWriter;
 import ussr.util.WindowSaver;
+import ussr.visualization.DataDumper;
+import ussr.visualization.VisualizationParameters;
 
 import com.jme.app.AbstractGame;
 import com.jme.input.InputHandler;
@@ -58,6 +60,7 @@ import com.jme.input.action.InputActionEvent;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.scene.TriMesh;
+import com.jme.scene.shape.AxisRods;
 import com.jme.system.DisplaySystem;
 import com.jme.system.GameSettings;
 import com.jme.system.PropertiesGameSettings;
@@ -113,6 +116,12 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     }
     
     protected void simpleInitGame() {
+    	// Create and init data dumping object
+    	if(VisualizationParameters.get().getUseDataDumper() == true) {
+    		DataDumper dumper = new DataDumper();
+    		subscribePhysicsTimestep(dumper);
+    		dumper.init(worldDescription.getNumberOfModules());
+    	}
     	 // Create underlying plane or terrain
         if(worldDescription.theWorldIsFlat())
           setStaticPlane(helper.createPlane(worldDescription.getPlaneSize(),worldDescription.getPlaneTexture()));
