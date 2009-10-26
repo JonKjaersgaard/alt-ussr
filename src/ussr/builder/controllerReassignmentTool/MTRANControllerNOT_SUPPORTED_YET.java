@@ -3,7 +3,7 @@ package ussr.builder.controllerReassignmentTool;
 import ussr.model.Module;
 
 
-public class MTRANControllerEMPTY extends ControllerStrategy {
+public class MTRANControllerNOT_SUPPORTED_YET extends ControllerStrategy {
 
 	/**
 	 * The method which will is activated when this class is instantiated by the tool called "AssignControllerTool"

@@ -177,10 +177,10 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * @param transformerHandler,the content handler used to print out XML format. 
 	 * @param firstStartTagName, the name of the tag.
 	 */
-	public void printFirstStartTag(TransformerHandler transformerHandler, String firstStartTagName){
+	public void printFirstStartTag(TransformerHandler transformerHandler, TagsUsed firstStartTagName){
 		try {
 			transformerHandler.startDocument();			
-			transformerHandler.startElement("","",firstStartTagName,EMPTY_ATT);
+			transformerHandler.startElement("","",firstStartTagName.toString(),EMPTY_ATT);
 		} catch (SAXException e) {
 			throw new Error ("SAX exception appeared and named as: "+ e.toString());
 		}
@@ -192,9 +192,9 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * @param transformerHandler,the content handler used to print out XML format. 
 	 * @param firstEndTagName, the  name of the tag.
 	 */
-	public void printFirstEndTag(TransformerHandler transformerHandler, String firstEndTagName){
+	public void printFirstEndTag(TransformerHandler transformerHandler, TagsUsed firstEndTagName){
 		try {			
-			transformerHandler.endElement("","",firstEndTagName);
+			transformerHandler.endElement("","",firstEndTagName.toString());
 			transformerHandler.endDocument();
 		} catch (SAXException e) {
 			throw new Error ("SAX exception appeared and named as: "+ e.toString());			
@@ -208,11 +208,11 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * @param tagName, the name of the tag.
 	 * @param value, the value between the tags.
 	 */
-	public void printSubTagsWithValue(TransformerHandler transformerHandler, String tagName, char[] value){
+	public void printSubTagsWithValue(TransformerHandler transformerHandler, TagsUsed tagName, char[] value){
 		try {			
-			transformerHandler.startElement("","",tagName,EMPTY_ATT);
+			transformerHandler.startElement("","",tagName.toString(),EMPTY_ATT);
 			transformerHandler.characters(value,0,value.length);
-			transformerHandler.endElement("","",tagName);
+			transformerHandler.endElement("","",tagName.toString());
 		} catch (SAXException e) {
 			throw new Error ("SAX exception appeared and named as: "+ e.toString());		
 		}	
@@ -443,8 +443,8 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * @param tagName, the name of the tag.
 	 * @return value, the data between the start and end tags.
 	 */
-	public String extractTagValue(Element firstElmnt,String tagName){
-		NodeList firstNmElmntLst = firstElmnt.getElementsByTagName(tagName);		      
+	public String extractTagValue(Element firstElmnt,TagsUsed tagName){
+		NodeList firstNmElmntLst = firstElmnt.getElementsByTagName(tagName.toString());		      
 		Element firstNmElmnt = (Element) firstNmElmntLst.item(0);
 		NodeList firstNm = firstNmElmnt.getChildNodes();		 
 		return ((Node) firstNm.item(0)).getNodeValue();

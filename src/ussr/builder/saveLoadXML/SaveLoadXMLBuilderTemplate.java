@@ -27,74 +27,8 @@ import ussr.physics.jme.JMESimulation;
  */  
 public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
-	/**
-	 * The name of ID tag (global ID of the module) in XML file (third in the hierarchy).
-	 */
-	private final static String idTag = "ID";
-
-	/**
-	 * The name of TYPE tag(type of the module) in XML file (third in the hierarchy).
-	 */
-	private final static String typeTag = "TYPE";
-
-	/**
-	 * The name of NAME tag(name of the module) in XML file (third in the hierarchy).
-	 */
-	private final static String nameTag = "NAME";
-
-	/**
-	 * The name of ROTATION tag(rotation of the module or component) in XML file (third in the hierarchy).
-	 */
-	private final static String rotationTag = "ROTATION";
-
-	/**
-	 * The name of ROTATION_QUATERNION tag(rotation of the module or component) in XML file (third in the hierarchy).
-	 */
-	private final static String rotationQuatTag = "ROTATION_QUATERNION";
-
-	/**
-	 * The name of POSITION tag(position of the  module or component) in XML file (third in the hierarchy).
-	 */
-	private final static String positionTag = "POSITION";
-
-	/**
-	 * The name of POSITION_VECTOR tag(position of the  module or component) in XML file (third in the hierarchy).
-	 */
-	private final static String positionVectorTag = "POSITION_VECTOR";
-
-	/**
-	 * The name of COMPONENTS tag(amount of components the module consists of) in XML file (third in the hierarchy).
-	 */
-	private final static String componentsTag = "COMPONENTS";
-
-	/**
-	 * The name of COLORS_COMPONENTS tag(colours of components the module consists of) in XML file (third in the hierarchy).
-	 */
-	private final static String coloursComponentsTag = "COLORS_COMPONENTS";
-	
-	/**
-	 * The name of CONNECTORS tag(amount of connectors on the module) in XML file (third in the hierarchy).
-	 */
-	private final static String connectorsTag = "CONNECTORS";
-
-	/**
-	 * The name of COLORS_CONNECTORS tag(colours of connectors on the module) in XML file (third in the hierarchy).
-	 */
-	private final static String coloursConnectorsTag = "COLORS_CONNECTORS";
-	
-	/**
-	 * The name of LABELS tag(labels of the module) in XML file (third in the hierarchy).
-	 */
-	private final static String labelsModuleTag = "LABELS_MODULE";
-	
 	
 	private final static String controllerLocationTag = "CONTROLLER_LOCATION";
-
-	/**
-	 * The name of LABELS tag(labels of the connectors) in XML file (third in the hierarchy).
-	 */
-	private final static String labelsConnectorsTag = "LABELS_CONNECTORS";
-
 
 	/**
 	 * Method for defining the format of XML to print into the xml file. In other words
@@ -119,28 +53,28 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 	
 		printFirstEndTag(transformerHandler, "SIMULATION");*/
 		
-		printFirstStartTag(transformerHandler, TagsUsed.MODULES.toString());
+		printFirstStartTag(transformerHandler, TagsUsed.MODULES);
 		int amountModules = numberOfSimulatedModules();
 		/*For each module print out the start and end tags with relevant data*/
 		for (int module=0; module<amountModules;module++){           
 			Module currentModule = getModuleByIndex(module);			
 				try {				
 					transformerHandler.startElement("","",TagsUsed.MODULE.toString(),EMPTY_ATT);				
-					printSubTagsWithValue(transformerHandler, idTag, getID(currentModule));				
-					printSubTagsWithValue(transformerHandler, typeTag, getType(currentModule));
-					printSubTagsWithValue(transformerHandler, nameTag, getName(currentModule));
-					printSubTagsWithValue(transformerHandler, rotationTag, getRotation(currentModule));
-					printSubTagsWithValue(transformerHandler, rotationQuatTag, getRotationQuaternion(currentModule));
-					printSubTagsWithValue(transformerHandler, positionTag, getPosition(currentModule));
+					printSubTagsWithValue(transformerHandler, TagsUsed.ID, getID(currentModule));				
+					printSubTagsWithValue(transformerHandler, TagsUsed.TYPE, getType(currentModule));
+					printSubTagsWithValue(transformerHandler, TagsUsed.NAME, getName(currentModule));
+					printSubTagsWithValue(transformerHandler, TagsUsed.ROTATION, getRotation(currentModule));
+					printSubTagsWithValue(transformerHandler, TagsUsed.ROTATION_QUATERNION, getRotationQuaternion(currentModule));
+					printSubTagsWithValue(transformerHandler, TagsUsed.POSITION, getPosition(currentModule));
 					//printSubTagsWithValue(transformerHandler, positionVectorTag, getPositionVector(currentModule));
 					
-					printSubTagsWithValue(transformerHandler, controllerLocationTag, getControllerLocation(currentModule));
-					printSubTagsWithValue(transformerHandler, labelsModuleTag, getLabelsModule(currentModule));
-					printSubTagsWithValue(transformerHandler, componentsTag, getAmountComponents(currentModule));
-					printSubTagsWithValue(transformerHandler, coloursComponentsTag, getColorsComponents(currentModule));
-					printSubTagsWithValue(transformerHandler, connectorsTag, getAmountConnectors(currentModule));			
-					printSubTagsWithValue(transformerHandler, coloursConnectorsTag, getColorsConnectors(currentModule));
-					printSubTagsWithValue(transformerHandler,labelsConnectorsTag, getLabelsConnectors(currentModule));
+					//printSubTagsWithValue(transformerHandler, controllerLocationTag, getControllerLocation(currentModule));
+					printSubTagsWithValue(transformerHandler,  TagsUsed.LABELS_MODULE, getLabelsModule(currentModule));
+					printSubTagsWithValue(transformerHandler,  TagsUsed.COMPONENTS, getAmountComponents(currentModule));
+					printSubTagsWithValue(transformerHandler, TagsUsed.COLORS_COMPONENTS, getColorsComponents(currentModule));
+					printSubTagsWithValue(transformerHandler, TagsUsed.CONNECTORS, getAmountConnectors(currentModule));			
+					printSubTagsWithValue(transformerHandler, TagsUsed.COLORS_CONNECTORS, getColorsConnectors(currentModule));
+					printSubTagsWithValue(transformerHandler,TagsUsed.LABELS_CONNECTORS, getLabelsConnectors(currentModule));
 					
 					printInfoConnectors(transformerHandler,getInfoConnectors(currentModule, true), getInfoConnectors(currentModule, false));						
 					transformerHandler.endElement("","",TagsUsed.MODULE.toString());
@@ -148,7 +82,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 					throw new Error ("SAX exception appeared and named as: "+ e.toString());
 				}			
 		}
-		printFirstEndTag(transformerHandler, TagsUsed.MODULES.toString());		
+		printFirstEndTag(transformerHandler, TagsUsed.MODULES);		
 	}
 
 	protected abstract Module getModuleByIndex(int module);
@@ -167,26 +101,26 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 				Element firstElmnt = (Element) firstNode;				
 				//String moduleID = extractTagValue(firstElmnt,idTag);
-				String moduleType = extractTagValue(firstElmnt,typeTag);
-				String moduleName = extractTagValue(firstElmnt,nameTag);
-				String moduleRotation = extractTagValue(firstElmnt,rotationTag);		
-				String moduleRotationQuaternion = extractTagValue(firstElmnt,rotationQuatTag);
-				String modulePosition = extractTagValue(firstElmnt,positionTag);
+				String moduleType = extractTagValue(firstElmnt,TagsUsed.TYPE);
+				String moduleName = extractTagValue(firstElmnt,TagsUsed.NAME);
+				String moduleRotation = extractTagValue(firstElmnt,TagsUsed.ROTATION);		
+				String moduleRotationQuaternion = extractTagValue(firstElmnt,TagsUsed.ROTATION_QUATERNION);
+				String modulePosition = extractTagValue(firstElmnt,TagsUsed.POSITION);
 				//String modulePositionVector = extractTagValue(firstElmnt,positionVectorTag);
-				String labelsModule = extractTagValue(firstElmnt,labelsModuleTag);
+				String labelsModule = extractTagValue(firstElmnt,TagsUsed.LABELS_MODULE);
 				if (labelsModule.contains(BuilderHelper.getTempLabel())){
 					labelsModule = labelsModule.replaceAll(BuilderHelper.getTempLabel(), "");
 				}				
 				
-				int amountComponents = Integer.parseInt(extractTagValue(firstElmnt,componentsTag));
-				String colorsComponents = extractTagValue(firstElmnt,coloursComponentsTag);				
+				int amountComponents = Integer.parseInt(extractTagValue(firstElmnt,TagsUsed.COMPONENTS));
+				String colorsComponents = extractTagValue(firstElmnt,TagsUsed.COLORS_COMPONENTS);				
 				LinkedList<Color> listColorsComponents = extractColorsComponents(amountComponents, colorsComponents);				
 				
-				int amountConnectors = Integer.parseInt(extractTagValue(firstElmnt,connectorsTag));
-				String colorsConnectors = extractTagValue(firstElmnt,coloursConnectorsTag);				
+				int amountConnectors = Integer.parseInt(extractTagValue(firstElmnt,TagsUsed.CONNECTORS));
+				String colorsConnectors = extractTagValue(firstElmnt,TagsUsed.COLORS_CONNECTORS);				
 				LinkedList<Color> listColorsConnectors= extractColoursConnectors(amountConnectors,colorsConnectors);
 
-				String labelsConnectors = extractTagValue(firstElmnt,labelsConnectorsTag);
+				String labelsConnectors = extractTagValue(firstElmnt,TagsUsed.LABELS_CONNECTORS);
 				String tempLabelsConnectors[] = labelsConnectors.split(",");	
 				
 				RotationDescription rotationDescription = new RotationDescription();

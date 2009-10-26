@@ -3,7 +3,7 @@ package ussr.builder.controllerReassignmentTool;
 import ussr.model.Module;
 
 
-public class CKBotStandardControllerEMPTY extends ControllerStrategy {
+public class CKBotStandardControllerNOT_SUPPORTED_YET extends ControllerStrategy {
 
 	/**
 	 * The method which will is activated when this class is instantiated by the tool called "AssignControllerTool"
