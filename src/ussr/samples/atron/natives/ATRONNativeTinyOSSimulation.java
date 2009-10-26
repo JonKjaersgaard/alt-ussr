@@ -45,7 +45,7 @@ public class ATRONNativeTinyOSSimulation extends GenericATRONSimulation {
 	
 	public static void main(String argv[]) {
 				
-		VisualizationParameters.get().setShowPhysicalModules(false);
+		//VisualizationParameters.get().setShowPhysicalModules(false);
 		VisualizationParameters.get().setUseDataDumper(true);
 		
 		//PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
