@@ -44,7 +44,7 @@ public class OdinSandboxController extends OdinController {
     		//actuate((float)(Math.sin(time)+1)/2f);
     		//balls are named 6-11
     		if(module.getProperty("name").contains(Integer.toString(6))) {
-    			actuate(1f);	//range: 0-1 (float)
+    			actuate(1.0f);	//range: 0-1 (float)
     		}
     		else {
     			actuate(0);
