@@ -46,6 +46,8 @@ public class JMEOdinFactory implements ModuleFactory {
         if(simulation==null) throw new Error("Internal error: factory not initialized");
         if(robot.getDescription().getType()=="OdinMuscle")
             createOdinMuscle(module_id, module, robot);
+        else if(robot.getDescription().getType()=="OdinSSRlinearActuator")
+        	createOdinSSRlinearActuator(module_id, module, robot);
         else if(robot.getDescription().getType()=="OdinWheel")
             createOdinWheel(module_id, module, robot); 
         else if(robot.getDescription().getType()=="OdinHinge")
@@ -214,6 +216,25 @@ public class JMEOdinFactory implements ModuleFactory {
                 module.addActuator(new Actuator(centerActuator));
                 centerActuator.attach(north,south);
                 centerActuator.setControlParameters(9.82f,0.06f/0.25f,0f,0.06f); //odin muscle parametre - way too fast!
+                JMETiltSensor tiltX = new JMETiltSensor(simulation,"tiltX",'x',north);
+                JMETiltSensor tiltY = new JMETiltSensor(simulation,"tiltY",'y',north);
+                JMETiltSensor tiltZ = new JMETiltSensor(simulation,"tiltZ",'z',north);
+                module.addSensor(new Sensor(tiltX));
+                module.addSensor(new Sensor(tiltY)); 
+                module.addSensor(new Sensor(tiltZ)); 
+            }
+        }.createLongishThing(i, module, robot);
+
+    }
+    private void createOdinSSRlinearActuator(int i, final Module module, Robot robot) {
+        new CreateOdinLongishActuatedThing() {
+            @Override
+            protected void adapt(Module module, DynamicPhysicsNode north, DynamicPhysicsNode south) {
+                JMELinearActuator centerActuator = new JMELinearActuator(simulation,"center");
+                module.addActuator(new Actuator(centerActuator));
+                centerActuator.attach(north,south);
+                //tweaked parameters to fit Chi-han's linear actuator, ~3x extension (0.06+0.12)
+                centerActuator.setControlParameters(9.82f,0.06f/0.25f,0f,0.12f); //odin muscle parametre - way too fast!
                 JMETiltSensor tiltX = new JMETiltSensor(simulation,"tiltX",'x',north);
                 JMETiltSensor tiltY = new JMETiltSensor(simulation,"tiltY",'y',north);
                 JMETiltSensor tiltZ = new JMETiltSensor(simulation,"tiltZ",'z',north);
