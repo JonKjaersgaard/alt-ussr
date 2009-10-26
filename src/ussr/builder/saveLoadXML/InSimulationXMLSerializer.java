@@ -7,6 +7,7 @@ import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
+import ussr.description.setup.WorldDescription;
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.PhysicsSimulation;
@@ -68,5 +69,11 @@ public class InSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate {
         //newModule.setColorList(colorsComponents);     
         //setColorsConnectors(simulation,newModule.getID(),colorsConnectors);       
     }
+
+	@Override
+	protected WorldDescription getWorldDescription() {
+
+		return simulation.getWorldDescription();
+	}
 
 }

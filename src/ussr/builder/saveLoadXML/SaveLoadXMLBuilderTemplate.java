@@ -14,6 +14,7 @@ import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
+import ussr.description.setup.WorldDescription;
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.PhysicsSimulation;
@@ -25,16 +26,6 @@ import ussr.physics.jme.JMESimulation;
  * @author Konstantinas
  */  
 public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
-
-	/**
-	 * The name of the first tag in XML file (first in the hierarchy).
-	 */
-	private final static String firstTag = "MODULES";
-
-	/**
-	 * The name of the second tag in XML file (second in the hierarchy). 
-	 */
-	private final static String secondTag = "MODULE";
 
 	/**
 	 * The name of ID tag (global ID of the module) in XML file (third in the hierarchy).
@@ -95,6 +86,9 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 	 * The name of LABELS tag(labels of the module) in XML file (third in the hierarchy).
 	 */
 	private final static String labelsModuleTag = "LABELS_MODULE";
+	
+	
+	private final static String controllerLocationTag = "CONTROLLER_LOCATION";
 
 	/**
 	 * The name of LABELS tag(labels of the connectors) in XML file (third in the hierarchy).
@@ -102,22 +96,36 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 	private final static String labelsConnectorsTag = "LABELS_CONNECTORS";
 
 
-	public SaveLoadXMLBuilderTemplate() {
-	}
-
 	/**
 	 * Method for defining the format of XML to print into the xml file. In other words
 	 * what to save in the file about simulation.  
 	 * @param transformerHandler,the content handler used to print out XML format. 
 	 */
-	public void printOutXML(TransformerHandler transformerHandler) {		
-		printFirstStartTag(transformerHandler, firstTag);
+	public void printOutXML(TransformerHandler transformerHandler) {
+	/*	printFirstStartTag(transformerHandler, "SIMULATION");		
+		
+		try {
+			transformerHandler.startElement("","","WORLD_DESCRIPTION",EMPTY_ATT);
+			printSubTagsWithValue(transformerHandler, "PLANE_SIZE", (""+getWorldDescription().getPlaneSize()).toCharArray());
+			printSubTagsWithValue(transformerHandler, "PLANE_TEXTURE", getWorldDescription().getPlaneTexture().getFileName().toString().toCharArray());
+			printSubTagsWithValue(transformerHandler, "CAMERA_POSITION", getWorldDescription().getCameraPosition().toString().toCharArray());
+			
+			
+			transformerHandler.endElement("","","WORLD_DESCRIPTION");
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		printFirstEndTag(transformerHandler, "SIMULATION");*/
+		
+		printFirstStartTag(transformerHandler, TagsUsed.MODULES.toString());
 		int amountModules = numberOfSimulatedModules();
 		/*For each module print out the start and end tags with relevant data*/
 		for (int module=0; module<amountModules;module++){           
 			Module currentModule = getModuleByIndex(module);			
 				try {				
-					transformerHandler.startElement("","",secondTag,EMPTY_ATT);				
+					transformerHandler.startElement("","",TagsUsed.MODULE.toString(),EMPTY_ATT);				
 					printSubTagsWithValue(transformerHandler, idTag, getID(currentModule));				
 					printSubTagsWithValue(transformerHandler, typeTag, getType(currentModule));
 					printSubTagsWithValue(transformerHandler, nameTag, getName(currentModule));
@@ -125,6 +133,8 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 					printSubTagsWithValue(transformerHandler, rotationQuatTag, getRotationQuaternion(currentModule));
 					printSubTagsWithValue(transformerHandler, positionTag, getPosition(currentModule));
 					//printSubTagsWithValue(transformerHandler, positionVectorTag, getPositionVector(currentModule));
+					
+					printSubTagsWithValue(transformerHandler, controllerLocationTag, getControllerLocation(currentModule));
 					printSubTagsWithValue(transformerHandler, labelsModuleTag, getLabelsModule(currentModule));
 					printSubTagsWithValue(transformerHandler, componentsTag, getAmountComponents(currentModule));
 					printSubTagsWithValue(transformerHandler, coloursComponentsTag, getColorsComponents(currentModule));
@@ -133,20 +143,22 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 					printSubTagsWithValue(transformerHandler,labelsConnectorsTag, getLabelsConnectors(currentModule));
 					
 					printInfoConnectors(transformerHandler,getInfoConnectors(currentModule, true), getInfoConnectors(currentModule, false));						
-					transformerHandler.endElement("","",secondTag);
+					transformerHandler.endElement("","",TagsUsed.MODULE.toString());
 				} catch (SAXException e) {
 					throw new Error ("SAX exception appeared and named as: "+ e.toString());
 				}			
 		}
-		printFirstEndTag(transformerHandler, firstTag);		
+		printFirstEndTag(transformerHandler, TagsUsed.MODULES.toString());		
 	}
 
 	protected abstract Module getModuleByIndex(int module);
+	
+	protected abstract WorldDescription getWorldDescription();
 
     protected abstract int numberOfSimulatedModules();
 
     public void loadInXML(Document document) {
-		NodeList nodeList = document.getElementsByTagName(secondTag);
+		NodeList nodeList = document.getElementsByTagName(TagsUsed.MODULE.toString());
 
 		for (int node = 0; node < nodeList.getLength(); node++) {
 			Node firstNode = nodeList.item(node);
@@ -162,9 +174,9 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 				String modulePosition = extractTagValue(firstElmnt,positionTag);
 				//String modulePositionVector = extractTagValue(firstElmnt,positionVectorTag);
 				String labelsModule = extractTagValue(firstElmnt,labelsModuleTag);
-			/*	if (labelsModule.contains(BuilderHelper.getTempLabel())){
+				if (labelsModule.contains(BuilderHelper.getTempLabel())){
 					labelsModule = labelsModule.replaceAll(BuilderHelper.getTempLabel(), "");
-				}*/				
+				}				
 				
 				int amountComponents = Integer.parseInt(extractTagValue(firstElmnt,componentsTag));
 				String colorsComponents = extractTagValue(firstElmnt,coloursComponentsTag);				
@@ -183,7 +195,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 				createNewModule(moduleName,moduleType,new VectorDescription(extractFromPosition(modulePosition, "X"),extractFromPosition(modulePosition, "Y"),extractFromPosition(modulePosition, "Z")),rotationDescription ,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
 				
 //FIXME IN CASE THERE IS A NEED TO EXTRACT THE STATE OF CONNECTORS
-				/*	NodeList sixthNmElmntLst = fstElmnt.getElementsByTagName("CONNECTOR");
+					/*NodeList sixthNmElmntLst = fstElmnt.getElementsByTagName("CONNECTOR");
 				int amountConnectorNodes = sixthNmElmntLst.getLength();
 				System.out.println("amountConnectorNodes:"+amountConnectorNodes );
 
@@ -255,5 +267,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 		return extractedValue; 
 	}
+	
+	
 
 }

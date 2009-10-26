@@ -520,6 +520,16 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	}
 
 
+	
+	/*EXPERIMENTAL PART FOR SIMULATION SET UP*/
+	public char[]  getControllerLocation(Module currentModule){
+		String c = currentModule.getController().toString();//.toString();
+		//currentModule.getController().getClass().
+		//System.out.println("Cont" + c);
+		//FIXME
+		return c.toCharArray();
+
+	}
 
 
 }

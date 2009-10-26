@@ -27,6 +27,8 @@ public class PreSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate {
         world.setModulePositions(new ArrayList<ModulePosition>());
     }
 
+    
+    
     @Override
     protected int numberOfSimulatedModules() {
         throw new Error("Pre-sim deserializer does not support serialization");
@@ -67,5 +69,12 @@ public class PreSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate {
         
         PhysicsLogger.log("Warning: colors not transferred"); //newModule.setColorList(listColorsComponents);
     }
+
+
+
+	@Override
+	protected WorldDescription getWorldDescription() {
+		 throw new Error("Pre-sim deserializer does not support serialization");
+	}
 
 }
