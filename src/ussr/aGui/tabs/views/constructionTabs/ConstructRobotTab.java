@@ -67,7 +67,7 @@ public class ConstructRobotTab extends Tabs {
 
 		/*Instantiation of components*/
 		
-		jButton1 = new javax.swing.JButton();
+		jButtonStartNewRobot = new javax.swing.JButton();
 		
 		jToolBarSaveLoad = new javax.swing.JToolBar();
 		jToolBarGenericTools = new javax.swing.JToolBar();
@@ -104,19 +104,20 @@ public class ConstructRobotTab extends Tabs {
 		hintPanel  = new HintPanel(430,120);//custom panel
 
 		/*Description of components */		
-		jButton1.setText("Start new robot");
-		jButton1.setFocusable(true);
-		jButton1.setPreferredSize(new Dimension(110,GuiFrames.COMMON_HEIGHT+2));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+		jButtonStartNewRobot.setText("Start new robot");
+		jButtonStartNewRobot.setRolloverEnabled(true);
+		jButtonStartNewRobot.setFocusable(true);
+		jButtonStartNewRobot.setPreferredSize(new Dimension(110,GuiFrames.COMMON_HEIGHT+2));
+        jButtonStartNewRobot.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {            	
-            	ConstructRobotTabController.jButton1ActionPerformed(evt);            	
+            	ConstructRobotTabController.jButtonStartNewRobotActionPerformed(evt);            	
             }
         });        
         gridBagConstraints.fill = GridBagConstraints.FIRST_LINE_START;// position on the first line start
         gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
 		gridBagConstraints.insets = new Insets(0,0,15,50);  //make some space on the right so that button moves to the left and at the bottom (not so crowded)
-		super.jComponent.add(jButton1,gridBagConstraints);
+		super.jComponent.add(jButtonStartNewRobot,gridBagConstraints);
 	
 		jToolBarSaveLoad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarSaveLoad.setFloatable(false);//user can not make the tool bar to float
@@ -660,7 +661,7 @@ public class ConstructRobotTab extends Tabs {
 	private static javax.swing.AbstractButton radionButtonODIN;	
 	private static javax.swing.AbstractButton radionButtonCKBOTSTANDARD;
 
-	private javax.swing.JButton jButton1;
+	private javax.swing.JButton jButtonStartNewRobot;
 	private  static javax.swing.JButton jButtonDelete;
 	private  static javax.swing.JButton jButtonMove;
 	private  static javax.swing.JButton jButtonColorConnetors;	

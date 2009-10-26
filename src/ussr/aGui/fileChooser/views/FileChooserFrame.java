@@ -38,9 +38,9 @@ public abstract class FileChooserFrame extends GuiFrames{
 
 		jFileChooser = new javax.swing.JFileChooser();
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);		
-		getContentPane().setLayout(new java.awt.FlowLayout());		
-		getContentPane().add(jFileChooser);// MAC HAS PROBLEMS WITH THAT
-		jFileChooser.setAcceptAllFileFilterUsed(false);		
+		getContentPane().setLayout(new java.awt.FlowLayout());	
+		jFileChooser.setAcceptAllFileFilterUsed(false);	
+		getContentPane().add(jFileChooser);// MAC HAS PROBLEMS WITH THAT			
 		pack();
 		changeToLookAndFeel(this);// for all platforms
 		setSize(580,450);//THINK MORE HERE

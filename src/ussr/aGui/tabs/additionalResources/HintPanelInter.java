@@ -28,6 +28,8 @@ public interface HintPanelInter {
                                  
                                 /*10*/   "Select module to add new module on initial connector. Next use green arows to move module from one connector onto another." +
                                 		 "When desired placement achieved, repeat the sequence of actions for next modules.",
+                                
+                                /*11*/   "Choose modular robot type from four available (ATRON, Odin  and so on).",
                         
 	"NEW HINT"};
 	
