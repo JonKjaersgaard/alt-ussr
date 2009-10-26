@@ -185,7 +185,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 			}
 		}
 		
-		ConstructRobotTabController.adjustGUItoSelectedModule(this.modularRobotName);//Adapt GUI to selected module(modular robot) type
+		ConstructRobotTabController.adjustTabToSelectedModule(this.modularRobotName);//Adapt GUI to selected module(modular robot) type
 	}
 
 	/**
