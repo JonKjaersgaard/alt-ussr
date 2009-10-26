@@ -31,6 +31,121 @@ import ussr.samples.atron.ATRONController.CenterStates;
 public abstract class ATRONTinyOSController extends ControllerImpl implements PacketSentObserver, PacketReceivedObserver, PhysicsObserver, IATRONTinyOSAPI {
 
 	protected boolean sendBusy = false;
+
+	public float getSouthRotationW(int modNo) {
+        for(Module m: module.getSimulation().getModules()) { 
+        	if (m.getProperty("name").contains(Integer.toString(modNo)))
+        		return ATRONKinematicModel.getSouthHemisphereNode(m).getLocalRotation().w;
+        }
+        return 0;
+	}
+
+	public float getSouthRotationX(int modNo) {
+        for(Module m: module.getSimulation().getModules()) { 
+        	if (m.getProperty("name").contains(Integer.toString(modNo)))
+        		return ATRONKinematicModel.getSouthHemisphereNode(m).getLocalRotation().x;
+        }
+        return 0;
+	}
+
+	public float getSouthRotationY(int modNo) {
+        for(Module m: module.getSimulation().getModules()) { 
+        	if (m.getProperty("name").contains(Integer.toString(modNo)))
+        		return ATRONKinematicModel.getSouthHemisphereNode(m).getLocalRotation().y;
+        }
+        return 0;
+	}
+
+	public float getSouthRotationZ(int modNo) {
+        for(Module m: module.getSimulation().getModules()) { 
+        	if (m.getProperty("name").contains(Integer.toString(modNo)))
+        		return ATRONKinematicModel.getSouthHemisphereNode(m).getLocalRotation().z;
+        }
+        return 0;
+	}
+	
+	public float getSouthTranslationX(int modNo) {
+        for(Module m: module.getSimulation().getModules()) { 
+        	if (m.getProperty("name").contains(Integer.toString(modNo)))
+        		return ATRONKinematicModel.getSouthHemisphereNode(m).getLocalTranslation().x;
+        }
+        return 0;
+	}
+
+	public float getSouthTranslationY(int modNo) {
+        for(Module m: module.getSimulation().getModules()) { 
+        	if (m.getProperty("name").contains(Integer.toString(modNo)))
+        		return ATRONKinematicModel.getSouthHemisphereNode(m).getLocalTranslation().y;
+        }
+        return 0;
+	}
+
+	public float getSouthTranslationZ(int modNo) {
+        for(Module m: module.getSimulation().getModules()) { 
+        	if (m.getProperty("name").contains(Integer.toString(modNo)))
+        		return ATRONKinematicModel.getSouthHemisphereNode(m).getLocalTranslation().z;
+        }
+        return 0;
+	}
+
+	/**/
+	public float getNorthRotationW(int modNo) {
+        for(Module m: module.getSimulation().getModules()) { 
+        	if (m.getProperty("name").contains(Integer.toString(modNo)))
+        		return ATRONKinematicModel.getNorthHemisphereNode(m).getLocalRotation().w;
+        }
+        return 0;
+	}
+
+	public float getNorthRotationX(int modNo) {
+        for(Module m: module.getSimulation().getModules()) { 
+        	if (m.getProperty("name").contains(Integer.toString(modNo)))
+        		return ATRONKinematicModel.getNorthHemisphereNode(m).getLocalRotation().x;
+        }
+        return 0;
+	}
+
+	public float getNorthRotationY(int modNo) {
+        for(Module m: module.getSimulation().getModules()) { 
+        	if (m.getProperty("name").contains(Integer.toString(modNo)))
+        		return ATRONKinematicModel.getNorthHemisphereNode(m).getLocalRotation().y;
+        }
+        return 0;
+	}
+
+	public float getNorthRotationZ(int modNo) {
+        for(Module m: module.getSimulation().getModules()) { 
+        	if (m.getProperty("name").contains(Integer.toString(modNo)))
+        		return ATRONKinematicModel.getNorthHemisphereNode(m).getLocalRotation().z;
+        }
+        return 0;
+	}
+	
+	public float getNorthTranslationX(int modNo) {
+        for(Module m: module.getSimulation().getModules()) { 
+        	if (m.getProperty("name").contains(Integer.toString(modNo)))
+        		return ATRONKinematicModel.getNorthHemisphereNode(m).getLocalTranslation().x;
+        }
+        return 0;
+	}
+
+	public float getNorthTranslationY(int modNo) {
+        for(Module m: module.getSimulation().getModules()) { 
+        	if (m.getProperty("name").contains(Integer.toString(modNo)))
+        		return ATRONKinematicModel.getNorthHemisphereNode(m).getLocalTranslation().y;
+        }
+        return 0;
+	}
+
+	public float getNorthTranslationZ(int modNo) {
+        for(Module m: module.getSimulation().getModules()) { 
+        	if (m.getProperty("name").contains(Integer.toString(modNo)))
+        		return ATRONKinematicModel.getNorthHemisphereNode(m).getLocalTranslation().z;
+        }
+        return 0;
+	}
+	
+/**/
 	
 	public float getSouthRotationW() {
 		return ATRONKinematicModel.getSouthHemisphereNode(module).getLocalRotation().w;
