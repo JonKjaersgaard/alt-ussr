@@ -206,7 +206,7 @@ __AUTO_GENERATED_DISPATCHER_SENDDONE__
 }
 void JNICALL Java_ussr_samples_atron_natives_ATRONNativeTinyOSController_nativeHandleMessage(JNIEnv *jniENV, jobject self, jint initializationContext, jbyteArray message, jint messageSize, jint channel) {
   int moduleId;
-  unsigned char buffer[ATRON_MAX_MESSAGE_SIZE];
+  unsigned char buffer[USSR_MAX_MESSAGE_SIZE];
   USSREnv env;
   env.jnienv = jniENV;
   env.controller = self;

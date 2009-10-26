@@ -4,7 +4,7 @@
 #include <ussr.h>
 
 /*TODO: link it to TOSH_DATA_LENGTH*/
-#define ATRON_MAX_MESSAGE_SIZE 128
+#define USSR_MAX_MESSAGE_SIZE 128
 
 #ifdef USSR
 void ussr_stub();
