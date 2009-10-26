@@ -1,5 +1,7 @@
 package ussr.aGui.tabs;
 
+import ussr.aGui.MainFrameInter;
+
 
 /**
  * Supports definition of visual appearance(view in MVC pattern) of tabs, which are pluged-in main GUI window. 
@@ -62,9 +64,8 @@ public interface TabsInter {
     * Numbers of connectors on CKBotStandard module(
     */
    public String[] CKBOT_CONNECTORS = {"0","1", "2", "3"};
-    
-    
-    
+   
+   
 	public enum ATRONStandardRotations   {		
 		EW, WE, DU, UD, SN, NS,	
 	}

@@ -1,12 +1,10 @@
 package ussr.aGui.tabs.controllers;
 
-import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
+import java.awt.event.ActionEvent;
 
-import ussr.aGui.MainFrame;
+import javax.swing.AbstractButton;
+import javax.swing.JComboBox;
+
 import ussr.aGui.tabs.TabsInter;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
@@ -52,20 +50,13 @@ public class ConstructRobotTabController {
 	public static void jButtonGroupActionPerformed(AbstractButton button,JMESimulation jmeSimulation ) {
 		jmeSimulationLocal = jmeSimulation;
 		
-		/*Disable and enable available components*/
-		ConstructRobotTab.setRadioButtonsEnabled(false);
-		ConstructRobotTab.getJComboBoxEntity().setEnabled(true);
-		ConstructRobotTab.setEnabledRotationToolBar(true);
-		ConstructRobotTab.setEnabledGenericToolBar(true);
 		
-		ConstructRobotTab.setEnabledConstructionToolsToolBar(true);
-		ConstructRobotTab.setEnabledButtonsArrows(false);
 		
 		
 
 		String chosenModularRobot = button.getText();			
 		chosenMRname = SupportedModularRobots.valueOf(chosenModularRobot.toUpperCase());
-		adjustGUItoChosenMR(chosenMRname);
+		adaptTabToChosenMR(chosenMRname);
 		
 		addNewDefaultConstructionModule(jmeSimulation); //Add default construction module
 		// Set default construction tool to be "On selected  connector"
@@ -76,24 +67,37 @@ public class ConstructRobotTabController {
 	}
 	
 	
-	private static void adjustGUItoChosenMR(SupportedModularRobots chosenMRname ){
+	private static void adaptTabToChosenMR(SupportedModularRobots chosenMRname){
+		
+		/*Disable and enable available components*/
+		ConstructRobotTab.setRadioButtonsEnabled(false);
+		ConstructRobotTab.getJComboBoxEntity().setEnabled(true);
+		ConstructRobotTab.setEnabledRotationToolBar(true);
+		ConstructRobotTab.setEnabledGenericToolBar(true);
+		
+		ConstructRobotTab.setEnabledConstructionToolsToolBar(true);
+		ConstructRobotTab.setEnabledButtonsArrows(false);
+		
 		/*Adapt tab to chosen modular robot*/
 		if (chosenMRname.equals(SupportedModularRobots.ATRON)){
-
+			ConstructRobotTab.getRadionButtonATRON().setSelected(true);
 			ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ATRONStandardRotations.values()));
 			ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ATRON_CONNECTORS));
 
 		}else if (chosenMRname.equals(SupportedModularRobots.MTRAN)){
+			ConstructRobotTab.getRadioButtonMTRAN().setSelected(true);
 			ConstructRobotTab.getJButtonMove().setEnabled(false);
 			ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.MTRANStandardRotations.values()));
 			ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.MTRAN_CONNECTORS));
 
-		}else if (chosenMRname.equals(SupportedModularRobots.ODIN)){			
+		}else if (chosenMRname.equals(SupportedModularRobots.ODIN)){
+			ConstructRobotTab.getRadionButtonODIN().setSelected(true);
 			ConstructRobotTab.setEnabledRotationToolBar(false);// for Odin not yet relevant
 			ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ODIN_CONNECTORS));
 
 			
 		}else if (chosenMRname.equals(SupportedModularRobots.CKBOTSTANDARD)){
+			ConstructRobotTab.getRadionButtonCKBOTSTANDARD().setSelected(true);
 			ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel( TabsInter.CKBotStandardRotations.values() ));
 			ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.CKBOT_CONNECTORS));
 		}
@@ -352,7 +356,7 @@ public class ConstructRobotTabController {
 		//TODO CHECK IF THE MODULE IS ALREADY ON CONNECTOR AND THEN DO NOT PLACE NEW ONE THERE
 	}
 	
-	public static void adjustGUItoSelectedModule(SupportedModularRobots supportedModularRobot){
+	public static void adjustTabToSelectedModule(SupportedModularRobots supportedModularRobot){
 		ConstructRobotTab.setRadioButtonsEnabled(true);
 		if (supportedModularRobot.equals(SupportedModularRobots.ATRON)){
 			ConstructRobotTab.getRadionButtonATRON().setSelected(true);			
@@ -363,10 +367,37 @@ public class ConstructRobotTabController {
 		}else if (supportedModularRobot.equals(SupportedModularRobots.CKBOTSTANDARD)){
 			ConstructRobotTab.getRadionButtonCKBOTSTANDARD().setSelected(true);
 		}
-		adjustGUItoChosenMR(supportedModularRobot);
+		adaptTabToChosenMR(supportedModularRobot);
 		ConstructRobotTab.setRadioButtonsEnabled(false);
 	}
+
+
+	public static void jButton1ActionPerformed(ActionEvent evt) {
+		ConstructRobotTab.setRadioButtonsEnabled(true);
+		//ConstructRobotTab.getRadionButtonATRON().requestFocus(true);
+
+	}
 		
+	//FIXME MAKE IT MORE GENERIC BY MEANS OF IDENTIFYING THE LAST TYPE OF MODULE IN XML FILE
+	public static void adaptTabToModuleInSimulation(JMESimulation jmeSimulation){
+		if (jmeSimulation.getModules().size()>0){
+			/*Adapt first module*/
+			String modularRobotName = jmeSimulation.getModules().get(0).getProperty(BuilderHelper.getModuleTypeKey());
+			if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ATRON.toString())){
+				
+				adaptTabToChosenMR(SupportedModularRobots.ATRON);
+			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ODIN.toString())){
+				adaptTabToChosenMR(SupportedModularRobots.ODIN);
+			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.MTRAN.toString())){
+				adaptTabToChosenMR(SupportedModularRobots.MTRAN);
+			}else if(modularRobotName.toUpperCase().contains(SupportedModularRobots.CKBOTSTANDARD.toString())){
+				adaptTabToChosenMR(SupportedModularRobots.CKBOTSTANDARD);
+			}
+			
+			jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
+		}
+		
+	}
 	
 
 }

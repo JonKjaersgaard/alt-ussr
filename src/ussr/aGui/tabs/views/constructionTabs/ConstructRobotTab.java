@@ -13,6 +13,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 import ussr.aGui.FramesInter;
 import ussr.aGui.GuiFrames;
+import ussr.aGui.MainFrame;
 import ussr.aGui.MainFrameInter;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.HintPanel;
@@ -37,7 +38,7 @@ public class ConstructRobotTab extends Tabs {
 	 * The constants of grid bag layout used during design of the tab.
 	 */
 	private GridBagConstraints gridBagConstraints = new GridBagConstraints();	
-
+	
 
 	/**
 	 * Defines visual appearance of the tab called "1 Step: Construct Robot".
@@ -55,8 +56,6 @@ public class ConstructRobotTab extends Tabs {
 		initComponents();
 	}
 
-
-
 	/**
 	 * Initializes the visual appearance of all components in the tab.
 	 * Follows Strategy  pattern.
@@ -67,6 +66,10 @@ public class ConstructRobotTab extends Tabs {
 	public void initComponents(){
 
 		/*Instantiation of components*/
+		
+		jButton1 = new javax.swing.JButton();
+		
+		jToolBarSaveLoad = new javax.swing.JToolBar();
 		jToolBarGenericTools = new javax.swing.JToolBar();
 		jToolBarRotationTools = new javax.swing.JToolBar();
 		jToolBarConstructionTools = new javax.swing.JToolBar();
@@ -80,6 +83,12 @@ public class ConstructRobotTab extends Tabs {
 		jButtonJumpFromConnToConnector = new javax.swing.JButton();
 		jButtonOnNextConnector = new javax.swing.JButton();
 		jButtonOnPreviousConnector = new javax.swing.JButton();
+		
+		buttonGroup = new ButtonGroup();
+		radionButtonATRON =  new JRadioButton();
+		radionButtonODIN =  new JRadioButton();
+		radioButtonMTRAN =  new JRadioButton();
+		radionButtonCKBOTSTANDARD =  new JRadioButton();
 
 		jLabel1000 = new javax.swing.JLabel();
 		jLabel10002 = new javax.swing.JLabel();	
@@ -94,19 +103,39 @@ public class ConstructRobotTab extends Tabs {
 		
 		hintPanel  = new HintPanel(400,120);//custom panel
 
-		/*Description of components */
-		jLabel10002.setText("Choose modular robot:");
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 0;
+		/*Description of components */		
+		jButton1.setText("Start new robot");
+		jButton1.setFocusable(true);
+		jButton1.setPreferredSize(new Dimension(120,GuiFrames.COMMON_HEIGHT+2));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {            	
+            	ConstructRobotTabController.jButton1ActionPerformed(evt);            	
+            }
+        });        
+        gridBagConstraints.fill = GridBagConstraints.FIRST_LINE_START;// position on the first line start
+        gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
-		gridBagConstraints.insets = new Insets(0,0,10,0);
-		super.jComponent.add(jLabel10002,gridBagConstraints);
-
-		buttonGroup = new ButtonGroup() ;
-
-		radionButtonATRON =  new JRadioButton();
-		radionButtonATRON.setFocusable(true);// direct the user to what should be done first
-		radionButtonATRON.setText("ATRON");		
+		gridBagConstraints.insets = new Insets(0,0,10,50);  //make some space on the right so that button moves to the left and at the bottom (not so crowded)
+		super.jComponent.add(jButton1,gridBagConstraints);
+	
+		jToolBarSaveLoad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarSaveLoad.setFloatable(false);//user can not make the tool bar to float
+		jToolBarSaveLoad.setRollover(true);// the components inside are roll over
+		jToolBarSaveLoad.setToolTipText("Save or load robot");
+		jToolBarSaveLoad.setPreferredSize(new Dimension(60,GuiFrames.COMMON_HEIGHT+2));
+		gridBagConstraints.fill = GridBagConstraints.FIRST_LINE_END;
+		gridBagConstraints.gridx = 4;
+		gridBagConstraints.gridy = 0;
+		gridBagConstraints.insets = new Insets(0,0,10,0);  //make some space at the bottom and reset rest values
+		super.jComponent.add(jToolBarSaveLoad,gridBagConstraints);
+ 
+		/*Reuse the buttons for saving and loading  already initialized in the main window*/
+		jToolBarSaveLoad.add(MainFrame.initSaveButton());
+		jToolBarSaveLoad.add(MainFrame.initOpenButton());		
+		
+		radionButtonATRON.setFocusable(false);
+		radionButtonATRON.setText("ATRON");
+		radionButtonATRON.setEnabled(false);
 		radionButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
@@ -118,10 +147,10 @@ public class ConstructRobotTab extends Tabs {
 		super.jComponent.add(radionButtonATRON,gridBagConstraints);
 		buttonGroup.add(radionButtonATRON);
 		jRadioButtons.add(radionButtonATRON);
-
-		radionButtonODIN =  new JRadioButton();
+		
 		radionButtonODIN.setText("Odin");
 		radionButtonODIN.setFocusable(false);
+		radionButtonODIN.setEnabled(false);
 		radionButtonODIN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonODIN,jmeSimulation);
@@ -134,10 +163,10 @@ public class ConstructRobotTab extends Tabs {
 		super.jComponent.add(radionButtonODIN,gridBagConstraints);
 		buttonGroup.add(radionButtonODIN);
 		jRadioButtons.add(radionButtonODIN);
-
-		radioButtonMTRAN =  new JRadioButton();
+		
 		radioButtonMTRAN.setText("MTran");
 		radioButtonMTRAN.setFocusable(false);
+		radioButtonMTRAN.setEnabled(false);
 		radioButtonMTRAN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructRobotTabController.jButtonGroupActionPerformed(radioButtonMTRAN,jmeSimulation);
@@ -150,10 +179,11 @@ public class ConstructRobotTab extends Tabs {
 		super.jComponent.add(radioButtonMTRAN,gridBagConstraints);
 		buttonGroup.add(radioButtonMTRAN);
 		jRadioButtons.add(radioButtonMTRAN);
-
-		radionButtonCKBOTSTANDARD =  new JRadioButton();
+		
+		
 		radionButtonCKBOTSTANDARD.setText("CKBotStandard");
 		radionButtonCKBOTSTANDARD.setFocusable(false);
+		radionButtonCKBOTSTANDARD.setEnabled(false);
 		radionButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD,jmeSimulation);
@@ -249,7 +279,7 @@ public class ConstructRobotTab extends Tabs {
 
 		super.jComponent.add(jToolBarRotationTools,gridBagConstraints);
 
-		jLabel10003.setText("Generic funtionality for:");
+		jLabel10003.setText("Operations on existing modules:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 4;
@@ -332,7 +362,7 @@ public class ConstructRobotTab extends Tabs {
 
 
 		jLabel10001 = new javax.swing.JLabel();		
-		jLabel10001.setText("Choose construction tool:");
+		jLabel10001.setText("Add new modules:");
 		//jLabel10001.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
@@ -619,6 +649,10 @@ public class ConstructRobotTab extends Tabs {
 	public static HintPanel getHintPanel() {
 		return hintPanel;
 	}
+	
+	public static ButtonGroup getButtonGroup() {
+		return buttonGroup;
+	}
 
 	/*Declaration of tab components*/
 	private static javax.swing.JComboBox jComboBoxEntity;
@@ -632,12 +666,14 @@ public class ConstructRobotTab extends Tabs {
 	
 	private static ButtonGroup buttonGroup;	
 
+
+
 	private static  javax.swing.AbstractButton radionButtonATRON;
 	private static javax.swing.AbstractButton  radioButtonMTRAN;
 	private static javax.swing.AbstractButton radionButtonODIN;	
 	private static javax.swing.AbstractButton radionButtonCKBOTSTANDARD;
 
-
+	private javax.swing.JButton jButton1;
 	private  static javax.swing.JButton jButtonDelete;
 	private  static javax.swing.JButton jButtonMove;
 	private  static javax.swing.JButton jButtonColorConnetors;	
@@ -647,7 +683,8 @@ public class ConstructRobotTab extends Tabs {
 	private  static javax.swing.JButton jButtonJumpFromConnToConnector;
 	private  static javax.swing.JButton jButtonOnNextConnector;
 	private  static javax.swing.JButton jButtonOnPreviousConnector;
-
+	
+	private static javax.swing.JToolBar jToolBarSaveLoad;
 	private static javax.swing.JToolBar jToolBarGenericTools;
 	private static javax.swing.JToolBar jToolBarRotationTools;
 	private static javax.swing.JToolBar jToolBarConstructionTools;

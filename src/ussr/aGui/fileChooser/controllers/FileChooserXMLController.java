@@ -5,6 +5,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import ussr.aGui.MainFrameController;
+import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.saveLoadXML.InSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
@@ -42,6 +43,8 @@ public class FileChooserXMLController extends FileChooserController {
 	  			saveLoadXML = new InSimulationXMLSerializer(this.jmeSimulation);
 	  			saveLoadXML.loadXMLfile(fileDirectoryName);	
 	  			fileChooserFrame.dispose(); //close the frame(window)
+	  			
+	  			ConstructRobotTabController.adaptTabToModuleInSimulation(this.jmeSimulation);
 	  		}else if (command.equalsIgnoreCase(ActionCommands.CANCELSELECTION.toString())){//Cancel pressed			
 	  			fileChooserFrame.dispose();//close the frame(window) 	  			
 	  		}	

@@ -4,9 +4,6 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
@@ -50,12 +47,12 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 	/**
 	 * File chooser in the form of Open dialog.
 	 */
-	protected  FramesInter fcOpenFrame;
+	protected static  FramesInter fcOpenFrame;
 
 	/**
 	 * File chooser in the form of Save dialog.
 	 */
-	protected  FramesInter fcSaveFrame;	
+	protected static  FramesInter fcSaveFrame;	
 	
 	/**
 	 * Container for keeping main GUI window components, the height of which determine the height of the window.  
@@ -264,9 +261,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 		jButtonRunStepByStep = new javax.swing.JButton();		
 		jButtonRunFast = new javax.swing.JButton();
 		jButtonPause = new javax.swing.JButton();
-		jSeparator3 = new javax.swing.JToolBar.Separator();
-		jButtonSave = new javax.swing.JButton();
-		jButtonOpen = new javax.swing.JButton();		
+		jSeparator3 = new javax.swing.JToolBar.Separator();			
 		jSeparator4 = new javax.swing.JToolBar.Separator();
 		jButtonConstructRobot = new javax.swing.JButton();
 		
@@ -320,32 +315,9 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 		
 		jSeparator3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jSeparator3);
-
-		jButtonSave.setToolTipText("Save");
-		jButtonSave.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + SAVE));
-		jButtonSave.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));		
-		jButtonSave.setFocusable(false);
-		jButtonSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButtonSave.setPreferredSize(new java.awt.Dimension(30, 30));
-		jButtonSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButtonSave.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.saveActionPerformed(fcSaveFrame);
-			}
-		});
-		jToolBarGeneralControl.add(jButtonSave);
-
-		jButtonOpen.setToolTipText("Open");
-		jButtonOpen.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPEN));
-		jButtonOpen.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));	
-		jButtonOpen.setFocusable(false);		
-		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));
-		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.openActionPerformed(fcOpenFrame);
-			}
-		});
-		jToolBarGeneralControl.add(jButtonOpen);
+		
+		jToolBarGeneralControl.add(initSaveButton());
+		jToolBarGeneralControl.add(initOpenButton());
 		
 		jSeparator4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jSeparator4);
@@ -366,8 +338,40 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 
 		getContentPane().add(jToolBarGeneralControl);
 	}
-
 	
+	
+	public static javax.swing.JButton  initSaveButton(){
+		jButtonSave = new javax.swing.JButton();		
+		jButtonSave.setToolTipText("Save");
+		jButtonSave.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + SAVE));
+		jButtonSave.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));		
+		jButtonSave.setFocusable(false);
+		jButtonSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+		jButtonSave.setPreferredSize(new java.awt.Dimension(30, 30));
+		jButtonSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameController.saveActionPerformed(fcSaveFrame);
+			}
+		});
+		return jButtonSave;
+	}
+	
+	public static javax.swing.JButton  initOpenButton(){
+		jButtonOpen = new javax.swing.JButton();
+		jButtonOpen.setToolTipText("Open");
+		jButtonOpen.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPEN));
+		jButtonOpen.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));	
+		jButtonOpen.setFocusable(false);		
+		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));
+		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameController.openActionPerformed(fcOpenFrame);
+			}
+		});
+		return jButtonOpen;
+		
+	}
 	
 	/**
 	 * @return
@@ -535,8 +539,6 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 	public static javax.swing.JButton jButtonOpen;
 	public static javax.swing.JButton jButtonConstructRobot;
 	
-	private javax.swing.JButton jTabButton;
-
 	public javax.swing.JButton jButtonRunFast;
 	public javax.swing.JButton jButtonPause;
 

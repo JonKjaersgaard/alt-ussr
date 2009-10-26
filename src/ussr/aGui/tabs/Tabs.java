@@ -4,6 +4,7 @@ import java.awt.font.TextAttribute;
 import java.util.HashMap;
 import java.util.Map;
 
+import ussr.aGui.MainFrameInter;
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -77,4 +78,6 @@ public abstract class Tabs implements TabsInter {
 	public boolean isFirstTabbedPane() {
 		return firstTabbedPane;
 	}
+	
+	
 }

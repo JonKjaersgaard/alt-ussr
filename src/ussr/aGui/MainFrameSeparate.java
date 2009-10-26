@@ -5,6 +5,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.TabsInter;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
@@ -40,9 +41,11 @@ public class MainFrameSeparate extends MainFrame {
 			//System.out.println("Some");
 		}
 		
+		
 	    initComponents();
 	    changeInstanceFlagListener();//Change the instance flag to true. Meaning the window is once instantiated.
-		windowResizingListener();//Resize the main GUI window according to dimension of it's components, if user is maximizing or restoring it down.		
+		windowResizingListener();//Resize the main GUI window according to dimension of it's components, if user is maximizing or restoring it down.
+		
 	}	
 	
 	
@@ -53,11 +56,15 @@ public class MainFrameSeparate extends MainFrame {
 		initJMenuBar();
 		initJToolbarGeneralControl((int)SCREEN_DIMENSION.getWidth()/2,COMMON_HEIGHT);//TODO CHANGE null with default simulation
 		
+		
+		
 		initFirstTabbbedPane();
 		initSecondTabbedPane((int)SCREEN_DIMENSION.getWidth()/2, TAB_PANE_HEIGHT2);
 		
 		pack(); 
 		changeToLookAndFeel(this);
+	
+		
 		
 		components.add(jMenuBarMain);
 		components.add(jToolBarGeneralControl);
@@ -126,7 +133,7 @@ public class MainFrameSeparate extends MainFrame {
 	public void activate() {
 			java.awt.EventQueue.invokeLater(new Runnable() {
 		public void run() {            	
-			mainFrame = new MainFrameSeparate(jmeSimulation,tabs);
+			mainFrame = new MainFrameSeparate(jmeSimulation,tabs);			
 			mainFrame.setVisible(true);
 
 		}
