@@ -18,28 +18,38 @@ public abstract class OdinTinyOSController extends ControllerImpl implements Pac
 	public boolean sendBusy;
 	protected String type;
 	
-    public float getActuatorPosition() {
+	static final int MODULE_TYPE_UNKNOWN = 0;	
+	static final int MODULE_TYPE_ODIN_BALL = 1;
+	static final int MODULE_TYPE_SSR_LINEAR_ACTUATOR = 2;	
+
+	/* return a 0-100 output */
+    public int getActuatorPosition() {
     	if(module.getActuators().size()!=0) {
     		if(type=="OdinMuscle" || type=="OdinSSRlinearActuator") {
-    			return (float)(module.getActuators().get(0).getEncoderValue());
+    			return (int) (module.getActuators().get(0).getEncoderValue()*100);
     		}
     	}
-    	throw new RuntimeException("Not well defined method for module type "+type);
+    	//throw new RuntimeException("Not well defined method for module type "+type);
+    	return 0;
     }
     
     public boolean isActuating() {
-    	boolean acutating = false;
+    	boolean actuating = false;
     	for(int i=0;i<module.getActuators().size();i++) {
-    		acutating &=module.getActuators().get(i).isActive();
+    		actuating &=module.getActuators().get(i).isActive();
     	}
-    	return acutating;
+    	return actuating;
     }   
-
-    public void actuate(float pos) {
+   
+    /* input [-100, 100] */
+    public void setActuatorSpeed(int val) {
     	if(module.getActuators().size()!=0) {
-    		module.getActuators().get(0).setDesiredPosition(pos);
+    		if(type=="OdinMuscle" || type=="OdinSSRlinearActuator") {
+    			module.getActuators().get(0).setDesiredVelocity( ((float)val)/100 );
+    		}
     	}
-	}
+    	//throw new RuntimeException("Not well defined method for module type "+type);    	
+    }
     
 	public int getRandomNumber() {
 		//Math.random() return a double between 0 and 1
@@ -49,11 +59,11 @@ public abstract class OdinTinyOSController extends ControllerImpl implements Pac
 	
 	public int moduleType() {
 		if(type == "OdinBall")
-			return 1;
+			return MODULE_TYPE_ODIN_BALL;
 		else if(type == "OdinSSRlinearActuator")
-			return 2;
+			return MODULE_TYPE_SSR_LINEAR_ACTUATOR;
 		else
-			return 0; // unknown
+			return MODULE_TYPE_UNKNOWN;
 	}
 	
 	public int sendMessage(byte[] message, int messageSize, int connector) {
