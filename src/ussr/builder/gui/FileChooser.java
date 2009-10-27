@@ -88,13 +88,13 @@ private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {
 		System.out.println("Save pressed"); //For debugging        
 		String fileDirectoryName = jFileChooser1.getSelectedFile().toString();
 		System.out.println("fileDirectoryName:"+fileDirectoryName); //For debugging	
-		saveLoadXML.saveXMLfile(fileDirectoryName);			
+		saveLoadXML.saveXMLfile(null, fileDirectoryName);			
 		this.dispose();
 	}else if(command.equalsIgnoreCase("ApproveSelection") && this.type == true ){//Open dialog
 		System.out.println("Open pressed");//For debugging        
 		String fileDirectoryName = jFileChooser1.getSelectedFile().toString();
 		System.out.println("fileDiretoryName:"+fileDirectoryName); //For debugging  
-		saveLoadXML.loadXMLfile(fileDirectoryName);	
+		saveLoadXML.loadXMLfile(null, fileDirectoryName);	
 		this.dispose();       
 	}else if (command.equalsIgnoreCase("CancelSelection")){
 		System.out.println("Cancel pressed");//For debugging

@@ -1,6 +1,9 @@
 package ussr.builder;
 
-//import ckbot.CKBotStandard;
+import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
+import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
+import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
+import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
@@ -8,6 +11,7 @@ import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
+import ussr.samples.GenericModuleConnectorHelper;
 import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
@@ -26,7 +30,7 @@ import ussr.samples.odin.modules.OdinWheel;
  * for ATRON,MTRAN and Odin modular robots.
  * @author Konstantinas
  */
-public class BuilderMultiRobotSimulation extends GenericSimulation {
+public class CopyOfBuilderMultiRobotInSimulation extends GenericSimulation {
 
 	
 	/**
@@ -43,14 +47,45 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 		return null;
 	}
 
+	
+	//private final static String loadFile = "samples/simulations/atron/simpleVehicleSimulation.xml";
+	private final  String loadFile = "samples/simulations/atron/morphologies/simpleVehicle.xml";
+	private static  boolean preSimulation = false;
 	/**
 	 * Starts multi-robot simulation for ATRON,MTRAN and Odin.
 	 * @param args, passed arguments.
 	 */
 	public static void main( String[] args ) {
+		
+		   /* Set up home */
+	    String home = System.getenv("USSRHOME"); 
+	    if(home!=null) {
+	        System.out.println("Setting home to "+home);
+	        PhysicsFactory.getOptions().setResourceDirectory(home+"/");
+	    }		
+	    preSimulation = true;
+		runSimulationFromXMLFile();
+		
+//		
+//			/*Activate connectors*/
+//			GenericSimulation.setConnectorsAreActive(true);
+//			BuilderMultiRobotSimulation simulation = new BuilderMultiRobotSimulation();
+//			/* Specify realistic collision*/
+//			PhysicsParameters.get().setRealisticCollision(true);
+//			/* Specify simulation step*/
+//			PhysicsParameters.get().setPhysicsSimulationStepSize(0.0035f);
+//			/* Specify smallest resolution factor so that simulation can handle more modules.
+//			 * This is done in order to "in a way" avoid stack overflow */
+//			PhysicsParameters.get().setResolutionFactor(1);
+//			simulation.runSimulation(null,true);	
+	}
+	private static void runSimulationFromXMLFile(){
+		
 		/*Activate connectors*/
 		GenericSimulation.setConnectorsAreActive(true);
-		BuilderMultiRobotSimulation simulation = new BuilderMultiRobotSimulation();
+		CopyOfBuilderMultiRobotInSimulation simulation = new CopyOfBuilderMultiRobotInSimulation();		
+		
+		
 		/* Specify realistic collision*/
 		PhysicsParameters.get().setRealisticCollision(true);
 		/* Specify simulation step*/
@@ -60,6 +95,7 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 		PhysicsParameters.get().setResolutionFactor(1);
 		simulation.runSimulation(null,true);
 	}
+	
 	/**
 	 * Define the simulation to run.
 	 * @param world, the world description.
@@ -142,11 +178,17 @@ public class BuilderMultiRobotSimulation extends GenericSimulation {
 	        	}},"CKBotStandard");
 		
         /*Create the world description of simulation and set it to simulation*/
-		if(world==null) world = createWorld()
-		;
+		if(world==null) world = createWorld();
 		simulation.setWorld(world);
 		/*Simulation should be in paused state (static)in the beginning*/
 		simulation.setPause(startPaused);
+		
+		if (preSimulation){
+		SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);
+		xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT, loadFile);
+		
+		world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
+		}
 		/* Start the simulation*/
 		simulation.start();
 	}

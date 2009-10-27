@@ -89,9 +89,9 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
 	 * @param fileDirectoryName, the name of directory, like for example: "C:/newXMLfile". 
 	 */
-	public void saveXMLfile(String fileDirectoryName) {
+	public void saveXMLfile(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName) {
 		TransformerHandler transformerHandler = initializeTransformer(fileDirectoryName);
-		printOutXML(transformerHandler);
+		printOutXML(ussrXmlFileType, transformerHandler);
 	}
 
 	/**  
@@ -99,9 +99,9 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
 	 * @param fileDirectoryName, the name of directory, like for example: "C:/newXMLfile".	 
 	 */
-	public void loadXMLfile(String fileDirectoryName){
+	public void loadXMLfile(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName){
 		Document document = initializeDocument(fileDirectoryName);
-		loadInXML(document);	
+		loadInXML(ussrXmlFileType, document);	
 	}
 
 	/**
@@ -159,17 +159,19 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * Method for defining the format of XML to print into the xml file. In other words
 	 * what to save in the file about simulation.
 	 * This method is so-called "Primitive operation" for above TEMPLATE method, called "saveXMLfile(String fileDirectoryName)". 	  
+	 * @param ussrXmlFileType TODO
 	 * @param transformerHandler,the content handler used to print out XML format. 
 	 */
-	public abstract void printOutXML(TransformerHandler transformerHandler);
+	public abstract void printOutXML(UssrXmlFileTypes ussrXmlFileType, TransformerHandler transformerHandler);
 
 	/**
 	 * Method for defining the format of reading the data from XML file.  In other words
 	 * what to read from the file into simulation.
 	 *  This method is so-called "Primitive operation" for above TEMPLATE method, called "loadXMLfile(String fileDirectoryName)". 	  
+	 * @param ussrXmlFileType TODO
 	 * @param document,DOM object of document. 
 	 */
-	public abstract void loadInXML(Document document);
+	public abstract void loadInXML(UssrXmlFileTypes ussrXmlFileType, Document document);
 	
 	
 	/**
@@ -523,12 +525,15 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	
 	/*EXPERIMENTAL PART FOR SIMULATION SET UP*/
 	public char[]  getControllerLocation(Module currentModule){
-		String c = currentModule.getController().toString();//.toString();
-		//currentModule.getController().getClass().
-		//System.out.println("Cont" + c);
-		//FIXME
-		return c.toCharArray();
-
+		String roughControllerLocation = currentModule.getController().toString();//.toString();
+		String[]controllerLocation = null;
+		if (roughControllerLocation.contains("@")){
+			controllerLocation =  roughControllerLocation.split("@");			
+		}else if (roughControllerLocation.contains("$")){
+			controllerLocation =  roughControllerLocation.split("$");
+		}
+			
+		return controllerLocation[0].toCharArray();
 	}
 
 

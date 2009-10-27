@@ -1,11 +1,8 @@
 package ussr.builder;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ussr.builder.helpers.ControllerFactory;
 import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
+import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
 import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
@@ -18,12 +15,8 @@ import ussr.samples.GenericModuleConnectorHelper;
 import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;
-import ussr.samples.atron.ATRONController;
-import ussr.samples.ckbot.CKBotController;
 import ussr.samples.ckbot.CKBotStandard;
 import ussr.samples.mtran.MTRAN;
-import ussr.samples.mtran.MTRANController;
-import ussr.samples.odin.OdinController;
 import ussr.samples.odin.modules.OdinBall;
 import ussr.samples.odin.modules.OdinBattery;
 import ussr.samples.odin.modules.OdinHinge;
@@ -37,9 +30,14 @@ import ussr.samples.odin.modules.OdinWheel;
  * for ATRON,MTRAN and Odin modular robots.
  * @author Konstantinas
  */
-public class Loader extends GenericSimulation {
-    private static String fileName;
-    private static List<String> controllerNames = new ArrayList<String>();
+public class BuilderMultiRobotPreSimulation extends GenericSimulation {
+
+	
+	/**
+	 * The obstacle generator for generating line of box obstacles
+	 */
+	protected static ObstacleGenerator.ObstacleType obstacleType = ObstacleGenerator.ObstacleType.LINE;
+	
 	
 	/**
 	 * Returns the robot in the simulation.
@@ -49,28 +47,29 @@ public class Loader extends GenericSimulation {
 		return null;
 	}
 
+	
+	//private final static String loadFile = "samples/simulations/atron/simpleVehicleSimulation.xml";
+	public static final  String loadFile = "samples/simulations/atron/morphologies/simpleVehicle.xml";
+	
 	/**
 	 * Starts multi-robot simulation for ATRON,MTRAN and Odin.
 	 * @param args, passed arguments.
 	 */
 	public static void main( String[] args ) {
-	    if(args.length!=2) throw new Error("Usage: provide robot definition xml file and name of the Java controller class(es)");
-	    fileName=args[0];
-	    for(int i=1; i<args.length; i++)
-	        controllerNames.add(args[i]);
-	    runSimulationFromFile();
-	}
-	
-	public static void runSimulationFromFile() {
-	    /* Set up home */
+		   /* Set up home */
 	    String home = System.getenv("USSRHOME"); 
 	    if(home!=null) {
 	        System.out.println("Setting home to "+home);
 	        PhysicsFactory.getOptions().setResourceDirectory(home+"/");
-	    }
+	    }		
+		runSimulationFromXMLFile();	
+	}
+	private static void runSimulationFromXMLFile(){
+		
 		/*Activate connectors*/
 		GenericSimulation.setConnectorsAreActive(true);
-		Loader simulation = new Loader();
+		BuilderMultiRobotPreSimulation simulation = new BuilderMultiRobotPreSimulation();		
+		
 		/* Specify realistic collision*/
 		PhysicsParameters.get().setRealisticCollision(true);
 		/* Specify simulation step*/
@@ -80,6 +79,7 @@ public class Loader extends GenericSimulation {
 		PhysicsParameters.get().setResolutionFactor(1);
 		simulation.runSimulation(null,true);
 	}
+	
 	/**
 	 * Define the simulation to run.
 	 * @param world, the world description.
@@ -87,21 +87,16 @@ public class Loader extends GenericSimulation {
 	 */
 	public void runSimulation(WorldDescription world, boolean startPaused) {
 		PhysicsLogger.setDefaultLoggingLevel();
+		
 		/* Create the simulation*/
 		final PhysicsSimulation simulation = PhysicsFactory.createSimulator();
-		
-		/**
-		 * Find the controller(s)
-		 */
-		final ControllerFactory controllerFactory = new ControllerFactory(controllerNames);
 		
 		/*Set ATRON robot to simulation and assign default controller to it*/
 		ATRON atron = new ATRON(){
 			public Controller createController() {
-			    if(controllerFactory.has(ATRONController.class))
-			        return controllerFactory.create(ATRONController.class);
 				return new ATRONControllerDefault() {
 					public void activate() {
+						//delay(10000);
 						super.activate();
 					}
 				};
@@ -116,8 +111,6 @@ public class Loader extends GenericSimulation {
 		/*Set MTRAN robot to simulation and assign default controller to it*/
 		simulation.setRobot(new MTRAN(){
 			public Controller createController() {
-                if(controllerFactory.has(MTRANController.class))
-                    return controllerFactory.create(MTRANController.class);
 				return new MTRANControllerDefault() {
 					public void activate() {
 						//delay(10000);
@@ -129,41 +122,44 @@ public class Loader extends GenericSimulation {
 		/*Set different Odin modules  to simulation and assign default controllers to them */
 		simulation.setRobot(new OdinMuscle(){
 			public Controller createController() {
-                return getDefaultOdinController(controllerFactory);
+				return new OdinControllerDefault() {
+					public void activate() {
+						//delay(10000);
+						super.activate();
+					}
+				};
 			}},"OdinMuscle");
 		simulation.setRobot(new OdinWheel(){
 			public Controller createController() {
-				return getDefaultOdinController(controllerFactory);
+				return new OdinControllerDefault();
 			}},"OdinWheel");
 		simulation.setRobot(new OdinHinge(){
 			public Controller createController() {
-				return getDefaultOdinController(controllerFactory);
+				return new OdinControllerDefault();
 			}},"OdinHinge");
 
 		simulation.setRobot(new OdinBattery(){
 			public Controller createController() {
-				return getDefaultOdinController(controllerFactory);
+				return new OdinControllerDefault();
 			}},"OdinBattery");
 
 		simulation.setRobot(new OdinBall(){
 			public Controller createController() {
-				return getDefaultOdinController(controllerFactory);
+				return new OdinControllerDefault();
 			}},"OdinBall");
 
 		simulation.setRobot(new OdinSpring(){
 			public Controller createController() {
-				return getDefaultOdinController(controllerFactory);
+				return new OdinControllerDefault();
 			}},"OdinSpring");
 
 		simulation.setRobot(new OdinTube(){
 			public Controller createController() {
-				return getDefaultOdinController(controllerFactory);
+				return new OdinControllerDefault();
 			}},"OdinTube");	
 		 simulation.setRobot(new CKBotStandard(){
 	        	public Controller createController() {
-	        	    if(controllerFactory.has(CKBotController.class))
-	                    return controllerFactory.create(CKBotController.class);
-	        	    return new CKBotControllerDefault();
+	        		return new CKBotControllerDefault();
 	        	}},"CKBotStandard");
 		
         /*Create the world description of simulation and set it to simulation*/
@@ -171,22 +167,17 @@ public class Loader extends GenericSimulation {
 		simulation.setWorld(world);
 		/*Simulation should be in paused state (static)in the beginning*/
 		simulation.setPause(startPaused);
-		/* Load the robot */
+		
 		SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);
-		xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,fileName);
-		/* Connect modules */
+		xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT, loadFile);
+		
 		world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
+		
 		/* Start the simulation*/
 		simulation.start();
 	}
 
-	private Controller getDefaultOdinController(final ControllerFactory controllerFactory) {
-        if(controllerFactory.has(OdinController.class))
-            return controllerFactory.create(OdinController.class);
-        return new OdinControllerDefault();
-    }
-
-    /**
+	/**
 	 * Create a world description for simulation.
 	 * @return world, the world description.
 	 */

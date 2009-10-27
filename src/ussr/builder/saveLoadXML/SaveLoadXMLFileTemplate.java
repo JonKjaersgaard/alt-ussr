@@ -10,16 +10,18 @@ public interface SaveLoadXMLFileTemplate {
 	/**	
 	 * Saves the data about simulation in chosen XML format file.
 	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
+	 * @param ussrXmlFileType TODO
 	 * @param fileDirectoryName, the name of directory, like for example: "C:/newXMLfile". 
 	 */
-	public void saveXMLfile(String fileDirectoryName);
+	public void saveXMLfile(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName);
 		
 	/**  
 	 * Loads the data about simulation from chosen XML file into simulation.
 	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
+	 * @param ussrXmlFileType TODO
 	 * @param fileDirectoryName, the name of directory, like for example: "C:/newXMLfile".	 
 	 */
-	public void loadXMLfile(String fileDirectoryName);
+	public void loadXMLfile(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName);
 	
 	/**
 	 * Method for defining the format of reading the data from XML file.  In other words

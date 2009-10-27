@@ -10,6 +10,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import com.jme.math.Quaternion;
 
+import ussr.builder.BuilderMultiRobotPreSimulation;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
@@ -27,71 +28,117 @@ import ussr.physics.jme.JMESimulation;
  */  
 public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
-	
-	private final static String controllerLocationTag = "CONTROLLER_LOCATION";
-
 	/**
 	 * Method for defining the format of XML to print into the xml file. In other words
 	 * what to save in the file about simulation.  
 	 * @param transformerHandler,the content handler used to print out XML format. 
 	 */
-	public void printOutXML(TransformerHandler transformerHandler) {
-	/*	printFirstStartTag(transformerHandler, "SIMULATION");		
-		
-		try {
-			transformerHandler.startElement("","","WORLD_DESCRIPTION",EMPTY_ATT);
-			printSubTagsWithValue(transformerHandler, "PLANE_SIZE", (""+getWorldDescription().getPlaneSize()).toCharArray());
-			printSubTagsWithValue(transformerHandler, "PLANE_TEXTURE", getWorldDescription().getPlaneTexture().getFileName().toString().toCharArray());
-			printSubTagsWithValue(transformerHandler, "CAMERA_POSITION", getWorldDescription().getCameraPosition().toString().toCharArray());
+	public void printOutXML(UssrXmlFileTypes ussrXmlFileType, TransformerHandler transformerHandler) {
+		if (ussrXmlFileType.equals(UssrXmlFileTypes.ROBOT)){
+			printRobotXML(transformerHandler);
+
+		}else if (ussrXmlFileType.equals(UssrXmlFileTypes.SIMULATION)){
 			
-			
-			transformerHandler.endElement("","","WORLD_DESCRIPTION");
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			printFirstStartTag(transformerHandler, TagsUsed.SIMULATION);		
+
+			try {
+
+				transformerHandler.startElement("","",TagsUsed.ROBOT.toString(),EMPTY_ATT);
+
+				printSubTagsWithValue(transformerHandler, TagsUsed.TYPE, getType(getModuleByIndex(0)));
+				printSubTagsWithValue(transformerHandler, TagsUsed.CONTROLLER_LOCATION, getControllerLocation(getModuleByIndex(0)));
+				printSubTagsWithValue(transformerHandler, TagsUsed.MORPHOLOGY_LOCATION, BuilderMultiRobotPreSimulation.loadFile.toCharArray());
+
+				//printSubTagsWithValue(transformerHandler, "PLANE_SIZE", (""+getWorldDescription().getPlaneSize()).toCharArray());
+				//printSubTagsWithValue(transformerHandler, "PLANE_TEXTURE", getWorldDescription().getPlaneTexture().getFileName().toString().toCharArray());
+				//printSubTagsWithValue(transformerHandler, "CAMERA_POSITION", getWorldDescription().getCameraPosition().toString().toCharArray());
+
+				transformerHandler.endElement("","",TagsUsed.ROBOT.toString());
+
+
+				transformerHandler.startElement("","",TagsUsed.WORLD_DESCRIPTION.toString(),EMPTY_ATT);
+
+				printSubTagsWithValue(transformerHandler, TagsUsed.TYPE, getType(getModuleByIndex(0)));
+
+
+				transformerHandler.endElement("","",TagsUsed.WORLD_DESCRIPTION.toString());
+
+
+				transformerHandler.startElement("","",TagsUsed.PHYSICS_PARAMETERS.toString(),EMPTY_ATT);
+
+				printSubTagsWithValue(transformerHandler, TagsUsed.TYPE, getType(getModuleByIndex(0)));
+
+				transformerHandler.endElement("","",TagsUsed.PHYSICS_PARAMETERS.toString());
+
+
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			printFirstEndTag(transformerHandler, TagsUsed.SIMULATION);
 		}
-	
-		printFirstEndTag(transformerHandler, "SIMULATION");*/
-		
+
+
+
+
+
+	}
+
+	private void  printRobotXML(TransformerHandler transformerHandler){
 		printFirstStartTag(transformerHandler, TagsUsed.MODULES);
 		int amountModules = numberOfSimulatedModules();
 		/*For each module print out the start and end tags with relevant data*/
 		for (int module=0; module<amountModules;module++){           
 			Module currentModule = getModuleByIndex(module);			
-				try {				
-					transformerHandler.startElement("","",TagsUsed.MODULE.toString(),EMPTY_ATT);				
-					printSubTagsWithValue(transformerHandler, TagsUsed.ID, getID(currentModule));				
-					printSubTagsWithValue(transformerHandler, TagsUsed.TYPE, getType(currentModule));
-					printSubTagsWithValue(transformerHandler, TagsUsed.NAME, getName(currentModule));
-					printSubTagsWithValue(transformerHandler, TagsUsed.ROTATION, getRotation(currentModule));
-					printSubTagsWithValue(transformerHandler, TagsUsed.ROTATION_QUATERNION, getRotationQuaternion(currentModule));
-					printSubTagsWithValue(transformerHandler, TagsUsed.POSITION, getPosition(currentModule));
-					//printSubTagsWithValue(transformerHandler, positionVectorTag, getPositionVector(currentModule));
-					
-					//printSubTagsWithValue(transformerHandler, controllerLocationTag, getControllerLocation(currentModule));
-					printSubTagsWithValue(transformerHandler,  TagsUsed.LABELS_MODULE, getLabelsModule(currentModule));
-					printSubTagsWithValue(transformerHandler,  TagsUsed.COMPONENTS, getAmountComponents(currentModule));
-					printSubTagsWithValue(transformerHandler, TagsUsed.COLORS_COMPONENTS, getColorsComponents(currentModule));
-					printSubTagsWithValue(transformerHandler, TagsUsed.CONNECTORS, getAmountConnectors(currentModule));			
-					printSubTagsWithValue(transformerHandler, TagsUsed.COLORS_CONNECTORS, getColorsConnectors(currentModule));
-					printSubTagsWithValue(transformerHandler,TagsUsed.LABELS_CONNECTORS, getLabelsConnectors(currentModule));
-					
-					printInfoConnectors(transformerHandler,getInfoConnectors(currentModule, true), getInfoConnectors(currentModule, false));						
-					transformerHandler.endElement("","",TagsUsed.MODULE.toString());
-				} catch (SAXException e) {
-					throw new Error ("SAX exception appeared and named as: "+ e.toString());
-				}			
+			try {				
+				transformerHandler.startElement("","",TagsUsed.MODULE.toString(),EMPTY_ATT);				
+				printSubTagsWithValue(transformerHandler, TagsUsed.ID, getID(currentModule));				
+				printSubTagsWithValue(transformerHandler, TagsUsed.TYPE, getType(currentModule));
+				printSubTagsWithValue(transformerHandler, TagsUsed.NAME, getName(currentModule));
+				printSubTagsWithValue(transformerHandler, TagsUsed.ROTATION, getRotation(currentModule));
+				printSubTagsWithValue(transformerHandler, TagsUsed.ROTATION_QUATERNION, getRotationQuaternion(currentModule));
+				printSubTagsWithValue(transformerHandler, TagsUsed.POSITION, getPosition(currentModule));
+				//printSubTagsWithValue(transformerHandler, positionVectorTag, getPositionVector(currentModule));
+
+				//printSubTagsWithValue(transformerHandler, controllerLocationTag, getControllerLocation(currentModule));
+				printSubTagsWithValue(transformerHandler,  TagsUsed.LABELS_MODULE, getLabelsModule(currentModule));
+				printSubTagsWithValue(transformerHandler,  TagsUsed.COMPONENTS, getAmountComponents(currentModule));
+				printSubTagsWithValue(transformerHandler, TagsUsed.COLORS_COMPONENTS, getColorsComponents(currentModule));
+				printSubTagsWithValue(transformerHandler, TagsUsed.CONNECTORS, getAmountConnectors(currentModule));			
+				printSubTagsWithValue(transformerHandler, TagsUsed.COLORS_CONNECTORS, getColorsConnectors(currentModule));
+				printSubTagsWithValue(transformerHandler,TagsUsed.LABELS_CONNECTORS, getLabelsConnectors(currentModule));
+
+				printInfoConnectors(transformerHandler,getInfoConnectors(currentModule, true), getInfoConnectors(currentModule, false));						
+				transformerHandler.endElement("","",TagsUsed.MODULE.toString());
+			} catch (SAXException e) {
+				throw new Error ("SAX exception appeared and named as: "+ e.toString());
+			}			
 		}
-		printFirstEndTag(transformerHandler, TagsUsed.MODULES);		
+		printFirstEndTag(transformerHandler, TagsUsed.MODULES);	
 	}
 
 	protected abstract Module getModuleByIndex(int module);
-	
+
 	protected abstract WorldDescription getWorldDescription();
 
-    protected abstract int numberOfSimulatedModules();
+	protected abstract int numberOfSimulatedModules();
 
-    public void loadInXML(Document document) {
+	public void loadInXML(UssrXmlFileTypes ussrXmlFileType, Document document) {
+
+		if (ussrXmlFileType.equals(UssrXmlFileTypes.ROBOT)){
+			loadRobotXML(document);
+		}else if (ussrXmlFileType.equals(UssrXmlFileTypes.SIMULATION)){
+
+		}
+
+
+
+
+
+	}
+	
+	private void loadRobotXML(Document document){
 		NodeList nodeList = document.getElementsByTagName(TagsUsed.MODULE.toString());
 
 		for (int node = 0; node < nodeList.getLength(); node++) {
@@ -143,8 +190,9 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 		}	
 	}
+	
 
-    protected abstract void createNewModule(String moduleName, String moduleType, VectorDescription modulePosition, RotationDescription moduleRotation, LinkedList<Color> listColorsComponents,LinkedList<Color> listColorsConnectors, String labelsModule, String[] labelsConnectors);
+	protected abstract void createNewModule(String moduleName, String moduleType, VectorDescription modulePosition, RotationDescription moduleRotation, LinkedList<Color> listColorsComponents,LinkedList<Color> listColorsConnectors, String labelsModule, String[] labelsConnectors);
 
 	/**
 	 * Extracts the value of specific coordinate from the string of VectorDescription.
@@ -201,7 +249,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 		return extractedValue; 
 	}
-	
-	
+
+
 
 }
