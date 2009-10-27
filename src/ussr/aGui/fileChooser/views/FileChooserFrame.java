@@ -1,12 +1,10 @@
 package ussr.aGui.fileChooser.views;
-
 import java.util.ArrayList;
 
 import ussr.aGui.GuiFrames;
-
 import ussr.aGui.fileChooser.FileFilter;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
-import ussr.physics.jme.JMESimulation;
+
 
 /**
  * Manages the FileChooser in two dialog forms: Open and Save.
@@ -27,9 +25,16 @@ public abstract class FileChooserFrame extends GuiFrames{
 	protected ArrayList<String> fileExtensions;
 
 	/**
-	 * The controllers for each file extension.
+	 * The controller for file extension.
 	 */
-	protected ArrayList<FileChooserControllerInter> fileChooserControllers;
+	protected FileChooserControllerInter fileChooserController;
+	
+	public FileChooserFrame(ArrayList<String> fileExtensions, FileChooserControllerInter fileChooserController){
+		this.fileExtensions= fileExtensions;
+		this.fileChooserController= fileChooserController;
+		initComponents();
+	}
+	
 	
 	/** 
 	 * This method is called from within the constructor to initialize the form(frame) of the file chooser.
@@ -40,7 +45,7 @@ public abstract class FileChooserFrame extends GuiFrames{
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);		
 		getContentPane().setLayout(new java.awt.FlowLayout());	
 		jFileChooser.setAcceptAllFileFilterUsed(false);	
-		getContentPane().add(jFileChooser);// MAC HAS PROBLEMS WITH THAT			
+		getContentPane().add(jFileChooser);// MAC HAS PROBLEMS WITH THAT		
 		pack();
 		changeToLookAndFeel(this);// for all platforms
 		setSize(580,450);//THINK MORE HERE
@@ -53,45 +58,11 @@ public abstract class FileChooserFrame extends GuiFrames{
 	public void setFilesToFilter(ArrayList<String> fileExtensions){		
 		for (int index=0; index<fileExtensions.size(); index++){
 			if (fileExtensions.get(index).indexOf(".")==0){// if format has "." in the beginning. For example ".xml"
-				jFileChooser.setFileFilter(new FileFilter (fileExtensions.get(index)));
-				//TODO setController(index);				
+				jFileChooser.setFileFilter(new FileFilter (fileExtensions.get(index)));			
 			}else{
 				throw new Error("Wrong format of file extension. Point is missing in the beginning. It should be for instance: .xml");
 			}
 		}
 	}
 	
-//TODO ADD setting of controllers depending on file extension(Here experimenting).
-/*	public void setController(int index){
-
-		int sizeExtensions = fileExtensions.size();
-		int sizeControllers = fileChooserControllers.size();		
-		//if(sizeExtensions>1&&sizeControllers>1){
-		//TODO For future implementation. Add calls for controllers if there will be more file extensions than one.
-		//throw new Error("The implementation is missing for more than one extension");
-		if (sizeExtensions==sizeControllers){
-										
-				addFileChooserActionListener(fileChooserControllers.get(index));
-			
-		}else{
-			throw new Error("The amount of file extensions is not matching the amount of controllers to control them ");
-		}
-
-	}*/
-
-/*	private void addFileChooserActionListener(final FileChooserControllerInter fileChooserController){
-		jFileChooser.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				System.out.println("Some");
-				if (fcFrame instanceof FileChooserOpenFrame){
-					System.out.println("Some1");
-					fileChooserController.controlOpenDialog(evt, jFileChooser, fcFrame);
-				}else if (fcFrame instanceof FileChooserSaveFrame) {
-					System.out.println("Some2");
-					fileChooserController.controlSaveDialog(evt, jFileChooser, fcFrame);
-				}				
-			}
-		});
-	}*/
-
 }

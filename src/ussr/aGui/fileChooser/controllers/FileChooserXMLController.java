@@ -4,11 +4,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
-import ussr.aGui.MainFrameController;
+import ussr.aGui.fileChooser.views.FileChooserSaveAsFrame;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.saveLoadXML.InSimulationXMLSerializer;
-import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
+import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -41,7 +41,10 @@ public class FileChooserXMLController extends FileChooserController {
 	  	  if(command.equalsIgnoreCase(ActionCommands.APPROVESELECTION.toString()) ){ 		
 	  			String fileDirectoryName = fileChooser.getSelectedFile().toString();// get the directory of selected file	  			
 	  			saveLoadXML = new InSimulationXMLSerializer(this.jmeSimulation);
-	  			saveLoadXML.loadXMLfile(fileDirectoryName);	
+	  			saveLoadXML.loadXMLfile(UssrXmlFileTypes.ROBOT, fileDirectoryName);
+	  			
+	  			//saveLoadXML.loadXMLfile(UssrXmlFileTypes.SIMULATION, fileDirectoryName);
+	  			
 	  			fileChooserFrame.dispose(); //close the frame(window)
 	  			
 	  			ConstructRobotTabController.adaptTabToModuleInSimulation(this.jmeSimulation);
@@ -57,10 +60,39 @@ public class FileChooserXMLController extends FileChooserController {
 		if(command.equalsIgnoreCase(ActionCommands.APPROVESELECTION.toString())  ){		        
 			String fileDirectoryName = fileChooser.getSelectedFile().toString();
 			saveLoadXML = new InSimulationXMLSerializer(this.jmeSimulation);
-			saveLoadXML.saveXMLfile(fileDirectoryName);	
+			saveLoadXML.saveXMLfile(UssrXmlFileTypes.ROBOT, fileDirectoryName);
+			//saveLoadXML.saveXMLfile(UssrXmlFileTypes.SIMULATION, fileDirectoryName);
+			
 			fileChooserFrame.dispose();//close the frame(window)			
 		}else if (command.equalsIgnoreCase(ActionCommands.CANCELSELECTION.toString())){//Cancel pressed			
 			fileChooserFrame.dispose();//close the frame(window)			
 		}		
+	}
+
+	
+	private UssrXmlFileTypes ussXmlFileType;
+	
+	@Override
+	public void controlSaveAsDialog(ActionEvent evt, JFileChooser fileChooser,
+			FileChooserSaveAsFrame fcSaveAsFrame) {		
+		
+		String fileDescription = fileChooser.getFileFilter().getDescription();
+		if(fileDescription.contains(UssrXmlFileTypes.ROBOT.toString().toLowerCase().replaceFirst("r", "R"))){
+			ussXmlFileType =UssrXmlFileTypes.ROBOT;
+		}else if (fileDescription.contains(UssrXmlFileTypes.SIMULATION.toString().toLowerCase().replaceFirst("s", "S"))){
+			ussXmlFileType = UssrXmlFileTypes.SIMULATION;
+		}
+			//TODO Repeating code
+		String command = evt.getActionCommand();//Selected button command			
+		if(command.equalsIgnoreCase(ActionCommands.APPROVESELECTION.toString())  ){		        
+			String fileDirectoryName = fileChooser.getSelectedFile().toString();
+			saveLoadXML = new InSimulationXMLSerializer(this.jmeSimulation);
+			saveLoadXML.saveXMLfile(ussXmlFileType, fileDirectoryName);
+			
+			fcSaveAsFrame.dispose();//close the frame(window)			
+		}else if (command.equalsIgnoreCase(ActionCommands.CANCELSELECTION.toString())){//Cancel pressed			
+			fcSaveAsFrame.dispose();//close the frame(window)			
+		}		
+		
 	}
 }

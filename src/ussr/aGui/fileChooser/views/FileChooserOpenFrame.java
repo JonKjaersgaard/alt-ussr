@@ -19,12 +19,10 @@ public class FileChooserOpenFrame extends FileChooserFrame  {
 	/**
 	 * Manages the file chooser in the form of Open dialog.
 	 * @param fileExtensions, extensions of the files, which will be available to filter out by the file chooser.
-	 * @param fileChooserControllers, the controllers for each file extension.
+	 * @param fileChooserController, the controller for  file extension.
 	 */
-	public FileChooserOpenFrame(ArrayList<String> fileExtensions, ArrayList<FileChooserControllerInter> fileChooserControllers) {
-		this.fileExtensions = fileExtensions;
-		this.fileChooserControllers = fileChooserControllers;
-		initComponents();
+	public FileChooserOpenFrame(ArrayList<String> fileExtensions, FileChooserControllerInter fileChooserController) {
+		super(fileExtensions,fileChooserController);
 		changeToOpenDialog();
 		setFilesToFilter(fileExtensions);
 	}
@@ -34,19 +32,12 @@ public class FileChooserOpenFrame extends FileChooserFrame  {
 	 */
 	private void changeToOpenDialog(){
 		setUSSRicon(this);
-		setTitle("Load simulation from the file");
-		jFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);	
+		setTitle("Open");
+		super.jFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);	
 		
-		jFileChooser.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				int sizeExtensions = fileExtensions.size();
-				int sizeControllers = fileChooserControllers.size();
-				if(sizeExtensions>1&&sizeControllers>1){
-					//TODO For future implementation. Add calls for controllers if there will be more file extensions than one.
-					//throw new Error("The implementation is missing for more than one extension");
-				}else{
-				fileChooserControllers.get(0).controlOpenDialog(evt,jFileChooser,fcOpenFrame);//call controller
-				}
+		super.jFileChooser.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {				
+				fileChooserController.controlOpenDialog(evt,jFileChooser,fcOpenFrame);//call controller				
 			}
 		});		
 	}
@@ -58,7 +49,7 @@ public class FileChooserOpenFrame extends FileChooserFrame  {
 	public void activate(){
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() { 
-				fcOpenFrame = new FileChooserOpenFrame(fileExtensions,fileChooserControllers);
+				fcOpenFrame = new FileChooserOpenFrame(fileExtensions,fileChooserController);
 				fcOpenFrame.setVisible(true);				
 			}
 		});    	

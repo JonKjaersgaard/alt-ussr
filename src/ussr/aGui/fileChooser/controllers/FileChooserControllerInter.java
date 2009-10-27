@@ -1,5 +1,10 @@
 package ussr.aGui.fileChooser.controllers;
 
+import java.awt.event.ActionEvent;
+
+import javax.swing.JFileChooser;
+
+import ussr.aGui.fileChooser.views.FileChooserSaveAsFrame;
 import ussr.physics.jme.JMESimulation;
 
 public interface FileChooserControllerInter {
@@ -19,5 +24,8 @@ public interface FileChooserControllerInter {
 	 * @param fileChooserFrame
 	 */
 	public  void controlOpenDialog(java.awt.event.ActionEvent evt,javax.swing.JFileChooser fileChooser,javax.swing.JFrame fileChooserFrame);
+
+	public void controlSaveAsDialog(ActionEvent evt, JFileChooser fileChooser,
+			FileChooserSaveAsFrame fcSaveAsFrame);
 
 }

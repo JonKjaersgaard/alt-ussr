@@ -191,9 +191,7 @@ public class AssignBehaviorsTab extends Tabs {
 			jToolBar2.setRollover(true);// the buttons inside are roll over
 			jToolBar2.setToolTipText("Generic tools");
 			jToolBar2.setPreferredSize(new Dimension(jToolBar1Width,J_LIST_HEIGHT-70));
-			jToolBar2.setOrientation(JToolBar.VERTICAL);
-		 
-		 
+			jToolBar2.setOrientation(JToolBar.VERTICAL);		 
 		 
 		   final ButtonGroup buttonGroupEntities = new ButtonGroup() ;
 
@@ -205,7 +203,7 @@ public class AssignBehaviorsTab extends Tabs {
 				public void actionPerformed(java.awt.event.ActionEvent evt) {
 					//AssignBehaviorsTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
 				}
-			});
+			});			
 		
 			jToolBar2.add(radioButtonModule);
 			buttonGroupEntities.add(radioButtonModule);
@@ -231,14 +229,33 @@ public class AssignBehaviorsTab extends Tabs {
 		
 			jToolBar2.add(radioButtonSensor);
 			buttonGroupEntities.add(radioButtonSensor);
-
+ 
+			final ButtonGroup buttonGroupTypesSensors = new ButtonGroup() ;
 		
-			
+			radioButtonProximitySensor =  new JRadioButton();		
+			radioButtonProximitySensor.setText("Proximity");	
+			radioButtonProximitySensor.setSelected(true);//set initially selected so that jList will containe already filtered out controllers
+			radioButtonProximitySensor.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent evt) {
+					//AssignBehaviorsTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
+				}
+			});
 			gridBagConstraintsInternal.fill = GridBagConstraints.HORIZONTAL;
-			gridBagConstraintsInternal.gridx = 0;
-			gridBagConstraintsInternal.gridy = 0;
-			//gridBagConstraintsInternal.insets = new Insets(0,0,0,5); // some space on the right
-			labelingPanel.add(jToolBar2,gridBagConstraints);			
+			gridBagConstraintsInternal.gridx = 1;
+			gridBagConstraintsInternal.gridy = 4;
+			gridBagConstraintsInternal.insets = new Insets(0,50,0,0);
+			
+			
+			jToolBar2.add(radioButtonProximitySensor,gridBagConstraintsInternal);
+			
+			buttonGroupTypesSensors.add(radioButtonProximitySensor);
+			
+			labelingPanel.add(jToolBar2,gridBagConstraints);
+			
+			super.jComponent.add(labelingPanel,gridBagConstraints);
+			
+			//gridBagConstraintsInternal.insets = new Insets(10,0,0,5); // some space on the right
+						
 		
 		
 		/*jLabel10005.setText("Entity to label");
@@ -256,7 +273,7 @@ public class AssignBehaviorsTab extends Tabs {
 		
 		
 		
-		super.jComponent.add(labelingPanel,gridBagConstraints);
+		
 			
 	
 		
@@ -321,6 +338,7 @@ public class AssignBehaviorsTab extends Tabs {
 	private static javax.swing.AbstractButton radioButtonModule;
 	private static javax.swing.AbstractButton radionButtonConnector;
 	private static javax.swing.AbstractButton  radioButtonSensor;
+	private static javax.swing.AbstractButton radioButtonProximitySensor;
 	
 	private static javax.swing.JToolBar jToolBar1;
 	private static javax.swing.JToolBar jToolBar2;

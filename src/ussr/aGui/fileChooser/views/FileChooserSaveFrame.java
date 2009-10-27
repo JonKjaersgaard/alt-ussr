@@ -1,61 +1,61 @@
 package ussr.aGui.fileChooser.views;
 
 import java.util.ArrayList;
-
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
-import ussr.physics.jme.JMESimulation;
+
 
 /**
- * Manages the file chooser in the form of Save dialog.
+ * Manages the file chooser in the forms of Save dialog.
  * @author Konstantinas
  */
 public class FileChooserSaveFrame extends FileChooserFrame  {
-	
-	
+
+	/**
+	 * TODO
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * The file chooser frame in Save dialog form.
+	 */
 	private static FileChooserSaveFrame fcSaveFrame;
-	
+
 	/**
 	 * Manages the file chooser in the form of Save dialog.
 	 * @param fileExtensions,extensions of the files, which will be available to filter out by the file chooser.
-	 * @param fileChooserControllers, the controllers for each file extension.
-	 * @param jmeSimulation,
+	 * @param fileChooserController, the controller for file extension.
 	 */
-	public FileChooserSaveFrame(ArrayList<String> fileExtensions,ArrayList<FileChooserControllerInter> fileChooserControllers) {	
-		this.fileExtensions = fileExtensions;
-		this.fileChooserControllers = fileChooserControllers;
-		initComponents();
+	public FileChooserSaveFrame(ArrayList<String> fileExtensions,FileChooserControllerInter fileChooserController) {
+		super(fileExtensions,fileChooserController);			
 		changeToSaveDialog();
 		setFilesToFilter(fileExtensions);
 	}
-	
-	
+
+
 	/**
 	 * Changes several components of file chooser so that it is Save dialog.
 	 */
 	private void changeToSaveDialog(){
 		setUSSRicon(this);
-		setTitle("Save simulation in the file");
-		jFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);		
+		jFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);	
+		setTitle("Save");
 		jFileChooser.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if(fileExtensions.size()>1&&fileChooserControllers.size()>1){
-					//TODO For future implementation. Add calls for controllers if there will be more file extensions than one.
-					throw new Error("The implementation is missing for more than one extension");
-				}else{
-				fileChooserControllers.get(0).controlSaveDialog(evt,jFileChooser, fcSaveFrame);//call controller
-				}
+			public void actionPerformed(java.awt.event.ActionEvent evt) {				
+				fileChooserController.controlSaveDialog(evt,jFileChooser, fcSaveFrame);//call controller
+
 			}
 		});		
-	}
-	
-	
+	}	
+
+
+
+
 	/**
 	 * Starts the window of file chooser in the form of Save dialog.
 	 */
 	public void activate(){
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() { 
-				fcSaveFrame = new FileChooserSaveFrame(fileExtensions,fileChooserControllers);
+				fcSaveFrame = new FileChooserSaveFrame(fileExtensions,fileChooserController);
 				fcSaveFrame.setVisible(true);
 			}
 		});    	
