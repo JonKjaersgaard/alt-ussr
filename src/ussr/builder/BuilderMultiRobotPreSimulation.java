@@ -49,7 +49,7 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 
 	
 	//private final static String loadFile = "samples/simulations/atron/simpleVehicleSimulation.xml";
-	public static final  String loadFile = "samples/simulations/atron/morphologies/simpleVehicle.xml";
+	public static final  String loadFile = "samples/simulations/atron/morphologies/simpleVehicleMophology.xml";
 	
 	/**
 	 * Starts multi-robot simulation for ATRON,MTRAN and Odin.
