@@ -132,7 +132,7 @@ public class JMELinearActuator implements JMEActuator {
 			return false;
 		}
     	if(goalPos<0||goalPos>1){
-			PhysicsLogger.log("Linear Actuator Velocity Value out of range!");
+			PhysicsLogger.log("Linear Actuator Position Value out of range!");
 			return false;
 		}
 		active = true;
