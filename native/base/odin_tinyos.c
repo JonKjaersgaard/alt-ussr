@@ -33,6 +33,12 @@ int moduleType(USSREnv *env) {
   int type = ussr_call_int_controller_method(env, "moduleType", "()I");
   return type;
 }
+void setActuatorSpeed(USSREnv* env, int8_t value) {
+  ussr_call_void_controller_method(env, "setActuatorSpeed", "(I)V", value);  
+}
+int getActuatorPosition(USSREnv* env) {
+  return ussr_call_int_controller_method(env, "getActuatorPosition", "()I");
+}
 /* //this does not really work ... ! */
 /* void setPositionCentralJoint(USSREnv *env, int32_t position) { */
 /*   ussr_call_void_controller_method(env, "setPositionCentralJoint", "(I)V", position); */

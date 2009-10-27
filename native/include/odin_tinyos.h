@@ -10,6 +10,8 @@
 void ussr_stub();
 int getRandomNumber(USSREnv *env);
 int moduleType(USSREnv *env);
+void setActuatorSpeed(USSREnv* env, int8_t value);
+int getActuatorPosition(USSREnv* env);
 int32_t sendMessage(USSRONLYC(USSREnv *env) uint8_t *message, int32_t messageSize, int32_t connector);
 #else
 
