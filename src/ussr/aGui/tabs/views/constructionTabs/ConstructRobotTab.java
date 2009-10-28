@@ -51,8 +51,7 @@ public class ConstructRobotTab extends Tabs {
 		super(firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
 
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
-		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
-		//super.fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+		super.jComponent = new javax.swing.JPanel(new GridBagLayout());		
 		initComponents();
 	}
 
@@ -110,7 +109,7 @@ public class ConstructRobotTab extends Tabs {
 		jButtonStartNewRobot.setPreferredSize(new Dimension(110,GuiFrames.COMMON_HEIGHT+2));
         jButtonStartNewRobot.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {            	
-            	ConstructRobotTabController.jButtonStartNewRobotActionPerformed(evt);            	
+            	ConstructRobotTabController.jButtonStartNewRobotActionPerformed(jmeSimulation);            	
             }
         });        
         gridBagConstraints.fill = GridBagConstraints.FIRST_LINE_START;// position on the first line start

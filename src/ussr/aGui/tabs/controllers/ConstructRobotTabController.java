@@ -1,6 +1,7 @@
 package ussr.aGui.tabs.controllers;
 
 import java.awt.event.ActionEvent;
+import java.util.Iterator;
 
 import javax.swing.AbstractButton;
 import javax.swing.JComboBox;
@@ -372,12 +373,10 @@ public class ConstructRobotTabController {
 	}
 
 
-	public static void jButtonStartNewRobotActionPerformed(ActionEvent evt) {
+	public static void jButtonStartNewRobotActionPerformed(JMESimulation jmeSimulation) {
 		ConstructRobotTab.setRadioButtonsEnabled(true);
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHints[11]); //Informing user
-		
-		//ConstructRobotTab.getRadionButtonATRON().requestFocus(true);
-
+		BuilderHelper.deleteAllModules(jmeSimulation);
 	}
 		
 	//FIXME MAKE IT MORE GENERIC BY MEANS OF IDENTIFYING THE LAST TYPE OF MODULE IN XML FILE
