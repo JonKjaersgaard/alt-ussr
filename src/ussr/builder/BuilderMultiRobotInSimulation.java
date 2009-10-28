@@ -1,9 +1,6 @@
 package ussr.builder;
 
-import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
-import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
-import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
-import ussr.builder.saveLoadXML.UssrXmlFileTypes;
+
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
@@ -11,7 +8,6 @@ import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
-import ussr.samples.GenericModuleConnectorHelper;
 import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;
 import ussr.samples.atron.ATRON;

@@ -10,6 +10,7 @@ import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Connector;
 import ussr.model.Module;
+import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMESimulation;
 
@@ -18,11 +19,15 @@ public class InSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate {
      * The physical simulation
      */
     private JMESimulation simulation;
+    
+    
 
     public InSimulationXMLSerializer(PhysicsSimulation simulation) {
         if(!(simulation instanceof JMESimulation)) throw new Error("Internal error: only JME-based simulations supported by builder");
         this.simulation = (JMESimulation)simulation;
+        
     }
+    
 
     @Override
     protected int numberOfSimulatedModules() {
@@ -72,8 +77,10 @@ public class InSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate {
 
 	@Override
 	protected WorldDescription getWorldDescription() {
-
+        
 		return simulation.getWorldDescription();
 	}
+
+
 
 }

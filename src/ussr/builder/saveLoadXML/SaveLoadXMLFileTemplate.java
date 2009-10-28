@@ -40,5 +40,7 @@ public interface SaveLoadXMLFileTemplate {
 	 * @param transformerHandler,the content handler used to print out XML format. 
 	 */
 	//public abstract void printOutXML(TransformerHandler transformerHandler);
+	
 	public Map<TagsUsed, String> getSimulationDescriptionValues();
+	public Map<TagsUsed, String> getSimulationPhysicsValues();
 }

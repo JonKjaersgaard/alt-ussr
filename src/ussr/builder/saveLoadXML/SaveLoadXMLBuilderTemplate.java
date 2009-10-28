@@ -25,6 +25,7 @@ import ussr.description.setup.WorldDescription;
 import ussr.description.setup.WorldDescription.TextureDescription;
 import ussr.model.Connector;
 import ussr.model.Module;
+import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMESimulation;
 
@@ -54,7 +55,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 				printSubTagsWithValue(transformerHandler, TagsUsed.TYPE, getType(getModuleByIndex(0)));				
 				printSubTagsWithValue(transformerHandler, TagsUsed.NUMBER_OF_MODULES, (""+getWorldDescription().getNumberOfModules()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.MORPHOLOGY_LOCATION, BuilderMultiRobotPreSimulation.loadableRobotMorphologyFile.toCharArray());
+				printSubTagsWithValue(transformerHandler, TagsUsed.MORPHOLOGY_LOCATION, BuilderMultiRobotPreSimulation.robotMorphologyFile.toCharArray());
 				printSubTagsWithValue(transformerHandler, TagsUsed.CONTROLLER_LOCATION, getControllerLocation(getModuleByIndex(0)));
 				
 				transformerHandler.endElement("","",TagsUsed.ROBOT.toString());
@@ -79,8 +80,24 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 				transformerHandler.startElement("","",TagsUsed.PHYSICS_PARAMETERS.toString(),EMPTY_ATT);
 
-				printSubTagsWithValue(transformerHandler, TagsUsed.TYPE, getType(getModuleByIndex(0)));
+				printSubTagsWithValue(transformerHandler, TagsUsed.WORLD_DAMPING_LINEAR_VELOCITY, (""+PhysicsParameters.get().getWorldDampingLinearVelocity()).toCharArray());
+				printSubTagsWithValue(transformerHandler, TagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY, (""+PhysicsParameters.get().getWorldDampingAngularVelocity()).toCharArray());
+				printSubTagsWithValue(transformerHandler, TagsUsed.PHYSICS_SIMULATION_STEP_SIZE, (""+PhysicsParameters.get().getPhysicsSimulationStepSize()).toCharArray());
+				printSubTagsWithValue(transformerHandler, TagsUsed.REALISTIC_COLLISION, (""+PhysicsParameters.get().getRealisticCollision()).toCharArray());
+				printSubTagsWithValue(transformerHandler, TagsUsed.GRAVITY, (""+PhysicsParameters.get().getGravity()).toCharArray());
+				printSubTagsWithValue(transformerHandler, TagsUsed.PLANE_MATERIAL, PhysicsParameters.get().getPlaneMaterial().toString().toCharArray());
+				printSubTagsWithValue(transformerHandler, TagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS, (""+PhysicsParameters.get().getMaintainRotationalJointPositions()).toCharArray());
+			//	printSubTagsWithValue(transformerHandler, TagsUsed.HAS_MECHANICAL_CONNECTOR_SPRINGINESS, (""+PhysicsParameters.get().hasMechanicalConnectorSpringiness()).toCharArray());
+			//	printSubTagsWithValue(transformerHandler, TagsUsed.MECHANICAL_CONNECTOR_CONSTANT, (""+PhysicsParameters.get().getMechanicalConnectorConstant()).toCharArray());
+			//  printSubTagsWithValue(transformerHandler, TagsUsed.MECHANICAL_CONNECTOR_DAMPING, (""+PhysicsParameters.get().getMechanicalConnectorDamping()).toCharArray());
+				printSubTagsWithValue(transformerHandler, TagsUsed.CONSTRAINT_FORCE_MIX, (""+PhysicsParameters.get().getConstraintForceMix()).toCharArray());
+				printSubTagsWithValue(transformerHandler, TagsUsed.ERROR_REDUCTION_PARAMETER, (""+PhysicsParameters.get().getErrorReductionParameter()).toCharArray());
+				printSubTagsWithValue(transformerHandler, TagsUsed.RESOLUTION_FACTOR, (""+PhysicsParameters.get().getResolutionFactor()).toCharArray());
+				printSubTagsWithValue(transformerHandler, TagsUsed.USE_MOUSE_EVENT_QUEUE, (""+PhysicsParameters.get().useModuleEventQueue()).toCharArray());
+				printSubTagsWithValue(transformerHandler, TagsUsed.SYNC_WITH_CONTROLLERS, (""+PhysicsParameters.get().syncWithControllers()).toCharArray());
+				printSubTagsWithValue(transformerHandler, TagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR, (""+PhysicsParameters.get().getPhysicsSimulationControllerStepFactor()).toCharArray());
 
+				
 				transformerHandler.endElement("","",TagsUsed.PHYSICS_PARAMETERS.toString());
 
 
@@ -146,6 +163,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 		printFirstEndTag(transformerHandler, TagsUsed.MODULES);	
 	}
 
+	
 	protected abstract Module getModuleByIndex(int module);
 
 	protected abstract WorldDescription getWorldDescription();
@@ -172,8 +190,13 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 	}
 	
 	public Map<TagsUsed, String> simulationDescriptionValues = new Hashtable<TagsUsed, String>();
+	public Map<TagsUsed, String> simulationPhysicsValues = new Hashtable<TagsUsed, String>();
 	
 	
+	public Map<TagsUsed, String> getSimulationPhysicsValues() {
+		return simulationPhysicsValues;
+	}
+
 	private void loadSimulationXML(Document document){
 		
 		
@@ -210,9 +233,37 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 				simulationDescriptionValues.put(TagsUsed.HAS_HEAVY_OBSTACLES, extractTagValue(firstElmnt,TagsUsed.HAS_HEAVY_OBSTACLES));				
 				simulationDescriptionValues.put(TagsUsed.IS_FRAME_GRABBING_ACTIVE, extractTagValue(firstElmnt,TagsUsed.IS_FRAME_GRABBING_ACTIVE));
 				//simulationDescriptionValues.put(TagsUsed.BIG_OBSTACLES, extractTagValue(firstElmnt,TagsUsed.BIG_OBSTACLES));				
-				
-				
-				//String moduleRotation = extractTagValue(firstElmnt,TagsUsed.ROTATION);		
+		
+			
+			}
+
+		}	
+		
+		NodeList nodeList1 = document.getElementsByTagName(TagsUsed.PHYSICS_PARAMETERS.toString());
+		for (int node = 0; node < nodeList1.getLength(); node++) {
+			Node firstNode = nodeList1.item(node);
+
+			if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+
+				Element firstElmnt = (Element) firstNode;				
+		
+				simulationPhysicsValues.put(TagsUsed.WORLD_DAMPING_LINEAR_VELOCITY, extractTagValue(firstElmnt,TagsUsed.WORLD_DAMPING_LINEAR_VELOCITY));
+				simulationPhysicsValues.put(TagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY, extractTagValue(firstElmnt,TagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY));
+				simulationPhysicsValues.put(TagsUsed.PHYSICS_SIMULATION_STEP_SIZE, extractTagValue(firstElmnt,TagsUsed.PHYSICS_SIMULATION_STEP_SIZE));
+				simulationPhysicsValues.put(TagsUsed.REALISTIC_COLLISION, extractTagValue(firstElmnt,TagsUsed.REALISTIC_COLLISION));
+				simulationPhysicsValues.put(TagsUsed.GRAVITY, extractTagValue(firstElmnt,TagsUsed.GRAVITY));
+				simulationPhysicsValues.put(TagsUsed.PLANE_MATERIAL, extractTagValue(firstElmnt,TagsUsed.PLANE_MATERIAL));
+				simulationPhysicsValues.put(TagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS, extractTagValue(firstElmnt,TagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS));
+				//simulationPhysicsValues.put(TagsUsed.HAS_MECHANICAL_CONNECTOR_SPRINGINESS, extractTagValue(firstElmnt,TagsUsed.HAS_MECHANICAL_CONNECTOR_SPRINGINESS));
+				//simulationPhysicsValues.put(TagsUsed.MECHANICAL_CONNECTOR_CONSTANT, extractTagValue(firstElmnt,TagsUsed.MECHANICAL_CONNECTOR_CONSTANT));
+				//simulationPhysicsValues.put(TagsUsed.MECHANICAL_CONNECTOR_DAMPING, extractTagValue(firstElmnt,TagsUsed.MECHANICAL_CONNECTOR_CONSTANT));
+				simulationPhysicsValues.put(TagsUsed.CONSTRAINT_FORCE_MIX, extractTagValue(firstElmnt,TagsUsed.CONSTRAINT_FORCE_MIX));
+				simulationPhysicsValues.put(TagsUsed.ERROR_REDUCTION_PARAMETER, extractTagValue(firstElmnt,TagsUsed.ERROR_REDUCTION_PARAMETER));
+				simulationPhysicsValues.put(TagsUsed.RESOLUTION_FACTOR, extractTagValue(firstElmnt,TagsUsed.RESOLUTION_FACTOR));
+				simulationPhysicsValues.put(TagsUsed.USE_MOUSE_EVENT_QUEUE, extractTagValue(firstElmnt,TagsUsed.USE_MOUSE_EVENT_QUEUE));
+				simulationPhysicsValues.put(TagsUsed.SYNC_WITH_CONTROLLERS, extractTagValue(firstElmnt,TagsUsed.SYNC_WITH_CONTROLLERS));
+				simulationPhysicsValues.put(TagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR, extractTagValue(firstElmnt,TagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR));
+
 			
 			}
 

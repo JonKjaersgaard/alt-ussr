@@ -1,11 +1,9 @@
 package ussr.builder;
 
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Map;
 
 import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
-import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
 import ussr.builder.saveLoadXML.TagsUsed;
 import ussr.builder.saveLoadXML.UssrXmlFileTypes;
@@ -18,6 +16,7 @@ import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
+import ussr.physics.PhysicsParameters.Material;
 import ussr.samples.GenericModuleConnectorHelper;
 import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;
@@ -54,40 +53,87 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		return null;
 	}
 
-
-
-	public static final  String loadableRobotMorphologyFile = "samples/simulations/atron/morphologies/simpleVehicleMophology.xml";
-
-	private  static final String loadableSimulationFile ="samples/simulations/atron/simpleVehicleSim.xml";
+	/*For saving XML file*/
+	public static final  String robotMorphologyFile = "samples/simulations/atron/morphologies/simpleVehicleMorphology.xml";
+	//public static final  String robotMorphologyFile = "samples/simulations/atron/morphologies/simulation1Morphology.xml";
+   // public static final  String robotMorphologyFile = "samples/simulations/atron/morphologies/snakeSimulationMorphology.xml";
 	
-	private static Map<TagsUsed,String> simulationDescription; 
+	/*UNCOMMENT ONE OF US TO LOAD SIMULATION FROM XML FILE*/
+	//private  static final String loadableSimulationFile ="samples/simulations/atron/simpleVehicleSim.xml";
+	//private  static final String loadableSimulationFile ="samples/simulations/atron/simulation1.xml";
+	private  static final String loadableSimulationFile ="samples/simulations/atron/snakeSimulation.xml";
+	
+	private static Map<TagsUsed,String> simulationWorldDescription;
+	private static Map<TagsUsed,String> simulationPhysicsParameters; 
 	
 	/**
 	 * Starts multi-robot simulation for ATRON,MTRAN and Odin.
 	 * @param args, passed arguments.
 	 */
 	public static void main( String[] args ) {
-		/* Set up home */
+	/*	 Set up home 
 		String home = System.getenv("USSRHOME"); 
 		if(home!=null) {
 			System.out.println("Setting home to "+home);
 			PhysicsFactory.getOptions().setResourceDirectory(home+"/");
-		}		
+		}	*/	
 		runSimulationFromXMLFile();	
 	}
 	private static void runSimulationFromXMLFile(){
 
 		/*Activate connectors*/
 		GenericSimulation.setConnectorsAreActive(true);
-		BuilderMultiRobotPreSimulation simulation = new BuilderMultiRobotPreSimulation();		
+		BuilderMultiRobotPreSimulation simulation = new BuilderMultiRobotPreSimulation();
+		
+		
+//		/* Specify realistic collision*/
+//		PhysicsParameters.get().setRealisticCollision(true);
+//		/* Specify simulation step*/
+//		PhysicsParameters.get().setPhysicsSimulationStepSize(0.0035f);
+//		/* Specify smallest resolution factor so that simulation can handle more modules.
+//		 * This is done in order to "in a way" avoid stack overflow */
+//		PhysicsParameters.get().setResolutionFactor(1);
+		
+		/*Load Simulation Configuration file*/
+		SaveLoadXMLFileTemplate xmlLoaderSimulation = new PreSimulationXMLSerializer(new PhysicsParameters());
+		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, loadableSimulationFile);
+        simulationWorldDescription = xmlLoaderSimulation.getSimulationDescriptionValues();
 
-		/* Specify realistic collision*/
-		PhysicsParameters.get().setRealisticCollision(true);
-		/* Specify simulation step*/
-		PhysicsParameters.get().setPhysicsSimulationStepSize(0.0035f);
-		/* Specify smallest resolution factor so that simulation can handle more modules.
-		 * This is done in order to "in a way" avoid stack overflow */
-		PhysicsParameters.get().setResolutionFactor(1);
+        simulationPhysicsParameters = xmlLoaderSimulation.getSimulationPhysicsValues();
+		
+        /*Get values*/
+        float worldDampingLinearVelocity = Float.parseFloat(simulationPhysicsParameters.get(TagsUsed.WORLD_DAMPING_LINEAR_VELOCITY)); 
+        float worldDampingAngularVelocity = Float.parseFloat(simulationPhysicsParameters.get(TagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY));
+        float physicsSimulationStepSize = Float.parseFloat(simulationPhysicsParameters.get(TagsUsed.PHYSICS_SIMULATION_STEP_SIZE));
+        boolean realisticCollision = Boolean.parseBoolean(simulationPhysicsParameters.get(TagsUsed.REALISTIC_COLLISION));
+        float gravity = Float.parseFloat(simulationPhysicsParameters.get(TagsUsed.GRAVITY));
+        String material = simulationPhysicsParameters.get(TagsUsed.PLANE_MATERIAL);
+        boolean maintainRotationalJointPositions = Boolean.parseBoolean(simulationPhysicsParameters.get(TagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS));
+        float constraintForceMix = Float.parseFloat(simulationPhysicsParameters.get(TagsUsed.CONSTRAINT_FORCE_MIX));
+        float errorReductionParameter = Float.parseFloat(simulationPhysicsParameters.get(TagsUsed.ERROR_REDUCTION_PARAMETER));	
+        int resolutionFactor = Integer.parseInt(simulationPhysicsParameters.get(TagsUsed.RESOLUTION_FACTOR));
+        boolean useModuleEventQueue = Boolean.parseBoolean(simulationPhysicsParameters.get(TagsUsed.USE_MOUSE_EVENT_QUEUE));
+        boolean sync = Boolean.parseBoolean(simulationPhysicsParameters.get(TagsUsed.SYNC_WITH_CONTROLLERS));
+        float physicsSimulationControllerStepFactor = Float.parseFloat(simulationPhysicsParameters.get(TagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR));
+        
+        /*Set values*/
+        PhysicsParameters.get().setWorldDampingLinearVelocity(worldDampingLinearVelocity);
+        PhysicsParameters.get().setWorldDampingAngularVelocity(worldDampingAngularVelocity);
+        PhysicsParameters.get().setPhysicsSimulationStepSize(physicsSimulationStepSize);
+        PhysicsParameters.get().setRealisticCollision(realisticCollision);
+        PhysicsParameters.get().setGravity(gravity);
+        PhysicsParameters.get().setPlaneMaterial(Material.valueOf(material));
+        PhysicsParameters.get().setMaintainRotationalJointPositions(maintainRotationalJointPositions);
+//       /*Not supported yet*/ HAS_MECHANICAL_CONNECTOR_SPRINGINESS,
+//       /*Not supported yet*/ MECHANICAL_CONNECTOR_CONSTANT,
+//       /*Not supported yet*/MECHANICAL_CONNECTOR_DAMPING,
+        PhysicsParameters.get().setConstraintForceMix(constraintForceMix);
+        PhysicsParameters.get().setErrorReductionParameter(errorReductionParameter);
+        PhysicsParameters.get().setResolutionFactor(resolutionFactor);
+        PhysicsParameters.get().setUseModuleEventQueue(useModuleEventQueue);
+        PhysicsParameters.get().setSyncWithControllers(sync);
+        PhysicsParameters.get().setPhysicsSimulationControllerStepFactor(physicsSimulationControllerStepFactor);
+       	
 		simulation.runSimulation(null,true);
 	}
 
@@ -173,10 +219,7 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 				return new CKBotControllerDefault();
 			}},"CKBotStandard");
 
-		SaveLoadXMLFileTemplate xmlLoaderSimulation = new PreSimulationXMLSerializer(/*world*/);
-		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, loadableSimulationFile);
-        
-		simulationDescription = xmlLoaderSimulation.getSimulationDescriptionValues();
+		
 		
 		/*Create the world description of simulation and set it to simulation*/
 		if(world==null) world = createWorld();
@@ -184,9 +227,9 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		/*Simulation should be in paused state (static)in the beginning*/
 		simulation.setPause(startPaused);
 
-
+		/*Load Robot Morphology file*/
 		SaveLoadXMLFileTemplate xmlLoaderRodbot = new PreSimulationXMLSerializer(world);
-		xmlLoaderRodbot.loadXMLfile(UssrXmlFileTypes.ROBOT, simulationDescription.get(TagsUsed.MORPHOLOGY_LOCATION));
+		xmlLoaderRodbot.loadXMLfile(UssrXmlFileTypes.ROBOT, simulationWorldDescription.get(TagsUsed.MORPHOLOGY_LOCATION));
 
 		world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
 
@@ -200,12 +243,14 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 	 */
 	private static WorldDescription createWorld() {
 		/*Extract values*/
-		int planeSize =Integer.parseInt(simulationDescription.get(TagsUsed.PLANE_SIZE)) ;
-	    String textureFile = simulationDescription.get(TagsUsed.PLANE_TEXTURE);
+		int planeSize =Integer.parseInt(simulationWorldDescription.get(TagsUsed.PLANE_SIZE)) ;
+	    String textureFile = simulationWorldDescription.get(TagsUsed.PLANE_TEXTURE);
 	    System.out.println("tEXTURE:"+textureFile );
 	    
 	    /*Local container for all textures*/
+	    //FIXME SHOULD I COUPLE YOU WITH WORLD_DESCRIPTION?
 	    Map<String,TextureDescription> containerTextureDesc = new Hashtable<String, TextureDescription>(); 
+	     
 	    containerTextureDesc.put(WorldDescription.GRASS_TEXTURE.getFileName(), WorldDescription.GRASS_TEXTURE);
 	    containerTextureDesc.put(WorldDescription.GREY_GRID_TEXTURE.getFileName(), WorldDescription.GREY_GRID_TEXTURE);
 	    containerTextureDesc.put(WorldDescription.MARS_TEXTURE.getFileName(), WorldDescription.MARS_TEXTURE);
@@ -214,11 +259,11 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 	    
 	    TextureDescription textureDescription = containerTextureDesc.get(textureFile);
 	    
-		String cameraPosition = simulationDescription.get(TagsUsed.CAMERA_POSITION);
-		boolean theWorldIsFlat = Boolean.parseBoolean(simulationDescription.get(TagsUsed.THE_WORLD_IS_FLAT));
-		boolean hasClouds = Boolean.parseBoolean(simulationDescription.get(TagsUsed.HAS_BACKGROUND_SCENERY));
-		boolean heavyObstacles = Boolean.parseBoolean(simulationDescription.get(TagsUsed.HAS_HEAVY_OBSTACLES));
-		boolean isActive = Boolean.parseBoolean(simulationDescription.get(TagsUsed.IS_FRAME_GRABBING_ACTIVE));
+		String cameraPosition = simulationWorldDescription.get(TagsUsed.CAMERA_POSITION);
+		boolean theWorldIsFlat = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.THE_WORLD_IS_FLAT));
+		boolean hasClouds = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.HAS_BACKGROUND_SCENERY));
+		boolean heavyObstacles = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.HAS_HEAVY_OBSTACLES));
+		boolean isActive = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.IS_FRAME_GRABBING_ACTIVE));
 		//boolean heavyObstacles = Boolean.parseBoolean(simulationDescription.get(TagsUsed.HAS_HEAVY_OBSTACLES));
 		
 		

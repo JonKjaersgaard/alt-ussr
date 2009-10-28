@@ -23,7 +23,7 @@ public class RemoveModule  extends CustomizedPicker{
 	 * Handles identification of selected module and removal of its components. 
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickModuleComponent(ussr.physics.jme.JMEModuleComponent)
 	 */	
-	protected void pickModuleComponent(JMEModuleComponent component) {		
+	protected void pickModuleComponent(JMEModuleComponent component) {	
 		Module selectedModule = component.getModel();	
 		BuilderHelper.deleteModule(selectedModule);		
 	}	
