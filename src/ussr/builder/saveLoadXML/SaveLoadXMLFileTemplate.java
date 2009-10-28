@@ -1,5 +1,7 @@
 package ussr.builder.saveLoadXML;
 
+import java.util.Map;
+
 /**
  * Supports saving and loading of data in XML format.
  * Is  based on SAX and DOM. Follows design pattern called TEMPLATE METHOD.
@@ -38,4 +40,5 @@ public interface SaveLoadXMLFileTemplate {
 	 * @param transformerHandler,the content handler used to print out XML format. 
 	 */
 	//public abstract void printOutXML(TransformerHandler transformerHandler);
+	public Map<TagsUsed, String> getSimulationDescriptionValues();
 }

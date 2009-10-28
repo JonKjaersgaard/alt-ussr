@@ -10,11 +10,9 @@ import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
-import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.PhysicsLogger;
-import ussr.physics.PhysicsSimulation;
-import ussr.physics.jme.JMESimulation;
+
 
 public class PreSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate {
     /**
@@ -22,12 +20,22 @@ public class PreSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate {
      */
     private WorldDescription world;
 
+    /**
+     * 
+     * For loading simulation robot into simulation.
+     * @param world, description of world properties.
+     */
     public PreSimulationXMLSerializer(WorldDescription world) {
         this.world = world;
         world.setModulePositions(new ArrayList<ModulePosition>());
     }
 
-    
+    /**
+     * For loading simulation.
+     */
+    public PreSimulationXMLSerializer() {
+       
+    }
     
     @Override
     protected int numberOfSimulatedModules() {

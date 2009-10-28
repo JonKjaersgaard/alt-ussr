@@ -22,6 +22,7 @@ import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.BoxDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
+import ussr.description.setup.WorldDescription.TextureDescription;
 import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.PhysicsSimulation;
@@ -53,7 +54,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 				printSubTagsWithValue(transformerHandler, TagsUsed.TYPE, getType(getModuleByIndex(0)));				
 				printSubTagsWithValue(transformerHandler, TagsUsed.NUMBER_OF_MODULES, (""+getWorldDescription().getNumberOfModules()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.MORPHOLOGY_LOCATION, BuilderMultiRobotPreSimulation.loadFile.toCharArray());
+				printSubTagsWithValue(transformerHandler, TagsUsed.MORPHOLOGY_LOCATION, BuilderMultiRobotPreSimulation.loadableRobotMorphologyFile.toCharArray());
 				printSubTagsWithValue(transformerHandler, TagsUsed.CONTROLLER_LOCATION, getControllerLocation(getModuleByIndex(0)));
 				
 				transformerHandler.endElement("","",TagsUsed.ROBOT.toString());
@@ -63,6 +64,8 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 				printSubTagsWithValue(transformerHandler, TagsUsed.PLANE_SIZE, (""+getWorldDescription().getPlaneSize()).toCharArray());
 				printSubTagsWithValue(transformerHandler, TagsUsed.PLANE_TEXTURE, getWorldDescription().getPlaneTexture().getFileName().toString().toCharArray());
+				//System.out.printn("ss"+ (TextureDescription)getWorldDescription().getPlaneTexture().);
+				
 			    printSubTagsWithValue(transformerHandler, TagsUsed.CAMERA_POSITION, getWorldDescription().getCameraPosition().toString().toCharArray());			    
 			    printSubTagsWithValue(transformerHandler, TagsUsed.THE_WORLD_IS_FLAT, (""+getWorldDescription().theWorldIsFlat()).toCharArray());
 			    printSubTagsWithValue(transformerHandler, TagsUsed.HAS_BACKGROUND_SCENERY, (""+getWorldDescription().hasBackgroundScenery()).toCharArray());
@@ -162,9 +165,32 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 
 	}
-	public Map<TagsUsed, String> worldDescriptionValues = new Hashtable<TagsUsed, String>();
+	
+	
+	public Map<TagsUsed, String> getSimulationDescriptionValues() {
+		return simulationDescriptionValues;
+	}
+	
+	public Map<TagsUsed, String> simulationDescriptionValues = new Hashtable<TagsUsed, String>();
+	
 	
 	private void loadSimulationXML(Document document){
+		
+		
+    NodeList nodeList2 = document.getElementsByTagName(TagsUsed.ROBOT.toString());
+		
+		for (int node = 0; node < nodeList2.getLength(); node++) {
+			Node firstNode = nodeList2.item(node);
+
+			if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+
+				Element firstElmnt = (Element) firstNode;				
+		
+				simulationDescriptionValues.put(TagsUsed.MORPHOLOGY_LOCATION, extractTagValue(firstElmnt,TagsUsed.MORPHOLOGY_LOCATION));
+									
+			}
+		}		
+		
 		
 		NodeList nodeList = document.getElementsByTagName(TagsUsed.WORLD_DESCRIPTION.toString());
 		
@@ -175,15 +201,15 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 				Element firstElmnt = (Element) firstNode;				
 		
-				worldDescriptionValues.put(TagsUsed.PLANE_SIZE, extractTagValue(firstElmnt,TagsUsed.PLANE_SIZE));
-				worldDescriptionValues.put(TagsUsed.PLANE_TEXTURE, extractTagValue(firstElmnt,TagsUsed.PLANE_TEXTURE));
-				worldDescriptionValues.put(TagsUsed.CAMERA_POSITION, extractTagValue(firstElmnt,TagsUsed.CAMERA_POSITION));
+				simulationDescriptionValues.put(TagsUsed.PLANE_SIZE, extractTagValue(firstElmnt,TagsUsed.PLANE_SIZE));
+				simulationDescriptionValues.put(TagsUsed.PLANE_TEXTURE, extractTagValue(firstElmnt,TagsUsed.PLANE_TEXTURE));
+				simulationDescriptionValues.put(TagsUsed.CAMERA_POSITION, extractTagValue(firstElmnt,TagsUsed.CAMERA_POSITION));
 				//number of modules is not relevant
-				worldDescriptionValues.put(TagsUsed.THE_WORLD_IS_FLAT, extractTagValue(firstElmnt,TagsUsed.THE_WORLD_IS_FLAT));				
-				worldDescriptionValues.put(TagsUsed.HAS_BACKGROUND_SCENERY, extractTagValue(firstElmnt,TagsUsed.HAS_BACKGROUND_SCENERY));
-				worldDescriptionValues.put(TagsUsed.HAS_HEAVY_OBSTACLES, extractTagValue(firstElmnt,TagsUsed.HAS_HEAVY_OBSTACLES));				
-				worldDescriptionValues.put(TagsUsed.IS_FRAME_GRABBING_ACTIVE, extractTagValue(firstElmnt,TagsUsed.IS_FRAME_GRABBING_ACTIVE));
-				worldDescriptionValues.put(TagsUsed.BIG_OBSTACLES, extractTagValue(firstElmnt,TagsUsed.BIG_OBSTACLES));				
+				simulationDescriptionValues.put(TagsUsed.THE_WORLD_IS_FLAT, extractTagValue(firstElmnt,TagsUsed.THE_WORLD_IS_FLAT));				
+				simulationDescriptionValues.put(TagsUsed.HAS_BACKGROUND_SCENERY, extractTagValue(firstElmnt,TagsUsed.HAS_BACKGROUND_SCENERY));
+				simulationDescriptionValues.put(TagsUsed.HAS_HEAVY_OBSTACLES, extractTagValue(firstElmnt,TagsUsed.HAS_HEAVY_OBSTACLES));				
+				simulationDescriptionValues.put(TagsUsed.IS_FRAME_GRABBING_ACTIVE, extractTagValue(firstElmnt,TagsUsed.IS_FRAME_GRABBING_ACTIVE));
+				//simulationDescriptionValues.put(TagsUsed.BIG_OBSTACLES, extractTagValue(firstElmnt,TagsUsed.BIG_OBSTACLES));				
 				
 				
 				//String moduleRotation = extractTagValue(firstElmnt,TagsUsed.ROTATION);		
@@ -191,6 +217,11 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 			}
 
 		}	
+		
+		
+    
+		
+		
 	}
 	
 	private void loadRobotXML(Document document){
