@@ -74,6 +74,7 @@ public class AssignBehaviorsTab extends Tabs {
 		jScrollPane2 = new javax.swing.JScrollPane();	
 
 		labelingPanel = new javax.swing.JPanel();
+		entitiesToLabel =  new javax.swing.JPanel();
 
 		/*Description of components*/		
 		/*		jLabel10003.setText("Filter out for:");
@@ -177,13 +178,12 @@ public class AssignBehaviorsTab extends Tabs {
 		labelingPanel.setBorder(displayTitle);
 		labelingPanel.setPreferredSize(new Dimension(200,200));
 
-		/*External layout of panel inside main panel (jComponent)*/
+		/*External layout of labelingPanel inside main panel (jComponent)*/
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 2;
-		gridBagConstraints.gridwidth = 2;
-
-
+		gridBagConstraints.gridwidth = 2;		
+		
 		jToolBar2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBar2.setFloatable(false);//user can not make the tool bar to float
 		jToolBar2.setRollover(true);// the buttons inside are roll over
@@ -203,7 +203,7 @@ public class AssignBehaviorsTab extends Tabs {
 			}
 		});			
 
-		//jToolBar2.add(radioButtonModule);
+		jToolBar2.add(radioButtonModule);
 		buttonGroupEntities.add(radioButtonModule);
 
 		radionButtonConnector =  new JRadioButton();
@@ -214,7 +214,7 @@ public class AssignBehaviorsTab extends Tabs {
 			}
 		});
 
-		//jToolBar2.add(radionButtonConnector);
+	    jToolBar2.add(radionButtonConnector);
 		buttonGroupEntities.add(radionButtonConnector);
 
 		radioButtonSensors =  new JRadioButton();
@@ -225,19 +225,53 @@ public class AssignBehaviorsTab extends Tabs {
 			}
 		});
 
-		//jToolBar2.add(radioButtonSensor);
+		jToolBar2.add(radioButtonSensors);
 		buttonGroupEntities.add(radioButtonSensors);
 
-		/*	final ButtonGroup buttonGroupTypesSensors = new ButtonGroup() ;
+		
+		labelingPanel.add(jToolBar2,gridBagConstraints);
 
-			radioButtonProximitySensor =  new JRadioButton();		
-			radioButtonProximitySensor.setText("Proximity");	
-			radioButtonProximitySensor.setSelected(true);//set initially selected so that jList will containe already filtered out controllers
-			radioButtonProximitySensor.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent evt) {
-					//AssignBehaviorsTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
-				}
-			});
+		super.jComponent.add(labelingPanel,gridBagConstraints);
+		
+		
+		/*TitledBorder displayTitle1;
+		displayTitle1 = BorderFactory.createTitledBorder("Choose entity");
+		displayTitle1.setTitleJustification(TitledBorder.CENTER);
+		entitiesToLabel.setBorder(displayTitle1);
+		entitiesToLabel.setPreferredSize(new Dimension(labelingPanel.getWidth(),100));
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 2;
+		gridBagConstraints.gridwidth = 1;	
+		
+		
+		//jToolBar3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBar3.setFloatable(false);//user can not make the tool bar to float
+		jToolBar3.setRollover(true);// the buttons inside are roll over
+		jToolBar3.setToolTipText("Sensors");
+		jToolBar3.setPreferredSize(new Dimension(jToolBar2.getWidth()-10,(int)jToolBar2.getHeight()/3));
+		jToolBar3.setOrientation(JToolBar.VERTICAL);
+	
+		
+		
+
+		radioButtonProximitySensor =  new JRadioButton();		
+		radioButtonProximitySensor.setText("Proximity");	
+		radioButtonProximitySensor.setSelected(true);//set initially selected so that jList will containe already filtered out controllers
+		radioButtonProximitySensor.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				//AssignBehaviorsTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
+			}
+		});
+		jToolBar3.add(radioButtonProximitySensor);
+
+		buttonGroupEntities.add(radioButtonProximitySensor);
+		entitiesToLabel.add(jToolBar3);	
+		
+
+		
+		super.jComponent.add(entitiesToLabel,gridBagConstraints);*/
+		/*	
 			gridBagConstraintsInternal.fill = GridBagConstraints.HORIZONTAL;
 			gridBagConstraintsInternal.gridx = 1;
 			gridBagConstraintsInternal.gridy = 4;
@@ -248,17 +282,9 @@ public class AssignBehaviorsTab extends Tabs {
 
 			buttonGroupTypesSensors.add(radioButtonProximitySensor);*/
 
-		jToolBar3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBar3.setFloatable(false);//user can not make the tool bar to float
-		jToolBar3.setRollover(true);// the buttons inside are roll over
-		jToolBar3.setToolTipText("Types of sensors");
-		jToolBar3.setPreferredSize(new Dimension(jToolBar1Width-20,J_LIST_HEIGHT-50));
-		jToolBar3.setOrientation(JToolBar.VERTICAL);
-
-		//jToolBar2.add(jToolBar3);
 
 		/*Internal layout of current panel (labelingPanel)*/
-		GroupLayout jToolBar2Layout = new GroupLayout(jToolBar2);
+	/*	GroupLayout jToolBar2Layout = new GroupLayout(jToolBar2);
 		jToolBar2.setLayout(jToolBar2Layout);
 
 
@@ -272,10 +298,11 @@ public class AssignBehaviorsTab extends Tabs {
 								.addComponent(radionButtonConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE)
 										.addComponent(radioButtonSensors,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-											.addComponent(jToolBar3,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-										
+												GroupLayout.PREFERRED_SIZE)
+												.addGap(0, 50, Short.MAX_VALUE)
+												.addComponent(radioButtonProximitySensor,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+
 
 				));
 
@@ -287,17 +314,16 @@ public class AssignBehaviorsTab extends Tabs {
 								.addComponent(radionButtonConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE)	
 										.addComponent(radioButtonSensors,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-										.addComponent(jToolBar3,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-									
-		);
+												GroupLayout.PREFERRED_SIZE)
+                
+												.addComponent(radioButtonProximitySensor,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+
+		);*/
 
 
 
-		labelingPanel.add(jToolBar2,gridBagConstraints);
-
-		super.jComponent.add(labelingPanel,gridBagConstraints);
+		
 
 
 
@@ -368,6 +394,7 @@ public class AssignBehaviorsTab extends Tabs {
 
 
 	private javax.swing.JPanel labelingPanel;
+	private javax.swing.JPanel entitiesToLabel;
 
 	private javax.swing.JScrollPane jScrollPane2;
 
