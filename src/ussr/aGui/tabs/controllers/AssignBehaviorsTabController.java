@@ -6,7 +6,7 @@ import javax.swing.JRadioButton;
 
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.builder.SupportedModularRobots;
-import ussr.builder.controllerReassignmentTool.AssignControllerTool;
+import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;
 
@@ -22,9 +22,9 @@ public class AssignBehaviorsTabController {
 	//private static javax.swing.JList tempjList1;
 	
 	/**
-	 * The name of the package where all the controllers are stored for interactive assignment
+	 * The name of the package where all behaviors are stored for interactive adjustment of controller.
 	 */
-	private static final String packageName = "ussr.builder.controllerReassignmentTool";
+	private static final String packageName = "ussr.builder.controllerAdjustmentTool";
 
 
 	/**

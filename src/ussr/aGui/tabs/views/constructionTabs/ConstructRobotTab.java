@@ -670,6 +670,10 @@ public class ConstructRobotTab extends Tabs {
 	}
 	
 	
+	/**
+	 * Enables or disables the tab;
+	 * @param enabled, true if the tab is enabled.
+	 */
 	public static void setTabEnabled (boolean enabled){
 		getJButtonStartNewRobot().setEnabled(enabled);
 		setRadioButtonsEnabled(enabled);		
