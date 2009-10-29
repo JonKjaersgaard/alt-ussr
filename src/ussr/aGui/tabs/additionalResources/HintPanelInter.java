@@ -1,8 +1,15 @@
 package ussr.aGui.tabs.additionalResources;
 
+/**
+ * Supports GUI with display for hints. Giving feedback to the user(communication).
+ * @author Konstantinas
+ */
 public interface HintPanelInter {
 
-	public final String[] builInHints = 
+	/**
+	 * Array of build in hints for tab called Construct Robot
+	 */
+	public final String[] builInHintsConstrucRobotTab = 
 	                             /*0*/   {"Follow hints displayed here to explore all available functionality. When done constructing robot go to next tab.",
 			
 			                     /*1*/    "Now locate newly added module in the simulation environment. Hold right side of the mouse to look around and W,A,S,D to move. Next there are two options: 1)" +
@@ -16,8 +23,8 @@ public interface HintPanelInter {
 	            
 	                             /*5*/   "Select module to delete. Not recommended to use, if only one module exists in simulation environment.",
 	                             
-	                             /*6*/   "Select module to color its connectors with color coding (nr. of connector - color). Here:0-Black, 1-Red,"+
-                                          " 2-Cyan, 3-Grey, 4-Green, 5-Magenta, 6-Orange, 7-Pink, 8-Blue, 9-White, 10-Yellow, 11-Light Grey",
+	                             /*6*/   "Select module to color its connectors with color coding (color - connector number ). Here:Black - 0, Red - 1,"+
+                                          " Cyan - 2, Grey - 3, Green - 4, Magenta - 5, Orange - 6, Pink - 7, Blue - 8, White - 9, Yellow - 10, Light Grey -11",
 	                             
                                  /*7*/   "Zoom in closer to module and select connectors (black-white geometric shapes). On each selected module will be connected new.",
                                  
@@ -33,11 +40,14 @@ public interface HintPanelInter {
                         
 	"NEW HINT"};
 	
+	/**
+	 * Types of hint panel (hint panel icons).
+	 * @author Konstantinas
+	 */
 	public enum HintPanelTypesOfIcons {
 
-		DEFAULT,// just dummy for initialization
-		ATTENTION,
-		INFORMATION, 
+		INFORMATION,//Default 
+		ATTENTION,		
 		ERROR;
 	}
 }

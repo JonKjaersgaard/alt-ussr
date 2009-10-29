@@ -64,8 +64,7 @@ public class ConstructRobotTab extends Tabs {
 	 */
 	public void initComponents(){
 
-		/*Instantiation of components*/
-		
+		/*Instantiation of components*/		
 		jButtonStartNewRobot = new javax.swing.JButton();
 		
 		jToolBarSaveLoad = new javax.swing.JToolBar();
@@ -100,6 +99,7 @@ public class ConstructRobotTab extends Tabs {
 		jSeparator1 = new javax.swing.JToolBar.Separator();
 		jSeparator2 = new javax.swing.JToolBar.Separator();
 		
+		/*Display for hints. Feedback to the user.*/
 		hintPanel  = new HintPanel(430,120);//custom panel
 
 		/*Description of components */		
@@ -113,8 +113,8 @@ public class ConstructRobotTab extends Tabs {
             }
         });        
         gridBagConstraints.fill = GridBagConstraints.FIRST_LINE_START;// position on the first line start
-        gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 0;// x goes from left to the right of the screen
+		gridBagConstraints.gridy = 0;// y goes from top to the bottom of the screen
 		gridBagConstraints.insets = new Insets(0,0,15,50);  //make some space on the right so that button moves to the left and at the bottom (not so crowded)
 		super.jComponent.add(jButtonStartNewRobot,gridBagConstraints);
 	
@@ -507,7 +507,7 @@ public class ConstructRobotTab extends Tabs {
 		super.jComponent.add(jToolBarConstructionTools,gridBagConstraints);
 		
 		
-		hintPanel.setText(HintPanelInter.builInHints[0]);
+		hintPanel.setText(HintPanelInter.builInHintsConstrucRobotTab[0]);
 		hintPanel.setBorderTitle("Display for hints");		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;		
