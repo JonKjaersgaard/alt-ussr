@@ -9,6 +9,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import ussr.aGui.tabs.TabsInter;
+import ussr.aGui.tabs.additionalResources.HintPanelInter;
+import ussr.aGui.tabs.additionalResources.HintPanelTypes;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
@@ -55,6 +57,10 @@ public class MainFrameController {
 	 * @param jmeSimulation
 	 */
 	public static void jButtonRunRealTimeActionPerformed(JMESimulation jmeSimulation) {
+		ConstructRobotTab.setTabEnabled(false);
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ATTENTION);
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[12]);
+		
 		timesSelected++;
 		if (jmeSimulation.isPaused()){// Start simulation in real time, if simulation is in paused state
 			jmeSimulation.setRealtime(true);
@@ -62,7 +68,7 @@ public class MainFrameController {
 		}else if (jmeSimulation.isRealtime()==false){//if simulation is running fast, then run it in real time
 			jmeSimulation.setRealtime(true);
 		}	
-		disableComponets(jmeSimulation);
+		connectModules(jmeSimulation);
 		jmeSimulation.setPicker(new PhysicsPicker());
 	}
 
@@ -73,6 +79,9 @@ public class MainFrameController {
 	 * @param jmeSimulation
 	 */
 	public static void jButtonRunFastActionPerformed(JMESimulation jmeSimulation) {
+		ConstructRobotTab.setTabEnabled(false);		
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ATTENTION);
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[12]);
 		
 		if (jmeSimulation.isPaused()){// Start simulation  fast, if simulation is in paused state
 			jmeSimulation.setRealtime(false);
@@ -81,11 +90,11 @@ public class MainFrameController {
 			jmeSimulation.setRealtime(false);
 		}	
 		timesSelected++;
-		disableComponets(jmeSimulation);
+		connectModules(jmeSimulation);
 		jmeSimulation.setPicker(new PhysicsPicker());
 	}
 
-	private static void disableComponets(JMESimulation jmeSimulation){
+	private static void connectModules(JMESimulation jmeSimulation){
 		
 		if (timesSelected==1){
 			BuilderHelper.connectAllModules(jmeSimulation);	
@@ -212,12 +221,16 @@ public class MainFrameController {
 	 * @param jmeSimulation
 	 */
 	public static void jButtonRunStepByStepActionPerformed(JMESimulation jmeSimulation) {       	
+		ConstructRobotTab.setTabEnabled(false);		
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ATTENTION);
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[12]);
+		timesSelected++;
+		connectModules(jmeSimulation);
+		
 		jmeSimulation.setPause(true);
-		jmeSimulation.setSingleStep(true);		
-		disableComponets(jmeSimulation);
+		jmeSimulation.setSingleStep(true);
+		
 	}
-
-
 
 	/**
 	 * Controls pausing of running simulation.

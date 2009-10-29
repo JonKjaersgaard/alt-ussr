@@ -99,7 +99,7 @@ public class HintPanel extends JPanel implements HintPanelInter {
 	 * Sets the type of icon in the panel. For example attention, information, error and so on. 
 	 * @param typeOfIcon, type of icon.
 	 */
-	public void setType(HintPanelTypesOfIcons typeOfIcon){
+	public void setType(HintPanelTypes typeOfIcon){
 		jLabelIcon.setIcon(new javax.swing.ImageIcon(TabsInter.DIRECTORY_ICONS + typeOfIcon.toString().toLowerCase() + ".jpg" ));
 	}
 

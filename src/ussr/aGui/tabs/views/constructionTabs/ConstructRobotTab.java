@@ -32,7 +32,10 @@ public class ConstructRobotTab extends Tabs {
 	 */
 	private static ArrayList<AbstractButton> jRadioButtons =  new ArrayList<AbstractButton>() ;	
 
-	private static ArrayList<javax.swing.JButton> jButtons =  new ArrayList<javax.swing.JButton>() ;
+	/**
+	 * Container for buttons contained in the tab, except radio buttons.
+	 *//*
+	private static ArrayList<javax.swing.JButton> jButtons =  new ArrayList<javax.swing.JButton>() ;*/
 
 	/**
 	 * The constants of grid bag layout used during design of the tab.
@@ -62,7 +65,7 @@ public class ConstructRobotTab extends Tabs {
 	/* (non-Javadoc)
 	 * @see ussr.aGui.tabs.views.Tabs#initComponents()
 	 */
-	public void initComponents(){
+	protected void initComponents(){
 
 		/*Instantiation of components*/		
 		jButtonStartNewRobot = new javax.swing.JButton();
@@ -82,15 +85,13 @@ public class ConstructRobotTab extends Tabs {
 		jButtonOnNextConnector = new javax.swing.JButton();
 		jButtonOnPreviousConnector = new javax.swing.JButton();
 		
-		buttonGroup = new ButtonGroup();
+		buttonGroupModularRobots = new ButtonGroup();
 		radionButtonATRON =  new JRadioButton();
 		radionButtonODIN =  new JRadioButton();
 		radioButtonMTRAN =  new JRadioButton();
 		radionButtonCKBOTSTANDARD =  new JRadioButton();
 
-		jLabel1000 = new javax.swing.JLabel();
-		jLabel10002 = new javax.swing.JLabel();	
-		jLabel10003 = new javax.swing.JLabel();	
+		jLabelOperations = new javax.swing.JLabel();	
 
 		jComboBoxEntity = new javax.swing.JComboBox();
 		jComboBoxStandardRotations = new javax.swing.JComboBox();
@@ -147,7 +148,7 @@ public class ConstructRobotTab extends Tabs {
 		gridBagConstraints.gridy = 1;
 		gridBagConstraints.insets = new Insets(0,0,0,0);//reset
 		super.jComponent.add(radionButtonATRON,gridBagConstraints);
-		buttonGroup.add(radionButtonATRON);
+		buttonGroupModularRobots.add(radionButtonATRON);
 		jRadioButtons.add(radionButtonATRON);
 		
 		radionButtonODIN.setText("Odin");
@@ -163,7 +164,7 @@ public class ConstructRobotTab extends Tabs {
 		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 10; 
 		super.jComponent.add(radionButtonODIN,gridBagConstraints);
-		buttonGroup.add(radionButtonODIN);
+		buttonGroupModularRobots.add(radionButtonODIN);
 		jRadioButtons.add(radionButtonODIN);
 		
 		radioButtonMTRAN.setText("MTran");
@@ -179,7 +180,7 @@ public class ConstructRobotTab extends Tabs {
 		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 10; 
 		super.jComponent.add(radioButtonMTRAN,gridBagConstraints);
-		buttonGroup.add(radioButtonMTRAN);
+		buttonGroupModularRobots.add(radioButtonMTRAN);
 		jRadioButtons.add(radioButtonMTRAN);
 		
 		
@@ -196,17 +197,17 @@ public class ConstructRobotTab extends Tabs {
 		gridBagConstraints.gridy = 1;
 		//gridBagConstraints.ipady = 40; 
 		super.jComponent.add(radionButtonCKBOTSTANDARD,gridBagConstraints);
-		buttonGroup.add(radionButtonCKBOTSTANDARD);	
+		buttonGroupModularRobots.add(radionButtonCKBOTSTANDARD);	
 		jRadioButtons.add(radionButtonCKBOTSTANDARD);		
 
-		jLabel10003.setText("Operations on existing modules:");
+		jLabelOperations.setText("Operations on existing modules:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 2;
 		gridBagConstraints.gridwidth = 1;// reset grid width
 		gridBagConstraints.insets = new Insets(0,0,10,0);  
 		
-		super.jComponent.add(jLabel10003,gridBagConstraints);
+		super.jComponent.add(jLabelOperations,gridBagConstraints);
 		
 		jToolBarRotationTools.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarRotationTools.setFloatable(false);//user can not make the tool bar to float
@@ -230,11 +231,10 @@ public class ConstructRobotTab extends Tabs {
 		jButtonOppositeRotation.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
 		jButtonOppositeRotation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection(jButtonOppositeRotation);
+				setSelectionDeselection(jButtonOppositeRotation);
 				ConstructRobotTabController.jButtonOppositeRotationActionPerformed(jmeSimulation);
 			}
 		});
-		jButtons.add(jButtonOppositeRotation);
 
 		jComboBoxStandardRotations.setToolTipText("Rotate with standard rotation");
 		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
@@ -242,7 +242,7 @@ public class ConstructRobotTab extends Tabs {
 		jComboBoxStandardRotations.setEnabled(false);
 		jComboBoxStandardRotations.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
-				ConstructRobotTabController.jComboBox2ActionPerformed(jmeSimulation);
+				ConstructRobotTabController.jComboBoxStandardRotationsActionPerformed(jmeSimulation);
 			}
 		});
 
@@ -306,11 +306,11 @@ public class ConstructRobotTab extends Tabs {
 		jButtonMove.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT));	
 		jButtonMove.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection(jButtonMove);
+				setSelectionDeselection(jButtonMove);
 				ConstructRobotTabController.jButtonMoveActionPerformed(jmeSimulation);
 			}
 		});
-		jButtons.add(jButtonMove);
+		
 		jToolBarGenericTools.add(jButtonMove);
 
 		jButtonDelete.setToolTipText("Delete");
@@ -321,11 +321,10 @@ public class ConstructRobotTab extends Tabs {
 		jButtonDelete.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT));
 		jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection(jButtonDelete);
+				setSelectionDeselection(jButtonDelete);
 				ConstructRobotTabController.jButtonDeleteActionPerformed(jmeSimulation);
 			}
 		});
-		jButtons.add(jButtonDelete);
 		jToolBarGenericTools.add(jButtonDelete);		
 
 		jButtonColorConnetors.setToolTipText("Color Connectors");
@@ -336,25 +335,23 @@ public class ConstructRobotTab extends Tabs {
 		jButtonColorConnetors.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH));
 		jButtonColorConnetors.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection(jButtonColorConnetors);
+				setSelectionDeselection(jButtonColorConnetors);
 				ConstructRobotTabController.jButtonColorConnectorsActionPerformed(jmeSimulation);
 			}
 		});
-
-		jButtons.add(jButtonColorConnetors);
+		
 		jToolBarGenericTools.add(jButtonColorConnetors);	
 
 		super.jComponent.add(jToolBarGenericTools,gridBagConstraints);
 
 
-		jLabel10001 = new javax.swing.JLabel();		
-		jLabel10001.setText("Add new modules:");
-		//jLabel10001.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));		
+		jLabelAddNewModules = new javax.swing.JLabel();		
+		jLabelAddNewModules.setText("Add new modules:");	
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 6;
 		gridBagConstraints.insets = new Insets(0,0,10,10);  //make some space at the bottom and right
-		super.jComponent.add(jLabel10001,gridBagConstraints);
+		super.jComponent.add(jLabelAddNewModules,gridBagConstraints);
 
 		jToolBarConstructionTools.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarConstructionTools.setFloatable(false);//user can not make the tool bar to float
@@ -375,11 +372,10 @@ public class ConstructRobotTab extends Tabs {
 		jButtonOnSelectedConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
 		jButtonOnSelectedConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection(jButtonOnSelectedConnector);
+				setSelectionDeselection(jButtonOnSelectedConnector);
 				ConstructRobotTabController.jButtonOnSelectedConnectorActionPerformed(jmeSimulation);
 			}
 		});	
-		jButtons.add(jButtonOnSelectedConnector);
 
 		jComboBoxNrConnectorsConstructionTool.setToolTipText("On chosen connector number (select module)");
 		jComboBoxNrConnectorsConstructionTool.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
@@ -399,11 +395,10 @@ public class ConstructRobotTab extends Tabs {
 		jButtonConnectAllModules.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
 		jButtonConnectAllModules.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection(jButtonConnectAllModules);
+				setSelectionDeselection(jButtonConnectAllModules);
 				ConstructRobotTabController.jButtonConnectAllModulesActionPerformed(jmeSimulation);
 			}
 		});	
-		jButtons.add(jButtonConnectAllModules);
 
 		jSeparator1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jSeparator1.setPreferredSize(new Dimension(6,30));
@@ -416,7 +411,7 @@ public class ConstructRobotTab extends Tabs {
 		jButtonOnPreviousConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
 		jButtonOnPreviousConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection(jButtonOnPreviousConnector);				
+				setSelectionDeselection(jButtonOnPreviousConnector);				
 				ConstructRobotTabController.jButtonOnPreviousConnectorActionPerformed(jmeSimulation);
 			}
 		});		
@@ -429,11 +424,10 @@ public class ConstructRobotTab extends Tabs {
 		jButtonJumpFromConnToConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
 		jButtonJumpFromConnToConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection(jButtonJumpFromConnToConnector);
+				setSelectionDeselection(jButtonJumpFromConnToConnector);
 				ConstructRobotTabController.jButtonJumpFromConnToConnectorActionPerformed(jmeSimulation);
 			}
 		});	
-		jButtons.add(jButtonJumpFromConnToConnector);
 
 		jButtonOnNextConnector.setToolTipText("On next connector");
 		jButtonOnNextConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NEXT));
@@ -443,14 +437,11 @@ public class ConstructRobotTab extends Tabs {
 		jButtonOnNextConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
 		jButtonOnNextConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				controlSelectionDeselection(jButtonOnNextConnector);
+				setSelectionDeselection(jButtonOnNextConnector);
 				ConstructRobotTabController.jButtonOnNextConnectorActionPerformed(jmeSimulation);
 			}
 		});
-		jButtons.add(jButtonOnNextConnector);
-		
-		
-
+	
 		jSeparator2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jSeparator2.setPreferredSize(new Dimension(6,30));
 
@@ -516,30 +507,34 @@ public class ConstructRobotTab extends Tabs {
 		super.jComponent.add(hintPanel,gridBagConstraints);
 			
 	}
-    
-
-
-	public  void setEnabled(){
-		jComponent.setEnabled(false);
-	}
-
+	
+	
+	/*Getters and setters*/
+	
+	/**
+	 * Enables and disables radio buttons with names of modular robots.
+	 * @param enabled, true if enabled.
+	 */
 	public static void setRadioButtonsEnabled(boolean enabled){
 		for (AbstractButton radioButton: jRadioButtons ){
 			radioButton.setEnabled(enabled);
 		}
 	}
 
-
-	private void controlSelectionDeselection(javax.swing.JButton  jButton){
-     for(int index =0;index<jComponent.getComponents().length; index++ ){
-			
+	/**
+	 * Controls selection and deselection of button. Only one button can be selected, others desected.
+	 * @param jButton, the button to control selection and deselection.
+	 */
+	private void setSelectionDeselection(javax.swing.JButton  jButton){
+		/* go through each component in parent component*/
+     for(int index =0;index<jComponent.getComponents().length; index++ ){			
 			String className = jComponent.getComponent(index).getClass().toString();
-			//System.out.println("Out:"+ );
 			if (className.contains("JToolBar")){
 				javax.swing.JToolBar  currentToolBar = (JToolBar) jComponent.getComponent(index);
+				/*Go through components in the toolbar*/
 				for(int inde =0;inde<currentToolBar.getComponents().length; inde++ ){
-					String className1 = currentToolBar.getComponent(inde).toString();
-					if (className1.contains("JButton")){
+					String classNameNew = currentToolBar.getComponent(inde).toString();
+					if (classNameNew.contains("JButton")){
 						javax.swing.JButton  button = (JButton) currentToolBar.getComponent(inde);
 						if (button.isSelected()){
 							button.setSelected(false);
@@ -552,14 +547,14 @@ public class ConstructRobotTab extends Tabs {
      jButton.setSelected(true);
 	}
 	
+	/**
+	 * Enables  and disables  buttons for moving module from one connector onto another.
+	 * @param enabled, true if enabled.
+	 */
 	public static void setEnabledButtonsArrows(boolean enabled){
 		jButtonOnNextConnector.setEnabled(enabled);
 		jButtonOnPreviousConnector.setEnabled(enabled);
-	}
-	
-	
-	
-	/*Getters and setters*/
+	}	
 
 	/**
 	 * Enables and disables the tool bar containing generic tools for manipulating modules.
@@ -571,13 +566,17 @@ public class ConstructRobotTab extends Tabs {
 		jButtonColorConnetors.setEnabled(enable);
 	}
 
+	/**
+	 * Returns button for moving module or robot.
+	 * @return jButtonMove, the button for moving module or robot.
+	 */
 	public static javax.swing.JButton getJButtonMove() {
 		return jButtonMove;
 	}
 
 
 	/**
-	 * Enables and disables the tool bar containing the tools for constructing the shape(morphology) of modular robot.
+	 * Enables and disables the tool bar containing the tools for constructing the shape of modular robot(Add new modules).
 	 * @param enable,true for tool bar to be disabled. 
 	 */
 	public static void setEnabledConstructionToolsToolBar(boolean enable){
@@ -598,88 +597,117 @@ public class ConstructRobotTab extends Tabs {
 		jComboBoxStandardRotations.setEnabled(enable);	
 	}	
 
+	/**
+	 * Returns JComboBox, containing choice of module or robot
+	 * @return jComboBoxEntity, containing choice of module or robot.
+	 */
 	public static javax.swing.JComboBox getJComboBoxEntity() {
 		return jComboBoxEntity;
 	}
 
-	public static javax.swing.JLabel getJLabel10001() {
-		return jLabel10001;
-	}
-
+	/**
+	 * Returns JComboBox, containing robot specific(standard) rotations.
+	 * @return jComboBoxStandardRotations, containing robot specific(standard) rotations.
+	 */
 	public static javax.swing.JComboBox getjComboBoxStandardRotations() {
 		return jComboBoxStandardRotations;
 	}
 
+	/**
+	 * Returns JComboBox, containing numbers of connectors(on modular robot) for construction tool using them.
+	 * @return jComboBoxNrConnectorsConstructionTool, containing numbers of connectors(on modular robot) for construction tool using them.
+	 */
 	public static javax.swing.JComboBox getJComboBoxNrConnectorsConstructionTool() {
 		return jComboBoxNrConnectorsConstructionTool;
 	}
 	
-	
-
-	
+	/**
+	 * Returns radio button for ATRON modular robot.
+	 * @return radionButtonATRON, radio button for ATRON modular robot.
+	 */
 	public static javax.swing.AbstractButton getRadionButtonATRON() {
 		return radionButtonATRON;
 	}
 	
+	/**
+	 * Returns radio button for MTRAN modular robot.
+	 * @return radioButtonMTRAN, radio button for MTRAN modular robot.
+	 */
 	public static javax.swing.AbstractButton getRadioButtonMTRAN() {
 		return radioButtonMTRAN;
 	}
 	
+	/**
+	 * Returns radio button for ODIN modular robot.
+	 * @return radionButtonODIN, radio button for ODIN modular robot.
+	 */
 	public static javax.swing.AbstractButton getRadionButtonODIN() {
 		return radionButtonODIN;
 	}
 	
+	/**
+	 * Returns radio button for CKBOTSTANDARD modular robot.
+	 * @return radionButtonCKBOTSTANDARD, radio button for CKBOTSTANDARD modular robot.
+	 */
 	public static javax.swing.AbstractButton getRadionButtonCKBOTSTANDARD() {
 		return radionButtonCKBOTSTANDARD;
 	}
 
-	
+	/**
+	 * Returns the panel for displaying hints to the user.
+	 * @return hintPanel, the panel for displaying hints to the user.
+	 */
 	public static HintPanel getHintPanel() {
 		return hintPanel;
 	}
+			
+	/**
+	 * Returns button for starting construction of new modular robot.
+	 * @return jButtonStartNewRobot, button for starting construction of new modular robot.
+	 */
+	public static javax.swing.JButton getJButtonStartNewRobot() {
+		return jButtonStartNewRobot;
+	}
 	
-	public static ButtonGroup getButtonGroup() {
-		return buttonGroup;
+	
+	public static void setTabEnabled (boolean enabled){
+		getJButtonStartNewRobot().setEnabled(enabled);
+		setRadioButtonsEnabled(enabled);		
+		setEnabledRotationToolBar(enabled);
+		setEnabledGenericToolBar(enabled);		
+		setEnabledConstructionToolsToolBar(enabled);
+		for (int button=0; button<getJToolBarSaveLoad().getComponentCount();button++ ){
+			getJToolBarSaveLoad().getComponent(button).setEnabled(enabled);
+		}
+	}	
+
+	/**
+	 * @return jToolBarSaveLoad, the toolbar containing buttons for saving and loading XML.
+	 */
+	public static javax.swing.JToolBar getJToolBarSaveLoad() {
+		return jToolBarSaveLoad;
 	}
 
 	/*Declaration of tab components*/
-	private static javax.swing.JComboBox jComboBoxEntity;
-	private static javax.swing.JComboBox jComboBoxStandardRotations;
-	private static javax.swing.JComboBox jComboBoxNrConnectorsConstructionTool;
+	private static javax.swing.JComboBox jComboBoxEntity,
+    jComboBoxStandardRotations,jComboBoxNrConnectorsConstructionTool;	
 	
-	private static javax.swing.JLabel jLabel1000;
-	private static javax.swing.JLabel jLabel10001;
-	private static javax.swing.JLabel jLabel10002;
-	private static javax.swing.JLabel jLabel10003;
+	private static javax.swing.JLabel jLabelAddNewModules,jLabelOperations;
 	
-	private static ButtonGroup buttonGroup;	
+	private static ButtonGroup buttonGroupModularRobots;	
 
+	private static  javax.swing.AbstractButton radionButtonATRON,
+	radioButtonMTRAN,radionButtonODIN, radionButtonCKBOTSTANDARD;
 
-
-	private static  javax.swing.AbstractButton radionButtonATRON;
-	private static javax.swing.AbstractButton  radioButtonMTRAN;
-	private static javax.swing.AbstractButton radionButtonODIN;	
-	private static javax.swing.AbstractButton radionButtonCKBOTSTANDARD;
-
-	private javax.swing.JButton jButtonStartNewRobot;
-	private  static javax.swing.JButton jButtonDelete;
-	private  static javax.swing.JButton jButtonMove;
-	private  static javax.swing.JButton jButtonColorConnetors;	
-	private  static javax.swing.JButton jButtonOppositeRotation;
-	private  static javax.swing.JButton jButtonOnSelectedConnector;
-	private  static javax.swing.JButton jButtonConnectAllModules;
-	private  static javax.swing.JButton jButtonJumpFromConnToConnector;
-	private  static javax.swing.JButton jButtonOnNextConnector;
-	private  static javax.swing.JButton jButtonOnPreviousConnector;
+	private  static javax.swing.JButton jButtonStartNewRobot,jButtonDelete,
+	jButtonMove,jButtonColorConnetors,jButtonOppositeRotation,jButtonOnSelectedConnector,
+	jButtonConnectAllModules,jButtonJumpFromConnToConnector,jButtonOnNextConnector,
+	jButtonOnPreviousConnector;
 	
-	private static javax.swing.JToolBar jToolBarSaveLoad;
-	private static javax.swing.JToolBar jToolBarGenericTools;
-	private static javax.swing.JToolBar jToolBarRotationTools;
-	private static javax.swing.JToolBar jToolBarConstructionTools;
+	private static javax.swing.JToolBar jToolBarSaveLoad,jToolBarGenericTools,
+	jToolBarRotationTools,jToolBarConstructionTools;
 
-	private javax.swing.JToolBar.Separator  jSeparator1;
-	private javax.swing.JToolBar.Separator  jSeparator2;
-
+	private javax.swing.JToolBar.Separator jSeparator1,jSeparator2;
 	
 	private static HintPanel hintPanel;
 }

@@ -37,17 +37,9 @@ public interface HintPanelInter {
                                 		 "When desired placement achieved, repeat the sequence of actions for next modules.",
                                 
                                 /*11*/   "Choose modular robot type from four available (ATRON, Odin  and so on).",
+                                
+                                /*12*/   "This tab is only available before simulation is started!",
                         
 	"NEW HINT"};
 	
-	/**
-	 * Types of hint panel (hint panel icons).
-	 * @author Konstantinas
-	 */
-	public enum HintPanelTypesOfIcons {
-
-		INFORMATION,//Default 
-		ATTENTION,		
-		ERROR;
-	}
 }
