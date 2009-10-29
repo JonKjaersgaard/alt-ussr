@@ -1,0 +1,14 @@
+<body>
+Supports the builder with interactive assignment of controllers to modules selected in 
+the simulation environment. Look in class called "AssignControllerTool.java".<br />
+<h1>HOW TO ...?</h1> 
+<h2>Add my own controller class?</h2> 
+1) Create new class and inherit it from "ControllerStrategy.java".<br />
+2) Implement the method called "activate()", which is the main method of your controller.<br />
+   Look other classes like "ATRONWheelController.java" and so on for inspiration.<br />
+3) Start simulation and from GUI comboBox select the name of your controller class.<br />
+   (All this can be found in toolBar nr8 from the top in GUI).<br />
+   After that select the module in simulation environment to which you would like to apply<br />
+   this controller. The controller should start running.<br />
+PRECONDITION. Your new controller should be located in this package, otherwise it won't work.<br />
+</body>
