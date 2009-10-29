@@ -19,6 +19,7 @@ public class ATRONAxleControllerNegative extends ControllerStrategy {
 	 */
 	public void activate (Module selectedModule){		
 		controller = (ATRONController)selectedModule.getController();
-		controller.rotateDegrees(-90);		
+		controller.rotateDegrees(-90);
+		//selectedModule.setController(controller)
 	}
 }

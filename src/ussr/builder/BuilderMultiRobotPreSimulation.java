@@ -53,10 +53,12 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		return null;
 	}
 
-	/*For saving XML file*/
+	/*For saving XML file*/ 
 	public static final  String robotMorphologyFile = "samples/simulations/atron/morphologies/simpleVehicleMorphology.xml";
 	//public static final  String robotMorphologyFile = "samples/simulations/atron/morphologies/simulation1Morphology.xml";
    // public static final  String robotMorphologyFile = "samples/simulations/atron/morphologies/snakeSimulationMorphology.xml";
+	
+	
 	
 	/*UNCOMMENT ONE OF US TO LOAD SIMULATION FROM XML FILE*/
 	//private  static final String loadableSimulationFile ="samples/simulations/atron/simpleVehicleSim.xml";
@@ -84,21 +86,13 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		/*Activate connectors*/
 		GenericSimulation.setConnectorsAreActive(true);
 		BuilderMultiRobotPreSimulation simulation = new BuilderMultiRobotPreSimulation();
-		
-		
-//		/* Specify realistic collision*/
-//		PhysicsParameters.get().setRealisticCollision(true);
-//		/* Specify simulation step*/
-//		PhysicsParameters.get().setPhysicsSimulationStepSize(0.0035f);
-//		/* Specify smallest resolution factor so that simulation can handle more modules.
-//		 * This is done in order to "in a way" avoid stack overflow */
-//		PhysicsParameters.get().setResolutionFactor(1);
-		
+				
 		/*Load Simulation Configuration file*/
 		SaveLoadXMLFileTemplate xmlLoaderSimulation = new PreSimulationXMLSerializer(new PhysicsParameters());
 		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, loadableSimulationFile);
-        simulationWorldDescription = xmlLoaderSimulation.getSimulationDescriptionValues();
-
+        
+		/*Get values from XML file*/
+		simulationWorldDescription = xmlLoaderSimulation.getSimulationDescriptionValues();
         simulationPhysicsParameters = xmlLoaderSimulation.getSimulationPhysicsValues();
 		
         /*Get values*/

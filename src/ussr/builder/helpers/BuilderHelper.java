@@ -10,6 +10,7 @@ import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
+import ussr.physics.PhysicsModuleComponent;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.atron.ATRONBuilder;
@@ -163,8 +164,8 @@ public class BuilderHelper {
 	}
 
 	/**
-	 * Removes (deletes) the module from simulation environment
-	 * @param selectedModule, module to remove (delete)
+	 * Removes (deletes) the module from simulation environment.
+	 * @param selectedModule, module to remove (delete).
 	 */
 	public static void deleteModule(Module selectedModule){
 		/*Remove the module from the internal list of the modules in USSR*/
@@ -173,17 +174,44 @@ public class BuilderHelper {
 		/* Identify each component of the module and remove the visual of it*/
 		int amountComponents= selectedModule.getNumberOfComponents();		
 		for (int compon=0; compon<amountComponents;compon++){			
-			JMEModuleComponent moduleComponent= (JMEModuleComponent)selectedModule.getComponent(compon);			
-			for(DynamicPhysicsNode part: moduleComponent.getNodes()){
-				int amountNodes = moduleComponent.getNodes().size();
-				for (int node=0; node<amountNodes; node++ ){ //removes bounds and physics
-					moduleComponent.getNodes().get(node).removeFromParent();
-				}						
-				part.setIsCollidable(false);
-				part.setActive(false);							
-				part.detachAllChildren();//removes visual						
-			}        
+			removeModuleComponent(selectedModule.getComponent(compon));  
 		}		
+	}
+
+
+	/**
+	 * Removes specific component of the module from simulation environment.
+	 * @param physicsModuleComponent, the physical component of the module.
+	 */
+	public static void removeModuleComponent(PhysicsModuleComponent physicsModuleComponent ){
+		JMEModuleComponent moduleComponent= (JMEModuleComponent)physicsModuleComponent;
+		/*Remove each node of component*/
+		for(DynamicPhysicsNode part: moduleComponent.getNodes()){
+			int amountNodes = moduleComponent.getNodes().size();
+			for (int node=0; node<amountNodes; node++ ){ //removes bounds and physics
+				moduleComponent.getNodes().get(node).removeFromParent();
+			}						
+			part.setIsCollidable(false);
+			part.setActive(false);							
+			part.detachAllChildren();//removes visual						
+		}        
+	};
+
+
+	/**
+	 * Removes all modules (robot(s)) from simulation environment.
+	 * @param jmeSimulation, the physical simulation.
+	 */
+	public static void deleteAllModules(JMESimulation jmeSimulation){
+		/*Loop through the modules in simulation*/
+		for (int moduleNr =0; moduleNr<jmeSimulation.getModules().size();moduleNr++){
+			Module currentModule = jmeSimulation.getModules().get(moduleNr);
+			
+            /*Remove each module component*/
+			for (int compon=0; compon<currentModule.getNumberOfComponents();compon++){			
+				removeModuleComponent(currentModule.getComponent(compon));
+			}	
+		}
 	}
 	/**
 	 * Rotates the component of the module with specified angle around specific coordinate.
@@ -301,7 +329,7 @@ public class BuilderHelper {
 			simulation.worldDescription.setModulePositions(odinAllModulePositions);
 			simulation.worldDescription.setModuleConnections(odinModuleConnection);                          
 			simulation.placeModules();			
-		            
+
 			ArrayList<ModuleConnection> ckbotModuleConnection = CKBotSimulation.allConnections(ckbotModulePositions);        	 
 			simulation.setModules(ckbotModules);
 			simulation.worldDescription.setModulePositions(ckbotModulePositions);

@@ -142,7 +142,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	protected void pickTarget(Geometry target) {
 		if (toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){
 			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);
-			System.out.println("Connector:"+selectedConnectorNr );
+		//Adapt Construct Robot tab
 			ConstructRobotTab.setEnabledRotationToolBar(false);
 			ConstructRobotTab.getJButtonMove().setEnabled(false);
 		}

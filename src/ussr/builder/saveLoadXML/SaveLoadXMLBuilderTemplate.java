@@ -15,7 +15,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import com.jme.math.Quaternion;
 
+import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.BuilderMultiRobotPreSimulation;
+import ussr.builder.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
@@ -170,10 +172,13 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 	protected abstract int numberOfSimulatedModules();
 
+	
 	public void loadInXML(UssrXmlFileTypes ussrXmlFileType, Document document) {
 
 		if (ussrXmlFileType.equals(UssrXmlFileTypes.ROBOT)){
 			loadRobotXML(document);
+		
+			
 		}else if (ussrXmlFileType.equals(UssrXmlFileTypes.SIMULATION)){
             loadSimulationXML(document);
 		}
@@ -285,7 +290,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 				Element firstElmnt = (Element) firstNode;				
 				//String moduleID = extractTagValue(firstElmnt,idTag);
-				String moduleType = extractTagValue(firstElmnt,TagsUsed.TYPE);
+			    String moduleType = extractTagValue(firstElmnt,TagsUsed.TYPE);
 				String moduleName = extractTagValue(firstElmnt,TagsUsed.NAME);
 				String moduleRotation = extractTagValue(firstElmnt,TagsUsed.ROTATION);		
 				String moduleRotationQuaternion = extractTagValue(firstElmnt,TagsUsed.ROTATION_QUATERNION);
@@ -311,6 +316,19 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 				rotationDescription.setRotation(new Quaternion(extractFromQuaternion(moduleRotationQuaternion,"X"),extractFromQuaternion(moduleRotationQuaternion,"Y"),extractFromQuaternion(moduleRotationQuaternion,"Z"),extractFromQuaternion(moduleRotationQuaternion,"W")));
 
 				createNewModule(moduleName,moduleType,new VectorDescription(extractFromPosition(modulePosition, "X"),extractFromPosition(modulePosition, "Y"),extractFromPosition(modulePosition, "Z")),rotationDescription ,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
+			
+				
+				if (moduleType.contains("ATRON")){
+					ConstructRobotTabController.adjustTabToSelectedModule(SupportedModularRobots.ATRON);
+				}else if (moduleType.contains("MTRAN")){
+					ConstructRobotTabController.adjustTabToSelectedModule(SupportedModularRobots.MTRAN);
+				}else if (moduleType.contains("Odin")){
+					ConstructRobotTabController.adjustTabToSelectedModule(SupportedModularRobots.ODIN);
+				}else if (moduleType.contains("CKBotStandard")){
+					ConstructRobotTabController.adjustTabToSelectedModule(SupportedModularRobots.CKBOTSTANDARD);
+				}else throw new Error ("Module type "+ moduleType+ " not supported yet");
+				
+				
 				
 //FIXME IN CASE THERE IS A NEED TO EXTRACT THE STATE OF CONNECTORS
 					/*NodeList sixthNmElmntLst = fstElmnt.getElementsByTagName("CONNECTOR");
