@@ -13,7 +13,7 @@ import ussr.builder.constructionTools.ConstructionToolSpecification;
 import ussr.builder.constructionTools.ConstructionTools;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
-import ussr.builder.controllerReassignmentTool.AssignControllerTool;
+import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
 import ussr.builder.experimental.MtranExperiment;
 import ussr.builder.experimental.NewSelection;
 import ussr.builder.genericTools.ColorConnectors;
