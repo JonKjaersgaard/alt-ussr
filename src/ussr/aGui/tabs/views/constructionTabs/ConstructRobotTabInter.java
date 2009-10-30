@@ -49,6 +49,4 @@ public interface ConstructRobotTabInter extends ConstructionTabsInter {
 		ROT_0_90X_MIN90Z,
 		ROT_0_MIN90X_MIN90Z;
 	}
-	
-//TODO MOVE THINGS FROM COMMON INTYERFACE
 }

@@ -19,6 +19,7 @@ import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
+import ussr.aGui.tabs.views.constructionTabs.ConstructionTabsInter.CommonJComponentsText;
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -137,7 +138,7 @@ public class ConstructRobotTab extends Tabs implements ConstructRobotTabInter {
 		super.jComponent.add(jToolBarSaveLoad,gridBagConstraints);				
 		
 		radionButtonATRON.setFocusable(false);
-		radionButtonATRON.setText("ATRON");
+		radionButtonATRON.setText(CommonJComponentsText.ATRON.toString());
 		radionButtonATRON.setEnabled(false);
 		radionButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,7 +153,7 @@ public class ConstructRobotTab extends Tabs implements ConstructRobotTabInter {
 		buttonGroupModularRobots.add(radionButtonATRON);
 		jRadioButtons.add(radionButtonATRON);
 		
-		radionButtonODIN.setText("Odin");
+		radionButtonODIN.setText(CommonJComponentsText.Odin.toString());
 		radionButtonODIN.setFocusable(false);
 		radionButtonODIN.setEnabled(false);
 		radionButtonODIN.addActionListener(new java.awt.event.ActionListener() {
@@ -168,7 +169,7 @@ public class ConstructRobotTab extends Tabs implements ConstructRobotTabInter {
 		buttonGroupModularRobots.add(radionButtonODIN);
 		jRadioButtons.add(radionButtonODIN);
 		
-		radioButtonMTRAN.setText("MTran");
+		radioButtonMTRAN.setText(CommonJComponentsText.MTran.toString());
 		radioButtonMTRAN.setFocusable(false);
 		radioButtonMTRAN.setEnabled(false);
 		radioButtonMTRAN.addActionListener(new java.awt.event.ActionListener() {
@@ -185,7 +186,7 @@ public class ConstructRobotTab extends Tabs implements ConstructRobotTabInter {
 		jRadioButtons.add(radioButtonMTRAN);
 		
 		
-		radionButtonCKBOTSTANDARD.setText("CKBotStandard");
+		radionButtonCKBOTSTANDARD.setText(CommonJComponentsText.CKBotStandard.toString());
 		radionButtonCKBOTSTANDARD.setFocusable(false);
 		radionButtonCKBOTSTANDARD.setEnabled(false);
 		radionButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
