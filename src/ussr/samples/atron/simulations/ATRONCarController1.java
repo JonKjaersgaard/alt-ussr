@@ -39,9 +39,6 @@ public class ATRONCarController1 extends ATRONController {
         boolean firstTime = true;
         while(true) {
         	
-            // Enable stopping the car interactively:
-            if(!GenericSimulation.getActuatorsAreActive()) { yield(); firstTime = true; continue; }
-            
             // Basic control: first time we enter the loop start rotating and turn the axle
             String name = module.getProperty("name");
             if(firstTime) {

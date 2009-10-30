@@ -27,17 +27,7 @@ public abstract class GenericSimulation {
      * Last time user toggle activeness of connectors, help to avoid multiple re-activations
      */
     private static long lastConnectorToggleTime = -1;
-    
-    /**
-     * Property indicating whether connectors should be active or not
-     */
-    private static boolean connectorsAreActive = false;
-    
-    /**
-     * Property indicating whether actuators should be active or not
-     */
-    private static boolean actuatorsAreActive = true;
-    
+        
     protected abstract Robot getRobot();
     protected static PhysicsSimulation simulation;
 
@@ -61,20 +51,6 @@ public abstract class GenericSimulation {
         simulation.setWorld(world);
         simulation.setPause(startPaused);
 
-        // Global connector activation toggle 
-        simulation.addInputHandler("Z", new PhysicsSimulation.Handler() {
-            public void handle() {
-                // Avoid problem with keypress being registered twice
-                if(System.currentTimeMillis()-lastConnectorToggleTime<1000) return;
-                lastConnectorToggleTime = System.currentTimeMillis();
-                // Toggle connector activeness flag
-                setConnectorsAreActive(!getConnectorsAreActive());
-                // Tell user what is happening
-                if(getConnectorsAreActive()) System.out.println("Connectors are now active");
-                else System.out.println("Connectors are now inactive");
-            }
-        });
-
         // Start
         simulation.start();
     }
@@ -97,30 +73,5 @@ public abstract class GenericSimulation {
         });
         return world;
     }
-
-    /**
-     * Return the state of whether connector are active or not, as controlled by user input.
-     * @return true if the connectors should be active, false otherwise
-     */
-    public static boolean getConnectorsAreActive() {
-        return connectorsAreActive;
-    }
-
-    /**
-     * Set the tate of whether connector are active or not
-     * @param connectorsAreActive set the states of whether the connectors should be active
-     */
-    public static void setConnectorsAreActive(boolean active) {
-        connectorsAreActive = active;
-    }
-
-    public static void setActuatorsAreActive(boolean active) {
-        actuatorsAreActive = true;
-    }
-    
-    public static boolean getActuatorsAreActive() {
-        return actuatorsAreActive;
-    }
-    
 
 }

@@ -39,7 +39,6 @@ public class OdinSandboxController extends OdinController {
     public void muscleControl() {
     	float lastTime = module.getSimulation().getTime();
     	while(true) {
-            if(!GenericSimulation.getActuatorsAreActive()) { yield(); continue; }
     		float time = module.getSimulation().getTime()+timeOffset;
     		//actuate((float)(Math.sin(time)+1)/2f);
     		//balls are named 6-11

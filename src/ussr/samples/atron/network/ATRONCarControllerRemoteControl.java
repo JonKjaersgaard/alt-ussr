@@ -133,9 +133,6 @@ public class ATRONCarControllerRemoteControl extends ATRONController {
         			controllerYield();
         		}
         	}
-   			if(!GenericSimulation.getConnectorsAreActive()) {
-   				disconnectAll();
-   			}
 //   			controllerYield();
         }
     }

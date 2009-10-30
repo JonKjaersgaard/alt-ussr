@@ -32,9 +32,6 @@ public class ATRONSnakeController1 extends ATRONController {
         while(true) {
         	if(!module.getSimulation().isPaused()) {
         		snakeControl();
-    			if(!GenericSimulation.getConnectorsAreActive()) {
-    				disconnectAll();
-    			}
         	}
         	Thread.yield();
         }

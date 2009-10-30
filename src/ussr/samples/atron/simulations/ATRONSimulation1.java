@@ -36,7 +36,6 @@ public class ATRONSimulation1 extends GenericSimulation {
 
     public void main() {
         PhysicsParameters.get().setPhysicsSimulationStepSize(0.001f);
-        setConnectorsAreActive(true);
         WorldDescription world = new WorldDescription();
         world.setPlaneSize(5);
         List<ModulePosition> modulePos;

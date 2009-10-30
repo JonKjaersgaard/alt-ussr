@@ -62,7 +62,6 @@ public class MultiRobotSimulation extends GenericSimulation {
     private static float unit =  0.065f*2+0.01f;//(float)Math.sqrt((0.18f*0.18f)/2);
     
     public static void main( String[] args ) {
-        GenericSimulation.setConnectorsAreActive(true);
         MultiRobotSimulation simulation = new MultiRobotSimulation();
         //PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
         PhysicsParameters.get().setWorldDampingLinearVelocity(0.9f);

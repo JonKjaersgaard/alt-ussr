@@ -45,7 +45,7 @@ public class PhysicsParameters {
     private float errorReductionParameter = 0.8f;
     private float worldDampingLinearVelocity = 0.0f;
     private float worldDampingAngularVelocity = 0.0f;
-    private int resolutionFactor = 5;
+    private int resolutionFactor = 2; // Modules not as pretty but more scalable in terms of #modules
     private boolean useModuleEventQueue = /*true*/ false ;
     private boolean syncWithControllers = /*true*/ false ;
     

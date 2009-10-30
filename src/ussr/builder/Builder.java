@@ -48,7 +48,6 @@ public class Builder extends GenericSimulation {
 	 */
 	public static void main( String[] args ) {
 		/*Activate connectors*/
-		GenericSimulation.setConnectorsAreActive(true);
 		Builder simulation = new Builder();
 		/* Specify realistic collision*/
 		PhysicsParameters.get().setRealisticCollision(true);

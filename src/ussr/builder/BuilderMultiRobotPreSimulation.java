@@ -84,7 +84,6 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 	private static void runSimulationFromXMLFile(){
 
 		/*Activate connectors*/
-		GenericSimulation.setConnectorsAreActive(true);
 		BuilderMultiRobotPreSimulation simulation = new BuilderMultiRobotPreSimulation();
 				
 		/*Load Simulation Configuration file*/

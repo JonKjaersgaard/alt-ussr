@@ -40,9 +40,6 @@ public class ATRONSampleController1 extends ATRONController {
             if(name=="wheel2right") rotateContinuous(-1);
             if(name=="wheel4right") rotateContinuous(-1);
             if(name.contains("snake")) snakeControl();
-            if(!GenericSimulation.getConnectorsAreActive()) {
-                disconnectAll();
-            }
             yield();
         }
     }

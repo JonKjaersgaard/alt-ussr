@@ -28,7 +28,6 @@ public abstract class GenericATRONSimulation extends GenericSimulation {
 	
     public void main() {
         this.setupPhysicsHook();
-        setConnectorsAreActive(true);
         WorldDescription world = new WorldDescription();
         world.setPlaneSize(100);
         

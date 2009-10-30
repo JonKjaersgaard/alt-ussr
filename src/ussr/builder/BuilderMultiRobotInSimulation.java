@@ -50,7 +50,6 @@ public class BuilderMultiRobotInSimulation extends GenericSimulation {
 	public static void main( String[] args ) {
 		
 			/*Activate connectors*/
-			GenericSimulation.setConnectorsAreActive(true);
 			BuilderMultiRobotInSimulation simulation = new BuilderMultiRobotInSimulation();
 			/* Specify realistic collision*/
 			PhysicsParameters.get().setRealisticCollision(true);
