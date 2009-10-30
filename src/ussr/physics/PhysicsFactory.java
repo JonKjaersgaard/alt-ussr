@@ -53,6 +53,16 @@ public class PhysicsFactory {
         private String resourceDirectory;
         private boolean saveWindowSettingOnExit = false;
 
+        public void set(Options other) {
+            this.exitOnQuit = other.exitOnQuit;
+            this.headless = other.headless;
+            this.monitors = other.monitors;
+            this.resourceDirectory = other.resourceDirectory;
+            this.saveWindowSettingOnExit = other.saveWindowSettingOnExit;
+            this.startPaused = other.startPaused;
+            this.topologyWriter = other.topologyWriter;
+        }
+
         public Options copy() { 
             try {
                 return (Options)clone();
@@ -134,6 +144,7 @@ public class PhysicsFactory {
 		public boolean getSaveWindowSettingOnExit() {
 			return saveWindowSettingOnExit;
 		}
+
     }
     
     private static final ModuleFactory[] INITIAL_FACTORIES = new ModuleFactory[] { new JMEATRONFactory(), new JMEOdinFactory(), new JMEMTRANFactory(), new JMECKBotFactory() };
@@ -190,4 +201,5 @@ public class PhysicsFactory {
     public static Options getOptions() {
         return options;
     }
+
 }

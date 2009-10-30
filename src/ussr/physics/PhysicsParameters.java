@@ -51,7 +51,31 @@ public class PhysicsParameters {
     
     private boolean realtime = true;
     
-    
+    /**
+     * Copy physics parameters from another instance (e.g., passed via RMI)
+     * @param  the instance to copy from
+     */
+    public static void set(PhysicsParameters p) {
+        PhysicsParameters it = get();
+        it.constraintForceMix = p.constraintForceMix;
+        it.errorReductionParameter = p.errorReductionParameter;
+        it.gravity = p.gravity;
+        it.hasMechanicalConnectorSpringiness = p.hasMechanicalConnectorSpringiness;
+        it.maintainRotationalJointPositions = p.maintainRotationalJointPositions;
+        it.mechanicalConnectorDamping = p.mechanicalConnectorDamping;
+        it.mechanicalConnectorSpringConstant = p.mechanicalConnectorSpringConstant;
+        it.physicsSimulationControllerStepFactor = p.physicsSimulationControllerStepFactor;
+        it.physicsSimulationStepSize = p.physicsSimulationStepSize;
+        it.planeMaterial = p.planeMaterial;
+        it.realisticCollision = p.realisticCollision;
+        it.realtime = p.realtime;
+        it.resolutionFactor = p.resolutionFactor;
+        it.syncWithControllers = p.syncWithControllers;
+        it.useModuleEventQueue = p.useModuleEventQueue;
+        it.worldDampingAngularVelocity = p.worldDampingAngularVelocity;
+        it.worldDampingLinearVelocity = p.worldDampingLinearVelocity;
+    }
+
     public float getWorldDampingLinearVelocity() {
         return worldDampingLinearVelocity;
     }
