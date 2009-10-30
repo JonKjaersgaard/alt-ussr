@@ -64,7 +64,7 @@ public abstract class GenericSimulation {
     public WorldDescription createGenericSimulationWorld(ControllerFactory controllerFactory) {
         PhysicsLogger.setDefaultLoggingLevel();
         /* Create the simulation*/
-        PhysicsSimulation simulation = PhysicsFactory.createSimulator();
+        simulation = PhysicsFactory.createSimulator();
         
         /* Assign controller to selection of robots */
         DefaultSimulationSetup.addDefaultRobotSelection(simulation, controllerFactory);
@@ -89,7 +89,7 @@ public abstract class GenericSimulation {
         return world;
     }
 
-    protected void start(boolean startPaused) {
+    public void start(boolean startPaused) {
         /* Should simulation be in paused state (static)in the beginning*/
         simulation.setPause(startPaused);
         /* Start simulation */
