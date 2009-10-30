@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import ussr.remote.RemoteWrapper;
 
 public class MagicHandlerHelper implements Serializable, InvocationHandler {
 

@@ -7,6 +7,11 @@ import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsSimulation;
 
+/**
+ * Wrapper for a standard PhysicsSimulation allowing it to be used as a remote object
+ * @author ups
+ *
+ */
 public class RemotePhysicsSimulationWrapper extends UnicastRemoteObject implements RemotePhysicsSimulation {
     private PhysicsSimulation simulation;
     

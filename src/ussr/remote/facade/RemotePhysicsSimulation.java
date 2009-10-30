@@ -6,6 +6,11 @@ import java.rmi.RemoteException;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 
+/**
+ * Remote version of the standard PhysicsSimulation interface
+ * @author ups
+ *
+ */
 public interface RemotePhysicsSimulation extends Remote {
 
     /**

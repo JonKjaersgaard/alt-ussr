@@ -6,7 +6,6 @@ import java.lang.reflect.Proxy;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import ussr.remote.RemoteWrapper;
 import ussr.remote.SimulationAccessError;
 
 
