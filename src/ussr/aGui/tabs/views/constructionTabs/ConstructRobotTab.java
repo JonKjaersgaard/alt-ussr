@@ -25,7 +25,7 @@ import ussr.physics.jme.JMESimulation;
  * Defines visual appearance of the tab called "1 Step: Construct Robot".  
  * @author Konstantinas
  */
-public class ConstructRobotTab extends Tabs {
+public class ConstructRobotTab extends Tabs implements ConstructRobotTabInter {
 
 	/**
 	 * The container for radio buttons of supported modular robots (ATRON,Odin and so on).

@@ -1,8 +1,6 @@
 package ussr.aGui.tabs;
 
-import java.awt.font.TextAttribute;
-import java.util.HashMap;
-import java.util.Map;
+
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -15,7 +13,7 @@ public abstract class Tabs implements TabsInter {
 	
 	protected String imageIconDirectory;
 	
-	protected Map<TextAttribute, Integer> fontAttributes = new HashMap<TextAttribute, Integer>();
+	//protected Map<TextAttribute, Integer> fontAttributes = new HashMap<TextAttribute, Integer>();
 	
 
 	/**

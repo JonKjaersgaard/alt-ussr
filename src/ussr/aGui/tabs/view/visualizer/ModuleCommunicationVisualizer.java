@@ -46,7 +46,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
-		super.fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+		//super.fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		
 		initComponents();
 	}
@@ -88,12 +88,12 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		
 		jLabel1001.setText("Make sure that in simulation there are atleast two modules  and press run beneath ");
 		jLabel1001.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + INFORMATION));
-		jLabel1001.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));		
+		//jLabel1001.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));		
 		jLabel1001.setVisible(true);
 		jScrollPane.setViewportView(jLabel1001);
 		
 		jLabel1000.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + ERROR));		
-		jLabel1000.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));		
+		//jLabel1000.setFont( new Font("Times New Roman", Font.PLAIN, 12).deriveFont(fontAttributes));		
 		jLabel1000.setVisible(false);		
 		
 		super.jComponent.add(jScrollPane,gridBagConstraints);

@@ -2,6 +2,7 @@ package ussr.aGui.tabs.controllers;
 
 import java.util.Vector;
 
+import javax.swing.AbstractButton;
 import javax.swing.JRadioButton;
 
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
@@ -97,6 +98,22 @@ public class AssignBehaviorsTabController {
 	return tempClassesOfControllers;
 	  
   }
+
+public static void radioButtonGroupEntitiesActionPerformed(AbstractButton button) {
+	// TODO Auto-generated method stub
+	//AssignBehaviorsTab.getJTable2().getColumn(0).getHeaderValue();
+	if (button.getText().contains("Sensors")){
+		AssignBehaviorsTab.getJToolBar3().setVisible(true);
+	}else{
+		AssignBehaviorsTab.getJToolBar3().setVisible(false);
+	    String columnHeaderName = button.getText() + " Labels"; 
+		AssignBehaviorsTab.getJTable2().getTableHeader().getColumnModel().getColumn(0).setHeaderValue(columnHeaderName);
+	}
+	
+	
+	
+	
+}
   
   
 
