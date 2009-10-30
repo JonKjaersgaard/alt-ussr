@@ -347,20 +347,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_main_frame", false)) {			 
 			if (MainFrameSeparate.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
 			}else{
-			    new Thread() {
-			        public void run() {
-			            while(true) {
-			                System.out.print("*"); System.out.flush();
-			                try {
-                                Thread.sleep(100);
-                            } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-			            }
-			        }
-			    }.start();
-			    System.out.println("Starting frame"); System.out.flush();
 				JMESimulation simulation = (JMESimulation)this;
 				simulation.setPause(true); // pause simulation.
 				
@@ -377,11 +363,8 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 				
 				/*Tabs of the second tabbed pane*/
 				tabs.add(new ConsoleTab(false,"Console", null, TabsInter.DIRECTORY_ICONS+TabsInter.CONSOLE));
-                System.out.println("Creating frame"); System.out.flush();
-				FramesInter mainFrame = new MainFrameSeparate(this,tabs);				
-                System.out.println("Activating frame"); System.out.flush();
-				mainFrame.activate();
-                System.out.println("Frame started"); System.out.flush();
+				FramesInter mainFrame = new MainFrameSeparate(this,tabs);				                
+				mainFrame.activate();                
 				
 			}			
 		}
