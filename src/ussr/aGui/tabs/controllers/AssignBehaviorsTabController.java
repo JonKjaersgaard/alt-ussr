@@ -102,6 +102,10 @@ public class AssignBehaviorsTabController {
 public static void radioButtonGroupEntitiesActionPerformed(AbstractButton button) {
 	// TODO Auto-generated method stub
 	//AssignBehaviorsTab.getJTable2().getColumn(0).getHeaderValue();
+	AssignBehaviorsTab.getJTable1().getCellEditor(0, 0).getTableCellEditorComponent(AssignBehaviorsTab.getJTable1(),AssignBehaviorsTab.getComboBox1(),  true, 0, 0).setVisible(false);
+	AssignBehaviorsTab.getJTable1().getCellEditor(0, 0).getTableCellEditorComponent(AssignBehaviorsTab.getJTable1(),AssignBehaviorsTab.getComboBox1(),  true, 0, 0).setVisible(true);
+	
+	
 	if (button.getText().contains("Sensors")){
 		AssignBehaviorsTab.getJToolBar3().setVisible(true);
 	}else{

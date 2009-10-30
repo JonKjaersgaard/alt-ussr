@@ -22,13 +22,14 @@ import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.samples.odin.modules.Odin;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
+import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTabInter;
 
 
 /**
  * Controls 
  * @author Konstantinas
  */
-public class ConstructRobotTabController {
+public class ConstructRobotTabController implements ConstructRobotTabInter{
 
 	/**
 	 * Local reference to physical simulation.
@@ -109,8 +110,8 @@ public class ConstructRobotTabController {
 	 */
 	private static void adaptTabToATRON(){
 		ConstructRobotTab.getRadionButtonATRON().setSelected(true);
-		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ATRONStandardRotations.values()));
-		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ATRON_CONNECTORS));
+		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(ATRONStandardRotations.values()));
+		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(ATRON_CONNECTORS));
 	}
 
 	/**
@@ -119,8 +120,8 @@ public class ConstructRobotTabController {
 	private static void adaptTabToMTRAN(){
 		ConstructRobotTab.getRadioButtonMTRAN().setSelected(true);
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
-		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.MTRANStandardRotations.values()));
-		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.MTRAN_CONNECTORS));
+		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(MTRANStandardRotations.values()));
+		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(MTRAN_CONNECTORS));
 	}
 
 	/**
@@ -129,7 +130,7 @@ public class ConstructRobotTabController {
 	private static void adaptTabToOdin(){
 		ConstructRobotTab.getRadionButtonODIN().setSelected(true);
 		ConstructRobotTab.setEnabledRotationToolBar(false);// for Odin not yet relevant
-		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.ODIN_CONNECTORS));
+		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(ODIN_CONNECTORS));
 	}
 
 	/**
@@ -137,8 +138,8 @@ public class ConstructRobotTabController {
 	 */
 	private static void adaptTabToCKBOTSTANDARD(){
 		ConstructRobotTab.getRadionButtonCKBOTSTANDARD().setSelected(true);
-		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel( TabsInter.CKBotStandardRotations.values() ));
-		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(TabsInter.CKBOT_CONNECTORS));
+		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel( CKBotStandardRotations.values() ));
+		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(CKBOT_CONNECTORS));
 	}
 
 
@@ -371,13 +372,13 @@ public class ConstructRobotTabController {
         
 		connectorNr++;
 		if (chosenMRname.equals(SupportedModularRobots.ATRON)){
-			if (connectorNr>TabsInter.ATRON_CONNECTORS.length){ connectorNr=0;} //reset to zero      
+			if (connectorNr>ATRON_CONNECTORS.length){ connectorNr=0;} //reset to zero      
 		}else if (chosenMRname.equals(SupportedModularRobots.MTRAN)){
-			if (connectorNr>TabsInter.MTRAN_CONNECTORS.length){ connectorNr=0;}
+			if (connectorNr>MTRAN_CONNECTORS.length){ connectorNr=0;}
 		}else if (chosenMRname.equals(SupportedModularRobots.ODIN)){
 			if (connectorNr>12){ connectorNr=0;}// OdinBall
 		}else if(chosenMRname.equals(SupportedModularRobots.CKBOTSTANDARD)){
-			if (connectorNr>TabsInter.CKBOT_CONNECTORS.length){ connectorNr=0;}
+			if (connectorNr>CKBOT_CONNECTORS.length){ connectorNr=0;}
 		}
 		//TODO NEED TO GET BACK FOR ODIN WHICH TYPE OF MODULE IS SELECTED. 
 		int amountModules = jmeSimulation.getModules().size();
@@ -397,10 +398,10 @@ public class ConstructRobotTabController {
 	public static void jButtonOnPreviousConnectorActionPerformed(JMESimulation jmeSimulation) {
 		connectorNr--;
 		if (chosenMRname.equals(SupportedModularRobots.ATRON) && connectorNr<0){
-			connectorNr =TabsInter.ATRON_CONNECTORS.length-1;//reset
-		}else if (chosenMRname.equals(SupportedModularRobots.MTRAN) && connectorNr<0){connectorNr=TabsInter.MTRAN_CONNECTORS.length-1;}
+			connectorNr =ATRON_CONNECTORS.length-1;//reset
+		}else if (chosenMRname.equals(SupportedModularRobots.MTRAN) && connectorNr<0){connectorNr=MTRAN_CONNECTORS.length-1;}
 		else if (chosenMRname.equals(SupportedModularRobots.ODIN) && connectorNr<0){connectorNr=11;
-		}else if (chosenMRname.equals(SupportedModularRobots.CKBOTSTANDARD) && connectorNr<0){connectorNr= TabsInter.CKBOT_CONNECTORS.length-1;}
+		}else if (chosenMRname.equals(SupportedModularRobots.CKBOTSTANDARD) && connectorNr<0){connectorNr= CKBOT_CONNECTORS.length-1;}
 
 		int amountModules = jmeSimulation.getModules().size();
 		String lastModuleType = jmeSimulation.getModules().get(amountModules-1).getProperty(BuilderHelper.getModuleTypeKey());

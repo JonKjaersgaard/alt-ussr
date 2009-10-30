@@ -106,6 +106,7 @@ public class ConstructRobotTab extends Tabs implements ConstructRobotTabInter {
 		/*Description of components */		
 		jButtonStartNewRobot.setText("Start new robot");
 		jButtonStartNewRobot.setRolloverEnabled(true);
+		jButtonStartNewRobot.setToolTipText("Start constructing new robot");
 		jButtonStartNewRobot.setFocusable(true);
 		jButtonStartNewRobot.setPreferredSize(new Dimension(110,GuiFrames.COMMON_HEIGHT+2));
         jButtonStartNewRobot.addActionListener(new java.awt.event.ActionListener() {
