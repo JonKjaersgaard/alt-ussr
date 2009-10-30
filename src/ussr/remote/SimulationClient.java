@@ -22,6 +22,11 @@ import ussr.physics.PhysicsFactory.Options;
 import ussr.remote.facade.RemotePhysicsSimulation;
 import ussr.remote.facade.RemotePhysicsSimulationWrapper;
 
+/***
+ * Simulation launcher for use with SimulationLauncherServer.  Connects to the server, allowing the
+ * server to control how a simulation is started.
+ * @author ups
+ */
 public class SimulationClient extends UnicastRemoteObject implements RemoteActiveSimulation {
 
     private PhysicsSimulation simulation;

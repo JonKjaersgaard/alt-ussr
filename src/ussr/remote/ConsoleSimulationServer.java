@@ -8,6 +8,10 @@ import java.rmi.RemoteException;
 
 import ussr.remote.facade.RemotePhysicsSimulation;
 
+/**
+ * Example of how a main application can start a single simulation using the remote facility provided by this package
+ * @author ups
+ */
 public class ConsoleSimulationServer {
 
     /**
@@ -15,7 +19,7 @@ public class ConsoleSimulationServer {
      * @throws IOException 
      */
     public static void main(String[] args) throws IOException {
-        SimulationLauncherServer server = new SimulationLauncherServer(SimulationServer.SERVER_PORT);
+        SimulationLauncherServer server = new SimulationLauncherServer(ConsoleSimulationServer.SERVER_PORT);
         final ActiveSimulation simulation = server.launchSimulation();
         dumpStream("out", simulation.getStandardOut());
         eatStream("err", simulation.getStandardErr());
@@ -76,5 +80,7 @@ public class ConsoleSimulationServer {
             }
         }.start();
     }
+
+    public static final int SERVER_PORT = 54323;
 
 }

@@ -18,8 +18,6 @@ import java.util.List;
  * remote semantics must still be expected (e.g., call-by-value causes parameters
  * and return values to be copied).
  * 
- * Intended to be used as a singleton.
- * 
  * @author ups
  *
  */
