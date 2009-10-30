@@ -18,9 +18,11 @@ public class LabelSensorTemplate extends LabelEntityTemplate {
 	 * @return sensor, the sensor on the connector number selected on the module in simulation environment. 
 	 */
 	public Entity getCurrentEntity(LabelingToolSpecification specification) {
-		int connectorNr = specification.getSelectedConnectorNr();		 
-		Sensor sensor =  specification.getSelectedModule().getSensors().get(connectorNr);
-		return sensor;
+		int connectorNr = specification.getSelectedConnectorNr();
+		if (connectorNr == 1000 ){
+			return null;
+		}else		
+		return (Sensor)specification.getSelectedModule().getSensors().get(connectorNr);
 	}		
 
 }

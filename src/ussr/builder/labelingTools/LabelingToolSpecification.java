@@ -105,7 +105,8 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 */
 	private void callSpecificTool(){
        if(this.labeling instanceof  LabelConnectorTemplate && selectedConnectorNr == 1000){// the case when user selects the module  or something else instead of connector.
-    	   JOptionPane.showMessageDialog(null, "You do not selected connector. Chosen tool is for connectors. Please zoom in and select the connector instead. ","Error", JOptionPane.ERROR_MESSAGE);				
+    	   //Do nothing
+    	   //JOptionPane.showMessageDialog(null, "You do not selected connector. Chosen tool is for connectors. Please zoom in and select the connector instead. ","Error", JOptionPane.ERROR_MESSAGE);				
        }else{
 		switch(toolName){
 		case LABEL_CONNECTOR:		

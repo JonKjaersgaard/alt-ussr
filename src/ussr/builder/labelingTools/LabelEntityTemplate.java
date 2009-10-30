@@ -1,5 +1,8 @@
 package ussr.builder.labelingTools;
 
+import java.util.ArrayList;
+
+import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.builder.QuickPrototyping;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.model.Entity;
@@ -13,10 +16,7 @@ import ussr.model.Entity;
  */
 public abstract class LabelEntityTemplate implements LabelingTemplate {	
 	
-	/**
-	 * Separator used to separate the labels. 
-	 */
-	public static final String LABEL_SEPARATOR =",";
+	
 	
 	/**
 	 * Empty string used to replace the deleted label. 
@@ -73,7 +73,15 @@ public abstract class LabelEntityTemplate implements LabelingTemplate {
 	public void readLabels(LabelingToolSpecification specification){
 		Entity currentEntity = getCurrentEntity(specification);				
 		String labels = currentEntity.getProperty(BuilderHelper.getLabelsKey());
-		QuickPrototyping quickPrototyping = specification.getQuickPrototyping();
+		//IF exception then the problem is that I am not yet saving labels of sensor
+		if (labels==null){
+			AssignBehaviorsTabController.updateTableLabels("");
+		}else{
+			AssignBehaviorsTabController.updateTableLabels(labels);
+		}
+		
+		/*FOR QPSS*/
+		/*QuickPrototyping quickPrototyping = specification.getQuickPrototyping();
 		if (labels == null){
 			quickPrototyping.getModuleLabelsjComboBox().setModel(new javax.swing.DefaultComboBoxModel(new String[] {NONE}));
 		}else{
@@ -81,8 +89,11 @@ public abstract class LabelEntityTemplate implements LabelingTemplate {
 			String[] arrayLabels = labels.split(LABEL_SEPARATOR);    	
 			quickPrototyping.getModuleLabelsjComboBox().setModel(new javax.swing.DefaultComboBoxModel(arrayLabels));
 
-		}
-		System.out.println("L:"+ labels);// for debugging
+		}*/
+			
+		//System.out.println("Labels:"+ labels.length());// for debugging
+		//System.out.println("Length:"+ labels.length());// for debugging
+		
 	};
 	
 	/**
