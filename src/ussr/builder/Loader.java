@@ -42,23 +42,20 @@ public class Loader extends GenericSimulation {
 	    List<String> controllerNames = new ArrayList<String>();
 	    for(int i=1; i<args.length; i++)
 	        controllerNames.add(args[i]);
-	    runSimulationFromFile(fileName,controllerNames);
+	    new Loader(fileName,controllerNames).start(true);
 	}
 	
-	public static void runSimulationFromFile(String fileName, List<String> controllerNames) {
+	public Loader(String fileName, List<String> controllerNames) {
 	    DefaultSimulationSetup.setUSSRHome();
 		/*Activate connectors*/
-		Loader simulation = new Loader();
 		// Start simulation
         ControllerFactory controllerFactory = new ControllerFactoryImpl(controllerNames);
-        WorldDescription world = simulation.createGenericSimulationWorld(controllerFactory);
+        WorldDescription world = this.createGenericSimulationWorld(controllerFactory);
         /* Load the robot */
         SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);
         xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,fileName);
         /* Connect modules */
         world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
-        /* Start the simulation*/
-        simulation.start(true);
 	}
 
 }
