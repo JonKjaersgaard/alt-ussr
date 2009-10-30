@@ -6,6 +6,8 @@
  */
 package ussr.samples;
 
+import ussr.builder.helpers.ControllerFactory;
+import ussr.builder.helpers.ControllerFactoryImpl;
 import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.WorldDescription;
@@ -59,6 +61,19 @@ public abstract class GenericSimulation {
     	
     }
     
+    public WorldDescription createGenericSimulationWorld(ControllerFactory controllerFactory) {
+        PhysicsLogger.setDefaultLoggingLevel();
+        /* Create the simulation*/
+        PhysicsSimulation simulation = PhysicsFactory.createSimulator();
+        
+        /* Assign controller to selection of robots */
+        DefaultSimulationSetup.addDefaultRobotSelection(simulation, controllerFactory);
+        
+        /*Create the world description of simulation and set it to simulation*/
+        WorldDescription world = DefaultSimulationSetup.createWorld();
+        simulation.setWorld(world);
+        return world;
+    }
     
     /**
      * Create a world description for our simulation
@@ -74,4 +89,10 @@ public abstract class GenericSimulation {
         return world;
     }
 
+    protected void start(boolean startPaused) {
+        /* Should simulation be in paused state (static)in the beginning*/
+        simulation.setPause(startPaused);
+        /* Start simulation */
+        simulation.start();
+    }
 }

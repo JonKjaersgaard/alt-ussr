@@ -14,6 +14,7 @@ import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
+import ussr.samples.DefaultSimulationSetup;
 import ussr.samples.GenericModuleConnectorHelper;
 import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;
@@ -23,9 +24,6 @@ import ussr.samples.ObstacleGenerator;
  * @author Konstantinas
  */
 public class Loader extends GenericSimulation {
-    private static String fileName;
-    private static List<String> controllerNames = new ArrayList<String>();
-	
 	/**
 	 * Returns the robot in the simulation.
 	 */
@@ -40,51 +38,27 @@ public class Loader extends GenericSimulation {
 	 */
 	public static void main( String[] args ) {
 	    if(args.length!=2) throw new Error("Usage: provide robot definition xml file and name of the Java controller class(es)");
-	    fileName=args[0];
+	    String fileName=args[0];
+	    List<String> controllerNames = new ArrayList<String>();
 	    for(int i=1; i<args.length; i++)
 	        controllerNames.add(args[i]);
-	    runSimulationFromFile();
+	    runSimulationFromFile(fileName,controllerNames);
 	}
 	
-	public static void runSimulationFromFile() {
+	public static void runSimulationFromFile(String fileName, List<String> controllerNames) {
 	    DefaultSimulationSetup.setUSSRHome();
 		/*Activate connectors*/
 		Loader simulation = new Loader();
-		/* Specify realistic collision*/
-		// PhysicsParameters.get().setRealisticCollision(true);// already default
-		/* Specify simulation step*/
-		// PhysicsParameters.get().setPhysicsSimulationStepSize(0.0035f);// Redundant
-		/* Specify smallest resolution factor so that simulation can handle more modules.
-		 * This is done in order to "in a way" avoid stack overflow */
-		//PhysicsParameters.get().setResolutionFactor(1); // Default is 2, redundant default
-		simulation.runSimulation(null,true);
+		// Start simulation
+        ControllerFactory controllerFactory = new ControllerFactoryImpl(controllerNames);
+        WorldDescription world = simulation.createGenericSimulationWorld(controllerFactory);
+        /* Load the robot */
+        SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);
+        xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,fileName);
+        /* Connect modules */
+        world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
+        /* Start the simulation*/
+        simulation.start(true);
 	}
 
-    /**
-	 * Define the simulation to run.
-	 * @param world, the world description.
-	 * @param startPaused, the state of simulation. True if paused and false if running.
-	 */
-	public void runSimulation(WorldDescription world, boolean startPaused) {
-		PhysicsLogger.setDefaultLoggingLevel();
-		/* Create the simulation*/
-		PhysicsSimulation simulation = PhysicsFactory.createSimulator();
-		
-		/* Assign controller to selection of robots */
-		ControllerFactory controllerFactory = new ControllerFactoryImpl(controllerNames);
-		DefaultSimulationSetup.addDefaultRobotSelection(simulation, controllerFactory);
-		
-        /*Create the world description of simulation and set it to simulation*/
-		if(world==null) world = DefaultSimulationSetup.createWorld();
-		simulation.setWorld(world);
-		/*Simulation should be in paused state (static)in the beginning*/
-		simulation.setPause(startPaused);
-		/* Load the robot */
-		SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);
-		xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,fileName);
-		/* Connect modules */
-		world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
-		/* Start the simulation*/
-		simulation.start();
-	}
 }
