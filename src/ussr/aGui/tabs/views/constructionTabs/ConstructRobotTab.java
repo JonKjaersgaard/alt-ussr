@@ -47,7 +47,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	/**
 	 * Defines visual appearance of the tab called "1 Step: Construct Robot".
 	 * @param firstTabbedPane, location of the tab in the main GUI frame. True if it is the first tabbed pane.
-	 * @param tabTitle, the title of the tab
+	 * @param tabTitle, the title of the tab.
 	 * @param jmeSimulation, the physical simulation.
 	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
 	 */
