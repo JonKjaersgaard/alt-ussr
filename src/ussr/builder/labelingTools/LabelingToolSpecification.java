@@ -31,7 +31,7 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	/**
 	 * The label to assign to entity.
 	 */
-	private String label;	
+	private String labels;	
 
 	/**
 	 * The name of the tool to be used.
@@ -57,12 +57,12 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 * For calling tools handling labeling of entities, in particular tools like "LABEL_MODULE","LABEL_CONNECTOR" and "DELETE_LABEL". 
 	 * @param simulation, the physical simulation.
 	 * @param entityToLabel, the entity to be labeled. For example: LabeledEntities.MODULE or LabeledEntities.CONNECTOR.
-	 * @param label, the label to be assigned. Can be any String.
+	 * @param labels, the labels to be assigned.
 	 * @param toolName, the name of the tool to be used.
 	 */
-	public LabelingToolSpecification(JMESimulation simulation,LabeledEntities entityToLabel,String label, LabelingTools toolName){
+	public LabelingToolSpecification(JMESimulation simulation,LabeledEntities entityToLabel,String labels, LabelingTools toolName){
 		this.simulation = simulation;		
-		this.label = label;		
+		this.labels = labels;		
 		this.toolName = toolName;
 		this.labeling = new LabelingFactory().getLabeling(entityToLabel);		
 	}
@@ -121,9 +121,6 @@ public class LabelingToolSpecification extends CustomizedPicker {
 		case READ_LABELS:	
 			this.labeling.readLabels(this);
 			break;
-		case DELETE_LABEL:	
-			this.labeling.removeLabel(this);
-			break;
 		default: throw new Error ("The tool name:" +toolName+ ", is not supported yet");
 		}		
        }
@@ -138,11 +135,11 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	}
 
 	/**
-	 * Returns the label associated with the current tool.
-	 * @return label, the label associated with the current tool.
+	 * Returns the labels associated with the current tool.
+	 * @return labels, the labels associated with the current tool.
 	 */
-	public String getLabel() {
-		return label;
+	public String getLabels() {
+		return labels;
 	}
 
 	/**
@@ -159,5 +156,8 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 */
 	public QuickPrototyping getQuickPrototyping() {
 		return quickPrototyping;
-	}	
+	}
+	public LabelingTemplate getLabeling() {
+		return labeling;
+	}
 }

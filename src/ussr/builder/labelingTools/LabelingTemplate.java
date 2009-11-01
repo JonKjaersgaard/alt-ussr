@@ -23,14 +23,7 @@ public interface LabelingTemplate {
 	 * @param specification, object containing information about entity to label, the name of the label and so on.
 	 */	
 	public abstract void labelSpecificEntity(LabelingToolSpecification specification);
-	
-	/**
-	 * Removes specific label from the string of labels assigned to the entity.
-	 * This operation is TEMPLATE method. Operation means that it should be executed on the object. 
-	 * @param specification, object containing information about entity to label, the name of the label and so on.
-	 */	
-	public abstract void removeLabel(LabelingToolSpecification specification);
-	
+		
 	/**
 	 * Reads and displays in GUI the labels assigned to the entity.
 	 * This operation is TEMPLATE method. Operation means that it should be executed on the object. 

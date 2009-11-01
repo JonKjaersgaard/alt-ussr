@@ -1087,10 +1087,11 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		guiHelper.passTo(AssistantjTextField,"Select "+ this.entityToLabel.toString().toLowerCase()+ " to display its labels");
 	}  
 
-	private void removeLabeljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   
-		System.out.println("Label toolbar-->Remove");//for debugging		
+	private void removeLabeljButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		//DEAD CODE IF QPSS is removed
+		/*System.out.println("Label toolbar-->Remove");//for debugging		
 		JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,currentLabeljTextField.getText(),LabelingTools.DELETE_LABEL));
-		guiHelper.passTo(AssistantjTextField,"Select "+ this.entityToLabel.toString().toLowerCase()+ " to remove the label: "+  currentLabeljTextField.getText());
+		guiHelper.passTo(AssistantjTextField,"Select "+ this.entityToLabel.toString().toLowerCase()+ " to remove the label: "+  currentLabeljTextField.getText());*/
 	}                                
 
 	private void assignLabeljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   

@@ -36,15 +36,13 @@ public abstract class LabelEntityTemplate implements LabelingTemplate {
 	public void labelSpecificEntity(LabelingToolSpecification specification){
 		/*Get the entity to label, the new label to assign and the labels currently assigned to entity */
 		Entity currentEntity = getCurrentEntity(specification);
-		String newLabel = specification.getLabel();		
+		String newLabels = specification.getLabels();		
 		String labels = currentEntity.getProperty(BuilderHelper.getLabelsKey());
 
 		if (labels == null){// entity do not even have the property for labels set 
-			currentEntity.setProperty(BuilderHelper.getLabelsKey(), newLabel +LABEL_SEPARATOR);			
-		}else if (labels.contains(newLabel)){// if entity already contains the same label 
-			//do nothing
+			currentEntity.setProperty(BuilderHelper.getLabelsKey(), newLabels);			
 		}else{// to old labels of the entity add new label.
-			currentEntity.setProperty(BuilderHelper.getLabelsKey(), labels+newLabel+LABEL_SEPARATOR);
+			currentEntity.setProperty(BuilderHelper.getLabelsKey(), newLabels);
 		}		
 		System.out.println("L:"+ currentEntity.getProperty(BuilderHelper.getLabelsKey()));// for debugging
 	};	
@@ -56,13 +54,13 @@ public abstract class LabelEntityTemplate implements LabelingTemplate {
 	 */	
 	public void removeLabel(LabelingToolSpecification specification){
 		Entity currentEntity = getCurrentEntity(specification);
-		String label = specification.getLabel();		
+		String label = specification.getLabels();		
 		String labels = currentEntity.getProperty(BuilderHelper.getLabelsKey());		
 		if (labels != null  && labels.contains(label)){
 			String changedLabels = labels.replaceAll(label+LABEL_SEPARATOR, EMPTY);
 			currentEntity.setProperty(BuilderHelper.getLabelsKey(), changedLabels);
 		}		
-		System.out.println("L:"+ currentEntity.getProperty(BuilderHelper.getLabelsKey()));// for debugging
+		//System.out.println("L:"+ currentEntity.getProperty(BuilderHelper.getLabelsKey()));// for debugging
 	};
 
 	/**
@@ -73,7 +71,7 @@ public abstract class LabelEntityTemplate implements LabelingTemplate {
 	public void readLabels(LabelingToolSpecification specification){
 		Entity currentEntity = getCurrentEntity(specification);				
 		String labels = currentEntity.getProperty(BuilderHelper.getLabelsKey());
-		//IF exception then the problem is that I am not yet saving labels of sensor
+		//FIXME IF exception then the problem is that I am not yet saving labels of sensor
 		if (labels==null){
 			AssignBehaviorsTabController.updateTableLabels("");
 		}else{

@@ -17,9 +17,6 @@ LABEL_CONNECTOR,
  */
 LABEL_SENSOR,
 /*The tool where user selects the module or connector on the module in simulation environment and 
- * the label passed as parameter is removed from the all labels assigned to it*/
-DELETE_LABEL,
-/*The tool where user selects the module or connector on the module in simulation environment and 
  * all labels assigned to it are displayed to the user*/
 READ_LABELS; 
 }
