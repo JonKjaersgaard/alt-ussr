@@ -26,7 +26,7 @@ import ussr.physics.jme.JMESimulation;
  * Defines visual appearance of the tab called "1 Step: Construct Robot".  
  * @author Konstantinas
  */
-public class ConstructRobotTab extends Tabs implements ConstructRobotTabInter {
+public class ConstructRobotTab extends ConstructionTabs implements ConstructRobotTabInter {
 
 	/**
 	 * The container for radio buttons of supported modular robots (ATRON,Odin and so on).
@@ -55,16 +55,14 @@ public class ConstructRobotTab extends Tabs implements ConstructRobotTabInter {
 		super(firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
 
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
-		super.jComponent = new javax.swing.JPanel(new GridBagLayout());		
+		super.jComponent = new javax.swing.JPanel(new GridBagLayout());	
+	
 		initComponents();
 	}
 
 	/**
 	 * Initializes the visual appearance of all components in the tab.
 	 * Follows Strategy  pattern.
-	 */
-	/* (non-Javadoc)
-	 * @see ussr.aGui.tabs.views.Tabs#initComponents()
 	 */
 	protected void initComponents(){
 
@@ -99,10 +97,7 @@ public class ConstructRobotTab extends Tabs implements ConstructRobotTabInter {
 		jComboBoxNrConnectorsConstructionTool = new javax.swing.JComboBox();
 
 		jSeparator1 = new javax.swing.JToolBar.Separator();
-		jSeparator2 = new javax.swing.JToolBar.Separator();
-		
-		/*Display for hints. Feedback to the user.*/
-		hintPanel  = new HintPanel(430,120);//custom panel
+		jSeparator2 = new javax.swing.JToolBar.Separator();	
 
 		/*Description of components */		
 		jButtonStartNewRobot.setText("Start new robot");
@@ -499,9 +494,8 @@ public class ConstructRobotTab extends Tabs implements ConstructRobotTabInter {
 		);
 		super.jComponent.add(jToolBarConstructionTools,gridBagConstraints);
 		
-		
-		hintPanel.setText(HintPanelInter.builInHintsConstrucRobotTab[0]);
-		hintPanel.setBorderTitle("Display for hints");		
+		/*Display for hints. Feedback to the user.*/
+		hintPanel =  initHintPanel(430,120,HintPanelInter.builInHintsConstrucRobotTab[0]);			
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;		
 		gridBagConstraints.gridy = 8;
@@ -521,32 +515,6 @@ public class ConstructRobotTab extends Tabs implements ConstructRobotTabInter {
 		for (AbstractButton radioButton: jRadioButtons ){
 			radioButton.setEnabled(enabled);
 		}
-	}
-
-	/**
-	 * Controls selection and deselection of button. Only one button can be selected, others desected.
-	 * @param jButton, the button to control selection and deselection.
-	 */
-	private void setSelectionDeselection(javax.swing.JButton  jButton){
-		/* go through each component in parent component*/
-     for(int index =0;index<jComponent.getComponents().length; index++ ){			
-			String className = jComponent.getComponent(index).getClass().toString();
-			if (className.contains("JToolBar")){
-				javax.swing.JToolBar  currentToolBar = (JToolBar) jComponent.getComponent(index);
-				/*Go through components in the toolbar*/
-				for(int inde =0;inde<currentToolBar.getComponents().length; inde++ ){
-					String classNameNew = currentToolBar.getComponent(inde).toString();
-					if (classNameNew.contains("JButton")){
-						javax.swing.JButton  button = (JButton) currentToolBar.getComponent(inde);
-						if (button.isSelected()){
-							button.setSelected(false);
-						}
-					}					
-				}					
-			}
-		}
-     
-     jButton.setSelected(true);
 	}
 	
 	/**
@@ -654,15 +622,7 @@ public class ConstructRobotTab extends Tabs implements ConstructRobotTabInter {
 	public static javax.swing.AbstractButton getRadionButtonCKBOTSTANDARD() {
 		return radionButtonCKBOTSTANDARD;
 	}
-
-	/**
-	 * Returns the panel for displaying hints to the user.
-	 * @return hintPanel, the panel for displaying hints to the user.
-	 */
-	public static HintPanel getHintPanel() {
-		return hintPanel;
-	}
-			
+		
 	/**
 	 * Returns button for starting construction of new modular robot.
 	 * @return jButtonStartNewRobot, button for starting construction of new modular robot.
@@ -715,5 +675,4 @@ public class ConstructRobotTab extends Tabs implements ConstructRobotTabInter {
 
 	private javax.swing.JToolBar.Separator jSeparator1,jSeparator2;
 	
-	private static HintPanel hintPanel;
 }

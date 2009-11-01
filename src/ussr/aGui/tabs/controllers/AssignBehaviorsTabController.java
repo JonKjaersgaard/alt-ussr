@@ -3,11 +3,13 @@ package ussr.aGui.tabs.controllers;
 import java.util.Vector;
 
 import javax.swing.AbstractButton;
+import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
+import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter.TabJComponentsText;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
@@ -18,9 +20,10 @@ import ussr.builder.labelingTools.LabeledEntities;
 import ussr.builder.labelingTools.LabelingTemplate;
 import ussr.builder.labelingTools.LabelingToolSpecification;
 import ussr.builder.labelingTools.LabelingTools;
+import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 
-public class AssignBehaviorsTabController {
+public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 
 	private static Object[] strings;
 
@@ -28,8 +31,6 @@ public class AssignBehaviorsTabController {
 
 
 	private static  Vector<String> tempClassesOfControllers =  new Vector<String> ()  ;
-
-	//private static javax.swing.JList tempjList1;
 
 	/**
 	 * The name of the package where all behaviors are stored for interactive adjustment of controller.
@@ -108,77 +109,90 @@ public class AssignBehaviorsTabController {
 
 	}
 
-	
+
 	private  static Identifier currentIdentifier;
 	
-	public static void radioButtonGroupEntitiesActionPerformed(AbstractButton button, JMESimulation jmeSimulation) {
+	private  static Module selectedModule;
 	
-		String buttonText = button.getText();
+	private static LabelingToolSpecification labelingToolSpecification;
+	
+	
+	
+	private static String chosenRadioEntityText;
+	
+	private static JMESimulation localJMEsimulation;
+	
+	/**
+	 * @param button, radio button selected in GUI.
+	 * @param jmeSimulation, the physical simulation.
+	 */
+	public static void radioButtonGroupEntitiesActionPerformed(AbstractButton button, JMESimulation jmeSimulation) {
+
+		AssignBehaviorsTab.setEnabledControlButtons(true);
 		
-		
+		chosenRadioEntityText = button.getText();
+		localJMEsimulation = jmeSimulation;
+
+		/*Updates table header, according to selected entity */
 		String columnHeaderName ="";
-		if (buttonText.equals(TabJComponentsText.Sensors.toString())){
+		if (chosenRadioEntityText.equals(TabJComponentsText.Sensors.toString())){
 			AssignBehaviorsTab.getJToolBar3().setVisible(true);
-		}else if (buttonText.equals(TabJComponentsText.Proximity.toString())){
+		}else if (chosenRadioEntityText.equals(TabJComponentsText.Proximity.toString())){
 			AssignBehaviorsTab.getJToolBar3().setVisible(true);
 			//FIXME
-			columnHeaderName = buttonText+ " Sensor" + " Labels"; 
+			columnHeaderName = chosenRadioEntityText+ " Sensor" + " Labels"; 
 			AssignBehaviorsTab.getJTable2().getTableHeader().getColumnModel().getColumn(0).setHeaderValue(columnHeaderName);
 		}else{
-			columnHeaderName = buttonText + " Labels"; 
+			columnHeaderName = chosenRadioEntityText + " Labels"; 
 			AssignBehaviorsTab.getJTable2().getTableHeader().getColumnModel().getColumn(0).setHeaderValue(columnHeaderName);
 			AssignBehaviorsTab.getJToolBar3().setVisible(false);
-			
+
+		}
+        /*Initialze the tool for reading labels*/
+		jButtonReadLabelsActionPerformed();
+
+		/*Informing user*/
+		AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[1]);
+	}
+	
+	/**
+	 * Initializes the tool for reading labels.
+	 */
+	public static void jButtonReadLabelsActionPerformed() {
+		TabJComponentsText currentText = TabJComponentsText.valueOf(chosenRadioEntityText);
+
+		switch(currentText){
+
+		case Module:
+			//TODO ELIMINATE null at the end if QPSS should be eliminated.
+			localJMEsimulation.setPicker(new LabelingToolSpecification(localJMEsimulation,LabeledEntities.MODULE,LabelingTools.READ_LABELS, null));
+			break;
+		case Connector:
+			localJMEsimulation.setPicker(new LabelingToolSpecification(localJMEsimulation,LabeledEntities.CONNECTOR,LabelingTools.READ_LABELS, null));
+			break;
+		case Sensors:
+		case Proximity:// go to proximity because only this type of sensor is supported right now.
+			localJMEsimulation.setPicker(new LabelingToolSpecification(localJMEsimulation,LabeledEntities.SENSOR,LabelingTools.READ_LABELS, null));
+			break;
+		default: throw new Error("Labeling is not supported for " + chosenRadioEntityText ); 
 		}
 		
-		
-		TabJComponentsText currentText = TabJComponentsText.valueOf(buttonText);
-		
-	   switch(currentText){
-	
-	   case Module:
-		   //TODO ELIMINATE null at the end if QPSS should be eliminated.
-		   jmeSimulation.setPicker(new LabelingToolSpecification(jmeSimulation,LabeledEntities.MODULE,LabelingTools.READ_LABELS, null));
-		   break;
-	   case Connector:
-		   jmeSimulation.setPicker(new LabelingToolSpecification(jmeSimulation,LabeledEntities.CONNECTOR,LabelingTools.READ_LABELS, null));
-		   break;
-	   case Sensors:
-	   case Proximity:
-		   jmeSimulation.setPicker(new LabelingToolSpecification(jmeSimulation,LabeledEntities.SENSOR,LabelingTools.READ_LABELS, null));
-		   break;
-	    default: throw new Error("Labeling is not supported for " + buttonText ); 
-	}
-		
-		
-		
-		//currentIdentifier = new Identifier(TypesIdentifier.MODULE);
-		//jmeSimulation.setPicker(currentIdentifier);
-		
-		
-		
-		AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[1]);
-
-	}
-	
-	
-/*FIXME NOT USED*/
-	public static void jTable1RowDoubleSelectedActionPerformed(JTable jTable1) {
-		String rowValue = (String)jTable1.getValueAt(jTable1.getSelectedRow(),0);
-        System.out.println("out"+ rowValue);
 	}
 
-	
+
+
+
+	/**
+	 * Displays labels in the table of GUI. Is called from  LabelEntityTemplate.java.
+	 * @param labels, the string of labels to display in GUI.
+	 */
 	public static void updateTableLabels(String labels){
-		
-		
 		// clear the column
 		int amountRows = AssignBehaviorsTab.getJTable2().getRowCount() ;
 		for (int rowNr =0;rowNr < amountRows; rowNr++){
 			AssignBehaviorsTab.getJTable2().setValueAt("", rowNr, 0);
 		}
-		
-		
+
 		//populate column with labels
 		String[] sepratedLabels = labels.split(LabelingTemplate.LABEL_SEPARATOR);
 		if(amountRows>sepratedLabels.length&&labels.length()>0) {
@@ -191,18 +205,56 @@ public class AssignBehaviorsTabController {
 			throw new Error ("Addition of new rows is not supported yet");
 		}
 		
+	}
+
+	/**
+	 * Shows or hides the panel for controlling labels.
+	 * @param jCheckBox, checkBox in GUI selected or deselected by user.
+	 */
+	public static void jCheckBoxShowLabelControlActionPerformed(JCheckBox jCheckBox) {
+		if (jCheckBox.isSelected()){
+			AssignBehaviorsTab.getLabelingPanel().setVisible(true);
+		}else{		
+			AssignBehaviorsTab.getLabelingPanel().setVisible(false);
+		}
+	}
+
+	
+
+	public static void jButtonAssignLabelsActionPerformed() {
+		
+		/*Get labels from the table*/
+		int amountRows = AssignBehaviorsTab.getJTable2().getRowCount() ;
+		String labelsInTable="";
+		for (int rowNr =0;rowNr < amountRows; rowNr++){
+			if (AssignBehaviorsTab.getJTable2().getValueAt(rowNr, 0).toString().isEmpty()){
+				//do not store empty rows
+			}else{
+			labelsInTable= labelsInTable + AssignBehaviorsTab.getJTable2().getValueAt(rowNr, 0)+",";
+			}
+		}
+		System.out.println("L" + labelsInTable);
+		/*Assign labels to entity*/
+		TabJComponentsText currentText = TabJComponentsText.valueOf(chosenRadioEntityText);
+
+		switch(currentText){
+
+		case Module:			
+			localJMEsimulation.setPicker(new LabelingToolSpecification(localJMEsimulation,LabeledEntities.MODULE,labelsInTable,LabelingTools.LABEL_MODULE));
+			break;
+		case Connector:
+			localJMEsimulation.setPicker(new LabelingToolSpecification(localJMEsimulation,LabeledEntities.CONNECTOR,labelsInTable,LabelingTools.LABEL_CONNECTOR));
+			break;
+		case Sensors:
+		case Proximity:// go to proximity because only this type of sensor is supported right now.
+			localJMEsimulation.setPicker(new LabelingToolSpecification(localJMEsimulation,LabeledEntities.SENSOR,labelsInTable,LabelingTools.LABEL_SENSOR));
+			break;
+		default: throw new Error("Labeling is not supported for " + chosenRadioEntityText ); 
+		}
 		
 		
 		
 		
-		
-		
-		
-		
-		
-		//AssignBehaviorsTab.getJTable2().setValueAt(aValue, row, column);
-		//AssignBehaviorsTab.getJTable2().getRowCount();
-		//AssignBehaviorsTab.getJTable2().getColumnClass(0)
 	}
 
 

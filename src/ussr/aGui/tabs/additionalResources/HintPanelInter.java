@@ -6,6 +6,10 @@ package ussr.aGui.tabs.additionalResources;
  */
 public interface HintPanelInter {
 
+	
+	public final String commonTitle = "Display for hints"; 
+	
+	
 	/**
 	 * Array of build in hints for tab called Construct Robot
 	 */
