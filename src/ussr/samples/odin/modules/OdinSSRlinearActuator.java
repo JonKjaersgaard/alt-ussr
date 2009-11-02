@@ -32,8 +32,8 @@ public abstract class OdinSSRlinearActuator extends Odin {
 		final float pi = (float)Math.PI;
         CylinderShape cylinderExternal = new CylinderShape(0.035f/2f,0.06f,new VectorDescription(0,0,0), new RotationDescription(0,-pi/2,0));
         CylinderShape cylinderInternal = new CylinderShape(0.032f/2f,0.06f,new VectorDescription(0,0,0), new RotationDescription(0,-pi/2,0));
-        ConeShape coneCap1 = new ConeShape(0.035f/2f,0.035f, new VectorDescription(-0.03f-0.035f/2f,0,0), new RotationDescription(pi,-pi/2,0));
-        ConeShape coneCap2 = new ConeShape(0.032f/2f,0.035f, new VectorDescription(0.03f+0.035f/2f,0,0), new RotationDescription(0,-pi/2,0));
+        ConeShape coneCap1 = new ConeShape(/*0.035f/2f*/0.035f/5f,0.035f, new VectorDescription(-0.03f-0.035f/2f,0,0), new RotationDescription(pi,-pi/2,0));
+        ConeShape coneCap2 = new ConeShape(/*0.032f/2f*/0.032f/5f,0.035f, new VectorDescription(0.03f+0.035f/2f,0,0), new RotationDescription(0,-pi/2,0));
         
         cylinderExternal.setColor(Color.RED);
         cylinderInternal.setColor(Color.BLUE);
