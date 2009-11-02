@@ -1,5 +1,6 @@
 package ussr.remote;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -27,7 +28,15 @@ public class RMIProcessActiveSimulation implements ActiveSimulation {
      * The process used to initially launch the simulator
      */
     private Process process;
+    
+    /**
+     * The internal ID used to hook the process up with the corresponding RMI object
+     */
     private int id;
+    
+    /**
+     * The remote RMI object corresponding to the simulation process
+     */
     private RemoteActiveSimulation remoteSimulation;
     
     public RMIProcessActiveSimulation(int id, Process process) {
@@ -89,4 +98,30 @@ public class RMIProcessActiveSimulation implements ActiveSimulation {
             throw new Error("Unexpected interruption");
         }
     }
+
+    public void discardStandardErr() {
+        eatStream(this.getStandardErr());
+    }
+
+    public void discardStandardOut() {
+        eatStream(this.getStandardOut());
+    }
+
+    /**
+     * Discard contents of a stream
+     * @param unusedName unused name parameter, used for convenience when switching to dumpStream
+     * @param stream 
+     */
+    private static void eatStream(final InputStream stream) {
+        new Thread() {
+            public void run() {
+                try {
+                    while(stream.read()!=-1);
+                    } catch (IOException e) {
+                        throw new Error("Unable to dump stream: "+e); 
+                    }
+                }
+        }.start();
+    }
+
 }

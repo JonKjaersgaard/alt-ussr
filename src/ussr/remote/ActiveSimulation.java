@@ -21,12 +21,14 @@ import ussr.samples.atron.simulations.ATRONCarController1;
  */
 public interface ActiveSimulation extends RemoteActiveSimulation {
     /**
-     * Obtain standard out from running simulation 
+     * Obtain standard out from running simulation.  Not reading this stream can cause the
+     * simulation to stop due to a full output buffer
      * @return stream representing standard out
      */
     public InputStream getStandardOut();
     /**
-     * Obtain standard error from running simulation
+     * Obtain standard error from running simulation.  Not reading this stream can cause the
+     * simulation to stop due to a full output buffer
      * @return stream representing standard error
      */
     public InputStream getStandardErr();
@@ -47,4 +49,12 @@ public interface ActiveSimulation extends RemoteActiveSimulation {
      * Wait for isReady() to return true
      */
     public void waitForReady();
+    /**
+     * Discard the output generated to standard out (avoid buffers running full)
+     */
+    public void discardStandardOut();
+    /**
+     * Discard the output generated to standard err (avoid buffers running full)
+     */
+    public void discardStandardErr();
 }

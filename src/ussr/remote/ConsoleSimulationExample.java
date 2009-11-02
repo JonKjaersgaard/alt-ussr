@@ -21,15 +21,25 @@ public class ConsoleSimulationExample {
      * @param args
      * @throws IOException 
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        try {
+            consoleSimulationExample();
+        } catch(IOException exn) {
+            System.err.println("Program terminated with "+exn.getClass().getName()+" exception");
+            // Explicitly stop program (RMI server still running)
+            System.exit(0);
+        }
+    }
+    
+    public static void consoleSimulationExample() throws IOException { 
         // Start a simulation server (one that manages a number of running simulation processes)
         SimulationLauncherServer server = new SimulationLauncherServer(ConsoleSimulationExample.SERVER_PORT);
         // Start a simulation server process
         final ActiveSimulation simulation = server.launchSimulation();
-        // Get standard out, pass it to method that prints it in separate thread
-        dumpStream("out", simulation.getStandardOut());
-        // Disable standard error
-        eatStream("err", simulation.getStandardErr());
+        // Discard standard out (avoid buffers running full)
+        simulation.discardStandardOut();
+        // Get standard err, pass it to method that prints it in separate thread
+        dumpStream("err", simulation.getStandardErr());
         // Wait for simulation process to be ready to start a new simulation
         if(!simulation.isReady()) {
             System.out.println("Waiting for simulation");
@@ -70,19 +80,12 @@ public class ConsoleSimulationExample {
         }
     }
 
-    private static void eatStream(String string, final InputStream stream) {
-        new Thread() {
-            public void run() {
-                try {
-                    while(stream.read()!=-1);
-                    } catch (IOException e) {
-                        throw new Error("Unable to dump stream: "+e); 
-                    }
-                }
-        }.start();
-    }
-
-    private static void dumpStream(final String name, final InputStream stream) {
+    /**
+     * Dump an input stream to standard out, prefixing all lines with a fixed text 
+     * @param prefix the prefix to use
+     * @param stream the stream to dump
+     */
+    private static void dumpStream(final String prefix, final InputStream stream) {
         new Thread() {
             public void run() {
                 BufferedReader input = new BufferedReader(new InputStreamReader(stream));
@@ -91,7 +94,7 @@ public class ConsoleSimulationExample {
                     try {
                         line = input.readLine();
                         if(line==null) break;
-                        System.out.println(name+": "+line);
+                        System.out.println(prefix+": "+line);
                     } catch (IOException e) {
                         throw new Error("Unable to dump stream: "+e); 
                     }
