@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.view.visualizer.CanvasMouseListener;
@@ -84,11 +85,27 @@ public class ModuleCommunicationVisualizerController {
 		//new ModuleFilterDialog(null, jmeSimulation);
 	}
 
-	public static void jCheckBoxShowLabelControlActionPerformed(
-			JCheckBox checkBoxShowLabelControl) {
+	public static void jCheckBoxShowLabelControlActionPerformed(JCheckBox checkBoxShowLabelControl,JMESimulation jmeSimulation) {
 		if (checkBoxShowLabelControl.isSelected()){
 			ModuleCommunicationVisualizer.getJPanelLabeling().setVisible(true);
 			ModuleCommunicationVisualizer.getJToolBar1().setVisible(false);
+			
+			int amountRows = ModuleCommunicationVisualizer.getJTableModules().getRowCount() ;
+			int amountModules = jmeSimulation.getModules().size();
+			//if (amountModules<amountRows){
+			for (int module =0;module < amountModules; module++){
+				
+				//ModuleCommunicationVisualizer.getJTableModules().setValueAt("#"+module, module, 0);
+				//ModuleCommunicationVisualizer.getJTableModules().setValueAt(true, module, 1);
+				javax.swing.table.DefaultTableModel model = (DefaultTableModel) ModuleCommunicationVisualizer.getJTableModules().getModel();
+				model.addRow(new Object[]{"#"+module,true});
+			}
+/*			}else{
+				//TODO add addition of new rows if there are too many modules 
+				throw new Error ("Too many modules");
+			}*/
+			
+			
 		}else{
 			ModuleCommunicationVisualizer.getJPanelLabeling().setVisible(false);
 			ModuleCommunicationVisualizer.getJToolBar1().setVisible(true);

@@ -4,7 +4,7 @@ package ussr.aGui.tabs;
 import ussr.physics.jme.JMESimulation;
 
 /**
- * Defines visual appearance of tabs pluged-in the main GUI window.
+ * Supports definitions of visual appearance for tabs pluged-in the main GUI window.
  * @author Konstantinas
  */
 public abstract class Tabs implements TabsInter {
