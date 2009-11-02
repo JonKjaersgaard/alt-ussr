@@ -12,6 +12,8 @@ import ussr.remote.facade.RemotePhysicsSimulation;
 
 /**
  * Remote interface used internally for RMI operations.  See ActiveSimulation for a complete interface.
+ * 
+ * (Interface for proxy object used on frontend side to access simulation process) 
  * @author ups
  *
  */

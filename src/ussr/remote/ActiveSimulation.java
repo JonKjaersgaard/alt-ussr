@@ -15,6 +15,7 @@ import ussr.samples.atron.simulations.ATRONCarController1;
  * Note that exceeding the buffer size on stdout and stderr can cause the running simulation to pause
  * until buffers are emptied
  * 
+ * (Proxy object and handle for the simulation process, used on the frontend side.)
  * @author ups
  *
  */

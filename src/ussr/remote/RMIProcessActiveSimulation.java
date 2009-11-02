@@ -17,7 +17,8 @@ import ussr.remote.facade.RemotePhysicsSimulation;
 /**
  * Proxy for an active simulation that has been launched using a Process
  * and is controlled using RMI
- * 
+ *
+ * (Proxy object used on frontend side to control simulation process)
  * @author ups
  */
 public class RMIProcessActiveSimulation implements ActiveSimulation {

@@ -20,11 +20,13 @@ import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsFactory.Options;
 import ussr.remote.facade.RemotePhysicsSimulation;
-import ussr.remote.facade.RemotePhysicsSimulationWrapper;
+import ussr.remote.facade.RemotePhysicsSimulationImpl;
 
 /***
  * Simulation launcher for use with SimulationLauncherServer.  Connects to the server, allowing the
  * server to control how a simulation is started.
+ * 
+ * (The main class used to launch the simulation for subsequent hookup to and control by the frontend.)
  * @author ups
  */
 public class SimulationClient extends UnicastRemoteObject implements RemoteActiveSimulation {
@@ -57,7 +59,7 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
         if(simulation==null) return null;
         if(simulation!=null && simulationWrapper==null)
             // simulationWrapper = MagicRemoteWrapper.wrap(RemotePhysicsSimulation.class, simulation);
-            simulationWrapper = new RemotePhysicsSimulationWrapper(simulation);
+            simulationWrapper = new RemotePhysicsSimulationImpl(simulation);
         return simulationWrapper;
     }
 
@@ -78,10 +80,11 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
     }
 
     public static void main(String argv[]) throws RemoteException {
+    	System.out.println("Starting simulator");
         if(argv.length!=1) throw new Error("Incorrect invocation");
         String spec = argv[0];
-        if(!spec.startsWith("@") || spec.indexOf(",")<0) throw new Error("Incorrect port spec");
-        String[] parts = spec.substring(1).split(",");
+        if(!spec.startsWith("@") || spec.indexOf("_")<0) throw new Error("Incorrect port spec");
+        String[] parts = spec.substring(1).split("_");
         int portNumber = Integer.parseInt(parts[0]);
         int idNumber = Integer.parseInt(parts[1]);
         new SimulationClient(portNumber,idNumber);

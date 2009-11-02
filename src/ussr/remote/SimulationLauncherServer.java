@@ -18,13 +18,15 @@ import java.util.List;
  * remote semantics must still be expected (e.g., call-by-value causes parameters
  * and return values to be copied).
  * 
+ * (Server object running on the frontend, allowing simulation processes to connect to the frontend)
  * @author ups
  *
  */
 
 public class SimulationLauncherServer extends UnicastRemoteObject implements SimulationServer {
 
-    private static final String CLIENT_COMMAND = "launchers/ussr-client"; //+File.pathSeparatorChar+"ussr-client";
+    private static final String WIN_CLIENT_COMMAND = "launchers/ussr-client.bat"; 
+    private static final String NIX_CLIENT_COMMAND = "launchers/ussr-client";
 
     /**
      * Counter passed to client simulations used to hook them back up to the corresponding ActiveSimulation object
@@ -53,7 +55,12 @@ public class SimulationLauncherServer extends UnicastRemoteObject implements Sim
     }
 
     public ActiveSimulation launchSimulation() throws IOException {
-        return this.launchSimulation(CLIENT_COMMAND, "");
+        String command;
+        if(File.pathSeparatorChar=='\\')
+            command = WIN_CLIENT_COMMAND;
+        else
+            command = NIX_CLIENT_COMMAND;
+        return this.launchSimulation(command, "");
     }
 
     
@@ -81,7 +88,7 @@ public class SimulationLauncherServer extends UnicastRemoteObject implements Sim
      * @return
      */
     private String insertInformation(int port, int id) {
-        return " @"+port+","+id+" ";
+        return " @"+port+"_"+id+" ";
     }
 
     public void register(int id, RemoteActiveSimulation remoteSimulation) {
