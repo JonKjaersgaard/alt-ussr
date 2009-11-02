@@ -46,34 +46,20 @@ public class AssignControllerTool extends CustomizedPicker  {
 					Method method =clas.getMethod(methodToAccess, typs);
 					method.invoke(controller, selectedModule);
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new Error ("Class not found in in the directory:"+packageClassName);
 				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new Error ("Class can not be instantiated. Class name:"+packageClassName );
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new Error ("Illegal Acess for class:"+ packageClassName );
 				} catch (SecurityException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new Error ("Security Exception for class:"+ packageClassName );
 				} catch (NoSuchMethodException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new Error ("Method activate() was not found in class:"+ packageClassName );
 				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new Error ("Illegal argument for method in class:"+ packageClassName );
 				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new Error ("Invocation exceptio in class:"+ packageClassName );
 				}
-								
-			
-			/*IS IT A GOOD PLACE FOR YOU?*/
-			
-			//AssignBehaviorsTab.getJLabel10005().setVisible(true);
-			//AssignBehaviorsTab.getJLabel10005().setText("Controller was assigned successfully to module with ID: "+selectedModule.getID());
-			//AssignBehaviorsTab.getJLabel1000().setVisible(true);
 	}
 
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.

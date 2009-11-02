@@ -10,6 +10,6 @@ public class CKBotStandardControllerNOT_SUPPORTED_YET extends ControllerStrategy
 	 * @param selectedModule, the module selected in simulation environment
 	 */
 	public void activate (Module selectedModule){		
-			
+		//TODO	
 	}	
 }
