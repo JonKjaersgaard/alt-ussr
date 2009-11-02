@@ -56,7 +56,7 @@ public class SimulationLauncherServer extends UnicastRemoteObject implements Sim
 
     public ActiveSimulation launchSimulation() throws IOException {
         String command;
-        if(File.pathSeparatorChar=='\\')
+        if(File.separatorChar=='\\')
             command = WIN_CLIENT_COMMAND;
         else
             command = NIX_CLIENT_COMMAND;
