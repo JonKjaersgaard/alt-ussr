@@ -7,7 +7,12 @@ import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 
 /**
- * Remote version of the standard PhysicsSimulation interface
+ * Remote version of the standard PhysicsSimulation interface.
+ * 
+ * Note to developers: this interface can be extended beyond the standard simulation interface
+ * to provide whatever capabilities are required for remote control of simulation; the 
+ * RemotePhysicsSimulationImpl class must simply implement the corresponding method. 
+ * 
  * @author ups
  *
  */
