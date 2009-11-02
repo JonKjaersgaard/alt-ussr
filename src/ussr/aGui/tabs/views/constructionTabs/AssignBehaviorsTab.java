@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 import javax.swing.border.TitledBorder;
@@ -33,6 +34,9 @@ import ussr.physics.jme.JMESimulation;
 public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehaviorsTabInter {
 
 
+	
+	private static HintPanel hintPanel;
+	
 	/**
 	 * 
 	 */
@@ -114,9 +118,8 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		final ButtonGroup buttonGroup = new ButtonGroup() ;
 
 		radionButtonATRON =  new JRadioButton();		
-		radionButtonATRON.setText(CommonJComponentsText.ATRON.toString());	
+		radionButtonATRON.setText(ModularRobotsNames.ATRON.toString());	
 		radionButtonATRON.setFocusable(true);// direct the user to what should be done first
-		radionButtonATRON.setSelected(true);//set initially selected so that jList will contain already filtered out controllers
 		radionButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				AssignBehaviorsTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
@@ -127,7 +130,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		buttonGroup.add(radionButtonATRON);
 
 		radioButtonODIN =  new JRadioButton();
-		radioButtonODIN.setText(CommonJComponentsText.Odin.toString());
+		radioButtonODIN.setText(ModularRobotsNames.Odin.toString());
 		radioButtonODIN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				AssignBehaviorsTabController.jButtonGroupActionPerformed(radioButtonODIN,jmeSimulation);
@@ -138,7 +141,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		buttonGroup.add(radioButtonODIN);
 
 		radioButtonMTRAN =  new JRadioButton();
-		radioButtonMTRAN.setText(CommonJComponentsText.MTran.toString());
+		radioButtonMTRAN.setText(ModularRobotsNames.MTRAN.toString());
 		radioButtonMTRAN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				AssignBehaviorsTabController.jButtonGroupActionPerformed(radioButtonMTRAN,jmeSimulation);
@@ -149,7 +152,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		buttonGroup.add(radioButtonMTRAN);
 
 		radionButtonCKBOTSTANDARD =  new JRadioButton();
-		radionButtonCKBOTSTANDARD.setText(CommonJComponentsText.CKBotStandard.toString());
+		radionButtonCKBOTSTANDARD.setText(ModularRobotsNames.CKBotStandard.toString());
 		radionButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				AssignBehaviorsTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD,jmeSimulation);
@@ -164,22 +167,17 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 
 		jListAvailableControllers.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		jListAvailableControllers.setPreferredSize(new java.awt.Dimension(J_LIST_WIDTH+60, J_LIST_HEIGHT));	
-		AssignBehaviorsTabController.loadExistingControllers(jListAvailableControllers);
-
 		jListAvailableControllers.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				AssignBehaviorsTabController.jList1MouseReleased( jListAvailableControllers,jmeSimulation);
 			}
 		});
 		jScrollPaneAvailableControllers.setViewportView(jListAvailableControllers);
-		jScrollPaneAvailableControllers.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Available controllers", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
+		jScrollPaneAvailableControllers.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Available behaviors", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 0;
-		super.jComponent.add(jScrollPaneAvailableControllers,gridBagConstraints);	
-
-		/*Initially update the list with controllers available for ATRON*/
-		AssignBehaviorsTabController.updateList(jListAvailableControllers, AssignBehaviorsTabController.filterOut("ATRON"));
+		super.jComponent.add(jScrollPaneAvailableControllers,gridBagConstraints);		
 
 		jCheckBoxShowLabelControl.setText("Show labeling control");
 		jCheckBoxShowLabelControl.addActionListener(new java.awt.event.ActionListener() {
@@ -215,7 +213,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		gridBagConstraintsLabelingPanel.gridx = 0;
 		gridBagConstraintsLabelingPanel.gridy = 0;
 
-		jToolBarEntitiesForLabeling.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		//jToolBarEntitiesForLabeling.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarEntitiesForLabeling.setFloatable(false);//user can not make the tool bar to float
 		jToolBarEntitiesForLabeling.setRollover(true);// the buttons inside are roll over
 		jToolBarEntitiesForLabeling.setToolTipText("Entities for labeling");
@@ -229,7 +227,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		final ButtonGroup buttonGroupEntities = new ButtonGroup() ;
 
 		radioButtonModule =  new JRadioButton();		
-		radioButtonModule.setText(TabJComponentsText.Module.toString());	
+		radioButtonModule.setText(EntitiesForLabelingText.Module.toString());	
 		radioButtonModule.setFocusable(true);// direct the user to what should be done first
 		radioButtonModule.setSelected(false);
 		radioButtonModule.addActionListener(new java.awt.event.ActionListener() {
@@ -243,7 +241,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jRadioButtonsLabelledEntities.add(radioButtonModule);
 
 		radionButtonConnector =  new JRadioButton();
-		radionButtonConnector.setText(TabJComponentsText.Connector.toString());
+		radionButtonConnector.setText(EntitiesForLabelingText.Connector.toString());
 		radionButtonConnector.setSelected(false);
 		radionButtonConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -256,7 +254,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jRadioButtonsLabelledEntities.add(radionButtonConnector);
 
 		radioButtonSensors =  new JRadioButton();
-		radioButtonSensors.setText(TabJComponentsText.Sensors.toString());
+		radioButtonSensors.setText(EntitiesForLabelingText.Sensors.toString());
 		radioButtonSensors.setSelected(false);
 		radioButtonSensors.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -271,7 +269,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 
 		jPanelEntitiesToLabel.add(jToolBarEntitiesForLabeling,gridBagConstraintsEntitiesToLabel);
 
-		jToolBarTypesSensors.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		//jToolBarTypesSensors.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarTypesSensors.setFloatable(false);//user can not make the tool bar to float
 		jToolBarTypesSensors.setRollover(true);// the buttons inside are roll over
 		jToolBarTypesSensors.setToolTipText("Entities for labeling");
@@ -284,7 +282,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		gridBagConstraintsEntitiesToLabel.insets = new Insets (0,10,0,0);
 
 		radioButtonProximitySensor =  new JRadioButton();		
-		radioButtonProximitySensor.setText(TabJComponentsText.Proximity.toString());	
+		radioButtonProximitySensor.setText(EntitiesForLabelingText.Proximity.toString());	
 		radioButtonProximitySensor.setSelected(false);
 		radioButtonProximitySensor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -320,7 +318,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jTableCurrentLabels.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		jScrollPaneTableCurrentLabels.setPreferredSize(new Dimension(150,150));
 
-		jToolBarControlOfLabels.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		//jToolBarControlOfLabels.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarControlOfLabels.setFloatable(false);//user can not make the tool bar to float
 		jToolBarControlOfLabels.setRollover(true);// the buttons inside are roll over
 		jToolBarControlOfLabels.setToolTipText("Control of labels");
@@ -450,6 +448,10 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 	}
 	public static javax.swing.JLabel getJLabel1000() {
 		return jLabel1000;
+	}
+	
+	public static HintPanel getHintPanel(){
+		return hintPanel;
 	}
 
 

@@ -9,6 +9,7 @@ import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 import ussr.aGui.FramesInter;
@@ -19,7 +20,7 @@ import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
-import ussr.aGui.tabs.views.constructionTabs.ConstructionTabsInter.CommonJComponentsText;
+import ussr.aGui.tabs.views.constructionTabs.ConstructionTabsInter.ModularRobotsNames;
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -133,7 +134,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		super.jComponent.add(jToolBarSaveLoad,gridBagConstraints);				
 		
 		radionButtonATRON.setFocusable(false);
-		radionButtonATRON.setText(CommonJComponentsText.ATRON.toString());
+		radionButtonATRON.setText(ModularRobotsNames.ATRON.toString());
 		radionButtonATRON.setEnabled(false);
 		radionButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,7 +149,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		buttonGroupModularRobots.add(radionButtonATRON);
 		jRadioButtons.add(radionButtonATRON);
 		
-		radionButtonODIN.setText(CommonJComponentsText.Odin.toString());
+		radionButtonODIN.setText(ModularRobotsNames.Odin.toString());
 		radionButtonODIN.setFocusable(false);
 		radionButtonODIN.setEnabled(false);
 		radionButtonODIN.addActionListener(new java.awt.event.ActionListener() {
@@ -164,7 +165,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		buttonGroupModularRobots.add(radionButtonODIN);
 		jRadioButtons.add(radionButtonODIN);
 		
-		radioButtonMTRAN.setText(CommonJComponentsText.MTran.toString());
+		radioButtonMTRAN.setText(ModularRobotsNames.MTRAN.toString());
 		radioButtonMTRAN.setFocusable(false);
 		radioButtonMTRAN.setEnabled(false);
 		radioButtonMTRAN.addActionListener(new java.awt.event.ActionListener() {
@@ -181,7 +182,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jRadioButtons.add(radioButtonMTRAN);
 		
 		
-		radionButtonCKBOTSTANDARD.setText(CommonJComponentsText.CKBotStandard.toString());
+		radionButtonCKBOTSTANDARD.setText(ModularRobotsNames.CKBotStandard.toString());
 		radionButtonCKBOTSTANDARD.setFocusable(false);
 		radionButtonCKBOTSTANDARD.setEnabled(false);
 		radionButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
@@ -653,6 +654,10 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	public static javax.swing.JToolBar getJToolBarSaveLoad() {
 		return jToolBarSaveLoad;
 	}
+	
+	public static HintPanel getHintPanel(){
+		return hintPanel;
+	}
 
 	/*Declaration of tab components*/
 	private static javax.swing.JComboBox jComboBoxEntity,
@@ -674,5 +679,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	jToolBarRotationTools,jToolBarConstructionTools;
 
 	private javax.swing.JToolBar.Separator jSeparator1,jSeparator2;
+	
+	private static HintPanel hintPanel;
 	
 }

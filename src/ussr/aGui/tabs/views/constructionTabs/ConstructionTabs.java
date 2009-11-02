@@ -15,12 +15,11 @@ import ussr.physics.jme.JMESimulation;
 public abstract class ConstructionTabs extends Tabs {
 
 	
-	public static HintPanel hintPanel;
+	
 
 	protected ConstructionTabs(boolean firstTabbedPane, String tabTitle,
 			JMESimulation jmeSimulation, String imageIconDirectory) {
 		super(firstTabbedPane, tabTitle, jmeSimulation, imageIconDirectory);
-		// TODO Auto-generated constructor stub
 	}
 	
 	
@@ -93,13 +92,7 @@ public abstract class ConstructionTabs extends Tabs {
 		hintPanel.setBorderTitle(HintPanelInter.commonTitle);
 		return hintPanel;
 	}
+
 	
-	/**
-	 * Returns the panel responsible for displaying feedback to the user.
-	 * @return hintPanel, the panel responsible for displaying feedback to the user.
-	 */
-	public static HintPanel getHintPanel() {
-		return hintPanel;
-	}
 
 }

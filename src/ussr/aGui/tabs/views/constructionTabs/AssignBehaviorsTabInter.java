@@ -3,13 +3,12 @@ package ussr.aGui.tabs.views.constructionTabs;
 public interface AssignBehaviorsTabInter extends ConstructionTabsInter  {
 
 	/**
-	 * Keeps strings used to set the text value on components. setText() method.
+	 * Keeps strings to represent entities for labeling. setText() method.
 	 * @author Konstantinas
 	 */
-	public enum TabJComponentsText{		
+	public enum EntitiesForLabelingText{		
 		/*Entities for labeling*/
-		Module,Connector,Sensors,Proximity;
-		
-		
+		Module,Connector,Sensors,Proximity;		
 	}
+	
 }

@@ -10,7 +10,7 @@ import javax.swing.JTable;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter;
-import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter.TabJComponentsText;
+import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter.EntitiesForLabelingText;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
 import ussr.builder.genericTools.Identifier;
@@ -25,30 +25,67 @@ import ussr.physics.jme.JMESimulation;
 
 public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 
-	private static Object[] strings;
-
-	private static  Vector<String> classesOfControllers ;	
-
-
+	/**
+	 * Container for keeping all classes of controllers extracted from package "ussr.builder.controllerAdjustmentTool";
+	 */
+	private static  Vector<String> classesOfControllers ;
+	
+	/**
+	 * Temporary container for keeping classes of controllers filtered out for specific modular robot.
+	 */
 	private static  Vector<String> tempClassesOfControllers =  new Vector<String> ()  ;
+	
+	/**
+	 * Current entity for labeling;
+	 */
+	private static String chosenRadioEntityText;
+
+	/**
+	 * The physical simulation.
+	 */
+	private static JMESimulation localJMEsimulation;	
 
 	/**
 	 * The name of the package where all behaviors are stored for interactive adjustment of controller.
 	 */
 	private static final String packageName = "ussr.builder.controllerAdjustmentTool";
 
-
 	/**
-	 * Loads the names of the controllers existing in the package "ussr.builder.controllerReassignmentTool" into List
-	 * @param jList1
+	 * Loads all existing names of controllers from package ussr.builder.controllerAdjustmentTool and filters
+	 * out the ones for selected button (modular robot name).
+	 * @param radionButton, the radio button representing modular robot name.
+	 * @param jmeSimulation, the physical simulation.
+	 */
+	public static void jButtonGroupActionPerformed(javax.swing.AbstractButton radionButton,JMESimulation jmeSimulation){
+		loadExistingControllers(AssignBehaviorsTab.getJList1());
+
+		ModularRobotsNames[] modularRobotsNames = ModularRobotsNames.values();
+		boolean modularRobotNameExists = false;
+		for (int buttonTextItem=0;buttonTextItem<modularRobotsNames.length;buttonTextItem++){
+			if (radionButton.getText().equals(modularRobotsNames[buttonTextItem].toString())){
+				updateList(AssignBehaviorsTab.getJList1(),filterOut(modularRobotsNames[buttonTextItem]));
+				modularRobotNameExists =true;
+			}
+		}
+		
+		if (modularRobotNameExists==false){
+			throw new Error ("Not supported modulal robot name: "+ radionButton.getText());
+		}
+		/*Informing user*/
+		AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[1]);
+	}
+	
+	/**
+	 * Extracts and loads the names of controllers existing in the package "ussr.builder.controllerAdjustmentTool" into jList
+	 * @param jList1, the component in GUI.
 	 */
 	public static void loadExistingControllers(javax.swing.JList jList1){
-		//tempjList1 = jList1;
+		
 		Class[] classes = null;
 		try {
 			classes = BuilderHelper.getClasses(packageName);
 		} catch (ClassNotFoundException e) {
-			throw new Error ("The package named as: "+ packageName + "was not found in the directory of USSR");			
+			throw new Error ("The package named as: "+ packageName + "was not found in the directory ussr.builder.controllerAdjustmentTool");			
 		}		
 
 		/*Loop through the classes and take only controllers, but not the classes defining the tool*/
@@ -62,13 +99,15 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 		}			
 		updateList(jList1,classesOfControllers);
 		/*Update the list with newly loaded names of controllers*/
-
 	}
 
-	public static Vector<String> getClassesOfControllers() {
-		return classesOfControllers;
-	}
 
+	/**
+	 * Updates the list with the names of controllers.
+	 * @param jList1,the component in GUI. 
+	 * @param controllers, vector of controllers.
+	 */
+	@SuppressWarnings("serial")
 	public static void updateList(javax.swing.JList jList1,final Vector<String> controllers ){
 		jList1.setModel(new javax.swing.AbstractListModel() {
 			Object[] strings =  controllers.toArray();
@@ -76,52 +115,47 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 			public Object getElementAt(int i) { return strings[i]; }
 		});		
 	}
-
-	public static void jList1MouseReleased(javax.swing.JList jList1,JMESimulation jmeSimulation) {
-		AssignBehaviorsTab.getJLabel10005().setVisible(false);
-		jmeSimulation.setPicker(new AssignControllerTool(packageName+"."+jList1.getSelectedValue()));
-	}
-
-	public static void jButtonGroupActionPerformed(javax.swing.AbstractButton radionButton,JMESimulation jmeSimulation){
-
-		if (radionButton.getText().contains("ATRON")){		  
-			updateList(AssignBehaviorsTab.getJList1(),filterOut("ATRON"));
-		}else if (radionButton.getText().contains("Odin")){
-			updateList(AssignBehaviorsTab.getJList1(),filterOut("Odin"));
-		}else if (radionButton.getText().contains("MTran")){
-			updateList(AssignBehaviorsTab.getJList1(),filterOut("MTRAN"));
-		}else if (radionButton.getText().contains("CKBotStandard")){
-			updateList(AssignBehaviorsTab.getJList1(),filterOut("CKBotStandard"));
-		}
-	}
-
-	public static Vector<String> filterOut(String modularRobotName){
+	
+	/**
+	 * Filters out the names of controller for specific modular robot name.
+	 * @param modularRobotsName, modular robot name.
+	 * @return tempClassesOfControllers, array of controllers for specific modular robot name.
+	 */
+	public static Vector<String> filterOut(ModularRobotsNames modularRobotsName){
 		tempClassesOfControllers.removeAllElements();
 		for (int index=0; index<classesOfControllers.size();index++){
-			if (classesOfControllers.get(index).contains(modularRobotName.toString())){
+			if (classesOfControllers.get(index).contains(modularRobotsName.toString())){
 				tempClassesOfControllers.add(classesOfControllers.get(index));
 			}
 		}
-		/*	  if (tempClassesOfControllers.isEmpty()){
-		  tempClassesOfControllers.add(filterValue + "is not supported yet");
-	  }*/
 		return tempClassesOfControllers;
-
 	}
 
+	/**
+	 * Initializes the tool for assigning controller chosen by user in GUI component. 
+	 * @param jList1,the component in GUI. 
+	 * @param jmeSimulation, the physical simulation.
+	 */
+	public static void jList1MouseReleased(javax.swing.JList jList1,JMESimulation jmeSimulation) {
+		jmeSimulation.setPicker(new AssignControllerTool(packageName+"."+jList1.getSelectedValue()));
+	}
 
-	private  static Identifier currentIdentifier;
 	
-	private  static Module selectedModule;
+	/**
+	 * Shows or hides the panel for controlling labels.
+	 * @param jCheckBox, checkBox in GUI selected or deselected by user.
+	 */
+	public static void jCheckBoxShowLabelControlActionPerformed(JCheckBox jCheckBox) {
+		if (jCheckBox.isSelected()){
+			AssignBehaviorsTab.getLabelingPanel().setVisible(true);
+			/*Informing user*/
+			AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[2]);
+		}else{		
+			AssignBehaviorsTab.getLabelingPanel().setVisible(false);
+		}
+	}
 	
-	private static LabelingToolSpecification labelingToolSpecification;
-	
-	
-	
-	private static String chosenRadioEntityText;
-	
-	private static JMESimulation localJMEsimulation;
-	
+
 	/**
 	 * @param button, radio button selected in GUI.
 	 * @param jmeSimulation, the physical simulation.
@@ -129,15 +163,27 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 	public static void radioButtonGroupEntitiesActionPerformed(AbstractButton button, JMESimulation jmeSimulation) {
 
 		AssignBehaviorsTab.setEnabledControlButtons(true);
-		
+
 		chosenRadioEntityText = button.getText();
 		localJMEsimulation = jmeSimulation;
 
 		/*Updates table header, according to selected entity */
+		updateTableHeader();
+		/*Initialize the tool for reading labels*/
+		jButtonReadLabelsActionPerformed();
+
+		/*Informing user*/
+		AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[3]);
+	}
+	
+	/**
+	 * Updates table header according to the entity name selected in button group.
+	 */
+	private static void updateTableHeader(){
 		String columnHeaderName ="";
-		if (chosenRadioEntityText.equals(TabJComponentsText.Sensors.toString())){
+		if (chosenRadioEntityText.equals(EntitiesForLabelingText.Sensors.toString())){
 			AssignBehaviorsTab.getJToolBar3().setVisible(true);
-		}else if (chosenRadioEntityText.equals(TabJComponentsText.Proximity.toString())){
+		}else if (chosenRadioEntityText.equals(EntitiesForLabelingText.Proximity.toString())){
 			AssignBehaviorsTab.getJToolBar3().setVisible(true);
 			//FIXME
 			columnHeaderName = chosenRadioEntityText+ " Sensor" + " Labels"; 
@@ -148,18 +194,13 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 			AssignBehaviorsTab.getJToolBar3().setVisible(false);
 
 		}
-        /*Initialze the tool for reading labels*/
-		jButtonReadLabelsActionPerformed();
+	} 
 
-		/*Informing user*/
-		AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[1]);
-	}
-	
 	/**
 	 * Initializes the tool for reading labels.
 	 */
 	public static void jButtonReadLabelsActionPerformed() {
-		TabJComponentsText currentText = TabJComponentsText.valueOf(chosenRadioEntityText);
+		EntitiesForLabelingText currentText = EntitiesForLabelingText.valueOf(chosenRadioEntityText);
 
 		switch(currentText){
 
@@ -176,7 +217,8 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 			break;
 		default: throw new Error("Labeling is not supported for " + chosenRadioEntityText ); 
 		}
-		
+		/*Informing user*/
+		AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[3]);
 	}
 
 
@@ -204,25 +246,11 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 		}else{
 			throw new Error ("Addition of new rows is not supported yet");
 		}
-		
-	}
 
-	/**
-	 * Shows or hides the panel for controlling labels.
-	 * @param jCheckBox, checkBox in GUI selected or deselected by user.
-	 */
-	public static void jCheckBoxShowLabelControlActionPerformed(JCheckBox jCheckBox) {
-		if (jCheckBox.isSelected()){
-			AssignBehaviorsTab.getLabelingPanel().setVisible(true);
-		}else{		
-			AssignBehaviorsTab.getLabelingPanel().setVisible(false);
-		}
 	}
-
-	
 
 	public static void jButtonAssignLabelsActionPerformed() {
-		
+
 		/*Get labels from the table*/
 		int amountRows = AssignBehaviorsTab.getJTable2().getRowCount() ;
 		String labelsInTable="";
@@ -230,12 +258,12 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 			if (AssignBehaviorsTab.getJTable2().getValueAt(rowNr, 0).toString().isEmpty()){
 				//do not store empty rows
 			}else{
-			labelsInTable= labelsInTable + AssignBehaviorsTab.getJTable2().getValueAt(rowNr, 0)+",";
+				labelsInTable= labelsInTable + AssignBehaviorsTab.getJTable2().getValueAt(rowNr, 0)+",";
 			}
 		}
-		System.out.println("L" + labelsInTable);
+	
 		/*Assign labels to entity*/
-		TabJComponentsText currentText = TabJComponentsText.valueOf(chosenRadioEntityText);
+		EntitiesForLabelingText currentText = EntitiesForLabelingText.valueOf(chosenRadioEntityText);
 
 		switch(currentText){
 
@@ -251,10 +279,8 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 			break;
 		default: throw new Error("Labeling is not supported for " + chosenRadioEntityText ); 
 		}
-		
-		
-		
-		
+		/*Informing user*/
+		AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[4]);
 	}
 
 
