@@ -19,8 +19,7 @@ public interface TabsInter {
 	 * The names of the icons used in tabs
 	 */
 	public final String DELETE = "delete.jpg", MOVE = "move.jpg", COLOUR_CONNECTORS = "colourConnectors.jpg",
-	                    ERROR = "error.jpg", INFORMATION ="information.jpg", 
-	                    VISUALIZER = "visualizer.jpg", CONSOLE = "console.jpg", OPPOSITE = "opposite.jpg",
+	                    ERROR = "error.jpg", INFORMATION ="information.jpg", CONSOLE = "console.jpg", OPPOSITE = "opposite.jpg",
 	                    ON_SELECTED_CONNECTOR ="onSelectedConnector.jpg", CONNECT_ALL_MODULES = "connectAllModules.jpg",
 	                    JUMP_FROM_CONN_TO_CONNECTOR = "jumpFromConnToConnector.jpg", NEXT = "next.jpg",
 	                    PREVIOUS = "previous.jpg",ASSIGN_LABELS = "assignLabels.jpg", READ_LABELS ="readLabels.jpg",
@@ -41,12 +40,10 @@ public interface TabsInter {
 	public boolean isFirstTabbedPane();
 	
 	
-	
 	public String getImageIconDirectory();   
     
-	
+	public boolean isInitiallyVisible();
 
-	
 	
 
 }

@@ -16,6 +16,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
@@ -41,8 +42,8 @@ public class ModuleCommunicationVisualizer extends Tabs {
 	private GridBagConstraints gridBagConstraints = new GridBagConstraints();
 	
 		
-	public ModuleCommunicationVisualizer(boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
-		super(firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);		
+	public ModuleCommunicationVisualizer(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
+		super(initiallyVisible,firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);		
 		
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
@@ -232,5 +233,6 @@ public class ModuleCommunicationVisualizer extends Tabs {
 	
 	private static javax.swing.JLabel jLabel1000;	
 	private static javax.swing.JLabel jLabel1001;
+
 	
 }

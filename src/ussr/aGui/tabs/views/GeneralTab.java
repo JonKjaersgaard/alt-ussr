@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
+import javax.swing.JCheckBoxMenuItem;
+
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.GeneralTabController;
 import ussr.physics.jme.JMESimulation;
@@ -15,8 +17,8 @@ import ussr.physics.jme.JMESimulation;
  */
 public class GeneralTab extends Tabs {
 
-	public GeneralTab(boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation, String imageIconDirectory){
-		super(firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
+	public GeneralTab(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation, String imageIconDirectory){
+		super(initiallyVisible,firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
 		
 		super.jComponent = new javax.swing.JPanel();
 		initComponents();
@@ -113,7 +115,8 @@ public class GeneralTab extends Tabs {
 	private javax.swing.JScrollPane jScrollPane3;
 	
 	
-	private javax.swing.JTable jTable1 ;   
+	private javax.swing.JTable jTable1 ;
+
 	
 
 }

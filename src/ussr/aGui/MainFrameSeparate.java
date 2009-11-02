@@ -5,18 +5,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
-import ussr.aGui.tabs.Tabs;
+
 import ussr.aGui.tabs.TabsInter;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
 
+@SuppressWarnings("serial")
 public class MainFrameSeparate extends MainFrame {
 
-	/**
-	 * WHAT IS THAT?
-	 */
-	private static final long serialVersionUID = 1L;
-	
 
 	/**
 	 * Starts the main GUI window (frame) during simulation. Simulation starts first and after that main GUI window is started.

@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JRadioButton;
 
 import ussr.physics.jme.JMESimulation;
@@ -27,14 +28,15 @@ public class YourNewTab extends Tabs {
 	/**
 	 * Defines visual appearance of YOUR NEW tab implemented by YOU. Serves as an example for how to design and add new tab in main GUI.
      * Replicates part of design from Construct Robot Tab and explains it in step by step fashion.
-     * Please leave this class alone for future developers and use the copy of it. 
+     * Please leave this class alone for future developers and use the copy of it.
+     * TODO initiallyVisible 
 	 * @param firstTabbedPane,location of the tab in the main GUI frame. True if it is the first tabbed pane. 
 	 * @param tabTitle, the title of the tab.
 	 * @param jmeSimulation, the physical simulation.
 	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
 	 */
-	public YourNewTab(boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation, String imageIconDirectory){
-		super(firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
+	public YourNewTab(boolean initiallyVisible ,boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation, String imageIconDirectory){
+		super(initiallyVisible,firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
 		
 		/*JComponent, is the main container of the tab. Place all your components in it.
 		 *Here is used GridBagLayout manager */		
@@ -119,4 +121,5 @@ public class YourNewTab extends Tabs {
 		/*Look for inspiration in design of other tabs or create your own. The only thing to remember is
 		 * that jComponent is your main container.*/
 	}
+
 }

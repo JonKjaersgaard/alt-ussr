@@ -9,6 +9,7 @@ import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
@@ -47,13 +48,14 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 
 	/**
 	 * Defines visual appearance of the tab called "1 Step: Construct Robot".
+	 * TODO
 	 * @param firstTabbedPane, location of the tab in the main GUI frame. True if it is the first tabbed pane.
 	 * @param tabTitle, the title of the tab.
 	 * @param jmeSimulation, the physical simulation.
 	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
 	 */
-	public ConstructRobotTab(boolean firstTabbedPane,String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
-		super(firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
+	public ConstructRobotTab(boolean initiallyVisible, boolean firstTabbedPane,String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
+		super(initiallyVisible,firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
 
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());	
@@ -681,5 +683,6 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	private javax.swing.JToolBar.Separator jSeparator1,jSeparator2;
 	
 	private static HintPanel hintPanel;
+
 	
 }

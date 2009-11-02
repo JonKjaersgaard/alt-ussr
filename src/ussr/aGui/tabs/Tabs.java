@@ -13,8 +13,13 @@ public abstract class Tabs implements TabsInter {
 	
 	protected String imageIconDirectory;
 	
+	protected boolean initiallyVisible;
+	
 	//protected Map<TextAttribute, Integer> fontAttributes = new HashMap<TextAttribute, Integer>();
 	
+
+	
+
 
 	/**
 	 * The title of the tab.
@@ -39,11 +44,13 @@ public abstract class Tabs implements TabsInter {
     protected abstract void initComponents();
     
     /**
+     * TODO
      * @param firstTabbedPane
      * @param tabTitle
      * @param jmeSimulation
      */
-    protected Tabs(boolean firstTabbedPane, String tabTitle, JMESimulation jmeSimulation,String imageIconDirectory){
+    protected Tabs(boolean initiallyVisible ,boolean firstTabbedPane, String tabTitle, JMESimulation jmeSimulation,String imageIconDirectory){
+    	this.initiallyVisible= initiallyVisible;
     	this.firstTabbedPane = firstTabbedPane;
     	this.tabTitle = tabTitle;
     	this.jmeSimulation = jmeSimulation;
@@ -75,5 +82,9 @@ public abstract class Tabs implements TabsInter {
 		return firstTabbedPane;
 	}
 	
+	
+	public boolean isInitiallyVisible() {
+		return initiallyVisible;
+	}
 	
 }

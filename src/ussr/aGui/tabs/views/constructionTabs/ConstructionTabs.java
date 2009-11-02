@@ -17,9 +17,9 @@ public abstract class ConstructionTabs extends Tabs {
 	
 	
 
-	protected ConstructionTabs(boolean firstTabbedPane, String tabTitle,
+	protected ConstructionTabs(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,
 			JMESimulation jmeSimulation, String imageIconDirectory) {
-		super(firstTabbedPane, tabTitle, jmeSimulation, imageIconDirectory);
+		super(initiallyVisible,firstTabbedPane, tabTitle, jmeSimulation, imageIconDirectory);
 	}
 	
 	

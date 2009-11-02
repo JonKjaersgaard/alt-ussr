@@ -1,5 +1,6 @@
 package ussr.aGui.tabs.views;
 
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JScrollPane;
 import ussr.aGui.tabs.Tabs;
 import ussr.physics.jme.JMESimulation;
@@ -11,8 +12,8 @@ import ussr.physics.jme.JMESimulation;
 public class ConsoleTab extends Tabs  {
 	
 	
-	public ConsoleTab(boolean firstTabbedPane, String tabTitle, JMESimulation jmeSimulation,String imageIconDirectory){
-		super(firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
+	public ConsoleTab(boolean initiallyVisible,boolean firstTabbedPane, String tabTitle, JMESimulation jmeSimulation,String imageIconDirectory){
+		super(initiallyVisible,firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
 		
 		/*JComponent, which will be added to the tab in the main Window.*/
 		super.jComponent = new javax.swing.JScrollPane();
@@ -31,6 +32,7 @@ public class ConsoleTab extends Tabs  {
 		
 	}
 	
-	private javax.swing.JTextArea jTextArea1;	
+	private javax.swing.JTextArea jTextArea1;
+
 
 }

@@ -10,6 +10,7 @@ import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -58,13 +59,14 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 
 	/**
 	 * Defines visual appearance of the tab called "2 Step: Assign Behaviors".
+	 * TODO
 	 * @param firstTabbedPane,
 	 * @param tabTitle, the title of the tab
 	 * @param jmeSimulation, the physical simulation.
 	 * @param imageIconDirectory
 	 */
-	public AssignBehaviorsTab(boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
-		super(firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);	
+	public AssignBehaviorsTab(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
+		super(initiallyVisible,firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);	
 
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		this.jComponent = new javax.swing.JPanel(new GridBagLayout());
@@ -502,5 +504,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 	
 
 	private javax.swing.JCheckBox jCheckBoxShowLabelControl;
+
+	
 
 }

@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
@@ -46,10 +48,6 @@ public class MainFrameController {
 		fcSaveFrame.activate();				
 	}
 
-	public static void jTextField1FocusGained(JTextField jTextField1) {
-		jTextField1.setText("");
-	}
-
 	private static int timesSelected =0;
 
 	/**
@@ -60,7 +58,7 @@ public class MainFrameController {
 		ConstructRobotTab.setTabEnabled(false);
 		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ATTENTION);
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[12]);
-		
+
 		timesSelected++;
 		if (jmeSimulation.isPaused()){// Start simulation in real time, if simulation is in paused state
 			jmeSimulation.setRealtime(true);
@@ -82,7 +80,7 @@ public class MainFrameController {
 		ConstructRobotTab.setTabEnabled(false);		
 		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ATTENTION);
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[12]);
-		
+
 		if (jmeSimulation.isPaused()){// Start simulation  fast, if simulation is in paused state
 			jmeSimulation.setRealtime(false);
 			jmeSimulation.setPause(false);				
@@ -95,13 +93,12 @@ public class MainFrameController {
 	}
 
 	private static void connectModules(JMESimulation jmeSimulation){
-		
+
 		if (timesSelected==1){
 			BuilderHelper.connectAllModules(jmeSimulation);	
 			/*Disable GUI components responsible for opening file choosers, because it is possible to load
 			 *simulation from XML file only in static state of simulation.*/ 
 			MainFrame.setSaveOpenEnabled(false);
-			MainFrame.setConstructionEnabled(false);
 		}		
 	}
 
@@ -226,10 +223,10 @@ public class MainFrameController {
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[12]);
 		timesSelected++;
 		connectModules(jmeSimulation);
-		
+
 		jmeSimulation.setPause(true);
 		jmeSimulation.setSingleStep(true);
-		
+
 	}
 
 	/**
@@ -241,72 +238,77 @@ public class MainFrameController {
 			jmeSimulation.setPause(true);
 	}
 
-    
-	
 
-	public static void jCheckBoxMenuItemActionPerformedNew(java.awt.event.ActionEvent evt,ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems, javax.swing.JTabbedPane jTabbedPane1, ArrayList<TabsInter> tabs ) {
+	public static void jButtonConstructRobotActionPerformed(JToggleButton jToggleButtonConstructRobot, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs ) {
 		
-		
-//FIXME MAYBE BETTER SOLUTION //ADD ADING OF TABS
-		for (int in=0; in < checkBoxMenuItems.size(); in++){
-			 //System.out.println("SizeCheck: "+checkBoxMenuItems.size());
-			if (checkBoxMenuItems.get(in).isSelected()==false){
-				for (int index=0; index < jTabbedPane1.getTabCount(); index++){
-					if (checkBoxMenuItems.get(in).getText().equalsIgnoreCase(jTabbedPane1.getTitleAt(index))){
-						jTabbedPane1.removeTabAt(index);
-						MainFrame.getCheckBoxMenuItems().get(in).setSelected(false);												
-					};
-				}
-				}
-		}		
-		
-	}
-		
-		public static void constructRobotActionPerformed(JButton jButtonConstructRobot, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs,ArrayList<javax.swing.JCheckBoxMenuItem> checkBoxMenuItems ) {
+		if (jToggleButtonConstructRobot.isSelected()){
 			jTabbedPaneFirst.addTab(tabs.get(0).getTabTitle(),new javax.swing.ImageIcon(tabs.get(0).getImageIconDirectory()),tabs.get(0).getJComponent());
 			jTabbedPaneFirst.addTab(tabs.get(1).getTabTitle(),new javax.swing.ImageIcon(tabs.get(1).getImageIconDirectory()),tabs.get(1).getJComponent());
-			jButtonConstructRobot.setEnabled(false);
-			//checkBoxMenuItems.get(0).setSelected(true);
-			//checkBoxMenuItems.get(1).setSelected(true);
-			
-			MainFrame.getAssignBehavior().setSelected(true);
-			MainFrame.getConstructRobot().setSelected(true);
-			MainFrame.getCheckBoxMenuItems().get(0).setSelected(true);
-			MainFrame.getCheckBoxMenuItems().get(1).setSelected(true);
-			
-			
-			MainFrame.changeToLookAndFeel(jTabbedPaneFirst);
-		}
-
-
-
-		public static void jCheckBoxMenuItemWasSelected() {
-			// TODO Auto-generated method stub
-			System.out.println("selected");
-		}
-
-
-
-		public static void jCheckBoxMenuItemWasDeSelected(javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem,javax.swing.JTabbedPane jTabbedPane ) {
-			//for (int in=0; in < checkBoxMenuItems.size(); in++){
-				 //System.out.println("SizeCheck: "+checkBoxMenuItems.size());
-				//if (checkBoxMenuItems.get(in).isSelected()==false){
-					for (int index=0; index < jTabbedPane.getTabCount(); index++){
-						if (jCheckBoxMenuItem.getText().equalsIgnoreCase(jTabbedPane.getTitleAt(index))){
-							jTabbedPane.removeTabAt(index);
-							//MainFrame.getCheckBoxMenuItems().get(in).setSelected(false);
-						};
-					//}
-
-				//}
-				
+		}else{
+			for (int index=0; index < jTabbedPaneFirst.getTabCount(); index++){
+				String tabTitle = jTabbedPaneFirst.getTitleAt(index);
+				if (tabTitle.equalsIgnoreCase(tabs.get(0).getTabTitle())){
+					jTabbedPaneFirst.removeTabAt(index);
+					index--;
+				}else if (tabTitle.equalsIgnoreCase(tabs.get(1).getTabTitle())){
+					jTabbedPaneFirst.removeTabAt(index);
+				}
 			}
-					System.out.println("Deselected");
-			
 		}
+				
+		MainFrame.changeToLookAndFeel(jTabbedPaneFirst);
+	}
 
 
 
-	
+
+
+	public static void jCheckBoxMenuItemWasDeSelected(javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem,javax.swing.JTabbedPane jTabbedPane ) {
+		//for (int in=0; in < checkBoxMenuItems.size(); in++){
+		//System.out.println("SizeCheck: "+checkBoxMenuItems.size());
+		//if (checkBoxMenuItems.get(in).isSelected()==false){
+		for (int index=0; index < jTabbedPane.getTabCount(); index++){
+			if (jCheckBoxMenuItem.getText().equalsIgnoreCase(jTabbedPane.getTitleAt(index))){
+				jTabbedPane.removeTabAt(index);
+				//MainFrame.getCheckBoxMenuItems().get(in).setSelected(false);
+			};
+			//}
+
+			//}
+
+		}
+		System.out.println("Deselected");
 
 	}
+
+
+
+	public static void jButtonVisualizerActionPerformed(JToggleButton toggleButtonVisualizer, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs) {
+		if (toggleButtonVisualizer.isSelected()){
+			jTabbedPaneFirst.addTab(tabs.get(2).getTabTitle(),new javax.swing.ImageIcon(tabs.get(2).getImageIconDirectory()),tabs.get(2).getJComponent());
+			
+		}else{
+			for (int index=0; index < jTabbedPaneFirst.getTabCount(); index++){
+				String tabTitle = jTabbedPaneFirst.getTitleAt(index);
+				if (tabTitle.equalsIgnoreCase(tabs.get(2).getTabTitle())){
+					jTabbedPaneFirst.removeTabAt(index);
+				}
+			}
+		}
+				
+		MainFrame.changeToLookAndFeel(jTabbedPaneFirst);
+		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+}

@@ -24,7 +24,7 @@ public interface FramesInter {
 	/**
 	 * Dominating(common) height of most components.
 	 */
-	public final int COMMON_HEIGHT = 30;
+	public final int COMMON_HEIGHT = 33;
 	
 	
 	/**
