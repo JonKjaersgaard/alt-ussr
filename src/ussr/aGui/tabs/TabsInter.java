@@ -23,7 +23,7 @@ public interface TabsInter {
 	                    ON_SELECTED_CONNECTOR ="onSelectedConnector.jpg", CONNECT_ALL_MODULES = "connectAllModules.jpg",
 	                    JUMP_FROM_CONN_TO_CONNECTOR = "jumpFromConnToConnector.jpg", NEXT = "next.jpg",
 	                    PREVIOUS = "previous.jpg",ASSIGN_LABELS = "assignLabels.jpg", READ_LABELS ="readLabels.jpg",
-	                    NEW_TAB = "newTab.jpg";
+	                    NEW_TAB = "newTab.jpg", RESET = "reset.jpg";
 	
 	/**
      * Getter method common for all tabs and is used by GUI during addition of new tab.

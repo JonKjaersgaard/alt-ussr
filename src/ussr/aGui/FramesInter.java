@@ -24,13 +24,13 @@ public interface FramesInter {
 	/**
 	 * Dominating(common) height of most components.
 	 */
-	public final int COMMON_HEIGHT = 33;
+	public final int COMMON_HEIGHT = 32;
 	
 	
 	/**
 	 * Width and height of buttons.
 	 */
-	public final int BUTTONS_WIDTH =30;
+	public final int BUTTONS_WIDTH =31;
 	
 	/**
 	 * Padding for adding space around components of the JFrame. 

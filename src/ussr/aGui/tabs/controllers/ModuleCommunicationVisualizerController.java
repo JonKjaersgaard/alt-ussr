@@ -1,15 +1,18 @@
 package ussr.aGui.tabs.controllers;
 
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 import ussr.aGui.tabs.TabsInter;
-import ussr.aGui.tabs.additionalResources.CanvasMouseListener;
+import ussr.aGui.tabs.view.visualizer.CanvasMouseListener;
 import ussr.aGui.tabs.view.visualizer.ModuleCommunicationVisualizer;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.comm.monitors.visualtracker.DrawingCanvas;
@@ -51,17 +54,18 @@ public class ModuleCommunicationVisualizerController {
 
 	public static void jButtonResetActionPerformed(JMESimulation jmeSimulation,JScrollPane jScrollPane) {		
 		if (drawingCanvas == null){
-			drawingCanvas = getDrawingCanvas( jmeSimulation, jScrollPane);
+			drawingCanvas = getDrawingCanvas( jmeSimulation);
 			drawingCanvas.start();
 		}else{
-			drawingCanvas.stop();
-			drawingCanvas = getDrawingCanvas( jmeSimulation, jScrollPane);
+			drawingCanvas.stop();			
+			drawingCanvas = getDrawingCanvas( jmeSimulation);
 			drawingCanvas.start();
 		}
-		jScrollPane.setViewportView(drawingCanvas); //add canvas to scroll pane
+		jScrollPane.setViewportView(drawingCanvas); //add canvas to scroll pane		
+		
 	}
 
-	private static DrawingCanvas getDrawingCanvas(JMESimulation jmeSimulation,JScrollPane jScrollPane){
+	private static DrawingCanvas getDrawingCanvas(JMESimulation jmeSimulation){
 
 		jmeSimulation.setPause(false);	
 
@@ -77,7 +81,19 @@ public class ModuleCommunicationVisualizerController {
 	}
 
 	public static void jButtonModulesActionPerformed(JMESimulation jmeSimulation,JScrollPane jScrollPane) {		
-		//new ModuleFilterDialog(null, this);
+		//new ModuleFilterDialog(null, jmeSimulation);
+	}
+
+	public static void jCheckBoxShowLabelControlActionPerformed(
+			JCheckBox checkBoxShowLabelControl) {
+		if (checkBoxShowLabelControl.isSelected()){
+			ModuleCommunicationVisualizer.getJPanelLabeling().setVisible(true);
+			ModuleCommunicationVisualizer.getJToolBar1().setVisible(false);
+		}else{
+			ModuleCommunicationVisualizer.getJPanelLabeling().setVisible(false);
+			ModuleCommunicationVisualizer.getJToolBar1().setVisible(true);
+		}
+		
 	}
 
 }

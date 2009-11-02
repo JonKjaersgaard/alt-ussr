@@ -105,7 +105,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		/*Description of components */		
 		jButtonStartNewRobot.setText("Start new robot");
 		jButtonStartNewRobot.setRolloverEnabled(true);
-		jButtonStartNewRobot.setToolTipText("Start constructing new robot");
+		jButtonStartNewRobot.setToolTipText(TOOL_TIP_TEXTS[0]);
 		jButtonStartNewRobot.setFocusable(true);
 		jButtonStartNewRobot.setPreferredSize(new Dimension(110,GuiFrames.COMMON_HEIGHT+2));
         jButtonStartNewRobot.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +122,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jToolBarSaveLoad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarSaveLoad.setFloatable(false);//user can not make the tool bar to float
 		jToolBarSaveLoad.setRollover(true);// the components inside are roll over
-		jToolBarSaveLoad.setToolTipText("Save or load robot");
+		jToolBarSaveLoad.setToolTipText(TOOL_TIP_TEXTS[1]);
 		jToolBarSaveLoad.setPreferredSize(new Dimension(60,GuiFrames.COMMON_HEIGHT+2));
 		gridBagConstraints.fill = GridBagConstraints.FIRST_LINE_END;
 		gridBagConstraints.gridx = 4;
@@ -223,7 +223,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.insets = new Insets(0,3,10,18);  
 		
 
-		jButtonOppositeRotation.setToolTipText("Rotate opposite");		
+		jButtonOppositeRotation.setToolTipText(TOOL_TIP_TEXTS[2]);		
 		jButtonOppositeRotation.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE));
 		jButtonOppositeRotation.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));
 		jButtonOppositeRotation.setFocusable(false); 
@@ -236,7 +236,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 			}
 		});
 
-		jComboBoxStandardRotations.setToolTipText("Rotate with standard rotation");
+		jComboBoxStandardRotations.setToolTipText(TOOL_TIP_TEXTS[3]);
 		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 		jComboBoxStandardRotations.setPreferredSize(new java.awt.Dimension(140, GuiFrames.COMMON_HEIGHT-3));
 		jComboBoxStandardRotations.setEnabled(false);
@@ -298,7 +298,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.gridwidth = 3;
 		gridBagConstraints.insets = new Insets(8,3,10,18);  
 
-		jButtonMove.setToolTipText("Move");		
+		jButtonMove.setToolTipText(TOOL_TIP_TEXTS[4]);		
 		jButtonMove.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOVE));
 		jButtonMove.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));
 		jButtonMove.setFocusable(false); 
@@ -313,7 +313,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		
 		jToolBarGenericTools.add(jButtonMove);
 
-		jButtonDelete.setToolTipText("Delete");
+		jButtonDelete.setToolTipText(TOOL_TIP_TEXTS[5]);
 		jButtonDelete.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE));
 		jButtonDelete.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
 		jButtonDelete.setFocusable(false);
@@ -327,7 +327,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		});
 		jToolBarGenericTools.add(jButtonDelete);		
 
-		jButtonColorConnetors.setToolTipText("Color Connectors");
+		jButtonColorConnetors.setToolTipText(TOOL_TIP_TEXTS[6]);
 		jButtonColorConnetors.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + COLOUR_CONNECTORS));
 		jButtonColorConnetors.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
 		jButtonColorConnetors.setFocusable(false);
@@ -356,7 +356,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jToolBarConstructionTools.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarConstructionTools.setFloatable(false);//user can not make the tool bar to float
 		jToolBarConstructionTools.setRollover(true);// the buttons inside are roll over
-		jToolBarConstructionTools.setToolTipText("Construction tools");
+		jToolBarConstructionTools.setToolTipText(TOOL_TIP_TEXTS[7]);
 		jToolBarConstructionTools.setPreferredSize(new Dimension(195,GuiFrames.COMMON_HEIGHT+2));		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;		
@@ -364,7 +364,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.gridwidth = 4;
 		gridBagConstraints.insets = new Insets(0,0,10,18);  
 
-		jButtonOnSelectedConnector.setToolTipText("On selected connector (select connector)");
+		jButtonOnSelectedConnector.setToolTipText(TOOL_TIP_TEXTS[8]);
 		jButtonOnSelectedConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + ON_SELECTED_CONNECTOR));
 		jButtonOnSelectedConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
 		jButtonOnSelectedConnector.setFocusable(false);
@@ -377,7 +377,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 			}
 		});	
 
-		jComboBoxNrConnectorsConstructionTool.setToolTipText("On chosen connector number (select module)");
+		jComboBoxNrConnectorsConstructionTool.setToolTipText(TOOL_TIP_TEXTS[9]);
 		jComboBoxNrConnectorsConstructionTool.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 		jComboBoxNrConnectorsConstructionTool.setPreferredSize(new java.awt.Dimension(60, GuiFrames.COMMON_HEIGHT-4));
 		jComboBoxNrConnectorsConstructionTool.setEnabled(false);
@@ -387,7 +387,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 			}
 		});		
 
-		jButtonConnectAllModules.setToolTipText("To all connectors(select module)");
+		jButtonConnectAllModules.setToolTipText(TOOL_TIP_TEXTS[10]);
 		jButtonConnectAllModules.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + CONNECT_ALL_MODULES));
 		jButtonConnectAllModules.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
 		jButtonConnectAllModules.setFocusable(false);
@@ -403,7 +403,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jSeparator1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jSeparator1.setPreferredSize(new Dimension(6,30));
 
-		jButtonOnPreviousConnector.setToolTipText("On previous connector");
+		jButtonOnPreviousConnector.setToolTipText(TOOL_TIP_TEXTS[11]);
 		jButtonOnPreviousConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PREVIOUS));
 		jButtonOnPreviousConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
 		jButtonOnPreviousConnector.setFocusable(false);
@@ -416,7 +416,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 			}
 		});		
 
-		jButtonJumpFromConnToConnector.setToolTipText("Jump from one connector to the next connector(loop)");
+		jButtonJumpFromConnToConnector.setToolTipText(TOOL_TIP_TEXTS[12]);
 		jButtonJumpFromConnToConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + JUMP_FROM_CONN_TO_CONNECTOR));
 		jButtonJumpFromConnToConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
 		jButtonJumpFromConnToConnector.setFocusable(false);
@@ -429,7 +429,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 			}
 		});	
 
-		jButtonOnNextConnector.setToolTipText("On next connector");
+		jButtonOnNextConnector.setToolTipText(TOOL_TIP_TEXTS[13]);
 		jButtonOnNextConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NEXT));
 		jButtonOnNextConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));		
 		jButtonOnNextConnector.setFocusable(false);
