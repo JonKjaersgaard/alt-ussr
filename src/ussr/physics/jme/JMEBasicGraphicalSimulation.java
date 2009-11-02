@@ -10,8 +10,10 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import ussr.aGui.FramesInter;
 import ussr.aGui.MainFrame;
@@ -201,10 +203,10 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			WindowSaver.init();
 		}
 	}
-	
-	
-	ArrayList<TabsInter> tabs; 
-	
+
+
+
+
 	protected void assignKeys() {       
 		/** Assign key P to action "toggle_pause". */
 		//KeyBindingManager.getKeyBindingManager().set( "toggle_pause",
@@ -343,30 +345,41 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			}else{QuickPrototyping.activate(this);}			
 		}
 
-
+		
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_main_frame", false)) {			 
 			if (MainFrameSeparate.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
 			}else{
 				JMESimulation simulation = (JMESimulation)this;
 				simulation.setPause(true); // pause simulation.
+                
+				/*Container for tabs*/
+				ArrayList<TabsInter> tabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI			
+
+				/*Instantiation of each tab*/
+				TabsInter  constructRobot = new ConstructRobotTab(false,true,"1 Step: Construct Robot",simulation,MainFrameInter.DIRECTORY_ICONS+MainFrameInter.CONSTRUCT_ROBOT),
+				           assignBehaviors = new AssignBehaviorsTab(false,true,"2 Step: Assign Behaviour (Controller)",simulation,MainFrameInter.DIRECTORY_ICONS+MainFrameInter.CONSTRUCT_ROBOT),
+				           moduleCommunicationVisualizer = new ModuleCommunicationVisualizer(false,true,"Communication Visualiser",simulation,MainFrameInter.DIRECTORY_ICONS+MainFrameInter.VISUALIZER),
+				           general = new GeneralTab(true,true,"General",simulation,FramesInter.DIRECTORY_USSR_ICON),
+				           console = new ConsoleTab(true,false,"Console", null, TabsInter.DIRECTORY_ICONS+TabsInter.CONSOLE),
 				
-				tabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI			
+			    /*YOUR NEW TAB*/  yourNewtab = new YourNewTab(true,true, "Your New Tab",simulation,TabsInter.DIRECTORY_ICONS+TabsInter.NEW_TAB);
 				
-				/*Tabs of the first tabbed pane*/
-				//tabs.add(new ConstructionTab(true,"1 Step: Construct Robot (Interactive User Guide)",simulation));//Build in tab
-				tabs.add(new ConstructRobotTab(true,"1 Step: Construct Robot",simulation,MainFrameInter.DIRECTORY_ICONS+MainFrameInter.CONSTRUCT_ROBOT));//Build in tab
-				tabs.add(new AssignBehaviorsTab(true,"2 Step: Assign Behaviour (Controller)",simulation,MainFrameInter.DIRECTORY_ICONS+MainFrameInter.CONSTRUCT_ROBOT));//Build in tab
-				tabs.add(new GeneralTab(true,"General",simulation,FramesInter.DIRECTORY_USSR_ICON));
-				tabs.add(new ModuleCommunicationVisualizer(true,"Communication Visualiser",simulation,TabsInter.DIRECTORY_ICONS+TabsInter.VISUALIZER));//Build in tab
-				//tabs.add(new AssignBehavioursTab(true,"2 Step: Assign Behaviour (Interactive User Guide)",simulation));//Build in tab
 				
-				/*YOUR NEW*/ tabs.add(new YourNewTab(true, "Your New Tab",simulation,TabsInter.DIRECTORY_ICONS+TabsInter.NEW_TAB));				
-				
-				/*Tabs of the second tabbed pane*/
-				tabs.add(new ConsoleTab(false,"Console", null, TabsInter.DIRECTORY_ICONS+TabsInter.CONSOLE));
+
+				/*Populate container with tabs*/				
+				/*Buil in Tabs*/tabs.add(constructRobot);tabs.add(assignBehaviors);
+				tabs.add(moduleCommunicationVisualizer); tabs.add(console);
+				tabs.add(general);				
+				/*YOUR NEW TAB*/ 
+				tabs.add(yourNewtab);				
+
 				FramesInter mainFrame = new MainFrameSeparate(this,tabs);				                
-				mainFrame.activate();                
+				mainFrame.activate();   
+				Hashtable<String,String> table = new Hashtable<String,String>();
 				
+				
+				
+
 			}			
 		}
 
@@ -720,16 +733,16 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 				e.printStackTrace();
 				throw new Error("Unable to link native libraries");
 			}
-		
+
 			display.setMinDepthBits( depthBits );
 			display.setMinStencilBits( stencilBits );
 			display.setMinAlphaBits( alphaBits );
 			display.setMinSamples( samples );
 			/** Create a window with the startup box's information. */
-		   display.createWindow( properties.getWidth(), properties.getHeight(),
+			display.createWindow( properties.getWidth(), properties.getHeight(),
 					properties.getDepth(), properties.getFreq(), properties
 					.getFullscreen() );			
-			
+
 			//display.moveWindowTo(600, 400);	
 
 			/**
