@@ -1,5 +1,12 @@
 package ussr.samples.odin;
 
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Hashtable;
+
+import com.jme.math.Vector3f;
+
 import ussr.comm.Packet;
 import ussr.comm.PacketReceivedObserver;
 import ussr.comm.PacketSentObserver;
@@ -12,6 +19,7 @@ import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
+import ussr.physics.jme.JMEModuleComponent;
 
 public abstract class OdinTinyOSController extends ControllerImpl implements PacketSentObserver, PacketReceivedObserver, PhysicsObserver, IOdinTinyOSAPI {
 
@@ -22,6 +30,38 @@ public abstract class OdinTinyOSController extends ControllerImpl implements Pac
 	static final int MODULE_TYPE_ODIN_BALL = 1;
 	static final int MODULE_TYPE_SSR_LINEAR_ACTUATOR = 2;	
 
+    public void setColor(int c) {
+    	if(c == 1)
+    		module.setColor(Color.YELLOW);
+    	else if (c == 2)
+    		module.setColor(Color.BLUE);   		
+    	else if (c == 3)
+    		module.setColor(Color.BLACK); 
+    	else if (c == 4)
+    		module.setColor(Color.WHITE);
+    }	
+	
+    public void setColor(float r, float g, float b) {
+   		module.setColor(new Color(r,g,b));
+    }
+    
+    public float getTilt() {	
+    	float[] angles = new float[3];
+    	((JMEModuleComponent)(module.getComponent(0))).getModuleNode().getLocalRotation().toAngles(angles);
+    	return angles[2]; //pitch?
+    }
+    
+    public float getDistanceSensor() {
+    	if(this.module.getSimulation().getObstaclePositions().size() != 0) {
+        	//the target from which we calculate the distance is the obstacle 0
+    		Vector3f source = this.module.getSimulation().getObstaclePositions().get(0).getVector();   		
+			Vector3f modulePosition = ((JMEModuleComponent)(module.getComponent(0))).getModuleNode().getLocalTranslation();
+			return (modulePosition.clone()).distance(source);
+    	}
+    	else
+    		return Float.POSITIVE_INFINITY;
+    }
+       
 	/* return a 0-100 output */
     public int getActuatorPosition() {
     	if(module.getActuators().size()!=0) {
