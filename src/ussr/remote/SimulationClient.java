@@ -19,6 +19,7 @@ import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsFactory.Options;
+import ussr.remote.facade.RemoteActiveSimulation;
 import ussr.remote.facade.RemotePhysicsSimulation;
 import ussr.remote.facade.RemotePhysicsSimulationImpl;
 

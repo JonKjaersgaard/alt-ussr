@@ -3,6 +3,8 @@ package ussr.remote;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import ussr.remote.facade.RemoteActiveSimulation;
+
 /**
  * Interface defining capabilities for a frontend server for simulations
  * @author ups

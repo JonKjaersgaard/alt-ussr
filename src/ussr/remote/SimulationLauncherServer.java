@@ -9,6 +9,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ussr.remote.facade.ActiveSimulation;
+import ussr.remote.facade.RemoteActiveSimulation;
+
 
 /**
  * Generic class for launching simulator instances.  Instances of this class act

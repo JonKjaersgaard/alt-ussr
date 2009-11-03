@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 
+import ussr.remote.facade.ActiveSimulation;
 import ussr.remote.facade.RemotePhysicsSimulation;
 
 /**
