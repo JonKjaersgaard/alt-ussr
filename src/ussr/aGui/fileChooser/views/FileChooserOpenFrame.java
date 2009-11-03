@@ -1,14 +1,15 @@
 package ussr.aGui.fileChooser.views;
 
-import java.util.ArrayList;
+
+import java.util.Map;
 
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
-import ussr.physics.jme.JMESimulation;
 
 /**
- * Manages the file chooser in the form of Open dialog.
+ * Defines visual appearance of the file chooser in the form of Open dialog.
  * @author Konstantinas
  */
+@SuppressWarnings("serial")
 public class FileChooserOpenFrame extends FileChooserFrame  {	
 	
 	/**
@@ -18,13 +19,13 @@ public class FileChooserOpenFrame extends FileChooserFrame  {
 	
 	/**
 	 * Manages the file chooser in the form of Open dialog.
-	 * @param fileExtensions, extensions of the files, which will be available to filter out by the file chooser.
+	 * @param fileDescriptionsAndExtensions, 
 	 * @param fileChooserController, the controller for  file extension.
 	 */
-	public FileChooserOpenFrame(ArrayList<String> fileExtensions, FileChooserControllerInter fileChooserController) {
-		super(fileExtensions,fileChooserController);
+	public FileChooserOpenFrame(Map<String, String> fileDescriptionsAndExtensions, FileChooserControllerInter fileChooserController) {
+		super(fileDescriptionsAndExtensions,fileChooserController);
 		changeToOpenDialog();
-		setFilesToFilter(fileExtensions);
+		setFilesToFilterOutWithDescription();
 	}
 	
 	/**
@@ -49,7 +50,7 @@ public class FileChooserOpenFrame extends FileChooserFrame  {
 	public void activate(){
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() { 
-				fcOpenFrame = new FileChooserOpenFrame(fileExtensions,fileChooserController);
+				fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,fileChooserController);
 				fcOpenFrame.setVisible(true);				
 			}
 		});    	

@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.swing.JCheckBoxMenuItem;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
+import ussr.aGui.fileChooser.views.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveAsFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
@@ -20,7 +21,7 @@ import ussr.physics.jme.JMESimulation;
  * @author Konstantinas
  */
 @SuppressWarnings("serial")
-public abstract class MainFrame extends GuiFrames implements MainFrameInter {
+public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	
 	/**
 	 * Height of the second tabbed pane.
@@ -35,7 +36,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 	/**
 	 * The main GUI window.
 	 */
-	protected static MainFrame mainFrame;	
+	protected static MainFrames mainFrame;	
 	
 	/**
 	 * The physical simulation.
@@ -45,47 +46,73 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 	/**
 	 * File choosers in the form of Open,Save and Save as dialogs respectively.
 	 */
-	protected static  FramesInter fcOpenFrame,fcSaveFrame,fcSaveAsFrame;
+	protected static FileChooserFrameInter fcOpenFrame,fcSaveFrame,fcSaveAsFrame;
 
-	
 	/**
 	 * Container for keeping main GUI window components, the height of which determine the height of the window.  
 	 */
 	protected ArrayList<javax.swing.JComponent> components = new ArrayList<javax.swing.JComponent>();
 	
 	/**
-	 * Container for keeping all tabs pluged-in the main GUI window(MainFrame).
+	 * Containers for keeping all tabs plugged-in the main GUI window(MainFrame), tabs in the first and second tabbed panes respectively.
 	 */
-	protected  ArrayList<TabsInter> tabs = new ArrayList <TabsInter>();
+	protected ArrayList<TabsInter> allTabs,tabsFirstTabbedPane,tabsSecondTabbedPane;
 	
 	
-	protected ArrayList<TabsInter> tabsFirstTabbedPane = new ArrayList <TabsInter>();
 	
-	protected  ArrayList<TabsInter> tabsSecondTabbedPane = new ArrayList <TabsInter>();
-	
+	public MainFrames(){
+		filterPopulateTabs();
+		initFileChoosers ();// initialize visual appearance of file choosers. Why here, because then they are responding faster to user generated events, because they are compiled earlier).
+		initFrameProperties();
+	}
 	
 	
 	/**
-	 * Initializes file choosers in two forms: 1)Open and 2)Save dialog.
+	 * Filters out and populates the tabs assigned to the first and second tabbed panes, into separate array lists. 
+	 */
+	public void filterPopulateTabs(){
+		tabsFirstTabbedPane = new ArrayList<TabsInter>();
+		tabsSecondTabbedPane = new ArrayList<TabsInter>();
+		allTabs = new ArrayList<TabsInter>();
+		
+		for (int tabNr=0; tabNr<TABS.length;tabNr++){
+			TabsInter currentTab = TABS[tabNr]; 
+			if (currentTab.isFirstTabbedPane()){
+				tabsFirstTabbedPane.add(currentTab);	
+			}else {
+				tabsSecondTabbedPane.add(currentTab);
+			}
+			allTabs.add(currentTab);
+			}
+	}	
+	
+	/**
+	 * Initializes file choosers in forms: 1)Open, 2)Save and 3) Save as dialog.
 	 */
 	public void initFileChoosers () {	
+		
+		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
+		fileDescriptionsAndExtensions.put("Simulation", ".xml");
+		fileDescriptionsAndExtensions.put("Robot", ".xml");
 		
 		ArrayList <String> fileExtensions = new ArrayList<String>();
 		fileExtensions.add(".xml");//TODO MOVE TO fc INTERFACE
 
-		FileChooserControllerInter fcXMLController = new FileChooserXMLController(this.jmeSimulation);
+		FileChooserControllerInter fcXMLController = new FileChooserXMLController();
 	
-		fcOpenFrame = new FileChooserOpenFrame(fileExtensions,fcXMLController);	
+		String defaultDirectory = "samples/simulations";
+		
+		fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,fcXMLController);	
+		fcOpenFrame.setDefaultDirectory(defaultDirectory);
+		
 		fcSaveFrame = new FileChooserSaveFrame(fileExtensions,fcXMLController);
-		
-		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
-		fileDescriptionsAndExtensions.put("Simulation Configuration", ".xml");
-		fileDescriptionsAndExtensions.put("Robot Morphology", ".xml");
-		
+		fcSaveFrame.setDefaultDirectory(defaultDirectory);
+	
 		fcSaveAsFrame = new FileChooserSaveAsFrame(fileDescriptionsAndExtensions,fcXMLController);
+		fcSaveAsFrame.setDefaultDirectory(defaultDirectory);
 	}
 	
-		
+
 	/**
 	 * Initializes the visual appearance the main GUI windows.
 	 * Follows Strategy  pattern.
@@ -99,7 +126,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 	public void initFrameProperties(){		
 		setUSSRicon(this);
 		setTitle("Unified Simulator for Self-Reconfigurable Robots");
-		getContentPane().setLayout(new java.awt.FlowLayout());		
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);		
 	}
 	
 	
@@ -173,7 +200,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 		jMenuItemExit.setText("Exit");
 		jMenuItemExit.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jMenuItem1ActionPerformed(mainFrame);
+				MainFrameController.jMenuItemExitActionPerformed();
 			}
 		});
 		jMenuFile.add(jMenuItemExit);
@@ -332,7 +359,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 		jToggleButtonConstructRobot.setPreferredSize(new java.awt.Dimension(30, 30));
 		jToggleButtonConstructRobot.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
-				MainFrameController.jButtonConstructRobotActionPerformed(jToggleButtonConstructRobot,jTabbedPaneFirst, tabs );
+				MainFrameController.jButtonConstructRobotActionPerformed(jToggleButtonConstructRobot,jTabbedPaneFirst, allTabs );
 				
 			}
 		});
@@ -347,7 +374,7 @@ public abstract class MainFrame extends GuiFrames implements MainFrameInter {
 		jToggleButtonVisualizer.setPreferredSize(new java.awt.Dimension(30, 30));
 		jToggleButtonVisualizer.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jButtonVisualizerActionPerformed(jToggleButtonVisualizer,jTabbedPaneFirst, tabs);
+				MainFrameController.jButtonVisualizerActionPerformed(jToggleButtonVisualizer,jTabbedPaneFirst, allTabs);
 			}
 		});
 		jToolBarGeneralControl.add(jToggleButtonVisualizer);

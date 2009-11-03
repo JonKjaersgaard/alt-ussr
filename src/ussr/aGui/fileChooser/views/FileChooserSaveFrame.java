@@ -3,9 +3,8 @@ package ussr.aGui.fileChooser.views;
 import java.util.ArrayList;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 
-
 /**
- * Manages the file chooser in the forms of Save dialog.
+ * Defines visual appearance of the file chooser in the form of Save dialog.
  * @author Konstantinas
  */
 public class FileChooserSaveFrame extends FileChooserFrame  {

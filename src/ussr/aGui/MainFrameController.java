@@ -1,33 +1,23 @@
 package ussr.aGui;
 
 import java.util.ArrayList;
-
-
-import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-
 import ussr.aGui.tabs.TabsInter;
-import ussr.aGui.tabs.additionalResources.HintPanelInter;
-import ussr.aGui.tabs.additionalResources.HintPanelTypes;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
-import ussr.builder.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
-import ussr.samples.atron.simulations.ATRONSnakeSimulation;
+
 
 public class MainFrameController {
 
 	/**
-	 * Executes closing of main window(frame)
-	 * @param frame,
+	 * Executes closing of main window(frame)by terminating Java Virtual Machine.
 	 */
-	public static void jMenuItem1ActionPerformed(javax.swing.JFrame frame) {	
-		frame.dispose();// closes only the current window		
+	public static void jMenuItemExitActionPerformed() {	
+		System.exit(0);	
 	} 
 
 
@@ -93,7 +83,7 @@ public class MainFrameController {
 			BuilderHelper.connectAllModules(jmeSimulation);	
 			/*Disable GUI components responsible for opening file choosers, because it is possible to load
 			 *simulation from XML file only in static state of simulation.*/ 
-			MainFrame.setSaveOpenEnabled(false);
+			MainFrames.setSaveOpenEnabled(false);
 		}		
 	}
 
@@ -202,7 +192,7 @@ public class MainFrameController {
 
 
 	/**
-	 * Controls running simulation in step by step fashion.
+	 * Executes running simulation in step by step fashion.
 	 * @param jmeSimulation
 	 */
 	public static void jButtonRunStepByStepActionPerformed(JMESimulation jmeSimulation) {       	
@@ -225,45 +215,86 @@ public class MainFrameController {
 
 
 	/**
-	 * @param jToggleButtonConstructRobot
-	 * @param jTabbedPaneFirst
-	 * @param tabs
+	 * Adds or removes tabs for construction of modular robot morphology.
+	 * @param jToggleButtonConstructRobot, the toggle button in main frame.
+	 * @param jTabbedPaneFirst, the tabbed pane used as container for construction tabs.
+	 * @param tabs, container of all tabs in main frame.
 	 */
 	public static void jButtonConstructRobotActionPerformed(JToggleButton jToggleButtonConstructRobot, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs ) {
 		
+		/*Check if tabs are defined*/
+		TabsInter constructRobotTab = getTabByTitle(MainFramesInter.CONSTRUCT_ROBOT_TAB_TITLE,tabs);
+		TabsInter assignBehaviorsTab = getTabByTitle(MainFramesInter.ASSIGN_BEHAVIORS_TAB_TITLE,tabs);
+		
+		
 		if (jToggleButtonConstructRobot.isSelected()){
-			jTabbedPaneFirst.addTab(tabs.get(0).getTabTitle(),new javax.swing.ImageIcon(tabs.get(0).getImageIconDirectory()),tabs.get(0).getJComponent());
-			jTabbedPaneFirst.addTab(tabs.get(1).getTabTitle(),new javax.swing.ImageIcon(tabs.get(1).getImageIconDirectory()),tabs.get(1).getJComponent());
+			/*Add tabs for construction of modular robot*/
+			jTabbedPaneFirst.addTab(constructRobotTab.getTabTitle(),new javax.swing.ImageIcon(constructRobotTab.getImageIconDirectory()),constructRobotTab.getJComponent());
+			jTabbedPaneFirst.addTab(assignBehaviorsTab.getTabTitle(),new javax.swing.ImageIcon(assignBehaviorsTab.getImageIconDirectory()),assignBehaviorsTab.getJComponent());
+			
+			/*Update look and feel for newly added tabs*/		
+			MainFrames.changeToLookAndFeel(constructRobotTab.getJComponent());
+			MainFrames.changeToLookAndFeel(assignBehaviorsTab.getJComponent());
 		}else{
+			/*Identify and remove tabs for construction of modular robot*/
 			for (int index=0; index < jTabbedPaneFirst.getTabCount(); index++){
 				String tabTitle = jTabbedPaneFirst.getTitleAt(index);
-				if (tabTitle.equalsIgnoreCase(tabs.get(0).getTabTitle())){
+				if (tabTitle.equals(MainFramesInter.CONSTRUCT_ROBOT_TAB_TITLE)){
 					jTabbedPaneFirst.removeTabAt(index);
 					index--;
-				}else if (tabTitle.equalsIgnoreCase(tabs.get(1).getTabTitle())){
+				}else if (tabTitle.equalsIgnoreCase(MainFramesInter.ASSIGN_BEHAVIORS_TAB_TITLE)){
 					jTabbedPaneFirst.removeTabAt(index);
 				}
 			}
 		}
-				
-		MainFrame.changeToLookAndFeel(jTabbedPaneFirst);
+		
+	}
+	
+	/**
+	 * Checks if the tab with specific title is in the container for tabs.
+	 * @param tabTitle, the title of the tab to look for.
+	 * @param tabs, container of all tabs in main frame.
+	 * @return foundTab, the tab with the title to look for.
+	 */
+	private static TabsInter getTabByTitle( String tabTitle,ArrayList<TabsInter> tabs){
+		TabsInter foundTab = null;
+		for (int tabNr=0;tabNr<tabs.size();tabNr++){
+			String currentTabTitle = tabs.get(tabNr).getTabTitle();
+			if (currentTabTitle.equals(tabTitle)){
+				foundTab = tabs.get(tabNr);
+			}
+		}
+		
+		if (foundTab == null){
+			throw new Error("The tab with title ("+ tabTitle + ") was not found");
+		}
+		return foundTab;
 	}
 
+	/**
+	 * Adds or removes tab for visualization of communication between modules.
+	 * @param toggleButtonVisualizer, the toggle button in main frame.
+	 * @param jTabbedPaneFirst,the tabbed pane used as container for construction tabs.
+	 * @param tabs, container of all tabs in main frame.
+	 */
 	public static void jButtonVisualizerActionPerformed(JToggleButton toggleButtonVisualizer, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs) {
+		/*Check if tab is defined*/
+		TabsInter moduleCommunicationVisualizerTab = getTabByTitle(MainFramesInter.MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE,tabs);
+		
 		if (toggleButtonVisualizer.isSelected()){
-			jTabbedPaneFirst.addTab(tabs.get(2).getTabTitle(),new javax.swing.ImageIcon(tabs.get(2).getImageIconDirectory()),tabs.get(2).getJComponent());
-			
+			/*Add tabs for visualizing module communication*/
+			jTabbedPaneFirst.addTab(moduleCommunicationVisualizerTab.getTabTitle(),new javax.swing.ImageIcon(moduleCommunicationVisualizerTab.getImageIconDirectory()),moduleCommunicationVisualizerTab.getJComponent());
+			/*Update look and feel for all tabs*/			
+			MainFrames.changeToLookAndFeel(moduleCommunicationVisualizerTab.getJComponent());
 		}else{
+			/*Identify and remove the tab for visualizing module communication*/
 			for (int index=0; index < jTabbedPaneFirst.getTabCount(); index++){
 				String tabTitle = jTabbedPaneFirst.getTitleAt(index);
-				if (tabTitle.equalsIgnoreCase(tabs.get(2).getTabTitle())){
+				if (tabTitle.equals(MainFramesInter.MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE)){
 					jTabbedPaneFirst.removeTabAt(index);
 				}
 			}
-		}
-				
-		MainFrame.changeToLookAndFeel(jTabbedPaneFirst);
-		
+		}		
 	}
 
 

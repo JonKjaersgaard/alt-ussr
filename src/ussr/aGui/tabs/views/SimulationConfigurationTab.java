@@ -15,9 +15,9 @@ import ussr.physics.jme.JMESimulation;
  * future developers and use the copy of it.  
  * @author Konstantinas
  */
-public class GeneralTab extends Tabs {
+public class SimulationConfigurationTab extends Tabs {
 
-	public GeneralTab(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation, String imageIconDirectory){
+	public SimulationConfigurationTab(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation, String imageIconDirectory){
 		super(initiallyVisible,firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
 		
 		super.jComponent = new javax.swing.JPanel();
@@ -85,7 +85,7 @@ public class GeneralTab extends Tabs {
 		 
 		 
 		 
-	        javax.swing.GroupLayout layout = new javax.swing.GroupLayout( super.jComponent);
+	/*        javax.swing.GroupLayout layout = new javax.swing.GroupLayout( super.jComponent);
 	        super.jComponent.setLayout(layout);
 	        layout.setHorizontalGroup(
 	            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,7 +104,7 @@ public class GeneralTab extends Tabs {
 	                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 	                    .addComponent(jLabel1))
 	                .addContainerGap(269, Short.MAX_VALUE))
-	        );
+	        );*/
 
 	      
 	}

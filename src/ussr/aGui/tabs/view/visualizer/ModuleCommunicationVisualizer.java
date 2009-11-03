@@ -28,7 +28,7 @@ import javax.swing.JToolBar;
 import javax.swing.border.TitledBorder;
 
 import ussr.aGui.GuiFrames;
-import ussr.aGui.MainFrameInter;
+import ussr.aGui.MainFramesInter;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
@@ -197,8 +197,8 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		//gridBagConstraints.ipadx = 300;//make it wide
 
 
-		jButtonRun.setIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.RUN_REAL_TIME));
-		jButtonRun.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));
+		jButtonRun.setIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.RUN_REAL_TIME));
+		jButtonRun.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
 		jButtonRun.setPreferredSize(new Dimension(30,30));
 		jButtonRun.setToolTipText("Run");
 		jButtonRun.setFocusable(true);
@@ -211,7 +211,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 
 
 		jButtonReset.setIcon(new javax.swing.ImageIcon(TabsInter.DIRECTORY_ICONS + TabsInter.RESET));
-		jButtonReset.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));
+		jButtonReset.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
 		jButtonReset.setPreferredSize(new Dimension(30,30));
 		jButtonReset.setToolTipText("Reset Display Area");
 		jButtonReset.setFocusable(true);

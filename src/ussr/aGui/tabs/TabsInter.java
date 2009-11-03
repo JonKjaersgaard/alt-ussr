@@ -1,6 +1,6 @@
 package ussr.aGui.tabs;
 
-import ussr.aGui.MainFrameInter;
+import ussr.aGui.MainFramesInter;
 
 
 /**

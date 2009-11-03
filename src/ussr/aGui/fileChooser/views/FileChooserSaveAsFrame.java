@@ -1,6 +1,5 @@
 package ussr.aGui.fileChooser.views;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -10,40 +9,36 @@ import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 
 
 /**
- * Manages the file chooser in the forms of Save dialog.
+ * Defines visual appearance of the file chooser in the forms of Save As dialog.
  * @author Konstantinas
  */
+@SuppressWarnings("serial")
 public class FileChooserSaveAsFrame extends FileChooserFrame  {
 
-	/**
-	 * TODO
-	 */
-	private static final long serialVersionUID = 1L;
-	
 	/**
 	 * The file chooser frame in Save dialog form.
 	 */
 	private static FileChooserSaveAsFrame fcSaveFrame;
-	
-	
+
+
 	private  HashMap<String,String>  fileDescriptionsAndExtensions;
 
 
 	/**
-	 * Manages the file chooser in the form of Save As dialog.
+	 * Defines visual appearance the file chooser in the form of Save As dialog.
 	 * @param fileDescriptionsAndExtensions,descriptions and extensions of the files, which will be available to filter out by the file chooser.
 	 * @param fileChooserController, the controller for file extension.
 	 */
 	public FileChooserSaveAsFrame(Map<String, String> fileDescriptionsAndExtensions,FileChooserControllerInter fileChooserController) {
-		super(null, fileChooserController);	
+		super(fileDescriptionsAndExtensions, fileChooserController);	
 		this.fileDescriptionsAndExtensions = (HashMap<String, String>) fileDescriptionsAndExtensions;
 		changeToSaveAsDialog();
-		setFilesToFilterOut();
+		setFilesToFilterOutWithDescription();
 	}
 
 
 	/**
-	 * Changes several components of file chooser so that it is Save dialog.
+	 * Changes several components of file chooser so that it is Save As dialog.
 	 */
 	private void changeToSaveAsDialog(){
 		setUSSRicon(this);
@@ -56,15 +51,6 @@ public class FileChooserSaveAsFrame extends FileChooserFrame  {
 		});		
 	}	
 
-	private void setFilesToFilterOut(){
-		Iterator<String> keyIterator = fileDescriptionsAndExtensions.keySet().iterator();
-		Iterator<String> valueIterator = fileDescriptionsAndExtensions.values().iterator();
-		while(keyIterator.hasNext()){
-			jFileChooser.setFileFilter(new FileFilter (keyIterator.next(),valueIterator.next()));			
-		}
-	}
-
-
 	/**
 	 * Starts the window of file chooser in the form of Save As dialog.
 	 */
@@ -76,6 +62,6 @@ public class FileChooserSaveAsFrame extends FileChooserFrame  {
 			}
 		});    	
 	}
-	
-	
+
+
 }

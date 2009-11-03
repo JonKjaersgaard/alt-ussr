@@ -19,7 +19,7 @@ import javax.swing.border.TitledBorder;
 
 import ussr.aGui.FramesInter;
 import ussr.aGui.GuiFrames;
-import ussr.aGui.MainFrameInter;
+import ussr.aGui.MainFramesInter;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
@@ -329,7 +329,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 
 		jButtonReadLabels.setToolTipText("Read Labels");		
 		jButtonReadLabels.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + READ_LABELS));
-		jButtonReadLabels.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));
+		jButtonReadLabels.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
 		jButtonReadLabels.setFocusable(false); 
 		jButtonReadLabels.setEnabled(false);	
 		jButtonReadLabels.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
@@ -343,7 +343,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 
 		jButtonAssignLabels.setToolTipText("Assign Labels");		
 		jButtonAssignLabels.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + ASSIGN_LABELS));
-		jButtonAssignLabels.setDisabledIcon(new javax.swing.ImageIcon(MainFrameInter.DIRECTORY_ICONS + MainFrameInter.NO_ENTRANCE));
+		jButtonAssignLabels.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
 		jButtonAssignLabels.setFocusable(false); 
 		jButtonAssignLabels.setEnabled(false);	
 		jButtonAssignLabels.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	

@@ -30,8 +30,8 @@ public class FileChooserXMLController extends FileChooserController {
 	 * Here also manages calls for XML processing.
 	 * @param jmeSimulation, the physical simulation.
 	 */
-	public FileChooserXMLController(JMESimulation jmeSimulation){
-		this.jmeSimulation = jmeSimulation;
+	public FileChooserXMLController(/*JMESimulation jmeSimulation*/){
+	/*	this.jmeSimulation = jmeSimulation;*/
 	}	
 	
 	@Override
