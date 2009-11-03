@@ -18,7 +18,7 @@ import java.util.Set;
 import ussr.aGui.FramesInter;
 import ussr.aGui.MainFrame;
 import ussr.aGui.MainFrameInter;
-import ussr.aGui.MainFrameSeparate;
+import ussr.aGui.MainFrameSeparateInSim;
 import ussr.aGui.tabs.YourNewTab;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.view.visualizer.ModuleCommunicationVisualizer;
@@ -347,7 +347,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
 		
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_main_frame", false)) {			 
-			if (MainFrameSeparate.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
+			if (MainFrameSeparateInSim.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
 			}else{
 				JMESimulation simulation = (JMESimulation)this;
 				simulation.setPause(true); // pause simulation.
@@ -373,7 +373,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 				/*YOUR NEW TAB*/ 
 				tabs.add(yourNewtab);				
 
-				FramesInter mainFrame = new MainFrameSeparate(this,tabs);				                
+				FramesInter mainFrame = new MainFrameSeparateInSim(this,tabs);				                
 				mainFrame.activate();   
 				Hashtable<String,String> table = new Hashtable<String,String>();
 				
