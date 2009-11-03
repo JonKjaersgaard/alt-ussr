@@ -7,6 +7,8 @@
 package ussr.samples.atron;
 
 
+import java.util.Random;
+
 import ussr.comm.Packet;
 import ussr.comm.PacketReceivedObserver;
 import ussr.comm.RadioReceiver;
@@ -35,12 +37,26 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	private boolean blocking;
 	private boolean globalTime;
 	private int leds=0;
+	private boolean simulateCommFailure = false;
+	private float[] commFailureRisk = new float[8];
+	private Random commFailureRandomizer = new Random(); 
+	
 	/**
 	 * Instantiate ATRON controller
 	 */
     public ATRONController() {
         setBlocking(false);
         setHasGlobalTime(true);
+    }
+    
+    public void setCommFailureRisk(float generalRiskMin, float generalRiskMax, float totalFailureRisk) {
+        simulateCommFailure = true;
+        Random r = commFailureRandomizer;
+        float scale = generalRiskMax-generalRiskMin;
+        for(int c=0; c<8; c++) {
+            if(r.nextFloat()<totalFailureRisk) commFailureRisk[c] = 1.0f;
+            else commFailureRisk[c] = generalRiskMin+r.nextFloat()*scale;
+        }
     }
     
     /**
@@ -425,6 +441,10 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     		if(module.getReceivers().get(i).equals(device)) {
     			final byte[] data = device.getData().getData();
     			final int index = i;
+    			if(this.simulateCommFailure&&this.commFailureRisk[i]>this.commFailureRandomizer.nextFloat()) { 
+    			    System.err.println("Simulation packet lost");
+    			    return;
+    			}
     			if(PhysicsParameters.get().useModuleEventQueue())
     			    module.getModuleEventsQueue().addEvent(new Event(0) {
                         @Override public void trigger() { handleMessage(data,data.length,index); }

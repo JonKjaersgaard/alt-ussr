@@ -1,6 +1,9 @@
 package ussr.remote;
 
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 import java.rmi.AccessException;
 import java.rmi.Naming;
@@ -19,6 +22,7 @@ import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsFactory.Options;
+import ussr.remote.facade.ParameterHolder;
 import ussr.remote.facade.RemoteActiveSimulation;
 import ussr.remote.facade.RemotePhysicsSimulation;
 import ussr.remote.facade.RemotePhysicsSimulationImpl;
@@ -35,6 +39,7 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
     private PhysicsSimulation simulation;
     private RemotePhysicsSimulation simulationWrapper;
     private SimulationServer server;
+    private static ReturnValueHandler returnHandler;
 
     public SimulationClient(int portNumber, int idNumber) throws RemoteException {
         connectToServer(portNumber,idNumber);
@@ -80,6 +85,36 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
         simulation.start(true);
     }
 
+    public void start(Class<?> mainClass) throws RemoteException {
+        this.start(mainClass,null,null);
+    }
+
+    public void start(Class<?> mainClass, ParameterHolder parameter, ReturnValueHandler handler) throws RemoteException {
+        ParameterHolder.set(parameter);
+        returnHandler = handler;
+        Method[] allMethods = mainClass.getMethods();
+        for(int i=0; i<allMethods.length; i++) {
+            Method main = allMethods[i]; 
+            if(main.getName().equals("main") && Modifier.isStatic(main.getModifiers())) {
+                try {
+                    main.invoke(null, new Object[] { new String[0] });
+                } catch (IllegalArgumentException e) {
+                    throw new Error("Illegal main method declaration: incorrect parameter(s)");
+                } catch (IllegalAccessException e) {
+                    throw new Error("Cannot access main method");
+                } catch (InvocationTargetException e) {
+                    throw new Error("Cannot invoke main method");
+                }
+                return;
+            }
+        }
+        throw new Error("No main method found in class");
+    }
+
+    public static ReturnValueHandler getReturnHandler() {
+        return returnHandler;
+    }
+    
     public static void main(String argv[]) throws RemoteException {
     	System.out.println("Starting simulator");
         if(argv.length!=1) throw new Error("Incorrect invocation");
@@ -90,5 +125,5 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
         int idNumber = Integer.parseInt(parts[1]);
         new SimulationClient(portNumber,idNumber);
     }
-    
+
 }

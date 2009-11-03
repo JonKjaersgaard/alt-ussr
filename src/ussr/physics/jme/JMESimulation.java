@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CyclicBarrier;
@@ -42,6 +43,7 @@ import ussr.physics.PhysicsObserver;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.PhysicsSimulationHelper;
+import ussr.physics.TimedPhysicsObserver;
 import ussr.physics.jme.connectors.JMEBasicConnector;
 import ussr.physics.jme.connectors.JMEConnector;
 import ussr.physics.jme.pickers.PhysicsPicker;
@@ -307,8 +309,12 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 
             if (!finished) {
             	System.out.println("Available Display Modes: ");
-            	org.lwjgl.opengl.DisplayMode[] modes = Display.getAvailableDisplayModes();
-            	for(int i=0;i<modes.length;i++) System.out.println(" Mode "+i+" = "+modes[i]);
+            	try {
+            	    org.lwjgl.opengl.DisplayMode[] modes = Display.getAvailableDisplayModes();
+                    for(int i=0;i<modes.length;i++) System.out.println(" Mode "+i+" = "+modes[i]);
+            	} catch(UnsatisfiedLinkError err) {
+            	    throw new Error("Unable to initialize LWJGL, cannot load native library; path = "+System.getProperty("java.library.path"));
+            	}
             	
                 initSystem();
                 assertDisplayCreated();
@@ -543,6 +549,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     }
     HashSet<Module> waitingModules = new HashSet<Module>();
     HashSet<Module> startedModules = new HashSet<Module>();
+    private PriorityQueue<TimedPhysicsObserver> oneShotObserverQueue = new PriorityQueue<TimedPhysicsObserver>();
+    
     public synchronized void waitForPhysicsStep(Module module) {
     	waitingModules.add(module);
     	waitForPhysicsStep(false);
@@ -597,6 +605,14 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         // Now iterate through the list
         for(PhysicsObserver observer: observers)
             observer.physicsTimeStepHook(this);
+        // Any timed events?
+        if(this.oneShotObserverQueue.size()>0) {
+            synchronized(this.oneShotObserverQueue) {
+                float currentTime = this.getTime();
+                while(this.oneShotObserverQueue.peek().getTime()<currentTime)
+                    this.oneShotObserverQueue.remove().physicsTimeStepHook(this);
+            }
+        }
     }
 
     public DisplaySystem getDisplay() {
@@ -643,6 +659,12 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 		setting.setFrequency(50);
 		return setting;
 	}
+
+    public void waitForPhysicsTimestep(TimedPhysicsObserver observer) {
+        synchronized(oneShotObserverQueue) {
+            oneShotObserverQueue.add(observer);
+        }
+    }
 
 }
 

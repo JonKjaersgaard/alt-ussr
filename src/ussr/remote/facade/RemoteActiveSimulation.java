@@ -8,6 +8,7 @@ import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
+import ussr.remote.ReturnValueHandler;
 
 /**
  * Remote interface used internally for RMI operations.  See ActiveSimulation for a complete interface.
@@ -41,4 +42,16 @@ public interface RemoteActiveSimulation extends Remote {
      * @throws RemoteException
      */
     public void start(String simulationXML, Set<Class<? extends Controller>> controllers) throws RemoteException;
+    /**
+     * Start a remote simulation by starting the corresponding main class
+     * @throws RemoteException
+     */
+    public void start(Class<?> mainClass) throws RemoteException;
+    /**
+     * Start a remote simulation by starting the corresponding main class, providing parameter and return value passing
+     * @param mainClass the main class to start as a simulation (will call main static method without passing any arguments)
+     * @param parameter optional instance of ParameterHolder, passed to simulation ParameterHolder singleton as a convenience
+     * @throws RemoteException
+     */
+    public void start(Class<?> mainClass, ParameterHolder parameter, ReturnValueHandler handler) throws RemoteException;
 }

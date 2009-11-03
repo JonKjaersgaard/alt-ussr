@@ -14,6 +14,7 @@ import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.remote.facade.ActiveSimulation;
+import ussr.remote.facade.ParameterHolder;
 import ussr.remote.facade.RemoteActiveSimulation;
 import ussr.remote.facade.RemotePhysicsSimulation;
 
@@ -40,6 +41,11 @@ public class RMIProcessActiveSimulation implements ActiveSimulation {
      * The remote RMI object corresponding to the simulation process
      */
     private RemoteActiveSimulation remoteSimulation;
+    
+    /**
+     * Copy of parameters from subprocess, if any
+     */
+    private ParameterHolder parameters;
     
     public RMIProcessActiveSimulation(int id, Process process) {
         this.id = id; this.process = process;
@@ -88,6 +94,16 @@ public class RMIProcessActiveSimulation implements ActiveSimulation {
         remoteSimulation.start(simulationXML, controllers);
     }
 
+    public void start(Class<?> mainClass, ParameterHolder parameter, ReturnValueHandler handler) throws RemoteException {
+        verifyRemote();
+        remoteSimulation.start(mainClass, parameter, new ReturnValueHandlerWrapper(handler));
+    }
+
+    public void start(Class<?> mainClass) throws RemoteException {
+        verifyRemote();
+        remoteSimulation.start(mainClass);
+    }
+
     public boolean isReady() {
         return remoteSimulation!=null;
     }
@@ -124,6 +140,14 @@ public class RMIProcessActiveSimulation implements ActiveSimulation {
                     }
                 }
         }.start();
+    }
+
+    public void setParameters(ParameterHolder parameters) {
+        this.parameters = parameters;
+    }
+    
+    public ParameterHolder getParameters() {
+        return parameters;
     }
 
 }

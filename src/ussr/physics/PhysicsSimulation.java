@@ -150,4 +150,6 @@ public interface PhysicsSimulation {
      * Get the positions of all obstacles
      */
     public List<VectorDescription> getObstaclePositions();
+
+    public void waitForPhysicsTimestep(TimedPhysicsObserver observer);
 }

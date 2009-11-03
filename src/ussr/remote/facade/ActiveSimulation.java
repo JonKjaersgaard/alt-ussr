@@ -57,4 +57,9 @@ public interface ActiveSimulation extends RemoteActiveSimulation {
      * Discard the output generated to standard err (avoid buffers running full)
      */
     public void discardStandardErr();
+    /**
+     * Obtain the latest version of the parameters object (if passed from subprocess)
+     * @return parameters object
+     */
+    public ParameterHolder getParameters();
 }

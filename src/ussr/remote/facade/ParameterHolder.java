@@ -1,4 +1,4 @@
-package ussr.remote;
+package ussr.remote.facade;
 
 import java.io.Serializable;
 
