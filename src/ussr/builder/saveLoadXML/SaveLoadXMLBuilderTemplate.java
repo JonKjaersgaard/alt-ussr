@@ -15,8 +15,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import com.jme.math.Quaternion;
 
-import ussr.aGui.MainFrame;
-import ussr.aGui.MainFrameSeparateInSim;
+import ussr.aGui.MainFrames;
+import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.BuilderMultiRobotPreSimulation;
 import ussr.builder.SupportedModularRobots;
@@ -314,7 +314,8 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 				createNewModule(moduleName,moduleType,new VectorDescription(extractFromPosition(modulePosition, "X"),extractFromPosition(modulePosition, "Y"),extractFromPosition(modulePosition, "Z")),rotationDescription ,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
 			
-				if (MainFrameSeparateInSim.isInstanceFlag()){// check if MainFrame is instantiated.
+				/*PROBABLY NOT NEEDED*/
+				/*if (MainFrameSeparate.isInstanceFlag()){// check if MainFrame is instantiated.
 				if (moduleType.contains("ATRON")){
 					ConstructRobotTabController.adjustTabToSelectedModule(SupportedModularRobots.ATRON);
 				}else if (moduleType.contains("MTRAN")){
@@ -324,7 +325,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 				}else if (moduleType.contains("CKBotStandard")){
 					ConstructRobotTabController.adjustTabToSelectedModule(SupportedModularRobots.CKBOTSTANDARD);
 				}else throw new Error ("Module type "+ moduleType+ " not supported yet");
-				}
+				}*/
 				
 				
 //FIXME IN CASE THERE IS A NEED TO EXTRACT THE STATE OF CONNECTORS
