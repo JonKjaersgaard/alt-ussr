@@ -1,6 +1,8 @@
 package ussr.aGui.fileChooser.views;
 
 import java.util.ArrayList;
+import java.util.Map;
+
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 
 /**
@@ -23,10 +25,10 @@ public class FileChooserSaveFrame extends FileChooserFrame  {
 	 * @param fileExtensions,extensions of the files, which will be available to filter out by the file chooser.
 	 * @param fileChooserController, the controller for file extension.
 	 */
-	public FileChooserSaveFrame(ArrayList<String> fileExtensions,FileChooserControllerInter fileChooserController) {
-		super(fileExtensions,fileChooserController);			
+	public FileChooserSaveFrame(Map<String, String> fileDescriptionsAndExtensions,FileChooserControllerInter fileChooserController) {
+		super(fileDescriptionsAndExtensions,fileChooserController);			
 		changeToSaveDialog();
-		setFilesToFilter(fileExtensions);
+		setFilesToFilterOutWithDescription();
 	}
 
 
@@ -54,7 +56,7 @@ public class FileChooserSaveFrame extends FileChooserFrame  {
 	public void activate(){
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() { 
-				fcSaveFrame = new FileChooserSaveFrame(fileExtensions,fileChooserController);
+				fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,fileChooserController);
 				fcSaveFrame.setVisible(true);
 			}
 		});    	

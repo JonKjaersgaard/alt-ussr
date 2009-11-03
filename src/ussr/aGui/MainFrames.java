@@ -3,14 +3,11 @@ package ussr.aGui;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
-import javax.swing.JCheckBoxMenuItem;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
-import ussr.aGui.fileChooser.views.FileChooserSaveAsFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 import ussr.aGui.tabs.TabsInter;
 
@@ -44,9 +41,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	protected JMESimulation jmeSimulation;	
 		
 	/**
-	 * File choosers in the form of Open,Save and Save as dialogs respectively.
+	 * File choosers in the form of Open and Save  dialogs respectively.
 	 */
-	protected static FileChooserFrameInter fcOpenFrame,fcSaveFrame,fcSaveAsFrame;
+	protected static FileChooserFrameInter fcOpenFrame,fcSaveFrame;
 
 	/**
 	 * Container for keeping main GUI window components, the height of which determine the height of the window.  
@@ -95,8 +92,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		fileDescriptionsAndExtensions.put("Simulation", ".xml");
 		fileDescriptionsAndExtensions.put("Robot", ".xml");
 		
-		ArrayList <String> fileExtensions = new ArrayList<String>();
-		fileExtensions.add(".xml");//TODO MOVE TO fc INTERFACE
 
 		FileChooserControllerInter fcXMLController = new FileChooserXMLController();
 	
@@ -105,11 +100,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,fcXMLController);	
 		fcOpenFrame.setDefaultDirectory(defaultDirectory);
 		
-		fcSaveFrame = new FileChooserSaveFrame(fileExtensions,fcXMLController);
+		fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,fcXMLController);
 		fcSaveFrame.setDefaultDirectory(defaultDirectory);
 	
-		fcSaveAsFrame = new FileChooserSaveAsFrame(fileDescriptionsAndExtensions,fcXMLController);
-		fcSaveAsFrame.setDefaultDirectory(defaultDirectory);
 	}
 	
 
@@ -184,16 +177,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		jMenuFile.add(jMenuItemSave);
 
-		jMenuItemSaveAs.setText("Save As...");
-		//jMenuItemSaveAs.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+SAVE_SMALL));
-		//jMenuItemSave.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OFF_LINE_SMALL));		
-		jMenuItemSaveAs.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.saveActionPerformed(fcSaveAsFrame);
-			}
-		});
-		
-		jMenuFile.add(jMenuItemSaveAs);
 		jMenuFile.add(jSeparator1);
 
 		jMenuItemExit.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+EXIT));

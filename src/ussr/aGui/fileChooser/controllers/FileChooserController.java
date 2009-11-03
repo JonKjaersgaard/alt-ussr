@@ -1,21 +1,27 @@
 package ussr.aGui.fileChooser.controllers;
 
-import java.awt.event.ActionEvent;
 
-import javax.swing.JFileChooser;
 
-import ussr.aGui.fileChooser.views.FileChooserSaveAsFrame;
+import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 import ussr.physics.jme.JMESimulation;
 
 public abstract class FileChooserController implements FileChooserControllerInter  {
 
 	protected JMESimulation jmeSimulation;
 	
+	protected UssrXmlFileTypes ussXmlFileType;
+	
     public abstract void controlSaveDialog(java.awt.event.ActionEvent evt, javax.swing.JFileChooser fileChooser,javax.swing.JFrame fileChooserFrame);
 	
 	public abstract  void controlOpenDialog(java.awt.event.ActionEvent evt,javax.swing.JFileChooser fileChooser,javax.swing.JFrame fileChooserFrame);
 	
 	
-	public abstract void controlSaveAsDialog(ActionEvent evt, JFileChooser fileChooser,
-			FileChooserSaveAsFrame fcSaveAsFrame);
+	public void checkFileDescription(String fileDescription){
+		if(fileDescription.contains(UssrXmlFileTypes.ROBOT.toString().toLowerCase().replaceFirst("r", "R"))){
+			ussXmlFileType =UssrXmlFileTypes.ROBOT;
+		}else if (fileDescription.contains(UssrXmlFileTypes.SIMULATION.toString().toLowerCase().replaceFirst("s", "S"))){
+			ussXmlFileType = UssrXmlFileTypes.SIMULATION;
+		}
+	}
+	
 }

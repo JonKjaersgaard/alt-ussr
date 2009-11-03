@@ -40,18 +40,7 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 	
 	protected Map<String, String> fileDescriptionsAndExtensions;
 	
-	/**
-	 * @param fileExtensions
-	 * @param fileChooserController
-	 * @param defaultDirectory, default directory for file chooser to open.
-	 */
-	public FileChooserFrame(ArrayList<String> fileExtensions, FileChooserControllerInter fileChooserController){
-		this.fileExtensions= fileExtensions;
-		this.fileChooserController= fileChooserController;
-		initComponents();
-	}
-	
-	
+
 	public FileChooserFrame(Map<String, String> fileDescriptionsAndExtensions, FileChooserControllerInter fileChooserController){
 		this.fileDescriptionsAndExtensions= fileDescriptionsAndExtensions;
 		this.fileChooserController= fileChooserController;
@@ -76,19 +65,7 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 		setSize(580,450);//THINK MORE HERE
 	}	
 
-	/**
-	 * Sets the file extensions for file chooser to filter out (file filters).
-	 * @param fileExtensions, the ArrayList containing the file extensions in the format (for instance: ".xml").
-	 */
-	public void setFilesToFilter(ArrayList<String> fileExtensions){		
-		for (int index=0; index<fileExtensions.size(); index++){
-			if (fileExtensions.get(index).indexOf(".")==0){// if format has "." in the beginning. For example ".xml"
-				jFileChooser.setFileFilter(new FileFilter (fileExtensions.get(index)));			
-			}else{
-				throw new Error("Wrong format of file extension. Point is missing in the beginning. It should be for instance: .xml");
-			}
-		}
-	}
+
 	
 	public void setFilesToFilterOutWithDescription(){
 		Iterator<String> keyIterator = fileDescriptionsAndExtensions.keySet().iterator();
