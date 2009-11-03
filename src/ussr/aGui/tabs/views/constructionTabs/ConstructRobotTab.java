@@ -20,6 +20,7 @@ import ussr.aGui.MainFrameInter;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
+import ussr.aGui.tabs.additionalResources.HintPanelTypes;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.views.constructionTabs.ConstructionTabsInter.ModularRobotsNames;
 import ussr.physics.jme.JMESimulation;
@@ -648,7 +649,11 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		for (int button=0; button<getJToolBarSaveLoad().getComponentCount();button++ ){
 			getJToolBarSaveLoad().getComponent(button).setEnabled(enabled);
 		}
-	}	
+		getHintPanel().setType(HintPanelTypes.ATTENTION);
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[12]);
+	}
+	
+	
 
 	/**
 	 * @return jToolBarSaveLoad, the toolbar containing buttons for saving and loading XML.

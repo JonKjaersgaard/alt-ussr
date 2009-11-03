@@ -10,17 +10,21 @@ import ussr.aGui.tabs.TabsInter;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
 
+/**
+ * @author Konstantinas
+ *
+ */
 @SuppressWarnings("serial")
-public class MainFrameSeparate extends MainFrame {
+public class MainFrameSeparateInSim extends MainFrame {
 
 
 	/**
-	 * Starts the main GUI window (frame) during simulation. Simulation starts first and after that main GUI window is started.
+	 * Starts the main GUI window (frame) during simulation (in simulation). Simulation starts first and after that main GUI window is started.
 	 * This can be achieved by pressing "O" on keyboard after starting the simulation. 
 	 * @param jmeSimulation, the physical simulation.
 	 * @param tabs, the tabs to plug in into main window's tabbed panes.
 	 */
-	public MainFrameSeparate(JMEBasicGraphicalSimulation jmeSimulation, ArrayList<TabsInter> tabs){
+	public MainFrameSeparateInSim(JMEBasicGraphicalSimulation jmeSimulation, ArrayList<TabsInter> tabs){
 		super.jmeSimulation = (JMESimulation) jmeSimulation;	
 		super.tabs = tabs;
 		
@@ -129,7 +133,7 @@ public class MainFrameSeparate extends MainFrame {
 	public void activate() {
 			java.awt.EventQueue.invokeLater(new Runnable() {
 		public void run() {            	
-			mainFrame = new MainFrameSeparate(jmeSimulation,tabs);			
+			mainFrame = new MainFrameSeparateInSim(jmeSimulation,tabs);			
 			mainFrame.setVisible(true);
 
 		}

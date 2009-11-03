@@ -56,8 +56,6 @@ public class MainFrameController {
 	 */
 	public static void jButtonRunRealTimeActionPerformed(JMESimulation jmeSimulation) {
 		ConstructRobotTab.setTabEnabled(false);
-		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ATTENTION);
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[12]);
 
 		timesSelected++;
 		if (jmeSimulation.isPaused()){// Start simulation in real time, if simulation is in paused state
@@ -71,16 +69,13 @@ public class MainFrameController {
 	}
 
 
-
 	/**
 	 * Controls running simulation in fast time.
 	 * @param jmeSimulation
 	 */
 	public static void jButtonRunFastActionPerformed(JMESimulation jmeSimulation) {
 		ConstructRobotTab.setTabEnabled(false);		
-		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ATTENTION);
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[12]);
-
+	
 		if (jmeSimulation.isPaused()){// Start simulation  fast, if simulation is in paused state
 			jmeSimulation.setRealtime(false);
 			jmeSimulation.setPause(false);				
@@ -101,13 +96,6 @@ public class MainFrameController {
 			MainFrame.setSaveOpenEnabled(false);
 		}		
 	}
-
-
-	public static void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {
-		//BuilderMultiRobotSimulation.main(null);
-		ATRONSnakeSimulation.main(null);
-
-	}   
 
 	/**
 	 * Renders or stops rendering the physics during simulation.
@@ -219,14 +207,11 @@ public class MainFrameController {
 	 */
 	public static void jButtonRunStepByStepActionPerformed(JMESimulation jmeSimulation) {       	
 		ConstructRobotTab.setTabEnabled(false);		
-		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ATTENTION);
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[12]);
 		timesSelected++;
 		connectModules(jmeSimulation);
 
 		jmeSimulation.setPause(true);
 		jmeSimulation.setSingleStep(true);
-
 	}
 
 	/**
@@ -239,6 +224,11 @@ public class MainFrameController {
 	}
 
 
+	/**
+	 * @param jToggleButtonConstructRobot
+	 * @param jTabbedPaneFirst
+	 * @param tabs
+	 */
 	public static void jButtonConstructRobotActionPerformed(JToggleButton jToggleButtonConstructRobot, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs ) {
 		
 		if (jToggleButtonConstructRobot.isSelected()){
@@ -259,30 +249,6 @@ public class MainFrameController {
 		MainFrame.changeToLookAndFeel(jTabbedPaneFirst);
 	}
 
-
-
-
-
-	public static void jCheckBoxMenuItemWasDeSelected(javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem,javax.swing.JTabbedPane jTabbedPane ) {
-		//for (int in=0; in < checkBoxMenuItems.size(); in++){
-		//System.out.println("SizeCheck: "+checkBoxMenuItems.size());
-		//if (checkBoxMenuItems.get(in).isSelected()==false){
-		for (int index=0; index < jTabbedPane.getTabCount(); index++){
-			if (jCheckBoxMenuItem.getText().equalsIgnoreCase(jTabbedPane.getTitleAt(index))){
-				jTabbedPane.removeTabAt(index);
-				//MainFrame.getCheckBoxMenuItems().get(in).setSelected(false);
-			};
-			//}
-
-			//}
-
-		}
-		System.out.println("Deselected");
-
-	}
-
-
-
 	public static void jButtonVisualizerActionPerformed(JToggleButton toggleButtonVisualizer, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs) {
 		if (toggleButtonVisualizer.isSelected()){
 			jTabbedPaneFirst.addTab(tabs.get(2).getTabTitle(),new javax.swing.ImageIcon(tabs.get(2).getImageIconDirectory()),tabs.get(2).getJComponent());
@@ -299,16 +265,6 @@ public class MainFrameController {
 		MainFrame.changeToLookAndFeel(jTabbedPaneFirst);
 		
 	}
-
-
-
-
-
-
-
-
-
-
 
 
 }
