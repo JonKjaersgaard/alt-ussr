@@ -16,7 +16,7 @@ import org.xml.sax.SAXException;
 import com.jme.math.Quaternion;
 
 import ussr.aGui.MainFrame;
-import ussr.aGui.MainFrameSeparate;
+import ussr.aGui.MainFrameSeparateInSim;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.BuilderMultiRobotPreSimulation;
 import ussr.builder.SupportedModularRobots;
@@ -314,7 +314,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 				createNewModule(moduleName,moduleType,new VectorDescription(extractFromPosition(modulePosition, "X"),extractFromPosition(modulePosition, "Y"),extractFromPosition(modulePosition, "Z")),rotationDescription ,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
 			
-				if (MainFrameSeparate.isInstanceFlag()){// check if MainFrame is instantiated.
+				if (MainFrameSeparateInSim.isInstanceFlag()){// check if MainFrame is instantiated.
 				if (moduleType.contains("ATRON")){
 					ConstructRobotTabController.adjustTabToSelectedModule(SupportedModularRobots.ATRON);
 				}else if (moduleType.contains("MTRAN")){
