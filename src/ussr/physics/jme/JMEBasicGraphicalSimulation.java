@@ -23,7 +23,7 @@ import ussr.aGui.tabs.YourNewTab;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.view.visualizer.ModuleCommunicationVisualizer;
 import ussr.aGui.tabs.views.ConsoleTab;
-import ussr.aGui.tabs.views.SimulationConfigurationTab;
+import ussr.aGui.tabs.views.SimulationTab;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.builder.QuickPrototyping;
