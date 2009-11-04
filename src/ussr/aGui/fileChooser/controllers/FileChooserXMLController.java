@@ -4,8 +4,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
+import ussr.builder.BuilderMultiRobotPreSimulation;
 import ussr.builder.saveLoadXML.InSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
+import ussr.remote.ConsoleSimulationExample;
 
 
 /**
@@ -35,19 +37,22 @@ public class FileChooserXMLController extends FileChooserController {
 	public void controlOpenDialog(ActionEvent evt, JFileChooser fileChooser,
 			JFrame fileChooserFrame) {
 		String fileDescription = fileChooser.getFileFilter().getDescription();
-		checkFileDescription( fileDescription);
-		
-		
+		checkFileDescription( fileDescription);		
 		
 		String command = evt.getActionCommand();//Selected button command				
 	  	  if(command.equalsIgnoreCase(ActionCommands.APPROVESELECTION.toString()) ){ 		
 	  			String fileDirectoryName = fileChooser.getSelectedFile().toString();// get the directory of selected file	  			
-	  			saveLoadXML = new InSimulationXMLSerializer(this.jmeSimulation);
-	  			saveLoadXML.loadXMLfile(ussXmlFileType, fileDirectoryName);
+	  			//saveLoadXML = new InSimulationXMLSerializer(this.jmeSimulation);
+	  			//saveLoadXML.loadXMLfile(ussXmlFileType, fileDirectoryName);
 	  			
 	  			fileChooserFrame.dispose(); //close the frame(window)
 	  			
-	  			ConstructRobotTabController.adaptTabToModuleInSimulation(this.jmeSimulation);
+	  			//ConstructRobotTabController.adaptTabToModuleInSimulation(this.jmeSimulation);
+	  			
+	  			//BuilderMultiRobotPreSimulation.setXmlSimulationFile(fileDirectoryName);
+	  			//BuilderMultiRobotPreSimulation.main(null);
+	  			//ConsoleSimulationExample.main(null);
+	  			
 	  		}else if (command.equalsIgnoreCase(ActionCommands.CANCELSELECTION.toString())){//Cancel pressed			
 	  			fileChooserFrame.dispose();//close the frame(window) 	  			
 	  		}	

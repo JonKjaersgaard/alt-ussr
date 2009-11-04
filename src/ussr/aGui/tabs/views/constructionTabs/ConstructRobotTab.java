@@ -130,7 +130,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.gridy = 0;
 		gridBagConstraints.insets = new Insets(0,0,15,-25);  
 			
-		super.jComponent.add(initSaveLoadJToolbar(),gridBagConstraints);				
+		super.jComponent.add(jToolBarSaveLoad,gridBagConstraints);				
 		
 		radionButtonATRON.setFocusable(false);
 		radionButtonATRON.setText(ModularRobotsNames.ATRON.toString());

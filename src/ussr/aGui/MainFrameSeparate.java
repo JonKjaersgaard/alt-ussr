@@ -3,6 +3,9 @@ package ussr.aGui;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import ussr.builder.BuilderMultiRobotPreSimulation;
+import ussr.remote.ConsoleSimulationExample;
 /**
  * Defines visual appearance of the main GUI frame (window), separate from simulation environment.
  * @author Konstantinas
@@ -67,12 +70,19 @@ public class MainFrameSeparate extends MainFrames {
 	 * @param args, passed arguments.
 	 */
 	public static void main( String[] args ) {
+		
+		//ConsoleSimulationExample.main(null);//GUI FREEZES
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() { 
+				//ConsoleSimulationExample.main(null);//GUI FREEZES
 				mainFrame = new MainFrameSeparate();
-				mainFrame.setVisible(true);				
+				mainFrame.setVisible(true);	
+				//ConsoleSimulationExample.main(null);//GUI FREEZES
 			}
-		});    	
+		});
+		//ConsoleSimulationExample.main(null);//WORKS
+		BuilderMultiRobotPreSimulation.setXmlSimulationFile("samples/simulations/atron/snakeSimulation.xml");
+		BuilderMultiRobotPreSimulation.main(null);
 	}
 
 

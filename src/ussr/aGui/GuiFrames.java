@@ -14,12 +14,8 @@ import javax.swing.UnsupportedLookAndFeelException;
  * common methods.
  * @author Konstantinas
  */
+@SuppressWarnings("serial")
 public abstract class GuiFrames extends javax.swing.JFrame implements FramesInter {
-
-	/**
-	 * WHAT IS THAT?
-	 */
-	private static final long serialVersionUID = 1L;	
 	
 	/**
 	 *  Initial height of the frame. 

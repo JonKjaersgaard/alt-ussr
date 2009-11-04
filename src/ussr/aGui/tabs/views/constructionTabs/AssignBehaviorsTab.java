@@ -107,7 +107,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		gridBagConstraints.fill = GridBagConstraints.FIRST_LINE_END;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
-		super.jComponent.add(initSaveLoadJToolbar(),gridBagConstraints);	
+		super.jComponent.add(jToolBarSaveLoad,gridBagConstraints);	
 		
 		jToolBarFilterForModularRobot.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Filter out for:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));		
 		jToolBarFilterForModularRobot.setFloatable(false);//user can not make the tool bar to float

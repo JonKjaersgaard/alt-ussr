@@ -28,6 +28,7 @@ public abstract class ConstructionTabs extends Tabs implements ConstructionTabsI
 	protected ConstructionTabs(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,
 			JMESimulation jmeSimulation, String imageIconDirectory) {
 		super(initiallyVisible,firstTabbedPane, tabTitle, jmeSimulation, imageIconDirectory);
+		jToolBarSaveLoad = initSaveLoadJToolbar();
 	}
 	
 	

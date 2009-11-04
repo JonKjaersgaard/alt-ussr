@@ -139,10 +139,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		gridBagConstraints.ipadx = 550;//600;//make it wide
 
 		jTableModules.setModel(new javax.swing.table.DefaultTableModel(
-				new Object [][] {
-						//Initially empty rows
-						/*{null, null},{null, null},{null, null},{null, null},{null, null},{null, null},{null, null},	{null, null},
-						{null, null},{null, null},{null, null},{null, null}*/
+				new Object [][] {//none rows
 
 				},
 				new String [] {

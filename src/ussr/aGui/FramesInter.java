@@ -1,9 +1,8 @@
 package ussr.aGui;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.util.ArrayList;
+
 
 /**
  * Supports any GUI frame implemented for USSR with common resources and operations.
