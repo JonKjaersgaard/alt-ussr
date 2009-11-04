@@ -52,6 +52,15 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 	protected Robot getRobot() {		
 		return null;
 	}
+	
+	private static String xmlSimulationFile;
+	
+
+	
+
+	public static void setXmlSimulationFile(String xmlSimulationFile) {
+		BuilderMultiRobotPreSimulation.xmlSimulationFile = xmlSimulationFile;
+	}
 
 	/*For saving XML file*/ 
 	public static final  String robotMorphologyFile = "samples/simulations/atron/morphologies/simpleVehicleMorphology.xml";
@@ -94,38 +103,26 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		simulationWorldDescription = xmlLoaderSimulation.getSimulationDescriptionValues();
         simulationPhysicsParameters = xmlLoaderSimulation.getSimulationPhysicsValues();
 		
-        /*Get values*/
-        float worldDampingLinearVelocity = Float.parseFloat(simulationPhysicsParameters.get(TagsUsed.WORLD_DAMPING_LINEAR_VELOCITY)); 
-        float worldDampingAngularVelocity = Float.parseFloat(simulationPhysicsParameters.get(TagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY));
-        float physicsSimulationStepSize = Float.parseFloat(simulationPhysicsParameters.get(TagsUsed.PHYSICS_SIMULATION_STEP_SIZE));
-        boolean realisticCollision = Boolean.parseBoolean(simulationPhysicsParameters.get(TagsUsed.REALISTIC_COLLISION));
-        float gravity = Float.parseFloat(simulationPhysicsParameters.get(TagsUsed.GRAVITY));
-        String material = simulationPhysicsParameters.get(TagsUsed.PLANE_MATERIAL);
-        boolean maintainRotationalJointPositions = Boolean.parseBoolean(simulationPhysicsParameters.get(TagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS));
-        float constraintForceMix = Float.parseFloat(simulationPhysicsParameters.get(TagsUsed.CONSTRAINT_FORCE_MIX));
-        float errorReductionParameter = Float.parseFloat(simulationPhysicsParameters.get(TagsUsed.ERROR_REDUCTION_PARAMETER));	
-        int resolutionFactor = Integer.parseInt(simulationPhysicsParameters.get(TagsUsed.RESOLUTION_FACTOR));
-        boolean useModuleEventQueue = Boolean.parseBoolean(simulationPhysicsParameters.get(TagsUsed.USE_MOUSE_EVENT_QUEUE));
-        boolean sync = Boolean.parseBoolean(simulationPhysicsParameters.get(TagsUsed.SYNC_WITH_CONTROLLERS));
-        float physicsSimulationControllerStepFactor = Float.parseFloat(simulationPhysicsParameters.get(TagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR));
+        /*Converter for converting values from String into corresponding type used in USSR*/
+        SimulationDescriptionConverter descriptionConverter =  new SimulationDescriptionConverter(simulationWorldDescription,simulationPhysicsParameters); 
         
-        /*Set values*/
-        PhysicsParameters.get().setWorldDampingLinearVelocity(worldDampingLinearVelocity);
-        PhysicsParameters.get().setWorldDampingAngularVelocity(worldDampingAngularVelocity);
-        PhysicsParameters.get().setPhysicsSimulationStepSize(physicsSimulationStepSize);
-        PhysicsParameters.get().setRealisticCollision(realisticCollision);
-        PhysicsParameters.get().setGravity(gravity);
-        PhysicsParameters.get().setPlaneMaterial(Material.valueOf(material));
-        PhysicsParameters.get().setMaintainRotationalJointPositions(maintainRotationalJointPositions);
+        /*Get and set values*/
+        PhysicsParameters.get().setWorldDampingLinearVelocity(descriptionConverter.convertWorldDampingLinearVelocity());
+        PhysicsParameters.get().setWorldDampingAngularVelocity(descriptionConverter.convertWorldDampingAngularVelocity());
+        PhysicsParameters.get().setPhysicsSimulationStepSize(descriptionConverter.convertPhysicsSimulationStepSize());
+        PhysicsParameters.get().setRealisticCollision(descriptionConverter.covertRealisticCollision());
+        PhysicsParameters.get().setGravity(descriptionConverter.covertGravity());
+        PhysicsParameters.get().setPlaneMaterial(descriptionConverter.covertMaterial());
+        PhysicsParameters.get().setMaintainRotationalJointPositions(descriptionConverter.convertMaintainRotationalJointPositions());
 //       /*Not supported yet*/ HAS_MECHANICAL_CONNECTOR_SPRINGINESS,
 //       /*Not supported yet*/ MECHANICAL_CONNECTOR_CONSTANT,
 //       /*Not supported yet*/MECHANICAL_CONNECTOR_DAMPING,
-        PhysicsParameters.get().setConstraintForceMix(constraintForceMix);
-        PhysicsParameters.get().setErrorReductionParameter(errorReductionParameter);
-        PhysicsParameters.get().setResolutionFactor(resolutionFactor);
-        PhysicsParameters.get().setUseModuleEventQueue(useModuleEventQueue);
-        PhysicsParameters.get().setSyncWithControllers(sync);
-        PhysicsParameters.get().setPhysicsSimulationControllerStepFactor(physicsSimulationControllerStepFactor);
+        PhysicsParameters.get().setConstraintForceMix(descriptionConverter.convertConstraintForceMix());
+        PhysicsParameters.get().setErrorReductionParameter(descriptionConverter.convertErrorReductionParameter());
+        PhysicsParameters.get().setResolutionFactor(descriptionConverter.convertResolutionFactor());
+        PhysicsParameters.get().setUseModuleEventQueue(descriptionConverter.convertUseModuleEventQueue());
+        PhysicsParameters.get().setSyncWithControllers(descriptionConverter.convertSyncWithControllers());
+        PhysicsParameters.get().setPhysicsSimulationControllerStepFactor(descriptionConverter.convertPhysicsSimulationControllerStepFactor());
        	
 		simulation.runSimulation(null,true);
 	}
