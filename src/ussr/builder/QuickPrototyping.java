@@ -249,7 +249,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	/**
 	 * The name of the package where all the controllers are stored for interactive assignment
 	 */
-	private static final String packageName = "ussr.builder.controllerReassignmentTool";
+	private static final String packageName = "ussr.builder.controllerAdjustmentTool";
 
 	/**
 	 * The default controller name for interactive assignment 
