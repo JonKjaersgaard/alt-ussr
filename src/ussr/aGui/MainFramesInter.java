@@ -1,6 +1,5 @@
 package ussr.aGui;
 
-
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.YourNewTab;
 import ussr.aGui.tabs.view.visualizer.ModuleCommunicationVisualizer;

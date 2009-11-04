@@ -44,7 +44,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 	/**
 	 * The dimensions of the List component.
 	 */
-	private final int J_LIST_WIDTH = 150, J_LIST_HEIGHT = 195;
+	private final int J_LIST_WIDTH = 150, J_LIST_HEIGHT = 180;
 
 
 	private final int jToolBar1Width = 125;
@@ -91,6 +91,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jScrollPaneAvailableControllers = new javax.swing.JScrollPane();
 		jScrollPaneTableCurrentLabels = new javax.swing.JScrollPane();
 
+		jPanelAssignBehaviors = new javax.swing.JPanel();
 		jPanelLabeling = new javax.swing.JPanel();
 		jPanelEntitiesToLabel =  new javax.swing.JPanel(new GridBagLayout());		
 
@@ -102,10 +103,8 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 
 		jComboBox1 = new JComboBox();
 
-		/*Description of components*/
-		
-		
-		gridBagConstraints.fill = GridBagConstraints.PAGE_START;
+		/*Description of components*/		
+		gridBagConstraints.fill = GridBagConstraints.FIRST_LINE_END;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
 		super.jComponent.add(initSaveLoadJToolbar(),gridBagConstraints);	
@@ -114,12 +113,8 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jToolBarFilterForModularRobot.setFloatable(false);//user can not make the tool bar to float
 		jToolBarFilterForModularRobot.setRollover(true);// the buttons inside are roll over
 		jToolBarFilterForModularRobot.setToolTipText("Filter out for");
-		jToolBarFilterForModularRobot.setPreferredSize(new Dimension(jToolBar1Width,J_LIST_HEIGHT-70));
+		jToolBarFilterForModularRobot.setPreferredSize(new Dimension(jToolBar1Width,J_LIST_HEIGHT-50));
 		jToolBarFilterForModularRobot.setOrientation(JToolBar.VERTICAL);		
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 1;
-		gridBagConstraints.insets = new Insets(0,0,0,5); // some space on the right
 
 		final ButtonGroup buttonGroup = new ButtonGroup() ;
 
@@ -167,23 +162,45 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 
 		jToolBarFilterForModularRobot.add(radionButtonCKBOTSTANDARD);
 		buttonGroup.add(radionButtonCKBOTSTANDARD);			
-
-		super.jComponent.add(jToolBarFilterForModularRobot,gridBagConstraints);			
-
-
+		
 		jListAvailableControllers.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		jListAvailableControllers.setPreferredSize(new java.awt.Dimension(J_LIST_WIDTH+60, J_LIST_HEIGHT));	
 		jListAvailableControllers.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				AssignBehaviorsTabController.jList1MouseReleased( jListAvailableControllers,jmeSimulation);
 			}
-		});
+		});		
 		jScrollPaneAvailableControllers.setViewportView(jListAvailableControllers);
 		jScrollPaneAvailableControllers.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Available behaviors", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
+
+			
+		/*Internal layout of the panel*/
+		GroupLayout jPanelAssignBehaviorsLayout = new GroupLayout(jPanelAssignBehaviors);
+		jPanelAssignBehaviors.setLayout(jPanelAssignBehaviorsLayout);
+
+		jPanelAssignBehaviorsLayout.setAutoCreateGaps(true);
+		jPanelAssignBehaviorsLayout.setHorizontalGroup(
+				jPanelAssignBehaviorsLayout.createSequentialGroup()			
+				.addComponent(jToolBarFilterForModularRobot,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+						GroupLayout.PREFERRED_SIZE)						
+						.addComponent(jScrollPaneAvailableControllers,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)							
+		);
+
+		jPanelAssignBehaviorsLayout.setVerticalGroup(
+				jPanelAssignBehaviorsLayout.createSequentialGroup()
+				.addGroup(jPanelAssignBehaviorsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(jToolBarFilterForModularRobot,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+								.addComponent(jScrollPaneAvailableControllers,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE))												
+		);
+		/*External layout of the panel*/
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 1;
-		super.jComponent.add(jScrollPaneAvailableControllers,gridBagConstraints);		
+		
+		super.jComponent.add(jPanelAssignBehaviors,gridBagConstraints);		
 
 		jCheckBoxShowLabelControl.setText("Show labeling control");
 		jCheckBoxShowLabelControl.addActionListener(new java.awt.event.ActionListener() {
@@ -196,11 +213,11 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		super.jComponent.add(jCheckBoxShowLabelControl,gridBagConstraints);	
 
 		GridBagConstraints gridBagConstraintsLabelingPanel = new GridBagConstraints();
-		TitledBorder displayTitle;
-		displayTitle = BorderFactory.createTitledBorder("Labeling of entities");
-		displayTitle.setTitleJustification(TitledBorder.CENTER);
-		jPanelLabeling.setBorder(displayTitle);
-		jPanelLabeling.setPreferredSize(new Dimension(200,180));
+		//TitledBorder displayTitle;
+		//displayTitle = BorderFactory.createTitledBorder("Labeling of entities");
+		//displayTitle.setTitleJustification(TitledBorder.CENTER);
+		//jPanelLabeling.setBorder(displayTitle);
+		jPanelLabeling.setPreferredSize(new Dimension(200,160));
 		jPanelLabeling.setVisible(false);//initially invisible
 
 		/*External layout of labelingPanel inside main panel (jComponent)*/
@@ -322,7 +339,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jTableCurrentLabels.setPreferredSize(new Dimension(150,150));
 		jScrollPaneTableCurrentLabels.setViewportView(jTableCurrentLabels);
 		jTableCurrentLabels.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		jScrollPaneTableCurrentLabels.setPreferredSize(new Dimension(150,150));
+		jScrollPaneTableCurrentLabels.setPreferredSize(new Dimension(150,130));
 
 		//jToolBarControlOfLabels.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarControlOfLabels.setFloatable(false);//user can not make the tool bar to float
@@ -468,6 +485,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 
 	private static javax.swing.JPanel jPanelLabeling;
 	private javax.swing.JPanel jPanelEntitiesToLabel;
+	private javax.swing.JPanel jPanelAssignBehaviors;
 
 	private javax.swing.JScrollPane jScrollPaneAvailableControllers;
 	private javax.swing.JScrollPane jScrollPaneTableCurrentLabels;
