@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.Set;
 
 import ussr.aGui.FramesInter;
-import ussr.aGui.MainFrame;
-import ussr.aGui.MainFrameInter;
-import ussr.aGui.MainFrameSeparateInSim;
+import ussr.aGui.MainFrames;
+import ussr.aGui.MainFramesInter;
+import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.tabs.YourNewTab;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.view.visualizer.ModuleCommunicationVisualizer;
 import ussr.aGui.tabs.views.ConsoleTab;
-import ussr.aGui.tabs.views.GeneralTab;
+import ussr.aGui.tabs.views.SimulationConfigurationTab;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.builder.QuickPrototyping;
@@ -245,8 +245,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
 		KeyBindingManager.getKeyBindingManager().set("display_quick_prototyping_of_simulation_scenarios", KeyInput.KEY_Q);
 
-		KeyBindingManager.getKeyBindingManager().set("display_main_frame", KeyInput.KEY_O);
-
 		/** Assign key K to action "visualize_module_communication". */
 		KeyBindingManager.getKeyBindingManager().set("visualize_module_communication", KeyInput.KEY_K);
 
@@ -343,44 +341,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_quick_prototyping_of_simulation_scenarios", false)) {
 			if (QuickPrototyping.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
 			}else{QuickPrototyping.activate(this);}			
-		}
-
-		
-		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_main_frame", false)) {			 
-			if (MainFrameSeparateInSim.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
-			}else{
-				JMESimulation simulation = (JMESimulation)this;
-				simulation.setPause(true); // pause simulation.
-                
-				/*Container for tabs*/
-				ArrayList<TabsInter> tabs =  new ArrayList<TabsInter>();//All tabs displayed in the main GUI			
-
-				/*Instantiation of each tab*/
-				TabsInter  constructRobot = new ConstructRobotTab(false,true,"1 Step: Construct Robot",simulation,MainFrameInter.DIRECTORY_ICONS+MainFrameInter.CONSTRUCT_ROBOT),
-				           assignBehaviors = new AssignBehaviorsTab(false,true,"2 Step: Assign Behaviour (Controller)",simulation,MainFrameInter.DIRECTORY_ICONS+MainFrameInter.CONSTRUCT_ROBOT),
-				           moduleCommunicationVisualizer = new ModuleCommunicationVisualizer(false,true,"Communication Visualiser",simulation,MainFrameInter.DIRECTORY_ICONS+MainFrameInter.VISUALIZER),
-				           general = new GeneralTab(true,true,"General",simulation,FramesInter.DIRECTORY_USSR_ICON),
-				           console = new ConsoleTab(true,false,"Console", null, TabsInter.DIRECTORY_ICONS+TabsInter.CONSOLE),
-				
-			    /*YOUR NEW TAB*/  yourNewtab = new YourNewTab(true,true, "Your New Tab",simulation,TabsInter.DIRECTORY_ICONS+TabsInter.NEW_TAB);
-				
-				
-
-				/*Populate container with tabs*/				
-				/*Buil in Tabs*/tabs.add(constructRobot);tabs.add(assignBehaviors);
-				tabs.add(moduleCommunicationVisualizer); tabs.add(console);
-				tabs.add(general);				
-				/*YOUR NEW TAB*/ 
-				tabs.add(yourNewtab);				
-
-				FramesInter mainFrame = new MainFrameSeparateInSim(this,tabs);				                
-				mainFrame.activate();   
-				Hashtable<String,String> table = new Hashtable<String,String>();
-				
-				
-				
-
-			}			
 		}
 
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("visualize_module_communication", false)) {
