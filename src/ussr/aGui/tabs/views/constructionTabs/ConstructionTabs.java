@@ -1,21 +1,29 @@
 package ussr.aGui.tabs.views.constructionTabs;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
+import ussr.aGui.GuiFrames;
+import ussr.aGui.MainFrames;
+import ussr.aGui.fileChooser.views.FileChooserFrameInter;
+import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
+import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.physics.jme.JMESimulation;
 
-public abstract class ConstructionTabs extends Tabs {
+public abstract class ConstructionTabs extends Tabs implements ConstructionTabsInter  {
 
 	
-	
+	protected static javax.swing.JToolBar jToolBarSaveLoad;
 
 	protected ConstructionTabs(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,
 			JMESimulation jmeSimulation, String imageIconDirectory) {
@@ -91,6 +99,30 @@ public abstract class ConstructionTabs extends Tabs {
 		hintPanel.setText(initialHint);
 		hintPanel.setBorderTitle(HintPanelInter.commonTitle);
 		return hintPanel;
+	}
+	
+	
+	
+	public javax.swing.JToolBar initSaveLoadJToolbar(){
+		jToolBarSaveLoad = new javax.swing.JToolBar();
+		
+		jToolBarSaveLoad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarSaveLoad.setFloatable(false);//user can not make the tool bar to float
+		jToolBarSaveLoad.setRollover(true);// the components inside are roll over
+		jToolBarSaveLoad.setToolTipText(COMMON_TOOL_TIP_TEXTS[0]);
+		jToolBarSaveLoad.setPreferredSize(new Dimension(60,GuiFrames.COMMON_HEIGHT+2));
+		
+		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
+		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
+
+		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DIRECTORY_ROBOTS),
+		                      fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DIRECTORY_ROBOTS);
+		
+		/*Reuse the buttons for saving and loading  already initialized in the main window*/
+		jToolBarSaveLoad.add(MainFrames.initSaveButton(fcSaveFrame));
+		jToolBarSaveLoad.add(MainFrames.initOpenButton(fcOpenFrame));
+		
+		return jToolBarSaveLoad;
 	}
 
 	

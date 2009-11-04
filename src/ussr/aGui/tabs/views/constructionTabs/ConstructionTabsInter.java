@@ -1,12 +1,13 @@
 package ussr.aGui.tabs.views.constructionTabs;
 
-import java.awt.GridBagConstraints;
 
-import javax.swing.JPanel;
 
 public interface ConstructionTabsInter {
 
 	
+	public String[] COMMON_TOOL_TIP_TEXTS = {
+			/*0*/  "Save or load robot",
+	};
 	
 	/**
 	 * Keeps strings used to present modular robots names in tabs. setText() method.

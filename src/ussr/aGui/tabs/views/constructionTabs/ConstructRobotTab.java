@@ -78,8 +78,6 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 
 		/*Instantiation of components*/		
 		jButtonStartNewRobot = new javax.swing.JButton();
-		
-		jToolBarSaveLoad = new javax.swing.JToolBar();
 		jToolBarGenericTools = new javax.swing.JToolBar();
 		jToolBarRotationTools = new javax.swing.JToolBar();
 		jToolBarConstructionTools = new javax.swing.JToolBar();
@@ -126,27 +124,13 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.insets = new Insets(0,0,15,50);  //make some space on the right so that button moves to the left and at the bottom (not so crowded)
 		super.jComponent.add(jButtonStartNewRobot,gridBagConstraints);
 	
-		jToolBarSaveLoad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBarSaveLoad.setFloatable(false);//user can not make the tool bar to float
-		jToolBarSaveLoad.setRollover(true);// the components inside are roll over
-		jToolBarSaveLoad.setToolTipText(TOOL_TIP_TEXTS[1]);
-		jToolBarSaveLoad.setPreferredSize(new Dimension(60,GuiFrames.COMMON_HEIGHT+2));
+		/*Layout for SavaLoadJToolbar */
 		gridBagConstraints.fill = GridBagConstraints.FIRST_LINE_END;
 		gridBagConstraints.gridx = 4;
 		gridBagConstraints.gridy = 0;
 		gridBagConstraints.insets = new Insets(0,0,15,-25);  
-		
-		/*Reuse the buttons for saving and loading  already initialized in the main window*/
-		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
-		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
-	
-		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DIRECTORY_ROBOTS);	
-		FileChooserFrameInter fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DIRECTORY_ROBOTS);
-		
-		jToolBarSaveLoad.add(MainFrames.initSaveButton(fcSaveFrame));
-		jToolBarSaveLoad.add(MainFrames.initOpenButton(fcOpenFrame));
-		
-		super.jComponent.add(jToolBarSaveLoad,gridBagConstraints);				
+			
+		super.jComponent.add(initSaveLoadJToolbar(),gridBagConstraints);				
 		
 		radionButtonATRON.setFocusable(false);
 		radionButtonATRON.setText(ModularRobotsNames.ATRON.toString());
@@ -694,7 +678,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	jButtonConnectAllModules,jButtonJumpFromConnToConnector,jButtonOnNextConnector,
 	jButtonOnPreviousConnector;
 	
-	private static javax.swing.JToolBar jToolBarSaveLoad,jToolBarGenericTools,
+	private static javax.swing.JToolBar jToolBarGenericTools,
 	jToolBarRotationTools,jToolBarConstructionTools;
 
 	private javax.swing.JToolBar.Separator jSeparator1,jSeparator2;

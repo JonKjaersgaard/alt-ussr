@@ -10,21 +10,18 @@ import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 import javax.swing.border.TitledBorder;
 
 import ussr.aGui.FramesInter;
-import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFramesInter;
-import ussr.aGui.tabs.Tabs;
+
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
-import ussr.aGui.tabs.controllers.ConstructRobotTabController;
+
 
 import ussr.physics.jme.JMESimulation;
 
@@ -106,6 +103,13 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jComboBox1 = new JComboBox();
 
 		/*Description of components*/
+		
+		
+		gridBagConstraints.fill = GridBagConstraints.PAGE_START;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 0;
+		super.jComponent.add(initSaveLoadJToolbar(),gridBagConstraints);	
+		
 		jToolBarFilterForModularRobot.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Filter out for:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));		
 		jToolBarFilterForModularRobot.setFloatable(false);//user can not make the tool bar to float
 		jToolBarFilterForModularRobot.setRollover(true);// the buttons inside are roll over
@@ -114,7 +118,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jToolBarFilterForModularRobot.setOrientation(JToolBar.VERTICAL);		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 0;
+		gridBagConstraints.gridy = 1;
 		gridBagConstraints.insets = new Insets(0,0,0,5); // some space on the right
 
 		final ButtonGroup buttonGroup = new ButtonGroup() ;
@@ -178,7 +182,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jScrollPaneAvailableControllers.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Available behaviors", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
-		gridBagConstraints.gridy = 0;
+		gridBagConstraints.gridy = 1;
 		super.jComponent.add(jScrollPaneAvailableControllers,gridBagConstraints);		
 
 		jCheckBoxShowLabelControl.setText("Show labeling control");
@@ -188,7 +192,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 			}
 		});
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridy = 2;
 		super.jComponent.add(jCheckBoxShowLabelControl,gridBagConstraints);	
 
 		GridBagConstraints gridBagConstraintsLabelingPanel = new GridBagConstraints();

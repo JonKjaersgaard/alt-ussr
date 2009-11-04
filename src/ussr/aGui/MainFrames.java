@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
-import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
@@ -264,6 +262,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonPause = new javax.swing.JButton();
 		jSeparator3 = new javax.swing.JToolBar.Separator();			
 		jSeparator4 = new javax.swing.JToolBar.Separator();
+		jSeparator5 = new javax.swing.JToolBar.Separator();
 		jToggleButtonConstructRobot = new javax.swing.JToggleButton();
 		jToggleButtonVisualizer = new javax.swing.JToggleButton();
 		
@@ -352,7 +351,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jToggleButtonVisualizer);
 		
-		
+		jSeparator5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarGeneralControl.add(jSeparator5);
 		
 
 		getContentPane().add(jToolBarGeneralControl);
@@ -490,6 +490,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	
 	public javax.swing.JToolBar.Separator jSeparator3;
 	public javax.swing.JToolBar.Separator jSeparator4;
+	public javax.swing.JToolBar.Separator jSeparator5;
 
 	public javax.swing.JToolBar jToolBar1;
 	public javax.swing.JToolBar jToolBarGeneralControl;

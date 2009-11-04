@@ -52,7 +52,7 @@ public interface ConstructRobotTabInter extends ConstructionTabsInter {
 
 	public String[] TOOL_TIP_TEXTS = {
 			/*0*/ "Start constructing new robot",
-			/*1*/ "Save or load robot",
+			/*1*/ "Save or load robot", //TODO eliminate me 
 			/*2*/ "Rotate opposite",
 			/*3*/ "Rotate with standard rotation",
 			/*4*/ "Move",
