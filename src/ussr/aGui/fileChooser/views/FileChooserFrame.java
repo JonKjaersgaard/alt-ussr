@@ -1,5 +1,4 @@
 package ussr.aGui.fileChooser.views;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -9,10 +8,11 @@ import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 
 
 /**
- * Defines visual appearance of the file chooser in several dialog forms: Open, Save and Save As.
- * Limits the file choosing to extensions specified in fileExtensions ArrayList.   
+ * Defines visual appearance of the file chooser in several dialog forms: Open and Save for now.
+ * Limits the file choosing to extensions specified in the map of file descriptions and extensions.   
  * @author Konstantinas
  */
+
 @SuppressWarnings("serial")
 public abstract class FileChooserFrame extends GuiFrames implements FileChooserFrameInter {
 
@@ -20,30 +20,34 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 	/**
 	 * Used as flag to indicate that file chooser should open build in default directory.
 	 */
-	private String defaultDirectory = "";
+	protected String defaultDirectory = "";
 	
 	/**
 	 * The file chooser appearance, which is integrated into the frame.
 	 */
-	protected javax.swing.JFileChooser jFileChooser;
+	protected javax.swing.JFileChooser jFileChooserCustomized;
 
 	/**
-	 * Extensions of the files, which will be available to filter out by the file chooser
-	 */
-	protected ArrayList<String> fileExtensions;
-
-	/**
-	 * Controller for file extensions.
+	 * Controller for file chooser.
 	 */
 	protected FileChooserControllerInter fileChooserController;
 	
-	
+	/**
+	 * Map containing mapping of file description to file extension.
+	 */
 	protected Map<String, String> fileDescriptionsAndExtensions;
 	
-
-	public FileChooserFrame(Map<String, String> fileDescriptionsAndExtensions, FileChooserControllerInter fileChooserController){
+	/**
+	 * Defines visual appearance of the file chooser in several dialog forms: Open and Save for now.
+     * Limits the file choosing to extensions specified in the map of file descriptions and extensions. 
+	 * @param fileDescriptionsAndExtensions,map containing mapping of file description to file extension.
+	 * @param fileChooserController, controller for file chooser.
+	 * @param defaultDirectory, default directory to open.
+	 */
+	public FileChooserFrame(Map<String, String> fileDescriptionsAndExtensions, FileChooserControllerInter fileChooserController,String defaultDirectory){
 		this.fileDescriptionsAndExtensions= fileDescriptionsAndExtensions;
 		this.fileChooserController= fileChooserController;
+		this.defaultDirectory =defaultDirectory;
 		initComponents();
 	}
 	
@@ -52,26 +56,50 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 	 */	
 	public void initComponents() {
        if (defaultDirectory.isEmpty()){
-		this.jFileChooser = new javax.swing.JFileChooser();
+		jFileChooserCustomized = new javax.swing.JFileChooser();
        }else{
-    	   this.jFileChooser = new javax.swing.JFileChooser(defaultDirectory);    	   
+    	   jFileChooserCustomized = new javax.swing.JFileChooser(defaultDirectory);    	   
        }
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);		
-		getContentPane().setLayout(new java.awt.FlowLayout());	
-		this.jFileChooser.setAcceptAllFileFilterUsed(false);	
-		getContentPane().add(this.jFileChooser);// MAC HAS PROBLEMS WITH THAT		
+		getContentPane().setLayout(new java.awt.FlowLayout());			
+		getContentPane().add(jFileChooserCustomized);// MAC HAS PROBLEMS WITH THAT
+		jFileChooserCustomized.setAcceptAllFileFilterUsed(false);
 		pack();
 		changeToLookAndFeel(this);// for all platforms
 		setSize(580,450);//THINK MORE HERE
+		
+		
+		/*TRY ON MAC*/
+		/*jFileChooser = new javax.swing.JFileChooser();
+
+	    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+	    setTitle("Choose the file");
+	    getContentPane().setLayout(new java.awt.FlowLayout());
+
+	    jFileChooser.setDialogTitle("Choose the file to save or open");
+	    jFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+	    jFileChooser.addActionListener(new java.awt.event.ActionListener() {
+	        public void actionPerformed(java.awt.event.ActionEvent evt) {
+	        
+					//jFileChooser1ActionPerformed(evt);
+				
+	        }
+	    });
+	    getContentPane().add(jFileChooser);
+	    jFileChooser.setAcceptAllFileFilterUsed(false);
+	    jFileChooser.setFileFilter(new FileFilter (".xml"));*/
 	}	
 
 
 	
+	/**
+	 * Changes default file filters with ones specified in the map. 
+	 */
 	public void setFilesToFilterOutWithDescription(){
 		Iterator<String> keyIterator = fileDescriptionsAndExtensions.keySet().iterator();
 		Iterator<String> valueIterator = fileDescriptionsAndExtensions.values().iterator();
 		while(keyIterator.hasNext()){
-			jFileChooser.setFileFilter(new FileFilter (keyIterator.next(),valueIterator.next()));			
+			jFileChooserCustomized.setFileFilter(new FileFilter (keyIterator.next(),valueIterator.next()));			
 		}
 	}
 	
@@ -81,6 +109,15 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 	 */
 	public void setDefaultDirectory(String defaultDirectory) {
 		this.defaultDirectory = defaultDirectory;
+		
+	}
+	
+	/**
+	 * Sets file extensions(with descriptions) for file chooser to filter.
+	 * @param fileDescriptionsAndExtensions, map containing mapping of file description to file extension.
+	 */
+	public void setFileFiltersWithDescriptions(Map<String, String> fileDescriptionsAndExtensions){
+		this.fileDescriptionsAndExtensions = fileDescriptionsAndExtensions;
 	}
 	
 }

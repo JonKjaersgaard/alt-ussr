@@ -5,6 +5,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
@@ -17,6 +20,9 @@ import ussr.aGui.FramesInter;
 import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFrames;
 import ussr.aGui.MainFramesInter;
+import ussr.aGui.fileChooser.views.FileChooserFrameInter;
+import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
+import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
@@ -131,8 +137,14 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.insets = new Insets(0,0,15,-25);  
 		
 		/*Reuse the buttons for saving and loading  already initialized in the main window*/
-		jToolBarSaveLoad.add(MainFrames.initSaveButton());
-		jToolBarSaveLoad.add(MainFrames.initOpenButton());
+		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
+		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
+	
+		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DIRECTORY_ROBOTS);	
+		FileChooserFrameInter fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DIRECTORY_ROBOTS);
+		
+		jToolBarSaveLoad.add(MainFrames.initSaveButton(fcSaveFrame));
+		jToolBarSaveLoad.add(MainFrames.initOpenButton(fcOpenFrame));
 		
 		super.jComponent.add(jToolBarSaveLoad,gridBagConstraints);				
 		

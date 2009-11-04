@@ -1,6 +1,6 @@
 package ussr.aGui.fileChooser.views;
 
-import java.util.ArrayList;
+
 import java.util.Map;
 
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
@@ -9,12 +9,9 @@ import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
  * Defines visual appearance of the file chooser in the form of Save dialog.
  * @author Konstantinas
  */
+@SuppressWarnings("serial")
 public class FileChooserSaveFrame extends FileChooserFrame  {
 
-	/**
-	 * TODO
-	 */
-	private static final long serialVersionUID = 1L;
 	/**
 	 * The file chooser frame in Save dialog form.
 	 */
@@ -24,9 +21,10 @@ public class FileChooserSaveFrame extends FileChooserFrame  {
 	 * Manages the file chooser in the form of Save dialog.
 	 * @param fileExtensions,extensions of the files, which will be available to filter out by the file chooser.
 	 * @param fileChooserController, the controller for file extension.
+	 * @param defaultDirectory, default directory to open.
 	 */
-	public FileChooserSaveFrame(Map<String, String> fileDescriptionsAndExtensions,FileChooserControllerInter fileChooserController) {
-		super(fileDescriptionsAndExtensions,fileChooserController);			
+	public FileChooserSaveFrame(Map<String, String> fileDescriptionsAndExtensions,FileChooserControllerInter fileChooserController,String defaultDirectory) {
+		super(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);			
 		changeToSaveDialog();
 		setFilesToFilterOutWithDescription();
 	}
@@ -37,11 +35,11 @@ public class FileChooserSaveFrame extends FileChooserFrame  {
 	 */
 	private void changeToSaveDialog(){
 		setUSSRicon(this);
-		jFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);	
+		jFileChooserCustomized.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);	
 		setTitle("Save");
-		jFileChooser.addActionListener(new java.awt.event.ActionListener() {
+		jFileChooserCustomized.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
-				fileChooserController.controlSaveDialog(evt,jFileChooser, fcSaveFrame);//call controller
+				fileChooserController.controlSaveDialog(evt,jFileChooserCustomized, fcSaveFrame);//call controller
 
 			}
 		});		
@@ -56,7 +54,7 @@ public class FileChooserSaveFrame extends FileChooserFrame  {
 	public void activate(){
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() { 
-				fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,fileChooserController);
+				fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);
 				fcSaveFrame.setVisible(true);
 			}
 		});    	

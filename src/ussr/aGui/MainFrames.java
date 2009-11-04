@@ -89,20 +89,10 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public void initFileChoosers () {	
 		
 		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
-		fileDescriptionsAndExtensions.put("Simulation", ".xml");
-		fileDescriptionsAndExtensions.put("Robot", ".xml");
-		
-
-		FileChooserControllerInter fcXMLController = new FileChooserXMLController();
+		fileDescriptionsAndExtensions.put(FileChooserFrameInter.DEFAULT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
 	
-		String defaultDirectory = "samples/simulations";
-		
-		fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,fcXMLController);	
-		fcOpenFrame.setDefaultDirectory(defaultDirectory);
-		
-		fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,fcXMLController);
-		fcSaveFrame.setDefaultDirectory(defaultDirectory);
-	
+		fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);	
+		fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
 	}
 	
 
@@ -328,8 +318,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jSeparator3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jSeparator3);
 		
-		jToolBarGeneralControl.add(initSaveButton());
-		jToolBarGeneralControl.add(initOpenButton());
+		jToolBarGeneralControl.add(initSaveButton(fcSaveFrame));
+		jToolBarGeneralControl.add(initOpenButton(fcOpenFrame));
 		
 		jSeparator4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jSeparator4);
@@ -369,7 +359,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	}
 	
 	
-	public static javax.swing.JButton  initSaveButton(){
+	public static javax.swing.JButton  initSaveButton(final FileChooserFrameInter fcSaveFrame ){
 		jButtonSave = new javax.swing.JButton();		
 		jButtonSave.setToolTipText("Save");
 		jButtonSave.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + SAVE));
@@ -386,7 +376,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		return jButtonSave;
 	}
 	
-	public static javax.swing.JButton  initOpenButton(){
+	public static javax.swing.JButton  initOpenButton(final FileChooserFrameInter fcOpenFrame){
 		jButtonOpen = new javax.swing.JButton();
 		jButtonOpen.setToolTipText("Open");
 		jButtonOpen.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPEN));
