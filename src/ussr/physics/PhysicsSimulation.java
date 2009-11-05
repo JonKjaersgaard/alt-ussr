@@ -126,10 +126,16 @@ public interface PhysicsSimulation {
 	public void unsubscribePhysicsTimestep(PhysicsObserver observer);
 
 	/**
-	 * Set whether the simulation is paused
-	 * @param paused true if the simulation should be paused, false otherwise
+	 * Set whether the simulation is paused.
+	 * @param paused, true if the simulation should be paused, false otherwise
 	 */
 	public void setPause(boolean paused);
+
+	/**
+	 * Set whether the simulation is running in real time.
+	 * @param realtime, true if the simulation should running in real time.
+	 */
+	public void setRealtime(boolean realtime);
 
 	/**
 	 * Obtain a reference to the simulation helper, which contains various utility
