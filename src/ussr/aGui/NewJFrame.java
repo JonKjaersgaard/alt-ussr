@@ -56,7 +56,11 @@ public class NewJFrame extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	timesPressed++;
                 if (timesPressed==1){
-                	ConsoleSimulationExample.main(null);
+                    new Thread() { 
+                        public void run() {
+                            ConsoleSimulationExample.main(null);
+                        }
+                    }.start();
                 }
             }
         });
