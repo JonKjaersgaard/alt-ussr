@@ -1,5 +1,6 @@
 package ussr.aGui;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTabbedPane;
@@ -9,9 +10,17 @@ import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
+import ussr.remote.ConsoleSimulationExample;
+import ussr.remote.GUISimulationStarter;
+import ussr.remote.facade.RemotePhysicsSimulation;
 
 
 public class MainFrameController {
+
+
+	private static RemotePhysicsSimulation remotePhysicsSimulation;
+
+
 
 	/**
 	 * Executes closing of main window(frame)by terminating Java Virtual Machine.
@@ -41,21 +50,25 @@ public class MainFrameController {
 	private static int timesSelected =0;
 
 	/**
-	 * Controls running simulation in real time.
-	 * @param jmeSimulation
+	 * Starts running simulation in real time.
 	 */
-	public static void jButtonRunRealTimeActionPerformed(JMESimulation jmeSimulation) {
+	public static void jButtonRunRealTimeActionPerformed() {
+		remotePhysicsSimulation = GUISimulationStarter.getSim();
+
 		ConstructRobotTab.setTabEnabled(false);
 
 		timesSelected++;
-		if (jmeSimulation.isPaused()){// Start simulation in real time, if simulation is in paused state
-			jmeSimulation.setRealtime(true);
-			jmeSimulation.setPause(false);				
-		}else if (jmeSimulation.isRealtime()==false){//if simulation is running fast, then run it in real time
-			jmeSimulation.setRealtime(true);
-		}	
-		connectModules(jmeSimulation);
-		jmeSimulation.setPicker(new PhysicsPicker());
+		try {
+			if (remotePhysicsSimulation.isPaused()){// Start simulation in real time, if simulation is in paused state
+				remotePhysicsSimulation.setPause(false);				
+			}
+			remotePhysicsSimulation.setRealtime(true);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//connectModules(jmeSimulation);
+		//jmeSimulation.setPicker(new PhysicsPicker());*/
 	}
 
 
@@ -64,8 +77,9 @@ public class MainFrameController {
 	 * @param jmeSimulation
 	 */
 	public static void jButtonRunFastActionPerformed(JMESimulation jmeSimulation) {
+
 		ConstructRobotTab.setTabEnabled(false);		
-	
+
 		if (jmeSimulation.isPaused()){// Start simulation  fast, if simulation is in paused state
 			jmeSimulation.setRealtime(false);
 			jmeSimulation.setPause(false);				
@@ -209,8 +223,15 @@ public class MainFrameController {
 	 * @param jmeSimulation
 	 */
 	public static void jButtonPauseActionPerformed(JMESimulation jmeSimulation) {       	
-		if (jmeSimulation.isPaused()==false)
-			jmeSimulation.setPause(true);
+		/*	if (jmeSimulation.isPaused()==false)
+			jmeSimulation.setPause(true);*/
+
+
+		new Thread() {
+			public void run() {
+				ConsoleSimulationExample.main(null);
+			}
+		}.start();
 	}
 
 
@@ -221,17 +242,17 @@ public class MainFrameController {
 	 * @param tabs, container of all tabs in main frame.
 	 */
 	public static void jButtonConstructRobotActionPerformed(JToggleButton jToggleButtonConstructRobot, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs ) {
-		
+
 		/*Check if tabs are defined*/
 		TabsInter constructRobotTab = getTabByTitle(MainFramesInter.CONSTRUCT_ROBOT_TAB_TITLE,tabs);
 		TabsInter assignBehaviorsTab = getTabByTitle(MainFramesInter.ASSIGN_BEHAVIORS_TAB_TITLE,tabs);
-		
-		
+
+
 		if (jToggleButtonConstructRobot.isSelected()){
 			/*Add tabs for construction of modular robot*/
 			jTabbedPaneFirst.addTab(constructRobotTab.getTabTitle(),new javax.swing.ImageIcon(constructRobotTab.getImageIconDirectory()),constructRobotTab.getJComponent());
 			jTabbedPaneFirst.addTab(assignBehaviorsTab.getTabTitle(),new javax.swing.ImageIcon(assignBehaviorsTab.getImageIconDirectory()),assignBehaviorsTab.getJComponent());
-			
+
 			/*Update look and feel for newly added tabs*/		
 			MainFrames.changeToLookAndFeel(constructRobotTab.getJComponent());
 			MainFrames.changeToLookAndFeel(assignBehaviorsTab.getJComponent());
@@ -247,9 +268,9 @@ public class MainFrameController {
 				}
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * Checks if the tab with specific title is in the container for tabs.
 	 * @param tabTitle, the title of the tab to look for.
@@ -264,7 +285,7 @@ public class MainFrameController {
 				foundTab = tabs.get(tabNr);
 			}
 		}
-		
+
 		if (foundTab == null){
 			throw new Error("The tab with title ("+ tabTitle + ") was not found");
 		}
@@ -280,7 +301,7 @@ public class MainFrameController {
 	public static void jButtonVisualizerActionPerformed(JToggleButton toggleButtonVisualizer, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs) {
 		/*Check if tab is defined*/
 		TabsInter moduleCommunicationVisualizerTab = getTabByTitle(MainFramesInter.MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE,tabs);
-		
+
 		if (toggleButtonVisualizer.isSelected()){
 			/*Add tabs for visualizing module communication*/
 			jTabbedPaneFirst.addTab(moduleCommunicationVisualizerTab.getTabTitle(),new javax.swing.ImageIcon(moduleCommunicationVisualizerTab.getImageIconDirectory()),moduleCommunicationVisualizerTab.getJComponent());

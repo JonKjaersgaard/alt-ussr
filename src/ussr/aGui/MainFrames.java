@@ -273,7 +273,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonRunRealTime.setPreferredSize(new java.awt.Dimension(30, 30));      
 		jButtonRunRealTime.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jButtonRunRealTimeActionPerformed(jmeSimulation);        	  
+				MainFrameController.jButtonRunRealTimeActionPerformed();        	  
 			}
 		});
 		jToolBarGeneralControl.add(jButtonRunRealTime);

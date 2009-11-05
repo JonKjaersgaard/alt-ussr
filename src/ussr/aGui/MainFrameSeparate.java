@@ -71,18 +71,12 @@ public class MainFrameSeparate extends MainFrames {
 	 */
 	public static void main( String[] args ) {
 		
-		//ConsoleSimulationExample.main(null);//GUI FREEZES
 		java.awt.EventQueue.invokeLater(new Runnable(){
-			public void run() { 
-				//ConsoleSimulationExample.main(null);//GUI FREEZES
+			public void run() {				
 				mainFrame = new MainFrameSeparate();
 				mainFrame.setVisible(true);	
-				//ConsoleSimulationExample.main(null);//GUI FREEZES
 			}
 		});
-		//ConsoleSimulationExample.main(null);//WORKS
-		//BuilderMultiRobotPreSimulation.setXmlSimulationFile("samples/simulations/atron/snakeSimulation.xml");
-		//BuilderMultiRobotPreSimulation.main(null);//WORKS
 	}
 
 
