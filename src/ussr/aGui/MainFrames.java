@@ -132,12 +132,12 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jSeparator1 = new javax.swing.JSeparator();
 		jSeparator2 = new javax.swing.JSeparator();			
 
-		jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem4 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem5 = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItem6 = new javax.swing.JCheckBoxMenuItem();
+		jCheckBoxMenuItemPhysics = new javax.swing.JCheckBoxMenuItem();
+		jCheckBoxMenuItemWireFrame = new javax.swing.JCheckBoxMenuItem();
+		jCheckBoxMenuBounds = new javax.swing.JCheckBoxMenuItem();
+		jCheckBoxMenuItemNormals = new javax.swing.JCheckBoxMenuItem();
+		jCheckBoxMenuItemLights = new javax.swing.JCheckBoxMenuItem();
+		jCheckBoxMenuBufferDepth = new javax.swing.JCheckBoxMenuItem();
 		
 		jMenuFile.setText("File");
 
@@ -179,60 +179,60 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuBarMain.add(jMenuFile);
 
 		jMenuRender.setText("Render");
-		jCheckBoxMenuItem1.setSelected(false);
-		jCheckBoxMenuItem1.setText("Physics");
-		jCheckBoxMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+		jCheckBoxMenuItemPhysics.setSelected(false);
+		jCheckBoxMenuItemPhysics.setText("Physics");
+		jCheckBoxMenuItemPhysics.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jCheckBoxMenuItem1ActionPerformed(jCheckBoxMenuItem1,jmeSimulation);
+				MainFrameController.jCheckBoxMenuItemPhysicsActionPerformed(jCheckBoxMenuItemPhysics);
 			}
 		});
-		jMenuRender.add(jCheckBoxMenuItem1);
+		jMenuRender.add(jCheckBoxMenuItemPhysics);
 
-		jCheckBoxMenuItem2.setSelected(false);
-		jCheckBoxMenuItem2.setText("Wire Frame");
-		jCheckBoxMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+		jCheckBoxMenuItemWireFrame.setSelected(false);
+		jCheckBoxMenuItemWireFrame.setText("Wire Frame");
+		jCheckBoxMenuItemWireFrame.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jCheckBoxMenuItem2ActionPerformed(jCheckBoxMenuItem2,jmeSimulation);
+				MainFrameController.jCheckBoxMenuItemWireFrameActionPerformed(jCheckBoxMenuItemWireFrame);
 			}
 		});
-		jMenuRender.add(jCheckBoxMenuItem2);
+		jMenuRender.add(jCheckBoxMenuItemWireFrame);
 
-		jCheckBoxMenuItem3.setSelected(false);
-		jCheckBoxMenuItem3.setText("Bounds");
-		jCheckBoxMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+		jCheckBoxMenuBounds.setSelected(false);
+		jCheckBoxMenuBounds.setText("Bounds");
+		jCheckBoxMenuBounds.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jCheckBoxMenuItem3ActionPerformed(jCheckBoxMenuItem3,jmeSimulation);
+				MainFrameController.jCheckBoxMenuBoundsActionPerformed(jCheckBoxMenuBounds);
 			}
 		});
-		jMenuRender.add(jCheckBoxMenuItem3);
+		jMenuRender.add(jCheckBoxMenuBounds);
 
-		jCheckBoxMenuItem4.setSelected(false);
-		jCheckBoxMenuItem4.setText("Normals");
-		jCheckBoxMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+		jCheckBoxMenuItemNormals.setSelected(false);
+		jCheckBoxMenuItemNormals.setText("Normals");
+		jCheckBoxMenuItemNormals.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jCheckBoxMenuItem4ActionPerformed(jCheckBoxMenuItem4,jmeSimulation);
+				MainFrameController.jCheckBoxMenuItemNormalsActionPerformed(jCheckBoxMenuItemNormals);
 			}
 		});
-		jMenuRender.add(jCheckBoxMenuItem4);
+		jMenuRender.add(jCheckBoxMenuItemNormals);
 
-		jCheckBoxMenuItem5.setSelected(false);
-		jCheckBoxMenuItem5.setText("Lights");
-		jCheckBoxMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+		jCheckBoxMenuItemLights.setSelected(false);
+		jCheckBoxMenuItemLights.setText("Lights");
+		jCheckBoxMenuItemLights.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jCheckBoxMenuItem5ActionPerformed(jCheckBoxMenuItem5,jmeSimulation);
+				MainFrameController.jCheckBoxMenuItemLightsActionPerformed(jCheckBoxMenuItemLights);
 			}
 		});
-		jMenuRender.add(jCheckBoxMenuItem5);
+		jMenuRender.add(jCheckBoxMenuItemLights);
 
-		jCheckBoxMenuItem6.setSelected(false);
-		jCheckBoxMenuItem6.setText("Buffer Depth");
-		jCheckBoxMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+		jCheckBoxMenuBufferDepth.setSelected(false);
+		jCheckBoxMenuBufferDepth.setText("Buffer Depth");
+		jCheckBoxMenuBufferDepth.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jCheckBoxMenuItem6ActionPerformed(jCheckBoxMenuItem6,jmeSimulation);
+				MainFrameController.jCheckBoxMenuBufferDepthActionPerformed(jCheckBoxMenuBufferDepth);
 			}
 		});
 
-		jMenuRender.add(jCheckBoxMenuItem6);
+		jMenuRender.add(jCheckBoxMenuBufferDepth);
 
 		jMenuBarMain.add(jMenuRender);
 		
@@ -488,12 +488,12 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public static javax.swing.JMenuItem jMenuItemSaveAs;
 	public javax.swing.JMenuItem jMenuItem4;
 
-	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
-	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
-	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem5;
-	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem6;	
+	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemPhysics;
+	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemWireFrame;
+	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuBounds;
+	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemNormals;
+	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemLights;
+	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuBufferDepth;	
 	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemNew;
 
 	public javax.swing.JSeparator jSeparator1;
