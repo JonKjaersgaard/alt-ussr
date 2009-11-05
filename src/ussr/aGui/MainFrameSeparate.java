@@ -81,8 +81,8 @@ public class MainFrameSeparate extends MainFrames {
 			}
 		});
 		//ConsoleSimulationExample.main(null);//WORKS
-		BuilderMultiRobotPreSimulation.setXmlSimulationFile("samples/simulations/atron/snakeSimulation.xml");
-		BuilderMultiRobotPreSimulation.main(null);
+		//BuilderMultiRobotPreSimulation.setXmlSimulationFile("samples/simulations/atron/snakeSimulation.xml");
+		//BuilderMultiRobotPreSimulation.main(null);//WORKS
 	}
 
 

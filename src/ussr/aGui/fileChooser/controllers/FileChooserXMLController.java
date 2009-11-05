@@ -51,7 +51,7 @@ public class FileChooserXMLController extends FileChooserController {
 	  			
 	  			//BuilderMultiRobotPreSimulation.setXmlSimulationFile(fileDirectoryName);
 	  			//BuilderMultiRobotPreSimulation.main(null);
-	  			//ConsoleSimulationExample.main(null);
+	  			ConsoleSimulationExample.main(null);
 	  			
 	  		}else if (command.equalsIgnoreCase(ActionCommands.CANCELSELECTION.toString())){//Cancel pressed			
 	  			fileChooserFrame.dispose();//close the frame(window) 	  			
