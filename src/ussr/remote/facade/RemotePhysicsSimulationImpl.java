@@ -65,6 +65,11 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
     
     public void setRealtime(boolean realtime)throws RemoteException{
     	simulation.setRealtime(realtime);
-    };
+    }
+
+	@Override
+	public void setSingleStep(boolean singleStep) throws RemoteException {
+		simulation.setSingleStep(singleStep);
+	};
 
 }

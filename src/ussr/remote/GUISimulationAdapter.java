@@ -6,19 +6,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 
-import ussr.builder.BuilderMultiRobotPreSimulation;
+
+import ussr.aGui.MainFrameController;
 import ussr.remote.facade.ActiveSimulation;
-import ussr.remote.facade.ParameterHolder;
+
 import ussr.remote.facade.RemotePhysicsSimulation;
-import ussr.samples.atron.simulations.ATRONSimpleVehicleSimulation;
-import ussr.samples.atron.simulations.ATRONSimulation1;
+
 
 /**
  * Frontend example: a main application that starts a single simulation using the remote facility 
  * provided by this package
  * @author ups
  */
-public class GUISimulationStarter {
+public class GUISimulationAdapter {
 
     public static final int SERVER_PORT = 54323;
 
@@ -45,7 +45,7 @@ public class GUISimulationStarter {
     
     public static void consoleSimulationExample() throws IOException { 
         // Start a simulation server (one that manages a number of running simulation processes)
-        SimulationLauncherServer server = new SimulationLauncherServer(GUISimulationStarter.SERVER_PORT);
+        SimulationLauncherServer server = new SimulationLauncherServer(GUISimulationAdapter.SERVER_PORT);
         // Start a simulation server process
         final ActiveSimulation simulation = server.launchSimulation();
         // Discard standard out (avoid buffers running full)
@@ -82,6 +82,7 @@ public class GUISimulationStarter {
         while(sim==null) {
             System.out.println("Simulation still null");
             sim = simulation.getSimulation();
+            MainFrameController.setRemotePhysicsSimulation(sim);//pass remote physics simulation to GUI controller 
             try {
                 Thread.sleep(1000);
             } catch(InterruptedException exn) {
@@ -89,7 +90,7 @@ public class GUISimulationStarter {
             }
         }
         // Continuously print the status of the remote simulation (example of remote access)
-        /*while(true) {
+    /*    while(true) {
             System.out.println(" remote simulation isPaused()="+sim.isPaused());
             try {
                 Thread.sleep(1000);

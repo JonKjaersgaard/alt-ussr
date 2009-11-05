@@ -67,8 +67,18 @@ public interface RemotePhysicsSimulation extends Remote {
      */
     public boolean isStopped() throws RemoteException;
 
-    
+    /**
+	 * Set whether the simulation is running in real time.
+	 * @param realtime, true if the simulation should running in real time, false - fast mode.
+	 */
     public void setRealtime(boolean realtime) throws RemoteException;
+    
+    /**
+	 * Set whether the simulation is single step.
+	 * @param singleStep,the state of simulation step.
+	 */
+    public void setSingleStep(boolean singleStep)throws RemoteException;
+    
     
     /**
      * Get the current simulation time
