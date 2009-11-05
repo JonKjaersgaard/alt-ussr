@@ -936,7 +936,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 * Returns the state of showing normals. 
 	 * @return showNormals, the state of showing normals. 
 	 */
-	public boolean isShowNormals() {
+	public boolean isShowingNormals() {
 		return showNormals;
 	}
 
@@ -952,7 +952,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 * Returns the state of showing bounds. 
 	 * @return showBounds, the state of showing bounds.
 	 */
-	public boolean isShowBounds() {
+	public boolean isShowingBounds() {
 		return showBounds;
 	}
 
@@ -967,7 +967,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 * Returns the state of showing physics. 
 	 * @return showPhysics, the state of showing physics.
 	 */
-	public boolean isShowPhysics() {
+	public boolean isShowingPhysics() {
 		return showPhysics;
 	}
 	/**
@@ -985,7 +985,16 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public LightState getLightState() {
 		return lightState;
 	}
-
+	
+	
+	/**
+	 * Checks whenever lights are enabled. 
+	 * @return boolean, true for shown.  
+	 */
+	public boolean isLightStateShowing() {
+		return lightState.isEnabled();
+	}
+	
 	/**
 	 * Sets the state of showing lights.
 	 * @param lightState, the state of showing lights.
@@ -993,14 +1002,39 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public void setLightState(LightState lightState) {
 		this.lightState = lightState;
 	}
+	
+	/**
+	 * Sets whenever lights are shown .
+	 * @param enabled, true for showing lights.
+	 */
+	public void setLightStateShowing(boolean enabled) {
+		lightState.setEnabled(enabled);
+	}
 
 	/**
-	 *  Returns the state of showing wireFrame.
-	 * @return wireState, the state of showing wireFrame.
+	 *  Returns the wireFrame.
+	 * @return wireState, the wireFrame.
 	 */
-	public WireframeState getWireState() {
+	public WireframeState getWireFrame() {
 		return wireState;
 	}
+	
+	/**
+	 *  Returns the state of showing wireFrame.
+	 * @return wireState,  the state of showing wireFrame.
+	 */
+	public boolean isWireFrameEnabled() {
+		return wireState.isEnabled();
+	}
+	
+	/**
+	 *  Sets whenever wire state is enabled(shown).
+	 * @return enabled, the state of showing wireFrame.
+	 */
+	public void setWireFrameEnabled(boolean enabled) {
+		 wireState.setEnabled(enabled);
+	}
+	
 	/**
 	 *  Sets the state of showing wireFrame.
 	 * @param wireState, the state of showing wireFrame.
@@ -1013,7 +1047,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 * Returns the state of showing the depth of the buffer.
 	 * @return showDepth, the state of showing the depth of the buffer.
 	 */
-	public boolean isShowDepth() {
+	public boolean isShowingDepth() {
 		return showDepth;
 	}
 
