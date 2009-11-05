@@ -136,6 +136,12 @@ public interface PhysicsSimulation {
 	 * @param realtime, true if the simulation should running in real time.
 	 */
 	public void setRealtime(boolean realtime);
+	
+	/**
+	 * Set whether the simulation is single step.
+	 * @param singleStep,the state of simulation step.
+	 */
+	public void setSingleStep(boolean singleStep);	
 
 	/**
 	 * Obtain a reference to the simulation helper, which contains various utility
