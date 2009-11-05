@@ -72,7 +72,7 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 	/*UNCOMMENT ONE OF US TO LOAD SIMULATION FROM XML FILE*/
 	//private  static final String loadableSimulationFile ="samples/simulations/atron/simpleVehicleSim.xml";
 	//private  static final String loadableSimulationFile ="samples/simulations/atron/simulation1.xml";
-	private  static final String loadableSimulationFile ="samples/simulations/atron/snakeSimulation.xml";
+	//private  static final String loadableSimulationFile ="samples/simulations/atron/snakeSimulation.xml";
 	
 	private static Map<TagsUsed,String> simulationWorldDescription;
 	private static Map<TagsUsed,String> simulationPhysicsParameters; 
@@ -90,6 +90,9 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		}	*/	
 		runSimulationFromXMLFile();	
 	}
+	
+	private static SimulationDescriptionConverter descriptionConverter ;
+	
 	private static void runSimulationFromXMLFile(){
 
 		/*Activate connectors*/
@@ -97,34 +100,39 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 				
 		/*Load Simulation Configuration file*/
 		SaveLoadXMLFileTemplate xmlLoaderSimulation = new PreSimulationXMLSerializer(new PhysicsParameters());
-		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, loadableSimulationFile);
+		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, xmlSimulationFile);
+		//xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, loadableSimulationFile);
         
 		/*Get values from XML file*/
 		simulationWorldDescription = xmlLoaderSimulation.getSimulationDescriptionValues();
         simulationPhysicsParameters = xmlLoaderSimulation.getSimulationPhysicsValues();
 		
         /*Converter for converting values from String into corresponding type used in USSR*/
-        SimulationDescriptionConverter descriptionConverter =  new SimulationDescriptionConverter(simulationWorldDescription,simulationPhysicsParameters); 
+         descriptionConverter =  new SimulationDescriptionConverter(simulationWorldDescription,simulationPhysicsParameters); 
         
         /*Get and set values*/
-        PhysicsParameters.get().setWorldDampingLinearVelocity(descriptionConverter.convertWorldDampingLinearVelocity());
-        PhysicsParameters.get().setWorldDampingAngularVelocity(descriptionConverter.convertWorldDampingAngularVelocity());
-        PhysicsParameters.get().setPhysicsSimulationStepSize(descriptionConverter.convertPhysicsSimulationStepSize());
-        PhysicsParameters.get().setRealisticCollision(descriptionConverter.covertRealisticCollision());
-        PhysicsParameters.get().setGravity(descriptionConverter.covertGravity());
-        PhysicsParameters.get().setPlaneMaterial(descriptionConverter.covertMaterial());
-        PhysicsParameters.get().setMaintainRotationalJointPositions(descriptionConverter.convertMaintainRotationalJointPositions());
-//       /*Not supported yet*/ HAS_MECHANICAL_CONNECTOR_SPRINGINESS,
-//       /*Not supported yet*/ MECHANICAL_CONNECTOR_CONSTANT,
-//       /*Not supported yet*/MECHANICAL_CONNECTOR_DAMPING,
-        PhysicsParameters.get().setConstraintForceMix(descriptionConverter.convertConstraintForceMix());
-        PhysicsParameters.get().setErrorReductionParameter(descriptionConverter.convertErrorReductionParameter());
-        PhysicsParameters.get().setResolutionFactor(descriptionConverter.convertResolutionFactor());
-        PhysicsParameters.get().setUseModuleEventQueue(descriptionConverter.convertUseModuleEventQueue());
-        PhysicsParameters.get().setSyncWithControllers(descriptionConverter.convertSyncWithControllers());
-        PhysicsParameters.get().setPhysicsSimulationControllerStepFactor(descriptionConverter.convertPhysicsSimulationControllerStepFactor());
+        setPhysicsParatemeters(descriptionConverter);
        	
 		simulation.runSimulation(null,true);
+	}
+	
+	private static void setPhysicsParatemeters(SimulationDescriptionConverter descriptionConverter){
+	      PhysicsParameters.get().setWorldDampingLinearVelocity(descriptionConverter.convertWorldDampingLinearVelocity());
+	        PhysicsParameters.get().setWorldDampingAngularVelocity(descriptionConverter.convertWorldDampingAngularVelocity());
+	        PhysicsParameters.get().setPhysicsSimulationStepSize(descriptionConverter.convertPhysicsSimulationStepSize());
+	        PhysicsParameters.get().setRealisticCollision(descriptionConverter.covertRealisticCollision());
+	        PhysicsParameters.get().setGravity(descriptionConverter.covertGravity());
+	        PhysicsParameters.get().setPlaneMaterial(descriptionConverter.covertMaterial());
+	        PhysicsParameters.get().setMaintainRotationalJointPositions(descriptionConverter.convertMaintainRotationalJointPositions());
+//	       /*Not supported yet*/ HAS_MECHANICAL_CONNECTOR_SPRINGINESS,
+//	       /*Not supported yet*/ MECHANICAL_CONNECTOR_CONSTANT,
+//	       /*Not supported yet*/MECHANICAL_CONNECTOR_DAMPING,
+	        PhysicsParameters.get().setConstraintForceMix(descriptionConverter.convertConstraintForceMix());
+	        PhysicsParameters.get().setErrorReductionParameter(descriptionConverter.convertErrorReductionParameter());
+	        PhysicsParameters.get().setResolutionFactor(descriptionConverter.convertResolutionFactor());
+	        PhysicsParameters.get().setUseModuleEventQueue(descriptionConverter.convertUseModuleEventQueue());
+	        PhysicsParameters.get().setSyncWithControllers(descriptionConverter.convertSyncWithControllers());
+	        PhysicsParameters.get().setPhysicsSimulationControllerStepFactor(descriptionConverter.convertPhysicsSimulationControllerStepFactor());
 	}
 
 	/**
@@ -233,25 +241,26 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 	 */
 	private static WorldDescription createWorld() {
 		/*Extract values*/
-		int planeSize =Integer.parseInt(simulationWorldDescription.get(TagsUsed.PLANE_SIZE)) ;
-	    String textureFile = simulationWorldDescription.get(TagsUsed.PLANE_TEXTURE);
-	    System.out.println("tEXTURE:"+textureFile );
+		//int planeSize =Integer.parseInt(simulationWorldDescription.get(TagsUsed.PLANE_SIZE)) ;
+	    //String textureFile = simulationWorldDescription.get(TagsUsed.PLANE_TEXTURE);
+	    
+	   // System.out.println("tEXTURE:"+textureFile );
 	    
 	    /*Local container for all textures*/
 	    //FIXME SHOULD I COUPLE YOU WITH WORLD_DESCRIPTION?
-	    Map<String,TextureDescription> containerTextureDesc = new Hashtable<String, TextureDescription>(); 
+	  /*  Map<String,TextureDescription> containerTextureDesc = new Hashtable<String, TextureDescription>(); 
 	     
 	    containerTextureDesc.put(WorldDescription.GRASS_TEXTURE.getFileName(), WorldDescription.GRASS_TEXTURE);
 	    containerTextureDesc.put(WorldDescription.GREY_GRID_TEXTURE.getFileName(), WorldDescription.GREY_GRID_TEXTURE);
 	    containerTextureDesc.put(WorldDescription.MARS_TEXTURE.getFileName(), WorldDescription.MARS_TEXTURE);
 	    containerTextureDesc.put(WorldDescription.WHITE_GRID_TEXTURE.getFileName(), WorldDescription.WHITE_GRID_TEXTURE);
-	    containerTextureDesc.put(WorldDescription.WHITE_TEXTURE.getFileName(), WorldDescription.WHITE_TEXTURE);
+	    containerTextureDesc.put(WorldDescription.WHITE_TEXTURE.getFileName(), WorldDescription.WHITE_TEXTURE);*/
 	    
-	    TextureDescription textureDescription = containerTextureDesc.get(textureFile);
+	    //TextureDescription textureDescription = containerTextureDesc.get(textureFile);
 	    
-		String cameraPosition = simulationWorldDescription.get(TagsUsed.CAMERA_POSITION);
-		boolean theWorldIsFlat = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.THE_WORLD_IS_FLAT));
-		boolean hasClouds = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.HAS_BACKGROUND_SCENERY));
+		//String cameraPosition = simulationWorldDescription.get(TagsUsed.CAMERA_POSITION);
+		//boolean theWorldIsFlat = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.THE_WORLD_IS_FLAT));
+		//boolean hasClouds = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.HAS_BACKGROUND_SCENERY));
 		boolean heavyObstacles = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.HAS_HEAVY_OBSTACLES));
 		boolean isActive = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.IS_FRAME_GRABBING_ACTIVE));
 		//boolean heavyObstacles = Boolean.parseBoolean(simulationDescription.get(TagsUsed.HAS_HEAVY_OBSTACLES));
@@ -259,11 +268,11 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		
 		/*Assign values to world*/
 		WorldDescription world = new WorldDescription();	        
-		world.setPlaneSize(planeSize);
-		world.setPlaneTexture(textureDescription);
-		world.setCameraPosition(CameraPosition.valueOf(cameraPosition));
-		world.setFlatWorld(theWorldIsFlat);
-		world.setHasBackgroundScenery(hasClouds);
+		world.setPlaneSize(descriptionConverter.convertPlaneSize());
+		world.setPlaneTexture(descriptionConverter.covertPlaneTexture());
+		world.setCameraPosition(descriptionConverter.convertCameraPosition());
+		world.setFlatWorld(descriptionConverter.convertTheWorldIsFlat());
+		world.setHasBackgroundScenery(descriptionConverter.convertHasClouds());
 		world.setHeavyObstacles(heavyObstacles);
 		world.setIsFrameGrabbingActive(isActive);
 		//TODO world.setBigObstacles(bigObstacles);
