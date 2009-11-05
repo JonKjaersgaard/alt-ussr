@@ -1448,7 +1448,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void normalsjCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                 
 		//System.out.println("RenderToolbar-->Normals");//for debugging       
-		if ( JME_simulation.isShowNormals() == false ){            
+		if ( JME_simulation.isShowingNormals() == false ){            
 			normalsjCheckBox.setSelected(true);
 			JME_simulation.setShowNormals(true);
 			guiHelper.passTo(AssistantjTextField, "Rendering normals");// informing user
@@ -1465,7 +1465,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void boundsjCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                
 		// System.out.println("Render toolbar-->Wireframe");//for debugging        
-		if ( JME_simulation.isShowBounds() == false ){        
+		if ( JME_simulation.isShowingBounds() == false ){        
 			boundsjCheckBox.setSelected(true);
 			JME_simulation.setShowBounds(true);
 			guiHelper.passTo(AssistantjTextField, "Rendering wireframe");// informing user
@@ -1482,15 +1482,15 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	 
 	private void wireFramejCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                   
 		// System.out.println("Render toolbar-->Wireframe");//for debugging        
-		if ( JME_simulation.getWireState().isEnabled() == false ){        
+	/*	if ( JME_simulation.getWireFrame().isEnabled() == false ){        
 			wireFramejCheckBox.setSelected(true);
-			JME_simulation.getWireState().setEnabled(true);
+			JME_simulation.getWireFrame().setEnabled(true);
 			guiHelper.passTo(AssistantjTextField, "Rendering wireframe");// informing user
 		}else {            
 			wireFramejCheckBox.setSelected(false);
-			JME_simulation.getWireState().setEnabled(false);
+			JME_simulation.getWireFrame().setEnabled(false);
 			guiHelper.passTo(AssistantjTextField, "Stopped rendering wireframe");// informing user
-		}       
+		}  */     
 	}                                                  
 
 	/**
@@ -1499,7 +1499,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	 
 	private void physicsjCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {                                                 
 		//System.out.println("Render toolbar-->Physics");//for debugging        
-		if (JME_simulation.isShowPhysics() == false ){                             
+		if (JME_simulation.isShowingPhysics() == false ){                             
 			physicsjCheckBox.setSelected(true);
 			JME_simulation.setShowPhysics(true);
 			guiHelper.passTo(AssistantjTextField, "Rendering physics");// informing user
