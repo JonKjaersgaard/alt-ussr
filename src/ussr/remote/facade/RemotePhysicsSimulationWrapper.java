@@ -51,4 +51,15 @@ public class RemotePhysicsSimulationWrapper extends UnicastRemoteObject implemen
         simulation.stop();
     }
 
+	@Override
+	public void setPause(boolean paused) throws RemoteException {
+		simulation.setPause(paused);
+		
+	}
+
+	@Override
+	public void setRealtime(boolean realtime)throws RemoteException {
+		simulation.setRealtime(realtime);		
+	}
+
 }

@@ -20,7 +20,7 @@ import ussr.physics.PhysicsSimulation;
  * @author ups
  *
  */
-public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements RemotePhysicsSimulation {
+public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements RemotePhysicsSimulation  {
     private PhysicsSimulation simulation;
     
     public RemotePhysicsSimulationImpl(PhysicsSimulation simulation) throws RemoteException {
@@ -33,6 +33,10 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 
     public boolean isPaused() throws RemoteException {
         return simulation.isPaused();
+    }
+    
+    public void setPause(boolean paused) throws RemoteException {
+     simulation.setPause(paused);
     }
 
     public boolean isStopped() throws RemoteException {
@@ -58,5 +62,9 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
     public void stop() throws RemoteException {
         simulation.stop();
     }
+    
+    public void setRealtime(boolean realtime)throws RemoteException{
+    	simulation.setRealtime(realtime);
+    };
 
 }

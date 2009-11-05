@@ -56,11 +56,20 @@ public interface RemotePhysicsSimulation extends Remote {
     public boolean isPaused() throws RemoteException;
     
     /**
+     * Set whether the simulation is paused.
+     * @param paused, true if simulation should be paused. 
+     */
+    public void setPause(boolean paused) throws RemoteException;
+    
+    /**
      * Test whether the simulation has been stopped
      * @return true if the simulation has been stopped, false otherwise
      */
     public boolean isStopped() throws RemoteException;
 
+    
+    public void setRealtime(boolean realtime) throws RemoteException;
+    
     /**
      * Get the current simulation time
      * @return the simulation time
