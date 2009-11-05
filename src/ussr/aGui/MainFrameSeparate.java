@@ -6,6 +6,7 @@ import java.awt.event.WindowEvent;
 
 import ussr.builder.BuilderMultiRobotPreSimulation;
 import ussr.remote.ConsoleSimulationExample;
+import ussr.remote.GUISimulationAdapter;
 /**
  * Defines visual appearance of the main GUI frame (window), separate from simulation environment.
  * @author Konstantinas
@@ -77,8 +78,16 @@ public class MainFrameSeparate extends MainFrames {
 				mainFrame.setVisible(true);	
 			}
 		});
+		runDefaultRemoteSimulation();
 	}
 
+	private static void runDefaultRemoteSimulation(){
+		new Thread() {
+			public void run() {
+				GUISimulationAdapter.main(null);
+			}
+		}.start();
+	}
 
 	@Override
 	public void activate() {

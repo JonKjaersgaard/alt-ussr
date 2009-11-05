@@ -11,16 +11,17 @@ import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.remote.ConsoleSimulationExample;
-import ussr.remote.GUISimulationStarter;
+import ussr.remote.GUISimulationAdapter;
 import ussr.remote.facade.RemotePhysicsSimulation;
 
 
 public class MainFrameController {
 
 
+	/**
+	 * The remote(running of separate JVM than GUI) physics simulation.
+	 */
 	private static RemotePhysicsSimulation remotePhysicsSimulation;
-
-
 
 	/**
 	 * Executes closing of main window(frame)by terminating Java Virtual Machine.
@@ -28,8 +29,6 @@ public class MainFrameController {
 	public static void jMenuItemExitActionPerformed() {	
 		System.exit(0);	
 	} 
-
-
 
 	/**
 	 * Opens file chooser in the form of Open dialog
@@ -47,48 +46,52 @@ public class MainFrameController {
 		fcSaveFrame.activate();				
 	}
 
+	/**
+	 * Keeps track for how many times simulation was started, so that only first time all connectors on the modules will be connected.
+	 */
 	private static int timesSelected =0;
 
 	/**
-	 * Starts running simulation in real time.
+	 * Starts running remote simulation in real time.
 	 */
 	public static void jButtonRunRealTimeActionPerformed() {
-		remotePhysicsSimulation = GUISimulationStarter.getSim();
-
 		ConstructRobotTab.setTabEnabled(false);
-
-		timesSelected++;
+	
 		try {
 			if (remotePhysicsSimulation.isPaused()){// Start simulation in real time, if simulation is in paused state
 				remotePhysicsSimulation.setPause(false);				
 			}
 			remotePhysicsSimulation.setRealtime(true);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new Error ("Pausing or running remote simulation in real time failed, due to remote exception");
 		}
+
+		timesSelected++;
+
 		//connectModules(jmeSimulation);
 		//jmeSimulation.setPicker(new PhysicsPicker());*/
 	}
 
 
 	/**
-	 * Controls running simulation in fast time.
-	 * @param jmeSimulation
+	 * Starts running remote simulation in fast mode.
 	 */
-	public static void jButtonRunFastActionPerformed(JMESimulation jmeSimulation) {
+	public static void jButtonRunFastActionPerformed() {
 
 		ConstructRobotTab.setTabEnabled(false);		
 
-		if (jmeSimulation.isPaused()){// Start simulation  fast, if simulation is in paused state
-			jmeSimulation.setRealtime(false);
-			jmeSimulation.setPause(false);				
-		}else if (jmeSimulation.isRealtime()==true){//if simulation in real time, then run it fast
-			jmeSimulation.setRealtime(false);
-		}	
+		try {
+			if (remotePhysicsSimulation.isPaused()){// Start simulation  fast, if simulation is in paused state
+				remotePhysicsSimulation.setPause(false);				
+			}
+			remotePhysicsSimulation.setRealtime(false);
+		} catch (RemoteException e) {
+			throw new Error ("Pausing or running remote simulation in fast mode failed, due to remote exception");
+		}
+
 		timesSelected++;
-		connectModules(jmeSimulation);
-		jmeSimulation.setPicker(new PhysicsPicker());
+		//connectModules(jmeSimulation);
+		//jmeSimulation.setPicker(new PhysicsPicker());
 	}
 
 	private static void connectModules(JMESimulation jmeSimulation){
@@ -101,6 +104,49 @@ public class MainFrameController {
 		}		
 	}
 
+	/**
+	 * Executes running remote simulation in step by step fashion.
+	 */
+	public static void jButtonRunStepByStepActionPerformed() {       	
+		ConstructRobotTab.setTabEnabled(false);		
+		timesSelected++;
+		//connectModules(jmeSimulation);
+
+		try {
+			remotePhysicsSimulation.setPause(true);
+			remotePhysicsSimulation.setSingleStep(true);
+		} catch (RemoteException e) {
+			throw new Error ("Running remote simulation in single step mode failed, due to remote exception");
+		}		
+	}
+	
+	
+	/**
+	 * Pauses remote simulation.
+	 */
+	public static void jButtonPauseActionPerformed() {       	
+			try {
+				if (remotePhysicsSimulation.isPaused()==false){
+					remotePhysicsSimulation.setPause(true);
+				}
+			} catch (RemoteException e) {
+				throw new Error ("Pausing remote simulation failed, due to remote exception");
+			}
+	}
+	
+	public static void jButtonTerminateActionPerformed() {
+		try {
+			remotePhysicsSimulation.stop();			
+		} catch (RemoteException e) {
+			throw new Error ("Termination of remote simulation failed, due to remote exception");
+		}
+		
+	}
+	
+	
+	
+	
+	
 	/**
 	 * Renders or stops rendering the physics during simulation.
 	 * @param jCheckBoxMenuItem1
@@ -205,34 +251,9 @@ public class MainFrameController {
 	}
 
 
-	/**
-	 * Executes running simulation in step by step fashion.
-	 * @param jmeSimulation
-	 */
-	public static void jButtonRunStepByStepActionPerformed(JMESimulation jmeSimulation) {       	
-		ConstructRobotTab.setTabEnabled(false);		
-		timesSelected++;
-		connectModules(jmeSimulation);
+	
 
-		jmeSimulation.setPause(true);
-		jmeSimulation.setSingleStep(true);
-	}
-
-	/**
-	 * Controls pausing of running simulation.
-	 * @param jmeSimulation
-	 */
-	public static void jButtonPauseActionPerformed(JMESimulation jmeSimulation) {       	
-		/*	if (jmeSimulation.isPaused()==false)
-			jmeSimulation.setPause(true);*/
-
-
-		new Thread() {
-			public void run() {
-				ConsoleSimulationExample.main(null);
-			}
-		}.start();
-	}
+	
 
 
 	/**
@@ -318,5 +339,16 @@ public class MainFrameController {
 		}		
 	}
 
+
+
+	/**
+	 * Sets remote physics simulation for this controller.
+	 * @param remotePhysicsSimulation, the remote physics simulation.
+	 */
+	public static void setRemotePhysicsSimulation(RemotePhysicsSimulation remotePhysicsSimulation) {
+		MainFrameController.remotePhysicsSimulation = remotePhysicsSimulation;
+	}
+
+	
 
 }

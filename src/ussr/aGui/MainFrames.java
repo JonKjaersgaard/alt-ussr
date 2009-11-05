@@ -260,6 +260,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonRunStepByStep = new javax.swing.JButton();		
 		jButtonRunFast = new javax.swing.JButton();
 		jButtonPause = new javax.swing.JButton();
+		jButtonTerminate = new javax.swing.JButton();
 		jSeparator3 = new javax.swing.JToolBar.Separator();			
 		jSeparator4 = new javax.swing.JToolBar.Separator();
 		jSeparator5 = new javax.swing.JToolBar.Separator();
@@ -284,7 +285,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonRunFast.setPreferredSize(new java.awt.Dimension(30, 30));      
 		jButtonRunFast.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jButtonRunFastActionPerformed(jmeSimulation);        	  
+				MainFrameController.jButtonRunFastActionPerformed();        	  
 			}
 		});
 
@@ -299,7 +300,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonRunStepByStep.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jButtonRunStepByStep.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jButtonRunStepByStepActionPerformed(jmeSimulation);
+				MainFrameController.jButtonRunStepByStepActionPerformed();
 			}
 		});
 		jToolBarGeneralControl.add(jButtonRunStepByStep);
@@ -309,10 +310,20 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonPause.setFocusable(false);   
 		jButtonPause.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameController.jButtonPauseActionPerformed(jmeSimulation);
+				MainFrameController.jButtonPauseActionPerformed();
 			}
 		});
 		jToolBarGeneralControl.add(jButtonPause);
+		
+		jButtonTerminate.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + TERMINATE));
+		jButtonTerminate.setToolTipText("Terminate");
+		jButtonTerminate.setFocusable(false);   
+		jButtonTerminate.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameController.jButtonTerminateActionPerformed();
+			}
+		});
+		jToolBarGeneralControl.add(jButtonTerminate);
 		
 		jSeparator3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jSeparator3);
@@ -504,6 +515,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	
 	public javax.swing.JButton jButtonRunFast;
 	public javax.swing.JButton jButtonPause;
+	public javax.swing.JButton jButtonTerminate;
 
 	public javax.swing.JLabel jLabel1;
 	public javax.swing.JLabel jLabel3;
