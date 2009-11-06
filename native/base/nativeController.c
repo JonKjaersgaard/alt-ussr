@@ -20,7 +20,8 @@ JNIEXPORT void JNICALL Java_ussr_model_NativeController_nativeActivate(JNIEnv *j
   env.controller = self;
   env.context = initializationContext;
   /* Wait for simulator to be unpaused, otherwise system becomes unstable (e.g., JNI method lookup fails incorrectly). Maybe problem with unchecked exceptions bug? */
-  controllerIterationSimulatorHook(&env,0);
+  //now it seems ok, but we keep this to yield after .start
+  controllerIterationSimulatorHook(&env, 1);
   activate(&env);
 }
 
