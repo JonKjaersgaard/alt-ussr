@@ -361,7 +361,7 @@ public class MainFrameController {
 
 
 
-	/*Setters and getters*/
+	/*Setters*/
 	/**
 	 * Sets builder controller of remote simulation for this controller.
 	 * @param builderController,builder controller of remote simulation.
@@ -369,15 +369,7 @@ public class MainFrameController {
 	public static void setBuilderControl(BuilderControlInter builderController) {
 		MainFrameController.builderControl = builderController;
 	}
-
-	/**
-	 * Returns builder controller of remote simulation.
-	 * @return builder controller of remote simulation.
-	 */
-	public static BuilderControlInter getBuilderController() {
-		return builderControl;
-	}
-
+	
 	/**
 	 * Sets remote physics simulation for this controller.
 	 * @param remotePhysicsSimulation, the remote physics simulation.

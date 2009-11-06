@@ -229,7 +229,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonOppositeRotation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setSelectionDeselection(jButtonOppositeRotation);
-				ConstructRobotTabController.jButtonOppositeRotationActionPerformed(jmeSimulation);
+				ConstructRobotTabController.jButtonOppositeRotationActionPerformed();
 			}
 		});
 

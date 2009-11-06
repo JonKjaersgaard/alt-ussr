@@ -13,8 +13,6 @@ import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter.EntitiesForLabelingText;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
-import ussr.builder.genericTools.Identifier;
-import ussr.builder.genericTools.TypesIdentifier;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.labelingTools.LabeledEntities;
 import ussr.builder.labelingTools.LabelingTemplate;

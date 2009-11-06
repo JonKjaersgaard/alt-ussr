@@ -5,8 +5,6 @@ import java.rmi.RemoteException;
 import javax.swing.AbstractButton;
 import javax.swing.JComboBox;
 
-import ussr.aGui.MainFrameController;
-import ussr.aGui.tabs.TabsInter;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
 import ussr.builder.constructionTools.CKBotOperationsTemplate;
@@ -15,16 +13,15 @@ import ussr.builder.constructionTools.ConstructionToolSpecification;
 import ussr.builder.constructionTools.ConstructionTools;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
-import ussr.builder.genericTools.ColorConnectors;
-import ussr.builder.genericTools.RemoveModule;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
-import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.remote.facade.BuilderControlInter;
 import ussr.remote.facade.BuilderSupportingPickers;
+import ussr.remote.facade.RemotePhysicsSimulation;
 import ussr.samples.odin.modules.Odin;
+import ussr.aGui.MainFrameController;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTabInter;
@@ -36,9 +33,19 @@ import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTabInter;
  */
 public class ConstructRobotTabController implements ConstructRobotTabInter{
 
+	
+	/**
+	 * The remote(running of separate JVM than GUI) physics simulation.
+	 */
+	private static RemotePhysicsSimulation remotePhysicsSimulation; 
+	
+	/**
+	 * Remote version of builder controller object.
+	 */
 	private static BuilderControlInter builderControl;
+		
 	
-	
+
 	/**
 	 * Local reference to physical simulation.
 	 */
@@ -57,7 +64,7 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	 *  The name of  default(chosen) modular robot.
 	 *  Just do not have the case when it is empty.
 	 */
-	private static SupportedModularRobots chosenMRname = SupportedModularRobots.ATRON; 
+	 private  static SupportedModularRobots chosenMRname = SupportedModularRobots.ATRON;	
 
 
 	/**
@@ -296,8 +303,15 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	 * Initializes the tool for rotating modules selected in simulation environment with opposite rotation. 
 	 * @param jmeSimulation, the physical simulation.     
 	 */	
-	public static void jButtonOppositeRotationActionPerformed(JMESimulation jmeSimulation) {
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.OPPOSITE_ROTATION));
+	public static void jButtonOppositeRotationActionPerformed() {
+		//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.OPPOSITE_ROTATION));
+	/*	try {
+			builderControl.setPicker();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[2]);
 	}
@@ -485,6 +499,10 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 
 	}
 	
+	public static SupportedModularRobots getChosenMRname() {
+		return chosenMRname;
+	}
+	
 	/**
 	 * Sets builder controller of remote simulation for this controller.
 	 * @param builderControl,builder controller of remote simulation.
@@ -493,4 +511,15 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 		ConstructRobotTabController.builderControl = builderControl;
 	}
 
+	/**
+	 * Sets remote physics simulation for this controller.
+	 * @param remotePhysicsSimulation, the remote physics simulation.
+	 */
+	public static void setRemotePhysicsSimulation(RemotePhysicsSimulation remotePhysicsSimulation) {
+		ConstructRobotTabController.remotePhysicsSimulation = remotePhysicsSimulation;
+	}
+	
+	public static BuilderControlInter getBuilderControl() {
+		return builderControl;
+	}
 }
