@@ -473,7 +473,6 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     public void setWorld(WorldDescription world) {
         this.worldDescription = world;        
     }
-
     /**
      * 
      */
