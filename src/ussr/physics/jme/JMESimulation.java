@@ -48,7 +48,6 @@ import ussr.physics.jme.connectors.JMEBasicConnector;
 import ussr.physics.jme.connectors.JMEConnector;
 import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.physics.jme.pickers.Picker;
-import ussr.remote.facade.RemotePhysicsSimulation;
 import ussr.util.TopologyWriter;
 import ussr.util.WindowSaver;
 import ussr.visualization.DataDumper;
