@@ -8,7 +8,12 @@ import com.jme.scene.state.LightState;
 import com.jme.scene.state.WireframeState;
 
 import ussr.physics.jme.JMESimulation;
+import ussr.physics.jme.pickers.Picker;
 
+/**
+ * Wrapper class for remote objects of rendering control.
+ * @author Konstantinas
+ */
 public class JMERendererControlWrapper extends UnicastRemoteObject implements SimulationRendererControlInter {
 
 	private JMESimulation jmeSimulation;	
@@ -137,7 +142,4 @@ public class JMERendererControlWrapper extends UnicastRemoteObject implements Si
 	public void setShowDepth(boolean showDepth)throws RemoteException{
 		jmeSimulation.setShowDepth(showDepth);
 	}
-
-
-
 }

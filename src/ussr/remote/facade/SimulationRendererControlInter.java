@@ -2,10 +2,13 @@ package ussr.remote.facade;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-
 import com.jme.scene.state.LightState;
 import com.jme.scene.state.WireframeState;
 
+/**
+ * Remote version of rendering control.
+ * @author Konstantinas
+ */
 public interface SimulationRendererControlInter extends Remote {
 
 	/**
@@ -99,4 +102,5 @@ public interface SimulationRendererControlInter extends Remote {
 	 * @param showDepth, the state of showing the depth of the buffer.
 	 */
 	public void setShowDepth(boolean showDepth)throws RemoteException;	
+	
 }

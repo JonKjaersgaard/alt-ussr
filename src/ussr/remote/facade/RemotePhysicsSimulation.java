@@ -8,6 +8,7 @@ import com.jme.scene.state.WireframeState;
 
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
+import ussr.physics.jme.pickers.Picker;
 
 /**
  * Remote version of the standard PhysicsSimulation interface.
@@ -81,7 +82,7 @@ public interface RemotePhysicsSimulation extends Remote {
 	 * @param singleStep,the state of simulation step.
 	 */
     public void setSingleStep(boolean singleStep)throws RemoteException;
-    
+        
 	
 	/**
 	 * Returns the object for controlling rendering of remote simulation.
@@ -89,6 +90,11 @@ public interface RemotePhysicsSimulation extends Remote {
 	 */
 	public SimulationRendererControlInter getRendererControl()throws RemoteException;
 	
+	/**
+	 * Returns the object for building modular robot in remote simulation.
+	 * @return object, for building modular robot in remote simulation.
+	 */
+	public BuilderControlInter getBuilderControl()throws RemoteException;
 		
     /**
      * Get the current simulation time

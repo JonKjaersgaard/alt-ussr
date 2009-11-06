@@ -11,6 +11,7 @@ import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
+import ussr.physics.jme.pickers.Picker;
 
 /**
  * Wrapper for a standard PhysicsSimulation allowing it to be used as a remote object.
@@ -78,9 +79,20 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 	}
 
 
-	
+	/**
+	 * Returns the object for controlling rendering of remote simulation.
+	 * @return object, for controlling rendering of remote simulation. 
+	 */
 	public SimulationRendererControlInter getRendererControl() throws RemoteException{
 		return new JMERendererControlWrapper((JMESimulation)simulation);
+	}
+	
+	/**
+	 * Returns the object for building modular robot in remote simulation.
+	 * @return object, for building modular robot in remote simulation.
+	 */
+	public BuilderControlInter getBuilderControl()throws RemoteException{
+		return new JMEBuilderControllerWrapper((JMESimulation)simulation);
 	}
 
 }
