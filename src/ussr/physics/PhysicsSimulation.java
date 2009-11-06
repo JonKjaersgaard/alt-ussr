@@ -15,6 +15,7 @@ import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Module;
+import ussr.physics.jme.pickers.Picker;
 
 /**
  * A physics simulation, defined independently of the underlying physics engine.  Instances
