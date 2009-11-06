@@ -10,7 +10,8 @@ import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;
-import ussr.remote.GUISimulationAdapter;
+import ussr.remote.facade.BuilderControlInter;
+import ussr.remote.facade.BuilderSupportingPickers;
 import ussr.remote.facade.RemotePhysicsSimulation;
 import ussr.remote.facade.SimulationRendererControlInter;
 
@@ -26,7 +27,16 @@ public class MainFrameController {
 	 */
 	private static RemotePhysicsSimulation remotePhysicsSimulation; 
 
+	/**
+	 * Remote version of rendering control object.
+	 */
 	private static SimulationRendererControlInter rendererControl;
+
+	/**
+	 * Remote version of builder controller object.
+	 */
+	private static BuilderControlInter builderControl;	
+
 
 	/**
 	 * Executes closing of main window(frame)by terminating Java Virtual Machine.
@@ -63,19 +73,20 @@ public class MainFrameController {
 	public static void jButtonRunRealTimeActionPerformed() {
 		ConstructRobotTab.setTabEnabled(false);
 
+
 		try {
 			if (remotePhysicsSimulation.isPaused()){// Start simulation in real time, if simulation is in paused state
 				remotePhysicsSimulation.setPause(false);				
 			}
 			remotePhysicsSimulation.setRealtime(true);
+
+			builderControl.setPicker(BuilderSupportingPickers.DEFAULT);			
 		} catch (RemoteException e) {
 			throw new Error ("Pausing or running remote simulation in real time failed, due to remote exception");
 		}
 
 		timesSelected++;
-
 		//connectModules(jmeSimulation);
-		//jmeSimulation.setPicker(new PhysicsPicker());*/
 	}
 
 
@@ -91,18 +102,19 @@ public class MainFrameController {
 				remotePhysicsSimulation.setPause(false);				
 			}
 			remotePhysicsSimulation.setRealtime(false);
+
+			builderControl.setPicker(BuilderSupportingPickers.DEFAULT);	
 		} catch (RemoteException e) {
 			throw new Error ("Pausing or running remote simulation in fast mode failed, due to remote exception");
 		}
 
 		timesSelected++;
 		//connectModules(jmeSimulation);
-		//jmeSimulation.setPicker(new PhysicsPicker());
 	}
 
 	private static void connectModules(JMESimulation jmeSimulation){
 
-		if (timesSelected==1){
+		if (timesSelected==1){			
 			BuilderHelper.connectAllModules(jmeSimulation);	
 			/*Disable GUI components responsible for opening file choosers, because it is possible to load
 			 *simulation from XML file only in static state of simulation.*/ 
@@ -347,6 +359,25 @@ public class MainFrameController {
 		}		
 	}
 
+
+
+	/*Setters and getters*/
+	/**
+	 * Sets builder controller of remote simulation for this controller.
+	 * @param builderController,builder controller of remote simulation.
+	 */
+	public static void setBuilderControl(BuilderControlInter builderController) {
+		MainFrameController.builderControl = builderController;
+	}
+
+	/**
+	 * Returns builder controller of remote simulation.
+	 * @return builder controller of remote simulation.
+	 */
+	public static BuilderControlInter getBuilderController() {
+		return builderControl;
+	}
+
 	/**
 	 * Sets remote physics simulation for this controller.
 	 * @param remotePhysicsSimulation, the remote physics simulation.
@@ -357,9 +388,11 @@ public class MainFrameController {
 
 	/**
 	 * Sets renderer control of remote physics simulation for this controller.
-	 * @param rendererControl, renderer control for remote physics simulation.
+	 * @param rendererControl, renderer control of remote physics simulation.
 	 */
 	public static void setRendererControl(SimulationRendererControlInter rendererControl) {
 		MainFrameController.rendererControl = rendererControl;
 	}
+
+
 }

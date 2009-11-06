@@ -1,8 +1,11 @@
 package ussr.aGui.tabs.controllers;
 
+import java.rmi.RemoteException;
+
 import javax.swing.AbstractButton;
 import javax.swing.JComboBox;
 
+import ussr.aGui.MainFrameController;
 import ussr.aGui.tabs.TabsInter;
 import ussr.builder.SupportedModularRobots;
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
@@ -19,6 +22,8 @@ import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
+import ussr.remote.facade.BuilderControlInter;
+import ussr.remote.facade.BuilderSupportingPickers;
 import ussr.samples.odin.modules.Odin;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
@@ -31,6 +36,9 @@ import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTabInter;
  */
 public class ConstructRobotTabController implements ConstructRobotTabInter{
 
+	private static BuilderControlInter builderControl;
+	
+	
 	/**
 	 * Local reference to physical simulation.
 	 */
@@ -67,10 +75,10 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 		adaptTabToChosenMR(chosenMRname);
 
 		/*Add initial construction module*/
-		addNewDefaultConstructionModule(jmeSimulation); 
+		//addNewDefaultConstructionModule(jmeSimulation); 
 
 		/* Set default construction tool to be "On selected  connector"*/
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
+		//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
 
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[1]);
@@ -219,7 +227,11 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	 */
 	public static void jButtonDeleteActionPerformed(JMESimulation jmeSimulation) {
 		if (chosenItem.equalsIgnoreCase("Module")){
-			jmeSimulation.setPicker(new RemoveModule());
+			try {
+				builderControl.setPicker(BuilderSupportingPickers.REMOVE_MODULE);
+			} catch (RemoteException e) {
+				throw new Error("Failed to initialize picker called REMOVE_MODULE, due to remote exception");
+			}
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
 			//TODO SUPPORT ROBOT DELETION
 		}
@@ -233,7 +245,11 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	 */
 	public static void jButtonMoveActionPerformed(JMESimulation jmeSimulation) {	
 		if (chosenItem.equalsIgnoreCase("Module")){
-			jmeSimulation.setPicker(new PhysicsPicker(true, true));
+			try {
+				builderControl.setPicker(BuilderSupportingPickers.MOVE_MODULE);
+			} catch (RemoteException e) {
+				throw new Error("Failed to initialize picker called MOVE_MODULE, due to remote exception");
+			}
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
 			//TODO Support robot deletion, moving and coloring of connectors.
 		}
@@ -247,7 +263,11 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	 */
 	public static void jButtonColorConnectorsActionPerformed(JMESimulation jmeSimulation) {	
 		if (chosenItem.equalsIgnoreCase("Module")){
-			jmeSimulation.setPicker(new ColorConnectors());	
+			try {
+				builderControl.setPicker(BuilderSupportingPickers.COLOR_CONNECTORS);
+			} catch (RemoteException e) {
+				throw new Error("Failed to initialize picker called COLOR_CONNECTORS, due to remote exception");
+			}	
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
 			//TODO  Support robot deletion, moving and coloring of connectors.
 		}
@@ -441,7 +461,7 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 		ConstructRobotTab.setRadioButtonsEnabled(true);
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[11]); 
-		BuilderHelper.deleteAllModules(jmeSimulation);
+		//BuilderHelper.deleteAllModules(jmeSimulation);
 	}
 
 	//FIXME MAKE IT MORE GENERIC BY MEANS OF IDENTIFYING THE LAST TYPE OF MODULE IN XML FILE
@@ -463,6 +483,14 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 			jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
 		}
 
+	}
+	
+	/**
+	 * Sets builder controller of remote simulation for this controller.
+	 * @param builderControl,builder controller of remote simulation.
+	 */
+	public static void setBuilderController(BuilderControlInter builderControl) {
+		ConstructRobotTabController.builderControl = builderControl;
 	}
 
 }
