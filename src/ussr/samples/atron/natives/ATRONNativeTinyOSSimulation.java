@@ -54,7 +54,10 @@ public class ATRONNativeTinyOSSimulation extends GenericATRONSimulation {
 		PhysicsParameters.get().setUseModuleEventQueue(true);
 		PhysicsParameters.get().setSyncWithControllers(true);
 		PhysicsParameters.get().setPhysicsSimulationStepSize(0.001f);
-		PhysicsParameters.get().setPhysicsSimulationControllerStepFactor(0.01f);
+			
+		//0.07 would correspond (very roughly!) to the AVR ATRON
+		PhysicsParameters.get().setPhysicsSimulationControllerStepFactor(0.07f);
+
 		new ATRONNativeTinyOSSimulation().main();
 	}
 
@@ -80,11 +83,11 @@ public class ATRONNativeTinyOSSimulation extends GenericATRONSimulation {
 		ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
 		mPos.add(new ModulePosition("custom 0", new VectorDescription(0*ATRON.UNIT, -5*ATRON.UNIT, 0*ATRON.UNIT), new RotationDescription(0, 0, -eigth)));
 		mPos.add(new ModulePosition("custom 1", new VectorDescription(1*ATRON.UNIT, -5*ATRON.UNIT, 1*ATRON.UNIT), ATRON.ROTATION_EW));
-		//mPos.add(new ModulePosition("custom 2", new VectorDescription(1*ATRON.UNIT, -5*ATRON.UNIT, -1*ATRON.UNIT), ATRON.ROTATION_EW));
-		//mPos.add(new ModulePosition("custom 3", new VectorDescription(2*ATRON.UNIT, -5*ATRON.UNIT, 0*ATRON.UNIT), new RotationDescription(0, 0, -eigth)));
-		//mPos.add(new ModulePosition("custom 4", new VectorDescription(3*ATRON.UNIT, -5*ATRON.UNIT, 1*ATRON.UNIT), ATRON.ROTATION_EW));
-		//mPos.add(new ModulePosition("custom 5", new VectorDescription(3*ATRON.UNIT, -5*ATRON.UNIT, -1*ATRON.UNIT), ATRON.ROTATION_EW));
-		//mPos.add(new ModulePosition("custom 6", new VectorDescription(4*ATRON.UNIT, -5*ATRON.UNIT, 0*ATRON.UNIT), new RotationDescription(0, 0, -eigth)));
+		mPos.add(new ModulePosition("custom 2", new VectorDescription(1*ATRON.UNIT, -5*ATRON.UNIT, -1*ATRON.UNIT), ATRON.ROTATION_EW));
+		mPos.add(new ModulePosition("custom 3", new VectorDescription(2*ATRON.UNIT, -5*ATRON.UNIT, 0*ATRON.UNIT), new RotationDescription(0, 0, -eigth)));
+		mPos.add(new ModulePosition("custom 4", new VectorDescription(3*ATRON.UNIT, -5*ATRON.UNIT, 1*ATRON.UNIT), ATRON.ROTATION_EW));
+		mPos.add(new ModulePosition("custom 5", new VectorDescription(3*ATRON.UNIT, -5*ATRON.UNIT, -1*ATRON.UNIT), ATRON.ROTATION_EW));
+		mPos.add(new ModulePosition("custom 6", new VectorDescription(4*ATRON.UNIT, -5*ATRON.UNIT, 0*ATRON.UNIT), new RotationDescription(0, 0, -eigth)));
 		return mPos;	
 
 		
