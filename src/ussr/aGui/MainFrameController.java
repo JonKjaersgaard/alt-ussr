@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
+
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;
+import ussr.remote.GUISimulationAdapter;
 import ussr.remote.facade.RemotePhysicsSimulation;
+import ussr.remote.facade.SimulationRendererControlInter;
 
 
 /**
@@ -18,17 +21,19 @@ import ussr.remote.facade.RemotePhysicsSimulation;
  */
 public class MainFrameController {
 
-
 	/**
 	 * The remote(running of separate JVM than GUI) physics simulation.
 	 */
-	private static RemotePhysicsSimulation remotePhysicsSimulation;
+	private static RemotePhysicsSimulation remotePhysicsSimulation; 
+
+	private static SimulationRendererControlInter rendererControl;
 
 	/**
 	 * Executes closing of main window(frame)by terminating Java Virtual Machine.
 	 */
 	public static void jMenuItemExitActionPerformed() {	
-		System.exit(0);	
+		System.exit(0);
+
 	} 
 
 	/**
@@ -57,7 +62,7 @@ public class MainFrameController {
 	 */
 	public static void jButtonRunRealTimeActionPerformed() {
 		ConstructRobotTab.setTabEnabled(false);
-	
+
 		try {
 			if (remotePhysicsSimulation.isPaused()){// Start simulation in real time, if simulation is in paused state
 				remotePhysicsSimulation.setPause(false);				
@@ -120,21 +125,21 @@ public class MainFrameController {
 			throw new Error ("Running remote simulation in single step mode failed, due to remote exception");
 		}		
 	}
-	
-	
+
+
 	/**
 	 * Pauses remote simulation.
 	 */
 	public static void jButtonPauseActionPerformed() {       	
-			try {
-				if (remotePhysicsSimulation.isPaused()==false){
-					remotePhysicsSimulation.setPause(true);
-				}
-			} catch (RemoteException e) {
-				throw new Error ("Pausing remote simulation failed, due to remote exception");
+		try {
+			if (remotePhysicsSimulation.isPaused()==false){
+				remotePhysicsSimulation.setPause(true);
 			}
+		} catch (RemoteException e) {
+			throw new Error ("Pausing remote simulation failed, due to remote exception");
+		}
 	}
-	
+
 	/**
 	 * Terminates remote simulation.
 	 */
@@ -144,27 +149,28 @@ public class MainFrameController {
 		} catch (RemoteException e) {
 			throw new Error ("Termination of remote simulation failed, due to remote exception");
 		}
-		
+
 	}
-	
+
 	/**
 	 * Renders or stops rendering the physics during remote simulation.
 	 * @param jCheckBoxMenuItemPhysics, component in GUI.
 	 */
 	public static void jCheckBoxMenuItemPhysicsActionPerformed(JCheckBoxMenuItem jCheckBoxMenuItemPhysics) {       
+
 		try {
-			if (remotePhysicsSimulation.isShowPhysics() == false ){                             
+			if (rendererControl.isShowingPhysics() == false ){                             
 				jCheckBoxMenuItemPhysics.setSelected(true);
-				remotePhysicsSimulation.setShowPhysics(true);				
+				rendererControl.setShowPhysics(true);				
 			}else {                         
 				jCheckBoxMenuItemPhysics.setSelected(false);
-				remotePhysicsSimulation.setShowPhysics(false);				
+				rendererControl.setShowPhysics(false);				
 			}
 		} catch (RemoteException e) {
 			throw new Error ("Changing the state of rendering physics on remote simulation failed, due to remote exception");
-		}   
+		}	 
 	}	
-	
+
 
 	/**
 	 * Renders or stops rendering the wire state during remote simulation.
@@ -173,12 +179,12 @@ public class MainFrameController {
 	public static void jCheckBoxMenuItemWireFrameActionPerformed(JCheckBoxMenuItem jCheckBoxMenuItemWireFrame) {
 
 		try {
-			if ( remotePhysicsSimulation.isWireFrameEnabled() == false ){        
+			if ( rendererControl.isShowingWireFrame() == false ){        
 				jCheckBoxMenuItemWireFrame.setSelected(true);
-				remotePhysicsSimulation.setWireFrameEnabled(true);			
+				rendererControl.setShowWireFrame(true);			
 			}else {            
 				jCheckBoxMenuItemWireFrame.setSelected(false);
-				remotePhysicsSimulation.setWireFrameEnabled(false);		
+				rendererControl.setShowWireFrame(false);		
 			}
 		} catch (RemoteException e) {
 			throw new Error ("Changing the state of rendering wire frame on remote simulation failed, due to remote exception");
@@ -192,12 +198,12 @@ public class MainFrameController {
 	 */
 	public static void jCheckBoxMenuBoundsActionPerformed(JCheckBoxMenuItem jCheckBoxMenuBounds) {       
 		try {
-			if ( remotePhysicsSimulation.isShowingBounds() == false ){        
+			if (rendererControl.isShowingBounds() == false ){        
 				jCheckBoxMenuBounds.setSelected(true);
-				remotePhysicsSimulation.setShowBounds(true);			
+				rendererControl.setShowBounds(true);			
 			}else {            
 				jCheckBoxMenuBounds.setSelected(false);
-				remotePhysicsSimulation.setShowBounds(false);			
+				rendererControl.setShowBounds(false);			
 			}
 		} catch (RemoteException e) {
 			throw new Error ("Changing the state of rendering bounds on remote simulation failed, due to remote exception");
@@ -210,12 +216,12 @@ public class MainFrameController {
 	 */
 	public static void jCheckBoxMenuItemNormalsActionPerformed(JCheckBoxMenuItem jCheckBoxMenuItemNormals) {    
 		try {
-			if ( remotePhysicsSimulation.isShowingNormals() == false ){            
+			if (rendererControl.isShowingNormals() == false ){            
 				jCheckBoxMenuItemNormals.setSelected(true);
-				remotePhysicsSimulation.setShowNormals(true);			
+				rendererControl.setShowNormals(true);			
 			}else {            
 				jCheckBoxMenuItemNormals.setSelected(false);
-				remotePhysicsSimulation.setShowNormals(false);			
+				rendererControl.setShowNormals(false);			
 			}
 		} catch (RemoteException e) {
 			throw new Error ("Changing the state of showing normals on remote simulation failed, due to remote exception");
@@ -228,12 +234,12 @@ public class MainFrameController {
 	 */
 	public static void jCheckBoxMenuItemLightsActionPerformed(JCheckBoxMenuItem jCheckBoxMenuItemLights) {   
 		try {
-			if (remotePhysicsSimulation.isLightStateShowing() == true ){                       
+			if (rendererControl.isLightStateShowing() == true ){                       
 				jCheckBoxMenuItemLights.setSelected(true);
-				remotePhysicsSimulation.setLightStateShowing(false);			
+				rendererControl.setShowLights(false);			
 			}else {                   
 				jCheckBoxMenuItemLights.setSelected(false);
-				remotePhysicsSimulation.setLightStateShowing(true);			
+				rendererControl.setShowLights(true);			
 			}
 		} catch (RemoteException e) {
 			throw new Error ("Changing the state of showing lights on remote simulation failed, due to remote exception");
@@ -245,20 +251,20 @@ public class MainFrameController {
 	 * @param jCheckBoxMenuBufferDepth, component in GUI. 
 	 */
 	public static void jCheckBoxMenuBufferDepthActionPerformed(JCheckBoxMenuItem jCheckBoxMenuBufferDepth) {
-		try {
-			if (remotePhysicsSimulation.isShowingDepth() == false ){                       
+		try {			
+			if (rendererControl.isShowingDepth() == false ){                       
 				jCheckBoxMenuBufferDepth.setSelected(true);
-				remotePhysicsSimulation.setShowDepth(true);			
+				rendererControl.setShowDepth(true);			
 			}else {                   
 				jCheckBoxMenuBufferDepth.setSelected(false);
-				remotePhysicsSimulation.setShowDepth(false);			
+				rendererControl.setShowDepth(false);			
 			}
 		} catch (RemoteException e) {
 			throw new Error ("Changing the state of showing buffer depth on remote simulation failed, due to remote exception");
 		}  
 
 	}
-	
+
 	/**
 	 * Adds or removes tabs for construction of modular robot morphology.
 	 * @param jToggleButtonConstructRobot, the toggle button in main frame.
@@ -347,5 +353,13 @@ public class MainFrameController {
 	 */
 	public static void setRemotePhysicsSimulation(RemotePhysicsSimulation remotePhysicsSimulation) {
 		MainFrameController.remotePhysicsSimulation = remotePhysicsSimulation;
+	}
+
+	/**
+	 * Sets renderer control of remote physics simulation for this controller.
+	 * @param rendererControl, renderer control for remote physics simulation.
+	 */
+	public static void setRendererControl(SimulationRendererControlInter rendererControl) {
+		MainFrameController.rendererControl = rendererControl;
 	}
 }
