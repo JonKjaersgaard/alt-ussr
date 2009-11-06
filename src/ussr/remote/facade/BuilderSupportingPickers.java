@@ -1,7 +1,12 @@
 package ussr.remote.facade;
 
+import ussr.aGui.tabs.controllers.ConstructRobotTabController;
+import ussr.builder.SupportedModularRobots;
+import ussr.builder.constructionTools.ConstructionToolSpecification;
+import ussr.builder.constructionTools.ConstructionTools;
 import ussr.builder.genericTools.ColorConnectors;
 import ussr.builder.genericTools.RemoveModule;
+import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.physics.jme.pickers.Picker;
 
@@ -12,6 +17,7 @@ import ussr.physics.jme.pickers.Picker;
  */
 public enum BuilderSupportingPickers {
 
+	
 	/**
 	 * Move objects in simulation environment during simulation runtime.
 	 */
@@ -25,9 +31,9 @@ public enum BuilderSupportingPickers {
 	/**
 	 * Move module with movement of the mouse (hold left side of the mouse).
 	 */
-	MOVE_MODULE(new PhysicsPicker(true,true)),
+	MOVE_MODULE(new PhysicsPicker(true,true)),	
 	
-	//ON_SELECTED_CONNECTOR ();
+	//ROTATE_OPPOSITE(new ConstructionToolSpecification(ConstructRobotTabController.getBuilderControl().getJMESimulation(),ConstructRobotTabController.getChosenMRname(),ConstructionTools.OPPOSITE_ROTATION)),
 	
 	/**
 	 * Colors connectors on the module with color coding.
@@ -38,8 +44,14 @@ public enum BuilderSupportingPickers {
 	BuilderSupportingPickers(Picker picker){
 		this.picker = picker;
 	}
-	
 	public Picker getPicker(){
 		return this.picker;
 	}
+	
+/*	BuilderSupportingPickers(class className){
+	
+	}*/
+		
+	
+	
 }
