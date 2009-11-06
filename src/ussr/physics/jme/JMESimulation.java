@@ -377,7 +377,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 					Thread.yield();
 					if(singleStep&&physicsStep) singleStep = false;
 			
-					if(PhysicsParameters.get().isRealtime() && !pause) {
+					if(realtime && !pause) {
 						long realTime = (System.currentTimeMillis()-realTimeReference);
 						long simTime = (long)(1000*getTime());
 						long diffTime = simTime-realTime;
