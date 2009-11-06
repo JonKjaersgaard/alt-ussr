@@ -31,6 +31,8 @@
  */
 package ussr.physics.jme.pickers;
 
+import java.io.Serializable;
+
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
