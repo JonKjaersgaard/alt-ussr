@@ -146,107 +146,13 @@ public interface PhysicsSimulation {
 	 */
 	public void setSingleStep(boolean singleStep);	
 	
-	
-	/**
-	 * Returns the state of showing physics. 
-	 * @return showPhysics, the state of showing physics.
-	 */
-	public boolean isShowingPhysics();
-	
-	/**
-	 * Sets the state of showing physics.
-	 * @param showPhysics, the state of showing physics.
-	 */
-	public void setShowPhysics(boolean showPhysics);
-	
-	/**
-	 *  Returns the wireFrame.
-	 * @return wireState, the wireFrame.
-	 */
-	public WireframeState getWireFrame();
-	
-	/**
-	 *  Returns the state of showing wireFrame.
-	 * @return wireState,  the state of showing wireFrame.
-	 */
-	public boolean isWireFrameEnabled();
-	
 	/**
 	 * Obtain a reference to the simulation helper, which contains various utility
 	 * methods that work on the simulation
 	 * @return a reference to the simulation helper object for this simulation
 	 * @see PhysicsSimulationHelper
 	 */
-    public PhysicsSimulationHelper getHelper();
-    
-    /**
-	 *  Sets whenever wire state is enabled(shown).
-	 * @return enabled, the state of showing wireFrame.
-	 */
-	public void setWireFrameEnabled(boolean enabled);
-	
-	/**
-	 * Returns the state of showing bounds. 
-	 * @return showBounds, the state of showing bounds.
-	 */
-	public boolean isShowingBounds();
-
-	/**
-	 * Sets the state of showing bounds.
-	 * @param showBounds, the state of showing bounds.
-	 */
-	public void setShowBounds(boolean showBounds);
-	
-	
-	/**
-	 * Returns the state of showing normals. 
-	 * @return showNormals, the state of showing normals. 
-	 */
-	public boolean isShowingNormals(); 
-
-	/**
-	 * Sets the state of  showing normals.
-	 * @param showNormals, the state of  showing normals.
-	 */
-	public void setShowNormals(boolean showNormals);
-	
-	
-	/**
-	 * Returns the state for showing lights. 
-	 * @return lightState, the state for showing lights.  
-	 */
-	public LightState getLightState();
-	
-	
-	/**
-	 * Checks whenever lights are shown. 
-	 * @return boolean, true for shown.  
-	 */
-	public boolean isLightStateShowing();
-	
-	/**
-	 * Sets whenever lights are shown.
-	 * @param enabled, true for showing lights.
-	 */
-	public void setLightStateShowing(boolean enabled);
-	
-	/**
-	 * Sets the state of showing lights.
-	 * @param lightState, the state of showing lights.
-	 */
-	public void setLightState(LightState lightState);
-	
-	/**
-	 * Returns the state of showing the depth of the buffer.
-	 * @return showDepth, the state of showing the depth of the buffer.
-	 */
-	public boolean isShowingDepth();
-
-	/**
-	 *  Sets the state of showing the depth of the buffer.
-	 * @param showDepth, the state of showing the depth of the buffer.
-	 */
-	public void setShowDepth(boolean showDepth);	
+    public PhysicsSimulationHelper getHelper();	
 
     /**
      * Add a simulation gadget to this simulation (a plugin that modifies the user
