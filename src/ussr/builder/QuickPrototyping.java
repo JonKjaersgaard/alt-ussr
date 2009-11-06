@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.rmi.RemoteException;
 import java.util.Vector;
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
 import ussr.builder.constructionTools.CKBotOperationsTemplate;
@@ -493,7 +494,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		movejButton.setToolTipText("Move Entity");
 		movejButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				movejButtonActionPerformed(evt);
+			//	movejButtonActionPerformed(evt);
 			}
 		});
 
@@ -1414,7 +1415,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 * selecting them with the left side of the mouse.
 	 * @param evt, selection with left side of the mouse event (jButton selection).     
 	 */	
-	private void movejButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+	private void movejButtonActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {                                            
 		//System.out.println("Module generic toolbar-->Move"); //for debugging
 			if (this.entity.equalsIgnoreCase("Module")){
 			JME_simulation.setPicker(new PhysicsPicker(true, true));
