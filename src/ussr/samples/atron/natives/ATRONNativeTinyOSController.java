@@ -10,6 +10,7 @@ import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEModuleComponent;
+import ussr.physics.jme.JMESimulation;
 import ussr.samples.atron.ATRONTinyOSController;
 
 public class ATRONNativeTinyOSController extends NativeController {
@@ -38,6 +39,12 @@ public class ATRONNativeTinyOSController extends NativeController {
 	    public synchronized void physicsTimeStepHook(PhysicsSimulation simulation) {
 	    	//we issue a callback to the controller every 1ms for the timer/counter
 	    	//for the moment, this implies a timestepSize == 1ms
+			if(eventLock!=null) {
+	            synchronized(eventLock) {
+	                eventLock.notify();
+	                eventLock = null;
+	            }
+	        }	    	
 	    	if(PhysicsParameters.get().getPhysicsSimulationStepSize() != 0.001f)
 	    		PhysicsLogger.log("PhysicsStepSize does not allow for accurate simulation!");
 	    	nativeMillisecondElapsed(getInitializationContext());
