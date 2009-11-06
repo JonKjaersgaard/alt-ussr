@@ -96,11 +96,12 @@ public class NativeController implements Controller {
 
         //need a certain accuracy: on OS X is ok, check on linux/win
     	if(elapsed > SimStepSizeNanoSec) {
-    		lastYieldTime = threadMXBean.getCurrentThreadUserTime();
             
             if(PhysicsParameters.get().syncWithControllers()) {
             	try {
 					( (JMESimulation) controller.getModule().getSimulation() ).controlSyncBarrier.await();
+					//we need to record it here to avoid accounting for the time spent awaiting on the barrier
+					lastYieldTime = threadMXBean.getCurrentThreadUserTime();
             	} catch (InterruptedException e) {
 					e.printStackTrace();
 					System.out.println("native ctrl interrupted");
