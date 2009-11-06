@@ -8,10 +8,10 @@ import java.rmi.RemoteException;
 
 
 import ussr.aGui.MainFrameController;
+
 import ussr.remote.facade.ActiveSimulation;
 
 import ussr.remote.facade.RemotePhysicsSimulation;
-
 
 /**
  * Frontend example: a main application that starts a single simulation using the remote facility 
@@ -21,13 +21,6 @@ import ussr.remote.facade.RemotePhysicsSimulation;
 public class GUISimulationAdapter {
 
     public static final int SERVER_PORT = 54323;
-
-    private static RemotePhysicsSimulation sim = null;
-    
-    
-    public static RemotePhysicsSimulation getSim() {
-		return sim;
-	}
 
 	/**
      * @param args
@@ -79,17 +72,22 @@ public class GUISimulationAdapter {
         System.out.println("Simulation started as background thread");
         // Obtain a reference to remote PhysicsSimulation object (must wait for it to be instantiated remotely)
         
+        RemotePhysicsSimulation sim = null;
         while(sim==null) {
             System.out.println("Simulation still null");
             sim = simulation.getSimulation();
-            MainFrameController.setRemotePhysicsSimulation(sim);//pass remote physics simulation to GUI controller 
+           
             try {
                 Thread.sleep(1000);
             } catch(InterruptedException exn) {
                 throw new Error("Unexpected interruption");
             }
         }
-        // Continuously print the status of the remote simulation (example of remote access)
+        
+        
+        MainFrameController.setRemotePhysicsSimulation(sim);
+        MainFrameController.setRendererControl(sim.getRendererControl());
+        
     /*    while(true) {
             System.out.println(" remote simulation isPaused()="+sim.isPaused());
             try {
@@ -122,6 +120,8 @@ public class GUISimulationAdapter {
             }
         }.start();
     }
+    
+   
 
     
 }

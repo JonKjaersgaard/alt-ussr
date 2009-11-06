@@ -9,6 +9,8 @@ import com.jme.scene.state.WireframeState;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsSimulation;
+import ussr.physics.jme.JMEBasicGraphicalSimulation;
+import ussr.physics.jme.JMESimulation;
 
 /**
  * Wrapper for a standard PhysicsSimulation allowing it to be used as a remote object.
@@ -75,86 +77,10 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 		simulation.setSingleStep(singleStep);
 	}
 
-	@Override
-	public void setShowPhysics(boolean showPhysics) throws RemoteException {
-		simulation.setShowPhysics(showPhysics);
-		
-	}
 
-	@Override
-	public boolean isShowPhysics() throws RemoteException {
-		return simulation.isShowingPhysics();
-	}
-
-	@Override
-	public WireframeState getWireFrame() throws RemoteException {
-		return simulation.getWireFrame();
-	}
-
-	@Override
-	public boolean isWireFrameEnabled() throws RemoteException {
-		return simulation.isWireFrameEnabled();
-	}
-
-	@Override
-	public void setWireFrameEnabled(boolean enabled) throws RemoteException {
-		 simulation.setWireFrameEnabled(enabled);
-	}
-
-	@Override
-	public boolean isShowingBounds() throws RemoteException {
-		return simulation.isShowingBounds();
-	}
-
-	@Override
-	public void setShowBounds(boolean showBounds) throws RemoteException {
-		simulation.setShowBounds(showBounds);		
-	}
-
-	@Override
-	public boolean isShowingNormals() throws RemoteException {
-		return simulation.isShowingNormals();
-	}
-
-	@Override
-	public void setShowNormals(boolean showNormals) throws RemoteException {
-		simulation.setShowNormals(showNormals);		
-	}
-
-	@Override
-	public LightState getLightState() throws RemoteException {
-		return simulation.getLightState();
-	}
-
-	@Override
-	public boolean isLightStateShowing() throws RemoteException {		
-		return simulation.isLightStateShowing();
-	}
-
-	@Override
-	public void setLightState(LightState lightState) throws RemoteException {
-		simulation.setLightState(lightState);		
-	}
-
-	@Override
-	public void setLightStateShowing(boolean showLights) throws RemoteException {
-		simulation.getLightState().setEnabled(showLights);		
-	}
-
-	@Override
-	public boolean isShowingDepth() throws RemoteException {
-		return simulation.isShowingDepth();
-	}
-
-	@Override
-	public void setShowDepth(boolean showDepth) throws RemoteException {
-		simulation.setShowDepth(showDepth);		
-	};
 	
-	
-	
-	
-	
-
+	public SimulationRendererControlInter getRendererControl() throws RemoteException{
+		return new JMERendererControlWrapper((JMESimulation)simulation);
+	}
 
 }
