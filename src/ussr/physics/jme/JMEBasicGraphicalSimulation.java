@@ -1007,7 +1007,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 * Sets whenever lights are shown .
 	 * @param enabled, true for showing lights.
 	 */
-	public void setLightStateShowing(boolean enabled) {
+	public void setShowLights(boolean enabled) {
 		lightState.setEnabled(enabled);
 	}
 
@@ -1023,7 +1023,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 *  Returns the state of showing wireFrame.
 	 * @return wireState,  the state of showing wireFrame.
 	 */
-	public boolean isWireFrameEnabled() {
+	public boolean isShowingWireFrame() {
 		return wireState.isEnabled();
 	}
 	
@@ -1031,7 +1031,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 *  Sets whenever wire state is enabled(shown).
 	 * @return enabled, the state of showing wireFrame.
 	 */
-	public void setWireFrameEnabled(boolean enabled) {
+	public void setShowWireFrame(boolean enabled) {
 		 wireState.setEnabled(enabled);
 	}
 	
