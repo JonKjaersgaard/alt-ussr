@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.constructionTools.ConstructionToolSpecification;
-import ussr.builder.constructionTools.ConstructionTools;
+import ussr.builder.enums.ConstructionTools;
 import ussr.builder.genericTools.RemoveModule;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
@@ -19,7 +19,7 @@ public interface BuilderControlInter extends Remote {
 	 * Attaches specific picker(left side of the mouse selection) to remote simulation.
 	 * @param builderSupportingPicker, the picker supported by builder.	
 	 */
-	public void setPicker(BuilderSupportingPickers builderSupportingPicker)throws RemoteException;
+	public void setPicker(BuilderSupportingUnicastPickers builderSupportingPicker)throws RemoteException;
 	
 	
 	//public void setConstructionPicker(ConstructionToolSpecification constructionToolSpecification)throws RemoteException;

@@ -6,7 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.constructionTools.ConstructionToolSpecification;
-import ussr.builder.constructionTools.ConstructionTools;
+import ussr.builder.enums.ConstructionTools;
 
 import ussr.physics.jme.JMESimulation;
 
@@ -23,7 +23,7 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 	}
 
 	@Override
-	public void setPicker(BuilderSupportingPickers builderSupportingPicker)throws RemoteException {
+	public void setPicker(BuilderSupportingUnicastPickers builderSupportingPicker)throws RemoteException {
 		jmeSimulation.setPicker(builderSupportingPicker.getPicker());
 		//jmeSimulation.setPicker(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.STANDARD_ROTATIONS,ConstructRobotTabController.getChosenStandardRotation()));
 	

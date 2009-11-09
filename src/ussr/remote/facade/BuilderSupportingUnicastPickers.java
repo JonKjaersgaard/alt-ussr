@@ -3,7 +3,7 @@ package ussr.remote.facade;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 
 import ussr.builder.constructionTools.ConstructionToolSpecification;
-import ussr.builder.constructionTools.ConstructionTools;
+import ussr.builder.enums.ConstructionTools;
 import ussr.builder.genericTools.ColorConnectors;
 import ussr.builder.genericTools.RemoveModule;
 import ussr.physics.jme.pickers.PhysicsPicker;
@@ -14,7 +14,7 @@ import ussr.physics.jme.pickers.Picker;
  * @author Konstantinas
  *
  */
-public enum BuilderSupportingPickers {
+public enum BuilderSupportingUnicastPickers {
 
 	
 	/**
@@ -35,7 +35,7 @@ public enum BuilderSupportingPickers {
 	/**
 	 * Rotates the module with opposite rotation to current one.
 	 */
-	ROTATE_MODULE_OPPOSITE(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.OPPOSITE_ROTATION)),
+	ROTATE_MODULE_OPPOSITE(new ConstructionToolSpecification(ConstructionTools.OPPOSITE_ROTATION)),
 
 	/**
 	 * Colors connectors on the module with color coding.
@@ -45,26 +45,26 @@ public enum BuilderSupportingPickers {
 	/**
 	 * Rotates the module with standard rotation.
 	 */
-	//TEST ME
+	//FIX ME
 	ROTATE_MODULE_STANDARD (new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.STANDARD_ROTATIONS,ConstructRobotTabController.getChosenStandardRotation())),
 	
 	/**
 	 * Adds new module on connector selected by user.
 	 */
-	ON_SELECTED_CONNECTOR(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.ON_SELECTED_CONNECTOR)),
+	ON_SELECTED_CONNECTOR(new ConstructionToolSpecification(ConstructionTools.ON_SELECTED_CONNECTOR)),
 	
 	/**
 	 * 
 	 */
-	//TEST ME
+	//FIXME ME
 	ON_CHOSEN_CONNECTOR_NR(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.ON_CHOSEN_CONNECTOR,ConstructRobotTabController.getChosenConnectorNr())),
 	
 	/**
 	 * Adds new modules on all connectors of selected module.
 	 */
-	ON_ALL_CONNECTORS(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.ON_ALL_CONNECTORS)),
+	ON_ALL_CONNECTORS(new ConstructionToolSpecification(ConstructionTools.ON_ALL_CONNECTORS)),
 	
-	ROTATE_MODULE_STANDARD_IN_LOOP(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.STANDARD_ROTATIONS_IN_LOOP));
+	//ROTATE_MODULE_STANDARD_IN_LOOP(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.STANDARD_ROTATIONS_IN_LOOP));
 	;
 	
 	
@@ -78,7 +78,7 @@ public enum BuilderSupportingPickers {
 	 * Contains pickers (left side of the mouse selectors) supported by builder.
 	 * @param picker, the picker supported by builder.
 	 */
-	BuilderSupportingPickers(Picker picker){
+	BuilderSupportingUnicastPickers(Picker picker){
 		this.picker = picker;
 	}
 	/**
