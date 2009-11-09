@@ -21,6 +21,11 @@ public interface BuilderControlInter extends Remote {
 	 */
 	public void setPicker(BuilderSupportingUnicastPickers builderSupportingPicker)throws RemoteException;
 	
-	
+	/**
+	 * Removes all modules (robot(s)) from simulation environment.
+	 */
+	public void removeAllModules() throws RemoteException;
 	//public void setConstructionPicker(ConstructionToolSpecification constructionToolSpecification)throws RemoteException;
+	
+	public JMESimulation getRemoteJMESimulation()throws RemoteException;
 }

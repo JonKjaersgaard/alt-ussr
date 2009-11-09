@@ -64,9 +64,9 @@ public enum BuilderSupportingUnicastPickers{
 	 */
 	ON_ALL_CONNECTORS(new ConstructionToolSpecification(ConstructionTools.ON_ALL_CONNECTORS)),
 	
-	VARIATE_MODULE_PROPERTIES (new ConstructionToolSpecification(ConstructionTools.VARIATE_PROPERTIES))
+	VARIATE_MODULE_PROPERTIES (new ConstructionToolSpecification(ConstructionTools.VARIATE_PROPERTIES)),
 	
-	//ROTATE_MODULE_STANDARD_IN_LOOP(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.STANDARD_ROTATIONS_IN_LOOP));
+    ROTATE_MODULE_STANDARD_IN_LOOP(new ConstructionToolSpecification(ConstructionTools.STANDARD_ROTATIONS_IN_LOOP));
 	;
 	
 	
