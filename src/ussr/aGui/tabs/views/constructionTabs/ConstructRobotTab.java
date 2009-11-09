@@ -92,7 +92,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonOnNextConnector = new javax.swing.JButton();
 		jButtonOnPreviousConnector = new javax.swing.JButton();
 		jButtonVariateModuleProperties = new javax.swing.JButton();
-		jButtonStandardRotationsLoop = new javax.swing.JButton();
+		jButtonAvailableRotationsLoop = new javax.swing.JButton();
 
 		buttonGroupModularRobots = new ButtonGroup();
 		radionButtonATRON =  new JRadioButton();
@@ -117,7 +117,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonStartNewRobot.setPreferredSize(new Dimension(110,GuiFrames.COMMON_HEIGHT+2));
 		jButtonStartNewRobot.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {            	
-				ConstructRobotTabController.jButtonStartNewRobotActionPerformed(jmeSimulation);            	
+				ConstructRobotTabController.jButtonStartNewRobotActionPerformed();            	
 			}
 		});        
 		gridBagConstraints.fill = GridBagConstraints.FIRST_LINE_START;// position on the first line start
@@ -235,14 +235,14 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 			}
 		});
 
-		jButtonStandardRotationsLoop.setToolTipText(TOOL_TIP_TEXTS[3]);//todo
-		jButtonStandardRotationsLoop.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE));
-		//jButtonStandardRotationsLoop.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
-		jButtonStandardRotationsLoop.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
-		jButtonStandardRotationsLoop.setEnabled(true);
-		jButtonStandardRotationsLoop.addActionListener(new java.awt.event.ActionListener() {
+		jButtonAvailableRotationsLoop.setToolTipText(TOOL_TIP_TEXTS[16]);
+		jButtonAvailableRotationsLoop.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + AVAILABLE_ROTATIONS));
+		jButtonAvailableRotationsLoop.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
+		jButtonAvailableRotationsLoop.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
+		jButtonAvailableRotationsLoop.setEnabled(false);
+		jButtonAvailableRotationsLoop.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				setSelectionDeselection(jButtonStandardRotationsLoop);
+				setSelectionDeselection(jButtonAvailableRotationsLoop);
 				ConstructRobotTabController.jButtonStandardRotationsLoopActionPerformed();
 			}
 		});
@@ -267,7 +267,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 				//Forces preferred side of component
 				.addComponent(jButtonOppositeRotation,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 						GroupLayout.PREFERRED_SIZE)
-						.addComponent(jButtonStandardRotationsLoop,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+						.addComponent(jButtonAvailableRotationsLoop,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE)
 								.addComponent(jComboBoxStandardRotations,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE)				
@@ -278,7 +278,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 				.addGroup(jToolBarRotationToolsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(jButtonOppositeRotation,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE)
-								.addComponent(jButtonStandardRotationsLoop,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								.addComponent(jButtonAvailableRotationsLoop,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE)
 										.addComponent(jComboBoxStandardRotations,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 												GroupLayout.PREFERRED_SIZE))						
@@ -597,7 +597,8 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	 */
 	public static void setEnabledRotationToolBar(boolean enable){
 		jButtonOppositeRotation.setEnabled(enable);
-		jComboBoxStandardRotations.setEnabled(enable);	
+		jComboBoxStandardRotations.setEnabled(enable);
+		jButtonAvailableRotationsLoop.setEnabled(enable);
 	}	
 
 	/**
@@ -709,7 +710,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	private  static javax.swing.JButton jButtonStartNewRobot,jButtonDelete,
 	jButtonMove,jButtonColorConnetors,jButtonOppositeRotation,jButtonOnSelectedConnector,
 	jButtonConnectAllModules,jButtonJumpFromConnToConnector,jButtonOnNextConnector,
-	jButtonOnPreviousConnector,jButtonVariateModuleProperties,jButtonStandardRotationsLoop;
+	jButtonOnPreviousConnector,jButtonVariateModuleProperties,jButtonAvailableRotationsLoop;
 
 	private static javax.swing.JToolBar jToolBarGenericTools,
 	jToolBarRotationTools,jToolBarConstructionTools;

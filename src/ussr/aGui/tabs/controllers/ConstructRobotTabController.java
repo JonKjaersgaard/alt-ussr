@@ -72,12 +72,13 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 
 		/*Adapt Tab components to chosen modular robot */
 		adaptTabToChosenMR(chosenMRname);
-
+		
 		/*Add initial construction module*/
-		//addNewDefaultConstructionModule(jmeSimulation); 
+		//addNewDefaultConstructionModule(builderControl.getRemoteJMESimulation()); 
 
-		/* Set default construction tool to be "On selected  connector"*/
+		
 		try {
+			/* Set default construction tool to be "On selected  connector"*/
 			builderControl.setPicker(BuilderSupportingUnicastPickers.ON_SELECTED_CONNECTOR);
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called " + BuilderSupportingUnicastPickers.ON_SELECTED_CONNECTOR + " , due to remote exception");
@@ -485,15 +486,20 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 		ConstructRobotTab.setRadioButtonsEnabled(false);
 	}
 
-
 	/**
 	 * @param jmeSimulation, the physical simulation.
 	 */
-	public static void jButtonStartNewRobotActionPerformed(JMESimulation jmeSimulation) {
+	public static void jButtonStartNewRobotActionPerformed() {
 		ConstructRobotTab.setRadioButtonsEnabled(true);
+		    //TODO SOMETIMES FAILS WHY?
+			try {
+				builderControl.removeAllModules();
+			} catch (RemoteException e) {
+				throw new Error("Failed to to remove all modules, due to remote exception");
+			}		
+		
 		/*Informing user*/
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[11]); 
-		//BuilderHelper.deleteAllModules(jmeSimulation);
+		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[11]);
 	}
 
 	//FIXME MAKE IT MORE GENERIC BY MEANS OF IDENTIFYING THE LAST TYPE OF MODULE IN XML FILE
@@ -572,11 +578,11 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 
 
 	public static void jButtonStandardRotationsLoopActionPerformed() {
-		/*try {
+		try {
 			builderControl.setPicker(BuilderSupportingUnicastPickers.ROTATE_MODULE_STANDARD_IN_LOOP);
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called ROTATE_MODULE_STANDARD_IN_LOOP, due to remote exception");
-		}*/
+		}
 		
 	}
 }
