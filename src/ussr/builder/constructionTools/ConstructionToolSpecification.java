@@ -91,7 +91,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		this.toolName = toolName;
 		this.selectedConnectorNr = chosenConnectorNr;
 	}
-	
+
 	/**
 	 * For calling tools handling construction of morphology of modular robot, in particular tools like "STANDARD_ROTATION". 
 	 * @param modularRobotName, the name of the modular robot. For example: ATRON, MTRAN,ODIN and so on.
@@ -103,14 +103,14 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		this.toolName = toolName;
 		this.standardRotationName = standardRotationName;	
 	}
-	
+
 	/**
 	 * Instantiates the tool.
 	 * @param jmeSimulation, the physical simulation.
 	 */
 	private void instantiateTool(JMESimulation jmeSimulation){
 		this.jmeSimulation = jmeSimulation;
-		
+
 		/*Keeps and updates the data about the module type currently selected in simulation environment*/
 		SelectedModuleTypeMapHelper[] selectModulesTypes = {
 				new SelectedModuleTypeMapHelper(SupportedModularRobots.ATRON,isAtron()),
@@ -118,7 +118,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 				new SelectedModuleTypeMapHelper(SupportedModularRobots.ODIN,isOdin()),
 				new SelectedModuleTypeMapHelper(SupportedModularRobots.CKBOTSTANDARD,isCKBotStandard())
 		};
-        /*Identifies selected module and readjusts tools accordingly, also calls for GUI re-adjustment*/
+		/*Identifies selected module and readjusts tools accordingly, also calls for GUI re-adjustment*/
 		for(int index =0;index<selectModulesTypes.length;index++){
 			if(selectModulesTypes[index].isSelected()==true){
 				this.modularRobotName = selectModulesTypes[index].getModularRobotName();
@@ -126,7 +126,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 				this.construction = selectOperations.getConstruction();				
 			}
 		}
-		
+
 	}
 
 	int timesSelected =-1;
@@ -148,10 +148,10 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		timesSelected++;
 		this.selectedModule = component.getModel();
 		instantiateTool((JMESimulation)component.getSimulation());		
-		
-		
-       if (this.toolName.equals(ConstructionTools.LOOP)){
-		ConstructRobotTab.setEnabledButtonsArrows(true);	
+
+
+		if (this.toolName.equals(ConstructionTools.LOOP)){
+			ConstructRobotTab.setEnabledButtonsArrows(true);	
 		}
 		callAppropriateTool();		
 	}
@@ -162,11 +162,11 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 */
 	@Override
 	protected void pickTarget(Geometry target,JMESimulation jmeSimulation) {
-		
+
 		if (toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){			
 			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(jmeSimulation, target);
 			System.out.println("Connector:"+selectedConnectorNr );
-		//Adapt Construct Robot tab
+			//Adapt Construct Robot tab
 			//ConstructRobotTab.setEnabledRotationToolBar(false);
 			//ConstructRobotTab.getJButtonMove().setEnabled(false);
 		}
@@ -195,8 +195,8 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * 
 	 */
 	private void reAdjustUserInput(){
-		
-	/*	Keeps and updates the data about the module type currently selected in simulation environment
+
+		/*	Keeps and updates the data about the module type currently selected in simulation environment
 		SelectedModuleTypeMapHelper[] selectModulesTypes = {
 				new SelectedModuleTypeMapHelper(SupportedModularRobots.ATRON,isAtron()),
 				new SelectedModuleTypeMapHelper(SupportedModularRobots.MTRAN,isMtran()),
@@ -211,7 +211,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 				this.construction = selectOperations.getConstruction();				
 			}
 		}*/
-		
+
 		//ConstructRobotTabController.adjustTabToSelectedModule(this.modularRobotName);//Adapt GUI to selected module(modular robot) type
 	}
 
@@ -267,25 +267,35 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * Calls the tool for construction of modular robot morphology. 
 	 */
 	private void callTool(){
-
-		if (this.toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){
+		
+		switch(toolName){
+		case ON_SELECTED_CONNECTOR:
 			if (connectorsMatch()){
 				this.selectOperations.addNewModuleOnConnector(this);
 			}else{//Just skip(connector number will be 1000) 		
 			}
-		}else if (this.toolName.equals(ConstructionTools.ON_CHOSEN_CONNECTOR)||this.toolName.equals(ConstructionTools.LOOP)){
+			break;
+		case ON_CHOSEN_CONNECTOR://break through
+		case LOOP:
 			this.selectOperations.addNewModuleOnConnector(this);
-		}else if (this.toolName.equals(ConstructionTools.ON_ALL_CONNECTORS)){
-			this.selectOperations.addModulesOnAllConnectors(this);		
-		}else if(this.toolName.equals(ConstructionTools.STANDARD_ROTATIONS)){
+			break;
+		case ON_ALL_CONNECTORS:
+			this.selectOperations.addModulesOnAllConnectors(this);
+			break;
+		case STANDARD_ROTATIONS:
 			this.selectOperations.rotateModuleStandardRotation(this, this.standardRotationName);
-		}else if (this.toolName.equals(ConstructionTools.OPPOSITE_ROTATION)){			
+			break;
+		case OPPOSITE_ROTATION:
 			this.selectOperations.rotateModuleWithOppositeRotation(this);
-		}else if (this.toolName.equals(ConstructionTools.VARIATION)){
+			break;
+		case VARIATE_PROPERTIES:
 			this.selectOperations.variateModule(this);
-		}else if (this.toolName.equals(ConstructionTools.STANDARD_ROTATIONS_IN_LOOP)){
+			break;
+		case STANDARD_ROTATIONS_IN_LOOP:
 			this.selectOperations.rotateModuleStandardRotationInLoop(this);
-		}	
+			break;
+		default: throw new Error ("The tool with name: " + toolName +", is not supported");
+		}
 	}
 
 	/**

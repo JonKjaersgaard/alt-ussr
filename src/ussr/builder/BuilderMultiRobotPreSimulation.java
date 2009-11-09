@@ -53,14 +53,6 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		return null;
 	}
 	
-	private static String xmlSimulationFile;
-	
-
-	
-
-	public static void setXmlSimulationFile(String xmlSimulationFile) {
-		BuilderMultiRobotPreSimulation.xmlSimulationFile = xmlSimulationFile;
-	}
 
 	/*For saving XML file*/ 
 	public static final  String robotMorphologyFile = "samples/simulations/atron/morphologies/simpleVehicleMorphology.xml";
@@ -70,7 +62,7 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 	
 	
 	/*UNCOMMENT ONE OF US TO LOAD SIMULATION FROM XML FILE*/
-	//private  static final String loadableSimulationFile ="samples/simulations/atron/simpleVehicleSim.xml";
+	private  static final String xmlSimulationFile ="samples/simulations/atron/simpleVehicleSim.xml";
 	//private  static final String loadableSimulationFile ="samples/simulations/atron/simulation1.xml";
 	//private  static final String loadableSimulationFile ="samples/simulations/atron/snakeSimulation.xml";
 	
@@ -82,12 +74,8 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 	 * @param args, passed arguments.
 	 */
 	public static void main( String[] args ) {
-	/*	 Set up home 
-		String home = System.getenv("USSRHOME"); 
-		if(home!=null) {
-			System.out.println("Setting home to "+home);
-			PhysicsFactory.getOptions().setResourceDirectory(home+"/");
-		}	*/	
+
+	
 		runSimulationFromXMLFile();	
 	}
 	
