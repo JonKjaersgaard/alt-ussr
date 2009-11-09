@@ -150,4 +150,11 @@ public class RMIProcessActiveSimulation implements ActiveSimulation {
         return parameters;
     }
 
+	@Override
+	public void start(String simulationXMLFile) throws RemoteException {
+		 verifyRemote();
+	        remoteSimulation.start(simulationXMLFile);
+		
+	}
+
 }

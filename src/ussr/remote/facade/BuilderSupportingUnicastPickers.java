@@ -10,11 +10,11 @@ import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.physics.jme.pickers.Picker;
 
 /**
- * Pickers (left side of the mouse selectors) supported by builder.
+ * Unicast pickers (left side of the mouse selectors) supported by builder.
  * @author Konstantinas
  *
  */
-public enum BuilderSupportingUnicastPickers {
+public enum BuilderSupportingUnicastPickers{
 
 	
 	/**
@@ -63,6 +63,8 @@ public enum BuilderSupportingUnicastPickers {
 	 * Adds new modules on all connectors of selected module.
 	 */
 	ON_ALL_CONNECTORS(new ConstructionToolSpecification(ConstructionTools.ON_ALL_CONNECTORS)),
+	
+	VARIATE_MODULE_PROPERTIES (new ConstructionToolSpecification(ConstructionTools.VARIATE_PROPERTIES))
 	
 	//ROTATE_MODULE_STANDARD_IN_LOOP(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.STANDARD_ROTATIONS_IN_LOOP));
 	;

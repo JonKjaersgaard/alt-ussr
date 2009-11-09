@@ -26,9 +26,7 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 	public void setPicker(BuilderSupportingUnicastPickers builderSupportingPicker)throws RemoteException {
 		jmeSimulation.setPicker(builderSupportingPicker.getPicker());
 		//jmeSimulation.setPicker(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.STANDARD_ROTATIONS,ConstructRobotTabController.getChosenStandardRotation()));
-	
 		//jmeSimulation.setPicker(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.ON_SELECTED_CONNECTOR));
-		
 	}
 	
 	//STOPPED HERE

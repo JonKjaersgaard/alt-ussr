@@ -57,12 +57,7 @@ public class GUISimulationAdapter {
                 try {
                     // Start using an xml file for a robot and a controller (both loaded by simulator process)
                     simulation.start("samples/atron/car.xml", ussr.samples.atron.simulations.ATRONCarController1.class);
-                   // BuilderMultiRobotPreSimulation.setXmlSimulationFile(xmlSimulationFile);
-                    //simulation.start( BuilderMultiRobotPreSimulation.class);
-                    //simulation.start(ATRONSimulation1.class);
-                    //simulation.start(ATRONSimpleVehicleSimulation.class);
-                	
-                	//simulation.start(BuilderMultiRobotPreSimulation.class, null, null);
+                	//simulation.start("samples/atron/car.xml");
                 
                 } catch (RemoteException e) {
                     // Normal or abnormal termination, inspection of remote exception currently needed to determine...
