@@ -3,6 +3,7 @@ package ussr.builder.constructionTools;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
+import ussr.builder.enums.MTRANStandardRotations;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.ModuleMapEntryHelper;
 import ussr.builder.helpers.ModuleRotationMapEntryHelper;
@@ -28,12 +29,6 @@ public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate 
 	 */
 	private final static int CONNECTORnr0 = 0, CONNECTORnr1 = 1,  CONNECTORnr2 = 2, CONNECTORnr3  = 3, CONNECTORnr4  = 4, CONNECTORnr5  = 5;
 
-	/**
-	 * Supported rotations of MTRAN module.
-	 */
-	private final static String ORI1 ="ORI1", ORI1Y = "ORI1Y", ORI1X ="ORI1X", ORI1XY ="ORI1XY", ORI2 ="ORI2", ORI2Y ="ORI2Y", 
-	ORI2X ="ORI2X",ORI2XY ="ORI2XY", ORI3 ="ORI3", ORI3Y ="ORI3Y", ORI3X ="ORI3X", ORI3XY ="ORI3XY"; 
-	
 	/**
 	 * The indexes of MTRAN module components 
 	 */
@@ -72,18 +67,18 @@ public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * (Look the first entry in array beneath).
 	 */
 	private final static ModuleRotationMapEntryHelper[] MODULE_ROTATION_MAP =  {
-		new ModuleRotationMapEntryHelper(ORI1,MTRANSimulation.ORI1,MTRANSimulation.ORI1Y,MTRANSimulation.ORI1X),
-		new ModuleRotationMapEntryHelper(ORI1Y,MTRANSimulation.ORI1Y,MTRANSimulation.ORI1,MTRANSimulation.ORI1XY),
-		new ModuleRotationMapEntryHelper(ORI1X,MTRANSimulation.ORI1X,MTRANSimulation.ORI1XY,MTRANSimulation.ORI1),
-		new ModuleRotationMapEntryHelper(ORI1XY,MTRANSimulation.ORI1XY,MTRANSimulation.ORI1X,MTRANSimulation.ORI1Y),
-		new ModuleRotationMapEntryHelper(ORI2,MTRANSimulation.ORI2,MTRANSimulation.ORI2Y,MTRANSimulation.ORI2X),
-		new ModuleRotationMapEntryHelper(ORI2Y,MTRANSimulation.ORI2Y,MTRANSimulation.ORI2,MTRANSimulation.ORI2XY),
-		new ModuleRotationMapEntryHelper(ORI2X,MTRANSimulation.ORI2X,MTRANSimulation.ORI2XY,MTRANSimulation.ORI2),
-		new ModuleRotationMapEntryHelper(ORI2XY,MTRANSimulation.ORI2XY,MTRANSimulation.ORI2X,MTRANSimulation.ORI2Y),
-		new ModuleRotationMapEntryHelper(ORI3,MTRANSimulation.ORI3,MTRANSimulation.ORI3Y,MTRANSimulation.ORI3X),
-		new ModuleRotationMapEntryHelper(ORI3Y,MTRANSimulation.ORI3Y,MTRANSimulation.ORI3,MTRANSimulation.ORI3XY),
-		new ModuleRotationMapEntryHelper(ORI3X,MTRANSimulation.ORI3X,MTRANSimulation.ORI3XY,MTRANSimulation.ORI3),
-		new ModuleRotationMapEntryHelper(ORI3XY,MTRANSimulation.ORI3XY,MTRANSimulation.ORI3X,MTRANSimulation.ORI3Y)
+		new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI1.toString(),MTRANSimulation.ORI1,MTRANSimulation.ORI1Y,MTRANSimulation.ORI1X),
+		new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI1Y.toString(),MTRANSimulation.ORI1Y,MTRANSimulation.ORI1,MTRANSimulation.ORI1XY),
+		new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI1X.toString(),MTRANSimulation.ORI1X,MTRANSimulation.ORI1XY,MTRANSimulation.ORI1),
+		new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI1XY.toString(),MTRANSimulation.ORI1XY,MTRANSimulation.ORI1X,MTRANSimulation.ORI1Y),
+		new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI2.toString(),MTRANSimulation.ORI2,MTRANSimulation.ORI2Y,MTRANSimulation.ORI2X),
+		new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI2Y.toString(),MTRANSimulation.ORI2Y,MTRANSimulation.ORI2,MTRANSimulation.ORI2XY),
+		new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI2X.toString(),MTRANSimulation.ORI2X,MTRANSimulation.ORI2XY,MTRANSimulation.ORI2),
+		new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI2XY.toString(),MTRANSimulation.ORI2XY,MTRANSimulation.ORI2X,MTRANSimulation.ORI2Y),
+		new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI3.toString(),MTRANSimulation.ORI3,MTRANSimulation.ORI3Y,MTRANSimulation.ORI3X),
+		new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI3Y.toString(),MTRANSimulation.ORI3Y,MTRANSimulation.ORI3,MTRANSimulation.ORI3XY),
+		new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI3X.toString(),MTRANSimulation.ORI3X,MTRANSimulation.ORI3XY,MTRANSimulation.ORI3),
+		new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI3XY.toString(),MTRANSimulation.ORI3XY,MTRANSimulation.ORI3X,MTRANSimulation.ORI3Y)
 	};
 
 	/**
@@ -466,30 +461,30 @@ public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate 
 		/*Array containing the data for rearranging the components of MTRAN module to specific rotation
 		 * with respect to the position of the link*/ 
 		ModuleRotationMapEntryHelper[] moduleRotationAdditonalMap = {
-				new ModuleRotationMapEntryHelper(ORI1,RED_BOX_INDEX,MTRANSimulation.ORI1,new Vector3f(x,yMinusSecondLinkOffset,z)),
-				new ModuleRotationMapEntryHelper(ORI1,BLUE_BOX_INDEX,MTRANSimulation.ORI1,new Vector3f(x,yPlusSecondLinkOffset,z)),				
-				new ModuleRotationMapEntryHelper(ORI1X,RED_BOX_INDEX,MTRANSimulation.ORI1X,new Vector3f(x,yMinusSecondLinkOffset,z)),
-				new ModuleRotationMapEntryHelper(ORI1X,BLUE_BOX_INDEX,MTRANSimulation.ORI1X,new Vector3f(x,yPlusSecondLinkOffset,z)),				
-				new ModuleRotationMapEntryHelper(ORI1Y,RED_BOX_INDEX,MTRANSimulation.ORI1Y,new Vector3f(x,yPlusSecondLinkOffset,z)),
-				new ModuleRotationMapEntryHelper(ORI1Y,BLUE_BOX_INDEX,MTRANSimulation.ORI1Y,new Vector3f(x,yMinusSecondLinkOffset,z)),				
-				new ModuleRotationMapEntryHelper(ORI1XY,RED_BOX_INDEX,MTRANSimulation.ORI1XY,new Vector3f(x,yPlusSecondLinkOffset,z)),
-				new ModuleRotationMapEntryHelper(ORI1XY,BLUE_BOX_INDEX,MTRANSimulation.ORI1XY,new Vector3f(x,yMinusSecondLinkOffset,z)),				
-				new ModuleRotationMapEntryHelper(ORI2,RED_BOX_INDEX,MTRANSimulation.ORI2,new Vector3f(xMinusSecondLinkOffset,y,z)),
-				new ModuleRotationMapEntryHelper(ORI2,BLUE_BOX_INDEX,MTRANSimulation.ORI2,new Vector3f(xPlusSecondLinkOffset,y,z)),				
-				new ModuleRotationMapEntryHelper(ORI2X,RED_BOX_INDEX,MTRANSimulation.ORI2X,new Vector3f(xMinusSecondLinkOffset,y,z)),
-				new ModuleRotationMapEntryHelper(ORI2X,BLUE_BOX_INDEX,MTRANSimulation.ORI2X,new Vector3f(xPlusSecondLinkOffset,y,z)),				
-				new ModuleRotationMapEntryHelper(ORI2Y,RED_BOX_INDEX,MTRANSimulation.ORI2Y,new Vector3f(xPlusSecondLinkOffset,y,z)),
-				new ModuleRotationMapEntryHelper(ORI2Y,BLUE_BOX_INDEX,MTRANSimulation.ORI2Y,new Vector3f(xMinusSecondLinkOffset,y,z)),				
-				new ModuleRotationMapEntryHelper(ORI2XY,RED_BOX_INDEX,MTRANSimulation.ORI2XY,new Vector3f(xPlusSecondLinkOffset,y,z)),
-				new ModuleRotationMapEntryHelper(ORI2XY,BLUE_BOX_INDEX,MTRANSimulation.ORI2XY,new Vector3f(xMinusSecondLinkOffset,y,z)),				
-				new ModuleRotationMapEntryHelper(ORI3,RED_BOX_INDEX,MTRANSimulation.ORI3,new Vector3f(x,y,zPlusSecondLinkOffset)),
-				new ModuleRotationMapEntryHelper(ORI3,BLUE_BOX_INDEX,MTRANSimulation.ORI3,new Vector3f(x,y,zMinusSecondLinkOffset)),				
-				new ModuleRotationMapEntryHelper(ORI3X,RED_BOX_INDEX,MTRANSimulation.ORI3X,new Vector3f(x,y,zPlusSecondLinkOffset)),
-				new ModuleRotationMapEntryHelper(ORI3X,BLUE_BOX_INDEX,MTRANSimulation.ORI3X,new Vector3f(x,y,zMinusSecondLinkOffset)),				
-				new ModuleRotationMapEntryHelper(ORI3Y,RED_BOX_INDEX,MTRANSimulation.ORI3Y,new Vector3f(x,y,zMinusSecondLinkOffset)),
-				new ModuleRotationMapEntryHelper(ORI3Y,BLUE_BOX_INDEX,MTRANSimulation.ORI3Y,new Vector3f(x,y,zPlusSecondLinkOffset)),				
-				new ModuleRotationMapEntryHelper(ORI3XY,RED_BOX_INDEX,MTRANSimulation.ORI3XY,new Vector3f(x,y,zMinusSecondLinkOffset)),
-				new ModuleRotationMapEntryHelper(ORI3XY,BLUE_BOX_INDEX,MTRANSimulation.ORI3XY,new Vector3f(x,y,zPlusSecondLinkOffset))
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI1.toString(),RED_BOX_INDEX,MTRANSimulation.ORI1,new Vector3f(x,yMinusSecondLinkOffset,z)),
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI1.toString(),BLUE_BOX_INDEX,MTRANSimulation.ORI1,new Vector3f(x,yPlusSecondLinkOffset,z)),				
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI1X.toString(),RED_BOX_INDEX,MTRANSimulation.ORI1X,new Vector3f(x,yMinusSecondLinkOffset,z)),
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI1X.toString(),BLUE_BOX_INDEX,MTRANSimulation.ORI1X,new Vector3f(x,yPlusSecondLinkOffset,z)),				
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI1Y.toString(),RED_BOX_INDEX,MTRANSimulation.ORI1Y,new Vector3f(x,yPlusSecondLinkOffset,z)),
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI1Y.toString(),BLUE_BOX_INDEX,MTRANSimulation.ORI1Y,new Vector3f(x,yMinusSecondLinkOffset,z)),				
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI1XY.toString(),RED_BOX_INDEX,MTRANSimulation.ORI1XY,new Vector3f(x,yPlusSecondLinkOffset,z)),
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI1XY.toString(),BLUE_BOX_INDEX,MTRANSimulation.ORI1XY,new Vector3f(x,yMinusSecondLinkOffset,z)),				
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI2.toString(),RED_BOX_INDEX,MTRANSimulation.ORI2,new Vector3f(xMinusSecondLinkOffset,y,z)),
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI2.toString(),BLUE_BOX_INDEX,MTRANSimulation.ORI2,new Vector3f(xPlusSecondLinkOffset,y,z)),				
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI2X.toString(),RED_BOX_INDEX,MTRANSimulation.ORI2X,new Vector3f(xMinusSecondLinkOffset,y,z)),
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI2X.toString(),BLUE_BOX_INDEX,MTRANSimulation.ORI2X,new Vector3f(xPlusSecondLinkOffset,y,z)),				
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI2Y.toString(),RED_BOX_INDEX,MTRANSimulation.ORI2Y,new Vector3f(xPlusSecondLinkOffset,y,z)),
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI2Y.toString(),BLUE_BOX_INDEX,MTRANSimulation.ORI2Y,new Vector3f(xMinusSecondLinkOffset,y,z)),				
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI2XY.toString(),RED_BOX_INDEX,MTRANSimulation.ORI2XY,new Vector3f(xPlusSecondLinkOffset,y,z)),
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI2XY.toString(),BLUE_BOX_INDEX,MTRANSimulation.ORI2XY,new Vector3f(xMinusSecondLinkOffset,y,z)),				
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI3.toString(),RED_BOX_INDEX,MTRANSimulation.ORI3,new Vector3f(x,y,zPlusSecondLinkOffset)),
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI3.toString(),BLUE_BOX_INDEX,MTRANSimulation.ORI3,new Vector3f(x,y,zMinusSecondLinkOffset)),				
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI3X.toString(),RED_BOX_INDEX,MTRANSimulation.ORI3X,new Vector3f(x,y,zPlusSecondLinkOffset)),
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI3X.toString(),BLUE_BOX_INDEX,MTRANSimulation.ORI3X,new Vector3f(x,y,zMinusSecondLinkOffset)),				
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI3Y.toString(),RED_BOX_INDEX,MTRANSimulation.ORI3Y,new Vector3f(x,y,zMinusSecondLinkOffset)),
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI3Y.toString(),BLUE_BOX_INDEX,MTRANSimulation.ORI3Y,new Vector3f(x,y,zPlusSecondLinkOffset)),				
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI3XY.toString(),RED_BOX_INDEX,MTRANSimulation.ORI3XY,new Vector3f(x,y,zMinusSecondLinkOffset)),
+				new ModuleRotationMapEntryHelper(MTRANStandardRotations.ORI3XY.toString(),BLUE_BOX_INDEX,MTRANSimulation.ORI3XY,new Vector3f(x,y,zPlusSecondLinkOffset))
 		};		
 		return moduleRotationAdditonalMap;
 	}
@@ -508,5 +503,11 @@ public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate 
 				rotateModuleComponent(selectedModuleComponent,MODULE_ROTATION_MAP[entry].getRotationAroundAxisValue().getRotation());
 			}
 		}		
+	}
+
+	@Override
+	public ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP() {
+		// TODO Auto-generated method stub
+		return null;
 	}	
 }

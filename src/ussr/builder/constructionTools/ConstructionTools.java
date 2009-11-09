@@ -23,5 +23,7 @@ public enum ConstructionTools {
 	/*The tool where user selects the module and the module is rotated with opposite rotation */
 	OPPOSITE_ROTATION,
 	/*The tool for varying unique properties of modular robots modules */
-	VARIATION
+	VARIATION,
+	
+	STANDARD_ROTATIONS_IN_LOOP;
 }

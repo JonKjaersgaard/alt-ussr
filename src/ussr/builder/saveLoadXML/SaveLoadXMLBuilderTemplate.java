@@ -19,7 +19,7 @@ import ussr.aGui.MainFrames;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.BuilderMultiRobotPreSimulation;
-import ussr.builder.SupportedModularRobots;
+import ussr.builder.enums.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;

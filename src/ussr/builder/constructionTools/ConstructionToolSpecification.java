@@ -8,7 +8,7 @@ import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
-import ussr.builder.SupportedModularRobots;
+import ussr.builder.enums.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.SelectedModuleTypeMapHelper;
 
@@ -73,48 +73,55 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 
 	/**
 	 * For calling tools handling construction of morphology of modular robot, in particular tools like "ON_SELECTED_CONNECTOR","ON_ALL_CONNECTORS" and "VARIATION". 
-	 * @param simulation, the physical simulation. 
 	 * @param modularRobotName,the name of the modular robot. For example: ATRON, MTRAN,Odin and so on.
 	 * @param toolName,the name of the tool from GUI. For example, in this case, these can be "ON_SELECTED_CONNECTOR", "ON_ALL_CONNECTORS" and "VARIATION".
 	 */
-	public  ConstructionToolSpecification(/*JMESimulation simulation,*/ SupportedModularRobots modularRobotName, ConstructionTools toolName){
-		/*this.simulation = simulation;*/
+	public  ConstructionToolSpecification( SupportedModularRobots modularRobotName, ConstructionTools toolName){
 		this.modularRobotName = modularRobotName;
-		this.toolName = toolName;
-		//this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
-		//this.construction = selectOperations.getConstruction();		
+		this.toolName = toolName;		
 	}
 
 	/**
 	 * For calling tools handling construction of morphology of modular robot,in particular tools like "ON_CHOSEN_CONNECTOR" or "LOOP".
-	 * @param simulation, the physical simulation.
 	 * @param modularRobotName,the name of the modular robot. For example: ATRON, MTRAN,ODIN and so on.
 	 * @param toolName,the name of the tool from GUI. For example, in this  case, these can be "ChosenConnector" or "Loop".
 	 * @param chosenConnectorNr,the connector number on module, chosen in GUI comboBox ("ON_CHOSEN_CONNECTOR")or just passed as default ("LOOP").
 	 */
-	public  ConstructionToolSpecification(/*JMESimulation simulation,*/ SupportedModularRobots modularRobotName, ConstructionTools toolName,int chosenConnectorNr){
-		/*this.simulation = simulation;*/
+	public  ConstructionToolSpecification(SupportedModularRobots modularRobotName, ConstructionTools toolName,int chosenConnectorNr){
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
 		this.selectedConnectorNr = chosenConnectorNr;
-		//this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
-		//this.construction = selectOperations.getConstruction();	
 	}
-
+	
 	/**
 	 * For calling tools handling construction of morphology of modular robot, in particular tools like "STANDARD_ROTATION". 
-	 * @param simulation, the physical simulation.
 	 * @param modularRobotName, the name of the modular robot. For example: ATRON, MTRAN,ODIN and so on.
 	 * @param toolName, the name of the tool from GUI. For example, in this case, this is "STANDARD_ROTATION".
 	 * @param standardRotationName,the name of rotation, which is standard to particular modular robot. For example for ATRON this can be EW, meaning east-west.
 	 */
-	public  ConstructionToolSpecification(/*JMESimulation simulation,*/ SupportedModularRobots modularRobotName, ConstructionTools toolName, String standardRotationName){
-		/*this.simulation = simulation;*/
+	public  ConstructionToolSpecification(SupportedModularRobots modularRobotName, ConstructionTools toolName, String standardRotationName){
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
-		this.standardRotationName = standardRotationName;
-		//this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
-		//this.construction = selectOperations.getConstruction();	
+		this.standardRotationName = standardRotationName;	
+	}
+	
+	/**
+	 * Instantiates the tool.
+	 * @param jmeSimulation, the physical simulation.
+	 */
+	private void instantiateTool(JMESimulation jmeSimulation){
+		this.jmeSimulation = jmeSimulation;
+		this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(jmeSimulation,modularRobotName);
+		this.construction = selectOperations.getConstruction();
+	}
+
+	int timesSelected =-1;
+	public int getTimesSelected() {
+		return timesSelected;
+	}
+
+	public void resetTimesSelected() {
+		timesSelected = -1;
 	}
 
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
@@ -123,12 +130,9 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickModuleComponent(ussr.physics.jme.JMEModuleComponent)
 	 */
 	@Override
-	protected void pickModuleComponent(JMEModuleComponent component) {	
-		
-		this.jmeSimulation = (JMESimulation)component.getSimulation();
-		this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(jmeSimulation,modularRobotName);
-		this.construction = selectOperations.getConstruction();
-		
+	protected void pickModuleComponent(JMEModuleComponent component) {
+		timesSelected++;
+		instantiateTool((JMESimulation)component.getSimulation());		
 		this.selectedModule = component.getModel();
 		
        if (this.toolName.equals(ConstructionTools.LOOP)){
@@ -145,9 +149,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 */
 	@Override
 	protected void pickTarget(Geometry target,JMESimulation jmeSimulation) {
-		this.jmeSimulation = jmeSimulation;
-		this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(jmeSimulation,modularRobotName);
-		this.construction = selectOperations.getConstruction();
+		instantiateTool(jmeSimulation);
 
 		if (toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){			
 			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(this.jmeSimulation, target);
@@ -266,6 +268,8 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 			this.selectOperations.rotateModuleWithOppositeRotation(this);
 		}else if (this.toolName.equals(ConstructionTools.VARIATION)){
 			this.selectOperations.variateModule(this);
+		}else if (this.toolName.equals(ConstructionTools.STANDARD_ROTATIONS_IN_LOOP)){
+			this.selectOperations.rotateModuleStandardRotationInLoop(this);
 		}	
 	}
 

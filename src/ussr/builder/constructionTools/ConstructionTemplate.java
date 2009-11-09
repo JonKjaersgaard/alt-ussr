@@ -1,5 +1,6 @@
 package ussr.builder.constructionTools;
 
+import ussr.builder.helpers.ModuleRotationMapEntryHelper;
 import ussr.model.Module;
 
 /**
@@ -92,6 +93,7 @@ public interface ConstructionTemplate {
 	 * @param selectedModuleComponent,the module component selected in simulation environment.
 	 * @param rotationQComponent,the rotation of selected component.	 
 	 */
+	public abstract ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP();
 	//public abstract void variateComponentProperties(JMEModuleComponent selectedModuleComponent,Quaternion  rotationQComponent);
 //FIME SHOULD I MOVE COMMON METHODS TO INTERFACE?
 }

@@ -1,5 +1,6 @@
 package ussr.builder.constructionTools;
 
+import ussr.builder.enums.ATRONStandardRotations;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.ModuleMapEntryHelper;
 import ussr.builder.helpers.ModuleRotationMapEntryHelper;
@@ -24,11 +25,6 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * The numbers of connectors on the ATRON module
 	 */
 	private final static int CONNECTORnr0 = 0,CONNECTORnr1 = 1,CONNECTORnr2 = 2,CONNECTORnr3 = 3,CONNECTORnr4 = 4, CONNECTORnr5 = 5,CONNECTORnr6 = 6, CONNECTORnr7 = 7;
-
-	/**
-	 * Supported rotations of ATRON module."EW" means east-west and so on.
-	 */
-	private final static String EW = "EW", WE= "WE", SN = "SN", NS = "NS", UD = "UD", DU = "DU";
 	
 	/**
 	 * The physical lattice distance between two ATRON modules
@@ -40,15 +36,15 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * The logic is: if rotation is "EW"(means east-west), then the rotation value is ATRON.ROTATION_EW and opposite
 	 * to this rotation is ATRON.ROTATION_WE (Look the first entry in array beneath).
 	 */
-	private final static ModuleRotationMapEntryHelper[] MODULE_ROTATION_MAP =  {
-		new ModuleRotationMapEntryHelper(EW,ATRON.ROTATION_EW,ATRON.ROTATION_WE),
-		new ModuleRotationMapEntryHelper(WE,ATRON.ROTATION_WE,ATRON.ROTATION_EW),
-		new ModuleRotationMapEntryHelper(SN,ATRON.ROTATION_SN,ATRON.ROTATION_NS),
-		new ModuleRotationMapEntryHelper(NS,ATRON.ROTATION_NS,ATRON.ROTATION_SN),
-		new ModuleRotationMapEntryHelper(UD,ATRON.ROTATION_UD,ATRON.ROTATION_DU),
-		new ModuleRotationMapEntryHelper(DU,ATRON.ROTATION_DU,ATRON.ROTATION_UD),
+	private static final ModuleRotationMapEntryHelper[] MODULE_ROTATION_MAP =  {
+		new ModuleRotationMapEntryHelper(ATRONStandardRotations.EW.toString(),ATRON.ROTATION_EW,ATRON.ROTATION_WE),
+		new ModuleRotationMapEntryHelper(ATRONStandardRotations.WE.toString(),ATRON.ROTATION_WE,ATRON.ROTATION_EW),
+		new ModuleRotationMapEntryHelper(ATRONStandardRotations.SN.toString(),ATRON.ROTATION_SN,ATRON.ROTATION_NS),
+		new ModuleRotationMapEntryHelper(ATRONStandardRotations.NS.toString(),ATRON.ROTATION_NS,ATRON.ROTATION_SN),
+		new ModuleRotationMapEntryHelper(ATRONStandardRotations.UD.toString(),ATRON.ROTATION_UD,ATRON.ROTATION_DU),
+		new ModuleRotationMapEntryHelper(ATRONStandardRotations.DU.toString(),ATRON.ROTATION_DU,ATRON.ROTATION_UD),
 	};
-	
+
 	/**
 	 * Tolerance used to identify if component (module) already exists in interval of space.
 	 */
@@ -217,5 +213,9 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 		 * for that. This support will require much more additional rotations in updateModuleMap method, as a
 		 * result a lot of time*/
 		rotateComponentOpposite(selectedModuleComponent,rotationQComponent);
+	}
+	
+	public  ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP() {
+		return MODULE_ROTATION_MAP;
 	}
 }

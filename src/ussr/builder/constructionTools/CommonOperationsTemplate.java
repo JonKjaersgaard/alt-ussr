@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import ussr.builder.enums.ATRONStandardRotations;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
@@ -188,7 +189,29 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 		this.construction = toolSpecification.getConstruction();
 		this.construction.rotateModuleSpecifically(this.selectedModule, standardRotationName);	
 	}
-
+	
+	
+	
+	public void rotateModuleStandardRotationInLoop(ConstructionToolSpecification toolSpecification){
+		this.selectedModule = toolSpecification.getSelectedModule();
+		this.construction = toolSpecification.getConstruction();
+		System.out.println("FFF"+construction.getMODULE_ROTATION_MAP().length );
+	
+		//TODO //FIXME
+		/*if (toolSpecification.getTimesSelected()<=this.construction.getMODULE_ROTATION_MAP().length){
+			construction.rotateModuleSpecifically(toolSpecification.getSelectedModule(), this.construction.getMODULE_ROTATION_MAP()[toolSpecification.getTimesSelected()].getRotationName()); 
+		}else{
+			toolSpecification.resetTimesSelected();
+		}*/	
+		//TODO //FIXME
+		if (toolSpecification.getTimesSelected()<=ATRONStandardRotations.values().length){
+			construction.rotateModuleSpecifically(toolSpecification.getSelectedModule(), this.construction.getMODULE_ROTATION_MAP()[toolSpecification.getTimesSelected()].getRotationName());
+			
+		}else{
+			toolSpecification.resetTimesSelected();
+		}
+	}
+	
 	/**
 	 * Additional method for implementing unique properties of modular robots. Like for example
 	 * MTRAN has several more specific rotations, which are implemented to make the construction

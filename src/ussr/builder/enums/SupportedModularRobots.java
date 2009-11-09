@@ -1,4 +1,4 @@
-package ussr.builder;
+package ussr.builder.enums;
 
 /**
  * Modular robots supported by builder(Quick Prototyping of Simulation Scenarios) for interactive

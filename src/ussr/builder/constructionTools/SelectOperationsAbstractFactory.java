@@ -1,6 +1,6 @@
 package ussr.builder.constructionTools;
 
-import ussr.builder.SupportedModularRobots;
+import ussr.builder.enums.SupportedModularRobots;
 import ussr.physics.jme.JMESimulation;
 
 /**

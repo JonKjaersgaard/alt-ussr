@@ -161,5 +161,11 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 		return connectorPosition;		
 	}
 
+	@Override
+	public ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

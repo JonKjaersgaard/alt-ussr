@@ -1,6 +1,6 @@
 package ussr.builder.helpers;
 
-import ussr.builder.SupportedModularRobots;
+import ussr.builder.enums.SupportedModularRobots;
 
 /**
  * Acts as a helper class for ConstructionToolSpecification.java in a way that maps modular robot name to

@@ -15,6 +15,7 @@ import ussr.builder.constructionTools.ConstructionTools;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
 import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
+import ussr.builder.enums.SupportedModularRobots;
 import ussr.builder.experimental.MtranExperiment;
 import ussr.builder.experimental.NewSelection;
 import ussr.builder.genericTools.ColorConnectors;

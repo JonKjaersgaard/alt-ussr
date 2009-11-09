@@ -1,5 +1,6 @@
 package ussr.builder.constructionTools;
 
+import ussr.builder.helpers.ModuleRotationMapEntryHelper;
 import ussr.description.geometry.VectorDescription;
 
 
@@ -76,6 +77,8 @@ public interface SelectOperationsTemplate {
 	 */
 	public abstract void rotateModuleStandardRotation(ConstructionToolSpecification toolSpecification, String standardRotationName);
 	
+	public abstract void rotateModuleStandardRotationInLoop(ConstructionToolSpecification toolSpecification);
+	
 	/**
 	 * Additional method for implementing unique properties of modular robots. Like for example
 	 * MTRAN has several more specific rotations, which are implemented to make the construction
@@ -104,4 +107,5 @@ public interface SelectOperationsTemplate {
 //TODO
 	public abstract void moveModuleOnNextConnector(ConstructionToolSpecification toolSpecification);
 		
+	
 }

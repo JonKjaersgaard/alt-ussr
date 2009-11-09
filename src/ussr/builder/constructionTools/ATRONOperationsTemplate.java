@@ -79,6 +79,7 @@ public class ATRONOperationsTemplate extends CommonOperationsTemplate{
 	public  ConstructionTemplate getConstruction() {
 		 return construction = new ATRONConstructionTemplate(simulation);		
 	}
+
 	
 	
 }

@@ -1,5 +1,6 @@
 package ussr.builder.constructionTools;
 
+import ussr.builder.enums.CKBotStandardRotations;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.ModuleMapEntryHelper;
 import ussr.builder.helpers.ModuleRotationMapEntryHelper;
@@ -7,8 +8,6 @@ import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.ckbot.CKBotStandard;
-
-
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
@@ -42,18 +41,18 @@ public class CKBotConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * to this rotation is CKBotStandard.ROT_0_OPPOS (Look the first entry in array beneath).
 	 */
 	private final static ModuleRotationMapEntryHelper[] MODULE_ROTATION_MAP =  {
-		new ModuleRotationMapEntryHelper("ROT_0",CKBotStandard.ROT_0,CKBotStandard.ROT_0_OPPOS,CKBotStandard.ROT_0_90Z),
-		new ModuleRotationMapEntryHelper("ROT_0_OPPOS",CKBotStandard.ROT_0_OPPOS,CKBotStandard.ROT_0,CKBotStandard.ROT_0_OPPOS_90Z),
-		new ModuleRotationMapEntryHelper("ROT_0_90Z",CKBotStandard.ROT_0_90Z,CKBotStandard.ROT_0_OPPOS_90Z,CKBotStandard.ROT_0),
-		new ModuleRotationMapEntryHelper("ROT_0_OPPOS_90Z",CKBotStandard.ROT_0_OPPOS_90Z,CKBotStandard.ROT_0_90Z,CKBotStandard.ROT_0_OPPOS),
-		new ModuleRotationMapEntryHelper("ROT_0_90X",CKBotStandard.ROT_0_90X,CKBotStandard.ROT_0_MIN90X,CKBotStandard.ROT_0_90X_90Y),
-		new ModuleRotationMapEntryHelper("ROT_0_MIN90X",CKBotStandard.ROT_0_MIN90X,CKBotStandard.ROT_0_90X,CKBotStandard.ROT_0_270X_90Y),
-		new ModuleRotationMapEntryHelper("ROT_0_90X_90Y",CKBotStandard.ROT_0_90X_90Y,CKBotStandard.ROT_0_270X_90Y,CKBotStandard.ROT_0_90X),
-		new ModuleRotationMapEntryHelper("ROT_0_270X_90Y",CKBotStandard.ROT_0_270X_90Y,CKBotStandard.ROT_0_90X_90Y,CKBotStandard.ROT_0_MIN90X),
-		new ModuleRotationMapEntryHelper("ROT_0_90Y",CKBotStandard.ROT_0_90Y,CKBotStandard.ROT_0_MIN90Y,CKBotStandard.ROT_0_MIN90X_MINUS90Z),
-		new ModuleRotationMapEntryHelper("ROT_0_MIN90Y",CKBotStandard.ROT_0_MIN90Y,CKBotStandard.ROT_0_90Y,CKBotStandard.ROT_0_90X_MIN90Z),
-		new ModuleRotationMapEntryHelper("ROT_0_90X_MIN90Z",CKBotStandard.ROT_0_90X_MIN90Z,CKBotStandard.ROT_0_MIN90X_MINUS90Z,CKBotStandard.ROT_0_MIN90Y),
-		new ModuleRotationMapEntryHelper("ROT_0_MIN90X_MIN90Z",CKBotStandard.ROT_0_MIN90X_MINUS90Z,CKBotStandard.ROT_0_90X_MIN90Z,CKBotStandard.ROT_0_90Y)
+		new ModuleRotationMapEntryHelper(CKBotStandardRotations.ROT_0.toString(),CKBotStandard.ROT_0,CKBotStandard.ROT_0_OPPOS,CKBotStandard.ROT_0_90Z),
+		new ModuleRotationMapEntryHelper(CKBotStandardRotations.ROT_0_OPPOS.toString(),CKBotStandard.ROT_0_OPPOS,CKBotStandard.ROT_0,CKBotStandard.ROT_0_OPPOS_90Z),
+		new ModuleRotationMapEntryHelper(CKBotStandardRotations.ROT_0_90Z.toString(),CKBotStandard.ROT_0_90Z,CKBotStandard.ROT_0_OPPOS_90Z,CKBotStandard.ROT_0),
+		new ModuleRotationMapEntryHelper(CKBotStandardRotations.ROT_0_OPPOS_90Z.toString(),CKBotStandard.ROT_0_OPPOS_90Z,CKBotStandard.ROT_0_90Z,CKBotStandard.ROT_0_OPPOS),
+		new ModuleRotationMapEntryHelper(CKBotStandardRotations.ROT_0_90X.toString(),CKBotStandard.ROT_0_90X,CKBotStandard.ROT_0_MIN90X,CKBotStandard.ROT_0_90X_90Y),
+		new ModuleRotationMapEntryHelper(CKBotStandardRotations.ROT_0_MIN90X.toString(),CKBotStandard.ROT_0_MIN90X,CKBotStandard.ROT_0_90X,CKBotStandard.ROT_0_270X_90Y),
+		new ModuleRotationMapEntryHelper(CKBotStandardRotations.ROT_0_90X_90Y.toString(),CKBotStandard.ROT_0_90X_90Y,CKBotStandard.ROT_0_270X_90Y,CKBotStandard.ROT_0_90X),
+		new ModuleRotationMapEntryHelper(CKBotStandardRotations.ROT_0_270X_90Y.toString(),CKBotStandard.ROT_0_270X_90Y,CKBotStandard.ROT_0_90X_90Y,CKBotStandard.ROT_0_MIN90X),
+		new ModuleRotationMapEntryHelper(CKBotStandardRotations.ROT_0_90Y.toString(),CKBotStandard.ROT_0_90Y,CKBotStandard.ROT_0_MIN90Y,CKBotStandard.ROT_0_MIN90X_MINUS90Z),
+		new ModuleRotationMapEntryHelper(CKBotStandardRotations.ROT_0_MIN90Y.toString(),CKBotStandard.ROT_0_MIN90Y,CKBotStandard.ROT_0_90Y,CKBotStandard.ROT_0_90X_MIN90Z),
+		new ModuleRotationMapEntryHelper(CKBotStandardRotations.ROT_0_90X_MIN90Z.toString(),CKBotStandard.ROT_0_90X_MIN90Z,CKBotStandard.ROT_0_MIN90X_MINUS90Z,CKBotStandard.ROT_0_MIN90Y),
+		new ModuleRotationMapEntryHelper(CKBotStandardRotations.ROT_0_MIN90X_MIN90Z.toString(),CKBotStandard.ROT_0_MIN90X_MINUS90Z,CKBotStandard.ROT_0_90X_MIN90Z,CKBotStandard.ROT_0_90Y)
 	};
 
 
@@ -233,5 +232,11 @@ public class CKBotConstructionTemplate extends ModularRobotConstructionTemplate 
 				rotateModuleComponent(selectedModuleComponent,MODULE_ROTATION_MAP[entry].getRotationAroundAxisValue().getRotation());
 			}
 		}
+	}
+
+	@Override
+	public ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	}
