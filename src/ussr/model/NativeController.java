@@ -14,6 +14,7 @@ import java.util.concurrent.BrokenBarrierException;
 
 import ussr.physics.PhysicsParameters;
 import ussr.physics.jme.JMESimulation;
+import ussr.samples.atron.ATRONTinyOSController;
 
 /**
  * A controller with a native implementation, bridged to a controller implementing
@@ -77,17 +78,25 @@ public class NativeController implements Controller {
     private synchronized native int nativeInitialize();
     
     void iterationSimulatorHook(boolean isActive) {
-    	    	
-        if(!isActive && idleLevel++>sleepThreshold) {
-        	idleLevel = 0;
-            eventLock = new Object();
-            synchronized(eventLock) {
-                try {
-                    eventLock.wait();
-                } catch(InterruptedException exn) {
-                    throw new Error("Error: interrupted while waiting");
-                }
-            }
+  	    	
+        if(!isActive /*&& idleLevel++>sleepThreshold*/) {
+            try {
+            	( (JMESimulation) controller.getModule().getSimulation() ).controlSyncBarrier.await();
+            } catch (InterruptedException e) {
+            	e.printStackTrace();
+            	System.out.println("native ctrl interrupted");
+            } catch (BrokenBarrierException e) {
+            	e.printStackTrace();
+            }	       	
+//        	idleLevel = 0;
+//            eventLock = new Object();
+//            synchronized(eventLock) {
+//                try {
+//                    eventLock.wait();
+//                } catch(InterruptedException exn) {
+//                    throw new Error("Error: interrupted while waiting");
+//                }
+//            }
         }     
         //do { Thread.yield(); } while(controller.getModule().getSimulation().isPaused());
         while(controller.getModule().getSimulation().isPaused()) Thread.yield();
