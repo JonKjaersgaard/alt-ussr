@@ -40,7 +40,7 @@ public interface ConstructRobotTabInter extends ConstructionTabsInter {
             /*12*/"Jump from one connector to the next connector(loop)",
             /*13*/"On next connector",
             /*14*/"Switch the type of module",
-
+            /*15*/"Vary module properties",
 
 	};
 }

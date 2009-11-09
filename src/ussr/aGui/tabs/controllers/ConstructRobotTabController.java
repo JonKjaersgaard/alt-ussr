@@ -558,12 +558,16 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	}
 
 	/**
-	 * Initializes the tool for variating the properties of modules selected in simulation environment.
+	 * Initializes the tool for varying the properties of modules selected in simulation environment.
+	 * Is specific to each modular robot.
 	 * @param jmeSimulation
 	 */
-	public static void jButtonSwitchModulesActionPerformed() {				
-			//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation,chosenMRname,ConstructionTools.VARIATION));
-				
+	public static void jButtonVariateModulePropertiesActionPerformed() {	
+		try {
+			builderControl.setPicker(BuilderSupportingUnicastPickers.VARIATE_MODULE_PROPERTIES);
+		} catch (RemoteException e) {
+			throw new Error("Failed to initate picker called "+ BuilderSupportingUnicastPickers.VARIATE_MODULE_PROPERTIES.toString() + ", due to remote exception");
+		}				
 	}
 
 

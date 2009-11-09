@@ -91,7 +91,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonJumpFromConnToConnector = new javax.swing.JButton();
 		jButtonOnNextConnector = new javax.swing.JButton();
 		jButtonOnPreviousConnector = new javax.swing.JButton();
-		jButtonSwitchModules = new javax.swing.JButton();
+		jButtonVariateModuleProperties = new javax.swing.JButton();
 		jButtonStandardRotationsLoop = new javax.swing.JButton();
 
 		buttonGroupModularRobots = new ButtonGroup();
@@ -357,20 +357,20 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 
 		jToolBarGenericTools.add(jButtonColorConnetors);
 
-		jButtonSwitchModules.setToolTipText(TOOL_TIP_TEXTS[14]);
-		jButtonSwitchModules.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + COLOUR_CONNECTORS));
-		jButtonSwitchModules.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));		
-		jButtonSwitchModules.setFocusable(false);
-		jButtonSwitchModules.setEnabled(true);
-		jButtonSwitchModules.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH));
-		jButtonSwitchModules.addActionListener(new java.awt.event.ActionListener() {
+		jButtonVariateModuleProperties.setToolTipText(TOOL_TIP_TEXTS[15]);
+		jButtonVariateModuleProperties.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + VARY_PROPERTIES));
+		jButtonVariateModuleProperties.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));		
+		jButtonVariateModuleProperties.setFocusable(false);
+		jButtonVariateModuleProperties.setEnabled(true);
+		jButtonVariateModuleProperties.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH));
+		jButtonVariateModuleProperties.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				setSelectionDeselection(jButtonSwitchModules);
-				ConstructRobotTabController.jButtonSwitchModulesActionPerformed();
+				setSelectionDeselection(jButtonVariateModuleProperties);
+				ConstructRobotTabController.jButtonVariateModulePropertiesActionPerformed();
 			}
 		});
 
-		jToolBarGenericTools.add(jButtonSwitchModules);
+		jToolBarGenericTools.add(jButtonVariateModuleProperties);
 
 		super.jComponent.add(jToolBarGenericTools,gridBagConstraints);
 
@@ -709,7 +709,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	private  static javax.swing.JButton jButtonStartNewRobot,jButtonDelete,
 	jButtonMove,jButtonColorConnetors,jButtonOppositeRotation,jButtonOnSelectedConnector,
 	jButtonConnectAllModules,jButtonJumpFromConnToConnector,jButtonOnNextConnector,
-	jButtonOnPreviousConnector,jButtonSwitchModules,jButtonStandardRotationsLoop;
+	jButtonOnPreviousConnector,jButtonVariateModuleProperties,jButtonStandardRotationsLoop;
 
 	private static javax.swing.JToolBar jToolBarGenericTools,
 	jToolBarRotationTools,jToolBarConstructionTools;
