@@ -84,7 +84,7 @@ public class MtranExperiment extends CustomizedPicker {
 	}
 
 	@Override
-	protected void pickTarget(Geometry target) {
+	protected void pickTarget(Geometry target, JMESimulation jmeSimulation) {
 		if(target instanceof TriMesh) {			
 			String name = simulation.getGeometryName((TriMesh)target);
 			if(name!=null && name.contains("Connector")){ 

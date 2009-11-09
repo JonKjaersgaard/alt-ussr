@@ -24,7 +24,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	/** 
 	 * The physical simulation.
 	 */
-	private JMESimulation simulation;
+	private JMESimulation jmeSimulation;
 
 	/**
 	 * The interface to construction of modular robot morphology. This one is on the level of modules of modular robot(creation and movement of them).  
@@ -77,12 +77,12 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * @param modularRobotName,the name of the modular robot. For example: ATRON, MTRAN,Odin and so on.
 	 * @param toolName,the name of the tool from GUI. For example, in this case, these can be "ON_SELECTED_CONNECTOR", "ON_ALL_CONNECTORS" and "VARIATION".
 	 */
-	public  ConstructionToolSpecification(JMESimulation simulation, SupportedModularRobots modularRobotName, ConstructionTools toolName){
-		this.simulation = simulation;
+	public  ConstructionToolSpecification(/*JMESimulation simulation,*/ SupportedModularRobots modularRobotName, ConstructionTools toolName){
+		/*this.simulation = simulation;*/
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
-		this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
-		this.construction = selectOperations.getConstruction();		
+		//this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
+		//this.construction = selectOperations.getConstruction();		
 	}
 
 	/**
@@ -92,13 +92,13 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * @param toolName,the name of the tool from GUI. For example, in this  case, these can be "ChosenConnector" or "Loop".
 	 * @param chosenConnectorNr,the connector number on module, chosen in GUI comboBox ("ON_CHOSEN_CONNECTOR")or just passed as default ("LOOP").
 	 */
-	public  ConstructionToolSpecification(JMESimulation simulation, SupportedModularRobots modularRobotName, ConstructionTools toolName,int chosenConnectorNr){
-		this.simulation = simulation;
+	public  ConstructionToolSpecification(/*JMESimulation simulation,*/ SupportedModularRobots modularRobotName, ConstructionTools toolName,int chosenConnectorNr){
+		/*this.simulation = simulation;*/
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
 		this.selectedConnectorNr = chosenConnectorNr;
-		this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
-		this.construction = selectOperations.getConstruction();	
+		//this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
+		//this.construction = selectOperations.getConstruction();	
 	}
 
 	/**
@@ -108,13 +108,13 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * @param toolName, the name of the tool from GUI. For example, in this case, this is "STANDARD_ROTATION".
 	 * @param standardRotationName,the name of rotation, which is standard to particular modular robot. For example for ATRON this can be EW, meaning east-west.
 	 */
-	public  ConstructionToolSpecification(JMESimulation simulation, SupportedModularRobots modularRobotName, ConstructionTools toolName, String standardRotationName){
-		this.simulation = simulation;
+	public  ConstructionToolSpecification(/*JMESimulation simulation,*/ SupportedModularRobots modularRobotName, ConstructionTools toolName, String standardRotationName){
+		/*this.simulation = simulation;*/
 		this.modularRobotName = modularRobotName;
 		this.toolName = toolName;
 		this.standardRotationName = standardRotationName;
-		this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
-		this.construction = selectOperations.getConstruction();	
+		//this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
+		//this.construction = selectOperations.getConstruction();	
 	}
 
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
@@ -123,7 +123,12 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickModuleComponent(ussr.physics.jme.JMEModuleComponent)
 	 */
 	@Override
-	protected void pickModuleComponent(JMEModuleComponent component) {		
+	protected void pickModuleComponent(JMEModuleComponent component) {	
+		
+		this.jmeSimulation = (JMESimulation)component.getSimulation();
+		this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(jmeSimulation,modularRobotName);
+		this.construction = selectOperations.getConstruction();
+		
 		this.selectedModule = component.getModel();
 		
        if (this.toolName.equals(ConstructionTools.LOOP)){
@@ -139,9 +144,14 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickTarget(com.jme.scene.Spatial)
 	 */
 	@Override
-	protected void pickTarget(Geometry target) {
-		if (toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){
-			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);
+	protected void pickTarget(Geometry target,JMESimulation jmeSimulation) {
+		this.jmeSimulation = jmeSimulation;
+		this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(jmeSimulation,modularRobotName);
+		this.construction = selectOperations.getConstruction();
+
+		if (toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){			
+			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(this.jmeSimulation, target);
+			System.out.println("Connector:"+selectedConnectorNr );
 		//Adapt Construct Robot tab
 			//ConstructRobotTab.setEnabledRotationToolBar(false);
 			//ConstructRobotTab.getJButtonMove().setEnabled(false);
@@ -180,7 +190,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		for(int index =0;index<selectModulesTypes.length;index++){
 			if(selectModulesTypes[index].isSelected()==true){
 				this.modularRobotName = selectModulesTypes[index].getModularRobotName();
-				this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(simulation,modularRobotName);
+				this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(jmeSimulation,modularRobotName);
 				this.construction = selectOperations.getConstruction();				
 			}
 		}
@@ -280,22 +290,22 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	//	TODO SHOULD BE IN SOME WAY MOVED TO CommonOperations class How should I do that?
 	// Strange exception appears now;
 	public void moveToNextConnector(int connectorNr){		
-		int amountModules = simulation.getModules().size();
+		int amountModules = jmeSimulation.getModules().size();
 
-		Module lastAddedModule = simulation.getModules().get(amountModules-1);//Last module		
+		Module lastAddedModule = jmeSimulation.getModules().get(amountModules-1);//Last module		
 		Module selectedModule = this.selectedModule;//Last module
 
 		if (this.modularRobotName.equals(SupportedModularRobots.ATRON)){			
-			ConstructionTemplate con =  new ATRONConstructionTemplate(simulation);
+			ConstructionTemplate con =  new ATRONConstructionTemplate(jmeSimulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule, true);
 		}else if (this.modularRobotName.equals(SupportedModularRobots.MTRAN)){			
-			ConstructionTemplate con =  new MTRANConstructionTemplate(simulation);
+			ConstructionTemplate con =  new MTRANConstructionTemplate(jmeSimulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
 		}else if (this.modularRobotName.equals(SupportedModularRobots.ODIN)){
-			ConstructionTemplate con =  new OdinConstructionTemplate(simulation);
+			ConstructionTemplate con =  new OdinConstructionTemplate(jmeSimulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
 		}else if (this.modularRobotName.equals(SupportedModularRobots.CKBOTSTANDARD)){
-			ConstructionTemplate con =  new CKBotConstructionTemplate(simulation);
+			ConstructionTemplate con =  new CKBotConstructionTemplate(jmeSimulation);
 			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
 		}
 	}

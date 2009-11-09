@@ -1110,7 +1110,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 
 		guiHelper.passTo(AssistantjTextField,"Select "+ this.entityToLabel.toString().toLowerCase()+ " to assign to it the label: " + currentLabeljTextField.getText());
 	}                                                  
-	ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.LOOP,0);
+	//ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.LOOP,0);
 	/**
 	 * Initializes the tool for placing the modules on connector and later  moving it on the another. 
 	 * @param evt, selection with left side of the mouse event (jButton selection).     
@@ -1121,9 +1121,9 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		nextjButton.setEnabled(true);
 		previousjButton.setEnabled(true);
 		this.connectorNr =0;
-		ConstructionToolSpecification constructionToolsnew = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.LOOP,this.connectorNr);
-		this.constructionTools = constructionToolsnew;
-		JME_simulation.setPicker(constructionToolsnew); 
+		//ConstructionToolSpecification constructionToolsnew = new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.LOOP,this.connectorNr);
+		//this.constructionTools = constructionToolsnew;
+		//JME_simulation.setPicker(constructionToolsnew); 
 	}    
 	/**
 	 * Moves the module to the previous connector with decreasing number of connector. 
@@ -1142,7 +1142,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		if (lastModuleType.equalsIgnoreCase("OdinBall")){
 			//do nothing
 		}else{
-			constructionTools.moveToNextConnector(this.connectorNr);
+			//constructionTools.moveToNextConnector(this.connectorNr);
 		}
 
 		guiHelper.passTo(AssistantjTextField,this.chosenMRname +" module is on connector number "+this.connectorNr);
@@ -1179,7 +1179,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		if (lastModuleType.equalsIgnoreCase("OdinBall")){
 			//do nothing
 		}else{
-			constructionTools.moveToNextConnector(this.connectorNr);
+			//constructionTools.moveToNextConnector(this.connectorNr);
 		}
 		//else if (this.chosenMRname.equalsIgnoreCase("Odin")){
 		//if (this.connectorNr>amountOdinConnectors){ this.connectorNr=0;}
@@ -1195,7 +1195,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void alljButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
 		//System.out.println("Construction toolbar-->All");//for debugging 
-		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));	
+		//JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));	
 		guiHelper.passTo(AssistantjTextField,"Select " +this.chosenMRname +" module");
 	} 
 
@@ -1210,7 +1210,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		else{
 			this.connectorNr = Integer.parseInt(connectorsjComboBox.getSelectedItem().toString());
 		}
-		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,this.connectorNr));
+		//JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,this.connectorNr));
 		guiHelper.passTo(AssistantjTextField,"Select " +this.chosenMRname +" module");
 
 	}                                                   
@@ -1221,7 +1221,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void onConnectorjButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                   
 		//System.out.println("Construction toolbar-->On connector");//for debugging    
-		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
+		//JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
 		guiHelper.passTo(AssistantjTextField,"Select connector on "+ this.chosenMRname +" modular robot");
 	}                                                  
 
@@ -1236,7 +1236,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		}else if (this.chosenMRname.equals(SupportedModularRobots.MTRAN)){
 			guiHelper.passTo(AssistantjTextField,"Select OdinMuscle to chage it with other types of modules");
 		}
-		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.VARIATION));
+		//JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.VARIATION));
 	}                                              
 
 	/**
@@ -1245,7 +1245,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void oppositeRotationjButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                        
 		//System.out.println("Modular robot generic toolbar-->Opposite");//for debugging 
-		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.OPPOSITE_ROTATION));        
+		//JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.OPPOSITE_ROTATION));        
 		guiHelper.passTo(AssistantjTextField,"Select " +this.chosenMRname +" module to rotate it opposite ");       
 	}                                                       
 
@@ -1263,7 +1263,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 * @param evt, selection with left side of the mouse event (jButton selection).     
 	 */	
 	private void standardRotationsjComboBoxActionPerformed(java.awt.event.ActionEvent evt) {     
-		JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.STANDARD_ROTATIONS,standardRotationsjComboBox.getSelectedItem().toString()));		
+		//JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.STANDARD_ROTATIONS,standardRotationsjComboBox.getSelectedItem().toString()));		
 		guiHelper.passTo(AssistantjTextField,"Select " +this.chosenMRname +"default module to rotate with "+ rotationName+ " rotation");
 	}                                                          
 
@@ -1357,7 +1357,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 			previousjButton.setEnabled(false);
 			newModulejButtonActionPerformed(evt); //Add default construction module
 			// Set default construction tool to be "On connector"
-			JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));		
+			//JME_simulation.setPicker(new ConstructionToolSpecification(JME_simulation, this.chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));		
 			guiHelper.passTo(AssistantjTextField,this.chosenMRname +" modular robot (MR) is chosen. Now continue selecting connectors on the modules until robot is ready.");
 		}
 	}                                                     

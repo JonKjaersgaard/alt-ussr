@@ -96,7 +96,7 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 * Here the connector number is extracted from the string of TriMesh. Initial format of string is for example: "Connector 1 #1"
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickTarget(com.jme.scene.Spatial)
 	 */
-	protected void pickTarget(Geometry target) {		
+	protected void pickTarget(Geometry target,JMESimulation jmeSimulation) {		
 		this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);		
 	}
 

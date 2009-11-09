@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import com.jme.scene.Geometry;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
+import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
 
 /**
@@ -67,6 +68,6 @@ public class AssignControllerTool extends CustomizedPicker  {
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickTarget(com.jme.scene.Spatial)
 	 */
 	@Override
-	protected void pickTarget(Geometry target) {		
+	protected void pickTarget(Geometry target, JMESimulation jmeSimulation) {		
 	}	
 }
