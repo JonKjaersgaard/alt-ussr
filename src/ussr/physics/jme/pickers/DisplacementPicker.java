@@ -1,6 +1,8 @@
 package ussr.physics.jme.pickers;
 
 import ussr.physics.jme.JMEModuleComponent;
+import ussr.physics.jme.JMESimulation;
+
 import com.jme.math.Vector3f;
 import com.jme.scene.Geometry;
 import com.jmex.physics.DynamicPhysicsNode;
@@ -17,7 +19,7 @@ public class DisplacementPicker extends CustomizedPicker {
     }
 
 	@Override
-	protected void pickTarget(Geometry target) {
+	protected void pickTarget(Geometry target, JMESimulation jmeSimulation) {
 		// TODO Auto-generated method stub
 		
 	}	

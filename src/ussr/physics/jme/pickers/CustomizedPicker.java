@@ -83,10 +83,11 @@ public abstract class CustomizedPicker implements Picker {
     }
 
      /**
-     * Passes geometry of picked visual object
-     * @param target, the picked geometry
+     * Passes geometry of picked visual object.
+     * @param target, the picked geometry.
+     * @param jmeSimulation, jME simulation.
      */
-    protected abstract void pickTarget(Geometry target);
+    protected abstract void pickTarget(Geometry target, JMESimulation jmeSimulation);
 
     public void delete() {
         inputHandler.removeAction( pickAction );
@@ -112,16 +113,18 @@ public abstract class CustomizedPicker implements Picker {
                     for ( int i = 0; i < pickResults.getNumber(); i++ ) {
                         PickData data = pickResults.getPickData( i );
                         if ( data.getTargetTris() != null && data.getTargetTris().size() > 0 ) {
-                            Spatial target = data.getTargetMesh();//.getParentGeom();//TODO was Spatial target = data.getTargetMesh().getParentGeom();                           
-                            pickTarget(data.getTargetMesh()); 
+                            Spatial target = data.getTargetMesh();                     
+                            pickTarget(data.getTargetMesh(),simulation);
                             while ( target != null ) {
                                 if ( target instanceof DynamicPhysicsNode ) {
                                     DynamicPhysicsNode picked = (DynamicPhysicsNode) target;
-                                    pickNode( picked );
+                                    pickNode(picked);
                                     break loopResults;
                                 }
-                                target = target.getParent();
+                                target = target.getParent(); 
                             }
+                            
+                           
                         }
                     }
             }
