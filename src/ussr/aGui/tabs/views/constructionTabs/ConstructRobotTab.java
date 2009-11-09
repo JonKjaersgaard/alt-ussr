@@ -139,7 +139,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		radionButtonATRON.setEnabled(false);
 		radionButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonATRON,jmeSimulation);
+				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonATRON);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -155,7 +155,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		radionButtonODIN.setEnabled(false);
 		radionButtonODIN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonODIN,jmeSimulation);
+				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonODIN);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -171,7 +171,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		radioButtonMTRAN.setEnabled(false);
 		radioButtonMTRAN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructRobotTabController.jButtonGroupActionPerformed(radioButtonMTRAN,jmeSimulation);
+				ConstructRobotTabController.jButtonGroupActionPerformed(radioButtonMTRAN);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -188,13 +188,13 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		radionButtonCKBOTSTANDARD.setEnabled(false);
 		radionButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
-				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD,jmeSimulation);
+				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 4;
 		gridBagConstraints.gridy = 1;
-		//gridBagConstraints.ipady = 40; 
+
 		super.jComponent.add(radionButtonCKBOTSTANDARD,gridBagConstraints);
 		buttonGroupModularRobots.add(radionButtonCKBOTSTANDARD);	
 		jRadioButtons.add(radionButtonCKBOTSTANDARD);		
@@ -403,7 +403,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonOnSelectedConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setSelectionDeselection(jButtonOnSelectedConnector);
-				ConstructRobotTabController.jButtonOnSelectedConnectorActionPerformed(jmeSimulation);
+				ConstructRobotTabController.jButtonOnSelectedConnectorActionPerformed();
 			}
 		});	
 
@@ -426,7 +426,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonConnectAllModules.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setSelectionDeselection(jButtonConnectAllModules);
-				ConstructRobotTabController.jButtonConnectAllModulesActionPerformed(jmeSimulation);
+				ConstructRobotTabController.jButtonConnectAllModulesActionPerformed();
 			}
 		});	
 

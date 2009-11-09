@@ -20,10 +20,9 @@ import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 
 import ussr.remote.facade.BuilderControlInter;
-import ussr.remote.facade.BuilderSupportingPickers;
+import ussr.remote.facade.BuilderSupportingUnicastPickers;
 import ussr.remote.facade.RemotePhysicsSimulation;
 import ussr.samples.odin.modules.Odin;
-import ussr.aGui.MainFrameController;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTabInter;
@@ -46,13 +45,6 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	 */
 	private static BuilderControlInter builderControl;
 		
-	
-
-	/**
-	 * Local reference to physical simulation.
-	 */
-	private static JMESimulation jmeSimulationLocal;
-
 	/**
 	 * Default positions of initial construction modules for each modular robot
 	 * TODO CHANGE TO ADDING INITIAL MODULES INTO THE POINT OF VIEW OR ROTATE CAMERA POSITION.
@@ -72,10 +64,8 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	/**
 	 * Adds initial construction module according to selected module type and adapts the Tab to modular robot type.
 	 * @param button, button selected in the group of radio button.
-	 * @param jmeSimulation, the physical simulation.
 	 */
-	public static void jButtonGroupActionPerformed(AbstractButton button,JMESimulation jmeSimulation ) {
-		jmeSimulationLocal = jmeSimulation;
+	public static void jButtonGroupActionPerformed(AbstractButton button ) {
 
 		String chosenModularRobot = button.getText();			
 		chosenMRname = SupportedModularRobots.valueOf(chosenModularRobot.toUpperCase());
@@ -88,9 +78,9 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 
 		/* Set default construction tool to be "On selected  connector"*/
 		try {
-			builderControl.setPicker(BuilderSupportingPickers.ON_SELECTED_CONNECTOR);
+			builderControl.setPicker(BuilderSupportingUnicastPickers.ON_SELECTED_CONNECTOR);
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called ON_SELECTED_CONNECTOR, due to remote exception");
+			throw new Error("Failed to initate picker called " + BuilderSupportingUnicastPickers.ON_SELECTED_CONNECTOR + " , due to remote exception");
 		}
 
 		/*Informing user*/
@@ -169,8 +159,7 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	 * TODO SHOULD CHANGE WHEN MODULE WILL BE ADDED TO VIEW POINT OR ROTATE CAMERA POSITION. 
 	 * @param jmeSimulation, the physical simulation.
 	 */
-	private static void addNewDefaultConstructionModule(JMESimulation jmeSimulation){
-		//System.out.println("Modular robot specific--> New Module");//for debugging     	
+	private static void addNewDefaultConstructionModule(JMESimulation jmeSimulation){   	
 		CommonOperationsTemplate comATRON = new ATRONOperationsTemplate(jmeSimulation);
 		CommonOperationsTemplate comMTRAN = new MTRANOperationsTemplate(jmeSimulation);
 		CommonOperationsTemplate comOdin = new OdinOperationsTemplate(jmeSimulation);
@@ -232,9 +221,9 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	public static void jButtonDeleteActionPerformed(JMESimulation jmeSimulation) {
 		if (chosenItem.equalsIgnoreCase("Module")){
 			try {
-				builderControl.setPicker(BuilderSupportingPickers.REMOVE_MODULE);
+				builderControl.setPicker(BuilderSupportingUnicastPickers.REMOVE_MODULE);
 			} catch (RemoteException e) {
-				throw new Error("Failed to initialize picker called REMOVE_MODULE, due to remote exception");
+				throw new Error("Failed to initialize picker called " + BuilderSupportingUnicastPickers.REMOVE_MODULE.toString() + " , due to remote exception");
 			}
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
 			//TODO SUPPORT ROBOT DELETION
@@ -250,9 +239,9 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	public static void jButtonMoveActionPerformed(JMESimulation jmeSimulation) {	
 		if (chosenItem.equalsIgnoreCase("Module")){
 			try {
-				builderControl.setPicker(BuilderSupportingPickers.MOVE_MODULE);
+				builderControl.setPicker(BuilderSupportingUnicastPickers.MOVE_MODULE);
 			} catch (RemoteException e) {
-				throw new Error("Failed to initialize picker called MOVE_MODULE, due to remote exception");
+				throw new Error("Failed to initialize picker called " + BuilderSupportingUnicastPickers.MOVE_MODULE.toString() + " , due to remote exception");
 			}
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
 			//TODO Support robot deletion, moving and coloring of connectors.
@@ -268,9 +257,9 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	public static void jButtonColorConnectorsActionPerformed(JMESimulation jmeSimulation) {	
 		if (chosenItem.equalsIgnoreCase("Module")){
 			try {
-				builderControl.setPicker(BuilderSupportingPickers.COLOR_CONNECTORS);
+				builderControl.setPicker(BuilderSupportingUnicastPickers.COLOR_CONNECTORS);
 			} catch (RemoteException e) {
-				throw new Error("Failed to initate picker called COLOR_CONNECTORS, due to remote exception");
+				throw new Error("Failed to initate picker called "+ BuilderSupportingUnicastPickers.COLOR_CONNECTORS.toString() + " , due to remote exception");
 			}	
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
 			//TODO  Support robot deletion, moving and coloring of connectors.
@@ -302,9 +291,9 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	 */	
 	public static void jButtonOppositeRotationActionPerformed() {
 		try {
-			builderControl.setPicker(BuilderSupportingPickers.ROTATE_MODULE_OPPOSITE);
+			builderControl.setPicker(BuilderSupportingUnicastPickers.ROTATE_MODULE_OPPOSITE);
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called ROTATE_MODULE_OPPOSITE, due to remote exception");
+			throw new Error("Failed to initate picker called "+ BuilderSupportingUnicastPickers.ROTATE_MODULE_OPPOSITE.toString()+ " , due to remote exception");
 		}
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[2]);
@@ -328,32 +317,28 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	public static void jComboBoxStandardRotationsActionPerformed(JComboBox comboBoxStandardRotations) {
 		chosenStandardRotation = comboBoxStandardRotations.getSelectedItem().toString(); 
 		System.out.println("R:"+chosenStandardRotation);
-		 //BuilderSupportingPickers.ROTATE_MODULE_STANDARD.setPicker(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.STANDARD_ROTATIONS,chosenStandardRotation));
-		 //BuilderSupportingPickers builderSupportingPicker=  BuilderSupportingPickers.ROTATE_MODULE_STANDARD;
-		try {
-			builderControl.setPicker(BuilderSupportingPickers.ROTATE_MODULE_STANDARD);
+	/*	try {
+			builderControl.setPicker(BuilderSupportingUnicastPickers.ROTATE_MODULE_STANDARD);
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called ROTATE_MODULE_STANDARD, due to remote exception");
-		}
+		}*/
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[2]);
 	}
 
 	/**
-	 * Initializes the tool for adding new modules on selected connectors of the module in interest in simulation environment. 
-	 * @param jmeSimulation, the physical simulation.
+	 * Initializes the tool for adding new modules on selected connectors of the module in interest in simulation environment. 	
 	 */
-	public static void jButtonOnSelectedConnectorActionPerformed(JMESimulation jmeSimulation) {
+	public static void jButtonOnSelectedConnectorActionPerformed() {
 		/*Disable tab components no longer available*/
 		ConstructRobotTab.setEnabledRotationToolBar(false);
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
          
 		try {
-			builderControl.setPicker(BuilderSupportingPickers.ON_SELECTED_CONNECTOR);
+			builderControl.setPicker(BuilderSupportingUnicastPickers.ON_SELECTED_CONNECTOR);
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called ON_SELECTED_CONNECTOR, due to remote exception");
-		}
-		//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
+			throw new Error("Failed to initate picker called " + BuilderSupportingUnicastPickers.ON_SELECTED_CONNECTOR.toString() + " , due to remote exception");
+		}		
 		
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[7]); 
@@ -376,11 +361,11 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
 
 		chosenConnectorNr = Integer.parseInt(comboBoxNrConnectorsConstructionTool.getSelectedItem().toString());
-		try {
-			builderControl.setPicker(BuilderSupportingPickers.ON_CHOSEN_CONNECTOR_NR);
+	/*	try {
+			builderControl.setPicker(BuilderSupportingUnicastPickers.ON_CHOSEN_CONNECTOR_NR);
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called ON_SELECTED_CONNECTOR, due to remote exception");
-		}
+		}*/
 		//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,chosenConnectorNr));
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[8]); 
@@ -388,19 +373,17 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 
 	/**
 	 * Initializes the tool for adding new modules to all connectors of selected module.
-	 * @param jmeSimulation, the physical simulation.
 	 */
-	public static void jButtonConnectAllModulesActionPerformed(JMESimulation jmeSimulation) {
+	public static void jButtonConnectAllModulesActionPerformed() {
 		/*Disable tab components no longer available*/
 		ConstructRobotTab.setEnabledRotationToolBar(false);
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
 
 		try {
-			builderControl.setPicker(BuilderSupportingPickers.ON_ALL_CONNECTORS);
+			builderControl.setPicker(BuilderSupportingUnicastPickers.ON_ALL_CONNECTORS);
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called ON_ALL_CONNECTORS, due to remote exception");
+			throw new Error("Failed to initate picker called "+ BuilderSupportingUnicastPickers.ON_ALL_CONNECTORS.toString() + ", due to remote exception");
 		}
-		//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[9]);
 
@@ -585,11 +568,11 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 
 
 	public static void jButtonStandardRotationsLoopActionPerformed() {
-		try {
-			builderControl.setPicker(BuilderSupportingPickers.ROTATE_MODULE_STANDARD_IN_LOOP);
+		/*try {
+			builderControl.setPicker(BuilderSupportingUnicastPickers.ROTATE_MODULE_STANDARD_IN_LOOP);
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called ROTATE_MODULE_STANDARD_IN_LOOP, due to remote exception");
-		}
+		}*/
 		
 	}
 }
