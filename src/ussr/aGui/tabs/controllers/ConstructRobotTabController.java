@@ -85,7 +85,11 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 		//addNewDefaultConstructionModule(jmeSimulation); 
 
 		/* Set default construction tool to be "On selected  connector"*/
-		//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
+		try {
+			builderControl.setPicker(BuilderSupportingPickers.ON_SELECTED_CONNECTOR);
+		} catch (RemoteException e) {
+			throw new Error("Failed to initate picker called ON_SELECTED_CONNECTOR, due to remote exception");
+		}
 
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[1]);
@@ -212,16 +216,7 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 			}
 		}
 		return false;    	
-	}
-
-	/**
-	 * Initializes the tool for variating the properties of modules selected in simulation environment.
-	 * TODO DECIDE WHERE TO ADD IT IN THE TAB. 
-	 * @param jmeSimulation
-	 */
-	public static void jButton6ActionPerformed(JMESimulation jmeSimulation) {		
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation,chosenMRname,ConstructionTools.VARIATION));
-	}
+	}	
 
 	/**
 	 * Default chosen entity for operations on existing modules or robot. 
@@ -273,7 +268,7 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 			try {
 				builderControl.setPicker(BuilderSupportingPickers.COLOR_CONNECTORS);
 			} catch (RemoteException e) {
-				throw new Error("Failed to initialize picker called COLOR_CONNECTORS, due to remote exception");
+				throw new Error("Failed to initate picker called COLOR_CONNECTORS, due to remote exception");
 			}	
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
 			//TODO  Support robot deletion, moving and coloring of connectors.
@@ -304,24 +299,37 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	 * @param jmeSimulation, the physical simulation.     
 	 */	
 	public static void jButtonOppositeRotationActionPerformed() {
-		//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.OPPOSITE_ROTATION));
-	/*	try {
-			builderControl.setPicker();
+		try {
+			builderControl.setPicker(BuilderSupportingPickers.ROTATE_MODULE_OPPOSITE);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
+			throw new Error("Failed to initate picker called ROTATE_MODULE_OPPOSITE, due to remote exception");
+		}
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[2]);
 	}
 
 	/**
+	 * Standard rotation of the module chosen in GUI.
+	 */
+	public static String chosenStandardRotation = ConstructRobotTab.ATRONStandardRotations.EW.toString();
+
+	/*public  String getChosenStandardRotation() {
+		return ConstructRobotTab.getjComboBoxStandardRotations().getSelectedItem().toString();
+	}*/
+	
+	
+	/**
 	 * Initializes the tool for rotating initial module selected in simulation environment with standard rotations. 
+	 * @param comboBoxStandardRotations, the GUI component. 
 	 * @param jmeSimulation, the physical simulation.  
 	 */	
-	public static void jComboBoxStandardRotationsActionPerformed(JMESimulation jmeSimulation) {
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.STANDARD_ROTATIONS,ConstructRobotTab.getjComboBoxStandardRotations().getSelectedItem().toString()));
+	public static void jComboBoxStandardRotationsActionPerformed(JComboBox comboBoxStandardRotations) {
+		chosenStandardRotation = comboBoxStandardRotations.getSelectedItem().toString(); 
+		try {
+			builderControl.setPicker(BuilderSupportingPickers.ROTATE_MODULE_STANDARD);
+		} catch (RemoteException e) {
+			throw new Error("Failed to initate picker called ROTATE_MODULE_STANDARD, due to remote exception");
+		}
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[2]);
 	}
@@ -334,11 +342,23 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 		/*Disable tab components no longer available*/
 		ConstructRobotTab.setEnabledRotationToolBar(false);
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
-
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
+         
+		try {
+			builderControl.setPicker(BuilderSupportingPickers.ON_SELECTED_CONNECTOR);
+		} catch (RemoteException e) {
+			throw new Error("Failed to initate picker called ON_SELECTED_CONNECTOR, due to remote exception");
+		}
+		//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
+		
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[7]); 
 	}
+
+	
+	/**
+	 * Connector number chosen by user in GUI.
+	 */
+	private static int chosenConnectorNr  = 0;
 
 	/**
 	 * Initializes the tool for adding new modules on connector chosen in combo box(GUI) by user. Later user selects the module to apply it to.
@@ -350,8 +370,13 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 		ConstructRobotTab.setEnabledRotationToolBar(false);
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
 
-		int chosenConnectorNr = Integer.parseInt(comboBoxNrConnectorsConstructionTool.getSelectedItem().toString());
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,chosenConnectorNr));
+		chosenConnectorNr = Integer.parseInt(comboBoxNrConnectorsConstructionTool.getSelectedItem().toString());
+		try {
+			builderControl.setPicker(BuilderSupportingPickers.ON_CHOSEN_CONNECTOR_NR);
+		} catch (RemoteException e) {
+			throw new Error("Failed to initate picker called ON_SELECTED_CONNECTOR, due to remote exception");
+		}
+		//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,chosenConnectorNr));
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[8]); 
 	}
@@ -365,7 +390,12 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 		ConstructRobotTab.setEnabledRotationToolBar(false);
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
 
-		jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));
+		try {
+			builderControl.setPicker(BuilderSupportingPickers.ON_ALL_CONNECTORS);
+		} catch (RemoteException e) {
+			throw new Error("Failed to initate picker called ON_ALL_CONNECTORS, due to remote exception");
+		}
+		//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_ALL_CONNECTORS));
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[9]);
 
@@ -374,7 +404,7 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	/**
 	 * Default construction tool for moving module from one connector onto another one.
 	 */
-	private static ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(jmeSimulationLocal, chosenMRname,ConstructionTools.LOOP,0);
+	//private static ConstructionToolSpecification constructionTools = new ConstructionToolSpecification(jmeSimulationLocal, chosenMRname,ConstructionTools.LOOP,0);
 
 	/**
 	 * Used to keep track on which connector number the module is positioned. 
@@ -391,9 +421,9 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
 
 		connectorNr =0;
-		ConstructionToolSpecification constructionToolsnew = new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.LOOP,connectorNr);
-		constructionTools = constructionToolsnew;
-		jmeSimulation.setPicker(constructionToolsnew); 
+		//ConstructionToolSpecification constructionToolsnew = new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.LOOP,connectorNr);
+		//constructionTools = constructionToolsnew;
+		//jmeSimulation.setPicker(constructionToolsnew); 
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[10]); 
 	}
@@ -420,7 +450,7 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 		if (lastModuleType.equalsIgnoreCase("OdinBall")){
 			//do nothing
 		}else{
-			constructionTools.moveToNextConnector(connectorNr);
+			//constructionTools.moveToNextConnector(connectorNr);
 		}
 		//TODO CHECK IF THE MODULE IS ALREADY ON CONNECTOR AND THEN DO NOT PLACE NEW ONE THERE.		
 	}
@@ -442,7 +472,7 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 		if (lastModuleType.equalsIgnoreCase("OdinBall")){
 			//do nothing
 		}else{
-			constructionTools.moveToNextConnector(connectorNr);
+			//constructionTools.moveToNextConnector(connectorNr);
 		}
 		//TODO CHECK IF THE MODULE IS ALREADY ON CONNECTOR AND THEN DO NOT PLACE NEW ONE THERE
 	}
@@ -494,7 +524,7 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 				adaptTabToChosenMR(SupportedModularRobots.CKBOTSTANDARD);
 			}
 
-			jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
+			//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
 		}
 
 	}
@@ -521,5 +551,30 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	
 	public static BuilderControlInter getBuilderControl() {
 		return builderControl;
+	}
+	
+	/**
+	 * Return standard rotation of the  module chosen by user in GUI.
+	 * @return chosenStandardRotation,standard rotation of the  module chosen by user in GUI.
+	 */
+	public static String getChosenStandardRotation() {
+		return chosenStandardRotation;
+	}
+	
+	/**
+	 * Returns connector number chosen by user in GUI.
+	 * @return, connector number chosen by user in GUI.
+	 */
+	public static int getChosenConnectorNr() {
+		return chosenConnectorNr;
+	}
+
+	/**
+	 * Initializes the tool for variating the properties of modules selected in simulation environment.
+	 * @param jmeSimulation
+	 */
+	public static void jButtonSwitchModulesActionPerformed() {				
+			//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation,chosenMRname,ConstructionTools.VARIATION));
+				
 	}
 }

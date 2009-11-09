@@ -64,7 +64,8 @@ public interface ConstructRobotTabInter extends ConstructionTabsInter {
             /*10*/"To all connectors(select module)",
             /*11*/"On previous connector",
             /*12*/"Jump from one connector to the next connector(loop)",
-            /*13*/"On next connector"
+            /*13*/"On next connector",
+            /*14*/"Switch the type of module",
 
 
 	};

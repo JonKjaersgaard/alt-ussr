@@ -72,8 +72,7 @@ public class MainFrameController {
 	 */
 	public static void jButtonRunRealTimeActionPerformed() {
 		ConstructRobotTab.setTabEnabled(false);
-
-
+		
 		try {
 			if (remotePhysicsSimulation.isPaused()){// Start simulation in real time, if simulation is in paused state
 				remotePhysicsSimulation.setPause(false);				
