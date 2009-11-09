@@ -129,11 +129,22 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 
 	}
 
+	/**
+	 * Used to keep track how many times entities were selected in simulation environment.
+	 */
 	int timesSelected =-1;
+	
+	/**
+	 * Returns amount of times entities were selected in simulation environment.
+	 * @return timesSelected, amount of times entities were selected in simulation environment.
+	 */
 	public int getTimesSelected() {
 		return timesSelected;
 	}
 
+	/**
+	 * Resets counter to initial value.
+	 */
 	public void resetTimesSelected() {
 		timesSelected = -1;
 	}
@@ -294,7 +305,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		case STANDARD_ROTATIONS_IN_LOOP:
 			this.selectOperations.rotateModuleStandardRotationInLoop(this);
 			break;
-		default: throw new Error ("The tool with name: " + toolName +", is not supported");
+		default: throw new Error ("The tool with name: " + toolName +", is not supported yet.");
 		}
 	}
 
@@ -379,6 +390,10 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		this.selectedConnectorNr = selectedConnectorNr;
 	}
 
+	/**
+	 * Returns connector number selected in simulation environment.
+	 * @return selectedConnectorNr, connector number selected in simulation environment.
+	 */
 	public int getSelectedConnectorNr() {
 		return selectedConnectorNr;
 	}	

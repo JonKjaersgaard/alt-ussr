@@ -93,7 +93,12 @@ public interface ConstructionTemplate {
 	 * @param selectedModuleComponent,the module component selected in simulation environment.
 	 * @param rotationQComponent,the rotation of selected component.	 
 	 */
-	public abstract ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP();
+	
 	//public abstract void variateComponentProperties(JMEModuleComponent selectedModuleComponent,Quaternion  rotationQComponent);
 //FIME SHOULD I MOVE COMMON METHODS TO INTERFACE?
+	
+	/**
+	 * Returns array of objects containing information about supported specific rotations of modular robot.
+	 */
+	public abstract ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP();
 }

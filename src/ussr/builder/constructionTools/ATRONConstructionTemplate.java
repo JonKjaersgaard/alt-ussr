@@ -214,8 +214,12 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 		 * result a lot of time*/
 		rotateComponentOpposite(selectedModuleComponent,rotationQComponent);
 	}
-	
-	public  ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP() {
+
+	/**
+	 * Returns array of objects containing information about supported specific rotations of modular robot.
+	 */
+	@Override
+	public ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP() {
 		return MODULE_ROTATION_MAP;
 	}
 }

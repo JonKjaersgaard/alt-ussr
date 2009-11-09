@@ -289,4 +289,6 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 		translateModuleComponent(firstComponent, new Vector3f(positionSecondComponent.getX(),positionSecondComponent.getY(),positionSecondComponent.getZ()));
 		translateModuleComponent(secondComponent, new Vector3f(positionFirstComponent.getX(),positionFirstComponent.getY(),positionFirstComponent.getZ()));	
 	}	
+	
+	
 }

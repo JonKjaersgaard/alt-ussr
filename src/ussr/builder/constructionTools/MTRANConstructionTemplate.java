@@ -505,9 +505,12 @@ public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate 
 		}		
 	}
 
+	
+	/**
+	 * Returns array of objects containing information about supported specific rotations of modular robot.
+	 */
 	@Override
 	public ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP() {
-		// TODO Auto-generated method stub
-		return null;
+		return MODULE_ROTATION_MAP;
 	}	
 }

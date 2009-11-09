@@ -187,32 +187,18 @@ public class BuilderHelper {
 		JMEModuleComponent moduleComponent= (JMEModuleComponent)physicsModuleComponent;
 		/*Remove each node of component*/
 		for(DynamicPhysicsNode part: moduleComponent.getNodes()){
+			part.detachAllChildren();//removes visual	
 			int amountNodes = moduleComponent.getNodes().size();
 			for (int node=0; node<amountNodes; node++ ){ //removes bounds and physics
 				moduleComponent.getNodes().get(node).removeFromParent();
 			}						
-			part.setIsCollidable(false);
-			part.setActive(false);							
-			part.detachAllChildren();//removes visual						
+			//part.setIsCollidable(false);
+			//part.setActive(false);												
 		}        
 	};
 
 
-	/**
-	 * Removes all modules (robot(s)) from simulation environment.
-	 * @param jmeSimulation, the physical simulation.
-	 */
-	public static void deleteAllModules(JMESimulation jmeSimulation){
-		/*Loop through the modules in simulation*/
-		for (int moduleNr =0; moduleNr<jmeSimulation.getModules().size();moduleNr++){
-			Module currentModule = jmeSimulation.getModules().get(moduleNr);
-			
-            /*Remove each module component*/
-			for (int compon=0; compon<currentModule.getNumberOfComponents();compon++){			
-				removeModuleComponent(currentModule.getComponent(compon));
-			}	
-		}
-	}
+	
 	/**
 	 * Rotates the component of the module with specified angle around specific coordinate.
 	 * @param matrix, initial rotation matrix of component.

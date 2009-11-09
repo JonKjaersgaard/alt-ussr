@@ -183,6 +183,7 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	 * This operation is common to children classes. Operation means that it should be executed on the object.
 	 * @param toolSpecification, object containing information about modular robot, selected module, simulation
 	 * and so on.
+	 * @param standardRotationName, specific rotation name as String.
 	 */
 	public void rotateModuleStandardRotation(ConstructionToolSpecification toolSpecification, String standardRotationName){
 		this.selectedModule = toolSpecification.getSelectedModule();
@@ -191,22 +192,16 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	}
 	
 	
-	
+	/**
+	 * Rotates the module selected in simulation environment with different standard rotation with each selections of the mouse. 
+	 * @param toolSpecification, object containing information about modular robot, selected module, simulation
+	 * and so on.
+	 */
 	public void rotateModuleStandardRotationInLoop(ConstructionToolSpecification toolSpecification){
 		this.selectedModule = toolSpecification.getSelectedModule();
-		this.construction = toolSpecification.getConstruction();
-		System.out.println("FFF"+construction.getMODULE_ROTATION_MAP().length );
-	
-		//TODO //FIXME
-		/*if (toolSpecification.getTimesSelected()<=this.construction.getMODULE_ROTATION_MAP().length){
-			construction.rotateModuleSpecifically(toolSpecification.getSelectedModule(), this.construction.getMODULE_ROTATION_MAP()[toolSpecification.getTimesSelected()].getRotationName()); 
-		}else{
-			toolSpecification.resetTimesSelected();
-		}*/	
-		//TODO //FIXME
-		if (toolSpecification.getTimesSelected()<=ATRONStandardRotations.values().length){
+		this.construction = toolSpecification.getConstruction(); 
+		if (toolSpecification.getTimesSelected()<construction.getMODULE_ROTATION_MAP().length){
 			construction.rotateModuleSpecifically(toolSpecification.getSelectedModule(), this.construction.getMODULE_ROTATION_MAP()[toolSpecification.getTimesSelected()].getRotationName());
-			
 		}else{
 			toolSpecification.resetTimesSelected();
 		}
