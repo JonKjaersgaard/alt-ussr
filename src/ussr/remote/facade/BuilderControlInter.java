@@ -22,4 +22,5 @@ public interface BuilderControlInter extends Remote {
 	public void setPicker(BuilderSupportingPickers builderSupportingPicker)throws RemoteException;
 	
 	
+	//public void setConstructionPicker(ConstructionToolSpecification constructionToolSpecification)throws RemoteException;
 }

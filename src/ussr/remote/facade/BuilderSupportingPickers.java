@@ -19,7 +19,7 @@ public enum BuilderSupportingPickers {
 
 	
 	/**
-	 * Move objects in simulation environment during simulation runtime.
+	 * Move modules with the mouse in simulation environment during simulation runtime.
 	 */
 	DEFAULT(new PhysicsPicker()),
 	
@@ -29,28 +29,69 @@ public enum BuilderSupportingPickers {
 	REMOVE_MODULE(new RemoveModule()),
 	
 	/**
-	 * Move module with movement of the mouse (hold left side of the mouse).
+	 * Move module with movement of the mouse in static state of simulation (hold left side of the mouse).
 	 */
 	MOVE_MODULE(new PhysicsPicker(true,true)),	
 	
-	//ROTATE_OPPOSITE(new ConstructionToolSpecification(ConstructRobotTabController.getBuilderControl().getJMESimulation(),ConstructRobotTabController.getChosenMRname(),ConstructionTools.OPPOSITE_ROTATION)),
-	
+	/**
+	 * Rotates the module with opposite rotation to current one.
+	 */
+	ROTATE_MODULE_OPPOSITE(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.OPPOSITE_ROTATION)),
+
 	/**
 	 * Colors connectors on the module with color coding.
 	 */
-	COLOR_CONNECTORS(new ColorConnectors());
+	COLOR_CONNECTORS(new ColorConnectors()),
 	
+	/**
+	 * Rotates the module with standard rotation.
+	 */
+	//TEST ME
+	ROTATE_MODULE_STANDARD (new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.STANDARD_ROTATIONS,ConstructRobotTabController.getChosenStandardRotation())),
+	
+	/**
+	 * Adds new module on connector selected by user.
+	 */
+	ON_SELECTED_CONNECTOR(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.ON_SELECTED_CONNECTOR)),
+	
+	/**
+	 * 
+	 */
+	//TEST ME
+	ON_CHOSEN_CONNECTOR_NR(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.ON_CHOSEN_CONNECTOR,ConstructRobotTabController.getChosenConnectorNr())),
+	
+	/**
+	 * 
+	 */
+	//TEST ME
+	ON_ALL_CONNECTORS(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.ON_ALL_CONNECTORS));
+	
+	
+	;
+	
+	
+	
+	/**
+	 * The picker supported by builder.
+	 */
 	private Picker picker;
+	
+	/**
+	 * Contains pickers (left side of the mouse selectors) supported by builder.
+	 * @param picker, the picker supported by builder.
+	 */
 	BuilderSupportingPickers(Picker picker){
 		this.picker = picker;
 	}
+	/**
+	 * Returns the picker supported by builder.
+	 * @return, the picker supported by builder.
+	 */
 	public Picker getPicker(){
 		return this.picker;
 	}
 	
-/*	BuilderSupportingPickers(class className){
-	
-	}*/
+
 		
 	
 	
