@@ -5,18 +5,20 @@ import java.rmi.RemoteException;
 import javax.swing.AbstractButton;
 import javax.swing.JComboBox;
 
-import ussr.builder.SupportedModularRobots;
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
 import ussr.builder.constructionTools.CKBotOperationsTemplate;
 import ussr.builder.constructionTools.CommonOperationsTemplate;
-import ussr.builder.constructionTools.ConstructionToolSpecification;
-import ussr.builder.constructionTools.ConstructionTools;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
+import ussr.builder.enums.ATRONStandardRotations;
+import ussr.builder.enums.CKBotStandardRotations;
+import ussr.builder.enums.MTRANStandardRotations;
+import ussr.builder.enums.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
+
 import ussr.remote.facade.BuilderControlInter;
 import ussr.remote.facade.BuilderSupportingPickers;
 import ussr.remote.facade.RemotePhysicsSimulation;
@@ -311,7 +313,7 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	/**
 	 * Standard rotation of the module chosen in GUI.
 	 */
-	public static String chosenStandardRotation = ConstructRobotTab.ATRONStandardRotations.EW.toString();
+	public static String chosenStandardRotation = ATRONStandardRotations.EW.toString();
 
 	/*public  String getChosenStandardRotation() {
 		return ConstructRobotTab.getjComboBoxStandardRotations().getSelectedItem().toString();
@@ -325,6 +327,9 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	 */	
 	public static void jComboBoxStandardRotationsActionPerformed(JComboBox comboBoxStandardRotations) {
 		chosenStandardRotation = comboBoxStandardRotations.getSelectedItem().toString(); 
+		System.out.println("R:"+chosenStandardRotation);
+		 //BuilderSupportingPickers.ROTATE_MODULE_STANDARD.setPicker(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.STANDARD_ROTATIONS,chosenStandardRotation));
+		 //BuilderSupportingPickers builderSupportingPicker=  BuilderSupportingPickers.ROTATE_MODULE_STANDARD;
 		try {
 			builderControl.setPicker(BuilderSupportingPickers.ROTATE_MODULE_STANDARD);
 		} catch (RemoteException e) {
@@ -576,5 +581,15 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	public static void jButtonSwitchModulesActionPerformed() {				
 			//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation,chosenMRname,ConstructionTools.VARIATION));
 				
+	}
+
+
+	public static void jButtonStandardRotationsLoopActionPerformed() {
+		try {
+			builderControl.setPicker(BuilderSupportingPickers.ROTATE_MODULE_STANDARD_IN_LOOP);
+		} catch (RemoteException e) {
+			throw new Error("Failed to initate picker called ROTATE_MODULE_STANDARD_IN_LOOP, due to remote exception");
+		}
+		
 	}
 }
