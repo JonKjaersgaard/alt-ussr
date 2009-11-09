@@ -8,6 +8,7 @@ import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
+import ussr.builder.enums.ConstructionTools;
 import ussr.builder.enums.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.SelectedModuleTypeMapHelper;
@@ -73,11 +74,9 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 
 	/**
 	 * For calling tools handling construction of morphology of modular robot, in particular tools like "ON_SELECTED_CONNECTOR","ON_ALL_CONNECTORS" and "VARIATION". 
-	 * @param modularRobotName,the name of the modular robot. For example: ATRON, MTRAN,Odin and so on.
 	 * @param toolName,the name of the tool from GUI. For example, in this case, these can be "ON_SELECTED_CONNECTOR", "ON_ALL_CONNECTORS" and "VARIATION".
 	 */
-	public  ConstructionToolSpecification( SupportedModularRobots modularRobotName, ConstructionTools toolName){
-		this.modularRobotName = modularRobotName;
+	public  ConstructionToolSpecification(ConstructionTools toolName){
 		this.toolName = toolName;		
 	}
 
@@ -111,8 +110,23 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 */
 	private void instantiateTool(JMESimulation jmeSimulation){
 		this.jmeSimulation = jmeSimulation;
-		this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(jmeSimulation,modularRobotName);
-		this.construction = selectOperations.getConstruction();
+		
+		/*Keeps and updates the data about the module type currently selected in simulation environment*/
+		SelectedModuleTypeMapHelper[] selectModulesTypes = {
+				new SelectedModuleTypeMapHelper(SupportedModularRobots.ATRON,isAtron()),
+				new SelectedModuleTypeMapHelper(SupportedModularRobots.MTRAN,isMtran()),
+				new SelectedModuleTypeMapHelper(SupportedModularRobots.ODIN,isOdin()),
+				new SelectedModuleTypeMapHelper(SupportedModularRobots.CKBOTSTANDARD,isCKBotStandard())
+		};
+        /*Identifies selected module and readjusts tools accordingly, also calls for GUI re-adjustment*/
+		for(int index =0;index<selectModulesTypes.length;index++){
+			if(selectModulesTypes[index].isSelected()==true){
+				this.modularRobotName = selectModulesTypes[index].getModularRobotName();
+				this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(jmeSimulation,modularRobotName);
+				this.construction = selectOperations.getConstruction();				
+			}
+		}
+		
 	}
 
 	int timesSelected =-1;
@@ -132,15 +146,14 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	@Override
 	protected void pickModuleComponent(JMEModuleComponent component) {
 		timesSelected++;
-		instantiateTool((JMESimulation)component.getSimulation());		
 		this.selectedModule = component.getModel();
+		instantiateTool((JMESimulation)component.getSimulation());		
+		
 		
        if (this.toolName.equals(ConstructionTools.LOOP)){
 		ConstructRobotTab.setEnabledButtonsArrows(true);	
 		}
-		callAppropriateTool();
-		
-		
+		callAppropriateTool();		
 	}
 
 	/* Method executed when the module is selected with the left side of the mouse in simulation environment.
@@ -149,10 +162,9 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 */
 	@Override
 	protected void pickTarget(Geometry target,JMESimulation jmeSimulation) {
-		instantiateTool(jmeSimulation);
-
+		
 		if (toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){			
-			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(this.jmeSimulation, target);
+			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(jmeSimulation, target);
 			System.out.println("Connector:"+selectedConnectorNr );
 		//Adapt Construct Robot tab
 			//ConstructRobotTab.setEnabledRotationToolBar(false);
@@ -179,25 +191,28 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 	 * specify it explicitly in the GUI.
 	 * Also makes feedback calls to GUI to adapt to the modular robot the user is working with right now. 
 	 */
+	/**
+	 * 
+	 */
 	private void reAdjustUserInput(){
 		
-		/*Keeps and updates the data about the module type currently selected in simulation environment*/
+	/*	Keeps and updates the data about the module type currently selected in simulation environment
 		SelectedModuleTypeMapHelper[] selectModulesTypes = {
 				new SelectedModuleTypeMapHelper(SupportedModularRobots.ATRON,isAtron()),
 				new SelectedModuleTypeMapHelper(SupportedModularRobots.MTRAN,isMtran()),
 				new SelectedModuleTypeMapHelper(SupportedModularRobots.ODIN,isOdin()),
 				new SelectedModuleTypeMapHelper(SupportedModularRobots.CKBOTSTANDARD,isCKBotStandard())
 		};
-        /*Identifies selected module and readjusts tools accordingly, also calls for GUI re-adjustment*/
+        Identifies selected module and readjusts tools accordingly, also calls for GUI re-adjustment
 		for(int index =0;index<selectModulesTypes.length;index++){
 			if(selectModulesTypes[index].isSelected()==true){
 				this.modularRobotName = selectModulesTypes[index].getModularRobotName();
 				this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(jmeSimulation,modularRobotName);
 				this.construction = selectOperations.getConstruction();				
 			}
-		}
+		}*/
 		
-		ConstructRobotTabController.adjustTabToSelectedModule(this.modularRobotName);//Adapt GUI to selected module(modular robot) type
+		//ConstructRobotTabController.adjustTabToSelectedModule(this.modularRobotName);//Adapt GUI to selected module(modular robot) type
 	}
 
 	/**
