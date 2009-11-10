@@ -6,26 +6,28 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import ussr.aGui.tabs.controllers.ConstructRobotTabController;
+
+import ussr.builder.constructionTools.ATRONConstructionTemplate;
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
+import ussr.builder.constructionTools.CKBotConstructionTemplate;
 import ussr.builder.constructionTools.CKBotOperationsTemplate;
 import ussr.builder.constructionTools.CommonOperationsTemplate;
+import ussr.builder.constructionTools.ConstructionTemplate;
 import ussr.builder.constructionTools.ConstructionToolSpecification;
+import ussr.builder.constructionTools.MTRANConstructionTemplate;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
+import ussr.builder.constructionTools.OdinConstructionTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
-import ussr.builder.enums.ConstructionTools;
 import ussr.builder.enums.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
-import ussr.description.setup.WorldDescription;
-import ussr.description.setup.WorldDescription.CameraPosition;
+
 
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
-import ussr.samples.GenericModuleConnectorHelper;
 import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.ckbot.CKBotSimulation;
 import ussr.samples.mtran.MTRANSimulation;
@@ -46,11 +48,15 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 	}
 
 	@Override
-	public void setPicker(BuilderSupportingUnicastPickers builderSupportingPicker)throws RemoteException {
+	public void setProxyPicker(BuilderSupportingProxyPickers builderSupportingPicker)throws RemoteException {
 		jmeSimulation.setPicker(builderSupportingPicker.getPicker());
-		//jmeSimulation.setPicker(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.STANDARD_ROTATIONS,ConstructRobotTabController.getChosenStandardRotation()));
-		//jmeSimulation.setPicker(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.ON_SELECTED_CONNECTOR));
 	}
+
+
+	public void setSerialazablePicker(ConstructionToolSpecification constructionToolSpecification)throws RemoteException {
+		jmeSimulation.setPicker(constructionToolSpecification);
+	}
+
 
 	/**
 	 * Removes all modules (robot(s)) from simulation environment.
@@ -62,7 +68,7 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 		for (int moduleNr =0; moduleNr<jmeSimulation.getModules().size();moduleNr++){
 
 			Module currentModule = jmeSimulation.getModules().get(moduleNr);
-			
+
 			/* Identify each component of the module and remove the visual of it*/
 			int amountComponents= currentModule.getNumberOfComponents();		
 			for (int compon=0; compon<amountComponents;compon++){			
@@ -147,7 +153,7 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 		}
 		return false;    	
 	}	
-	
+
 	/**
 	 * Connects all modules existing in simulation environment.
 	 */
@@ -231,5 +237,44 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 			jmeSimulation.worldDescription.setModuleConnections(ckbotModuleConnection);                          
 			jmeSimulation.placeModules();
 		}       
+	}
+
+	public Module getModuleCountingFromEnd(int amountFromLastMode ) throws RemoteException {
+		int amountModules = jmeSimulation.getModules().size();
+		if (amountModules >= amountFromLastMode){
+			Module lastModule= jmeSimulation.getModules().get(amountModules-amountFromLastMode);
+			return lastModule;
+		}else{
+			throw new Error("Not enough of modules in smulation environment to get "+amountFromLastMode+ "from last module" );
+		}
+	}
+
+	public String getModuleCountingFromEndType(int amountFromLastMode ) throws RemoteException{
+		return getModuleCountingFromEnd(amountFromLastMode).getProperty(BuilderHelper.getModuleTypeKey());
+	};
+
+	public void moveToNextConnector(SupportedModularRobots supportedMRmoduleType,int connectorNr) throws RemoteException{
+		Module selectedModule = getModuleCountingFromEnd(2);
+		Module lastAddedModule = getModuleCountingFromEnd(1);
+		ConstructionTemplate con = null;
+		switch(supportedMRmoduleType){
+		case ATRON:
+			con =  new ATRONConstructionTemplate(jmeSimulation);
+			con.moveModuleAccording(connectorNr,selectedModule,lastAddedModule, true);
+			break;
+		case MTRAN:
+			con =  new MTRANConstructionTemplate(jmeSimulation);
+			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
+			break;
+		case ODIN:
+			con =  new OdinConstructionTemplate(jmeSimulation);
+			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
+			break;
+		case CKBOTSTANDARD:
+			con =  new CKBotConstructionTemplate(jmeSimulation);
+			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
+			break;
+		default: throw new Error("Modular robot with name " +supportedMRmoduleType+ " is not supported yet");
+		}
 	}
 }

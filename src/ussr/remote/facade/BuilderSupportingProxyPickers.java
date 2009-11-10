@@ -17,9 +17,8 @@ import ussr.physics.jme.pickers.Picker;
  * @author Konstantinas
  *
  */
-public enum BuilderSupportingUnicastPickers{
+public enum BuilderSupportingProxyPickers{
 
-	
 	/**
 	 * Move modules with the mouse in simulation environment during simulation runtime.
 	 */
@@ -46,21 +45,9 @@ public enum BuilderSupportingUnicastPickers{
 	COLOR_CONNECTORS(new ColorConnectors()),
 	
 	/**
-	 * Rotates the module with standard rotation.
-	 */
-	//FIX ME
-	ROTATE_MODULE_STANDARD (new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.STANDARD_ROTATIONS,ConstructRobotTabController.getChosenStandardRotation())),
-	
-	/**
 	 * Adds new module on connector selected by user.
 	 */
 	ON_SELECTED_CONNECTOR(new ConstructionToolSpecification(ConstructionTools.ON_SELECTED_CONNECTOR)),
-	
-	/**
-	 * 
-	 */
-	//FIXME ME
-	ON_CHOSEN_CONNECTOR_NR(new ConstructionToolSpecification(ConstructRobotTabController.getChosenMRname(),ConstructionTools.ON_CHOSEN_CONNECTOR,ConstructRobotTabController.getChosenConnectorNr())),
 	
 	/**
 	 * Adds new modules on all connectors of selected module.
@@ -97,7 +84,7 @@ public enum BuilderSupportingUnicastPickers{
 	 * Contains pickers (left side of the mouse selectors) supported by builder.
 	 * @param picker, the picker supported by builder.
 	 */
-	BuilderSupportingUnicastPickers(Picker picker){
+	BuilderSupportingProxyPickers(Picker picker){
 		this.picker = picker;
 	}
 	/**
