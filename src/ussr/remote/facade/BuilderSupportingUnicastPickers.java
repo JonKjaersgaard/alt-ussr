@@ -4,11 +4,11 @@ import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 
 import ussr.builder.constructionTools.ConstructionToolSpecification;
 import ussr.builder.enums.ConstructionTools;
+import ussr.builder.enums.LabelingTools;
 import ussr.builder.genericTools.ColorConnectors;
 import ussr.builder.genericTools.RemoveModule;
 import ussr.builder.labelingTools.LabeledEntities;
 import ussr.builder.labelingTools.LabelingToolSpecification;
-import ussr.builder.labelingTools.LabelingTools;
 import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.physics.jme.pickers.Picker;
 
