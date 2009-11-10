@@ -33,7 +33,6 @@ public interface FileChooserControllerInter {
 		APPROVESELECTION,
 		/*Command, which is common for both forms*/
 	    CANCELSELECTION;
-
 	}
 
 }

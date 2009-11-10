@@ -23,7 +23,7 @@ import ussr.builder.labelingTools.LabelingToolSpecification;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.remote.facade.BuilderControlInter;
-import ussr.remote.facade.BuilderSupportingUnicastPickers;
+import ussr.remote.facade.BuilderSupportingProxyPickers;
 
 public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 
@@ -208,14 +208,14 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 
 		case Module:
 			try {
-					MainFrameController.getBuilderControl().setPicker(BuilderSupportingUnicastPickers.READ_MODULE_LABELS);
+					MainFrameController.getBuilderControl().setProxyPicker(BuilderSupportingProxyPickers.READ_MODULE_LABELS);
 				} catch (RemoteException e) {
 	
 				}
 			break;
 		case Connector:
 			try {
-					MainFrameController.getBuilderControl().setPicker(BuilderSupportingUnicastPickers.READ_CONNECTOR_LABELS);
+					MainFrameController.getBuilderControl().setProxyPicker(BuilderSupportingProxyPickers.READ_CONNECTOR_LABELS);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -224,7 +224,7 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 		case Sensors:
 		case Proximity:// go to proximity because only this type of sensor is supported right now.
 			try {
-					MainFrameController.getBuilderControl().setPicker(BuilderSupportingUnicastPickers.READ_SENSOR_LABELS);
+					MainFrameController.getBuilderControl().setProxyPicker(BuilderSupportingProxyPickers.READ_SENSOR_LABELS);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

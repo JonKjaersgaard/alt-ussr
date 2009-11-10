@@ -291,7 +291,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jComboBoxEntity.setEnabled(false);
 		jComboBoxEntity.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructRobotTabController.jComboBoxEntityActionPerformed(jComboBoxEntity,jmeSimulation);
+				ConstructRobotTabController.jComboBoxEntityActionPerformed(jComboBoxEntity);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -322,7 +322,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonMove.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setSelectionDeselection(jButtonMove);
-				ConstructRobotTabController.jButtonMoveActionPerformed(jmeSimulation);
+				ConstructRobotTabController.jButtonMoveActionPerformed();
 			}
 		});
 
@@ -337,7 +337,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setSelectionDeselection(jButtonDelete);
-				ConstructRobotTabController.jButtonDeleteActionPerformed(jmeSimulation);
+				ConstructRobotTabController.jButtonDeleteActionPerformed();
 			}
 		});
 		jToolBarGenericTools.add(jButtonDelete);		
@@ -351,7 +351,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonColorConnetors.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setSelectionDeselection(jButtonColorConnetors);
-				ConstructRobotTabController.jButtonColorConnectorsActionPerformed(jmeSimulation);
+				ConstructRobotTabController.jButtonColorConnectorsActionPerformed();
 			}
 		});
 
@@ -437,7 +437,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonOnPreviousConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PREVIOUS));
 		jButtonOnPreviousConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));		
 		jButtonOnPreviousConnector.setFocusable(false);
-		jButtonOnPreviousConnector.setEnabled(false);
+		//jButtonOnPreviousConnector.setEnabled(false);
 		jButtonOnPreviousConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
 		jButtonOnPreviousConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -455,7 +455,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonJumpFromConnToConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setSelectionDeselection(jButtonJumpFromConnToConnector);
-				ConstructRobotTabController.jButtonJumpFromConnToConnectorActionPerformed(jmeSimulation);
+				ConstructRobotTabController.jButtonJumpFromConnToConnectorActionPerformed();
 			}
 		});	
 
@@ -463,12 +463,12 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonOnNextConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NEXT));
 		jButtonOnNextConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));		
 		jButtonOnNextConnector.setFocusable(false);
-		jButtonOnNextConnector.setEnabled(false);
+		//jButtonOnNextConnector.setEnabled(false);
 		jButtonOnNextConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
 		jButtonOnNextConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setSelectionDeselection(jButtonOnNextConnector);
-				ConstructRobotTabController.jButtonOnNextConnectorActionPerformed(jmeSimulation);
+				ConstructRobotTabController.jButtonOnNextConnectorActionPerformed();
 			}
 		});
 

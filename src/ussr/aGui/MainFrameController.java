@@ -11,7 +11,7 @@ import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;
 import ussr.remote.facade.BuilderControlInter;
-import ussr.remote.facade.BuilderSupportingUnicastPickers;
+import ussr.remote.facade.BuilderSupportingProxyPickers;
 import ussr.remote.facade.RemotePhysicsSimulation;
 import ussr.remote.facade.SimulationRendererControlInter;
 
@@ -82,7 +82,7 @@ public class MainFrameController {
 			}
 			remotePhysicsSimulation.setRealtime(true);
 
-			builderControl.setPicker(BuilderSupportingUnicastPickers.DEFAULT);			
+			builderControl.setProxyPicker(BuilderSupportingProxyPickers.DEFAULT);			
 		} catch (RemoteException e) {
 			throw new Error ("Pausing or running remote simulation in real time failed, due to remote exception");
 		}
@@ -107,7 +107,7 @@ public class MainFrameController {
 			}
 			remotePhysicsSimulation.setRealtime(false);
 
-			builderControl.setPicker(BuilderSupportingUnicastPickers.DEFAULT);	
+			builderControl.setProxyPicker(BuilderSupportingProxyPickers.DEFAULT);	
 		} catch (RemoteException e) {
 			throw new Error ("Pausing or running remote simulation in fast mode failed, due to remote exception");
 		}
