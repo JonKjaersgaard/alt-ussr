@@ -67,6 +67,7 @@ import com.jme.scene.state.ZBufferState;
 import com.jme.system.DisplaySystem;
 import com.jme.system.JmeException;
 import com.jme.system.PropertiesIO;
+import com.jme.system.dummy.DummyDisplaySystem;
 import com.jme.util.GameTaskQueue;
 import com.jme.util.GameTaskQueueManager;
 import com.jme.util.TextureManager;
@@ -509,68 +510,72 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		/** Create rootNode */
 		rootNode = new Node( "rootNode" );
 
-		/**
-		 * Create a wirestate to toggle on and off. Starts disabled with default
-		 * width of 1 pixel.
-		 */
+		if(!options.getHeadless()) {
+		    /**
+		     * Create a wirestate to toggle on and off. Starts disabled with default
+		     * width of 1 pixel.
+		     */
 
-		wireState = display.getRenderer().createWireframeState();
-		wireState.setEnabled( false );
-		rootNode.setRenderState( wireState );
-
-
-		/**
-		 * Create a ZBuffer to display pixels closest to the camera above
-		 * farther ones.
-		 */
-		ZBufferState buf = display.getRenderer().createZBufferState();
-		buf.setEnabled( true );
-		buf.setFunction( ZBufferState.TestFunction.LessThanOrEqualTo  );
-		rootNode.setRenderState( buf );
+		    wireState = display.getRenderer().createWireframeState();
+		    wireState.setEnabled( false );
+		    rootNode.setRenderState( wireState );
 
 
-		// Then our font Text object.
-		/** This is what will actually have the text at the bottom. */
-		fps = Text.createDefaultTextLabel( "FPS label" );
-		fps.setCullHint( CullHint.Never );
-		fps.setTextureCombineMode( Spatial.TextureCombineMode.Replace );
-		//fps.setLocalScale(0.9f);
+		    /**
+		     * Create a ZBuffer to display pixels closest to the camera above
+		     * farther ones.
+		     */
+		    ZBufferState buf = display.getRenderer().createZBufferState();
+		    buf.setEnabled( true );
+		    buf.setFunction( ZBufferState.TestFunction.LessThanOrEqualTo  );
+		    rootNode.setRenderState( buf );
 
 
-		// Finally, a stand alone node (not attached to root on purpose)
-		fpsNode = new Node( "FPS node" );
-		//TODO JME2 UPGRADE fpsNode.setRenderState( fps.getRenderState( RenderState.RS_ALPHA ) );
-		fpsNode.setRenderState( fps.getRenderState( RenderState.StateType.Texture ) );
-		fpsNode.attachChild( fps );
-		fpsNode.setCullHint( CullHint.Never );
+		    // Then our font Text object.
+		    /** This is what will actually have the text at the bottom. */
+		    fps = Text.createDefaultTextLabel( "FPS label" );
+		    fps.setCullHint( CullHint.Never );
+		    fps.setTextureCombineMode( Spatial.TextureCombineMode.Replace );
+		    //fps.setLocalScale(0.9f);
 
-		// ---- LIGHTS
-		/** Set up a basic, default light. */
-		PointLight light = new PointLight();
-		light.setDiffuse( new ColorRGBA( 0.75f, 0.75f, 0.75f, 0.75f ) );
-		light.setAmbient( new ColorRGBA( 0.5f, 0.5f, 0.5f, 1.0f ) );
-		light.setLocation( new Vector3f( 100, 100, 100 ) );
-		light.setEnabled( true );
 
-		/** Attach the light to a lightState and the lightState to rootNode. */
-		lightState = display.getRenderer().createLightState();
-		lightState.setEnabled( true );
-		lightState.attach( light );
-		rootNode.setRenderState( lightState );
+		    // Finally, a stand alone node (not attached to root on purpose)
+		    fpsNode = new Node( "FPS node" );
+		    //TODO JME2 UPGRADE fpsNode.setRenderState( fps.getRenderState( RenderState.RS_ALPHA ) );
+		    fpsNode.setRenderState( fps.getRenderState( RenderState.StateType.Texture ) );
+		    fpsNode.attachChild( fps );
+		    fpsNode.setCullHint( CullHint.Never );
+
+		    // ---- LIGHTS
+		    /** Set up a basic, default light. */
+		    PointLight light = new PointLight();
+		    light.setDiffuse( new ColorRGBA( 0.75f, 0.75f, 0.75f, 0.75f ) );
+		    light.setAmbient( new ColorRGBA( 0.5f, 0.5f, 0.5f, 1.0f ) );
+		    light.setLocation( new Vector3f( 100, 100, 100 ) );
+		    light.setEnabled( true );
+
+		    /** Attach the light to a lightState and the lightState to rootNode. */
+		    lightState = display.getRenderer().createLightState();
+		    lightState.setEnabled( true );
+		    lightState.attach( light );
+		    rootNode.setRenderState( lightState );
+		}
 
 		/** Let derived classes initialize. */
 		simpleInitGame();
 
 		timer.reset();
 
-		/**
-		 * Update geometric and rendering information for both the rootNode and
-		 * fpsNode.
-		 */
-		rootNode.updateGeometricState( 0.0f, true );
-		rootNode.updateRenderState();
-		fpsNode.updateGeometricState( 0.0f, true );
-		fpsNode.updateRenderState();
+		if(!options.getHeadless()) {
+		    /**
+		     * Update geometric and rendering information for both the rootNode and
+		     * fpsNode.
+		     */
+		    rootNode.updateGeometricState( 0.0f, true );
+		    rootNode.updateRenderState();
+		    fpsNode.updateGeometricState( 0.0f, true );
+		    fpsNode.updateRenderState();
+		}
 	}
 	protected abstract void simpleInitGame();
 	/**
@@ -581,7 +586,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 */
 	@Override
 	protected final void update(float interpolation) {
-
+	    if(options.getHeadless()) return;
 		// disable input as we want it to be updated _after_ physics
 		// in your application derived from BaseGame you can simply make the call to InputHandler.update later
 		// in your game loop instead of this disabling and reenabling
@@ -685,7 +690,10 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			 * Get a DisplaySystem acording to the renderer selected in the
 			 * startup box.
 			 */
-			display = DisplaySystem.getDisplaySystem( properties.getRenderer() );
+			if(this.options.getHeadless())
+			    display = new DummyDisplaySystem();
+			else
+			    display = DisplaySystem.getDisplaySystem( properties.getRenderer() );
 			try {
 				String displayInfo = display.getAdapter();
 			} catch(UnsatisfiedLinkError e) { 
@@ -711,7 +719,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			 */
 			cam = display.getRenderer().createCamera( display.getWidth(),
 					display.getHeight() );
-
+			if(cam==null) cam = new DummyCamera();
 
 		} catch ( JmeException e ) {
 			/**
@@ -739,8 +747,12 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		/** Assign the camera to this renderer. */
 		display.getRenderer().setCamera( cam );
 		/** Create a basic input controller. */
-		FirstPersonHandler firstPersonHandler = new FirstPersonHandler( cam, 1f, 1 );
-		input = firstPersonHandler;
+		if(!options.getHeadless()) {
+		    FirstPersonHandler firstPersonHandler = new FirstPersonHandler( cam, 1f, 1 );
+		    input = firstPersonHandler;
+		} else {
+		    input = new InputHandler();
+		}
 
 		/** Sets the title of our display. */
 		display.setTitle( "USSR - Unified Simulator for Self-Reconfigurable Robots" );
@@ -761,9 +773,11 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		assignKeys();
 
 		/** Create a basic input controller. */
-		cameraInputHandler = new FirstPersonHandler( cam, 0.1f, 1 ); //TODO Make camera velocity relative to framerate
-		input = new InputHandler();
-		input.addToAttachedHandlers( cameraInputHandler );
+		if(!options.getHeadless()) {
+		    cameraInputHandler = new FirstPersonHandler( cam, 0.1f, 1 ); //TODO Make camera velocity relative to framerate
+		    input = new InputHandler();
+		    input.addToAttachedHandlers( cameraInputHandler );
+		}
 
 		/*if(cam.getLocation().y < (tb.getHeight(cam.getLocation())+2)) {
             cam.getLocation().y = tb.getHeight(cam.getLocation()) + 2;
@@ -784,6 +798,8 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			getPhysicsSpace().setAccuracy(PhysicsParameters.get().getPhysicsSimulationStepSize());
 		}
 
+		if(options.getHeadless()) return;
+		
 		input.addAction( new InputAction() {
 			public void performAction( InputActionEvent evt ) {
 				if ( evt.getTriggerPressed() ) {

@@ -91,7 +91,8 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
     
     public static void main(String argv[]) {
         if(ParameterHolder.get()==null)
-            ParameterHolder.set(new Parameters(0.5f,0.75f,0.0f,Float.MAX_VALUE));
+            // ParameterHolder.set(new Parameters(0.5f,0.75f,0.0f,Float.MAX_VALUE));
+            ParameterHolder.set(new Parameters(0.0f,0.0f,0.0f,Float.MAX_VALUE));
         new EightToCarRobustnessExperiment().main(); 
     }
 
@@ -114,6 +115,7 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
         PhysicsParameters.get().setUseModuleEventQueue(true);
         PhysicsParameters.get().setRealtime(false);
         PhysicsFactory.getOptions().setStartPaused(false);
+        PhysicsFactory.getOptions().setHeadless(true);
     }
     
     protected void changeWorldHook(WorldDescription world) {
@@ -186,17 +188,26 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
             bmsg[1] = counter;
             for(int i=HEADER_SIZE;i<message.length+HEADER_SIZE;i++)
                 bmsg[i] = (byte)message[i-HEADER_SIZE];
+            int retries = 0, previous = 0;
             while(counter==packetCounter[channel]) {
-                if(!this.isConnected(channel)) System.out.println("Warning: attempting transmit with no neighbor");
+                if(!this.isConnected(channel)) {
+                    System.out.println("["+getMyID()+"] Warning: attempting transmit with no neighbor");
+                    break;
+                }
                 if(queue.size()>0) {
                     Packet p = queue.remove(0);
-                    if(!this.isConnected(p.channel)) System.out.println("Warning: attempting ack with no neighbor");
+                    if(!this.isConnected(p.channel)) System.out.println("["+getMyID()+"] Warning: attempting ack with no neighbor");
                     super.sendMessage(p.payload, (byte)p.payload.length, p.channel);
                 } else
                     super.sendMessage(bmsg,(byte)size, (byte)channel);
-                System.out.println("Waiting for packet confirmation");
+                if(++retries>=previous*2) {
+                    previous = retries;
+                    System.out.println("["+getMyID()+"] Waiting for packet confirmation ("+retries+")");
+                    if(retries>=64) break;
+                }
                 this.delay(200);
             }
+            System.out.println("["+getMyID()+"] State transmission operation complete");
         }
         private byte[] lowlevelReceiveMessage(byte[] message, int channel) {
             if(message.length<HEADER_SIZE || (message[0]!=MAGIC_SEND_HEADER && message[0]!=MAGIC_ACK_HEADER)) {
@@ -213,7 +224,7 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     payload[i-HEADER_SIZE] = message[i];
                 return payload;
             } else {
-                System.out.println("Packet confirmed");
+                System.out.println("["+getMyID()+"] Packet confirmed");
                 packetCounter[channel] = message[1];
                 return null;
             }
