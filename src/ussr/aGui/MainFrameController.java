@@ -160,7 +160,6 @@ public class MainFrameController {
 		} catch (RemoteException e) {
 			throw new Error ("Termination of remote simulation failed, due to remote exception");
 		}
-
 	}
 
 	/**
@@ -273,7 +272,6 @@ public class MainFrameController {
 		} catch (RemoteException e) {
 			throw new Error ("Changing the state of showing buffer depth on remote simulation failed, due to remote exception");
 		}  
-
 	}
 
 	/**
@@ -369,6 +367,14 @@ public class MainFrameController {
 		MainFrameController.builderControl = builderController;
 	}
 	
+	/**
+	 * Returns builder controller of remote simulation for this controller.
+	 * @return builderControl,builder controller of remote simulation.
+	 */
+	public static BuilderControlInter getBuilderControl() {
+		return builderControl;
+	}
+
 	/**
 	 * Sets remote physics simulation for this controller.
 	 * @param remotePhysicsSimulation, the remote physics simulation.

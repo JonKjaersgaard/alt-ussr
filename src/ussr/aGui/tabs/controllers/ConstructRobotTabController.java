@@ -34,26 +34,11 @@ import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTabInter;
  */
 public class ConstructRobotTabController implements ConstructRobotTabInter{
 
-	
-	/**
-	 * The remote(running of separate JVM than GUI) physics simulation.
-	 */
-	private static RemotePhysicsSimulation remotePhysicsSimulation; 
-	
 	/**
 	 * Remote version of builder controller object.
 	 */
 	private static BuilderControlInter builderControl;
 		
-	/**
-	 * Default positions of initial construction modules for each modular robot
-	 * TODO CHANGE TO ADDING INITIAL MODULES INTO THE POINT OF VIEW OR ROTATE CAMERA POSITION.
-	 */
-	private final static VectorDescription atronDefaultPosition = new VectorDescription(0,-0.441f,0.5f),
-	mtranDefaultPosition = new VectorDescription(-1f,-0.4621f,0.5f),	
-	odinDefaultPosition = new VectorDescription(1f,-0.4646f,0.5f),	
-	ckbotDefaultPosition = new VectorDescription(2f,-0.4646f,0.5f); 
-
 	/**
 	 *  The name of  default(chosen) modular robot.
 	 *  Just do not have the case when it is empty.
@@ -73,9 +58,12 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 		/*Adapt Tab components to chosen modular robot */
 		adaptTabToChosenMR(chosenMRname);
 		
-		/*Add initial construction module*/
-		//addNewDefaultConstructionModule(builderControl.getRemoteJMESimulation()); 
-
+		 try {
+			 /*Add initial construction module*/
+			builderControl.addInitialConstructionModule(chosenMRname);
+		} catch (RemoteException e1) {
+			throw new Error("Failed to add initial construction module due to remote exception");
+		}
 		
 		try {
 			/* Set default construction tool to be "On selected  connector"*/
@@ -86,7 +74,6 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[1]);
-
 	}
 
 
@@ -153,62 +140,6 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel( CKBotStandardRotations.values() ));
 		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(CKBOT_CONNECTORS));
 	}
-
-
-	/**
-	 * Adds initial construction module according to chosen modular robot.
-	 * TODO SHOULD CHANGE WHEN MODULE WILL BE ADDED TO VIEW POINT OR ROTATE CAMERA POSITION. 
-	 * @param jmeSimulation, the physical simulation.
-	 */
-	private static void addNewDefaultConstructionModule(JMESimulation jmeSimulation){   	
-		CommonOperationsTemplate comATRON = new ATRONOperationsTemplate(jmeSimulation);
-		CommonOperationsTemplate comMTRAN = new MTRANOperationsTemplate(jmeSimulation);
-		CommonOperationsTemplate comOdin = new OdinOperationsTemplate(jmeSimulation);
-		CommonOperationsTemplate comCKBot = new CKBotOperationsTemplate(jmeSimulation);
-
-		VectorDescription zeroPosition = new VectorDescription(0,0,0);		
-
-		if (chosenMRname.equals(SupportedModularRobots.ATRON)&& moduleExists(atronDefaultPosition,jmeSimulation)==false ){
-			comATRON.addDefaultConstructionModule(/*this.chosenMRname.toString()*/"default", atronDefaultPosition);
-		}else if (chosenMRname.equals(SupportedModularRobots.MTRAN)&& moduleExists(mtranDefaultPosition,jmeSimulation)==false){
-			comMTRAN.addDefaultConstructionModule(chosenMRname.toString(),mtranDefaultPosition );
-		}else if (chosenMRname.equals(SupportedModularRobots.ODIN)&& moduleExists(odinDefaultPosition,jmeSimulation)==false){
-			Odin.setDefaultConnectorSize(0.006f);// make connector bigger in order to select them sucessfuly with "on Connector tool"
-			comOdin.addDefaultConstructionModule(chosenMRname.toString(), odinDefaultPosition);
-		}else if (chosenMRname.equals(SupportedModularRobots.CKBOTSTANDARD)&& moduleExists(ckbotDefaultPosition,jmeSimulation)==false){			
-			comCKBot.addDefaultConstructionModule(chosenMRname.toString(), ckbotDefaultPosition);
-		}else {
-			//com.addDefaultConstructionModule(this.chosenMRname, zeroPosition);
-			//com1.addDefaultConstructionModule(this.chosenMRname,mtranPosition );
-			//com2.addDefaultConstructionModule(this.chosenMRname,mtranPosition );
-		}
-
-	}
-
-	/**
-	 * Checks if module already exists at current position.
-	 * TODO SHOULD CHANGE WHEN MODULE WILL BE ADDED TO VIEW POINT OR ROTATE CAMERA POSITION. 
-	 * @param currentPosition, the position of the module to check.
-	 * @param jmeSimulation, the physical simulation.    
-	 *@return true, if module exists at current position.
-	 */	
-	private static boolean moduleExists(VectorDescription currentPosition,JMESimulation jmeSimulation){
-		int amountModules = jmeSimulation.getModules().size();
-		for (int module =0;module<amountModules;module++){
-			Module currentModule =jmeSimulation.getModules().get(module); 
-			String moduleType = currentModule.getProperty(BuilderHelper.getModuleTypeKey());
-			VectorDescription modulePosition;
-			if (moduleType.equalsIgnoreCase("MTRAN")){
-				modulePosition = currentModule.getPhysics().get(1).getPosition(); 
-			}else{
-				modulePosition = currentModule.getPhysics().get(0).getPosition();
-			}
-			if (modulePosition.equals(currentPosition)){
-				return true;
-			}
-		}
-		return false;    	
-	}	
 
 	/**
 	 * Default chosen entity for operations on existing modules or robot. 
@@ -534,15 +465,11 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 	public static void setBuilderController(BuilderControlInter builderControl) {
 		ConstructRobotTabController.builderControl = builderControl;
 	}
-
-	/**
-	 * Sets remote physics simulation for this controller.
-	 * @param remotePhysicsSimulation, the remote physics simulation.
-	 */
-	public static void setRemotePhysicsSimulation(RemotePhysicsSimulation remotePhysicsSimulation) {
-		ConstructRobotTabController.remotePhysicsSimulation = remotePhysicsSimulation;
-	}
 	
+	/**
+	 *  Returns remote version of builder controller object.
+	 * @return builderControl,remote version of builder controller object.
+	 */
 	public static BuilderControlInter getBuilderControl() {
 		return builderControl;
 	}

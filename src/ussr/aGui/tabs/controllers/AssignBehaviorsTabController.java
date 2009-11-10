@@ -1,5 +1,6 @@
 package ussr.aGui.tabs.controllers;
 
+import java.rmi.RemoteException;
 import java.util.Vector;
 
 import javax.swing.AbstractButton;
@@ -7,6 +8,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 
+import ussr.aGui.MainFrameController;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter;
@@ -20,6 +22,8 @@ import ussr.builder.labelingTools.LabelingToolSpecification;
 import ussr.builder.labelingTools.LabelingTools;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
+import ussr.remote.facade.BuilderControlInter;
+import ussr.remote.facade.BuilderSupportingUnicastPickers;
 
 public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 
@@ -203,21 +207,36 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 		switch(currentText){
 
 		case Module:
-			//TODO ELIMINATE null at the end if QPSS should be eliminated.
-			localJMEsimulation.setPicker(new LabelingToolSpecification(localJMEsimulation,LabeledEntities.MODULE,LabelingTools.READ_LABELS, null));
+			try {
+					MainFrameController.getBuilderControl().setPicker(BuilderSupportingUnicastPickers.READ_MODULE_LABELS);
+				} catch (RemoteException e) {
+	
+				}
 			break;
 		case Connector:
-			localJMEsimulation.setPicker(new LabelingToolSpecification(localJMEsimulation,LabeledEntities.CONNECTOR,LabelingTools.READ_LABELS, null));
+			try {
+					MainFrameController.getBuilderControl().setPicker(BuilderSupportingUnicastPickers.READ_CONNECTOR_LABELS);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			break;
 		case Sensors:
 		case Proximity:// go to proximity because only this type of sensor is supported right now.
-			localJMEsimulation.setPicker(new LabelingToolSpecification(localJMEsimulation,LabeledEntities.SENSOR,LabelingTools.READ_LABELS, null));
+			try {
+					MainFrameController.getBuilderControl().setPicker(BuilderSupportingUnicastPickers.READ_SENSOR_LABELS);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			break;
 		default: throw new Error("Labeling is not supported for " + chosenRadioEntityText ); 
 		}
 		/*Informing user*/
 		AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[3]);
 	}
+	
+	
 
 
 
@@ -262,7 +281,7 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 	
 		/*Assign labels to entity*/
 		EntitiesForLabelingText currentText = EntitiesForLabelingText.valueOf(chosenRadioEntityText);
-
+/*
 		switch(currentText){
 
 		case Module:			
@@ -276,10 +295,16 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 			localJMEsimulation.setPicker(new LabelingToolSpecification(localJMEsimulation,LabeledEntities.SENSOR,labelsInTable,LabelingTools.LABEL_SENSOR));
 			break;
 		default: throw new Error("Labeling is not supported for " + chosenRadioEntityText ); 
-		}
+		}*/
 		/*Informing user*/
 		AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[4]);
 	}
 
-
+	/**
+	 * Sets builder controller of remote simulation for this controller.
+	 * @param builderController,builder controller of remote simulation.
+	 */
+/*	public static void setBuilderControl(BuilderControlInter builderController) {
+		MainFrameController.builderControl = builderController;
+	}*/
 }
