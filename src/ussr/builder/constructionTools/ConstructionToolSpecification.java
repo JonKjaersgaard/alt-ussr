@@ -1,5 +1,7 @@
 package ussr.builder.constructionTools;
 
+import java.io.Serializable;
+
 import javax.swing.JOptionPane;
 import com.jme.scene.Geometry;
 import ussr.model.Module;
@@ -20,7 +22,7 @@ import ussr.builder.helpers.SelectedModuleTypeMapHelper;
  * modules or connectors on the modules).
  * @author Konstantinas
  */
-public class ConstructionToolSpecification extends CustomizedPicker{
+public class ConstructionToolSpecification extends CustomizedPicker implements Serializable{
 
 	/** 
 	 * The physical simulation.
@@ -82,24 +84,20 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 
 	/**
 	 * For calling tools handling construction of morphology of modular robot,in particular tools like "ON_CHOSEN_CONNECTOR" or "LOOP".
-	 * @param modularRobotName,the name of the modular robot. For example: ATRON, MTRAN,ODIN and so on.
 	 * @param toolName,the name of the tool from GUI. For example, in this  case, these can be "ChosenConnector" or "Loop".
 	 * @param chosenConnectorNr,the connector number on module, chosen in GUI comboBox ("ON_CHOSEN_CONNECTOR")or just passed as default ("LOOP").
 	 */
-	public  ConstructionToolSpecification(SupportedModularRobots modularRobotName, ConstructionTools toolName,int chosenConnectorNr){
-		this.modularRobotName = modularRobotName;
+	public  ConstructionToolSpecification(ConstructionTools toolName,int chosenConnectorNr){
 		this.toolName = toolName;
 		this.selectedConnectorNr = chosenConnectorNr;
 	}
 
 	/**
 	 * For calling tools handling construction of morphology of modular robot, in particular tools like "STANDARD_ROTATION". 
-	 * @param modularRobotName, the name of the modular robot. For example: ATRON, MTRAN,ODIN and so on.
 	 * @param toolName, the name of the tool from GUI. For example, in this case, this is "STANDARD_ROTATION".
 	 * @param standardRotationName,the name of rotation, which is standard to particular modular robot. For example for ATRON this can be EW, meaning east-west.
 	 */
-	public  ConstructionToolSpecification(SupportedModularRobots modularRobotName, ConstructionTools toolName, String standardRotationName){
-		this.modularRobotName = modularRobotName;
+	public  ConstructionToolSpecification(ConstructionTools toolName, String standardRotationName) {
 		this.toolName = toolName;
 		this.standardRotationName = standardRotationName;	
 	}
@@ -161,9 +159,9 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 		instantiateTool((JMESimulation)component.getSimulation());		
 
 
-		if (this.toolName.equals(ConstructionTools.LOOP)){
-			ConstructRobotTab.setEnabledButtonsArrows(true);	
-		}
+		//if (this.toolName.equals(ConstructionTools.LOOP)){
+			//ConstructRobotTab.setEnabledButtonsArrows(true);	
+		//}
 		callAppropriateTool();		
 	}
 
@@ -286,7 +284,7 @@ public class ConstructionToolSpecification extends CustomizedPicker{
 			}else{//Just skip(connector number will be 1000) 		
 			}
 			break;
-		case ON_CHOSEN_CONNECTOR://break through
+		case ON_CHOSEN_CONNECTOR_NR://break through
 		case LOOP:
 			this.selectOperations.addNewModuleOnConnector(this);
 			break;

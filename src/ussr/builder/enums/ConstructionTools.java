@@ -10,7 +10,7 @@ public enum ConstructionTools {
 	ON_SELECTED_CONNECTOR,
 	/*The tool where connector number should be passed as a parameter. As a result the module
 	 * is added on this connector */
-	ON_CHOSEN_CONNECTOR,
+	ON_CHOSEN_CONNECTOR_NR,
 	/*The tool where user selects the module and all possible modules are added to the connectors
 	 * of selected module */
 	ON_ALL_CONNECTORS,
