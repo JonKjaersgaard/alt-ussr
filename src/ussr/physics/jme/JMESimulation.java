@@ -211,7 +211,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 }
             }
         };
-        input.addAction( resetAction, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_R, InputHandler.AXIS_NONE, false );
+        if(!options.getHeadless())
+            input.addAction( resetAction, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_R, InputHandler.AXIS_NONE, false );
         resetAction.performAction( null );
 
         // Add any external input handlers
@@ -309,14 +310,16 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             getAttributes();
 
             if (!finished) {
-            	System.out.println("Available Display Modes: ");
-            	try {
-            	    org.lwjgl.opengl.DisplayMode[] modes = Display.getAvailableDisplayModes();
-                    for(int i=0;i<modes.length;i++) System.out.println(" Mode "+i+" = "+modes[i]);
-            	} catch(UnsatisfiedLinkError err) {
-            	    throw new Error("Unable to initialize LWJGL, cannot load native library; path = "+System.getProperty("java.library.path"));
-            	}
-            	
+                if(!options.getHeadless()) {
+                    System.out.println("Available Display Modes: ");
+                    try {
+                        org.lwjgl.opengl.DisplayMode[] modes = Display.getAvailableDisplayModes();
+                        for(int i=0;i<modes.length;i++) System.out.println(" Mode "+i+" = "+modes[i]);
+                    } catch(UnsatisfiedLinkError err) {
+                        throw new Error("Unable to initialize LWJGL, cannot load native library; path = "+System.getProperty("java.library.path"));
+                    }
+                }
+                
                 initSystem();
                 assertDisplayCreated();
         		initGame();
