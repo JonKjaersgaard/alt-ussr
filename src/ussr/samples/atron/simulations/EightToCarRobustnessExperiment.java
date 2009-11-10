@@ -41,23 +41,57 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
 
     public static class Parameters extends ParameterHolder {
         public float minR, maxR, completeR, maxTime;
-
-        /**
-         * @param minR
-         * @param maxR
-         * @param completeR
-         */
         public Parameters(float minR, float maxR, float completeR, float maxTime) {
             this.minR = minR;
             this.maxR = maxR;
             this.completeR = completeR;
             this.maxTime = maxTime;
         }
+        public String toString() {
+            return "minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime;
+        }
+        /* (non-Javadoc)
+         * @see java.lang.Object#hashCode()
+         */
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + Float.floatToIntBits(completeR);
+            result = prime * result + Float.floatToIntBits(maxR);
+            result = prime * result + Float.floatToIntBits(maxTime);
+            result = prime * result + Float.floatToIntBits(minR);
+            return result;
+        }
+        /* (non-Javadoc)
+         * @see java.lang.Object#equals(java.lang.Object)
+         */
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Parameters other = (Parameters) obj;
+            if (Float.floatToIntBits(completeR) != Float
+                    .floatToIntBits(other.completeR))
+                return false;
+            if (Float.floatToIntBits(maxR) != Float.floatToIntBits(other.maxR))
+                return false;
+            if (Float.floatToIntBits(maxTime) != Float
+                    .floatToIntBits(other.maxTime))
+                return false;
+            if (Float.floatToIntBits(minR) != Float.floatToIntBits(other.minR))
+                return false;
+            return true;
+        }
     }
     
     public static void main(String argv[]) {
-        //if(ParameterHolder.get()==null)
-          //  ParameterHolder.set(new Parameters(0.25f,0.5f,0.0f,Float.MAX_VALUE));
+        if(ParameterHolder.get()==null)
+            ParameterHolder.set(new Parameters(0.5f,0.75f,0.0f,Float.MAX_VALUE));
         new EightToCarRobustnessExperiment().main(); 
     }
 
@@ -75,7 +109,7 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
         PhysicsLogger.setDisplayInfo(true);
         PhysicsParameters.get().setMaintainRotationalJointPositions(true);
         PhysicsParameters.get().setRealisticCollision(true);
-        PhysicsParameters.get().setPhysicsSimulationStepSize(0.01f); // before: 0.0005f
+        PhysicsParameters.get().setPhysicsSimulationStepSize(0.001f); // before: 0.0005f
         PhysicsParameters.get().setWorldDampingLinearVelocity(0.9f);
         PhysicsParameters.get().setUseModuleEventQueue(true);
         PhysicsParameters.get().setRealtime(false);
@@ -153,11 +187,14 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
             for(int i=HEADER_SIZE;i<message.length+HEADER_SIZE;i++)
                 bmsg[i] = (byte)message[i-HEADER_SIZE];
             while(counter==packetCounter[channel]) {
+                if(!this.isConnected(channel)) System.out.println("Warning: attempting transmit with no neighbor");
                 if(queue.size()>0) {
                     Packet p = queue.remove(0);
+                    if(!this.isConnected(p.channel)) System.out.println("Warning: attempting ack with no neighbor");
                     super.sendMessage(p.payload, (byte)p.payload.length, p.channel);
                 } else
                     super.sendMessage(bmsg,(byte)size, (byte)channel);
+                System.out.println("Waiting for packet confirmation");
                 this.delay(200);
             }
         }
@@ -176,6 +213,7 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     payload[i-HEADER_SIZE] = message[i];
                 return payload;
             } else {
+                System.out.println("Packet confirmed");
                 packetCounter[channel] = message[1];
                 return null;
             }
@@ -721,6 +759,10 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
 
         private void reportResult(boolean success) throws Error {
             try {
+                if(SimulationClient.getReturnHandler()==null) {
+                    System.err.println("No return handler specified; time taken = "+module.getSimulation().getTime());
+                    System.exit(0);
+                }
                 if(success)
                     SimulationClient.getReturnHandler().provideReturnValue("success",module.getSimulation().getTime());
                 else
