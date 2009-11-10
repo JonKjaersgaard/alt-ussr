@@ -1,7 +1,7 @@
 package ussr.builder.enums;
 
 /**
- * Modular robots supported by builder(Quick Prototyping of Simulation Scenarios) for interactive
+ * Modular robots supported by builder for interactive
  * construction of their morphology and assignment of behaviors.
  * @author Konstantinas
  */

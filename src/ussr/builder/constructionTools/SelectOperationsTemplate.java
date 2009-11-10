@@ -1,7 +1,6 @@
 package ussr.builder.constructionTools;
 
-import ussr.builder.helpers.ModuleRotationMapEntryHelper;
-import ussr.description.geometry.VectorDescription;
+
 
 
 /**
@@ -24,19 +23,8 @@ public interface SelectOperationsTemplate {
 	 * @param type, the type of modular robot. For example: ATRON,MTRAN or OdinBall.
 	 * @param modulePosition, the position of module in simulation environment.
 	 */
-	public abstract void addDefaultConstructionModule(String type, VectorDescription modulePosition);	
+	//public abstract void addDefaultConstructionModule(String type, VectorDescription modulePosition);	
 	
-	/**
-	 * Adds default (the first) construction module at specified position.
-	 * This method is so-called "Primitive operation" for above TEMPLATE method, called "addDefaultConstructionModule(String type, VectorDescription modulePosition)".	 
-	 * @param type, the type of modular robot. For example: ATRON,MTRAN or OdinBall.
-	 * @param modulePosition, the position of the module in simulation environment.
-	 * @param moduleRotation, the rotation of the module.
-	 * @param colorsComponents, the colours of components constituting the module.
-	 * @param colorsConectors, the colours of connectors on the module.
-	 */
-	//public abstract void addDefaultModule(String type,VectorDescription modulePosition,RotationDescription moduleRotation, List<Color> colorsComponents,ArrayList<Color> colorsConectors);
-		
 	/**
 	 * Adds the new module on connector. This is for both: selected connector on the module in simulation environment
 	 * and connector passed as a variable and later selected module in simulation environment.
@@ -45,13 +33,6 @@ public interface SelectOperationsTemplate {
 	 * number,selected module, simulation and so on.  
 	 */
 	public abstract void addNewModuleOnConnector(ConstructionToolSpecification toolSpecification);
-	
-	/**
-	 * Creates and returns new module, depending on which is needed: the copy module or different one. 	 
-	 * This method is so-called "Primitive operation" for above TEMPLATE method, called "addNewModuleOnConnector(ConstructionToolSpecification toolSpecification)".	 
-	 * @param selectedModule,the module selected in simulation environment. 
-	 */
-	//public abstract Module createNewModule(Module selectedModule);	
 	
 	/**
 	 * Adds the new modules on all connectors of the module selected in simulation environment

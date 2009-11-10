@@ -1,9 +1,11 @@
 package ussr.builder.constructionTools;
 
 import java.awt.Color;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ussr.aGui.MainFrameController;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
@@ -45,7 +47,7 @@ public class ATRONOperationsTemplate extends CommonOperationsTemplate{
 		colorsConectors.add(Color.BLACK);colorsConectors.add(Color.WHITE);
 		colorsConectors.add(Color.BLACK);colorsConectors.add(Color.WHITE);
 		moduleRotation = ATRON.ROTATION_EW;
-		addNewModule(new ModulePosition(type+ BuilderHelper.getRandomInt(),type,modulePosition,moduleRotation),colorsComponents,colorsConectors);		
+	    addNewModule(new ModulePosition(type+ BuilderHelper.getRandomInt(),type,modulePosition,moduleRotation),colorsComponents,colorsConectors);		
 	}
 	
 	/**

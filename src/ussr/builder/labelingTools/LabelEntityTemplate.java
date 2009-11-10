@@ -16,8 +16,6 @@ import ussr.model.Entity;
  */
 public abstract class LabelEntityTemplate implements LabelingTemplate {	
 	
-	
-	
 	/**
 	 * Empty string used to replace the deleted label. 
 	 */

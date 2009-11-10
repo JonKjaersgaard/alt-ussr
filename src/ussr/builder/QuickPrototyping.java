@@ -1085,7 +1085,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */
 	private void readLabelsjButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
 		System.out.println("Labels toolbar-->Read");//for debugging     
-		JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,LabelingTools.READ_LABELS, this));
+		//JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,LabelingTools.READ_LABELS, this));
 		guiHelper.passTo(AssistantjTextField,"Select "+ this.entityToLabel.toString().toLowerCase()+ " to display its labels");
 	}  
 
@@ -1107,7 +1107,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 			tool = LabelingTools.LABEL_SENSOR;
 		}
 		else throw new Error("The  name of the entity is misspelled or this entity is not yet supported");
-		JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,currentLabeljTextField.getText(),tool));
+		//JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,currentLabeljTextField.getText(),tool));
 
 		guiHelper.passTo(AssistantjTextField,"Select "+ this.entityToLabel.toString().toLowerCase()+ " to assign to it the label: " + currentLabeljTextField.getText());
 	}                                                  
@@ -1274,7 +1274,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	 */	
 	private void newModulejButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                     
 		//System.out.println("Modular robot specific--> New Module");//for debugging     	
-		CommonOperationsTemplate comATRON = new ATRONOperationsTemplate(JME_simulation);
+	/*	CommonOperationsTemplate comATRON = new ATRONOperationsTemplate(JME_simulation);
 		CommonOperationsTemplate comMTRAN = new MTRANOperationsTemplate(JME_simulation);
 		CommonOperationsTemplate comOdin = new OdinOperationsTemplate(JME_simulation);
 		CommonOperationsTemplate comCKBot = new CKBotOperationsTemplate(JME_simulation);
@@ -1282,7 +1282,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		VectorDescription zeroPosition = new VectorDescription(0,0,0);		
 
 		if (this.chosenMRname.equals(SupportedModularRobots.ATRON)&& moduleExists(atronDefaultPosition)==false ){
-			comATRON.addDefaultConstructionModule(/*this.chosenMRname.toString()*/"default", atronDefaultPosition);
+			comATRON.addDefaultConstructionModule(this.chosenMRname.toString()"default", atronDefaultPosition);
 		}else if (this.chosenMRname.equals(SupportedModularRobots.MTRAN)&& moduleExists(mtranDefaultPosition)==false){
 			comMTRAN.addDefaultConstructionModule(this.chosenMRname.toString(),mtranDefaultPosition );
 		}else if (this.chosenMRname.equals(SupportedModularRobots.ODIN)&& moduleExists(odinDefaultPosition)==false){
@@ -1294,7 +1294,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 			//com.addDefaultConstructionModule(this.chosenMRname, zeroPosition);
 			//com1.addDefaultConstructionModule(this.chosenMRname,mtranPosition );
 			//com2.addDefaultConstructionModule(this.chosenMRname,mtranPosition );
-		}
+		}*/
 		guiHelper.passTo(AssistantjTextField,"Now choose one of the tools in the toolbar beneath (nr 5 from the top)");        
 
 

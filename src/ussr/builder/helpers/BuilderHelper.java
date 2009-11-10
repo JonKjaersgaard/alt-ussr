@@ -168,14 +168,14 @@ public class BuilderHelper {
 	 * @param selectedModule, module to remove (delete).
 	 */
 	public static void deleteModule(Module selectedModule){
-		/*Remove the module from the internal list of the modules in USSR*/
-		selectedModule.getSimulation().getModules().remove(selectedModule);
-
+		
 		/* Identify each component of the module and remove the visual of it*/
 		int amountComponents= selectedModule.getNumberOfComponents();		
 		for (int compon=0; compon<amountComponents;compon++){			
 			removeModuleComponent(selectedModule.getComponent(compon));  
-		}		
+		}
+		/*Remove the module from the internal list of the modules in USSR*/
+		//selectedModule.getSimulation().getModules().remove(selectedModule);
 	}
 
 
@@ -185,6 +185,7 @@ public class BuilderHelper {
 	 */
 	public static void removeModuleComponent(PhysicsModuleComponent physicsModuleComponent ){
 		JMEModuleComponent moduleComponent= (JMEModuleComponent)physicsModuleComponent;
+		
 		/*Remove each node of component*/
 		for(DynamicPhysicsNode part: moduleComponent.getNodes()){
 			part.detachAllChildren();//removes visual	
@@ -192,9 +193,10 @@ public class BuilderHelper {
 			for (int node=0; node<amountNodes; node++ ){ //removes bounds and physics
 				moduleComponent.getNodes().get(node).removeFromParent();
 			}						
-			//part.setIsCollidable(false);
-			//part.setActive(false);												
-		}        
+			part.setIsCollidable(false);
+			part.setActive(false);
+			part.clearControllers();
+		} 	
 	};
 
 

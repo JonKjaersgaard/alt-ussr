@@ -1,6 +1,5 @@
 package ussr.builder.labelingTools;
 
-import javax.swing.JOptionPane;
 import com.jme.scene.Geometry;
 import ussr.builder.QuickPrototyping;
 import ussr.builder.helpers.BuilderHelper;
@@ -21,7 +20,7 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	/**
 	 * The physical simulation.
 	 */
-	private JMESimulation simulation;
+	private JMESimulation jmeSimulation;
 
 	/**
 	 * The module selected in simulation environment.
@@ -46,7 +45,7 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	/**
 	 * The object of GUI.
 	 */
-	private QuickPrototyping quickPrototyping;
+	/*private QuickPrototyping quickPrototyping;*/
 
 	/**
 	 * The connector number on the module, selected with the left side of mouse in simulation environment. 
@@ -60,8 +59,8 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 * @param labels, the labels to be assigned.
 	 * @param toolName, the name of the tool to be used.
 	 */
-	public LabelingToolSpecification(JMESimulation simulation,LabeledEntities entityToLabel,String labels, LabelingTools toolName){
-		this.simulation = simulation;		
+	public LabelingToolSpecification(/*JMESimulation ,*/LabeledEntities entityToLabel,String labels, LabelingTools toolName){
+		/*this.jmeSimulation = jmeSimulation;	*/	
 		this.labels = labels;		
 		this.toolName = toolName;
 		this.labeling = new LabelingFactory().getLabeling(entityToLabel);		
@@ -74,11 +73,11 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 * @param toolName, the name of the tool to be used.
 	 * @param quickPrototyping, the QuickPrototyping frame.
 	 */
-	public LabelingToolSpecification(JMESimulation simulation,LabeledEntities entityToLabel, LabelingTools toolName, QuickPrototyping quickPrototyping){
-		this.simulation = simulation;				
+	public LabelingToolSpecification(/*JMESimulation simulation,*/LabeledEntities entityToLabel, LabelingTools toolName/*, QuickPrototyping quickPrototyping*/){
+		/*this.jmeSimulation = simulation;*/				
 		this.toolName = toolName;
 		this.labeling = new LabelingFactory().getLabeling(entityToLabel);
-		this.quickPrototyping = quickPrototyping;
+		/*this.quickPrototyping = quickPrototyping;*/
 
 	}
 
@@ -88,6 +87,7 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 */
 	@Override
 	protected void pickModuleComponent(JMEModuleComponent component) {
+		this.jmeSimulation = (JMESimulation)component.getModel().getSimulation();
 		this.selectedModule = component.getModel();
 		callSpecificTool();
 	}
@@ -97,33 +97,34 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickTarget(com.jme.scene.Spatial)
 	 */
 	protected void pickTarget(Geometry target,JMESimulation jmeSimulation) {		
-		this.selectedConnectorNr = BuilderHelper.extractConnectorNr(simulation, target);		
+		this.jmeSimulation = jmeSimulation;
+		this.selectedConnectorNr = BuilderHelper.extractConnectorNr(jmeSimulation, target);		
 	}
 
 	/**
 	 * Calls specific tool for labeling of entities. 
 	 */
 	private void callSpecificTool(){
-       if(this.labeling instanceof  LabelConnectorTemplate && selectedConnectorNr == 1000){// the case when user selects the module  or something else instead of connector.
-    	   //Do nothing
-    	   //JOptionPane.showMessageDialog(null, "You do not selected connector. Chosen tool is for connectors. Please zoom in and select the connector instead. ","Error", JOptionPane.ERROR_MESSAGE);				
-       }else{
-		switch(toolName){
-		case LABEL_CONNECTOR:		
-			this.labeling.labelSpecificEntity(this);			
-			break;
-		case LABEL_MODULE:
-			this.labeling.labelSpecificEntity(this);
-			break;
-		case LABEL_SENSOR:
-			this.labeling.labelSpecificEntity(this);
-			break;
-		case READ_LABELS:	
-			this.labeling.readLabels(this);
-			break;
-		default: throw new Error ("The tool name:" +toolName+ ", is not supported yet");
-		}		
-       }
+		if(this.labeling instanceof  LabelConnectorTemplate && selectedConnectorNr == 1000){// the case when user selects the module  or something else instead of connector.
+			//Do nothing
+			//JOptionPane.showMessageDialog(null, "You do not selected connector. Chosen tool is for connectors. Please zoom in and select the connector instead. ","Error", JOptionPane.ERROR_MESSAGE);				
+		}else{
+			switch(toolName){
+			case LABEL_CONNECTOR:		
+				this.labeling.labelSpecificEntity(this);			
+				break;
+			case LABEL_MODULE:
+				this.labeling.labelSpecificEntity(this);
+				break;
+			case LABEL_SENSOR:
+				this.labeling.labelSpecificEntity(this);
+				break;
+			case READ_LABELS:	
+				this.labeling.readLabels(this);
+				break;
+			default: throw new Error ("The tool name:" +toolName+ ", is not supported yet");
+			}		
+		}
 	}
 
 	/**
@@ -154,9 +155,9 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 * Returns the current instance of GUI and associated with the tool.
 	 * @return quickPrototyping, the current instance of GUI and associated with the tool.
 	 */
-	public QuickPrototyping getQuickPrototyping() {
+	/*public QuickPrototyping getQuickPrototyping() {
 		return quickPrototyping;
-	}
+	}*/
 	public LabelingTemplate getLabeling() {
 		return labeling;
 	}

@@ -1,6 +1,7 @@
 package ussr.builder.constructionTools;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
