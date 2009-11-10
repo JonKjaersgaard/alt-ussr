@@ -25,7 +25,7 @@ import ussr.physics.jme.JMESimulation;
 import ussr.remote.facade.BuilderControlInter;
 import ussr.remote.facade.BuilderSupportingProxyPickers;
 
-public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
+public class AssignBehaviorsTabController extends TabsControllers implements AssignBehaviorsTabInter {
 
 	/**
 	 * Container for keeping all classes of controllers extracted from package "ussr.builder.controllerAdjustmentTool";
@@ -42,15 +42,13 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 	 */
 	private static String chosenRadioEntityText;
 
-	/**
-	 * The physical simulation.
-	 */
-	private static JMESimulation localJMEsimulation;	
 
 	/**
 	 * The name of the package where all behaviors are stored for interactive adjustment of controller.
 	 */
 	private static final String packageName = "ussr.builder.controllerAdjustmentTool";
+	
+	public AssignBehaviorsTabController(){}
 
 	/**
 	 * Loads all existing names of controllers from package ussr.builder.controllerAdjustmentTool and filters
@@ -136,10 +134,13 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 	/**
 	 * Initializes the tool for assigning controller chosen by user in GUI component. 
 	 * @param jList1,the component in GUI. 
-	 * @param jmeSimulation, the physical simulation.
 	 */
-	public static void jList1MouseReleased(javax.swing.JList jList1,JMESimulation jmeSimulation) {
-		jmeSimulation.setPicker(new AssignControllerTool(packageName+"."+jList1.getSelectedValue()));
+	public static void jList1MouseReleased(javax.swing.JList jList1) {
+		try {
+			builderControl.setSerialazablePicker(new AssignControllerTool(packageName+"."+jList1.getSelectedValue()));
+		} catch (RemoteException e) {
+			throw new Error("Failed to initate picker called "+ "AssignControllerTool" + ", due to remote exception");
+		}		
 	}
 
 	
@@ -162,12 +163,11 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 	 * @param button, radio button selected in GUI.
 	 * @param jmeSimulation, the physical simulation.
 	 */
-	public static void radioButtonGroupEntitiesActionPerformed(AbstractButton button, JMESimulation jmeSimulation) {
+	public static void radioButtonGroupEntitiesActionPerformed(AbstractButton button) {
 
 		AssignBehaviorsTab.setEnabledControlButtons(true);
 
 		chosenRadioEntityText = button.getText();
-		localJMEsimulation = jmeSimulation;
 
 		/*Updates table header, according to selected entity */
 		updateTableHeader();
@@ -208,27 +208,28 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 
 		case Module:
 			try {
-					MainFrameController.getBuilderControl().setProxyPicker(BuilderSupportingProxyPickers.READ_MODULE_LABELS);
+				builderControl.setSerialazablePicker(new LabelingToolSpecification(LabeledEntities.MODULE, LabelingTools.READ_LABELS));
+					//MainFrameController.getBuilderControl().setProxyPicker(BuilderSupportingProxyPickers.READ_MODULE_LABELS);
 				} catch (RemoteException e) {
-	
+					throw new Error("Failed to initate picker called "+ LabelingTools.READ_LABELS.toString() + ", due to remote exception");
 				}
 			break;
 		case Connector:
-			try {
+			/*try {
 					MainFrameController.getBuilderControl().setProxyPicker(BuilderSupportingProxyPickers.READ_CONNECTOR_LABELS);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 			break;
 		case Sensors:
 		case Proximity:// go to proximity because only this type of sensor is supported right now.
-			try {
+			/*try {
 					MainFrameController.getBuilderControl().setProxyPicker(BuilderSupportingProxyPickers.READ_SENSOR_LABELS);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 			break;
 		default: throw new Error("Labeling is not supported for " + chosenRadioEntityText ); 
 		}
@@ -304,7 +305,7 @@ public class AssignBehaviorsTabController implements AssignBehaviorsTabInter {
 	 * Sets builder controller of remote simulation for this controller.
 	 * @param builderController,builder controller of remote simulation.
 	 */
-/*	public static void setBuilderControl(BuilderControlInter builderController) {
+	/*public static void setBuilderControl(BuilderControlInter builderController) {
 		MainFrameController.builderControl = builderController;
 	}*/
 }

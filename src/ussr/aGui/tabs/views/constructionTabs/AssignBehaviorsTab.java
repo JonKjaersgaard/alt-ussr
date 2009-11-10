@@ -167,7 +167,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jListAvailableControllers.setPreferredSize(new java.awt.Dimension(J_LIST_WIDTH+60, J_LIST_HEIGHT));	
 		jListAvailableControllers.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				AssignBehaviorsTabController.jList1MouseReleased( jListAvailableControllers,jmeSimulation);
+				AssignBehaviorsTabController.jList1MouseReleased( jListAvailableControllers);
 			}
 		});		
 		jScrollPaneAvailableControllers.setViewportView(jListAvailableControllers);
@@ -255,7 +255,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		radioButtonModule.setSelected(false);
 		radioButtonModule.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AssignBehaviorsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonModule,jmeSimulation);
+				AssignBehaviorsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonModule);
 			}
 		});			
 
@@ -268,7 +268,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		radionButtonConnector.setSelected(false);
 		radionButtonConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AssignBehaviorsTabController.radioButtonGroupEntitiesActionPerformed(radionButtonConnector,jmeSimulation);
+				AssignBehaviorsTabController.radioButtonGroupEntitiesActionPerformed(radionButtonConnector);
 			}
 		});
 
@@ -282,7 +282,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		radioButtonSensors.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				//jToolBar3.setVisible(false);
-				AssignBehaviorsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonSensors,jmeSimulation);
+				AssignBehaviorsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonSensors);
 			}
 		});
 
@@ -309,7 +309,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		radioButtonProximitySensor.setSelected(false);
 		radioButtonProximitySensor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AssignBehaviorsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonProximitySensor,jmeSimulation);
+				AssignBehaviorsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonProximitySensor);
 			}
 		});
 		jToolBarTypesSensors.add(radioButtonProximitySensor);

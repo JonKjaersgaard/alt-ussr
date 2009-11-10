@@ -25,12 +25,12 @@ import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTabInter;
  * Controls events of Construct Robot Tab  and underlying logic of simulator.
  * @author Konstantinas
  */
-public class ConstructRobotTabController extends TabsController implements ConstructRobotTabInter{
+public class ConstructRobotTabController extends TabsControllers implements ConstructRobotTabInter{
 
 	/**
 	 * Remote version of builder controller object.
 	 */
-	private static BuilderControlInter builderControl;
+	//private static BuilderControlInter builderControl;
 
 	/**
 	 *  The name of modular robot chosen in GUI.
@@ -366,24 +366,35 @@ public class ConstructRobotTabController extends TabsController implements Const
 
 	/**
 	 * Moves new module from connector to another connector with decreasing number of connector.
-	 * @param jmeSimulation, the physical simulation.
 	 */
-	public static void jButtonOnPreviousConnectorActionPerformed(JMESimulation jmeSimulation) {
-		connectorNr--;
-		if (chosenMRname.equals(SupportedModularRobots.ATRON) && connectorNr<0){
-			connectorNr =ATRON_CONNECTORS.length-1;//reset
-		}else if (chosenMRname.equals(SupportedModularRobots.MTRAN) && connectorNr<0){connectorNr=MTRAN_CONNECTORS.length-1;}
-		else if (chosenMRname.equals(SupportedModularRobots.ODIN) && connectorNr<0){connectorNr=11;
-		}else if (chosenMRname.equals(SupportedModularRobots.CKBOTSTANDARD) && connectorNr<0){connectorNr= CKBOT_CONNECTORS.length-1;}
-
-		int amountModules = jmeSimulation.getModules().size();
-		String lastModuleType = jmeSimulation.getModules().get(amountModules-1).getProperty(BuilderHelper.getModuleTypeKey());
-		if (lastModuleType.equalsIgnoreCase("OdinBall")){
-			//do nothing
-		}else{
-			//constructionTools.moveToNextConnector(connectorNr);
+	public static void jButtonOnPreviousConnectorActionPerformed() {
+		ConstructRobotTabController.connectorNr--;
+		
+		if (ConstructRobotTabController.connectorNr<0){
+		switch(chosenMRname){
+		case ATRON:			
+				ConstructRobotTabController.connectorNr =ATRON_CONNECTORS.length-1;//reset			
+			break;
+		case MTRAN:			
+				ConstructRobotTabController.connectorNr=MTRAN_CONNECTORS.length-1;//reset			
+			break;
+		case ODIN:
+			    ConstructRobotTabController.connectorNr =11;//reset	
+			break;
+		case CKBOTSTANDARD:
+			ConstructRobotTabController.connectorNr= CKBOT_CONNECTORS.length-1;//reset	
+			break;
 		}
-		//TODO CHECK IF THE MODULE IS ALREADY ON CONNECTOR AND THEN DO NOT PLACE NEW ONE THERE
+		}
+		  try {
+				if (builderControl.getModuleCountingFromEndType(1).equalsIgnoreCase("OdinBall")){
+					//do nothing
+				}else{
+					builderControl.moveToNextConnector(chosenMRname, ConstructRobotTabController.connectorNr);
+				}
+			} catch (RemoteException e) {
+				throw  new Error ("Failed to move module on previous connector, due to remote exception.");
+			}
 	}
 
 	/**
@@ -443,46 +454,17 @@ public class ConstructRobotTabController extends TabsController implements Const
 
 	}
 
-	public static SupportedModularRobots getChosenMRname() {
-		return chosenMRname;
-	}
-
-	/**
-	 * Sets builder controller of remote simulation for this controller.
-	 * @param builderControl,builder controller of remote simulation.
-	 */
-	public static void setBuilderController(BuilderControlInter builderControl) {
-		ConstructRobotTabController.builderControl = builderControl;
-	}
-
 	/**
 	 *  Returns remote version of builder controller object.
 	 * @return builderControl,remote version of builder controller object.
 	 */
-	public static BuilderControlInter getBuilderControl() {
+/*	public static BuilderControlInter getBuilderControl() {
 		return builderControl;
-	}
-
-	/**
-	 * Return standard rotation of the  module chosen by user in GUI.
-	 * @return chosenStandardRotation,standard rotation of the  module chosen by user in GUI.
-	 */
-	public static String getChosenStandardRotation() {
-		return chosenStandardRotation;
-	}
-
-	/**
-	 * Returns connector number chosen by user in GUI.
-	 * @return, connector number chosen by user in GUI.
-	 */
-	public static int getChosenConnectorNr() {
-		return chosenConnectorNr;
-	}
+	}*/
 
 	/**
 	 * Initializes the tool for varying the properties of modules selected in simulation environment.
 	 * Is specific to each modular robot.
-	 * @param jmeSimulation
 	 */
 	public static void jButtonVariateModulePropertiesActionPerformed() {	
 		try {
@@ -493,6 +475,9 @@ public class ConstructRobotTabController extends TabsController implements Const
 	}
 
 
+	/**
+	 * 
+	 */
 	public static void jButtonStandardRotationsLoopActionPerformed() {
 		try {
 			builderControl.setProxyPicker(BuilderSupportingProxyPickers.ROTATE_MODULE_STANDARD_IN_LOOP);

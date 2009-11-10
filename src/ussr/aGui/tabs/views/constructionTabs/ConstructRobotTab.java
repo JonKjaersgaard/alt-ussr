@@ -442,7 +442,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonOnPreviousConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setSelectionDeselection(jButtonOnPreviousConnector);				
-				ConstructRobotTabController.jButtonOnPreviousConnectorActionPerformed(jmeSimulation);
+				ConstructRobotTabController.jButtonOnPreviousConnectorActionPerformed();
 			}
 		});		
 
