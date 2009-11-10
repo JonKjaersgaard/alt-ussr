@@ -58,7 +58,6 @@ public class GUISimulationAdapter {
                     // Start using an xml file for a robot and a controller (both loaded by simulator process)
                     simulation.start("samples/atron/car.xml", ussr.samples.atron.simulations.ATRONCarController1.class);
                 	//simulation.start("samples/atron/car.xml");
-                
                 } catch (RemoteException e) {
                     // Normal or abnormal termination, inspection of remote exception currently needed to determine...
                     System.err.println("Simulation stopped");
@@ -79,7 +78,7 @@ public class GUISimulationAdapter {
                 throw new Error("Unexpected interruption");
             }
         }
-        
+        //ArrayList<Object> 
         
         MainFrameController.setRemotePhysicsSimulation(sim);
         MainFrameController.setRendererControl(sim.getRendererControl());

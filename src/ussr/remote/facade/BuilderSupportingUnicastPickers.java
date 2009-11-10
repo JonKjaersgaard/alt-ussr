@@ -6,6 +6,9 @@ import ussr.builder.constructionTools.ConstructionToolSpecification;
 import ussr.builder.enums.ConstructionTools;
 import ussr.builder.genericTools.ColorConnectors;
 import ussr.builder.genericTools.RemoveModule;
+import ussr.builder.labelingTools.LabeledEntities;
+import ussr.builder.labelingTools.LabelingToolSpecification;
+import ussr.builder.labelingTools.LabelingTools;
 import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.physics.jme.pickers.Picker;
 
@@ -64,12 +67,26 @@ public enum BuilderSupportingUnicastPickers{
 	 */
 	ON_ALL_CONNECTORS(new ConstructionToolSpecification(ConstructionTools.ON_ALL_CONNECTORS)),
 	
+	/**
+	 * This tool is used to implement robot specific properties. Like for instance for Odin switching  module type by selecting module in simulation environment.
+	 */
 	VARIATE_MODULE_PROPERTIES (new ConstructionToolSpecification(ConstructionTools.VARIATE_PROPERTIES)),
 	
-    ROTATE_MODULE_STANDARD_IN_LOOP(new ConstructionToolSpecification(ConstructionTools.STANDARD_ROTATIONS_IN_LOOP));
+	/**
+	 * With each selection of module in simulation environment rotates it with available (standard) rotation.
+	 */
+	ROTATE_MODULE_STANDARD_IN_LOOP(new ConstructionToolSpecification(ConstructionTools.STANDARD_ROTATIONS_IN_LOOP)),
+	
+	//TODO
+	READ_MODULE_LABELS (new LabelingToolSpecification(LabeledEntities.MODULE, LabelingTools.READ_LABELS)),
+	
+	//TODO
+	READ_CONNECTOR_LABELS (new LabelingToolSpecification(LabeledEntities.CONNECTOR,LabelingTools.READ_LABELS)),
+	
+	//TODO
+	READ_SENSOR_LABELS(new LabelingToolSpecification(LabeledEntities.SENSOR,LabelingTools.READ_LABELS)),
+	
 	;
-	
-	
 	
 	/**
 	 * The picker supported by builder.
