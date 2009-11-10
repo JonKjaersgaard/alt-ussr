@@ -1,9 +1,12 @@
 package ussr.remote;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.rmi.RemoteException;
 
 import ussr.remote.facade.ActiveSimulation;
@@ -19,6 +22,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
     public static final int SERVER_PORT = 54323;
     private Class<?> mainClass;
     private SimulationLauncherServer server;
+    private PrintWriter writer;
 
     public AbstractSimulationBatch(Class<?> mainClass) {
         this.mainClass = mainClass;
@@ -27,6 +31,11 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             server = new SimulationLauncherServer(AbstractSimulationBatch.SERVER_PORT);
         } catch (RemoteException e) {
             throw new Error("Unable to create server: "+e);
+        }
+        try {
+            writer = new PrintWriter(new BufferedWriter(new FileWriter("sim_out_err.txt")));
+        } catch(IOException exn) {
+            throw new Error("Unable to create log file for stdout and stderr");
         }
     }
     
@@ -72,7 +81,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
      * @param prefix the prefix to use
      * @param stream the stream to dump
      */
-    private static void dumpStream(final String prefix, final InputStream stream) {
+    private void dumpStream(final String prefix, final InputStream stream) {
         new Thread() {
             public void run() {
                 BufferedReader input = new BufferedReader(new InputStreamReader(stream));
@@ -81,7 +90,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
                     try {
                         line = input.readLine();
                         if(line==null) break;
-                        System.out.println(prefix+": "+line);
+                        writer.println(prefix+": "+line);
                     } catch (IOException e) {
                         throw new Error("Unable to dump stream: "+e); 
                     }
