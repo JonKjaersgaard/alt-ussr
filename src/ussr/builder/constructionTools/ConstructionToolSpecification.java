@@ -325,29 +325,6 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 		return false;		
 	} 
 
-	//	TODO SHOULD BE IN SOME WAY MOVED TO CommonOperations class How should I do that?
-	// Strange exception appears now;
-	public void moveToNextConnector(int connectorNr){		
-		int amountModules = jmeSimulation.getModules().size();
-
-		Module lastAddedModule = jmeSimulation.getModules().get(amountModules-1);//Last module		
-		Module selectedModule = this.selectedModule;//Last module
-
-		if (this.modularRobotName.equals(SupportedModularRobots.ATRON)){			
-			ConstructionTemplate con =  new ATRONConstructionTemplate(jmeSimulation);
-			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule, true);
-		}else if (this.modularRobotName.equals(SupportedModularRobots.MTRAN)){			
-			ConstructionTemplate con =  new MTRANConstructionTemplate(jmeSimulation);
-			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
-		}else if (this.modularRobotName.equals(SupportedModularRobots.ODIN)){
-			ConstructionTemplate con =  new OdinConstructionTemplate(jmeSimulation);
-			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
-		}else if (this.modularRobotName.equals(SupportedModularRobots.CKBOTSTANDARD)){
-			ConstructionTemplate con =  new CKBotConstructionTemplate(jmeSimulation);
-			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
-		}
-	}
-
 	/**
 	 * Returns the name of modular robot specified in selection tool
 	 * @return modularRobotName, the name of modular robot
