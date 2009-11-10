@@ -7,6 +7,7 @@ import ussr.builder.constructionTools.ConstructionToolSpecification;
 import ussr.builder.enums.SupportedModularRobots;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
+import ussr.physics.jme.pickers.Picker;
 
 public interface BuilderControlInter extends Remote {
 	
@@ -23,7 +24,7 @@ public interface BuilderControlInter extends Remote {
 	 */
 	public void removeAllModules() throws RemoteException;
 	
-	public void setSerialazablePicker(ConstructionToolSpecification constructionToolSpecification)throws RemoteException;
+	public void setSerialazablePicker(Picker picker)throws RemoteException;
 	
 	/**
 	 * Checks if module is occupying specific position in simulation environment. 

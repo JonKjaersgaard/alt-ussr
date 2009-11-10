@@ -28,6 +28,7 @@ import ussr.description.setup.ModulePosition;
 
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
+import ussr.physics.jme.pickers.Picker;
 import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.ckbot.CKBotSimulation;
 import ussr.samples.mtran.MTRANSimulation;
@@ -53,8 +54,8 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 	}
 
 
-	public void setSerialazablePicker(ConstructionToolSpecification constructionToolSpecification)throws RemoteException {
-		jmeSimulation.setPicker(constructionToolSpecification);
+	public void setSerialazablePicker(Picker picker)throws RemoteException {
+		jmeSimulation.setPicker(picker);
 	}
 
 

@@ -65,13 +65,13 @@ public enum BuilderSupportingProxyPickers{
 	ROTATE_MODULE_STANDARD_IN_LOOP(new ConstructionToolSpecification(ConstructionTools.STANDARD_ROTATIONS_IN_LOOP)),
 	
 	//TODO
-	READ_MODULE_LABELS (new LabelingToolSpecification(LabeledEntities.MODULE, LabelingTools.READ_LABELS)),
+	//READ_MODULE_LABELS (new LabelingToolSpecification(LabeledEntities.MODULE, LabelingTools.READ_LABELS)),
 	
 	//TODO
-	READ_CONNECTOR_LABELS (new LabelingToolSpecification(LabeledEntities.CONNECTOR,LabelingTools.READ_LABELS)),
+	//READ_CONNECTOR_LABELS (new LabelingToolSpecification(LabeledEntities.CONNECTOR,LabelingTools.READ_LABELS)),
 	
 	//TODO
-	READ_SENSOR_LABELS(new LabelingToolSpecification(LabeledEntities.SENSOR,LabelingTools.READ_LABELS)),
+	//READ_SENSOR_LABELS(new LabelingToolSpecification(LabeledEntities.SENSOR,LabelingTools.READ_LABELS)),
 	
 	;
 	
