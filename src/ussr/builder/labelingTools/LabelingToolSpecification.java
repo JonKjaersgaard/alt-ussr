@@ -1,6 +1,10 @@
 package ussr.builder.labelingTools;
 
+import java.io.Serializable;
+
 import com.jme.scene.Geometry;
+
+import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.builder.QuickPrototyping;
 import ussr.builder.enums.LabelingTools;
 import ussr.builder.helpers.BuilderHelper;
@@ -16,7 +20,7 @@ import ussr.physics.jme.pickers.CustomizedPicker;
  * modules or connectors on the modules).
  * @author Konstantinas
  */
-public class LabelingToolSpecification extends CustomizedPicker {
+public class LabelingToolSpecification extends CustomizedPicker implements Serializable {
 
 	/**
 	 * The physical simulation.
@@ -42,11 +46,16 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 * The interface to labeling.
 	 */
 	private LabelingTemplate labeling;
+	
+	private LabeledEntities entityToLabel;
 
+	
 	/**
 	 * The object of GUI.
 	 */
 	/*private QuickPrototyping quickPrototyping;*/
+
+
 
 	/**
 	 * The connector number on the module, selected with the left side of mouse in simulation environment. 
@@ -64,7 +73,9 @@ public class LabelingToolSpecification extends CustomizedPicker {
 		/*this.jmeSimulation = jmeSimulation;	*/	
 		this.labels = labels;		
 		this.toolName = toolName;
-		this.labeling = new LabelingFactory().getLabeling(entityToLabel);		
+		this.entityToLabel = entityToLabel;
+		
+				
 	}
 
 	/**
@@ -77,7 +88,9 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	public LabelingToolSpecification(/*JMESimulation simulation,*/LabeledEntities entityToLabel, LabelingTools toolName/*, QuickPrototyping quickPrototyping*/){
 		/*this.jmeSimulation = simulation;*/				
 		this.toolName = toolName;
-		this.labeling = new LabelingFactory().getLabeling(entityToLabel);
+		this.entityToLabel = entityToLabel;
+		
+		//this.labeling = new LabelingFactory().getLabeling(entityToLabel);
 		/*this.quickPrototyping = quickPrototyping;*/
 
 	}
@@ -90,6 +103,7 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	protected void pickModuleComponent(JMEModuleComponent component) {
 		this.jmeSimulation = (JMESimulation)component.getModel().getSimulation();
 		this.selectedModule = component.getModel();
+		this.labeling = new LabelingFactory().getLabeling(entityToLabel);
 		callSpecificTool();
 	}
 
@@ -99,7 +113,8 @@ public class LabelingToolSpecification extends CustomizedPicker {
 	 */
 	protected void pickTarget(Geometry target,JMESimulation jmeSimulation) {		
 		this.jmeSimulation = jmeSimulation;
-		this.selectedConnectorNr = BuilderHelper.extractConnectorNr(jmeSimulation, target);		
+		this.selectedConnectorNr = BuilderHelper.extractConnectorNr(jmeSimulation, target);
+		this.labeling = new LabelingFactory().getLabeling(entityToLabel);
 	}
 
 	/**

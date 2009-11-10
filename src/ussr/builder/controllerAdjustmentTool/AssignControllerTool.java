@@ -1,5 +1,6 @@
 package ussr.builder.controllerAdjustmentTool;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import com.jme.scene.Geometry;
@@ -15,7 +16,7 @@ import ussr.physics.jme.pickers.CustomizedPicker;
  * This method is going to be invoked. 
  * @author Konstantinas
  */
-public class AssignControllerTool extends CustomizedPicker  {
+public class AssignControllerTool extends CustomizedPicker implements Serializable{
 
 	
 	/**

@@ -1,5 +1,6 @@
 package ussr.builder.labelingTools;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
