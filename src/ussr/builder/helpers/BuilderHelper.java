@@ -175,7 +175,7 @@ public class BuilderHelper {
 			removeModuleComponent(selectedModule.getComponent(compon));  
 		}
 		/*Remove the module from the internal list of the modules in USSR*/
-		//selectedModule.getSimulation().getModules().remove(selectedModule);
+		selectedModule.getSimulation().getModules().remove(selectedModule);
 	}
 
 
@@ -242,89 +242,7 @@ public class BuilderHelper {
 		return 1000 /*means connector extraction failed*/;
 	}
 
-	//FIXME FIND BETTER PLACE FOR ME + REFACTOR
-	public static void connectAllModules(JMESimulation simulation){
-		if (simulation.worldDescription.getModulePositions().size()>=0){
-
-			int amountModules = simulation.getModules().size();
-			ArrayList<ModulePosition> atronModulePositions = new ArrayList<ModulePosition>();
-			ArrayList<ModulePosition> mtranModulePositions = new ArrayList<ModulePosition>(); 
-			ArrayList<ModulePosition> odinAllModulePositions = new ArrayList<ModulePosition>();
-			ArrayList<ModulePosition> odinBallModulePositions = new ArrayList<ModulePosition>(); 
-			ArrayList<ModulePosition> odinOtherModulesPositions = new ArrayList<ModulePosition>();
-			ArrayList<ModulePosition> ckbotModulePositions = new ArrayList<ModulePosition>();
-
-			List<Module> atronModules = new ArrayList<Module>();
-			List<Module> mtranModules = new ArrayList<Module>();
-			List<Module> odinAllModules = new ArrayList<Module>();
-			List<Module> ckbotModules = new ArrayList<Module>();
-
-
-			for (int i=0; i<amountModules; i++){
-				Module currentModule = simulation.getModules().get(i);
-				//currentModule.reset();
-				String moduleName = currentModule.getProperty(BuilderHelper.getModuleNameKey());
-				String moduleType = currentModule.getProperty(BuilderHelper.getModuleTypeKey());
-
-				RotationDescription moduleRotation = currentModule.getPhysics().get(0).getRotation(); 
-				if (moduleType.contains("ATRON")){
-					VectorDescription modulePosition = currentModule.getPhysics().get(0).getPosition();
-					atronModulePositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
-					atronModules.add(currentModule);             			
-				}else if (moduleType.contains("MTRAN")){ 
-					VectorDescription modulePosition = currentModule.getPhysics().get(1).getPosition();
-					mtranModulePositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));             			
-					mtranModules.add(currentModule);             			
-				}else if (moduleType.contains("Odin")){
-					VectorDescription modulePosition = currentModule.getPhysics().get(0).getPosition();
-					odinAllModulePositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
-					odinAllModules.add(currentModule);
-
-					if (moduleType.contains("OdinBall")){
-						odinBallModulePositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
-					}else {
-						odinOtherModulesPositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
-					}
-				}else if (moduleType.contains("CKBotStandard")){
-					System.out.println("INN");
-					VectorDescription modulePosition = currentModule.getPhysics().get(0).getPosition();
-					ckbotModulePositions.add(new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation));
-					ckbotModules.add(currentModule);    
-				}
-				else {
-					// do nothing
-				}
-			}         	
-
-			ATRONBuilder atronbuilder = new ATRONBuilder();             
-			ArrayList<ModuleConnection> atronModuleConnection = atronbuilder.allConnections(atronModulePositions);        	 
-			simulation.setModules(atronModules);
-			simulation.worldDescription.setModulePositions(atronModulePositions);
-			simulation.worldDescription.setModuleConnections(atronModuleConnection);                          
-			simulation.placeModules();
-
-			ArrayList<ModuleConnection> mtranModuleConnection =MTRANSimulation.allConnections(mtranModulePositions); 
-			simulation.setModules(mtranModules);
-			simulation.worldDescription.setModulePositions(mtranModulePositions);
-			simulation.worldDescription.setModuleConnections(mtranModuleConnection); 
-			simulation.placeModules();              
-
-			OdinBuilder odinBuilder = new OdinBuilder();
-			odinBuilder.setBallPos(odinBallModulePositions);
-			odinBuilder.setModulePos(odinOtherModulesPositions);             
-			ArrayList<ModuleConnection> odinModuleConnection = odinBuilder.allConnections();        	 
-			simulation.setModules(odinAllModules);
-			simulation.worldDescription.setModulePositions(odinAllModulePositions);
-			simulation.worldDescription.setModuleConnections(odinModuleConnection);                          
-			simulation.placeModules();			
-
-			ArrayList<ModuleConnection> ckbotModuleConnection = CKBotSimulation.allConnections(ckbotModulePositions);        	 
-			simulation.setModules(ckbotModules);
-			simulation.worldDescription.setModulePositions(ckbotModulePositions);
-			simulation.worldDescription.setModuleConnections(ckbotModuleConnection);                          
-			simulation.placeModules();
-		}       
-	}
+	
 
 	//FIXME FIND BETTER PLACE FOR ME
 	public static Class[] getClasses(String pckgname)

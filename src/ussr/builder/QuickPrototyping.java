@@ -15,6 +15,7 @@ import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
 import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
 import ussr.builder.enums.ConstructionTools;
+import ussr.builder.enums.LabelingTools;
 import ussr.builder.enums.SupportedModularRobots;
 import ussr.builder.experimental.MtranExperiment;
 import ussr.builder.experimental.NewSelection;
@@ -26,7 +27,6 @@ import ussr.builder.gui.GuiHelper;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.labelingTools.LabeledEntities;
 import ussr.builder.labelingTools.LabelingToolSpecification;
-import ussr.builder.labelingTools.LabelingTools;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
@@ -1591,7 +1591,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 		}else{
 			timesPressed++;
 			if (timesPressed ==1){ // First time is pressed connect all the modules in the morphology
-				BuilderHelper.connectAllModules(JME_simulation);		
+				//BuilderHelper.connectAllModules(JME_simulation);		
 			}
 			guiHelper.passTo(AssistantjTextField, "Simulation running");// informing user
 			pauseRunButton.setIcon(new javax.swing.ImageIcon(directoryForIcons + playIcon));

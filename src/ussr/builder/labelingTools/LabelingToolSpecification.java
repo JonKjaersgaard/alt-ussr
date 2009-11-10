@@ -2,6 +2,7 @@ package ussr.builder.labelingTools;
 
 import com.jme.scene.Geometry;
 import ussr.builder.QuickPrototyping;
+import ussr.builder.enums.LabelingTools;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;

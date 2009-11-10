@@ -1,4 +1,4 @@
-package ussr.builder.labelingTools;
+package ussr.builder.enums;
 
 /**
  * Tools supported by builder(Quick Prototyping of Simulation Scenarios) and 
