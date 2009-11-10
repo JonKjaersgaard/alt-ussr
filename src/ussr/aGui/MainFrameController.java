@@ -73,6 +73,9 @@ public class MainFrameController {
 	public static void jButtonRunRealTimeActionPerformed() {
 		ConstructRobotTab.setTabEnabled(false);
 		
+		timesSelected++;
+		connectModules();
+		
 		try {
 			if (remotePhysicsSimulation.isPaused()){// Start simulation in real time, if simulation is in paused state
 				remotePhysicsSimulation.setPause(false);				
@@ -84,8 +87,7 @@ public class MainFrameController {
 			throw new Error ("Pausing or running remote simulation in real time failed, due to remote exception");
 		}
 
-		timesSelected++;
-		//connectModules(jmeSimulation);
+	
 	}
 
 
@@ -94,7 +96,10 @@ public class MainFrameController {
 	 */
 	public static void jButtonRunFastActionPerformed() {
 
-		ConstructRobotTab.setTabEnabled(false);		
+		ConstructRobotTab.setTabEnabled(false);	
+		
+		timesSelected++;
+		connectModules();
 
 		try {
 			if (remotePhysicsSimulation.isPaused()){// Start simulation  fast, if simulation is in paused state
@@ -107,14 +112,18 @@ public class MainFrameController {
 			throw new Error ("Pausing or running remote simulation in fast mode failed, due to remote exception");
 		}
 
-		timesSelected++;
-		//connectModules(jmeSimulation);
+		
 	}
 
-	private static void connectModules(JMESimulation jmeSimulation){
+	private static void connectModules(){
 
-		if (timesSelected==1){			
-			BuilderHelper.connectAllModules(jmeSimulation);	
+		if (timesSelected==1){
+			try {
+				builderControl.connectAllModules();
+			} catch (RemoteException e) {
+				throw new Error ("Failed to connect modules, due to remote exception");
+			}
+			
 			/*Disable GUI components responsible for opening file choosers, because it is possible to load
 			 *simulation from XML file only in static state of simulation.*/ 
 			MainFrames.setSaveOpenEnabled(false);
@@ -127,7 +136,7 @@ public class MainFrameController {
 	public static void jButtonRunStepByStepActionPerformed() {       	
 		ConstructRobotTab.setTabEnabled(false);		
 		timesSelected++;
-		//connectModules(jmeSimulation);
+		connectModules();
 
 		try {
 			remotePhysicsSimulation.setPause(true);
@@ -390,6 +399,4 @@ public class MainFrameController {
 	public static void setRendererControl(SimulationRendererControlInter rendererControl) {
 		MainFrameController.rendererControl = rendererControl;
 	}
-
-
 }

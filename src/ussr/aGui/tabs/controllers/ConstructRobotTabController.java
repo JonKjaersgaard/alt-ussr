@@ -176,7 +176,7 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 				throw new Error("Failed to initialize picker called " + BuilderSupportingUnicastPickers.MOVE_MODULE.toString() + " , due to remote exception");
 			}
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
-			//TODO Support robot deletion, moving and coloring of connectors.
+			//TODO Support moving robot 
 		}
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[3]);//Informing user
@@ -194,7 +194,7 @@ public class ConstructRobotTabController implements ConstructRobotTabInter{
 				throw new Error("Failed to initate picker called "+ BuilderSupportingUnicastPickers.COLOR_CONNECTORS.toString() + " , due to remote exception");
 			}	
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
-			//TODO  Support robot deletion, moving and coloring of connectors.
+			//TODO  Support robot coloring of connectors.
 		}
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[6]);//Informing user
