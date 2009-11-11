@@ -3,7 +3,7 @@
 <ROBOT>
 <TYPE>ATRON</TYPE>
 <NUMBER_OF_MODULES>3</NUMBER_OF_MODULES>
-<MORPHOLOGY_LOCATION>samples/simulations/atron/morphologies/simpleVehicleMorphology.xml</MORPHOLOGY_LOCATION>
+<MORPHOLOGY_LOCATION>samples/robots/atron/simpleVehicleMorphology.xml</MORPHOLOGY_LOCATION>
 <CONTROLLER_LOCATION>ussr.samples.atron.simulations.ATRONSimpleVehicleController1</CONTROLLER_LOCATION>
 </ROBOT>
 <WORLD_DESCRIPTION>
