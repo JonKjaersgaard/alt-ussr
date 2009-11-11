@@ -28,7 +28,7 @@ import ussr.remote.facade.RemoteActiveSimulation;
 
 public class SimulationLauncherServer extends UnicastRemoteObject implements SimulationServer {
 
-    private static final String WIN_CLIENT_COMMAND = "launchers/ussr-client.bat"; 
+    private static final String WIN_CLIENT_COMMAND = "launchers\\ussr-client.bat"; 
     private static final String NIX_CLIENT_COMMAND = "launchers/ussr-client";
 
     /**
@@ -78,6 +78,7 @@ public class SimulationLauncherServer extends UnicastRemoteObject implements Sim
         int id = hookupIDcounter++;
         String commandString = command+insertInformation(port,id)+arguments;
         Process process;
+        System.out.println("Running command "+commandString);
         process = Runtime.getRuntime().exec(commandString);
         RMIProcessActiveSimulation simulation = new RMIProcessActiveSimulation(id,process);
         activeSimulations.add(simulation);
