@@ -14,10 +14,10 @@ import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter.EntitiesForLabelingText;
 import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
+import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
-import ussr.builder.labelingTools.LabeledEntities;
 import ussr.builder.labelingTools.LabelingTemplate;
 import ussr.builder.labelingTools.LabelingToolSpecification;
 import ussr.model.Module;
@@ -135,11 +135,11 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 	 * @param jList1,the component in GUI. 
 	 */
 	public static void jList1MouseReleased(javax.swing.JList jList1) {
-		/*try {
-			builderControl.setSerialazablePicker(new AssignControllerTool(packageName+"."+jList1.getSelectedValue()));
+		try {
+			builderControl.setAdjustControllerPicker(packageName+"."+jList1.getSelectedValue());			
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called "+ "AssignControllerTool" + ", due to remote exception");
-		}	*/	
+		}		
 	}
 
 	
@@ -205,11 +205,11 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 		switch(currentText){
 
 		case Module:
-			/*try {
-				builderControl.setProxyPicker(BuilderSupportingProxyPickers.READ_MODULE_LABELS);					
+			try {
+				builderControl.setLabelingToolSpecPicker(LabeledEntities.MODULE, LabelingTools.READ_LABELS);					
 				} catch (RemoteException e) {
 					throw new Error("Failed to initate picker called "+ LabelingTools.READ_LABELS.toString() + " of "+LabeledEntities.MODULE.toString()  + ", due to remote exception");
-				}*/
+				}
 			break;
 		case Connector:
 			/*try {

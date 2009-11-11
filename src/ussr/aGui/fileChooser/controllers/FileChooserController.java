@@ -2,7 +2,7 @@ package ussr.aGui.fileChooser.controllers;
 
 
 
-import ussr.builder.saveLoadXML.UssrXmlFileTypes;
+import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.physics.jme.JMESimulation;
 
 public abstract class FileChooserController implements FileChooserControllerInter  {

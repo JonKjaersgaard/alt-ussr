@@ -78,16 +78,16 @@ public class MainFrameSeparate extends MainFrames {
 				mainFrame.setVisible(true);	
 			}
 		});
-		runDefaultRemoteSimulation();
+		//runDefaultRemoteSimulation();
 	}
 
-	private static void runDefaultRemoteSimulation(){
+/*	private static void runDefaultRemoteSimulation(){
 		new Thread() {
 			public void run() {
 				GUISimulationAdapter.main(null);
 			}
 		}.start();
-	}
+	}*/
 
 	@Override
 	public void activate() {
