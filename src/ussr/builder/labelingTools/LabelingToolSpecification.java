@@ -6,7 +6,7 @@ import com.jme.scene.Geometry;
 
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.builder.QuickPrototyping;
-import ussr.builder.enums.LabelingTools;
+import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
