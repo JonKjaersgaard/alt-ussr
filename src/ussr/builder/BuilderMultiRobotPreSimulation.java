@@ -92,7 +92,7 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		//xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, loadableSimulationFile);
         
 		/*Get values from XML file*/
-		simulationWorldDescription = xmlLoaderSimulation.getSimulationDescriptionValues();
+		simulationWorldDescription = xmlLoaderSimulation.getSimulationWorldDescriptionValues();
         simulationPhysicsParameters = xmlLoaderSimulation.getSimulationPhysicsValues();
 		
         /*Converter for converting values from String into corresponding type used in USSR*/

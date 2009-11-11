@@ -189,7 +189,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 	}
 	
 	
-	public Map<XMLTagsUsed, String> getSimulationDescriptionValues() {
+	public Map<XMLTagsUsed, String> getSimulationWorldDescriptionValues() {
 		return simulationDescriptionValues;
 	}
 	
@@ -214,7 +214,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 				Element firstElmnt = (Element) firstNode;				
 		
 				simulationDescriptionValues.put(XMLTagsUsed.MORPHOLOGY_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION));
-									
+				simulationDescriptionValues.put(XMLTagsUsed.CONTROLLER_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.CONTROLLER_LOCATION));					
 			}
 		}		
 		

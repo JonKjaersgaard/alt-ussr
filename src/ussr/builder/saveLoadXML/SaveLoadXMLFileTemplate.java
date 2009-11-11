@@ -44,6 +44,6 @@ public interface SaveLoadXMLFileTemplate {
 	 */
 	//public abstract void printOutXML(TransformerHandler transformerHandler);
 	
-	public Map<XMLTagsUsed, String> getSimulationDescriptionValues();
+	public Map<XMLTagsUsed, String> getSimulationWorldDescriptionValues();
 	public Map<XMLTagsUsed, String> getSimulationPhysicsValues();
 }

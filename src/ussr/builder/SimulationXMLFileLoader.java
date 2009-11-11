@@ -59,27 +59,27 @@ public class SimulationXMLFileLoader extends GenericSimulation {
         /* Create the simulation*/
         simulation = PhysicsFactory.createSimulator();
         
-        List<String> controllerNames = new ArrayList<String>();
         
-        controllerNames.add("ussr.samples.atron.simulations.ATRONCarController1");
-        ControllerFactory controllerFactory = new ControllerFactoryImpl(controllerNames);
-      //  WorldDescription world = this.createGenericSimulationWorld(controllerFactory);
-        
-        /* Assign controller to selection of robots */
-        DefaultSimulationSetup.addDefaultRobotSelection(simulation,controllerFactory);
-        
-    	/*Load Simulation Configuration file*/
+        /*Load Simulation Configuration file*/
 		SaveLoadXMLFileTemplate xmlLoaderSimulation = new PreSimulationXMLSerializer(new PhysicsParameters());
 		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, simulationXMLfileName);
         
 		/*Get values from XML file*/
-		simulationWorldDescription = xmlLoaderSimulation.getSimulationDescriptionValues();
+		simulationWorldDescription = xmlLoaderSimulation.getSimulationWorldDescriptionValues();
         simulationPhysicsParameters = xmlLoaderSimulation.getSimulationPhysicsValues();
         
         /*Converter for converting values from String into corresponding type used in USSR*/
         descriptionConverter =  new SimulationDescriptionConverter(simulationWorldDescription,simulationPhysicsParameters); 
         
-        WorldDescription world = createWorld();
+        String controllerLocation = simulationWorldDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
+        
+        List<String> controllerNames = new ArrayList<String>();        
+        controllerNames.add(controllerLocation);
+        ControllerFactory controllerFactory = new ControllerFactoryImpl(controllerNames);
+        
+        
+        WorldDescription world = this.createGenericSimulationWorld(controllerFactory);
+        world = createWorld();
         
         /* Load the robot */
         String robotMorphologyLocation = simulationWorldDescription.get(XMLTagsUsed.MORPHOLOGY_LOCATION);
