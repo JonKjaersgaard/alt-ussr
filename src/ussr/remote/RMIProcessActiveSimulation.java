@@ -104,7 +104,11 @@ public class RMIProcessActiveSimulation implements ActiveSimulation {
         remoteSimulation.start(mainClass);
     }
     
-   /* public void start(String xmlFileName, GUICallHandler handler) throws RemoteException {
+   /*  public void start(String xmlFileName) throws RemoteException {
+    	 verifyRemote();
+    }*/
+    
+   /* public void start(String xmlFileName, GuiCallHandler handler) throws RemoteException {
     	
     }*/
 
@@ -157,7 +161,7 @@ public class RMIProcessActiveSimulation implements ActiveSimulation {
 	@Override
 	public void start(String simulationXMLFile) throws RemoteException {
 		 verifyRemote();
-	        remoteSimulation.start(simulationXMLFile);
+	     remoteSimulation.start(simulationXMLFile);
 		
 	}
 

@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import ussr.aGui.MainFrameController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.TabsControllers;
+import ussr.builder.BuilderMultiRobotPreSimulation;
 
 import ussr.remote.facade.ActiveSimulation;
 
@@ -30,7 +31,8 @@ public class GUISimulationAdapter {
      */
     public static void main(String[] args) {
         try {
-            consoleSimulationExample();
+        	String simulationXMLFile = "samples/simulations/atron/simpleVehicleSim.xml";
+            consoleSimulationExample(simulationXMLFile);
         } catch(IOException exn) {
             System.err.println("Program terminated with "+exn.getClass().getName()+" exception");
             // Explicitly stop program (RMI server still running)
@@ -38,7 +40,7 @@ public class GUISimulationAdapter {
         }
     }
     
-    public static void consoleSimulationExample() throws IOException { 
+    public static void consoleSimulationExample(final String simulationXMLFile) throws IOException { 
         // Start a simulation server (one that manages a number of running simulation processes)
         SimulationLauncherServer server = new SimulationLauncherServer(GUISimulationAdapter.SERVER_PORT);
         // Start a simulation server process
@@ -57,8 +59,10 @@ public class GUISimulationAdapter {
             public void run() {
                 try {
                     // Start using an xml file for a robot and a controller (both loaded by simulator process)
-                    simulation.start("samples/atron/car.xml", ussr.samples.atron.simulations.ATRONCarController1.class);
+                   //simulation.start("samples/atron/car.xml", ussr.samples.atron.simulations.ATRONCarController1.class);
+                	//simulation.start(ATRONSimulation1.class);
                 	//simulation.start("samples/atron/car.xml");
+                	simulation.start(simulationXMLFile);
                 } catch (RemoteException e) {
                     // Normal or abnormal termination, inspection of remote exception currently needed to determine...
                     System.err.println("Simulation stopped");
@@ -85,7 +89,7 @@ public class GUISimulationAdapter {
         MainFrameController.setRendererControl(sim.getRendererControl());
         MainFrameController.setBuilderControl(sim.getBuilderControl());
         TabsControllers.setBuilderController(sim.getBuilderControl());
-    /*    while(true) {
+/*        while(true) {
             System.out.println(" remote simulation isPaused()="+sim.isPaused());
             try {
                 Thread.sleep(1000);

@@ -6,10 +6,10 @@ import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 
 import ussr.builder.constructionTools.ConstructionToolSpecification;
 import ussr.builder.enumerations.ConstructionTools;
+import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.genericTools.ColorModuleConnectors;
 import ussr.builder.genericTools.RemoveModule;
-import ussr.builder.labelingTools.LabeledEntities;
 import ussr.builder.labelingTools.LabelingToolSpecification;
 import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.physics.jme.pickers.Picker;

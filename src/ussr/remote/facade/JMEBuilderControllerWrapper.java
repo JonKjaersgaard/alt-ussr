@@ -18,11 +18,15 @@ import ussr.builder.constructionTools.MTRANConstructionTemplate;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.builder.constructionTools.OdinConstructionTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
+import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
 import ussr.builder.enumerations.ConstructionTools;
+import ussr.builder.enumerations.LabeledEntities;
+import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.genericTools.ColorModuleConnectors;
 import ussr.builder.genericTools.RemoveModule;
 import ussr.builder.helpers.BuilderHelper;
+import ussr.builder.labelingTools.LabelingToolSpecification;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModuleConnection;
@@ -309,15 +313,35 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 		jmeSimulation.setPicker(new ConstructionToolSpecification(toolName));		
 	}
 	
+	/**
+	 * Sets a number of pickers called by specific name with String parameter. For now it is: ConstructionTools.STANDARD_ROTATIONS
+	 * @param toolName, the name of the picker.
+	 * @param parameter, String parameter.
+	 */
 	public void setConstructionToolSpecPicker(ConstructionTools toolName, String parameter)throws RemoteException{
 		jmeSimulation.setPicker(new ConstructionToolSpecification(toolName,parameter));
 	}
 	
+	/**
+	 * Sets a number of pickers called by specific name with Integer parameter. For now it is: ConstructionTools.ON_CHOSEN_CONNECTOR_NR
+	 * @param toolName, the name of the picker.
+	 * @param parameter, Integer parameter.
+	 */
 	public void setConstructionToolSpecPicker(ConstructionTools toolName, int parameter)throws RemoteException{
 		jmeSimulation.setPicker(new ConstructionToolSpecification(toolName,parameter));
 	}
 	
+	/**
+	 * Sets a picker for adjusting controller of module(s). 
+	 * @param controllerLocationDirectory, the directory where the controller can be located.
+	 */
+	public void setAdjustControllerPicker(String controllerLocationDirectory)throws RemoteException{
+		jmeSimulation.setPicker(new AssignControllerTool(controllerLocationDirectory));
+	}
 	
+	public void setLabelingToolSpecPicker(LabeledEntities entityName,LabelingTools toolName)throws RemoteException{
+		jmeSimulation.setPicker(new LabelingToolSpecification(entityName,toolName));
+	}
 	
 	
 }
