@@ -13,7 +13,7 @@ import com.jme.scene.Geometry;
  *  Currently supports up to 12 connectors colored with different colors.
  *  @author Konstantinas
  */
-public class ColorConnectors extends CustomizedPicker {
+public class ColorModuleConnectors extends CustomizedPicker {
 
 	/**
 	 * Array containing 12 colours for 12 connectors. 
