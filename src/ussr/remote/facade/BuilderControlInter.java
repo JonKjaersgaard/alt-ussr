@@ -4,27 +4,54 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import ussr.builder.constructionTools.ConstructionToolSpecification;
-import ussr.builder.enums.SupportedModularRobots;
+import ussr.builder.enumerations.ConstructionTools;
+import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.description.geometry.VectorDescription;
 import ussr.model.Module;
 import ussr.physics.jme.pickers.Picker;
 
 public interface BuilderControlInter extends Remote {
 	
-	
+	/**
+	 * Sets picker for moving modular robots (left side of the mouse selection) during running state of simulation.
+	 */
+	public void setDefaultPicker()throws RemoteException;
 	
 	/**
-	 * Attaches specific picker(left side of the mouse selection) to remote simulation.
-	 * @param builderSupportingPicker, the picker supported by builder.	
+	 * Sets picker for removing(deleting) module, selected in simulation environment.
 	 */
-	public void setProxyPicker(BuilderSupportingProxyPickers builderSupportingPicker)throws RemoteException;
+	public void setRemoveModulePicker()throws RemoteException;
+	
+	/**
+	 * Sets picker for moving module(left side of the mouse selection), selected in simulation environment(in paused state).
+	 */
+	public void setMoveModulePicker()throws RemoteException;
+	
+	/**
+	 * Sets picker for coloring module connectors with color coding, selected in simulation environment.
+	 */
+	public void setColorModuleConnectorsPicker()throws RemoteException;
+	
+	/**
+	 * Sets a number of pickers called by specific name. For example: ConstructionTools.AVAILABLE_ROTATIONS,
+		ConstructionTools.MODULE_OPPOSITE_ROTATION, ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR and so on.
+	 * @param toolName, the name of the picker.
+	 */
+	public void setConstructionToolSpecPicker(ConstructionTools toolName)throws RemoteException;
+	
+	
+	public void setConstructionToolSpecPicker(ConstructionTools toolName, String parameter)throws RemoteException;
+	
+	public void setConstructionToolSpecPicker(ConstructionTools toolName, int parameter)throws RemoteException;
+	
+
+	
+	
 	
 	/**
 	 * Removes all modules (robot(s)) from simulation environment.
 	 */
 	public void removeAllModules() throws RemoteException;
-	
-	public void setSerialazablePicker(Picker picker)throws RemoteException;
 	
 	/**
 	 * Checks if module is occupying specific position in simulation environment. 

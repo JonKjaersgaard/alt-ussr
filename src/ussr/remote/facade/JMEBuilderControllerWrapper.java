@@ -18,7 +18,10 @@ import ussr.builder.constructionTools.MTRANConstructionTemplate;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.builder.constructionTools.OdinConstructionTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
-import ussr.builder.enums.SupportedModularRobots;
+import ussr.builder.enumerations.ConstructionTools;
+import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.builder.genericTools.ColorModuleConnectors;
+import ussr.builder.genericTools.RemoveModule;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
@@ -28,6 +31,7 @@ import ussr.description.setup.ModulePosition;
 
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
+import ussr.physics.jme.pickers.PhysicsPicker;
 import ussr.physics.jme.pickers.Picker;
 import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.ckbot.CKBotSimulation;
@@ -45,19 +49,7 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 
 	public JMEBuilderControllerWrapper(JMESimulation jmeSimulation) throws RemoteException{
 		this.jmeSimulation = jmeSimulation;
-
 	}
-
-	@Override
-	public void setProxyPicker(BuilderSupportingProxyPickers builderSupportingPicker)throws RemoteException {
-		jmeSimulation.setPicker(builderSupportingPicker.getPicker());
-	}
-
-
-	public void setSerialazablePicker(Picker picker)throws RemoteException {
-		jmeSimulation.setPicker(picker);
-	}
-
 
 	/**
 	 * Removes all modules (robot(s)) from simulation environment.
@@ -278,4 +270,54 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 		default: throw new Error("Modular robot with name " +supportedMRmoduleType+ " is not supported yet");
 		}
 	}
+
+	
+	/**
+	 * Sets picker for moving modular robots (left side of the mouse selection) during running state of simulation.
+	 */
+	public void setDefaultPicker() throws RemoteException  {
+		jmeSimulation.setPicker(new PhysicsPicker());
+	}
+
+	/**
+	 * Sets picker for removing(deleting) module, selected in simulation environment(paused state, also works in dynamic state however is it not recommended ).
+	 */
+	public void setRemoveModulePicker() throws RemoteException {
+		jmeSimulation.setPicker(new RemoveModule());		
+	}
+	
+	/**
+	 * Sets picker for moving module(left side of the mouse selection), selected in simulation environment(in paused state).
+	 */
+	public void setMoveModulePicker()throws RemoteException{
+		jmeSimulation.setPicker(new PhysicsPicker(true,true));
+	}
+
+	/**
+	 * Sets picker for coloring module connectors with color coding, selected in simulation environment.
+	 */
+	public void setColorModuleConnectorsPicker()throws RemoteException{
+		jmeSimulation.setPicker(new ColorModuleConnectors());
+	}
+	
+	/**
+	 * Sets a number of pickers called by specific name. For example: ConstructionTools.AVAILABLE_ROTATIONS,
+		ConstructionTools.MODULE_OPPOSITE_ROTATION, ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR and so on.
+	 * @param toolName, the name of the picker.
+	 */
+	public void setConstructionToolSpecPicker(ConstructionTools toolName) {
+		jmeSimulation.setPicker(new ConstructionToolSpecification(toolName));		
+	}
+	
+	public void setConstructionToolSpecPicker(ConstructionTools toolName, String parameter)throws RemoteException{
+		jmeSimulation.setPicker(new ConstructionToolSpecification(toolName,parameter));
+	}
+	
+	public void setConstructionToolSpecPicker(ConstructionTools toolName, int parameter)throws RemoteException{
+		jmeSimulation.setPicker(new ConstructionToolSpecification(toolName,parameter));
+	}
+	
+	
+	
+	
 }

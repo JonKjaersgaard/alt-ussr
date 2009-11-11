@@ -103,6 +103,10 @@ public class RMIProcessActiveSimulation implements ActiveSimulation {
         verifyRemote();
         remoteSimulation.start(mainClass);
     }
+    
+   /* public void start(String xmlFileName, GUICallHandler handler) throws RemoteException {
+    	
+    }*/
 
     public boolean isReady() {
         return remoteSimulation!=null;
