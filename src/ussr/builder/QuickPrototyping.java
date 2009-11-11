@@ -14,12 +14,12 @@ import ussr.builder.constructionTools.ConstructionToolSpecification;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
 import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
-import ussr.builder.enums.ConstructionTools;
-import ussr.builder.enums.LabelingTools;
-import ussr.builder.enums.SupportedModularRobots;
+import ussr.builder.enumerations.ConstructionTools;
+import ussr.builder.enumerations.LabelingTools;
+import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.experimental.MtranExperiment;
 import ussr.builder.experimental.NewSelection;
-import ussr.builder.genericTools.ColorConnectors;
+import ussr.builder.genericTools.ColorModuleConnectors;
 import ussr.builder.genericTools.RemoveModule;
 import ussr.builder.genericTools.RotateModulesComponents;
 import ussr.builder.gui.FileChooser;
@@ -1382,7 +1382,7 @@ public class QuickPrototyping extends javax.swing.JFrame  {
 	private void colourConnectorsjButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                        
 		//System.out.println("Module generic toolbar-->Color connectors"); //for debugging         
 		guiHelper.passTo(AssistantjTextField, "Select module to color its connectors with color coding. See JavaDoc of QuickPrototyping.java for color coding.");// informing user
-		JME_simulation.setPicker(new ColorConnectors());
+		JME_simulation.setPicker(new ColorModuleConnectors());
 	}                                         
 
 	/**

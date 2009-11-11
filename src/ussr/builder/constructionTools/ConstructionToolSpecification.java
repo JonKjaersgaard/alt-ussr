@@ -8,10 +8,8 @@ import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
-import ussr.aGui.tabs.controllers.ConstructRobotTabController;
-import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
-import ussr.builder.enums.ConstructionTools;
-import ussr.builder.enums.SupportedModularRobots;
+import ussr.builder.enumerations.ConstructionTools;
+import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.SelectedModuleTypeMapHelper;
 
@@ -24,11 +22,6 @@ import ussr.builder.helpers.SelectedModuleTypeMapHelper;
  */
 public class ConstructionToolSpecification extends CustomizedPicker implements Serializable{
 
-	/** 
-	 * The physical simulation.
-	 */
-	private JMESimulation jmeSimulation;
-
 	/**
 	 * The interface to construction of modular robot morphology. This one is on the level of modules of modular robot(creation and movement of them).  
 	 */
@@ -38,11 +31,6 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	 * The interface to construction of modular robot morphology. This one is on the level of components of modules.  
 	 */
 	private ConstructionTemplate construction;
-
-	/**
-	 * Supported modular robots: ATRON, MTRAN and Odin.
-	 */
-	private static final String ATRON = "ATRON",MTRAN = "MTRAN", ODIN = "Odin",CKBotStandard = "CKBotStandard";
 
 	/**
 	 * The module selected in simulation environment with the left side of the mouse.
@@ -107,7 +95,6 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	 * @param jmeSimulation, the physical simulation.
 	 */
 	private void instantiateTool(JMESimulation jmeSimulation){
-		this.jmeSimulation = jmeSimulation;
 
 		/*Keeps and updates the data about the module type currently selected in simulation environment*/
 		SelectedModuleTypeMapHelper[] selectModulesTypes = {
@@ -172,7 +159,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	@Override
 	protected void pickTarget(Geometry target,JMESimulation jmeSimulation) {
 
-		if (toolName.equals(ConstructionTools.ON_SELECTED_CONNECTOR)){			
+		if (toolName.equals(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR)){			
 			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(jmeSimulation, target);
 			System.out.println("Connector:"+selectedConnectorNr );
 			//Adapt Construct Robot tab
@@ -230,7 +217,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	 */
 	private boolean isAtron(){
 		String typeofModule = this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());		
-		if (typeofModule.contains(ATRON)){
+		if (typeofModule.contains(SupportedModularRobots.ATRON.toString())){
 			return true;
 		}
 		return false;
@@ -242,7 +229,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	 */
 	private boolean isMtran(){		
 		String typeofModule = this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
-		if (typeofModule.contains(MTRAN)){
+		if (typeofModule.contains(SupportedModularRobots.MTRAN.toString())){
 			return true;
 		}
 		return false;
@@ -254,7 +241,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	 */
 	private boolean isOdin(){
 		String typeofModule = this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());		
-		if (typeofModule.contains(ODIN)){			
+		if (typeofModule.contains(SupportedModularRobots.ODIN.toString())){			
 			return true;
 		}
 		return false;
@@ -266,7 +253,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	 */
 	private boolean isCKBotStandard(){
 		String typeofModule = this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());		
-		if (typeofModule.contains(CKBotStandard)){			
+		if (typeofModule.toUpperCase().contains(SupportedModularRobots.CKBOTSTANDARD.toString())){			
 			return true;
 		}
 		return false;
@@ -278,29 +265,29 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	private void callTool(){
 		
 		switch(toolName){
-		case ON_SELECTED_CONNECTOR:
+		case NEW_MODULE_ON_SELECTED_CONNECTOR:
 			if (connectorsMatch()){
 				this.selectOperations.addNewModuleOnConnector(this);
 			}else{//Just skip(connector number will be 1000) 		
 			}
 			break;
 		case ON_CHOSEN_CONNECTOR_NR://break through
-		case LOOP:
+		case MOVE_MODULE_FROM_CON_TO_CON:
 			this.selectOperations.addNewModuleOnConnector(this);
 			break;
-		case ON_ALL_CONNECTORS:
+		case NEW_MODULES_ON_ALL_CONNECTORS:
 			this.selectOperations.addModulesOnAllConnectors(this);
 			break;
 		case STANDARD_ROTATIONS:
 			this.selectOperations.rotateModuleStandardRotation(this, this.standardRotationName);
 			break;
-		case OPPOSITE_ROTATION:
+		case MODULE_OPPOSITE_ROTATION:
 			this.selectOperations.rotateModuleWithOppositeRotation(this);
 			break;
-		case VARIATE_PROPERTIES:
+		case VARIATE_MODULE_OR_PROPERTIES:
 			this.selectOperations.variateModule(this);
 			break;
-		case STANDARD_ROTATIONS_IN_LOOP:
+		case AVAILABLE_ROTATIONS:
 			this.selectOperations.rotateModuleStandardRotationInLoop(this);
 			break;
 		default: throw new Error ("The tool with name: " + toolName +", is not supported yet.");
