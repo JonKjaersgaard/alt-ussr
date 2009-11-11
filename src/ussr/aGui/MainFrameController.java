@@ -82,12 +82,10 @@ public class MainFrameController {
 			}
 			remotePhysicsSimulation.setRealtime(true);
 
-			builderControl.setProxyPicker(BuilderSupportingProxyPickers.DEFAULT);			
+			builderControl.setDefaultPicker();			
 		} catch (RemoteException e) {
 			throw new Error ("Pausing or running remote simulation in real time failed, due to remote exception");
 		}
-
-	
 	}
 
 
@@ -107,12 +105,10 @@ public class MainFrameController {
 			}
 			remotePhysicsSimulation.setRealtime(false);
 
-			builderControl.setProxyPicker(BuilderSupportingProxyPickers.DEFAULT);	
+			builderControl.setDefaultPicker();
 		} catch (RemoteException e) {
 			throw new Error ("Pausing or running remote simulation in fast mode failed, due to remote exception");
 		}
-
-		
 	}
 
 	private static void connectModules(){

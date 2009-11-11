@@ -14,8 +14,8 @@ import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter.EntitiesForLabelingText;
 import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
-import ussr.builder.enums.LabelingTools;
-import ussr.builder.enums.SupportedModularRobots;
+import ussr.builder.enumerations.LabelingTools;
+import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.labelingTools.LabeledEntities;
 import ussr.builder.labelingTools.LabelingTemplate;
@@ -48,8 +48,7 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 	 */
 	private static final String packageName = "ussr.builder.controllerAdjustmentTool";
 	
-	public AssignBehaviorsTabController(){}
-
+	
 	/**
 	 * Loads all existing names of controllers from package ussr.builder.controllerAdjustmentTool and filters
 	 * out the ones for selected button (modular robot name).
@@ -136,11 +135,11 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 	 * @param jList1,the component in GUI. 
 	 */
 	public static void jList1MouseReleased(javax.swing.JList jList1) {
-		try {
+		/*try {
 			builderControl.setSerialazablePicker(new AssignControllerTool(packageName+"."+jList1.getSelectedValue()));
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called "+ "AssignControllerTool" + ", due to remote exception");
-		}		
+		}	*/	
 	}
 
 	
@@ -161,7 +160,6 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 
 	/**
 	 * @param button, radio button selected in GUI.
-	 * @param jmeSimulation, the physical simulation.
 	 */
 	public static void radioButtonGroupEntitiesActionPerformed(AbstractButton button) {
 
@@ -179,7 +177,7 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 	}
 	
 	/**
-	 * Updates table header according to the entity name selected in button group.
+	 * Updates table header according to the entity name selected in the button group.
 	 */
 	private static void updateTableHeader(){
 		String columnHeaderName ="";
@@ -207,28 +205,25 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 		switch(currentText){
 
 		case Module:
-			try {
-				builderControl.setSerialazablePicker(new LabelingToolSpecification(LabeledEntities.MODULE, LabelingTools.READ_LABELS));
-					//MainFrameController.getBuilderControl().setProxyPicker(BuilderSupportingProxyPickers.READ_MODULE_LABELS);
+			/*try {
+				builderControl.setProxyPicker(BuilderSupportingProxyPickers.READ_MODULE_LABELS);					
 				} catch (RemoteException e) {
-					throw new Error("Failed to initate picker called "+ LabelingTools.READ_LABELS.toString() + ", due to remote exception");
-				}
+					throw new Error("Failed to initate picker called "+ LabelingTools.READ_LABELS.toString() + " of "+LabeledEntities.MODULE.toString()  + ", due to remote exception");
+				}*/
 			break;
 		case Connector:
 			/*try {
-					MainFrameController.getBuilderControl().setProxyPicker(BuilderSupportingProxyPickers.READ_CONNECTOR_LABELS);
+				builderControl.setProxyPicker(BuilderSupportingProxyPickers.READ_CONNECTOR_LABELS);
 				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new Error("Failed to initate picker called "+ LabelingTools.READ_LABELS.toString() + " of "+LabeledEntities.CONNECTOR.toString()  + ", due to remote exception");
 				}*/
 			break;
 		case Sensors:
 		case Proximity:// go to proximity because only this type of sensor is supported right now.
 			/*try {
-					MainFrameController.getBuilderControl().setProxyPicker(BuilderSupportingProxyPickers.READ_SENSOR_LABELS);
+				builderControl.setProxyPicker(BuilderSupportingProxyPickers.READ_SENSOR_LABELS);
 				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new Error("Failed to initate picker called "+ LabelingTools.READ_LABELS.toString() + " of "+LabeledEntities.SENSOR.toString()  + ", due to remote exception");
 				}*/
 			break;
 		default: throw new Error("Labeling is not supported for " + chosenRadioEntityText ); 
@@ -237,11 +232,6 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 		AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[3]);
 	}
 	
-	
-
-
-
-
 	/**
 	 * Displays labels in the table of GUI. Is called from  LabelEntityTemplate.java.
 	 * @param labels, the string of labels to display in GUI.
@@ -260,6 +250,7 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 				AssignBehaviorsTab.getJTable2().setValueAt(sepratedLabels[index], index, 0);
 			}
 		}else if (labels.length() ==0){
+			//TODO
 			AssignBehaviorsTab.getJTable2().setValueAt("none label", 0, 0);
 		}else{
 			throw new Error ("Addition of new rows is not supported yet");

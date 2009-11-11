@@ -6,11 +6,11 @@ import javax.swing.AbstractButton;
 import javax.swing.JComboBox;
 
 import ussr.builder.constructionTools.ConstructionToolSpecification;
-import ussr.builder.enums.ATRONStandardRotations;
-import ussr.builder.enums.CKBotStandardRotations;
-import ussr.builder.enums.ConstructionTools;
-import ussr.builder.enums.MTRANStandardRotations;
-import ussr.builder.enums.SupportedModularRobots;
+import ussr.builder.enumerations.ATRONStandardRotations;
+import ussr.builder.enumerations.CKBotStandardRotations;
+import ussr.builder.enumerations.ConstructionTools;
+import ussr.builder.enumerations.MTRANStandardRotations;
+import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;
 
@@ -26,11 +26,6 @@ import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTabInter;
  * @author Konstantinas
  */
 public class ConstructRobotTabController extends TabsControllers implements ConstructRobotTabInter{
-
-	/**
-	 * Remote version of builder controller object.
-	 */
-	//private static BuilderControlInter builderControl;
 
 	/**
 	 *  The name of modular robot chosen in GUI.
@@ -57,10 +52,10 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		}
 
 		try {
-			/* Set default construction tool to be "On selected  connector"*/
-			builderControl.setProxyPicker(BuilderSupportingProxyPickers.ON_SELECTED_CONNECTOR);
+			 /*Set default construction tool to be "On selected  connector"*/
+			builderControl.setConstructionToolSpecPicker(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR);
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called " + BuilderSupportingProxyPickers.ON_SELECTED_CONNECTOR + " , due to remote exception");
+			throw new Error("Failed to initate picker called " + ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR + " , due to remote exception");
 		}
 
 		/*Informing user*/
@@ -143,9 +138,9 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	public static void jButtonDeleteActionPerformed() {
 		if (chosenItem.equalsIgnoreCase("Module")){
 			try {
-				builderControl.setProxyPicker(BuilderSupportingProxyPickers.REMOVE_MODULE);
+				builderControl.setRemoveModulePicker();
 			} catch (RemoteException e) {
-				throw new Error("Failed to initialize picker called " + BuilderSupportingProxyPickers.REMOVE_MODULE.toString() + " , due to remote exception");
+				throw new Error("Failed to initialize picker called Remove Module, due to remote exception");
 			}
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
 			//TODO SUPPORT ROBOT DELETION
@@ -160,9 +155,9 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	public static void jButtonMoveActionPerformed() {	
 		if (chosenItem.equalsIgnoreCase("Module")){
 			try {
-				builderControl.setProxyPicker(BuilderSupportingProxyPickers.MOVE_MODULE);
+				builderControl.setMoveModulePicker();
 			} catch (RemoteException e) {
-				throw new Error("Failed to initialize picker called " + BuilderSupportingProxyPickers.MOVE_MODULE.toString() + " , due to remote exception");
+				throw new Error("Failed to initialize picker called Move Module, due to remote exception");
 			}
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
 			//TODO Support moving robot 
@@ -177,9 +172,9 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	public static void jButtonColorConnectorsActionPerformed() {	
 		if (chosenItem.equalsIgnoreCase("Module")){
 			try {
-				builderControl.setProxyPicker(BuilderSupportingProxyPickers.COLOR_CONNECTORS);
+				builderControl.setColorModuleConnectorsPicker();
 			} catch (RemoteException e) {
-				throw new Error("Failed to initate picker called "+ BuilderSupportingProxyPickers.COLOR_CONNECTORS.toString() + " , due to remote exception");
+				throw new Error("Failed to initate picker called Color Module Connectors, due to remote exception");
 			}	
 		}else if (chosenItem.equalsIgnoreCase("Robot")){
 			//TODO  Support robot coloring of connectors.
@@ -210,9 +205,9 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 */	
 	public static void jButtonOppositeRotationActionPerformed() {
 		try {
-			builderControl.setProxyPicker(BuilderSupportingProxyPickers.ROTATE_MODULE_OPPOSITE);
+			builderControl.setConstructionToolSpecPicker(ConstructionTools.MODULE_OPPOSITE_ROTATION);
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called "+ BuilderSupportingProxyPickers.ROTATE_MODULE_OPPOSITE.toString()+ " , due to remote exception");
+			throw new Error("Failed to initate picker called "+ ConstructionTools.MODULE_OPPOSITE_ROTATION.toString()+ " , due to remote exception");
 		}
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[2]);
@@ -229,11 +224,10 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 */	
 	public static void jComboBoxStandardRotationsActionPerformed(JComboBox comboBoxStandardRotations) {
 		chosenStandardRotation = comboBoxStandardRotations.getSelectedItem().toString(); 
-		ConstructionToolSpecification standardRotations = new ConstructionToolSpecification(ConstructionTools.STANDARD_ROTATIONS,chosenStandardRotation);
 		try {
-			builderControl.setSerialazablePicker(standardRotations);
+			builderControl.setConstructionToolSpecPicker(ConstructionTools.STANDARD_ROTATIONS, chosenStandardRotation);
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called "+ ConstructionTools.STANDARD_ROTATIONS+ ", due to remote exception");
+			throw new Error("Failed to initate picker called "+ ConstructionTools.STANDARD_ROTATIONS.toString()+ ", due to remote exception");
 		}
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[2]);
@@ -248,9 +242,9 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
 
 		try {
-			builderControl.setProxyPicker(BuilderSupportingProxyPickers.ON_SELECTED_CONNECTOR);
+			builderControl.setConstructionToolSpecPicker(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR);
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called " + BuilderSupportingProxyPickers.ON_SELECTED_CONNECTOR.toString() + " , due to remote exception");
+			throw new Error("Failed to initate picker called " + ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR.toString() + " , due to remote exception");
 		}		
 
 		/*Informing user*/
@@ -265,25 +259,19 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	/**
 	 * Initializes the tool for adding new modules on connector chosen in combo box(GUI) by user. Later user selects the module to apply it to.
 	 * @param comboBoxNrConnectorsConstructionTool, JComboBox containing the number of connectors.
-	 * @param jmeSimulation, the physical simulation.
 	 */
-	/**
-	 * @param comboBoxNrConnectorsConstructionTool
-	 * @param jmeSimulation
-	 */
-	public static void jComboBoxNrConnectorsConstructionToolActionPerformed(JComboBox comboBoxNrConnectorsConstructionTool,JMESimulation jmeSimulation) {
+	public static void jComboBoxNrConnectorsConstructionToolActionPerformed(JComboBox comboBoxNrConnectorsConstructionTool) {
 		/*Disable tab components no longer available*/
 		ConstructRobotTab.setEnabledRotationToolBar(false);
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
 
 		chosenConnectorNr = Integer.parseInt(comboBoxNrConnectorsConstructionTool.getSelectedItem().toString());
-		ConstructionToolSpecification onChosenConnectorNr = new ConstructionToolSpecification(ConstructionTools.ON_CHOSEN_CONNECTOR_NR,chosenConnectorNr);
 		try {
-			builderControl.setSerialazablePicker(onChosenConnectorNr);
+			builderControl.setConstructionToolSpecPicker(ConstructionTools.ON_CHOSEN_CONNECTOR_NR,chosenConnectorNr);
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called "+ ConstructionTools.ON_CHOSEN_CONNECTOR_NR.toString()+ ", due to remote exception");
 		}
-		//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_CHOSEN_CONNECTOR,chosenConnectorNr));
+
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[8]); 
 	}
@@ -297,9 +285,9 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
 
 		try {
-			builderControl.setProxyPicker(BuilderSupportingProxyPickers.ON_ALL_CONNECTORS);
+			builderControl.setConstructionToolSpecPicker(ConstructionTools.NEW_MODULES_ON_ALL_CONNECTORS);
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called "+ BuilderSupportingProxyPickers.ON_ALL_CONNECTORS.toString() + ", due to remote exception");
+			throw new Error("Failed to initate picker called "+ ConstructionTools.NEW_MODULES_ON_ALL_CONNECTORS.toString() + ", due to remote exception");
 		}
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[9]);
@@ -318,12 +306,10 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		/*Disable tab components no longer available*/
 		ConstructRobotTab.setEnabledRotationToolBar(false);
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
-
-		ConstructionToolSpecification loopModuleAround = new ConstructionToolSpecification(ConstructionTools.LOOP,0);
 		try {
-			builderControl.setSerialazablePicker(loopModuleAround);
+			builderControl.setConstructionToolSpecPicker(ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON,connectorNr);
 		} catch (RemoteException e) {
-			throw  new Error ("Failed to initialize picker named as "+ ConstructionTools.LOOP.toString()+ " ,due to remote exception");
+			throw  new Error ("Failed to initialize picker named as "+ ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON.toString()+ " ,due to remote exception");
 		}
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[10]); 
@@ -463,27 +449,26 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	}*/
 
 	/**
-	 * Initializes the tool for varying the properties of modules selected in simulation environment.
+	 * Initializes the tool for varying the properties of modules (or types of modules in Odin case) selected in simulation environment.
 	 * Is specific to each modular robot.
 	 */
 	public static void jButtonVariateModulePropertiesActionPerformed() {	
 		try {
-			builderControl.setProxyPicker(BuilderSupportingProxyPickers.VARIATE_MODULE_PROPERTIES);
+			builderControl.setConstructionToolSpecPicker(ConstructionTools.VARIATE_MODULE_OR_PROPERTIES);
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called "+ BuilderSupportingProxyPickers.VARIATE_MODULE_PROPERTIES.toString() + ", due to remote exception");
+			throw new Error("Failed to initate picker called "+ ConstructionTools.VARIATE_MODULE_OR_PROPERTIES.toString() + ", due to remote exception");
 		}				
 	}
 
 
 	/**
-	 * 
+	 * Initializes the tool for changing module rotation with each selection of module in simulation environment.
 	 */
 	public static void jButtonStandardRotationsLoopActionPerformed() {
 		try {
-			builderControl.setProxyPicker(BuilderSupportingProxyPickers.ROTATE_MODULE_STANDARD_IN_LOOP);
+			builderControl.setConstructionToolSpecPicker(ConstructionTools.AVAILABLE_ROTATIONS);
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called ROTATE_MODULE_STANDARD_IN_LOOP, due to remote exception");
+			throw new Error("Failed to initate picker called"+ConstructionTools.AVAILABLE_ROTATIONS.toString() +", due to remote exception");
 		}
-
 	}
 }

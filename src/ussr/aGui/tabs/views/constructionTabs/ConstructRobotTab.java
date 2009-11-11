@@ -413,7 +413,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jComboBoxNrConnectorsConstructionTool.setEnabled(false);
 		jComboBoxNrConnectorsConstructionTool.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructRobotTabController.jComboBoxNrConnectorsConstructionToolActionPerformed(jComboBoxNrConnectorsConstructionTool,jmeSimulation);
+				ConstructRobotTabController.jComboBoxNrConnectorsConstructionToolActionPerformed(jComboBoxNrConnectorsConstructionTool);
 			}
 		});		
 
