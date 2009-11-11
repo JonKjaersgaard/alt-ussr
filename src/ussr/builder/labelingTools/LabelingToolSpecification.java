@@ -6,6 +6,7 @@ import com.jme.scene.Geometry;
 
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.builder.QuickPrototyping;
+import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.model.Module;
@@ -123,15 +124,14 @@ public class LabelingToolSpecification extends CustomizedPicker implements Seria
 	private void callSpecificTool(){
 		if(this.labeling instanceof  LabelConnectorTemplate && selectedConnectorNr == 1000){// the case when user selects the module  or something else instead of connector.
 			//Do nothing
-			//JOptionPane.showMessageDialog(null, "You do not selected connector. Chosen tool is for connectors. Please zoom in and select the connector instead. ","Error", JOptionPane.ERROR_MESSAGE);				
 		}else{
 			switch(toolName){
 			case LABEL_CONNECTOR:		
-				this.labeling.labelSpecificEntity(this);			
-				break;
+				//this.labeling.labelSpecificEntity(this);			
+				//break;
 			case LABEL_MODULE:
-				this.labeling.labelSpecificEntity(this);
-				break;
+				//this.labeling.labelSpecificEntity(this);
+				//break;
 			case LABEL_SENSOR:
 				this.labeling.labelSpecificEntity(this);
 				break;

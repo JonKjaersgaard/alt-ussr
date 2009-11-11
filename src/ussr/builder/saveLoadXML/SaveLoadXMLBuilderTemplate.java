@@ -20,6 +20,8 @@ import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.BuilderMultiRobotPreSimulation;
 import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.builder.enumerations.UssrXmlFileTypes;
+import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
@@ -46,58 +48,58 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 		}else if (ussrXmlFileType.equals(UssrXmlFileTypes.SIMULATION)){
 			
-			printFirstStartTag(transformerHandler, TagsUsed.SIMULATION);		
+			printFirstStartTag(transformerHandler, XMLTagsUsed.SIMULATION);		
 
 			try {
 
-				transformerHandler.startElement("","",TagsUsed.ROBOT.toString(),EMPTY_ATT);
+				transformerHandler.startElement("","",XMLTagsUsed.ROBOT.toString(),EMPTY_ATT);
 
-				printSubTagsWithValue(transformerHandler, TagsUsed.TYPE, getType(getModuleByIndex(0)));				
-				printSubTagsWithValue(transformerHandler, TagsUsed.NUMBER_OF_MODULES, (""+getWorldDescription().getNumberOfModules()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.MORPHOLOGY_LOCATION, BuilderMultiRobotPreSimulation.robotMorphologyFile.toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.CONTROLLER_LOCATION, getControllerLocation(getModuleByIndex(0)));
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.TYPE, getType(getModuleByIndex(0)));				
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.NUMBER_OF_MODULES, (""+getWorldDescription().getNumberOfModules()).toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.MORPHOLOGY_LOCATION, BuilderMultiRobotPreSimulation.robotMorphologyFile.toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.CONTROLLER_LOCATION, getControllerLocation(getModuleByIndex(0)));
 				
-				transformerHandler.endElement("","",TagsUsed.ROBOT.toString());
+				transformerHandler.endElement("","",XMLTagsUsed.ROBOT.toString());
 
 
-				transformerHandler.startElement("","",TagsUsed.WORLD_DESCRIPTION.toString(),EMPTY_ATT);
+				transformerHandler.startElement("","",XMLTagsUsed.WORLD_DESCRIPTION.toString(),EMPTY_ATT);
 
-				printSubTagsWithValue(transformerHandler, TagsUsed.PLANE_SIZE, (""+getWorldDescription().getPlaneSize()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.PLANE_TEXTURE, getWorldDescription().getPlaneTexture().getFileName().toString().toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.PLANE_SIZE, (""+getWorldDescription().getPlaneSize()).toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.PLANE_TEXTURE, getWorldDescription().getPlaneTexture().getFileName().toString().toCharArray());
 				//System.out.printn("ss"+ (TextureDescription)getWorldDescription().getPlaneTexture().);
 				
-			    printSubTagsWithValue(transformerHandler, TagsUsed.CAMERA_POSITION, getWorldDescription().getCameraPosition().toString().toCharArray());			    
-			    printSubTagsWithValue(transformerHandler, TagsUsed.THE_WORLD_IS_FLAT, (""+getWorldDescription().theWorldIsFlat()).toCharArray());
-			    printSubTagsWithValue(transformerHandler, TagsUsed.HAS_BACKGROUND_SCENERY, (""+getWorldDescription().hasBackgroundScenery()).toCharArray());
-			    printSubTagsWithValue(transformerHandler, TagsUsed.HAS_HEAVY_OBSTACLES, (""+getWorldDescription().hasBackgroundScenery()).toCharArray());
-			    printSubTagsWithValue(transformerHandler, TagsUsed.IS_FRAME_GRABBING_ACTIVE, (""+getWorldDescription().getIsFrameGrabbingActive()).toCharArray());
-			    printSubTagsWithValue(transformerHandler, TagsUsed.BIG_OBSTACLES, extractPositionsObstacles(getWorldDescription().getBigObstacles()));
+			    printSubTagsWithValue(transformerHandler, XMLTagsUsed.CAMERA_POSITION, getWorldDescription().getCameraPosition().toString().toCharArray());			    
+			    printSubTagsWithValue(transformerHandler, XMLTagsUsed.THE_WORLD_IS_FLAT, (""+getWorldDescription().theWorldIsFlat()).toCharArray());
+			    printSubTagsWithValue(transformerHandler, XMLTagsUsed.HAS_BACKGROUND_SCENERY, (""+getWorldDescription().hasBackgroundScenery()).toCharArray());
+			    printSubTagsWithValue(transformerHandler, XMLTagsUsed.HAS_HEAVY_OBSTACLES, (""+getWorldDescription().hasBackgroundScenery()).toCharArray());
+			    printSubTagsWithValue(transformerHandler, XMLTagsUsed.IS_FRAME_GRABBING_ACTIVE, (""+getWorldDescription().getIsFrameGrabbingActive()).toCharArray());
+			    printSubTagsWithValue(transformerHandler, XMLTagsUsed.BIG_OBSTACLES, extractPositionsObstacles(getWorldDescription().getBigObstacles()));
 
 			   
-				transformerHandler.endElement("","",TagsUsed.WORLD_DESCRIPTION.toString());
+				transformerHandler.endElement("","",XMLTagsUsed.WORLD_DESCRIPTION.toString());
 
 
-				transformerHandler.startElement("","",TagsUsed.PHYSICS_PARAMETERS.toString(),EMPTY_ATT);
+				transformerHandler.startElement("","",XMLTagsUsed.PHYSICS_PARAMETERS.toString(),EMPTY_ATT);
 
-				printSubTagsWithValue(transformerHandler, TagsUsed.WORLD_DAMPING_LINEAR_VELOCITY, (""+PhysicsParameters.get().getWorldDampingLinearVelocity()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY, (""+PhysicsParameters.get().getWorldDampingAngularVelocity()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.PHYSICS_SIMULATION_STEP_SIZE, (""+PhysicsParameters.get().getPhysicsSimulationStepSize()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.REALISTIC_COLLISION, (""+PhysicsParameters.get().getRealisticCollision()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.GRAVITY, (""+PhysicsParameters.get().getGravity()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.PLANE_MATERIAL, PhysicsParameters.get().getPlaneMaterial().toString().toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS, (""+PhysicsParameters.get().getMaintainRotationalJointPositions()).toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY, (""+PhysicsParameters.get().getWorldDampingLinearVelocity()).toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY, (""+PhysicsParameters.get().getWorldDampingAngularVelocity()).toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE, (""+PhysicsParameters.get().getPhysicsSimulationStepSize()).toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.REALISTIC_COLLISION, (""+PhysicsParameters.get().getRealisticCollision()).toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.GRAVITY, (""+PhysicsParameters.get().getGravity()).toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.PLANE_MATERIAL, PhysicsParameters.get().getPlaneMaterial().toString().toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS, (""+PhysicsParameters.get().getMaintainRotationalJointPositions()).toCharArray());
 			//	printSubTagsWithValue(transformerHandler, TagsUsed.HAS_MECHANICAL_CONNECTOR_SPRINGINESS, (""+PhysicsParameters.get().hasMechanicalConnectorSpringiness()).toCharArray());
 			//	printSubTagsWithValue(transformerHandler, TagsUsed.MECHANICAL_CONNECTOR_CONSTANT, (""+PhysicsParameters.get().getMechanicalConnectorConstant()).toCharArray());
 			//  printSubTagsWithValue(transformerHandler, TagsUsed.MECHANICAL_CONNECTOR_DAMPING, (""+PhysicsParameters.get().getMechanicalConnectorDamping()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.CONSTRAINT_FORCE_MIX, (""+PhysicsParameters.get().getConstraintForceMix()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.ERROR_REDUCTION_PARAMETER, (""+PhysicsParameters.get().getErrorReductionParameter()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.RESOLUTION_FACTOR, (""+PhysicsParameters.get().getResolutionFactor()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.USE_MOUSE_EVENT_QUEUE, (""+PhysicsParameters.get().useModuleEventQueue()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.SYNC_WITH_CONTROLLERS, (""+PhysicsParameters.get().syncWithControllers()).toCharArray());
-				printSubTagsWithValue(transformerHandler, TagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR, (""+PhysicsParameters.get().getPhysicsSimulationControllerStepFactor()).toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.CONSTRAINT_FORCE_MIX, (""+PhysicsParameters.get().getConstraintForceMix()).toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.ERROR_REDUCTION_PARAMETER, (""+PhysicsParameters.get().getErrorReductionParameter()).toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.RESOLUTION_FACTOR, (""+PhysicsParameters.get().getResolutionFactor()).toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.USE_MOUSE_EVENT_QUEUE, (""+PhysicsParameters.get().useModuleEventQueue()).toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.SYNC_WITH_CONTROLLERS, (""+PhysicsParameters.get().syncWithControllers()).toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR, (""+PhysicsParameters.get().getPhysicsSimulationControllerStepFactor()).toCharArray());
 
 				
-				transformerHandler.endElement("","",TagsUsed.PHYSICS_PARAMETERS.toString());
+				transformerHandler.endElement("","",XMLTagsUsed.PHYSICS_PARAMETERS.toString());
 
 
 			} catch (SAXException e) {
@@ -105,7 +107,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 				e.printStackTrace();
 			}
 
-			printFirstEndTag(transformerHandler, TagsUsed.SIMULATION);
+			printFirstEndTag(transformerHandler, XMLTagsUsed.SIMULATION);
 		}
 
 
@@ -129,37 +131,37 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 	}
 
 	private void  printRobotXML(TransformerHandler transformerHandler){
-		printFirstStartTag(transformerHandler, TagsUsed.MODULES);
+		printFirstStartTag(transformerHandler, XMLTagsUsed.MODULES);
 		int amountModules = numberOfSimulatedModules();
 		/*For each module print out the start and end tags with relevant data*/
 		for (int module=0; module<amountModules;module++){           
 			Module currentModule = getModuleByIndex(module);			
 			try {				
-				transformerHandler.startElement("","",TagsUsed.MODULE.toString(),EMPTY_ATT);				
-				printSubTagsWithValue(transformerHandler, TagsUsed.ID, getID(currentModule));				
-				printSubTagsWithValue(transformerHandler, TagsUsed.TYPE, getType(currentModule));
-				printSubTagsWithValue(transformerHandler, TagsUsed.NAME, getName(currentModule));
-				printSubTagsWithValue(transformerHandler, TagsUsed.CONTROLLER_LOCATION, getControllerLocation(getModuleByIndex(0)));
-				printSubTagsWithValue(transformerHandler, TagsUsed.ROTATION, getRotation(currentModule));
-				printSubTagsWithValue(transformerHandler, TagsUsed.ROTATION_QUATERNION, getRotationQuaternion(currentModule));
-				printSubTagsWithValue(transformerHandler, TagsUsed.POSITION, getPosition(currentModule));
+				transformerHandler.startElement("","",XMLTagsUsed.MODULE.toString(),EMPTY_ATT);				
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.ID, getID(currentModule));				
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.TYPE, getType(currentModule));
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.NAME, getName(currentModule));
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.CONTROLLER_LOCATION, getControllerLocation(getModuleByIndex(0)));
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.ROTATION, getRotation(currentModule));
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.ROTATION_QUATERNION, getRotationQuaternion(currentModule));
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.POSITION, getPosition(currentModule));
 				//printSubTagsWithValue(transformerHandler, positionVectorTag, getPositionVector(currentModule));
 
 				//printSubTagsWithValue(transformerHandler, controllerLocationTag, getControllerLocation(currentModule));
-				printSubTagsWithValue(transformerHandler,  TagsUsed.LABELS_MODULE, getLabelsModule(currentModule));
-				printSubTagsWithValue(transformerHandler,  TagsUsed.COMPONENTS, getAmountComponents(currentModule));
-				printSubTagsWithValue(transformerHandler, TagsUsed.COLORS_COMPONENTS, getColorsComponents(currentModule));
-				printSubTagsWithValue(transformerHandler, TagsUsed.CONNECTORS, getAmountConnectors(currentModule));			
-				printSubTagsWithValue(transformerHandler, TagsUsed.COLORS_CONNECTORS, getColorsConnectors(currentModule));
-				printSubTagsWithValue(transformerHandler,TagsUsed.LABELS_CONNECTORS, getLabelsConnectors(currentModule));
+				printSubTagsWithValue(transformerHandler,  XMLTagsUsed.LABELS_MODULE, getLabelsModule(currentModule));
+				printSubTagsWithValue(transformerHandler,  XMLTagsUsed.COMPONENTS, getAmountComponents(currentModule));
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.COLORS_COMPONENTS, getColorsComponents(currentModule));
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.CONNECTORS, getAmountConnectors(currentModule));			
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.COLORS_CONNECTORS, getColorsConnectors(currentModule));
+				printSubTagsWithValue(transformerHandler,XMLTagsUsed.LABELS_CONNECTORS, getLabelsConnectors(currentModule));
 
 				printInfoConnectors(transformerHandler,getInfoConnectors(currentModule, true), getInfoConnectors(currentModule, false));						
-				transformerHandler.endElement("","",TagsUsed.MODULE.toString());
+				transformerHandler.endElement("","",XMLTagsUsed.MODULE.toString());
 			} catch (SAXException e) {
 				throw new Error ("SAX exception appeared and named as: "+ e.toString());
 			}			
 		}
-		printFirstEndTag(transformerHandler, TagsUsed.MODULES);	
+		printFirstEndTag(transformerHandler, XMLTagsUsed.MODULES);	
 	}
 
 	
@@ -187,22 +189,22 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 	}
 	
 	
-	public Map<TagsUsed, String> getSimulationDescriptionValues() {
+	public Map<XMLTagsUsed, String> getSimulationDescriptionValues() {
 		return simulationDescriptionValues;
 	}
 	
-	public Map<TagsUsed, String> simulationDescriptionValues = new Hashtable<TagsUsed, String>();
-	public Map<TagsUsed, String> simulationPhysicsValues = new Hashtable<TagsUsed, String>();
+	public Map<XMLTagsUsed, String> simulationDescriptionValues = new Hashtable<XMLTagsUsed, String>();
+	public Map<XMLTagsUsed, String> simulationPhysicsValues = new Hashtable<XMLTagsUsed, String>();
 	
 	
-	public Map<TagsUsed, String> getSimulationPhysicsValues() {
+	public Map<XMLTagsUsed, String> getSimulationPhysicsValues() {
 		return simulationPhysicsValues;
 	}
 
 	private void loadSimulationXML(Document document){
 		
 		
-    NodeList nodeList2 = document.getElementsByTagName(TagsUsed.ROBOT.toString());
+    NodeList nodeList2 = document.getElementsByTagName(XMLTagsUsed.ROBOT.toString());
 		
 		for (int node = 0; node < nodeList2.getLength(); node++) {
 			Node firstNode = nodeList2.item(node);
@@ -211,13 +213,13 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 				Element firstElmnt = (Element) firstNode;				
 		
-				simulationDescriptionValues.put(TagsUsed.MORPHOLOGY_LOCATION, extractTagValue(firstElmnt,TagsUsed.MORPHOLOGY_LOCATION));
+				simulationDescriptionValues.put(XMLTagsUsed.MORPHOLOGY_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION));
 									
 			}
 		}		
 		
 		
-		NodeList nodeList = document.getElementsByTagName(TagsUsed.WORLD_DESCRIPTION.toString());
+		NodeList nodeList = document.getElementsByTagName(XMLTagsUsed.WORLD_DESCRIPTION.toString());
 		
 		for (int node = 0; node < nodeList.getLength(); node++) {
 			Node firstNode = nodeList.item(node);
@@ -226,14 +228,14 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 				Element firstElmnt = (Element) firstNode;				
 		
-				simulationDescriptionValues.put(TagsUsed.PLANE_SIZE, extractTagValue(firstElmnt,TagsUsed.PLANE_SIZE));
-				simulationDescriptionValues.put(TagsUsed.PLANE_TEXTURE, extractTagValue(firstElmnt,TagsUsed.PLANE_TEXTURE));
-				simulationDescriptionValues.put(TagsUsed.CAMERA_POSITION, extractTagValue(firstElmnt,TagsUsed.CAMERA_POSITION));
+				simulationDescriptionValues.put(XMLTagsUsed.PLANE_SIZE, extractTagValue(firstElmnt,XMLTagsUsed.PLANE_SIZE));
+				simulationDescriptionValues.put(XMLTagsUsed.PLANE_TEXTURE, extractTagValue(firstElmnt,XMLTagsUsed.PLANE_TEXTURE));
+				simulationDescriptionValues.put(XMLTagsUsed.CAMERA_POSITION, extractTagValue(firstElmnt,XMLTagsUsed.CAMERA_POSITION));
 				//number of modules is not relevant
-				simulationDescriptionValues.put(TagsUsed.THE_WORLD_IS_FLAT, extractTagValue(firstElmnt,TagsUsed.THE_WORLD_IS_FLAT));				
-				simulationDescriptionValues.put(TagsUsed.HAS_BACKGROUND_SCENERY, extractTagValue(firstElmnt,TagsUsed.HAS_BACKGROUND_SCENERY));
-				simulationDescriptionValues.put(TagsUsed.HAS_HEAVY_OBSTACLES, extractTagValue(firstElmnt,TagsUsed.HAS_HEAVY_OBSTACLES));				
-				simulationDescriptionValues.put(TagsUsed.IS_FRAME_GRABBING_ACTIVE, extractTagValue(firstElmnt,TagsUsed.IS_FRAME_GRABBING_ACTIVE));
+				simulationDescriptionValues.put(XMLTagsUsed.THE_WORLD_IS_FLAT, extractTagValue(firstElmnt,XMLTagsUsed.THE_WORLD_IS_FLAT));				
+				simulationDescriptionValues.put(XMLTagsUsed.HAS_BACKGROUND_SCENERY, extractTagValue(firstElmnt,XMLTagsUsed.HAS_BACKGROUND_SCENERY));
+				simulationDescriptionValues.put(XMLTagsUsed.HAS_HEAVY_OBSTACLES, extractTagValue(firstElmnt,XMLTagsUsed.HAS_HEAVY_OBSTACLES));				
+				simulationDescriptionValues.put(XMLTagsUsed.IS_FRAME_GRABBING_ACTIVE, extractTagValue(firstElmnt,XMLTagsUsed.IS_FRAME_GRABBING_ACTIVE));
 				//simulationDescriptionValues.put(TagsUsed.BIG_OBSTACLES, extractTagValue(firstElmnt,TagsUsed.BIG_OBSTACLES));				
 		
 			
@@ -241,7 +243,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 		}	
 		
-		NodeList nodeList1 = document.getElementsByTagName(TagsUsed.PHYSICS_PARAMETERS.toString());
+		NodeList nodeList1 = document.getElementsByTagName(XMLTagsUsed.PHYSICS_PARAMETERS.toString());
 		for (int node = 0; node < nodeList1.getLength(); node++) {
 			Node firstNode = nodeList1.item(node);
 
@@ -249,22 +251,22 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 				Element firstElmnt = (Element) firstNode;				
 		
-				simulationPhysicsValues.put(TagsUsed.WORLD_DAMPING_LINEAR_VELOCITY, extractTagValue(firstElmnt,TagsUsed.WORLD_DAMPING_LINEAR_VELOCITY));
-				simulationPhysicsValues.put(TagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY, extractTagValue(firstElmnt,TagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY));
-				simulationPhysicsValues.put(TagsUsed.PHYSICS_SIMULATION_STEP_SIZE, extractTagValue(firstElmnt,TagsUsed.PHYSICS_SIMULATION_STEP_SIZE));
-				simulationPhysicsValues.put(TagsUsed.REALISTIC_COLLISION, extractTagValue(firstElmnt,TagsUsed.REALISTIC_COLLISION));
-				simulationPhysicsValues.put(TagsUsed.GRAVITY, extractTagValue(firstElmnt,TagsUsed.GRAVITY));
-				simulationPhysicsValues.put(TagsUsed.PLANE_MATERIAL, extractTagValue(firstElmnt,TagsUsed.PLANE_MATERIAL));
-				simulationPhysicsValues.put(TagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS, extractTagValue(firstElmnt,TagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS));
+				simulationPhysicsValues.put(XMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY, extractTagValue(firstElmnt,XMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY));
+				simulationPhysicsValues.put(XMLTagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY, extractTagValue(firstElmnt,XMLTagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY));
+				simulationPhysicsValues.put(XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE, extractTagValue(firstElmnt,XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE));
+				simulationPhysicsValues.put(XMLTagsUsed.REALISTIC_COLLISION, extractTagValue(firstElmnt,XMLTagsUsed.REALISTIC_COLLISION));
+				simulationPhysicsValues.put(XMLTagsUsed.GRAVITY, extractTagValue(firstElmnt,XMLTagsUsed.GRAVITY));
+				simulationPhysicsValues.put(XMLTagsUsed.PLANE_MATERIAL, extractTagValue(firstElmnt,XMLTagsUsed.PLANE_MATERIAL));
+				simulationPhysicsValues.put(XMLTagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS, extractTagValue(firstElmnt,XMLTagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS));
 				//simulationPhysicsValues.put(TagsUsed.HAS_MECHANICAL_CONNECTOR_SPRINGINESS, extractTagValue(firstElmnt,TagsUsed.HAS_MECHANICAL_CONNECTOR_SPRINGINESS));
 				//simulationPhysicsValues.put(TagsUsed.MECHANICAL_CONNECTOR_CONSTANT, extractTagValue(firstElmnt,TagsUsed.MECHANICAL_CONNECTOR_CONSTANT));
 				//simulationPhysicsValues.put(TagsUsed.MECHANICAL_CONNECTOR_DAMPING, extractTagValue(firstElmnt,TagsUsed.MECHANICAL_CONNECTOR_CONSTANT));
-				simulationPhysicsValues.put(TagsUsed.CONSTRAINT_FORCE_MIX, extractTagValue(firstElmnt,TagsUsed.CONSTRAINT_FORCE_MIX));
-				simulationPhysicsValues.put(TagsUsed.ERROR_REDUCTION_PARAMETER, extractTagValue(firstElmnt,TagsUsed.ERROR_REDUCTION_PARAMETER));
-				simulationPhysicsValues.put(TagsUsed.RESOLUTION_FACTOR, extractTagValue(firstElmnt,TagsUsed.RESOLUTION_FACTOR));
-				simulationPhysicsValues.put(TagsUsed.USE_MOUSE_EVENT_QUEUE, extractTagValue(firstElmnt,TagsUsed.USE_MOUSE_EVENT_QUEUE));
-				simulationPhysicsValues.put(TagsUsed.SYNC_WITH_CONTROLLERS, extractTagValue(firstElmnt,TagsUsed.SYNC_WITH_CONTROLLERS));
-				simulationPhysicsValues.put(TagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR, extractTagValue(firstElmnt,TagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR));
+				simulationPhysicsValues.put(XMLTagsUsed.CONSTRAINT_FORCE_MIX, extractTagValue(firstElmnt,XMLTagsUsed.CONSTRAINT_FORCE_MIX));
+				simulationPhysicsValues.put(XMLTagsUsed.ERROR_REDUCTION_PARAMETER, extractTagValue(firstElmnt,XMLTagsUsed.ERROR_REDUCTION_PARAMETER));
+				simulationPhysicsValues.put(XMLTagsUsed.RESOLUTION_FACTOR, extractTagValue(firstElmnt,XMLTagsUsed.RESOLUTION_FACTOR));
+				simulationPhysicsValues.put(XMLTagsUsed.USE_MOUSE_EVENT_QUEUE, extractTagValue(firstElmnt,XMLTagsUsed.USE_MOUSE_EVENT_QUEUE));
+				simulationPhysicsValues.put(XMLTagsUsed.SYNC_WITH_CONTROLLERS, extractTagValue(firstElmnt,XMLTagsUsed.SYNC_WITH_CONTROLLERS));
+				simulationPhysicsValues.put(XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR, extractTagValue(firstElmnt,XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR));
 
 			
 			}
@@ -278,7 +280,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 	}
 	
 	private void loadRobotXML(Document document){
-		NodeList nodeList = document.getElementsByTagName(TagsUsed.MODULE.toString());
+		NodeList nodeList = document.getElementsByTagName(XMLTagsUsed.MODULE.toString());
 
 		for (int node = 0; node < nodeList.getLength(); node++) {
 			Node firstNode = nodeList.item(node);
@@ -287,26 +289,26 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
 
 				Element firstElmnt = (Element) firstNode;				
 				//String moduleID = extractTagValue(firstElmnt,idTag);
-			    String moduleType = extractTagValue(firstElmnt,TagsUsed.TYPE);
-				String moduleName = extractTagValue(firstElmnt,TagsUsed.NAME);
-				String moduleRotation = extractTagValue(firstElmnt,TagsUsed.ROTATION);		
-				String moduleRotationQuaternion = extractTagValue(firstElmnt,TagsUsed.ROTATION_QUATERNION);
-				String modulePosition = extractTagValue(firstElmnt,TagsUsed.POSITION);
+			    String moduleType = extractTagValue(firstElmnt,XMLTagsUsed.TYPE);
+				String moduleName = extractTagValue(firstElmnt,XMLTagsUsed.NAME);
+				String moduleRotation = extractTagValue(firstElmnt,XMLTagsUsed.ROTATION);		
+				String moduleRotationQuaternion = extractTagValue(firstElmnt,XMLTagsUsed.ROTATION_QUATERNION);
+				String modulePosition = extractTagValue(firstElmnt,XMLTagsUsed.POSITION);
 				//String modulePositionVector = extractTagValue(firstElmnt,positionVectorTag);
-				String labelsModule = extractTagValue(firstElmnt,TagsUsed.LABELS_MODULE);
+				String labelsModule = extractTagValue(firstElmnt,XMLTagsUsed.LABELS_MODULE);
 				if (labelsModule.contains(BuilderHelper.getTempLabel())){
 					labelsModule = labelsModule.replaceAll(BuilderHelper.getTempLabel(), "");
 				}				
 				
-				int amountComponents = Integer.parseInt(extractTagValue(firstElmnt,TagsUsed.COMPONENTS));
-				String colorsComponents = extractTagValue(firstElmnt,TagsUsed.COLORS_COMPONENTS);				
+				int amountComponents = Integer.parseInt(extractTagValue(firstElmnt,XMLTagsUsed.COMPONENTS));
+				String colorsComponents = extractTagValue(firstElmnt,XMLTagsUsed.COLORS_COMPONENTS);				
 				LinkedList<Color> listColorsComponents = extractColorsComponents(amountComponents, colorsComponents);				
 				
-				int amountConnectors = Integer.parseInt(extractTagValue(firstElmnt,TagsUsed.CONNECTORS));
-				String colorsConnectors = extractTagValue(firstElmnt,TagsUsed.COLORS_CONNECTORS);				
+				int amountConnectors = Integer.parseInt(extractTagValue(firstElmnt,XMLTagsUsed.CONNECTORS));
+				String colorsConnectors = extractTagValue(firstElmnt,XMLTagsUsed.COLORS_CONNECTORS);				
 				LinkedList<Color> listColorsConnectors= extractColoursConnectors(amountConnectors,colorsConnectors);
 
-				String labelsConnectors = extractTagValue(firstElmnt,TagsUsed.LABELS_CONNECTORS);
+				String labelsConnectors = extractTagValue(firstElmnt,XMLTagsUsed.LABELS_CONNECTORS);
 				String tempLabelsConnectors[] = labelsConnectors.split(",");	
 				
 				RotationDescription rotationDescription = new RotationDescription();

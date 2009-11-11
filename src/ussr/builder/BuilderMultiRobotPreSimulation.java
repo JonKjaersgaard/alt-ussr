@@ -3,10 +3,10 @@ package ussr.builder;
 import java.util.Hashtable;
 import java.util.Map;
 
+import ussr.builder.enumerations.UssrXmlFileTypes;
+import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
-import ussr.builder.saveLoadXML.TagsUsed;
-import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.description.setup.WorldDescription.CameraPosition;
@@ -66,8 +66,8 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 	//private  static final String loadableSimulationFile ="samples/simulations/atron/simulation1.xml";
 	//private  static final String loadableSimulationFile ="samples/simulations/atron/snakeSimulation.xml";
 	
-	private static Map<TagsUsed,String> simulationWorldDescription;
-	private static Map<TagsUsed,String> simulationPhysicsParameters; 
+	private static Map<XMLTagsUsed,String> simulationWorldDescription;
+	private static Map<XMLTagsUsed,String> simulationPhysicsParameters; 
 	
 	/**
 	 * Starts multi-robot simulation for ATRON,MTRAN and Odin.
@@ -215,7 +215,7 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 
 		/*Load Robot Morphology file*/
 		SaveLoadXMLFileTemplate xmlLoaderRodbot = new PreSimulationXMLSerializer(world);
-		xmlLoaderRodbot.loadXMLfile(UssrXmlFileTypes.ROBOT, simulationWorldDescription.get(TagsUsed.MORPHOLOGY_LOCATION));
+		xmlLoaderRodbot.loadXMLfile(UssrXmlFileTypes.ROBOT, simulationWorldDescription.get(XMLTagsUsed.MORPHOLOGY_LOCATION));
 
 		world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
 
@@ -249,8 +249,8 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		//String cameraPosition = simulationWorldDescription.get(TagsUsed.CAMERA_POSITION);
 		//boolean theWorldIsFlat = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.THE_WORLD_IS_FLAT));
 		//boolean hasClouds = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.HAS_BACKGROUND_SCENERY));
-		boolean heavyObstacles = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.HAS_HEAVY_OBSTACLES));
-		boolean isActive = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.IS_FRAME_GRABBING_ACTIVE));
+		//boolean heavyObstacles = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.HAS_HEAVY_OBSTACLES));
+		//boolean isActive = Boolean.parseBoolean(simulationWorldDescription.get(TagsUsed.IS_FRAME_GRABBING_ACTIVE));
 		//boolean heavyObstacles = Boolean.parseBoolean(simulationDescription.get(TagsUsed.HAS_HEAVY_OBSTACLES));
 		
 		
@@ -261,8 +261,8 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		world.setCameraPosition(descriptionConverter.convertCameraPosition());
 		world.setFlatWorld(descriptionConverter.convertTheWorldIsFlat());
 		world.setHasBackgroundScenery(descriptionConverter.convertHasClouds());
-		world.setHeavyObstacles(heavyObstacles);
-		world.setIsFrameGrabbingActive(isActive);
+		world.setHeavyObstacles(descriptionConverter.convertHasHeavyObstacles());
+		world.setIsFrameGrabbingActive(descriptionConverter.covertIsFrameGrabbingActive());
 		//TODO world.setBigObstacles(bigObstacles);
 		
 		//ObstacleGenerator generator = new ObstacleGenerator();

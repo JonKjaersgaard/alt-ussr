@@ -22,6 +22,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
+import ussr.builder.enumerations.UssrXmlFileTypes;
+import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.labelingTools.LabelingTemplate;
 import ussr.model.Module;
@@ -179,7 +181,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * @param transformerHandler,the content handler used to print out XML format. 
 	 * @param firstStartTagName, the name of the tag.
 	 */
-	public void printFirstStartTag(TransformerHandler transformerHandler, TagsUsed firstStartTagName){
+	public void printFirstStartTag(TransformerHandler transformerHandler, XMLTagsUsed firstStartTagName){
 		try {
 			transformerHandler.startDocument();			
 			transformerHandler.startElement("","",firstStartTagName.toString(),EMPTY_ATT);
@@ -194,7 +196,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * @param transformerHandler,the content handler used to print out XML format. 
 	 * @param firstEndTagName, the  name of the tag.
 	 */
-	public void printFirstEndTag(TransformerHandler transformerHandler, TagsUsed firstEndTagName){
+	public void printFirstEndTag(TransformerHandler transformerHandler, XMLTagsUsed firstEndTagName){
 		try {			
 			transformerHandler.endElement("","",firstEndTagName.toString());
 			transformerHandler.endDocument();
@@ -210,7 +212,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * @param tagName, the name of the tag.
 	 * @param value, the value between the tags.
 	 */
-	public void printSubTagsWithValue(TransformerHandler transformerHandler, TagsUsed tagName, char[] value){
+	public void printSubTagsWithValue(TransformerHandler transformerHandler, XMLTagsUsed tagName, char[] value){
 		try {			
 			transformerHandler.startElement("","",tagName.toString(),EMPTY_ATT);
 			transformerHandler.characters(value,0,value.length);
@@ -445,7 +447,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * @param tagName, the name of the tag.
 	 * @return value, the data between the start and end tags.
 	 */
-	public String extractTagValue(Element firstElmnt,TagsUsed tagName){
+	public String extractTagValue(Element firstElmnt,XMLTagsUsed tagName){
 		NodeList firstNmElmntLst = firstElmnt.getElementsByTagName(tagName.toString());		      
 		Element firstNmElmnt = (Element) firstNmElmntLst.item(0);
 		NodeList firstNm = firstNmElmnt.getChildNodes();		 

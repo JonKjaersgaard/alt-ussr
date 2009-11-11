@@ -1,4 +1,4 @@
-package ussr.builder.labelingTools;
+package ussr.builder.enumerations;
 
 /**
  * Entities supported by builder(Quick Prototyping of Simulation Scenarios) for labeling

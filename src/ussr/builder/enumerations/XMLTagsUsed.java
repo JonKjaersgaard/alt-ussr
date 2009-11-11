@@ -1,6 +1,6 @@
-package ussr.builder.saveLoadXML;
+package ussr.builder.enumerations;
 
-public enum TagsUsed {
+public enum XMLTagsUsed {
    /*For description of modular robot morphology(shape)*/
    MODULES,          /*First tag(by hierarchy), indicating that file keeps information about all modules in the morphology of modular robot*/
    MODULE,           /*Second tag, separating each module description*/

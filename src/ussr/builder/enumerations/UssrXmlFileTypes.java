@@ -1,4 +1,4 @@
-package ussr.builder.saveLoadXML;
+package ussr.builder.enumerations;
 
 public enum UssrXmlFileTypes {
 	ROBOT,

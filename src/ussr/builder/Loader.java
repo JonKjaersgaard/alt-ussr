@@ -3,11 +3,11 @@ package ussr.builder;
 import java.util.ArrayList;
 import java.util.List;
 
+import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.helpers.ControllerFactory;
 import ussr.builder.helpers.ControllerFactoryImpl;
 import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
-import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsFactory;

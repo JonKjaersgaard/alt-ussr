@@ -2,12 +2,15 @@ package ussr.builder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import ussr.builder.enumerations.UssrXmlFileTypes;
+import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.ControllerFactory;
 import ussr.builder.helpers.ControllerFactoryImpl;
 import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
-import ussr.builder.saveLoadXML.UssrXmlFileTypes;
+import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsFactory;
@@ -24,6 +27,12 @@ import ussr.samples.ObstacleGenerator;
  * @author Konstantinas
  */
 public class SimulationXMLFileLoader extends GenericSimulation {
+	
+	
+	private static Map<XMLTagsUsed,String> simulationWorldDescription;
+	private static Map<XMLTagsUsed,String> simulationPhysicsParameters; 
+	private static SimulationDescriptionConverter descriptionConverter;
+	
 	/**
 	 * Returns the robot in the simulation.
 	 */
@@ -44,23 +53,66 @@ public class SimulationXMLFileLoader extends GenericSimulation {
 	}
 	
 	public SimulationXMLFileLoader(String simulationXMLfileName) {
-	    DefaultSimulationSetup.setUSSRHome();
-		
-	    WorldDescription world = this.createGenericSimulationWorld(null);
-        //WorldDescription world = createWorld();
+	    DefaultSimulationSetup.setUSSRHome();	    
+	    
+	    PhysicsLogger.setDefaultLoggingLevel();
+        /* Create the simulation*/
+        simulation = PhysicsFactory.createSimulator();
+        
+        List<String> controllerNames = new ArrayList<String>();
+        
+        controllerNames.add("ussr.samples.atron.simulations.ATRONCarController1");
+        ControllerFactory controllerFactory = new ControllerFactoryImpl(controllerNames);
+      //  WorldDescription world = this.createGenericSimulationWorld(controllerFactory);
+        
+        /* Assign controller to selection of robots */
+        DefaultSimulationSetup.addDefaultRobotSelection(simulation,controllerFactory);
+        
+    	/*Load Simulation Configuration file*/
+		SaveLoadXMLFileTemplate xmlLoaderSimulation = new PreSimulationXMLSerializer(new PhysicsParameters());
+		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, simulationXMLfileName);
+        
+		/*Get values from XML file*/
+		simulationWorldDescription = xmlLoaderSimulation.getSimulationDescriptionValues();
+        simulationPhysicsParameters = xmlLoaderSimulation.getSimulationPhysicsValues();
+        
+        /*Converter for converting values from String into corresponding type used in USSR*/
+        descriptionConverter =  new SimulationDescriptionConverter(simulationWorldDescription,simulationPhysicsParameters); 
+        
+        WorldDescription world = createWorld();
+        
         /* Load the robot */
-        SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);
-        xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,simulationXMLfileName);
+        String robotMorphologyLocation = simulationWorldDescription.get(XMLTagsUsed.MORPHOLOGY_LOCATION);
+        
+        SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);       
+        xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,robotMorphologyLocation);
+      
+        simulation.setWorld(world);
+	    
+	    
+		
+	    //WorldDescription world = this.createGenericSimulationWorld(null);
+       // world = createWorld();
+        
+        
+        
+        /* Load the robot */
+        //SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);
+        //xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,simulationXMLfileName);
         /* Connect modules */
         world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
 	}
 	
 	private static WorldDescription createWorld() {
+		/*Assign values to world*/
 		WorldDescription world = new WorldDescription();	        
-		world.setPlaneSize(100);		
-	  	//ObstacleGenerator generator = new ObstacleGenerator();
-	    //generator.obstacalize(obstacleType, world); // activate to add obstacles
-	    // world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
+		world.setPlaneSize(descriptionConverter.convertPlaneSize());
+		world.setPlaneTexture(descriptionConverter.covertPlaneTexture());
+		world.setCameraPosition(descriptionConverter.convertCameraPosition());
+		world.setFlatWorld(descriptionConverter.convertTheWorldIsFlat());
+		world.setHasBackgroundScenery(descriptionConverter.convertHasClouds());
+		world.setHeavyObstacles(descriptionConverter.convertHasHeavyObstacles());
+		world.setIsFrameGrabbingActive(descriptionConverter.covertIsFrameGrabbingActive());
 		return world;
 	}
 

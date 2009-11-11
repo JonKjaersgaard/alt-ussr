@@ -1,5 +1,6 @@
 package ussr.builder.labelingTools;
 
+import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.helpers.LabelingFactoryMapHelper;
 
 /**
