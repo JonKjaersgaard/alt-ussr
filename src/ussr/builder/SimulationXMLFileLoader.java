@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import ussr.aGui.tabs.controllers.SimulationTabController;
+import ussr.aGui.tabs.views.SimulationTab;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.ControllerFactory;
@@ -71,8 +73,12 @@ public class SimulationXMLFileLoader extends GenericSimulation {
         /*Converter for converting values from String into corresponding type used in USSR*/
         descriptionConverter =  new SimulationDescriptionConverter(simulationWorldDescription,simulationPhysicsParameters); 
         
-        String controllerLocation = simulationWorldDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
+        //SimulationTabController.setDescriptionConverter(descriptionConverter);
+        //SimulationTabController.updateTable();
         
+       String controllerLocation = simulationWorldDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
+        
+        //String controllerLocation  = "";
         List<String> controllerNames = new ArrayList<String>();        
         controllerNames.add(controllerLocation);
         ControllerFactory controllerFactory = new ControllerFactoryImpl(controllerNames);
