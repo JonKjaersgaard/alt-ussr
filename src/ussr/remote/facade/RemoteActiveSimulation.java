@@ -55,5 +55,10 @@ public interface RemoteActiveSimulation extends Remote {
      */
     public void start(Class<?> mainClass, ParameterHolder parameter, ReturnValueHandler handler) throws RemoteException;
     
+    /**
+     * Starts a remote simulation from XML file.
+     * @param simulationXMLFile, the location of xml file.
+     * @throws RemoteException
+     */
     public void start(String simulationXMLFile) throws RemoteException;
 }
