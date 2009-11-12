@@ -8,7 +8,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 
-import ussr.aGui.MainFrameController;
+import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter;

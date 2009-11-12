@@ -4,6 +4,8 @@ import java.awt.Dimension;
 
 import javax.swing.GroupLayout;
 import javax.swing.JPanel;
+
+import ussr.aGui.enumerations.HintPanelTypes;
 import ussr.aGui.tabs.TabsInter;
 
 /**

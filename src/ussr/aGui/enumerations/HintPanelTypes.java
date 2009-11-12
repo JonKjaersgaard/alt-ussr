@@ -1,4 +1,4 @@
-package ussr.aGui.tabs.additionalResources;
+package ussr.aGui.enumerations;
 
 /**
  * Types of hint panel (hint panel icons).

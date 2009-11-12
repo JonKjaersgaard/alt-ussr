@@ -12,6 +12,7 @@ import javax.swing.JToolBar;
 
 import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFrames;
+import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
@@ -41,12 +42,12 @@ public abstract class ConstructionTabs extends Tabs implements ConstructionTabsI
 		/* go through each component in parent component*/
      for(int index =0;index<jComponent.getComponents().length; index++ ){			
 			String className = jComponent.getComponent(index).getClass().toString();
-			if (className.contains("JToolBar")){
+			if (className.contains(ComponentsFrame.JToolBar.toString())){
 				javax.swing.JToolBar  currentToolBar = (JToolBar) jComponent.getComponent(index);
 				/*Go through components in the toolbar*/
 				for(int inde =0;inde<currentToolBar.getComponents().length; inde++ ){
 					String classNameNew = currentToolBar.getComponent(inde).toString();
-					if (classNameNew.contains("JButton")){
+					if (classNameNew.contains(ComponentsFrame.JButton.toString())){
 						javax.swing.JButton  button = (JButton) currentToolBar.getComponent(inde);
 						if (button.isSelected()){
 							button.setSelected(false);

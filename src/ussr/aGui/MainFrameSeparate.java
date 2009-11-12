@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JComponent;
+
 import ussr.builder.BuilderMultiRobotPreSimulation;
 import ussr.remote.ConsoleSimulationExample;
 import ussr.remote.GUISimulationAdapter;
@@ -22,6 +24,7 @@ public class MainFrameSeparate extends MainFrames {
 		super();
 		initComponents();
 		windowResizingListener();//Resize the main GUI window according to dimension of it's components, if user is maximizing or restoring it down.
+		
 	}	
 
 
@@ -33,11 +36,12 @@ public class MainFrameSeparate extends MainFrames {
 
 		initFirstTabbbedPane();
 		initSecondTabbedPane((int)SCREEN_DIMENSION.getWidth()/2, TAB_PANE_HEIGHT2);
-
+		
 		pack(); 
 		changeToLookAndFeel(this);
-		components.add(jMenuBarMain);
-		components.add(jToolBarGeneralControl);
+		
+		components.add(getJMenuBarMain());
+		components.add(getJToolBarGeneralControl());
 		components.add(jTabbedPaneFirst);
 		components.add(jTabbedPane3);
 
@@ -75,23 +79,27 @@ public class MainFrameSeparate extends MainFrames {
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() {				
 				mainFrame = new MainFrameSeparate();
-				mainFrame.setVisible(true);	
+				mainFrame.setVisible(true);
+				
+				setMainFrameSeparateEnabled(false);
 			}
 		});
-		//runDefaultRemoteSimulation();
+		
 	}
 
-/*	private static void runDefaultRemoteSimulation(){
-		new Thread() {
-			public void run() {
-				GUISimulationAdapter.main(null);
-			}
-		}.start();
-	}*/
-
+	/**
+	 * Activates main GUI frame(window) separate from simulation environment, in separate thread.
+	 * @param args, passed arguments.
+	 */
 	@Override
 	public void activate() {
-		throw new Error("Main GUI frame activation is not supported. Use main method instead.");
+		MainFrameSeparate.main(null);
+	}
+	
+
+	private static void setMainFrameSeparateEnabled(boolean enabled){
+		setJMenuBarMainEnabled(enabled);
+		setJToolBarGeneralControlEnabled(enabled);
 	}
 
 

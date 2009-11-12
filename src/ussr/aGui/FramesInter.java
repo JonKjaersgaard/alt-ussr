@@ -42,11 +42,5 @@ public interface FramesInter {
 	 */
 	public abstract void activate();
 	
-	/**
-	 * Initializes visual appearance of the frames(windows).
-	 * Follows Strategy pattern.
-	 */
-	public abstract void initComponents();
-
 
 }
