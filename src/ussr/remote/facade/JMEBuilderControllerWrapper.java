@@ -31,6 +31,7 @@ import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
+import ussr.description.setup.WorldDescription;
 
 
 import ussr.model.Module;
@@ -362,5 +363,16 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 		return jmeSimulation.getModules();
 	}
 	
+	public Module createModule(ModulePosition position, boolean assign)throws RemoteException{
+		return jmeSimulation.createModule(position, assign);
+	}
 	
+	public WorldDescription getWorldDescription()throws RemoteException{
+		return jmeSimulation.getWorldDescription();
+	}
+	
+	public Module getModuleByIndex(int index)throws RemoteException{
+		Module module =jmeSimulation.getModules().get(index); 
+		return module;
+	}
 }

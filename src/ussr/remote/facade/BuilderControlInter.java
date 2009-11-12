@@ -11,6 +11,8 @@ import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModulePosition;
+import ussr.description.setup.WorldDescription;
 import ussr.model.Module;
 import ussr.physics.jme.pickers.Picker;
 
@@ -119,4 +121,10 @@ public interface BuilderControlInter extends Remote {
 	 * @return list of modules in simulation environment.
 	 */
 	public List<Module> getModules()throws RemoteException;
+	
+	public Module createModule(ModulePosition position, boolean assign)throws RemoteException;
+	
+	public WorldDescription getWorldDescription()throws RemoteException;
+	
+	public Module getModuleByIndex(int index)throws RemoteException;
 }
