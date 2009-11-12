@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 
 
-import ussr.aGui.MainFrameController;
+import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.TabsControllers;
 import ussr.builder.BuilderMultiRobotPreSimulation;
@@ -85,9 +85,9 @@ public class GUISimulationAdapter {
         }
         //ArrayList<Object> 
         
-        MainFrameController.setRemotePhysicsSimulation(sim);
-        MainFrameController.setRendererControl(sim.getRendererControl());
-        MainFrameController.setBuilderControl(sim.getBuilderControl());
+        MainFrameSeparateController.setRemotePhysicsSimulation(sim);
+        MainFrameSeparateController.setRendererControl(sim.getRendererControl());
+        MainFrameSeparateController.setBuilderControl(sim.getBuilderControl());
         TabsControllers.setBuilderController(sim.getBuilderControl());
 /*        while(true) {
             System.out.println(" remote simulation isPaused()="+sim.isPaused());
