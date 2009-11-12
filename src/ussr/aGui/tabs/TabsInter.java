@@ -45,6 +45,4 @@ public interface TabsInter {
     
 	public boolean isInitiallyVisible();
 
-	
-
 }

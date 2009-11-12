@@ -10,6 +10,7 @@ import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
@@ -18,6 +19,7 @@ import javax.swing.border.TitledBorder;
 import ussr.aGui.FramesInter;
 import ussr.aGui.MainFramesInter;
 
+import ussr.aGui.enumerations.HintPanelTypes;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
@@ -53,6 +55,9 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 	 * The constrains of grid bag layout used during design of both tabs.
 	 */
 	public  GridBagConstraints gridBagConstraints = new GridBagConstraints();
+	
+	
+
 
 	/**
 	 * Defines visual appearance of the tab called "2 Step: Assign Behaviors".
@@ -66,8 +71,8 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		super(initiallyVisible,firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);	
 
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
-		this.jComponent = new javax.swing.JPanel(new GridBagLayout());
-
+		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
+     
 		initComponents();
 	}
 
@@ -107,6 +112,8 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		gridBagConstraints.fill = GridBagConstraints.FIRST_LINE_END;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
+		
+		jToolBarSaveLoad = initSaveLoadJToolbar();
 		super.jComponent.add(jToolBarSaveLoad,gridBagConstraints);	
 		
 		jToolBarFilterForModularRobot.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Filter out for:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));		
@@ -477,6 +484,18 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		return hintPanel;
 	}
 
+	
+	/**
+	 * Enables or disables the tab;
+	 * @param enabled, true if the tab is enabled.
+	 */
+	public static void setTabEnabled (boolean enabled){
+//MORE HERE
+		for (int button=0; button<jToolBarSaveLoad.getComponentCount();button++ ){
+			JButton jButton = (JButton)jToolBarSaveLoad.getComponent(button);
+			jButton.setEnabled(enabled);
+		}
+	}
 
 
 	/*Declaration of components*/
@@ -517,6 +536,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 	private static javax.swing.JToolBar jToolBarFilterForModularRobot;
 	private static javax.swing.JToolBar jToolBarEntitiesForLabeling;
 	private static javax.swing.JToolBar jToolBarTypesSensors;
+	private static javax.swing.JToolBar jToolBarSaveLoad;
 
 	private static javax.swing.JToolBar jToolBarControlOfLabels;
 

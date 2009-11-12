@@ -541,7 +541,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 			}else if (componentClassName.contains(ComponentsFrame.JButton.toString())){
 				JButton currentJButton = (JButton)currentComponent;
 				String currentJButtonText = currentJButton.getToolTipText();
-				if (currentJButtonText.contains(ComponentsText.Open.toString())){
+				if (currentJButtonText.contains(ComponentsText.Open.toString())||currentJButtonText.contains(ComponentsText.Save.toString())){
 					//do nothing
 				}else{
 					currentJButton.setEnabled(enabled);

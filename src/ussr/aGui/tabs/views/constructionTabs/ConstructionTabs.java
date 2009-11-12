@@ -23,13 +23,17 @@ import ussr.physics.jme.JMESimulation;
 
 public abstract class ConstructionTabs extends Tabs implements ConstructionTabsInter  {
 
-	
-	protected static javax.swing.JToolBar jToolBarSaveLoad;
 
+	/**
+	 * @param initiallyVisible
+	 * @param firstTabbedPane
+	 * @param tabTitle
+	 * @param jmeSimulation
+	 * @param imageIconDirectory
+	 */
 	protected ConstructionTabs(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,
 			JMESimulation jmeSimulation, String imageIconDirectory) {
 		super(initiallyVisible,firstTabbedPane, tabTitle, jmeSimulation, imageIconDirectory);
-		jToolBarSaveLoad = initSaveLoadJToolbar();
 	}
 	
 	
@@ -106,7 +110,7 @@ public abstract class ConstructionTabs extends Tabs implements ConstructionTabsI
 	
 	
 	public javax.swing.JToolBar initSaveLoadJToolbar(){
-		jToolBarSaveLoad = new javax.swing.JToolBar();
+		javax.swing.JToolBar jToolBarSaveLoad = new javax.swing.JToolBar();
 		
 		jToolBarSaveLoad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarSaveLoad.setFloatable(false);//user can not make the tool bar to float

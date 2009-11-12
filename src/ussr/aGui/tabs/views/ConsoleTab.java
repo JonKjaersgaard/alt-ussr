@@ -3,6 +3,7 @@ package ussr.aGui.tabs.views;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JScrollPane;
 import ussr.aGui.tabs.Tabs;
+import ussr.aGui.tabs.additionalResources.RedirectSystemOutput;
 import ussr.physics.jme.JMESimulation;
 
 /**

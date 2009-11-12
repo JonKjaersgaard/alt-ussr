@@ -74,9 +74,8 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		ConstructRobotTab.getJComboBoxEntity().setEnabled(true);
 		ConstructRobotTab.setEnabledRotationToolBar(true);
 		ConstructRobotTab.setEnabledGenericToolBar(true);
-
 		ConstructRobotTab.setEnabledConstructionToolsToolBar(true);
-		//ConstructRobotTab.setEnabledButtonsArrows(false);
+		ConstructRobotTab.setEnabledButtonsArrows(false);
 
 		/*Adapt tab to chosen modular robot*/
 		if (chosenMRname.equals(SupportedModularRobots.ATRON)){
@@ -306,6 +305,8 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		/*Disable tab components no longer available*/
 		ConstructRobotTab.setEnabledRotationToolBar(false);
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
+		ConstructRobotTab.setEnabledButtonsArrows(true);
+		
 		try {
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON,connectorNr);
 		} catch (RemoteException e) {
@@ -404,7 +405,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	}
 
 	/**
-	 * @param jmeSimulation, the physical simulation.
+	 * Removes current robots in simulation environment and enables tab element for constructing new robot.
 	 */
 	public static void jButtonStartNewRobotActionPerformed() {
 		ConstructRobotTab.setRadioButtonsEnabled(true);

@@ -7,6 +7,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 
 import ussr.aGui.tabs.TabsInter;
+import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.physics.jme.JMESimulation;
@@ -72,6 +73,7 @@ public class MainFrameSeparateController {
 	 */
 	public static void jButtonRunRealTimeActionPerformed() {
 		ConstructRobotTab.setTabEnabled(false);
+		AssignBehaviorsTab.setTabEnabled(false);
 		
 		timesSelected++;
 		connectModules();
@@ -94,7 +96,8 @@ public class MainFrameSeparateController {
 	 */
 	public static void jButtonRunFastActionPerformed() {
 
-		ConstructRobotTab.setTabEnabled(false);	
+		ConstructRobotTab.setTabEnabled(false);
+		AssignBehaviorsTab.setTabEnabled(false);
 		
 		timesSelected++;
 		connectModules();
@@ -130,7 +133,9 @@ public class MainFrameSeparateController {
 	 * Executes running remote simulation in step by step fashion.
 	 */
 	public static void jButtonRunStepByStepActionPerformed() {       	
-		ConstructRobotTab.setTabEnabled(false);		
+		ConstructRobotTab.setTabEnabled(false);	
+		AssignBehaviorsTab.setTabEnabled(false);
+		
 		timesSelected++;
 		connectModules();
 

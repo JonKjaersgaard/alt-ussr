@@ -3,6 +3,7 @@ package ussr.aGui.tabs.controllers;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 import java.util.List;
 
 import javax.swing.JCheckBox;
@@ -21,7 +22,7 @@ import ussr.comm.monitors.visualtracker.ModuleFilterDialog;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 
-public class ModuleCommunicationVisualizerController {
+public class ModuleCommunicationVisualizerController extends TabsControllers {
 
 
 	private static int numberOfModules;
@@ -34,7 +35,14 @@ public class ModuleCommunicationVisualizerController {
 	public static void jButtonRunActionPerformed(JMESimulation jmeSimulation,JScrollPane jScrollPane) {
 		ModuleCommunicationVisualizer.getJButtonRun().setEnabled(false);
 		ModuleCommunicationVisualizer.getJButtonReset().setEnabled(true);
-		modules = jmeSimulation.getModules();	 
+		
+		try {
+			modules = builderControl.getModules();
+		} catch (RemoteException e) {
+			throw new Error ("Failed to receive the list of modules, due to remote exception.");
+		}
+		
+	//	modules = jmeSimulation.getModules();	 
 		numberOfModules = modules.size();
 
 		/*	
