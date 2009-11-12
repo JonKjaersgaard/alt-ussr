@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ussr.aGui.MainFrameController;
+import ussr.aGui.MainFrameSeparateController;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
