@@ -212,10 +212,13 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             Integer failure = failures.get(experiment);
             if(failure==null) failure=0;
             int total = success.size()+failure;
-            System.out.print(experiment+": nruns="+total);
-            System.out.print(", success='"+((float)success.size())/((float)total)+"'");
-            System.out.print(", avg time='"+average(success)+"'");
-            System.out.println();
+            StringBuffer output = new StringBuffer();
+            output.append(experiment+": nruns,success,Tavg,Tstddev;");
+            output.append(total+";");
+            output.append(((float)success.size())/((float)total)+";");
+            output.append(average(success)+";");
+            output.append(stddev(success)+";");
+            System.out.println(output);
         }
     }
 
@@ -223,5 +226,12 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
         float total = 0;
         for(float f: success) total+=f;
         return total/success.size();
+    }
+    
+    private float stddev(List<Float> numbers) {
+        float avg = average(numbers);
+        float sum = 0;
+        for(float f: numbers) sum += (f-avg)*(f-avg);
+        return (float) Math.sqrt(sum);
     }
 }
