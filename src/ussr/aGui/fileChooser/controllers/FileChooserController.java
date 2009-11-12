@@ -2,10 +2,11 @@ package ussr.aGui.fileChooser.controllers;
 
 
 
+import ussr.aGui.GeneralController;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.physics.jme.JMESimulation;
 
-public abstract class FileChooserController implements FileChooserControllerInter  {
+public abstract class FileChooserController extends GeneralController implements FileChooserControllerInter  {
 
 	protected JMESimulation jmeSimulation;
 	

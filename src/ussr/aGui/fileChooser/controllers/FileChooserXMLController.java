@@ -75,7 +75,7 @@ public class FileChooserXMLController extends FileChooserController {
 		String command = evt.getActionCommand();//Selected button command			
 		if(command.equalsIgnoreCase(ActionCommands.APPROVESELECTION.toString())  ){		        
 			String fileDirectoryName = fileChooser.getSelectedFile().toString();
-			saveLoadXML = new InSimulationXMLSerializer(this.jmeSimulation);
+			saveLoadXML = new InSimulationXMLSerializer(builderControl);
 			saveLoadXML.saveXMLfile(ussXmlFileType, fileDirectoryName);
 
 			fileChooserFrame.dispose();//close the frame(window)			
