@@ -42,7 +42,6 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
                 for(float risk = START_RISK; risk<=END_RISK; risk+=RISK_INC) {
                     for(int i=0; i<N_REPEAT; i++) {
                         parameters.add(new Parameters(Math.max(0, risk-RISK_DELTA),risk,fail,TIMEOUT));
-                        if(stop--<=0) break populate;
                     }
                 }
             }
