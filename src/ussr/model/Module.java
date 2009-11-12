@@ -7,6 +7,7 @@
 package ussr.model;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ import ussr.physics.PhysicsSimulationHelper;
  * @author ups
  *
  */
-public class Module extends Entity {
+public class Module extends Entity{
     /**
      * The controller of the module
      */
