@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 
 
+import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.TabsControllers;
@@ -89,6 +90,7 @@ public class GUISimulationAdapter {
         MainFrameSeparateController.setRendererControl(sim.getRendererControl());
         MainFrameSeparateController.setBuilderControl(sim.getBuilderControl());
         TabsControllers.setBuilderController(sim.getBuilderControl());
+        MainFrameSeparate.setMainFrameSeparateEnabled(true);
 /*        while(true) {
             System.out.println(" remote simulation isPaused()="+sim.isPaused());
             try {
