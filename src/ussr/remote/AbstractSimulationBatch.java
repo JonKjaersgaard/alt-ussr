@@ -214,10 +214,10 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             int total = success.size()+failure;
             StringBuffer output = new StringBuffer();
             output.append(experiment+": nruns,success,Tavg,Tstddev;");
-            output.append(total+";");
-            output.append(((float)success.size())/((float)total)+";");
-            output.append(average(success)+";");
-            output.append(stddev(success)+";");
+            output.append(total+" ");
+            output.append(((float)success.size())/((float)total)+" ");
+            output.append(average(success)+" ");
+            output.append(stddev(success)+" ");
             System.out.println(output);
         }
     }
