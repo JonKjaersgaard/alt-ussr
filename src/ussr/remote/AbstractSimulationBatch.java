@@ -28,8 +28,8 @@ import ussr.remote.facade.RemotePhysicsSimulation;
 public abstract class AbstractSimulationBatch implements ReturnValueHandler {
 
     public static final int SERVER_PORT = 54323;
-    public static final int N_PARALLEL_SIMS = 1;
     public static final int LINE_BUFFER_SIZE = 20;
+    
     private Class<?> mainClass;
     private SimulationLauncherServer server;
     private PrintWriter writer;
@@ -105,17 +105,17 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
                     System.out.println("#"+run+" Simulation stopped");
                 }
                 System.out.println("#"+run+" Simulation completed");
-            }
-            active = false;
-            synchronized(passiveWorkers) {
-                passiveWorkers.add(this);
-                passiveWorkers.notifyAll();
+                active = false;
+                synchronized(passiveWorkers) {
+                    passiveWorkers.add(this);
+                    passiveWorkers.notifyAll();
+                }
             }
         }
     }
     
-    public void start() {
-        createWorkers();
+    public void start(int max_parallel_sims) {
+        createWorkers(max_parallel_sims);
         int run = 0; 
         while(runMoreSimulations()) {
             ParameterHolder parameters = getNextParameters();
@@ -131,19 +131,20 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
                         }
                         continue;
                     }
-                    System.out.println("Assigning task...");
                     worker = passiveWorkers.remove(0);
-                    worker.activate(parameters, run++);
                 }
             }
+            System.out.println("Assigning task...");
+            worker.activate(parameters, run++);
         }
         System.out.println("Batch completed");
         reportRecord();
         System.exit(0);
     }
 
-    private void createWorkers() {
-        for(int i=0; i<N_PARALLEL_SIMS; i++) {
+    private void createWorkers(int max_parallel_sims) {
+        System.out.println("Creating "+max_parallel_sims+" workers");
+        for(int i=0; i<max_parallel_sims; i++) {
             Worker worker = new Worker();
             worker.start();
             passiveWorkers.add(worker);
@@ -214,6 +215,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             System.out.print(experiment+": ");
             System.out.print("success="+((float)success.size())/((float)total));
             System.out.print(", avg time="+average(success));
+            System.out.println();
         }
     }
 
