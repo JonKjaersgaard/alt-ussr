@@ -1,12 +1,5 @@
 package ussr.aGui.enumerations;
 
 public enum ComponentsFrame {
-	JToolBar,
-	JButton,
-	JTabbedPane,
-	JMenuItem,
-	JMenu,
-	JSeparator,
-	JToolBar$Separator,
-	JToggleButton
+	JToolBar,JButton,JTabbedPane, JMenuItem,JMenu,JSeparator,JToolBar$Separator,JToggleButton
 }

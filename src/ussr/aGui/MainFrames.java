@@ -12,7 +12,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JToggleButton;
 
 import ussr.aGui.enumerations.ComponentsFrame;
-import ussr.aGui.enumerations.ComponentsText;
+import ussr.aGui.enumerations.MainFrameComponentsText;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
@@ -142,9 +142,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jCheckBoxMenuItemLights = new javax.swing.JCheckBoxMenuItem();
 		jCheckBoxMenuBufferDepth = new javax.swing.JCheckBoxMenuItem();
 
-		jMenuFile.setText(ComponentsText.File.toString());
+		jMenuFile.setText(MainFrameComponentsText.File.toString());
 
-		jMenuItemOpen.setText(ComponentsText.Open.toString());
+		jMenuItemOpen.setText(MainFrameComponentsText.Open.toString());
 		jMenuItemOpen.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+OPEN_SMALL));
 		//jMenuItemOpen.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OFF_LINE_SMALL));		
 		jMenuItemOpen.addActionListener(new java.awt.event.ActionListener() {
@@ -157,7 +157,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		jMenuFile.add(jSeparator2);
 
-		jMenuItemSave.setText(ComponentsText.Save.toString());
+		jMenuItemSave.setText(MainFrameComponentsText.Save.toString());
 		jMenuItemSave.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+SAVE_SMALL));
 		//jMenuItemSave.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE_SMALL));	
 		jMenuItemSave.addActionListener(new java.awt.event.ActionListener() {
@@ -171,7 +171,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuFile.add(jSeparator1);
 
 		jMenuItemExit.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+EXIT));
-		jMenuItemExit.setText(ComponentsText.Exit.toString());
+		jMenuItemExit.setText(MainFrameComponentsText.Exit.toString());
 		jMenuItemExit.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jMenuItemExitActionPerformed();
@@ -181,9 +181,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		jMenuBarMain.add(jMenuFile);
 
-		jMenuRender.setText(ComponentsText.Render.toString());
+		jMenuRender.setText(MainFrameComponentsText.Render.toString());
 		jCheckBoxMenuItemPhysics.setSelected(false);
-		jCheckBoxMenuItemPhysics.setText(ComponentsText.Physics.toString());
+		jCheckBoxMenuItemPhysics.setText(MainFrameComponentsText.Physics.toString());
 		jCheckBoxMenuItemPhysics.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemPhysicsActionPerformed(jCheckBoxMenuItemPhysics);
@@ -192,7 +192,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuRender.add(jCheckBoxMenuItemPhysics);
 
 		jCheckBoxMenuItemWireFrame.setSelected(false);
-		jCheckBoxMenuItemWireFrame.setText(ComponentsText.Wire_Frame.toString().replace("_", " "));
+		jCheckBoxMenuItemWireFrame.setText(MainFrameComponentsText.Wire_Frame.toString().replace("_", " "));
 		jCheckBoxMenuItemWireFrame.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemWireFrameActionPerformed(jCheckBoxMenuItemWireFrame);
@@ -201,7 +201,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuRender.add(jCheckBoxMenuItemWireFrame);
 
 		jCheckBoxMenuBounds.setSelected(false);
-		jCheckBoxMenuBounds.setText(ComponentsText.Bounds.toString());
+		jCheckBoxMenuBounds.setText(MainFrameComponentsText.Bounds.toString());
 		jCheckBoxMenuBounds.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuBoundsActionPerformed(jCheckBoxMenuBounds);
@@ -210,7 +210,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuRender.add(jCheckBoxMenuBounds);
 
 		jCheckBoxMenuItemNormals.setSelected(false);
-		jCheckBoxMenuItemNormals.setText(ComponentsText.Normals.toString());
+		jCheckBoxMenuItemNormals.setText(MainFrameComponentsText.Normals.toString());
 		jCheckBoxMenuItemNormals.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemNormalsActionPerformed(jCheckBoxMenuItemNormals);
@@ -219,7 +219,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuRender.add(jCheckBoxMenuItemNormals);
 
 		jCheckBoxMenuItemLights.setSelected(false);
-		jCheckBoxMenuItemLights.setText(ComponentsText.Lights.toString());
+		jCheckBoxMenuItemLights.setText(MainFrameComponentsText.Lights.toString());
 		jCheckBoxMenuItemLights.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemLightsActionPerformed(jCheckBoxMenuItemLights);
@@ -228,7 +228,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuRender.add(jCheckBoxMenuItemLights);
 
 		jCheckBoxMenuBufferDepth.setSelected(false);
-		jCheckBoxMenuBufferDepth.setText(ComponentsText.Buffer_Depth.toString().replace("_", " "));
+		jCheckBoxMenuBufferDepth.setText(MainFrameComponentsText.Buffer_Depth.toString().replace("_", " "));
 		jCheckBoxMenuBufferDepth.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuBufferDepthActionPerformed(jCheckBoxMenuBufferDepth);
@@ -515,7 +515,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 					}else{
 						JMenuItem currentJMenuItem = (JMenuItem) currentJMenu.getMenuComponent(jMenuItem);
 						String jMenuItemText =currentJMenuItem.getText(); 
-						if (jMenuItemText.contains(ComponentsText.Open.toString())||jMenuItemText.contains(ComponentsText.Exit.toString())){
+						if (jMenuItemText.contains(MainFrameComponentsText.Open.toString())||jMenuItemText.contains(MainFrameComponentsText.Exit.toString())){
 							//do nothing
 						}else{
 							currentJMenuItem.setEnabled(enabled);
@@ -541,7 +541,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 			}else if (componentClassName.contains(ComponentsFrame.JButton.toString())){
 				JButton currentJButton = (JButton)currentComponent;
 				String currentJButtonText = currentJButton.getToolTipText();
-				if (currentJButtonText.contains(ComponentsText.Open.toString())||currentJButtonText.contains(ComponentsText.Save.toString())){
+				if (currentJButtonText.contains(MainFrameComponentsText.Open.toString())||currentJButtonText.contains(MainFrameComponentsText.Save.toString())){
 					//do nothing
 				}else{
 					currentJButton.setEnabled(enabled);
