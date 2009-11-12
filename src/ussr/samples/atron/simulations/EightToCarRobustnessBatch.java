@@ -17,7 +17,7 @@ import ussr.remote.AbstractSimulationBatch;
 import ussr.remote.facade.ParameterHolder;
 
 public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
-    private static final float TIMEOUT = 180f;
+    private static final float TIMEOUT = 270f;
     public static final int N_REPEAT = 15;
     public static final float START_RISK = 0;
     public static final float END_RISK = 0.8f;
@@ -36,12 +36,16 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     
     public EightToCarRobustnessBatch(Class<?> mainClass) {
         super(mainClass);
-        for(float fail = START_FAIL; fail<=END_FAIL; fail+=FAIL_INC) {
-            for(float risk = START_RISK; risk<=END_RISK; risk+=RISK_INC) {
-                for(int i=0; i<N_REPEAT; i++)
-                    parameters.add(new Parameters(Math.max(0, risk-RISK_DELTA),risk,fail,TIMEOUT));
+        int stop=2;
+        populate:
+            for(float fail = START_FAIL; fail<=END_FAIL; fail+=FAIL_INC) {
+                for(float risk = START_RISK; risk<=END_RISK; risk+=RISK_INC) {
+                    for(int i=0; i<N_REPEAT; i++) {
+                        parameters.add(new Parameters(Math.max(0, risk-RISK_DELTA),risk,fail,TIMEOUT));
+                        if(stop--<=0) break populate;
+                    }
+                }
             }
-        }
         try {
             logfile = new PrintWriter(new BufferedWriter(new FileWriter("eight-log.txt")));
         } catch(IOException exn) {
@@ -61,14 +65,19 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
         return parameters.size()>0;
     }
 
-    public void provideReturnValue(String name, Object value) throws RemoteException {
+    public void provideReturnValue(String experiment, String name, Object value) throws RemoteException {
         if(name.equals("success")) {
             float time = (Float)value;
             logfile.println("Time taken:"+time);
-        } else if(name.equals("timeout"))
+            recordSuccess(experiment,time);
+        } else if(name.equals("timeout")) {
             logfile.println("Timeout:X");
-        else
+            recordFailure(experiment);
+        }
+        else {
             logfile.println("Unknown value: "+name);
+            recordFailure(experiment);
+        }
         logfile.flush();
     }
 

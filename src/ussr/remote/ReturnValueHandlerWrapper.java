@@ -12,8 +12,8 @@ public class ReturnValueHandlerWrapper extends UnicastRemoteObject implements Re
         this.handler = handler;
     }
 
-    public void provideReturnValue(String name, Object value) throws RemoteException {
-        this.handler.provideReturnValue(name, value);
+    public void provideReturnValue(String experiment, String name, Object value) throws RemoteException {
+        this.handler.provideReturnValue(experiment, name, value);
     }
 
 }

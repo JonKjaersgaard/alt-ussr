@@ -8,8 +8,10 @@ package ussr.samples.atron.simulations;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
@@ -38,6 +40,7 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
     public static final boolean USE_BLOCKING_ROTATE = true;
     public static final boolean CORRECT_CAR_WHEELS = true;
     public static final boolean VERIFY_OPERATIONS = false;
+    public static final int CACHE_SIZE = 64;
 
     public static class Parameters extends ParameterHolder {
         public float minR, maxR, completeR, maxTime;
@@ -91,8 +94,8 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
     
     public static void main(String argv[]) {
         if(ParameterHolder.get()==null)
-            // ParameterHolder.set(new Parameters(0.5f,0.75f,0.0f,Float.MAX_VALUE));
-            ParameterHolder.set(new Parameters(0.0f,0.0f,0.0f,Float.MAX_VALUE));
+            ParameterHolder.set(new Parameters(0.5f,0.75f,0.0f,Float.MAX_VALUE));
+            //ParameterHolder.set(new Parameters(0.0f,0.0f,0.0f,Float.MAX_VALUE));
         new EightToCarRobustnessExperiment().main(); 
     }
 
@@ -146,17 +149,62 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
         Packet(byte channel, byte[] payload) { this.channel = channel; this.payload = payload; }
     }
     
+    private static class CacheEntry {
+        private byte id; byte counter;
+        /**
+         * @param id
+         * @param counter
+         */
+        public CacheEntry(byte id, byte counter) {
+            this.id = id;
+            this.counter = counter;
+        }
+        /* (non-Javadoc)
+         * @see java.lang.Object#hashCode()
+         */
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + counter;
+            result = prime * result + id;
+            return result;
+        }
+        /* (non-Javadoc)
+         * @see java.lang.Object#equals(java.lang.Object)
+         */
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            CacheEntry other = (CacheEntry) obj;
+            if (counter != other.counter)
+                return false;
+            if (id != other.id)
+                return false;
+            return true;
+        }
+        
+    }
+    
     protected class EightController extends ATRONController {
 
+        private static final int TRANSMIT_DELAY = 500;
+        private static final int MAX_N_TRANSMIT_RETRIES = 64;
         int token[] = new int[1];
         int moduleTranslator[] = new int[7];
         int message[] = new int[3];
         boolean eight2car_active = true;
         byte lastConnectorTry = 0;
         int retries = 0;
-        byte packetCounter[] = new byte[8];
+        byte packetCounter = 0;
         List<Packet> queue = java.util.Collections.synchronizedList(new LinkedList<Packet>());
         float maxTime;
+        List<CacheEntry> packetsSeen = java.util.Collections.synchronizedList(new LinkedList<CacheEntry>());
 
         public EightController() {
             Parameters p = (Parameters)ParameterHolder.get();
@@ -177,19 +225,22 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
             lowlevelSendMessage(message, size, channel);
         }
 
-        private static final byte HEADER_SIZE = 2;
+        private static final byte HEADER_SIZE = 3;
         private static final byte MAGIC_SEND_HEADER = (byte)123;
         private static final byte MAGIC_ACK_HEADER = (byte)124;
 
         private void lowlevelSendMessage(int[] message, int size, int channel) {
             byte[] bmsg = new byte[message.length+HEADER_SIZE];
-            byte counter = packetCounter[channel];
+            byte counter = packetCounter;
             bmsg[0] = MAGIC_SEND_HEADER;
             bmsg[1] = counter;
+            bmsg[2] = (byte) getMyID();
             for(int i=HEADER_SIZE;i<message.length+HEADER_SIZE;i++)
                 bmsg[i] = (byte)message[i-HEADER_SIZE];
+            //super.sendMessage(bmsg,(byte)size, (byte)channel);
+            //if(true) return;
             int retries = 0, previous = 0;
-            while(counter==packetCounter[channel]) {
+            while(counter==packetCounter) {
                 if(!this.isConnected(channel)) {
                     System.out.println("["+getMyID()+"] Warning: attempting transmit with no neighbor");
                     break;
@@ -203,9 +254,9 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                 if(++retries>=previous*2) {
                     previous = retries;
                     System.out.println("["+getMyID()+"] Waiting for packet confirmation ("+retries+")");
-                    if(retries>=64) break;
+                    if(retries>=MAX_N_TRANSMIT_RETRIES) break;
                 }
-                this.delay(200);
+                this.delay(TRANSMIT_DELAY);
             }
             System.out.println("["+getMyID()+"] State transmission operation complete");
         }
@@ -215,18 +266,33 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                 return message;
             }
             if(message[0]==MAGIC_SEND_HEADER) {
+                // Send ack
                 byte[] reply = new byte[HEADER_SIZE];
                 reply[0] = MAGIC_ACK_HEADER;
-                reply[1] = (byte)(message[1]+1);
+                reply[1] = (byte)(message[1]);
                 queue.add(new Packet((byte)channel,reply));
+                // Have we seen this packet before?
+                CacheEntry entry = new CacheEntry(message[2],message[1]);
+                if(packetsSeen.contains(entry)) {
+                    System.out.println("["+getMyID()+"] discarding duplicate packet");
+                    return null;
+                }
+                packetsSeen.add(0, entry);
+                if(packetsSeen.size()>CACHE_SIZE) packetsSeen.remove(packetsSeen.size()-1);
+                // Extract payload
                 byte[] payload = new byte[message.length-HEADER_SIZE];
                 for(int i=HEADER_SIZE; i<message.length; i++)
                     payload[i-HEADER_SIZE] = message[i];
                 return payload;
             } else {
-                System.out.println("["+getMyID()+"] Packet confirmed");
-                packetCounter[channel] = message[1];
-                return null;
+                if(message[1]==packetCounter) {
+                    System.out.println("["+getMyID()+"] Packet confirmed");
+                    packetCounter++;
+                    return null;
+                } else {
+                    System.out.println("["+getMyID()+"] Ignoring confirm");
+                    return null;
+                }
             }
 
         }
@@ -280,16 +346,16 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=2;
                     message[2]=moduleTranslator[1];
-                    sendMessage(message,3,4);
                     token[0]=-1;
+                    sendMessage(message,3,4);
                     setNorthIOPort(0);
                     break;
                 case 2:
                     message[0]=0;
                     message[1]=3;
                     message[2]=moduleTranslator[3];
-                    sendMessage(message,3,7);
                     token[0]=-1;
+                    sendMessage(message,3,7);
                     setNorthIOPort(0);
                     break;
                 case 3:
@@ -307,24 +373,24 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=6;
                     message[2]=moduleTranslator[5];
-                    sendMessage(message,3,0);
                     token[0]=-1;
+                    sendMessage(message,3,0);
                     setNorthIOPort(0);
                     break;
                 case 6:
                     message[0]=0;
                     message[1]=7;
                     message[2]=moduleTranslator[6];
-                    sendMessage(message,3,CORRECT_CAR_WHEELS?3:5);
                     token[0]=-1;
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?3:5);
                     setNorthIOPort(0);
                     break;
                 case 7:
                     message[0]=0;
                     message[1]=8;
                     message[2]=moduleTranslator[4];
-                    sendMessage(message,3,6);
                     token[0]=-1;
+                    sendMessage(message,3,6);
                     setNorthIOPort(0);
                     break;
                 case 8:
@@ -342,16 +408,16 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=11;
                     message[2]=moduleTranslator[3];
-                    sendMessage(message,3,CORRECT_CAR_WHEELS?6:0);
                     token[0]=-1;
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?6:0);
                     setNorthIOPort(0);
                     break;
                 case 11:
                     message[0]=0;
                     message[1]=12;
                     message[2]=moduleTranslator[1];
-                    sendMessage(message,3,6);
                     token[0]=-1;
+                    sendMessage(message,3,6);
                     setNorthIOPort(0);
                     break;
                 case 12:
@@ -364,24 +430,24 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=14;
                     message[2]=moduleTranslator[3];
-                    sendMessage(message,3,7);
                     token[0]=-1;
+                    sendMessage(message,3,7);
                     setNorthIOPort(0);
                     break;
                 case 14:
                     message[0]=0;
                     message[1]=15;
                     message[2]=moduleTranslator[5];
-                    sendMessage(message,3,0);
                     token[0]=-1;
+                    sendMessage(message,3,0);
                     setNorthIOPort(0);
                     break;
                 case 15:
                     message[0]=0;
                     message[1]=16;
                     message[2]=moduleTranslator[6];
-                    sendMessage(message,3,CORRECT_CAR_WHEELS?3:5);
                     token[0]=-1;
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?3:5);
                     setNorthIOPort(0);
                     break;
                 case 16:
@@ -393,8 +459,8 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=18;
                     message[2]=moduleTranslator[4];
-                    sendMessage(message,3,6);
                     token[0]=-1;
+                    sendMessage(message,3,6);
                     setNorthIOPort(0);
                     break;
                 case 18:
@@ -407,8 +473,8 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=20;
                     message[2]=moduleTranslator[6];
-                    sendMessage(message,3,CORRECT_CAR_WHEELS?1:7);
                     token[0]=-1;
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?1:7);
                     setNorthIOPort(0);
                     break;
                 case 20:
@@ -421,32 +487,32 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=22;
                     message[2]=moduleTranslator[4];
-                    sendMessage(message,3,6);
                     token[0]=-1;
+                    sendMessage(message,3,6);
                     setNorthIOPort(0);
                     break;
                 case 22:
                     message[0]=0;
                     message[1]=23;
                     message[2]=moduleTranslator[3];
-                    sendMessage(message,3,CORRECT_CAR_WHEELS?6:0);
                     token[0]=-1;
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?6:0);
                     setNorthIOPort(0);
                     break;
                 case 23:
                     message[0]=0;
                     message[1]=24;
                     message[2]=moduleTranslator[1];
-                    sendMessage(message,3,6);
                     token[0]=-1;
+                    sendMessage(message,3,6);
                     setNorthIOPort(0);
                     break;
                 case 24:
                     message[0]=0;
                     message[1]=25;
                     message[2]=moduleTranslator[0];
-                    sendMessage(message,3,3);
                     token[0]=-1;
+                    sendMessage(message,3,3);
                     setNorthIOPort(0);
                     break;
                 case 25:
@@ -458,8 +524,8 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=27;
                     message[2]=moduleTranslator[6];
-                    sendMessage(message,3,0);
                     token[0]=-1;
+                    sendMessage(message,3,0);
                     setNorthIOPort(0);
                     break;
                 case 27:
@@ -471,8 +537,8 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=29;
                     message[2]=moduleTranslator[0];
-                    sendMessage(message,3,3);
                     token[0]=-1;
+                    sendMessage(message,3,3);
                     setNorthIOPort(0);
                     break;
                 case 29:
@@ -485,8 +551,8 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=31;
                     message[2]=moduleTranslator[1];
-                    sendMessage(message,3,4);
                     token[0]=-1;
+                    sendMessage(message,3,4);
                     setNorthIOPort(0);
                     break;
                 case 31:
@@ -499,8 +565,8 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=33;
                     message[2]=moduleTranslator[0];
-                    sendMessage(message,3,3);
                     token[0]=-1;
+                    sendMessage(message,3,3);
                     setNorthIOPort(0);
                     break;
                 case 33:
@@ -513,24 +579,24 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=35;
                     message[2]=moduleTranslator[1];
-                    sendMessage(message,3,4);
                     token[0]=-1;
+                    sendMessage(message,3,4);
                     setNorthIOPort(0);
                     break;
                 case 35:
                     message[0]=0;
                     message[1]=36;
                     message[2]=moduleTranslator[3];
-                    sendMessage(message,3,7);
                     token[0]=-1;
+                    sendMessage(message,3,7);
                     setNorthIOPort(0);
                     break;
                 case 36:
                     message[0]=0;
                     message[1]=37;
                     message[2]=moduleTranslator[5];
-                    sendMessage(message,3,0);
                     token[0]=-1;
+                    sendMessage(message,3,0);
                     setNorthIOPort(0);
                     break;
                 case 37:
@@ -542,16 +608,16 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=39;
                     message[2]=moduleTranslator[3];
-                    sendMessage(message,3,CORRECT_CAR_WHEELS?7:1);
                     token[0]=-1;
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?7:1);
                     setNorthIOPort(0);
                     break;
                 case 39:
                     message[0]=0;
                     message[1]=40;
                     message[2]=moduleTranslator[2];
-                    sendMessage(message,3,2);
                     token[0]=-1;
+                    sendMessage(message,3,2);
                     setNorthIOPort(0);
                     break;
                 case 40:
@@ -563,16 +629,16 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=42;
                     message[2]=moduleTranslator[3];
-                    sendMessage(message,3,5);
                     token[0]=-1;
+                    sendMessage(message,3,5);
                     setNorthIOPort(0);
                     break;
                 case 42:
                     message[0]=0;
                     message[1]=43;
                     message[2]=moduleTranslator[1];
-                    sendMessage(message,3,6);
                     token[0]=-1;
+                    sendMessage(message,3,6);
                     setNorthIOPort(0);
                     break;
                 case 43:
@@ -584,8 +650,8 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=45;
                     message[2]=moduleTranslator[4];
-                    sendMessage(message,3,4);
                     token[0]=-1;
+                    sendMessage(message,3,4);
                     setNorthIOPort(0);
                     break;
                 case 45:
@@ -597,16 +663,16 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=47;
                     message[2]=moduleTranslator[1];
-                    sendMessage(message,3,CORRECT_CAR_WHEELS?5:1);
                     token[0]=-1;
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?5:1);
                     setNorthIOPort(0);
                     break;
                 case 47:
                     message[0]=0;
                     message[1]=48;
                     message[2]=moduleTranslator[3];
-                    sendMessage(message,3,7);
                     token[0]=-1;
+                    sendMessage(message,3,7);
                     setNorthIOPort(0);
                     break;
                 case 48:
@@ -618,32 +684,32 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=50;
                     message[2]=moduleTranslator[5];
-                    sendMessage(message,3,0);
                     token[0]=-1;
+                    sendMessage(message,3,0);
                     setNorthIOPort(0);
                     break;
                 case 50:
                     message[0]=0;
                     message[1]=51;
                     message[2]=moduleTranslator[6];
-                    sendMessage(message,3,CORRECT_CAR_WHEELS?4:0);
                     token[0]=-1;
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?4:0);
                     setNorthIOPort(0);
                     break;
                 case 51:
                     message[0]=0;
                     message[1]=52;
                     message[2]=moduleTranslator[0];
-                    sendMessage(message,3,3);
                     token[0]=-1;
+                    sendMessage(message,3,3);
                     setNorthIOPort(0);
                     break;
                 case 52:
                     message[0]=0;
                     message[1]=53;
                     message[2]=moduleTranslator[1];
-                    sendMessage(message,3,4);
                     token[0]=-1;
+                    sendMessage(message,3,4);
                     setNorthIOPort(0);
                     break;
                 case 53:
@@ -656,32 +722,32 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=55;
                     message[2]=moduleTranslator[0];
-                    sendMessage(message,3,3);
                     token[0]=-1;
+                    sendMessage(message,3,3);
                     setNorthIOPort(0);
                     break;
                 case 55:
                     message[0]=0;
                     message[1]=56;
                     message[2]=moduleTranslator[6];
-                    sendMessage(message,3,0);
                     token[0]=-1;
+                    sendMessage(message,3,0);
                     setNorthIOPort(0);
                     break;
                 case 56:
                     message[0]=0;
                     message[1]=57;
                     message[2]=moduleTranslator[5];
-                    sendMessage(message,3,5);
                     token[0]=-1;
+                    sendMessage(message,3,5);
                     setNorthIOPort(0);
                     break;
                 case 57:
                     message[0]=0;
                     message[1]=58;
                     message[2]=moduleTranslator[3];
-                    sendMessage(message,3,CORRECT_CAR_WHEELS?7:1);
                     token[0]=-1;
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?7:1);
                     setNorthIOPort(0);
                     break;
                 case 58:
@@ -694,32 +760,32 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=60;
                     message[2]=moduleTranslator[5];
-                    sendMessage(message,3,0);
                     token[0]=-1;
+                    sendMessage(message,3,0);
                     setNorthIOPort(0);
                     break;
                 case 60:
                     message[0]=0;
                     message[1]=61;
                     message[2]=moduleTranslator[6];
-                    sendMessage(message,3,CORRECT_CAR_WHEELS?4:0);
                     token[0]=-1;
+                    sendMessage(message,3,CORRECT_CAR_WHEELS?4:0);
                     setNorthIOPort(0);
                     break;
                 case 61:
                     message[0]=0;
                     message[1]=62;
                     message[2]=moduleTranslator[0];
-                    sendMessage(message,3,3);
                     token[0]=-1;
+                    sendMessage(message,3,3);
                     setNorthIOPort(0);
                     break;
                 case 62:
                     message[0]=0;
                     message[1]=63;
                     message[2]=moduleTranslator[1];
-                    sendMessage(message,3,4);
                     token[0]=-1;
+                    sendMessage(message,3,4);
                     setNorthIOPort(0);
                     break;
                 case 63:
@@ -731,8 +797,8 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=65;
                     message[2]=moduleTranslator[3];
-                    sendMessage(message,3,6);
                     token[0]=-1;
+                    sendMessage(message,3,6);
                     setNorthIOPort(0);
                     break;
                 case 65:
@@ -749,8 +815,8 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                     message[0]=0;
                     message[1]=68;
                     message[2]=moduleTranslator[1];
-                    sendMessage(message,3,5);
                     token[0]=-1;
+                    sendMessage(message,3,5);
                     setNorthIOPort(0);
                     break;
                 case 68:
@@ -769,15 +835,16 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
         }
 
         private void reportResult(boolean success) throws Error {
+            String experiment = ParameterHolder.get().toString();
             try {
                 if(SimulationClient.getReturnHandler()==null) {
                     System.err.println("No return handler specified; time taken = "+module.getSimulation().getTime());
                     System.exit(0);
                 }
                 if(success)
-                    SimulationClient.getReturnHandler().provideReturnValue("success",module.getSimulation().getTime());
+                    SimulationClient.getReturnHandler().provideReturnValue(experiment,"success",module.getSimulation().getTime());
                 else
-                    SimulationClient.getReturnHandler().provideReturnValue("timeout", null);
+                    SimulationClient.getReturnHandler().provideReturnValue(experiment,"timeout", null);
                 System.exit(0);
             } catch(RemoteException exn) {
                 throw new Error("Unable to report return value");

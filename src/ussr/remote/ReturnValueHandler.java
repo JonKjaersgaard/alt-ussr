@@ -4,5 +4,5 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface ReturnValueHandler extends Remote {
-    public void provideReturnValue(String name, Object value ) throws RemoteException;
+    public void provideReturnValue(String experiment, String result, Object value ) throws RemoteException;
 }
