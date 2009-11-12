@@ -37,16 +37,13 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     
     public EightToCarRobustnessBatch(Class<?> mainClass) {
         super(mainClass);
-        int stop=10;
-        populate:
-            for(float fail = START_FAIL; fail<=END_FAIL; fail+=FAIL_INC) {
-                for(float risk = START_RISK; risk<=END_RISK; risk+=RISK_INC) {
-                    for(int i=0; i<N_REPEAT; i++) {
-                        parameters.add(new Parameters(Math.max(0, risk-RISK_DELTA),risk,fail,TIMEOUT));
-                        if(stop--<0) break populate;
-                    }
+        for(float fail = START_FAIL; fail<=END_FAIL; fail+=FAIL_INC) {
+            for(float risk = START_RISK; risk<=END_RISK; risk+=RISK_INC) {
+                for(int i=0; i<N_REPEAT; i++) {
+                    parameters.add(new Parameters(Math.max(0, risk-RISK_DELTA),risk,fail,TIMEOUT));
                 }
             }
+        }
         try {
             logfile = new PrintWriter(new BufferedWriter(new FileWriter("eight-log.txt")));
         } catch(IOException exn) {
@@ -57,7 +54,7 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
 
     @Override
     protected ParameterHolder getNextParameters() {
-        logfile.print("experiment "+parameters.get(0)+":"); logfile.flush();
+        logfile.println("experiment "+parameters.get(0)+" starting"); logfile.flush();
         return parameters.remove(0);
     }
 
@@ -67,6 +64,7 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     }
 
     public void provideReturnValue(String experiment, String name, Object value) throws RemoteException {
+        logfile.print("experiment "+experiment+" completed: ");
         if(name.equals("success")) {
             float time = (Float)value;
             logfile.println("Time taken:"+time);
