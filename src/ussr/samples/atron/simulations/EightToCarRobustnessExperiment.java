@@ -43,15 +43,17 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
     public static final int CACHE_SIZE = 64;
 
     public static class Parameters extends ParameterHolder {
+        public int number;
         public float minR, maxR, completeR, maxTime;
-        public Parameters(float minR, float maxR, float completeR, float maxTime) {
+        public Parameters(int number, float minR, float maxR, float completeR, float maxTime) {
+            this.number = number;
             this.minR = minR;
             this.maxR = maxR;
             this.completeR = completeR;
             this.maxTime = maxTime;
         }
         public String toString() {
-            return "minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime;
+            return "#"+number+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime;
         }
         /* (non-Javadoc)
          * @see java.lang.Object#hashCode()
@@ -64,6 +66,7 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
             result = prime * result + Float.floatToIntBits(maxR);
             result = prime * result + Float.floatToIntBits(maxTime);
             result = prime * result + Float.floatToIntBits(minR);
+            result = prime * result + number;
             return result;
         }
         /* (non-Javadoc)
@@ -88,13 +91,15 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                 return false;
             if (Float.floatToIntBits(minR) != Float.floatToIntBits(other.minR))
                 return false;
+            if (number != other.number)
+                return false;
             return true;
         }
     }
     
     public static void main(String argv[]) {
         if(ParameterHolder.get()==null)
-            ParameterHolder.set(new Parameters(0.5f,0.75f,0.0f,Float.MAX_VALUE));
+            ParameterHolder.set(new Parameters(0,0.5f,0.75f,0.0f,Float.MAX_VALUE));
             //ParameterHolder.set(new Parameters(0.0f,0.0f,0.0f,Float.MAX_VALUE));
         new EightToCarRobustnessExperiment().main(); 
     }
@@ -118,7 +123,7 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
         PhysicsParameters.get().setUseModuleEventQueue(true);
         PhysicsParameters.get().setRealtime(false);
         PhysicsFactory.getOptions().setStartPaused(false);
-        PhysicsFactory.getOptions().setHeadless(true);
+        PhysicsFactory.getOptions().setHeadless(false);
     }
     
     protected void changeWorldHook(WorldDescription world) {
@@ -194,7 +199,7 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
     protected class EightController extends ATRONController {
 
         private static final int TRANSMIT_DELAY = 500;
-        private static final int MAX_N_TRANSMIT_RETRIES = 64;
+        private static final int MAX_N_TRANSMIT_RETRIES = 32;
         int token[] = new int[1];
         int moduleTranslator[] = new int[7];
         int message[] = new int[3];
@@ -243,6 +248,7 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
             while(counter==packetCounter) {
                 if(!this.isConnected(channel)) {
                     System.out.println("["+getMyID()+"] Warning: attempting transmit with no neighbor");
+                    packetCounter++;
                     break;
                 }
                 if(queue.size()>0) {
@@ -254,7 +260,11 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                 if(++retries>=previous*2) {
                     previous = retries;
                     System.out.println("["+getMyID()+"] Waiting for packet confirmation ("+retries+")");
-                    if(retries>=MAX_N_TRANSMIT_RETRIES) break;
+                    if(retries>=MAX_N_TRANSMIT_RETRIES) {
+                        System.out.println("["+getMyID()+"] Timeout");
+                        packetCounter++;
+                        break;
+                    }
                 }
                 this.delay(TRANSMIT_DELAY);
             }
@@ -274,10 +284,11 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
                 // Have we seen this packet before?
                 CacheEntry entry = new CacheEntry(message[2],message[1]);
                 if(packetsSeen.contains(entry)) {
-                    System.out.println("["+getMyID()+"] discarding duplicate packet");
+                    System.out.println("["+getMyID()+"] discarding duplicate packet <"+message[2]+","+message[1]+">");
                     return null;
                 }
                 packetsSeen.add(0, entry);
+                System.out.println("["+getMyID()+"] cache added >"+message[2]+","+message[1]+">");
                 if(packetsSeen.size()>CACHE_SIZE) packetsSeen.remove(packetsSeen.size()-1);
                 // Extract payload
                 byte[] payload = new byte[message.length-HEADER_SIZE];
@@ -306,13 +317,8 @@ public class EightToCarRobustnessExperiment extends GenericATRONSimulation {
             this.delay(10);
             setup();
             home();
-            this.activate_before_eight2car();
             this.activate_eight2car();
-            this.activate_after_eight2car();
         }
-        
-        public void activate_before_eight2car() { ; }
-        public void activate_after_eight2car() { ; }
 
         public void activate_eight2car() {
             int i;

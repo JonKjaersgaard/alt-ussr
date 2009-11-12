@@ -24,23 +24,25 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     public static final float RISK_DELTA = 0.4f;
     public static final float RISK_INC = 0.1f;
     public static final float START_FAIL = 0;
-    public static final float END_FAIL = 0.2f;
+    public static final float END_FAIL = 0.1f;
     public static final float FAIL_INC = 0.1f;
     public static final int N_PARALLEL_SIMS = 2;
+    public static final Class<? extends EightToCarRobustnessExperiment> MAINCLASS = EightToCarRobustnessExperiment.class;
     
     private List<ParameterHolder> parameters = new LinkedList<ParameterHolder>();
     private PrintWriter logfile;
     
     public static void main(String argv[]) {
-        new EightToCarRobustnessBatch(EightToCarRobustnessExperiment.class).start(N_PARALLEL_SIMS);
+        new EightToCarRobustnessBatch(MAINCLASS).start(N_PARALLEL_SIMS);
     }
     
     public EightToCarRobustnessBatch(Class<?> mainClass) {
         super(mainClass);
+        int counter = 0;
         for(float fail = START_FAIL; fail<=END_FAIL; fail+=FAIL_INC) {
             for(float risk = START_RISK; risk<=END_RISK; risk+=RISK_INC) {
                 for(int i=0; i<N_REPEAT; i++) {
-                    parameters.add(new Parameters(Math.max(0, risk-RISK_DELTA),risk,fail,TIMEOUT));
+                    parameters.add(new Parameters(counter++,Math.max(0, risk-RISK_DELTA),risk,fail,TIMEOUT));
                 }
             }
         }
