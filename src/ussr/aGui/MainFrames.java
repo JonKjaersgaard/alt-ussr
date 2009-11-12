@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JToggleButton;
 
 import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.ComponentsText;
@@ -530,36 +531,22 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		for (int component=0; component<amountComponents;component++){
 			JComponent currentComponent = (JComponent)jToolBarGeneralControl.getComponent(component);
 			String componentClassName = currentComponent.getClass().getName();
-			if (componentClassName.contains(ComponentsFrame.JButton.toString())){
+			
+			
+			if (componentClassName.contains(ComponentsFrame.JToolBar$Separator.toString())){
+				//do nothing
+			}else if(componentClassName.contains(ComponentsFrame.JToggleButton.toString())){
+				JToggleButton currentToggleJButton = (JToggleButton)currentComponent;
+				currentToggleJButton.setEnabled(enabled);
+			}else if (componentClassName.contains(ComponentsFrame.JButton.toString())){
 				JButton currentJButton = (JButton)currentComponent;
 				String currentJButtonText = currentJButton.getToolTipText();
 				if (currentJButtonText.contains(ComponentsText.Open.toString())){
 					//do nothing
 				}else{
-					currentJButton.setEnabled(false);
+					currentJButton.setEnabled(enabled);
 				}
 			}
-			/*JComponent currentComponent = (JComponent)jMenuBarMain.getComponent(component);
-			String componentClassName = currentComponent.getClass().getName();
-			
-			if (componentClassName.contains(ComponentsFrame.JMenu.toString())){
-				JMenu currentJMenu =(JMenu)currentComponent;
-				int amountJMenuItems = currentJMenu.getMenuComponentCount();
-				
-				for (int jMenuItem=0;jMenuItem<amountJMenuItems;jMenuItem++){
-					if (currentJMenu.getMenuComponent(jMenuItem).getClass().getName().contains(ComponentsFrame.JSeparator.toString())){
-						
-					}else{
-						JMenuItem currentJMenuItem = (JMenuItem) currentJMenu.getMenuComponent(jMenuItem);
-						String jMenuItemText =currentJMenuItem.getText(); 
-						if (jMenuItemText.contains(ComponentsText.Open.toString())||jMenuItemText.contains(ComponentsText.Exit.toString())){
-							//do nothing
-						}else{
-							currentJMenuItem.setEnabled(enabled);
-						}
-					}				
-				}				
-			}*/
 		}
 	}
 	

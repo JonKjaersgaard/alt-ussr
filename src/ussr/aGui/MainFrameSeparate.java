@@ -97,10 +97,12 @@ public class MainFrameSeparate extends MainFrames {
 	}
 	
 
-	private static void setMainFrameSeparateEnabled(boolean enabled){
+	/**
+	 * Controls custom enabling of the main frame.
+	 * @param enabled
+	 */
+	public static void setMainFrameSeparateEnabled(boolean enabled){
 		setJMenuBarMainEnabled(enabled);
 		setJToolBarGeneralControlEnabled(enabled);
 	}
-
-
 }
