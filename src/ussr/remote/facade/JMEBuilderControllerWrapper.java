@@ -236,20 +236,35 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 		}       
 	}
 
+	/**
+	 * Returns module from the end of the list of modules in simulation environment.
+	 * @param amountFromLastMode, amount of modules from the last module in the list.
+	 * @return Module, requested module from the end of the list.
+	 */
 	public Module getModuleCountingFromEnd(int amountFromLastMode ) throws RemoteException {
 		int amountModules = jmeSimulation.getModules().size();
 		if (amountModules >= amountFromLastMode){
-			Module lastModule= jmeSimulation.getModules().get(amountModules-amountFromLastMode);
-			return lastModule;
+			Module requestedModule= jmeSimulation.getModules().get(amountModules-amountFromLastMode);
+			return requestedModule;
 		}else{
 			throw new Error("Not enough of modules in smulation environment to get "+amountFromLastMode+ "from last module" );
 		}
 	}
 
+	/**
+	 * Returns the type of the module from the end of the list of modules in simulation environment.
+	 * @param amountFromLastMode, amount of modules from the last module in the list.
+	 * @return String, the type of requested module from the end of the list. 
+	 */
 	public String getModuleCountingFromEndType(int amountFromLastMode ) throws RemoteException{
 		return getModuleCountingFromEnd(amountFromLastMode).getProperty(BuilderHelper.getModuleTypeKey());
 	};
 
+	/**
+	 * Moves the last added module in simulation environment on next connector of previously added module(the one before the last). 
+	 * @param supportedMRmoduleType, the type of module (modular robot).
+	 * @param connectorNr,connector number on the module added before the last. 
+	 */
 	public void moveToNextConnector(SupportedModularRobots supportedMRmoduleType,int connectorNr) throws RemoteException{
 		Module selectedModule = getModuleCountingFromEnd(2);
 		Module lastAddedModule = getModuleCountingFromEnd(1);
@@ -341,6 +356,10 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 	
 	public void setLabelingToolSpecPicker(LabeledEntities entityName,LabelingTools toolName)throws RemoteException{
 		jmeSimulation.setPicker(new LabelingToolSpecification(entityName,toolName));
+	}
+	
+	public List<Module> getModules()throws RemoteException{
+		return jmeSimulation.getModules();
 	}
 	
 	

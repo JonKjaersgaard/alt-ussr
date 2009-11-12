@@ -16,6 +16,7 @@ import ussr.builder.BuilderMultiRobotPreSimulation;
 import ussr.remote.facade.ActiveSimulation;
 
 import ussr.remote.facade.RemotePhysicsSimulation;
+import ussr.samples.atron.simulations.CommunicationDemo;
 
 /**
  * Frontend example: a main application that starts a single simulation using the remote facility 
@@ -61,7 +62,7 @@ public class GUISimulationAdapter {
                 try {
                     // Start using an xml file for a robot and a controller (both loaded by simulator process)
                    //simulation.start("samples/atron/car.xml", ussr.samples.atron.simulations.ATRONCarController1.class);
-                	//simulation.start(ATRONSimulation1.class);
+                	//simulation.start(CommunicationDemo.class);
                 	//simulation.start("samples/atron/car.xml");
                 	simulation.start(simulationXMLFile);
                 } catch (RemoteException e) {

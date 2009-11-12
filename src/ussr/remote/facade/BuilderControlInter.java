@@ -2,6 +2,7 @@ package ussr.remote.facade;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import ussr.builder.constructionTools.ConstructionToolSpecification;
 import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
@@ -92,9 +93,30 @@ public interface BuilderControlInter extends Remote {
 	 */
 	public  void connectAllModules()throws RemoteException;
 	
+	/**
+	 * Returns module from the end of the list of modules in simulation environment.
+	 * @param amountFromLastMode, amount of modules from the last module in the list.
+	 * @return Module, requested module from the end of the list.
+	 */
 	public Module getModuleCountingFromEnd(int amountFromLastMode ) throws RemoteException;
 	
+	/**
+	 * Moves the last added module in simulation environment on next connector of previously added module(the one before the last). 
+	 * @param supportedMRmoduleType, the type of module (modular robot).
+	 * @param connectorNr,connector number on the module added before the last. 
+	 */
 	public void moveToNextConnector(SupportedModularRobots supportedMRmoduleType,int connectorNr) throws RemoteException;
 	
+	/**
+	 * Returns the type of the module from the end of the list of modules in simulation environment.
+	 * @param amountFromLastMode, amount of modules from the last module in the list.
+	 * @return String, the type of requested module from the end of the list. 
+	 */
 	public String getModuleCountingFromEndType(int amountFromLastMode ) throws RemoteException;
+	
+	/**
+	 * Returns the list of modules in simulation environment.
+	 * @return list of modules in simulation environment.
+	 */
+	public List<Module> getModules()throws RemoteException;
 }
