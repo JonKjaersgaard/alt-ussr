@@ -106,11 +106,16 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 		/*Identifies selected module and readjusts tools accordingly, also calls for GUI re-adjustment*/
 		for(int index =0;index<selectModulesTypes.length;index++){
 			if(selectModulesTypes[index].isSelected()==true){
-				this.modularRobotName = selectModulesTypes[index].getModularRobotName();
+				this.modularRobotName = selectModulesTypes[index].getMRobotName();
 				this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(jmeSimulation,modularRobotName);
 				this.construction = selectOperations.getConstruction();				
 			}
 		}
+		
+		if (modularRobotName == null){
+			throw new Error("Not supported modular robot");
+		}
+		
 
 	}
 
@@ -161,7 +166,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 
 		if (toolName.equals(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR)){			
 			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(jmeSimulation, target);
-			System.out.println("Connector:"+selectedConnectorNr );
+			//System.out.println("Connector:"+selectedConnectorNr );
 			//Adapt Construct Robot tab
 			//ConstructRobotTab.setEnabledRotationToolBar(false);
 			//ConstructRobotTab.getJButtonMove().setEnabled(false);
@@ -241,7 +246,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	 */
 	private boolean isOdin(){
 		String typeofModule = this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());		
-		if (typeofModule.contains(SupportedModularRobots.ODIN.toString())){			
+		if (typeofModule.contains(SupportedModularRobots.ODIN.toString().toLowerCase().replace("o", "O"))){			
 			return true;
 		}
 		return false;

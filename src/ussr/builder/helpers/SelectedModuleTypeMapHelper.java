@@ -38,7 +38,7 @@ public class SelectedModuleTypeMapHelper {
 	 * Returns modular robot name supported by "builder". 
 	 * @return modularRobotName, modular robot supported by builder
 	 */
-	public SupportedModularRobots getModularRobotName() {
+	public SupportedModularRobots getMRobotName() {
 		return modularRobotName;
 	}
 
