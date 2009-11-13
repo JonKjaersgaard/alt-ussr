@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -60,6 +61,11 @@ public class SimulationTab extends Tabs {
 		JComboBox comboBox2 = new JComboBox( WorldDescription.CameraPosition.values() );        
 		DefaultCellEditor dce2 = new DefaultCellEditor( comboBox2 );
 		editors.add(dce2);
+		
+		Object[] ob= {java.lang.Boolean.class};
+		jCheckBox3 = new JCheckBox( );
+		DefaultCellEditor dce3 = new DefaultCellEditor(jCheckBox3);
+		editors.add(dce3);
 	
 		//jTableSimulationDescription =  new  javax.swing.JTable();
 		
@@ -71,7 +77,7 @@ public class SimulationTab extends Tabs {
 		
 		String[] columnNames = {"World Description","Values"};
 		
-		final String[] worldDescriptionParameters = {"Plane Size","Plane Texture","Camera Position"};
+		final String[] worldDescriptionParameters = {"Plane Size","Plane Texture","Camera Position", "The world is flat"};
 		
 		DefaultTableModel model = new DefaultTableModel(columnNames,worldDescriptionParameters.length){
 			public Object getValueAt(int row, int col)
@@ -92,7 +98,8 @@ public class SimulationTab extends Tabs {
 			//  Determine editor to be used by row             
 			public TableCellEditor getCellEditor(int row, int column){                       
 				int modelColumn = convertColumnIndexToModel( column );                       
-				if (modelColumn < editors.size()+1)                               
+				//if (modelColumn < editors.size()+1)
+				if(modelColumn <= 3)
 					return (TableCellEditor)editors.get(row);                     
 				else                               
 					return super.getCellEditor(row, column);                
@@ -191,7 +198,12 @@ public class SimulationTab extends Tabs {
 
 
 	private static javax.swing.JTable jTableSimulationDescription ;
+ 
+	private static JCheckBox jCheckBox3;
 
+	public static JCheckBox getComboBox3() {
+		return jCheckBox3;
+	} 
 
 
 }

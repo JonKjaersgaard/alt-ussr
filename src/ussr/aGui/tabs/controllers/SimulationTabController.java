@@ -40,7 +40,13 @@ public class SimulationTabController extends GeneralController {
 		}
 		model.setValueAt(planeSize, 0, 1);
 		
-		//model.setValueAt(TextureDescriptions.MARS_TEXTURE.toString(), 1, 1);
+		
+		//SimulationTab.getComboBox3().setSelected(true);
+		//Tests
+		model.setValueAt(TextureDescriptions.MARS_TEXTURE.toString(), 1, 1);
+		model.setValueAt(CameraPosition.DEFAULT, 2, 1);
+		//model.setValueAt(true, 3, 1);
+		
 		
 		//TableColumn column = SimulationTab.getJTable1().getColumnModel().getColumn(1);
 		//String[] values = new String[]{""+planeSize};
