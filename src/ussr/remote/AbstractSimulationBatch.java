@@ -137,6 +137,15 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             System.out.println("Assigning task...");
             worker.activate(parameters, run++);
         }
+        synchronized(passiveWorkers) {
+            while(passiveWorkers.size()<max_parallel_sims) {
+                try {
+                    passiveWorkers.wait();
+                } catch (InterruptedException e) {
+                    throw new Error("Unexpected interruption");
+                }
+            }
+        }
         System.out.println("Batch completed");
         reportRecord();
         System.exit(0);
