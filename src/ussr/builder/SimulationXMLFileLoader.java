@@ -1,5 +1,6 @@
 package ussr.builder;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ import ussr.samples.ObstacleGenerator;
  *Input format: samples/atron/car.xml ussr.samples.atron.simulations.ATRONCarController1.
  * @author Konstantinas
  */
-public class SimulationXMLFileLoader extends GenericSimulation {
+public class SimulationXMLFileLoader extends GenericSimulation implements Serializable {
 	
 	
 	private static Map<XMLTagsUsed,String> simulationWorldDescription;
@@ -73,9 +74,6 @@ public class SimulationXMLFileLoader extends GenericSimulation {
         /*Converter for converting values from String into corresponding type used in USSR*/
         descriptionConverter =  new SimulationDescriptionConverter(simulationWorldDescription,simulationPhysicsParameters); 
         
-        //SimulationTabController.setDescriptionConverter(descriptionConverter);
-        //SimulationTabController.updateTable();
-        
        String controllerLocation = simulationWorldDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
         
         //String controllerLocation  = "";
@@ -109,6 +107,10 @@ public class SimulationXMLFileLoader extends GenericSimulation {
         world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
 	}
 	
+	public static SimulationDescriptionConverter getDescriptionConverter() {
+		return descriptionConverter;
+	}
+
 	private static WorldDescription createWorld() {
 		/*Assign values to world*/
 		WorldDescription world = new WorldDescription();	        
