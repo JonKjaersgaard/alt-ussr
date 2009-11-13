@@ -76,7 +76,7 @@ public class CommunicationVisualizerGUI extends JPanel {
     }
 		
 	private void initializeComponents() {		
-		canvas = new DrawingCanvas(simulation, 55, numberOfModules);
+		/*canvas = new DrawingCanvas(simulation, 55, numberOfModules);*/
 	    canvas.addMouseListener(new CanvasMouseListener());	    
 	    startSimulationButton = new JButton("Start simulation");
 	    modulesButton = new JButton("Modules");

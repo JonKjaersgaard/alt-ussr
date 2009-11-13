@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,7 +33,8 @@ import ussr.util.Pair;
 public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 
 	private static final long serialVersionUID = 1L;
-	protected JMESimulation simulation;
+	/*protected JMESimulation simulation;*/
+	private List<Module> modules;
 	protected int rows;
 	protected int columns;
 	protected int rowHeight;
@@ -61,8 +63,9 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 	private CommunicationContainer transmitterReceiverContainer = new CommunicationContainer();
 	private CommunicationContainer transmitterReceiverContainerBackup = new CommunicationContainer();
 			
-	public DrawingCanvas(JMESimulation simulation, int rows, int columns) {
-		this.simulation = simulation;
+	public DrawingCanvas(List<Module> modules,/*JMESimulation simulation,*/ int rows, int columns) {
+		/*this.simulation = simulation;*/
+		this.modules = modules;
 		this.rows = rows;
 		this.columns = columns;
 		setSize(getPreferredSize());
@@ -228,7 +231,7 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
     		int i;
     		int j;    		
     		i = 0;
-    		for(Module m : simulation.getModules()) {    			    			
+    		for(Module m : modules) {    			    			
     			drawModuleID(g2a, m, i * columnWidth + DX_MODULE_OFFSET, DY_MODULE_OFFSET);
     			i++;
     		}
