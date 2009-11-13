@@ -92,7 +92,8 @@ public abstract class ControllerImpl implements Controller {
     public void delay(int ms) {
     	float stopTime = module.getSimulation().getTime()+ms/1000f;
     	while(stopTime>module.getSimulation().getTime()) {
-    		yield();
+    		//yield();
+    	    module.getSimulation().waitForPhysicsStep(false);
     	}
 	}
 
