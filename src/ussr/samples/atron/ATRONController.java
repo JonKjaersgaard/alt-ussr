@@ -442,7 +442,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     			final byte[] data = device.getData().getData();
     			final int index = i;
     			if(this.simulateCommFailure&&this.commFailureRisk[i]>this.commFailureRandomizer.nextFloat()) { 
-    			    System.err.println("Simulation packet lost");
+    			    //System.err.println("Simulation packet lost");
     			    return;
     			}
     			if(PhysicsParameters.get().useModuleEventQueue())
