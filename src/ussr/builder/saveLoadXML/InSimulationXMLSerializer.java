@@ -16,6 +16,7 @@ import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMESimulation;
 import ussr.remote.facade.BuilderControlInter;
+import ussr.remote.facade.RemotePhysicsSimulation;
 
 public class InSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate{
     /**
@@ -23,43 +24,21 @@ public class InSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate{
      */
     private JMESimulation simulation;
     
-    private BuilderControlInter builderControl;
-
+  
     public InSimulationXMLSerializer(PhysicsSimulation simulation) {
         if(!(simulation instanceof JMESimulation)) throw new Error("Internal error: only JME-based simulations supported by builder");
         this.simulation = (JMESimulation)simulation;
         
     }
     
-    public InSimulationXMLSerializer(BuilderControlInter builderControl) {
-      this.builderControl = builderControl;        
-    }
-    
-
     @Override
     protected int numberOfSimulatedModules() {
-        //return simulation.getModules().size();
-    	
-    	int amountModules = 0;
-    	try {
-    		amountModules = builderControl.getModules().size();
-		} catch (RemoteException e) {
-			throw new Error("Failed to extract amount of modules from simulation environment, due to remote exception.");
-		}
-		return amountModules;
+        return simulation.getModules().size();
     }
 
     @Override
     protected Module getModuleByIndex(int module) {
-        //return simulation.getModules().get(module);
-    	Module moduleByIndex = null;
-    	try {
-			moduleByIndex = builderControl.getModuleByIndex(module);
-		} catch (RemoteException e) {
-			throw new Error("Failed get module with index "+ module+", due to remote exception.");
-		}
-    	
-    	return moduleByIndex;
+        return simulation.getModules().get(module);    	
     }
 
     protected void createNewModule(String moduleName, String moduleType, VectorDescription modulePosition, RotationDescription moduleRotation, LinkedList<Color> listColorsComponents,LinkedList<Color> listColorsConnectors, String labelsModule, String[] labelsConnectors){
@@ -67,21 +46,10 @@ public class InSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate{
         if (moduleType.contains("ATRON")||moduleType.equalsIgnoreCase("default")){
             ModulePosition modulePos= new ModulePosition(moduleName,"ATRON",modulePosition,moduleRotation);
             //ModulePosition modulePos= new ModulePosition(moduleName,"default",modulePosition,moduleRotation);
-            try {
-				newModule=  builderControl.createModule(modulePos, true);
-			} catch (RemoteException e) {
-				throw new Error("Failed to create new module of type "+ modulePos.getType()+", due to remote exception.");
-			}
-            
-            
-           // newModule = simulation.createModule(modulePos,true);            
+            newModule = simulation.createModule(modulePos,true);            
         }else{
             ModulePosition modulePos= new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation);
-            try {
-				newModule=  builderControl.createModule(modulePos, true);
-			} catch (RemoteException e) {
-				throw new Error("Failed to create new module of type "+ modulePos.getType()+", due to remote exception.");
-			}         
+            newModule = simulation.createModule(modulePos,true);        
         }
 
         if(labelsModule.contains(BuilderHelper.getTempLabel())){            
@@ -111,13 +79,7 @@ public class InSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate{
 
 	@Override
 	protected WorldDescription getWorldDescription() {
-        WorldDescription world;
-        try {
-			world = builderControl.getWorldDescription();
-		} catch (RemoteException e) {
-			throw new Error ("Failed to extract simulation world decription, due to remote exception.");
-		}
-		return world;
+      return simulation.getWorldDescription();
 	}
 
 

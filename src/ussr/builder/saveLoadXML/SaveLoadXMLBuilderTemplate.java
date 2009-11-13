@@ -1,6 +1,7 @@
 package ussr.builder.saveLoadXML;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -35,7 +36,7 @@ import ussr.physics.PhysicsParameters;
  * for builder (QPSS).
  * @author Konstantinas
  */  
-public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate  {
+public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 
 	/**
 	 * Method for defining the format of XML to print into the xml file. In other words
