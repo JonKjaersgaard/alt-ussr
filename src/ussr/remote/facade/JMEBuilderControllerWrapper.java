@@ -242,7 +242,7 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 	 * @param amountFromLastMode, amount of modules from the last module in the list.
 	 * @return Module, requested module from the end of the list.
 	 */
-	public Module getModuleCountingFromEnd(int amountFromLastMode ) throws RemoteException {
+	private Module getModuleCountingFromEnd(int amountFromLastMode ) throws RemoteException {
 		int amountModules = jmeSimulation.getModules().size();
 		if (amountModules >= amountFromLastMode){
 			Module requestedModule= jmeSimulation.getModules().get(amountModules-amountFromLastMode);
@@ -358,11 +358,7 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 	public void setLabelingToolSpecPicker(LabeledEntities entityName,LabelingTools toolName)throws RemoteException{
 		jmeSimulation.setPicker(new LabelingToolSpecification(entityName,toolName));
 	}
-	
-	public List<Module> getModules()throws RemoteException{
-		return jmeSimulation.getModules();
-	}
-	
+		
 	public Module createModule(ModulePosition position, boolean assign)throws RemoteException{
 		return jmeSimulation.createModule(position, assign);
 	}

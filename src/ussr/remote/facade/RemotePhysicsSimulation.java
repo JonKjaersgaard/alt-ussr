@@ -2,12 +2,15 @@ package ussr.remote.facade;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import com.jme.scene.state.LightState;
 import com.jme.scene.state.WireframeState;
 
+import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
+import ussr.model.Module;
 import ussr.physics.jme.pickers.Picker;
 
 /**
@@ -18,7 +21,7 @@ import ussr.physics.jme.pickers.Picker;
  * RemotePhysicsSimulationImpl class must simply implement the corresponding method. 
  * 
  * @author ups
- *
+ * @author Konstantinas, added support for controlling rendering, builder control and so on.
  */
 public interface RemotePhysicsSimulation extends Remote {
 
@@ -83,7 +86,12 @@ public interface RemotePhysicsSimulation extends Remote {
 	 */
     public void setSingleStep(boolean singleStep)throws RemoteException;
         
-	
+    /**
+     * Get the current simulation time
+     * @return the simulation time
+     */
+    public float getTime() throws RemoteException;
+       
 	/**
 	 * Returns the object for controlling rendering of remote simulation.
 	 * @return object, for controlling rendering of remote simulation. 
@@ -95,11 +103,11 @@ public interface RemotePhysicsSimulation extends Remote {
 	 * @return object, for building modular robot in remote simulation.
 	 */
 	public BuilderControlInter getBuilderControl()throws RemoteException;
-		
-    /**
-     * Get the current simulation time
-     * @return the simulation time
-     */
-    public float getTime() throws RemoteException;
-    	
+   
+	/**
+	 * Saves the data about simulation(or only robot) in xml file.
+	 * @param ussrXmlFileType, the type of xml, simulation description with reference to robot description xml file or only robot.
+	 * @param fileDirectoryName, the directory to save xml file to.
+	 */
+	public void saveToXML(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName)throws RemoteException;
 }

@@ -88,7 +88,7 @@ public class GUISimulationAdapter {
         }
         //ArrayList<Object> 
         
-        MainFrameSeparateController.setRemotePhysicsSimulation(sim);
+        GeneralController.setRemotePhysicsSimulation(sim);
         MainFrameSeparateController.setRendererControl(sim.getRendererControl());
         //MainFrameSeparateController.setBuilderControl(sim.getBuilderControl());
        //TabsControllers.setBuilderController(sim.getBuilderControl());

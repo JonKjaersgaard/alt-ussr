@@ -2,12 +2,16 @@ package ussr.remote.facade;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 import com.jme.scene.state.LightState;
 import com.jme.scene.state.WireframeState;
 
+import ussr.builder.enumerations.UssrXmlFileTypes;
+import ussr.builder.saveLoadXML.InSimulationXMLSerializer;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
+import ussr.model.Module;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
@@ -24,7 +28,7 @@ import ussr.physics.jme.pickers.Picker;
  * process when passed as argument or remain the simulator process when returned)
  * 
  * @author ups
- *
+ * @author Konstantinas, added support for controlling rendering, builder control and so on.
  */
 public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements RemotePhysicsSimulation  {
     private PhysicsSimulation simulation;
@@ -93,6 +97,16 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 	 */
 	public BuilderControlInter getBuilderControl()throws RemoteException{
 		return new JMEBuilderControllerWrapper((JMESimulation)simulation);
+	}
+
+	/**
+	 * Saves the data about simulation(or only robot) in xml file.
+	 * @param ussrXmlFileType, the type of xml, simulation description with reference to robot description xml file or only robot.
+	 * @param fileDirectoryName, the directory to save xml file to.
+	 */
+	public void saveToXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException {
+		InSimulationXMLSerializer saveXML = new InSimulationXMLSerializer((JMESimulation)simulation);
+		saveXML.saveXMLfile(ussrXmlFileType, fileDirectoryName);		
 	}
 
 }
