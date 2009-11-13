@@ -159,8 +159,10 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
                     Packet p = queue.remove(0);
                     if(TRACE&&!this.isConnected(p.channel)) System.out.println("["+getMyID()+"] Warning: attempting ack with no neighbor");
                     super.sendMessage(p.payload, (byte)p.payload.length, p.channel);
-                } else
+                } else {
                     super.sendMessage(bmsg,(byte)size, (byte)channel);
+                    break;
+                }
                 if(++retries>=previous*2) {
                     previous = retries;
                     if(TRACE) System.out.println("["+getMyID()+"] Waiting for packet confirmation ("+retries+")");
@@ -170,7 +172,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
                         break;
                     }
                 }
-                this.delay(TRANSMIT_DELAY);
+                //this.delay(TRANSMIT_DELAY);
             }
             if(TRACE) System.out.println("["+getMyID()+"] State transmission operation complete");
         }
