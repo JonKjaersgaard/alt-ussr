@@ -4,6 +4,7 @@ public class DistributedStateManager {
     private static byte MAGIC_HEADER = 107;
     private static byte HEADER_PLUS_FIXED_PAYLOAD = 4;
     protected static final int WAITTIME = 100;
+    protected static final float WAITTIME_MS = WAITTIME/1000.0f;
     
     private class EightMsg {
 
@@ -96,12 +97,25 @@ public class DistributedStateManager {
     private int recipientID;
     private boolean startingModule;
     private boolean alternateSequenceFlag;
-
+    private float lastTime;
+    
     public DistributedStateManager() {
         startSender();
     }
     
+    public void senderAct() {
+        float time = provider.getTime();
+        if(lastTime+WAITTIME_MS>time) return;
+        lastTime = time;
+        EightMsg msg; 
+        synchronized(DistributedStateManager.this) {
+            msg = new EightMsg(alternateSequenceFlag, globalState, recipientID, pendingStates);
+        }
+        provider.broadcastMessage(msg.encode());
+    }
+    
     private void startSender() {
+        if(true) return;
         new Thread() {
             public void run() {
                 synchronized(DistributedStateManager.this) {

@@ -50,6 +50,7 @@ public class carsnakeSimpleGen extends StateMachine {
   }
 
   protected void stateMachine() { 
+    api.yield();
     if(token == 255) { /* try to see if there's a new state for me */
       token = stateManager.getMyNewState();
 	  if(token!=255) {

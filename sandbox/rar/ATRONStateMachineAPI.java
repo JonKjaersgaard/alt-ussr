@@ -64,4 +64,8 @@ public class ATRONStateMachineAPI extends ATRONController implements Communicati
     public void reportResult(boolean b) {
         registrant.reportResult(b);
     }
+    
+    public float getTime() {
+        return module.getSimulation().getTime();
+    }
 }

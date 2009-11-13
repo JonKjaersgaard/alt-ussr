@@ -9,7 +9,10 @@ public abstract class StateMachine {
     
     public void activate() {
         System.out.println("Statemachine activated");
-        while(true) this.stateMachine();
+        while(true) {
+            this.stateMachine();
+            stateManager.senderAct();
+        }
     }
     
     protected abstract void stateMachine();
