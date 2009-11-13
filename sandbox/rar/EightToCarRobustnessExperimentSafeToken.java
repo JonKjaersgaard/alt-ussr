@@ -8,7 +8,9 @@ package rar;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -37,14 +39,15 @@ import ussr.samples.atron.GenericATRONSimulation;
  */ 
 public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnessExperiment {
 
-    private static final int TRANSMIT_DELAY = 50;
+    private static final int TRANSMIT_DELAY = 100;
+    private static final float TRANSMIT_DELAY_MS = TRANSMIT_DELAY/1000.0f;
     private static final int MAX_N_TRANSMIT_RETRIES = 32;
     private static final boolean TRACE = false;
     
     public static void main(String argv[]) {
         if(ParameterHolder.get()==null)
-            //ParameterHolder.set(new Parameters(0,0.5f,0.75f,0.0f,Float.MAX_VALUE));
-            ParameterHolder.set(new Parameters(0,0.0f,0.0f,0.0f,Float.MAX_VALUE));
+            ParameterHolder.set(new Parameters(0,0.5f,0.75f,0.0f,Float.MAX_VALUE));
+            //ParameterHolder.set(new Parameters(0,0.0f,0.0f,0.0f,Float.MAX_VALUE));
         new EightToCarRobustnessExperimentSafeToken().main(); 
     }
 
@@ -58,8 +61,40 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
     }
 
     private static class Packet {
-        byte channel; byte[] payload;
-        Packet(byte channel, byte[] payload) { this.channel = channel; this.payload = payload; }
+        byte channel; byte[] payload; int id; private int number_of_tries;
+        Packet(byte channel, byte[] payload) { this(channel,payload,-1); }
+        Packet(byte channel, byte[] payload, int id) { this.channel = channel; this.payload = payload; this.id = id; } 
+        /* (non-Javadoc)
+         * @see java.lang.Object#hashCode()
+         */
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + channel;
+            result = prime * result + Arrays.hashCode(payload);
+            return result;
+        }
+        /* (non-Javadoc)
+         * @see java.lang.Object#equals(java.lang.Object)
+         */
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Packet other = (Packet) obj;
+            if (channel != other.channel)
+                return false;
+            if (!Arrays.equals(payload, other.payload))
+                return false;
+            return true;
+        }
+        public synchronized void incTries() { number_of_tries++; }
+        public int getTries() { return number_of_tries; }
     }
     
     private static class CacheEntry {
@@ -113,8 +148,10 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
         byte lastConnectorTry = 0;
         int retries = 0;
         byte packetCounter = 0;
-        List<Packet> queue = java.util.Collections.synchronizedList(new LinkedList<Packet>());
-        List<CacheEntry> packetsSeen = java.util.Collections.synchronizedList(new LinkedList<CacheEntry>());
+        List<Packet> ackQueue = java.util.Collections.synchronizedList(new LinkedList<Packet>());
+        List<Packet> outbound = new LinkedList<Packet>();
+        List<CacheEntry> packetsSeen = new LinkedList<CacheEntry>();
+        private float lastSendTime = 0;
 
         public EightController() {
             Parameters p = (Parameters)ParameterHolder.get();
@@ -140,41 +177,62 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
 
         private void lowlevelSendMessage(int[] message, int size, int channel) {
             byte[] bmsg = new byte[message.length+HEADER_SIZE];
-            byte counter = packetCounter;
+            byte counter = packetCounter++;
             bmsg[0] = MAGIC_SEND_HEADER;
             bmsg[1] = counter;
             bmsg[2] = (byte) getMyID();
             for(int i=HEADER_SIZE;i<message.length+HEADER_SIZE;i++)
                 bmsg[i] = (byte)message[i-HEADER_SIZE];
-            //super.sendMessage(bmsg,(byte)size, (byte)channel);
-            //if(true) return;
-            int retries = 0, previous = 0;
-            while(counter==packetCounter) {
-                if(!this.isConnected(channel)) {
-                    if(TRACE) System.out.println("["+getMyID()+"] Warning: attempting transmit with no neighbor");
-                    packetCounter++;
-                    break;
-                }
-                if(queue.size()>0) {
-                    Packet p = queue.remove(0);
-                    if(TRACE&&!this.isConnected(p.channel)) System.out.println("["+getMyID()+"] Warning: attempting ack with no neighbor");
-                    super.sendMessage(p.payload, (byte)p.payload.length, p.channel);
-                } else {
-                    super.sendMessage(bmsg,(byte)size, (byte)channel);
-                    break;
-                }
-                if(++retries>=previous*2) {
-                    previous = retries;
-                    if(TRACE) System.out.println("["+getMyID()+"] Waiting for packet confirmation ("+retries+")");
-                    if(retries>=MAX_N_TRANSMIT_RETRIES) {
+            synchronized(outbound) { outbound.add(new Packet((byte)channel,bmsg,counter)); }
+        }
+        
+        private void sendAct() {
+            float time = module.getSimulation().getTime();
+            if(lastSendTime+TRANSMIT_DELAY_MS>time) return;
+            lastSendTime = time;
+            if(ackQueue.size()>0) {
+                Packet p = ackQueue.remove(0);
+                if(TRACE&&!this.isConnected(p.channel)) System.out.println("["+getMyID()+"] Warning: attempting ack with no neighbor");
+                super.sendMessage(p.payload, (byte)p.payload.length, p.channel);
+            } else if(outbound.size()>0) {
+                Packet p;
+                synchronized(outbound) {
+                    if(outbound.size()==0) return;
+                    p = outbound.remove(0);
+                    if(p.getTries()>=MAX_N_TRANSMIT_RETRIES) {
                         if(TRACE) System.out.println("["+getMyID()+"] Timeout");
-                        packetCounter++;
-                        break;
+                        return;
                     }
+                    p.incTries();
+                    outbound.add(p);
                 }
-                //this.delay(TRANSMIT_DELAY);
+                if(TRACE) System.out.println("["+getMyID()+"] Sending outbound packet id "+p.id);
+                super.sendMessage(p.payload, (byte)p.payload.length, p.channel);
             }
-            if(TRACE) System.out.println("["+getMyID()+"] State transmission operation complete");
+            
+//            while(counter==packetCounter) {
+//                if(!this.isConnected(channel)) {
+//                    if(TRACE) System.out.println("["+getMyID()+"] Warning: attempting transmit with no neighbor");
+//                    packetCounter++;
+//                    break;
+//                }
+//                if(ackQueue.size()>0) {
+//                } else {
+//                    super.sendMessage(bmsg,(byte)size, (byte)channel);
+//                    break;
+//                }
+//                if(++retries>=previous*2) {
+//                    previous = retries;
+//                    if(TRACE) System.out.println("["+getMyID()+"] Waiting for packet confirmation ("+retries+")");
+//                    if(retries>=MAX_N_TRANSMIT_RETRIES) {
+//                        if(TRACE) System.out.println("["+getMyID()+"] Timeout");
+//                        packetCounter++;
+//                        break;
+//                    }
+//                }
+//                //this.delay(TRANSMIT_DELAY);
+//            }
+//            if(TRACE) System.out.println("["+getMyID()+"] State transmission operation complete");
         }
         private byte[] lowlevelReceiveMessage(byte[] message, int channel) {
             if(message.length<HEADER_SIZE || (message[0]!=MAGIC_SEND_HEADER && message[0]!=MAGIC_ACK_HEADER)) {
@@ -186,7 +244,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
                 byte[] reply = new byte[HEADER_SIZE];
                 reply[0] = MAGIC_ACK_HEADER;
                 reply[1] = (byte)(message[1]);
-                queue.add(new Packet((byte)channel,reply));
+                ackQueue.add(new Packet((byte)channel,reply));
                 // Have we seen this packet before?
                 CacheEntry entry = new CacheEntry(message[2],message[1]);
                 if(packetsSeen.contains(entry)) {
@@ -202,11 +260,17 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
                     payload[i-HEADER_SIZE] = message[i];
                 return payload;
             } else {
-                if(message[1]==packetCounter) {
-                    if(TRACE) System.out.println("["+getMyID()+"] Packet confirmed");
-                    packetCounter++;
-                    return null;
-                } else {
+                synchronized(outbound) {
+                    byte counter = message[1];
+                    Iterator<Packet> packets = outbound.iterator();
+                    while(packets.hasNext()) {
+                        Packet p = packets.next();
+                        if(p.id==counter) {
+                            packets.remove();
+                            if(TRACE) System.out.println("["+getMyID()+"] Packet confirmed");
+                            return null;
+                        }
+                    }
                     if(TRACE) System.out.println("["+getMyID()+"] Ignoring confirm");
                     return null;
                 }
@@ -238,6 +302,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
             while(eight2car_active)
             {
                 super.yield();
+                sendAct();
                 if(token[0]!=255 && token[0]!=-1) {
                     System.out.println("Module "+this.getName()+" in state "+token[0]);
                     //delay(500);
