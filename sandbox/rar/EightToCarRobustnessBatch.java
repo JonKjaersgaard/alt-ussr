@@ -1,4 +1,4 @@
-package ussr.samples.atron.simulations;
+package rar;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -11,7 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import ussr.samples.atron.simulations.EightToCarRobustnessExperiment.Parameters;
+import rar.EightToCarRobustnessExperiment.Parameters;
+
 
 import ussr.remote.AbstractSimulationBatch;
 import ussr.remote.facade.ParameterHolder;

@@ -4,7 +4,7 @@
  * This software is distributed under the BSD open-source license.
  * For licensing see the file LICENCE.txt included in the root of the USSR distribution.
  */
-package ussr.samples.atron.simulations;
+package rar;
 
 import gen.carsnakeSimpleGen;
 
@@ -15,9 +15,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import rar.ATRONStateMachineAPI;
-import rar.ExperimentResultRegistrant;
-import rar.StateMachine;
 
 import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
