@@ -2,6 +2,7 @@ package ussr.aGui.fileChooser.controllers;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.rmi.RemoteException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -25,16 +26,7 @@ public class FileChooserXMLController extends FileChooserController {
 	 * Interface for XML processing
 	 */
 	private SaveLoadXMLFileTemplate saveLoadXML;
-
-
-	/**
-	 * Controls the functionality of both forms of file chooser: Open and Save.
-	 * Here also manages calls for XML processing.
-	 * @param jmeSimulation, the physical simulation.
-	 */
-	public FileChooserXMLController(/*JMESimulation jmeSimulation*/){
-		/*	this.jmeSimulation = jmeSimulation;*/
-	}	
+	
 
 	@Override
 	public void controlOpenDialog(ActionEvent evt, JFileChooser fileChooser,
@@ -75,8 +67,13 @@ public class FileChooserXMLController extends FileChooserController {
 		String command = evt.getActionCommand();//Selected button command			
 		if(command.equalsIgnoreCase(ActionCommands.APPROVESELECTION.toString())  ){		        
 			String fileDirectoryName = fileChooser.getSelectedFile().toString();
-			saveLoadXML = new InSimulationXMLSerializer(builderControl);
-			saveLoadXML.saveXMLfile(ussXmlFileType, fileDirectoryName);
+			//saveLoadXML = new InSimulationXMLSerializer(remotePhysicsSimulation);
+			//saveLoadXML.saveXMLfile(ussXmlFileType, fileDirectoryName);
+			try {
+				remotePhysicsSimulation.saveToXML(ussXmlFileType, fileDirectoryName);
+			} catch (RemoteException e) {
+				throw new Error("Failed to save "+ ussXmlFileType.toString()+" description in xml file "+ fileDirectoryName+ ", due ro remote exception");
+			}
 
 			fileChooserFrame.dispose();//close the frame(window)			
 		}else if (command.equalsIgnoreCase(ActionCommands.CANCELSELECTION.toString())){//Cancel pressed			

@@ -23,10 +23,6 @@ import ussr.remote.facade.SimulationRendererControlInter;
  */
 public class MainFrameSeparateController extends GeneralController {
 
-	/**
-	 * The remote(running of separate JVM than GUI) physics simulation.
-	 */
-	private static RemotePhysicsSimulation remotePhysicsSimulation; 
 
 	/**
 	 * Remote version of rendering control object.
@@ -385,13 +381,7 @@ public class MainFrameSeparateController extends GeneralController {
 		return builderControl;
 	}*/
 
-	/**
-	 * Sets remote physics simulation for this controller.
-	 * @param remotePhysicsSimulation, the remote physics simulation.
-	 */
-	public static void setRemotePhysicsSimulation(RemotePhysicsSimulation remotePhysicsSimulation) {
-		MainFrameSeparateController.remotePhysicsSimulation = remotePhysicsSimulation;
-	}
+	
 
 	/**
 	 * Sets renderer control of remote physics simulation for this controller.

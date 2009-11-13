@@ -36,11 +36,11 @@ public class ModuleCommunicationVisualizerController extends TabsControllers {
 		ModuleCommunicationVisualizer.getJButtonRun().setEnabled(false);
 		ModuleCommunicationVisualizer.getJButtonReset().setEnabled(true);
 		
-		try {
-			modules = builderControl.getModules();
+		/*try {
+			modules = remotePhysicsSimulation.getModules();
 		} catch (RemoteException e) {
 			throw new Error ("Failed to receive the list of modules, due to remote exception.");
-		}
+		}*/
 		
 	//	modules = jmeSimulation.getModules();	 
 		numberOfModules = modules.size();
@@ -78,7 +78,7 @@ public class ModuleCommunicationVisualizerController extends TabsControllers {
 
 		jmeSimulation.setPause(false);	
 
-		DrawingCanvas drawingCanvasNew = new DrawingCanvas(jmeSimulation, CANVAS_ROWS, numberOfModules);
+		DrawingCanvas drawingCanvasNew = new DrawingCanvas( modules,/*jmeSimulation,*/ CANVAS_ROWS, numberOfModules);
 		drawingCanvasNew.addMouseListener(new CanvasMouseListener(drawingCanvas));
 		//jScrollPane.setViewportView(drawingCanvasNew); //add canvas to scroll pane
 
