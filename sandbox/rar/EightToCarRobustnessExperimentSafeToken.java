@@ -35,7 +35,7 @@ import ussr.samples.atron.GenericATRONSimulation;
  * 
  * @author ups
  */ 
-public class EightToCarRobustnessExperimentToken extends EightToCarRobustnessExperiment {
+public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnessExperiment {
 
     private static final int TRANSMIT_DELAY = 50;
     private static final int MAX_N_TRANSMIT_RETRIES = 32;
@@ -45,7 +45,7 @@ public class EightToCarRobustnessExperimentToken extends EightToCarRobustnessExp
         if(ParameterHolder.get()==null)
             //ParameterHolder.set(new Parameters(0,0.5f,0.75f,0.0f,Float.MAX_VALUE));
             ParameterHolder.set(new Parameters(0,0.0f,0.0f,0.0f,Float.MAX_VALUE));
-        new EightToCarRobustnessExperimentToken().main(); 
+        new EightToCarRobustnessExperimentSafeToken().main(); 
     }
 
     @Override
@@ -112,6 +112,9 @@ public class EightToCarRobustnessExperimentToken extends EightToCarRobustnessExp
         boolean eight2car_active = true;
         byte lastConnectorTry = 0;
         int retries = 0;
+        byte packetCounter = 0;
+        List<Packet> queue = java.util.Collections.synchronizedList(new LinkedList<Packet>());
+        List<CacheEntry> packetsSeen = java.util.Collections.synchronizedList(new LinkedList<CacheEntry>());
 
         public EightController() {
             Parameters p = (Parameters)ParameterHolder.get();
@@ -128,15 +131,87 @@ public class EightToCarRobustnessExperimentToken extends EightToCarRobustnessExp
             int state = message[1];
             int moduleNumber = message[2];
             System.out.println("Module "+getMyID()+" setting module "+moduleNumber+" to state "+state+" through channel "+channel);
-            byte[] bmessage = new byte[message.length];
-            for(int i=0; i<message.length; i++) bmessage[i] = (byte)message[i];
-            super.sendMessage(bmessage, (byte)size, (byte)channel);
+            lowlevelSendMessage(message, size, channel);
         }
 
         private static final byte HEADER_SIZE = 3;
         private static final byte MAGIC_SEND_HEADER = (byte)123;
         private static final byte MAGIC_ACK_HEADER = (byte)124;
 
+        private void lowlevelSendMessage(int[] message, int size, int channel) {
+            byte[] bmsg = new byte[message.length+HEADER_SIZE];
+            byte counter = packetCounter;
+            bmsg[0] = MAGIC_SEND_HEADER;
+            bmsg[1] = counter;
+            bmsg[2] = (byte) getMyID();
+            for(int i=HEADER_SIZE;i<message.length+HEADER_SIZE;i++)
+                bmsg[i] = (byte)message[i-HEADER_SIZE];
+            //super.sendMessage(bmsg,(byte)size, (byte)channel);
+            //if(true) return;
+            int retries = 0, previous = 0;
+            while(counter==packetCounter) {
+                if(!this.isConnected(channel)) {
+                    if(TRACE) System.out.println("["+getMyID()+"] Warning: attempting transmit with no neighbor");
+                    packetCounter++;
+                    break;
+                }
+                if(queue.size()>0) {
+                    Packet p = queue.remove(0);
+                    if(TRACE&&!this.isConnected(p.channel)) System.out.println("["+getMyID()+"] Warning: attempting ack with no neighbor");
+                    super.sendMessage(p.payload, (byte)p.payload.length, p.channel);
+                } else
+                    super.sendMessage(bmsg,(byte)size, (byte)channel);
+                if(++retries>=previous*2) {
+                    previous = retries;
+                    if(TRACE) System.out.println("["+getMyID()+"] Waiting for packet confirmation ("+retries+")");
+                    if(retries>=MAX_N_TRANSMIT_RETRIES) {
+                        if(TRACE) System.out.println("["+getMyID()+"] Timeout");
+                        packetCounter++;
+                        break;
+                    }
+                }
+                this.delay(TRANSMIT_DELAY);
+            }
+            if(TRACE) System.out.println("["+getMyID()+"] State transmission operation complete");
+        }
+        private byte[] lowlevelReceiveMessage(byte[] message, int channel) {
+            if(message.length<HEADER_SIZE || (message[0]!=MAGIC_SEND_HEADER && message[0]!=MAGIC_ACK_HEADER)) {
+                System.err.println("Illegal packet");
+                return message;
+            }
+            if(message[0]==MAGIC_SEND_HEADER) {
+                // Send ack
+                byte[] reply = new byte[HEADER_SIZE];
+                reply[0] = MAGIC_ACK_HEADER;
+                reply[1] = (byte)(message[1]);
+                queue.add(new Packet((byte)channel,reply));
+                // Have we seen this packet before?
+                CacheEntry entry = new CacheEntry(message[2],message[1]);
+                if(packetsSeen.contains(entry)) {
+                    if(TRACE) System.out.println("["+getMyID()+"] discarding duplicate packet <"+message[2]+","+message[1]+">");
+                    return null;
+                }
+                packetsSeen.add(0, entry);
+                if(TRACE) System.out.println("["+getMyID()+"] cache added <"+message[2]+","+message[1]+">");
+                if(packetsSeen.size()>CACHE_SIZE) packetsSeen.remove(packetsSeen.size()-1);
+                // Extract payload
+                byte[] payload = new byte[message.length-HEADER_SIZE];
+                for(int i=HEADER_SIZE; i<message.length; i++)
+                    payload[i-HEADER_SIZE] = message[i];
+                return payload;
+            } else {
+                if(message[1]==packetCounter) {
+                    if(TRACE) System.out.println("["+getMyID()+"] Packet confirmed");
+                    packetCounter++;
+                    return null;
+                } else {
+                    if(TRACE) System.out.println("["+getMyID()+"] Ignoring confirm");
+                    return null;
+                }
+            }
+
+        }
+        
         private void setNorthIOPort(int value) { }
 
         @Override
@@ -706,6 +781,7 @@ public class EightToCarRobustnessExperimentToken extends EightToCarRobustnessExp
         }
 
         public void handleMessage(byte[] incoming, int messageSize, int channel) {
+            incoming = lowlevelReceiveMessage(incoming,channel);
             if(incoming==null) return;
             messageSize = incoming.length;
             if (incoming[2]==getMyID())
