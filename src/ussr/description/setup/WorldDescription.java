@@ -6,6 +6,7 @@
  */
 package ussr.description.setup;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,7 +24,7 @@ import ussr.description.geometry.VectorDescription;
  * @author ups
  *
  */
-public class WorldDescription extends Description {
+public class WorldDescription extends Description implements Serializable {
 
     /**
      * Default camera positions
