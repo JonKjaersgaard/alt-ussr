@@ -153,7 +153,9 @@ public class ModuleCommunicationVisualizer extends Tabs {
 			boolean[] canEdit = new boolean [] {
 					false, true
 			};
-
+			
+			
+			
 			@SuppressWarnings("unchecked")
 			public Class getColumnClass(int columnIndex) {
 				return types [columnIndex];
@@ -162,7 +164,6 @@ public class ModuleCommunicationVisualizer extends Tabs {
 			  public boolean isCellEditable(int rowIndex, int columnIndex) {
 	                return canEdit [columnIndex];
 	            }
-			
 		});
 
 		jTableModules.setCellSelectionEnabled(true);
