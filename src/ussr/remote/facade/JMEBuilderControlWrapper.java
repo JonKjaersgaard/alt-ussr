@@ -45,14 +45,14 @@ import ussr.samples.odin.OdinBuilder;
 import ussr.samples.odin.modules.Odin;
 
 
-public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements BuilderControlInter{
+public class JMEBuilderControlWrapper extends UnicastRemoteObject implements BuilderControlInter{
 	private JMESimulation jmeSimulation;	
 
 	//STOPPED HERE
 	//final static ConstructionToolSpecification OPPOSITE = new ConstructionToolSpecification(jmeSimulation,ConstructRobotTabController.getChosenMRname(),ConstructionTools.OPPOSITE_ROTATION);
 
 
-	public JMEBuilderControllerWrapper(JMESimulation jmeSimulation) throws RemoteException{
+	public JMEBuilderControlWrapper(JMESimulation jmeSimulation) throws RemoteException{
 		this.jmeSimulation = jmeSimulation;
 	}
 
@@ -363,12 +363,5 @@ public class JMEBuilderControllerWrapper extends UnicastRemoteObject implements 
 		return jmeSimulation.createModule(position, assign);
 	}
 	
-	public WorldDescription getWorldDescription()throws RemoteException{
-		return jmeSimulation.getWorldDescription();
-	}
-	
-	public Module getModuleByIndex(int index)throws RemoteException{
-		Module module =jmeSimulation.getModules().get(index); 
-		return module;
-	}
+
 }

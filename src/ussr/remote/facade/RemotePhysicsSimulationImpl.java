@@ -96,7 +96,7 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 	 * @return object, for building modular robot in remote simulation.
 	 */
 	public BuilderControlInter getBuilderControl()throws RemoteException{
-		return new JMEBuilderControllerWrapper((JMESimulation)simulation);
+		return new JMEBuilderControlWrapper((JMESimulation)simulation);
 	}
 
 	/**
@@ -107,6 +107,16 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 	public void saveToXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException {
 		InSimulationXMLSerializer saveXML = new InSimulationXMLSerializer((JMESimulation)simulation);
 		saveXML.saveXMLfile(ussrXmlFileType, fileDirectoryName);		
+	}
+	
+	public WorldDescription getWorldDescription()throws RemoteException{
+		return ((JMESimulation) simulation).getWorldDescription();
+	}
+
+	@Override
+	public WorldDescriptionControlInter getWorldDescriptionControl() throws RemoteException {
+	
+		return new JMEWorldDescriptionControlWrapper((JMESimulation)simulation) ;
 	}
 
 }

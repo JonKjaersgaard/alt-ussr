@@ -3,6 +3,7 @@ package ussr.remote.facade;
 import java.io.InputStream;
 import java.rmi.RemoteException;
 
+import ussr.builder.SimulationDescriptionConverter;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
@@ -62,4 +63,5 @@ public interface ActiveSimulation extends RemoteActiveSimulation {
      * @return parameters object
      */
     public ParameterHolder getParameters();
+    
 }

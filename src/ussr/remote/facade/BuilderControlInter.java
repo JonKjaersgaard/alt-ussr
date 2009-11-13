@@ -110,10 +110,8 @@ public interface BuilderControlInter extends Remote {
 	public String getModuleCountingFromEndType(int amountFromLastMode ) throws RemoteException;
 	
 
-	
 	public Module createModule(ModulePosition position, boolean assign)throws RemoteException;
 	
-	public WorldDescription getWorldDescription()throws RemoteException;
 	
-	public Module getModuleByIndex(int index)throws RemoteException;
+
 }

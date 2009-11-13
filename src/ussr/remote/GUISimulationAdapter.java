@@ -11,6 +11,7 @@ import ussr.aGui.GeneralController;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
+import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.controllers.TabsControllers;
 import ussr.builder.BuilderMultiRobotPreSimulation;
 
@@ -94,6 +95,8 @@ public class GUISimulationAdapter {
        //TabsControllers.setBuilderController(sim.getBuilderControl());
         GeneralController.setBuilderController(sim.getBuilderControl());
         MainFrameSeparate.setMainFrameSeparateEnabled(true);
+        SimulationTabController.updateTable();
+        
 /*        while(true) {
             System.out.println(" remote simulation isPaused()="+sim.isPaused());
             try {

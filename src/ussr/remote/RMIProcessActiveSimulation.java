@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import ussr.builder.SimulationDescriptionConverter;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
@@ -162,5 +163,4 @@ public class RMIProcessActiveSimulation implements ActiveSimulation {
 	     remoteSimulation.start(simulationXMLFile);
 		
 	}
-
 }

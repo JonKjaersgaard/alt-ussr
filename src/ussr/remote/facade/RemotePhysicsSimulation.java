@@ -103,6 +103,12 @@ public interface RemotePhysicsSimulation extends Remote {
 	 * @return object, for building modular robot in remote simulation.
 	 */
 	public BuilderControlInter getBuilderControl()throws RemoteException;
+	
+	/**
+	 * Returns the object for building modular robot in remote simulation.
+	 * @return object, for building modular robot in remote simulation.
+	 */
+	public WorldDescriptionControlInter getWorldDescriptionControl()throws RemoteException;
    
 	/**
 	 * Saves the data about simulation(or only robot) in xml file.
@@ -110,4 +116,6 @@ public interface RemotePhysicsSimulation extends Remote {
 	 * @param fileDirectoryName, the directory to save xml file to.
 	 */
 	public void saveToXML(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName)throws RemoteException;
+	
+	public WorldDescription getWorldDescription()throws RemoteException;
 }

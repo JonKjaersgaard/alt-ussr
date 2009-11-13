@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 import ussr.builder.Loader;
+import ussr.builder.SimulationDescriptionConverter;
 import ussr.builder.SimulationXMLFileLoader;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
@@ -86,7 +87,8 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
         simulation.start(true);
     }
    
-    public void start(String simulationXMLFile) throws RemoteException {  
+
+	public void start(String simulationXMLFile) throws RemoteException {  
     	SimulationXMLFileLoader simulation = new SimulationXMLFileLoader(simulationXMLFile);
         this.simulation = SimulationXMLFileLoader.getPhysicsSimulation();
         simulation.start(true);
