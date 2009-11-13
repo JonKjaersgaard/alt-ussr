@@ -387,8 +387,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 						long diffTime = simTime-realTime;
 						if(diffTime>0) {
 							if(diffTime>100) {
-								System.out.println(" ... Way Ahead "+(simTime-realTime));
-								System.out.println(" ... Catching down... ");
+								//System.out.println(" ... Way Ahead "+(simTime-realTime));
+								//System.out.println(" ... Catching down... ");
 								realTimeReference = System.currentTimeMillis()-simTime+100;
 								diffTime = 100;
 							}
@@ -396,8 +396,8 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
 						}
 						else {
 							if(diffTime<-100) {
-								System.out.println(" ... Way behind "+(simTime-realTime));
-								System.out.println(" ... Catching up... ");
+								//System.out.println(" ... Way behind "+(simTime-realTime));
+								//System.out.println(" ... Catching up... ");
 								realTimeReference = System.currentTimeMillis()-simTime-100;
 							}
 						}	

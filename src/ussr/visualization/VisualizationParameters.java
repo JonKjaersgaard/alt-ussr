@@ -6,6 +6,7 @@ public class VisualizationParameters {
 
 	private boolean showPhysicalModules = true ;
 	private boolean useDataDumper = false;
+    private boolean alwaysShowConnectors;
 
 	public boolean getShowPhysicalModules() {
 		return showPhysicalModules;
@@ -29,5 +30,13 @@ public class VisualizationParameters {
 	public void setUseDataDumper(boolean useDataDumper) {
 		this.useDataDumper = useDataDumper;
 	}
+
+    public void setAlwaysShowConnectors(boolean alwaysShow) {
+        this.alwaysShowConnectors = alwaysShow;
+    }
+    
+    public boolean getAlwaysShowConnectors() {
+        return this.alwaysShowConnectors;
+    }
 	
 }

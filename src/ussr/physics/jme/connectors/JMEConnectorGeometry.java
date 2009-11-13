@@ -91,7 +91,7 @@ public class JMEConnectorGeometry {
     		mesh.setCullHint(CullHint.Always);
     		return;
     	}
-    	if(visible) {
+    	if(visible || VisualizationParameters.get().getAlwaysShowConnectors()) {
 			mesh.setCullHint(CullHint.Dynamic);
 		}
 		else {

@@ -133,7 +133,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     	}
     }
     
-    private float readEncoderPosition() {
+    protected float readEncoderPosition() {
         float val = (module.getActuators().get(0).getEncoderValue()-zeroPos);
         if(val<0) val = 1+val;
         return val;

@@ -27,7 +27,7 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     public static final float END_FAIL = 0.1f;
     public static final float FAIL_INC = 0.1f;
     public static final int N_PARALLEL_SIMS = 2;
-    public static final Class<? extends EightToCarRobustnessExperiment> MAINCLASS = EightToCarRobustnessExperiment.class;
+    public static final Class<? extends EightToCarRobustnessExperiment> MAINCLASS = EightToCarRobustnessExperimentToken.class;
     
     private List<ParameterHolder> parameters = new LinkedList<ParameterHolder>();
     private PrintWriter logfile;
