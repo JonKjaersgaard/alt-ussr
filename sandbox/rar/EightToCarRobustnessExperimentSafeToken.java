@@ -39,15 +39,15 @@ import ussr.samples.atron.GenericATRONSimulation;
  */ 
 public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnessExperiment {
 
-    private static final int TRANSMIT_DELAY = 100;
-    private static final float TRANSMIT_DELAY_MS = TRANSMIT_DELAY/1000.0f;
+    private static final int RETRANSMIT_DELAY = 100;
+    private static final float TRANSMIT_DELAY_MS = RETRANSMIT_DELAY/1000.0f;
     private static final int MAX_N_TRANSMIT_RETRIES = 32;
     private static final boolean TRACE = false;
     
     public static void main(String argv[]) {
         if(ParameterHolder.get()==null)
-            ParameterHolder.set(new Parameters(0,0.5f,0.75f,0.0f,Float.MAX_VALUE));
-            //ParameterHolder.set(new Parameters(0,0.0f,0.0f,0.0f,Float.MAX_VALUE));
+            //ParameterHolder.set(new Parameters(0,0.5f,0.75f,0.0f,Float.MAX_VALUE));
+            ParameterHolder.set(new Parameters(0,0.0f,0.0f,0.0f,Float.MAX_VALUE));
         new EightToCarRobustnessExperimentSafeToken().main(); 
     }
 
@@ -152,6 +152,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
         List<Packet> outbound = new LinkedList<Packet>();
         List<CacheEntry> packetsSeen = new LinkedList<CacheEntry>();
         private float lastSendTime = 0;
+        private boolean transmitNow = false;
 
         public EightController() {
             Parameters p = (Parameters)ParameterHolder.get();
@@ -184,17 +185,15 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
             for(int i=HEADER_SIZE;i<message.length+HEADER_SIZE;i++)
                 bmsg[i] = (byte)message[i-HEADER_SIZE];
             synchronized(outbound) { outbound.add(new Packet((byte)channel,bmsg,counter)); }
+            transmitNow = true;
         }
         
         private void sendAct() {
             float time = module.getSimulation().getTime();
-            if(lastSendTime+TRANSMIT_DELAY_MS>time) return;
+            if(!transmitNow && lastSendTime+TRANSMIT_DELAY_MS>time) return;
             lastSendTime = time;
-            if(ackQueue.size()>0) {
-                Packet p = ackQueue.remove(0);
-                if(TRACE&&!this.isConnected(p.channel)) System.out.println("["+getMyID()+"] Warning: attempting ack with no neighbor");
-                super.sendMessage(p.payload, (byte)p.payload.length, p.channel);
-            } else if(outbound.size()>0) {
+            if(outbound.size()>0) {
+                transmitNow = false;
                 Packet p;
                 synchronized(outbound) {
                     if(outbound.size()==0) return;
@@ -207,6 +206,10 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
                     outbound.add(p);
                 }
                 if(TRACE) System.out.println("["+getMyID()+"] Sending outbound packet id "+p.id);
+                super.sendMessage(p.payload, (byte)p.payload.length, p.channel);
+            } else if(ackQueue.size()>0) {
+                Packet p = ackQueue.remove(0);
+                if(TRACE&&!this.isConnected(p.channel)) System.out.println("["+getMyID()+"] Warning: attempting ack with no neighbor");
                 super.sendMessage(p.payload, (byte)p.payload.length, p.channel);
             }
             
