@@ -215,6 +215,12 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
         }
     }
     public void reportRecord() {
+        PrintWriter resultFile = null;
+        try {
+            resultFile = new PrintWriter(new BufferedWriter(new FileWriter("results.txt")));
+        } catch (IOException e) {
+            System.err.println("Warning: unable to create result file");
+        }
         for(String experiment: experiments) {
             List<Float> success = successes.get(experiment);
             if(success==null) success = Collections.EMPTY_LIST;
@@ -227,8 +233,10 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             output.append(((float)success.size())/((float)total)+" ");
             output.append(average(success)+" ");
             output.append(stddev(success)+" ");
+            if(resultFile!=null) resultFile.println(output);
             System.out.println(output);
         }
+        if(resultFile!=null) resultFile.close();
     }
 
     private float average(List<Float> success) {
