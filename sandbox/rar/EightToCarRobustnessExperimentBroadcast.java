@@ -6,7 +6,7 @@
  */
 package rar;
 
-import gen.carsnakeSimpleGen;
+import gen.carsnakeSimpleGen_seq;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class EightToCarRobustnessExperimentBroadcast extends EightToCarRobustnes
     protected Robot getRobot() {
         return new ATRON() {
             public Controller createController() {
-                StateMachine machine = new carsnakeSimpleGen();
+                StateMachine machine = new carsnakeSimpleGen_seq();
                 return new ATRONStateMachineAPI(machine,EightToCarRobustnessExperimentBroadcast.this);
             }
         };

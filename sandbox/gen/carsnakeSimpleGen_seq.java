@@ -4,7 +4,7 @@ package gen;
 
 import rar.*;
 
-public class carsnakeSimpleGen extends StateMachine {
+public class carsnakeSimpleGen_seq extends StateMachine {
 
   private static final int CENTER_ERROR_TOLERANCE = 5;
   private int token = 255;
