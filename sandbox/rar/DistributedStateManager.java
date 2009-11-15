@@ -219,4 +219,31 @@ public class DistributedStateManager {
         this.provider = provider;
     }
 
+    public void addPendingState(int state) {
+        for(int i=0; i<MAX_N_PENDING_STATES; i++) {
+            if(pendingStates[i] == state)
+                return;
+            if(pendingStates[i] == 0) {
+                pendingStates[i] = state;
+                break;
+            }
+        }
+    }
+
+    public void removePendingState(int state) {
+        for(int i=0; i< MAX_N_PENDING_STATES; i++) {
+            if(pendingStates[i] == state) {
+                pendingStates[i] = 0;
+                break;
+            }
+        }
+    }
+
+    public String dump() {
+        StringBuffer res = new StringBuffer(this.globalState+" [ ");
+        for(int i=0; i<MAX_N_PENDING_STATES; i++) res.append(pendingStates[i]+" ");
+        res.append("]");
+        return res.toString();
+    }
+
 }
