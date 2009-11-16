@@ -3,9 +3,6 @@ package ussr.builder.labelingTools;
 import java.io.Serializable;
 
 import com.jme.scene.Geometry;
-
-import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
-import ussr.builder.QuickPrototyping;
 import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.helpers.BuilderHelper;
@@ -50,33 +47,21 @@ public class LabelingToolSpecification extends CustomizedPicker implements Seria
 	
 	private LabeledEntities entityToLabel;
 
-	
-	/**
-	 * The object of GUI.
-	 */
-	/*private QuickPrototyping quickPrototyping;*/
-
-
-
 	/**
 	 * The connector number on the module, selected with the left side of mouse in simulation environment. 
 	 */	
 	private int selectedConnectorNr = 1000;//just to avoid having default 0 value, which is also number of connector. 
 
 	/**
-	 * For calling tools handling labeling of entities, in particular tools like "LABEL_MODULE","LABEL_CONNECTOR" and "DELETE_LABEL". 
-	 * @param simulation, the physical simulation.
+	 * For calling tools handling labeling of entities, in particular tools like "LABEL_MODULE","LABEL_CONNECTOR" and so on. 
 	 * @param entityToLabel, the entity to be labeled. For example: LabeledEntities.MODULE or LabeledEntities.CONNECTOR.
 	 * @param labels, the labels to be assigned.
 	 * @param toolName, the name of the tool to be used.
 	 */
-	public LabelingToolSpecification(/*JMESimulation ,*/LabeledEntities entityToLabel,String labels, LabelingTools toolName){
-		/*this.jmeSimulation = jmeSimulation;	*/	
+	public LabelingToolSpecification(LabeledEntities entityToLabel,String labels, LabelingTools toolName){
 		this.labels = labels;		
 		this.toolName = toolName;
-		this.entityToLabel = entityToLabel;
-		
-				
+		this.entityToLabel = entityToLabel;				
 	}
 
 	/**
