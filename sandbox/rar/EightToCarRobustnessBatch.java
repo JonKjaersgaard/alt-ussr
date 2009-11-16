@@ -31,7 +31,9 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     public static final int N_PARALLEL_SIMS = 2;
     public static final Class<?> EXPERIMENTS[] = new Class<?>[] {
         EightToCarRobustnessExperimentSafeToken.class,
-        EightToCarRobustnessExperimentBroadcast.class
+        EightToCarRobustnessExperimentBroadcast.class,
+        EightToCarRobustnessExperimentParallelLim.class,
+        EightToCarRobustnessExperimentParallelStd.class
     };
     
     private List<ParameterHolder> parameters = new LinkedList<ParameterHolder>();
