@@ -3,7 +3,6 @@ package ussr.aGui.tabs.view.visualizer;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import ussr.comm.monitors.visualtracker.DrawingCanvas;
 
 public class CanvasMouseListener extends MouseAdapter {
 	

@@ -6,10 +6,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JRadioButton;
 
-import ussr.physics.jme.JMESimulation;
+
 
 /**
  * Defines visual appearance of YOUR NEW tab implemented by YOU. Serves as an example for how to design and add new tab in main GUI.
@@ -32,11 +31,10 @@ public class YourNewTab extends Tabs {
      * TODO initiallyVisible 
 	 * @param firstTabbedPane,location of the tab in the main GUI frame. True if it is the first tabbed pane. 
 	 * @param tabTitle, the title of the tab.
-	 * @param jmeSimulation, the physical simulation.
 	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
 	 */
-	public YourNewTab(boolean initiallyVisible ,boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation, String imageIconDirectory){
-		super(initiallyVisible,firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
+	public YourNewTab(boolean initiallyVisible ,boolean firstTabbedPane, String tabTitle, String imageIconDirectory){
+		super(initiallyVisible,firstTabbedPane,tabTitle,imageIconDirectory);
 		
 		/*JComponent, is the main container of the tab. Place all your components in it.
 		 *Here is used GridBagLayout manager */		

@@ -35,7 +35,6 @@ import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter.EntitiesForLabelingText;
-import ussr.comm.monitors.visualtracker.DrawingCanvas;
 
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
@@ -53,8 +52,8 @@ public class ModuleCommunicationVisualizer extends Tabs {
 
 
 
-	public ModuleCommunicationVisualizer(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
-		super(initiallyVisible,firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);		
+	public ModuleCommunicationVisualizer(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,String imageIconDirectory){
+		super(initiallyVisible,firstTabbedPane,tabTitle,imageIconDirectory);		
 
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
@@ -202,7 +201,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jButtonRun.setFocusable(true);
 		jButtonRun.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ModuleCommunicationVisualizerController.jButtonRunActionPerformed( jmeSimulation, jScrollPane);
+				ModuleCommunicationVisualizerController.jButtonRunActionPerformed(jScrollPane);
 			}
 		});
 		jToolBar1.add(jButtonRun);
@@ -216,7 +215,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jButtonReset.setEnabled(false);
 		jButtonReset.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ModuleCommunicationVisualizerController.jButtonResetActionPerformed( jmeSimulation, jScrollPane);
+				ModuleCommunicationVisualizerController.jButtonResetActionPerformed( jScrollPane);
 			}
 		});
 		jToolBar1.add(jButtonReset);
@@ -227,16 +226,10 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jCheckBoxShowLabelControl.setText("Display Legend");
 		jCheckBoxShowLabelControl.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ModuleCommunicationVisualizerController.jCheckBoxShowLabelControlActionPerformed(jCheckBoxShowLabelControl,jmeSimulation);
+				ModuleCommunicationVisualizerController.jCheckBoxShowLabelControlActionPerformed(jCheckBoxShowLabelControl);
 			}
 		});
 		jToolBar1.add(jCheckBoxShowLabelControl);
-
-
-
-
-
-
 
 
 		//	    jComboBoxNrPacketFilters.setToolTipText("SOME");

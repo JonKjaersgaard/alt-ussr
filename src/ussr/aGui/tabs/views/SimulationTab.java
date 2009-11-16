@@ -10,7 +10,6 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
@@ -19,11 +18,8 @@ import ussr.aGui.enumerations.TextureDescriptions;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.CheckBoxEditor;
 import ussr.aGui.tabs.additionalResources.SpinnerEditor;
-import ussr.aGui.tabs.additionalResources.recycleBin.JTableSimulationTab;
-import ussr.aGui.tabs.additionalResources.recycleBin.RowEditorModel;
 import ussr.description.setup.WorldDescription;
 
-import ussr.physics.jme.JMESimulation;
 
 /**
 
@@ -37,8 +33,8 @@ public class SimulationTab extends Tabs {
 	 */
 	public  GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
-	public SimulationTab(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation, String imageIconDirectory){
-		super(initiallyVisible,firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
+	public SimulationTab(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle, String imageIconDirectory){
+		super(initiallyVisible,firstTabbedPane,tabTitle,imageIconDirectory);
 
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());

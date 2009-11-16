@@ -64,11 +64,10 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 	 * TODO
 	 * @param firstTabbedPane,
 	 * @param tabTitle, the title of the tab
-	 * @param jmeSimulation, the physical simulation.
 	 * @param imageIconDirectory
 	 */
-	public AssignBehaviorsTab(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
-		super(initiallyVisible,firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);	
+	public AssignBehaviorsTab(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,String imageIconDirectory){
+		super(initiallyVisible,firstTabbedPane,tabTitle,imageIconDirectory);	
 
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());

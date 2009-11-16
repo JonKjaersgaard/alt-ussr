@@ -58,11 +58,10 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	 * TODO
 	 * @param firstTabbedPane, location of the tab in the main GUI frame. True if it is the first tabbed pane.
 	 * @param tabTitle, the title of the tab.
-	 * @param jmeSimulation, the physical simulation.
 	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
 	 */
-	public ConstructRobotTab(boolean initiallyVisible, boolean firstTabbedPane,String tabTitle,JMESimulation jmeSimulation,String imageIconDirectory){
-		super(initiallyVisible,firstTabbedPane,tabTitle,jmeSimulation,imageIconDirectory);
+	public ConstructRobotTab(boolean initiallyVisible, boolean firstTabbedPane,String tabTitle,String imageIconDirectory){
+		super(initiallyVisible,firstTabbedPane,tabTitle,imageIconDirectory);
 
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());	

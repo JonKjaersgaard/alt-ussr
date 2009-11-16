@@ -1,12 +1,10 @@
 package ussr.aGui.tabs.views.constructionTabs;
 
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
@@ -19,7 +17,6 @@ import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
-import ussr.physics.jme.JMESimulation;
 
 public abstract class ConstructionTabs extends Tabs implements ConstructionTabsInter  {
 
@@ -28,12 +25,10 @@ public abstract class ConstructionTabs extends Tabs implements ConstructionTabsI
 	 * @param initiallyVisible
 	 * @param firstTabbedPane
 	 * @param tabTitle
-	 * @param jmeSimulation
 	 * @param imageIconDirectory
 	 */
-	protected ConstructionTabs(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,
-			JMESimulation jmeSimulation, String imageIconDirectory) {
-		super(initiallyVisible,firstTabbedPane, tabTitle, jmeSimulation, imageIconDirectory);
+	protected ConstructionTabs(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle, String imageIconDirectory) {
+		super(initiallyVisible,firstTabbedPane, tabTitle, imageIconDirectory);
 	}
 	
 	
