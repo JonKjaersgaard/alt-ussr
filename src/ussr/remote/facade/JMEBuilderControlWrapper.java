@@ -4,6 +4,7 @@ package ussr.remote.facade;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -361,6 +362,19 @@ public class JMEBuilderControlWrapper extends UnicastRemoteObject implements Bui
 		
 	public Module createModule(ModulePosition position, boolean assign)throws RemoteException{
 		return jmeSimulation.createModule(position, assign);
+	}
+	
+	public List<Integer> getIDsModules() throws RemoteException{
+		
+		List<Integer> idsModules = new ArrayList<Integer>();
+		
+		List<Module> modules =jmeSimulation.getModules();
+		//Iterator moduleIterator = modules.iterator();
+		for (Module currentModule: modules){
+			idsModules.add(currentModule.getID());
+		}
+		
+		return idsModules; 
 	}
 	
 

@@ -112,6 +112,6 @@ public interface BuilderControlInter extends Remote {
 
 	public Module createModule(ModulePosition position, boolean assign)throws RemoteException;
 	
-	
+	public List<Integer> getIDsModules()throws RemoteException;
 
 }
