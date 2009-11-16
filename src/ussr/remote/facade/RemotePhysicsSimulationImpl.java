@@ -116,7 +116,7 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 	@Override
 	public WorldDescriptionControlInter getWorldDescriptionControl() throws RemoteException {
 	
-		return new JMEWorldDescriptionControlWrapper((JMESimulation)simulation) ;
+		return new JMEWorldDescriptionControlWrapper(((JMESimulation)simulation).getWorldDescription()) ;
 	}
 
 }

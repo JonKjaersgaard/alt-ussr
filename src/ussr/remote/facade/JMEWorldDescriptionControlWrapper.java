@@ -3,23 +3,57 @@ package ussr.remote.facade;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import ussr.description.setup.WorldDescription;
 import ussr.physics.jme.JMESimulation;
 
 public class JMEWorldDescriptionControlWrapper extends UnicastRemoteObject implements WorldDescriptionControlInter {
 
-	
-	private JMESimulation jmeSimulation;	
 
-	public JMEWorldDescriptionControlWrapper(JMESimulation jmeSimulation)throws RemoteException {
-		this.jmeSimulation = jmeSimulation;
+	//private JMESimulation jmeSimulation;	
+
+	private WorldDescription worldDescription;
+
+
+	public JMEWorldDescriptionControlWrapper(WorldDescription worldDescription/*JMESimulation jmeSimulation*/)throws RemoteException {
+		/*this.jmeSimulation = jmeSimulation;*/
+		this.worldDescription =worldDescription;
 	}
-	
+
+	/**
+	 * Returns the size of one edge of the underlying plane.
+	 */
 	public int getPlaneSize()throws RemoteException{
-		return jmeSimulation.getWorldDescription().getPlaneSize();
+		//return jmeSimulation.getWorldDescription().getPlaneSize();
+		return worldDescription.getPlaneSize();
 	}
-	
+
+
 	public void setPlaneSize(int size)throws RemoteException{
-	 jmeSimulation.getWorldDescription().setPlaneSize(size);
+		worldDescription.setPlaneSize(size);
+		//jmeSimulation.getWorldDescription().setPlaneSize(size);
+	}
+
+	/**
+	 * Returns whether is used a plane or a generated texture
+	 */
+	public boolean theWorldIsFlat()throws RemoteException{
+		return worldDescription.theWorldIsFlat();
+	}
+
+	/**
+	 *  Returns if the background/overhead have clouds etc.
+	 */
+	public boolean hasBackgroundScenery()throws RemoteException{
+		return worldDescription.hasBackgroundScenery();
 	}
 	
+	/**
+     * Returns if light or heavy obstacles are set in simulation environment.
+     */
+	public boolean hasHeavyObstacles()throws RemoteException{
+		return worldDescription.hasHeavyObstacles();
+	}
+
+
+
 }
