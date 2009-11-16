@@ -1,6 +1,7 @@
 package ussr.aGui.tabs.views;
 
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import javax.swing.table.TableCellEditor;
 
 import ussr.aGui.enumerations.TextureDescriptions;
 import ussr.aGui.tabs.Tabs;
+import ussr.aGui.tabs.additionalResources.CheckBoxEditor;
 import ussr.aGui.tabs.additionalResources.SpinnerEditor;
 import ussr.aGui.tabs.additionalResources.recycleBin.JTableSimulationTab;
 import ussr.aGui.tabs.additionalResources.recycleBin.RowEditorModel;
@@ -49,6 +51,8 @@ public class SimulationTab extends Tabs {
 	 */
 	public void initComponents() {
 		jScrollPane3 = new javax.swing.JScrollPane();
+		jScrollPane4 = new javax.swing.JScrollPane();
+		
 		
 		final ArrayList<AbstractCellEditor> editors = new ArrayList<AbstractCellEditor>();
 		
@@ -62,10 +66,20 @@ public class SimulationTab extends Tabs {
 		DefaultCellEditor dce2 = new DefaultCellEditor( comboBox2 );
 		editors.add(dce2);
 		
-		Object[] ob= {java.lang.Boolean.class};
-		jCheckBox3 = new JCheckBox( );
-		DefaultCellEditor dce3 = new DefaultCellEditor(jCheckBox3);
+		JComboBox comboBox3 = new JComboBox( TextureDescriptions.values() );        
+		DefaultCellEditor dce3 = new DefaultCellEditor( comboBox3 );
 		editors.add(dce3);
+		
+		editors.add(new CheckBoxEditor());//the world is flat
+		editors.add(new CheckBoxEditor());//has background scenery
+		editors.add(new CheckBoxEditor());//has heavy obstacles
+		editors.add(new CheckBoxEditor());// big obstacles
+		
+		//JComboBox comboBox3 = new JComboBox( new String[]{"yes","no"}); //the world is flat       
+		//DefaultCellEditor dce3 = new DefaultCellEditor( comboBox3 );
+		//editors.add(dce3);
+		
+		
 	
 		//jTableSimulationDescription =  new  javax.swing.JTable();
 		
@@ -75,9 +89,15 @@ public class SimulationTab extends Tabs {
 				   {"The world is flat", new Boolean(false)},
 		   };*/
 		
+
+		
 		String[] columnNames = {"World Description","Values"};
 		
-		final String[] worldDescriptionParameters = {"Plane Size","Plane Texture","Camera Position", "The world is flat"};
+		final String[] worldDescriptionParameters = {"Plane Size","Plane Texture","Camera Position",
+				                                      "The world is flat","Has background scenery",
+				                                      "Has heavy obstacles","Is frame grabbing active", 
+				                                      		"Big obstacles"};
+		
 		
 		DefaultTableModel model = new DefaultTableModel(columnNames,worldDescriptionParameters.length){
 			public Object getValueAt(int row, int col)
@@ -94,7 +114,7 @@ public class SimulationTab extends Tabs {
                 return true;
             }
 		};       
-		jTableSimulationDescription = new JTable(model){               
+		jTableWorldDescription = new JTable(model){               
 			//  Determine editor to be used by row             
 			public TableCellEditor getCellEditor(int row, int column){                       
 				int modelColumn = convertColumnIndexToModel( column );                       
@@ -106,8 +126,77 @@ public class SimulationTab extends Tabs {
 				}       
 			};
 			
+			jTableWorldDescription.addMouseListener(new java.awt.event.MouseAdapter() {
+	            public void mouseReleased(java.awt.event.MouseEvent evt) {
+	            	//jTable1MouseReleased(evt);
+	            }
+	        });
 			
 			
+			jScrollPane3.setViewportView(jTableWorldDescription);
+			jScrollPane3.setPreferredSize(new Dimension(300,155));
+			gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+			gridBagConstraints.gridx = 0;
+			gridBagConstraints.gridy = 0;
+			super.jComponent.add(jScrollPane3,gridBagConstraints);
+				
+			
+			
+			final ArrayList<AbstractCellEditor> editors1 = new ArrayList<AbstractCellEditor>();
+			
+			editors1.add(new SpinnerEditor());
+			
+			String[] columnNames1 = {"Physics Parameters","Values"};
+			
+			final String[] worldDescriptionParameters1 = {"Damping linear velocity","Damping angular velocity",
+					                                      "Physics Simulation Step Size",
+					                                      "Realistic collision","Gravity",
+					                                      "Plane material","Maintain rotational joint positiosn", 
+					                                      		"Big obstacles","Constraint force fix", "Resolution factor",
+					                                      		"Use mouse event queue","Synchronize with controllers", 
+					                                      		"Physics simulation controller step factor"};
+			
+			
+			DefaultTableModel model1 = new DefaultTableModel(columnNames1,worldDescriptionParameters1.length){
+				public Object getValueAt(int row, int col)
+	            {
+	                if (col==0){
+	                   return worldDescriptionParameters1[row];
+	                }
+	                return super.getValueAt(row,col);
+	            }
+	            public boolean isCellEditable(int row, int col)
+	            {
+	                if (col==0)
+	                    return false;	                
+	                return true;
+	            }
+			};       
+			jTablePhysicsParameters = new JTable(model1){               
+				//  Determine editor to be used by row             
+				public TableCellEditor getCellEditor(int row, int column){                       
+					int modelColumn = convertColumnIndexToModel( column );                       
+					//if (modelColumn < editors.size()+1)
+					if(modelColumn <= 3)
+						return (TableCellEditor)editors1.get(row);                     
+					else                               
+						return super.getCellEditor(row, column);                
+					}       
+				};
+				
+				jTablePhysicsParameters.addMouseListener(new java.awt.event.MouseAdapter() {
+		            public void mouseReleased(java.awt.event.MouseEvent evt) {
+		            	//jTable1MouseReleased(evt);
+		            }
+		        });
+				
+				
+				jScrollPane4.setViewportView(jTablePhysicsParameters);
+				jScrollPane4.setPreferredSize(new Dimension(390,240));
+				gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+				gridBagConstraints.gridx = 0;
+				gridBagConstraints.gridy = 1;
+				super.jComponent.add(jScrollPane4,gridBagConstraints);			
 			
 			//jTableSimulationDescription.setEnabled(false);
 	
@@ -177,27 +266,25 @@ public class SimulationTab extends Tabs {
 	            }
 		});*/
 
-		jScrollPane3.setViewportView(jTableSimulationDescription);
-		gridBagConstraints.fill = GridBagConstraints.PAGE_START;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 0;
-		super.jComponent.add(jScrollPane3,gridBagConstraints);	
+			
 
 
 
 	}
 
 	public static javax.swing.JTable getJTable1() {
-		return jTableSimulationDescription;
+		return jTableWorldDescription;
 	}
 
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JSpinner jSpinner1;
 
 	private javax.swing.JScrollPane jScrollPane3;
+	private javax.swing.JScrollPane jScrollPane4;
 
 
-	private static javax.swing.JTable jTableSimulationDescription ;
+	private static javax.swing.JTable jTableWorldDescription ;
+	private static javax.swing.JTable jTablePhysicsParameters ;
  
 	private static JCheckBox jCheckBox3;
 

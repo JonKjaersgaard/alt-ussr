@@ -60,7 +60,8 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
        }else{
     	   jFileChooserCustomized = new javax.swing.JFileChooser(defaultDirectory);    	   
        }
-		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);		
+		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		setResizable(false);// do not allow for file chooser to maximized.
 		getContentPane().setLayout(new java.awt.FlowLayout());			
 		getContentPane().add(jFileChooserCustomized);// MAC HAS PROBLEMS WITH THAT
 		jFileChooserCustomized.setAcceptAllFileFilterUsed(false);

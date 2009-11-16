@@ -30,9 +30,15 @@ public class SimulationTabController extends GeneralController {
 		javax.swing.table.DefaultTableModel model = (DefaultTableModel) SimulationTab.getJTable1().getModel();
 		//descriptionConverter.
 		int planeSize=0;
+		boolean theWorldIsFlat = false;
 		CameraPosition camear = null;
+		boolean hasBackgroundScenery = false;
+		boolean hasHeavyObstacles = false;
 		try {
 			planeSize = remotePhysicsSimulation.getWorldDescriptionControl().getPlaneSize();
+			theWorldIsFlat = remotePhysicsSimulation.getWorldDescriptionControl().theWorldIsFlat();
+			hasBackgroundScenery = 	remotePhysicsSimulation.getWorldDescriptionControl().hasBackgroundScenery();
+			hasHeavyObstacles = remotePhysicsSimulation.getWorldDescriptionControl().hasHeavyObstacles();
 			//camear = remotePhysicsSimulation.getWorldDescription().getCameraPosition();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -45,7 +51,11 @@ public class SimulationTabController extends GeneralController {
 		//Tests
 		model.setValueAt(TextureDescriptions.MARS_TEXTURE.toString(), 1, 1);
 		model.setValueAt(CameraPosition.DEFAULT, 2, 1);
-		//model.setValueAt(true, 3, 1);
+		model.setValueAt(theWorldIsFlat, 3, 1);
+		model.setValueAt(hasBackgroundScenery, 4, 1);
+		model.setValueAt(hasHeavyObstacles, 5, 1);
+		
+		
 		
 		
 		//TableColumn column = SimulationTab.getJTable1().getColumnModel().getColumn(1);
