@@ -18,4 +18,8 @@ public abstract class StateMachine {
     protected abstract void stateMachine();
     public abstract void init(int id);
     public abstract void setAPI(Object api);
+
+    public void setLimitPendingOneWay(boolean b) {
+        stateManager.setLimitPendingOneWay(b);
+    }
 }

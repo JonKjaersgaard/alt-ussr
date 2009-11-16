@@ -40,13 +40,13 @@ import ussr.visualization.VisualizationParameters;
  * 
  * @author ups
  */ 
-public class EightToCarRobustnessExperimentParallelStd extends EightToCarRobustnessExperiment implements ExperimentResultRegistrant {
+public class EightToCarRobustnessExperimentParallelLim extends EightToCarRobustnessExperiment implements ExperimentResultRegistrant {
 
     public static void main(String argv[]) {
         if(ParameterHolder.get()==null)
             //ParameterHolder.set(new Parameters(0,0.5f,0.75f,0.0f,Float.MAX_VALUE));
             ParameterHolder.set(new Parameters(0,0.0f,0.0f,0.0f,Float.MAX_VALUE));
-        new EightToCarRobustnessExperimentParallelStd().main(); 
+        new EightToCarRobustnessExperimentParallelLim().main(); 
     }
 
     @Override
@@ -54,7 +54,8 @@ public class EightToCarRobustnessExperimentParallelStd extends EightToCarRobustn
         return new ATRON() {
             public Controller createController() {
                 StateMachine machine = new carsnakeSimpleGen_par();
-                return new ATRONStateMachineAPI(machine,EightToCarRobustnessExperimentParallelStd.this);
+                machine.setLimitPendingOneWay(true);
+                return new ATRONStateMachineAPI(machine,EightToCarRobustnessExperimentParallelLim.this);
             }
         };
     }

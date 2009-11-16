@@ -98,6 +98,7 @@ public class DistributedStateManager {
     private boolean startingModule;
     private boolean alternateSequenceFlag;
     private float lastTime;
+    private boolean limitPendingOneWay;
     
     public DistributedStateManager() {
         startSender();
@@ -204,6 +205,7 @@ public class DistributedStateManager {
             return;
 
         int previousState = globalState;
+        if(limitPendingOneWay && msg.state<previousState) return;
 
         int pendingBuffer[] = new int[MAX_N_PENDING_STATES];
         globalState = merge(globalState, pendingStates, msg.state, msg.pending, pendingBuffer);
@@ -244,6 +246,10 @@ public class DistributedStateManager {
         for(int i=0; i<MAX_N_PENDING_STATES; i++) res.append(pendingStates[i]+" ");
         res.append("]");
         return res.toString();
+    }
+
+    public void setLimitPendingOneWay(boolean b) {
+        this.limitPendingOneWay = true;
     }
 
 }

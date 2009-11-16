@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,20 +22,23 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     private static final float TIMEOUT = 270f;
     public static final int N_REPEAT = 15;
     public static final float START_RISK = 0;
-    public static final float END_RISK = 0.8f;
+    public static final float END_RISK = 0.9f;
     public static final float RISK_DELTA = 0.4f;
     public static final float RISK_INC = 0.1f;
     public static final float START_FAIL = 0;
     public static final float END_FAIL = 0.1f;
     public static final float FAIL_INC = 0.1f;
     public static final int N_PARALLEL_SIMS = 2;
-    public static final Class<? extends EightToCarRobustnessExperiment> MAINCLASS = EightToCarRobustnessExperimentToken.class;
+    public static final Class<?> EXPERIMENTS[] = new Class<?>[] {
+        EightToCarRobustnessExperimentToken.class
+    };
     
     private List<ParameterHolder> parameters = new LinkedList<ParameterHolder>();
+    private List<Class<? extends EightToCarRobustnessExperiment>> experiments = new ArrayList<Class<? extends EightToCarRobustnessExperiment>>();
     private PrintWriter logfile;
     
     public static void main(String argv[]) {
-        new EightToCarRobustnessBatch(MAINCLASS).start(N_PARALLEL_SIMS);
+        new EightToCarRobustnessBatch(EXPERIMENTS[0]).start(N_PARALLEL_SIMS);
     }
     
     public EightToCarRobustnessBatch(Class<?> mainClass) {
