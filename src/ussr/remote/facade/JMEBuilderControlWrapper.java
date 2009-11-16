@@ -369,8 +369,12 @@ public class JMEBuilderControlWrapper extends UnicastRemoteObject implements Bui
 		jmeSimulation.setPicker(new AssignControllerTool(controllerLocationDirectory));
 	}
 	
-	public void setLabelingToolSpecPicker(LabeledEntities entityName,LabelingTools toolName)throws RemoteException{
+	public void setLabelingToolReadLabels(LabeledEntities entityName,LabelingTools toolName)throws RemoteException{
 		jmeSimulation.setPicker(new LabelingToolSpecification(entityName,toolName));
+	}
+	
+	public void setLabelingToolAssignLabels(LabeledEntities entityName,LabelingTools toolName, String labels)throws RemoteException{
+		jmeSimulation.setPicker(new LabelingToolSpecification(entityName,labels,toolName));
 	}
 		
 	public Module createModule(ModulePosition position, boolean assign)throws RemoteException{

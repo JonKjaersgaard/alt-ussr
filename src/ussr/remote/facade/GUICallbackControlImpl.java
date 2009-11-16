@@ -3,8 +3,8 @@ package ussr.remote.facade;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
-import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.builder.enumerations.ConstructionTools;
 
 public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICallbackControl {
@@ -20,6 +20,13 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 	public void adaptConstructRobotTabToChosenTool(ConstructionTools chosenTool)throws RemoteException{
 		ConstructRobotTabController.adaptConstructRobotTabToChosenTool(chosenTool);
 	};
+	
+	
+	public void updateTableWithLabels(String labels) throws RemoteException{
+		AssignBehaviorsTabController.updateTableLabels(labels);
+	}
+	
+	
 	
 
 

@@ -71,7 +71,13 @@ public interface BuilderControlInter extends Remote {
 	/**
 	 * @param toolName
 	 */
-	public void setLabelingToolSpecPicker(LabeledEntities entityName,LabelingTools toolName)throws RemoteException;
+	public void setLabelingToolReadLabels(LabeledEntities entityName,LabelingTools toolName)throws RemoteException;
+	
+	
+	public void setLabelingToolAssignLabels(LabeledEntities entityName,LabelingTools toolName, String labels)throws RemoteException;
+	
+	
+	
 	
 	/**
 	 * Removes all modules (robot(s)) from simulation environment.

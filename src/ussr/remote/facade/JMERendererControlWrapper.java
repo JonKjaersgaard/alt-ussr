@@ -16,6 +16,9 @@ import ussr.physics.jme.pickers.Picker;
  */
 public class JMERendererControlWrapper extends UnicastRemoteObject implements SimulationRendererControlInter {
 
+	/**
+	 *  JME level simulation.
+	 */
 	private JMESimulation jmeSimulation;	
 
 	public JMERendererControlWrapper(JMESimulation jmeSimulation)throws RemoteException {

@@ -9,13 +9,10 @@ import ussr.physics.jme.JMESimulation;
 public class JMEWorldDescriptionControlWrapper extends UnicastRemoteObject implements WorldDescriptionControlInter {
 
 
-	//private JMESimulation jmeSimulation;	
-
 	private WorldDescription worldDescription;
 
 
-	public JMEWorldDescriptionControlWrapper(WorldDescription worldDescription/*JMESimulation jmeSimulation*/)throws RemoteException {
-		/*this.jmeSimulation = jmeSimulation;*/
+	public JMEWorldDescriptionControlWrapper(WorldDescription worldDescription)throws RemoteException {
 		this.worldDescription =worldDescription;
 	}
 
@@ -23,14 +20,12 @@ public class JMEWorldDescriptionControlWrapper extends UnicastRemoteObject imple
 	 * Returns the size of one edge of the underlying plane.
 	 */
 	public int getPlaneSize()throws RemoteException{
-		//return jmeSimulation.getWorldDescription().getPlaneSize();
 		return worldDescription.getPlaneSize();
 	}
 
 
 	public void setPlaneSize(int size)throws RemoteException{
 		worldDescription.setPlaneSize(size);
-		//jmeSimulation.getWorldDescription().setPlaneSize(size);
 	}
 
 	/**
