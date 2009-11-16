@@ -154,8 +154,6 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
         private boolean transmitNow = false;
 
         public EightController() {
-            EightToCarRobustnessBatch.Parameters p = (EightToCarRobustnessBatch.Parameters)ParameterHolder.get();
-            super.setCommFailureRisk(p.minR, p.maxR, p.completeR, p.seedMaybe);
         }
         
         private void sendMessage(int[] message, int size, int channel) {
@@ -284,6 +282,8 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
 
         @Override
         public void activate() {
+            EightToCarRobustnessBatch.Parameters p = (EightToCarRobustnessBatch.Parameters)ParameterHolder.get();
+            super.setCommFailureRisk(p.minR, p.maxR, p.completeR, p.seedMaybe);
             this.yield();
             if(USE_BLOCKING_ROTATE) this.setBlocking(true);
             this.delay(10);
