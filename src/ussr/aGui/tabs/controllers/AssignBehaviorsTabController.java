@@ -185,12 +185,11 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 			AssignBehaviorsTab.getJToolBar3().setVisible(true);
 		}else if (chosenRadioEntityText.equals(EntitiesForLabelingText.Proximity.toString())){
 			AssignBehaviorsTab.getJToolBar3().setVisible(true);
-			//FIXME
 			columnHeaderName = chosenRadioEntityText+ " Sensor" + " Labels"; 
-			AssignBehaviorsTab.getJTable2().getTableHeader().getColumnModel().getColumn(0).setHeaderValue(columnHeaderName);
+			AssignBehaviorsTab.getJTableLabels().getTableHeader().getColumnModel().getColumn(0).setHeaderValue(columnHeaderName);
 		}else{
 			columnHeaderName = chosenRadioEntityText + " Labels"; 
-			AssignBehaviorsTab.getJTable2().getTableHeader().getColumnModel().getColumn(0).setHeaderValue(columnHeaderName);
+			AssignBehaviorsTab.getJTableLabels().getTableHeader().getColumnModel().getColumn(0).setHeaderValue(columnHeaderName);
 			AssignBehaviorsTab.getJToolBar3().setVisible(false);
 
 		}
@@ -206,97 +205,109 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 
 		case Module:
 			try {
-				builderControl.setLabelingToolSpecPicker(LabeledEntities.MODULE, LabelingTools.READ_LABELS);					
+				builderControl.setLabelingToolReadLabels(LabeledEntities.MODULE, LabelingTools.READ_LABELS);					
 				} catch (RemoteException e) {
 					throw new Error("Failed to initate picker called "+ LabelingTools.READ_LABELS.toString() + " of "+LabeledEntities.MODULE.toString()  + ", due to remote exception");
 				}
 			break;
 		case Connector:
-			/*try {
-				builderControl.setProxyPicker(BuilderSupportingProxyPickers.READ_CONNECTOR_LABELS);
+			try {
+				builderControl.setLabelingToolReadLabels(LabeledEntities.CONNECTOR, LabelingTools.READ_LABELS);
 				} catch (RemoteException e) {
 					throw new Error("Failed to initate picker called "+ LabelingTools.READ_LABELS.toString() + " of "+LabeledEntities.CONNECTOR.toString()  + ", due to remote exception");
-				}*/
+				}
 			break;
 		case Sensors:
 		case Proximity:// go to proximity because only this type of sensor is supported right now.
-			/*try {
-				builderControl.setProxyPicker(BuilderSupportingProxyPickers.READ_SENSOR_LABELS);
+			try {
+				builderControl.setLabelingToolReadLabels(LabeledEntities.SENSOR, LabelingTools.READ_LABELS);
 				} catch (RemoteException e) {
 					throw new Error("Failed to initate picker called "+ LabelingTools.READ_LABELS.toString() + " of "+LabeledEntities.SENSOR.toString()  + ", due to remote exception");
-				}*/
+				}
 			break;
 		default: throw new Error("Labeling is not supported for " + chosenRadioEntityText ); 
 		}
 		/*Informing user*/
 		AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[3]);
 	}
+
 	
 	/**
-	 * Displays labels in the table of GUI. Is called from  LabelEntityTemplate.java.
+	 * Displays labels in the table of GUI.
 	 * @param labels, the string of labels to display in GUI.
 	 */
 	public static void updateTableLabels(String labels){
 		// clear the column
-		int amountRows = AssignBehaviorsTab.getJTable2().getRowCount() ;
+		int amountRows = AssignBehaviorsTab.getJTableLabels().getRowCount() ;
 		for (int rowNr =0;rowNr < amountRows; rowNr++){
-			AssignBehaviorsTab.getJTable2().setValueAt("", rowNr, 0);
+			AssignBehaviorsTab.getJTableLabels().setValueAt("", rowNr, 0);
 		}
 
 		//populate column with labels
 		String[] sepratedLabels = labels.split(LabelingTemplate.LABEL_SEPARATOR);
 		if(amountRows>sepratedLabels.length&&labels.length()>0) {
 			for (int index=0; index<sepratedLabels.length; index++){
-				AssignBehaviorsTab.getJTable2().setValueAt(sepratedLabels[index], index, 0);
+				AssignBehaviorsTab.getJTableLabels().setValueAt(sepratedLabels[index], index, 0);
 			}
 		}else if (labels.length() ==0){
 			//TODO
-			AssignBehaviorsTab.getJTable2().setValueAt("none label", 0, 0);
+			AssignBehaviorsTab.getJTableLabels().setValueAt("none label", 0, 0);
 		}else{
 			throw new Error ("Addition of new rows is not supported yet");
 		}
 
 	}
 
+	/**
+	 * 
+	 */
 	public static void jButtonAssignLabelsActionPerformed() {
 
 		/*Get labels from the table*/
-		int amountRows = AssignBehaviorsTab.getJTable2().getRowCount() ;
+		int amountRows = AssignBehaviorsTab.getJTableLabels().getRowCount() ;
 		String labelsInTable="";
 		for (int rowNr =0;rowNr < amountRows; rowNr++){
-			if (AssignBehaviorsTab.getJTable2().getValueAt(rowNr, 0).toString().isEmpty()){
+			if (AssignBehaviorsTab.getJTableLabels().getValueAt(rowNr, 0).toString().isEmpty()){
 				//do not store empty rows
 			}else{
-				labelsInTable= labelsInTable + AssignBehaviorsTab.getJTable2().getValueAt(rowNr, 0)+",";
+				labelsInTable= labelsInTable + AssignBehaviorsTab.getJTableLabels().getValueAt(rowNr, 0)+",";
 			}
 		}
 	
 		/*Assign labels to entity*/
 		EntitiesForLabelingText currentText = EntitiesForLabelingText.valueOf(chosenRadioEntityText);
-/*
+
 		switch(currentText){
 
-		case Module:			
-			localJMEsimulation.setPicker(new LabelingToolSpecification(localJMEsimulation,LabeledEntities.MODULE,labelsInTable,LabelingTools.LABEL_MODULE));
+		case Module:
+			//builderControl.setLabelingToolSpecPicker(entityName, toolName)
+			try {
+					builderControl.setLabelingToolAssignLabels(LabeledEntities.MODULE,LabelingTools.LABEL_MODULE,labelsInTable);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			break;
 		case Connector:
-			localJMEsimulation.setPicker(new LabelingToolSpecification(localJMEsimulation,LabeledEntities.CONNECTOR,labelsInTable,LabelingTools.LABEL_CONNECTOR));
+			try {
+					builderControl.setLabelingToolAssignLabels(LabeledEntities.CONNECTOR,LabelingTools.LABEL_CONNECTOR,labelsInTable);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			break;
 		case Sensors:
 		case Proximity:// go to proximity because only this type of sensor is supported right now.
-			localJMEsimulation.setPicker(new LabelingToolSpecification(localJMEsimulation,LabeledEntities.SENSOR,labelsInTable,LabelingTools.LABEL_SENSOR));
+			try {
+					builderControl.setLabelingToolAssignLabels(LabeledEntities.SENSOR,LabelingTools.LABEL_SENSOR,labelsInTable);
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			break;
 		default: throw new Error("Labeling is not supported for " + chosenRadioEntityText ); 
-		}*/
+		}
 		/*Informing user*/
 		AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[4]);
 	}
-
-	/**
-	 * Sets builder controller of remote simulation for this controller.
-	 * @param builderController,builder controller of remote simulation.
-	 */
-	/*public static void setBuilderControl(BuilderControlInter builderController) {
-		MainFrameController.builderControl = builderController;
-	}*/
 }

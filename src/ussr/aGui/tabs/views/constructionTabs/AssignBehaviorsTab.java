@@ -464,7 +464,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		return jToolBarTypesSensors;
 	}
 
-	public static javax.swing.JTable getJTable2() {
+	public static javax.swing.JTable getJTableLabels() {
 		return jTableCurrentLabels;
 	}
 
