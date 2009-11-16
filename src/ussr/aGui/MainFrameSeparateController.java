@@ -7,14 +7,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 
 import ussr.aGui.tabs.TabsInter;
+import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
-import ussr.builder.helpers.BuilderHelper;
-import ussr.physics.jme.JMESimulation;
 import ussr.remote.facade.BuilderControlInter;
-import ussr.remote.facade.BuilderSupportingProxyPickers;
-import ussr.remote.facade.RemotePhysicsSimulation;
 import ussr.remote.facade.SimulationRendererControlInter;
 
 
@@ -314,9 +311,9 @@ public class MainFrameSeparateController extends GeneralController {
 				}
 			}
 		}
-		/*Adapt construction tab to the first module in simulation environment if it exists.*/
+		/*Adapt construction tabs to the first module in simulation environment if it exists.*/
 		ConstructRobotTabController.adaptTabToModuleInSimulation();
-
+		AssignBehaviorsTabController.adaptTabToModuleInSimulation();
 	}
 
 	/**

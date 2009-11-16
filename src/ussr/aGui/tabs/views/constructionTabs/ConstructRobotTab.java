@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -18,7 +17,6 @@ import ussr.aGui.enumerations.HintPanelTypes;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
-import ussr.builder.enumerations.ConstructionTools;
 
 
 /**

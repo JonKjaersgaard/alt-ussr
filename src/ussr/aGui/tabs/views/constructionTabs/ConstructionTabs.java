@@ -18,20 +18,22 @@ import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 
+/**
+ * Holds common methods for definition of construction tabs visual appearance. Tabs such as: ConstrutRobotTab.java and AssignBehaviors.java. 
+ * @author Konstantinas
+ */
 public abstract class ConstructionTabs extends Tabs implements ConstructionTabsInter  {
 
 
 	/**
-	 * @param initiallyVisible
-	 * @param firstTabbedPane
-	 * @param tabTitle
-	 * @param imageIconDirectory
+	 * Defines visual appearance of the tabs for construction of modular robot.
+	 * @param firstTabbedPane,true if the tab is visible after activation of main GUI window. 
+	 * @param tabTitle, the title of the tab
+	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
 	 */
 	protected ConstructionTabs(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle, String imageIconDirectory) {
 		super(initiallyVisible,firstTabbedPane, tabTitle, imageIconDirectory);
 	}
-	
-	
 	
 	/**
 	 * Controls selection and deselection of button. Only one button can be selected, others desected.
