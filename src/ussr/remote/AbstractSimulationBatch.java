@@ -30,13 +30,11 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
     public static final int SERVER_PORT = 54323;
     public static final int LINE_BUFFER_SIZE = 20;
     
-    private Class<?> mainClass;
     private SimulationLauncherServer server;
     private PrintWriter writer;
     private List<Worker> passiveWorkers = new ArrayList<Worker>();
 
-    public AbstractSimulationBatch(Class<?> mainClass) {
-        this.mainClass = mainClass;
+    public AbstractSimulationBatch() {
         // Start a simulation server (one that manages a number of running simulation processes)
         try {
             server = new SimulationLauncherServer(AbstractSimulationBatch.SERVER_PORT);
@@ -59,8 +57,10 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
         private int run;
         private boolean active = false;
         private Object signal = new Object();
+        private Class<?> mainClass;
         public void activate(ParameterHolder parameters, int run) {
             if(active) throw new Error("Active worker activated");
+            this.mainClass = parameters.getMainClass();
             this.parameters = parameters;
             this.run = run;
             this.active = true;
@@ -195,6 +195,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
     private Set<String> experiments = Collections.synchronizedSet(new HashSet<String>());
     private Map<String,List<Float>> successes = new HashMap<String,List<Float>>();
     private Map<String,Integer> failures = new HashMap<String,Integer>();
+
     public void recordSuccess(String key, float value) {
         experiments.add(key);
         synchronized(successes) {
