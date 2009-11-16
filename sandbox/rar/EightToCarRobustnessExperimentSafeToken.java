@@ -41,16 +41,15 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
 
     private static final int RETRANSMIT_DELAY = 100;
     private static final float TRANSMIT_DELAY_MS = RETRANSMIT_DELAY/1000.0f;
-    private static final int MAX_N_TRANSMIT_RETRIES = 32;
     private static final boolean TRACE = false;
+    private int maxNretries;
     
-    public static void main(String argv[]) {
-        if(ParameterHolder.get()==null)
-            //ParameterHolder.set(new Parameters(0,0.5f,0.75f,0.0f,Float.MAX_VALUE));
-            ParameterHolder.set(new Parameters(null,0,0.0f,0.0f,0.0f,Float.MAX_VALUE));
-        new EightToCarRobustnessExperimentSafeToken().main(); 
+    public EightToCarRobustnessExperimentSafeToken(int maxNretries) {
+        this.maxNretries = maxNretries;
     }
-
+    
+    public int getMaxNretries() { return maxNretries; }
+    
     @Override
     protected Robot getRobot() {
         return new ATRON() {
@@ -155,7 +154,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
         private boolean transmitNow = false;
 
         public EightController() {
-            Parameters p = (Parameters)ParameterHolder.get();
+            EightToCarRobustnessBatch.Parameters p = (EightToCarRobustnessBatch.Parameters)ParameterHolder.get();
             super.setCommFailureRisk(p.minR, p.maxR, p.completeR);
         }
         
@@ -198,7 +197,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
                 synchronized(outbound) {
                     if(outbound.size()==0) return;
                     p = outbound.remove(0);
-                    if(p.getTries()>=MAX_N_TRANSMIT_RETRIES) {
+                    if(p.getTries()>=getMaxNretries()) {
                         if(TRACE) System.out.println("["+getMyID()+"] Timeout");
                         return;
                     }

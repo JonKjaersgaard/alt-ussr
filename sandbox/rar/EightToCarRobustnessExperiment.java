@@ -47,68 +47,12 @@ public abstract class EightToCarRobustnessExperiment extends GenericATRONSimulat
 
     @Override
     protected void simulationHook(PhysicsSimulation simulation) {
-        float maxTime = ((Parameters)Parameters.get()).maxTime;
+        float maxTime = ((EightToCarRobustnessBatch.Parameters)EightToCarRobustnessBatch.Parameters.get()).maxTime;
         simulation.waitForPhysicsTimestep(new TimedPhysicsObserver(maxTime) {
             public void physicsTimeStepHook(PhysicsSimulation simulation) {
                 reportResult(false);
             }
         });
-    }
-    
-    public static class Parameters extends ParameterHolder {
-        public int number;
-        public float minR, maxR, completeR, maxTime;
-        public Parameters(Class<?> mainClass, int number, float minR, float maxR, float completeR, float maxTime) {
-            super(mainClass);
-            this.number = number;
-            this.minR = minR;
-            this.maxR = maxR;
-            this.completeR = completeR;
-            this.maxTime = maxTime;
-        }
-        public String toString() {
-            return (super.mainClass==null?"_":super.mainClass.getName())+"#"+number+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime;
-        }
-        /* (non-Javadoc)
-         * @see java.lang.Object#hashCode()
-         */
-        @Override
-        public int hashCode() {
-            final int prime = 31;
-            int result = super.hashCode();
-            result = prime * result + Float.floatToIntBits(completeR);
-            result = prime * result + Float.floatToIntBits(maxR);
-            result = prime * result + Float.floatToIntBits(maxTime);
-            result = prime * result + Float.floatToIntBits(minR);
-            result = prime * result + number;
-            return result;
-        }
-        /* (non-Javadoc)
-         * @see java.lang.Object#equals(java.lang.Object)
-         */
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (!super.equals(obj))
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            Parameters other = (Parameters) obj;
-            if (Float.floatToIntBits(completeR) != Float
-                    .floatToIntBits(other.completeR))
-                return false;
-            if (Float.floatToIntBits(maxR) != Float.floatToIntBits(other.maxR))
-                return false;
-            if (Float.floatToIntBits(maxTime) != Float
-                    .floatToIntBits(other.maxTime))
-                return false;
-            if (Float.floatToIntBits(minR) != Float.floatToIntBits(other.minR))
-                return false;
-            if (number != other.number)
-                return false;
-            return true;
-        }
     }
     
     @Override

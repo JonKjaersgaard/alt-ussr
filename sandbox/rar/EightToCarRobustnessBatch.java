@@ -11,14 +11,70 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import rar.EightToCarRobustnessExperiment.Parameters;
 
 
 import ussr.remote.AbstractSimulationBatch;
 import ussr.remote.facade.ParameterHolder;
 
 public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
+    public static class Parameters extends ParameterHolder {
+        public int number;
+        public float minR, maxR, completeR, maxTime;
+        public Parameters(Class<?> mainClass, int number, float minR, float maxR, float completeR, float maxTime) {
+            super(mainClass);
+            this.number = number;
+            this.minR = minR;
+            this.maxR = maxR;
+            this.completeR = completeR;
+            this.maxTime = maxTime;
+        }
+        public String toString() {
+            return (super.mainClass==null?"_":super.mainClass.getName())+"#"+number+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime;
+        }
+        /* (non-Javadoc)
+         * @see java.lang.Object#hashCode()
+         */
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = super.hashCode();
+            result = prime * result + Float.floatToIntBits(completeR);
+            result = prime * result + Float.floatToIntBits(maxR);
+            result = prime * result + Float.floatToIntBits(maxTime);
+            result = prime * result + Float.floatToIntBits(minR);
+            result = prime * result + number;
+            return result;
+        }
+        /* (non-Javadoc)
+         * @see java.lang.Object#equals(java.lang.Object)
+         */
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (!super.equals(obj))
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Parameters other = (Parameters) obj;
+            if (Float.floatToIntBits(completeR) != Float
+                    .floatToIntBits(other.completeR))
+                return false;
+            if (Float.floatToIntBits(maxR) != Float.floatToIntBits(other.maxR))
+                return false;
+            if (Float.floatToIntBits(maxTime) != Float
+                    .floatToIntBits(other.maxTime))
+                return false;
+            if (Float.floatToIntBits(minR) != Float.floatToIntBits(other.minR))
+                return false;
+            if (number != other.number)
+                return false;
+            return true;
+        }
+    }
+
     private static final float TIMEOUT = 100f;
     public static final int N_REPEAT = 20;
     public static final float START_RISK = 0;
@@ -30,7 +86,8 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     public static final float FAIL_INC = 0.01f;
     public static final int N_PARALLEL_SIMS = 2;
     public static final Class<?> EXPERIMENTS[] = new Class<?>[] {
-        EightToCarRobustnessExperimentSafeToken.class,
+        EightToCarRobustnessExperimentSafeToken32.class,
+        EightToCarRobustnessExperimentSafeTokenMaxint.class,
         EightToCarRobustnessExperimentBroadcast.class,
         EightToCarRobustnessExperimentParallelLim.class,
         EightToCarRobustnessExperimentParallelStd.class
@@ -50,14 +107,14 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
             // Efficiency experiments, 0% failure risk, varying packet loss
             for(float risk = START_RISK; risk<=END_RISK; risk+=RISK_INC) {
                 for(int i=0; i<N_REPEAT; i++) {
-                    parameters.add(new Parameters(mainClasses[ci],counter,Math.max(0, risk-RISK_DELTA),risk,0,TIMEOUT));
+                    parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,Math.max(0, risk-RISK_DELTA),risk,0,TIMEOUT));
                 }
                 counter++;
             }
             // Robustness experiments, varying failure risk, no packet loss
             for(float fail = START_FAIL; fail<=END_FAIL; fail+=FAIL_INC) {
                 for(int i=0; i<N_REPEAT; i++) {
-                    parameters.add(new Parameters(mainClasses[ci],counter,0,0,fail,TIMEOUT));
+                    parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,0,0,fail,TIMEOUT));
                 }
                 counter++;
             }
@@ -99,4 +156,11 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
         logfile.flush();
     }
 
+    @Override
+    protected void reportHook(Set<String> experimentsNames,
+            Map<String, List<Float>> successes,
+            Map<String, Integer> failures,
+            Map<String, ParameterHolder> experimentParameters) {
+        
+    }
 }

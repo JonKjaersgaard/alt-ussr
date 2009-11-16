@@ -1,6 +1,6 @@
 package rar;
 
-import rar.EightToCarRobustnessExperiment.Parameters;
+import rar.EightToCarRobustnessBatch.Parameters;
 import ussr.remote.facade.ParameterHolder;
 import ussr.samples.atron.ATRONController;
 
@@ -14,7 +14,7 @@ public class ATRONStateMachineAPI extends ATRONController implements Communicati
         this.registrant = registrant;
         machine.stateManager.setCommunicationProvider(this);
         machine.setAPI(this);
-        Parameters p = (Parameters)ParameterHolder.get();
+        EightToCarRobustnessBatch.Parameters p = (EightToCarRobustnessBatch.Parameters)ParameterHolder.get();
         super.setCommFailureRisk(p.minR, p.maxR, p.completeR);
     }
     

@@ -44,7 +44,7 @@ public class EightToCarRobustnessExperimentToken extends EightToCarRobustnessExp
     public static void main(String argv[]) {
         if(ParameterHolder.get()==null)
             //ParameterHolder.set(new Parameters(0,0.5f,0.75f,0.0f,Float.MAX_VALUE));
-            ParameterHolder.set(new Parameters(null,0,0.0f,0.0f,0.0f,Float.MAX_VALUE));
+            ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.0f,0.0f,0.0f,Float.MAX_VALUE));
         new EightToCarRobustnessExperimentToken().main(); 
     }
 
@@ -114,7 +114,7 @@ public class EightToCarRobustnessExperimentToken extends EightToCarRobustnessExp
         int retries = 0;
 
         public EightController() {
-            Parameters p = (Parameters)ParameterHolder.get();
+            EightToCarRobustnessBatch.Parameters p = (EightToCarRobustnessBatch.Parameters)ParameterHolder.get();
             super.setCommFailureRisk(p.minR, p.maxR, p.completeR);
         }
         

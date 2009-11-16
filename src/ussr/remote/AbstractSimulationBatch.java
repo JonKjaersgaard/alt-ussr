@@ -33,6 +33,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
     private SimulationLauncherServer server;
     private PrintWriter writer;
     private List<Worker> passiveWorkers = new ArrayList<Worker>();
+    private Map<String,ParameterHolder> experimentParameters = new HashMap<String,ParameterHolder>();
 
     public AbstractSimulationBatch() {
         // Start a simulation server (one that manages a number of running simulation processes)
@@ -105,6 +106,9 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
                     System.out.println("#"+run+" Simulation stopped");
                 }
                 System.out.println("#"+run+" Simulation completed");
+                // Register in set of parameters
+                experimentParameters.put(parameters.toString(), parameters);
+                // Prepare for next job
                 active = false;
                 synchronized(passiveWorkers) {
                     passiveWorkers.add(this);
@@ -207,6 +211,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             previous.add(value);
         }
     }
+
     public void recordFailure(String key) {
         experiments.add(key);
         synchronized(failures) {
@@ -215,6 +220,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             failures.put(key, previous+1);
         }
     }
+    
     public void reportRecord() {
         PrintWriter resultFile = null;
         try {
@@ -238,15 +244,22 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             System.out.println(output);
         }
         if(resultFile!=null) resultFile.close();
+        reportHook(experiments,successes,failures,experimentParameters);
     }
 
-    private float average(List<Float> success) {
+    protected void reportHook(Set<String> experimentsNames,
+            Map<String, List<Float>> successes,
+            Map<String, Integer> failures,
+            Map<String, ParameterHolder> experimentParameters) {
+    }
+
+    public static float average(List<Float> success) {
         float total = 0;
         for(float f: success) total+=f;
         return total/success.size();
     }
     
-    private float stddev(List<Float> numbers) {
+    public static float stddev(List<Float> numbers) {
         float avg = average(numbers);
         float sum = 0;
         for(float f: numbers) sum += (f-avg)*(f-avg);
