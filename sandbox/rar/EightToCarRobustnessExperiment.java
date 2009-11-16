@@ -58,7 +58,8 @@ public abstract class EightToCarRobustnessExperiment extends GenericATRONSimulat
     public static class Parameters extends ParameterHolder {
         public int number;
         public float minR, maxR, completeR, maxTime;
-        public Parameters(int number, float minR, float maxR, float completeR, float maxTime) {
+        public Parameters(Class<?> mainClass, int number, float minR, float maxR, float completeR, float maxTime) {
+            super(mainClass);
             this.number = number;
             this.minR = minR;
             this.maxR = maxR;
@@ -66,7 +67,7 @@ public abstract class EightToCarRobustnessExperiment extends GenericATRONSimulat
             this.maxTime = maxTime;
         }
         public String toString() {
-            return "#"+number+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime;
+            return super.mainClass.getName()+"#"+number+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime;
         }
         /* (non-Javadoc)
          * @see java.lang.Object#hashCode()
@@ -74,7 +75,7 @@ public abstract class EightToCarRobustnessExperiment extends GenericATRONSimulat
         @Override
         public int hashCode() {
             final int prime = 31;
-            int result = 1;
+            int result = super.hashCode();
             result = prime * result + Float.floatToIntBits(completeR);
             result = prime * result + Float.floatToIntBits(maxR);
             result = prime * result + Float.floatToIntBits(maxTime);
@@ -89,7 +90,7 @@ public abstract class EightToCarRobustnessExperiment extends GenericATRONSimulat
         public boolean equals(Object obj) {
             if (this == obj)
                 return true;
-            if (obj == null)
+            if (!super.equals(obj))
                 return false;
             if (getClass() != obj.getClass())
                 return false;
@@ -120,7 +121,7 @@ public abstract class EightToCarRobustnessExperiment extends GenericATRONSimulat
         PhysicsParameters.get().setUseModuleEventQueue(true);
         PhysicsParameters.get().setRealtime(false);
         PhysicsFactory.getOptions().setStartPaused(false);
-        PhysicsFactory.getOptions().setHeadless(false);
+        PhysicsFactory.getOptions().setHeadless(true);
         //VisualizationParameters.get().setAlwaysShowConnectors(true);
         PhysicsParameters.get().setGravity(0);
     }

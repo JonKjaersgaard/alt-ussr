@@ -19,18 +19,19 @@ import ussr.remote.AbstractSimulationBatch;
 import ussr.remote.facade.ParameterHolder;
 
 public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
-    private static final float TIMEOUT = 270f;
-    public static final int N_REPEAT = 15;
+    private static final float TIMEOUT = 100f;
+    public static final int N_REPEAT = 1;
     public static final float START_RISK = 0;
     public static final float END_RISK = 0.9f;
-    public static final float RISK_DELTA = 0.4f;
+    public static final float RISK_DELTA = 0.0f;
     public static final float RISK_INC = 0.1f;
     public static final float START_FAIL = 0;
     public static final float END_FAIL = 0.1f;
-    public static final float FAIL_INC = 0.1f;
+    public static final float FAIL_INC = 0.01f;
     public static final int N_PARALLEL_SIMS = 2;
     public static final Class<?> EXPERIMENTS[] = new Class<?>[] {
-        EightToCarRobustnessExperimentToken.class
+        EightToCarRobustnessExperimentSafeToken.class,
+        EightToCarRobustnessExperimentBroadcast.class
     };
     
     private List<ParameterHolder> parameters = new LinkedList<ParameterHolder>();
@@ -38,19 +39,27 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     private PrintWriter logfile;
     
     public static void main(String argv[]) {
-        new EightToCarRobustnessBatch(EXPERIMENTS[0]).start(N_PARALLEL_SIMS);
+        new EightToCarRobustnessBatch(EXPERIMENTS).start(N_PARALLEL_SIMS);
     }
     
-    public EightToCarRobustnessBatch(Class<?> mainClass) {
-        super(mainClass);
+    public EightToCarRobustnessBatch(Class<?>[] mainClasses) {
         int counter = 0;
-        for(float fail = START_FAIL; fail<=END_FAIL; fail+=FAIL_INC) {
+        for(int ci=0; ci<mainClasses.length; ci++) {
+            // Efficiency experiments, 0% failure risk, varying packet loss
             for(float risk = START_RISK; risk<=END_RISK; risk+=RISK_INC) {
                 for(int i=0; i<N_REPEAT; i++) {
-                    parameters.add(new Parameters(counter,Math.max(0, risk-RISK_DELTA),risk,fail,TIMEOUT));
+                    parameters.add(new Parameters(mainClasses[ci],counter,Math.max(0, risk-RISK_DELTA),risk,0,TIMEOUT));
                 }
                 counter++;
             }
+            // Robustness experiments, varying failure risk, no packet loss
+            for(float fail = START_FAIL; fail<=END_FAIL; fail+=FAIL_INC) {
+                for(int i=0; i<N_REPEAT; i++) {
+                    parameters.add(new Parameters(mainClasses[ci],counter,0,0,fail,TIMEOUT));
+                }
+                counter++;
+            }
+
         }
         try {
             logfile = new PrintWriter(new BufferedWriter(new FileWriter("eight-log.txt")));
