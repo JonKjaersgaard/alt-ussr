@@ -20,7 +20,7 @@ import ussr.remote.facade.ParameterHolder;
 
 public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     private static final float TIMEOUT = 100f;
-    public static final int N_REPEAT = 1;
+    public static final int N_REPEAT = 20;
     public static final float START_RISK = 0;
     public static final float END_RISK = 0.91f;
     public static final float RISK_DELTA = 0.0f;
