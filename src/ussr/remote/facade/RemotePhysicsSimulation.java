@@ -2,16 +2,9 @@ package ussr.remote.facade;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
-
-import com.jme.scene.state.LightState;
-import com.jme.scene.state.WireframeState;
-
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
-import ussr.model.Module;
-import ussr.physics.jme.pickers.Picker;
 
 /**
  * Remote version of the standard PhysicsSimulation interface.
@@ -117,5 +110,13 @@ public interface RemotePhysicsSimulation extends Remote {
 	 */
 	public void saveToXML(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName)throws RemoteException;
 	
+	/**
+	 * @return
+	 */
 	public WorldDescription getWorldDescription()throws RemoteException;
+	
+	/**
+	 * @param control
+	 */
+	public void setGUICallbackControl(GUICallbackControl control)throws RemoteException;
 }

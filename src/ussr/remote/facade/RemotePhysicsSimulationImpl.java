@@ -2,20 +2,14 @@ package ussr.remote.facade;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.List;
-
-import com.jme.scene.state.LightState;
-import com.jme.scene.state.WireframeState;
 
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.saveLoadXML.InSimulationXMLSerializer;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
-import ussr.model.Module;
 import ussr.physics.PhysicsSimulation;
-import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
-import ussr.physics.jme.pickers.Picker;
+
 
 /**
  * Wrapper for a standard PhysicsSimulation allowing it to be used as a remote object.
@@ -31,51 +25,51 @@ import ussr.physics.jme.pickers.Picker;
  * @author Konstantinas, added support for controlling rendering, builder control and so on.
  */
 public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements RemotePhysicsSimulation  {
-    private PhysicsSimulation simulation;
-    
-    public RemotePhysicsSimulationImpl(PhysicsSimulation simulation) throws RemoteException {
-        this.simulation = simulation;
-    }
+	private PhysicsSimulation simulation;
 
-    public float getTime() throws RemoteException {
-       return simulation.getTime();
-    }
+	public RemotePhysicsSimulationImpl(PhysicsSimulation simulation) throws RemoteException {
+		this.simulation = simulation;
+	}
 
-    public boolean isPaused() throws RemoteException {
-        return simulation.isPaused();
-    }
-    
-    public void setPause(boolean paused) throws RemoteException {
-     simulation.setPause(paused);
-    }
+	public float getTime() throws RemoteException {
+		return simulation.getTime();
+	}
 
-    public boolean isStopped() throws RemoteException {
-        return simulation.isStopped();
-    }
+	public boolean isPaused() throws RemoteException {
+		return simulation.isPaused();
+	}
 
-    public void setRobot(Robot bot) throws RemoteException {
-        simulation.setRobot(bot);
-    }
+	public void setPause(boolean paused) throws RemoteException {
+		simulation.setPause(paused);
+	}
 
-    public void setRobot(Robot bot, String type) throws RemoteException {
-        simulation.setRobot(bot, type);
-    }
+	public boolean isStopped() throws RemoteException {
+		return simulation.isStopped();
+	}
 
-    public void setWorld(WorldDescription world) throws RemoteException {
-        simulation.setWorld(world);
-    }
+	public void setRobot(Robot bot) throws RemoteException {
+		simulation.setRobot(bot);
+	}
 
-    public void start() throws RemoteException {
-        simulation.start();
-    }
+	public void setRobot(Robot bot, String type) throws RemoteException {
+		simulation.setRobot(bot, type);
+	}
 
-    public void stop() throws RemoteException {
-        simulation.stop();
-    }
-    
-    public void setRealtime(boolean realtime)throws RemoteException{
-    	simulation.setRealtime(realtime);
-    }
+	public void setWorld(WorldDescription world) throws RemoteException {
+		simulation.setWorld(world);
+	}
+
+	public void start() throws RemoteException {
+		simulation.start();
+	}
+
+	public void stop() throws RemoteException {
+		simulation.stop();
+	}
+
+	public void setRealtime(boolean realtime)throws RemoteException{
+		simulation.setRealtime(realtime);
+	}
 
 	@Override
 	public void setSingleStep(boolean singleStep) throws RemoteException {
@@ -90,7 +84,7 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 	public SimulationRendererControlInter getRendererControl() throws RemoteException{
 		return new JMERendererControlWrapper((JMESimulation)simulation);
 	}
-	
+
 	/**
 	 * Returns the object for building modular robot in remote simulation.
 	 * @return object, for building modular robot in remote simulation.
@@ -108,15 +102,27 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 		InSimulationXMLSerializer saveXML = new InSimulationXMLSerializer((JMESimulation)simulation);
 		saveXML.saveXMLfile(ussrXmlFileType, fileDirectoryName);		
 	}
-	
+
 	public WorldDescription getWorldDescription()throws RemoteException{
 		return ((JMESimulation) simulation).getWorldDescription();
 	}
 
 	@Override
 	public WorldDescriptionControlInter getWorldDescriptionControl() throws RemoteException {
-	
+
 		return new JMEWorldDescriptionControlWrapper(((JMESimulation)simulation).getWorldDescription()) ;
 	}
 
+
+
+	private static GUICallbackControl guiCallbackControl;
+
+
+	public void setGUICallbackControl(GUICallbackControl control) throws RemoteException {
+		guiCallbackControl = control;		
+	}
+
+	public static GUICallbackControl getGUICallbackControl() throws RemoteException {
+		return guiCallbackControl;
+	}
 }

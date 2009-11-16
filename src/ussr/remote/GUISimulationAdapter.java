@@ -10,12 +10,14 @@ import java.rmi.RemoteException;
 import ussr.aGui.GeneralController;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrameSeparateController;
+import ussr.aGui.MainFramesInter;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.controllers.TabsControllers;
 import ussr.builder.BuilderMultiRobotPreSimulation;
 
 import ussr.remote.facade.ActiveSimulation;
+import ussr.remote.facade.GUICallbackControlImpl;
 
 import ussr.remote.facade.RemotePhysicsSimulation;
 import ussr.samples.atron.simulations.CommunicationDemo;
@@ -88,6 +90,9 @@ public class GUISimulationAdapter {
             }
         }
         //ArrayList<Object> 
+        
+        
+        sim.setGUICallbackControl(new GUICallbackControlImpl() );
         
         GeneralController.setRemotePhysicsSimulation(sim);
         MainFrameSeparateController.setRendererControl(sim.getRendererControl());

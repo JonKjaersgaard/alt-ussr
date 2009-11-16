@@ -10,6 +10,7 @@ import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
@@ -109,9 +110,19 @@ public interface BuilderControlInter extends Remote {
 	 */
 	public String getModuleCountingFromEndType(int amountFromLastMode ) throws RemoteException;
 	
+	/**
+	 * Returns the type of the module according to its number sequence in the list of modules.
+	 * @param moduleNr, number of the module in the list of modules.
+	 * @return type, the type of the module.
+	 */
+	public String getModuleType(int moduleNr) throws RemoteException;
 
 	public Module createModule(ModulePosition position, boolean assign)throws RemoteException;
 	
+	/**
+	 * Returns the list of IDs of all modules in simulation environment.
+	 * @return the list of IDs of all modules in simulation environment.
+	 */
 	public List<Integer> getIDsModules()throws RemoteException;
 
 }

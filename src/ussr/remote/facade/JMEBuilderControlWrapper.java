@@ -47,10 +47,13 @@ import ussr.samples.odin.modules.Odin;
 
 
 public class JMEBuilderControlWrapper extends UnicastRemoteObject implements BuilderControlInter{
+	
+	/**
+	 * JME level simulation.
+	 */
 	private JMESimulation jmeSimulation;	
 
-	//STOPPED HERE
-	//final static ConstructionToolSpecification OPPOSITE = new ConstructionToolSpecification(jmeSimulation,ConstructRobotTabController.getChosenMRname(),ConstructionTools.OPPOSITE_ROTATION);
+	
 
 
 	public JMEBuilderControlWrapper(JMESimulation jmeSimulation) throws RemoteException{
@@ -261,6 +264,16 @@ public class JMEBuilderControlWrapper extends UnicastRemoteObject implements Bui
 	public String getModuleCountingFromEndType(int amountFromLastMode ) throws RemoteException{
 		return getModuleCountingFromEnd(amountFromLastMode).getProperty(BuilderHelper.getModuleTypeKey());
 	};
+		
+	/**
+	 * Returns the type of the module according to its number sequence in the list of modules.
+	 * @param moduleNr, number of the module in the list of modules.
+	 * @return type, the type of the module.
+	 */
+	public String getModuleType(int moduleNr) throws RemoteException{
+	 return jmeSimulation.getModules().get(moduleNr).getProperty(BuilderHelper.getModuleTypeKey()); 
+	};
+	
 
 	/**
 	 * Moves the last added module in simulation environment on next connector of previously added module(the one before the last). 
@@ -364,16 +377,18 @@ public class JMEBuilderControlWrapper extends UnicastRemoteObject implements Bui
 		return jmeSimulation.createModule(position, assign);
 	}
 	
+	/**
+	 * Returns the list of IDs of all modules in simulation environment.
+	 * @return the list of IDs of all modules in simulation environment.
+	 */
 	public List<Integer> getIDsModules() throws RemoteException{
 		
 		List<Integer> idsModules = new ArrayList<Integer>();
 		
 		List<Module> modules =jmeSimulation.getModules();
-		//Iterator moduleIterator = modules.iterator();
 		for (Module currentModule: modules){
 			idsModules.add(currentModule.getID());
-		}
-		
+		}		
 		return idsModules; 
 	}
 	
