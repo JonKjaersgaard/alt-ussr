@@ -4,18 +4,11 @@ import java.rmi.RemoteException;
 
 import javax.swing.AbstractButton;
 import javax.swing.JComboBox;
-
-import ussr.builder.constructionTools.ConstructionToolSpecification;
 import ussr.builder.enumerations.ATRONStandardRotations;
 import ussr.builder.enumerations.CKBotStandardRotations;
 import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.MTRANStandardRotations;
 import ussr.builder.enumerations.SupportedModularRobots;
-import ussr.builder.helpers.BuilderHelper;
-import ussr.physics.jme.JMESimulation;
-
-import ussr.remote.facade.BuilderControlInter;
-import ussr.remote.facade.BuilderSupportingProxyPickers;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTabInter;
@@ -304,8 +297,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	public static void jButtonJumpFromConnToConnectorActionPerformed() {
 		/*Disable tab components no longer available*/
 		ConstructRobotTab.setEnabledRotationToolBar(false);
-		ConstructRobotTab.getJButtonMove().setEnabled(false);
-		ConstructRobotTab.setEnabledButtonsArrows(true);
+		ConstructRobotTab.getJButtonMove().setEnabled(false);		
 		
 		try {
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON,connectorNr);
@@ -385,7 +377,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	}
 
 	/**
-	 * Adapts
+	 * Adapts Construct Robot Tab to the the type modular robot is simulation environment.
 	 * Called from ConstructionToolSpecification.
 	 * @param supportedModularRobot, supported modular robot.
 	 */
@@ -403,9 +395,50 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		adaptTabToChosenMR(supportedModularRobot);
 		ConstructRobotTab.setRadioButtonsEnabled(false);
 	}
+	
+	/**
+	 * Adapts Construct Robot Tab to the the type of first module in simulation environment.
+	 * TODO MAKE IT MORE GENERIC BY MEANS OF IDENTIFYING THE LAST TYPE OF MODULE IN XML FILE
+	 * OR SOMETHING SIMILLAR.
+	 */
+	public static void adaptTabToModuleInSimulation(){
+		int amountModules =0;		
+		try {
+			amountModules =  builderControl.getIDsModules().size();
+		} catch (RemoteException e) {
+			throw new Error("Failed to identify amount of modules in simulation environment, due to remote exception");
+		}
+		
+		if (amountModules>0){
+			/*Adapt to first module*/
+			String modularRobotName ="";
+			try {
+				modularRobotName = builderControl.getModuleType(0);
+			} catch (RemoteException e) {
+				throw new Error ("Failed to identify the type of the first module in simulation environment, due to remote exception.");
+			}
+			if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ATRON.toString())){
+				adaptTabToChosenMR(SupportedModularRobots.ATRON);
+			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ODIN.toString())){
+				adaptTabToChosenMR(SupportedModularRobots.ODIN);
+			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.MTRAN.toString())){
+				adaptTabToChosenMR(SupportedModularRobots.MTRAN);
+			}else if(modularRobotName.toUpperCase().contains(SupportedModularRobots.CKBOTSTANDARD.toString())){
+				adaptTabToChosenMR(SupportedModularRobots.CKBOTSTANDARD);
+			}
+			
+			try {
+				 /*Set default construction tool to be "On selected  connector"*/
+				builderControl.setConstructionToolSpecPicker(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR);
+			} catch (RemoteException e) {
+				throw new Error("Failed to initate picker called " + ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR + " , due to remote exception");
+			}
+		}
+
+	}	
 
 	/**
-	 * Removes current robots in simulation environment and enables tab element for constructing new robot.
+	 * Removes current robots in simulation environment and enables tab elements for constructing new robot.
 	 */
 	public static void jButtonStartNewRobotActionPerformed() {
 		ConstructRobotTab.setRadioButtonsEnabled(true);
@@ -420,35 +453,6 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[11]);
 	}
 
-	//FIXME MAKE IT MORE GENERIC BY MEANS OF IDENTIFYING THE LAST TYPE OF MODULE IN XML FILE
-	public static void adaptTabToModuleInSimulation(JMESimulation jmeSimulation){
-		if (jmeSimulation.getModules().size()>0){
-			/*Adapt first module*/
-			String modularRobotName = jmeSimulation.getModules().get(0).getProperty(BuilderHelper.getModuleTypeKey());
-			if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ATRON.toString())){
-
-				adaptTabToChosenMR(SupportedModularRobots.ATRON);
-			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ODIN.toString())){
-				adaptTabToChosenMR(SupportedModularRobots.ODIN);
-			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.MTRAN.toString())){
-				adaptTabToChosenMR(SupportedModularRobots.MTRAN);
-			}else if(modularRobotName.toUpperCase().contains(SupportedModularRobots.CKBOTSTANDARD.toString())){
-				adaptTabToChosenMR(SupportedModularRobots.CKBOTSTANDARD);
-			}
-
-			//jmeSimulation.setPicker(new ConstructionToolSpecification(jmeSimulation, chosenMRname,ConstructionTools.ON_SELECTED_CONNECTOR));
-		}
-
-	}
-
-	/**
-	 *  Returns remote version of builder controller object.
-	 * @return builderControl,remote version of builder controller object.
-	 */
-/*	public static BuilderControlInter getBuilderControl() {
-		return builderControl;
-	}*/
-
 	/**
 	 * Initializes the tool for varying the properties of modules (or types of modules in Odin case) selected in simulation environment.
 	 * Is specific to each modular robot.
@@ -461,7 +465,6 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		}				
 	}
 
-
 	/**
 	 * Initializes the tool for changing module rotation with each selection of module in simulation environment.
 	 */
@@ -472,4 +475,23 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			throw new Error("Failed to initate picker called"+ConstructionTools.AVAILABLE_ROTATIONS.toString() +", due to remote exception");
 		}
 	}
+	
+	/**
+	 * Adapts Construct Robot tab to the tool chosen by user. To be more precise disables and enables relevant components of the tab. 
+	 * @param chosenTool,the tool chosen by the user in Construct Robot tab.
+	 */
+	public static void adaptConstructRobotTabToChosenTool(ConstructionTools chosenTool)throws RemoteException{
+
+		switch(chosenTool){
+		
+		case MOVE_MODULE_FROM_CON_TO_CON:
+			ConstructRobotTab.setEnabledButtonsArrows(true);	
+			break;
+		case NEW_MODULE_ON_SELECTED_CONNECTOR:
+			ConstructRobotTab.setEnabledRotationToolBar(false);
+			ConstructRobotTab.getJButtonMove().setEnabled(false);
+			break;			
+		default: throw new Error ("The tool named as "+ chosenTool.toString() + " is not supported yet.");
+		}
+	};
 }

@@ -4,32 +4,22 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JToolBar;
 import ussr.aGui.FramesInter;
 import ussr.aGui.GuiFrames;
-import ussr.aGui.MainFrames;
 import ussr.aGui.MainFramesInter;
 import ussr.aGui.enumerations.HintPanelTypes;
-import ussr.aGui.fileChooser.views.FileChooserFrameInter;
-import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
-import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
-import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
-import ussr.aGui.tabs.views.constructionTabs.ConstructionTabsInter.ModularRobotsNames;
-import ussr.physics.jme.JMESimulation;
+import ussr.builder.enumerations.ConstructionTools;
+
 
 /**
  * Defines visual appearance of the tab called "1 Step: Construct Robot".  
@@ -43,11 +33,6 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	private static ArrayList<AbstractButton> jRadioButtons =  new ArrayList<AbstractButton>() ;	
 
 	/**
-	 * Container for buttons contained in the tab, except radio buttons.
-	 *//*
-	private static ArrayList<javax.swing.JButton> jButtons =  new ArrayList<javax.swing.JButton>() ;*/
-
-	/**
 	 * The constants of grid bag layout used during design of the tab.
 	 */
 	private GridBagConstraints gridBagConstraints = new GridBagConstraints();	
@@ -55,7 +40,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 
 	/**
 	 * Defines visual appearance of the tab called "1 Step: Construct Robot".
-	 * TODO
+	 * @param initiallyVisible, true if the tab is visible after activation of main GUI window. 
 	 * @param firstTabbedPane, location of the tab in the main GUI frame. True if it is the first tabbed pane.
 	 * @param tabTitle, the title of the tab.
 	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
@@ -160,7 +145,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 1;
-		//gridBagConstraints.ipady = 10; 
+		
 		super.jComponent.add(radionButtonODIN,gridBagConstraints);
 		buttonGroupModularRobots.add(radionButtonODIN);
 		jRadioButtons.add(radionButtonODIN);
@@ -176,7 +161,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 3;
 		gridBagConstraints.gridy = 1;
-		//gridBagConstraints.ipady = 10; 
+		
 		super.jComponent.add(radioButtonMTRAN,gridBagConstraints);
 		buttonGroupModularRobots.add(radioButtonMTRAN);
 		jRadioButtons.add(radioButtonMTRAN);
@@ -219,7 +204,6 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.gridy = 3;
 		gridBagConstraints.gridwidth = 4;
 		gridBagConstraints.insets = new Insets(0,3,10,18);  
-
 
 		jButtonOppositeRotation.setToolTipText(TOOL_TIP_TEXTS[2]);		
 		jButtonOppositeRotation.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE));
@@ -474,7 +458,6 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jSeparator2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jSeparator2.setPreferredSize(new Dimension(6,30));
 
-
 		/*Internal layout of the toolbar*/
 		GroupLayout jToolBarConstructionToolsLayout = new GroupLayout(jToolBarConstructionTools);
 		jToolBarConstructionTools.setLayout(jToolBarConstructionToolsLayout);
@@ -538,7 +521,6 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 
 
 	/*Getters and setters*/
-
 	/**
 	 * Enables and disables radio buttons with names of modular robots.
 	 * @param enabled, true if enabled.
@@ -576,7 +558,6 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	public static javax.swing.JButton getJButtonMove() {
 		return jButtonMove;
 	}
-
 
 	/**
 	 * Enables and disables the tool bar containing the tools for constructing the shape of modular robot(Add new modules).
@@ -665,7 +646,6 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		return jButtonStartNewRobot;
 	}
 
-
 	/**
 	 * Enables or disables the tab;
 	 * @param enabled, true if the tab is enabled.
@@ -684,10 +664,10 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[12]);
 	}
 
-
-
-
-
+	/**
+	 * Returns hint panel, which is used to display feedback to the user.
+	 * @return hint panel, which is used to display feedback to the user.
+	 */
 	public static HintPanel getHintPanel(){
 		return hintPanel;
 	}
@@ -714,6 +694,4 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	private javax.swing.JToolBar.Separator jSeparator1,jSeparator2;
 
 	private static HintPanel hintPanel;
-
-
 }

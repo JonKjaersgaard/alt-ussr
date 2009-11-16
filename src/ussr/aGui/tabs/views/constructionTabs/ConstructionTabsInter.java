@@ -10,7 +10,7 @@ public interface ConstructionTabsInter {
 	};
 	
 	/**
-	 * Keeps strings used to present modular robots names in tabs. setText() method.
+	 * Keeps strings used to present modular robots names in  construction tabs. setText() method.
 	 * @author Konstantinas
 	 */
 	public enum ModularRobotsNames{

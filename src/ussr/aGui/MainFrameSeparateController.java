@@ -7,6 +7,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 
 import ussr.aGui.tabs.TabsInter;
+import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.builder.helpers.BuilderHelper;
@@ -313,6 +314,8 @@ public class MainFrameSeparateController extends GeneralController {
 				}
 			}
 		}
+		/*Adapt construction tab to the first module in simulation environment if it exists.*/
+		ConstructRobotTabController.adaptTabToModuleInSimulation();
 
 	}
 

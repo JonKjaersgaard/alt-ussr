@@ -1,6 +1,10 @@
 package ussr.aGui.tabs.views.constructionTabs;
 
 
+/**
+ * Supports  with constants.
+ * @author Konstantinas
+ */
 public interface ConstructRobotTabInter extends ConstructionTabsInter {
 
 	/**
