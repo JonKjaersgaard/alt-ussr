@@ -1,12 +1,15 @@
 package ussr.builder.labelingTools;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.builder.QuickPrototyping;
+import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.model.Entity;
+import ussr.remote.facade.RemotePhysicsSimulationImpl;
 
 /**
  * Supports labeling of entities composing the module and module itself. Currently these can be:
@@ -16,7 +19,7 @@ import ussr.model.Entity;
  *
  */
 public abstract class LabelEntityTemplate implements LabelingTemplate {	
-	
+
 	/**
 	 * Empty string used to replace the deleted label. 
 	 */
@@ -26,7 +29,7 @@ public abstract class LabelEntityTemplate implements LabelingTemplate {
 	 *  The output used to indicate that entity do not have labels.
 	 */
 	public static final String NONE = "none";	
-	
+
 	/**
 	 * Assigns (adds) new label to the entity. If entity already has several labels, just adds current label to them.
 	 * This operation is TEMPLATE method. Operation means that it should be executed on the object. 
@@ -71,28 +74,18 @@ public abstract class LabelEntityTemplate implements LabelingTemplate {
 		Entity currentEntity = getCurrentEntity(specification);				
 		String labels = currentEntity.getProperty(BuilderHelper.getLabelsKey());
 		//FIXME IF exception then the problem is that I am not yet saving labels of sensor
-		if (labels==null){
-			AssignBehaviorsTabController.updateTableLabels("");
-		}else{
-			AssignBehaviorsTabController.updateTableLabels(labels);
-		}
-		
-		/*FOR QPSS*/
-		/*QuickPrototyping quickPrototyping = specification.getQuickPrototyping();
-		if (labels == null){
-			quickPrototyping.getModuleLabelsjComboBox().setModel(new javax.swing.DefaultComboBoxModel(new String[] {NONE}));
-		}else{
-			quickPrototyping.getCurrentLabeljTextField().setText(labels);
-			String[] arrayLabels = labels.split(LABEL_SEPARATOR);    	
-			quickPrototyping.getModuleLabelsjComboBox().setModel(new javax.swing.DefaultComboBoxModel(arrayLabels));
 
-		}*/
-			
-		//System.out.println("Labels:"+ labels.length());// for debugging
-		//System.out.println("Length:"+ labels.length());// for debugging
-		
+		try {
+			if (labels==null){
+				RemotePhysicsSimulationImpl.getGUICallbackControl().updateTableWithLabels("");
+			}else{
+				RemotePhysicsSimulationImpl.getGUICallbackControl().updateTableWithLabels(labels);
+			}
+		} catch (RemoteException e) {
+			throw new Error("Failed to update the table with labels, due to remote exception.");
+		}
 	};
-	
+
 	/**
 	 * Returns the entity for labeling.
 	 * This method is so-called "Primitive operation" for above TEMPLATE methods. 
@@ -100,5 +93,5 @@ public abstract class LabelEntityTemplate implements LabelingTemplate {
 	 * @return entity, the entity for labeling. 
 	 */
 	public abstract Entity getCurrentEntity(LabelingToolSpecification specification);
-	
+
 }
