@@ -22,11 +22,11 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     private static final float TIMEOUT = 100f;
     public static final int N_REPEAT = 1;
     public static final float START_RISK = 0;
-    public static final float END_RISK = 0.9f;
+    public static final float END_RISK = 0.91f;
     public static final float RISK_DELTA = 0.0f;
     public static final float RISK_INC = 0.1f;
     public static final float START_FAIL = 0;
-    public static final float END_FAIL = 0.1f;
+    public static final float END_FAIL = 0.101f;
     public static final float FAIL_INC = 0.01f;
     public static final int N_PARALLEL_SIMS = 2;
     public static final Class<?> EXPERIMENTS[] = new Class<?>[] {

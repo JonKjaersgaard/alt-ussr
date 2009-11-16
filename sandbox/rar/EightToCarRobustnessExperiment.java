@@ -67,7 +67,7 @@ public abstract class EightToCarRobustnessExperiment extends GenericATRONSimulat
             this.maxTime = maxTime;
         }
         public String toString() {
-            return super.mainClass.getName()+"#"+number+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime;
+            return (super.mainClass==null?"_":super.mainClass.getName())+"#"+number+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime;
         }
         /* (non-Javadoc)
          * @see java.lang.Object#hashCode()
@@ -121,7 +121,7 @@ public abstract class EightToCarRobustnessExperiment extends GenericATRONSimulat
         PhysicsParameters.get().setUseModuleEventQueue(true);
         PhysicsParameters.get().setRealtime(false);
         PhysicsFactory.getOptions().setStartPaused(false);
-        PhysicsFactory.getOptions().setHeadless(true);
+        PhysicsFactory.getOptions().setHeadless(false);
         //VisualizationParameters.get().setAlwaysShowConnectors(true);
         PhysicsParameters.get().setGravity(0);
     }
