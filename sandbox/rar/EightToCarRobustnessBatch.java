@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -31,7 +33,8 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
             this.maxTime = maxTime;
         }
         public String toString() {
-            return (super.mainClass==null?"_":super.mainClass.getName())+"#"+number+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime;
+            NumberFormat formatter = new DecimalFormat("0000");
+            return (super.mainClass==null?"_":super.mainClass.getName())+"#"+formatter.format(number)+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime;
         }
         /* (non-Javadoc)
          * @see java.lang.Object#hashCode()
@@ -75,8 +78,9 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
         }
     }
 
+    private static final boolean SKIP_EFFICIENCY = true;
     private static final float TIMEOUT = 200f;
-    public static final int N_REPEAT = 20;
+    public static final int N_REPEAT = 40;
     public static final float START_RISK = 0;
     public static final float END_RISK = 0.91f;
     public static final float RISK_DELTA = 0.0f;
@@ -86,12 +90,12 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     public static final float FAIL_INC = 0.01f;
     public static final int N_PARALLEL_SIMS = 2;
     public static final Class<?> EXPERIMENTS[] = new Class<?>[] {
-        //EightToCarRobustnessExperimentSafeToken32.class,
+        EightToCarRobustnessExperimentSafeToken32.class,
         EightToCarRobustnessExperimentSafeToken128.class,
-        EightToCarRobustnessExperimentSafeTokenMaxint.class //,
-        //EightToCarRobustnessExperimentBroadcast.class,
-        //EightToCarRobustnessExperimentParallelLim.class,
-        //EightToCarRobustnessExperimentParallelStd.class
+        EightToCarRobustnessExperimentSafeTokenMaxint.class,
+        EightToCarRobustnessExperimentBroadcast.class,
+        EightToCarRobustnessExperimentParallelLim.class,
+        EightToCarRobustnessExperimentParallelStd.class
     };
     
     private List<ParameterHolder> parameters = new LinkedList<ParameterHolder>();
@@ -106,12 +110,13 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
         int counter = 0;
         for(int ci=0; ci<mainClasses.length; ci++) {
             // Efficiency experiments, 0% failure risk, varying packet loss
-            for(float risk = START_RISK; risk<=END_RISK; risk+=RISK_INC) {
-                for(int i=0; i<N_REPEAT; i++) {
-                    parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,Math.max(0, risk-RISK_DELTA),risk,0,TIMEOUT));
+            if(SKIP_EFFICIENCY)
+                for(float risk = START_RISK; risk<=END_RISK; risk+=RISK_INC) {
+                    for(int i=0; i<N_REPEAT; i++) {
+                        parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,Math.max(0, risk-RISK_DELTA),risk,0,TIMEOUT));
+                    }
+                    counter++;
                 }
-                counter++;
-            }
             // Robustness experiments, varying failure risk, no packet loss
             for(float fail = START_FAIL; fail<=END_FAIL; fail+=FAIL_INC) {
                 for(int i=0; i<N_REPEAT; i++) {
