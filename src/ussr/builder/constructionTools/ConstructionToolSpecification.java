@@ -1,6 +1,7 @@
 package ussr.builder.constructionTools;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 
 import javax.swing.JOptionPane;
 import com.jme.scene.Geometry;
@@ -8,6 +9,7 @@ import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
+import ussr.remote.facade.RemotePhysicsSimulationImpl;
 import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
@@ -150,10 +152,13 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 		this.selectedModule = component.getModel();
 		instantiateTool((JMESimulation)component.getSimulation());		
 
-
-		//if (this.toolName.equals(ConstructionTools.LOOP)){
-			//ConstructRobotTab.setEnabledButtonsArrows(true);	
-		//}
+		if (this.toolName.equals(ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON)){
+			try {
+				RemotePhysicsSimulationImpl.getGUICallbackControl().adaptConstructRobotTabToChosenTool(ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON);
+			} catch (RemoteException e) {
+			throw new Error("Failed adapt Construction Tab to selection tool named as" +ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON.toString()+", due to remote exception.");
+			}
+		}
 		callAppropriateTool();		
 	}
 
@@ -166,10 +171,11 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 
 		if (toolName.equals(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR)){			
 			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(jmeSimulation, target);
-			//System.out.println("Connector:"+selectedConnectorNr );
-			//Adapt Construct Robot tab
-			//ConstructRobotTab.setEnabledRotationToolBar(false);
-			//ConstructRobotTab.getJButtonMove().setEnabled(false);
+			try {
+				RemotePhysicsSimulationImpl.getGUICallbackControl().adaptConstructRobotTabToChosenTool(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR);
+			} catch (RemoteException e) {
+			throw new Error("Failed adapt Construction Tab to selection tool named as" +ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR.toString()+", due to remote exception.");
+			}
 		}
 	}
 
