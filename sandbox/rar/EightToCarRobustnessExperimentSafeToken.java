@@ -155,7 +155,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
 
         public EightController() {
             EightToCarRobustnessBatch.Parameters p = (EightToCarRobustnessBatch.Parameters)ParameterHolder.get();
-            super.setCommFailureRisk(p.minR, p.maxR, p.completeR);
+            super.setCommFailureRisk(p.minR, p.maxR, p.completeR, p.seedMaybe);
         }
         
         private void sendMessage(int[] message, int size, int channel) {

@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 
@@ -24,17 +25,22 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     public static class Parameters extends ParameterHolder {
         public int number;
         public float minR, maxR, completeR, maxTime;
+        public Integer seedMaybe;
         public Parameters(Class<?> mainClass, int number, float minR, float maxR, float completeR, float maxTime) {
+            this(mainClass,number,minR,maxR,completeR,maxTime,null);
+        }
+        public Parameters(Class<?> mainClass, int number, float minR, float maxR, float completeR, float maxTime, Integer seed) {
             super(mainClass);
             this.number = number;
             this.minR = minR;
             this.maxR = maxR;
             this.completeR = completeR;
             this.maxTime = maxTime;
+            this.seedMaybe = seed;
         }
         public String toString() {
             NumberFormat formatter = new DecimalFormat("0000");
-            return (super.mainClass==null?"_":super.mainClass.getName())+"#"+formatter.format(number)+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime;
+            return (super.mainClass==null?"_":super.mainClass.getName())+"#"+formatter.format(number)+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime+(seedMaybe==null?",%":","+seedMaybe);
         }
         /* (non-Javadoc)
          * @see java.lang.Object#hashCode()
@@ -105,12 +111,26 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     public static void main(String argv[]) {
         new EightToCarRobustnessBatch(EXPERIMENTS).start(N_PARALLEL_SIMS);
     }
+
+    private int sequenceIndex = -1;
+    private List<Integer> randomSequence = new ArrayList<Integer>();
+    private Random sequenceRandomizer = new Random(87);
+    
+    private void resetRandomSequence() {
+        sequenceIndex = 0;
+    }
+    
+    private int nextRandomFromSequence() {
+        while(sequenceIndex>randomSequence.size())
+            randomSequence.add(sequenceRandomizer.nextInt());
+        return randomSequence.get(sequenceIndex++);
+    }
     
     public EightToCarRobustnessBatch(Class<?>[] mainClasses) {
         int counter = 0;
         for(int ci=0; ci<mainClasses.length; ci++) {
             // Efficiency experiments, 0% failure risk, varying packet loss
-            if(SKIP_EFFICIENCY)
+            if(!SKIP_EFFICIENCY)
                 for(float risk = START_RISK; risk<=END_RISK; risk+=RISK_INC) {
                     for(int i=0; i<N_REPEAT; i++) {
                         parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,Math.max(0, risk-RISK_DELTA),risk,0,TIMEOUT));
@@ -119,8 +139,9 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
                 }
             // Robustness experiments, varying failure risk, no packet loss
             for(float fail = START_FAIL; fail<=END_FAIL; fail+=FAIL_INC) {
+                resetRandomSequence();
                 for(int i=0; i<N_REPEAT; i++) {
-                    parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,0,0,fail,TIMEOUT));
+                    parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,0,0,fail,TIMEOUT,nextRandomFromSequence()));
                 }
                 counter++;
             }

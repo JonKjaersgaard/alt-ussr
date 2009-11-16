@@ -50,13 +50,26 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
     }
     
     public void setCommFailureRisk(float generalRiskMin, float generalRiskMax, float totalFailureRisk) {
+        this.setCommFailureRisk(generalRiskMin, generalRiskMax, totalFailureRisk, null);
+    }
+    
+    public void setCommFailureRisk(float generalRiskMin, float generalRiskMax, float totalFailureRisk, Integer seedMaybe) {
         simulateCommFailure = true;
-        Random r = commFailureRandomizer;
-        float scale = generalRiskMax-generalRiskMin;
-        for(int c=0; c<8; c++) {
-            if(r.nextFloat()<totalFailureRisk) commFailureRisk[c] = 1.0f;
-            else commFailureRisk[c] = generalRiskMin+r.nextFloat()*scale;
+        Random r;
+        if(seedMaybe==null)
+            r = commFailureRandomizer;
+        else {
+            int moduleOffset = module.getProperty("ussr.module.name").hashCode();
+            r = new Random(seedMaybe+moduleOffset);
         }
+        float scale = generalRiskMax-generalRiskMin;
+        StringBuffer fingerPrint = new StringBuffer("<");
+        for(int c=0; c<8; c++) {
+            if(r.nextFloat()<totalFailureRisk) { commFailureRisk[c] = 1.0f; fingerPrint.append("1"); }
+            else { commFailureRisk[c] = generalRiskMin+r.nextFloat()*scale; fingerPrint.append("0"); }
+        }
+        fingerPrint.append(">");
+        System.out.println("(Module "+module.getProperty("ussr.module.name")+" randomization fingerprint: "+fingerPrint+")");
     }
     
     /**

@@ -47,6 +47,7 @@ public class JMEFactoryHelper {
         String module_type = robot.getDescription().getType();
         if(module_type==null) throw new Error("Module type is null");
         module.setProperty("ussr.module.type", module_type);
+        module.setProperty("ussr.module.name", module_name);
         module.setDescription(robot.getDescription());
         ModuleFactory factory;
         // Find a matching factory
