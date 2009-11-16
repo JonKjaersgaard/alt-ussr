@@ -75,7 +75,7 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
         }
     }
 
-    private static final float TIMEOUT = 100f;
+    private static final float TIMEOUT = 200f;
     public static final int N_REPEAT = 20;
     public static final float START_RISK = 0;
     public static final float END_RISK = 0.91f;
