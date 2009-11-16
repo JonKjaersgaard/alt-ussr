@@ -121,7 +121,7 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     }
     
     private int nextRandomFromSequence() {
-        while(sequenceIndex>randomSequence.size())
+        while(sequenceIndex>=randomSequence.size())
             randomSequence.add(sequenceRandomizer.nextInt());
         return randomSequence.get(sequenceIndex++);
     }
