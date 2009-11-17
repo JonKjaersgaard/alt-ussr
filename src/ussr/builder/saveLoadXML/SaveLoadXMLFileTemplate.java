@@ -15,7 +15,7 @@ public interface SaveLoadXMLFileTemplate {
 	/**	
 	 * Saves the data about simulation in chosen XML format file.
 	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
-	 * @param ussrXmlFileType TODO
+	 * @param ussrXmlFileType, the type of XML file supported by USSR.
 	 * @param fileDirectoryName, the name of directory, like for example: "C:/newXMLfile". 
 	 */
 	public void saveXMLfile(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName);
@@ -23,27 +23,20 @@ public interface SaveLoadXMLFileTemplate {
 	/**  
 	 * Loads the data about simulation from chosen XML file into simulation.
 	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
-	 * @param ussrXmlFileType TODO
+	 * @param ussrXmlFileType, the type of XML file supported by USSR.
 	 * @param fileDirectoryName, the name of directory, like for example: "C:/newXMLfile".	 
 	 */
 	public void loadXMLfile(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName);
 	
-	/**
-	 * Method for defining the format of reading the data from XML file.  In other words
-	 * what to read from the file into simulation.
-	 *  This method is so-called "Primitive operation" for above TEMPLATE method, called "loadXMLfile(String fileDirectoryName)". 	  
-	 * @param document,DOM object of document. 
-	 */
-	//public abstract void loadInXML(Document document);	
+    /**
+     * Returns values of world description object taken from xml file describing simulation.
+     * @return values of world description object taken from xml file describing simulation.
+     */
+    public Map<XMLTagsUsed, String> getSimulationWorldDescriptionValues();
 	
-	/**
-	 * Method for defining the format of XML to print into the xml file. In other words
-	 * what to save in the file about simulation.
-	 * This method is so-called "Primitive operation" for above TEMPLATE method, called "saveXMLfile(String fileDirectoryName)". 	  
-	 * @param transformerHandler,the content handler used to print out XML format. 
+    /**
+     * Returns values of physics parameters object taken from xml file describing simulation.
+	 * @return values of physics parameters object taken from xml file describing simulation.
 	 */
-	//public abstract void printOutXML(TransformerHandler transformerHandler);
-	
-	public Map<XMLTagsUsed, String> getSimulationWorldDescriptionValues();
 	public Map<XMLTagsUsed, String> getSimulationPhysicsValues();
 }

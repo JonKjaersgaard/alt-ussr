@@ -64,7 +64,7 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Serial
         
         
         /*Load Simulation Configuration file*/
-		SaveLoadXMLFileTemplate xmlLoaderSimulation = new PreSimulationXMLSerializer(new PhysicsParameters());
+		SaveLoadXMLFileTemplate xmlLoaderSimulation = new PreSimulationXMLSerializer(/*new PhysicsParameters()*/);
 		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, simulationXMLfileName);
         
 		/*Get values from XML file*/
@@ -74,7 +74,7 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Serial
         /*Converter for converting values from String into corresponding type used in USSR*/
         descriptionConverter =  new SimulationDescriptionConverter(simulationWorldDescription,simulationPhysicsParameters); 
         
-       String controllerLocation = simulationWorldDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
+        String controllerLocation = simulationWorldDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
         
         //String controllerLocation  = "";
         List<String> controllerNames = new ArrayList<String>();        
@@ -91,8 +91,7 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Serial
         SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);       
         xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,robotMorphologyLocation);
       
-        simulation.setWorld(world);
-	    
+        simulation.setWorld(world); 
 	    
 		
 	    //WorldDescription world = this.createGenericSimulationWorld(null);

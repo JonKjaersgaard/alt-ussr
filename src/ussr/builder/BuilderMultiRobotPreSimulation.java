@@ -87,7 +87,7 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		BuilderMultiRobotPreSimulation simulation = new BuilderMultiRobotPreSimulation();
 				
 		/*Load Simulation Configuration file*/
-		SaveLoadXMLFileTemplate xmlLoaderSimulation = new PreSimulationXMLSerializer(new PhysicsParameters());
+		SaveLoadXMLFileTemplate xmlLoaderSimulation = new PreSimulationXMLSerializer(/*new PhysicsParameters()*/);
 		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, xmlSimulationFile);
 		//xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, loadableSimulationFile);
         

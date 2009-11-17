@@ -22,7 +22,7 @@ public class PreSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate {
     private WorldDescription world;
 
     
-    private PhysicsParameters physicsParameters;
+   // private PhysicsParameters physicsParameters;
     
 
 	/**
@@ -39,8 +39,8 @@ public class PreSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate {
     /**
      * For loading simulation.
      */
-    public PreSimulationXMLSerializer(PhysicsParameters physicsParameters) {
-       this.physicsParameters = physicsParameters;
+    public PreSimulationXMLSerializer(/*PhysicsParameters physicsParameters*/) {
+       /*this.physicsParameters = physicsParameters;*/
     }
     
     @Override
