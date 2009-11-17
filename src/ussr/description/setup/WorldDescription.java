@@ -44,7 +44,7 @@ public class WorldDescription extends Description implements Serializable {
         public String getFileName();
         public VectorDescription getScale(int size);
     }
-
+    
     public static final TextureDescription GRASS_TEXTURE = new TextureDescription() {
         public String getFileName() { return "resources/myGrass2.jpg"; }
         public VectorDescription getScale(int size) { return new VectorDescription(100f,100f,0f); }
