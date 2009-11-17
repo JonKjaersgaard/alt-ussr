@@ -13,7 +13,6 @@ import ussr.aGui.tabs.views.ConsoleTab;
  */
 public class ConsoleTabController {
 	
-
 	/**
 	 * Directs output stream to GUI component called console(tab). Stream runs in separate thread.
 	 * @param prefix, the prefix to use.
