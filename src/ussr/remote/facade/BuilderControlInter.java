@@ -10,6 +10,7 @@ import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
@@ -131,4 +132,5 @@ public interface BuilderControlInter extends Remote {
 	 */
 	public List<Integer> getIDsModules()throws RemoteException;
 
+	public void saveToXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException;
 }

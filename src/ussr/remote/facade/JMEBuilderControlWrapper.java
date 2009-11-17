@@ -6,6 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 
 import ussr.builder.constructionTools.ATRONConstructionTemplate;
@@ -24,10 +25,13 @@ import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.genericTools.ColorModuleConnectors;
 import ussr.builder.genericTools.RemoveModule;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.labelingTools.LabelingToolSpecification;
+import ussr.builder.saveLoadXML.InSimulationXMLSerializer;
+import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModuleConnection;
@@ -396,5 +400,8 @@ public class JMEBuilderControlWrapper extends UnicastRemoteObject implements Bui
 		return idsModules; 
 	}
 	
-
+	public void saveToXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException {
+		SaveLoadXMLFileTemplate openXML = new InSimulationXMLSerializer(jmeSimulation);
+		openXML.loadXMLfile(ussrXmlFileType, fileDirectoryName);		
+	}
 }
