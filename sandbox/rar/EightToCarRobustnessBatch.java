@@ -40,7 +40,7 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
         }
         public String toString() {
             NumberFormat formatter = new DecimalFormat("0000");
-            return (super.mainClass==null?"_":super.mainClass.getName())+"#"+formatter.format(number)+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime+(seedMaybe==null?",%":","+seedMaybe);
+            return (super.mainClass==null?"_":super.mainClass.getName())+"#"+formatter.format(number)+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime+(seedMaybe==null?",noseed":",aseed");
         }
         /* (non-Javadoc)
          * @see java.lang.Object#hashCode()
@@ -84,13 +84,14 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
         }
     }
 
-    private static final boolean SKIP_EFFICIENCY = true;
-    private static final float TIMEOUT = 200f;
-    public static final int N_REPEAT = 40;
-    public static final float START_RISK = 0;
-    public static final float END_RISK = 0.91f;
+    private static final boolean SKIP_EFFICIENCY = false;
+    private static final boolean SKIP_ROBUSTNESS = true;
+    private static final float TIMEOUT = 400f;
+    public static final int N_REPEAT = 20;
+    public static final float START_RISK = 0.8f;
+    public static final float END_RISK = 0.99f;
     public static final float RISK_DELTA = 0.0f;
-    public static final float RISK_INC = 0.1f;
+    public static final float RISK_INC = 0.02f;
     public static final float START_FAIL = 0;
     public static final float END_FAIL = 0.101f;
     public static final float FAIL_INC = 0.01f;
@@ -138,14 +139,14 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
                     counter++;
                 }
             // Robustness experiments, varying failure risk, no packet loss
-            for(float fail = START_FAIL; fail<=END_FAIL; fail+=FAIL_INC) {
-                resetRandomSequence();
-                for(int i=0; i<N_REPEAT; i++) {
-                    parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,0,0,fail,TIMEOUT,nextRandomFromSequence()));
+            if(!SKIP_ROBUSTNESS)
+                for(float fail = START_FAIL; fail<=END_FAIL; fail+=FAIL_INC) {
+                    resetRandomSequence();
+                    for(int i=0; i<N_REPEAT; i++) {
+                        parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,0,0,fail,TIMEOUT,nextRandomFromSequence()));
+                    }
+                    counter++;
                 }
-                counter++;
-            }
-
         }
         try {
             logfile = new PrintWriter(new BufferedWriter(new FileWriter("eight-log.txt")));
