@@ -109,7 +109,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 
 			transformerHandler.startElement("","",XMLTagsUsed.WORLD_DESCRIPTION.toString(),EMPTY_ATT);
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.PLANE_SIZE, (""+getWorldDescription().getPlaneSize()).toCharArray());
-			printSubTagsWithValue(transformerHandler, XMLTagsUsed.PLANE_TEXTURE, getWorldDescription().getPlaneTexture().getFileName().toString().toCharArray());			
+			printSubTagsWithValue(transformerHandler, XMLTagsUsed.PLANE_TEXTURE,  getWorldDescription().getPlaneTexture().getFileName().toString().toCharArray());			
 		    printSubTagsWithValue(transformerHandler, XMLTagsUsed.CAMERA_POSITION, getWorldDescription().getCameraPosition().toString().toCharArray());			    
 		    printSubTagsWithValue(transformerHandler, XMLTagsUsed.THE_WORLD_IS_FLAT, (""+getWorldDescription().theWorldIsFlat()).toCharArray());
 		    printSubTagsWithValue(transformerHandler, XMLTagsUsed.HAS_BACKGROUND_SCENERY, (""+getWorldDescription().hasBackgroundScenery()).toCharArray());
@@ -186,8 +186,9 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	 * @param document, DOM object of document. 
 	 */
 	private void loadRobotXML(Document document){
+		
 		NodeList nodeList = document.getElementsByTagName(XMLTagsUsed.MODULE.toString());
-
+		
 		for (int node = 0; node < nodeList.getLength(); node++) {
 			Node firstNode = nodeList.item(node);
 
@@ -234,7 +235,6 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 					System.out.println("CONNECTOR NAME=" +currentElement.getAttributes().item(0).getNodeValue()+" state:"+ ((Node) currentNumber.item(0)).getNodeValue());
 				}*/
 			}
-
 		}	
 	}
 	
@@ -417,7 +417,4 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 
 		return extractedValue; 
 	}
-
-
-
 }

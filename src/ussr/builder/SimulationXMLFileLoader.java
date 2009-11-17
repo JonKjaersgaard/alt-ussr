@@ -16,6 +16,7 @@ import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
+import ussr.description.setup.WorldDescription.CameraPosition;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
