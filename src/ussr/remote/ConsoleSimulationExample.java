@@ -8,6 +8,15 @@ import java.rmi.RemoteException;
 
 import ussr.remote.facade.ActiveSimulation;
 import ussr.remote.facade.RemotePhysicsSimulation;
+import ussr.samples.atron.natives.EightToCarSimulation;
+import ussr.samples.atron.simulations.ATRONCarSimulation;
+import ussr.samples.atron.simulations.ATRONRoleSimulation;
+import ussr.samples.atron.simulations.ATRONSimulation1;
+import ussr.samples.atron.simulations.ATRONTestSimulation;
+import ussr.samples.atron.simulations.CommunicationDemo;
+import ussr.samples.atron.simulations.ConveyorSimulation;
+import ussr.samples.atron.simulations.CrawlerSimulation;
+import ussr.samples.atron.simulations.SnakeCarDemo;
 
 /**
  * Frontend example: a main application that starts a single simulation using the remote facility 
@@ -52,6 +61,10 @@ public class ConsoleSimulationExample {
                 try {
                     // Start using an xml file for a robot and a controller (both loaded by simulator process)
                     simulation.start("samples/atron/car.xml", ussr.samples.atron.simulations.ATRONCarController1.class);
+                    //simulation.start(SnakeCarDemo.class);
+                    //ATRONSimulation1.class,ATRONCarSimulation
+                    //NO ATRONRoleSimulation.class(broken), CommunicationDemo(null),ATRONTestSimulation.class(null),
+                    //ConveyorSimulation(null),CrawlerSimulation(null),EightToCarSimulation(broken),SnakeCarDemo.class(null);
                 } catch (RemoteException e) {
                     // Normal or abnormal termination, inspection of remote exception currently needed to determine...
                     System.err.println("Simulation stopped");
