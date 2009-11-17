@@ -4,6 +4,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JScrollPane;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.RedirectSystemOutput;
+import ussr.aGui.tabs.controllers.ConsoleTabController;
 import ussr.physics.jme.JMESimulation;
 
 /**
@@ -30,7 +31,7 @@ public class ConsoleTab extends Tabs  {
 		this.jTextArea1 = new javax.swing.JTextArea();
 		((JScrollPane) super.jComponent).setViewportView(jTextArea1);// add text area into scroll pane and return it.
 		//RedirectSystemOutput redirectedSystemOutput = new RedirectSystemOutput(true, true,null/*"resources/mainFrame/HERE.txt"*/,this.jTextArea1);
-		
+		jTextArea1.append(ConsoleTabController.addText());
 	}
 	
 	private javax.swing.JTextArea jTextArea1;

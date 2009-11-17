@@ -3,6 +3,7 @@ package ussr.aGui;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.JComponent;
 
@@ -36,7 +37,7 @@ public class MainFrameSeparate extends MainFrames {
 
 		initFirstTabbbedPane();
 		initSecondTabbedPane((int)SCREEN_DIMENSION.getWidth()/2, TAB_PANE_HEIGHT2);
-		
+		setResizable(false);//FOR TESTING. RESIZING WORKS HOWEVER NEEDS MORE ATTENTION
 		pack(); 
 		changeToLookAndFeel(this);
 		
@@ -79,11 +80,16 @@ public class MainFrameSeparate extends MainFrames {
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() {				
 				mainFrame = new MainFrameSeparate();
-				mainFrame.setVisible(true);
-				
-				setMainFrameSeparateEnabled(false);
+				mainFrame.setVisible(true);				
+				setMainFrameSeparateEnabled(true);//FOR TESTING
 			}
 		});
+	/*	new Thread() {
+			public void run(){
+				GUISimulationAdapter.main(null);
+			}
+		}.start();*/
+		
 		
 	}
 
@@ -98,8 +104,8 @@ public class MainFrameSeparate extends MainFrames {
 	
 
 	/**
-	 * Controls custom enabling of the main frame.
-	 * @param enabled
+	 * Controls custom enabling of the main frame. Disables components so that the user have to load the simulation from xml file first.
+	 * @param enabled, true for main frame to be enabled. 
 	 */
 	public static void setMainFrameSeparateEnabled(boolean enabled){
 		setJMenuBarMainEnabled(enabled);

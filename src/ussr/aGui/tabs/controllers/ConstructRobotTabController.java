@@ -409,7 +409,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			throw new Error("Failed to identify amount of modules in simulation environment, due to remote exception");
 		}
 		
-		if (amountModules>0){
+		if (amountModules>2){
 			/*Adapt to first module*/
 			String modularRobotName ="";
 			try {
@@ -426,6 +426,8 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			}else if(modularRobotName.toUpperCase().contains(SupportedModularRobots.CKBOTSTANDARD.toString())){
 				adaptTabToChosenMR(SupportedModularRobots.CKBOTSTANDARD);
 			}
+			ConstructRobotTab.setEnabledRotationToolBar(false);
+			ConstructRobotTab.getJButtonMove().setEnabled(false);
 			
 			try {
 				 /*Set default construction tool to be "On selected  connector"*/
