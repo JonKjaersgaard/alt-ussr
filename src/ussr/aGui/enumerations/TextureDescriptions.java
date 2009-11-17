@@ -4,6 +4,8 @@ import ussr.description.setup.WorldDescription;
 import ussr.description.setup.WorldDescription.TextureDescription;
 
 public enum TextureDescriptions {
+	
+	
 	GRASS_TEXTURE (WorldDescription.GRASS_TEXTURE),
 	GREY_GRID_TEXTURE(WorldDescription.GREY_GRID_TEXTURE),
 	MARS_TEXTURE(WorldDescription.MARS_TEXTURE),

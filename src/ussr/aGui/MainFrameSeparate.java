@@ -83,14 +83,7 @@ public class MainFrameSeparate extends MainFrames {
 				mainFrame.setVisible(true);				
 				setMainFrameSeparateEnabled(true);//FOR TESTING
 			}
-		});
-	/*	new Thread() {
-			public void run(){
-				GUISimulationAdapter.main(null);
-			}
-		}.start();*/
-		
-		
+		});		
 	}
 
 	/**

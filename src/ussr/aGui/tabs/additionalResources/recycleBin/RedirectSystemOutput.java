@@ -1,4 +1,4 @@
-package ussr.aGui.tabs.additionalResources;
+package ussr.aGui.tabs.additionalResources.recycleBin;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileWriter;

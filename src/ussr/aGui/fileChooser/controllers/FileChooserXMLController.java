@@ -43,6 +43,7 @@ public class FileChooserXMLController extends FileChooserController {
 				public void run() {
 					try {
 						GUISimulationAdapter.consoleSimulationExample(fileDirectoryName);
+						//GUISimulationAdapter.main(null);
 					} catch (IOException e) {
 						throw new Error("Failed to run simulation file located at "+ fileDirectoryName+ " , due to remote exception");
 					}

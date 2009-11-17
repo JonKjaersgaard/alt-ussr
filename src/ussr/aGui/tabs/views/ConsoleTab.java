@@ -1,11 +1,7 @@
 package ussr.aGui.tabs.views;
 
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JScrollPane;
 import ussr.aGui.tabs.Tabs;
-import ussr.aGui.tabs.additionalResources.RedirectSystemOutput;
-import ussr.aGui.tabs.controllers.ConsoleTabController;
-import ussr.physics.jme.JMESimulation;
 
 /**
  * Defines visual appearance of Console tab. 
@@ -14,6 +10,13 @@ import ussr.physics.jme.JMESimulation;
 public class ConsoleTab extends Tabs  {
 	
 	
+	/**
+	 * Defines visual appearance of the tab called "Console".
+	 * @param initiallyVisible, true if the tab is visible after activation of main GUI window. 
+	 * @param firstTabbedPane,true if the tab is visible after activation of main GUI window. 
+	 * @param tabTitle, the title of the tab
+	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
+	 */
 	public ConsoleTab(boolean initiallyVisible,boolean firstTabbedPane, String tabTitle,String imageIconDirectory){
 		super(initiallyVisible,firstTabbedPane,tabTitle,imageIconDirectory);
 		
@@ -24,17 +27,20 @@ public class ConsoleTab extends Tabs  {
 
 	/**
      * Initializes the visual appearance of all components in the tab.
-     * Follows Strategy  pattern.
+     * Follows Strategy pattern.
      */
-	public void initComponents() {
-		
-		this.jTextArea1 = new javax.swing.JTextArea();
-		((JScrollPane) super.jComponent).setViewportView(jTextArea1);// add text area into scroll pane and return it.
-		//RedirectSystemOutput redirectedSystemOutput = new RedirectSystemOutput(true, true,null/*"resources/mainFrame/HERE.txt"*/,this.jTextArea1);
-		jTextArea1.append(ConsoleTabController.addText());
+	public void initComponents() {		
+	     jTextAreaConsole = new javax.swing.JTextArea();
+		((JScrollPane) super.jComponent).setViewportView(jTextAreaConsole);// add text area into scroll pane and return it.
 	}
 	
-	private javax.swing.JTextArea jTextArea1;
+	/**
+	 * Returns text area component of the tab.
+	 * @return jTextAreaConsole, the component of the Tab.
+	 */
+	public static javax.swing.JTextArea getJTextAreaConsole() {
+		return jTextAreaConsole;
+	}
 
-
+	private static javax.swing.JTextArea jTextAreaConsole;
 }
