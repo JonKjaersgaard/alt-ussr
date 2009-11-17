@@ -13,18 +13,13 @@ import ussr.remote.GUISimulationAdapter;
 
 /**
  * Controls the functionality of both forms of file chooser: Open and Save.
- * Here also manages calls for XML processing.
+ * Here also manages calls for remote XML processing.
  * @author Konstantinas
  *
  */
 public class FileChooserXMLController extends FileChooserController {
 
-	/**
-	 * Interface for XML processing
-	 */
-	//private SaveLoadXMLFileTemplate saveLoadXML;
 	
-
 	@Override
 	public void controlOpenDialog(ActionEvent evt, JFileChooser fileChooser,
 			JFrame fileChooserFrame) {
