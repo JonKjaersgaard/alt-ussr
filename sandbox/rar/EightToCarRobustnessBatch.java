@@ -138,7 +138,7 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
                 }
             if(!EightToCarSettings.SKIP_RESET)
                 for(float interval = EightToCarSettings.RESET_RISK_TS_SIZE_MIN; interval<=EightToCarSettings.RESET_RISK_TS_SIZE_MAX; interval+=EightToCarSettings.RESET_RISK_TS_SIZE_DELTA)
-                    for(float reset = EightToCarSettings.RESET_RISK_PER_TS_MIN; interval<=EightToCarSettings.RESET_RISK_PER_TS_MAX; interval+=EightToCarSettings.RESET_RISK_PER_TS_DELTA) {
+                    for(float reset = EightToCarSettings.RESET_RISK_PER_TS_MIN; reset<=EightToCarSettings.RESET_RISK_PER_TS_MAX; reset+=EightToCarSettings.RESET_RISK_PER_TS_DELTA) {
                         for(int i=0; i<EightToCarSettings.N_REPEAT; i++)
                             parameters.add(new Parameters(mainClasses[ci],counter,0,0,0,EightToCarSettings.TIMEOUT,reset,interval));
                         counter++;
