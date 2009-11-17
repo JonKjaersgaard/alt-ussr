@@ -24,23 +24,25 @@ import ussr.remote.facade.ParameterHolder;
 public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     public static class Parameters extends ParameterHolder {
         public int number;
-        public float minR, maxR, completeR, maxTime;
+        public float minR, maxR, completeR, maxTime, resetRisk,resetInterval;
         public Integer seedMaybe;
-        public Parameters(Class<?> mainClass, int number, float minR, float maxR, float completeR, float maxTime) {
-            this(mainClass,number,minR,maxR,completeR,maxTime,null);
+        public Parameters(Class<?> mainClass, int number, float minR, float maxR, float completeR, float maxTime, float resetRisk, float resetInterval) {
+            this(mainClass,number,minR,maxR,completeR,maxTime,resetRisk,resetInterval,null);
         }
-        public Parameters(Class<?> mainClass, int number, float minR, float maxR, float completeR, float maxTime, Integer seed) {
+        public Parameters(Class<?> mainClass, int number, float minR, float maxR, float completeR, float maxTime, float resetRisk, float resetInterval, Integer seed) {
             super(mainClass);
             this.number = number;
             this.minR = minR;
             this.maxR = maxR;
             this.completeR = completeR;
             this.maxTime = maxTime;
+            this.resetRisk = resetRisk;
+            this.resetInterval = resetInterval;
             this.seedMaybe = seed;
         }
         public String toString() {
             NumberFormat formatter = new DecimalFormat("0000");
-            return (super.mainClass==null?"_":super.mainClass.getName())+"#"+formatter.format(number)+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime+(seedMaybe==null?",noseed":",aseed");
+            return (super.mainClass==null?"_":super.mainClass.getName())+"#"+formatter.format(number)+":minR="+minR+",maxR="+maxR+",comR="+completeR+",maxT="+maxTime+(seedMaybe==null?",noseed":",aseed")+",rR="+resetRisk+",rI="+resetInterval;
         }
         /* (non-Javadoc)
          * @see java.lang.Object#hashCode()
@@ -54,6 +56,8 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
             result = prime * result + Float.floatToIntBits(maxTime);
             result = prime * result + Float.floatToIntBits(minR);
             result = prime * result + number;
+            result = prime * result + Float.floatToIntBits(resetInterval);
+            result = prime * result + Float.floatToIntBits(resetRisk);
             return result;
         }
         /* (non-Javadoc)
@@ -79,6 +83,12 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
             if (Float.floatToIntBits(minR) != Float.floatToIntBits(other.minR))
                 return false;
             if (number != other.number)
+                return false;
+            if (Float.floatToIntBits(resetInterval) != Float
+                    .floatToIntBits(other.resetInterval))
+                return false;
+            if (Float.floatToIntBits(resetRisk) != Float
+                    .floatToIntBits(other.resetRisk))
                 return false;
             return true;
         }
@@ -113,7 +123,7 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
             if(!EightToCarSettings.SKIP_EFFICIENCY)
                 for(float risk = EightToCarSettings.START_RISK; risk<=EightToCarSettings.END_RISK; risk+=EightToCarSettings.RISK_INC) {
                     for(int i=0; i<EightToCarSettings.N_REPEAT; i++) {
-                        parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,Math.max(0, risk-EightToCarSettings.RISK_DELTA),risk,0,EightToCarSettings.TIMEOUT));
+                        parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,Math.max(0, risk-EightToCarSettings.RISK_DELTA),risk,0,EightToCarSettings.TIMEOUT,0,0));
                     }
                     counter++;
                 }
@@ -122,10 +132,17 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
                 for(float fail = EightToCarSettings.START_FAIL; fail<=EightToCarSettings.END_FAIL; fail+=EightToCarSettings.FAIL_INC) {
                     resetRandomSequence();
                     for(int i=0; i<EightToCarSettings.N_REPEAT; i++) {
-                        parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,0,0,fail,EightToCarSettings.TIMEOUT,nextRandomFromSequence()));
+                        parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,0,0,fail,EightToCarSettings.TIMEOUT,0,0,nextRandomFromSequence()));
                     }
                     counter++;
                 }
+            if(!EightToCarSettings.SKIP_RESET)
+                for(float interval = EightToCarSettings.RESET_RISK_TS_SIZE_MIN; interval<=EightToCarSettings.RESET_RISK_TS_SIZE_MAX; interval+=EightToCarSettings.RESET_RISK_TS_SIZE_DELTA)
+                    for(float reset = EightToCarSettings.RESET_RISK_PER_TS_MIN; interval<=EightToCarSettings.RESET_RISK_PER_TS_MAX; interval+=EightToCarSettings.RESET_RISK_PER_TS_DELTA) {
+                        for(int i=0; i<EightToCarSettings.N_REPEAT; i++)
+                            parameters.add(new Parameters(mainClasses[ci],counter,0,0,0,EightToCarSettings.TIMEOUT,reset,interval));
+                        counter++;
+                    }
         }
         try {
             logfile = new PrintWriter(new BufferedWriter(new FileWriter("eight-log.txt")));

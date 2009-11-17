@@ -13,7 +13,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
+
+import rar.EightToCarRobustnessBatch.Parameters;
 
 import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
@@ -152,8 +155,13 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
         List<CacheEntry> packetsSeen = new LinkedList<CacheEntry>();
         private float lastSendTime = 0;
         private boolean transmitNow = false;
+        private float last_reset_check_time = 0, reset_interval, reset_risk;
+        private Random resetRandomizer = new Random();
 
         public EightController() {
+            Parameters p = (Parameters)ParameterHolder.get();
+            reset_risk = p.resetRisk;
+            reset_interval = p.resetInterval;
         }
         
         private void sendMessage(int[] message, int size, int channel) {
@@ -293,18 +301,12 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
         }
 
         public void activate_eight2car() {
-            int i;
-            for (i=0;i<1;i++)
-                token[i]=255;
-            for(i=0;i<7;i++)
-                moduleTranslator[i] = i;
-            if(getMyID()==0) {
-                token[0] = 0;
-            }
+            initializeState();
             while(eight2car_active)
             {
                 super.yield();
                 sendAct();
+                resetAct();
                 if(token[0]!=255 && token[0]!=-1) {
                     System.out.println("Module "+this.getName()+" in state "+token[0]);
                     //delay(500);
@@ -805,6 +807,28 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
                     reportResult(true);
                     break;
                 }
+            }
+        }
+
+        private void resetAct() {
+            float time = getTime();
+            if(last_reset_check_time+reset_interval>time) return;
+            last_reset_check_time = time;
+            if(resetRandomizer .nextFloat()<reset_risk) {
+                System.err.println("RESET start "+token[0]);
+                this.initializeState();
+                System.err.println("RESET done "+token[0]);
+            }
+        }
+
+        private void initializeState() {
+            int i;
+            for (i=0;i<1;i++)
+                token[i]=255;
+            for(i=0;i<7;i++)
+                moduleTranslator[i] = i;
+            if(getMyID()==0) {
+                token[0] = 0;
             }
         }
 

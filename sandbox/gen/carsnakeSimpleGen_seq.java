@@ -331,6 +331,7 @@ public class carsnakeSimpleGen_seq extends StateMachine {
 
     else address = 127;
 	myID = address;
+	token = 255;
 	stateManager.init(myID);
 	
     api.setLeds(myID);
@@ -346,7 +347,7 @@ public class carsnakeSimpleGen_seq extends StateMachine {
 }
 
   public void reset_state() {
-    if ( myID == 0 ) {
+    if ( myID == 0) {
       token = 0; // Tolerate reset in the middle of reconfiguration
     }    
     stateManager.reset_state();

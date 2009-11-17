@@ -22,7 +22,7 @@ public class ATRONStateMachineAPI extends ATRONController implements Communicati
         Integer seedMaybe = p.seedMaybe;
         super.setCommFailureRisk(p.minR, p.maxR, p.completeR, seedMaybe);
         started = true;
-        machine.init(getMyID());
+        machine.initialize(getMyID());
         machine.activate();
     }
 

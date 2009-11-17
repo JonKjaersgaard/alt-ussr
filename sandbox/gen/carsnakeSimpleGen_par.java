@@ -353,6 +353,7 @@ public class carsnakeSimpleGen_par extends StateMachine {
 
     else address = 127;
 	myID = address;
+	token = 255;
 	stateManager.init(myID);
 	
     api.setLeds(myID);

@@ -92,6 +92,7 @@ public class DistributedStateManager {
     private int localState;
     private boolean activated = false;
     private static final int MAX_N_PENDING_STATES = 5;
+    private static final int INIT_WAITTIME = 2000;
     private int[] pendingStates = new int[MAX_N_PENDING_STATES];
     private int globalState;
     private int recipientID;
@@ -147,15 +148,16 @@ public class DistributedStateManager {
         recipientID = 0;
         for(i=0; i<MAX_N_PENDING_STATES; i++) pendingStates[i] = 0;
         /* flip the flag (can't do that with ~alternateSequenceFlag, beware!) */
-        if(alternateSequenceFlag)
+        /*if(alternateSequenceFlag)
             alternateSequenceFlag = false;
         else
-            alternateSequenceFlag = true;  
+            alternateSequenceFlag = true;*/
         this.notifyAll();
     }
 
     public void init(int myID) {
         this.myID = myID;
+        provider.delay(INIT_WAITTIME);
     }
 
     public int getGlobalState() {
@@ -223,6 +225,10 @@ public class DistributedStateManager {
 
     public void setLimitPendingOneWay(boolean b) {
         this.limitPendingOneWay = true;
+    }
+
+    public float getTime() {
+        return provider.getTime();
     }
 
 }
