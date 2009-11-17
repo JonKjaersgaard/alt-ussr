@@ -100,10 +100,6 @@ public class DistributedStateManager {
     private float lastTime;
     private boolean limitPendingOneWay;
     
-    public DistributedStateManager() {
-        startSender();
-    }
-    
     public void senderAct() {
         float time = provider.getTime();
         if(lastTime+WAITTIME_MS>time) return;
@@ -115,29 +111,6 @@ public class DistributedStateManager {
         provider.broadcastMessage(msg.encode());
     }
     
-    private void startSender() {
-        if(true) return;
-        new Thread() {
-            public void run() {
-                synchronized(DistributedStateManager.this) {
-                    try {
-                        DistributedStateManager.this.wait();
-                    } catch(InterruptedException exn) {
-                        throw new Error("Interrupted");
-                    }
-                }
-                while(true) {
-                    EightMsg msg; 
-                    synchronized(DistributedStateManager.this) {
-                        msg = new EightMsg(alternateSequenceFlag, globalState, recipientID, pendingStates);
-                    }
-                    provider.broadcastMessage(msg.encode());
-                    provider.delay(WAITTIME);
-                }
-            }
-        }.start();
-    }
-
     public synchronized int getMyNewState() {
         int state = localState;
         localState = 255;
