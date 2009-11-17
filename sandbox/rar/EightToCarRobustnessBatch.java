@@ -84,33 +84,12 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
         }
     }
 
-    private static final boolean SKIP_EFFICIENCY = false;
-    private static final boolean SKIP_ROBUSTNESS = true;
-    private static final float TIMEOUT = 400f;
-    public static final int N_REPEAT = 20;
-    public static final float START_RISK = 0.8f;
-    public static final float END_RISK = 0.99f;
-    public static final float RISK_DELTA = 0.0f;
-    public static final float RISK_INC = 0.02f;
-    public static final float START_FAIL = 0;
-    public static final float END_FAIL = 0.101f;
-    public static final float FAIL_INC = 0.01f;
-    public static final int N_PARALLEL_SIMS = 2;
-    public static final Class<?> EXPERIMENTS[] = new Class<?>[] {
-        EightToCarRobustnessExperimentSafeToken32.class,
-        EightToCarRobustnessExperimentSafeToken128.class,
-        EightToCarRobustnessExperimentSafeTokenMaxint.class,
-        EightToCarRobustnessExperimentBroadcast.class,
-        EightToCarRobustnessExperimentParallelLim.class,
-        EightToCarRobustnessExperimentParallelStd.class
-    };
-    
     private List<ParameterHolder> parameters = new LinkedList<ParameterHolder>();
     private List<Class<? extends EightToCarRobustnessExperiment>> experiments = new ArrayList<Class<? extends EightToCarRobustnessExperiment>>();
     private PrintWriter logfile;
     
     public static void main(String argv[]) {
-        new EightToCarRobustnessBatch(EXPERIMENTS).start(N_PARALLEL_SIMS);
+        new EightToCarRobustnessBatch(EightToCarSettings.EXPERIMENTS).start(EightToCarSettings.N_PARALLEL_SIMS);
     }
 
     private int sequenceIndex = -1;
@@ -131,19 +110,19 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
         int counter = 0;
         for(int ci=0; ci<mainClasses.length; ci++) {
             // Efficiency experiments, 0% failure risk, varying packet loss
-            if(!SKIP_EFFICIENCY)
-                for(float risk = START_RISK; risk<=END_RISK; risk+=RISK_INC) {
-                    for(int i=0; i<N_REPEAT; i++) {
-                        parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,Math.max(0, risk-RISK_DELTA),risk,0,TIMEOUT));
+            if(!EightToCarSettings.SKIP_EFFICIENCY)
+                for(float risk = EightToCarSettings.START_RISK; risk<=EightToCarSettings.END_RISK; risk+=EightToCarSettings.RISK_INC) {
+                    for(int i=0; i<EightToCarSettings.N_REPEAT; i++) {
+                        parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,Math.max(0, risk-EightToCarSettings.RISK_DELTA),risk,0,EightToCarSettings.TIMEOUT));
                     }
                     counter++;
                 }
             // Robustness experiments, varying failure risk, no packet loss
-            if(!SKIP_ROBUSTNESS)
-                for(float fail = START_FAIL; fail<=END_FAIL; fail+=FAIL_INC) {
+            if(!EightToCarSettings.SKIP_ROBUSTNESS)
+                for(float fail = EightToCarSettings.START_FAIL; fail<=EightToCarSettings.END_FAIL; fail+=EightToCarSettings.FAIL_INC) {
                     resetRandomSequence();
-                    for(int i=0; i<N_REPEAT; i++) {
-                        parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,0,0,fail,TIMEOUT,nextRandomFromSequence()));
+                    for(int i=0; i<EightToCarSettings.N_REPEAT; i++) {
+                        parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,0,0,fail,EightToCarSettings.TIMEOUT,nextRandomFromSequence()));
                     }
                     counter++;
                 }
