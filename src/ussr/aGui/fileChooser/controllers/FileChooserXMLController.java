@@ -6,11 +6,8 @@ import java.rmi.RemoteException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import ussr.builder.BuilderMultiRobotPreSimulation;
+
 import ussr.builder.enumerations.UssrXmlFileTypes;
-import ussr.builder.saveLoadXML.InSimulationXMLSerializer;
-import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
-import ussr.remote.ConsoleSimulationExample;
 import ussr.remote.GUISimulationAdapter;
 
 
@@ -25,35 +22,43 @@ public class FileChooserXMLController extends FileChooserController {
 	/**
 	 * Interface for XML processing
 	 */
-	private SaveLoadXMLFileTemplate saveLoadXML;
+	//private SaveLoadXMLFileTemplate saveLoadXML;
 	
 
 	@Override
 	public void controlOpenDialog(ActionEvent evt, JFileChooser fileChooser,
 			JFrame fileChooserFrame) {
-		String fileDescription = fileChooser.getFileFilter().getDescription();
-		checkFileDescription( fileDescription);		
-
-		String command = evt.getActionCommand();//Selected button command				
+		checkFileDescription( fileChooser);
+		String command = evt.getActionCommand();//Selected button command
+		
+		
 		if(command.equalsIgnoreCase(ActionCommands.APPROVESELECTION.toString()) ){ 		
 			final String fileDirectoryName = fileChooser.getSelectedFile().toString();// get the directory of selected file	  			
 			
-            if (ussXmlFileType.equals(UssrXmlFileTypes.SIMULATION)){
-			new Thread() {
-				public void run() {
-					try {
-						GUISimulationAdapter.consoleSimulationExample(fileDirectoryName);
-						//GUISimulationAdapter.main(null);
-					} catch (IOException e) {
-						throw new Error("Failed to run simulation file located at "+ fileDirectoryName+ " , due to remote exception");
+			switch(ussXmlFileType){
+			case SIMULATION:
+				new Thread() {
+					public void run() {
+						try {
+							GUISimulationAdapter.consoleSimulationExample(fileDirectoryName);
+							//GUISimulationAdapter.main(null);
+						} catch (IOException e) {
+							throw new Error("Failed to run simulation file located at "+ fileDirectoryName+ " , due to remote exception");
+						}
 					}
-				}
-			}.start();
-			fileChooserFrame.dispose(); //close the frame(window)
-            }
-            //else{
-            	
-            //}
+				}.start();
+				break;			
+			case ROBOT:
+				try {
+						builderControl.saveToXML(UssrXmlFileTypes.ROBOT, fileDirectoryName);
+					} catch (RemoteException e) {
+						throw new Error("Failed to save robot morphology in xml file, due to remote exception");
+					}
+				break;
+				default: throw new Error("XML file type named as " +ussXmlFileType.toString() +"is not yet supported.");
+			}
+			 //close the frame(window)          
+            fileChooserFrame.dispose();
 		}else if (command.equalsIgnoreCase(ActionCommands.CANCELSELECTION.toString())){//Cancel pressed			
 			fileChooserFrame.dispose();//close the frame(window) 	  			
 		}	
@@ -62,14 +67,12 @@ public class FileChooserXMLController extends FileChooserController {
 	@Override
 	public void controlSaveDialog(ActionEvent evt, JFileChooser fileChooser,
 			JFrame fileChooserFrame) {
-		String fileDescription = fileChooser.getFileFilter().getDescription();
-		checkFileDescription( fileDescription);
+		checkFileDescription( fileChooser);
 		//TODO Repeating code
 		String command = evt.getActionCommand();//Selected button command			
 		if(command.equalsIgnoreCase(ActionCommands.APPROVESELECTION.toString())  ){		        
 			String fileDirectoryName = fileChooser.getSelectedFile().toString();
-			//saveLoadXML = new InSimulationXMLSerializer(remotePhysicsSimulation);
-			//saveLoadXML.saveXMLfile(ussXmlFileType, fileDirectoryName);
+			
 			try {
 				remotePhysicsSimulation.saveToXML(ussXmlFileType, fileDirectoryName);
 			} catch (RemoteException e) {
