@@ -66,7 +66,7 @@ public abstract class EightToCarRobustnessExperiment extends GenericATRONSimulat
         PhysicsParameters.get().setUseModuleEventQueue(true);
         PhysicsParameters.get().setRealtime(false);
         PhysicsFactory.getOptions().setStartPaused(false);
-        PhysicsFactory.getOptions().setHeadless(true);
+        PhysicsFactory.getOptions().setHeadless(false);
         //VisualizationParameters.get().setAlwaysShowConnectors(true);
         PhysicsParameters.get().setGravity(0);
     }
