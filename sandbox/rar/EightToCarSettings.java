@@ -7,23 +7,23 @@ public interface EightToCarSettings {
     public static final boolean SKIP_ROBUSTNESS = true;
     public static final boolean SKIP_RESET = true;
     public static final Class<?> EXPERIMENTS[] = new Class<?>[] {
-        //EightToCarRobustnessExperimentSafeToken32.class,
-        //EightToCarRobustnessExperimentSafeToken128.class,
-        EightToCarRobustnessExperimentSafeTokenMaxint.class //,
-        //EightToCarRobustnessExperimentBroadcast.class,
-        //EightToCarRobustnessExperimentParallelLim.class,
-        //EightToCarRobustnessExperimentParallelStd.class
+        EightToCarRobustnessExperimentSafeToken32.class,
+        EightToCarRobustnessExperimentSafeToken128.class,
+        EightToCarRobustnessExperimentSafeTokenMaxint.class,
+        EightToCarRobustnessExperimentBroadcast.class,
+        EightToCarRobustnessExperimentParallelLim.class,
+        EightToCarRobustnessExperimentParallelStd.class
     };
     
     // Basic experimental settings
-    public static final float TIMEOUT = 1000f;
+    public static final float TIMEOUT = 200f;
     public static final int N_REPEAT = 20;
     
     // Risk of packet loss
-    public static final float START_RISK = 0.94f;
+    public static final float START_RISK = 0.0f;
     public static final float END_RISK = 0.99f;
     public static final float RISK_DELTA = 0.0f;
-    public static final float RISK_INC = 0.02f;
+    public static final float RISK_INC = 0.1f;
     
     // Risk of permanent communication failure
     public static final float START_FAIL = 0;

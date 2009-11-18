@@ -430,6 +430,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	{
     	if(isOtherConnectorNearby(connector)&&connector<8) {
 			module.getTransmitters().get(connector).send(new Packet(message));
+			if(packetCountingActive) incPacketsSentCount();
 			return 1;
 		}
     	else if(connector==8) { //radio
@@ -503,4 +504,17 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
 	 * @see ussr.samples.atron.IATRONAPI#getTiltZ()
 	 */
     public byte getTiltZ() { return read("TiltSensor:z"); }
+    
+    private static long packetsSentCount;
+    private static boolean packetCountingActive = false;
+    private synchronized static void incPacketsSentCount() {
+        packetsSentCount++;
+    }
+    public static void activatePacketCounting() {
+        packetCountingActive = true;
+    }
+    public static int getPacketsSentCount() {
+        if(packetsSentCount>Integer.MAX_VALUE) throw new Error("Count exceeds maxint");
+        return (int)packetsSentCount;
+    }
 }

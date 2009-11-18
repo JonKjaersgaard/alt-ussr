@@ -53,6 +53,7 @@ public abstract class EightToCarRobustnessExperiment extends GenericATRONSimulat
                 reportResult(false);
             }
         });
+        ATRONController.activatePacketCounting();
     }
     
     @Override
@@ -65,7 +66,7 @@ public abstract class EightToCarRobustnessExperiment extends GenericATRONSimulat
         PhysicsParameters.get().setUseModuleEventQueue(true);
         PhysicsParameters.get().setRealtime(false);
         PhysicsFactory.getOptions().setStartPaused(false);
-        PhysicsFactory.getOptions().setHeadless(false);
+        PhysicsFactory.getOptions().setHeadless(true);
         //VisualizationParameters.get().setAlwaysShowConnectors(true);
         PhysicsParameters.get().setGravity(0);
     }
@@ -102,9 +103,9 @@ public abstract class EightToCarRobustnessExperiment extends GenericATRONSimulat
                 System.exit(0);
             }
             if(success)
-                SimulationClient.getReturnHandler().provideReturnValue(experiment,"success",sim.getTime());
+                SimulationClient.getReturnHandler().provideReturnValue(experiment,"success",new Object[] { sim.getTime(), ATRONController.getPacketsSentCount() });
             else
-                SimulationClient.getReturnHandler().provideReturnValue(experiment,"timeout", null);
+                SimulationClient.getReturnHandler().provideReturnValue(experiment,"timeout", ATRONController.getPacketsSentCount());
             System.exit(0);
         } catch(RemoteException exn) {
             throw new Error("Unable to report return value");

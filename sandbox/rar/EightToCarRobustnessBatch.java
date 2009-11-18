@@ -166,16 +166,19 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     public void provideReturnValue(String experiment, String name, Object value) throws RemoteException {
         logfile.print("experiment "+experiment+" completed: ");
         if(name.equals("success")) {
-            float time = (Float)value;
+            Object[] values = (Object[])value;
+            float time = (Float)values[0];
+            int packetCount = (Integer)values[1];
             logfile.println("Time taken:"+time);
-            recordSuccess(experiment,time);
+            recordSuccess(experiment,time,packetCount);
         } else if(name.equals("timeout")) {
             logfile.println("Timeout:X");
-            recordFailure(experiment);
+            int packetCount = (Integer)value;
+            recordFailure(experiment,packetCount);
         }
         else {
             logfile.println("Unknown value: "+name);
-            recordFailure(experiment);
+            recordFailure(experiment,0);
         }
         logfile.flush();
     }

@@ -201,8 +201,9 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
     private Set<String> experiments = Collections.synchronizedSet(new HashSet<String>());
     private Map<String,List<Float>> successes = new HashMap<String,List<Float>>();
     private Map<String,Integer> failures = new HashMap<String,Integer>();
+    private Map<String,List<Integer>> packetCounts = new HashMap<String,List<Integer>>();
 
-    public void recordSuccess(String key, float value) {
+    public void recordSuccess(String key, float value, int packetCount) {
         experiments.add(key);
         synchronized(successes) {
             List<Float> previous = successes.get(key);
@@ -212,9 +213,22 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             }
             previous.add(value);
         }
+        recordPacketCount(key, packetCount);
     }
 
-    public void recordFailure(String key) {
+    private void recordPacketCount(String key, int packetCount) {
+        synchronized(packetCounts) {
+            List<Integer> previous = packetCounts.get(key);
+            if(previous==null) {
+                previous = new ArrayList<Integer>();
+                packetCounts.put(key, previous);
+            }
+            previous.add(packetCount);
+        }
+        recordPacketCount(key, packetCount);
+    }
+
+    public void recordFailure(String key, int packetCount) {
         experiments.add(key);
         synchronized(failures) {
             Integer previous = failures.get(key);
@@ -232,16 +246,19 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
         }
         for(String experiment: experiments) {
             List<Float> success = successes.get(experiment);
+            List<Integer> counts = packetCounts.get(experiment);
             if(success==null) success = Collections.EMPTY_LIST;
+            if(counts==null) counts = Collections.EMPTY_LIST;
             Integer failure = failures.get(experiment);
             if(failure==null) failure=0;
             int total = success.size()+failure;
             StringBuffer output = new StringBuffer();
-            output.append(experiment+": nruns,success,Tavg,Tstddev;");
+            output.append(experiment+": nruns,success,Tavg,Tstddev,packets;");
             output.append(total+" ");
             output.append(((float)success.size())/((float)total)+" ");
             output.append(average(success)+" ");
             output.append(stddev(success)+" ");
+            output.append(averageI(counts)+" ");
             if(resultFile!=null) resultFile.println(output);
             System.out.println(output);
         }
@@ -253,6 +270,12 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             Map<String, List<Float>> successes,
             Map<String, Integer> failures,
             Map<String, ParameterHolder> experimentParameters) {
+    }
+
+    private static float averageI(List<Integer> counts) {
+        int total = 0;
+        for(float f: counts) total+=f;
+        return total/(float)counts.size();
     }
 
     public static float average(List<Float> success) {
