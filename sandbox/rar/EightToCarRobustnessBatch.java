@@ -127,6 +127,14 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
                     }
                     counter++;
                 }
+            if(!EightToCarSettings.SKIP_EFFICIENCY_EXTRA)
+                for(float risk = EightToCarSettings.START_RISK; risk<=EightToCarSettings.END_RISK; risk+=EightToCarSettings.RISK_INC) {
+                    resetRandomSequence();
+                    for(int i=0; i<EightToCarSettings.N_REPEAT; i++) {
+                        parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,Math.max(0, risk-EightToCarSettings.RISK_DELTA),risk,0,EightToCarSettings.TIMEOUT,0,0,nextRandomFromSequence()));
+                    }
+                    counter++;
+                }
             // Robustness experiments, varying failure risk, no packet loss
             if(!EightToCarSettings.SKIP_ROBUSTNESS)
                 for(float fail = EightToCarSettings.START_FAIL; fail<=EightToCarSettings.END_FAIL; fail+=EightToCarSettings.FAIL_INC) {
