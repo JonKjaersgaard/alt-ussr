@@ -16,7 +16,7 @@ public interface EightToCarSettings {
     };
     
     // Basic experimental settings
-    public static final float TIMEOUT = 200f;
+    public static final float TIMEOUT = 100f;
     public static final int N_REPEAT = 20;
     
     // Risk of packet loss
@@ -31,9 +31,9 @@ public interface EightToCarSettings {
     public static final float FAIL_INC = 0.01f;
     
     // Risk of spontaneous reset
-    public static final float RESET_RISK_PER_TS_MIN = 0.0f;
+    public static final float RESET_RISK_PER_TS_MIN = 0.00f;
     public static final float RESET_RISK_PER_TS_MAX = 0.51f;
-    public static final float RESET_RISK_PER_TS_DELTA = 0.05f;
+    public static final float RESET_RISK_PER_TS_DELTA = 0.1f;
     public static final float RESET_RISK_TS_SIZE_MIN = 1;
     public static final float RESET_RISK_TS_SIZE_MAX = 5.1f;
     public static final float RESET_RISK_TS_SIZE_DELTA = 2;

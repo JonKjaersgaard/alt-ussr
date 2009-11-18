@@ -108,6 +108,8 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
                 System.out.println("#"+run+" Simulation completed");
                 // Register in set of parameters
                 experimentParameters.put(parameters.toString(), parameters);
+                // Report intermediate results
+                reportRecord();
                 // Prepare for next job
                 active = false;
                 synchronized(passiveWorkers) {
@@ -221,7 +223,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
         }
     }
     
-    public void reportRecord() {
+    public synchronized void reportRecord() {
         PrintWriter resultFile = null;
         try {
             resultFile = new PrintWriter(new BufferedWriter(new FileWriter("results.txt")));
