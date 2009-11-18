@@ -225,7 +225,6 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             }
             previous.add(packetCount);
         }
-        recordPacketCount(key, packetCount);
     }
 
     public void recordFailure(String key, int packetCount) {
@@ -235,6 +234,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             if(previous==null) previous = 0;
             failures.put(key, previous+1);
         }
+        recordPacketCount(key, packetCount);
     }
     
     public synchronized void reportRecord() {

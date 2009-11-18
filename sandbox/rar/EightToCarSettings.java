@@ -39,5 +39,5 @@ public interface EightToCarSettings {
     public static final float RESET_RISK_TS_SIZE_DELTA = 2;
     
     // Max number of parallel simulations
-    public static final int N_PARALLEL_SIMS = 2;
+    public static final int N_PARALLEL_SIMS = 1;
 }
