@@ -309,7 +309,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     	//Logger.getLogger(AbstractGame.class.getName()).setLevel(Level.OFF);
     	try {
             getAttributes();
-
+            //a 
             if (!finished) {
                 if(!options.getHeadless()) {
                     System.out.println("Available Display Modes: ");
