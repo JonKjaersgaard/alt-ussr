@@ -891,7 +891,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
                 if(!VERIFY_OPERATIONS) throw new Error("Illegal packet 89");
                 this.other_id = incoming[1];
             } else if(!canHandleMessage(incoming,messageSize,channel)) {
-            	System.out.println("ERROR?"); System.out.flush();
+            	System.out.println("Warning: ignorign unknown packet"); System.out.flush();
                 //super.sendMessage(incoming,(byte)messageSize,(byte)channel);
             } 
 
