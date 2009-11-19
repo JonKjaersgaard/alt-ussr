@@ -339,7 +339,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 for(Thread t: moduleControlThreads)
                 	t.start();
                 
-                while (!finished && !getDisplay().isClosing()) {
+                while (!finished && !getDisplay().isClosing() && physicsSteps < PhysicsParameters.get().getMaxPhysicsIterations()) {
                 	boolean physicsStep = false;
                     if ( !pause ||singleStep ) {
                     	if(PhysicsParameters.get().syncWithControllers() == false)
