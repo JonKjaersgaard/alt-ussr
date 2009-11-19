@@ -29,6 +29,7 @@ import javax.swing.border.TitledBorder;
 
 import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFramesInter;
+import ussr.aGui.enumerations.VisualizerPacketFormats;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
@@ -57,8 +58,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
-		//super.fontAttributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-
+	
 		initComponents();
 	}
 
@@ -72,6 +72,8 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		/*Instantiation of components*/		
 		jScrollPane = new JScrollPane();
 		jScrollPaneNew = new JScrollPane();
+		jScrollPacketFormat = new JScrollPane();
+		
 
 		jTableModules = new javax.swing.JTable();
 		jToolBarEntitiesForLabeling = new javax.swing.JToolBar();
@@ -81,6 +83,8 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jButtonRun = new JButton();
 		jButtonReset = new JButton();
 		jButtonModules = new JButton();
+		
+		jListPacketFormats = new javax.swing.JList();
 
 
 		jLabel1000 = new javax.swing.JLabel();
@@ -88,7 +92,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jComboBoxNrPacketFilters = new javax.swing.JComboBox();
 
 		jSeparator1 = new javax.swing.JToolBar.Separator();
-		jCheckBoxShowLabelControl =  new javax.swing.JCheckBox(); 
+		jCheckBoxDisplayLegendControl =  new javax.swing.JCheckBox(); 
 
 		jPanelLegend =  new javax.swing.JPanel();
 
@@ -119,7 +123,20 @@ public class ModuleCommunicationVisualizer extends Tabs {
 
 
 		super.jComponent.add(jScrollPane,gridBagConstraints);
-
+		
+		jCheckBoxDisplayLegendControl.setText("Display Legend-Control");
+		jCheckBoxDisplayLegendControl.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ModuleCommunicationVisualizerController.jCheckBoxShowLabelControlActionPerformed(jCheckBoxDisplayLegendControl);
+			}
+		});
+		
+		gridBagConstraints.fill = GridBagConstraints.CENTER;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.ipady = 0;//reset
+		gridBagConstraints.ipadx = 0;//reset
+		super.jComponent.add(jCheckBoxDisplayLegendControl,gridBagConstraints);
 
 
 		GridBagConstraints gridBagConstraintsLabelingPanel = new GridBagConstraints();
@@ -127,13 +144,12 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		displayTitle1 = BorderFactory.createTitledBorder("Legend");
 		displayTitle1.setTitleJustification(TitledBorder.CENTER);
 		jPanelLegend.setBorder(displayTitle1);
-		//jPanelLabeling.setPreferredSize(new Dimension(200,180));
 		jPanelLegend.setVisible(false);//initially invisible
 
 		/*External layout of labelingPanel inside main panel (jComponent)*/
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridy = 2;
 		gridBagConstraints.ipady = 50;
 		gridBagConstraints.ipadx = 550;//600;//make it wide
 
@@ -142,7 +158,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 
 				},
 				new String [] {
-						"Modules", "Include or Exclude"//Column names
+						"Module ID", "Include"//Column names
 				}
 		){
 			@SuppressWarnings("unchecked")
@@ -171,17 +187,80 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jTableModules.setPreferredSize(new Dimension(200,300));
 		jScrollPaneNew.setViewportView(jTableModules);
 		jTableModules.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		jScrollPaneNew.setPreferredSize(new Dimension(200,80));
-
-
+		jScrollPaneNew.setPreferredSize(new Dimension(140,80));
+		
 		jPanelLegend.add(jScrollPaneNew);	
+		
+		jListPacketFormats.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+		jListPacketFormats.setPreferredSize(new java.awt.Dimension(135, 70));
+		jListPacketFormats.setModel(new javax.swing.AbstractListModel() {
+			VisualizerPacketFormats[] strings = VisualizerPacketFormats.values();
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+		jListPacketFormats.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseReleased(java.awt.event.MouseEvent evt) {
+				ModuleCommunicationVisualizerController.jListPacketFormatsMouseReleased( );
+			}
+		});
+		
+		
+		
+		jScrollPacketFormat.setViewportView(jListPacketFormats);
+		jScrollPacketFormat.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Packet Fromats", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
+		jScrollPacketFormat.setPreferredSize(new Dimension(140,110));
+	
+		
+		jPanelLegend.add(jScrollPacketFormat);	
+		
+		
+		/*Internal layout of the panel*/
+	/*	GroupLayout jPanelLegendLayout = new GroupLayout(jPanelLegend);
+		jPanelLegend.setLayout(jPanelLegendLayout);
 
+		jPanelLegendLayout.setAutoCreateGaps(true);
+		jPanelLegendLayout.setHorizontalGroup(
+				jPanelLegendLayout.createSequentialGroup()			
+				.addComponent(jScrollPaneNew,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+						GroupLayout.PREFERRED_SIZE)						
+						.addComponent(jScrollPacketFormat,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)							
+		);
 
+		jPanelLegendLayout.setVerticalGroup(
+				jPanelLegendLayout.createSequentialGroup()
+				.addGroup(jPanelLegendLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(jScrollPaneNew,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+								.addComponent(jScrollPacketFormat,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE))												
+		);*/
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		super.jComponent.add(jPanelLegend,gridBagConstraints);
+		
+		
+		
+		
+	
+		
 
 
-
-		jToolBar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		/*jToolBar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBar1.setRollover(true);
 		jToolBar1.setFloatable(false);
 		jToolBar1.setToolTipText("Visualizer Control");
@@ -223,13 +302,13 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jSeparator1.setSize(2, 5);//FIXME
 		jToolBar1.add(jSeparator1);
 
-		jCheckBoxShowLabelControl.setText("Display Legend");
-		jCheckBoxShowLabelControl.addActionListener(new java.awt.event.ActionListener() {
+		jCheckBoxDisplayLegendControl.setText("Display Legend");
+		jCheckBoxDisplayLegendControl.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ModuleCommunicationVisualizerController.jCheckBoxShowLabelControlActionPerformed(jCheckBoxShowLabelControl);
+				ModuleCommunicationVisualizerController.jCheckBoxShowLabelControlActionPerformed(jCheckBoxDisplayLegendControl);
 			}
 		});
-		jToolBar1.add(jCheckBoxShowLabelControl);
+		jToolBar1.add(jCheckBoxDisplayLegendControl);*/
 
 
 		//	    jComboBoxNrPacketFilters.setToolTipText("SOME");
@@ -292,7 +371,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 																		GroupLayout.PREFERRED_SIZE))
 
 		);*/
-		super.jComponent.add(jToolBar1,gridBagConstraints);
+		//super.jComponent.add(jToolBar1,gridBagConstraints);
 
 
 
@@ -396,6 +475,14 @@ public class ModuleCommunicationVisualizer extends Tabs {
 
 	}
 
+	/**
+	 * Returns the scroll pane of display for communication of modules.  
+	 * @return Returns the scroll pane of display for communication of modules. 
+	 */
+	public static javax.swing.JScrollPane getJScrollPane() {
+		return jScrollPane;
+	}
+
 	public static javax.swing.JTable getJTableModules() {
 		return jTableModules;
 	}
@@ -435,9 +522,12 @@ public class ModuleCommunicationVisualizer extends Tabs {
 	private  static javax.swing.JButton  jButtonRun;
 	private  static javax.swing.JButton  jButtonReset;
 	private  static javax.swing.JButton  jButtonModules;
+	
+	private static javax.swing.JList jListPacketFormats;	
 
 	private static javax.swing.JScrollPane  jScrollPane;
 	private static javax.swing.JScrollPane  jScrollPaneNew;
+	private static javax.swing.JScrollPane  jScrollPacketFormat;
 
 	private static javax.swing.JToolBar jToolBar1;
 	private javax.swing.JToolBar  jToolBarEntitiesForLabeling;
@@ -452,7 +542,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 
 	private javax.swing.JToolBar.Separator jSeparator1;	
 
-	private javax.swing.JCheckBox jCheckBoxShowLabelControl;
+	private javax.swing.JCheckBox jCheckBoxDisplayLegendControl;
 	private static javax.swing.JPanel jPanelLegend;
 
 }

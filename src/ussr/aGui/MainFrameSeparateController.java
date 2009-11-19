@@ -9,6 +9,7 @@ import javax.swing.JToggleButton;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
+import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.remote.facade.BuilderControlInter;
@@ -90,6 +91,7 @@ public class MainFrameSeparateController extends GeneralController {
 		ConstructRobotTab.setTabEnabled(false);
 		AssignBehaviorsTab.setTabEnabled(false);
 		MainFrameSeparate.getJToggleButtonVisualizer().setEnabled(true);
+		ModuleCommunicationVisualizerController.setIdsModules();
 	}
 
 
@@ -357,6 +359,7 @@ public class MainFrameSeparateController extends GeneralController {
 			jTabbedPaneFirst.addTab(moduleCommunicationVisualizerTab.getTabTitle(),new javax.swing.ImageIcon(moduleCommunicationVisualizerTab.getImageIconDirectory()),moduleCommunicationVisualizerTab.getJComponent());
 			/*Update look and feel for all tabs*/			
 			MainFrames.changeToLookAndFeel(moduleCommunicationVisualizerTab.getJComponent());
+			ModuleCommunicationVisualizerController.jButtonRunActionPerformed();
 		}else{
 			/*Identify and remove the tab for visualizing module communication*/
 			for (int index=0; index < jTabbedPaneFirst.getTabCount(); index++){

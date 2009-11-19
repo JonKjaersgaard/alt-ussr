@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import ussr.aGui.tabs.view.visualizer.CanvasMouseListener;
 import ussr.aGui.tabs.view.visualizer.DrawingCanvas;
 import ussr.aGui.tabs.view.visualizer.ModuleCommunicationVisualizer;
+import ussr.remote.facade.BuilderControlInter;
 
 public class ModuleCommunicationVisualizerController extends TabsControllers {
 
@@ -22,22 +23,24 @@ public class ModuleCommunicationVisualizerController extends TabsControllers {
 	//private static List<Module> modules ;
 	private static List<Integer> idsModules; 
 
+	public static void setIdsModules() {
+		try {
+			idsModules = builderControl.getIDsModules();
+			numberOfModules = idsModules.size();
+		} catch (RemoteException e) {
+			throw new Error ("Failed to receive the list of modules, due to remote exception.");
+		}
+	}
+
 	private static DrawingCanvas drawingCanvas;
 
 	private final static int CANVAS_ROWS = 55;
 
-	public static void jButtonRunActionPerformed(JScrollPane jScrollPane) {
+	public static void jButtonRunActionPerformed() {
 		ModuleCommunicationVisualizer.getJButtonRun().setEnabled(false);
 		ModuleCommunicationVisualizer.getJButtonReset().setEnabled(true);
+			 
 		
-		try {
-			idsModules = builderControl.getIDsModules() ;
-		} catch (RemoteException e) {
-			throw new Error ("Failed to receive the list of modules, due to remote exception.");
-		}
-		
-	//	modules = jmeSimulation.getModules();	 
-		numberOfModules = idsModules.size();
 
 		/*	
         if(jmeSimulation.isPaused()==false){
@@ -45,13 +48,13 @@ public class ModuleCommunicationVisualizerController extends TabsControllers {
 			jLabel1000.setText("Simulation is running ");
 			jScrollPane.setViewportView(jLabel1000);
 
-		}else */if (numberOfModules == 0||numberOfModules <= 2){
+		}else */if (numberOfModules == 0||numberOfModules < 2){
 			// WOULD BE GOOD TO CHECK: 1) IF THERE IS TWO THE SAME MODULE TYPES AND 2)COMMUNICATION IS IN PROGRESS
 			ModuleCommunicationVisualizer.getJLabel1000().setVisible(true);
 			ModuleCommunicationVisualizer.getJLabel1000().setText("In simulation environment should be at lest two modules. Now there are "+ numberOfModules + " modules.");
-			jScrollPane.setViewportView(ModuleCommunicationVisualizer.getJLabel1000());
+			ModuleCommunicationVisualizer.getJScrollPane().setViewportView(ModuleCommunicationVisualizer.getJLabel1000());
 		}else{
-			jButtonResetActionPerformed(jScrollPane);
+			jButtonResetActionPerformed(ModuleCommunicationVisualizer.getJScrollPane());
 		}
 	}	
 
@@ -109,5 +112,12 @@ public class ModuleCommunicationVisualizerController extends TabsControllers {
 		}
 		
 	}
+
+	public static void jListPacketFormatsMouseReleased() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 
 }

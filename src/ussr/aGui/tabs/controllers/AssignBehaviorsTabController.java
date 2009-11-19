@@ -5,12 +5,12 @@ import java.util.Vector;
 
 import javax.swing.AbstractButton;
 import javax.swing.JCheckBox;
-import javax.swing.JRadioButton;
+
 
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter;
-import ussr.builder.enumerations.ConstructionTools;
+
 import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.enumerations.SupportedModularRobots;
@@ -124,7 +124,7 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 	 * Initializes the tool for assigning controller chosen by user in GUI component. 
 	 * @param jList1,the component in GUI. 
 	 */
-	public static void jList1MouseReleased(javax.swing.JList jList1) {
+	public static void jListAvailableControllersMouseReleased(javax.swing.JList jList1) {
 		try {
 			builderControl.setAdjustControllerPicker(packageName+"."+jList1.getSelectedValue());			
 		} catch (RemoteException e) {

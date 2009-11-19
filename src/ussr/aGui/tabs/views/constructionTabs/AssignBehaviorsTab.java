@@ -164,7 +164,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jListAvailableControllers.setPreferredSize(new java.awt.Dimension(J_LIST_WIDTH+60, J_LIST_HEIGHT));	
 		jListAvailableControllers.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				AssignBehaviorsTabController.jList1MouseReleased( jListAvailableControllers);
+				AssignBehaviorsTabController.jListAvailableControllersMouseReleased( jListAvailableControllers);
 			}
 		});		
 		jScrollPaneAvailableControllers.setViewportView(jListAvailableControllers);
