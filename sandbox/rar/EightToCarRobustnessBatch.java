@@ -140,7 +140,7 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
                 for(float fail = EightToCarSettings.START_FAIL; fail<=EightToCarSettings.END_FAIL; fail+=EightToCarSettings.FAIL_INC) {
                     resetRandomSequence();
                     for(int i=0; i<EightToCarSettings.N_REPEAT; i++) {
-                        parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,0,0,fail,EightToCarSettings.TIMEOUT,0,0,nextRandomFromSequence()));
+                        parameters.add(new EightToCarRobustnessBatch.Parameters(mainClasses[ci],counter,EightToCarSettings.FAIL_COMM_RISK,EightToCarSettings.FAIL_COMM_RISK,fail,EightToCarSettings.TIMEOUT,0,0,nextRandomFromSequence()));
                     }
                     counter++;
                 }
