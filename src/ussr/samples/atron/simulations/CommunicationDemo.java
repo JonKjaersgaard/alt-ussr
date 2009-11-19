@@ -13,16 +13,9 @@ import ussr.comm.CommunicationMonitor;
 import ussr.comm.GenericReceiver;
 import ussr.comm.GenericTransmitter;
 import ussr.comm.Packet;
-import ussr.description.Robot;
-import ussr.description.geometry.RotationDescription;
-import ussr.description.geometry.VectorDescription;
-import ussr.description.setup.BoxDescription;
-import ussr.description.setup.WorldDescription;
-import ussr.model.Controller;
 import ussr.model.Module;
 import ussr.physics.PhysicsFactory;
-import ussr.samples.ObstacleGenerator;
-import ussr.samples.atron.ATRON;
+
 
 /**
  * Extension of the {@link EightToCarSimulationJ} example to use snake and car modes of locomotion.
