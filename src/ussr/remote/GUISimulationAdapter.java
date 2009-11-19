@@ -17,6 +17,7 @@ import ussr.remote.facade.ActiveSimulation;
 import ussr.remote.facade.GUICallbackControlImpl;
 
 import ussr.remote.facade.RemotePhysicsSimulation;
+import ussr.samples.atron.simulations.CommunicationDemo;
 
 
 /**

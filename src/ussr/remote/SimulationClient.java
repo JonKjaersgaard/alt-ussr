@@ -28,6 +28,7 @@ import ussr.remote.facade.ParameterHolder;
 import ussr.remote.facade.RemoteActiveSimulation;
 import ussr.remote.facade.RemotePhysicsSimulation;
 import ussr.remote.facade.RemotePhysicsSimulationImpl;
+import ussr.samples.GenericSimulation;
 
 /***
  * Simulation launcher for use with SimulationLauncherServer.  Connects to the server, allowing the
@@ -106,6 +107,7 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
             Method main = allMethods[i]; 
             if(main.getName().equals("main") && Modifier.isStatic(main.getModifiers())) {
                 try {
+                	backgroundWaitAndSetSimulation();
                     main.invoke(null, new Object[] { new String[0] });
                 } catch (IllegalArgumentException e) {
                     throw new Error("Illegal main method declaration: incorrect parameter(s)");
@@ -120,7 +122,24 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
         throw new Error("No main method found in class");
     }
 
-    public static ReturnValueHandler getReturnHandler() {
+    private void backgroundWaitAndSetSimulation() {
+    	new Thread() {
+    		public void run() {
+    			while(GenericSimulation.getPhysicsSimulation()==null) {
+    				synchronized(GenericSimulation.class) {
+    					try {
+							GenericSimulation.class.wait();
+						} catch (InterruptedException e) {
+							throw new Error("Unexpected interruption, unable to read simulation ref");
+						}
+    				}
+    			}
+    			simulation = GenericSimulation.getPhysicsSimulation();
+    		}
+    	}.start();
+	}
+
+	public static ReturnValueHandler getReturnHandler() {
         return returnHandler;
     }
     

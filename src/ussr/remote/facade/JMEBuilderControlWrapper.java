@@ -58,8 +58,6 @@ public class JMEBuilderControlWrapper extends UnicastRemoteObject implements Bui
 	private JMESimulation jmeSimulation;	
 
 	
-
-
 	public JMEBuilderControlWrapper(JMESimulation jmeSimulation) throws RemoteException{
 		this.jmeSimulation = jmeSimulation;
 	}
@@ -309,7 +307,6 @@ public class JMEBuilderControlWrapper extends UnicastRemoteObject implements Bui
 		}
 	}
 
-	
 	/**
 	 * Sets picker for moving modular robots (left side of the mouse selection) during running state of simulation.
 	 */

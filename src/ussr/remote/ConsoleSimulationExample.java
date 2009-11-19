@@ -60,8 +60,8 @@ public class ConsoleSimulationExample {
             public void run() {
                 try {
                     // Start using an xml file for a robot and a controller (both loaded by simulator process)
-                    simulation.start("samples/atron/car.xml", ussr.samples.atron.simulations.ATRONCarController1.class);
-                    //simulation.start(SnakeCarDemo.class);
+                    //simulation.start("samples/atron/car.xml", ussr.samples.atron.simulations.ATRONCarController1.class);
+                    simulation.start(SnakeCarDemo.class);
                     //ATRONSimulation1.class,ATRONCarSimulation
                     //NO ATRONRoleSimulation.class(broken), CommunicationDemo(null),ATRONTestSimulation.class(null),
                     //ConveyorSimulation(null),CrawlerSimulation(null),EightToCarSimulation(broken),SnakeCarDemo.class(null);

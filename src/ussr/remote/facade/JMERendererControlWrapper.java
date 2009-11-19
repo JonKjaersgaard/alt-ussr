@@ -3,12 +3,10 @@ package ussr.remote.facade;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-
 import com.jme.scene.state.LightState;
 import com.jme.scene.state.WireframeState;
-
 import ussr.physics.jme.JMESimulation;
-import ussr.physics.jme.pickers.Picker;
+
 
 /**
  * Wrapper class for remote objects of rendering control.
@@ -21,6 +19,10 @@ public class JMERendererControlWrapper extends UnicastRemoteObject implements Si
 	 */
 	private JMESimulation jmeSimulation;	
 
+	/**
+	 * Wrapper class for remote objects of rendering control.
+	 * @param jmeSimulation,JME level simulation.
+	 */
 	public JMERendererControlWrapper(JMESimulation jmeSimulation)throws RemoteException {
 		this.jmeSimulation = jmeSimulation;
 	}
