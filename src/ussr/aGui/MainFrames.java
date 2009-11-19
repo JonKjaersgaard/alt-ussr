@@ -366,12 +366,11 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jToggleButtonConstructRobot);	
 
-
-
-		jToggleButtonVisualizer.setToolTipText("Visualize communication of modules");
+		jToggleButtonVisualizer.setToolTipText(MainFrameComponentsText.Visualize_communication_of_modules.toString().replace("_", ""));
 		jToggleButtonVisualizer.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + VISUALIZER ));
 		jToggleButtonVisualizer.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));
-		jToggleButtonVisualizer.setFocusable(false);		
+		jToggleButtonVisualizer.setFocusable(false);
+		jToggleButtonVisualizer.setEnabled(false);
 		jToggleButtonVisualizer.setPreferredSize(new java.awt.Dimension(30, 30));
 		jToggleButtonVisualizer.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -385,6 +384,15 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 
 		getContentPane().add(jToolBarGeneralControl);
+	}
+
+
+	/**
+	 * Returns the button for opening Tab called Visualize Communication of modules. 
+	 * @return the button for opening Tab called Visualize Communication of modules.
+	 */
+	public static javax.swing.JToggleButton getJToggleButtonVisualizer() {
+		return jToggleButtonVisualizer;
 	}
 
 
@@ -537,7 +545,11 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 				//do nothing
 			}else if(componentClassName.contains(ComponentsFrame.JToggleButton.toString())){
 				JToggleButton currentToggleJButton = (JToggleButton)currentComponent;
+				if (currentToggleJButton.getToolTipText().contains(MainFrameComponentsText.Visualize_communication_of_modules.toString().replace("_", ""))){
+					//do nothing
+				}else{				
 				currentToggleJButton.setEnabled(enabled);
+				}
 			}else if (componentClassName.contains(ComponentsFrame.JButton.toString())){
 				JButton currentJButton = (JButton)currentComponent;
 				String currentJButtonText = currentJButton.getToolTipText();
@@ -588,7 +600,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public static javax.swing.JButton jButtonSave;
 	public static javax.swing.JButton jButtonOpen;
 	public static javax.swing.JToggleButton jToggleButtonConstructRobot;
-	public javax.swing.JToggleButton jToggleButtonVisualizer;
+	public static javax.swing.JToggleButton jToggleButtonVisualizer;
 
 	public javax.swing.JButton jButtonRunFast;
 	public javax.swing.JButton jButtonPause;

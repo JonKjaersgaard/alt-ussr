@@ -66,8 +66,7 @@ public class MainFrameSeparateController extends GeneralController {
 	 * Starts running remote simulation in real time.
 	 */
 	public static void jButtonRunRealTimeActionPerformed() {
-		ConstructRobotTab.setTabEnabled(false);
-		AssignBehaviorsTab.setTabEnabled(false);
+		adaptEnablingOfGUI();
 		
 		timesSelected++;
 		connectModules();
@@ -83,6 +82,15 @@ public class MainFrameSeparateController extends GeneralController {
 			throw new Error ("Pausing or running remote simulation in real time failed, due to remote exception");
 		}
 	}
+	
+	/**
+	 * Enables and disables GUI components in relation to selection of run simulation buttons like run real time, fast and step by step.
+	 */
+	private static void adaptEnablingOfGUI(){
+		ConstructRobotTab.setTabEnabled(false);
+		AssignBehaviorsTab.setTabEnabled(false);
+		MainFrameSeparate.getJToggleButtonVisualizer().setEnabled(true);
+	}
 
 
 	/**
@@ -90,8 +98,7 @@ public class MainFrameSeparateController extends GeneralController {
 	 */
 	public static void jButtonRunFastActionPerformed() {
 
-		ConstructRobotTab.setTabEnabled(false);
-		AssignBehaviorsTab.setTabEnabled(false);
+		adaptEnablingOfGUI();
 		
 		timesSelected++;
 		connectModules();
@@ -127,8 +134,7 @@ public class MainFrameSeparateController extends GeneralController {
 	 * Executes running remote simulation in step by step fashion.
 	 */
 	public static void jButtonRunStepByStepActionPerformed() {       	
-		ConstructRobotTab.setTabEnabled(false);	
-		AssignBehaviorsTab.setTabEnabled(false);
+		adaptEnablingOfGUI();
 		
 		timesSelected++;
 		connectModules();
