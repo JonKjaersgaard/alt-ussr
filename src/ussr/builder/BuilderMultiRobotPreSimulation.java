@@ -1,6 +1,5 @@
 package ussr.builder;
 
-import java.util.Hashtable;
 import java.util.Map;
 
 import ussr.builder.enumerations.UssrXmlFileTypes;
@@ -9,14 +8,11 @@ import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
-import ussr.description.setup.WorldDescription.CameraPosition;
-import ussr.description.setup.WorldDescription.TextureDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
-import ussr.physics.PhysicsParameters.Material;
 import ussr.samples.GenericModuleConnectorHelper;
 import ussr.samples.GenericSimulation;
 import ussr.samples.ObstacleGenerator;

@@ -5,7 +5,8 @@ import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.scene.Geometry;
 import com.jme.scene.TriMesh;
-import ussr.builder.QuickPrototyping;
+
+import ussr.aGui.tabs.additionalResources.recycleBin.QuickPrototyping;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;

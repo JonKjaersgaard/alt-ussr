@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import ussr.aGui.tabs.additionalResources.recycleBin.QuickPrototyping;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
-import ussr.builder.QuickPrototyping;
 import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.model.Entity;
