@@ -52,6 +52,7 @@ public abstract class GenericSimulation {
         adaptWorldToSimulationHook(world);
         simulation.setWorld(world);
         simulation.setPause(startPaused);
+        synchronized(GenericSimulation.class) { GenericSimulation.class.notifyAll(); }
 
         // Start
         simulation.start();
@@ -65,13 +66,13 @@ public abstract class GenericSimulation {
         PhysicsLogger.setDefaultLoggingLevel();
         /* Create the simulation*/
         simulation = PhysicsFactory.createSimulator();
-        
         /* Assign controller to selection of robots */
         DefaultSimulationSetup.addDefaultRobotSelection(simulation, controllerFactory);
         
         /*Create the world description of simulation and set it to simulation*/
         WorldDescription world = DefaultSimulationSetup.createWorld();
         simulation.setWorld(world);
+        synchronized(GenericSimulation.class) { GenericSimulation.class.notifyAll(); }
         return world;
     }
     
