@@ -3,13 +3,8 @@ package ussr.aGui;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 
-import javax.swing.JComponent;
 
-import ussr.builder.BuilderMultiRobotPreSimulation;
-import ussr.remote.ConsoleSimulationExample;
-import ussr.remote.GUISimulationAdapter;
 /**
  * Defines visual appearance of the main GUI frame (window), separate from simulation environment.
  * @author Konstantinas
@@ -24,7 +19,7 @@ public class MainFrameSeparate extends MainFrames {
 	public MainFrameSeparate(){
 		super();
 		initComponents();
-		windowResizingListener();//Resize the main GUI window according to dimension of it's components, if user is maximizing or restoring it down.
+		addWindowListeners();//Override default window listeners.
 		
 	}	
 
@@ -52,11 +47,12 @@ public class MainFrameSeparate extends MainFrames {
 	/**
 	 * 
 	 */
-	private void windowResizingListener(){
+	private void addWindowListeners(){
 		this.addWindowStateListener (new WindowAdapter() {	
 			public void windowStateChanged(WindowEvent event) {
 				/*THINK MORE HERE*/
 				int newState = event.getNewState();
+				//System.out.println("State:"+ newState);
 				if (newState == 6){//Window maximized
 					for(int index=0;index<components.size();index++){
 						components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING/2,components.get(index).getHeight()));
@@ -66,6 +62,14 @@ public class MainFrameSeparate extends MainFrames {
 						components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING,components.get(index).getHeight()));
 					}
 				}
+			}			
+		}
+		);	
+		
+		
+		addWindowListener (new WindowAdapter() {			
+			public void windowClosing(WindowEvent event) {
+				MainFrameSeparateController.jMenuItemExitActionPerformed();                     
 			}
 		}
 		);		
@@ -81,7 +85,7 @@ public class MainFrameSeparate extends MainFrames {
 			public void run() {				
 				mainFrame = new MainFrameSeparate();
 				mainFrame.setVisible(true);				
-				setMainFrameSeparateEnabled(true);//FOR TESTING
+				setMainFrameSeparateEnabled(false);
 			}
 		});		
 	}

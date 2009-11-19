@@ -286,7 +286,10 @@ public class SimulationTab extends Tabs {
 
 	public static JCheckBox getComboBox3() {
 		return jCheckBox3;
-	} 
-
+	}
+	
+   public static void setTabVisible(){
+	   
+   }
 
 }

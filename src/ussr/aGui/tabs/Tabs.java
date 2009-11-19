@@ -26,10 +26,6 @@ public abstract class Tabs implements TabsInter {
 	 */
 	protected String tabTitle;
 
-	/**
-	 * The physical simulation
-	 */	   
-	protected JMESimulation jmeSimulation;
 	
 	/**
 	 * The main component, which is the container for all components situated in the tab. 

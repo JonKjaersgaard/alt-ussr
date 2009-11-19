@@ -444,6 +444,9 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 */
 	public static void jButtonStartNewRobotActionPerformed() {
 		ConstructRobotTab.setRadioButtonsEnabled(true);
+		ConstructRobotTab.setEnabledRotationToolBar(true);
+		ConstructRobotTab.getJButtonMove().setEnabled(true);		
+		
 		//TODO SOMETIMES FAILS WHY?
 		try {
 			builderControl.removeAllModules();

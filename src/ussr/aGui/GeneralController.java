@@ -1,6 +1,6 @@
 package ussr.aGui;
 
-import ussr.aGui.tabs.controllers.TabsControllers;
+
 import ussr.remote.facade.BuilderControlInter;
 import ussr.remote.facade.RemotePhysicsSimulation;
 

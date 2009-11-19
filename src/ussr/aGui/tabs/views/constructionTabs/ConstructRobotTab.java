@@ -528,7 +528,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 			radioButton.setEnabled(enabled);
 		}
 	}
-
+	
 	/**
 	 * Enables  and disables  buttons for moving module from one connector onto another.
 	 * @param enabled, true if enabled.

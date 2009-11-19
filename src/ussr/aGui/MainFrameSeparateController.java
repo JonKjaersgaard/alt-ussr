@@ -28,17 +28,17 @@ public class MainFrameSeparateController extends GeneralController {
 	private static SimulationRendererControlInter rendererControl;
 
 	/**
-	 * Remote version of builder controller object.
-	 */
-	//private static BuilderControlInter builderControl;	
-
-
-	/**
-	 * Executes closing of main window(frame)by terminating Java Virtual Machine.
+	 * Executes closing of main window(frame) and simulation by terminating Java Virtual Machines.
 	 */
 	public static void jMenuItemExitActionPerformed() {	
-		System.exit(0);
-
+		try {
+			if (remotePhysicsSimulation!=null){
+			remotePhysicsSimulation.stop();
+			}
+		} catch (RemoteException e) {
+			//Do not throw anything, because this means only GUI is closed and simulation was not even started			
+		}
+		System.exit(0);		
 	} 
 
 	/**

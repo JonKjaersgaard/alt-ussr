@@ -1,7 +1,5 @@
 package ussr.aGui.tabs;
 
-import ussr.aGui.MainFramesInter;
-
 
 /**
  * Supports definition of visual appearance(view in MVC pattern) of tabs, which are pluged-in main GUI window. 
