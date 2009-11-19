@@ -45,6 +45,8 @@ public class PhysicsParameters {
     private float errorReductionParameter = 0.8f;
     private float worldDampingLinearVelocity = 0.0f;
     private float worldDampingAngularVelocity = 0.0f;
+    private long maxPhysicsIterations = Long.MAX_VALUE;
+    private int resolutionFactor = 5;
     private int resolutionFactor = 2; // Modules not as pretty but more scalable in terms of #modules
     private boolean useModuleEventQueue = /*true*/ false ;
     private boolean syncWithControllers = /*true*/ false ;
@@ -88,6 +90,13 @@ public class PhysicsParameters {
     
     public float getWorldDampingAngularVelocity() {
         return worldDampingAngularVelocity;
+    }
+    public void setMaxPhysicsIterations(long max) {
+        this.maxPhysicsIterations = max;
+    }
+    
+    public long getMaxPhysicsIterations() {
+        return maxPhysicsIterations;
     }
     /**
      * Percentage of angular velocity lost in each physics time-step
