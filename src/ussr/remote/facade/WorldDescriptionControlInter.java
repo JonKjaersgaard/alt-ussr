@@ -3,6 +3,9 @@ package ussr.remote.facade;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import ussr.description.setup.WorldDescription.CameraPosition;
+import ussr.description.setup.WorldDescription.TextureDescription;
+
 public interface WorldDescriptionControlInter extends Remote {
 
 	/**
@@ -26,4 +29,10 @@ public interface WorldDescriptionControlInter extends Remote {
      * Returns if light or heavy obstacles are set in simulation environment.
      */
 	public boolean hasHeavyObstacles()throws RemoteException;
+	
+	public CameraPosition getCameraPosition()throws RemoteException;
+	
+	public TextureDescription getPlaneTexture()throws RemoteException;
+	
+	public boolean getIsFrameGrabbingActive()throws RemoteException;
 }

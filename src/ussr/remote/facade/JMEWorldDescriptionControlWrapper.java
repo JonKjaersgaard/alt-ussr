@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import ussr.description.setup.WorldDescription;
+import ussr.description.setup.WorldDescription.CameraPosition;
+import ussr.description.setup.WorldDescription.TextureDescription;
 import ussr.physics.jme.JMESimulation;
 
 public class JMEWorldDescriptionControlWrapper extends UnicastRemoteObject implements WorldDescriptionControlInter {
@@ -48,7 +50,18 @@ public class JMEWorldDescriptionControlWrapper extends UnicastRemoteObject imple
 	public boolean hasHeavyObstacles()throws RemoteException{
 		return worldDescription.hasHeavyObstacles();
 	}
+	
+	
+	public CameraPosition getCameraPosition()throws RemoteException{
+		return worldDescription.getCameraPosition();
+	}
 
-
+	public TextureDescription getPlaneTexture()throws RemoteException{
+		return worldDescription.getPlaneTexture();
+	}
+	
+	public boolean getIsFrameGrabbingActive()throws RemoteException{
+		return worldDescription.getIsFrameGrabbingActive();
+	}
 
 }
