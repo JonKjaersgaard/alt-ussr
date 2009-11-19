@@ -11,13 +11,13 @@ import ussr.aGui.GeneralController;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.tabs.controllers.ConsoleTabController;
+import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 
 import ussr.remote.facade.ActiveSimulation;
 import ussr.remote.facade.GUICallbackControlImpl;
 
 import ussr.remote.facade.RemotePhysicsSimulation;
-import ussr.samples.atron.simulations.CommunicationDemo;
 
 
 /**
@@ -99,7 +99,7 @@ public class GUISimulationAdapter {
        //TabsControllers.setBuilderController(sim.getBuilderControl());
         GeneralController.setBuilderController(sim.getBuilderControl());
         MainFrameSeparate.setMainFrameSeparateEnabled(true);
-        SimulationTabController.updateTable();
+        SimulationTabController.updateTable();     
        
         
 /*        while(true) {
