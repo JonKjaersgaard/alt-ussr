@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import ussr.aGui.tabs.view.visualizer.DrawingCanvas;
 import ussr.model.Module;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 import ussr.physics.jme.JMESimulation;
@@ -77,7 +76,7 @@ public class CommunicationVisualizerGUI extends JPanel {
     }
 		
 	private void initializeComponents() {		
-		/*canvas = new DrawingCanvas(simulation, 55, numberOfModules);*/
+		canvas = new DrawingCanvas(simulation, 55, numberOfModules);
 	    canvas.addMouseListener(new CanvasMouseListener());	    
 	    startSimulationButton = new JButton("Start simulation");
 	    modulesButton = new JButton("Modules");
