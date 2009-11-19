@@ -46,7 +46,6 @@ public class PhysicsParameters {
     private float worldDampingLinearVelocity = 0.0f;
     private float worldDampingAngularVelocity = 0.0f;
     private long maxPhysicsIterations = Long.MAX_VALUE;
-    private int resolutionFactor = 5;
     private int resolutionFactor = 2; // Modules not as pretty but more scalable in terms of #modules
     private boolean useModuleEventQueue = /*true*/ false ;
     private boolean syncWithControllers = /*true*/ false ;
