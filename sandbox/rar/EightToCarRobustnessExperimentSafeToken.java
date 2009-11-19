@@ -204,7 +204,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
                     if(outbound.size()==0) return;
                     p = outbound.remove(0);
                     if(p.getTries()>=getMaxNretries()) {
-                        if(TRACE) System.out.println("["+getMyID()+"] Timeout");
+                        System.out.println("["+getMyID()+"] Timeout");
                         return;
                     }
                     p.incTries();

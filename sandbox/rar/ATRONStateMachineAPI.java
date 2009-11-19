@@ -20,7 +20,7 @@ public class ATRONStateMachineAPI extends ATRONController implements Communicati
     public void activate() {
         EightToCarRobustnessBatch.Parameters p = (EightToCarRobustnessBatch.Parameters)ParameterHolder.get();
         Integer seedMaybe = p.seedMaybe;
-        super.setCommFailureRisk(p.minR, p.maxR, p.completeR, seedMaybe);
+        super.setCommFailureRisk(p.minR, p.maxR, p.completeR, p.completeDegree, seedMaybe);
         started = true;
         machine.initialize(getMyID());
         machine.activate();

@@ -3,7 +3,7 @@ package rar;
 public interface EightToCarSettings {
 
     // Selection of experiments
-    public static final boolean SKIP_EFFICIENCY = true;
+    public static final boolean SKIP_EFFICIENCY = false;
     public static final boolean SKIP_ROBUSTNESS = false;
     public static final boolean SKIP_RESET = true;
     public static final boolean SKIP_EFFICIENCY_EXTRA = true;
@@ -30,7 +30,8 @@ public interface EightToCarSettings {
     public static final float START_FAIL = 0.02f;
     public static final float END_FAIL = 0.02f;
     public static final float FAIL_INC = 0.01f;
-    public static final float FAIL_COMM_RISK = 0.95f;
+    public static final float FAIL_COMM_RISK = 0.2f;
+    public static final float COMPLETE_FAILURE_DEGREE = 0.99f;
     
     // Risk of spontaneous reset
     public static final float RESET_RISK_PER_TS_MIN = 0.00f;

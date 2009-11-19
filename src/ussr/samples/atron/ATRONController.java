@@ -49,11 +49,11 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         setHasGlobalTime(true);
     }
     
-    public void setCommFailureRisk(float generalRiskMin, float generalRiskMax, float totalFailureRisk) {
-        this.setCommFailureRisk(generalRiskMin, generalRiskMax, totalFailureRisk, null);
+    public void setCommFailureRisk(float generalRiskMin, float generalRiskMax, float totalFailureRisk, float totalDegree) {
+        this.setCommFailureRisk(generalRiskMin, generalRiskMax, totalFailureRisk, totalDegree, null);
     }
     
-    public void setCommFailureRisk(float generalRiskMin, float generalRiskMax, float totalFailureRisk, Integer seedMaybe) {
+    public void setCommFailureRisk(float generalRiskMin, float generalRiskMax, float totalFailureRisk, float totalDegree, Integer seedMaybe) {
         simulateCommFailure = true;
         Random r;
         if(seedMaybe==null)
@@ -65,7 +65,7 @@ public abstract class ATRONController extends ControllerImpl implements PacketRe
         float scale = generalRiskMax-generalRiskMin;
         StringBuffer fingerPrint = new StringBuffer("<");
         for(int c=0; c<8; c++) {
-            if(r.nextFloat()<totalFailureRisk) { commFailureRisk[c] = 1.0f; fingerPrint.append("1"); }
+            if(r.nextFloat()<totalFailureRisk) { commFailureRisk[c] = totalDegree; fingerPrint.append("1"); }
             else { commFailureRisk[c] = generalRiskMin+r.nextFloat()*scale; fingerPrint.append("0"); }
         }
         fingerPrint.append(">");

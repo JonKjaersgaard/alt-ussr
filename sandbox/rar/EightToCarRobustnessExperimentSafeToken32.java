@@ -42,7 +42,7 @@ public class EightToCarRobustnessExperimentSafeToken32 {
     public static void main(String argv[]) {
         if(ParameterHolder.get()==null)
             //ParameterHolder.set(new Parameters(0,0.5f,0.75f,0.0f,Float.MAX_VALUE));
-            ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.0f,0.0f,0.0f,Float.MAX_VALUE,0,0));
+            ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.0f,0.0f,0.0f,0,Float.MAX_VALUE,0,0));
         new EightToCarRobustnessExperimentSafeToken(32).main(); 
     }
 

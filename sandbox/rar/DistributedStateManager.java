@@ -224,7 +224,7 @@ public class DistributedStateManager {
     }
 
     public void setLimitPendingOneWay(boolean b) {
-        this.limitPendingOneWay = true;
+        this.limitPendingOneWay = b;
     }
 
     public float getTime() {
