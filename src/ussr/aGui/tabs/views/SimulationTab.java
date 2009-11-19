@@ -58,7 +58,7 @@ public class SimulationTab extends Tabs {
 		DefaultCellEditor dce1 = new DefaultCellEditor( comboBox1 );
 		editors.add(dce1);
 		
-		JComboBox comboBox2 = new JComboBox( WorldDescription.CameraPosition.values() );        
+		comboBox2 = new JComboBox( WorldDescription.CameraPosition.values() );        
 		DefaultCellEditor dce2 = new DefaultCellEditor( comboBox2 );
 		editors.add(dce2);
 		
@@ -121,6 +121,7 @@ public class SimulationTab extends Tabs {
 					return super.getCellEditor(row, column);                
 				}       
 			};
+			jTableWorldDescription.setVisible(false);
 			
 			jTableWorldDescription.addMouseListener(new java.awt.event.MouseAdapter() {
 	            public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -179,6 +180,8 @@ public class SimulationTab extends Tabs {
 						return super.getCellEditor(row, column);                
 					}       
 				};
+				
+				jTablePhysicsParameters.setVisible(false);
 				
 				jTablePhysicsParameters.addMouseListener(new java.awt.event.MouseAdapter() {
 		            public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -268,7 +271,18 @@ public class SimulationTab extends Tabs {
 
 	}
 
-	public static javax.swing.JTable getJTable1() {
+
+
+	public static void setJTablesVisible(boolean visible) {
+		jTableWorldDescription.setVisible(visible);
+		jTablePhysicsParameters.setVisible(visible);
+	}
+
+	public static JComboBox getComboBox2() {
+		return comboBox2;
+	}
+
+	public static javax.swing.JTable getJTableWorldDescription() {
 		return jTableWorldDescription;
 	}
 
@@ -283,6 +297,7 @@ public class SimulationTab extends Tabs {
 	private static javax.swing.JTable jTablePhysicsParameters ;
  
 	private static JCheckBox jCheckBox3;
+	private static JComboBox comboBox2;
 
 	public static JCheckBox getComboBox3() {
 		return jCheckBox3;

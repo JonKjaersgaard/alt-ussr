@@ -78,7 +78,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jTableModules = new javax.swing.JTable();
 		jToolBarEntitiesForLabeling = new javax.swing.JToolBar();
 
-		jToolBar1 =  new javax.swing.JToolBar();
+		jToolBar2 =  new javax.swing.JToolBar();
 
 		jButtonRun = new JButton();
 		jButtonReset = new JButton();
@@ -127,7 +127,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jCheckBoxDisplayLegendControl.setText("Display Legend-Control");
 		jCheckBoxDisplayLegendControl.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ModuleCommunicationVisualizerController.jCheckBoxShowLabelControlActionPerformed(jCheckBoxDisplayLegendControl);
+				ModuleCommunicationVisualizerController.jCheckBoxDisplayLegend(jCheckBoxDisplayLegendControl);
 			}
 		});
 		
@@ -139,11 +139,11 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		super.jComponent.add(jCheckBoxDisplayLegendControl,gridBagConstraints);
 
 
-		GridBagConstraints gridBagConstraintsLabelingPanel = new GridBagConstraints();
-		TitledBorder displayTitle1;
-		displayTitle1 = BorderFactory.createTitledBorder("Legend");
-		displayTitle1.setTitleJustification(TitledBorder.CENTER);
-		jPanelLegend.setBorder(displayTitle1);
+		//GridBagConstraints gridBagConstraintsLabelingPanel = new GridBagConstraints();
+		//TitledBorder displayTitle1;
+		//displayTitle1 = BorderFactory.createTitledBorder("Legend");
+		//displayTitle1.setTitleJustification(TitledBorder.CENTER);
+		//jPanelLegend.setBorder(displayTitle1);
 		jPanelLegend.setVisible(false);//initially invisible
 
 		/*External layout of labelingPanel inside main panel (jComponent)*/
@@ -151,8 +151,31 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 2;
 		gridBagConstraints.ipady = 50;
-		gridBagConstraints.ipadx = 550;//600;//make it wide
+		gridBagConstraints.ipadx = 550;//600;//make it wide		
+		
+		jToolBar2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBar2.setRollover(true);
+		jToolBar2.setFloatable(false);
+		jToolBar2.setToolTipText("Visualizer Control");
+		jToolBar2.setPreferredSize(new Dimension(30,60));	
+		jToolBar2.setOrientation(JToolBar.VERTICAL);
+		
+		jButtonReset.setIcon(new javax.swing.ImageIcon(TabsInter.DIRECTORY_ICONS + TabsInter.RESET));
+		jButtonReset.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
+		jButtonReset.setPreferredSize(new Dimension(30,30));
+		jButtonReset.setToolTipText("Reset Display Area");
+		jButtonReset.setFocusable(true);
+		jButtonReset.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ModuleCommunicationVisualizerController.jButtonResetActionPerformed( jScrollPane);
+			}
+		});
+		//jPanelLegend.add(jButtonReset);	
+		jToolBar2.add(jButtonReset);
 
+		jPanelLegend.add(jToolBar2);	
+		
+		
 		jTableModules.setModel(new javax.swing.table.DefaultTableModel(
 				new Object [][] {//none rows
 
@@ -180,14 +203,15 @@ public class ModuleCommunicationVisualizer extends Tabs {
 	                return canEdit [columnIndex];
 	            }
 		});
-
+		
 		jTableModules.setCellSelectionEnabled(true);
 		jTableModules.setDragEnabled(false);
 		jTableModules.getTableHeader().setReorderingAllowed(false);
 		jTableModules.setPreferredSize(new Dimension(200,300));
 		jScrollPaneNew.setViewportView(jTableModules);
 		jTableModules.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		jScrollPaneNew.setPreferredSize(new Dimension(140,80));
+		jScrollPaneNew.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Filter out for", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
+		jScrollPaneNew.setPreferredSize(new Dimension(160,110));
 		
 		jPanelLegend.add(jScrollPaneNew);	
 		
@@ -204,23 +228,25 @@ public class ModuleCommunicationVisualizer extends Tabs {
 			}
 		});
 		
-		
-		
+
 		jScrollPacketFormat.setViewportView(jListPacketFormats);
 		jScrollPacketFormat.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Packet Fromats", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
 		jScrollPacketFormat.setPreferredSize(new Dimension(140,110));
 	
 		
-		jPanelLegend.add(jScrollPacketFormat);	
+		jPanelLegend.add(jScrollPacketFormat);
+
 		
 		
-		/*Internal layout of the panel*/
-	/*	GroupLayout jPanelLegendLayout = new GroupLayout(jPanelLegend);
+	/*	Internal layout of the panel
+		GroupLayout jPanelLegendLayout = new GroupLayout(jPanelLegend);
 		jPanelLegend.setLayout(jPanelLegendLayout);
 
 		jPanelLegendLayout.setAutoCreateGaps(true);
 		jPanelLegendLayout.setHorizontalGroup(
-				jPanelLegendLayout.createSequentialGroup()			
+				jPanelLegendLayout.createSequentialGroup()
+				.addComponent(jToolBar2,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)	
 				.addComponent(jScrollPaneNew,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 						GroupLayout.PREFERRED_SIZE)						
 						.addComponent(jScrollPacketFormat,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
@@ -230,35 +256,15 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jPanelLegendLayout.setVerticalGroup(
 				jPanelLegendLayout.createSequentialGroup()
 				.addGroup(jPanelLegendLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(jToolBar2,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
 						.addComponent(jScrollPaneNew,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE)
 								.addComponent(jScrollPacketFormat,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE))												
-		);*/
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		);*/		
 		
 		super.jComponent.add(jPanelLegend,gridBagConstraints);
-		
-		
-		
-		
-	
-		
-
 
 		/*jToolBar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBar1.setRollover(true);
@@ -487,9 +493,9 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		return jTableModules;
 	}
 
-	public static javax.swing.JToolBar getJToolBar1() {
+/*	public static javax.swing.JToolBar getJToolBar1() {
 		return jToolBar1;
-	}
+	}*/
 
 	public static javax.swing.JPanel getJPanelLabeling() {
 		return jPanelLegend;
@@ -529,7 +535,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 	private static javax.swing.JScrollPane  jScrollPaneNew;
 	private static javax.swing.JScrollPane  jScrollPacketFormat;
 
-	private static javax.swing.JToolBar jToolBar1;
+	private static javax.swing.JToolBar jToolBar2;
 	private javax.swing.JToolBar  jToolBarEntitiesForLabeling;
 
 	private static javax.swing.JLabel jLabel1000;	

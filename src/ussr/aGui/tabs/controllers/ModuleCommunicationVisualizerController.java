@@ -86,10 +86,10 @@ public class ModuleCommunicationVisualizerController extends TabsControllers {
 		return drawingCanvasNew;
 	}
 
-	public static void jCheckBoxShowLabelControlActionPerformed(JCheckBox checkBoxShowLabelControl) {
+	public static void jCheckBoxDisplayLegend(JCheckBox checkBoxShowLabelControl) {
 		if (checkBoxShowLabelControl.isSelected()){
 			ModuleCommunicationVisualizer.getJPanelLabeling().setVisible(true);
-			ModuleCommunicationVisualizer.getJToolBar1().setVisible(false);
+			//ModuleCommunicationVisualizer.getJToolBar1().setVisible(false);
 			
 			int amountRows = ModuleCommunicationVisualizer.getJTableModules().getRowCount() ;
 			//if (amountModules<amountRows){
@@ -108,7 +108,7 @@ public class ModuleCommunicationVisualizerController extends TabsControllers {
 			
 		}else{
 			ModuleCommunicationVisualizer.getJPanelLabeling().setVisible(false);
-			ModuleCommunicationVisualizer.getJToolBar1().setVisible(true);
+			//ModuleCommunicationVisualizer.getJToolBar1().setVisible(true);
 		}
 		
 	}
