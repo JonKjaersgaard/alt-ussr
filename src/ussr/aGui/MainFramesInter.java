@@ -9,6 +9,10 @@ import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 
 
+/**
+ * Supports all instances of main GUI window with common constants.
+ * @author Konstantinas
+ */
 public interface MainFramesInter {
 
 	/**
@@ -25,17 +29,18 @@ public interface MainFramesInter {
 	TERMINATE = "terminate.jpg", NO_ENTRANCE_SMALL = "noEntranceSmall.jpg";
   
 	
-	
+	/**
+	 * The titles of the tabs plugged in the main GUI window.
+	 */
 	public final String CONSTRUCT_ROBOT_TAB_TITLE = "1 Step: Construct Robot",
 	                    ASSIGN_BEHAVIORS_TAB_TITLE = "2 Step: Assign Behaviour (Controller)",
 	                    MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE = "Communication Visualiser",
 	                    SIMULATION_TAB_TITLE = "Simulation",
 	                    CONSOLE_TAB_TITLE = "Console",
 /*YOUR TAB TITLE*/      YOUR_TAB_TITLE = "YOUR TAB";
-	                    ;
 	
 	/**     
-	 * Instances of tabs plugged in the Main frame.
+	 * Instances of tabs plugged in main GUI window
 	 */
 	public final TabsInter  CONSTRUCT_ROBOT_TAB = new ConstructRobotTab(false,true,CONSTRUCT_ROBOT_TAB_TITLE,DIRECTORY_ICONS+CONSTRUCT_ROBOT),
 	                        ASSIGN_BEHAVIORS_TAB = new AssignBehaviorsTab(false,true,ASSIGN_BEHAVIORS_TAB_TITLE,DIRECTORY_ICONS+CONSTRUCT_ROBOT),

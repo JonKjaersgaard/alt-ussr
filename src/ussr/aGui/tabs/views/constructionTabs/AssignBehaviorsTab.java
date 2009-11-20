@@ -56,8 +56,8 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 	/**
 	 * Defines visual appearance of the tab called "2 Step: Assign Behaviors".
 	 * @param initiallyVisible, true if the tab is visible after activation of main GUI window. 
-	 * @param firstTabbedPane,true if the tab is visible after activation of main GUI window. 
-	 * @param tabTitle, the title of the tab
+	 * @param firstTabbedPane, location of the tab in the main GUI frame. True if it is the first tabbed pane from the top. 
+	 * @param tabTitle, the title of the tab.
 	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
 	 */
 	public AssignBehaviorsTab(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,String imageIconDirectory){

@@ -4,12 +4,17 @@ package ussr.aGui;
 import ussr.remote.facade.BuilderControlInter;
 import ussr.remote.facade.RemotePhysicsSimulation;
 
-public class GeneralController {
-	   /**
+/**
+ * 
+ * @author Konstantinas
+ *
+ */
+public abstract class GeneralController {
+	 
+	/**
 	 * Remote version of builder controller object.
 	 */
-	protected static BuilderControlInter builderControl;
-	
+	protected static BuilderControlInter builderControl;	
 	
 	/**
 	 * The remote(running of separate JVM than GUI) physics simulation.

@@ -40,7 +40,6 @@ public class YourNewMainFrame extends MainFrames {
 		initJToolbarGeneralControl((int)SCREEN_DIMENSION.getWidth()/2,COMMON_HEIGHT);
 		setSize(600, 300);
 		pack(); 
-		changeToLookAndFeel(this);
-		
+		changeToLookAndFeel(this);		
 	}
 }

@@ -1,47 +1,23 @@
 package ussr.aGui.tabs.view.visualizer;
 
-import java.awt.BorderLayout;
+
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.font.TextAttribute;
-import java.util.List;
-
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.border.TitledBorder;
-
-import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFramesInter;
 import ussr.aGui.enumerations.VisualizerPacketFormats;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.TabsInter;
-import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
-import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
-import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter.EntitiesForLabelingText;
 
-import ussr.model.Module;
-import ussr.physics.jme.JMESimulation;
 
 /**
- * Defines visual appearance of   
+ * Defines visual appearance of the tab called "Communication Visualizer".   
  * @author Konstantinas (Adapted Brian's code)
  */
 public class ModuleCommunicationVisualizer extends Tabs {
@@ -51,14 +27,19 @@ public class ModuleCommunicationVisualizer extends Tabs {
 	 */
 	private GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
-
-
+	/**
+	 * Defines visual appearance of the tab called "Communication Visualizer".   
+	 * @param initiallyVisible,true if the tab is visible after activation of main GUI window. 
+	 * @param firstTabbedPane, location of the tab in the main GUI frame. True if it is the first tabbed pane from the top. 
+	 * @param tabTitle, the title of the tab
+	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
+	 */
 	public ModuleCommunicationVisualizer(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle,String imageIconDirectory){
 		super(initiallyVisible,firstTabbedPane,tabTitle,imageIconDirectory);		
 
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
-	
+
 		initComponents();
 	}
 
@@ -70,23 +51,20 @@ public class ModuleCommunicationVisualizer extends Tabs {
 	public void initComponents() {
 
 		/*Instantiation of components*/		
-		jScrollPane = new JScrollPane();
+		jScrollPaneCommunicationDisplay = new JScrollPane();
 		jScrollPaneNew = new JScrollPane();
-		jScrollPacketFormat = new JScrollPane();
-		
+		jScrollPacketFormat = new JScrollPane();		
 
-		jTableModules = new javax.swing.JTable();
-		jToolBarEntitiesForLabeling = new javax.swing.JToolBar();
+		jTableModules = new javax.swing.JTable();		
 
 		jToolBar2 =  new javax.swing.JToolBar();
 
 		jButtonRun = new JButton();
 		jButtonReset = new JButton();
 		jButtonModules = new JButton();
-		
+
 		jListPacketFormats = new javax.swing.JList();
-
-
+		
 		jLabel1000 = new javax.swing.JLabel();
 		jLabel1001 = new javax.swing.JLabel();
 		jComboBoxNrPacketFilters = new javax.swing.JComboBox();
@@ -94,22 +72,20 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jSeparator1 = new javax.swing.JToolBar.Separator();
 		jCheckBoxDisplayLegendControl =  new javax.swing.JCheckBox(); 
 
-		jPanelLegend =  new javax.swing.JPanel();
+		jPanelLegend =  new javax.swing.JPanel();		
 
-		jScrollPane.setPreferredSize(new Dimension(800, 2000));
-		//jScrollPane.setPreferredSize(new Dimension(1200, 4000));
+		/*Description of components */	
 		TitledBorder displayTitle;
 		displayTitle = BorderFactory.createTitledBorder("Display for Communication of Modules");
 		displayTitle.setTitleJustification(TitledBorder.CENTER);
-
-		jScrollPane.setBorder(displayTitle);
-		jScrollPane.setToolTipText("Display for Communication of Modules");
+		jScrollPaneCommunicationDisplay.setBorder(displayTitle);
+		jScrollPaneCommunicationDisplay.setToolTipText("Display for Communication of Modules");
+		jScrollPaneCommunicationDisplay.setPreferredSize(new Dimension(800, 2000));
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 0;
-		//gridBagConstraints.gridwidth =10;
-		gridBagConstraints.ipady = 320;//2000;//make it tall
-		gridBagConstraints.ipadx = 550;//600;//make it wide			
+		gridBagConstraints.gridy = 0;		
+		gridBagConstraints.ipady = 320;
+		gridBagConstraints.ipadx = 550;
 
 		/*	jLabel1001.setText("Make sure that in simulation there are atleast two modules  and press run beneath ");
 		jLabel1001.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + INFORMATION));
@@ -122,15 +98,14 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jLabel1000.setVisible(false);	*/	
 
 
-		super.jComponent.add(jScrollPane,gridBagConstraints);
-		
+		super.jComponent.add(jScrollPaneCommunicationDisplay,gridBagConstraints);
+
 		jCheckBoxDisplayLegendControl.setText("Display Legend-Control");
 		jCheckBoxDisplayLegendControl.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ModuleCommunicationVisualizerController.jCheckBoxDisplayLegend(jCheckBoxDisplayLegendControl);
 			}
 		});
-		
 		gridBagConstraints.fill = GridBagConstraints.CENTER;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 1;
@@ -138,28 +113,20 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		gridBagConstraints.ipadx = 0;//reset
 		super.jComponent.add(jCheckBoxDisplayLegendControl,gridBagConstraints);
 
-
-		//GridBagConstraints gridBagConstraintsLabelingPanel = new GridBagConstraints();
-		//TitledBorder displayTitle1;
-		//displayTitle1 = BorderFactory.createTitledBorder("Legend");
-		//displayTitle1.setTitleJustification(TitledBorder.CENTER);
-		//jPanelLegend.setBorder(displayTitle1);
 		jPanelLegend.setVisible(false);//initially invisible
-
-		/*External layout of labelingPanel inside main panel (jComponent)*/
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 2;
 		gridBagConstraints.ipady = 50;
 		gridBagConstraints.ipadx = 550;//600;//make it wide		
-		
+
 		jToolBar2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBar2.setRollover(true);
 		jToolBar2.setFloatable(false);
 		jToolBar2.setToolTipText("Visualizer Control");
 		jToolBar2.setPreferredSize(new Dimension(30,60));	
 		jToolBar2.setOrientation(JToolBar.VERTICAL);
-		
+
 		jButtonReset.setIcon(new javax.swing.ImageIcon(TabsInter.DIRECTORY_ICONS + TabsInter.RESET));
 		jButtonReset.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
 		jButtonReset.setPreferredSize(new Dimension(30,30));
@@ -167,15 +134,13 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jButtonReset.setFocusable(true);
 		jButtonReset.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ModuleCommunicationVisualizerController.jButtonResetActionPerformed( jScrollPane);
+				ModuleCommunicationVisualizerController.jButtonResetActionPerformed( jScrollPaneCommunicationDisplay);
 			}
-		});
-		//jPanelLegend.add(jButtonReset);	
+		});	
 		jToolBar2.add(jButtonReset);
-
 		jPanelLegend.add(jToolBar2);	
-		
-		
+
+
 		jTableModules.setModel(new javax.swing.table.DefaultTableModel(
 				new Object [][] {//none rows
 
@@ -191,19 +156,19 @@ public class ModuleCommunicationVisualizer extends Tabs {
 			boolean[] canEdit = new boolean [] {
 					false, true
 			};
-			
-			
-			
+
+
+
 			@SuppressWarnings("unchecked")
 			public Class getColumnClass(int columnIndex) {
 				return types [columnIndex];
 			}
-			
-			  public boolean isCellEditable(int rowIndex, int columnIndex) {
-	                return canEdit [columnIndex];
-	            }
+
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				return canEdit [columnIndex];
+			}
 		});
-		
+
 		jTableModules.setCellSelectionEnabled(true);
 		jTableModules.setDragEnabled(false);
 		jTableModules.getTableHeader().setReorderingAllowed(false);
@@ -212,33 +177,33 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jTableModules.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		jScrollPaneNew.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Filter out for", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
 		jScrollPaneNew.setPreferredSize(new Dimension(160,110));
-		
+
 		jPanelLegend.add(jScrollPaneNew);	
-		
+
 		jListPacketFormats.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		jListPacketFormats.setPreferredSize(new java.awt.Dimension(135, 70));
 		jListPacketFormats.setModel(new javax.swing.AbstractListModel() {
 			VisualizerPacketFormats[] strings = VisualizerPacketFormats.values();
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+			public int getSize() { return strings.length; }
+			public Object getElementAt(int i) { return strings[i]; }
+		});
 		jListPacketFormats.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				ModuleCommunicationVisualizerController.jListPacketFormatsMouseReleased( );
 			}
 		});
-		
+
 
 		jScrollPacketFormat.setViewportView(jListPacketFormats);
 		jScrollPacketFormat.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Packet Fromats", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
 		jScrollPacketFormat.setPreferredSize(new Dimension(140,110));
-	
-		
+
+
 		jPanelLegend.add(jScrollPacketFormat);
 
-		
-		
-	/*	Internal layout of the panel
+
+
+		/*	Internal layout of the panel
 		GroupLayout jPanelLegendLayout = new GroupLayout(jPanelLegend);
 		jPanelLegend.setLayout(jPanelLegendLayout);
 
@@ -263,7 +228,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 								.addComponent(jScrollPacketFormat,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE))												
 		);*/		
-		
+
 		super.jComponent.add(jPanelLegend,gridBagConstraints);
 
 		/*jToolBar1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -486,14 +451,14 @@ public class ModuleCommunicationVisualizer extends Tabs {
 	 * @return Returns the scroll pane of display for communication of modules. 
 	 */
 	public static javax.swing.JScrollPane getJScrollPane() {
-		return jScrollPane;
+		return jScrollPaneCommunicationDisplay;
 	}
 
 	public static javax.swing.JTable getJTableModules() {
 		return jTableModules;
 	}
 
-/*	public static javax.swing.JToolBar getJToolBar1() {
+	/*	public static javax.swing.JToolBar getJToolBar1() {
 		return jToolBar1;
 	}*/
 
@@ -528,10 +493,10 @@ public class ModuleCommunicationVisualizer extends Tabs {
 	private  static javax.swing.JButton  jButtonRun;
 	private  static javax.swing.JButton  jButtonReset;
 	private  static javax.swing.JButton  jButtonModules;
-	
+
 	private static javax.swing.JList jListPacketFormats;	
 
-	private static javax.swing.JScrollPane  jScrollPane;
+	private static javax.swing.JScrollPane  jScrollPaneCommunicationDisplay;
 	private static javax.swing.JScrollPane  jScrollPaneNew;
 	private static javax.swing.JScrollPane  jScrollPacketFormat;
 

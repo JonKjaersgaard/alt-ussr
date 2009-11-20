@@ -19,7 +19,7 @@ import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 import ussr.aGui.tabs.TabsInter;
 
 /**
- * 
+ * Holds methods and constants common for different design(visual appearance) of main GUI window (MainFrames). 
  * @author Konstantinas
  */
 @SuppressWarnings("serial")
@@ -105,7 +105,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 	/**
 	 * Initializes the basic properties of the Frame common to all MainFrame instances.
-	 * For example: top-left icon,title and layout manager.
+	 * For example: top-left icon,title and so on.
 	 */
 	public void initFrameProperties(){		
 		setUSSRicon(this);
@@ -122,16 +122,13 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuBarMain = new javax.swing.JMenuBar();	
 
 		jMenuFile = new javax.swing.JMenu();
-		jMenuView = new javax.swing.JMenu();
 		jMenuRender = new javax.swing.JMenu();		
 
 		jMenuItemOpen = new javax.swing.JMenuItem();
-		jMenuItem4 = new javax.swing.JMenuItem();
 
 		jMenuItemExit = new javax.swing.JMenuItem();		
 		jMenuItemSave = new javax.swing.JMenuItem();
-		jMenuItemSaveAs = new javax.swing.JMenuItem();
-
+		
 		jSeparator1 = new javax.swing.JSeparator();
 		jSeparator2 = new javax.swing.JSeparator();			
 
@@ -273,9 +270,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonRunFast = new javax.swing.JButton();
 		jButtonPause = new javax.swing.JButton();
 		jButtonTerminate = new javax.swing.JButton();
-		jSeparator3 = new javax.swing.JToolBar.Separator();			
-		jSeparator4 = new javax.swing.JToolBar.Separator();
-		jSeparator5 = new javax.swing.JToolBar.Separator();
+		jToolBarSeparator3 = new javax.swing.JToolBar.Separator();			
+		jToolBarSeparator4 = new javax.swing.JToolBar.Separator();
+		jToolBarSeparator5 = new javax.swing.JToolBar.Separator();
 		jToggleButtonConstructRobot = new javax.swing.JToggleButton();
 		jToggleButtonVisualizer = new javax.swing.JToggleButton();
 
@@ -343,14 +340,14 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jButtonTerminate);
 
-		jSeparator3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBarGeneralControl.add(jSeparator3);
+		jToolBarSeparator3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarGeneralControl.add(jToolBarSeparator3);
 
 		jToolBarGeneralControl.add(initSaveButton(fcSaveFrame));
 		jToolBarGeneralControl.add(initOpenButton(fcOpenFrame));
 
-		jSeparator4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBarGeneralControl.add(jSeparator4);
+		jToolBarSeparator4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarGeneralControl.add(jToolBarSeparator4);
 
 
 		jToggleButtonConstructRobot.setToolTipText("Construct Robot");
@@ -379,10 +376,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jToggleButtonVisualizer);
 
-		jSeparator5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBarGeneralControl.add(jSeparator5);
-
-
+		jToolBarSeparator5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarGeneralControl.add(jToolBarSeparator5);
+		
 		getContentPane().add(jToolBarGeneralControl);
 	}
 
@@ -396,7 +392,12 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	}
 
 
-	public static javax.swing.JButton  initSaveButton(final FileChooserFrameInter fcSaveFrame ){
+	/**
+	 * Initializes and returns the button called Save.
+	 * @param fcSaveFrame, the file chooser frame to associate the button with.
+	 * @return the button called Save.
+	 */
+	public static javax.swing.JButton initSaveButton(final FileChooserFrameInter fcSaveFrame ){
 		jButtonSave = new javax.swing.JButton();		
 		jButtonSave.setToolTipText("Save");
 		jButtonSave.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + SAVE));
@@ -413,6 +414,11 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		return jButtonSave;
 	}
 
+	/**
+	 * Initializes and returns the button called Open.
+	 * @param fcOpenFrame,the file chooser frame to associate the button with.
+	 * @return the button called Open.
+	 */
 	public static javax.swing.JButton  initOpenButton(final FileChooserFrameInter fcOpenFrame){
 		jButtonOpen = new javax.swing.JButton();
 		jButtonOpen.setToolTipText("Open");
@@ -426,11 +432,11 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 			}
 		});
 		return jButtonOpen;
-
 	}
 
 	/**
-	 * @return
+	 * Initializes and returns the first tabbed pane (from the top in main GUI window).
+	 * @return  the first tabbed pane.
 	 */
 	public javax.swing.JTabbedPane initFirstTabbbedPane( ){
 		jTabbedPaneFirst  = new javax.swing.JTabbedPane();
@@ -438,21 +444,21 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jTabbedPaneFirst.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jTabbedPaneFirst.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2, TAB_PANE_HEIGHT1));		
 		jTabbedPaneFirst.setFocusable(false);
-		addTabs(tabsFirstTabbedPane,jTabbedPaneFirst);//Plug in tabs in tabbed pane and check boxes in menu bar		
+		addTabs(tabsFirstTabbedPane,jTabbedPaneFirst);//Plug in tabs in tabbed pane 		
 
 		getContentPane().add(jTabbedPaneFirst);
 		return jTabbedPaneFirst;
 	}
 
 
-
-
-
-
+	/**
+	 * Plugs in tabs in tabbed panes.
+	 * @param tabsContainer, the container of tabs.
+	 * @param jTabbedPane, tabbed pane to plug tabs into.
+	 */
 	private void  addTabs(final ArrayList<TabsInter> tabsContainer ,final javax.swing.JTabbedPane jTabbedPane){
 
 		for (int index =0; index < tabsContainer.size(); index++){
-			//	System.out.println("S:" +tabsContainer.size());
 			TabsInter currentTab = tabsContainer.get(index);				
 
 			if (currentTab.getImageIconDirectory()==null &&currentTab.isInitiallyVisible()){			
@@ -460,39 +466,58 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 			}else if (currentTab.isInitiallyVisible()){				
 				jTabbedPane.addTab(currentTab.getTabTitle(),new javax.swing.ImageIcon(currentTab.getImageIconDirectory()),currentTab.getJComponent());
-
 			}		
-
 		}	
 	}
 
 
-	public void initSecondTabbedPane(int width, int height){
-		jTabbedPane3 = new javax.swing.JTabbedPane();
-		jTabbedPane3.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-		jTabbedPane3.setPreferredSize(new Dimension(width, height));
-		addTabs(tabsSecondTabbedPane,jTabbedPane3);//Plug in tabs in tabbed pane and check boxes in menu bar		
-		getContentPane().add(jTabbedPane3);
-	}
-
-
 	/**
-	 * Enables and disables menu components opening file choosers. 
-	 * @param state
+	 * Initializes second tabbed pane from the top in the design of main GUI window.
+	 * @param width, the width of tabbed pane.
+	 * @param height,the height of tabbed pane.
 	 */
-	public static void setSaveOpenEnabled (boolean state){
-		jButtonSave.setEnabled(state);
-		jMenuItemOpen.setEnabled(state);
-		jMenuItemSave.setEnabled(state);	
-		jButtonOpen.setEnabled(state);
-	} 
-
-
+	public void initSecondTabbedPane(int width, int height){
+		jTabbedPaneSecond = new javax.swing.JTabbedPane();
+		jTabbedPaneSecond.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+		jTabbedPaneSecond.setPreferredSize(new Dimension(width, height));
+		addTabs(tabsSecondTabbedPane,jTabbedPaneSecond);//Plug in tabs in tabbed pane and check boxes in menu bar		
+		getContentPane().add(jTabbedPaneSecond);
+	}
+	
 	/**
 	 * Starts the main GUI window (frame).
 	 * Follows strategy pattern. 
 	 */
 	public abstract void activate();
+
+    /*Getters and setters*/
+	/**
+	 * Enables and disables menu components opening file choosers. 
+	 * @param enable, true for enabled.
+	 */
+	public static void setSaveOpenEnabled (boolean enable){
+		jButtonSave.setEnabled(enable);
+		jMenuItemOpen.setEnabled(enable);
+		jMenuItemSave.setEnabled(enable);	
+		jButtonOpen.setEnabled(enable);
+	} 
+
+	/**
+	 * Returns second tabbed pane from the top in the design of main GUI window.
+	 * @return second tabbed pane from the top in the design of main GUI window.
+	 */
+	public static javax.swing.JTabbedPane getJTabbedPaneSecond() {
+		return jTabbedPaneSecond;
+	}
+
+	/**
+	 * Returns first tabbed pane from the top in the design of main GUI window.
+	 * @return first tabbed pane from the top in the design of main GUI window.
+	 */
+	public static javax.swing.JTabbedPane getJTabbedPaneFirst() {
+		return jTabbedPaneFirst;
+	}	
+
 
 	/**
 	 * Returns the toolbar for general control of simulation and mainframe.
@@ -501,119 +526,29 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public static javax.swing.JToolBar getJToolBarGeneralControl() {
 		return jToolBarGeneralControl;
 	}
-	
 
-	/**
-	 * Controls enabling of MenuBar components
-	 * @param enabled, true for enabled. 
-	 */
-	public static void setJMenuBarMainEnabled(boolean enabled) {
-		int amountComponents = jMenuBarMain.getComponents().length;
-		for (int component=0; component<amountComponents;component++){
-			JComponent currentComponent = (JComponent)jMenuBarMain.getComponent(component);
-			String componentClassName = currentComponent.getClass().getName();
-			
-			if (componentClassName.contains(ComponentsFrame.JMenu.toString())){
-				JMenu currentJMenu =(JMenu)currentComponent;
-				int amountJMenuItems = currentJMenu.getMenuComponentCount();
-				
-				for (int jMenuItem=0;jMenuItem<amountJMenuItems;jMenuItem++){
-					if (currentJMenu.getMenuComponent(jMenuItem).getClass().getName().contains(ComponentsFrame.JSeparator.toString())){
-						
-					}else{
-						JMenuItem currentJMenuItem = (JMenuItem) currentJMenu.getMenuComponent(jMenuItem);
-						String jMenuItemText =currentJMenuItem.getText(); 
-						if (jMenuItemText.contains(MainFrameComponentsText.Open.toString())||jMenuItemText.contains(MainFrameComponentsText.Exit.toString())){
-							//do nothing
-						}else{
-							currentJMenuItem.setEnabled(enabled);
-						}
-					}				
-				}				
-			}
-		}
-	}
 	
-	public static void setJToolBarGeneralControlEnabled(boolean enabled) {
-		int amountComponents = jToolBarGeneralControl.getComponents().length;
-		for (int component=0; component<amountComponents;component++){
-			JComponent currentComponent = (JComponent)jToolBarGeneralControl.getComponent(component);
-			String componentClassName = currentComponent.getClass().getName();
-			
-			
-			if (componentClassName.contains(ComponentsFrame.JToolBar$Separator.toString())){
-				//do nothing
-			}else if(componentClassName.contains(ComponentsFrame.JToggleButton.toString())){
-				JToggleButton currentToggleJButton = (JToggleButton)currentComponent;
-				if (currentToggleJButton.getToolTipText().contains(MainFrameComponentsText.Visualize_communication_of_modules.toString().replace("_", ""))){
-					//do nothing
-				}else{				
-				currentToggleJButton.setEnabled(enabled);
-				}
-			}else if (componentClassName.contains(ComponentsFrame.JButton.toString())){
-				JButton currentJButton = (JButton)currentComponent;
-				String currentJButtonText = currentJButton.getToolTipText();
-				if (currentJButtonText.contains(MainFrameComponentsText.Open.toString())){
-					//do nothing
-				}else{
-					currentJButton.setEnabled(enabled);
-				}
-			}
-		}
-	}
-	
-	
-	
-
 	/*Declaration of MainFrame components*/
 	private static javax.swing.JMenuBar jMenuBarMain;
-	public javax.swing.JMenu jMenuFile;
-	public javax.swing.JMenu jMenuView;
-	public javax.swing.JMenu jMenuRender;
+	private javax.swing.JMenu jMenuFile,jMenuRender;
 
-	public javax.swing.JMenuItem jMenuItemExit;
-	public static javax.swing.JMenuItem jMenuItemOpen;
-	public static javax.swing.JMenuItem jMenuItemSave;
-	public static javax.swing.JMenuItem jMenuItemSaveAs;
-	public javax.swing.JMenuItem jMenuItem4;
+	private javax.swing.JMenuItem jMenuItemExit;
+	private static javax.swing.JMenuItem jMenuItemOpen,jMenuItemSave;
 
-	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemPhysics;
-	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemWireFrame;
-	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuBounds;
-	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemNormals;
-	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemLights;
-	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuBufferDepth;	
-	public javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemNew;
+	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemPhysics,jCheckBoxMenuItemWireFrame,jCheckBoxMenuBounds,
+	                                     jCheckBoxMenuItemNormals,jCheckBoxMenuItemLights,jCheckBoxMenuBufferDepth;
+	                                 
+	private javax.swing.JSeparator jSeparator1,jSeparator2;
 
-	public javax.swing.JSeparator jSeparator1;
-	public javax.swing.JSeparator jSeparator2;
+	private javax.swing.JToolBar.Separator jToolBarSeparator3,jToolBarSeparator4,jToolBarSeparator5;
 
-	public javax.swing.JToolBar.Separator jSeparator3;
-	public javax.swing.JToolBar.Separator jSeparator4;
-	public javax.swing.JToolBar.Separator jSeparator5;
-
-	public javax.swing.JToolBar jToolBar1;
 	private static javax.swing.JToolBar jToolBarGeneralControl;
 	
-	public javax.swing.JButton jButtonRunRealTime;
-	public javax.swing.JButton jButtonRunStepByStep;
-	public static javax.swing.JButton jButtonSave;
-	public static javax.swing.JButton jButtonOpen;
-	public static javax.swing.JToggleButton jToggleButtonConstructRobot;
-	public static javax.swing.JToggleButton jToggleButtonVisualizer;
+	private javax.swing.JButton jButtonRunRealTime,jButtonRunStepByStep,jButtonRunFast,
+	                           jButtonPause,jButtonTerminate;
+	private static javax.swing.JButton jButtonSave,jButtonOpen;
+	private static javax.swing.JToggleButton jToggleButtonConstructRobot,jToggleButtonVisualizer;
 
-	public javax.swing.JButton jButtonRunFast;
-	public javax.swing.JButton jButtonPause;
-	public javax.swing.JButton jButtonTerminate;
-
-	public javax.swing.JLabel jLabel1;
-	public javax.swing.JLabel jLabel3;
-	public javax.swing.JLabel jLabel5;
-	public javax.swing.JTextField jTextField1;
-
-	public static javax.swing.JTabbedPane jTabbedPaneFirst;
-	public static javax.swing.JTabbedPane jTabbedPane3;
-	public javax.swing.JSplitPane jSplitPane1;
-
+	private static javax.swing.JTabbedPane jTabbedPaneFirst,jTabbedPaneSecond;
 }
 

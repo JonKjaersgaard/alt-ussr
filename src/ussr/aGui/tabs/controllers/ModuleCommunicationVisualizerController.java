@@ -39,8 +39,8 @@ public class ModuleCommunicationVisualizerController extends TabsControllers {
 	public static void jButtonRunActionPerformed() {
 		ModuleCommunicationVisualizer.getJButtonRun().setEnabled(false);
 		ModuleCommunicationVisualizer.getJButtonReset().setEnabled(true);
-			 
-		
+
+
 
 		/*	
         if(jmeSimulation.isPaused()==false){
@@ -68,11 +68,10 @@ public class ModuleCommunicationVisualizerController extends TabsControllers {
 			drawingCanvas.start();
 		}
 		jScrollPane.setViewportView(drawingCanvas); //add canvas to scroll pane		
-		
+
 	}
 
 	private static DrawingCanvas getDrawingCanvas(){
-
 		//jmeSimulation.setPause(false);	
 
 		DrawingCanvas drawingCanvasNew = new DrawingCanvas( idsModules,/*jmeSimulation,*/ CANVAS_ROWS, numberOfModules);
@@ -86,38 +85,28 @@ public class ModuleCommunicationVisualizerController extends TabsControllers {
 		return drawingCanvasNew;
 	}
 
+	/**
+	 * Controls visibility of the legend for display of module communication. 
+	 * @param checkBoxShowLabelControl, the GUI component.
+	 */
 	public static void jCheckBoxDisplayLegend(JCheckBox checkBoxShowLabelControl) {
 		if (checkBoxShowLabelControl.isSelected()){
 			ModuleCommunicationVisualizer.getJPanelLabeling().setVisible(true);
-			//ModuleCommunicationVisualizer.getJToolBar1().setVisible(false);
-			
-			int amountRows = ModuleCommunicationVisualizer.getJTableModules().getRowCount() ;
-			//if (amountModules<amountRows){
+			/*For each module ID add new row in the table of modules */
 			for (int module =0;module < numberOfModules; module++){
-				
-				//ModuleCommunicationVisualizer.getJTableModules().setValueAt("#"+module, module, 0);
-				//ModuleCommunicationVisualizer.getJTableModules().setValueAt(true, module, 1);
 				javax.swing.table.DefaultTableModel model = (DefaultTableModel) ModuleCommunicationVisualizer.getJTableModules().getModel();
 				model.addRow(new Object[]{"#"+module,true});
 			}
-/*			}else{
-				//TODO add addition of new rows if there are too many modules 
-				throw new Error ("Too many modules");
-			}*/
-			
-			
-		}else{
+			}else{
 			ModuleCommunicationVisualizer.getJPanelLabeling().setVisible(false);
-			//ModuleCommunicationVisualizer.getJToolBar1().setVisible(true);
 		}
-		
 	}
 
 	public static void jListPacketFormatsMouseReleased() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
+
+
 
 }

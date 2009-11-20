@@ -245,6 +245,7 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 		}
 		g2.drawImage(communicationImage, null, 0, 0);
 		
+		
 		//drawReferenceCommunication(g2);
 				
 		// Container draw
@@ -324,6 +325,15 @@ public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 		return (int)(len * Math.sin(dir));
 	}
 		
+	/**
+	 * Draws communication arrow from one module to another.
+	 * @param g2
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @param stroke
+	 */
 	public void drawArrow(Graphics2D g2, int x1, int y1, int x2, int y2, float stroke) {
 	      double aDir = Math.atan2(x1 - x2, y1 - y2);
 	      g2.drawLine(x2, y2, x1, y1);
