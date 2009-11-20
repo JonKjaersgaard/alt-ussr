@@ -1,5 +1,7 @@
 package rar;
 
+import java.util.Arrays;
+
 public class DistributedStateManager {
     private static byte MAGIC_HEADER = 107;
     private static byte HEADER_PLUS_FIXED_PAYLOAD = 4;
@@ -184,6 +186,8 @@ public class DistributedStateManager {
 
         int pendingBuffer[] = new int[MAX_N_PENDING_STATES];
         globalState = merge(globalState, pendingStates, msg.state, msg.pending, pendingBuffer);
+        if(msg.state<previousState && !Arrays.equals(pendingStates, pendingBuffer))
+            System.out.println("*** Out-of-order merge");
         int[] tmp = pendingStates; pendingStates = pendingBuffer; pendingBuffer = tmp; /* swap */
         if(globalState>previousState) {
             recipientID = msg.recipientID;

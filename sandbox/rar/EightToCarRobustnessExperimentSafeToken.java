@@ -291,7 +291,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
         @Override
         public void activate() {
             EightToCarRobustnessBatch.Parameters p = (EightToCarRobustnessBatch.Parameters)ParameterHolder.get();
-            super.setCommFailureRisk(p.minR, p.maxR, p.completeR, p.seedMaybe);
+            super.setCommFailureRisk(p.minR, p.maxR, p.completeR, p.completeDegree, p.seedMaybe);
             this.yield();
             if(USE_BLOCKING_ROTATE) this.setBlocking(true);
             this.delay(10);

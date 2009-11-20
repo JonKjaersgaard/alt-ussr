@@ -44,7 +44,8 @@ public class EightToCarRobustnessExperimentParallelLim extends EightToCarRobustn
 
     public static void main(String argv[]) {
         if(ParameterHolder.get()==null)
-            ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.5f,0.75f,0.0f,0,Float.MAX_VALUE,0,0));
+            ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.25f,0.25f,0.25f,0.99f,Float.MAX_VALUE,0.0f,0.0f));
+            //ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.5f,0.75f,0.0f,0,Float.MAX_VALUE,0,0));
             //ParameterHolder.set(new Parameters(null,0,0.0f,0.0f,0.0f,Float.MAX_VALUE));
         new EightToCarRobustnessExperimentParallelLim().main(); 
     }

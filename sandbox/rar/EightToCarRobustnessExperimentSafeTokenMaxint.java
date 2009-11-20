@@ -40,9 +40,10 @@ import ussr.samples.atron.GenericATRONSimulation;
 public class EightToCarRobustnessExperimentSafeTokenMaxint {
 
     public static void main(String argv[]) {
-        if(ParameterHolder.get()==null)
-            //ParameterHolder.set(new Parameters(0,0.5f,0.75f,0.0f,Float.MAX_VALUE));
-            ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.98f,0.98f,0.0f,0,Float.MAX_VALUE,0,0));
+        //if(ParameterHolder.get()==null)
+        ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.25f,0.25f,0.25f,0.99f,Float.MAX_VALUE,0.0f,0.0f));
+        //ParameterHolder.set(new Parameters(0,0.5f,0.75f,0.0f,Float.MAX_VALUE));
+        //ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.98f,0.98f,0.0f,0,Float.MAX_VALUE,0,0));
         new EightToCarRobustnessExperimentSafeToken(Integer.MAX_VALUE).main(); 
     }
 
