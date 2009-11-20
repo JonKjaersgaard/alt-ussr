@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import ussr.aGui.tabs.SimulationTab;
 import ussr.aGui.tabs.controllers.SimulationTabController;
-import ussr.aGui.tabs.views.SimulationTab;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.ControllerFactory;
