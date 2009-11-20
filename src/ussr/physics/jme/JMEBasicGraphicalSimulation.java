@@ -7,26 +7,13 @@
 package ussr.physics.jme;
 
 import java.awt.Color;
-import java.awt.Frame;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
-import ussr.aGui.FramesInter;
-import ussr.aGui.MainFrames;
-import ussr.aGui.MainFramesInter;
 import ussr.aGui.MainFrameSeparate;
-import ussr.aGui.tabs.YourNewTab;
-import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.additionalResources.recycleBin.QuickPrototyping;
-import ussr.aGui.tabs.view.visualizer.ModuleCommunicationVisualizer;
-import ussr.aGui.tabs.views.ConsoleTab;
-import ussr.aGui.tabs.views.SimulationTab;
-import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
-import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
 import ussr.comm.monitors.visualtracker.CommunicationVisualizerGUI;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsParameters;
@@ -36,7 +23,6 @@ import ussr.physics.PhysicsFactory.Options;
 import ussr.physics.jme.cameraHandlers.RobotCameraHandler;
 import ussr.util.Pair;
 import ussr.util.WindowSaver;
-
 import com.jme.app.AbstractGame;
 import com.jme.app.BaseSimpleGame;
 import com.jme.image.Texture;
@@ -74,8 +60,6 @@ import com.jme.util.TextureManager;
 import com.jme.util.Timer;
 import com.jme.util.geom.Debugger;
 import com.jmex.awt.input.AWTMouseInput;
-import com.jmex.awt.lwjgl.LWJGLAWTCanvasConstructor;
-import com.jmex.awt.lwjgl.LWJGLCanvas;
 import com.jmex.physics.DynamicPhysicsNode;
 import com.jmex.physics.PhysicsDebugger;
 import com.jmex.physics.PhysicsSpace;
@@ -89,8 +73,7 @@ import com.jmex.terrain.TerrainBlock;
  * field that are used in JMESimulation to define the behavior of the physical simulation.
  * 
  * @author Modular Robots @ MMMI
- * @author Konstantinas (modified for builder). In particular added code for displaying the GUI
- * of Quick Prototyping of simulation Scenarios, main GUI window and getter-setter methods for showing physics, normals,
+ * @author Konstantinas (modified for builder). Added getter-setter methods for showing physics, normals,
  * bounds, lights, wireState, buffer depth, running simulation in real time and fast. 
  */
 public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
