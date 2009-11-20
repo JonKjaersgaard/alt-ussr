@@ -8,13 +8,13 @@ import ussr.description.setup.WorldDescription.CameraPosition;
 import ussr.description.setup.WorldDescription.TextureDescription;
 import ussr.physics.jme.JMESimulation;
 
-public class JMEWorldDescriptionControlWrapper extends UnicastRemoteObject implements WorldDescriptionControlInter {
+public class WorldDescriptionControlWrapper extends UnicastRemoteObject implements WorldDescriptionControlInter {
 
 
 	private WorldDescription worldDescription;
 
 
-	public JMEWorldDescriptionControlWrapper(WorldDescription worldDescription)throws RemoteException {
+	public WorldDescriptionControlWrapper(WorldDescription worldDescription)throws RemoteException {
 		this.worldDescription =worldDescription;
 	}
 
@@ -63,5 +63,6 @@ public class JMEWorldDescriptionControlWrapper extends UnicastRemoteObject imple
 	public boolean getIsFrameGrabbingActive()throws RemoteException{
 		return worldDescription.getIsFrameGrabbingActive();
 	}
-
+	
+	
 }

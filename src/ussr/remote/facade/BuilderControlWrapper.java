@@ -50,7 +50,7 @@ import ussr.samples.odin.OdinBuilder;
 import ussr.samples.odin.modules.Odin;
 
 
-public class JMEBuilderControlWrapper extends UnicastRemoteObject implements BuilderControlInter{
+public class BuilderControlWrapper extends UnicastRemoteObject implements BuilderControlInter{
 	
 	/**
 	 * JME level simulation.
@@ -58,7 +58,7 @@ public class JMEBuilderControlWrapper extends UnicastRemoteObject implements Bui
 	private JMESimulation jmeSimulation;	
 
 	
-	public JMEBuilderControlWrapper(JMESimulation jmeSimulation) throws RemoteException{
+	public BuilderControlWrapper(JMESimulation jmeSimulation) throws RemoteException{
 		this.jmeSimulation = jmeSimulation;
 	}
 

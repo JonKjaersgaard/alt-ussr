@@ -82,7 +82,7 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 	 * @return object, for controlling rendering of remote simulation. 
 	 */
 	public SimulationRendererControlInter getRendererControl() throws RemoteException{
-		return new JMERendererControlWrapper((JMESimulation)simulation);
+		return new RendererControlWrapper((JMESimulation)simulation);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 	 * @return object, for building modular robot in remote simulation.
 	 */
 	public BuilderControlInter getBuilderControl()throws RemoteException{
-		return new JMEBuilderControlWrapper((JMESimulation)simulation);
+		return new BuilderControlWrapper((JMESimulation)simulation);
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 
 	@Override
 	public WorldDescriptionControlInter getWorldDescriptionControl() throws RemoteException {
-		return new JMEWorldDescriptionControlWrapper(((JMESimulation)simulation).getWorldDescription()) ;
+		return new WorldDescriptionControlWrapper(((JMESimulation)simulation).getWorldDescription()) ;
 	}
 
 
