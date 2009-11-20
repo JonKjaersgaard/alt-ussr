@@ -14,7 +14,7 @@ import ussr.description.setup.WorldDescription;
  * RemotePhysicsSimulationImpl class must simply implement the corresponding method. 
  * 
  * @author ups
- * @author Konstantinas, added support for controlling rendering, builder control and so on.
+ * @author Konstantinas, added support for controlling rendering, builder control, guil call backs, world description and so on.
  */
 public interface RemotePhysicsSimulation extends Remote {
 
@@ -97,10 +97,7 @@ public interface RemotePhysicsSimulation extends Remote {
 	 */
 	public BuilderControlInter getBuilderControl()throws RemoteException;
 	
-	/**
-	 * Returns the object for building modular robot in remote simulation.
-	 * @return object, for building modular robot in remote simulation.
-	 */
+
 	public WorldDescriptionControlInter getWorldDescriptionControl()throws RemoteException;
    
 	/**
@@ -109,14 +106,10 @@ public interface RemotePhysicsSimulation extends Remote {
 	 * @param fileDirectoryName, the directory to save xml file to.
 	 */
 	public void saveToXML(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName)throws RemoteException;
-	
+		
 	/**
-	 * @return
-	 */
-	public WorldDescription getWorldDescription()throws RemoteException;
-	
-	/**
-	 * @param control
+	 * Sets the object for managing GUI calls from remote simulation side.
+	 * @param control,the object for managing GUI calls from remote simulation side
 	 */
 	public void setGUICallbackControl(GUICallbackControl control)throws RemoteException;
 }

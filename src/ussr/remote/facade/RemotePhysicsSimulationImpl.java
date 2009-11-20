@@ -103,13 +103,8 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 		saveXML.saveXMLfile(ussrXmlFileType, fileDirectoryName);		
 	}
 
-	public WorldDescription getWorldDescription()throws RemoteException{
-		return ((JMESimulation) simulation).getWorldDescription();
-	}
-
 	@Override
 	public WorldDescriptionControlInter getWorldDescriptionControl() throws RemoteException {
-
 		return new JMEWorldDescriptionControlWrapper(((JMESimulation)simulation).getWorldDescription()) ;
 	}
 

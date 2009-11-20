@@ -39,7 +39,7 @@ public class GUISimulationAdapter {
             consoleSimulationExample(simulationXMLFile);
         } catch(IOException exn) {
             System.err.println("Program terminated with "+exn.getClass().getName()+" exception");
-            // Explicitly stop program (RMI server still running)
+            // Explicitly stop program (RMI server still running)           
             System.exit(0);
         }
     }

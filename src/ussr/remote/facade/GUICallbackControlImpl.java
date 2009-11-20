@@ -21,10 +21,14 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 		ConstructRobotTabController.adaptConstructRobotTabToChosenTool(chosenTool);
 	};
 	
-	
+	/**
+	 * Populates the table in Assign behavior tab with labels of entity(module, connector and so on) selected in simulation environment.
+	 * @param labels, the string of labels separated by comma to populate the table with.
+	 */
 	public void updateTableWithLabels(String labels) throws RemoteException{
 		AssignBehaviorsTabController.updateTableLabels(labels);
 	}
+	
 	
 	
 	
