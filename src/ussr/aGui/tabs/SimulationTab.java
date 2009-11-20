@@ -67,14 +67,9 @@ public class SimulationTab extends Tabs {
 		DefaultCellEditor dce2 = new DefaultCellEditor( comboBox2 );
 		editors.add(dce2);
 		
-		JComboBox comboBox3 = new JComboBox( TextureDescriptions.values() );        
-		DefaultCellEditor dce3 = new DefaultCellEditor( comboBox3 );
-		editors.add(dce3);
-		
 		editors.add(new CheckBoxEditor());//the world is flat
 		editors.add(new CheckBoxEditor());//has background scenery
 		editors.add(new CheckBoxEditor());//has heavy obstacles
-		editors.add(new CheckBoxEditor());// big obstacles
 		
 		//JComboBox comboBox3 = new JComboBox( new String[]{"yes","no"}); //the world is flat       
 		//DefaultCellEditor dce3 = new DefaultCellEditor( comboBox3 );
@@ -96,8 +91,8 @@ public class SimulationTab extends Tabs {
 		
 		final String[] worldDescriptionParameters = {"Plane Size","Plane Texture","Camera Position",
 				                                      "The world is flat","Has background scenery",
-				                                      "Has heavy obstacles","Is frame grabbing active", 
-				                                      		"Big obstacles"};
+				                                      "Has heavy obstacles","Is frame grabbing active" 
+				                                     };
 		
 		
 		DefaultTableModel model = new DefaultTableModel(columnNames,worldDescriptionParameters.length){
@@ -120,10 +115,10 @@ public class SimulationTab extends Tabs {
 			public TableCellEditor getCellEditor(int row, int column){                       
 				int modelColumn = convertColumnIndexToModel( column );                       
 				//if (modelColumn < editors.size()+1)
-				if(modelColumn <= 3)
+				//if(modelColumn <= 1)
 					return (TableCellEditor)editors.get(row);                     
-				else                               
-					return super.getCellEditor(row, column);                
+				/*else                               
+					return super.getCellEditor(row, column);*/                
 				}       
 			};
 			jTableWorldDescription.setVisible(false);
@@ -277,6 +272,10 @@ public class SimulationTab extends Tabs {
 	}
 
 
+
+	public static javax.swing.JTable getJTablePhysicsParameters() {
+		return jTablePhysicsParameters;
+	}
 
 	public static void setJTablesVisible(boolean visible) {
 		jTableWorldDescription.setVisible(visible);

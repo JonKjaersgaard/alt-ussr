@@ -37,4 +37,16 @@ public enum TextureDescriptions {
 		return this.textureDescription.getFileName();
 	}
 	
+	public static String texture(WorldDescription.TextureDescription teture){
+		
+		for (int textureNr=0;textureNr<TextureDescriptions.values().length;textureNr++){
+			TextureDescriptions.values()[textureNr].equals(teture);
+			return TextureDescriptions.values()[textureNr].name();
+		}
+		
+		
+		return null;
+		
+	}
+	
 }
