@@ -5,19 +5,19 @@ public interface EightToCarSettings {
     // Selection of experiments
     public static final boolean SKIP_EFFICIENCY = true;
     public static final boolean SKIP_ROBUSTNESS = true;
-    public static final boolean SKIP_RESET = false;
-    public static final boolean SKIP_EFFICIENCY_EXTRA = true;
+    public static final boolean SKIP_RESET = true;
+    public static final boolean SKIP_EFFICIENCY_EXTRA = false;
     public static final Class<?> EXPERIMENTS[] = new Class<?>[] {
-        EightToCarRobustnessExperimentSafeToken32.class,
-        EightToCarRobustnessExperimentSafeToken128.class,
-        EightToCarRobustnessExperimentSafeTokenMaxint.class,
-        EightToCarRobustnessExperimentBroadcast.class,
+        //EightToCarRobustnessExperimentSafeToken32.class,
+        //EightToCarRobustnessExperimentSafeToken128.class,
+        EightToCarRobustnessExperimentSafeTokenMaxint.class //,
+        //EightToCarRobustnessExperimentBroadcast.class,
         //EightToCarRobustnessExperimentParallelLim.class,
-        EightToCarRobustnessExperimentParallelStd.class
+        //EightToCarRobustnessExperimentParallelStd.class
     };
     
     // Basic experimental settings
-    public static final float TIMEOUT = 200f;
+    public static final float TIMEOUT = 1000f;
     public static final int N_REPEAT = 20;
     
     // Risk of packet loss
@@ -27,10 +27,10 @@ public interface EightToCarSettings {
     public static final float RISK_INC = 0.02f;
     
     // Risk of permanent communication failure
-    public static final float START_FAIL = 0.02f;
-    public static final float END_FAIL = 0.02f;
-    public static final float FAIL_INC = 0.01f;
-    public static final float FAIL_COMM_RISK = 0.2f;
+    public static final float START_FAIL = 0.0f;
+    public static final float END_FAIL = 0.25f;
+    public static final float FAIL_INC = 0.02f;
+    public static final float FAIL_COMM_RISK = 0.25f;
     public static final float COMPLETE_FAILURE_DEGREE = 0.99f;
     
     // Risk of spontaneous reset
@@ -42,5 +42,5 @@ public interface EightToCarSettings {
     public static final float RESET_RISK_TS_SIZE_DELTA = 2;
     
     // Max number of parallel simulations
-    public static final int N_PARALLEL_SIMS = 10;
+    public static final int N_PARALLEL_SIMS = 2;
 }
