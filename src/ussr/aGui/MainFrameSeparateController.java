@@ -22,7 +22,6 @@ import ussr.remote.facade.SimulationRendererControlInter;
  */
 public class MainFrameSeparateController extends GeneralController {
 
-
 	/**
 	 * Remote version of rendering control object.
 	 */
@@ -374,24 +373,6 @@ public class MainFrameSeparateController extends GeneralController {
 
 
 	/*Setters*/
-	/**
-	 * Sets builder controller of remote simulation for this controller.
-	 * @param builderController,builder controller of remote simulation.
-	 */
-	public static void setBuilderControl(BuilderControlInter builderController) {
-		MainFrameSeparateController.builderControl = builderController;
-	}
-	
-	/**
-	 * Returns builder controller of remote simulation for this controller.
-	 * @return builderControl,builder controller of remote simulation.
-	 */
-	/*public static BuilderControlInter getBuilderControl() {
-		return builderControl;
-	}*/
-
-	
-
 	/**
 	 * Sets renderer control of remote physics simulation for this controller.
 	 * @param rendererControl, renderer control of remote physics simulation.

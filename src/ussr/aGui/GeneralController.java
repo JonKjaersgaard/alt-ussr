@@ -5,9 +5,8 @@ import ussr.remote.facade.BuilderControlInter;
 import ussr.remote.facade.RemotePhysicsSimulation;
 
 /**
- * 
+ * Supports controllers with common remote objects for controlling remote simulation. 
  * @author Konstantinas
- *
  */
 public abstract class GeneralController {
 	 

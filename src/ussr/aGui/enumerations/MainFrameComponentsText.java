@@ -2,7 +2,8 @@ package ussr.aGui.enumerations;
 
 /**
  * Contains text elements presented to the user in GUI(MainFrame). Such as text on GUI elements and tool tips text.
- * NOTE: underscore is later replaced with space.  
+ * NOTE: underscore is later replaced with space. 
+ * NOTE: is not complete, because not all of them are used in the code. 
  * @author Konstantinas
  *
  */

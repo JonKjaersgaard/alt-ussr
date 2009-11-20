@@ -3,6 +3,10 @@ package ussr.aGui.enumerations;
 import ussr.description.setup.WorldDescription;
 import ussr.description.setup.WorldDescription.TextureDescription;
 
+/**
+ * @author Konstantinas
+ *
+ */
 public enum TextureDescriptions {
 	
 	
@@ -10,17 +14,21 @@ public enum TextureDescriptions {
 	GREY_GRID_TEXTURE(WorldDescription.GREY_GRID_TEXTURE),
 	MARS_TEXTURE(WorldDescription.MARS_TEXTURE),
 	WHITE_GRID_TEXTURE(WorldDescription.WHITE_GRID_TEXTURE),
-	WHITE_TEXTURE(WorldDescription.WHITE_TEXTURE),
-	
-	;
+	WHITE_TEXTURE(WorldDescription.WHITE_TEXTURE);
 
 
 	private TextureDescription textureDescription;
 
+	/**
+	 * @param textureDescription
+	 */
 	TextureDescriptions(TextureDescription textureDescription){
 		this.textureDescription = textureDescription;
 	}
 	
+	/**
+	 * @return
+	 */
 	public TextureDescription getTextureDecription(){
 		return this.textureDescription;
 	}
