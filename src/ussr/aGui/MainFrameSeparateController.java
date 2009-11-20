@@ -7,12 +7,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 
 import ussr.aGui.tabs.TabsInter;
+import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
+import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
-import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
-import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
-import ussr.remote.facade.BuilderControlInter;
 import ussr.remote.facade.SimulationRendererControlInter;
 
 

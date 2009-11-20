@@ -1,4 +1,4 @@
-package ussr.aGui.tabs.view.visualizer;
+package ussr.aGui.tabs.visualizer;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

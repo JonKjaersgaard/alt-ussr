@@ -9,7 +9,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 
 
-
 /**
  * Defines visual appearance of YOUR NEW tab implemented by YOU. Serves as an example for how to design and add new tab in main GUI.
  * Replicates part of design from Construct Robot Tab and explains it in step by step fashion.
@@ -28,7 +27,7 @@ public class YourNewTab extends Tabs {
 	 * Defines visual appearance of YOUR NEW tab implemented by YOU. Serves as an example for how to design and add new tab in main GUI.
      * Replicates part of design from Construct Robot Tab and explains it in step by step fashion.
      * Please leave this class alone for future developers and use the copy of it.
-     * TODO initiallyVisible 
+     * @param initiallyVisible, true if the tab is visible after activation of main GUI window. 
 	 * @param firstTabbedPane,location of the tab in the main GUI frame. True if it is the first tabbed pane. 
 	 * @param tabTitle, the title of the tab.
 	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.

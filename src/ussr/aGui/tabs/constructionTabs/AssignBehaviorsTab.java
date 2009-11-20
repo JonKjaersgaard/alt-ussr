@@ -1,4 +1,4 @@
-package ussr.aGui.tabs.views.constructionTabs;
+package ussr.aGui.tabs.constructionTabs;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;

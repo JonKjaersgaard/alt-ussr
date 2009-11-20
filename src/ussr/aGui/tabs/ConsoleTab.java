@@ -1,7 +1,6 @@
-package ussr.aGui.tabs.views;
+package ussr.aGui.tabs;
 
 import javax.swing.JScrollPane;
-import ussr.aGui.tabs.Tabs;
 
 /**
  * Defines visual appearance of Console tab. 

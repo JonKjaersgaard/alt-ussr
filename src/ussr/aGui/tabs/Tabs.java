@@ -1,26 +1,26 @@
 package ussr.aGui.tabs;
 
-
-import ussr.physics.jme.JMESimulation;
-
 /**
  * Supports definitions of visual appearance for tabs pluged-in the main GUI window.
  * @author Konstantinas
  */
 public abstract class Tabs implements TabsInter {
 	
+	/**
+	 * 
+	 */
 	protected boolean firstTabbedPane;
 	
+	/**
+	 * 
+	 */
 	protected String imageIconDirectory;
 	
+	/**
+	 * 
+	 */
 	protected boolean initiallyVisible;
 	
-	//protected Map<TextAttribute, Integer> fontAttributes = new HashMap<TextAttribute, Integer>();
-	
-
-	
-
-
 	/**
 	 * The title of the tab.
 	 */

@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import ussr.aGui.tabs.views.ConsoleTab;
+import ussr.aGui.tabs.ConsoleTab;
 
 /**
  * Directs output streams to Console tab.
  * @author Konstantinas
  */
-public class ConsoleTabController {
+public class ConsoleTabController extends TabsControllers {
 	
 	/**
 	 * Directs output stream to GUI component called console(tab). Stream runs in separate thread.

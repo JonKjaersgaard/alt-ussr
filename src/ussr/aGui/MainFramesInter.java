@@ -1,12 +1,12 @@
 package ussr.aGui;
 
+import ussr.aGui.tabs.ConsoleTab;
+import ussr.aGui.tabs.SimulationTab;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.YourNewTab;
-import ussr.aGui.tabs.view.visualizer.ModuleCommunicationVisualizer;
-import ussr.aGui.tabs.views.ConsoleTab;
-import ussr.aGui.tabs.views.SimulationTab;
-import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
-import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
+import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
+import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
+import ussr.aGui.tabs.visualizer.ModuleCommunicationVisualizer;
 
 
 /**

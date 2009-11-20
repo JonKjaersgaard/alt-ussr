@@ -8,8 +8,8 @@ import javax.swing.JCheckBox;
 
 
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
-import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTab;
-import ussr.aGui.tabs.views.constructionTabs.AssignBehaviorsTabInter;
+import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
+import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTabInter;
 
 import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;

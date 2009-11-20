@@ -3,18 +3,14 @@ package ussr.aGui.tabs.controllers;
 
 import java.rmi.RemoteException;
 import java.util.List;
-
 import javax.swing.JCheckBox;
-
 import javax.swing.JScrollPane;
-
 import javax.swing.table.DefaultTableModel;
 
+import ussr.aGui.tabs.visualizer.CanvasMouseListener;
+import ussr.aGui.tabs.visualizer.DrawingCanvas;
+import ussr.aGui.tabs.visualizer.ModuleCommunicationVisualizer;
 
-import ussr.aGui.tabs.view.visualizer.CanvasMouseListener;
-import ussr.aGui.tabs.view.visualizer.DrawingCanvas;
-import ussr.aGui.tabs.view.visualizer.ModuleCommunicationVisualizer;
-import ussr.remote.facade.BuilderControlInter;
 
 public class ModuleCommunicationVisualizerController extends TabsControllers {
 

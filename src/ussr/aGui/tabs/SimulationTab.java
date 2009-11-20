@@ -1,4 +1,4 @@
-package ussr.aGui.tabs.views;
+package ussr.aGui.tabs;
 
 
 import java.awt.Dimension;
@@ -15,7 +15,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 
 import ussr.aGui.enumerations.TextureDescriptions;
-import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.additionalResources.CheckBoxEditor;
 import ussr.aGui.tabs.additionalResources.SpinnerEditor;
 import ussr.description.setup.WorldDescription;
@@ -33,6 +32,12 @@ public class SimulationTab extends Tabs {
 	 */
 	public  GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
+	/**
+	 * @param initiallyVisible
+	 * @param firstTabbedPane
+	 * @param tabTitle
+	 * @param imageIconDirectory
+	 */
 	public SimulationTab(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle, String imageIconDirectory){
 		super(initiallyVisible,firstTabbedPane,tabTitle,imageIconDirectory);
 

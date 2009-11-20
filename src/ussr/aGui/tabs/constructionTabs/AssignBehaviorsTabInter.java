@@ -1,4 +1,4 @@
-package ussr.aGui.tabs.views.constructionTabs;
+package ussr.aGui.tabs.constructionTabs;
 
 public interface AssignBehaviorsTabInter extends ConstructionTabsInter  {
 
@@ -10,5 +10,4 @@ public interface AssignBehaviorsTabInter extends ConstructionTabsInter  {
 		/*Entities for labeling*/
 		Module,Connector,Sensors,Proximity;		
 	}
-	
 }

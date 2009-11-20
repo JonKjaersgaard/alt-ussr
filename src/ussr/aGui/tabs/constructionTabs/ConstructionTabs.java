@@ -1,4 +1,4 @@
-package ussr.aGui.tabs.views.constructionTabs;
+package ussr.aGui.tabs.constructionTabs;
 
 import java.awt.Dimension;
 import java.util.HashMap;
@@ -23,7 +23,6 @@ import ussr.aGui.tabs.additionalResources.HintPanelInter;
  * @author Konstantinas
  */
 public abstract class ConstructionTabs extends Tabs implements ConstructionTabsInter  {
-
 
 	/**
 	 * Defines visual appearance of the tabs for construction of modular robot.

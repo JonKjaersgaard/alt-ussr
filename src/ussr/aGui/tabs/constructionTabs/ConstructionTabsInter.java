@@ -1,10 +1,9 @@
-package ussr.aGui.tabs.views.constructionTabs;
+package ussr.aGui.tabs.constructionTabs;
 
 
 
 public interface ConstructionTabsInter {
 
-	
 	public String[] COMMON_TOOL_TIP_TEXTS = {
 			/*0*/  "Save or load robot",
 	};
@@ -17,6 +16,4 @@ public interface ConstructionTabsInter {
 		/*Modular robots names on radio buttons*/
 		ATRON,Odin,MTRAN,CKBotStandard,		
 	}
-	
-	
 }

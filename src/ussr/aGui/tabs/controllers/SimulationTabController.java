@@ -4,23 +4,16 @@ import java.rmi.RemoteException;
 import java.util.Hashtable;
 import java.util.Map;
 
-import javax.swing.DefaultCellEditor;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
-import ussr.aGui.GeneralController;
-import ussr.aGui.enumerations.TextureDescriptions;
-import ussr.aGui.tabs.additionalResources.SpinnerEditor;
-import ussr.aGui.tabs.view.visualizer.ModuleCommunicationVisualizer;
-import ussr.aGui.tabs.views.SimulationTab;
-import ussr.builder.SimulationDescriptionConverter;
-import ussr.builder.enumerations.XMLTagsUsed;
+import ussr.aGui.tabs.SimulationTab;
+
 import ussr.description.setup.WorldDescription;
 import ussr.description.setup.WorldDescription.CameraPosition;
 import ussr.description.setup.WorldDescription.TextureDescription;
 
 
-public class SimulationTabController extends GeneralController {
+public class SimulationTabController extends TabsControllers {
 
 	
 	//private static SimulationDescriptionConverter descriptionConverter;

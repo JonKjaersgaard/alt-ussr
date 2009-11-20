@@ -10,8 +10,8 @@ import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.MTRANStandardRotations;
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
-import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTab;
-import ussr.aGui.tabs.views.constructionTabs.ConstructRobotTabInter;
+import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
+import ussr.aGui.tabs.constructionTabs.ConstructRobotTabInter;
 
 
 /**
