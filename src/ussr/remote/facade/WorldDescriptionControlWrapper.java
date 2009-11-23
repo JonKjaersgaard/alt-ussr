@@ -25,11 +25,6 @@ public class WorldDescriptionControlWrapper extends UnicastRemoteObject implemen
 		return worldDescription.getPlaneSize();
 	}
 
-
-	public void setPlaneSize(int size)throws RemoteException{
-		worldDescription.setPlaneSize(size);
-	}
-
 	/**
 	 * Returns whether is used a plane or a generated texture
 	 */
@@ -60,6 +55,9 @@ public class WorldDescriptionControlWrapper extends UnicastRemoteObject implemen
 		return worldDescription.getPlaneTexture();
 	}
 	
+	public String getPlaneTextureFileName()throws RemoteException{
+		return worldDescription.getPlaneTexture().getFileName();
+	}
 	public boolean getIsFrameGrabbingActive()throws RemoteException{
 		return worldDescription.getIsFrameGrabbingActive();
 	}

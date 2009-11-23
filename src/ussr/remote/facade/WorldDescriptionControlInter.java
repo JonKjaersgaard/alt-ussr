@@ -13,7 +13,7 @@ public interface WorldDescriptionControlInter extends Remote {
      */
 	public int getPlaneSize()throws RemoteException;
 	
-	public void setPlaneSize(int size)throws RemoteException;
+
 	
 	/**
      * Returns whether is used a plane or a generated texture
@@ -35,4 +35,6 @@ public interface WorldDescriptionControlInter extends Remote {
 	public TextureDescription getPlaneTexture()throws RemoteException;
 	
 	public boolean getIsFrameGrabbingActive()throws RemoteException;
+	
+	public String getPlaneTextureFileName()throws RemoteException;
 }
