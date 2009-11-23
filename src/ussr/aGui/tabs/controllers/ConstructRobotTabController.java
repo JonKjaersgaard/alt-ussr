@@ -301,7 +301,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		ConstructRobotTab.getJButtonMove().setEnabled(false);		
 
 		try {
-			builderControl.setConstructionToolSpecPicker(ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON,connectorNr);
+			builderControl.setConstructionToolSpecPicker(ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON,0);
 		} catch (RemoteException e) {
 			throw  new Error ("Failed to initialize picker named as "+ ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON.toString()+ " ,due to remote exception");
 		}
@@ -336,7 +336,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			if (builderControl.getModuleCountingFromEndType(1).equalsIgnoreCase("OdinBall")){
 				//do nothing
 			}else{
-				builderControl.moveToNextConnector(chosenMRname, ConstructRobotTabController.connectorNr);
+				builderControl.moveToNextConnector(chosenMRname, ConstructRobotTabController.connectorNr, selectedModuleID);
 			}
 		} catch (RemoteException e) {
 			throw  new Error ("Failed to move module on next connector, due to remote exception.");
@@ -370,7 +370,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			if (builderControl.getModuleCountingFromEndType(1).equalsIgnoreCase("OdinBall")){
 				//do nothing
 			}else{
-				builderControl.moveToNextConnector(chosenMRname, ConstructRobotTabController.connectorNr);
+				builderControl.moveToNextConnector(chosenMRname, ConstructRobotTabController.connectorNr, selectedModuleID);
 			}
 		} catch (RemoteException e) {
 			throw  new Error ("Failed to move module on previous connector, due to remote exception.");
@@ -440,8 +440,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 				throw new Error ("Modular robot type "+modularRobotName+ "is not supported yet" );
 			}
 			ConstructRobotTab.setEnabledRotationToolBar(false);
-			ConstructRobotTab.getJButtonMove().setEnabled(false);
-			ConstructRobotTab.getJButtonJumpFromConnToConnector().setEnabled(false);
+			ConstructRobotTab.getJButtonMove().setEnabled(false);			
 
 			try {
 				/*Set default construction tool to be "On selected  connector"*/
@@ -511,5 +510,18 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			break;			
 		default: throw new Error ("The tool named as "+ chosenTool.toString() + " is not supported yet.");
 		}
-	};
+	}
+	
+	/**
+	 * The global ID of the module selected in simulation environment.
+	 */
+	private static int selectedModuleID;
+	
+	/**
+	 * Sets the global ID of the module selected in simulation environment.
+	 * @param selectedModuleID, the global ID of the module selected in simulation environment.
+	 */
+	public static void setSelectedModuleID(int selectedModuleID){
+		ConstructRobotTabController.selectedModuleID = selectedModuleID;
+	}
 }
