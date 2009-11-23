@@ -76,10 +76,10 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonAvailableRotationsLoop = new javax.swing.JButton();
 
 		buttonGroupModularRobots = new ButtonGroup();
-		radionButtonATRON =  new JRadioButton();
-		radionButtonODIN =  new JRadioButton();
+		radioButtonATRON =  new JRadioButton();
+		radioButtonODIN =  new JRadioButton();
 		radioButtonMTRAN =  new JRadioButton();
-		radionButtonCKBOTSTANDARD =  new JRadioButton();
+		radioButtonCKBOTSTANDARD =  new JRadioButton();
 
 		jLabelOperations = new javax.swing.JLabel();	
 
@@ -116,37 +116,37 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jToolBarSaveLoad = initSaveLoadJToolbar();
 		super.jComponent.add(jToolBarSaveLoad,gridBagConstraints);				
 
-		radionButtonATRON.setFocusable(false);
-		radionButtonATRON.setText(ModularRobotsNames.ATRON.toString());
-		radionButtonATRON.setEnabled(false);
-		radionButtonATRON.addActionListener(new java.awt.event.ActionListener() {
+		radioButtonATRON.setFocusable(false);
+		radioButtonATRON.setText(ModularRobotsNames.ATRON.toString());
+		radioButtonATRON.setEnabled(false);
+		radioButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonATRON);
+				ConstructRobotTabController.jButtonGroupActionPerformed(radioButtonATRON);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
 		gridBagConstraints.insets = new Insets(0,0,0,0);//reset
-		super.jComponent.add(radionButtonATRON,gridBagConstraints);
-		buttonGroupModularRobots.add(radionButtonATRON);
-		jRadioButtons.add(radionButtonATRON);
+		super.jComponent.add(radioButtonATRON,gridBagConstraints);
+		buttonGroupModularRobots.add(radioButtonATRON);
+		jRadioButtons.add(radioButtonATRON);
 
-		radionButtonODIN.setText(ModularRobotsNames.Odin.toString());
-		radionButtonODIN.setFocusable(false);
-		radionButtonODIN.setEnabled(false);
-		radionButtonODIN.addActionListener(new java.awt.event.ActionListener() {
+		radioButtonODIN.setText(ModularRobotsNames.Odin.toString());
+		radioButtonODIN.setFocusable(false);
+		radioButtonODIN.setEnabled(false);
+		radioButtonODIN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonODIN);
+				ConstructRobotTabController.jButtonGroupActionPerformed(radioButtonODIN);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 1;
 		
-		super.jComponent.add(radionButtonODIN,gridBagConstraints);
-		buttonGroupModularRobots.add(radionButtonODIN);
-		jRadioButtons.add(radionButtonODIN);
+		super.jComponent.add(radioButtonODIN,gridBagConstraints);
+		buttonGroupModularRobots.add(radioButtonODIN);
+		jRadioButtons.add(radioButtonODIN);
 
 		radioButtonMTRAN.setText(ModularRobotsNames.MTRAN.toString());
 		radioButtonMTRAN.setFocusable(false);
@@ -165,21 +165,21 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jRadioButtons.add(radioButtonMTRAN);
 
 
-		radionButtonCKBOTSTANDARD.setText(ModularRobotsNames.CKBotStandard.toString());
-		radionButtonCKBOTSTANDARD.setFocusable(false);
-		radionButtonCKBOTSTANDARD.setEnabled(false);
-		radionButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
+		radioButtonCKBOTSTANDARD.setText(ModularRobotsNames.CKBotStandard.toString());
+		radioButtonCKBOTSTANDARD.setFocusable(false);
+		radioButtonCKBOTSTANDARD.setEnabled(false);
+		radioButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
-				ConstructRobotTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD);
+				ConstructRobotTabController.jButtonGroupActionPerformed(radioButtonCKBOTSTANDARD);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 4;
 		gridBagConstraints.gridy = 1;
 
-		super.jComponent.add(radionButtonCKBOTSTANDARD,gridBagConstraints);
-		buttonGroupModularRobots.add(radionButtonCKBOTSTANDARD);	
-		jRadioButtons.add(radionButtonCKBOTSTANDARD);		
+		super.jComponent.add(radioButtonCKBOTSTANDARD,gridBagConstraints);
+		buttonGroupModularRobots.add(radioButtonCKBOTSTANDARD);	
+		jRadioButtons.add(radioButtonCKBOTSTANDARD);		
 
 		jLabelOperations.setText("Operations on existing modules:");
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -517,7 +517,6 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 
 	}
 
-
 	/*Getters and setters*/
 	/**
 	 * Enables and disables radio buttons with names of modular robots.
@@ -529,6 +528,14 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		}
 	}
 	
+	/**
+	 * Returns the button group of radio buttons representing supported modular robots.
+	 * @return the button group of radio buttons representing supported modular robots.
+	 */
+	public static ButtonGroup getButtonGroupModularRobots() {
+		return buttonGroupModularRobots;
+	}
+		
 	/**
 	 * Enables  and disables  buttons for moving module from one connector onto another.
 	 * @param enabled, true if enabled.
@@ -619,7 +626,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	 * @return radionButtonATRON, radio button for ATRON modular robot.
 	 */
 	public static javax.swing.AbstractButton getRadionButtonATRON() {
-		return radionButtonATRON;
+		return radioButtonATRON;
 	}
 
 	/**
@@ -635,7 +642,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	 * @return radionButtonODIN, radio button for ODIN modular robot.
 	 */
 	public static javax.swing.AbstractButton getRadionButtonODIN() {
-		return radionButtonODIN;
+		return radioButtonODIN;
 	}
 
 	/**
@@ -643,7 +650,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	 * @return radionButtonCKBOTSTANDARD, radio button for CKBOTSTANDARD modular robot.
 	 */
 	public static javax.swing.AbstractButton getRadionButtonCKBOTSTANDARD() {
-		return radionButtonCKBOTSTANDARD;
+		return radioButtonCKBOTSTANDARD;
 	}
 
 	/**
@@ -696,8 +703,8 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 
 	private static ButtonGroup buttonGroupModularRobots;	
 
-	private static  javax.swing.AbstractButton radionButtonATRON,
-	radioButtonMTRAN,radionButtonODIN, radionButtonCKBOTSTANDARD;
+	private static  javax.swing.AbstractButton radioButtonATRON,
+	radioButtonMTRAN,radioButtonODIN, radioButtonCKBOTSTANDARD;
 
 	private static javax.swing.JButton jButtonStartNewRobot,jButtonDelete,
 	jButtonMove,jButtonColorConnetors,jButtonOppositeRotation,jButtonOnSelectedConnector,
