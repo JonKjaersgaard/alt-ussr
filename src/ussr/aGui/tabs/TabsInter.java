@@ -1,5 +1,7 @@
 package ussr.aGui.tabs;
 
+import java.util.ArrayList;
+
 /**
  * Supports definition of visual appearance(view in MVC pattern) of tabs, which are pluged-in main GUI window. 
  * @author Konstantinas
@@ -20,8 +22,9 @@ public interface TabsInter {
 	                    JUMP_FROM_CONN_TO_CONNECTOR = "jumpFromConnToConnector.jpg", NEXT = "next.jpg",
 	                    PREVIOUS = "previous.jpg",ASSIGN_LABELS = "assignLabels.jpg", READ_LABELS ="readLabels.jpg",
 	                    NEW_TAB = "newTab.jpg", RESET = "reset.jpg", VARY_PROPERTIES = "varyProperties.jpg",
-	                   AVAILABLE_ROTATIONS = "availableRotations.jpg", EXPANSION_CLOSED = "expansionClosed.jpg",
-	                   EXPANSION_OPENED ="expansionOpened.jpg", FINAL_LEAF = "finalLeaf.jpg";
+	                    AVAILABLE_ROTATIONS = "availableRotations.jpg", EXPANSION_CLOSED = "expansionClosed.jpg",
+	                    EXPANSION_OPENED ="expansionOpened.jpg", FINAL_LEAF = "finalLeaf.jpg", 
+	                    PLANE_TITL_RIGHT ="planeTiltRight.jpg";
 	
 	/**
 	 * Returns JComponent, which is the main container of components situated in the tab.
@@ -55,4 +58,6 @@ public interface TabsInter {
 	 */
 	public boolean isInitiallyVisible();
 
+	
+	public ArrayList<javax.swing.JComponent> getComponents();
 }

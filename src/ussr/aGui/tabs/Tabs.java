@@ -1,5 +1,9 @@
 package ussr.aGui.tabs;
 
+import java.util.ArrayList;
+
+import javax.swing.JComponent;
+
 /**
  * Supports definitions of visual appearance for tabs pluged-in the main GUI window.
  * @author Konstantinas
@@ -59,6 +63,14 @@ public abstract class Tabs implements TabsInter {
     public  javax.swing.JComponent getJComponent() {
 		return jComponent;
 	}
+    
+    public ArrayList<javax.swing.JComponent> getComponents(){
+    	ArrayList<javax.swing.JComponent> components = new ArrayList<javax.swing.JComponent>();
+    	for (int compon=0;compon<jComponent.getComponents().length;compon++){
+    		components.add((JComponent) jComponent.getComponent(compon));
+    	}
+    	return components;
+    }
     
 	/**
 	 * Getter method common for all tabs and is used by GUI during addition of new tab.

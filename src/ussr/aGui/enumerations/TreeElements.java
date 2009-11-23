@@ -7,6 +7,8 @@ Robot,
 
 World_Description, 
 Plane_Size,
+Plane_Texture,
+Camera_Position,
 
 
 
