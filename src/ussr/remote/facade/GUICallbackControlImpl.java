@@ -28,11 +28,4 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 	public void updateTableWithLabels(String labels) throws RemoteException{
 		AssignBehaviorsTabController.updateTableLabels(labels);
 	}
-	
-	
-	
-	
-
-
-
 }
