@@ -99,7 +99,7 @@ public class GUISimulationAdapter {
        //TabsControllers.setBuilderController(sim.getBuilderControl());
         GeneralController.setBuilderController(sim.getBuilderControl());
         MainFrameSeparate.setMainFrameSeparateEnabled(true);
-        SimulationTabController.updateTable();     
+       // SimulationTabController.updateTable();     
        
         
 /*        while(true) {
