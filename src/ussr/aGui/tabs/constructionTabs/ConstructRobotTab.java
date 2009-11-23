@@ -540,7 +540,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 
 	/**
 	 * Enables and disables the tool bar containing generic tools for manipulating modules.
-	 * @param enable,true for tool bar to be disabled. 
+	 * @param enable,true for tool bar to be enabled. 
 	 */
 	public static void setEnabledGenericToolBar(boolean enabled){
 		jButtonDelete.setEnabled(enabled);
@@ -549,6 +549,16 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonVariateModuleProperties.setEnabled(enabled);
 	}
 
+	/**
+	 * Enables and disables all tool bars in the tab.
+	 * @param enable,true for tool bars to be enabled. 
+	 */
+	public static void setEnabledAllToolBars(boolean enabled){
+		setEnabledRotationToolBar(enabled);
+		setEnabledGenericToolBar(enabled);
+		setEnabledConstructionToolsToolBar(enabled);
+	};
+	
 	/**
 	 * Returns button for moving module or robot.
 	 * @return jButtonMove, the button for moving module or robot.
@@ -668,6 +678,14 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	 */
 	public static HintPanel getHintPanel(){
 		return hintPanel;
+	}
+	
+	/**
+	 * Returns the button for initializing construction tool named as MOVE_MODULE_FROM_CON_TO_CON. 
+	 * @return the button for initializing construction tool named as MOVE_MODULE_FROM_CON_TO_CON.
+	 */
+	public static javax.swing.JButton getJButtonJumpFromConnToConnector() {
+		return jButtonJumpFromConnToConnector;
 	}
 
 	/*Declaration of tab components*/

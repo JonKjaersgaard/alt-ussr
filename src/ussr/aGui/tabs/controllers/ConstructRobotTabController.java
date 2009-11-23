@@ -45,7 +45,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		}
 
 		try {
-			 /*Set default construction tool to be "On selected  connector"*/
+			/*Set default construction tool to be "On selected  connector"*/
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR);
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called " + ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR + " , due to remote exception");
@@ -299,7 +299,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		/*Disable tab components no longer available*/
 		ConstructRobotTab.setEnabledRotationToolBar(false);
 		ConstructRobotTab.getJButtonMove().setEnabled(false);		
-		
+
 		try {
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON,connectorNr);
 		} catch (RemoteException e) {
@@ -331,8 +331,8 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			break;			
 		default: throw  new Error ("Modular robot with name "+ chosenMRname+ " is not supported yet");
 		}
-		
-	    try {
+
+		try {
 			if (builderControl.getModuleCountingFromEndType(1).equalsIgnoreCase("OdinBall")){
 				//do nothing
 			}else{
@@ -349,32 +349,32 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 */
 	public static void jButtonOnPreviousConnectorActionPerformed() {
 		ConstructRobotTabController.connectorNr--;
-		
+
 		if (ConstructRobotTabController.connectorNr<0){
-		switch(chosenMRname){
-		case ATRON:			
+			switch(chosenMRname){
+			case ATRON:			
 				ConstructRobotTabController.connectorNr =ATRON_CONNECTORS.length-1;//reset			
-			break;
-		case MTRAN:			
+				break;
+			case MTRAN:			
 				ConstructRobotTabController.connectorNr=MTRAN_CONNECTORS.length-1;//reset			
-			break;
-		case ODIN:
-			    ConstructRobotTabController.connectorNr =11;//reset	
-			break;
-		case CKBOTSTANDARD:
-			ConstructRobotTabController.connectorNr= CKBOT_CONNECTORS.length-1;//reset	
-			break;
-		}
-		}
-		  try {
-				if (builderControl.getModuleCountingFromEndType(1).equalsIgnoreCase("OdinBall")){
-					//do nothing
-				}else{
-					builderControl.moveToNextConnector(chosenMRname, ConstructRobotTabController.connectorNr);
-				}
-			} catch (RemoteException e) {
-				throw  new Error ("Failed to move module on previous connector, due to remote exception.");
+				break;
+			case ODIN:
+				ConstructRobotTabController.connectorNr =11;//reset	
+				break;
+			case CKBOTSTANDARD:
+				ConstructRobotTabController.connectorNr= CKBOT_CONNECTORS.length-1;//reset	
+				break;
 			}
+		}
+		try {
+			if (builderControl.getModuleCountingFromEndType(1).equalsIgnoreCase("OdinBall")){
+				//do nothing
+			}else{
+				builderControl.moveToNextConnector(chosenMRname, ConstructRobotTabController.connectorNr);
+			}
+		} catch (RemoteException e) {
+			throw  new Error ("Failed to move module on previous connector, due to remote exception.");
+		}
 	}
 
 	/**
@@ -384,19 +384,26 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 */
 	public static void adjustTabToSelectedModule(SupportedModularRobots supportedModularRobot){
 		ConstructRobotTab.setRadioButtonsEnabled(true);
-		if (supportedModularRobot.equals(SupportedModularRobots.ATRON)){
-			ConstructRobotTab.getRadionButtonATRON().setSelected(true);			
-		}else if (supportedModularRobot.equals(SupportedModularRobots.ODIN)){
+
+		switch(supportedModularRobot){
+		case ATRON:
+			ConstructRobotTab.getRadionButtonATRON().setSelected(true);	
+			break;
+		case ODIN:
 			ConstructRobotTab.getRadionButtonODIN().setSelected(true);
-		}else if (supportedModularRobot.equals(SupportedModularRobots.MTRAN)){			
+			break;
+		case MTRAN:
 			ConstructRobotTab.getRadioButtonMTRAN().setSelected(true);
-		}else if (supportedModularRobot.equals(SupportedModularRobots.CKBOTSTANDARD)){
+			break;
+		case CKBOTSTANDARD:
 			ConstructRobotTab.getRadionButtonCKBOTSTANDARD().setSelected(true);
-		}
+			break;
+		default: throw new Error("Modular robot named as "+ supportedModularRobot.toString() + "is not supported yet" );
+		}	
 		adaptTabToChosenMR(supportedModularRobot);
 		ConstructRobotTab.setRadioButtonsEnabled(false);
 	}
-	
+
 	/**
 	 * Adapts Construct Robot Tab to the the type of first module in simulation environment.
 	 */
@@ -407,7 +414,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		} catch (RemoteException e) {
 			throw new Error("Failed to identify amount of modules in simulation environment, due to remote exception");
 		}
-		
+
 		if (amountModules>2){
 			/*Adapt to first module type*/
 			String modularRobotName ="";
@@ -416,20 +423,28 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			} catch (RemoteException e) {
 				throw new Error ("Failed to identify the type of the first module in simulation environment, due to remote exception.");
 			}
+
 			if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ATRON.toString())){
 				adaptTabToChosenMR(SupportedModularRobots.ATRON);
+				chosenMRname = SupportedModularRobots.ATRON;
 			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ODIN.toString())){
 				adaptTabToChosenMR(SupportedModularRobots.ODIN);
+				chosenMRname = SupportedModularRobots.ODIN;
 			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.MTRAN.toString())){
 				adaptTabToChosenMR(SupportedModularRobots.MTRAN);
+				chosenMRname = SupportedModularRobots.MTRAN;
 			}else if(modularRobotName.toUpperCase().contains(SupportedModularRobots.CKBOTSTANDARD.toString())){
 				adaptTabToChosenMR(SupportedModularRobots.CKBOTSTANDARD);
+				chosenMRname = SupportedModularRobots.CKBOTSTANDARD;
+			}else{
+				throw new Error ("Modular robot type "+modularRobotName+ "is not supported yet" );
 			}
 			ConstructRobotTab.setEnabledRotationToolBar(false);
-			ConstructRobotTab.getJButtonMove().setEnabled(false);		
-			
+			ConstructRobotTab.getJButtonMove().setEnabled(false);
+			ConstructRobotTab.getJButtonJumpFromConnToConnector().setEnabled(false);
+
 			try {
-				 /*Set default construction tool to be "On selected  connector"*/
+				/*Set default construction tool to be "On selected  connector"*/
 				builderControl.setConstructionToolSpecPicker(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR);
 			} catch (RemoteException e) {
 				throw new Error("Failed to initate picker called " + ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR + " , due to remote exception");
@@ -443,9 +458,8 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 */
 	public static void jButtonStartNewRobotActionPerformed() {
 		ConstructRobotTab.setRadioButtonsEnabled(true);
-		ConstructRobotTab.setEnabledRotationToolBar(true);
-		ConstructRobotTab.getJButtonMove().setEnabled(true);
-		
+		ConstructRobotTab.setEnabledAllToolBars(false);		
+
 		//TODO SOMETIMES FAILS WHY?
 		try {
 			builderControl.removeAllModules();
@@ -479,7 +493,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			throw new Error("Failed to initate picker called"+ConstructionTools.AVAILABLE_ROTATIONS.toString() +", due to remote exception");
 		}
 	}
-	
+
 	/**
 	 * Adapts Construct Robot tab to the tool chosen by user. To be more precise disables and enables relevant components of the tab. 
 	 * @param chosenTool,the tool chosen by the user in Construct Robot tab.
@@ -487,7 +501,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	public static void adaptConstructRobotTabToChosenTool(ConstructionTools chosenTool)throws RemoteException{
 
 		switch(chosenTool){
-		
+
 		case MOVE_MODULE_FROM_CON_TO_CON:
 			ConstructRobotTab.setEnabledButtonsArrows(true);	
 			break;
