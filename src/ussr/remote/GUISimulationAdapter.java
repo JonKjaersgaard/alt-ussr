@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import ussr.aGui.GeneralController;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrameSeparateController;
+import ussr.aGui.tabs.SimulationTab;
 import ussr.aGui.tabs.controllers.ConsoleTabController;
 import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
 import ussr.aGui.tabs.controllers.SimulationTabController;
@@ -99,7 +100,7 @@ public class GUISimulationAdapter {
        //TabsControllers.setBuilderController(sim.getBuilderControl());
         GeneralController.setBuilderController(sim.getBuilderControl());
         MainFrameSeparate.setMainFrameSeparateEnabled(true);
-       // SimulationTabController.updateTable();     
+       SimulationTab.setTabVisible(true);
        
         
 /*        while(true) {
