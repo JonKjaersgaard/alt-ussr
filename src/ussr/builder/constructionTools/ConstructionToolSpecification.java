@@ -150,6 +150,13 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	protected void pickModuleComponent(JMEModuleComponent component) {
 		timesSelected++;
 		this.selectedModule = component.getModel();
+		int selectedModuleID = selectedModule.getID();
+		try {
+			RemotePhysicsSimulationImpl.getGUICallbackControl().setSelectedModuleID(selectedModuleID);
+		} catch (RemoteException e1) {
+			throw new Error("Failed to set ID of module selected in simulation environment due to remote exception.");
+		}
+		
 		instantiateTool((JMESimulation)component.getSimulation());		
 
 		if (this.toolName.equals(ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON)){

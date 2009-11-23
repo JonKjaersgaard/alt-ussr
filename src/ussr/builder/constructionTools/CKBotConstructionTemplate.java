@@ -33,7 +33,7 @@ public class CKBotConstructionTemplate extends ModularRobotConstructionTemplate 
 	/**
 	 * Tolerance used to identify if component (module) already exists in interval of space.
 	 */
-	private final static float SERACH_TOLERANCE = 0.06f;
+	private final static float SEARCH_TOLERANCE = 0.06f;
 
 	/**
 	 * The array of objects containing information about CKBot specific rotations.
@@ -79,8 +79,10 @@ public class CKBotConstructionTemplate extends ModularRobotConstructionTemplate 
 		for (int i=0; i<moduleMap.length;i++){				
 			if (moduleMap[i].getConnectorNr()==connectorNr && moduleMap[i].getInitialRotation().getRotation().equals(rotationQuatComponent)){
 				/*If component(module) already exists at current position, delete movableModuleComponent and newly added module.*/
-				if (componentExitst(moduleMap[i].getNewPosition(), SERACH_TOLERANCE)&& loopFlag== false){						
+				if (componentExitst(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag== false){						
 				BuilderHelper.deleteModule(movableModuleComponent.getModel());											
+				}else if (componentExitst(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag== true){
+					//do nothing
 				}else {/*move the component to new position with new rotation*/
 				moveModuleComponent(movableModuleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
 				}

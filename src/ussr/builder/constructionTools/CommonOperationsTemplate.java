@@ -112,7 +112,7 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	public void addNewModuleOnConnector(ConstructionToolSpecification toolSpecification){		
 		this.construction = toolSpecification.getConstruction();		
 		this.selectedModule = toolSpecification.getSelectedModule();				
-//		FIXME HERE THE PROBLEM EXISTS WITH "default" thing of ATRON 
+///		FIXME HERE THE PROBLEM EXISTS WITH "default" thing of ATRON 
 		this.newMovableModule = createNewModule(this.selectedModule);		
 		this.construction.moveModuleAccording(toolSpecification.getSelectedConnectorNr(), this.selectedModule, this.newMovableModule, false);		
 	}
