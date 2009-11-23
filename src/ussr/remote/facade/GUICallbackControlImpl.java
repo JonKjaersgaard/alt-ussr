@@ -28,4 +28,12 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 	public void updateTableWithLabels(String labels) throws RemoteException{
 		AssignBehaviorsTabController.updateTableLabels(labels);
 	}
+	
+	/**
+	 * Sets the global ID of the module selected in simulation environment.
+	 * @param selectedModuleID, the global ID of the module selected in simulation environment.
+	 */
+	public void setSelectedModuleID(int selectedModuleID){
+		ConstructRobotTabController.setSelectedModuleID(selectedModuleID);
+	}
 }

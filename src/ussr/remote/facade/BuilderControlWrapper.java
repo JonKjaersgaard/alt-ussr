@@ -282,8 +282,14 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 	 * @param supportedMRmoduleType, the type of module (modular robot).
 	 * @param connectorNr,connector number on the module added before the last. 
 	 */
-	public void moveToNextConnector(SupportedModularRobots supportedMRmoduleType,int connectorNr) throws RemoteException{
-		Module selectedModule = getModuleCountingFromEnd(2);
+	public void moveToNextConnector(SupportedModularRobots supportedMRmoduleType,int connectorNr, int selectedModuleID) throws RemoteException{
+		//Module selectedModule = getModuleCountingFromEnd(2);
+		Module selectedModule = null;
+		for (int moduleNr=0;moduleNr<jmeSimulation.getModules().size();moduleNr++){
+			if (jmeSimulation.getModules().get(moduleNr).getID()==selectedModuleID){
+				selectedModule = jmeSimulation.getModules().get(moduleNr);
+			}
+		}
 		Module lastAddedModule = getModuleCountingFromEnd(1);
 		ConstructionTemplate con = null;
 		switch(supportedMRmoduleType){

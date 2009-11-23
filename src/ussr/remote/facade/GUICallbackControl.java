@@ -2,8 +2,6 @@ package ussr.remote.facade;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-
-import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.builder.enumerations.ConstructionTools;
 
 public interface GUICallbackControl extends Remote {
@@ -14,10 +12,15 @@ public interface GUICallbackControl extends Remote {
 	 */
 	public void adaptConstructRobotTabToChosenTool(ConstructionTools chosenTool)throws RemoteException;
 
-
 	/**
 	 * Populates the table in Assign behavior tab with labels of entity(module, connector and so on) selected in simulation environment.
 	 * @param labels, the string of labels separated by comma to populate the table with.
 	 */
 	public void updateTableWithLabels(String labels) throws RemoteException;
+	
+	/**
+	 * Sets the global ID of the module selected in simulation environment.
+	 * @param selectedModuleID, the global ID of the module selected in simulation environment.
+	 */
+	public void setSelectedModuleID(int selectedModuleID)throws RemoteException;
 }

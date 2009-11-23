@@ -107,7 +107,7 @@ public interface BuilderControlInter extends Remote {
 	 * @param supportedMRmoduleType, the type of module (modular robot).
 	 * @param connectorNr,connector number on the module added before the last. 
 	 */
-	public void moveToNextConnector(SupportedModularRobots supportedMRmoduleType,int connectorNr) throws RemoteException;
+	public void moveToNextConnector(SupportedModularRobots supportedMRmoduleType,int connectorNr, int selectedModuleID) throws RemoteException;
 	
 	/**
 	 * Returns the type of the module from the end of the list of modules in simulation environment.
