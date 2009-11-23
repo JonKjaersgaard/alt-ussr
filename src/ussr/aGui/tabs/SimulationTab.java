@@ -17,6 +17,7 @@ import javax.swing.table.TableCellEditor;
 import ussr.aGui.enumerations.TextureDescriptions;
 import ussr.aGui.tabs.additionalResources.CheckBoxEditor;
 import ussr.aGui.tabs.additionalResources.SpinnerEditor;
+import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.description.setup.WorldDescription;
 
 
@@ -85,7 +86,6 @@ public class SimulationTab extends Tabs {
 				   {"The world is flat", new Boolean(false)},
 		   };*/
 		
-
 		
 		String[] columnNames = {"World Description","Values"};
 		
@@ -139,9 +139,21 @@ public class SimulationTab extends Tabs {
 				
 			
 			
-			final ArrayList<AbstractCellEditor> editors1 = new ArrayList<AbstractCellEditor>();
 			
+			
+			final ArrayList<AbstractCellEditor> editors1 = new ArrayList<AbstractCellEditor>();
 			editors1.add(new SpinnerEditor());
+			editors1.add(new SpinnerEditor());
+			editors1.add(new SpinnerEditor());
+			editors1.add(new SpinnerEditor());
+			editors1.add(new SpinnerEditor());
+			editors1.add(new SpinnerEditor());
+			editors1.add(new SpinnerEditor());
+			editors1.add(new SpinnerEditor());
+			editors1.add(new SpinnerEditor());
+			editors1.add(new SpinnerEditor());
+			editors1.add(new SpinnerEditor());
+			
 			
 			String[] columnNames1 = {"Physics Parameters","Values"};
 			
@@ -185,7 +197,7 @@ public class SimulationTab extends Tabs {
 				
 				jTablePhysicsParameters.addMouseListener(new java.awt.event.MouseAdapter() {
 		            public void mouseReleased(java.awt.event.MouseEvent evt) {
-		            	//jTable1MouseReleased(evt);
+		            	SimulationTabController.jTablePhysicsParametersMouseReleasedActionPerformed(evt);
 		            }
 		        });
 				

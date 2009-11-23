@@ -4,14 +4,6 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JToggleButton;
-
-import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.MainFrameComponentsText;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;

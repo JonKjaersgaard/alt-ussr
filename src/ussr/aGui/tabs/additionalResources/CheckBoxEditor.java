@@ -24,7 +24,7 @@ public class CheckBoxEditor extends Editors {
 
 	// Prepares the spinner component and returns it.
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-		//spinner.setValue(value);
+		//jCheckBox.setValue(value);
 		return jCheckBox;
 	}
 

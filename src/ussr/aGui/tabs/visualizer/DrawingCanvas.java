@@ -17,10 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.swing.JPanel;
-
-
 import ussr.comm.CommunicationMonitor;
 import ussr.comm.GenericReceiver;
 import ussr.comm.GenericTransmitter;

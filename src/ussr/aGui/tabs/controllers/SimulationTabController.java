@@ -1,5 +1,6 @@
 package ussr.aGui.tabs.controllers;
 
+import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
 import java.util.Hashtable;
 import java.util.Map;
@@ -24,6 +25,8 @@ public class SimulationTabController extends TabsControllers {
 		SimulationTabController.descriptionConverter = descriptionConverter;
 	}*/
 	private static Map<String,Object> table = new Hashtable<String,Object>();
+	
+	static javax.swing.table.DefaultTableModel model1;
 
 	public static void updateTable(){
 		
@@ -65,11 +68,34 @@ public class SimulationTabController extends TabsControllers {
 		
 		
 		
-		javax.swing.table.DefaultTableModel model1 = (DefaultTableModel) SimulationTab.getJTablePhysicsParameters().getModel();
+		/*javax.swing.table.DefaultTableModel*/ model1 = (DefaultTableModel) SimulationTab.getJTablePhysicsParameters().getModel();
 		model1.setValueAt(PhysicsParameters.get().getWorldDampingLinearVelocity(), 0, 1);
 		model1.setValueAt(PhysicsParameters.get().getWorldDampingAngularVelocity(), 1, 1);
 		model1.setValueAt(PhysicsParameters.get().getPhysicsSimulationStepSize(), 2, 1);
 		model1.setValueAt(PhysicsParameters.get().getRealisticCollision(), 3, 1);
+		model1.setValueAt(PhysicsParameters.get().getGravity(), 4, 1);
+		model1.setValueAt(PhysicsParameters.get().getPlaneMaterial().toString(), 5, 1);
+		model1.setValueAt(PhysicsParameters.get().getMaintainRotationalJointPositions(), 6, 1);
+		//model1.setValueAt(PhysicsParameters.get(), 6, 1); bIG oBSTACLES.
+		//model1.setValueAt(PhysicsParameters.get().ge, 7, 1); Constarint force mix
+		model1.setValueAt(PhysicsParameters.get().getResolutionFactor(), 8, 1); 
+		//model1.setValueAt(PhysicsParameters.get()., 9, 1);//mouse evenet queq
+		model1.setValueAt(PhysicsParameters.get().syncWithControllers(), 10, 1);
+		model1.setValueAt(PhysicsParameters.get().getPhysicsSimulationControllerStepFactor(), 11, 1); 
+	}
+
+	public static void jTablePhysicsParametersMouseReleasedActionPerformed(
+			MouseEvent evt) {
+		
+		System.out.println("INNNNNNNNN");
+		//PhysicsParameters.get().setGravity(	0/*Float.parseFloat(model1.getValueAt(4, 1).toString())*/);
+		try {
+			remotePhysicsSimulation.getWorldDescriptionControl().setPlaneSize(2);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 		
 	}
 	

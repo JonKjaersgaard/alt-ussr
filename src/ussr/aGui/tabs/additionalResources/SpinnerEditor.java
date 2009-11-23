@@ -15,7 +15,7 @@ public class SpinnerEditor extends Editors {
 
 	// Initializes the spinner.
 	public SpinnerEditor() {
-		spinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 5));
+		spinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
 	}
 
 	// Prepares the spinner component and returns it.

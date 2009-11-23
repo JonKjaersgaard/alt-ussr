@@ -8,7 +8,6 @@ import javax.swing.JScrollPane;
  */
 public class ConsoleTab extends Tabs  {
 	
-	
 	/**
 	 * Defines visual appearance of the tab called "Console".
 	 * @param initiallyVisible, true if the tab is visible after activation of main GUI window. 

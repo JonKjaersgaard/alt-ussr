@@ -23,9 +23,9 @@ public class Editors extends AbstractCellEditor implements TableCellEditor{
 	
 	// Enables the editor only for double-clicks.
 	public boolean isCellEditable(EventObject evt) {
-		if (evt instanceof MouseEvent) {
+		/*if (evt instanceof MouseEvent) {
 			return ((MouseEvent)evt).getClickCount() >= 1;
-		}
+		}*/
 		return true;
 	}
 

@@ -71,22 +71,26 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		ConstructRobotTab.setEnabledButtonsArrows(false);
 
 		/*Adapt tab to chosen modular robot*/
-		if (chosenMRname.equals(SupportedModularRobots.ATRON)){
+		switch(chosenMRname){
+		case ATRON:
 			adaptTabToATRON();
-		}else if (chosenMRname.equals(SupportedModularRobots.MTRAN)){
+			break;
+		case MTRAN:
 			adaptTabToMTRAN();
-		}else if (chosenMRname.equals(SupportedModularRobots.ODIN)){
+			break;
+		case ODIN:
 			adaptTabToOdin();
-		}else if (chosenMRname.equals(SupportedModularRobots.CKBOTSTANDARD)){
-			adaptTabToCKBOTSTANDARD();			
-		}
+			break;
+		case CKBOTSTANDARD:
+			adaptTabToCKBOTSTANDARD();
+			break;
+		}	
 	}
 
 	/**
 	 * Adapts tab to ATRON modular robot
 	 */
 	private static void adaptTabToATRON(){
-		ConstructRobotTab.getRadionButtonATRON().setSelected(true);
 		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(ATRONStandardRotations.values()));
 		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(ATRON_CONNECTORS));
 	}
@@ -95,7 +99,6 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 * Adapts tab to MTRAN modular robot
 	 */
 	private static void adaptTabToMTRAN(){
-		ConstructRobotTab.getRadioButtonMTRAN().setSelected(true);
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
 		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(MTRANStandardRotations.values()));
 		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(MTRAN_CONNECTORS));
@@ -105,7 +108,6 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 * Adapts tab to Odin modular robot
 	 */
 	private static void adaptTabToOdin(){
-		ConstructRobotTab.getRadionButtonODIN().setSelected(true);
 		ConstructRobotTab.setEnabledRotationToolBar(false);// for Odin not yet relevant
 		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(ODIN_CONNECTORS));
 	}
@@ -114,7 +116,6 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 * Adapts tab to CKBOTSTANDARD modular robot
 	 */
 	private static void adaptTabToCKBOTSTANDARD(){
-		ConstructRobotTab.getRadionButtonCKBOTSTANDARD().setSelected(true);
 		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel( CKBotStandardRotations.values() ));
 		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(CKBOT_CONNECTORS));
 	}
@@ -398,8 +399,6 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	
 	/**
 	 * Adapts Construct Robot Tab to the the type of first module in simulation environment.
-	 * TODO MAKE IT MORE GENERIC BY MEANS OF IDENTIFYING THE LAST TYPE OF MODULE IN XML FILE
-	 * OR SOMETHING SIMILLAR.
 	 */
 	public static void adaptTabToModuleInSimulation(){
 		int amountModules =0;		
@@ -410,7 +409,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		}
 		
 		if (amountModules>2){
-			/*Adapt to first module*/
+			/*Adapt to first module type*/
 			String modularRobotName ="";
 			try {
 				modularRobotName = builderControl.getModuleType(0);
@@ -427,7 +426,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 				adaptTabToChosenMR(SupportedModularRobots.CKBOTSTANDARD);
 			}
 			ConstructRobotTab.setEnabledRotationToolBar(false);
-			ConstructRobotTab.getJButtonMove().setEnabled(false);
+			ConstructRobotTab.getJButtonMove().setEnabled(false);		
 			
 			try {
 				 /*Set default construction tool to be "On selected  connector"*/
@@ -445,7 +444,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	public static void jButtonStartNewRobotActionPerformed() {
 		ConstructRobotTab.setRadioButtonsEnabled(true);
 		ConstructRobotTab.setEnabledRotationToolBar(true);
-		ConstructRobotTab.getJButtonMove().setEnabled(true);		
+		ConstructRobotTab.getJButtonMove().setEnabled(true);
 		
 		//TODO SOMETIMES FAILS WHY?
 		try {
