@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import ussr.aGui.MainFrameSeparate;
-import ussr.aGui.tabs.additionalResources.recycleBin.QuickPrototyping;
 import ussr.comm.monitors.visualtracker.CommunicationVisualizerGUI;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsParameters;
@@ -227,8 +225,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 				KeyInput.KEY_R); 
 		KeyBindingManager.getKeyBindingManager().set("display_debug_shell", KeyInput.KEY_U);
 
-		KeyBindingManager.getKeyBindingManager().set("display_quick_prototyping_of_simulation_scenarios", KeyInput.KEY_Q);
-
 		/** Assign key K to action "visualize_module_communication". */
 		KeyBindingManager.getKeyBindingManager().set("visualize_module_communication", KeyInput.KEY_K);
 
@@ -321,10 +317,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_debug_shell", false)) {
 			DebugShell.activate(this);
-		}
-		if(KeyBindingManager.getKeyBindingManager().isValidCommand("display_quick_prototyping_of_simulation_scenarios", false)) {
-			if (QuickPrototyping.isInstanceFlag()){// if the window is instantiated do not instantiate it again				
-			}else{QuickPrototyping.activate(this);}			
 		}
 
 		if(KeyBindingManager.getKeyBindingManager().isValidCommand("visualize_module_communication", false)) {
