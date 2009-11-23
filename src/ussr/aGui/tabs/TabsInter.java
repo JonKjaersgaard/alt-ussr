@@ -20,7 +20,8 @@ public interface TabsInter {
 	                    JUMP_FROM_CONN_TO_CONNECTOR = "jumpFromConnToConnector.jpg", NEXT = "next.jpg",
 	                    PREVIOUS = "previous.jpg",ASSIGN_LABELS = "assignLabels.jpg", READ_LABELS ="readLabels.jpg",
 	                    NEW_TAB = "newTab.jpg", RESET = "reset.jpg", VARY_PROPERTIES = "varyProperties.jpg",
-	                   AVAILABLE_ROTATIONS = "availableRotations.jpg";
+	                   AVAILABLE_ROTATIONS = "availableRotations.jpg", EXPANSION_CLOSED = "expansionClosed.jpg",
+	                   EXPANSION_OPENED ="expansionOpened.jpg", FINAL_LEAF = "finalLeaf.jpg";
 	
 	/**
 	 * Returns JComponent, which is the main container of components situated in the tab.

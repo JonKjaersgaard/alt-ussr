@@ -24,11 +24,11 @@ public class SimulationTabController extends TabsControllers {
 /*	public static void setDescriptionConverter(SimulationDescriptionConverter descriptionConverter) {
 		SimulationTabController.descriptionConverter = descriptionConverter;
 	}*/
-	private static Map<String,Object> table = new Hashtable<String,Object>();
+	//private static Map<String,Object> table = new Hashtable<String,Object>();
 	
-	static javax.swing.table.DefaultTableModel model1;
+	//static javax.swing.table.DefaultTableModel model1;
 
-	public static void updateTable(){
+	/*public static void updateTable(){
 		
 		SimulationTab.setJTablesVisible(true);
 		
@@ -39,10 +39,10 @@ public class SimulationTabController extends TabsControllers {
 		boolean hasBackgroundScenery = false, hasHeavyObstacles = false,theWorldIsFlat = false,
 		isFrameGrabingActive = false, bigObstacles = false;
 		TextureDescription planeTexture = null;
-	/*	final String[] worldDescriptionParameters = {"Plane Size","Plane Texture","Camera Position",
+		final String[] worldDescriptionParameters = {"Plane Size","Plane Texture","Camera Position",
                 "The world is flat","Has background scenery",
                 "Has heavy obstacles","Is frame grabbing active", 
-                		"Big obstacles"};*/
+                		"Big obstacles"};
 		String teture = null;
 		try {
 			planeSize = remotePhysicsSimulation.getWorldDescriptionControl().getPlaneSize();
@@ -68,7 +68,7 @@ public class SimulationTabController extends TabsControllers {
 		
 		
 		
-		/*javax.swing.table.DefaultTableModel*/ model1 = (DefaultTableModel) SimulationTab.getJTablePhysicsParameters().getModel();
+		javax.swing.table.DefaultTableModel model1 = (DefaultTableModel) SimulationTab.getJTablePhysicsParameters().getModel();
 		model1.setValueAt(PhysicsParameters.get().getWorldDampingLinearVelocity(), 0, 1);
 		model1.setValueAt(PhysicsParameters.get().getWorldDampingAngularVelocity(), 1, 1);
 		model1.setValueAt(PhysicsParameters.get().getPhysicsSimulationStepSize(), 2, 1);
@@ -88,16 +88,16 @@ public class SimulationTabController extends TabsControllers {
 			MouseEvent evt) {
 		
 		System.out.println("INNNNNNNNN");
-		//PhysicsParameters.get().setGravity(	0/*Float.parseFloat(model1.getValueAt(4, 1).toString())*/);
-		try {
+		//PhysicsParameters.get().setGravity(	0/*Float.parseFloat(model1.getValueAt(4, 1).toString()));*/
+/*		try {
 			remotePhysicsSimulation.getWorldDescriptionControl().setPlaneSize(2);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	
 		
-	}
+	//}
 	
 	
 
