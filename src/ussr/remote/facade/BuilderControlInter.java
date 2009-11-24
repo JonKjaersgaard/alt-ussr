@@ -65,8 +65,6 @@ public interface BuilderControlInter extends Remote {
 	 */
 	public void setAdjustControllerPicker(String controllerLocationDirectory)throws RemoteException;
 	
-	
-	
 	/**
 	 * 
 	 * @param toolName

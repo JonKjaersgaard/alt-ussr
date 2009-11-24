@@ -48,8 +48,11 @@ public class GUISimulationAdapter {
 		}      
 	} 
 	
+	/**
+	 * Starts simulation from specified xml file.
+	 * @param simulationXMLFile
+	 */
 	public static void runSimulation(final String simulationXMLFile) throws IOException { 
-
 
 		// Start a simulation server process
 		final ActiveSimulation simulation;
