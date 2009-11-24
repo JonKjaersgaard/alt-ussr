@@ -11,7 +11,7 @@ public abstract class StateMachine {
     private float reset_risk;
     private float reset_interval;
     private float last_reset_check_time;
-    private Random resetRandomizer = new Random();
+    private Random resetRandomizer;
     protected ATRONStateMachineAPI api;
 
     public StateMachine() {
@@ -19,6 +19,7 @@ public abstract class StateMachine {
         Parameters p = (Parameters)ParameterHolder.get();
         reset_risk = p.resetRisk;
         reset_interval = p.resetInterval;
+        resetRandomizer = p.seedMaybe==null?new Random():new Random(p.seedMaybe);
     }
     
     public void setAPI(ATRONStateMachineAPI api) {

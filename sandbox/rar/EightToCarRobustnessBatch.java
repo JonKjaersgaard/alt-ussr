@@ -121,6 +121,12 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
         return randomSequence.get(sequenceIndex++);
     }
     
+    private void newRandomSequence() {
+        randomSequence = new ArrayList<Integer>();
+        sequenceRandomizer = new Random(87);
+        resetRandomSequence();
+    }
+    
     public EightToCarRobustnessBatch(Class<?>[] mainClasses) {
         int counter = 0;
         for(int ci=0; ci<mainClasses.length; ci++) {
@@ -132,7 +138,8 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
                     }
                     counter++;
                 }
-            if(!EightToCarSettings.SKIP_EFFICIENCY_EXTRA)
+            if(!EightToCarSettings.SKIP_EFFICIENCY_EXTRA) {
+                newRandomSequence();
                 for(float risk = EightToCarSettings.START_RISK; risk<=EightToCarSettings.END_RISK; risk+=EightToCarSettings.RISK_INC) {
                     resetRandomSequence();
                     for(int i=0; i<EightToCarSettings.N_REPEAT; i++) {
@@ -140,8 +147,10 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
                     }
                     counter++;
                 }
+            }
             // Robustness experiments, varying failure risk, no packet loss
-            if(!EightToCarSettings.SKIP_ROBUSTNESS)
+            if(!EightToCarSettings.SKIP_ROBUSTNESS) {
+                newRandomSequence();
                 for(float fail = EightToCarSettings.START_FAIL; fail<=EightToCarSettings.END_FAIL; fail+=EightToCarSettings.FAIL_INC) {
                     resetRandomSequence();
                     for(int i=0; i<EightToCarSettings.N_REPEAT; i++) {
@@ -149,13 +158,17 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
                     }
                     counter++;
                 }
-            if(!EightToCarSettings.SKIP_RESET)
+            }
+            if(!EightToCarSettings.SKIP_RESET) {
+                newRandomSequence();
                 for(float interval = EightToCarSettings.RESET_RISK_TS_SIZE_MIN; interval<=EightToCarSettings.RESET_RISK_TS_SIZE_MAX; interval+=EightToCarSettings.RESET_RISK_TS_SIZE_DELTA)
                     for(float reset = EightToCarSettings.RESET_RISK_PER_TS_MIN; reset<=EightToCarSettings.RESET_RISK_PER_TS_MAX; reset+=EightToCarSettings.RESET_RISK_PER_TS_DELTA) {
+                        resetRandomSequence();
                         for(int i=0; i<EightToCarSettings.N_REPEAT; i++)
-                            parameters.add(new Parameters(mainClasses[ci],counter,0,0,0,0,EightToCarSettings.TIMEOUT,reset,interval));
+                            parameters.add(new Parameters(mainClasses[ci],counter,0,0,0,0,EightToCarSettings.TIMEOUT,reset,interval,nextRandomFromSequence()));
                         counter++;
                     }
+            }
         }
         try {
             logfile = new PrintWriter(new BufferedWriter(new FileWriter("eight-log.txt")));

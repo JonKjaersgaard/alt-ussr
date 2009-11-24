@@ -156,12 +156,13 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
         private float lastSendTime = 0;
         private boolean transmitNow = false;
         private float last_reset_check_time = 0, reset_interval, reset_risk;
-        private Random resetRandomizer = new Random();
+        private Random resetRandomizer;
 
         public EightController() {
             Parameters p = (Parameters)ParameterHolder.get();
             reset_risk = p.resetRisk;
             reset_interval = p.resetInterval;
+            resetRandomizer = p.seedMaybe==null?new Random():new Random(p.seedMaybe);
         }
         
         private void sendMessage(int[] message, int size, int channel) {
