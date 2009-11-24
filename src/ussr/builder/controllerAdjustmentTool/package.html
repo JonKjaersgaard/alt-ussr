@@ -1,19 +1,26 @@
 <body>
 <p>Supports the builder with interactive assignment of controllers to modules selected in 
 the simulation environment. Look in class called "AssignControllerTool.java".</p>
-<hr />
-<h1>HOW TO ...?</h1> 
-<h2>Add my own controller class?</h2>
-<ol> 
-<li> Create new class and inherit it from "ControllerStrategy.java".</li>
-<li> Implement the method called "activate()", which is the main method of your controller.
-   Look other classes like "ATRONWheelController.java" and so on for inspiration.</li>
-</ol>
-<p>
 PRECONDITIONS.<br />
 <ol>
 <li>Your new controller should be located in this package, otherwise it won't work. </li>
 <li>The name of the class defining controller should contain the name of modular robot it is implemented for.
 For instance: for ATRON it is <code>ATRONRotateContinuousNegative.java</code </li>   
 </ol> 
+<hr />
+<h1>HOW TO ...?</h1> 
+<h2>Add my own controller class?</h2>
+<ol> 
+<li> Create new class and inherit it from "ControllerStrategy.java".</li>
+<li> Implement the method called "activate()", which is the main method of your controller.
+   Look other classes for inspiration and DCD beneath, were the class highlighted with purple
+   color is your new controller.</li>
+</ol>
+<p>
+
+
+<img src ="../../../../doc/developer/builderPackage/focusOnControllerAdjustmentTool.jpg" title= "Design class diagram with focus on controller adjustment tool.">
+<br/>
+<br/>
+
 </body>

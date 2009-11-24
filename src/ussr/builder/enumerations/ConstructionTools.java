@@ -1,8 +1,7 @@
 package ussr.builder.enumerations;
 
 /**
- *  Tools supported by builder(Quick Prototyping of Simulation Scenarios) and 
- *  used for construction of supported modular robots morphology.  
+ *  Tools supported by builder and used for construction of supported modular robots morphology.  
  * @author Konstantinas
  */
 public enum ConstructionTools {
@@ -24,7 +23,8 @@ public enum ConstructionTools {
 	MODULE_OPPOSITE_ROTATION,
 	/*The tool for varying unique properties of modular robots modules */
 	VARIATE_MODULE_OR_PROPERTIES,
-	
-	AVAILABLE_ROTATIONS,
+	/*The tool were the module is rotated with different rotation with each time it is selected*/
+	AVAILABLE_ROTATIONS,	
+	/*For adding first(initial) construction module*/
 	ADD_DEFAULT_CONSTRUCTION_MODULE;
 }
