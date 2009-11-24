@@ -39,7 +39,6 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 	 */
 	private static ArrayList<AbstractButton> jRadioButtonsLabelledEntities =  new ArrayList<AbstractButton>() ;	
 
-
 	/**
 	 * The dimensions of the List component.
 	 */

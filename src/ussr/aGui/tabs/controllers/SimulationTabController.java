@@ -200,7 +200,6 @@ public class SimulationTabController extends TabsControllers {
 
 	public static void setValuejSpinnerPhysicsSimulationStepSize(JSpinner spinnerPhysicsSimulationStepSize) {
 		spinnerPhysicsSimulationStepSize.setValue(PhysicsParameters.get().getPhysicsSimulationStepSize());
-		
 	}
 
 }

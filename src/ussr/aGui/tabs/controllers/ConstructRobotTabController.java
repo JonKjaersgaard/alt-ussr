@@ -379,10 +379,9 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 
 	/**
 	 * Adapts Construct Robot Tab to the the type modular robot is simulation environment.
-	 * Called from ConstructionToolSpecification.
 	 * @param supportedModularRobot, supported modular robot.
 	 */
-	public static void adjustTabToSelectedModule(SupportedModularRobots supportedModularRobot){
+	/*public static void adjustTabToSelectedModule(SupportedModularRobots supportedModularRobot){
 		ConstructRobotTab.setRadioButtonsEnabled(true);
 
 		switch(supportedModularRobot){
@@ -402,7 +401,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		}	
 		adaptTabToChosenMR(supportedModularRobot);
 		ConstructRobotTab.setRadioButtonsEnabled(false);
-	}
+	}*/
 
 	/**
 	 * Adapts Construct Robot Tab to the the type of first module in simulation environment.

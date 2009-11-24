@@ -6,9 +6,15 @@ package ussr.aGui;
  * Please leave this class alone for future developers and use the copy of it.  
  * @author Konstantinas
  */
+@SuppressWarnings("serial")
 public class YourNewMainFrame extends MainFrames {
 
 	
+	/**
+	 * Defines visual appearance of YOUR NEW MAIN FRAME implemented by YOU. Serves as an example for how to design new visual appearance for main GUI window.
+	 * Replicates part of design from MainFrameSeparate.
+	 * Please leave this class alone for future developers and use the copy of it.  
+	 */
 	public YourNewMainFrame(){
 		initComponents();
 	}
