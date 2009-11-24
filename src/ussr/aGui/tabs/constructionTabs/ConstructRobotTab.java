@@ -515,9 +515,18 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.gridwidth = 5;
 		super.jComponent.add(hintPanel,gridBagConstraints);
 
-	}
+	}	
 
 	/*Getters and setters*/
+	
+	/**
+	 * Returns the button for initialization of opposite rotation tool. 
+	 * @return the button for initialization of opposite rotation tool.
+	 */
+	public static javax.swing.JButton getJButtonOppositeRotation() {
+		return jButtonOppositeRotation;
+	}
+	
 	/**
 	 * Enables and disables radio buttons with names of modular robots.
 	 * @param enabled, true if enabled.

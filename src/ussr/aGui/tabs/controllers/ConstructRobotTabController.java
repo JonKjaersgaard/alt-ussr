@@ -381,7 +381,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 * Adapts Construct Robot Tab to the the type modular robot is simulation environment.
 	 * @param supportedModularRobot, supported modular robot.
 	 */
-	/*public static void adjustTabToSelectedModule(SupportedModularRobots supportedModularRobot){
+	public static void adaptTabToSelectedModule(SupportedModularRobots supportedModularRobot){
 		ConstructRobotTab.setRadioButtonsEnabled(true);
 
 		switch(supportedModularRobot){
@@ -401,7 +401,11 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		}	
 		adaptTabToChosenMR(supportedModularRobot);
 		ConstructRobotTab.setRadioButtonsEnabled(false);
-	}*/
+		
+		ConstructRobotTab.setEnabledRotationToolBar(false);
+		ConstructRobotTab.getJButtonOppositeRotation().setEnabled(true);			
+		ConstructRobotTab.getJButtonMove().setEnabled(false);	
+	}
 
 	/**
 	 * Adapts Construct Robot Tab to the the type of first module in simulation environment.
@@ -439,6 +443,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 				throw new Error ("Modular robot type "+modularRobotName+ "is not supported yet" );
 			}
 			ConstructRobotTab.setEnabledRotationToolBar(false);
+			ConstructRobotTab.getJButtonOppositeRotation().setEnabled(true);			
 			ConstructRobotTab.getJButtonMove().setEnabled(false);			
 
 			try {
