@@ -7,6 +7,8 @@ import javax.swing.AbstractButton;
 import javax.swing.JCheckBox;
 
 
+import ussr.aGui.enumerations.HintPanelTypes;
+import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTabInter;
@@ -61,6 +63,7 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 			throw new Error ("Not supported modulal robot name: "+ radionButton.getText());
 		}
 		/*Informing user*/
+		AssignBehaviorsTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 		AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[1]);
 	}
 
@@ -190,7 +193,7 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 	 */
 	public static void jButtonReadLabelsActionPerformed() {
 		EntitiesForLabelingText currentText = EntitiesForLabelingText.valueOf(chosenRadioEntityText);
-
+		
 		switch(currentText){
 
 		case Module:
@@ -326,4 +329,12 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 			}		
 		}
 	}
+	
+	
+	public static void updateHintPanel(HintPanelTypes hintPanelTypes,String text){
+		AssignBehaviorsTab.getHintPanel().setType(hintPanelTypes);
+		AssignBehaviorsTab.getHintPanel().setText(text);
+	}
+	
+	
 }

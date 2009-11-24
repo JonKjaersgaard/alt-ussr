@@ -4,17 +4,14 @@ package ussr.aGui.tabs;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.ArrayList;
 
-import javax.swing.AbstractCellEditor;
+
+
 import javax.swing.BorderFactory;
-import javax.swing.DefaultCellEditor;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
+
 import javax.swing.border.TitledBorder;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -23,11 +20,9 @@ import javax.swing.tree.TreeSelectionModel;
 
 import ussr.aGui.enumerations.TextureDescriptions;
 import ussr.aGui.enumerations.TreeElements;
-import ussr.aGui.tabs.additionalResources.CheckBoxEditor;
-import ussr.aGui.tabs.additionalResources.SpinnerEditor;
-import ussr.aGui.tabs.controllers.ConstructRobotTabController;
+
 import ussr.aGui.tabs.controllers.SimulationTabController;
-import ussr.description.setup.WorldDescription;
+
 import ussr.description.setup.WorldDescription.CameraPosition;
 
 
