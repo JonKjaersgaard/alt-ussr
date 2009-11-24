@@ -273,14 +273,15 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             output.append(average(success)+" ");
             output.append(stddev(success)+" ");
             output.append(averageI(counts)+" ");
-            if(resultFile!=null) resultFile.println(output);
-            System.out.println(output);
             // Event summary
             Map<String,List<Float>> experimentEvents = events.get(experiment);
             if(experimentEvents!=null) {
                 for(String name: experimentEvents.keySet())
                     output.append(reportEventHook(name,experimentEvents.get(name)));
             }
+            // Output
+            if(resultFile!=null) resultFile.println(output);
+            System.out.println(output);
         }
         if(resultFile!=null) resultFile.close();
         reportHook(experiments,successes,failures,experimentParameters);
