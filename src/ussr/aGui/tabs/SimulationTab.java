@@ -33,7 +33,7 @@ import ussr.description.setup.WorldDescription.CameraPosition;
 
 
 /**
-
+ * Defines visual appearance of the tab called Simulation.
  * @author Konstantinas
  */
 public class SimulationTab extends Tabs {
@@ -45,10 +45,11 @@ public class SimulationTab extends Tabs {
 	public  GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
 	/**
-	 * @param initiallyVisible
-	 * @param firstTabbedPane
-	 * @param tabTitle
-	 * @param imageIconDirectory
+	 * Defines visual appearance of the tab called "Simulation".
+	 * @param initiallyVisible, true if the tab is visible after activation of main GUI window. 
+	 * @param firstTabbedPane, location of the tab in the main GUI frame. True if it is the first tabbed pane from the top.
+	 * @param tabTitle, the title of the tab.
+	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
 	 */
 	public SimulationTab(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle, String imageIconDirectory){
 		super(initiallyVisible,firstTabbedPane,tabTitle,imageIconDirectory);
@@ -69,8 +70,6 @@ public class SimulationTab extends Tabs {
 		jScrollPaneTree = new javax.swing.JScrollPane();
 
 		jPanelEditor = new javax.swing.JPanel(new GridBagLayout());
-
-
 
 		DefaultMutableTreeNode firstNodeHierarchy = new DefaultMutableTreeNode(TreeElements.Simulation.toString());
 

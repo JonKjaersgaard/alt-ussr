@@ -20,7 +20,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	/**
 	 * Height of the second tabbed pane.
 	 */
-	public final int TAB_PANE_HEIGHT2 = 100;
+	public final int TAB_PANE_HEIGHT2 = 125;
 
 	/**
 	 * Height of the first tabbed pane.
@@ -427,18 +427,29 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	}
 
 	/**
+	 * Initializes resizing of both tabbed panes.
+	 */
+	public void initializeTabbedPanesResizing(){
+		ComponentResizer componentResizer = new ComponentResizer();
+		componentResizer.setSnapSize(new Dimension(10,10));
+		componentResizer.registerComponent(jTabbedPaneFirst,jTabbedPaneSecond);
+	}
+	
+	
+	/**
 	 * Initializes and returns the first tabbed pane (from the top in main GUI window).
 	 * @return  the first tabbed pane.
 	 */
-	public javax.swing.JTabbedPane initFirstTabbbedPane( ){
+	public javax.swing.JTabbedPane initFirstTabbedPane( ){
+		
 		jTabbedPaneFirst  = new javax.swing.JTabbedPane();
 		jTabbedPaneFirst.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 		jTabbedPaneFirst.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jTabbedPaneFirst.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2, TAB_PANE_HEIGHT1));		
 		jTabbedPaneFirst.setFocusable(false);
+		
 		addTabs(tabsFirstTabbedPane,jTabbedPaneFirst);//Plug in tabs in tabbed pane 		
-
-		getContentPane().add(jTabbedPaneFirst);
+		getContentPane().add(jTabbedPaneFirst);		
 		return jTabbedPaneFirst;
 	}
 
@@ -471,6 +482,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public void initSecondTabbedPane(int width, int height){
 		jTabbedPaneSecond = new javax.swing.JTabbedPane();
 		jTabbedPaneSecond.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+		jTabbedPaneSecond.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jTabbedPaneSecond.setPreferredSize(new Dimension(width, height));
 		addTabs(tabsSecondTabbedPane,jTabbedPaneSecond);//Plug in tabs in tabbed pane and check boxes in menu bar		
 		getContentPane().add(jTabbedPaneSecond);

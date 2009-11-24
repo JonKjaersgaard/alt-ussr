@@ -20,7 +20,7 @@ public class ConsoleTab extends Tabs  {
 		
 		/*JComponent, which will be added to the tab in the main Window.*/
 		super.jComponent = new javax.swing.JScrollPane();
-		initComponents();		
+		initComponents();
 	}
 
 	/**

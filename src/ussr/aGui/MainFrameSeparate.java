@@ -37,10 +37,10 @@ public class MainFrameSeparate extends MainFrames {
 		getContentPane().setLayout(new java.awt.FlowLayout());
 		initJMenuBar();
 		initJToolbarGeneralControl((int)SCREEN_DIMENSION.getWidth()/2,COMMON_HEIGHT);
-
-		initFirstTabbbedPane();
+		initFirstTabbedPane();
 		initSecondTabbedPane((int)SCREEN_DIMENSION.getWidth()/2, TAB_PANE_HEIGHT2);
-		setResizable(false);//FOR TESTING. RESIZING WORKS HOWEVER NEEDS MORE ATTENTION
+		initializeTabbedPanesResizing();
+		//setResizable(false);//FOR TESTING. RESIZING WORKS HOWEVER NEEDS MORE ATTENTION
 		pack(); 
 		changeToLookAndFeel(this);
 		
