@@ -1,5 +1,6 @@
 package ussr.aGui.tabs.additionalResources;
 
+
 /**
  * Supports GUI with display for hints. Giving feedback to the user(communication).
  * @author Konstantinas

@@ -112,6 +112,7 @@ public class HintPanel extends JPanel implements HintPanelInter {
 	public void setText(String hintText){	
 		jTextPaneHintDisplay.setText(hintText);	
 	}
+	
 
 	/*Declaration of components*/
 	private javax.swing.JLabel jLabelIcon;

@@ -6,7 +6,7 @@ package ussr.aGui.enumerations;
  * NOTE: There is a plenty of room for improvement. Meaning many different types of hint panel
  * can be supported.
  */
-public enum HintPanelTypes {
+public enum HintPanelTypes{
 
 	INFORMATION,//Default 
 	ATTENTION,		

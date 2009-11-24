@@ -32,30 +32,18 @@ public class SimulationTabController extends TabsControllers {
 	 */
 	public static void jTreeItemSelectedActionPerformed(String selectedNode) {
 		
-
-			//SimulationTab.getJPanelEditor().removeAll();
-		/*	int i= panelEditor.getComponentCount();
-			System.out.println(i);
-		while(panelEditor.getComponentCount()!=0){
-			i--;
-			panelEditor.getComponent(i).removeNotify();
-		}*/
 	   SimulationTab.getJPanelEditor().removeAll();
 	   SimulationTab.getJPanelEditor().revalidate();
 	   SimulationTab.getJPanelEditor().repaint();
-	/*	for (int com=panelEditor.getComponentCount()-1;com>-1;com--){
-			//panelEditor.remove(panelEditor.getComponent(com));
-			//Component component = (Component)panelEditor.getComponent(com);
-		
-			panelEditor.remove(panelEditor.getComponent(com));
-			//panelEditor.revalidate();
-		}
-		panelEditor.revalidate();*/
+	
 
 		switch(TreeElements.valueOf(selectedNode.replace(" ", "_"))){
 		
 		case Physics_Simulation_Step_Size:
 			SimulationTab.addPhysicsSimulationStepSizeEditor();
+			break;
+		case Resolution_Factor:
+			SimulationTab.addResolutionFactorEditor();
 			break;
 		case Type:
 			//TODO
@@ -93,6 +81,28 @@ public class SimulationTabController extends TabsControllers {
 		case Angular_Velocity:
 			SimulationTab.addDampingAngularVelocityEditor();
 			break;
+		case Realistic_Collision:
+			SimulationTab.addRealisticCollisionEditor();
+			break;
+		case Gravity:
+			SimulationTab.addGravityEditor();
+			break;
+		case Constraint_Force_Mix:
+			SimulationTab.addConstraintForceMixEditor();
+			break;
+		case Error_Reduction_Parameter:
+			SimulationTab.addErrorReductionParameterEditor();
+			break;
+		case Use_Mouse_Event_Queue:
+			SimulationTab.addUseMouseEventQueueEditor();
+			break;
+		case Synchronize_With_Controllers:
+			SimulationTab.addSynchronizeWithControllersEditor();
+			break;
+		case Physics_Simulation_Controller_Step_Factor:
+			SimulationTab.addPhysicsSimulationControllerStepFactor();
+			break;
+		default: throw new Error("The node "+ selectedNode + "is not supported yet.");
 		
 		}
 		SimulationTab.getJPanelEditor().validate();
@@ -201,5 +211,43 @@ public class SimulationTabController extends TabsControllers {
 	public static void setValuejSpinnerPhysicsSimulationStepSize(JSpinner spinnerPhysicsSimulationStepSize) {
 		spinnerPhysicsSimulationStepSize.setValue(PhysicsParameters.get().getPhysicsSimulationStepSize());
 	}
+
+	public static void setSelectedJCheckBoxRealisticCollision(JCheckBox checkBoxRealisticCollision) {
+		checkBoxRealisticCollision.setSelected(PhysicsParameters.get().getRealisticCollision());
+	}
+
+	public static void setValuejSpinnerGravity(JSpinner spinnerGravity) {
+		spinnerGravity.setValue(PhysicsParameters.get().getGravity());
+		
+	}
+
+	public static void setValuejSpinnerConstraintForceMix(JSpinner spinnerConstraintForceMix) {
+		spinnerConstraintForceMix.setValue(PhysicsParameters.get().getConstraintForceMix());		
+	}
+
+	public static void setValueJSpinnerErrorReductionParameter(JSpinner spinnerErrorReductionParameter) {
+		spinnerErrorReductionParameter.setValue(PhysicsParameters.get().getErrorReductionParameter());
+		
+	}
+
+	public static void setValueJSpinnerResolutionFactor(JSpinner spinnerResolutionFactor) {
+		spinnerResolutionFactor.setValue(PhysicsParameters.get().getResolutionFactor());
+	}
+
+	public static void setSelectedJCheckBoxUseMouseEventQueue(JCheckBox checkBoxUseMouseEventQueue) {
+		checkBoxUseMouseEventQueue.setSelected(PhysicsParameters.get().useModuleEventQueue());
+		
+	}
+
+	public static void setSelectedjCheckBoxSynchronizeWithControllers(JCheckBox checkBoxSynchronizeWithControllers) {
+		checkBoxSynchronizeWithControllers.setSelected(PhysicsParameters.get().syncWithControllers());
+	}
+
+	public static void setValuejPhysicsSimulationControllerStepFactor(JSpinner physicsSimulationControllerStepFactor) {
+		physicsSimulationControllerStepFactor.setValue(PhysicsParameters.get().getPhysicsSimulationControllerStepFactor());
+		
+	}
+	
+	
 
 }

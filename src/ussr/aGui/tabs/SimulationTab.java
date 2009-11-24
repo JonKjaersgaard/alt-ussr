@@ -18,9 +18,12 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
+import ussr.aGui.enumerations.HintPanelTypes;
 import ussr.aGui.enumerations.TextureDescriptions;
 import ussr.aGui.enumerations.TreeElements;
 
+import ussr.aGui.tabs.additionalResources.HintPanel;
+import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 
 import ussr.description.setup.WorldDescription.CameraPosition;
@@ -38,6 +41,7 @@ public class SimulationTab extends Tabs {
 	 */
 	public  GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
+	private static HintPanel  hintPanel;
 	/**
 	 * Defines visual appearance of the tab called "Simulation".
 	 * @param initiallyVisible, true if the tab is visible after activation of main GUI window. 
@@ -58,25 +62,28 @@ public class SimulationTab extends Tabs {
 	 * Follows Strategy  pattern.
 	 */
 	public void initComponents() {
-		//jScrollPane3 = new javax.swing.JScrollPane();
-		//jScrollPane4 = new javax.swing.JScrollPane();
-
+		
 		jScrollPaneTree = new javax.swing.JScrollPane();
 
 		jPanelEditor = new javax.swing.JPanel(new GridBagLayout());
 
-		DefaultMutableTreeNode firstNodeHierarchy = new DefaultMutableTreeNode(TreeElements.Simulation.toString());
+		//First in hierarchy
+		DefaultMutableTreeNode firstNodeHierarchySimulation = new DefaultMutableTreeNode(TreeElements.Simulation.toString());
 
-		
+		//Second in hierarchy
 		DefaultMutableTreeNode secondNodeHierarchyPhysicsSimulationStepSize =  new DefaultMutableTreeNode(TreeElements.Physics_Simulation_Step_Size.toString().replace("_", " "));
-		firstNodeHierarchy.add(secondNodeHierarchyPhysicsSimulationStepSize);
+		firstNodeHierarchySimulation.add(secondNodeHierarchyPhysicsSimulationStepSize);
+		DefaultMutableTreeNode secondNodeHierarchyResolutionFactor =  new DefaultMutableTreeNode(TreeElements.Resolution_Factor.toString().replace("_", " "));
+		firstNodeHierarchySimulation.add(secondNodeHierarchyResolutionFactor);
 		
 		DefaultMutableTreeNode secondNodeHierarchyRobots =  new DefaultMutableTreeNode(TreeElements.Robots.toString());
-		firstNodeHierarchy.add(secondNodeHierarchyRobots);
+		firstNodeHierarchySimulation.add(secondNodeHierarchyRobots);
 		
+		//Third in hierarchy
 		DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(TreeElements.Robot.toString());
 		secondNodeHierarchyRobots.add(thirdNodeHierarchyRobot);
 		
+		//Fourth in hierarchy
 		DefaultMutableTreeNode fourthNodeHierarchyRobotType = new DefaultMutableTreeNode(TreeElements.Type.toString());
 		thirdNodeHierarchyRobot.add(fourthNodeHierarchyRobotType);		
 		DefaultMutableTreeNode fourthNodeHierarchyMorphologyLocation = new DefaultMutableTreeNode(TreeElements.Morphology_Location.toString().replace("_", " "));
@@ -84,10 +91,11 @@ public class SimulationTab extends Tabs {
 		DefaultMutableTreeNode fourthNodeHierarchyControllerLocation = new DefaultMutableTreeNode(TreeElements.Controller_Location.toString().replace("_", " "));
 		thirdNodeHierarchyRobot.add(fourthNodeHierarchyControllerLocation);
 
-
+		//Second in hierarchy
 		DefaultMutableTreeNode secondNodeHierarchyWorldDescription = new DefaultMutableTreeNode(TreeElements.World_Description.toString().replace("_", " "));
-		firstNodeHierarchy.add(secondNodeHierarchyWorldDescription);
+		firstNodeHierarchySimulation.add(secondNodeHierarchyWorldDescription);
 
+		//Third in hierarchy
 		DefaultMutableTreeNode thirdNodeHierarchyPlaneSize =  new DefaultMutableTreeNode(TreeElements.Plane_Size.toString().replace("_", " "));
 		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyPlaneSize);
 		DefaultMutableTreeNode thirdNodeHierarchyPlaneTexture =  new DefaultMutableTreeNode(TreeElements.Plane_Texture.toString().replace("_", " "));
@@ -103,21 +111,39 @@ public class SimulationTab extends Tabs {
 		DefaultMutableTreeNode thirdNodeHierarchyIsFrameGrabbingActive = new DefaultMutableTreeNode(TreeElements.Is_Frame_Grabbing_Active.toString().replace("_", " "));
 		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyIsFrameGrabbingActive);
 
+		//Second in hierarchy
 		DefaultMutableTreeNode secondNodeHierarchyPhysicsParameters = new DefaultMutableTreeNode(TreeElements.Physics_Parameters.toString().replace("_", " "));
-		firstNodeHierarchy.add(secondNodeHierarchyPhysicsParameters);
+		firstNodeHierarchySimulation.add(secondNodeHierarchyPhysicsParameters);
 		
+		//Third in hierarchy
 		DefaultMutableTreeNode thirdNodeHierarchyDamping= new DefaultMutableTreeNode(TreeElements.Damping.toString());
 		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyDamping);
-
+		
+		//Fourth in hierarchy
 		DefaultMutableTreeNode fourthNodeHierarchyDampingLinearVelocity = new DefaultMutableTreeNode(TreeElements.Linear_Velocity.toString().replace("_", " "));
 		thirdNodeHierarchyDamping.add(fourthNodeHierarchyDampingLinearVelocity);
 		
-		DefaultMutableTreeNode fourthNodeHierarchyAngularLinearVelocity = new DefaultMutableTreeNode(TreeElements.Angular_Velocity.toString().replace("_", " "));
-		thirdNodeHierarchyDamping.add(fourthNodeHierarchyAngularLinearVelocity);
+		DefaultMutableTreeNode fourthNodeHierarchyAngularVelocity = new DefaultMutableTreeNode(TreeElements.Angular_Velocity.toString().replace("_", " "));
+		thirdNodeHierarchyDamping.add(fourthNodeHierarchyAngularVelocity);
+		
+		//Third in hierarchy
+		DefaultMutableTreeNode thirdNodeHierarchyRealisticCollision = new DefaultMutableTreeNode(TreeElements.Realistic_Collision.toString().replace("_", " "));
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyRealisticCollision);
+		DefaultMutableTreeNode thirdNodeHierarchyGravity = new DefaultMutableTreeNode(TreeElements.Gravity.toString());
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyGravity);
+		DefaultMutableTreeNode thirdNodeHierarchyConstraintForceMix = new DefaultMutableTreeNode(TreeElements.Constraint_Force_Mix.toString().replace("_", " "));
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyConstraintForceMix);
+		DefaultMutableTreeNode thirdNodeHierarchyErrorReductionParameter = new DefaultMutableTreeNode(TreeElements.Error_Reduction_Parameter.toString().replace("_", " "));
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyErrorReductionParameter);
+		DefaultMutableTreeNode thirdNodeHierarchyUseMouseEventQueue = new DefaultMutableTreeNode(TreeElements.Use_Mouse_Event_Queue.toString().replace("_", " "));
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyUseMouseEventQueue);
+		DefaultMutableTreeNode thirdNodeHierarchySynchronizeWithControllers = new DefaultMutableTreeNode(TreeElements.Synchronize_With_Controllers.toString().replace("_", " "));
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchySynchronizeWithControllers);
+		DefaultMutableTreeNode thirdNodeHierarchyPhysicsSimulationControllerStepFactor = new DefaultMutableTreeNode(TreeElements.Physics_Simulation_Controller_Step_Factor.toString().replace("_", " "));
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyPhysicsSimulationControllerStepFactor );
 
 
-
-		jTree1 = new javax.swing.JTree(firstNodeHierarchy);
+		jTree1 = new javax.swing.JTree(firstNodeHierarchySimulation);
 
 		ImageIcon closedIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_CLOSED);
 		ImageIcon openIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_OPENED);
@@ -145,12 +171,7 @@ public class SimulationTab extends Tabs {
 				if (node.isLeaf()) {
 					System.out.println(node.getPath()[node.getPath().length-1].toString());
 					SimulationTabController.jTreeItemSelectedActionPerformed(node.getPath()[node.getPath().length-1].toString());
-
-					/*	BookInfo book = (BookInfo)nodeInfo;
-					displayURL(book.bookURL);*/
-				} /*else {
-					displayURL(helpURL); 
-				}*/
+				} 
 
 			}
 		});
@@ -178,6 +199,20 @@ public class SimulationTab extends Tabs {
 		gridBagConstraints.gridy = 0;		
 
 		super.jComponent.add(jPanelEditor,gridBagConstraints);
+		
+		hintPanel = new HintPanel(600, 80);
+		hintPanel.setType(HintPanelTypes.INFORMATION);
+		hintPanel.setBorderTitle("Display for hints");
+		
+		hintPanel.setText("Would be nice to add a short description of each element in the tree :).");
+		hintPanel.setVisible(false);
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridwidth=2;
+		
+		super.jComponent.add(hintPanel,gridBagConstraints);
+		
 
 
 	}
@@ -190,6 +225,7 @@ public class SimulationTab extends Tabs {
 	public static void setTabVisible(boolean visible) {
 		jScrollPaneTree.setVisible(visible);
 		jPanelEditor.setVisible(visible);
+         hintPanel.setVisible(visible);
 	}
 
 	
@@ -250,17 +286,17 @@ public class SimulationTab extends Tabs {
 	}
 	
 	public static void addTheWorldIsFlatEditor(){
-		JCheckBoxTheWorldIsFlat =  new javax.swing.JCheckBox ();
-		SimulationTabController.setSelectedJCheckBoxTheWorldIsFlat(JCheckBoxTheWorldIsFlat);
+		jCheckBoxTheWorldIsFlat =  new javax.swing.JCheckBox ();
+		SimulationTabController.setSelectedJCheckBoxTheWorldIsFlat(jCheckBoxTheWorldIsFlat);
 	
-		jPanelEditor.add(JCheckBoxTheWorldIsFlat);
+		jPanelEditor.add(jCheckBoxTheWorldIsFlat);
 	}
 
 	
 	public static void addHasBackgroundSceneryEditor(){
-		JCheckBoxHasBackgroundScenery =  new javax.swing.JCheckBox ();
-		SimulationTabController.setSelectedJCheckBoxHasBackgroundScenery(JCheckBoxHasBackgroundScenery);
-		jPanelEditor.add(JCheckBoxHasBackgroundScenery);
+		jCheckBoxHasBackgroundScenery =  new javax.swing.JCheckBox ();
+		SimulationTabController.setSelectedJCheckBoxHasBackgroundScenery(jCheckBoxHasBackgroundScenery);
+		jPanelEditor.add(jCheckBoxHasBackgroundScenery);
 	}
 	
 	public static void addHasHeavyObstaclesEditor(){
@@ -272,10 +308,10 @@ public class SimulationTab extends Tabs {
 	}
 	
 	public static void addIsFrameGrabbingActiveEditor(){
-		JCheckBoxIsFrameGrabbingActive = new javax.swing.JCheckBox ();
-		SimulationTabController.setSelectedJCheckBoxIsFrameGrabbingActive(JCheckBoxIsFrameGrabbingActive);
+		jCheckBoxIsFrameGrabbingActive = new javax.swing.JCheckBox ();
+		SimulationTabController.setSelectedJCheckBoxIsFrameGrabbingActive(jCheckBoxIsFrameGrabbingActive);
 		
-		jPanelEditor.add(JCheckBoxIsFrameGrabbingActive);
+		jPanelEditor.add(jCheckBoxIsFrameGrabbingActive);
 		
 	}
 	
@@ -313,8 +349,69 @@ public class SimulationTab extends Tabs {
 		jPanelEditor.add(jSpinnerPhysicsSimulationStepSize);	
 		
 	}
+	
+	public static void addRealisticCollisionEditor() {
+		jCheckBoxRealisticCollision = new javax.swing.JCheckBox ();
+       SimulationTabController.setSelectedJCheckBoxRealisticCollision(jCheckBoxRealisticCollision);		
+		jPanelEditor.add(jCheckBoxRealisticCollision);
+		
+	}
+	
+	public static void addGravityEditor() {
+		jSpinnerGravity = new javax.swing.JSpinner();
+		jSpinnerGravity.setPreferredSize(new Dimension(60,20));
+		jSpinnerGravity.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(-100.0f), null, null, Float.valueOf(1.0f)));
+		SimulationTabController.setValuejSpinnerGravity(jSpinnerGravity);		
+		jPanelEditor.add(jSpinnerGravity);	
+		
+	}
 
-
+	public static void addConstraintForceMixEditor() {
+		jSpinnerConstraintForceMix = new javax.swing.JSpinner();
+		jSpinnerConstraintForceMix.setPreferredSize(new Dimension(60,20));
+		jSpinnerConstraintForceMix.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
+		SimulationTabController.setValuejSpinnerConstraintForceMix(jSpinnerConstraintForceMix);		
+		jPanelEditor.add(jSpinnerConstraintForceMix);		
+	}
+	
+	public static void addErrorReductionParameterEditor() {
+		jSpinnerErrorReductionParameter = new javax.swing.JSpinner();
+		jSpinnerErrorReductionParameter.setPreferredSize(new Dimension(60,20));
+		jSpinnerErrorReductionParameter.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
+		SimulationTabController.setValueJSpinnerErrorReductionParameter(jSpinnerErrorReductionParameter);		
+		jPanelEditor.add(jSpinnerErrorReductionParameter);	
+		
+	}
+	
+	public static void addResolutionFactorEditor() {
+		jSpinnerResolutionFactor = new javax.swing.JSpinner();
+		jSpinnerResolutionFactor.setPreferredSize(new Dimension(60,20));
+		jSpinnerResolutionFactor.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));
+		SimulationTabController.setValueJSpinnerResolutionFactor(jSpinnerResolutionFactor);		
+		jPanelEditor.add(jSpinnerResolutionFactor);			
+	}
+	
+	public static void addUseMouseEventQueueEditor() {
+		jCheckBoxUseMouseEventQueue = new javax.swing.JCheckBox ();
+		SimulationTabController.setSelectedJCheckBoxUseMouseEventQueue(jCheckBoxUseMouseEventQueue);		
+		jPanelEditor.add(jCheckBoxUseMouseEventQueue);		
+	}
+	
+	public static void addSynchronizeWithControllersEditor() {
+		jCheckBoxSynchronizeWithControllers = new javax.swing.JCheckBox ();
+		SimulationTabController.setSelectedjCheckBoxSynchronizeWithControllers(jCheckBoxSynchronizeWithControllers);		
+		jPanelEditor.add(jCheckBoxSynchronizeWithControllers);	
+		
+	}
+	
+	public static void addPhysicsSimulationControllerStepFactor() {
+		jPhysicsSimulationControllerStepFactor = new javax.swing.JSpinner();
+		jPhysicsSimulationControllerStepFactor.setPreferredSize(new Dimension(60,20));
+		jPhysicsSimulationControllerStepFactor.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));
+		SimulationTabController.setValuejPhysicsSimulationControllerStepFactor(jPhysicsSimulationControllerStepFactor);		
+		jPanelEditor.add(jPhysicsSimulationControllerStepFactor);	
+		
+	}
 
 	private static javax.swing.JTree jTree1;
 	private static javax.swing.JScrollPane jScrollPaneTree;
@@ -324,8 +421,9 @@ public class SimulationTab extends Tabs {
 	private static javax.swing.JComboBox jComboBoxPlaneTexture;
 	private static javax.swing.JComboBox jComboBoxCameraPosition;
 	
-	private static javax.swing.JCheckBox JCheckBoxTheWorldIsFlat,JCheckBoxHasBackgroundScenery, jCheckBoxHasHeavyObstacles,
-	JCheckBoxIsFrameGrabbingActive;
+	private static javax.swing.JCheckBox jCheckBoxTheWorldIsFlat,jCheckBoxHasBackgroundScenery, jCheckBoxHasHeavyObstacles,
+	jCheckBoxIsFrameGrabbingActive,jCheckBoxRealisticCollision,jCheckBoxUseMouseEventQueue,
+	jCheckBoxSynchronizeWithControllers;
 	
 
 	private static javax.swing.JToolBar jToolBarPlaneControl;
@@ -334,12 +432,8 @@ public class SimulationTab extends Tabs {
 
 	private static javax.swing.JPanel jPanelEditor;
 	private static javax.swing.JSpinner jSpinnerDampingLinearVelocity, jSpinnerDampingAngularVelocity,
-	jSpinnerPhysicsSimulationStepSize;
+	jSpinnerPhysicsSimulationStepSize, jSpinnerGravity,jSpinnerConstraintForceMix,
+	jSpinnerErrorReductionParameter, jSpinnerResolutionFactor, jPhysicsSimulationControllerStepFactor;
 
 	
-
-	
-
-
-
 }
