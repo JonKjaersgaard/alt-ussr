@@ -237,17 +237,19 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
     }
     
     public void recordEvent(String experiment, String name, float time) {
-        Map<String,List<Float>> registry = events.get(experiment);
-        if(registry==null) {
-            registry = new HashMap<String,List<Float>>();
-            events.put(experiment, registry);
+        synchronized(events) {
+            Map<String,List<Float>> registry = events.get(experiment);
+            if(registry==null) {
+                registry = new HashMap<String,List<Float>>();
+                events.put(experiment, registry);
+            }
+            List<Float> times = registry.get(name);
+            if(times==null) {
+                times = new ArrayList<Float>();
+                registry.put(name, times);
+            }
+            times.add(time);
         }
-        List<Float> times = registry.get(name);
-        if(times==null) {
-            times = new ArrayList<Float>();
-            registry.put(name, times);
-        }
-        times.add(time);
     }
 
     public synchronized void reportRecord() {
@@ -274,10 +276,12 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             output.append(stddev(success)+" ");
             output.append(averageI(counts)+" ");
             // Event summary
-            Map<String,List<Float>> experimentEvents = events.get(experiment);
-            if(experimentEvents!=null) {
-                for(String name: experimentEvents.keySet())
-                    output.append(reportEventHook(name,experimentEvents.get(name),total));
+            synchronized(events) {
+                Map<String,List<Float>> experimentEvents = events.get(experiment);
+                if(experimentEvents!=null) {
+                    for(String name: experimentEvents.keySet())
+                        output.append(reportEventHook(name,experimentEvents.get(name),total));
+                }
             }
             // Output
             if(resultFile!=null) resultFile.println(output);
