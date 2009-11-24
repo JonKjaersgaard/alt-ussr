@@ -22,6 +22,7 @@ import ussr.builder.helpers.SelectedModuleTypeMapHelper;
  * modules or connectors on the modules).
  * @author Konstantinas
  */
+@SuppressWarnings("serial")
 public class ConstructionToolSpecification extends CustomizedPicker implements Serializable{
 
 	/**
@@ -113,9 +114,14 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 				this.construction = selectOperations.getConstruction();				
 			}
 		}
-
 		if (modularRobotName == null){
 			throw new Error("Not supported modular robot");
+		}
+		
+		try {
+			RemotePhysicsSimulationImpl.getGUICallbackControl().adaptConstructRobotTabToSelectedModuleType(this.modularRobotName);
+		} catch (RemoteException e) {
+			throw new Error("Failed adapt GUI to module selected in simulation environment, due to remote exception.");
 		}
 
 
@@ -155,7 +161,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 			RemotePhysicsSimulationImpl.getGUICallbackControl().setSelectedModuleID(selectedModuleID);
 		} catch (RemoteException e1) {
 			throw new Error("Failed to set ID of module selected in simulation environment due to remote exception.");
-		}
+		}		
 
 		instantiateTool((JMESimulation)component.getSimulation());		
 
@@ -188,47 +194,14 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 
 	/**
 	 * Checks if construction tool type is matching the module type selected in simulation environment. If
-	 * yes calls appropriate tool. If no, For example: if the tool is for ATRON modular robot (modularRobotName) 
-	 * and the module type selected in simulation environment is MTRAN. Then the method will complain.	 * 
+	 * yes calls appropriate tool.  
 	 */
 	private void callAppropriateTool(){
 		if (this.modularRobotName.equals(SupportedModularRobots.ATRON)&& isAtron()||this.modularRobotName.equals(SupportedModularRobots.MTRAN)&& isMtran()||this.modularRobotName.equals(SupportedModularRobots.ODIN)&&isOdin()||this.modularRobotName.equals(SupportedModularRobots.CKBOTSTANDARD)&&isCKBotStandard()){		
 			callTool();	
-		}else{
-			reAdjustUserInput();
 		}
 	}
-
-
-	/**
-	 * Makes the tools more "generic", in a sense that each tool is working for all Supported modular robots, without the need to
-	 * specify it explicitly in the GUI.
-	 * Also makes feedback calls to GUI to adapt to the modular robot the user is working with right now. 
-	 */
-	/**
-	 * 
-	 */
-	private void reAdjustUserInput(){
-
-		/*	Keeps and updates the data about the module type currently selected in simulation environment
-		SelectedModuleTypeMapHelper[] selectModulesTypes = {
-				new SelectedModuleTypeMapHelper(SupportedModularRobots.ATRON,isAtron()),
-				new SelectedModuleTypeMapHelper(SupportedModularRobots.MTRAN,isMtran()),
-				new SelectedModuleTypeMapHelper(SupportedModularRobots.ODIN,isOdin()),
-				new SelectedModuleTypeMapHelper(SupportedModularRobots.CKBOTSTANDARD,isCKBotStandard())
-		};
-        Identifies selected module and readjusts tools accordingly, also calls for GUI re-adjustment
-		for(int index =0;index<selectModulesTypes.length;index++){
-			if(selectModulesTypes[index].isSelected()==true){
-				this.modularRobotName = selectModulesTypes[index].getModularRobotName();
-				this.selectOperations = new SelectOperationsAbstractFactory().getSelectOperations(jmeSimulation,modularRobotName);
-				this.construction = selectOperations.getConstruction();				
-			}
-		}*/
-
-		//ConstructRobotTabController.adjustTabToSelectedModule(this.modularRobotName);//Adapt GUI to selected module(modular robot) type
-	}
-
+	
 	/**
 	 * Checks if the module selected in simulation environment is an ATRON module 
 	 * @return true, if selected module is an ATRON module
