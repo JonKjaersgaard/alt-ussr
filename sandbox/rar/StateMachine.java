@@ -12,6 +12,7 @@ public abstract class StateMachine {
     private float reset_interval;
     private float last_reset_check_time;
     private Random resetRandomizer = new Random();
+    protected ATRONStateMachineAPI api;
 
     public StateMachine() {
         stateManager = new DistributedStateManager();
@@ -20,6 +21,10 @@ public abstract class StateMachine {
         reset_interval = p.resetInterval;
     }
     
+    public void setAPI(ATRONStateMachineAPI api) {
+      this.api = api;
+    }
+
     public void activate() {
         System.out.println("Statemachine activated");
         while(true) {
@@ -36,6 +41,7 @@ public abstract class StateMachine {
         if(resetRandomizer.nextFloat()<reset_risk) {
             System.err.println("RESET");
             this.reset_module();
+            api.reportEvent("RESET",time);
         }
     }
 
@@ -51,7 +57,6 @@ public abstract class StateMachine {
     
     protected abstract void stateMachine();
     public abstract void init(int id);
-    public abstract void setAPI(Object api);
 
     public void setLimitPendingOneWay(boolean b) {
         stateManager.setLimitPendingOneWay(b);

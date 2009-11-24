@@ -200,6 +200,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
     private Map<String,List<Float>> successes = new HashMap<String,List<Float>>();
     private Map<String,Integer> failures = new HashMap<String,Integer>();
     private Map<String,List<Integer>> packetCounts = new HashMap<String,List<Integer>>();
+    private Map<String,Map<String,List<Float>>> events = new HashMap<String,Map<String,List<Float>>>();
 
     public void recordSuccess(String key, float value, int packetCount) {
         experiments.add(key);
@@ -235,6 +236,20 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
         recordPacketCount(key, packetCount);
     }
     
+    public void recordEvent(String experiment, String name, float time) {
+        Map<String,List<Float>> registry = events.get(experiment);
+        if(registry==null) {
+            registry = new HashMap<String,List<Float>>();
+            events.put(experiment, registry);
+        }
+        List<Float> times = registry.get(name);
+        if(times==null) {
+            times = new ArrayList<Float>();
+            registry.put(name, times);
+        }
+        times.add(time);
+    }
+
     public synchronized void reportRecord() {
         PrintWriter resultFile = null;
         try {
@@ -243,6 +258,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             System.err.println("Warning: unable to create result file");
         }
         for(String experiment: experiments) {
+            // Regular result
             List<Float> success = successes.get(experiment);
             List<Integer> counts = packetCounts.get(experiment);
             if(success==null) success = Collections.EMPTY_LIST;
@@ -259,10 +275,18 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             output.append(averageI(counts)+" ");
             if(resultFile!=null) resultFile.println(output);
             System.out.println(output);
+            // Event summary
+            Map<String,List<Float>> experimentEvents = events.get(experiment);
+            if(experimentEvents!=null) {
+                for(String name: experimentEvents.keySet())
+                    output.append(reportEventHook(name,experimentEvents.get(name)));
+            }
         }
         if(resultFile!=null) resultFile.close();
         reportHook(experiments,successes,failures,experimentParameters);
     }
+
+    protected String reportEventHook(String name, List<Float> set) { return ""; }
 
     protected void reportHook(Set<String> experimentsNames,
             Map<String, List<Float>> successes,
@@ -288,4 +312,5 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
         for(float f: numbers) sum += (f-avg)*(f-avg);
         return (float) Math.sqrt(sum);
     }
+
 }

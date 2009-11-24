@@ -203,4 +203,41 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
             Map<String, ParameterHolder> experimentParameters) {
         
     }
+
+    @Override
+    public void provideEventNotification(String experiment, String name, float time) throws RemoteException {
+        super.recordEvent(experiment,name,time);
+    }
+    
+    @Override
+    protected String reportEventHook(String name, List<Float> set) { 
+        if(!name.equals("RESET")) {
+            return "[unknown event "+name+"] ";
+        }
+        StringBuffer result = new StringBuffer(";reset=total,maxIn2; ");
+        result.append(set.size()+" ");
+        float max = max(set);
+        int maxInterval = 0;
+        for(int i=0; i<=max; i+=2) {
+            int thisInterval = count(i,i+2,set);
+            if(thisInterval>maxInterval) maxInterval = thisInterval;
+        }
+        result.append(maxInterval+" ");
+        return result.toString();
+    }
+
+    private int count(int min, int max, List<Float> set) {
+        int result = 0;
+        for(float f: set)
+            if(f>min && f<=max) result++;
+        return result;
+    }
+
+    private float max(List<Float> set) {
+        float result = Float.MIN_VALUE;
+        for(float f: set)
+            result=Math.max(result, f);
+        return result;
+    }
+
 }

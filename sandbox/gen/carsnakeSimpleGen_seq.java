@@ -13,12 +13,6 @@ public class carsnakeSimpleGen_seq extends StateMachine {
   private static final boolean TRUE = true;
   private static final boolean FALSE = false;
   
-  private ATRONStateMachineAPI api;
-
-  public void setAPI(Object api) {
-    this.api = (ATRONStateMachineAPI)api;
-  }
-
   private boolean doneRotatingTo(int goal) { 
 	
 	if(api.isRotating()) {

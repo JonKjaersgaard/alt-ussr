@@ -112,5 +112,17 @@ public abstract class EightToCarRobustnessExperiment extends GenericATRONSimulat
         }
     }
     
+    public void reportEvent(String name, float time) {
+        String experiment = ParameterHolder.get().toString();
+        if(SimulationClient.getReturnHandler()==null) {
+            System.err.println("No return handler specified, cannot report event");
+            return;
+        }
+        try {
+            SimulationClient.getReturnHandler().provideEventNotification(experiment,name,time);
+        } catch (RemoteException e) {
+            System.err.println("Unable to report event");
+        }
+    }
 
 }

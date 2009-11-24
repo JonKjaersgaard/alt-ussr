@@ -16,4 +16,9 @@ public class ReturnValueHandlerWrapper extends UnicastRemoteObject implements Re
         this.handler.provideReturnValue(experiment, name, value);
     }
 
+    @Override
+    public void provideEventNotification(String experiment, String name, float time) throws RemoteException {
+        this.handler.provideEventNotification(experiment, name, time);
+    }
+
 }
