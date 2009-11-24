@@ -1,34 +1,21 @@
 package ussr.remote;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.rmi.RemoteException;
-
-
 import ussr.aGui.GeneralController;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.tabs.SimulationTab;
 import ussr.aGui.tabs.controllers.ConsoleTabController;
-import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
-import ussr.aGui.tabs.controllers.SimulationTabController;
-
 import ussr.remote.facade.ActiveSimulation;
 import ussr.remote.facade.GUICallbackControlImpl;
 
 import ussr.remote.facade.RemotePhysicsSimulation;
-import ussr.samples.atron.simulations.SnakeCarDemo;
-
 
 /**
- * Frontend example: a main application that starts a single simulation using the remote facility 
- * provided by this package
- * @author ups
+ * Is responsible for connecting GUI with remote simulation.
+ * @author Konstantinas
  */
 public class GUISimulationAdapter {
 

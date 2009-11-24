@@ -2,6 +2,8 @@ package ussr.remote.facade;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+
+import ussr.aGui.enumerations.HintPanelTypes;
 import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.SupportedModularRobots;
 
@@ -30,4 +32,11 @@ public interface GUICallbackControl extends Remote {
 	 * @param supportedModularRobot, the type of modular robot to adapt to.
 	 */
 	public void adaptConstructRobotTabToSelectedModuleType(SupportedModularRobots supportedModularRobot)throws RemoteException;
+	
+	/**
+	 * Updates the hint panel in the tab called Assign Behaviors by changing icon and text of it.
+	 * @param hintPanelTypes, the type of hint panel.
+	 * @param text, the text for hint panel to display.
+	 */
+	public void updateHintPanelAssignBehaviorsTab(HintPanelTypes hintPanelTypes, String text)throws RemoteException;
 }

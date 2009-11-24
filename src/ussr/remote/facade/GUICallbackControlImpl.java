@@ -3,6 +3,7 @@ package ussr.remote.facade;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import ussr.aGui.enumerations.HintPanelTypes;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.enumerations.ConstructionTools;
@@ -45,6 +46,15 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 	 */
 	public void adaptConstructRobotTabToSelectedModuleType(SupportedModularRobots supportedModularRobot)throws RemoteException{
 		ConstructRobotTabController.adaptTabToSelectedModule(supportedModularRobot);		
+	}
+
+	/**
+	 * Updates the hint panel in the tab called Assign Behaviors by changing icon and text of it.
+	 * @param hintPanelTypes, the type of hint panel.
+	 * @param text, the text for hint panel to display.
+	 */
+	public void updateHintPanelAssignBehaviorsTab(HintPanelTypes hintPanelTypes, String text)throws RemoteException{
+		AssignBehaviorsTabController.updateHintPanel(hintPanelTypes, text);
 	}
 
 }
