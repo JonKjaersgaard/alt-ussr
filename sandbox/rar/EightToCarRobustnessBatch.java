@@ -218,7 +218,7 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
         result.append(set.size()/(float)count+" ");
         float max = max(set);
         int maxInterval = 0;
-        for(int i=0; i<=max; i+=2) {
+        for(int i=0; i<=max; i++) {
             int thisInterval = count(i,i+2,set);
             if(thisInterval>maxInterval) maxInterval = thisInterval;
         }
@@ -229,7 +229,7 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     private int count(int min, int max, List<Float> set) {
         int result = 0;
         for(float f: set)
-            if(f>min && f<=max) result++;
+            if(f>=min && f<max) result++;
         return result;
     }
 
