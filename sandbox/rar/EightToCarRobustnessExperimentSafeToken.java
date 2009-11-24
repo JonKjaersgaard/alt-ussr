@@ -818,6 +818,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
                 System.err.println("RESET start "+token[0]);
                 this.initializeState();
                 System.err.println("RESET done "+token[0]);
+                reportEvent("RESET",time);
             }
         }
 
