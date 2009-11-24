@@ -8,14 +8,6 @@ import java.rmi.RemoteException;
 
 import ussr.remote.facade.ActiveSimulation;
 import ussr.remote.facade.RemotePhysicsSimulation;
-import ussr.samples.atron.natives.EightToCarSimulation;
-import ussr.samples.atron.simulations.ATRONCarSimulation;
-import ussr.samples.atron.simulations.ATRONRoleSimulation;
-import ussr.samples.atron.simulations.ATRONSimulation1;
-import ussr.samples.atron.simulations.ATRONTestSimulation;
-import ussr.samples.atron.simulations.CommunicationDemo;
-import ussr.samples.atron.simulations.ConveyorSimulation;
-import ussr.samples.atron.simulations.CrawlerSimulation;
 import ussr.samples.atron.simulations.SnakeCarDemo;
 
 /**
@@ -25,8 +17,9 @@ import ussr.samples.atron.simulations.SnakeCarDemo;
  */
 public class ConsoleSimulationExample {
 
-    public static final int SERVER_PORT = 54323;
+    
 
+    public static final int SERVER_PORT = 54323;
     /**
      * @param args
      * @throws IOException 
