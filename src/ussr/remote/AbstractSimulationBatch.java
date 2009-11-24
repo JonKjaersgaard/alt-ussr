@@ -277,7 +277,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
             Map<String,List<Float>> experimentEvents = events.get(experiment);
             if(experimentEvents!=null) {
                 for(String name: experimentEvents.keySet())
-                    output.append(reportEventHook(name,experimentEvents.get(name)));
+                    output.append(reportEventHook(name,experimentEvents.get(name),total));
             }
             // Output
             if(resultFile!=null) resultFile.println(output);
@@ -287,7 +287,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
         reportHook(experiments,successes,failures,experimentParameters);
     }
 
-    protected String reportEventHook(String name, List<Float> set) { return ""; }
+    protected String reportEventHook(String name, List<Float> set, int count) { return ""; }
 
     protected void reportHook(Set<String> experimentsNames,
             Map<String, List<Float>> successes,

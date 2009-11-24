@@ -210,19 +210,19 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     }
     
     @Override
-    protected String reportEventHook(String name, List<Float> set) { 
+    protected String reportEventHook(String name, List<Float> set, int count) { 
         if(!name.equals("RESET")) {
             return "[unknown event "+name+"] ";
         }
         StringBuffer result = new StringBuffer(";reset=total,maxIn2; ");
-        result.append(set.size()+" ");
+        result.append(set.size()/(float)count+" ");
         float max = max(set);
         int maxInterval = 0;
         for(int i=0; i<=max; i+=2) {
             int thisInterval = count(i,i+2,set);
             if(thisInterval>maxInterval) maxInterval = thisInterval;
         }
-        result.append(maxInterval+" ");
+        result.append(maxInterval/(float)count+" ");
         return result.toString();
     }
 
