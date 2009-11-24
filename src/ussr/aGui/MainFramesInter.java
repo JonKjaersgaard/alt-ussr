@@ -35,7 +35,7 @@ public interface MainFramesInter {
 	public final String CONSTRUCT_ROBOT_TAB_TITLE = "1 Step: Construct Robot",
 	                    ASSIGN_BEHAVIORS_TAB_TITLE = "2 Step: Assign Behaviour (Controller)",
 	                    MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE = "Communication Visualiser",
-	                    SIMULATION_TAB_TITLE = "Simulation",
+	                    SIMULATION_TAB_TITLE = "Simulation(s)",
 	                    CONSOLE_TAB_TITLE = "Console",
 /*YOUR TAB TITLE*/      YOUR_TAB_TITLE = "YOUR TAB";
 	

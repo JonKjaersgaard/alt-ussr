@@ -19,6 +19,12 @@ import ussr.remote.GUISimulationAdapter;
  */
 public class FileChooserXMLController extends FileChooserController {
 
+
+	
+	public FileChooserXMLController(){
+		  new GUISimulationAdapter();
+	}
+	
 	
 	@Override
 	public void controlOpenDialog(ActionEvent evt, JFileChooser fileChooser,
@@ -35,8 +41,7 @@ public class FileChooserXMLController extends FileChooserController {
 				new Thread() {
 					public void run() {
 						try {
-							GUISimulationAdapter.consoleSimulationExample(fileDirectoryName);
-							//GUISimulationAdapter.main(null);
+							GUISimulationAdapter.runSimulation(fileDirectoryName);
 						} catch (IOException e) {
 							throw new Error("Failed to run simulation file located at "+ fileDirectoryName+ " , due to remote exception");
 						}
