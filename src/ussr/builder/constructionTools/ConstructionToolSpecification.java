@@ -113,11 +113,11 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 				this.construction = selectOperations.getConstruction();				
 			}
 		}
-		
+
 		if (modularRobotName == null){
 			throw new Error("Not supported modular robot");
 		}
-		
+
 
 	}
 
@@ -125,7 +125,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	 * Used to keep track how many times entities were selected in simulation environment.
 	 */
 	int timesSelected =-1;
-	
+
 	/**
 	 * Returns amount of times entities were selected in simulation environment.
 	 * @return timesSelected, amount of times entities were selected in simulation environment.
@@ -156,14 +156,14 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 		} catch (RemoteException e1) {
 			throw new Error("Failed to set ID of module selected in simulation environment due to remote exception.");
 		}
-		
+
 		instantiateTool((JMESimulation)component.getSimulation());		
 
 		if (this.toolName.equals(ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON)){
 			try {
 				RemotePhysicsSimulationImpl.getGUICallbackControl().adaptConstructRobotTabToChosenTool(ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON);
 			} catch (RemoteException e) {
-			throw new Error("Failed adapt Construction Tab to selection tool named as" +ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON.toString()+", due to remote exception.");
+				throw new Error("Failed adapt Construction Tab to selection tool named as" +ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON.toString()+", due to remote exception.");
 			}
 		}
 		callAppropriateTool();		
@@ -181,7 +181,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 			try {
 				RemotePhysicsSimulationImpl.getGUICallbackControl().adaptConstructRobotTabToChosenTool(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR);
 			} catch (RemoteException e) {
-			throw new Error("Failed adapt Construction Tab to selection tool named as" +ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR.toString()+", due to remote exception.");
+				throw new Error("Failed adapt Construction Tab to selection tool named as" +ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR.toString()+", due to remote exception.");
 			}
 		}
 	}
@@ -281,7 +281,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	 * Calls the tool for construction of modular robot morphology. 
 	 */
 	private void callTool(){
-		
+
 		switch(toolName){
 		case NEW_MODULE_ON_SELECTED_CONNECTOR:
 			if (connectorsMatch()){
@@ -291,7 +291,13 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 			break;
 		case ON_CHOSEN_CONNECTOR_NR://break through
 		case MOVE_MODULE_FROM_CON_TO_CON:
-			this.selectOperations.addNewModuleOnConnector(this);
+
+			String selectedModuleType = selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
+			if(selectedModuleType.contains("OdinMuscle")){
+				//do nothing
+			}else{
+				this.selectOperations.addNewModuleOnConnector(this);
+			}
 			break;
 		case NEW_MODULES_ON_ALL_CONNECTORS:
 			this.selectOperations.addModulesOnAllConnectors(this);

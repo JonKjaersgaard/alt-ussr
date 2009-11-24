@@ -47,7 +47,7 @@ public interface ConstructionTemplate {
 	public void variateModuleProperties(Module selectedModule);	
 	
 	/**
-	 * Returns array of objects containing information about supported specific rotations of modular robot.
+	 * Returns array of objects containing information about supported-specific rotations of modular robot.
 	 */
 	public abstract ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP();
 }

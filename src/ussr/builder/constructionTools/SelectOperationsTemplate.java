@@ -18,14 +18,6 @@ public interface SelectOperationsTemplate {
 	public abstract ConstructionTemplate getConstruction();
 	
 	/**
-	 * Adds default (the first) construction module at specified position.
-	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
-	 * @param type, the type of modular robot. For example: ATRON,MTRAN or OdinBall.
-	 * @param modulePosition, the position of module in simulation environment.
-	 */
-	//public abstract void addDefaultConstructionModule(String type, VectorDescription modulePosition);	
-	
-	/**
 	 * Adds the new module on connector. This is for both: selected connector on the module in simulation environment
 	 * and connector passed as a variable and later selected module in simulation environment.
 	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
@@ -58,6 +50,11 @@ public interface SelectOperationsTemplate {
 	 */
 	public abstract void rotateModuleStandardRotation(ConstructionToolSpecification toolSpecification, String standardRotationName);
 	
+	/**
+	 * Rotates the module with different rotation for each selection of the mouse.
+	 * @param toolSpecification,object containing information about modular robot, selected module, simulation
+	 * and so on.
+	 */
 	public abstract void rotateModuleStandardRotationInLoop(ConstructionToolSpecification toolSpecification);
 	
 	/**
@@ -69,24 +66,6 @@ public interface SelectOperationsTemplate {
 	 * @param toolSpecification,object containing information about modular robot, selected module, simulation
 	 * and so on.
 	 */
-	public abstract void variateModule(ConstructionToolSpecification toolSpecification);
-	
-	/**
-	 * Additional method for implementing unique properties of modular robots. Like for example
-	 * MTRAN has several more specific rotations, which are implemented to make the construction
-	 * more flexible.In Odin case this is replacement of modules by just selecting them in simulation
-	 * environment. 
-	 * This method is so-called "Primitive operation" for above TEMPLATE method, called "variateModule(ConstructionToolSpecification toolSpecification)".	    
-	 * @param selectedModule,the module selected in simulation environment.	
-	 */
-	//public abstract void variateSpecificModule(Module selectedModule);	
-	
-	/**
-	 * TODO
-	 * @param toolSpecification
-	 */
-//TODO
-	public abstract void moveModuleOnNextConnector(ConstructionToolSpecification toolSpecification);
-		
-	
+	public abstract void variateModule(ConstructionToolSpecification toolSpecification);	
+
 }

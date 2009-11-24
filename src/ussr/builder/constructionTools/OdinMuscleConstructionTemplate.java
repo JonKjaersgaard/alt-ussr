@@ -18,9 +18,6 @@ import com.jme.math.Vector3f;
  * to design of OdinMuscle module.
  * @author Konstantinas
  */
-//FIXME 1) UPDATE COMMENTS
-//FIXME 2) FIX EXISTING IMPROVEMENTS
-//FIXME 3) CONSIDER TO MOVE THE SAME CODE FROM moveOdinMusleAccording() METHOD TO PARENT CLASS
 public class OdinMuscleConstructionTemplate extends OdinConstructionTemplate  {	
 
 	/**
