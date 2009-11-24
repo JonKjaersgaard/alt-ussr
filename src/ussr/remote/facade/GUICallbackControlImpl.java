@@ -6,7 +6,9 @@ import java.rmi.server.UnicastRemoteObject;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.enumerations.ConstructionTools;
+import ussr.builder.enumerations.SupportedModularRobots;
 
+@SuppressWarnings("serial")
 public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICallbackControl {
 
 	public GUICallbackControlImpl() throws RemoteException {
@@ -33,7 +35,16 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 	 * Sets the global ID of the module selected in simulation environment.
 	 * @param selectedModuleID, the global ID of the module selected in simulation environment.
 	 */
-	public void setSelectedModuleID(int selectedModuleID){
+	public void setSelectedModuleID(int selectedModuleID)throws RemoteException{
 		ConstructRobotTabController.setSelectedModuleID(selectedModuleID);
 	}
+	
+	/**
+	 * Adapts construct robot to the module type selected in simulation environment.
+	 * @param supportedModularRobot, the type of modular robot to adapt to.
+	 */
+	public void adaptConstructRobotTabToSelectedModuleType(SupportedModularRobots supportedModularRobot)throws RemoteException{
+		ConstructRobotTabController.adaptTabToSelectedModule(supportedModularRobot);		
+	}
+
 }

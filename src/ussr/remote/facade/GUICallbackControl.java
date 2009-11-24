@@ -3,6 +3,7 @@ package ussr.remote.facade;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import ussr.builder.enumerations.ConstructionTools;
+import ussr.builder.enumerations.SupportedModularRobots;
 
 public interface GUICallbackControl extends Remote {
 
@@ -23,4 +24,10 @@ public interface GUICallbackControl extends Remote {
 	 * @param selectedModuleID, the global ID of the module selected in simulation environment.
 	 */
 	public void setSelectedModuleID(int selectedModuleID)throws RemoteException;
+	
+	/**
+	 * Adapts construct robot to the module type selected in simulation environment.
+	 * @param supportedModularRobot, the type of modular robot to adapt to.
+	 */
+	public void adaptConstructRobotTabToSelectedModuleType(SupportedModularRobots supportedModularRobot)throws RemoteException;
 }
