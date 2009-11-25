@@ -20,22 +20,23 @@ import ussr.remote.GUISimulationAdapter;
 public class FileChooserXMLController extends FileChooserController {
 
 
-	
+
 	public FileChooserXMLController(){
-		  new GUISimulationAdapter();
+		/*Starts simulation adapter, which in turn starts simulation server (only once) */
+		new GUISimulationAdapter();
 	}
-	
-	
+
+
 	@Override
 	public void controlOpenDialog(ActionEvent evt, JFileChooser fileChooser,
 			JFrame fileChooserFrame) {
 		checkFileDescription( fileChooser);
 		String command = evt.getActionCommand();//Selected button command
-		
-		
+
+
 		if(command.equalsIgnoreCase(ActionCommands.APPROVESELECTION.toString()) ){ 		
 			final String fileDirectoryName = fileChooser.getSelectedFile().toString();// get the directory of selected file	  			
-			
+
 			switch(ussXmlFileType){
 			case SIMULATION:
 				new Thread() {
@@ -50,15 +51,15 @@ public class FileChooserXMLController extends FileChooserController {
 				break;			
 			case ROBOT:
 				try {
-						builderControl.saveToXML(UssrXmlFileTypes.ROBOT, fileDirectoryName);
-					} catch (RemoteException e) {
-						throw new Error("Failed to save robot morphology in xml file, due to remote exception");
-					}
+					builderControl.saveToXML(UssrXmlFileTypes.ROBOT, fileDirectoryName);
+				} catch (RemoteException e) {
+					throw new Error("Failed to save robot morphology in xml file, due to remote exception");
+				}
 				break;
-				default: throw new Error("XML file type named as " +ussXmlFileType.toString() +"is not yet supported.");
+			default: throw new Error("XML file type named as " +ussXmlFileType.toString() +"is not yet supported.");
 			}
-			 //close the frame(window)          
-            fileChooserFrame.dispose();
+			//close the frame(window)          
+			fileChooserFrame.dispose();
 		}else if (command.equalsIgnoreCase(ActionCommands.CANCELSELECTION.toString())){//Cancel pressed			
 			fileChooserFrame.dispose();//close the frame(window) 	  			
 		}	
@@ -72,7 +73,7 @@ public class FileChooserXMLController extends FileChooserController {
 		String command = evt.getActionCommand();//Selected button command			
 		if(command.equalsIgnoreCase(ActionCommands.APPROVESELECTION.toString())  ){		        
 			String fileDirectoryName = fileChooser.getSelectedFile().toString();
-			
+
 			try {
 				remotePhysicsSimulation.saveToXML(ussXmlFileType, fileDirectoryName);
 			} catch (RemoteException e) {

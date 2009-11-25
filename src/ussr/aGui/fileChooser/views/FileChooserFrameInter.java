@@ -13,11 +13,12 @@ public interface FileChooserFrameInter extends FramesInter {
 	public final String DEFAULT_FILE_DESCRIPTION = "Simulation",
 	                    ROBOT_FILE_DESCRIPTION = "Robot"; 
 	
-	public final String DEFAULT_DIRECTORY = "samples/simulations",
-	                    DIRECTORY_ROBOTS = "samples/robots";
+	public final String DEFAULT_DIRECTORY = "samples/simulations";
+	         
 	
 	public final FileChooserControllerInter FC_XML_CONTROLLER = new FileChooserXMLController();
 	
+
 	/**
 	 * Sets specific default directory to open.
 	 * @param defaultDirectory, the directory for file chooser to open as default.
