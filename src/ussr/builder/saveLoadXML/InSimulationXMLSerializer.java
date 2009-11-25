@@ -1,8 +1,6 @@
 package ussr.builder.saveLoadXML;
 
 import java.awt.Color;
-import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.LinkedList;
 
 import ussr.builder.helpers.BuilderHelper;
@@ -12,11 +10,8 @@ import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Connector;
 import ussr.model.Module;
-import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMESimulation;
-import ussr.remote.facade.BuilderControlInter;
-import ussr.remote.facade.RemotePhysicsSimulation;
 
 public class InSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate{
     /**

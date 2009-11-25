@@ -23,6 +23,7 @@ public enum XMLTagsUsed {
    /*For description of simulation*/
    SIMULATION,
    
+   ROBOTS,
    ROBOT,
    NUMBER_OF_MODULES,
    CONTROLLER_LOCATION,
@@ -39,6 +40,7 @@ public enum XMLTagsUsed {
    BIG_OBSTACLES,
    
    PHYSICS_PARAMETERS,
+   DAMPING,
    WORLD_DAMPING_LINEAR_VELOCITY,
    WORLD_DAMPING_ANGULAR_VELOCITY,
    PHYSICS_SIMULATION_STEP_SIZE,

@@ -39,6 +39,8 @@ import ussr.physics.jme.JMESimulation;
  */ 
 public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 
+	
+	protected String fileDirectoryName;
 	/**
 	 * The string representation of XML file extension.
 	 */
@@ -93,6 +95,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 */
 	public void saveXMLfile(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName) {
 		TransformerHandler transformerHandler = initializeTransformer(fileDirectoryName);
+		this.fileDirectoryName = fileDirectoryName;
 		printOutXML(ussrXmlFileType, transformerHandler);
 	}
 
@@ -112,7 +115,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 	 * @param fileDirectoryName,the name of directory, like for example: "C:/newXMLfile".
 	 * @return transformerHandler, the content handler used to print out XML format. 
 	 */
-	private TransformerHandler initializeTransformer(String fileDirectoryName) {
+	public TransformerHandler initializeTransformer(String fileDirectoryName) {
 		File newFile = new File (fileDirectoryName + XML_EXTENSION);
 		BufferedWriter characterWriter = null;
 		try {
@@ -132,7 +135,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 		Transformer serializer = transformerHandler.getTransformer();
 		serializer.setOutputProperty(OutputKeys.ENCODING,XML_ENCODING);		
 		serializer.setOutputProperty(OutputKeys.INDENT,"yes");
-		transformerHandler.setResult(streamResult);		
+		transformerHandler.setResult(streamResult);	
 		return transformerHandler;
 	}
 	

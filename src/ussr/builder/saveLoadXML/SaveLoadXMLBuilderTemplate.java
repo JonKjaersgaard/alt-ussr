@@ -15,11 +15,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import com.jme.math.Quaternion;
 
-import ussr.builder.BuilderMultiRobotPreSimulation;
-
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.BuilderHelper;
+import ussr.builder.helpers.FileDirectoryHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.BoxDescription;
@@ -95,14 +94,29 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	 */
 	private void printSimulationXML(TransformerHandler transformerHandler){
 		printFirstStartTag(transformerHandler, XMLTagsUsed.SIMULATION);		
-
+		String robotMorphologyFileLocation ="";
 		try {
 
 			transformerHandler.startElement("","",XMLTagsUsed.ROBOT.toString(),EMPTY_ATT);
 
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.TYPE, getType(getModuleByIndex(0)));				
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.NUMBER_OF_MODULES, (""+getWorldDescription().getNumberOfModules()).toCharArray());
-			printSubTagsWithValue(transformerHandler, XMLTagsUsed.MORPHOLOGY_LOCATION, BuilderMultiRobotPreSimulation.robotMorphologyFile.toCharArray());
+			
+		
+		/*	//Extract only directory
+			String[] temporaryFileDirectoryName = fileDirectoryName.split("\\\\");
+			
+			for (int index=0;index<temporaryFileDirectoryName.length-1; index++){
+				directory = directory+temporaryFileDirectoryName[index]+"\\";
+			}*/
+			//System.out.println("dir"+fileDirectoryName);
+			
+			
+			String directory = FileDirectoryHelper.extractDirectory(fileDirectoryName);
+			
+			robotMorphologyFileLocation = directory;//+ "morphologies"+"\\"+ BuilderHelper.getRandomInt();
+						
+			printSubTagsWithValue(transformerHandler, XMLTagsUsed.MORPHOLOGY_LOCATION, robotMorphologyFileLocation.toCharArray());
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.CONTROLLER_LOCATION, getControllerLocation(getModuleByIndex(0)));
 			
 			transformerHandler.endElement("","",XMLTagsUsed.ROBOT.toString());
@@ -141,6 +155,12 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 		}
 
 		printFirstEndTag(transformerHandler, XMLTagsUsed.SIMULATION);
+		
+		
+		//System.out.println(robotMorphologyFileLocation);
+		
+		//printOutXML(UssrXmlFileTypes.ROBOT,initializeTransformer(robotMorphologyFileLocation));
+				
 	}
 	
 	/**
