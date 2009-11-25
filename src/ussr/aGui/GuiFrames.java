@@ -2,6 +2,8 @@ package ussr.aGui;
 
 import java.awt.Component;
 import java.awt.Toolkit;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -69,7 +71,7 @@ public abstract class GuiFrames extends javax.swing.JFrame implements FramesInte
 	 * Initializes visual appearance of the frames(windows).
 	 * Follows Strategy pattern.
 	 */
-	public abstract void initComponents();
+	protected abstract void initComponents();
 	
 	/**
 	 * Starts the windows(frames) of GUI.

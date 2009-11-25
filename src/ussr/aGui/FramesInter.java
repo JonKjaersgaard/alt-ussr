@@ -1,6 +1,8 @@
 package ussr.aGui;
 
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 
 
@@ -11,19 +13,55 @@ import java.awt.Toolkit;
 public interface FramesInter {
 
 	/**
-	 * The directory for USSR icon.
+	 * Directory for USSR icon.
 	 */
 	public final String DIRECTORY_USSR_ICON = "resources/mainFrame/icons/jpg/ussrIcon.jpg";
 	
 	/**
-	 * Screen dimension.
+	 * Screen(display) size.
 	 */
-	public Dimension SCREEN_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
+	public Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+	
+	/**
+	 * Width of the screen(display).
+	 */
+	public final int SCREEN_WIDTH = (int)SCREEN_SIZE.getWidth();
+	
+	/**
+	 * Height of the screen(display).
+	 */
+	public final int SCREEN_HEIGHT = (int)SCREEN_SIZE.getHeight();
+	
+	/**
+	 * Bounds of the screen (not including task bar).
+	 */
+	public final Rectangle MAX_SCREEN_VIABLE_BOUNDS = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+	
+	/**
+	 * Width and height of the screen (not including task bar).
+	 */
+	public final double SCREEN_VIABLE_WIDTH = MAX_SCREEN_VIABLE_BOUNDS.getWidth(),
+	                    SCREEN_VIABLE_HEIGHT = MAX_SCREEN_VIABLE_BOUNDS.getHeight();
+	
+	/**
+	 * The height of the toolbar oriented horizontally.
+	 */
+	public final int HORIZONTAL_TOOLBAR_HEIGHT = 30;
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * Dominating(common) height of most components.
 	 */
 	public final int COMMON_HEIGHT = 32;
+	
+	
+	
 	
 	
 	/**

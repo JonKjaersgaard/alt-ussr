@@ -1,6 +1,7 @@
 package ussr.aGui;
 
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -21,12 +22,44 @@ import ussr.aGui.enumerations.MainFrameComponentsText;
 @SuppressWarnings("serial")
 public class MainFrameSeparate extends MainFrames {
 
-
+    /**
+     * The width and height of this frame.
+     */
+    private final int FRAME_WIDTH = (int)SCREEN_VIABLE_WIDTH/2,
+                      FRAME_HEIGHT = (int)SCREEN_VIABLE_HEIGHT;
+    
+    /**
+     * Horizontal and vertical gaps between components of the frame. 
+     */
+    private final int HORIZONTAL_GAPS = 6,
+                      VERTICAL_GAPS = 6;
+    /**
+     * Common width of main(first hierarchy) components(containers) of the frame.
+     */
+    private final int CONTAINER_WIDTH = FRAME_WIDTH-super.insets.right -super.insets.left-2*HORIZONTAL_GAPS;
+    
+    /**
+     * Height of menu bar.
+     */
+    private final int MENU_BAR_HEIGHT = 20;
+    
+	/**
+	 * Height of the second tabbed pane.
+	 */
+	public final int TABBED_PANE2_HEIGHT = 125;
+    
+    /**
+	 * Height of the first tabbed pane. 
+	 * Calculate is so that the height of it is dependable on the height of each component of the frame, including dimensions of frame border and gaps between components.
+	 */
+	public final int TABBED_PANE1_HEIGHT = (int)((FRAME_HEIGHT-MENU_BAR_HEIGHT-HORIZONTAL_TOOLBAR_HEIGHT-TABBED_PANE2_HEIGHT- super.insets.top-super.insets.bottom -4*VERTICAL_GAPS));
+	
+	
 	/**
 	 * Defines visual appearance of the main GUI frame (window), separate from simulation environment.
 	 */
 	public MainFrameSeparate(){
-		super();
+		super();		
 		initComponents();
 		addWindowListeners();//Override default window listeners.
 	}	
@@ -34,22 +67,34 @@ public class MainFrameSeparate extends MainFrames {
 
 	@Override
 	public void initComponents() {
-		getContentPane().setLayout(new java.awt.FlowLayout());
-		initJMenuBar();
-		initJToolbarGeneralControl((int)SCREEN_DIMENSION.getWidth()/2,COMMON_HEIGHT);
-		initFirstTabbedPane();
-		initSecondTabbedPane((int)SCREEN_DIMENSION.getWidth()/2, TAB_PANE_HEIGHT2);
-		initializeTabbedPanesResizing();
-		//setResizable(false);//FOR TESTING. RESIZING WORKS HOWEVER NEEDS MORE ATTENTION
-		pack(); 
+		
+		/*initialize layout*/
+		java.awt.FlowLayout flowLayout = new java.awt.FlowLayout();
+		flowLayout.setHgap(HORIZONTAL_GAPS);
+		flowLayout.setVgap(VERTICAL_GAPS);		
+		getContentPane().setLayout(flowLayout);		
+		
+		/*initialize the main containers of the frame*/
+		initJMenuBar(CONTAINER_WIDTH,MENU_BAR_HEIGHT);
+		initJToolbarGeneralControl(CONTAINER_WIDTH,HORIZONTAL_TOOLBAR_HEIGHT);
+		initFirstTabbedPane(CONTAINER_WIDTH,TABBED_PANE1_HEIGHT);
+		initSecondTabbedPane(CONTAINER_WIDTH, TABBED_PANE2_HEIGHT);
+		initializeTabbedPanesResizing();		
+		//setResizable(false);//FOR TESTING. RESIZING WORKS HOWEVER NEEDS MORE ATTENTION		
+		
+		this.setSize(new Dimension(FRAME_WIDTH,FRAME_HEIGHT));
 		changeToLookAndFeel(this);
 		
 		components.add(getJMenuBarMain());
 		components.add(getJToolBarGeneralControl());
 		components.add(getJTabbedPaneFirst());
 		components.add(getJTabbedPaneSecond());
-
-		setFrameHeightAccordingComponents(this,(int)SCREEN_DIMENSION.getWidth()/2+PADDING,components); 
+		
+		 
+		
+//		setFrameHeightAccordingComponents(this,FRAME_WIDTH,components);
+		
+		
 	}
 
 	/**
@@ -63,11 +108,11 @@ public class MainFrameSeparate extends MainFrames {
 				//System.out.println("State:"+ newState);
 				if (newState == 6){//Window maximized
 					for(int index=0;index<components.size();index++){
-						components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()-PADDING/2,components.get(index).getHeight()));
+						components.get(index).setPreferredSize(new Dimension((int)SCREEN_SIZE.getWidth()-PADDING/2,components.get(index).getHeight()));
 					}			    		
 				}else if(newState == 0){//Window restored down to its initial dimension.
 					for(int index=0;index<components.size();index++){
-						components.get(index).setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2-PADDING,components.get(index).getHeight()));
+						components.get(index).setPreferredSize(new Dimension((int)SCREEN_SIZE.getWidth()/2-PADDING,components.get(index).getHeight()));
 					}
 				}
 			}			
@@ -87,8 +132,7 @@ public class MainFrameSeparate extends MainFrames {
 	 * Starts main GUI frame(window) separate from simulation environment, in separate thread.
 	 * @param args, passed arguments.
 	 */
-	public static void main( String[] args ) {
-		
+	public static void main( String[] args ) {		
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() {				
 				mainFrame = new MainFrameSeparate();

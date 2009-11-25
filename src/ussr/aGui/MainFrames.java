@@ -1,6 +1,7 @@
 package ussr.aGui;
 
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,22 +17,13 @@ import ussr.aGui.tabs.TabsInter;
  */
 @SuppressWarnings("serial")
 public abstract class MainFrames extends GuiFrames implements MainFramesInter {
-
-	/**
-	 * Height of the second tabbed pane.
-	 */
-	public final int TAB_PANE_HEIGHT2 = 125;
-
-	/**
-	 * Height of the first tabbed pane.
-	 */
-	public final int TAB_PANE_HEIGHT1 = (int)(SCREEN_DIMENSION.getHeight()-COMMON_HEIGHT-TAB_PANE_HEIGHT2-4*PADDING);
-
 	/**
 	 * The main GUI window.
 	 */
-	protected static MainFrames mainFrame;	
-
+	protected static MainFrames mainFrame;
+	
+	protected Insets insets; 
+	
 	/**
 	 * File choosers in the form of Open and Save  dialogs respectively.
 	 */
@@ -53,7 +45,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public MainFrames(){
 		filterPopulateTabs();
 		initFileChoosers ();// initialize visual appearance of file choosers. Why here, because then they are responding faster to user generated events, because they are compiled earlier).
-		initFrameProperties();
+		initFrameProperties();	
 	}
 
 
@@ -102,17 +94,22 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public void initFrameProperties(){		
 		setUSSRicon(this);
 		setTitle("Unified Simulator for Self-Reconfigurable Robots");
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);		
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		pack();
+		this.insets = this.getInsets();		
 	}
 
 
 	/**
-	 * Initializes visual appearance(view) of menu bar.
+	 * Initializes visual appearance (view) of menu bar.
+	 * @param width, the width of menu bar.
+	 * @param height, the height of menu bar.
 	 */
-	public void initJMenuBar(){
+	public void initJMenuBar(int width, int height){
 
 		jMenuBarMain = new javax.swing.JMenuBar();	
-
+		jMenuBarMain.setPreferredSize(new Dimension(width,height));
+	
 		jMenuFile = new javax.swing.JMenu();
 		jMenuRender = new javax.swing.JMenu();		
 
@@ -435,17 +432,19 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		componentResizer.registerComponent(jTabbedPaneFirst,jTabbedPaneSecond);
 	}
 	
-	
+
 	/**
 	 * Initializes and returns the first tabbed pane (from the top in main GUI window).
-	 * @return  the first tabbed pane.
+	 * @param width, the width of first tabbed pane.
+	 * @param height, the height of first tabbed pane.
+	 * @return the first tabbed pane.
 	 */
-	public javax.swing.JTabbedPane initFirstTabbedPane( ){
+	public javax.swing.JTabbedPane initFirstTabbedPane(int width,int height){
 		
 		jTabbedPaneFirst  = new javax.swing.JTabbedPane();
 		jTabbedPaneFirst.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 		jTabbedPaneFirst.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jTabbedPaneFirst.setPreferredSize(new Dimension((int)SCREEN_DIMENSION.getWidth()/2, TAB_PANE_HEIGHT1));		
+		jTabbedPaneFirst.setPreferredSize(new Dimension(width, height));		
 		jTabbedPaneFirst.setFocusable(false);
 		
 		addTabs(tabsFirstTabbedPane,jTabbedPaneFirst);//Plug in tabs in tabbed pane 		
