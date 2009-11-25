@@ -232,37 +232,11 @@ public class SimulationTab extends Tabs {
 	
 	public static void addPlaneSizeEditor(){
 
-		GridBagConstraints gridBagConstraints = new GridBagConstraints();
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 0;
-
 		jSpinnerPlaneSize = new javax.swing.JSpinner();
 		jSpinnerPlaneSize.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
 		SimulationTabController.setJSpinnerPlaneSizeValue(jSpinnerPlaneSize);
 
-		jPanelEditor.add(jSpinnerPlaneSize,gridBagConstraints);
-
-		jToolBarPlaneControl = new javax.swing.JToolBar();
-		jToolBarPlaneControl.setRollover(true);
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 1;
-		
-		jButtonPlaneTiltRight = new javax.swing.JButton();
-		jButtonPlaneTiltRight.setPreferredSize(new Dimension(30,30));
-		jButtonPlaneTiltRight.setIcon(new ImageIcon(DIRECTORY_ICONS+PLANE_TITL_RIGHT));
-		jButtonPlaneTiltRight.setFocusable(false);
-		jButtonPlaneTiltRight.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {            	
-				SimulationTabController.jButtonPlaneTiltRightActionPerformed();            	
-			}
-		});        
-
-		jToolBarPlaneControl.add(jButtonPlaneTiltRight);
-		
-		jPanelEditor.add(jToolBarPlaneControl,gridBagConstraints);
-
+		jPanelEditor.add(jSpinnerPlaneSize);
 	}
 	
 	
@@ -416,7 +390,7 @@ public class SimulationTab extends Tabs {
 	private static javax.swing.JTree jTree1;
 	private static javax.swing.JScrollPane jScrollPaneTree;
 
-	private static javax.swing.JButton jButtonPlaneTiltRight;
+
 	private static javax.swing.JSpinner  jSpinnerPlaneSize ;
 	private static javax.swing.JComboBox jComboBoxPlaneTexture;
 	private static javax.swing.JComboBox jComboBoxCameraPosition;
@@ -424,9 +398,6 @@ public class SimulationTab extends Tabs {
 	private static javax.swing.JCheckBox jCheckBoxTheWorldIsFlat,jCheckBoxHasBackgroundScenery, jCheckBoxHasHeavyObstacles,
 	jCheckBoxIsFrameGrabbingActive,jCheckBoxRealisticCollision,jCheckBoxUseMouseEventQueue,
 	jCheckBoxSynchronizeWithControllers;
-	
-
-	private static javax.swing.JToolBar jToolBarPlaneControl;
 	
 	private static javax.swing.JLabel jLabelRobotType;
 

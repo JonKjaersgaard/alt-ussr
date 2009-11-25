@@ -22,7 +22,6 @@ import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 
-
 /**
  * Defines visual appearance of the tab called "2 Step: Assign Behaviors".  
  * @author Konstantinas
