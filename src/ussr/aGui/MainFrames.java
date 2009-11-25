@@ -22,10 +22,13 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	protected static MainFrames mainFrame;
 	
+	/**
+	 * Insets of main frame border.
+	 */
 	protected Insets insets; 
 	
 	/**
-	 * File choosers in the form of Open and Save  dialogs respectively.
+	 * File choosers in the form of Open and Save dialogs respectively.
 	 */
 	protected static FileChooserFrameInter fcOpenFrame,fcSaveFrame;
 
@@ -39,9 +42,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	protected ArrayList<TabsInter> allTabs,tabsFirstTabbedPane,tabsSecondTabbedPane;
 
-	public ArrayList<javax.swing.JButton> simulationControlButtons = new ArrayList<javax.swing.JButton>();
-
-
+	/**
+	 * Defines visual appearance common to all instances of main GUI window.  
+	 */
 	public MainFrames(){
 		filterPopulateTabs();
 		initFileChoosers ();// initialize visual appearance of file choosers. Why here, because then they are responding faster to user generated events, because they are compiled earlier).
@@ -79,7 +82,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);	
 		fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
 	}
-
 
 	/**
 	 * Initializes the visual appearance the main GUI windows.

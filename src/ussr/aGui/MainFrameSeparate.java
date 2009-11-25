@@ -1,9 +1,9 @@
 package ussr.aGui;
 
 import java.awt.Dimension;
-import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -25,23 +25,18 @@ public class MainFrameSeparate extends MainFrames {
     /**
      * The width and height of this frame.
      */
-    private final int FRAME_WIDTH = (int)SCREEN_VIABLE_WIDTH/2,
+    private final int FRAME_WIDTH_HALF = (int)SCREEN_VIABLE_WIDTH/2,
                       FRAME_HEIGHT = (int)SCREEN_VIABLE_HEIGHT;
+ 
+    /**
+     * Common width of main(first hierarchy) components(containers) of the frame in case when the frame is in maximized state.
+     */
+    private final int CONTAINER_WIDTH = (int)SCREEN_VIABLE_WIDTH-super.insets.right -super.insets.left+2*HORIZONTAL_GAPS;
     
     /**
-     * Horizontal and vertical gaps between components of the frame. 
+     * Common width of main(first hierarchy) components(containers) of the frame in case when the frame is not in maximized state.
      */
-    private final int HORIZONTAL_GAPS = 6,
-                      VERTICAL_GAPS = 6;
-    /**
-     * Common width of main(first hierarchy) components(containers) of the frame.
-     */
-    private final int CONTAINER_WIDTH = FRAME_WIDTH-super.insets.right -super.insets.left-2*HORIZONTAL_GAPS;
-    
-    /**
-     * Height of menu bar.
-     */
-    private final int MENU_BAR_HEIGHT = 20;
+    private final int CONTAINER_WIDTH_HALF = FRAME_WIDTH_HALF-super.insets.right -super.insets.left-2*HORIZONTAL_GAPS;
     
 	/**
 	 * Height of the second tabbed pane.
@@ -53,7 +48,6 @@ public class MainFrameSeparate extends MainFrames {
 	 * Calculate is so that the height of it is dependable on the height of each component of the frame, including dimensions of frame border and gaps between components.
 	 */
 	public final int TABBED_PANE1_HEIGHT = (int)((FRAME_HEIGHT-MENU_BAR_HEIGHT-HORIZONTAL_TOOLBAR_HEIGHT-TABBED_PANE2_HEIGHT- super.insets.top-super.insets.bottom -4*VERTICAL_GAPS));
-	
 	
 	/**
 	 * Defines visual appearance of the main GUI frame (window), separate from simulation environment.
@@ -75,59 +69,64 @@ public class MainFrameSeparate extends MainFrames {
 		getContentPane().setLayout(flowLayout);		
 		
 		/*initialize the main containers of the frame*/
-		initJMenuBar(CONTAINER_WIDTH,MENU_BAR_HEIGHT);
-		initJToolbarGeneralControl(CONTAINER_WIDTH,HORIZONTAL_TOOLBAR_HEIGHT);
-		initFirstTabbedPane(CONTAINER_WIDTH,TABBED_PANE1_HEIGHT);
-		initSecondTabbedPane(CONTAINER_WIDTH, TABBED_PANE2_HEIGHT);
-		initializeTabbedPanesResizing();		
-		//setResizable(false);//FOR TESTING. RESIZING WORKS HOWEVER NEEDS MORE ATTENTION		
+		initJMenuBar(CONTAINER_WIDTH_HALF,MENU_BAR_HEIGHT);
+		initJToolbarGeneralControl(CONTAINER_WIDTH_HALF,HORIZONTAL_TOOLBAR_HEIGHT);
+		initFirstTabbedPane(CONTAINER_WIDTH_HALF,TABBED_PANE1_HEIGHT);
+		initSecondTabbedPane(CONTAINER_WIDTH_HALF, TABBED_PANE2_HEIGHT);
+		initializeTabbedPanesResizing();			
 		
-		this.setSize(new Dimension(FRAME_WIDTH,FRAME_HEIGHT));
+		this.setSize(new Dimension(FRAME_WIDTH_HALF,FRAME_HEIGHT));
 		changeToLookAndFeel(this);
 		
-		components.add(getJMenuBarMain());
+		/*Add components into container, which affect the width of main window when it is maximized and restored down to its initial size. */
+		//JMenuBar is an exception here.
 		components.add(getJToolBarGeneralControl());
 		components.add(getJTabbedPaneFirst());
-		components.add(getJTabbedPaneSecond());
-		
-		 
-		
-//		setFrameHeightAccordingComponents(this,FRAME_WIDTH,components);
-		
-		
+		components.add(getJTabbedPaneSecond());		
 	}
 
 	/**
-	 * 
+	 * Overrides the window listeners for events like window state change (maximized and restored down to its initial state) and
+	 * and window closing event.
 	 */
 	private void addWindowListeners(){
 		this.addWindowStateListener (new WindowAdapter() {	
-			public void windowStateChanged(WindowEvent event) {
-				/*THINK MORE HERE*/
+			public void windowStateChanged(WindowEvent event) {				
 				int newState = event.getNewState();
-				//System.out.println("State:"+ newState);
-				if (newState == 6){//Window maximized
-					for(int index=0;index<components.size();index++){
-						components.get(index).setPreferredSize(new Dimension((int)SCREEN_SIZE.getWidth()-PADDING/2,components.get(index).getHeight()));
-					}			    		
-				}else if(newState == 0){//Window restored down to its initial dimension.
-					for(int index=0;index<components.size();index++){
-						components.get(index).setPreferredSize(new Dimension((int)SCREEN_SIZE.getWidth()/2-PADDING,components.get(index).getHeight()));
-					}
+				
+				switch(newState){
+				case WINDOW_MAXIMIZED_STATE:
+					changeWidthOfMajorComponents(components,CONTAINER_WIDTH);
+					break;
+				case WINDOW_RESTORED_STATE:
+					changeWidthOfMajorComponents(components,CONTAINER_WIDTH_HALF);
+					break;
+				/*avoid overriding the rest states, because in this case they matching quite well.*/
 				}
 			}			
 		}
 		);	
-		
-		
-		addWindowListener (new WindowAdapter() {			
+		this.addWindowListener (new WindowAdapter() {			
 			public void windowClosing(WindowEvent event) {
+				/*Special exit, in order to check if remote simulation is still running */
 				MainFrameSeparateController.jMenuItemExitActionPerformed();                     
 			}
 		}
 		);		
 	}
-
+	
+	
+	/**
+	 * Changes the width of each component in the array and keeps the same height.
+	 * @param components, the components to change the width to.
+	 * @param width, new width of components.
+	 */
+	private void changeWidthOfMajorComponents(ArrayList<JComponent> components,int width){
+		for(int index=0;index<components.size();index++){						
+			components.get(index).setPreferredSize(new Dimension(width,components.get(index).getHeight()));
+		}
+	}
+	
 	/**
 	 * Starts main GUI frame(window) separate from simulation environment, in separate thread.
 	 * @param args, passed arguments.

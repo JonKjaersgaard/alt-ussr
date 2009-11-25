@@ -2,9 +2,6 @@ package ussr.aGui;
 
 import java.awt.Component;
 import java.awt.Toolkit;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
@@ -19,25 +16,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 @SuppressWarnings("serial")
 public abstract class GuiFrames extends javax.swing.JFrame implements FramesInter {
 	
-	/**
-	 *  Initial height of the frame. 
-	 */
-	private int frameHeight=0;	
-	
-	/**
-	 * Sets the height of the frame according to the height of each its component.
-	 * @param frame, the frame to set the height to. 
-	 * @param width, desired width of the frame.
-	 * @param components, JComponents influencing the height of the frame.
-	 */
-	public void setFrameHeightAccordingComponents(javax.swing.JFrame frame,int width, ArrayList<javax.swing.JComponent> components){
-	
-		for (int  index =0;index<components.size();index++){
-			frameHeight = frameHeight + components.get(index).getHeight();			
-     	}
-		frame.setSize(width,frameHeight+2*PADDING);// add padding to cover for JMenuBar and distances between components. 
-		
-	}
 
 	/**
 	 * Sets USSR icon in the top-left corner of the frame. 
