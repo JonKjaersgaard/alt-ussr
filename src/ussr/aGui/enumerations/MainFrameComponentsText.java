@@ -18,14 +18,21 @@ public enum MainFrameComponentsText {
 	       //File Menu 
 	       Open,Save,Exit, 
            //Render Menu
-	       Physics, Wire_Frame, Bounds,Normals, Lights,Buffer_Depth, 
+	       Physics, Wire_frame, Bounds,Normals, Lights,Buffer_depth, 
 	
 	
 	/*METHOD: setToolTipText()*/
 	
 	      /*JToolBars*/
-	       General_Control,
+	       General_control,
 	
 	      /*JButtons*/
-	      Run_real_time, Run_fast, Run_step_by_step,Pause,Terminate,Construct_Robot,Visualize_communication_of_modules
+	      Run_real_time, Run_fast, Run_step_by_step,Pause,Terminate,Construct_robot,Visualize_communication_of_modules
+	      
+	      
+	      ;
+	      
+	      public static String replaceUnderscoreWithSpace(MainFrameComponentsText mainFrameComponentsText){
+	    	  return mainFrameComponentsText.toString().replace("_", " ");
+	     }
 	}

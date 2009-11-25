@@ -39,7 +39,7 @@ public class SimulationTabController extends TabsControllers {
 
 		switch(TreeElements.valueOf(selectedNode.replace(" ", "_"))){
 		
-		case Physics_Simulation_Step_Size:
+		case Physics_simulation_step_size:
 			SimulationTab.addPhysicsSimulationStepSizeEditor();
 			break;
 		case Resolution_Factor:
@@ -48,58 +48,58 @@ public class SimulationTabController extends TabsControllers {
 		case Type:
 			//TODO
 			break;
-		case Morphology_Location:
+		case Morphology:
 			//TODO
 			break;
-		case Controller_Location:
+		case Controller:
 			//TODO
 			break;
-		case Plane_Size:
+		case Plane_size:
 			SimulationTab.addPlaneSizeEditor();
 			break;
-		case Plane_Texture:
+		case Plane_texture:
 			SimulationTab.addPlaneTextureEditor();
 			break;
-		case Camera_Position:
+		case Camera_position:
 			SimulationTab.addCameraPositionEditor();
 			break;
-		case The_World_Is_Flat:
+		case The_world_is_flat:
 			SimulationTab.addTheWorldIsFlatEditor();
 			break;
-		case Has_Background_Scenery:
+		case Has_background_scenery:
 			SimulationTab.addHasBackgroundSceneryEditor();
 			break;
-		case Has_Heavy_Obstacles:
+		case Has_heavy_obstacles:
 			SimulationTab.addHasHeavyObstaclesEditor();
 			break;			
-		case Is_Frame_Grabbing_Active:
+		case Is_frame_grabbing_active:
 			SimulationTab.addIsFrameGrabbingActiveEditor();
 			break;
-		case Linear_Velocity:
+		case Linear_velocity:
 			SimulationTab.addDampingLinearVelocityEditor();
 			break;
-		case Angular_Velocity:
+		case Angular_velocity:
 			SimulationTab.addDampingAngularVelocityEditor();
 			break;
-		case Realistic_Collision:
+		case Realistic_collision:
 			SimulationTab.addRealisticCollisionEditor();
 			break;
 		case Gravity:
 			SimulationTab.addGravityEditor();
 			break;
-		case Constraint_Force_Mix:
+		case Constraint_rorce_mix:
 			SimulationTab.addConstraintForceMixEditor();
 			break;
-		case Error_Reduction_Parameter:
+		case Error_reduction_parameter:
 			SimulationTab.addErrorReductionParameterEditor();
 			break;
-		case Use_Mouse_Event_Queue:
+		case Use_mouse_event_queue:
 			SimulationTab.addUseMouseEventQueueEditor();
 			break;
-		case Synchronize_With_Controllers:
+		case Synchronize_with_controllers:
 			SimulationTab.addSynchronizeWithControllersEditor();
 			break;
-		case Physics_Simulation_Controller_Step_Factor:
+		case Physics_simulation_controller_step_factor:
 			SimulationTab.addPhysicsSimulationControllerStepFactor();
 			break;
 		default: throw new Error("The node "+ selectedNode + "is not supported yet.");

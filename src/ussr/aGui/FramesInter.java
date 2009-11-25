@@ -18,6 +18,11 @@ public interface FramesInter {
 	public final String DIRECTORY_USSR_ICON = "resources/mainFrame/icons/jpg/ussrIcon.jpg";
 	
 	/**
+	 * Title for USSR simulator.
+	 */
+	public final String USSR_TITLE = "Unified Simulator for Self-Reconfigurable Robots";
+	
+	/**
 	 * Screen(display) size.
 	 */
 	public Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
