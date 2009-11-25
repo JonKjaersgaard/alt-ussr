@@ -3,7 +3,7 @@
 <ROBOT>
 <TYPE>ATRON</TYPE>
 <NUMBER_OF_MODULES>4</NUMBER_OF_MODULES>
-<MORPHOLOGY_LOCATION>samples/simulations/atron/morphologies/snakeSimulationMorphology.xml</MORPHOLOGY_LOCATION>
+<MORPHOLOGY_LOCATION>samples/simulations/atron/robots/snakeSimulationMorphology.xml</MORPHOLOGY_LOCATION>
 <CONTROLLER_LOCATION>ussr.samples.atron.simulations.ATRONSnakeController2</CONTROLLER_LOCATION>
 </ROBOT>
 <WORLD_DESCRIPTION>
