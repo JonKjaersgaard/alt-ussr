@@ -53,7 +53,6 @@ import ussr.util.WindowSaver;
 import ussr.visualization.DataDumper;
 import ussr.visualization.VisualizationParameters;
 
-import com.jme.app.AbstractGame;
 import com.jme.input.InputHandler;
 import com.jme.input.KeyInput;
 import com.jme.input.MouseInput;
@@ -62,7 +61,6 @@ import com.jme.input.action.InputActionEvent;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jme.scene.TriMesh;
-import com.jme.scene.shape.AxisRods;
 import com.jme.system.DisplaySystem;
 import com.jme.system.GameSettings;
 import com.jme.system.PropertiesGameSettings;
@@ -669,10 +667,5 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             oneShotObserverQueue.add(observer);
         }
     }
-    
-    public  void moveDisplay(int displayX, int displayY){
-    	display.moveWindowTo(displayX, displayY);
     }
-
-}
 
