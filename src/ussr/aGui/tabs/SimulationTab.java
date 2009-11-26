@@ -398,16 +398,21 @@ public class SimulationTab extends Tabs {
 	public static void addMorphologyEditor() {
 		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
 		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
-
+        System.out.println("BOOO"+robotMorphologyLocation);
 		
 		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
 		
 		jPanelEditor.add(MainFrames.initOpenButton(fcOpenFrame));
 	}
 	
+	private static String robotMorphologyLocation;
 	
 	
 
+
+	public static void setRobotMorphologyLocation(String robotMorphologyLocation) {
+		SimulationTab.robotMorphologyLocation = robotMorphologyLocation;
+	}
 
 	private static javax.swing.JTree jTree1;
 	private static javax.swing.JScrollPane jScrollPaneTree;

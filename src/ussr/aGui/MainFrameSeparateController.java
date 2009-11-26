@@ -386,4 +386,27 @@ public class MainFrameSeparateController extends GeneralController {
 	public static void setRendererControl(RendererControlInter rendererControl) {
 		MainFrameSeparateController.rendererControl = rendererControl;
 	}
+
+	public static void jCheckBoxMenuItemInteractionActionPerformed(JCheckBoxMenuItem checkBoxMenuItemInteraction) {
+		
+		if (checkBoxMenuItemInteraction.isSelected()){			
+			MainFrames.setJTabbedPaneFirstVisible(true);
+			//TODO MAYBE ADD RESIZING HERE OR ACTIVATE RESIGIN HERE
+		}else {				
+			MainFrames.setJTabbedPaneFirstVisible(false);
+			//TODO MAYBE ADD RESIZING HERE OR ACTIVATE RESIGIN HERE
+		}
+		
+	}
+
+	public static void jCheckBoxMenuItemDebuggingActionPerformed(JCheckBoxMenuItem checkBoxMenuItemDebugging) {
+		if (checkBoxMenuItemDebugging.isSelected()){			
+			MainFrames.setJTabbedPaneSecondVisible(true);
+			//TODO MAYBE ADD RESIZING HERE OR ACTIVATE RESIGIN HERE
+		}else {				
+			MainFrames.setJTabbedPaneSecondVisible(false);
+			//TODO MAYBE ADD RESIZING HERE OR ACTIVATE RESIGIN HERE
+		}
+		
+	}
 }

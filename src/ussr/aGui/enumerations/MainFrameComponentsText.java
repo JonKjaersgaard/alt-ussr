@@ -12,15 +12,15 @@ public enum MainFrameComponentsText {
 	/*METHOD: setText()*/
 	
 	     /*JMenues*/
-	     File,Render,
+	     File,Render,Window,
 	
 	     /*JMenuItems*/
 	       //File Menu 
 	       Open,Save,Exit, 
            //Render Menu
 	       Physics, Wire_frame, Bounds,Normals, Lights,Buffer_depth, 
-	
-	
+	       // Window Menu 
+	       Focus_on,Interaction,Debugging,
 	/*METHOD: setToolTipText()*/
 	
 	      /*JToolBars*/

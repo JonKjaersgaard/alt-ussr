@@ -109,27 +109,35 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	public void initJMenuBar(int width, int height){
 
-		jMenuBarMain = new javax.swing.JMenuBar();	
-		jMenuBarMain.setPreferredSize(new Dimension(width,height));
+		/*Instantiate components*/
+		jMenuBarMain = new javax.swing.JMenuBar();			
 	
 		jMenuFile = new javax.swing.JMenu();
-		jMenuRender = new javax.swing.JMenu();		
-
 		jMenuItemOpen = new javax.swing.JMenuItem();
-
 		jMenuItemExit = new javax.swing.JMenuItem();		
 		jMenuItemSave = new javax.swing.JMenuItem();
 		
 		jSeparator1 = new javax.swing.JSeparator();
-		jSeparator2 = new javax.swing.JSeparator();			
-
+		jSeparator2 = new javax.swing.JSeparator();	
+		
+		jMenuRender = new javax.swing.JMenu();	
+		
 		jCheckBoxMenuItemPhysics = new javax.swing.JCheckBoxMenuItem();
 		jCheckBoxMenuItemWireFrame = new javax.swing.JCheckBoxMenuItem();
 		jCheckBoxMenuBounds = new javax.swing.JCheckBoxMenuItem();
 		jCheckBoxMenuItemNormals = new javax.swing.JCheckBoxMenuItem();
 		jCheckBoxMenuItemLights = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuBufferDepth = new javax.swing.JCheckBoxMenuItem();
+		jCheckBoxMenuBufferDepth = new javax.swing.JCheckBoxMenuItem();	
+		
+		jMenuWindow = new javax.swing.JMenu();
+		jMenuFocusOn = new javax.swing.JMenu();
+		
+		jCheckBoxMenuItemInteraction= new javax.swing.JCheckBoxMenuItem();
+		jCheckBoxMenuItemDebugging = new javax.swing.JCheckBoxMenuItem();
 
+        /*Description of components*/
+		jMenuBarMain.setPreferredSize(new Dimension(width,height));
+		
 		jMenuFile.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.File));
 
 		jMenuItemOpen.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Open));
@@ -226,7 +234,32 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuRender.add(jCheckBoxMenuBufferDepth);
 
 		jMenuBarMain.add(jMenuRender);
-
+		
+		
+		jMenuWindow.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Window));
+		
+		jMenuFocusOn.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Focus_on));
+		
+		jCheckBoxMenuItemInteraction.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Interaction));
+		jCheckBoxMenuItemInteraction.setSelected(true);
+		jCheckBoxMenuItemInteraction.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.jCheckBoxMenuItemInteractionActionPerformed(jCheckBoxMenuItemInteraction);
+			}
+		});
+		jMenuFocusOn.add(jCheckBoxMenuItemInteraction);
+		jCheckBoxMenuItemDebugging.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Debugging));
+		jCheckBoxMenuItemDebugging.setSelected(true);
+		jCheckBoxMenuItemDebugging.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.jCheckBoxMenuItemDebuggingActionPerformed(jCheckBoxMenuItemDebugging);
+			}
+		});
+		jMenuFocusOn.add(jCheckBoxMenuItemDebugging);
+		
+		jMenuWindow.add(jMenuFocusOn);
+		
+		jMenuBarMain.add(jMenuWindow);
 		setJMenuBar(jMenuBarMain); 
 	}
 
@@ -523,6 +556,21 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		return jTabbedPaneFirst;
 	}	
 
+	/**
+	 * Controls visibility of the first tabbed pane.
+	 * @param visible, true for being visible.
+	 */
+	public static void setJTabbedPaneFirstVisible(boolean visible) {
+     jTabbedPaneFirst.setVisible(visible);
+	}
+	
+	/**
+	 * Controls visibility of the second tabbed pane.
+	 * @param visible, true for being visible.
+	 */
+	public static void setJTabbedPaneSecondVisible(boolean visible) {
+		 jTabbedPaneSecond.setVisible(visible);
+	}
 
 	/**
 	 * Returns the toolbar for general control of simulation and mainframe.
@@ -531,18 +579,18 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public static javax.swing.JToolBar getJToolBarGeneralControl() {
 		return jToolBarGeneralControl;
 	}
-
 	
 	/*Declaration of MainFrame components*/
 	private static javax.swing.JMenuBar jMenuBarMain;
-	private javax.swing.JMenu jMenuFile,jMenuRender;
+	private javax.swing.JMenu jMenuFile,jMenuRender,jMenuWindow,jMenuFocusOn;
 
 	private javax.swing.JMenuItem jMenuItemExit;
 	private static javax.swing.JMenuItem jMenuItemOpen,jMenuItemSave;
 
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemPhysics,jCheckBoxMenuItemWireFrame,jCheckBoxMenuBounds,
-	                                     jCheckBoxMenuItemNormals,jCheckBoxMenuItemLights,jCheckBoxMenuBufferDepth;
-	                                 
+	                                     jCheckBoxMenuItemNormals,jCheckBoxMenuItemLights,jCheckBoxMenuBufferDepth,
+	                                     jCheckBoxMenuItemInteraction,jCheckBoxMenuItemDebugging;
+	
 	private javax.swing.JSeparator jSeparator1,jSeparator2;
 
 	private javax.swing.JToolBar.Separator jToolBarSeparator3,jToolBarSeparator4,jToolBarSeparator5;
