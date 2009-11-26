@@ -12,7 +12,7 @@ import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
-import ussr.remote.facade.SimulationRendererControlInter;
+import ussr.remote.facade.RendererControlInter;
 
 
 /**
@@ -24,7 +24,7 @@ public class MainFrameSeparateController extends GeneralController {
 	/**
 	 * Remote version of rendering control object.
 	 */
-	private static SimulationRendererControlInter rendererControl;
+	private static RendererControlInter rendererControl;
 
 	/**
 	 * Executes closing of main window(frame) and simulation by terminating Java Virtual Machines.
@@ -177,7 +177,14 @@ public class MainFrameSeparateController extends GeneralController {
 	 * @param jCheckBoxMenuItemPhysics, component in GUI.
 	 */
 	public static void jCheckBoxMenuItemPhysicsActionPerformed(JCheckBoxMenuItem jCheckBoxMenuItemPhysics) {       
-
+       
+		//FIXME
+		/*try {
+			rendererControl.moveDisplayTo();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 		try {
 			if (rendererControl.isShowingPhysics() == false ){                             
 				jCheckBoxMenuItemPhysics.setSelected(true);
@@ -291,7 +298,7 @@ public class MainFrameSeparateController extends GeneralController {
 	 * @param tabs, container of all tabs in main frame.
 	 */
 	public static void jButtonConstructRobotActionPerformed(JToggleButton jToggleButtonConstructRobot, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs ) {
-
+		
 		/*Check if tabs are defined*/
 		TabsInter constructRobotTab = getTabByTitle(MainFramesInter.CONSTRUCT_ROBOT_TAB_TITLE,tabs);
 		TabsInter assignBehaviorsTab = getTabByTitle(MainFramesInter.ASSIGN_BEHAVIORS_TAB_TITLE,tabs);
@@ -376,7 +383,7 @@ public class MainFrameSeparateController extends GeneralController {
 	 * Sets renderer control of remote physics simulation for this controller.
 	 * @param rendererControl, renderer control of remote physics simulation.
 	 */
-	public static void setRendererControl(SimulationRendererControlInter rendererControl) {
+	public static void setRendererControl(RendererControlInter rendererControl) {
 		MainFrameSeparateController.rendererControl = rendererControl;
 	}
 }

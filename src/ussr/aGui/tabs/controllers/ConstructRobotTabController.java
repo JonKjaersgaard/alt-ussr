@@ -30,7 +30,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 * @param button, button selected in the group of radio button.
 	 */
 	public static void jButtonGroupActionPerformed(AbstractButton button ) {
-
+	
 		String chosenModularRobot = button.getText();			
 		chosenMRname = SupportedModularRobots.valueOf(chosenModularRobot.toUpperCase());
 

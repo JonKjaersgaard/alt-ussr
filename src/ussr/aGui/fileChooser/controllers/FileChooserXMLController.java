@@ -47,7 +47,7 @@ public class FileChooserXMLController extends FileChooserController {
 							throw new Error("Failed to run simulation file located at "+ fileDirectoryName+ " , due to remote exception");
 						}
 					}
-				}.start();
+				}.start();	
 				break;			
 			case ROBOT:
 				try {
@@ -60,6 +60,7 @@ public class FileChooserXMLController extends FileChooserController {
 			}
 			//close the frame(window)          
 			fileChooserFrame.dispose();
+
 		}else if (command.equalsIgnoreCase(ActionCommands.CANCELSELECTION.toString())){//Cancel pressed			
 			fileChooserFrame.dispose();//close the frame(window) 	  			
 		}	
