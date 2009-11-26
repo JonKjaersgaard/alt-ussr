@@ -12,7 +12,7 @@ import ussr.physics.jme.JMESimulation;
  * Wrapper class for remote objects of rendering control.
  * @author Konstantinas
  */
-public class RendererControlWrapper extends UnicastRemoteObject implements SimulationRendererControlInter {
+public class RendererControlWrapper extends UnicastRemoteObject implements RendererControlInter {
 
 	/**
 	 *  JME level simulation.
@@ -146,5 +146,9 @@ public class RendererControlWrapper extends UnicastRemoteObject implements Simul
 	 */
 	public void setShowDepth(boolean showDepth)throws RemoteException{
 		jmeSimulation.setShowDepth(showDepth);
+	}
+	
+	public void moveDisplayTo()throws RemoteException{
+		jmeSimulation.moveDisplayTo();
 	}
 }

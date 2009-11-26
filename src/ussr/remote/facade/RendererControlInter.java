@@ -9,7 +9,7 @@ import com.jme.scene.state.WireframeState;
  * Remote version of rendering control.
  * @author Konstantinas
  */
-public interface SimulationRendererControlInter extends Remote {
+public interface RendererControlInter extends Remote {
 
 	/**
 	 * Sets the state of showing physics.
@@ -101,6 +101,8 @@ public interface SimulationRendererControlInter extends Remote {
 	 *  Sets the state of showing the depth of the buffer.
 	 * @param showDepth, the state of showing the depth of the buffer.
 	 */
-	public void setShowDepth(boolean showDepth)throws RemoteException;	
+	public void setShowDepth(boolean showDepth)throws RemoteException;
+	
+	public void moveDisplayTo()throws RemoteException;
 	
 }

@@ -89,7 +89,7 @@ public interface RemotePhysicsSimulation extends Remote {
 	 * Returns the object for controlling rendering of remote simulation.
 	 * @return object, for controlling rendering of remote simulation. 
 	 */
-	public SimulationRendererControlInter getRendererControl()throws RemoteException;
+	public RendererControlInter getRendererControl()throws RemoteException;
 	
 	/**
 	 * Returns the object for building modular robot in remote simulation.
@@ -112,4 +112,5 @@ public interface RemotePhysicsSimulation extends Remote {
 	 * @param control,the object for managing GUI calls from remote simulation side
 	 */
 	public void setGUICallbackControl(GUICallbackControl control)throws RemoteException;
+	
 }

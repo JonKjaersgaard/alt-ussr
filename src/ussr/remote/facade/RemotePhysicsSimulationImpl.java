@@ -82,7 +82,7 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 	 * Returns the object for controlling rendering of remote simulation.
 	 * @return object, for controlling rendering of remote simulation. 
 	 */
-	public SimulationRendererControlInter getRendererControl() throws RemoteException{
+	public RendererControlInter getRendererControl() throws RemoteException{
 		return new RendererControlWrapper((JMESimulation)simulation);
 	}
 
@@ -121,4 +121,6 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 	public static GUICallbackControl getGUICallbackControl() throws RemoteException {
 		return guiCallbackControl;
 	}
+
+
 }

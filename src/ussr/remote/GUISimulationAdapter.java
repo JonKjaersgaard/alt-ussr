@@ -76,8 +76,7 @@ public class GUISimulationAdapter {
 				}
 			}
 		}.start();
-
-
+		
 		// Obtain a reference to remote PhysicsSimulation object (must wait for it to be instantiated remotely)
 		RemotePhysicsSimulation sim = null;
 		while(sim==null) {
@@ -104,5 +103,6 @@ public class GUISimulationAdapter {
 		GeneralController.setBuilderControl(remotePhysicsSimulation.getBuilderControl());
 		MainFrameSeparate.setMainFrameSeparateEnabled(true);
 		SimulationTab.setTabVisible(true);
+
 	}
 }
