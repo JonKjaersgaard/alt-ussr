@@ -39,4 +39,5 @@ public interface GUICallbackControl extends Remote {
 	 * @param text, the text for hint panel to display.
 	 */
 	public void updateHintPanelAssignBehaviorsTab(HintPanelTypes hintPanelTypes, String text)throws RemoteException;
+	
 }

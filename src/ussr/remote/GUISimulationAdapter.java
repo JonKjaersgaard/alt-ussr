@@ -91,6 +91,7 @@ public class GUISimulationAdapter {
 		}
 
 		callBackGUI(sim);
+
 	}
 	
 	/**
@@ -100,7 +101,7 @@ public class GUISimulationAdapter {
 		remotePhysicsSimulation.setGUICallbackControl(new GUICallbackControlImpl() );
 		GeneralController.setRemotePhysicsSimulation(remotePhysicsSimulation);
 		MainFrameSeparateController.setRendererControl(remotePhysicsSimulation.getRendererControl());
-		GeneralController.setBuilderController(remotePhysicsSimulation.getBuilderControl());
+		GeneralController.setBuilderControl(remotePhysicsSimulation.getBuilderControl());
 		MainFrameSeparate.setMainFrameSeparateEnabled(true);
 		SimulationTab.setTabVisible(true);
 	}

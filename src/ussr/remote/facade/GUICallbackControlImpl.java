@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import ussr.aGui.enumerations.HintPanelTypes;
+import ussr.aGui.tabs.SimulationTab;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.enumerations.ConstructionTools;
@@ -56,5 +57,6 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 	public void updateHintPanelAssignBehaviorsTab(HintPanelTypes hintPanelTypes, String text)throws RemoteException{
 		AssignBehaviorsTabController.updateHintPanel(hintPanelTypes, text);
 	}
+	
 
 }
