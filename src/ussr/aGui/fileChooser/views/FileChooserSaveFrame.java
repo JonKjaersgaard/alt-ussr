@@ -33,8 +33,7 @@ public class FileChooserSaveFrame extends FileChooserFrame  {
 	/**
 	 * Changes several components of file chooser so that it is Save dialog.
 	 */
-	private void changeToSaveDialog(){
-		setUSSRicon(this);
+	private void changeToSaveDialog(){		
 		jFileChooserCustomized.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);	
 		setTitle("Save");
 		jFileChooserCustomized.addActionListener(new java.awt.event.ActionListener() {
@@ -43,10 +42,7 @@ public class FileChooserSaveFrame extends FileChooserFrame  {
 
 			}
 		});		
-	}	
-
-
-
+	}
 
 	/**
 	 * Starts the window of file chooser in the form of Save dialog.

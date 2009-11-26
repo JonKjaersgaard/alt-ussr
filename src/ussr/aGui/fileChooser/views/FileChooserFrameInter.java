@@ -6,16 +6,32 @@ import ussr.aGui.FramesInter;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
 
+/**
+ * Supports different file choosers with common constants and methods.  
+ * @author Konstantinas
+ */
 public interface FileChooserFrameInter extends FramesInter {
 
+	/**
+	 * Default file extension for file filter.
+	 */
 	public final String DEFAULT_FILE_EXTENSION =".xml";
 	
+	/**
+	 * File extension descriptions.
+	 */
 	public final String DEFAULT_FILE_DESCRIPTION = "Simulation",
 	                    ROBOT_FILE_DESCRIPTION = "Robot"; 
 	
+	/**
+	 * Default directory for file choosers to open.
+	 */
 	public final String DEFAULT_DIRECTORY = "samples/simulations";
 	         
 	
+	/**
+	 * Default controller for XML processing. 
+	 */
 	public final FileChooserControllerInter FC_XML_CONTROLLER = new FileChooserXMLController();
 	
 

@@ -28,22 +28,22 @@ public interface FramesInter {
 	public Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	/**
-	 * Width of the screen(display).
+	 * Width of the screen(display). Fails to work on several displays and is covering task bar.
 	 */
 	public final int SCREEN_WIDTH = (int)SCREEN_SIZE.getWidth();
 	
 	/**
-	 * Height of the screen(display).
+	 * Height of the screen(display). Fails to work on several displays and is covering task bar.
 	 */
 	public final int SCREEN_HEIGHT = (int)SCREEN_SIZE.getHeight();
 	
 	/**
-	 * Bounds of the screen (not including task bar).
+	 * Bounds of the screen (not including task bar). Works even with several displays.
 	 */
 	public final Rectangle MAX_SCREEN_VIABLE_BOUNDS = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 	
 	/**
-	 * Width and height of the screen (not including task bar).
+	 * Width and height of the screen (not including task bar).Works even with several displays.
 	 */
 	public final double SCREEN_VIABLE_WIDTH = MAX_SCREEN_VIABLE_BOUNDS.getWidth(),
 	                    SCREEN_VIABLE_HEIGHT = MAX_SCREEN_VIABLE_BOUNDS.getHeight();
@@ -81,14 +81,14 @@ public interface FramesInter {
 	
 	
 	
+	
+	
+	
+	
 	/**
 	 * Dominating(common) height of most components.
 	 */
 	public final int COMMON_HEIGHT = 32;
-	
-	
-	
-	
 	
 	/**
 	 * Width and height of buttons.
