@@ -669,6 +669,10 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             oneShotObserverQueue.add(observer);
         }
     }
+    
+    public  void moveDisplay(int displayX, int displayY){
+    	display.moveWindowTo(displayX, displayY);
+    }
 
 }
 
