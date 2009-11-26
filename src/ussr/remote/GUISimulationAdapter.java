@@ -97,7 +97,7 @@ public class GUISimulationAdapter {
 	 * Sets remote objects of simulation in GUI and adapts it to simulation.
 	 */
 	private static void callBackGUI(RemotePhysicsSimulation remotePhysicsSimulation)throws IOException {
-		remotePhysicsSimulation.setGUICallbackControl(new GUICallbackControlImpl() );
+		remotePhysicsSimulation.setGUICallbackControl(new GUICallbackControlImpl());
 		GeneralController.setRemotePhysicsSimulation(remotePhysicsSimulation);
 		MainFrameSeparateController.setRendererControl(remotePhysicsSimulation.getRendererControl());
 		GeneralController.setBuilderControl(remotePhysicsSimulation.getBuilderControl());

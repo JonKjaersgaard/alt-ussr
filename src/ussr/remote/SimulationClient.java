@@ -93,7 +93,9 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
 	public void start(String simulationXMLFile) throws RemoteException {  
     	SimulationXMLFileLoader simulation = new SimulationXMLFileLoader(simulationXMLFile);
         this.simulation = SimulationXMLFileLoader.getPhysicsSimulation();
-        simulation.start(true);
+ /*       System.out.println("LOCATION:"+ simulation.getRobotMorphologyLocation());
+        SimulationTab.setRobotMorphologyLocation(simulation.getRobotMorphologyLocation());*/        
+        simulation.start(true);       
     }
 
     public void start(Class<?> mainClass) throws RemoteException {

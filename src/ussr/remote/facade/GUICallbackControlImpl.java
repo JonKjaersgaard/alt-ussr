@@ -58,5 +58,6 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 		AssignBehaviorsTabController.updateHintPanel(hintPanelTypes, text);
 	}
 	
+	
 
 }
