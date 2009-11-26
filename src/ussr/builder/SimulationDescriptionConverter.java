@@ -11,10 +11,8 @@ import ussr.physics.PhysicsParameters.Material;
 
 public class SimulationDescriptionConverter {
 
-	private Map<XMLTagsUsed,String> simulationWorldDescription;
-
-
-	private Map<XMLTagsUsed,String> simulationPhysicsParameters;
+	private Map<XMLTagsUsed,String> simulationWorldDescription,simulationPhysicsParameters;
+	                              
 
    private Map<String,TextureDescription> containerPlaneTextureDesc = new Hashtable<String, TextureDescription>(); 
 

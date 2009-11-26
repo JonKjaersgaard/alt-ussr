@@ -14,4 +14,17 @@ public enum SupportedModularRobots {
 	ODIN,
 	/*CKBOT is homogeneous*/
 	CKBOTSTANDARD; //PARTIALLY SUPPORTED
+	
+    public static String getConsistentMRName (String supportedModularRobot){
+    
+    	SupportedModularRobots[] supportedMRobots = SupportedModularRobots.values();
+    	for (int newIndex=0; newIndex<supportedMRobots.length; newIndex++){
+    		String currentMR =supportedMRobots[newIndex].toString();  
+    		if (supportedModularRobot.contains(currentMR)||supportedModularRobot.toLowerCase().contains(currentMR.toLowerCase())){
+    			return currentMR;
+    		};
+    	}
+    	throw new Error("Modular robot named as "+supportedModularRobot+ "is not supported yet");
+    }
+    
 }

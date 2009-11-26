@@ -1,23 +1,10 @@
 package ussr.builder.helpers;
 
-import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import ussr.description.geometry.RotationDescription;
-import ussr.description.geometry.VectorDescription;
-import ussr.description.setup.ModuleConnection;
-import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 import ussr.physics.PhysicsModuleComponent;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
-import ussr.samples.atron.ATRONBuilder;
-import ussr.samples.ckbot.CKBotSimulation;
-import ussr.samples.mtran.MTRANSimulation;
-import ussr.samples.odin.OdinBuilder;
-
 import com.jme.math.Matrix3f;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
@@ -241,49 +228,4 @@ public class BuilderHelper {
 		}
 		return 1000 /*means connector extraction failed*/;
 	}
-
-	
-
-	//FIXME FIND BETTER PLACE FOR ME
-	public static Class[] getClasses(String pckgname)
-	throws ClassNotFoundException {
-		ArrayList<Class> classes = new ArrayList<Class>();
-		// Get a File object for the package
-		File directory = null;
-		try {
-			ClassLoader cld = Thread.currentThread().getContextClassLoader();
-			if (cld == null) {
-				throw new ClassNotFoundException("Can't get class loader.");
-			}
-			//String path = '/' + pckgname.replace('.', '/');
-			String path = pckgname.replace('.', '/');
-			URL resource = cld.getResource(path);
-			if (resource == null) {
-				throw new ClassNotFoundException("No resource for " + path);
-			}
-			directory = new File(resource.getFile());
-		} catch (NullPointerException x) {
-			throw new ClassNotFoundException(pckgname + " (" + directory
-					+ ") does not appear to be a valid package");
-		}
-		if (directory.exists()) {
-			// Get the list of the files contained in the package
-			String[] files = directory.list();
-			for (int i = 0; i < files.length; i++) {
-				// we are only interested in .class files
-				if (files[i].endsWith(".class")) {
-					// removes the .class extension
-					classes.add(Class.forName(pckgname + '.'
-							+ files[i].substring(0, files[i].length() - 6)));
-				}
-			}
-		} else {
-			throw new ClassNotFoundException(pckgname
-					+ " does not appear to be a valid package");
-		}
-		Class[] classesA = new Class[classes.size()];
-		classes.toArray(classesA);
-		return classesA;
-	}
-
 }

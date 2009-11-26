@@ -26,6 +26,14 @@ public class InSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate{
         
     }
     
+    /**
+	  * Returns instance of XML processing class.
+	 * @return  current instance of XML processing.
+	 */
+    protected  InSimulationXMLSerializer getInstance(){
+    	return this;
+    }
+    
     @Override
     protected int numberOfSimulatedModules() {
         return simulation.getModules().size();

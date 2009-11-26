@@ -41,11 +41,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
 
 	
 	protected String fileDirectoryName;
-	/**
-	 * The string representation of XML file extension.
-	 */
-	private final static String XML_EXTENSION = ".xml";
-		
+	
 	/**
 	 * The string representation of XML encoding
 	 */

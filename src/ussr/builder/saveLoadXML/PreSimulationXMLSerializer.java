@@ -91,4 +91,10 @@ public class PreSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate {
 		 throw new Error("Pre-sim deserializer does not support serialization");
 	}
 
+
+	@Override
+	protected InSimulationXMLSerializer getInstance() {
+		 throw new Error("Pre-sim deserializer does not support serialization");
+	}
+
 }

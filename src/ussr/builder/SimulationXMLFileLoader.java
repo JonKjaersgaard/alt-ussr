@@ -27,8 +27,8 @@ import ussr.samples.GenericSimulation;
 public class SimulationXMLFileLoader extends GenericSimulation implements Serializable {
 	
 	
-	private static Map<XMLTagsUsed,String> simulationWorldDescription;
-	private static Map<XMLTagsUsed,String> simulationPhysicsParameters; 
+	private static Map<XMLTagsUsed,String> simulationWorldDescription,simulationPhysicsParameters,
+                                           robotDescription; 
 	private static SimulationDescriptionConverter descriptionConverter;
 	
 	/**
@@ -65,11 +65,13 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Serial
 		/*Get values from XML file*/
 		simulationWorldDescription = xmlLoaderSimulation.getSimulationWorldDescriptionValues();
         simulationPhysicsParameters = xmlLoaderSimulation.getSimulationPhysicsValues();
+        robotDescription =  xmlLoaderSimulation.getRobotDescriptionValues();
+        
         
         /*Converter for converting values from String into corresponding type used in USSR*/
         descriptionConverter =  new SimulationDescriptionConverter(simulationWorldDescription,simulationPhysicsParameters); 
         
-        String controllerLocation = simulationWorldDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
+        String controllerLocation = robotDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
         
         //String controllerLocation  = "";
         List<String> controllerNames = new ArrayList<String>();        
@@ -81,24 +83,15 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Serial
         world = createWorld();
         
         /* Load the robot */
-        String robotMorphologyLocation = simulationWorldDescription.get(XMLTagsUsed.MORPHOLOGY_LOCATION);
+        String robotMorphologyLocation = robotDescription.get(XMLTagsUsed.MORPHOLOGY_LOCATION);
         
         SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);       
         xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,robotMorphologyLocation);
       
         simulation.setWorld(world); 
 	    
-		
-	    //WorldDescription world = this.createGenericSimulationWorld(null);
-       // world = createWorld();
-        
-        
-        
-        /* Load the robot */
-        //SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);
-        //xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,simulationXMLfileName);
         /* Connect modules */
-        world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
+        //world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
 	}
 	
 	public static SimulationDescriptionConverter getDescriptionConverter() {

@@ -15,20 +15,23 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import com.jme.math.Quaternion;
 
+import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.FileDirectoryHelper;
+import ussr.builder.helpers.StringProcessingHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.BoxDescription;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Module;
 import ussr.physics.PhysicsParameters;
+import ussr.physics.jme.JMESimulation;
 
 /**
  * This class is responsible for current definition of the XML format of saving and loading
- * for builder (QPSS).
+ * for builder.
  * @author Konstantinas
  */  
 public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
@@ -56,7 +59,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	 * Saves the data about the robot in simulation environment in XML file.
 	 * @param transformerHandler,the content handler used to print out XML format.
 	 */
-	private void  printRobotXML(TransformerHandler transformerHandler){
+	private void printRobotXML(TransformerHandler transformerHandler){
 		printFirstStartTag(transformerHandler, XMLTagsUsed.MODULES);
 		int amountModules = numberOfSimulatedModules();
 		/*For each module print out the start and end tags with relevant data*/
@@ -95,26 +98,23 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	private void printSimulationXML(TransformerHandler transformerHandler){
 		printFirstStartTag(transformerHandler, XMLTagsUsed.SIMULATION);		
 		String robotMorphologyFileLocation ="";
+		String moduleType ="";
 		try {
 
 			transformerHandler.startElement("","",XMLTagsUsed.ROBOT.toString(),EMPTY_ATT);
-
-			printSubTagsWithValue(transformerHandler, XMLTagsUsed.TYPE, getType(getModuleByIndex(0)));				
+            
+			
+			moduleType = StringProcessingHelper.covertToString(getType(getModuleByIndex(0)));		
+			
+			printSubTagsWithValue(transformerHandler, XMLTagsUsed.TYPE, moduleType.toCharArray());				
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.NUMBER_OF_MODULES, (""+getWorldDescription().getNumberOfModules()).toCharArray());
 			
-		
-		/*	//Extract only directory
-			String[] temporaryFileDirectoryName = fileDirectoryName.split("\\\\");
-			
-			for (int index=0;index<temporaryFileDirectoryName.length-1; index++){
-				directory = directory+temporaryFileDirectoryName[index]+"\\";
-			}*/
-			//System.out.println("dir"+fileDirectoryName);
-			
-			
 			String directory = FileDirectoryHelper.extractDirectory(fileDirectoryName);
+			robotMorphologyFileLocation = directory+DEFAULT_DIRECTORY_ROBOTS+"\\"+SupportedModularRobots.getConsistentMRName(moduleType).toLowerCase()+XML_EXTENSION;
+				
 			
-			robotMorphologyFileLocation = directory;//+ "morphologies"+"\\"+ BuilderHelper.getRandomInt();
+			
+			//robotMorphologyFileLocation = directory;//+ "morphologies"+"\\"+ BuilderHelper.getRandomInt();
 						
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.MORPHOLOGY_LOCATION, robotMorphologyFileLocation.toCharArray());
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.CONTROLLER_LOCATION, getControllerLocation(getModuleByIndex(0)));
@@ -155,13 +155,16 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 		}
 
 		printFirstEndTag(transformerHandler, XMLTagsUsed.SIMULATION);
-		
-		
-		//System.out.println(robotMorphologyFileLocation);
-		
-		//printOutXML(UssrXmlFileTypes.ROBOT,initializeTransformer(robotMorphologyFileLocation));
+	
+		getInstance().saveXMLfile(UssrXmlFileTypes.ROBOT, robotMorphologyFileLocation);
 				
 	}
+	
+	 /**
+	  * Returns instance of XML processing class.
+	 * @return  current instance of XML processing.
+	 */
+	protected abstract InSimulationXMLSerializer getInstance();
 	
 	/**
 	 * Returns module in simulation  environment by its index in the list of modules.
@@ -259,14 +262,11 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	}
 	
 	/**
-	 * Container for keeping simulation values of world description object.
+	 * Container for keeping simulation values of world description object, physics parameters object and robot desription.
 	 */
-	private Map<XMLTagsUsed, String> simulationWorldValues = new Hashtable<XMLTagsUsed, String>();
-	/**
-	 * Container for keeping simulation values of physics parameters object.
-	 */
-	private Map<XMLTagsUsed, String> simulationPhysicsValues = new Hashtable<XMLTagsUsed, String>();
-	
+	private Map<XMLTagsUsed, String> simulationWorldValues = new Hashtable<XMLTagsUsed, String>(),
+	                                 simulationPhysicsValues = new Hashtable<XMLTagsUsed, String>(),
+                                     robotDescription = new Hashtable<XMLTagsUsed, String>();
 	/**
      * Returns values of physics parameters object taken from xml file describing simulation.
 	 * @return values of physics parameters object taken from xml file describing simulation.
@@ -281,6 +281,14 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
      */
 	public Map<XMLTagsUsed, String> getSimulationWorldDescriptionValues() {
 		return simulationWorldValues;
+	}
+	
+	 /**
+     * Returns values of robot description object taken from xml file describing simulation.
+     * @return values of robot description object taken from xml file describing simulation.
+     */
+	public Map<XMLTagsUsed, String> getRobotDescriptionValues() {
+		return robotDescription;
 	}
 	
 	/**
@@ -298,8 +306,8 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 
 				Element firstElmnt = (Element) firstNode;				
 		
-				simulationWorldValues.put(XMLTagsUsed.MORPHOLOGY_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION));
-				simulationWorldValues.put(XMLTagsUsed.CONTROLLER_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.CONTROLLER_LOCATION));					
+				robotDescription.put(XMLTagsUsed.MORPHOLOGY_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION));
+				robotDescription.put(XMLTagsUsed.CONTROLLER_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.CONTROLLER_LOCATION));					
 			}
 		}		
 		

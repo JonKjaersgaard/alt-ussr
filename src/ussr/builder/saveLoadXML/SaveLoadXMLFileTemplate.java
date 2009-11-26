@@ -12,6 +12,16 @@ import ussr.builder.enumerations.XMLTagsUsed;
  */
 public interface SaveLoadXMLFileTemplate {
 	
+	/**
+	 * The string representation of XML file extension.
+	 */
+	public final static String XML_EXTENSION = ".xml";
+	
+	/**
+	 * Default directory for saving robot description xml files.
+	 */
+	public final static String DEFAULT_DIRECTORY_ROBOTS = "robots";
+	
 	/**	
 	 * Saves the data about simulation in chosen XML format file.
 	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
@@ -39,4 +49,10 @@ public interface SaveLoadXMLFileTemplate {
 	 * @return values of physics parameters object taken from xml file describing simulation.
 	 */
 	public Map<XMLTagsUsed, String> getSimulationPhysicsValues();
+	
+	 /**
+     * Returns values of robot description object taken from xml file describing simulation.
+     * @return values of robot description object taken from xml file describing simulation.
+     */
+	public Map<XMLTagsUsed, String> getRobotDescriptionValues();
 }
