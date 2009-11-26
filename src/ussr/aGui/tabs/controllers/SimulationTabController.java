@@ -14,7 +14,7 @@ import javax.swing.JSpinner;
 
 import ussr.aGui.MainFramesInter;
 import ussr.aGui.enumerations.TextureDescriptions;
-import ussr.aGui.enumerations.TreeElements;
+import ussr.aGui.enumerations.SimulationTabTreeElements;
 import ussr.aGui.tabs.SimulationTab;
 import ussr.physics.PhysicsParameters;
 
@@ -37,7 +37,7 @@ public class SimulationTabController extends TabsControllers {
 	   SimulationTab.getJPanelEditor().repaint();
 	
 
-		switch(TreeElements.valueOf(selectedNode.replace(" ", "_"))){
+		switch(SimulationTabTreeElements.valueOf(selectedNode.replace(" ", "_"))){
 		
 		case Physics_simulation_step_size:
 			SimulationTab.addPhysicsSimulationStepSizeEditor();
@@ -49,7 +49,7 @@ public class SimulationTabController extends TabsControllers {
 			//TODO
 			break;
 		case Morphology:
-			//TODO
+			SimulationTab.addMorphologyEditor();
 			break;
 		case Controller:
 			//TODO

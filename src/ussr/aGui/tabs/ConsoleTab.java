@@ -29,6 +29,7 @@ public class ConsoleTab extends Tabs  {
      */
 	public void initComponents() {		
 	     jTextAreaConsole = new javax.swing.JTextArea();
+	     jTextAreaConsole.setEditable(false);
 		((JScrollPane) super.jComponent).setViewportView(jTextAreaConsole);// add text area into scroll pane and return it.
 	}
 	

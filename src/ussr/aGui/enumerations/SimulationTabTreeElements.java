@@ -6,7 +6,7 @@ import ussr.builder.enumerations.XMLTagsUsed;
  * @author Konstantinas
  *
  */
-public enum TreeElements {
+public enum SimulationTabTreeElements {
 	//First Level Hierarchy	
 	Simulation(XMLTagsUsed.SIMULATION),
 	
@@ -53,7 +53,7 @@ public enum TreeElements {
 
 	private XMLTagsUsed xmlTagsUsed;
 
-	TreeElements(XMLTagsUsed xmlTagsUsed){
+	SimulationTabTreeElements(XMLTagsUsed xmlTagsUsed){
 		this.xmlTagsUsed=xmlTagsUsed;
 	}
 }

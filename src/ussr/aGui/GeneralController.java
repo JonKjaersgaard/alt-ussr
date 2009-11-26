@@ -24,7 +24,7 @@ public abstract class GeneralController {
 	 * Sets builder controller of remote simulation for this controller.
 	 * @param builderControl,builder controller of remote simulation.
 	 */
-	public static void setBuilderController(BuilderControlInter builderControl) {
+	public static void setBuilderControl(BuilderControlInter builderControl) {
 		GeneralController.builderControl = builderControl;
 	}
 	
