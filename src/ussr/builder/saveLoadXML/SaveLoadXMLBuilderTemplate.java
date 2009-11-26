@@ -112,8 +112,6 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 			String directory = FileDirectoryHelper.extractDirectory(fileDirectoryName);
 			robotMorphologyFileLocation = directory+DEFAULT_DIRECTORY_ROBOTS+"\\"+SupportedModularRobots.getConsistentMRName(moduleType).toLowerCase()+XML_EXTENSION;
 				
-			
-			
 			//robotMorphologyFileLocation = directory;//+ "morphologies"+"\\"+ BuilderHelper.getRandomInt();
 						
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.MORPHOLOGY_LOCATION, robotMorphologyFileLocation.toCharArray());

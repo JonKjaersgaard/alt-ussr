@@ -1,9 +1,12 @@
 package ussr.builder;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import ussr.aGui.tabs.SimulationTab;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.ControllerFactory;
@@ -15,6 +18,7 @@ import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
+import ussr.remote.facade.RemotePhysicsSimulationImpl;
 import ussr.samples.DefaultSimulationSetup;
 import ussr.samples.GenericModuleConnectorHelper;
 import ussr.samples.GenericSimulation;
@@ -24,13 +28,14 @@ import ussr.samples.GenericSimulation;
  *Input format: samples/atron/car.xml ussr.samples.atron.simulations.ATRONCarController1.
  * @author Konstantinas
  */
-public class SimulationXMLFileLoader extends GenericSimulation implements Serializable {
+public class SimulationXMLFileLoader extends GenericSimulation /*implements Serializable*/ {
 	
 	
 	private static Map<XMLTagsUsed,String> simulationWorldDescription,simulationPhysicsParameters,
                                            robotDescription; 
 	private static SimulationDescriptionConverter descriptionConverter;
 	
+
 	/**
 	 * Returns the robot in the simulation.
 	 */
@@ -73,7 +78,6 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Serial
         
         String controllerLocation = robotDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
         
-        //String controllerLocation  = "";
         List<String> controllerNames = new ArrayList<String>();        
         controllerNames.add(controllerLocation);
         ControllerFactory controllerFactory = new ControllerFactoryImpl(controllerNames);
@@ -84,11 +88,12 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Serial
         
         /* Load the robot */
         String robotMorphologyLocation = robotDescription.get(XMLTagsUsed.MORPHOLOGY_LOCATION);
+     
         
         SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);       
         xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,robotMorphologyLocation);
       
-        simulation.setWorld(world); 
+        simulation.setWorld(world);      
 	    
         /* Connect modules */
         //world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
@@ -110,5 +115,6 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Serial
 		world.setIsFrameGrabbingActive(descriptionConverter.covertIsFrameGrabbingActive());
 		return world;
 	}
+	
 
 }
