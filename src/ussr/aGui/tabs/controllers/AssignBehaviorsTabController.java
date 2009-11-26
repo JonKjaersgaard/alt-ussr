@@ -17,6 +17,7 @@ import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
+import ussr.builder.helpers.FileDirectoryHelper;
 import ussr.builder.labelingTools.LabelingTemplate;
 
 public class AssignBehaviorsTabController extends TabsControllers implements AssignBehaviorsTabInter {
@@ -75,7 +76,7 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 
 		Class[] classes = null;
 		try {
-			classes = BuilderHelper.getClasses(packageName);
+			classes = FileDirectoryHelper.getClasses(packageName);
 		} catch (ClassNotFoundException e) {
 			throw new Error ("The package named as: "+ packageName + "was not found in the directory ussr.builder.controllerAdjustmentTool");			
 		}		
