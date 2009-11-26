@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import ussr.aGui.tabs.SimulationTab;
-import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.ControllerFactory;
@@ -16,15 +13,12 @@ import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
-import ussr.description.setup.WorldDescription.CameraPosition;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
-import ussr.physics.PhysicsParameters;
-import ussr.physics.PhysicsSimulation;
 import ussr.samples.DefaultSimulationSetup;
 import ussr.samples.GenericModuleConnectorHelper;
 import ussr.samples.GenericSimulation;
-import ussr.samples.ObstacleGenerator;
+
 
 /**
  *Input format: samples/atron/car.xml ussr.samples.atron.simulations.ATRONCarController1.
