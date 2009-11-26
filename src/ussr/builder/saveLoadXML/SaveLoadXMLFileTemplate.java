@@ -54,5 +54,5 @@ public interface SaveLoadXMLFileTemplate {
      * Returns values of robot description object taken from xml file describing simulation.
      * @return values of robot description object taken from xml file describing simulation.
      */
-	public Map<XMLTagsUsed, String> getRobotDescriptionValues();
+	public  Map<XMLTagsUsed, String> getRobotDescriptionValues();
 }

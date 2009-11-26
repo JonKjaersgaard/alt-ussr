@@ -28,13 +28,17 @@ import ussr.samples.GenericSimulation;
  *Input format: samples/atron/car.xml ussr.samples.atron.simulations.ATRONCarController1.
  * @author Konstantinas
  */
-public class SimulationXMLFileLoader extends GenericSimulation /*implements Serializable*/ {
+public class SimulationXMLFileLoader extends GenericSimulation implements Serializable {
 	
 	
 	private static Map<XMLTagsUsed,String> simulationWorldDescription,simulationPhysicsParameters,
                                            robotDescription; 
 	private static SimulationDescriptionConverter descriptionConverter;
 	
+	private String robotMorphologyLocation;
+	public String getRobotMorphologyLocation() {
+		return robotMorphologyLocation;
+	}
 
 	/**
 	 * Returns the robot in the simulation.
@@ -87,7 +91,7 @@ public class SimulationXMLFileLoader extends GenericSimulation /*implements Seri
         world = createWorld();
         
         /* Load the robot */
-        String robotMorphologyLocation = robotDescription.get(XMLTagsUsed.MORPHOLOGY_LOCATION);
+        robotMorphologyLocation = robotDescription.get(XMLTagsUsed.MORPHOLOGY_LOCATION);
      
         
         SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);       
