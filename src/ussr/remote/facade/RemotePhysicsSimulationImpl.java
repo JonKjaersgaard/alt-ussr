@@ -5,6 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.saveLoadXML.InSimulationXMLSerializer;
+import ussr.builder.saveLoadXML.SaveLoadXMLTemplate;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsSimulation;
@@ -99,7 +100,7 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 	 * @param fileDirectoryName, the directory to save xml file to.
 	 */
 	public void saveToXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException {
-		InSimulationXMLSerializer saveXML = new InSimulationXMLSerializer((JMESimulation)simulation);
+		SaveLoadXMLTemplate saveXML = new InSimulationXMLSerializer((JMESimulation)simulation);
 		saveXML.saveXMLfile(ussrXmlFileType, fileDirectoryName);		
 	}
 
