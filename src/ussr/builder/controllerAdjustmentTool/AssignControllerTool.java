@@ -5,7 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.rmi.RemoteException;
 import com.jme.scene.Geometry;
-import ussr.aGui.enumerations.HintPanelTypes;
+
+import ussr.aGui.tabs.additionalResources.HintPanelTypes;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
