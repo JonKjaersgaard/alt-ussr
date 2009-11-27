@@ -25,6 +25,7 @@ import ussr.aGui.enumerations.TextureDescriptions;
 import ussr.aGui.enumerations.SimulationTabTreeNodes;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
+import ussr.aGui.helpers.RobotSpecification;
 
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelTypes;
@@ -397,10 +398,9 @@ public class SimulationTab extends Tabs {
 	public static void addMorphologyEditor() {
 		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
 		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
-        System.out.println("BOOO"+robotMorphologyLocation);
+        //System.out.println("BOOO"+RobotSpecification.getMorphologyLocation());
 		
-		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
-		
+		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,RobotSpecification.getMorphologyLocation());
 		jPanelEditor.add(MainFrames.initOpenButton(fcOpenFrame));
 	}
 	
@@ -422,6 +422,7 @@ public class SimulationTab extends Tabs {
 
 	private static javax.swing.JTree jTree1;
 	private static javax.swing.JScrollPane jScrollPaneTree;
+	private static javax.swing.JButton jButtonOpenMorphology ;
 
 	private static javax.swing.JSpinner  jSpinnerPlaneSize ;
 	private static javax.swing.JComboBox jComboBoxPlaneTexture;
