@@ -1,12 +1,10 @@
 package ussr.builder;
 
-import java.io.Serializable;
-import java.rmi.RemoteException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import ussr.aGui.tabs.SimulationTab;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.ControllerFactory;
@@ -18,9 +16,7 @@ import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
-import ussr.remote.facade.RemotePhysicsSimulationImpl;
 import ussr.samples.DefaultSimulationSetup;
-import ussr.samples.GenericModuleConnectorHelper;
 import ussr.samples.GenericSimulation;
 
 
@@ -28,7 +24,7 @@ import ussr.samples.GenericSimulation;
  *Input format: samples/atron/car.xml ussr.samples.atron.simulations.ATRONCarController1.
  * @author Konstantinas
  */
-public class SimulationXMLFileLoader extends GenericSimulation implements Serializable {
+public class SimulationXMLFileLoader extends GenericSimulation implements SimuliationXMLFileLoaderInter {
 	
 	
 	private static Map<XMLTagsUsed,String> simulationWorldDescription,simulationPhysicsParameters,
@@ -36,6 +32,7 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Serial
 	private static SimulationDescriptionConverter descriptionConverter;
 	
 	private String robotMorphologyLocation;
+	
 	public String getRobotMorphologyLocation() {
 		return robotMorphologyLocation;
 	}
