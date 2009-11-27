@@ -1,5 +1,6 @@
 package ussr.aGui.fileChooser.views;
 
+import java.io.File;
 import java.util.Map;
 
 import ussr.aGui.FramesInter;
@@ -47,4 +48,6 @@ public interface FileChooserFrameInter extends FramesInter {
 	 * @param fileDescriptionsAndExtensions, map containing mapping of file description to file extension.
 	 */
 	public void setFileFiltersWithDescriptions(Map<String, String> fileDescriptionsAndExtensions);
+	
+	public void setSelectedFile(File selectedFile);
 }

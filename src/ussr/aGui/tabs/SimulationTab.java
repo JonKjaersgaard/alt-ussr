@@ -4,6 +4,7 @@ package ussr.aGui.tabs;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -401,6 +402,8 @@ public class SimulationTab extends Tabs {
         //System.out.println("BOOO"+RobotSpecification.getMorphologyLocation());
 		
 		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,RobotSpecification.getMorphologyLocation());
+		fcOpenFrame.setSelectedFile(new File("some.xml"));
+		
 		jPanelEditor.add(MainFrames.initOpenButton(fcOpenFrame));
 	}
 	

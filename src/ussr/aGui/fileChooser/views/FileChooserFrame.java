@@ -1,4 +1,5 @@
 package ussr.aGui.fileChooser.views;
+import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -21,6 +22,11 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 	 * Used as flag to indicate that file chooser should open build in default directory.
 	 */
 	protected String defaultDirectory = "";
+	
+	/**
+	 * Default selected file
+	 */
+	private File selectedFile = new File("");
 	
 	/**
 	 * The file chooser appearance, which is integrated into the frame.
@@ -66,6 +72,7 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 		getContentPane().setLayout(new java.awt.FlowLayout());			
 		getContentPane().add(jFileChooserCustomized);
 		jFileChooserCustomized.setAcceptAllFileFilterUsed(false);
+		jFileChooserCustomized.setSelectedFile(selectedFile);
 		setUSSRicon(this);
 		pack();
 		changeToLookAndFeel(this);// for all platforms
@@ -100,6 +107,10 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 	 */
 	public void setFileFiltersWithDescriptions(Map<String, String> fileDescriptionsAndExtensions){
 		this.fileDescriptionsAndExtensions = fileDescriptionsAndExtensions;
+	}
+	
+	public void setSelectedFile(File selectedFile){
+		this.jFileChooserCustomized.setSelectedFile(selectedFile);
 	}
 	
 }

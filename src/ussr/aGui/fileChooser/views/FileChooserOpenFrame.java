@@ -15,7 +15,7 @@ public class FileChooserOpenFrame extends FileChooserFrame  {
 	/**
 	 * The frame of the file chooser for Open dialog form
 	 */
-	private  static FileChooserOpenFrame fcOpenFrame;	
+	private static FileChooserOpenFrame fcOpenFrame;	
 	
 	/**
 	 * Manages the file chooser in the form of Open dialog.
