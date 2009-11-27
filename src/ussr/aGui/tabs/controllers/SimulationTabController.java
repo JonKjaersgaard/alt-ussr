@@ -1,7 +1,5 @@
 package ussr.aGui.tabs.controllers;
 
-
-
 import java.awt.Component;
 import java.rmi.RemoteException;
 
@@ -14,19 +12,17 @@ import javax.swing.JSpinner;
 
 import ussr.aGui.MainFramesInter;
 import ussr.aGui.enumerations.TextureDescriptions;
-import ussr.aGui.enumerations.SimulationTabTreeElements;
+import ussr.aGui.enumerations.SimulationTabTreeNodes;
 import ussr.aGui.tabs.SimulationTab;
+import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.physics.PhysicsParameters;
 
 
 
 public class SimulationTabController extends TabsControllers {
 
-
-
-
-
-	//private static int  firtsTime =0;
+	
+	
 	/**
 	 * @param selectedNode
 	 */
@@ -37,7 +33,7 @@ public class SimulationTabController extends TabsControllers {
 	   SimulationTab.getJPanelEditor().repaint();
 	
 
-		switch(SimulationTabTreeElements.valueOf(selectedNode.replace(" ", "_"))){
+		switch(SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_"))){
 		
 		case Physics_simulation_step_size:
 			SimulationTab.addPhysicsSimulationStepSizeEditor();
@@ -87,7 +83,7 @@ public class SimulationTabController extends TabsControllers {
 		case Gravity:
 			SimulationTab.addGravityEditor();
 			break;
-		case Constraint_rorce_mix:
+		case Constraint_force_mix:
 			SimulationTab.addConstraintForceMixEditor();
 			break;
 		case Error_reduction_parameter:
@@ -227,6 +223,7 @@ public class SimulationTabController extends TabsControllers {
 
 	public static void setValueJSpinnerErrorReductionParameter(JSpinner spinnerErrorReductionParameter) {
 		spinnerErrorReductionParameter.setValue(PhysicsParameters.get().getErrorReductionParameter());
+		SimulationTab.getHintPanel().setText(HintPanelInter.builInHintsSimulationTab[0]);
 		
 	}
 

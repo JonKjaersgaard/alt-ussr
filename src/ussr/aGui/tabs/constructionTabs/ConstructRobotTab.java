@@ -13,9 +13,9 @@ import javax.swing.JRadioButton;
 import ussr.aGui.FramesInter;
 import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFramesInter;
-import ussr.aGui.enumerations.HintPanelTypes;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
+import ussr.aGui.tabs.additionalResources.HintPanelTypes;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 
 

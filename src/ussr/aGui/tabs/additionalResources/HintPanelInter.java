@@ -85,4 +85,17 @@ public interface HintPanelInter {
                    */     
 	"NEW HINT"};
 	
+	/**
+	 * Array of build in hints for tab called Simulation. 
+	 */
+	public final String[] builInHintsSimulationTab = 
+	                             /*0*/   {"Error reduction parameter(ERP) controls the menchanism for alligning connected joints together." +
+	                             		  "Joints misalignments can appear due to user specifying imprecise positions/rotations and during simulation, errors can creep so that, joints will drift away from each other." +
+	                             		  "ERP specifies what proportion of joint error will be fixed during next simulation step. Recommended values are:0.1-0.8. Default is 0.2. " +
+	                             		  "Read more here: http://opende.sourceforge.net/wiki/index.php/Manual_%28Concepts%29#Joint_error_and_the_error_reduction_parameter_.28ERP.29",
+	                             		  
+	                             		  
+			
+	                                      };	
+	
 }
