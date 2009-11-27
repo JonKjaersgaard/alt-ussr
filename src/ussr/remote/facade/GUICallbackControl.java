@@ -3,7 +3,7 @@ package ussr.remote.facade;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import ussr.aGui.enumerations.HintPanelTypes;
+import ussr.aGui.tabs.additionalResources.HintPanelTypes;
 import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.SupportedModularRobots;
 
