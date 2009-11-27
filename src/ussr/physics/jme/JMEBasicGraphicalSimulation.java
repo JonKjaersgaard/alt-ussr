@@ -1088,9 +1088,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	}
 	
 	public void moveDisplayTo(){
-		//display.setWidth(1000);
-		display.close();
-		//display.moveWindowTo(0, 0);
+		display.moveWindowTo(0, 0);
 	}
-
-}
+	}

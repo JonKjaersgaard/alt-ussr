@@ -620,7 +620,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     public DisplaySystem getDisplay() {
         return display;
     }
-
+    
     public void setModuleComponents(List<JMEModuleComponent> moduleComponents) {
         this.moduleComponents = moduleComponents;
     }
