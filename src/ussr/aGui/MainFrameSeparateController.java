@@ -1,5 +1,6 @@
 package ussr.aGui;
 
+import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.JCheckBoxMenuItem;
@@ -177,14 +178,6 @@ public class MainFrameSeparateController extends GeneralController {
 	 * @param jCheckBoxMenuItemPhysics, component in GUI.
 	 */
 	public static void jCheckBoxMenuItemPhysicsActionPerformed(JCheckBoxMenuItem jCheckBoxMenuItemPhysics) {       
-       
-		//FIXME
-		/*try {
-			rendererControl.moveDisplayTo();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		try {
 			if (rendererControl.isShowingPhysics() == false ){                             
 				jCheckBoxMenuItemPhysics.setSelected(true);
@@ -396,6 +389,7 @@ public class MainFrameSeparateController extends GeneralController {
 			MainFrames.setJTabbedPaneFirstVisible(false);
 			//TODO MAYBE ADD RESIZING HERE OR ACTIVATE RESIGIN HERE
 		}
+		
 		
 	}
 

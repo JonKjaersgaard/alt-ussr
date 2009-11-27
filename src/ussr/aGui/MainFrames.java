@@ -245,6 +245,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jCheckBoxMenuItemInteraction.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemInteractionActionPerformed(jCheckBoxMenuItemInteraction);
+				mainFrame.repaint();
 			}
 		});
 		jMenuFocusOn.add(jCheckBoxMenuItemInteraction);
@@ -253,6 +254,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jCheckBoxMenuItemDebugging.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemDebuggingActionPerformed(jCheckBoxMenuItemDebugging);
+				mainFrame.repaint();
 			}
 		});
 		jMenuFocusOn.add(jCheckBoxMenuItemDebugging);
