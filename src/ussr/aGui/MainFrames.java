@@ -166,7 +166,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		jMenuFile.add(jSeparator1);
 
-		jMenuItemExit.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+EXIT));
+		//jMenuItemExit.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+EXIT));
+		jMenuItemExit.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS+SOME));
 		jMenuItemExit.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Exit));
 		jMenuItemExit.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -304,6 +305,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		/*Description of components*/
 		jButtonRunRealTime.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RUN_REAL_TIME));
+		//jButtonRunRealTime.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PLAY1));
 		jButtonRunRealTime.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));
 		jButtonRunRealTime.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_real_time));		
 		jButtonRunRealTime.setFocusable(false);    

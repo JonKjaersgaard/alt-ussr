@@ -26,7 +26,7 @@ public interface MainFramesInter {
 	public final String RUN_REAL_TIME = "runRealTime.jpg",RUN_FAST = "runFast.jpg", PAUSE = "pause.jpg", STEP_BY_STEP ="stepByStep.jpg",
 	SAVE ="save.jpg",SAVE_SMALL ="saveSmall.jpg", EXIT = "exit.jpg", OPEN = "open.jpg",OPEN_SMALL ="openSmall.jpg",
 	NO_ENTRANCE ="noEntrance.jpg", CONSTRUCT_ROBOT = "constructRobot.jpg", VISUALIZER = "visualizer.jpg",
-	TERMINATE = "terminate.jpg", NO_ENTRANCE_SMALL = "noEntranceSmall.jpg";
+	TERMINATE = "terminate.jpg", NO_ENTRANCE_SMALL = "noEntranceSmall.jpg", SOME= "some.png", PLAY1= "play.png";
   
 	
 	/**
