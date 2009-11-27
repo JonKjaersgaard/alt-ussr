@@ -118,7 +118,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
         }
     }
     
-    public void start(int max_parallel_sims) {
+    public void start(int max_parallel_sims, boolean terminateAtEnd) {
         createWorkers(max_parallel_sims);
         int run = 0; 
         while(runMoreSimulations()) {
@@ -152,7 +152,7 @@ public abstract class AbstractSimulationBatch implements ReturnValueHandler {
         }
         System.out.println("Batch completed");
         reportRecord();
-        System.exit(0);
+        if(terminateAtEnd) System.exit(0);
     }
 
     private void createWorkers(int max_parallel_sims) {

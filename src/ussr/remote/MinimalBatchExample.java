@@ -44,7 +44,7 @@ public class MinimalBatchExample extends AbstractSimulationBatch {
     }
 
     public static void main(String argv[]) {
-        new MinimalBatchExample().start(1); // 1 for desktops, 10 works well for server in basement...
+        new MinimalBatchExample().start(1,false); // 1 for desktops, 10 works well for server in basement...
     }
     
 }
