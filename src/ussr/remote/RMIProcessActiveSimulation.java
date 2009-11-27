@@ -17,6 +17,7 @@ import ussr.remote.facade.ActiveSimulation;
 import ussr.remote.facade.ParameterHolder;
 import ussr.remote.facade.RemoteActiveSimulation;
 import ussr.remote.facade.RemotePhysicsSimulation;
+import ussr.remote.facade.XMLSimulationProviderInter;
 
 /**
  * Proxy for an active simulation that has been launched using a Process
@@ -161,5 +162,11 @@ public class RMIProcessActiveSimulation implements ActiveSimulation {
 		 verifyRemote();
 	     remoteSimulation.start(simulationXMLFile);
 		
+	}
+
+	@Override
+	public XMLSimulationProviderInter getXmlSimulationProvider()throws RemoteException {
+	   verifyRemote();
+		return remoteSimulation.getXmlSimulationProvider();
 	}
 }

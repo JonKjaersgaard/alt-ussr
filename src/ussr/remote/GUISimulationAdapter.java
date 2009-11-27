@@ -6,10 +6,13 @@ import java.rmi.RemoteException;
 import ussr.aGui.GeneralController;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrameSeparateController;
+import ussr.aGui.helpers.RobotSpecification;
 import ussr.aGui.tabs.SimulationTab;
 import ussr.aGui.tabs.controllers.ConsoleTabController;
 import ussr.remote.facade.ActiveSimulation;
 import ussr.remote.facade.GUICallbackControlImpl;
+import ussr.remote.facade.XMLSimulationProvider;
+import ussr.remote.facade.XMLSimulationProviderInter;
 
 import ussr.remote.facade.RemotePhysicsSimulation;
 
@@ -88,21 +91,26 @@ public class GUISimulationAdapter {
 				throw new Error("Unexpected interruption");
 			}
 		}
-
-		callBackGUI(sim);
-
+		
+	    RobotSpecification.setMorphologyLocation(simulation.getXmlSimulationProvider().getRobotMorphologyLocation());
+		callBackGUI(simulation,sim);
 	}
 	
+
 	/**
 	 * Sets remote objects of simulation in GUI and adapts it to simulation.
+	 * @param simulation
+	 * @param remotePhysicsSimulation
 	 */
-	private static void callBackGUI(RemotePhysicsSimulation remotePhysicsSimulation)throws IOException {
+	private static void callBackGUI(ActiveSimulation simulation,RemotePhysicsSimulation remotePhysicsSimulation)throws IOException {
 		remotePhysicsSimulation.setGUICallbackControl(new GUICallbackControlImpl());
 		GeneralController.setRemotePhysicsSimulation(remotePhysicsSimulation);
 		MainFrameSeparateController.setRendererControl(remotePhysicsSimulation.getRendererControl());
 		GeneralController.setBuilderControl(remotePhysicsSimulation.getBuilderControl());
 		MainFrameSeparate.setMainFrameSeparateEnabled(true);
 		SimulationTab.setTabVisible(true);
+		
+		 System.out.println("LOCATION:"+simulation.getXmlSimulationProvider().getRobotMorphologyLocation());
 
 	}
 }

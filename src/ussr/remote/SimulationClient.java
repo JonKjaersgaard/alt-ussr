@@ -29,6 +29,8 @@ import ussr.remote.facade.ParameterHolder;
 import ussr.remote.facade.RemoteActiveSimulation;
 import ussr.remote.facade.RemotePhysicsSimulation;
 import ussr.remote.facade.RemotePhysicsSimulationImpl;
+import ussr.remote.facade.XMLSimulationProvider;
+import ussr.remote.facade.XMLSimulationProviderInter;
 import ussr.samples.GenericSimulation;
 
 /***
@@ -44,7 +46,7 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
     private RemotePhysicsSimulation simulationWrapper;
     private SimulationServer server;
     private static ReturnValueHandler returnHandler;
-    //private XMLSimulationProvider provider;
+    private XMLSimulationProviderInter xmlSimulationProvider;
 
     public SimulationClient(int portNumber, int idNumber) throws RemoteException {
         connectToServer(portNumber,idNumber);
@@ -91,16 +93,32 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
     }
    
 
+
 	public void start(String simulationXMLFile) throws RemoteException {  
     	SimulationXMLFileLoader simulationLoader = new SimulationXMLFileLoader(simulationXMLFile);
-        this.simulation = SimulationXMLFileLoader.getPhysicsSimulation();
+    	System.out.println("LOCATION:"+ simulationLoader.getRobotMorphologyLocation());
+    	xmlSimulationProvider = new XMLSimulationProvider(simulationLoader);
+   
+    	System.out.println("LOCATION1:"+ xmlSimulationProvider.getRobotMorphologyLocation());
+        
+    	 //System.out.println("LOCATION:"+ xmlSimulationProvider.getRobotMorphologyLocation());
+        // SimulationTab.setRobotMorphologyLocation(simulation.getRobotMorphologyLocation());
+    	
+    	this.simulation = SimulationXMLFileLoader.getPhysicsSimulation();
  /*       System.out.println("LOCATION:"+ simulation.getRobotMorphologyLocation());
         SimulationTab.setRobotMorphologyLocation(simulation.getRobotMorphologyLocation());*/        
         simulationLoader.start(true);
         
     }
+	
+    public XMLSimulationProviderInter getXmlSimulationProvider()throws RemoteException {
+		return xmlSimulationProvider;
+	}
+    
+    
+    
 
-    public void start(Class<?> mainClass) throws RemoteException {
+	public void start(Class<?> mainClass) throws RemoteException {
         this.start(mainClass,null,null);
     }
 
