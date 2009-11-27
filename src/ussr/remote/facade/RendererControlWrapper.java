@@ -149,6 +149,7 @@ public class RendererControlWrapper extends UnicastRemoteObject implements Rende
 	}
 	
 	public void moveDisplayTo()throws RemoteException{
+		//jmeSimulation.getDisplay().createHeadlessWindow(100, 200, 1);
 		jmeSimulation.moveDisplayTo();
 	}
 }

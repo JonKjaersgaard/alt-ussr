@@ -115,12 +115,14 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 
 
 	public void setGUICallbackControl(GUICallbackControl control) throws RemoteException {
-		guiCallbackControl = control;		
+		guiCallbackControl = control;	
 	}
 
 	public static GUICallbackControl getGUICallbackControl() throws RemoteException {
 		return guiCallbackControl;
 	}
-
-
+	
+	public void moveDisplayTo()throws RemoteException{
+		simulation.moveDisplayTo();
+	}
 }

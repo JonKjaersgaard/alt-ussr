@@ -92,6 +92,8 @@ public class GUISimulationAdapter {
 			}
 		}
 		
+		//sim.getRendererControl().moveDisplayTo();
+		
 	    RobotSpecification.setMorphologyLocation(simulation.getXmlSimulationProvider().getRobotMorphologyLocation());
 		callBackGUI(simulation,sim);
 	}

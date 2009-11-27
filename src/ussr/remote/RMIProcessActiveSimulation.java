@@ -3,16 +3,13 @@ package ussr.remote;
 import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import ussr.builder.SimulationDescriptionConverter;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
-import ussr.physics.PhysicsSimulation;
 import ussr.remote.facade.ActiveSimulation;
 import ussr.remote.facade.ParameterHolder;
 import ussr.remote.facade.RemoteActiveSimulation;
