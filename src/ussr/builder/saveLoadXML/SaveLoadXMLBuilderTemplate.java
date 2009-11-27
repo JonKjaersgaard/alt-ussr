@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.xml.transform.sax.TransformerHandler;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -242,7 +243,10 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 				RotationDescription rotationDescription = new RotationDescription();
 				rotationDescription.setRotation(new Quaternion(extractFromQuaternion(moduleRotationQuaternion,"X"),extractFromQuaternion(moduleRotationQuaternion,"Y"),extractFromQuaternion(moduleRotationQuaternion,"Z"),extractFromQuaternion(moduleRotationQuaternion,"W")));
 
-				createNewModule(moduleName,moduleType,new VectorDescription(extractFromPosition(modulePosition, "X"),extractFromPosition(modulePosition, "Y"),extractFromPosition(modulePosition, "Z")),rotationDescription ,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
+				float moduleXposition = StringProcessingHelper.extractFromPosition(modulePosition, "X");
+				float moduleYposition = StringProcessingHelper.extractFromPosition(modulePosition, "Y");
+				float moduleZposition = StringProcessingHelper.extractFromPosition(modulePosition, "Z");				
+				createNewModule(moduleName,moduleType,new VectorDescription(moduleXposition,moduleYposition,moduleZposition),rotationDescription ,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
 			
 //FIXME IN CASE THERE IS A NEED TO EXTRACT THE STATE OF CONNECTORS
 					/*NodeList sixthNmElmntLst = fstElmnt.getElementsByTagName("CONNECTOR");
@@ -357,7 +361,8 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 				simulationPhysicsValues.put(XMLTagsUsed.SYNC_WITH_CONTROLLERS, extractTagValue(firstElmnt,XMLTagsUsed.SYNC_WITH_CONTROLLERS));
 				simulationPhysicsValues.put(XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR, extractTagValue(firstElmnt,XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR));
 			}
-		}			
+		}
+		
 	}
 	
 	/**
@@ -388,27 +393,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 		
 	}	
 	
-	/**
-	 * Extracts the value of specific coordinate from the string of VectorDescription.
-	 * @param textString, the string  of VectorDescription. 
-	 * @param coordinate, the coordinate to extract.
-	 * @return the value of the coordinate.
-	 */
-	private float extractFromPosition(String textString, String coordinate){		
-		String cleanedTextString1 =textString.replace("(", "");
-		String cleanedTextString2 =cleanedTextString1.replace(")", "");
-		String[] temporary = cleanedTextString2.split(",");		
-
-		float extractedValue = 100000; 
-		if (coordinate.equalsIgnoreCase("X")){
-			extractedValue = Float.parseFloat(temporary[0]);			
-		}else if (coordinate.equalsIgnoreCase("Y")){
-			extractedValue = Float.parseFloat(temporary[1]);			
-		}else if (coordinate.equalsIgnoreCase("Z")){
-			extractedValue = Float.parseFloat(temporary[2]);
-		}else throw new Error ("There is no such coordinate");
-		return extractedValue; 
-	}	
+		
 
 	/**
 	 * Extracts the value of specific coordinate from the string of Vector3f.

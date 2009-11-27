@@ -181,6 +181,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	 */
 	@Override
 	protected void pickTarget(Geometry target,JMESimulation jmeSimulation) {
+		//jmeSimulation.moveDisplayTo(); //FOR TESTING
 
 		if (toolName.equals(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR)){			
 			this.selectedConnectorNr = BuilderHelper.extractConnectorNr(jmeSimulation, target);
