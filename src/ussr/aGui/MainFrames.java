@@ -308,6 +308,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonRunRealTime.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RUN + DEFAULT_ICON_EXTENSION1));
 		//jButtonRunRealTime.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));
 		jButtonRunRealTime.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_EN+DEFAULT_ICON_EXTENSION1));
+		jButtonRunRealTime.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RUN_REAL_TIME_ROLLOVER + DEFAULT_ICON_EXTENSION1));
+		
 		jButtonRunRealTime.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_real_time));		
 		jButtonRunRealTime.setFocusable(false);    
 		jButtonRunRealTime.setPreferredSize(new java.awt.Dimension(30, 30));      
@@ -324,6 +326,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		//jButtonRunFast.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));
 		jButtonRunFast.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_EN+DEFAULT_ICON_EXTENSION1));
 		
+		jButtonRunFast.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RUN_FAST_ROLLOVER+DEFAULT_ICON_EXTENSION1));
+		
 		jButtonRunFast.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_fast));
 		jButtonRunFast.setFocusable(false);
 		jButtonRunFast.setPreferredSize(new java.awt.Dimension(30, 30));      
@@ -339,6 +343,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonRunStepByStep.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RUN_S + DEFAULT_ICON_EXTENSION1));
 		//jButtonRunStepByStep.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));
 		jButtonRunStepByStep.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_EN+DEFAULT_ICON_EXTENSION1));
+		
+		jButtonRunStepByStep.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RUN_STEP_BY_STEP_ROLLOVER +DEFAULT_ICON_EXTENSION1));
 		
 		jButtonRunStepByStep.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_step_by_step));
 		//jButtonRunStepByStep.setBorder(javax.swing.BorderFactory.createEtchedBorder());//On Vista does not work(test it)
@@ -357,6 +363,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonPause.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PAU+DEFAULT_ICON_EXTENSION1));
 		//jButtonPause.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));
 		jButtonPause.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_EN+DEFAULT_ICON_EXTENSION1));
+		jButtonPause.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PAUSE_ROLLOVER+DEFAULT_ICON_EXTENSION1));
+	
 		
 		jButtonPause.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Pause));
 		jButtonPause.setFocusable(false);   
@@ -371,6 +379,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonTerminate.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + TER+DEFAULT_ICON_EXTENSION1));
 		//jButtonTerminate.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));
 		jButtonTerminate.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_EN+DEFAULT_ICON_EXTENSION1));
+		
+		jButtonTerminate.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + TERMINATE_ROLLOVER+DEFAULT_ICON_EXTENSION1));
+		
 		jButtonTerminate.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Terminate));
 		jButtonTerminate.setFocusable(false);   
 		jButtonTerminate.addActionListener(new java.awt.event.ActionListener() {
@@ -379,7 +390,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 			}
 		});
 		jToolBarGeneralControl.add(jButtonTerminate);
-
+		
 		jToolBarSeparator3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jToolBarSeparator3);
 
@@ -388,7 +399,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		jToolBarSeparator4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jToolBarSeparator4);
-
 
 		jToggleButtonConstructRobot.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Construct_robot));
 		jToggleButtonConstructRobot.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + CONSTRUCT_ROBOT ));

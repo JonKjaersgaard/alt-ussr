@@ -36,8 +36,15 @@ public interface MainFramesInter {
 	
 	
 	
-	EXIT_SMALL= "exit", RUN = "runRealTime", RUN_F ="runFast",RUN_S ="runStepByStep",
-	PAU ="pause",TER = "terminate", NO_EN ="noEntrance"; 
+	EXIT_SMALL= "exit", RUN = "runRealTime",RUN_REAL_TIME_ROLLOVER ="runRealTimeRollover", RUN_F ="runFast", 
+	RUN_FAST_ROLLOVER = "runFastRollover",RUN_S ="runStepByStep",RUN_STEP_BY_STEP_ROLLOVER ="runStepByStepRollover",
+	PAU ="pause",PAUSE_ROLLOVER = "pauseRollover",TER = "terminate",TERMINATE_ROLLOVER = "terminateRollover",
+	NO_EN ="noEntrance"
+	
+	
+	
+	
+	; 
   
 	
 	/**

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import javax.swing.GroupLayout;
 import javax.swing.JPanel;
 
+import ussr.aGui.MainFramesInter;
 import ussr.aGui.tabs.TabsInter;
 
 /**
@@ -101,7 +102,7 @@ public class HintPanel extends JPanel implements HintPanelInter {
 	 * @param typeOfIcon, type of icon.
 	 */
 	public void setType(HintPanelTypes typeOfIcon){
-		jLabelIcon.setIcon(new javax.swing.ImageIcon(TabsInter.DIRECTORY_ICONS + typeOfIcon.toString().toLowerCase() + ".jpg" ));
+		jLabelIcon.setIcon(new javax.swing.ImageIcon(TabsInter.DIRECTORY_ICONS + typeOfIcon.toString().toLowerCase() + MainFramesInter.DEFAULT_ICON_EXTENSION1 ));
 	}
 
 	/**
