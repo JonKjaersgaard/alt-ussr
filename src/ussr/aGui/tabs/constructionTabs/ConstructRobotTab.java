@@ -204,10 +204,14 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.insets = new Insets(0,3,10,18);  
 
 		jButtonOppositeRotation.setToolTipText(TOOL_TIP_TEXTS[2]);		
-		jButtonOppositeRotation.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE));
-		jButtonOppositeRotation.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
-		jButtonOppositeRotation.setFocusable(false); 
+		//jButtonOppositeRotation.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE));
+		jButtonOppositeRotation.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE_ROTATION + MainFramesInter.DEFAULT_ICON_EXTENSION1));
+		jButtonOppositeRotation.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE_ROTATION_ROLLOVER + MainFramesInter.DEFAULT_ICON_EXTENSION1));
+		jButtonOppositeRotation.setSelectedIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE_ROTATION_ROLLOVER + MainFramesInter.DEFAULT_ICON_EXTENSION1));
+	
+		jButtonOppositeRotation.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_EN + MainFramesInter.DEFAULT_ICON_EXTENSION1 ));
 		jButtonOppositeRotation.setEnabled(false);	
+		jButtonOppositeRotation.setFocusable(false); 
 		jButtonOppositeRotation.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
 		jButtonOppositeRotation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,8 +221,12 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		});
 
 		jButtonAvailableRotationsLoop.setToolTipText(TOOL_TIP_TEXTS[16]);
-		jButtonAvailableRotationsLoop.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + AVAILABLE_ROTATIONS));
-		jButtonAvailableRotationsLoop.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
+		//jButtonAvailableRotationsLoop.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + AVAILABLE_ROTATIONS));
+		jButtonAvailableRotationsLoop.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + AVAILABLE_ROT+MainFramesInter.DEFAULT_ICON_EXTENSION1));
+		jButtonAvailableRotationsLoop.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + AVAILABLE_ROTATIONS_ROLLOVER+MainFramesInter.DEFAULT_ICON_EXTENSION1));
+		jButtonAvailableRotationsLoop.setSelectedIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + AVAILABLE_ROTATIONS_SELECTED+MainFramesInter.DEFAULT_ICON_EXTENSION1));
+		jButtonAvailableRotationsLoop.setFocusable(false); 
+		jButtonAvailableRotationsLoop.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_EN+ MainFramesInter.DEFAULT_ICON_EXTENSION1));
 		jButtonAvailableRotationsLoop.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
 		jButtonAvailableRotationsLoop.setEnabled(false);
 		jButtonAvailableRotationsLoop.addActionListener(new java.awt.event.ActionListener() {
@@ -294,9 +302,16 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.gridwidth = 3;
 		gridBagConstraints.insets = new Insets(8,3,10,18);  
 
-		jButtonMove.setToolTipText(TOOL_TIP_TEXTS[4]);		
-		jButtonMove.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOVE));
-		jButtonMove.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
+		jButtonMove.setToolTipText(TOOL_TIP_TEXTS[4]);	
+		//jButtonMove.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOVE));
+		jButtonMove.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOV+ MainFramesInter.DEFAULT_ICON_EXTENSION1));
+		jButtonMove.setSelectedIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOV+ MainFramesInter.DEFAULT_ICON_EXTENSION1));
+		jButtonMove.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOVE_ROLLOVER+ MainFramesInter.DEFAULT_ICON_EXTENSION1));
+		
+		//jButtonMove.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
+		jButtonMove.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_EN+MainFramesInter.DEFAULT_ICON_EXTENSION1));
+		
+		
 		jButtonMove.setFocusable(false); 
 		jButtonMove.setEnabled(false);
 		jButtonMove.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT));	
@@ -312,6 +327,8 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonDelete.setToolTipText(TOOL_TIP_TEXTS[5]);
 		//jButtonDelete.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE));
 		jButtonDelete.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DEL+ MainFramesInter.DEFAULT_ICON_EXTENSION1));
+		jButtonDelete.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE_ROLLOVER + MainFramesInter.DEFAULT_ICON_EXTENSION1));
+		jButtonDelete.setSelectedIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DEL+ MainFramesInter.DEFAULT_ICON_EXTENSION1));
 		
 		
 		jButtonDelete.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));		

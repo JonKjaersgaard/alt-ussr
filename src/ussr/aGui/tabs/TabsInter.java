@@ -26,8 +26,11 @@ public interface TabsInter {
 	                    EXPANSION_OPENED ="expansionOpened.jpg", FINAL_LEAF = "finalLeaf.jpg", 
 	                    PLANE_TITL_RIGHT ="planeTiltRight.jpg";
 	
-	public final String DEL ="delete", EXPAN_CLOSED ="expansionClosed", EXPAN_OPENED ="expansionOpened",
-	                    FINAL_L = "finalLeaf";
+	public final String DEL ="delete",DELETE_ROLLOVER ="deleteRollover", EXPAN_CLOSED ="expansionClosed", EXPAN_OPENED ="expansionOpened",
+	                    FINAL_L = "finalLeaf",OPPOSITE_ROTATION ="oppositeRotation", OPPOSITE_ROTATION_ROLLOVER ="oppositeRotationRollover",
+	                    AVAILABLE_ROT = "availableRotations", AVAILABLE_ROTATIONS_ROLLOVER = "availableRotationsRollover",
+	                    AVAILABLE_ROTATIONS_SELECTED = "availableRotationsSelected", MOV ="move", MOVE_ROLLOVER ="moveRollover"
+	                    ;
 	
 	/**
 	 * Returns JComponent, which is the main container of components situated in the tab.
