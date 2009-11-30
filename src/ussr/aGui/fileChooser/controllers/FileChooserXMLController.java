@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
+import ussr.aGui.MainFrameSeparateController;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.remote.GUISimulationAdapter;
 
@@ -48,6 +49,7 @@ public class FileChooserXMLController extends FileChooserController {
 						}
 					}
 				}.start();	
+				MainFrameSeparateController.setSimulationXMLFileDirectory(fileDirectoryName);
 				break;			
 			case ROBOT:
 				try {

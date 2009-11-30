@@ -1,6 +1,6 @@
 package ussr.aGui;
 
-import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.JCheckBoxMenuItem;
@@ -13,6 +13,7 @@ import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
+import ussr.remote.GUISimulationAdapter;
 import ussr.remote.facade.RendererControlInter;
 
 
@@ -26,6 +27,13 @@ public class MainFrameSeparateController extends GeneralController {
 	 * Remote version of rendering control object.
 	 */
 	private static RendererControlInter rendererControl;
+	
+	private static String simulationXMLFileDirectory;
+
+	public static void setSimulationXMLFileDirectory(
+			String simulationXMLFileDirectory) {
+		MainFrameSeparateController.simulationXMLFileDirectory = simulationXMLFileDirectory;
+	}
 
 	/**
 	 * Executes closing of main window(frame) and simulation by terminating Java Virtual Machines.
@@ -402,5 +410,25 @@ public class MainFrameSeparateController extends GeneralController {
 			//TODO MAYBE ADD RESIZING HERE OR ACTIVATE RESIGIN HERE
 		}
 		
+	}
+
+	public static void jButtonRestartActionPerformed() {
+		try {
+			if (remotePhysicsSimulation!=null){
+			remotePhysicsSimulation.stop();
+			}
+		} catch (RemoteException e) {
+			//Do not throw anything, because this means only GUI is closed and simulation was not even started			
+		}
+		
+		new Thread() {
+			public void run() {
+				try {
+					GUISimulationAdapter.runSimulation(simulationXMLFileDirectory);
+				} catch (IOException e) {
+					throw new Error("Failed to run simulation file located at "+ simulationXMLFileDirectory+ " , due to remote exception");
+				}
+			}
+		}.start();		
 	}
 }

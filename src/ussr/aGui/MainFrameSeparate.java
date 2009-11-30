@@ -112,7 +112,13 @@ public class MainFrameSeparate extends MainFrames {
 				MainFrameSeparateController.jMenuItemExitActionPerformed();                     
 			}
 		}
-		);		
+		);
+		
+		 this.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+	            public void mouseMoved(java.awt.event.MouseEvent evt) {
+	              //STOPPED HERE
+	            }
+	        });
 	}
 	
 	

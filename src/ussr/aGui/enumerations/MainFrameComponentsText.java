@@ -27,7 +27,7 @@ public enum MainFrameComponentsText {
 	       General_control,
 	
 	      /*JButtons*/
-	      Run_real_time, Run_fast, Run_step_by_step,Pause,Terminate,Construct_robot,Visualize_communication_of_modules
+	      Run_real_time, Run_fast, Run_step_by_step,Pause,Terminate,Restart,Construct_robot,Visualize_communication_of_modules
 	      
 	      
 	      ;

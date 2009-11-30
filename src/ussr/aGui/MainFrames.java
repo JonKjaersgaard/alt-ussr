@@ -297,6 +297,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonRunFast = new javax.swing.JButton();
 		jButtonPause = new javax.swing.JButton();
 		jButtonTerminate = new javax.swing.JButton();
+		jButtonRestart = new javax.swing.JButton();
 		jToolBarSeparator3 = new javax.swing.JToolBar.Separator();			
 		jToolBarSeparator4 = new javax.swing.JToolBar.Separator();
 		jToolBarSeparator5 = new javax.swing.JToolBar.Separator();
@@ -390,6 +391,25 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 			}
 		});
 		jToolBarGeneralControl.add(jButtonTerminate);
+		
+		
+		
+		jButtonRestart.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RESTART+DEFAULT_ICON_EXTENSION1));
+		//jButtonTerminate.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));
+		jButtonRestart.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_EN+DEFAULT_ICON_EXTENSION1));
+		
+		jButtonRestart.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + RESTART_ROLLOVER+DEFAULT_ICON_EXTENSION1));
+		
+		jButtonRestart.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Restart));
+		jButtonRestart.setFocusable(false);   
+		jButtonRestart.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.jButtonRestartActionPerformed();
+			}
+		});
+		jToolBarGeneralControl.add(jButtonRestart);		
+		
+		
 		
 		jToolBarSeparator3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jToolBarSeparator3);
@@ -624,7 +644,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	private static javax.swing.JToolBar jToolBarGeneralControl;
 	
 	private javax.swing.JButton jButtonRunRealTime,jButtonRunStepByStep,jButtonRunFast,
-	                           jButtonPause,jButtonTerminate;
+	                           jButtonPause,jButtonTerminate,jButtonRestart;
 	private static javax.swing.JButton jButtonSave,jButtonOpen;
 	private static javax.swing.JToggleButton jToggleButtonConstructRobot,jToggleButtonVisualizer;
 
