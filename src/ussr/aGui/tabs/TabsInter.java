@@ -26,6 +26,9 @@ public interface TabsInter {
 	                    EXPANSION_OPENED ="expansionOpened.jpg", FINAL_LEAF = "finalLeaf.jpg", 
 	                    PLANE_TITL_RIGHT ="planeTiltRight.jpg";
 	
+	public final String DEL ="delete", EXPAN_CLOSED ="expansionClosed", EXPAN_OPENED ="expansionOpened",
+	                    FINAL_L = "finalLeaf";
+	
 	/**
 	 * Returns JComponent, which is the main container of components situated in the tab.
 	 * @return JComponent, which is the main container of components situated in the tab.

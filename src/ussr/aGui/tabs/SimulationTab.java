@@ -22,6 +22,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
 import ussr.aGui.MainFrames;
+import ussr.aGui.MainFramesInter;
 import ussr.aGui.enumerations.TextureDescriptions;
 import ussr.aGui.enumerations.SimulationTabTreeNodes;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
@@ -150,9 +151,12 @@ public class SimulationTab extends Tabs {
 
 		jTree1 = new javax.swing.JTree(firstNodeHierarchySimulation);
 
-		ImageIcon closedIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_CLOSED);
-		ImageIcon openIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_OPENED);
-		ImageIcon leafIcon = new ImageIcon(DIRECTORY_ICONS + FINAL_LEAF);
+		//ImageIcon closedIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_CLOSED);
+		ImageIcon closedIcon = new ImageIcon(DIRECTORY_ICONS + EXPAN_CLOSED +MainFramesInter.DEFAULT_ICON_EXTENSION1);
+		//ImageIcon openIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_OPENED);
+		ImageIcon openIcon = new ImageIcon(DIRECTORY_ICONS + EXPAN_OPENED + MainFramesInter.DEFAULT_ICON_EXTENSION1);
+		//ImageIcon leafIcon = new ImageIcon(DIRECTORY_ICONS + FINAL_LEAF);
+		ImageIcon leafIcon = new ImageIcon(DIRECTORY_ICONS + FINAL_L + MainFramesInter.DEFAULT_ICON_EXTENSION1 );
 
 		if (openIcon != null) {
 			DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();		    

@@ -21,12 +21,23 @@ public interface MainFramesInter {
 	public final String DIRECTORY_ICONS = "resources/mainFrame/icons/jpg/";
 
 	/**
+	 * The default extension of each icon. 
+	 */
+	public final String DEFAULT_ICON_EXTENSION = ".jpg";
+	public final String DEFAULT_ICON_EXTENSION1 = ".png";
+	
+	/**
 	 * The names of the icons used in the main frame.
 	 */
-	public final String RUN_REAL_TIME = "runRealTime.jpg",RUN_FAST = "runFast.jpg", PAUSE = "pause.jpg", STEP_BY_STEP ="stepByStep.jpg",
+	public final String RUN_REAL_TIME = "runRealTime.jpg",RUN_FAST = "runFast.jpg", PAUSE = "pause.jpg", STEP_BY_STEP ="runStepByStep.jpg",
 	SAVE ="save.jpg",SAVE_SMALL ="saveSmall.jpg", EXIT = "exit.jpg", OPEN = "open.jpg",OPEN_SMALL ="openSmall.jpg",
 	NO_ENTRANCE ="noEntrance.jpg", CONSTRUCT_ROBOT = "constructRobot.jpg", VISUALIZER = "visualizer.jpg",
-	TERMINATE = "terminate.jpg", NO_ENTRANCE_SMALL = "noEntranceSmall.jpg", SOME= "some.png", PLAY1= "play.png";
+	TERMINATE = "terminate.jpg", NO_ENTRANCE_SMALL = "noEntranceSmall.jpg", 
+	
+	
+	
+	EXIT_SMALL= "exit", RUN = "runRealTime", RUN_F ="runFast",RUN_S ="runStepByStep",
+	PAU ="pause",TER = "terminate", NO_EN ="noEntrance"; 
   
 	
 	/**

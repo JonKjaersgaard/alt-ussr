@@ -310,7 +310,10 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jToolBarGenericTools.add(jButtonMove);
 
 		jButtonDelete.setToolTipText(TOOL_TIP_TEXTS[5]);
-		jButtonDelete.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE));
+		//jButtonDelete.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE));
+		jButtonDelete.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DEL+ MainFramesInter.DEFAULT_ICON_EXTENSION1));
+		
+		
 		jButtonDelete.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));		
 		jButtonDelete.setFocusable(false);
 		jButtonDelete.setEnabled(false);
