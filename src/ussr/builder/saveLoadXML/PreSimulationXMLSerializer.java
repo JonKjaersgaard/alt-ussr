@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import com.jme.system.DisplaySystem;
+
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
@@ -96,5 +98,4 @@ public class PreSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate {
 	protected InSimulationXMLSerializer getInstance() {
 		 throw new Error("Pre-sim deserializer does not support serialization");
 	}
-
 }

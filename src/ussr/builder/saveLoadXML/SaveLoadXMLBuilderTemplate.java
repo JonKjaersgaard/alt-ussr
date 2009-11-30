@@ -9,12 +9,15 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 import javax.xml.transform.sax.TransformerHandler;
+
+import org.lwjgl.util.Display;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import com.jme.math.Quaternion;
+import com.jme.system.DisplaySystem;
 
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.enumerations.UssrXmlFileTypes;
@@ -377,6 +380,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	 * @param labelsConnectors
 	 */
 	protected abstract void createNewModule(String moduleName, String moduleType, VectorDescription modulePosition, RotationDescription moduleRotation, LinkedList<Color> listColorsComponents,LinkedList<Color> listColorsConnectors, String labelsModule, String[] labelsConnectors);
+
 
 	
 	private char[] extractPositionsObstacles(List<BoxDescription> bigObstacles ){
