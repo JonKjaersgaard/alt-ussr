@@ -39,7 +39,8 @@ public interface MainFramesInter {
 	EXIT_SMALL= "exit", RUN = "runRealTime",RUN_REAL_TIME_ROLLOVER ="runRealTimeRollover", RUN_F ="runFast", 
 	RUN_FAST_ROLLOVER = "runFastRollover",RUN_S ="runStepByStep",RUN_STEP_BY_STEP_ROLLOVER ="runStepByStepRollover",
 	PAU ="pause",PAUSE_ROLLOVER = "pauseRollover",TER = "terminate",TERMINATE_ROLLOVER = "terminateRollover",
-	RESTART ="restart",RESTART_ROLLOVER = "restartRollover",
+	RESTART ="restart",RESTART_ROLLOVER = "restartRollover",CONSTRUCT_R = "constructRobot",
+	CONSTRUCT_ROBOT_ROLLOVER ="constructRobotRollover",VISUAL = "visualizer",VISUALZER_ROLLOVER ="visualizerRollover", 
 	NO_EN ="noEntrance"
 	
 	
@@ -61,9 +62,9 @@ public interface MainFramesInter {
 	/**     
 	 * Instances of tabs plugged in main GUI window
 	 */
-	public final TabsInter  CONSTRUCT_ROBOT_TAB = new ConstructRobotTab(false,true,CONSTRUCT_ROBOT_TAB_TITLE,DIRECTORY_ICONS+CONSTRUCT_ROBOT),
-	                        ASSIGN_BEHAVIORS_TAB = new AssignBehaviorsTab(false,true,ASSIGN_BEHAVIORS_TAB_TITLE,DIRECTORY_ICONS+CONSTRUCT_ROBOT),
-	                        MODULE_COMMUNICATION_VISUALIZER_TAB = new ModuleCommunicationVisualizer(false,true,MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE,DIRECTORY_ICONS+VISUALIZER),
+	public final TabsInter  CONSTRUCT_ROBOT_TAB = new ConstructRobotTab(false,true,CONSTRUCT_ROBOT_TAB_TITLE,DIRECTORY_ICONS+CONSTRUCT_ROBOT_ROLLOVER+DEFAULT_ICON_EXTENSION1),
+	                        ASSIGN_BEHAVIORS_TAB = new AssignBehaviorsTab(false,true,ASSIGN_BEHAVIORS_TAB_TITLE,DIRECTORY_ICONS+CONSTRUCT_ROBOT_ROLLOVER+DEFAULT_ICON_EXTENSION1),
+	                        MODULE_COMMUNICATION_VISUALIZER_TAB = new ModuleCommunicationVisualizer(false,true,MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE,DIRECTORY_ICONS+VISUALZER_ROLLOVER+DEFAULT_ICON_EXTENSION1),
 	                        SIMULATION_CONFIGURATION_TAB = new SimulationTab(true,true,SIMULATION_TAB_TITLE,FramesInter.DIRECTORY_USSR_ICON),
 	                        CONSOLE_TAB = new ConsoleTab(true,false,CONSOLE_TAB_TITLE, TabsInter.DIRECTORY_ICONS+TabsInter.CONSOLE),
               /*YOUR TAB*/  YOUR_TAB = new YourNewTab(true,true, YOUR_TAB_TITLE,TabsInter.DIRECTORY_ICONS+TabsInter.NEW_TAB);

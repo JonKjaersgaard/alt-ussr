@@ -3,6 +3,7 @@ package ussr.aGui.tabs.controllers;
 import java.awt.Component;
 import java.rmi.RemoteException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -122,7 +123,7 @@ public class SimulationTabController extends TabsControllers {
 
 	}
 	
-	public static void setSelectedJComboBoxPlaneTexture(JComboBox jComboBoxPlaneTexture){
+	public static void setSelectedJComboBoxPlaneTexture(JComboBox jComboBoxPlaneTexture, JLabel iconLabel){
 		String fileName;
 		try {
          fileName = remotePhysicsSimulation.getWorldDescriptionControl().getPlaneTextureFileName();
@@ -134,8 +135,13 @@ public class SimulationTabController extends TabsControllers {
 			
 			if (fileName.equals(TextureDescriptions.values()[text].getFileName())){
 				jComboBoxPlaneTexture.setSelectedItem(TextureDescriptions.values()[text]);
+				ImageIcon imageIcon = new ImageIcon(TextureDescriptions.values()[text].getFileName());
+				iconLabel.setIcon(imageIcon);
+				iconLabel.setSize(100, 100);
 			}
 		}
+		
+		
 		
 		
 		

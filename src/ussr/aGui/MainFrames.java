@@ -421,8 +421,15 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToolBarGeneralControl.add(jToolBarSeparator4);
 
 		jToggleButtonConstructRobot.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Construct_robot));
-		jToggleButtonConstructRobot.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + CONSTRUCT_ROBOT ));
+		//jToggleButtonConstructRobot.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + CONSTRUCT_ROBOT ));
+		
+		jToggleButtonConstructRobot.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + CONSTRUCT_R+DEFAULT_ICON_EXTENSION1 ));
+		jToggleButtonConstructRobot.setSelectedIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + CONSTRUCT_ROBOT_ROLLOVER+DEFAULT_ICON_EXTENSION1 ));
+		
 		jToggleButtonConstructRobot.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));
+		jToggleButtonConstructRobot.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + CONSTRUCT_ROBOT_ROLLOVER+DEFAULT_ICON_EXTENSION1 ));
+		
+		
 		jToggleButtonConstructRobot.setFocusable(false);		
 		jToggleButtonConstructRobot.setPreferredSize(new java.awt.Dimension(30, 30));
 		jToggleButtonConstructRobot.addActionListener(new java.awt.event.ActionListener() {
@@ -434,8 +441,13 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToolBarGeneralControl.add(jToggleButtonConstructRobot);	
 		
 		jToggleButtonVisualizer.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Visualize_communication_of_modules));
-		jToggleButtonVisualizer.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + VISUALIZER ));
+		//jToggleButtonVisualizer.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + VISUALIZER ));
+		jToggleButtonVisualizer.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + VISUAL + DEFAULT_ICON_EXTENSION1));
+		jToggleButtonVisualizer.setSelectedIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + VISUALZER_ROLLOVER + DEFAULT_ICON_EXTENSION1));
 		jToggleButtonVisualizer.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));
+		jToggleButtonVisualizer.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + VISUALZER_ROLLOVER + DEFAULT_ICON_EXTENSION1));
+		
+		
 		jToggleButtonVisualizer.setFocusable(false);
 		jToggleButtonVisualizer.setEnabled(false);
 		jToggleButtonVisualizer.setPreferredSize(new java.awt.Dimension(30, 30));

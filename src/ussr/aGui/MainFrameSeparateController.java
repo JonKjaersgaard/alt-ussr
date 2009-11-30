@@ -28,25 +28,12 @@ public class MainFrameSeparateController extends GeneralController {
 	 */
 	private static RendererControlInter rendererControl;
 	
-	private static String simulationXMLFileDirectory;
-
-	public static void setSimulationXMLFileDirectory(
-			String simulationXMLFileDirectory) {
-		MainFrameSeparateController.simulationXMLFileDirectory = simulationXMLFileDirectory;
-	}
-
 	/**
 	 * Executes closing of main window(frame) and simulation by terminating Java Virtual Machines.
 	 */
 	public static void jMenuItemExitActionPerformed() {	
-		try {
-			if (remotePhysicsSimulation!=null){
-			remotePhysicsSimulation.stop();
-			}
-		} catch (RemoteException e) {
-			//Do not throw anything, because this means only GUI is closed and simulation was not even started			
-		}
-		System.exit(0);		
+		terminateSimulation();
+		System.exit(0);//terminate GUI		
 	} 
 
 	/**
@@ -412,23 +399,12 @@ public class MainFrameSeparateController extends GeneralController {
 		
 	}
 
-	public static void jButtonRestartActionPerformed() {
-		try {
-			if (remotePhysicsSimulation!=null){
-			remotePhysicsSimulation.stop();
-			}
-		} catch (RemoteException e) {
-			//Do not throw anything, because this means only GUI is closed and simulation was not even started			
-		}
-		
-		new Thread() {
-			public void run() {
-				try {
-					GUISimulationAdapter.runSimulation(simulationXMLFileDirectory);
-				} catch (IOException e) {
-					throw new Error("Failed to run simulation file located at "+ simulationXMLFileDirectory+ " , due to remote exception");
-				}
-			}
-		}.start();		
-	}
+	/**
+	 * Restarts current simulation from XML file.
+	 */
+	public static void jButtonRestartActionPerformed() {	
+		terminateSimulation();
+		startSimulation(simulationXMLFileDirectory);		
+	}	
+	
 }

@@ -1,13 +1,10 @@
 package ussr.aGui.fileChooser.controllers;
 
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.rmi.RemoteException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-
-import ussr.aGui.MainFrameSeparateController;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.remote.GUISimulationAdapter;
 
@@ -40,16 +37,8 @@ public class FileChooserXMLController extends FileChooserController {
 
 			switch(ussXmlFileType){
 			case SIMULATION:
-				new Thread() {
-					public void run() {
-						try {
-							GUISimulationAdapter.runSimulation(fileDirectoryName);
-						} catch (IOException e) {
-							throw new Error("Failed to run simulation file located at "+ fileDirectoryName+ " , due to remote exception");
-						}
-					}
-				}.start();	
-				MainFrameSeparateController.setSimulationXMLFileDirectory(fileDirectoryName);
+				startSimulation(fileDirectoryName);	
+				setSimulationXMLFileDirectory(fileDirectoryName);//CallBack
 				break;			
 			case ROBOT:
 				try {

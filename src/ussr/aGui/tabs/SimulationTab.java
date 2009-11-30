@@ -244,19 +244,40 @@ public class SimulationTab extends Tabs {
 		jSpinnerPlaneSize = new javax.swing.JSpinner();
 		jSpinnerPlaneSize.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
 		SimulationTabController.setJSpinnerPlaneSizeValue(jSpinnerPlaneSize);
-
 		jPanelEditor.add(jSpinnerPlaneSize);
 	}
 	
 	
 	
 	public static void addPlaneTextureEditor(){
-
+		GridBagConstraints gridBagConstraintsTexture = new GridBagConstraints();
+		
 		jComboBoxPlaneTexture = new javax.swing.JComboBox(); 
 		jComboBoxPlaneTexture.setModel(new DefaultComboBoxModel(TextureDescriptions.values()));
-		SimulationTabController.setSelectedJComboBoxPlaneTexture(jComboBoxPlaneTexture);
-		jPanelEditor.add(jComboBoxPlaneTexture);
-
+		
+		gridBagConstraintsTexture.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsTexture.gridx = 0;
+		gridBagConstraintsTexture.gridy = 0;
+		
+		jPanelEditor.add(jComboBoxPlaneTexture,gridBagConstraintsTexture);
+		
+		javax.swing.JPanel previewPanel = new javax.swing.JPanel(new GridBagLayout());
+		previewPanel.setPreferredSize(new Dimension(100,100));
+		previewPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Preview", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
+		gridBagConstraintsTexture.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsTexture.gridx = 0;
+		gridBagConstraintsTexture.gridy = 1;
+		
+		javax.swing.JLabel iconLabel = new javax.swing.JLabel();
+		
+		SimulationTabController.setSelectedJComboBoxPlaneTexture(jComboBoxPlaneTexture,iconLabel);
+		
+		previewPanel.add(iconLabel);
+		
+		
+		
+		
+		jPanelEditor.add(previewPanel,gridBagConstraintsTexture);
 	}
 	
 	public static void addCameraPositionEditor(){
