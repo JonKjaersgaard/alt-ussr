@@ -41,7 +41,7 @@ public interface MainFramesInter {
 	PAU ="pause",PAUSE_ROLLOVER = "pauseRollover",TER = "terminate",TERMINATE_ROLLOVER = "terminateRollover",
 	RESTART ="restart",RESTART_ROLLOVER = "restartRollover",CONSTRUCT_R = "constructRobot",
 	CONSTRUCT_ROBOT_ROLLOVER ="constructRobotRollover",VISUAL = "visualizer",VISUALZER_ROLLOVER ="visualizerRollover", 
-	NO_EN ="noEntrance"
+	NO_EN ="noEntrance", OPE = "open",OPEN_ROLLOVER ="openRollover"
 	
 	
 	

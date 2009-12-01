@@ -483,6 +483,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonSave = new javax.swing.JButton();		
 		jButtonSave.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Save));
 		jButtonSave.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + SAVE));
+		
 		jButtonSave.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));		
 		jButtonSave.setFocusable(false);
 		jButtonSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -504,8 +505,13 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public static javax.swing.JButton  initOpenButton(final FileChooserFrameInter fcOpenFrame){
 		jButtonOpen = new javax.swing.JButton();
 		jButtonOpen.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Open));
-		jButtonOpen.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPEN));
-		jButtonOpen.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));	
+		//jButtonOpen.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPEN));
+		jButtonOpen.setDisabledIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NO_ENTRANCE));
+		
+		jButtonOpen.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPE + DEFAULT_ICON_EXTENSION1));
+		jButtonOpen.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPEN_ROLLOVER + DEFAULT_ICON_EXTENSION1));
+		jButtonOpen.setSelectedIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPE + DEFAULT_ICON_EXTENSION1));
+		
 		jButtonOpen.setFocusable(false);		
 		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));
 		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
