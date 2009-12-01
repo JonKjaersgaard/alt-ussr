@@ -13,6 +13,8 @@ import javax.swing.JRadioButton;
 import ussr.aGui.FramesInter;
 import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFramesInter;
+import ussr.aGui.enumerations.MainFrameIcons;
+import ussr.aGui.enumerations.TabsIcons;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.additionalResources.HintPanelTypes;
@@ -325,13 +327,10 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jToolBarGenericTools.add(jButtonMove);
 
 		jButtonDelete.setToolTipText(TOOL_TIP_TEXTS[5]);
-		//jButtonDelete.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE));
-		jButtonDelete.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DEL+ MainFramesInter.DEFAULT_ICON_EXTENSION1));
-		jButtonDelete.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DELETE_ROLLOVER + MainFramesInter.DEFAULT_ICON_EXTENSION1));
-		jButtonDelete.setSelectedIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + DEL+ MainFramesInter.DEFAULT_ICON_EXTENSION1));
-		
-		
-		jButtonDelete.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));		
+		jButtonDelete.setIcon(TabsIcons.DELETE.getImageIcon());
+		jButtonDelete.setSelectedIcon(TabsIcons.DELETE.getImageIcon());
+		jButtonDelete.setRolloverIcon(TabsIcons.DELETE_ROLLOVER.getImageIcon());		
+		jButtonDelete.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());		
 		jButtonDelete.setFocusable(false);
 		jButtonDelete.setEnabled(false);
 		jButtonDelete.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT));
@@ -396,7 +395,9 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.insets = new Insets(0,0,10,18);  
 
 		jButtonOnSelectedConnector.setToolTipText(TOOL_TIP_TEXTS[8]);
-		jButtonOnSelectedConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + ON_SELECTED_CONNECTOR));
+		jButtonOnSelectedConnector.setIcon(TabsIcons.ON_SELECTED_CONNECTOR.getImageIcon());
+		jButtonOnSelectedConnector.setSelectedIcon(TabsIcons.ON_SELECTED_CONNECTOR_ROLLOVER.getImageIcon());
+		jButtonOnSelectedConnector.setRolloverIcon(TabsIcons.ON_SELECTED_CONNECTOR_ROLLOVER.getImageIcon());
 		jButtonOnSelectedConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));		
 		jButtonOnSelectedConnector.setFocusable(false);
 		jButtonOnSelectedConnector.setEnabled(false);
@@ -419,8 +420,11 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		});		
 
 		jButtonConnectAllModules.setToolTipText(TOOL_TIP_TEXTS[10]);
-		jButtonConnectAllModules.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + CONNECT_ALL_MODULES));
-		jButtonConnectAllModules.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));		
+		jButtonConnectAllModules.setIcon(TabsIcons.CONNECT_ALL_MODULES.getImageIcon());
+		jButtonConnectAllModules.setSelectedIcon(TabsIcons.CONNECT_ALL_MODULES_ROLLOVER.getImageIcon());
+		jButtonConnectAllModules.setRolloverIcon(TabsIcons.CONNECT_ALL_MODULES_ROLLOVER.getImageIcon());
+		jButtonConnectAllModules.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());
+		
 		jButtonConnectAllModules.setFocusable(false);
 		jButtonConnectAllModules.setEnabled(false);
 		jButtonConnectAllModules.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
@@ -447,9 +451,11 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 			}
 		});		
 
-		jButtonJumpFromConnToConnector.setToolTipText(TOOL_TIP_TEXTS[12]);
-		jButtonJumpFromConnToConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + JUMP_FROM_CONN_TO_CONNECTOR));
-		jButtonJumpFromConnToConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));		
+		jButtonJumpFromConnToConnector.setToolTipText(TOOL_TIP_TEXTS[12]);		
+		jButtonJumpFromConnToConnector.setIcon(TabsIcons.JUMP_FROM_CON_TO_CON.getImageIcon());
+		jButtonJumpFromConnToConnector.setSelectedIcon(TabsIcons.JUMP_FROM_CON_TO_CON_ROLLOVER.getImageIcon());
+		jButtonJumpFromConnToConnector.setRolloverIcon(TabsIcons.JUMP_FROM_CON_TO_CON_ROLLOVER.getImageIcon());
+		jButtonJumpFromConnToConnector.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());		
 		jButtonJumpFromConnToConnector.setFocusable(false);
 		jButtonJumpFromConnToConnector.setEnabled(false);
 		jButtonJumpFromConnToConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));

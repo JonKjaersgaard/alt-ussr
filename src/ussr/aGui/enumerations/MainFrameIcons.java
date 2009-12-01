@@ -6,10 +6,10 @@ import ussr.aGui.MainFramesInter;
 
 /**
  * Contains icons used in main GUI window.
- * NOTE: Most of icons are 20x20 pixels,however small(this is keyword) ones are:15x15.
+ * NOTE: Most of icons are 20x20 pixels,however small(this is a keyword) ones are:15x15.
  * @author Konstantinas
  */
-public enum MainFrameIcons {
+public enum MainFrameIcons{
     /*Constant icons*/
 	
 	/*Save and Open*/	
@@ -59,10 +59,10 @@ public enum MainFrameIcons {
 
 	/**
 	 * Contains icons used in main GUI window.
-	 * @param iconName, the name of the icon (as a name of image file, not including extension).
+	 * @param imageName, the name of image file, not including extension.
 	 */
-	MainFrameIcons(String iconName){
-		this.imageIcon = new ImageIcon(formatIconDirectory(iconName));
+	MainFrameIcons(String imageName){
+		this.imageIcon = new ImageIcon(formatIconDirectory(imageName));
 	}
 
 	/**
@@ -75,11 +75,11 @@ public enum MainFrameIcons {
 
 	/**
 	 * Formats directory, where icon is located.
-	 * @param iconName, the name of the image file.
+	 * @param imageName, the name of the image file.
 	 * @return directory, where icon is located.
 	 */
-	private static String formatIconDirectory(String iconName){	
-		return MainFramesInter.DIRECTORY_ICONS+iconName+MainFramesInter.DEFAULT_ICON_EXTENSION1;
+	private static String formatIconDirectory(String imageName){	
+		return MainFramesInter.DIRECTORY_ICONS+imageName+MainFramesInter.DEFAULT_ICON_EXTENSION1;
 	}
 	
 }

@@ -16,7 +16,7 @@ public interface TabsInter {
 	/**
 	 * The names of the icons used in tabs
 	 */
-	public final String DELETE = "delete.jpg", MOVE = "move.jpg", COLOUR_CONNECTORS = "colourConnectors.jpg",
+	public final String MOVE = "move.jpg", COLOUR_CONNECTORS = "colourConnectors.jpg",
 	                    ERROR = "error.jpg", INFORMATION ="information.jpg", CONSOLE = "console.jpg", OPPOSITE = "opposite.jpg",
 	                    ON_SELECTED_CONNECTOR ="onSelectedConnector.jpg", CONNECT_ALL_MODULES = "connectAllModules.jpg",
 	                    JUMP_FROM_CONN_TO_CONNECTOR = "jumpFromConnToConnector.jpg", NEXT = "next.jpg",
@@ -26,10 +26,15 @@ public interface TabsInter {
 	                    EXPANSION_OPENED ="expansionOpened.jpg", FINAL_LEAF = "finalLeaf.jpg", 
 	                    PLANE_TITL_RIGHT ="planeTiltRight.jpg";
 	
-	public final String DEL ="delete",DELETE_ROLLOVER ="deleteRollover", EXPAN_CLOSED ="expansionClosed", EXPAN_OPENED ="expansionOpened",
-	                    FINAL_L = "finalLeaf",OPPOSITE_ROTATION ="oppositeRotation", OPPOSITE_ROTATION_ROLLOVER ="oppositeRotationRollover",
+	public final String DELETE ="delete",DELETE_ROLLOVER ="deleteRollover",
+	                    EXPAN_CLOSED ="expansionClosed", EXPAN_OPENED ="expansionOpened",FINAL_L = "finalLeaf",
+	                    OPPOSITE_ROTATION ="oppositeRotation", OPPOSITE_ROTATION_ROLLOVER ="oppositeRotationRollover",
 	                    AVAILABLE_ROT = "availableRotations", AVAILABLE_ROTATIONS_ROLLOVER = "availableRotationsRollover",
-	                    AVAILABLE_ROTATIONS_SELECTED = "availableRotationsSelected", MOV ="move", MOVE_ROLLOVER ="moveRollover"
+	                    AVAILABLE_ROTATIONS_SELECTED = "availableRotationsSelected", MOV ="move", MOVE_ROLLOVER ="moveRollover",
+	                    
+	                    CONNECT_ALL_MODULE ="connectAllModules",CONNECT_ALL_MODULES_ROLLOVER="connectAllModulesRollover",
+	                    ON_SELECTED_CONNECTO ="onSelectedConnector", ON_SELECTED_CONNECTOR_ROLLOVER ="onSelectedConnectorRollover",
+	                    JUMP_FROM_CON_TO_CON = "jumpFromConToCon",JUMP_FROM_CON_TO_CON_ROLLOVER = "jumpFromConToConRollover"	
 	                    ;
 	
 	/**
