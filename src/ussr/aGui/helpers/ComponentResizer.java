@@ -1,4 +1,4 @@
-package ussr.aGui;
+package ussr.aGui.helpers;
 
 import java.awt.*;
 import java.awt.event.*;

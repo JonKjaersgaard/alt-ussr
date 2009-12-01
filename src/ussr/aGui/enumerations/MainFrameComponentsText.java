@@ -28,8 +28,6 @@ public enum MainFrameComponentsText {
 	
 	      /*JButtons*/
 	      Run_real_time, Run_fast, Run_step_by_step,Pause,Terminate,Restart,Construct_robot,Visualize_communication_of_modules
-	      
-	      
 	      ;
 	      
 	      public static String replaceUnderscoreWithSpace(MainFrameComponentsText mainFrameComponentsText){

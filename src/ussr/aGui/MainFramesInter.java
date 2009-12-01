@@ -23,30 +23,33 @@ public interface MainFramesInter {
 	/**
 	 * The default extension of each icon. 
 	 */
-	public final String DEFAULT_ICON_EXTENSION = ".jpg";
+	//public final String DEFAULT_ICON_EXTENSION = ".jpg";
 	public final String DEFAULT_ICON_EXTENSION1 = ".png";
 	
 	/**
-	 * The names of the icons used in the main frame.
+	 * The names(file names) of the icons used in the main frame.
 	 */
-	public final String RUN_REAL_TIME = "runRealTime.jpg",RUN_FAST = "runFast.jpg", PAUSE = "pause.jpg", STEP_BY_STEP ="runStepByStep.jpg",
-	SAVE ="save.jpg",SAVE_SMALL ="saveSmall.jpg", EXIT = "exit.jpg", OPEN = "open.jpg",OPEN_SMALL ="openSmall.jpg",
-	NO_ENTRANCE ="noEntrance.jpg", CONSTRUCT_ROBOT = "constructRobot.jpg", VISUALIZER = "visualizer.jpg",
-	TERMINATE = "terminate.jpg", NO_ENTRANCE_SMALL = "noEntranceSmall.jpg", 
-	
-	
-	
-	EXIT_SMALL= "exit", RUN = "runRealTime",RUN_REAL_TIME_ROLLOVER ="runRealTimeRollover", RUN_F ="runFast", 
-	RUN_FAST_ROLLOVER = "runFastRollover",RUN_S ="runStepByStep",RUN_STEP_BY_STEP_ROLLOVER ="runStepByStepRollover",
-	PAU ="pause",PAUSE_ROLLOVER = "pauseRollover",TER = "terminate",TERMINATE_ROLLOVER = "terminateRollover",
-	RESTART ="restart",RESTART_ROLLOVER = "restartRollover",CONSTRUCT_R = "constructRobot",
-	CONSTRUCT_ROBOT_ROLLOVER ="constructRobotRollover",VISUAL = "visualizer",VISUALZER_ROLLOVER ="visualizerRollover", 
-	NO_EN ="noEntrance", OPE = "open",OPEN_ROLLOVER ="openRollover"
-	
-	
-	
-	
-	; 
+	public final String NO_ENTRANCE ="noEntrance.jpg",
+    
+	                    /*Open and Save*/
+                        OPEN = "open",OPEN_ROLLOVER ="openRollover",
+                        OPEN_SMAL ="openSmall",
+                        SAVE ="save", SAVE_ROLLOVER ="saveRollover",
+                        SAVE_SMALL = "saveSmall",
+   
+                        NO_EN ="noEntrance",NO_EN_SMALL ="noEntrance", 
+                        EXIT_SMALL= "exitSmall",
+		
+	                    RUN_REAL_TIME = "runRealTime",RUN_REAL_TIME_ROLLOVER ="runRealTimeRollover", 
+	                    RUN_FAST ="runFast", RUN_FAST_ROLLOVER = "runFastRollover",
+	                    RUN_STEP_BY_STEP ="runStepByStep",RUN_STEP_BY_STEP_ROLLOVER ="runStepByStepRollover",
+	                    PAUSE ="pause",PAUSE_ROLLOVER = "pauseRollover",
+	                    TERMINATE = "terminate",TERMINATE_ROLLOVER = "terminateRollover",
+	                    RESTART ="restart",RESTART_ROLLOVER = "restartRollover",
+	                    CONSTRUCT_ROBOT = "constructRobot",CONSTRUCT_ROBOT_ROLLOVER ="constructRobotRollover",
+	                    VISUALIZER = "visualizer",VISUALIZER_ROLLOVER ="visualizerRollover"
+	                    ; 
+	                    
   
 	
 	/**
@@ -57,17 +60,19 @@ public interface MainFramesInter {
 	                    MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE = "Communication Visualiser",
 	                    SIMULATION_TAB_TITLE = "Simulation",
 	                    CONSOLE_TAB_TITLE = "Console",
-/*YOUR TAB TITLE*/      YOUR_TAB_TITLE = "YOUR TAB";
+/*YOUR TAB TITLE*/      YOUR_TAB_TITLE = "YOUR TAB"
+	                    ;
 	
 	/**     
 	 * Instances of tabs plugged in main GUI window
 	 */
 	public final TabsInter  CONSTRUCT_ROBOT_TAB = new ConstructRobotTab(false,true,CONSTRUCT_ROBOT_TAB_TITLE,DIRECTORY_ICONS+CONSTRUCT_ROBOT_ROLLOVER+DEFAULT_ICON_EXTENSION1),
 	                        ASSIGN_BEHAVIORS_TAB = new AssignBehaviorsTab(false,true,ASSIGN_BEHAVIORS_TAB_TITLE,DIRECTORY_ICONS+CONSTRUCT_ROBOT_ROLLOVER+DEFAULT_ICON_EXTENSION1),
-	                        MODULE_COMMUNICATION_VISUALIZER_TAB = new ModuleCommunicationVisualizer(false,true,MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE,DIRECTORY_ICONS+VISUALZER_ROLLOVER+DEFAULT_ICON_EXTENSION1),
+	                        MODULE_COMMUNICATION_VISUALIZER_TAB = new ModuleCommunicationVisualizer(false,true,MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE,DIRECTORY_ICONS+VISUALIZER_ROLLOVER+DEFAULT_ICON_EXTENSION1),
 	                        SIMULATION_CONFIGURATION_TAB = new SimulationTab(true,true,SIMULATION_TAB_TITLE,FramesInter.DIRECTORY_USSR_ICON),
 	                        CONSOLE_TAB = new ConsoleTab(true,false,CONSOLE_TAB_TITLE, TabsInter.DIRECTORY_ICONS+TabsInter.CONSOLE),
-              /*YOUR TAB*/  YOUR_TAB = new YourNewTab(true,true, YOUR_TAB_TITLE,TabsInter.DIRECTORY_ICONS+TabsInter.NEW_TAB);
+              /*YOUR TAB*/  YOUR_TAB = new YourNewTab(true,true, YOUR_TAB_TITLE,TabsInter.DIRECTORY_ICONS+TabsInter.NEW_TAB)
+	                        ;
 
 	/**
 	 * Array of tabs plugged in the Main frame.
