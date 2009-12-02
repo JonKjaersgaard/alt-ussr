@@ -99,7 +99,8 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonStartNewRobot.setFocusable(true);
 		jButtonStartNewRobot.setPreferredSize(new Dimension(110,GuiFrames.COMMON_HEIGHT+2));
 		jButtonStartNewRobot.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {            	
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				setSelectionDeselection(jButtonStartNewRobot);
 				ConstructRobotTabController.jButtonStartNewRobotActionPerformed();            	
 			}
 		});        
@@ -545,6 +546,22 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 
 	/*Getters and setters*/
 	
+	/**
+	 * Returns the button for initialization of variate module properties tool.
+	 * @return the button for initialization of variate module properties tool.
+	 */
+	public static javax.swing.JButton getJButtonVariateModuleProperties() {
+		return jButtonVariateModuleProperties;
+	}
+
+	/**
+	 * Returns the button for initialization of available rotations tool.
+	 * @return the button for initialization of available rotations tool.
+	 */
+	public static javax.swing.JButton getJButtonAvailableRotationsLoop() {
+		return jButtonAvailableRotationsLoop;
+	}
+
 	/**
 	 * Returns the button for initialization of opposite rotation tool. 
 	 * @return the button for initialization of opposite rotation tool.

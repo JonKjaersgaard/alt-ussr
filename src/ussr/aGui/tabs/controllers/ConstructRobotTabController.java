@@ -35,7 +35,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		chosenMRname = SupportedModularRobots.valueOf(chosenModularRobot.toUpperCase());
 
 		/*Adapt Tab components to chosen modular robot */
-		adaptTabToChosenMR(chosenMRname);
+		adaptTabToChosenMR(chosenMRname,false);
 
 		try {
 			/*Add initial construction module*/
@@ -59,16 +59,20 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	/**
 	 * Adapt the tab to chosen modular robot.
 	 * @param chosenMRname, modular robot name chosen in button group.
+	 * @param moduleSelectedFlag, flag for identifying selection of module in simulation environment.
 	 */
-	private static void adaptTabToChosenMR(SupportedModularRobots chosenMRname){
+	private static void adaptTabToChosenMR(SupportedModularRobots chosenMRname, boolean moduleSelectedFlag){
 
 		/*Disable and enable components*/
-		ConstructRobotTab.setRadioButtonsEnabled(false);
-		ConstructRobotTab.getJComboBoxEntity().setEnabled(true);
-		ConstructRobotTab.setEnabledRotationToolBar(true);
-		ConstructRobotTab.setEnabledGenericToolBar(true);
-		ConstructRobotTab.setEnabledConstructionToolsToolBar(true);
-		ConstructRobotTab.setEnabledButtonsArrows(false);
+		if (moduleSelectedFlag){//do nothing
+		}else{
+			ConstructRobotTab.setRadioButtonsEnabled(false);
+			ConstructRobotTab.getJComboBoxEntity().setEnabled(true);
+			ConstructRobotTab.setEnabledRotationToolBar(true);
+			ConstructRobotTab.setEnabledGenericToolBar(true);
+			ConstructRobotTab.setEnabledConstructionToolsToolBar(true);
+			ConstructRobotTab.setEnabledButtonsArrows(false);
+		}
 
 		/*Adapt tab to chosen modular robot*/
 		switch(chosenMRname){
@@ -86,6 +90,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			break;
 		}	
 	}
+	
 
 	/**
 	 * Adapts tab to ATRON modular robot
@@ -108,7 +113,10 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 * Adapts tab to Odin modular robot
 	 */
 	private static void adaptTabToOdin(){
-		ConstructRobotTab.setEnabledRotationToolBar(false);// for Odin not yet relevant
+		//ConstructRobotTab.setEnabledRotationToolBar(false);// for Odin not yet relevant
+		ConstructRobotTab.getJButtonAvailableRotationsLoop().setEnabled(false);
+		ConstructRobotTab.getjComboBoxStandardRotations().setEnabled(false);
+		ConstructRobotTab.getJButtonOppositeRotation().setEnabled(true);
 		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(ODIN_CONNECTORS));
 	}
 
@@ -230,9 +238,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 * Initializes the tool for adding new modules on selected connectors of the module in interest in simulation environment. 	
 	 */
 	public static void jButtonOnSelectedConnectorActionPerformed() {
-		/*Disable tab components no longer available*/
-		ConstructRobotTab.setEnabledRotationToolBar(false);
-		ConstructRobotTab.getJButtonMove().setEnabled(false);
+		constructionToolSelected();
 
 		try {
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR);
@@ -254,9 +260,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 * @param comboBoxNrConnectorsConstructionTool, JComboBox containing the number of connectors.
 	 */
 	public static void jComboBoxNrConnectorsConstructionToolActionPerformed(JComboBox comboBoxNrConnectorsConstructionTool) {
-		/*Disable tab components no longer available*/
-		ConstructRobotTab.setEnabledRotationToolBar(false);
-		ConstructRobotTab.getJButtonMove().setEnabled(false);
+		constructionToolSelected();
 
 		chosenConnectorNr = Integer.parseInt(comboBoxNrConnectorsConstructionTool.getSelectedItem().toString());
 		try {
@@ -273,9 +277,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 * Initializes the tool for adding new modules to all connectors of selected module.
 	 */
 	public static void jButtonConnectAllModulesActionPerformed() {
-		/*Disable tab components no longer available*/
-		ConstructRobotTab.setEnabledRotationToolBar(false);
-		ConstructRobotTab.getJButtonMove().setEnabled(false);
+		constructionToolSelected();
 
 		try {
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.NEW_MODULES_ON_ALL_CONNECTORS);
@@ -285,6 +287,16 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[9]);
 
+	}
+	
+	/**
+	 * Disables and enables Gui components in case when any of construction tools are selected(chosen).
+	 */
+	private static void constructionToolSelected(){
+		ConstructRobotTab.getJButtonAvailableRotationsLoop().setEnabled(false);
+		ConstructRobotTab.getjComboBoxStandardRotations().setEnabled(false);
+		ConstructRobotTab.getJButtonOppositeRotation().setEnabled(true);
+		ConstructRobotTab.getJButtonMove().setEnabled(false);
 	}
 
 	/**
@@ -296,9 +308,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 * Initializes the tool for moving new module from connector to another connector.
 	 */
 	public static void jButtonJumpFromConnToConnectorActionPerformed() {
-		/*Disable tab components no longer available*/
-		ConstructRobotTab.setEnabledRotationToolBar(false);
-		ConstructRobotTab.getJButtonMove().setEnabled(false);		
+		constructionToolSelected();		
 
 		try {
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON,0);
@@ -399,12 +409,10 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			break;
 		default: throw new Error("Modular robot named as "+ supportedModularRobot.toString() + "is not supported yet" );
 		}	
-		adaptTabToChosenMR(supportedModularRobot);
+		adaptTabToChosenMR(supportedModularRobot,true);
 		ConstructRobotTab.setRadioButtonsEnabled(false);
+		//constructionToolSelected();HERE
 		
-		ConstructRobotTab.setEnabledRotationToolBar(false);
-		ConstructRobotTab.getJButtonOppositeRotation().setEnabled(true);			
-		ConstructRobotTab.getJButtonMove().setEnabled(false);	
 	}
 
 	/**
@@ -428,23 +436,21 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			}
 
 			if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ATRON.toString())){
-				adaptTabToChosenMR(SupportedModularRobots.ATRON);
+				adaptTabToChosenMR(SupportedModularRobots.ATRON,false);
 				chosenMRname = SupportedModularRobots.ATRON;
 			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ODIN.toString())){
-				adaptTabToChosenMR(SupportedModularRobots.ODIN);
+				adaptTabToChosenMR(SupportedModularRobots.ODIN,false);
 				chosenMRname = SupportedModularRobots.ODIN;
 			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.MTRAN.toString())){
-				adaptTabToChosenMR(SupportedModularRobots.MTRAN);
+				adaptTabToChosenMR(SupportedModularRobots.MTRAN,false);
 				chosenMRname = SupportedModularRobots.MTRAN;
 			}else if(modularRobotName.toUpperCase().contains(SupportedModularRobots.CKBOTSTANDARD.toString())){
-				adaptTabToChosenMR(SupportedModularRobots.CKBOTSTANDARD);
+				adaptTabToChosenMR(SupportedModularRobots.CKBOTSTANDARD,false);
 				chosenMRname = SupportedModularRobots.CKBOTSTANDARD;
 			}else{
 				throw new Error ("Modular robot type "+modularRobotName+ "is not supported yet" );
 			}
-			ConstructRobotTab.setEnabledRotationToolBar(false);
-			ConstructRobotTab.getJButtonOppositeRotation().setEnabled(true);			
-			ConstructRobotTab.getJButtonMove().setEnabled(false);			
+			constructionToolSelected();		
 
 			try {
 				/*Set default construction tool to be "On selected  connector"*/
@@ -484,7 +490,11 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.VARIATE_MODULE_OR_PROPERTIES);
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called "+ ConstructionTools.VARIATE_MODULE_OR_PROPERTIES.toString() + ", due to remote exception");
-		}				
+		}	
+		if (chosenMRname.equals(SupportedModularRobots.ODIN)){
+			ConstructRobotTab.setEnabledConstructionToolsToolBar(false);
+		}
+		
 	}
 
 	/**
@@ -510,8 +520,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			ConstructRobotTab.setEnabledButtonsArrows(true);	
 			break;
 		case NEW_MODULE_ON_SELECTED_CONNECTOR:
-			ConstructRobotTab.setEnabledRotationToolBar(false);
-			ConstructRobotTab.getJButtonMove().setEnabled(false);
+			constructionToolSelected();
 			break;			
 		default: throw new Error ("The tool named as "+ chosenTool.toString() + " is not supported yet.");
 		}
