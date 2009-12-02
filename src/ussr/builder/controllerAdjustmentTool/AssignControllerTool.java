@@ -71,6 +71,7 @@ public class AssignControllerTool extends CustomizedPicker implements Serializab
 			} catch (RemoteException e) {
 				throw new Error("Failed to give feedback to the user in Assign Behaviors Tab, due to remote exception.");
 			}
+			//FIXME in Odin case is a problem
 		}
 	}
 	
