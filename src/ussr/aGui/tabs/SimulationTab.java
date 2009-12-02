@@ -28,9 +28,9 @@ import ussr.aGui.enumerations.SimulationTabTreeNodes;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.helpers.RobotSpecification;
+import ussr.aGui.helpers.hintPanel.HintPanel;
+import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 
-import ussr.aGui.tabs.additionalResources.HintPanel;
-import ussr.aGui.tabs.additionalResources.HintPanelTypes;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 
 import ussr.description.setup.WorldDescription.CameraPosition;
@@ -151,11 +151,9 @@ public class SimulationTab extends Tabs {
 
 		jTree1 = new javax.swing.JTree(firstNodeHierarchySimulation);
 
-		//ImageIcon closedIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_CLOSED);
+		
 		ImageIcon closedIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_CLOSED_SMALL +MainFramesInter.DEFAULT_ICON_EXTENSION1);
-		//ImageIcon openIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_OPENED);
 		ImageIcon openIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_OPENED_SMALL + MainFramesInter.DEFAULT_ICON_EXTENSION1);
-		//ImageIcon leafIcon = new ImageIcon(DIRECTORY_ICONS + FINAL_LEAF);
 		ImageIcon leafIcon = new ImageIcon(DIRECTORY_ICONS + FINAL_LEAF_SMALL + MainFramesInter.DEFAULT_ICON_EXTENSION1 );
 
 		if (openIcon != null) {

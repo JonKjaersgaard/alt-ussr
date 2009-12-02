@@ -15,7 +15,7 @@ public interface FramesInter {
 	/**
 	 * Directory for USSR icon.
 	 */
-	public final String DIRECTORY_USSR_ICON = "resources/mainFrame/icons/jpg/ussrIcon.jpg";
+	public final String DIRECTORY_USSR_ICON = "resources/mainFrame/icons/jpg/ussrIcon.png";
 	
 	/**
 	 * Title for USSR simulator.

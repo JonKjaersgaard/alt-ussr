@@ -1,4 +1,4 @@
-package ussr.aGui.tabs.additionalResources;
+package ussr.aGui.helpers.hintPanel;
 
 import java.awt.Dimension;
 

@@ -1,4 +1,4 @@
-package ussr.aGui.tabs.additionalResources;
+package ussr.aGui.helpers.hintPanel;
 
 
 /**
@@ -10,6 +10,10 @@ public interface HintPanelInter {
 	
 	public final String commonTitle = "Display for hints"; 
 	
+	/**
+	 * The directory for keeping png icons used in hint panel.
+	 */
+	//public final String DIRECTORY_ICONS = "resources/mainFrame/icons/tabs/jpg/hintPanel/";
 	
 	/**
 	 * Array of build in hints for tab called Construct Robot

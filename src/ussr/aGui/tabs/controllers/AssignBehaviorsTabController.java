@@ -7,9 +7,9 @@ import javax.swing.AbstractButton;
 import javax.swing.JCheckBox;
 
 
-import ussr.aGui.tabs.additionalResources.HintPanel;
-import ussr.aGui.tabs.additionalResources.HintPanelInter;
-import ussr.aGui.tabs.additionalResources.HintPanelTypes;
+import ussr.aGui.helpers.hintPanel.HintPanel;
+import ussr.aGui.helpers.hintPanel.HintPanelInter;
+import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTabInter;
 

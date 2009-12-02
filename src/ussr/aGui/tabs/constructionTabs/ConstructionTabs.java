@@ -14,9 +14,9 @@ import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
+import ussr.aGui.helpers.hintPanel.HintPanel;
+import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.Tabs;
-import ussr.aGui.tabs.additionalResources.HintPanel;
-import ussr.aGui.tabs.additionalResources.HintPanelInter;
 
 /**
  * Holds common methods for definition of construction tabs visual appearance. Tabs such as: ConstrutRobotTab.java and AssignBehaviors.java. 

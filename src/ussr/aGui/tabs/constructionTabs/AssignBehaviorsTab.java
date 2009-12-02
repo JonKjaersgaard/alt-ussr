@@ -18,8 +18,8 @@ import javax.swing.border.TitledBorder;
 import ussr.aGui.FramesInter;
 import ussr.aGui.MainFramesInter;
 
-import ussr.aGui.tabs.additionalResources.HintPanel;
-import ussr.aGui.tabs.additionalResources.HintPanelInter;
+import ussr.aGui.helpers.hintPanel.HintPanel;
+import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 
 /**

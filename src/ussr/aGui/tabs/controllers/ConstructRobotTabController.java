@@ -9,7 +9,7 @@ import ussr.builder.enumerations.CKBotStandardRotations;
 import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.MTRANStandardRotations;
 import ussr.builder.enumerations.SupportedModularRobots;
-import ussr.aGui.tabs.additionalResources.HintPanelInter;
+import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTabInter;
 

@@ -15,10 +15,10 @@ import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFramesInter;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.TabsIcons;
+import ussr.aGui.helpers.hintPanel.HintPanel;
+import ussr.aGui.helpers.hintPanel.HintPanelInter;
+import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.TabsInter;
-import ussr.aGui.tabs.additionalResources.HintPanel;
-import ussr.aGui.tabs.additionalResources.HintPanelInter;
-import ussr.aGui.tabs.additionalResources.HintPanelTypes;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 
 
