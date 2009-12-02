@@ -15,6 +15,7 @@ import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFramesInter;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.TabsIcons;
+import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.additionalResources.HintPanel;
 import ussr.aGui.tabs.additionalResources.HintPanelInter;
 import ussr.aGui.tabs.additionalResources.HintPanelTypes;
@@ -207,12 +208,10 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.insets = new Insets(0,3,10,18);  
 
 		jButtonOppositeRotation.setToolTipText(TOOL_TIP_TEXTS[2]);		
-		//jButtonOppositeRotation.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE));
-		jButtonOppositeRotation.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE_ROTATION + MainFramesInter.DEFAULT_ICON_EXTENSION1));
-		jButtonOppositeRotation.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE_ROTATION_ROLLOVER + MainFramesInter.DEFAULT_ICON_EXTENSION1));
-		jButtonOppositeRotation.setSelectedIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + OPPOSITE_ROTATION_ROLLOVER + MainFramesInter.DEFAULT_ICON_EXTENSION1));
-	
-		jButtonOppositeRotation.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_EN + MainFramesInter.DEFAULT_ICON_EXTENSION1 ));
+		jButtonOppositeRotation.setIcon(TabsIcons.OPPOSITE_ROTATION.getImageIcon());
+		jButtonOppositeRotation.setSelectedIcon(TabsIcons.OPPOSITE_ROTATION_ROLLOVER.getImageIcon());
+		jButtonOppositeRotation.setRolloverIcon(TabsIcons.OPPOSITE_ROTATION_ROLLOVER.getImageIcon());	
+		jButtonOppositeRotation.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());
 		jButtonOppositeRotation.setEnabled(false);	
 		jButtonOppositeRotation.setFocusable(false); 
 		jButtonOppositeRotation.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
@@ -224,12 +223,11 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		});
 
 		jButtonAvailableRotationsLoop.setToolTipText(TOOL_TIP_TEXTS[16]);
-		//jButtonAvailableRotationsLoop.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + AVAILABLE_ROTATIONS));
-		jButtonAvailableRotationsLoop.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + AVAILABLE_ROT+MainFramesInter.DEFAULT_ICON_EXTENSION1));
-		jButtonAvailableRotationsLoop.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + AVAILABLE_ROTATIONS_ROLLOVER+MainFramesInter.DEFAULT_ICON_EXTENSION1));
-		jButtonAvailableRotationsLoop.setSelectedIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + AVAILABLE_ROTATIONS_SELECTED+MainFramesInter.DEFAULT_ICON_EXTENSION1));
-		jButtonAvailableRotationsLoop.setFocusable(false); 
-		jButtonAvailableRotationsLoop.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_EN+ MainFramesInter.DEFAULT_ICON_EXTENSION1));
+		jButtonAvailableRotationsLoop.setIcon(TabsIcons.AVAILABLE_ROTATIONS.getImageIcon());
+		jButtonAvailableRotationsLoop.setRolloverIcon(TabsIcons.AVAILABLE_ROTATIONS_ROLLOVER.getImageIcon());
+		jButtonAvailableRotationsLoop.setSelectedIcon(TabsIcons.AVAILABLE_ROTATIONS_SELECTED.getImageIcon());
+		jButtonAvailableRotationsLoop.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());
+		jButtonAvailableRotationsLoop.setFocusable(false); 		
 		jButtonAvailableRotationsLoop.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
 		jButtonAvailableRotationsLoop.setEnabled(false);
 		jButtonAvailableRotationsLoop.addActionListener(new java.awt.event.ActionListener() {
@@ -306,14 +304,10 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		gridBagConstraints.insets = new Insets(8,3,10,18);  
 
 		jButtonMove.setToolTipText(TOOL_TIP_TEXTS[4]);	
-		//jButtonMove.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOVE));
-		jButtonMove.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOV+ MainFramesInter.DEFAULT_ICON_EXTENSION1));
-		jButtonMove.setSelectedIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOV+ MainFramesInter.DEFAULT_ICON_EXTENSION1));
-		jButtonMove.setRolloverIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + MOVE_ROLLOVER+ MainFramesInter.DEFAULT_ICON_EXTENSION1));
-		
-		//jButtonMove.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
-		jButtonMove.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_EN+MainFramesInter.DEFAULT_ICON_EXTENSION1));
-		
+		jButtonMove.setIcon(TabsIcons.MOVE.getImageIcon());
+		jButtonMove.setSelectedIcon(TabsIcons.MOVE.getImageIcon());
+		jButtonMove.setRolloverIcon(TabsIcons.MOVE_ROLLOVER.getImageIcon());		
+		jButtonMove.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());
 		
 		jButtonMove.setFocusable(false); 
 		jButtonMove.setEnabled(false);
@@ -344,8 +338,10 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jToolBarGenericTools.add(jButtonDelete);		
 
 		jButtonColorConnetors.setToolTipText(TOOL_TIP_TEXTS[6]);
-		jButtonColorConnetors.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + COLOUR_CONNECTORS));
-		jButtonColorConnetors.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));		
+		jButtonColorConnetors.setIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
+		jButtonColorConnetors.setSelectedIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
+		jButtonColorConnetors.setRolloverIcon(TabsIcons.COLOR_CONNECTORS_ROLLOVER.getImageIcon());
+		jButtonColorConnetors.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());		
 		jButtonColorConnetors.setFocusable(false);
 		jButtonColorConnetors.setEnabled(false);
 		jButtonColorConnetors.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH));
@@ -359,8 +355,10 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jToolBarGenericTools.add(jButtonColorConnetors);
 
 		jButtonVariateModuleProperties.setToolTipText(TOOL_TIP_TEXTS[15]);
-		jButtonVariateModuleProperties.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + VARY_PROPERTIES));
-		jButtonVariateModuleProperties.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));		
+		jButtonVariateModuleProperties.setIcon(TabsIcons.VARY_PROPERTIES.getImageIcon());
+		jButtonVariateModuleProperties.setSelectedIcon(TabsIcons.VARY_PROPERTIES.getImageIcon());
+		jButtonVariateModuleProperties.setRolloverIcon(TabsIcons.VARY_PROPERTIES_ROLLOVER.getImageIcon());		
+		jButtonVariateModuleProperties.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());		
 		jButtonVariateModuleProperties.setFocusable(false);
 		jButtonVariateModuleProperties.setEnabled(false);
 		jButtonVariateModuleProperties.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH));

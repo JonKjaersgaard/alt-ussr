@@ -16,25 +16,25 @@ public interface TabsInter {
 	/**
 	 * The names of the icons used in tabs
 	 */
-	public final String MOVE = "move.jpg", COLOUR_CONNECTORS = "colourConnectors.jpg",
-	                    ERROR = "error.jpg", INFORMATION ="information.jpg", CONSOLE = "console.jpg", OPPOSITE = "opposite.jpg",
-	                    ON_SELECTED_CONNECTOR ="onSelectedConnector.jpg", CONNECT_ALL_MODULES = "connectAllModules.jpg",
-	                    JUMP_FROM_CONN_TO_CONNECTOR = "jumpFromConnToConnector.jpg", NEXT = "next.jpg",
+	public final String 
+	                    ERROR = "error.jpg", INFORMATION ="information.jpg", CONSOLE = "console.jpg",
+	                    NEXT = "next.jpg",
 	                    PREVIOUS = "previous.jpg",ASSIGN_LABELS = "assignLabels.jpg", READ_LABELS ="readLabels.jpg",
-	                    NEW_TAB = "newTab.jpg", RESET = "reset.jpg", VARY_PROPERTIES = "varyProperties.jpg",
-	                    AVAILABLE_ROTATIONS = "availableRotations.jpg", EXPANSION_CLOSED = "expansionClosed.jpg",
-	                    EXPANSION_OPENED ="expansionOpened.jpg", FINAL_LEAF = "finalLeaf.jpg", 
-	                    PLANE_TITL_RIGHT ="planeTiltRight.jpg";
+	                    NEW_TAB = "newTab.jpg", RESET = "reset.jpg";
 	
-	public final String DELETE ="delete",DELETE_ROLLOVER ="deleteRollover",
-	                    EXPAN_CLOSED ="expansionClosed", EXPAN_OPENED ="expansionOpened",FINAL_L = "finalLeaf",
+	public final String MOVE = "move", MOVE_ROLLOVER ="moveRollover",
+	                    DELETE ="delete",DELETE_ROLLOVER ="deleteRollover",
+	                    EXPANSION_CLOSED_SMALL ="expansionClosedSmall", EXPANSION_OPENED_SMALL ="expansionOpenedSmall",FINAL_LEAF_SMALL = "finalLeafSmall",
 	                    OPPOSITE_ROTATION ="oppositeRotation", OPPOSITE_ROTATION_ROLLOVER ="oppositeRotationRollover",
-	                    AVAILABLE_ROT = "availableRotations", AVAILABLE_ROTATIONS_ROLLOVER = "availableRotationsRollover",
-	                    AVAILABLE_ROTATIONS_SELECTED = "availableRotationsSelected", MOV ="move", MOVE_ROLLOVER ="moveRollover",
+	                    AVAILABLE_ROTATIONS = "availableRotations", AVAILABLE_ROTATIONS_ROLLOVER = "availableRotationsRollover",
+	                    AVAILABLE_ROTATIONS_SELECTED = "availableRotationsSelected",  
 	                    
-	                    CONNECT_ALL_MODULE ="connectAllModules",CONNECT_ALL_MODULES_ROLLOVER="connectAllModulesRollover",
-	                    ON_SELECTED_CONNECTO ="onSelectedConnector", ON_SELECTED_CONNECTOR_ROLLOVER ="onSelectedConnectorRollover",
-	                    JUMP_FROM_CON_TO_CON = "jumpFromConToCon",JUMP_FROM_CON_TO_CON_ROLLOVER = "jumpFromConToConRollover"	
+	                    CONNECT_ALL_MODULES ="connectAllModules",CONNECT_ALL_MODULES_ROLLOVER="connectAllModulesRollover",
+	                    ON_SELECTED_CONNECTOR ="onSelectedConnector", ON_SELECTED_CONNECTOR_ROLLOVER ="onSelectedConnectorRollover",
+	                    JUMP_FROM_CON_TO_CON = "jumpFromConToCon",JUMP_FROM_CON_TO_CON_ROLLOVER = "jumpFromConToConRollover",
+	                    COLOR_CONNECTORS ="colorConnectors", COLOR_CONNECTORS_ROLLOVER ="colorConnectorsRollover",
+	                    VARY_PROPERTIES = "varyProperties",VARY_PROPERTIES_ROLLOVER = "varyPropertiesRollover"
+	                    
 	                    ;
 	
 	/**

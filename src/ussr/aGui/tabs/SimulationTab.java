@@ -152,11 +152,11 @@ public class SimulationTab extends Tabs {
 		jTree1 = new javax.swing.JTree(firstNodeHierarchySimulation);
 
 		//ImageIcon closedIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_CLOSED);
-		ImageIcon closedIcon = new ImageIcon(DIRECTORY_ICONS + EXPAN_CLOSED +MainFramesInter.DEFAULT_ICON_EXTENSION1);
+		ImageIcon closedIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_CLOSED_SMALL +MainFramesInter.DEFAULT_ICON_EXTENSION1);
 		//ImageIcon openIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_OPENED);
-		ImageIcon openIcon = new ImageIcon(DIRECTORY_ICONS + EXPAN_OPENED + MainFramesInter.DEFAULT_ICON_EXTENSION1);
+		ImageIcon openIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_OPENED_SMALL + MainFramesInter.DEFAULT_ICON_EXTENSION1);
 		//ImageIcon leafIcon = new ImageIcon(DIRECTORY_ICONS + FINAL_LEAF);
-		ImageIcon leafIcon = new ImageIcon(DIRECTORY_ICONS + FINAL_L + MainFramesInter.DEFAULT_ICON_EXTENSION1 );
+		ImageIcon leafIcon = new ImageIcon(DIRECTORY_ICONS + FINAL_LEAF_SMALL + MainFramesInter.DEFAULT_ICON_EXTENSION1 );
 
 		if (openIcon != null) {
 			DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();		    
