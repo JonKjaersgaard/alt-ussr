@@ -50,4 +50,6 @@ public interface ConstructionTemplate {
 	 * Returns array of objects containing information about supported-specific rotations of modular robot.
 	 */
 	public abstract ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP();
+	
+	public int[] getConnectors();
 }

@@ -21,8 +21,6 @@ import ussr.physics.jme.JMESimulation;
  */
 public class OdinOperationsTemplate extends CommonOperationsTemplate{
 
-	
-
 	/**
 	 * The default construction module is OdinBall.
 	 */
@@ -31,7 +29,7 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 	/**
 	 * The amount of connectors on default module.
 	 */
-	private final static int AMOUNT_MODULES = 12;
+	private final static int AMOUNT_CONNECTORS = 12;
 	
 	/**
 	 * Other Odin modules
@@ -59,7 +57,7 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 	@Override
 	public void addDefaultModule(String type, VectorDescription modulePosition,	RotationDescription moduleRotation, List<Color> colorsComponents, ArrayList<Color> colorsConectors) {
 		colorsComponents.add(Color.RED);			
-		for (int connector=0;connector<AMOUNT_MODULES;connector++){
+		for (int connector=0;connector<AMOUNT_CONNECTORS;connector++){
 			colorsConectors.add(Color.WHITE);
 		}
 		moduleRotation = OdinConstructionTemplate.ROTATION000;
@@ -104,7 +102,7 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 			odinModule  = addNewModule(new ModulePosition(ODIN_MUSCLE+ BuilderHelper.getRandomInt(),ODIN_MUSCLE,modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		}else if(type.equalsIgnoreCase(DEFAULT_MODULE)){		
 			colorsComponents.add(Color.RED);			
-			for (int connector=0;connector<AMOUNT_MODULES;connector++){
+			for (int connector=0;connector<AMOUNT_CONNECTORS;connector++){
 				colorsConectors.add(Color.WHITE);
 			}			
 			odinModule = addNewModule(new ModulePosition(DEFAULT_MODULE+BuilderHelper.getRandomInt(),DEFAULT_MODULE,modulePosition,moduleRotation),colorsComponents,colorsConectors);

@@ -24,15 +24,22 @@ public class SelectOperationsAbstractFactory {
 	 * @throws error, if modular robot is not supported yet or the name of it is misspelled. 
 	 */
 	public SelectOperationsTemplate getSelectOperations(JMESimulation simulation, SupportedModularRobots modularRobotName){
-		if (modularRobotName.equals(SupportedModularRobots.ATRON)){
-			selectOperations = new ATRONOperationsTemplate(simulation);  
-		}else if (modularRobotName.equals(SupportedModularRobots.MTRAN)){
-			selectOperations = new MTRANOperationsTemplate(simulation);  
-		}else if (modularRobotName.equals(SupportedModularRobots.ODIN)){
-			selectOperations = new OdinOperationsTemplate(simulation);  
-		}else if (modularRobotName.equals(SupportedModularRobots.CKBOTSTANDARD)){
+		
+		switch(modularRobotName){
+		case ATRON:
+			selectOperations = new ATRONOperationsTemplate(simulation); 
+			break;			
+		case MTRAN:
+			selectOperations = new MTRANOperationsTemplate(simulation); 
+			break;
+		case ODIN:
+			selectOperations = new OdinOperationsTemplate(simulation);
+			break;
+		case CKBOTSTANDARD:
 			selectOperations = new CKBotOperationsTemplate(simulation);
-		}else throw new Error("This modular robot is not supported yet or the name of it is misspelled");
+			break;
+			default: throw new Error("Modular robot named as" +modularRobotName.toString()+ "is not supported yet or the name of it is misspelled");
+		}
 		return selectOperations;		
 	}
 }

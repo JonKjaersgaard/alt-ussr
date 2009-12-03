@@ -233,14 +233,6 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	 */
 	public abstract void variateSpecificModule(Module selectedModule);	
 	
-
-//	TODO MOVE THE FUNCTIONALITY
-	public void moveModuleOnNextConnector(ConstructionToolSpecification toolSpecification){
-/*		this.construction = toolSpecification.getConstruction();		
-		this.selectedModule = toolSpecification.getSelectedModule();
-		this.construction.moveModuleAccording(toolSpecification.getChosenConnectorNr(), this.selectedModule, this.newMovableModule);*/
-	}
-
 	/**
 	 * Returns the ArrayList, containing the colours of connectors of selected module.
 	 * @param selectedModule, the module selected in simulation environment.

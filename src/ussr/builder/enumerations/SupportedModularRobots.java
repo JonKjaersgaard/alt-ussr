@@ -15,6 +15,14 @@ public enum SupportedModularRobots {
 	/*CKBOT is homogeneous*/
 	CKBOTSTANDARD; //PARTIALLY SUPPORTED
 	
+	/**
+	 * 
+	 */
+	public final static int[] ATRON_CONNECTORS = {0,1,2,3,4,5,6,7},
+	                          CKBOTSTANDARD_CONNECTORS = {0,1,2,3},
+	                          MTRAN_CONNECTORS = {0,1,2,3,4,5},
+	                          ODIN_BALL_CONNECTORS = {0,1,2,3,4,5,6,7,8,9,10,11};
+	
     public static String getConsistentMRName (String supportedModularRobot){
     
     	SupportedModularRobots[] supportedMRobots = SupportedModularRobots.values();

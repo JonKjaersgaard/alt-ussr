@@ -11,6 +11,7 @@ import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;
 import ussr.remote.facade.RemotePhysicsSimulationImpl;
 import ussr.builder.enumerations.ConstructionTools;
+import ussr.builder.enumerations.OdinModules;
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.SelectedModuleTypeMapHelper;
@@ -24,7 +25,12 @@ import ussr.builder.helpers.SelectedModuleTypeMapHelper;
  */
 @SuppressWarnings("serial")
 public class ConstructionToolSpecification extends CustomizedPicker implements Serializable{
-
+	
+	/**
+	 * The physical simulation
+	 */
+	private JMESimulation jmeSimulation;
+	
 	/**
 	 * The interface to construction of modular robot morphology. This one is on the level of modules of modular robot(creation and movement of them).  
 	 */
@@ -163,7 +169,8 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 			throw new Error("Failed to set ID of module selected in simulation environment due to remote exception.");
 		}		
 
-		instantiateTool((JMESimulation)component.getSimulation());		
+		this.jmeSimulation = (JMESimulation)component.getSimulation();		
+		instantiateTool(jmeSimulation);		
 
 		if (this.toolName.equals(ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON)){
 			try {
@@ -251,11 +258,12 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 		return false;
 	}
 
+	boolean firstTime = true;
 	/**
 	 * Calls the tool for construction of modular robot morphology. 
 	 */
 	private void callTool(){
-
+		String selectedModuleType = selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
 		switch(toolName){
 		case NEW_MODULE_ON_SELECTED_CONNECTOR:
 			if (connectorsMatch()){
@@ -263,15 +271,39 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 			}else{//Just skip(connector number will be 1000) 		
 			}
 			break;
-		case ON_CHOSEN_CONNECTOR_NR://break through
-		case MOVE_MODULE_FROM_CON_TO_CON:
-
-			String selectedModuleType = selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
-			if(selectedModuleType.contains("OdinMuscle")){
+		case ON_CHOSEN_CONNECTOR_NR://break through	
+			
+			if(selectedModuleType.contains(OdinModules.OdinMuscle.toString())){
 				//do nothing
-			}else{
+			}else{		
 				this.selectOperations.addNewModuleOnConnector(this);
 			}
+			break;
+		case MOVE_MODULE_FROM_CON_TO_CON:
+			if(selectedModuleType.contains(OdinModules.OdinMuscle.toString())){
+				//do nothing
+			}else{
+				
+				int selectedModuleId = selectedModule.getID();
+				int amountModules = jmeSimulation.getModules().size();
+				Module lastModule = jmeSimulation.getModules().get(amountModules-1);
+				int lastModuleId = lastModule.getID();
+				
+				if (timesSelected==0&&firstTime==true){
+					firstTime=false;
+					this.selectOperations.addNewModuleOnConnector(this);
+				}else if (timesSelected==this.construction.getConnectors().length){
+					resetTimesSelected();
+				}else if (selectedModuleId == lastModuleId){
+					
+				}else{
+				
+				jmeSimulation.getModules().get(amountModules-1);
+				this.construction.moveModuleAccording(timesSelected, selectedModule, lastModule, true);
+				
+				}
+			}
+		
 			break;
 		case NEW_MODULES_ON_ALL_CONNECTORS:
 			this.selectOperations.addModulesOnAllConnectors(this);

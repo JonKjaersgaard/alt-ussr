@@ -2,6 +2,7 @@ package ussr.builder.constructionTools;
 
 import com.jme.math.Quaternion;
 
+import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.ModuleRotationMapEntryHelper;
 import ussr.description.geometry.RotationDescription;
@@ -168,6 +169,11 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 	public ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int[] getConnectors() {		
+		return SupportedModularRobots.ODIN_BALL_CONNECTORS;
 	}
 
 	

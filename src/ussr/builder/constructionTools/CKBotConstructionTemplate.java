@@ -1,6 +1,7 @@
 package ussr.builder.constructionTools;
 
 import ussr.builder.enumerations.CKBotStandardRotations;
+import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.ModuleMapEntryHelper;
 import ussr.builder.helpers.ModuleRotationMapEntryHelper;
@@ -242,5 +243,10 @@ public class CKBotConstructionTemplate extends ModularRobotConstructionTemplate 
 	@Override
 	public ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP() {
 		return MODULE_ROTATION_MAP;
+	}
+
+	@Override
+	public int[] getConnectors() {
+		return SupportedModularRobots.CKBOTSTANDARD_CONNECTORS;
 	}
 	}

@@ -1,12 +1,9 @@
 package ussr.builder.constructionTools;
 
-
-
-
 /**
  * Supports construction of modular robots morphologies on the level of modules, rather than
  * on the level of components of the modules.Is introducing operations implemented according to TEMPLATE method pattern.
- * Currently supports ATRON,MTRAN and Odin modular robots.
+ * Currently supports ATRON,MTRAN, Odin and CKBot modular robots.
  * @author Konstantinas
  */
 public interface SelectOperationsTemplate {
