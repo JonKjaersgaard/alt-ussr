@@ -22,18 +22,18 @@ public interface TabsInter {
 	                    PREVIOUS = "previous.jpg",ASSIGN_LABELS = "assignLabels.jpg", READ_LABELS ="readLabels.jpg",
 	                    NEW_TAB = "newTab.jpg", RESET = "reset.jpg";
 	
-	public final String MOVE = "move", MOVE_ROLLOVER ="moveRollover",
-	                    DELETE ="delete",DELETE_ROLLOVER ="deleteRollover",
+	public final String MOVE = "move", MOVE_ROLLOVER ="moveRollover",MOVE_DISABLED = "moveDisabled",
+	                    DELETE ="delete",DELETE_ROLLOVER ="deleteRollover",DELETE_DISABLED ="deleteDisabled",
 	                    EXPANSION_CLOSED_SMALL ="expansionClosedSmall", EXPANSION_OPENED_SMALL ="expansionOpenedSmall",FINAL_LEAF_SMALL = "finalLeafSmall",
-	                    OPPOSITE_ROTATION ="oppositeRotation", OPPOSITE_ROTATION_ROLLOVER ="oppositeRotationRollover",
+	                    OPPOSITE_ROTATION ="oppositeRotation", OPPOSITE_ROTATION_ROLLOVER ="oppositeRotationRollover",OPPOSITE_ROTATION_DISABLED ="oppositeRotationDisabled",
 	                    AVAILABLE_ROTATIONS = "availableRotations", AVAILABLE_ROTATIONS_ROLLOVER = "availableRotationsRollover",
-	                    AVAILABLE_ROTATIONS_SELECTED = "availableRotationsSelected",  
+	                    AVAILABLE_ROTATIONS_SELECTED = "availableRotationsSelected",AVAILABLE_ROTATIONS_DISABLED ="availableRotationsDisabled",  
 	                    
-	                    CONNECT_ALL_MODULES ="connectAllModules",CONNECT_ALL_MODULES_ROLLOVER="connectAllModulesRollover",
-	                    ON_SELECTED_CONNECTOR ="onSelectedConnector", ON_SELECTED_CONNECTOR_ROLLOVER ="onSelectedConnectorRollover",
-	                    JUMP_FROM_CON_TO_CON = "jumpFromConToCon",JUMP_FROM_CON_TO_CON_ROLLOVER = "jumpFromConToConRollover",
-	                    COLOR_CONNECTORS ="colorConnectors", COLOR_CONNECTORS_ROLLOVER ="colorConnectorsRollover",
-	                    VARY_PROPERTIES = "varyProperties",VARY_PROPERTIES_ROLLOVER = "varyPropertiesRollover"
+	                    CONNECT_ALL_MODULES ="connectAllModules",CONNECT_ALL_MODULES_ROLLOVER="connectAllModulesRollover",CONNECT_ALL_MODULES_DISABLED ="connectAllModulesDisabled",
+	                    ON_SELECTED_CONNECTOR ="onSelectedConnector", ON_SELECTED_CONNECTOR_ROLLOVER ="onSelectedConnectorRollover",ON_SELECTED_CONNECTOR_DISABLED ="onSelectedConnectorDisabled",
+	                    JUMP_FROM_CON_TO_CON = "jumpFromConToCon",JUMP_FROM_CON_TO_CON_ROLLOVER = "jumpFromConToConRollover",JUMP_FROM_CON_TO_CON_DISABLED ="jumpFromConToConDisabled",
+	                    COLOR_CONNECTORS ="colorConnectors", COLOR_CONNECTORS_ROLLOVER ="colorConnectorsRollover",COLOR_CONNECTORS_DISABLED ="colorConnectorsDisabled",
+	                    VARY_PROPERTIES = "varyProperties",VARY_PROPERTIES_ROLLOVER = "varyPropertiesRollover",VARY_PROPERTIES_DISABLED = "varyPropertiesDisabled"
 	                    
 	                    ;
 	
