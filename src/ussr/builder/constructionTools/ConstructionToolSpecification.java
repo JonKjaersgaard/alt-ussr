@@ -259,7 +259,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 		return false;
 	}
 
-	Random rand = new Random(this.construction.getConnectors().length);
+	
 	boolean firstTime = true;
 	/**
 	 * Calls the tool for construction of modular robot morphology. 
@@ -286,6 +286,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 				//do nothing
 			}else{
 				//FIXME THINK MORE HERE
+				Random rand = new Random(this.construction.getConnectors().length);
 				selectedConnectorNr = rand.nextInt();  
 				int selectedModuleId = selectedModule.getID();
 				int amountModules = jmeSimulation.getModules().size();
