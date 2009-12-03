@@ -509,6 +509,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jTabbedPaneFirst.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jTabbedPaneFirst.setPreferredSize(new Dimension(width, height));		
 		jTabbedPaneFirst.setFocusable(false);
+		jTabbedPaneFirst.setEnabled(false);
 		
 		addTabs(tabsFirstTabbedPane,jTabbedPaneFirst);//Plug in tabs in tabbed pane 		
 		getContentPane().add(jTabbedPaneFirst);		
@@ -598,6 +599,14 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	public static void setJTabbedPaneSecondVisible(boolean visible) {
 		 jTabbedPaneSecond.setVisible(visible);
+	}
+	
+	/**
+	 * Controls enabling of the first tabbed pane.
+	 * @param enabled, true for being enabled.
+	 */
+	public static void setJTabbedPaneFirstEnabled(boolean enabled) {
+		jTabbedPaneFirst.setEnabled(enabled);
 	}
 
 	/**
