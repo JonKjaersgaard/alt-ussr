@@ -127,7 +127,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 		try {
 			RemotePhysicsSimulationImpl.getGUICallbackControl().adaptConstructRobotTabToSelectedModuleType(this.modularRobotName);
 		} catch (RemoteException e) {
-			throw new Error("Failed adapt GUI to module selected in simulation environment, due to remote exception.");
+			throw new Error("Failed  adapt GUI to module selected in simulation environment, due to remote exception.");
 		}
 
 
@@ -296,8 +296,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 					resetTimesSelected();
 				}else if (selectedModuleId == lastModuleId){
 					
-				}else{
-				
+				}else{				
 				jmeSimulation.getModules().get(amountModules-1);
 				this.construction.moveModuleAccording(timesSelected, selectedModule, lastModule, true);
 				
