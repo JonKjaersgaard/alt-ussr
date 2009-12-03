@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import ussr.aGui.GeneralController;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrameSeparateController;
+import ussr.aGui.MainFrames;
 import ussr.aGui.helpers.RobotSpecification;
 import ussr.aGui.tabs.SimulationTab;
 import ussr.aGui.tabs.controllers.ConsoleTabController;
@@ -111,6 +112,7 @@ public class GUISimulationAdapter {
 		GeneralController.setBuilderControl(remotePhysicsSimulation.getBuilderControl());
 		MainFrameSeparate.setMainFrameSeparateEnabled(true);
 		SimulationTab.setTabVisible(true);
+		MainFrames.setJTabbedPaneFirstEnabled(true);
 		
 		 System.out.println("LOCATION:"+simulation.getXmlSimulationProvider().getRobotMorphologyLocation());
 
