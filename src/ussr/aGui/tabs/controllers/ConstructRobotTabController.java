@@ -446,7 +446,6 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	public static void adaptConstructRobotTabToChosenTool(ConstructionTools chosenTool)throws RemoteException{
 
 		switch(chosenTool){
-
 		case MOVE_MODULE_FROM_CON_TO_CON:
 			//ConstructRobotTab.setEnabledButtonsArrows(true);	
 			break;
