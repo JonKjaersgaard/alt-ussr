@@ -32,22 +32,22 @@ public interface MainFramesInter {
 	public final String NO_ENTRANCE ="noEntrance.jpg",
     
 	                    /*Open and Save*/
-                        OPEN = "open",OPEN_ROLLOVER ="openRollover",
-                        OPEN_SMAL ="openSmall",
-                        SAVE ="save", SAVE_ROLLOVER ="saveRollover",
-                        SAVE_SMALL = "saveSmall",
+                        OPEN = "open",OPEN_ROLLOVER ="openRollover",OPEN_DISABLED = "openDisabled",
+                        OPEN_SMALL ="openSmall",OPEN_SMALL_DISABLED ="openSmallDisabled",
+                        SAVE ="save", SAVE_ROLLOVER ="saveRollover",SAVE_DISABLED = "saveDisabled",
+                        SAVE_SMALL = "saveSmall",SAVE_SMALL_DISABLED = "saveSmallDisabled",
    
                         NO_EN ="noEntrance",NO_EN_SMALL ="noEntrance", 
                         EXIT_SMALL= "exitSmall",
 		
-	                    RUN_REAL_TIME = "runRealTime",RUN_REAL_TIME_ROLLOVER ="runRealTimeRollover", 
-	                    RUN_FAST ="runFast", RUN_FAST_ROLLOVER = "runFastRollover",
-	                    RUN_STEP_BY_STEP ="runStepByStep",RUN_STEP_BY_STEP_ROLLOVER ="runStepByStepRollover",
-	                    PAUSE ="pause",PAUSE_ROLLOVER = "pauseRollover",
-	                    TERMINATE = "terminate",TERMINATE_ROLLOVER = "terminateRollover",
-	                    RESTART ="restart",RESTART_ROLLOVER = "restartRollover",
-	                    CONSTRUCT_ROBOT = "constructRobot",CONSTRUCT_ROBOT_ROLLOVER ="constructRobotRollover",
-	                    VISUALIZER = "visualizer",VISUALIZER_ROLLOVER ="visualizerRollover"
+	                    RUN_REAL_TIME = "runRealTime",RUN_REAL_TIME_ROLLOVER ="runRealTimeRollover",RUN_REAL_TIME_DISABLED = "runRealTimeDisabled", 
+	                    RUN_FAST ="runFast", RUN_FAST_ROLLOVER = "runFastRollover",RUN_FAST_DISABLED = "runFastDisabled",
+	                    RUN_STEP_BY_STEP ="runStepByStep",RUN_STEP_BY_STEP_ROLLOVER ="runStepByStepRollover",RUN_STEP_BY_STEP_DISABLED ="runStepByStepDisabled",
+	                    PAUSE ="pause",PAUSE_ROLLOVER = "pauseRollover",PAUSE_DISABLED ="pauseDisabled",
+	                    TERMINATE = "terminate",TERMINATE_ROLLOVER = "terminateRollover",TERMINATE_DISABLED ="terminateDisabled",
+	                    RESTART ="restart",RESTART_ROLLOVER = "restartRollover",RESTART_DISABLED ="restartDisabled",
+	                    CONSTRUCT_ROBOT = "constructRobot",CONSTRUCT_ROBOT_ROLLOVER ="constructRobotRollover",CONSTRUCT_ROBOT_DISABLED = "constructRobotDisabled",
+	                    VISUALIZER = "visualizer",VISUALIZER_ROLLOVER ="visualizerRollover",VISUALIZER_DISABLED = "visualizerDisabled"
 	                    ; 
 	                    
   

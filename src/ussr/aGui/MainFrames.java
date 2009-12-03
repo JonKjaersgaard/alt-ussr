@@ -144,8 +144,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuFile.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.File));
 
 		jMenuItemOpen.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Open));
-		jMenuItemOpen.setIcon(MainFrameIcons.OPEN_SMAL.getImageIcon());
-		jMenuItemOpen.setDisabledIcon(MainFrameIcons.NO_ENTRANCE_SMALL.getImageIcon());		
+		jMenuItemOpen.setIcon(MainFrameIcons.OPEN_SMALL.getImageIcon());
+		jMenuItemOpen.setDisabledIcon(MainFrameIcons.OPEN_SMALL_DISABLED.getImageIcon());		
 		jMenuItemOpen.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.openActionPerformed(fcOpenFrame);
@@ -158,7 +158,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		jMenuItemSave.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Save));
 		jMenuItemSave.setIcon(MainFrameIcons.SAVE_SMALL.getImageIcon());
-		jMenuItemSave.setDisabledIcon(MainFrameIcons.NO_ENTRANCE_SMALL.getImageIcon());	
+		jMenuItemSave.setDisabledIcon(MainFrameIcons.SAVE_SMALL_DISABLED.getImageIcon());	
 		jMenuItemSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.saveActionPerformed(fcSaveFrame);
@@ -317,7 +317,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonRunRealTime.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_real_time));		
 		jButtonRunRealTime.setIcon(MainFrameIcons.RUN_REAL_TIME.getImageIcon());
 		jButtonRunRealTime.setRolloverIcon(MainFrameIcons.RUN_REAL_TIME_ROLLOVER.getImageIcon());		
-		jButtonRunRealTime.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());		
+		jButtonRunRealTime.setDisabledIcon(MainFrameIcons.RUN_REAL_TIME_DISABLED.getImageIcon());		
 		jButtonRunRealTime.setFocusable(false);    
 		jButtonRunRealTime.setPreferredSize(new java.awt.Dimension(30, 30));      
 		jButtonRunRealTime.addActionListener(new java.awt.event.ActionListener() {
@@ -330,7 +330,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonRunFast.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_fast));
 		jButtonRunFast.setIcon(MainFrameIcons.RUN_FAST.getImageIcon());		
 		jButtonRunFast.setRolloverIcon(MainFrameIcons.RUN_FAST_ROLLOVER.getImageIcon());
-		jButtonRunFast.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());		
+		jButtonRunFast.setDisabledIcon(MainFrameIcons.RUN_FAST_DISABLED.getImageIcon());		
 		jButtonRunFast.setFocusable(false);
 		jButtonRunFast.setPreferredSize(new java.awt.Dimension(30, 30));      
 		jButtonRunFast.addActionListener(new java.awt.event.ActionListener() {
@@ -343,7 +343,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonRunStepByStep.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_step_by_step));
 		jButtonRunStepByStep.setIcon(MainFrameIcons.RUN_STEP_BY_STEP.getImageIcon());				
 		jButtonRunStepByStep.setRolloverIcon(MainFrameIcons.RUN_STEP_BY_STEP_ROLLOVER.getImageIcon());
-		jButtonRunStepByStep.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());		
+	    jButtonRunStepByStep.setDisabledIcon(MainFrameIcons.RUN_STEP_BY_STEP_DISABLED.getImageIcon());		
 		jButtonRunStepByStep.setFocusable(false);
 		jButtonRunStepByStep.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 		jButtonRunStepByStep.setPreferredSize(new java.awt.Dimension(30, 30));
@@ -358,8 +358,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonPause.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Pause));
 		jButtonPause.setIcon(MainFrameIcons.PAUSE.getImageIcon());
 		jButtonPause.setRolloverIcon(MainFrameIcons.PAUSE_ROLLOVER.getImageIcon());
-		jButtonPause.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());	
-		
+		jButtonPause.setDisabledIcon(MainFrameIcons.PAUSE_DISABLED.getImageIcon());		
 		jButtonPause.setFocusable(false);   
 		jButtonPause.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -371,7 +370,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonTerminate.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Terminate));
 		jButtonTerminate.setIcon(MainFrameIcons.TERMINATE.getImageIcon());
 		jButtonTerminate.setRolloverIcon(MainFrameIcons.TERMINATE_ROLLOVER.getImageIcon());		
-		jButtonTerminate.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());
+		jButtonTerminate.setDisabledIcon(MainFrameIcons.TERMINATE_DISABLED.getImageIcon());
 		jButtonTerminate.setFocusable(false);   
 		jButtonTerminate.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -383,7 +382,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonRestart.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Restart));
 		jButtonRestart.setIcon(MainFrameIcons.RESTART.getImageIcon());
 		jButtonRestart.setRolloverIcon(MainFrameIcons.RESTART_ROLLOVER.getImageIcon());		
-		jButtonRestart.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());		
+		jButtonRestart.setDisabledIcon(MainFrameIcons.RESTART_DISABLED.getImageIcon());		
 		jButtonRestart.setFocusable(false);   
 		jButtonRestart.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -399,7 +398,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToggleButtonConstructRobot.setIcon(MainFrameIcons.CONSTRUCT_ROBOT.getImageIcon());
 		jToggleButtonConstructRobot.setSelectedIcon(MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageIcon());
 		jToggleButtonConstructRobot.setRolloverIcon(MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageIcon());
-		jToggleButtonConstructRobot.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());		
+		jToggleButtonConstructRobot.setDisabledIcon(MainFrameIcons.CONSTRUCT_ROBOT_DISABLED.getImageIcon());		
 		jToggleButtonConstructRobot.setFocusable(false);		
 		jToggleButtonConstructRobot.setPreferredSize(new java.awt.Dimension(30, 30));
 		jToggleButtonConstructRobot.addActionListener(new java.awt.event.ActionListener() {
@@ -414,7 +413,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToggleButtonVisualizer.setIcon(MainFrameIcons.VISUALIZER.getImageIcon());
 		jToggleButtonVisualizer.setSelectedIcon(MainFrameIcons.VISUALIZER_ROLLOVER.getImageIcon());		
 		jToggleButtonVisualizer.setRolloverIcon(MainFrameIcons.VISUALIZER_ROLLOVER.getImageIcon());
-		jToggleButtonVisualizer.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());
+	    jToggleButtonVisualizer.setDisabledIcon(MainFrameIcons.VISUALIZER_DISABLED.getImageIcon());
 		jToggleButtonVisualizer.setFocusable(false);
 		jToggleButtonVisualizer.setEnabled(false);
 		jToggleButtonVisualizer.setPreferredSize(new java.awt.Dimension(30, 30));
@@ -448,12 +447,10 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	public static javax.swing.JButton initSaveButton(final FileChooserFrameInter fcSaveFrame ){
 		jButtonSave = new javax.swing.JButton();		
-		jButtonSave.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Save));
-		
+		jButtonSave.setToolTipText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Save));		
 		jButtonSave.setIcon(MainFrameIcons.SAVE.getImageIcon());
 		jButtonSave.setRolloverIcon(MainFrameIcons.SAVE_ROLLOVER.getImageIcon());
-		jButtonSave.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());
-		
+		jButtonSave.setDisabledIcon(MainFrameIcons.SAVE_DISABLED.getImageIcon());		
 		jButtonSave.setFocusable(false);
 		jButtonSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 		jButtonSave.setPreferredSize(new java.awt.Dimension(30, 30));
@@ -477,7 +474,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		
 		jButtonOpen.setIcon(MainFrameIcons.OPEN.getImageIcon());
 		jButtonOpen.setRolloverIcon(MainFrameIcons.OPEN_ROLLOVER.getImageIcon());		
-		jButtonOpen.setDisabledIcon(MainFrameIcons.NO_ENTRANCE.getImageIcon());
+		jButtonOpen.setDisabledIcon(MainFrameIcons.OPEN_DISABLED.getImageIcon());
 		
 		jButtonOpen.setFocusable(false);		
 		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));
