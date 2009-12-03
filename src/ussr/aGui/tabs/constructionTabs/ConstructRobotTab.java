@@ -73,8 +73,6 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jButtonOnSelectedConnector =   new javax.swing.JButton();
 		jButtonConnectAllModules = new javax.swing.JButton();
 		jButtonJumpFromConnToConnector = new javax.swing.JButton();
-		jButtonOnNextConnector = new javax.swing.JButton();
-		jButtonOnPreviousConnector = new javax.swing.JButton();
 		jButtonVariateModuleProperties = new javax.swing.JButton();
 		jButtonAvailableRotationsLoop = new javax.swing.JButton();
 
@@ -90,7 +88,6 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jComboBoxStandardRotations = new javax.swing.JComboBox();
 		jComboBoxNrConnectorsConstructionTool = new javax.swing.JComboBox();
 
-		jSeparator1 = new javax.swing.JToolBar.Separator();
 		jSeparator2 = new javax.swing.JToolBar.Separator();	
 
 		/*Description of components */		
@@ -431,23 +428,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 				ConstructRobotTabController.jButtonConnectAllModulesActionPerformed();
 			}
 		});	
-
-		jSeparator1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jSeparator1.setPreferredSize(new Dimension(6,30));
-
-		jButtonOnPreviousConnector.setToolTipText(TOOL_TIP_TEXTS[11]);
-		jButtonOnPreviousConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + PREVIOUS));
-		jButtonOnPreviousConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));		
-		jButtonOnPreviousConnector.setFocusable(false);
-		jButtonOnPreviousConnector.setEnabled(false);
-		jButtonOnPreviousConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
-		jButtonOnPreviousConnector.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				setSelectionDeselection(jButtonOnPreviousConnector);				
-				ConstructRobotTabController.jButtonOnPreviousConnectorActionPerformed();
-			}
-		});		
-
+		
 		jButtonJumpFromConnToConnector.setToolTipText(TOOL_TIP_TEXTS[12]);		
 		jButtonJumpFromConnToConnector.setIcon(TabsIcons.JUMP_FROM_CON_TO_CON.getImageIcon());
 		jButtonJumpFromConnToConnector.setSelectedIcon(TabsIcons.JUMP_FROM_CON_TO_CON_ROLLOVER.getImageIcon());
@@ -462,19 +443,6 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 				ConstructRobotTabController.jButtonJumpFromConnToConnectorActionPerformed();
 			}
 		});	
-
-		jButtonOnNextConnector.setToolTipText(TOOL_TIP_TEXTS[13]);
-		jButtonOnNextConnector.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + NEXT));
-		jButtonOnNextConnector.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));		
-		jButtonOnNextConnector.setFocusable(false);
-		jButtonOnNextConnector.setEnabled(false);
-		jButtonOnNextConnector.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.BUTTONS_WIDTH-3));
-		jButtonOnNextConnector.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				setSelectionDeselection(jButtonOnNextConnector);
-				ConstructRobotTabController.jButtonOnNextConnectorActionPerformed();
-			}
-		});
 
 		jSeparator2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jSeparator2.setPreferredSize(new Dimension(6,30));
@@ -493,14 +461,8 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 								.addComponent(jButtonConnectAllModules,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE)
 										//Forces preferred side of component and also specifies it explicitly. For instance:6. 
-										.addComponent(jSeparator1,GroupLayout.PREFERRED_SIZE, 6,
-												GroupLayout.PREFERRED_SIZE)
-												.addComponent(jButtonOnPreviousConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
 														.addComponent(jButtonJumpFromConnToConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
-																.addComponent(jButtonOnNextConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.PREFERRED_SIZE)
 																		.addComponent(jSeparator2,GroupLayout.PREFERRED_SIZE, 6,
 																				GroupLayout.PREFERRED_SIZE)
 
@@ -516,14 +478,8 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 										.addComponent(jButtonConnectAllModules,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 												GroupLayout.PREFERRED_SIZE)
 												//Forces preferred side of component and also specifies it explicitly. For instance:28. 
-												.addComponent(jSeparator1,GroupLayout.PREFERRED_SIZE, 28,
-														GroupLayout.PREFERRED_SIZE)
 														.addComponent(jButtonJumpFromConnToConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
-																.addComponent(jButtonOnNextConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.PREFERRED_SIZE)
-																		.addComponent(jButtonOnPreviousConnector,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.PREFERRED_SIZE)
 																				.addComponent(jSeparator2,GroupLayout.PREFERRED_SIZE, 28,
 																						GroupLayout.PREFERRED_SIZE))
 
@@ -583,16 +539,7 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 	public static ButtonGroup getButtonGroupModularRobots() {
 		return buttonGroupModularRobots;
 	}
-		
-	/**
-	 * Enables  and disables  buttons for moving module from one connector onto another.
-	 * @param enabled, true if enabled.
-	 */
-	public static void setEnabledButtonsArrows(boolean enabled){
-		jButtonOnNextConnector.setEnabled(enabled);
-		jButtonOnPreviousConnector.setEnabled(enabled);
-	}	
-
+			
 	/**
 	 * Enables and disables the tool bar containing generic tools for manipulating modules.
 	 * @param enable,true for tool bar to be enabled. 
@@ -631,8 +578,6 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 		jComboBoxNrConnectorsConstructionTool.setEnabled(enable);
 		jButtonConnectAllModules.setEnabled(enable);
 		jButtonJumpFromConnToConnector.setEnabled(enable);
-		jButtonOnNextConnector.setEnabled(enable);
-		jButtonOnPreviousConnector.setEnabled(enable);
 	}
 
 	/**
@@ -756,13 +701,13 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 
 	private static javax.swing.JButton jButtonStartNewRobot,jButtonDelete,
 	jButtonMove,jButtonColorConnetors,jButtonOppositeRotation,jButtonOnSelectedConnector,
-	jButtonConnectAllModules,jButtonJumpFromConnToConnector,jButtonOnNextConnector,
-	jButtonOnPreviousConnector,jButtonVariateModuleProperties,jButtonAvailableRotationsLoop;
+	jButtonConnectAllModules,jButtonJumpFromConnToConnector,jButtonVariateModuleProperties,
+	jButtonAvailableRotationsLoop;
 
 	private static javax.swing.JToolBar jToolBarGenericTools,
 	jToolBarRotationTools,jToolBarConstructionTools,jToolBarSaveLoad;
 
-	private javax.swing.JToolBar.Separator jSeparator1,jSeparator2;
+	private javax.swing.JToolBar.Separator jSeparator2;
 
 	private static HintPanel hintPanel;
 }

@@ -71,7 +71,6 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			ConstructRobotTab.setEnabledRotationToolBar(true);
 			ConstructRobotTab.setEnabledGenericToolBar(true);
 			ConstructRobotTab.setEnabledConstructionToolsToolBar(true);
-			ConstructRobotTab.setEnabledButtonsArrows(false);
 		}
 
 		/*Adapt tab to chosen modular robot*/
@@ -320,74 +319,6 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	}
 
 	/**
-	 * Moves new module from connector to another connector with increasing number of connector.
-	 */
-	public static void jButtonOnNextConnectorActionPerformed() {
-
-		ConstructRobotTabController.connectorNr++;
-
-		switch(chosenMRname){
-		case ATRON:
-			if (ConstructRobotTabController.connectorNr>=ATRON_CONNECTORS.length){ ConstructRobotTabController.connectorNr=0;} //reset to zero      
-			break;
-		case MTRAN:
-			if (ConstructRobotTabController.connectorNr>=MTRAN_CONNECTORS.length){ConstructRobotTabController.connectorNr=0;}
-			break;
-		case ODIN:
-			if (ConstructRobotTabController.connectorNr>=12){ connectorNr=0;}// OdinBall
-			break;
-		case CKBOTSTANDARD:
-			if (ConstructRobotTabController.connectorNr>=CKBOT_CONNECTORS.length){ ConstructRobotTabController.connectorNr=0;}
-			break;			
-		default: throw  new Error ("Modular robot with name "+ chosenMRname+ " is not supported yet");
-		}
-
-		try {
-			if (builderControl.getModuleCountingFromEndType(1).equalsIgnoreCase("OdinBall")){
-				//do nothing
-			}else{
-				builderControl.moveToNextConnector(chosenMRname, ConstructRobotTabController.connectorNr, selectedModuleID);
-			}
-		} catch (RemoteException e) {
-			throw  new Error ("Failed to move module on next connector, due to remote exception.");
-		}
-		//TODO CHECK IF THE MODULE IS ALREADY ON CONNECTOR AND THEN DO NOT PLACE NEW ONE THERE.		
-	}
-
-	/**
-	 * Moves new module from connector to another connector with decreasing number of connector.
-	 */
-	public static void jButtonOnPreviousConnectorActionPerformed() {
-		ConstructRobotTabController.connectorNr--;
-
-		if (ConstructRobotTabController.connectorNr<0){
-			switch(chosenMRname){
-			case ATRON:			
-				ConstructRobotTabController.connectorNr =ATRON_CONNECTORS.length-1;//reset			
-				break;
-			case MTRAN:			
-				ConstructRobotTabController.connectorNr=MTRAN_CONNECTORS.length-1;//reset			
-				break;
-			case ODIN:
-				ConstructRobotTabController.connectorNr =11;//reset	
-				break;
-			case CKBOTSTANDARD:
-				ConstructRobotTabController.connectorNr= CKBOT_CONNECTORS.length-1;//reset	
-				break;
-			}
-		}
-		try {
-			if (builderControl.getModuleCountingFromEndType(1).equalsIgnoreCase("OdinBall")){
-				//do nothing
-			}else{
-				builderControl.moveToNextConnector(chosenMRname, ConstructRobotTabController.connectorNr, selectedModuleID);
-			}
-		} catch (RemoteException e) {
-			throw  new Error ("Failed to move module on previous connector, due to remote exception.");
-		}
-	}
-
-	/**
 	 * Adapts Construct Robot Tab to the the type modular robot is simulation environment.
 	 * @param supportedModularRobot, supported modular robot.
 	 */
@@ -517,7 +448,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		switch(chosenTool){
 
 		case MOVE_MODULE_FROM_CON_TO_CON:
-			ConstructRobotTab.setEnabledButtonsArrows(true);	
+			//ConstructRobotTab.setEnabledButtonsArrows(true);	
 			break;
 		case NEW_MODULE_ON_SELECTED_CONNECTOR:
 			constructionToolSelected();
