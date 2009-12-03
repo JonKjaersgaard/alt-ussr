@@ -2,6 +2,7 @@ package ussr.builder.constructionTools;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
 import com.jme.scene.Geometry;
@@ -258,6 +259,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 		return false;
 	}
 
+	Random rand = new Random(this.construction.getConnectors().length);
 	boolean firstTime = true;
 	/**
 	 * Calls the tool for construction of modular robot morphology. 
@@ -283,7 +285,8 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 			if(selectedModuleType.contains(OdinModules.OdinMuscle.toString())){
 				//do nothing
 			}else{
-				
+				//FIXME THINK MORE HERE
+				selectedConnectorNr = rand.nextInt();  
 				int selectedModuleId = selectedModule.getID();
 				int amountModules = jmeSimulation.getModules().size();
 				Module lastModule = jmeSimulation.getModules().get(amountModules-1);
