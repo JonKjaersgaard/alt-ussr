@@ -1,6 +1,5 @@
 package ussr.aGui;
 
-import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.JCheckBoxMenuItem;
@@ -13,7 +12,6 @@ import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
-import ussr.remote.GUISimulationAdapter;
 import ussr.remote.facade.RendererControlInter;
 
 
