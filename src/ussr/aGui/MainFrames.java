@@ -265,7 +265,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		
 		jMenuFocusOn.add(jSeparator3);
 		
-		jCheckBoxMenuItemBoth.setText("Both");
+		jCheckBoxMenuItemBoth.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Both));
 		jCheckBoxMenuItemBoth.setSelected(true);
 		jCheckBoxMenuItemBoth.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -522,8 +522,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jTabbedPaneFirst.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jTabbedPaneFirst.setPreferredSize(new Dimension(width, height));		
 		jTabbedPaneFirst.setFocusable(false);
-		jTabbedPaneFirst.setEnabled(false);
-		
+		jTabbedPaneFirst.setEnabled(false);		
 		addTabs(tabsFirstTabbedPane,jTabbedPaneFirst);//Plug in tabs in tabbed pane 		
 		getContentPane().add(jTabbedPaneFirst);		
 		return jTabbedPaneFirst;

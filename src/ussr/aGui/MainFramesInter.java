@@ -36,8 +36,7 @@ public interface MainFramesInter {
                         OPEN_SMALL ="openSmall",OPEN_SMALL_DISABLED ="openSmallDisabled",
                         SAVE ="save", SAVE_ROLLOVER ="saveRollover",SAVE_DISABLED = "saveDisabled",
                         SAVE_SMALL = "saveSmall",SAVE_SMALL_DISABLED = "saveSmallDisabled",
-   
-                        NO_EN ="noEntrance",NO_EN_SMALL ="noEntrance", 
+
                         EXIT_SMALL= "exitSmall",
 		
 	                    RUN_REAL_TIME = "runRealTime",RUN_REAL_TIME_ROLLOVER ="runRealTimeRollover",RUN_REAL_TIME_DISABLED = "runRealTimeDisabled", 

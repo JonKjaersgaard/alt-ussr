@@ -21,7 +21,8 @@ public enum MainFrameComponentsText {
            //Render Menu
 	       Physics, Wire_frame, Bounds,Normals, Lights,Buffer_depth, 
 	       // Window Menu 
-	       Focus_on,Interaction,Debugging,
+	       Focus_on,Interaction,Debugging,Both,
+	       
 	/*METHOD: setToolTipText()*/
 	
 	      /*JToolBars*/

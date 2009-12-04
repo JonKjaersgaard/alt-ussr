@@ -18,8 +18,6 @@ public interface TabsInter {
 	 */
 	public final String 
 	                    ERROR = "error.jpg", INFORMATION ="information.jpg", CONSOLE = "console.jpg",
-	                    NEXT = "next.jpg",
-	                    PREVIOUS = "previous.jpg",ASSIGN_LABELS = "assignLabels.jpg", READ_LABELS ="readLabels.jpg",
 	                    NEW_TAB = "newTab.jpg", RESET = "reset.jpg";
 	
 	public final String MOVE = "move", MOVE_ROLLOVER ="moveRollover",MOVE_DISABLED = "moveDisabled",
@@ -33,8 +31,9 @@ public interface TabsInter {
 	                    ON_SELECTED_CONNECTOR ="onSelectedConnector", ON_SELECTED_CONNECTOR_ROLLOVER ="onSelectedConnectorRollover",ON_SELECTED_CONNECTOR_DISABLED ="onSelectedConnectorDisabled",
 	                    JUMP_FROM_CON_TO_CON = "jumpFromConToCon",JUMP_FROM_CON_TO_CON_ROLLOVER = "jumpFromConToConRollover",JUMP_FROM_CON_TO_CON_DISABLED ="jumpFromConToConDisabled",
 	                    COLOR_CONNECTORS ="colorConnectors", COLOR_CONNECTORS_ROLLOVER ="colorConnectorsRollover",COLOR_CONNECTORS_DISABLED ="colorConnectorsDisabled",
-	                    VARY_PROPERTIES = "varyProperties",VARY_PROPERTIES_ROLLOVER = "varyPropertiesRollover",VARY_PROPERTIES_DISABLED = "varyPropertiesDisabled"
-	                    
+	                    VARY_PROPERTIES = "varyProperties",VARY_PROPERTIES_ROLLOVER = "varyPropertiesRollover",VARY_PROPERTIES_DISABLED = "varyPropertiesDisabled",
+	                    ASSIGN_LABELS = "assignLabels",ASSIGN_LABELS_ROLLOVER = "assignLabelsRollover", ASSIGN_LABELS_DISABLED ="assignLabelsDisabled",
+	                    READ_LABEL ="readLabels",READ_LABELS_ROLLOVER ="readLabelsRollover",READ_LABELS_DISABLED ="readLabelsDisabled"
 	                    ;
 	
 	/**

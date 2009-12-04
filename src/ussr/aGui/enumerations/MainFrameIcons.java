@@ -30,7 +30,6 @@ public enum MainFrameIcons{
 	OPEN_SMALL_DISABLED(MainFramesInter.OPEN_SMALL_DISABLED),
 	
 	EXIT_SMALL(MainFramesInter.EXIT_SMALL),
-	NO_ENTRANCE_SMALL(MainFramesInter.NO_EN_SMALL),
 	
 	/*First tool bar in main GUI window*/
 	RUN_REAL_TIME(MainFramesInter.RUN_REAL_TIME),
@@ -64,10 +63,6 @@ public enum MainFrameIcons{
     VISUALIZER(MainFramesInter.VISUALIZER),
     VISUALIZER_ROLLOVER(MainFramesInter.VISUALIZER_ROLLOVER),
     VISUALIZER_DISABLED(MainFramesInter.VISUALIZER_DISABLED),
-			
-	/*used to indicate disabled components(buttons)*/
-	NO_ENTRANCE(MainFramesInter.NO_EN)
-	
 	;
 	
 

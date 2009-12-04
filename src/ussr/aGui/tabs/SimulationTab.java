@@ -60,6 +60,7 @@ public class SimulationTab extends Tabs {
 
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
+		//super.jComponent.setPreferredSize(new Dimension(MainFrames.getMainFrameViableWidth(),300));
 		initComponents();
 	}
 

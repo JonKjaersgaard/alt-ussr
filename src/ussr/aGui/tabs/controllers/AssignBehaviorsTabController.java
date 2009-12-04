@@ -261,7 +261,7 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 		int amountRows = AssignBehaviorsTab.getJTableLabels().getRowCount() ;
 		String labelsInTable="";
 		for (int rowNr =0;rowNr < amountRows; rowNr++){
-			if (AssignBehaviorsTab.getJTableLabels().getValueAt(rowNr, 0).toString().isEmpty()){
+			if (AssignBehaviorsTab.getJTableLabels().getValueAt(rowNr, 0)==null){
 				//do not store empty rows
 			}else{
 				labelsInTable= labelsInTable + AssignBehaviorsTab.getJTableLabels().getValueAt(rowNr, 0)+",";

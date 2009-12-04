@@ -18,6 +18,7 @@ import javax.swing.border.TitledBorder;
 import ussr.aGui.FramesInter;
 import ussr.aGui.MainFramesInter;
 
+import ussr.aGui.enumerations.TabsIcons;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
@@ -339,8 +340,9 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jToolBarControlOfLabels.setOrientation(JToolBar.VERTICAL);		
 
 		jButtonReadLabels.setToolTipText("Read Labels");		
-		jButtonReadLabels.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + READ_LABELS));
-		jButtonReadLabels.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
+		jButtonReadLabels.setIcon(TabsIcons.READ_LABELS.getImageIcon());
+		jButtonReadLabels.setRolloverIcon(TabsIcons.READ_LABELS_ROLLOVER.getImageIcon());		
+		jButtonReadLabels.setDisabledIcon(TabsIcons.READ_LABELS_DISABLED.getImageIcon());
 		jButtonReadLabels.setFocusable(false); 
 		jButtonReadLabels.setEnabled(false);	
 		jButtonReadLabels.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
@@ -353,8 +355,9 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jToolBarControlOfLabels.add(jButtonReadLabels);	
 
 		jButtonAssignLabels.setToolTipText("Assign Labels");		
-		jButtonAssignLabels.setIcon(new javax.swing.ImageIcon(DIRECTORY_ICONS + ASSIGN_LABELS));
-		jButtonAssignLabels.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
+		jButtonAssignLabels.setIcon(TabsIcons.ASSIGN_LABELS.getImageIcon());
+		jButtonAssignLabels.setRolloverIcon(TabsIcons.ASSIGN_LABELS_ROLLOVER.getImageIcon());		
+		jButtonAssignLabels.setDisabledIcon(TabsIcons.ASSIGN_LABELS_DISABLED.getImageIcon());
 		jButtonAssignLabels.setFocusable(false); 
 		jButtonAssignLabels.setEnabled(false);	
 		jButtonAssignLabels.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
