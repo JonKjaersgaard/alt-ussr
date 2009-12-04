@@ -17,8 +17,7 @@ public interface TabsInter {
 	 * The names of the icons used in tabs
 	 */
 	public final String 
-	                    ERROR = "error.jpg", INFORMATION ="information.jpg", CONSOLE = "console.jpg",
-	                    NEW_TAB = "newTab.jpg", RESET = "reset.jpg";
+	                    ERROR = "error.jpg", RESET = "reset.jpg";
 	
 	public final String MOVE = "move", MOVE_ROLLOVER ="moveRollover",MOVE_DISABLED = "moveDisabled",
 	                    DELETE ="delete",DELETE_ROLLOVER ="deleteRollover",DELETE_DISABLED ="deleteDisabled",

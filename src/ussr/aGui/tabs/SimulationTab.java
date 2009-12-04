@@ -23,6 +23,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import ussr.aGui.MainFrames;
 import ussr.aGui.MainFramesInter;
+import ussr.aGui.enumerations.TabsIcons;
 import ussr.aGui.enumerations.TextureDescriptions;
 import ussr.aGui.enumerations.SimulationTabTreeNodes;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
@@ -153,10 +154,9 @@ public class SimulationTab extends Tabs {
 		jTree1 = new javax.swing.JTree(firstNodeHierarchySimulation);
 
 		
-		ImageIcon closedIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_CLOSED_SMALL +MainFramesInter.DEFAULT_ICON_EXTENSION1);
-		ImageIcon openIcon = new ImageIcon(DIRECTORY_ICONS + EXPANSION_OPENED_SMALL + MainFramesInter.DEFAULT_ICON_EXTENSION1);
-		ImageIcon leafIcon = new ImageIcon(DIRECTORY_ICONS + FINAL_LEAF_SMALL + MainFramesInter.DEFAULT_ICON_EXTENSION1 );
-
+		ImageIcon closedIcon = TabsIcons.EXPANSION_CLOSED_SMALL.getImageIcon();
+		ImageIcon openIcon = TabsIcons.EXPANSION_OPENED_SMALL.getImageIcon();
+		ImageIcon leafIcon = TabsIcons.FINAL_LEAF_SMALL.getImageIcon();
 		if (openIcon != null) {
 			DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();		    
 			renderer.setClosedIcon(closedIcon);
@@ -209,7 +209,7 @@ public class SimulationTab extends Tabs {
 		super.jComponent.add(jPanelEditor,gridBagConstraints);
 		
 		hintPanel = new HintPanel(600, 100);
-		hintPanel.setType(HintPanelTypes.INFORMATION);
+		//hintPanel.setType(HintPanelTypes.INFORMATION);
 		hintPanel.setBorderTitle("Display for hints");
 		
 		hintPanel.setText("Would be nice to add a short description of each element in the tree :).");

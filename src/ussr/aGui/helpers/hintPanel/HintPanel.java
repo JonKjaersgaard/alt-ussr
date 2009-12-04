@@ -15,12 +15,8 @@ import ussr.aGui.tabs.TabsInter;
  * attracting to much attention to select ok, cancel and so on buttons in JOptionPane.
  * @author Konstantinas
  */
+@SuppressWarnings("serial")
 public class HintPanel extends JPanel implements HintPanelInter {
-
-	/**
-	 * WHAT IS THAT?
-	 */
-	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Width and height of hint panel in the frame.
@@ -55,7 +51,7 @@ public class HintPanel extends JPanel implements HintPanelInter {
 
 		/*Define appearance*/
 		/*Label without text, just so there is only icon on the label*/
-		jLabelIcon.setIcon(new javax.swing.ImageIcon(TabsInter.DIRECTORY_ICONS + TabsInter.INFORMATION ));
+		jLabelIcon.setIcon(HintPanelTypes.INFORMATION.getImageIcon());
 		int  iconWidth = jLabelIcon.getIcon().getIconWidth();
 
 		/*relative dimension to the dimension of the panel, icon and tolerance*/

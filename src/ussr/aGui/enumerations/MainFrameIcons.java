@@ -63,6 +63,10 @@ public enum MainFrameIcons{
     VISUALIZER(MainFramesInter.VISUALIZER),
     VISUALIZER_ROLLOVER(MainFramesInter.VISUALIZER_ROLLOVER),
     VISUALIZER_DISABLED(MainFramesInter.VISUALIZER_DISABLED),
+    
+    CONSOLE (MainFramesInter.CONSOLE),
+    
+    YOUR_NEW_TAB(MainFramesInter.YOUR_NEW_TAB),
 	;
 	
 
@@ -70,13 +74,19 @@ public enum MainFrameIcons{
 	 * The icon created from image file.
 	 */
 	private ImageIcon imageIcon;
+	
+	/**
+	 * The directory, where image is located in.
+	 */
+	private String imageDirectory;
 
 	/**
 	 * Contains icons used in main GUI window.
 	 * @param imageName, the name of image file, not including extension.
 	 */
 	MainFrameIcons(String imageName){
-		this.imageIcon = new ImageIcon(formatIconDirectory(imageName));
+		imageDirectory = formatIconDirectory(imageName);
+		this.imageIcon = new ImageIcon(imageDirectory);
 	}
 
 	/**
@@ -87,6 +97,14 @@ public enum MainFrameIcons{
 		return imageIcon;
 	}
 
+	/**
+	 * 
+	 * Returns directory, where image is located in.
+	 * @return directory, where image is located in.
+	 */
+	public String getImageDirectory() {
+		return imageDirectory;
+	}
 	/**
 	 * Formats directory, where icon is located.
 	 * @param imageName, the name of the image file.

@@ -1,5 +1,6 @@
 package ussr.aGui;
 
+import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.tabs.ConsoleTab;
 import ussr.aGui.tabs.SimulationTab;
 import ussr.aGui.tabs.TabsInter;
@@ -46,7 +47,9 @@ public interface MainFramesInter {
 	                    TERMINATE = "terminate",TERMINATE_ROLLOVER = "terminateRollover",TERMINATE_DISABLED ="terminateDisabled",
 	                    RESTART ="restart",RESTART_ROLLOVER = "restartRollover",RESTART_DISABLED ="restartDisabled",
 	                    CONSTRUCT_ROBOT = "constructRobot",CONSTRUCT_ROBOT_ROLLOVER ="constructRobotRollover",CONSTRUCT_ROBOT_DISABLED = "constructRobotDisabled",
-	                    VISUALIZER = "visualizer",VISUALIZER_ROLLOVER ="visualizerRollover",VISUALIZER_DISABLED = "visualizerDisabled"
+	                    VISUALIZER = "visualizer",VISUALIZER_ROLLOVER ="visualizerRollover",VISUALIZER_DISABLED = "visualizerDisabled",
+	                    CONSOLE = "console",
+    /*YOUR TAB*/        YOUR_NEW_TAB ="yourNewTab"
 	                    ; 
 	                    
   
@@ -59,18 +62,18 @@ public interface MainFramesInter {
 	                    MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE = "Communication Visualiser",
 	                    SIMULATION_TAB_TITLE = "Simulation",
 	                    CONSOLE_TAB_TITLE = "Console",
-/*YOUR TAB TITLE*/      YOUR_TAB_TITLE = "YOUR TAB"
+/*YOUR TAB TITLE*/      YOUR_TAB_TITLE = "Your Tab"
 	                    ;
 	
 	/**     
 	 * Instances of tabs plugged in main GUI window
 	 */
-	public final TabsInter  CONSTRUCT_ROBOT_TAB = new ConstructRobotTab(false,true,CONSTRUCT_ROBOT_TAB_TITLE,DIRECTORY_ICONS+CONSTRUCT_ROBOT_ROLLOVER+DEFAULT_ICON_EXTENSION1),
-	                        ASSIGN_BEHAVIORS_TAB = new AssignBehaviorsTab(false,true,ASSIGN_BEHAVIORS_TAB_TITLE,DIRECTORY_ICONS+CONSTRUCT_ROBOT_ROLLOVER+DEFAULT_ICON_EXTENSION1),
-	                        MODULE_COMMUNICATION_VISUALIZER_TAB = new ModuleCommunicationVisualizer(false,true,MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE,DIRECTORY_ICONS+VISUALIZER_ROLLOVER+DEFAULT_ICON_EXTENSION1),
+	public final TabsInter  CONSTRUCT_ROBOT_TAB = new ConstructRobotTab(false,true,CONSTRUCT_ROBOT_TAB_TITLE,MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageDirectory()),
+	                        ASSIGN_BEHAVIORS_TAB = new AssignBehaviorsTab(false,true,ASSIGN_BEHAVIORS_TAB_TITLE,MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageDirectory()),
+	                        MODULE_COMMUNICATION_VISUALIZER_TAB = new ModuleCommunicationVisualizer(false,true,MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE,MainFrameIcons.VISUALIZER_ROLLOVER.getImageDirectory()),
 	                        SIMULATION_CONFIGURATION_TAB = new SimulationTab(true,true,SIMULATION_TAB_TITLE,FramesInter.DIRECTORY_USSR_ICON),
-	                        CONSOLE_TAB = new ConsoleTab(true,false,CONSOLE_TAB_TITLE, TabsInter.DIRECTORY_ICONS+TabsInter.CONSOLE),
-              /*YOUR TAB*/  YOUR_TAB = new YourNewTab(true,true, YOUR_TAB_TITLE,TabsInter.DIRECTORY_ICONS+TabsInter.NEW_TAB)
+	                        CONSOLE_TAB = new ConsoleTab(true,false,CONSOLE_TAB_TITLE, MainFrameIcons.CONSOLE.getImageDirectory()),
+              /*YOUR TAB*/  YOUR_TAB = new YourNewTab(true,true, YOUR_TAB_TITLE, MainFrameIcons.YOUR_NEW_TAB.getImageDirectory())
 	                        ;
 
 	/**

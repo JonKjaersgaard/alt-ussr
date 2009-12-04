@@ -13,8 +13,13 @@ public interface HintPanelInter {
 	/**
 	 * The directory for keeping png icons used in hint panel.
 	 */
-	//public final String DIRECTORY_ICONS = "resources/mainFrame/icons/tabs/jpg/hintPanel/";
+     public final String DIRECTORY_ICONS = "resources/mainFrame/icons/tabs/jpg/hintPanel/";
 	
+     
+     
+     public final String INFORMATION ="information";
+     
+     
 	/**
 	 * Array of build in hints for tab called Construct Robot
 	 */
