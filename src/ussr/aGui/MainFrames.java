@@ -28,7 +28,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	/**
 	 * Insets of main frame border.
 	 */
-	protected Insets insets; 
+	protected static Insets insets; 
 	
 	/**
 	 * File choosers in the form of Open and Save dialogs respectively.
@@ -121,7 +121,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuItemSave = new javax.swing.JMenuItem();
 		
 		jSeparator1 = new javax.swing.JSeparator();
-		jSeparator2 = new javax.swing.JSeparator();	
+		jSeparator2 = new javax.swing.JSeparator();
+		jSeparator3 = new javax.swing.JSeparator();
 		
 		jMenuRender = new javax.swing.JMenu();	
 		
@@ -137,6 +138,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		
 		jCheckBoxMenuItemInteraction= new javax.swing.JCheckBoxMenuItem();
 		jCheckBoxMenuItemDebugging = new javax.swing.JCheckBoxMenuItem();
+		jCheckBoxMenuItemBoth = new javax.swing.JCheckBoxMenuItem();
 
         /*Description of components*/
 		jMenuBarMain.setPreferredSize(new Dimension(width,height));
@@ -168,7 +170,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuFile.add(jMenuItemSave);
 
 		jMenuFile.add(jSeparator1);
-
 		
 		jMenuItemExit.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Exit));
 		jMenuItemExit.setIcon(MainFrameIcons.EXIT_SMALL.getImageIcon());		
@@ -237,15 +238,14 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		jMenuRender.add(jCheckBoxMenuBufferDepth);
 
-		jMenuBarMain.add(jMenuRender);
-		
+		jMenuBarMain.add(jMenuRender);		
 		
 		jMenuWindow.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Window));
 		
 		jMenuFocusOn.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Focus_on));
 		
 		jCheckBoxMenuItemInteraction.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Interaction));
-		jCheckBoxMenuItemInteraction.setSelected(true);
+		jCheckBoxMenuItemInteraction.setSelected(false);
 		jCheckBoxMenuItemInteraction.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemInteractionActionPerformed(jCheckBoxMenuItemInteraction);
@@ -254,7 +254,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jMenuFocusOn.add(jCheckBoxMenuItemInteraction);
 		jCheckBoxMenuItemDebugging.setText(MainFrameComponentsText.replaceUnderscoreWithSpace(MainFrameComponentsText.Debugging));
-		jCheckBoxMenuItemDebugging.setSelected(true);
+		jCheckBoxMenuItemDebugging.setSelected(false);
 		jCheckBoxMenuItemDebugging.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemDebuggingActionPerformed(jCheckBoxMenuItemDebugging);
@@ -262,6 +262,18 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 			}
 		});
 		jMenuFocusOn.add(jCheckBoxMenuItemDebugging);
+		
+		jMenuFocusOn.add(jSeparator3);
+		
+		jCheckBoxMenuItemBoth.setText("Both");
+		jCheckBoxMenuItemBoth.setSelected(true);
+		jCheckBoxMenuItemBoth.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.jCheckBoxMenuItemBothActionPerformed(jCheckBoxMenuItemBoth);
+				mainFrame.repaint();
+			}
+		});
+		jMenuFocusOn.add(jCheckBoxMenuItemBoth);
 		
 		jMenuWindow.add(jMenuFocusOn);
 		
@@ -505,6 +517,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public javax.swing.JTabbedPane initFirstTabbedPane(int width,int height){
 		
 		jTabbedPaneFirst  = new javax.swing.JTabbedPane();
+		//jTabbedPaneFirst.setToolTipText(text);
 		jTabbedPaneFirst.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 		jTabbedPaneFirst.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jTabbedPaneFirst.setPreferredSize(new Dimension(width, height));		
@@ -617,6 +630,39 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		return jToolBarGeneralControl;
 	}
 	
+	/**
+	 * Returns viable width of the frame (excluding border(decoration) and gaps between border and internal components). 
+	 * @return viable width of the frame (excluding border(decoration) and gaps between border and internal components). 
+	 */
+	public static int getMainFrameViableWidth(){
+		return mainFrame.getWidth() -insets.right-insets.left-2*HORIZONTAL_GAPS;
+	}
+	
+	
+	/**
+	 * Returns Gui component for controlling visibility of tabbed pane for debugging.
+	 * @return Gui component for controlling visibility of tabbed pane for debugging.
+	 */
+	public static javax.swing.JCheckBoxMenuItem getJCheckBoxMenuItemDebugging() {
+		return jCheckBoxMenuItemDebugging;
+	}
+
+	/**
+	 * Returns Gui component for controlling visibility of tabbed pane for interaction with simulation.
+	 * @return Gui component for controlling visibility of tabbed pane for interaction with simulation.
+	 */
+	public static javax.swing.JCheckBoxMenuItem getJCheckBoxMenuItemInteraction() {
+		return jCheckBoxMenuItemInteraction;
+	}
+	
+	/**
+	 * Returns Gui component for controlling visibility of both tabbed panes (for interaction with simulation and debugging).
+	 * @return Gui component for controlling visibility of both tabbed panes (for interaction with simulation and debugging).
+	 */
+	public static javax.swing.JCheckBoxMenuItem getJCheckBoxMenuItemBoth() {
+		return jCheckBoxMenuItemBoth;
+	}
+	
 	/*Declaration of MainFrame components*/
 	private static javax.swing.JMenuBar jMenuBarMain;
 	private javax.swing.JMenu jMenuFile,jMenuRender,jMenuWindow,jMenuFocusOn;
@@ -625,10 +671,11 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	private static javax.swing.JMenuItem jMenuItemOpen,jMenuItemSave;
 
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemPhysics,jCheckBoxMenuItemWireFrame,jCheckBoxMenuBounds,
-	                                     jCheckBoxMenuItemNormals,jCheckBoxMenuItemLights,jCheckBoxMenuBufferDepth,
-	                                     jCheckBoxMenuItemInteraction,jCheckBoxMenuItemDebugging;
-	
-	private javax.swing.JSeparator jSeparator1,jSeparator2;
+	                                     jCheckBoxMenuItemNormals,jCheckBoxMenuItemLights,jCheckBoxMenuBufferDepth;
+
+	private static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemInteraction,jCheckBoxMenuItemDebugging,jCheckBoxMenuItemBoth;
+	                                              
+	private javax.swing.JSeparator jSeparator1,jSeparator2,jSeparator3;
 
 	private javax.swing.JToolBar.Separator jToolBarSeparator3,jToolBarSeparator4,jToolBarSeparator5;
 
@@ -636,6 +683,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	
 	private javax.swing.JButton jButtonRunRealTime,jButtonRunStepByStep,jButtonRunFast,
 	                           jButtonPause,jButtonTerminate,jButtonRestart;
+	
 	private static javax.swing.JButton jButtonSave,jButtonOpen;
 	private static javax.swing.JToggleButton jToggleButtonConstructRobot,jToggleButtonVisualizer;
 

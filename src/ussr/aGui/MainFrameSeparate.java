@@ -31,23 +31,24 @@ public class MainFrameSeparate extends MainFrames {
     /**
      * Common width of main(first hierarchy) components(containers) of the frame in case when the frame is in maximized state.
      */
-    private final int CONTAINER_WIDTH = (int)SCREEN_VIABLE_WIDTH-super.insets.right -super.insets.left+2*HORIZONTAL_GAPS;
+    private final int CONTAINER_WIDTH = (int)SCREEN_VIABLE_WIDTH-insets.right -insets.left+2*HORIZONTAL_GAPS;
     
     /**
      * Common width of main(first hierarchy) components(containers) of the frame in case when the frame is not in maximized state.
      */
-    private final int CONTAINER_WIDTH_HALF = FRAME_WIDTH_HALF-super.insets.right -super.insets.left-2*HORIZONTAL_GAPS;
+    private final int CONTAINER_WIDTH_HALF = FRAME_WIDTH_HALF-insets.right -insets.left-2*HORIZONTAL_GAPS;
     
 	/**
 	 * Height of the second tabbed pane.
 	 */
-	public final int TABBED_PANE2_HEIGHT = 125;
+	public static final int TABBED_PANE2_HEIGHT = 125;
     
     /**
 	 * Height of the first tabbed pane. 
 	 * Calculate is so that the height of it is dependable on the height of each component of the frame, including dimensions of frame border and gaps between components.
 	 */
-	public final int TABBED_PANE1_HEIGHT = (int)((FRAME_HEIGHT-MENU_BAR_HEIGHT-HORIZONTAL_TOOLBAR_HEIGHT-TABBED_PANE2_HEIGHT- super.insets.top-super.insets.bottom -4*VERTICAL_GAPS));
+	public final int TABBED_PANE1_HEIGHT = (int)((FRAME_HEIGHT-MENU_BAR_HEIGHT-HORIZONTAL_TOOLBAR_HEIGHT-TABBED_PANE2_HEIGHT- insets.top-insets.bottom -4*VERTICAL_GAPS));
+	
 	
 	/**
 	 * Defines visual appearance of the main GUI frame (window), separate from simulation environment.
@@ -73,7 +74,8 @@ public class MainFrameSeparate extends MainFrames {
 		initJToolbarGeneralControl(CONTAINER_WIDTH_HALF,HORIZONTAL_TOOLBAR_HEIGHT);
 		initFirstTabbedPane(CONTAINER_WIDTH_HALF,TABBED_PANE1_HEIGHT);
 		initSecondTabbedPane(CONTAINER_WIDTH_HALF, TABBED_PANE2_HEIGHT);
-		initializeTabbedPanesResizing();			
+		//TODO DECIDE IF IT IS NEEDED
+		//initializeTabbedPanesResizing();			
 		
 		this.setSize(new Dimension(FRAME_WIDTH_HALF,FRAME_HEIGHT));
 		changeToLookAndFeel(this);
@@ -113,12 +115,6 @@ public class MainFrameSeparate extends MainFrames {
 			}
 		}
 		);
-		
-		 this.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-	            public void mouseMoved(java.awt.event.MouseEvent evt) {
-	              //STOPPED HERE
-	            }
-	        });
 	}
 	
 	
@@ -227,4 +223,5 @@ public class MainFrameSeparate extends MainFrames {
 			}
 		}
 	}
+
 }
