@@ -1,7 +1,10 @@
 package ussr.remote;
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 import ussr.aGui.GeneralController;
 import ussr.aGui.MainFrameSeparate;
@@ -52,10 +55,16 @@ public class GUISimulationAdapter {
 		} catch (IOException e) {
 			throw new Error("Unable to start simulation subprocess: "+e);
 		}
-
+		
 		// Get standard output and error streams and direct them to GUI console tab, so that the buffer is not full, which will cause simulation to stop.
 		ConsoleTabController.appendStreamToConsole("StandardOut", simulation.getStandardOut());
 		ConsoleTabController.appendStreamToConsole("Error/Info/Warning", simulation.getStandardErr());
+		  // Discard standard out (avoid buffers running full)
+        simulation.discardStandardOut();
+        // Get standard err, pass it to method that prints it in separate thread
+        dumpStream("err", simulation.getStandardErr());
+
+		
 
 
 		// Wait for simulation process to be ready to start a new simulation
@@ -117,4 +126,27 @@ public class GUISimulationAdapter {
 		 System.out.println("LOCATION:"+simulation.getXmlSimulationProvider().getRobotMorphologyLocation());
 
 	}
+	
+	 /**
+     * Dump an input stream to standard out, prefixing all lines with a fixed text 
+     * @param prefix the prefix to use
+     * @param stream the stream to dump
+     */
+    private static void dumpStream(final String prefix, final InputStream stream) {
+        new Thread() {
+            public void run() {
+                BufferedReader input = new BufferedReader(new InputStreamReader(stream));
+                while(true) {
+                    String line;
+                    try {
+                        line = input.readLine();
+                        if(line==null) break;
+                        System.out.println(prefix+": "+line);
+                    } catch (IOException e) {
+                        throw new Error("Unable to dump stream: "+e); 
+                    }
+                }
+            }
+        }.start();
+    }
 }
