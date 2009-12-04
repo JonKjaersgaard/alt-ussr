@@ -5,9 +5,6 @@ import java.awt.Dimension;
 import javax.swing.GroupLayout;
 import javax.swing.JPanel;
 
-import ussr.aGui.MainFramesInter;
-import ussr.aGui.tabs.TabsInter;
-
 /**
  * Is responsible for display of hints to the user about what is going on in simulation environment and
  * what the user can do next. Used as teaching tool at early stages of using simulator. Can be used to communicate
@@ -98,7 +95,7 @@ public class HintPanel extends JPanel implements HintPanelInter {
 	 * @param typeOfIcon, type of icon.
 	 */
 	public void setType(HintPanelTypes typeOfIcon){
-		jLabelIcon.setIcon(new javax.swing.ImageIcon(TabsInter.DIRECTORY_ICONS + typeOfIcon.toString().toLowerCase() + MainFramesInter.DEFAULT_ICON_EXTENSION1 ));
+		jLabelIcon.setIcon(typeOfIcon.getImageIcon());
 	}
 
 	/**

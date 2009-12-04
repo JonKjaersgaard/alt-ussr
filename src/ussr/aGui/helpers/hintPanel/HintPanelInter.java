@@ -17,7 +17,7 @@ public interface HintPanelInter {
 	
      
      
-     public final String INFORMATION ="information";
+     public final String INFORMATION ="information", ERROR ="error", ATTENTION = "attention";
      
      
 	/**

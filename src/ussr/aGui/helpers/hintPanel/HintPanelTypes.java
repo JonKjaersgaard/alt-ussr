@@ -13,8 +13,8 @@ import ussr.aGui.MainFramesInter;
 public enum HintPanelTypes{
 
 	INFORMATION(HintPanelInter.INFORMATION),//Default 
-	ATTENTION("some"),		
-	ERROR("some1");
+	ATTENTION(HintPanelInter.ATTENTION),		
+	ERROR(HintPanelInter.ERROR);
 	
 	
 	/**
