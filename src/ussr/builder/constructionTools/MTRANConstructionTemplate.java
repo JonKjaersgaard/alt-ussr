@@ -354,9 +354,9 @@ public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate 
 			if (connectorNr ==CONNECTORnr0||connectorNr ==CONNECTORnr3){// connectors Nr 0 and 3 are special(simpler)cases than others, because they always are aligned with one of the coordinate axes 
 				if (moduleMap[i].getConnectorNr()==connectorNr && moduleMap[i].getInitialRotation().getRotation().equals(rotationQuatComponent)){
 					/*If component(module) already exists at current position, delete movableModuleComponent and newly added module.*/
-					if (componentExitst(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&&loopFlag== false){
+					if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&&loopFlag== false){
 						BuilderHelper.deleteModule(movableModuleComponent.getModel());						
-					}else if (componentExitst(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag== true){
+					}else if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag== true){
 						//do nothing
 					}else{/*move the component to new position with new rotation*/
 						moveModuleComponent(movableModuleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
@@ -364,9 +364,9 @@ public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate 
 				}
 			}else if (moduleMap[i].getConnectorNr()==connectorNr &&moduleMap[i].getComponentNr()==componentCounter && moduleMap[i].getInitialRotation().getRotation().equals(rotationQuatComponent)){
 				/*If component(module) already exists at current position, delete movableModuleComponent and newly added module.*/
-				if (componentExitst(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&&loopFlag== false){					
+				if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&&loopFlag== false){					
 					BuilderHelper.deleteModule(movableModuleComponent.getModel());											
-				}else if (componentExitst(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag== true){
+				}else if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag== true){
 					//do nothing
 				}else{/*move the component to new position with new rotation*/
 				moveModuleComponent(movableModuleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
@@ -514,12 +514,15 @@ public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate 
 	/**
 	 * Returns array of objects containing information about supported specific rotations of modular robot.
 	 */
-	@Override
 	public ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP() {
 		return MODULE_ROTATION_MAP;
 	}
 
-	@Override
+
+	/**
+	 * Returns the array of connector numbers of MTRAN modular robot.
+	 * @return, the array of connector numbers of MTRAN modular robot.
+	 */
 	public int[] getConnectors() {
 	   return SupportedModularRobots.MTRAN_CONNECTORS;
 	}	

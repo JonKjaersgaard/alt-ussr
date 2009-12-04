@@ -161,10 +161,11 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 			for (int i=0; i<moduleMap.length;i++){				
 				if (moduleMap[i].getConnectorNr()==connectorNr && moduleMap[i].getInitialRotation().getRotation().equals(rotationQuatComponent)){
 					/*If component(module) already exists at current position, delete movableModuleComponent and newly added module.*/
-					if (componentExitst(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag== false){						
+					if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag== false){						
 						BuilderHelper.deleteModule(movableModuleComponent.getModel());											
-					} else if (componentExitst(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag== true){
-						//do nothing
+					} else if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag== true){
+						i=0;
+						connectorNr++;
 					}else{/*move the component to new position with new rotation*/
 						moveModuleComponent(movableModuleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
 					}
@@ -226,7 +227,10 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 		return MODULE_ROTATION_MAP;
 	}
 
-	@Override
+	/**
+	 * Returns the array of connector numbers of ARTON modular robot.
+	 * @return, the array of connector numbers of ARTON modular robot.
+	 */
 	public int[] getConnectors() {
 	return SupportedModularRobots.ATRON_CONNECTORS;
 	}

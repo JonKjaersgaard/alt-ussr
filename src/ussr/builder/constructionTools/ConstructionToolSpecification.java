@@ -286,14 +286,15 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 				//do nothing
 			}else{
 				//FIXME THINK MORE HERE
-				Random rand = new Random(this.construction.getConnectors().length);
-				selectedConnectorNr = rand.nextInt();  
+				//Random rand = new Random(11);
+				//selectedConnectorNr = rand.nextInt();  
 				int selectedModuleId = selectedModule.getID();
 				int amountModules = jmeSimulation.getModules().size();
 				Module lastModule = jmeSimulation.getModules().get(amountModules-1);
 				int lastModuleId = lastModule.getID();
 				
 				if (timesSelected==0&&firstTime==true){
+					//check if exists
 					firstTime=false;
 					this.selectOperations.addNewModuleOnConnector(this);
 				}else if (timesSelected==this.construction.getConnectors().length){

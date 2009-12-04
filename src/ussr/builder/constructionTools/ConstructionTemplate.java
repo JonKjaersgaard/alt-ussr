@@ -51,5 +51,9 @@ public interface ConstructionTemplate {
 	 */
 	public abstract ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP();
 	
+	/**
+	 * Returns the array of connector numbers of each modular robot.
+	 * @return, the array of connector numbers of each modular robot.
+	 */
 	public int[] getConnectors();
 }

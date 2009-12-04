@@ -1,5 +1,6 @@
 package ussr.builder.constructionTools;
 
+import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.ModuleMapEntryHelper;
 import ussr.description.geometry.VectorDescription;
@@ -68,7 +69,7 @@ public class OdinMuscleConstructionTemplate extends OdinConstructionTemplate  {
 			/*Loop through and locate the object matching the description of current component(also selected module).*/
 			for (int i=0; i<moduleMap.length;i++){
 				if (moduleMap[i].getConnectorNr()==connectorNr && moduleMap[i].getInitialRotation().getRotation().equals(rotationQuatSelectedModule)){
-					if (componentExitst(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag == false){						
+					if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag == false){						
 						BuilderHelper.deleteModule(moduleComponent.getModel());											
 					}else {/*move the component to new position with new rotation*/
 					moveModuleComponent(moduleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
@@ -115,5 +116,13 @@ public class OdinMuscleConstructionTemplate extends OdinConstructionTemplate  {
 				new ModuleMapEntryHelper(CONNECTORnr11,ROTATION000,ROTATION11, new Vector3f(xPlusOffset,yPlusOffset,z))				
 		};		
 		this.moduleMap = moduleMap;
+	}
+	
+	/**
+	 * Returns the array of connector numbers of OdinMuscle module.
+	 * @return, the array of connector numbers of OdinMuscle module.
+	 */
+	public int[] getConnectors() {		
+		return SupportedModularRobots.ODIN_MUSCLE_CONNECTORS;
 	}
 }

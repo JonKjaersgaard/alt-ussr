@@ -16,12 +16,13 @@ public enum SupportedModularRobots {
 	CKBOTSTANDARD; //PARTIALLY SUPPORTED
 	
 	/**
-	 * 
+	 * Arrays of number of connectors for each modular robot.
 	 */
 	public final static int[] ATRON_CONNECTORS = {0,1,2,3,4,5,6,7},
 	                          CKBOTSTANDARD_CONNECTORS = {0,1,2,3},
 	                          MTRAN_CONNECTORS = {0,1,2,3,4,5},
-	                          ODIN_BALL_CONNECTORS = {0,1,2,3,4,5,6,7,8,9,10,11};
+	                          ODIN_BALL_CONNECTORS = {0,1,2,3,4,5,6,7,8,9,10,11},
+	                          ODIN_MUSCLE_CONNECTORS = {0,1} ;
 	
     public static String getConsistentMRName (String supportedModularRobot){
     

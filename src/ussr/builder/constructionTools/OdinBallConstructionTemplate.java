@@ -3,6 +3,7 @@ package ussr.builder.constructionTools;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
+import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.ModuleMapEntryHelper;
 import ussr.description.geometry.VectorDescription;
@@ -71,7 +72,7 @@ public class OdinBallConstructionTemplate extends OdinConstructionTemplate  {
 			for (int i=0; i<moduleMap.length;i++){
 				if (moduleMap[i].getConnectorNr()==connectorNr && moduleMap[i].getInitialRotation().getRotation().equals(rotationQauterion)){
 					/*If component(module) already exists at current position, delete movableModuleComponent and newly added module.*/
-					if (componentExitst(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag == false ){						
+					if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag == false ){						
 						BuilderHelper.deleteModule(moduleComponent.getModel());											
 					}else {/*move the component to new position with new rotation*/
 					moveModuleComponent(moduleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
@@ -132,5 +133,13 @@ public class OdinBallConstructionTemplate extends OdinConstructionTemplate  {
 				new ModuleMapEntryHelper(CONNECTORnr1,ROTATION11,ROTATION000, new Vector3f(xMinusOffset,yMinusOffset,z)),				
 		};		
 		this.moduleMap = moduleMap;
+	}
+	
+	/**
+	 * Returns the array of connector numbers of OdinBall module.
+	 * @return, the array of connector numbers of OdinBall module.
+	 */
+	public int[] getConnectors() {		
+		return SupportedModularRobots.ODIN_BALL_CONNECTORS;
 	}
 }

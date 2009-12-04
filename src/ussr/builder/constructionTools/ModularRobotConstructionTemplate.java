@@ -232,7 +232,7 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 	 * @param tolerance, the tolerance for interval to search in (for x,y,z coordinates).  
 	 * @return true, if the module(component)already exists at this position.
 	 */
-	public boolean componentExitst(Vector3f componentPosition, float tolerance){		
+	public boolean componentExists(Vector3f componentPosition, float tolerance){		
 		int amountModules = simulation.getModules().size();
 		/*For each module in simulation get its components and check if it is already at the modulePosition*/
 		for (int module = 0; module<amountModules; module++ ){

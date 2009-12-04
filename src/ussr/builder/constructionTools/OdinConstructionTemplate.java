@@ -157,6 +157,7 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 	 * @return VectorDescription, description of a vector. 
 	 */
 	public VectorDescription getConnectorPosition(int connectorNr, Module selectedModule){
+		System.out.println("CONN:"+connectorNr);
 		Connector connector = selectedModule.getConnectors().get(connectorNr);		
 		VectorDescription connectorPosition = connector.getPhysics().get(0).getPosition();		
 		return connectorPosition;		
@@ -167,11 +168,14 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 	 */
 	@Override
 	public ModuleRotationMapEntryHelper[] getMODULE_ROTATION_MAP() {
-		// TODO Auto-generated method stub
+		// not relevant on Odin case
 		return null;
 	}
 
-	@Override
+	/**
+	 * Returns the array of connector numbers of Odin modular robot.
+	 * @return, the array of connector numbers of Odin modular robot.
+	 */
 	public int[] getConnectors() {		
 		return SupportedModularRobots.ODIN_BALL_CONNECTORS;
 	}
