@@ -1,5 +1,7 @@
 package ussr.aGui.enumerations;
 
+import java.awt.Toolkit;
+
 import javax.swing.ImageIcon;
 
 import ussr.aGui.MainFramesInter;
@@ -10,8 +12,6 @@ import ussr.aGui.tabs.TabsInter;
  * @author Konstantinas 
  */
 public enum TabsIcons {
-	
-	
 	
 	EXPANSION_CLOSED_SMALL(TabsInter.EXPANSION_CLOSED_SMALL),
 	EXPANSION_OPENED_SMALL(TabsInter.EXPANSION_OPENED_SMALL),
@@ -63,18 +63,29 @@ public enum TabsIcons {
 	READ_LABELS_DISABLED(TabsInter.READ_LABELS_DISABLED),
 	;
 	
-	
 	/**
 	 * The icon created from image file.
 	 */
 	private ImageIcon imageIcon;
 	
 	/**
+	 * The directory, where image is located in.
+	 */
+	private String imageDirectory;
+	
+	/**
+	 * The name of image file, not including extension
+	 */
+	private String imageName;
+	
+	/**
 	 * Contains icons used in tabs.
 	 * @param imageName, the name of image file, not including extension.
 	 */
 	TabsIcons(String imageName){
-		this.imageIcon = new ImageIcon(formatIconDirectory(imageName));
+		this.imageName = imageName;
+		this.imageDirectory = formatIconDirectory(imageName);
+		this.imageIcon = new ImageIcon(imageDirectory);
 	}
 	
 	/**
@@ -93,6 +104,24 @@ public enum TabsIcons {
 	public ImageIcon getImageIcon() {
 		return imageIcon;
 	}
+	
+	/**
+	 * Returns directory, where image is located in.
+	 * @return directory, where image is located in.
+	 */
+	public String getImageDirectory() {
+		return imageDirectory;
+	}
+	
+	/**
+	 * Returns the name of image file excluding extension.
+	 * @return the name of image file excluding extension.
+	 */
+	public String getImageName() {
+		return imageName;
+	}
+	
+	
 	
 	
 }

@@ -42,7 +42,7 @@ public class YourNewMainFrame extends MainFrames {
 	@Override
 	public void initComponents() {
 		getContentPane().setLayout(new java.awt.FlowLayout());
-		initJToolbarGeneralControl((int)SCREEN_SIZE.getWidth()/2,COMMON_HEIGHT);
+		initJToolbarGeneralControl((int)SCREEN_SIZE.getWidth()/2,HORIZONTAL_TOOLBAR_HEIGHT);
 		//setSize(600, 300);
 		pack(); 
 		changeToLookAndFeel(this);		

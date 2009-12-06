@@ -75,7 +75,8 @@ public class MainFrameSeparate extends MainFrames {
 		initFirstTabbedPane(CONTAINER_WIDTH_HALF,TABBED_PANE1_HEIGHT);
 		initSecondTabbedPane(CONTAINER_WIDTH_HALF, TABBED_PANE2_HEIGHT);
 		//TODO DECIDE IF IT IS NEEDED
-		//initializeTabbedPanesResizing();			
+		//initializeTabbedPanesResizing();	
+		//gettCursor();
 		
 		this.setSize(new Dimension(FRAME_WIDTH_HALF,FRAME_HEIGHT));
 		changeToLookAndFeel(this);

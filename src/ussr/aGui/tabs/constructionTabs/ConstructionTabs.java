@@ -112,7 +112,7 @@ public abstract class ConstructionTabs extends Tabs implements ConstructionTabsI
 		jToolBarSaveLoad.setFloatable(false);//user can not make the tool bar to float
 		jToolBarSaveLoad.setRollover(true);// the components inside are roll over
 		jToolBarSaveLoad.setToolTipText(COMMON_TOOL_TIP_TEXTS[0]);
-		jToolBarSaveLoad.setPreferredSize(new Dimension(60,GuiFrames.COMMON_HEIGHT+2));
+		jToolBarSaveLoad.setPreferredSize(new Dimension(60,32));
 		
 		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
 		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);

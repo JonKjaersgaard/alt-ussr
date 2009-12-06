@@ -6,7 +6,6 @@ package ussr.aGui.enumerations;
  * NOTE NR2: is not complete, because not all of them are used in the code.
  * NOTE NR3: if you want to change specific text, just refactor it and keep in mind that underscore is used instead of space. 
  * @author Konstantinas
- *
  */
 public enum MainFrameComponentsText {
     
@@ -33,15 +32,5 @@ public enum MainFrameComponentsText {
 	      
 	      /*JTabbedPanes*/
 	      //Interaction_with_simulation, 
-	      ;
-	      
-	    
-	     /**
-	      * Replaces underscore with space.
-	     * @param mainFrameComponentsText, text in which to replace "_" with "" 
-	     * @return text without underscore. 
-	     */
-	    public static String replaceUnderscoreWithSpace(MainFrameComponentsText mainFrameComponentsText){
-	    	  return mainFrameComponentsText.toString().replace("_", " ");
-	     }
+	      ; 
 	}

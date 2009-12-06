@@ -9,6 +9,7 @@ import ussr.builder.enumerations.CKBotStandardRotations;
 import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.MTRANStandardRotations;
 import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.aGui.enumerations.HintsConstructRobotTab;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTabInter;
@@ -52,7 +53,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		}
 
 		/*Informing user*/
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[1]);
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.MODULAR_ROBOT_CHOSEN.getHintText());
 	}
 
 
@@ -146,7 +147,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			//TODO SUPPORT ROBOT DELETION
 		}
 		/*Informing user*/
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[5]); 
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.DELETE.getHintText()); 
 	}
 
 	/**
@@ -163,7 +164,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			//TODO Support moving robot 
 		}
 		/*Informing user*/
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[3]);//Informing user
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.MOVE.getHintText());
 	}
 
 	/**
@@ -180,7 +181,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			//TODO  Support robot coloring of connectors.
 		}
 		/*Informing user*/
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[6]);//Informing user
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.COLOR_CONNECTORS.getHintText());
 
 	}
 
@@ -207,10 +208,10 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		try {
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.MODULE_OPPOSITE_ROTATION);
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called "+ ConstructionTools.MODULE_OPPOSITE_ROTATION.toString()+ " , due to remote exception");
+			throw new Error("Failed to initialize picker called "+ ConstructionTools.MODULE_OPPOSITE_ROTATION.toString()+ " , due to remote exception");
 		}
 		/*Informing user*/
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[2]);
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.OPPOSITE_ROTATION.getHintText());
 	}
 
 	/**
@@ -230,7 +231,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			throw new Error("Failed to initate picker called "+ ConstructionTools.STANDARD_ROTATIONS.toString()+ ", due to remote exception");
 		}
 		/*Informing user*/
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[2]);
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.STANDARD_ROTATIONS.getHintText()+ chosenStandardRotation +".");
 	}
 
 	/**
@@ -246,7 +247,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		}		
 
 		/*Informing user*/
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[7]); 
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.ON_SELECTED_CONNECTOR.getHintText()); 
 	}
 
 	/**
@@ -269,7 +270,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		}
 
 		/*Informing user*/
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[8]); 
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.ON_CHOSEN_CONNECTOR_NR.getHintText()+ chosenConnectorNr); 
 	}
 
 	/**
@@ -284,7 +285,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			throw new Error("Failed to initate picker called "+ ConstructionTools.NEW_MODULES_ON_ALL_CONNECTORS.toString() + ", due to remote exception");
 		}
 		/*Informing user*/
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[9]);
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.ON_ALL_CONNECTORS.getHintText());
 
 	}
 	
@@ -299,11 +300,6 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	}
 
 	/**
-	 * Used to keep track on which connector number the module is positioned. 
-	 */
-	private static int  connectorNr =0;
-
-	/**
 	 * Initializes the tool for moving new module from connector to another connector.
 	 */
 	public static void jButtonJumpFromConnToConnectorActionPerformed() {
@@ -315,7 +311,7 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 			throw  new Error ("Failed to initialize picker named as "+ ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON.toString()+ " ,due to remote exception");
 		}
 		/*Informing user*/
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[10]); 
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.JUMP_FROM_CON_TO_CON.getHintText()); 
 	}
 
 	/**
@@ -405,11 +401,11 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		try {
 			builderControl.removeAllModules();
 		} catch (RemoteException e) {
-			throw new Error("Failed to to remove all modules, due to remote exception");
+			throw new Error("Failed to to remove all modules, due to remote exception.");
 		}		
 
 		/*Informing user*/
-		ConstructRobotTab.getHintPanel().setText(HintPanelInter.builInHintsConstrucRobotTab[11]);
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.START_NEW_ROBOT.getHintText());
 	}
 
 	/**
@@ -425,7 +421,8 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		if (chosenMRname.equals(SupportedModularRobots.ODIN)){
 			ConstructRobotTab.setEnabledConstructionToolsToolBar(false);
 		}
-		
+		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.VARIATE_MODULE_PROPERTIES.getHintText());
 	}
 
 	/**
@@ -437,6 +434,10 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called"+ConstructionTools.AVAILABLE_ROTATIONS.toString() +", due to remote exception");
 		}
+		
+
+		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.AVAILABLE_ROTATIONS.getHintText());
 	}
 
 	/**

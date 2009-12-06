@@ -77,23 +77,11 @@ public interface FramesInter {
 	 * Numerical representation of window in minimized state. 
 	 */
 	public final int WINDOW_MINIMIZED_STATE = 1;
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	/**
-	 * Dominating(common) height of most components.
+	 * Dominating dimension of buttons with icons.
 	 */
-	public final int COMMON_HEIGHT = 32;
-	
-	/**
-	 * Width and height of buttons.
-	 */
-	public final int BUTTONS_WIDTH =31;
+	public final Dimension BUTTON_DIMENSION = new Dimension (30,30);
 	
 	/**
 	 * Padding for adding space around components of the JFrame. 

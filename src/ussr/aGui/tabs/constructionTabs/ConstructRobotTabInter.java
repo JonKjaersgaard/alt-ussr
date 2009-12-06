@@ -27,25 +27,4 @@ public interface ConstructRobotTabInter extends ConstructionTabsInter {
 	 */
 	public String[] CKBOT_CONNECTORS = {"0","1", "2", "3"};
 
-
-	public String[] TOOL_TIP_TEXTS = {
-			/*0*/ "Start constructing new robot",
-			/*1*/ "Save or load robot", //TODO eliminate me 
-			/*2*/ "Rotate opposite",
-			/*3*/ "Rotate with standard rotation",
-			/*4*/ "Move",
-			/*5*/ "Delete",
-			/*6*/ "Color Connectors",
-			/*7*/ "Construction tools",
-			/*8*/ "On selected connector (select connector)",
-            /*9*/ "On chosen connector number (select module)",
-            /*10*/"To all connectors (select module)",
-            /*11*/"On previous connector",
-            /*12*/"Jump from one connector to the next connector(select module)",
-            /*13*/"On next connector",
-            /*14*/"Switch the type of module",
-            /*15*/"Vary module-properties",
-            /*16*/"Available rotations"
-
-	};
 }

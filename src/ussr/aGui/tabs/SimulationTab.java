@@ -23,9 +23,9 @@ import javax.swing.tree.TreeSelectionModel;
 
 import ussr.aGui.MainFrames;
 import ussr.aGui.MainFramesInter;
+import ussr.aGui.enumerations.SimulationTabTreeNodes;
 import ussr.aGui.enumerations.TabsIcons;
 import ussr.aGui.enumerations.TextureDescriptions;
-import ussr.aGui.enumerations.SimulationTabTreeNodes;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.helpers.RobotSpecification;
@@ -208,7 +208,7 @@ public class SimulationTab extends Tabs {
 
 		super.jComponent.add(jPanelEditor,gridBagConstraints);
 		
-		hintPanel = new HintPanel(600, 100);
+		hintPanel = new HintPanel(600, HINT_PANEL_HEIGHT);
 		//hintPanel.setType(HintPanelTypes.INFORMATION);
 		hintPanel.setBorderTitle("Display for hints");
 		

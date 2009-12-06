@@ -345,7 +345,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jButtonReadLabels.setDisabledIcon(TabsIcons.READ_LABELS_DISABLED.getImageIcon());
 		jButtonReadLabels.setFocusable(false); 
 		jButtonReadLabels.setEnabled(false);	
-		jButtonReadLabels.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
+		jButtonReadLabels.setPreferredSize(FramesInter.BUTTON_DIMENSION);	
 		jButtonReadLabels.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setSelectionDeselection(jButtonReadLabels);
@@ -360,7 +360,6 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jButtonAssignLabels.setDisabledIcon(TabsIcons.ASSIGN_LABELS_DISABLED.getImageIcon());
 		jButtonAssignLabels.setFocusable(false); 
 		jButtonAssignLabels.setEnabled(false);	
-		jButtonAssignLabels.setPreferredSize(new java.awt.Dimension(FramesInter.BUTTONS_WIDTH, FramesInter.COMMON_HEIGHT-3));	
 		jButtonAssignLabels.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setSelectionDeselection(jButtonAssignLabels);
@@ -404,7 +403,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 
 		
 		/*Display for hints. Feedback to the user.*/
-		hintPanel = initHintPanel(400,100,HintPanelInter.builInHintsAssignBehaviorTab[0]);		
+		hintPanel = initHintPanel(400,HINT_PANEL_HEIGHT,HintPanelInter.builInHintsAssignBehaviorTab[0]);		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;		
 		gridBagConstraints.gridy = 4;

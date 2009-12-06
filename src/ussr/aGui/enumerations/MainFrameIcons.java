@@ -79,13 +79,19 @@ public enum MainFrameIcons{
 	 * The directory, where image is located in.
 	 */
 	private String imageDirectory;
-
+	
+	/**
+	 * The name of image file, not including extension
+	 */
+	private String imageName;
+	
 	/**
 	 * Contains icons used in main GUI window.
 	 * @param imageName, the name of image file, not including extension.
 	 */
 	MainFrameIcons(String imageName){
-		imageDirectory = formatIconDirectory(imageName);
+		this.imageName = imageName;
+		this.imageDirectory = formatIconDirectory(imageName);
 		this.imageIcon = new ImageIcon(imageDirectory);
 	}
 
@@ -98,7 +104,6 @@ public enum MainFrameIcons{
 	}
 
 	/**
-	 * 
 	 * Returns directory, where image is located in.
 	 * @return directory, where image is located in.
 	 */
@@ -112,6 +117,14 @@ public enum MainFrameIcons{
 	 */
 	private static String formatIconDirectory(String imageName){	
 		return MainFramesInter.DIRECTORY_ICONS+imageName+MainFramesInter.DEFAULT_ICON_EXTENSION1;
+	}
+	
+	/**
+	 * Returns the name of image file excluding extension.
+	 * @return the name of image file excluding extension.
+	 */
+	public String getImageName() {
+		return imageName;
 	}
 	
 }

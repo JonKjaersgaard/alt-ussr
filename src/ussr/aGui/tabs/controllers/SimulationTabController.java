@@ -12,8 +12,8 @@ import javax.swing.JSpinner;
 
 
 import ussr.aGui.MainFramesInter;
-import ussr.aGui.enumerations.TextureDescriptions;
 import ussr.aGui.enumerations.SimulationTabTreeNodes;
+import ussr.aGui.enumerations.TextureDescriptions;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.SimulationTab;
 import ussr.physics.PhysicsParameters;

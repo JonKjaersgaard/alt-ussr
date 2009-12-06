@@ -35,6 +35,8 @@ public interface TabsInter {
 	                    READ_LABEL ="readLabels",READ_LABELS_ROLLOVER ="readLabelsRollover",READ_LABELS_DISABLED ="readLabelsDisabled"
 	                    ;
 	
+	public final int HINT_PANEL_HEIGHT = 100;
+	
 	/**
 	 * Returns JComponent, which is the main container of components situated in the tab.
 	 * @return JComponent, which is the main container of components situated in the tab.
