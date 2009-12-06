@@ -1,21 +1,23 @@
 package ussr.builder.helpers;
 
+import ussr.aGui.enumerations.MainFrameComponentsText;
+
 public class StringProcessingHelper {
 
-	
+
 	public static String covertToString(char[] charArray){
 		String newString ="";
 		if (charArray.length==0){
 			throw new Error("Array is empty!");
 		}else{			
-	    	for (int index=0; index<charArray.length;index++){
-	    		newString = newString + charArray[index];
-	    	}
+			for (int index=0; index<charArray.length;index++){
+				newString = newString + charArray[index];
+			}
 		}
 		return newString;
 	}
-	
-	
+
+
 	/**
 	 * Extracts the value of specific coordinate from the string of VectorDescription.
 	 * @param textString, the string  of VectorDescription. 
@@ -37,4 +39,15 @@ public class StringProcessingHelper {
 		}else throw new Error ("There is no such coordinate");
 		return extractedValue; 
 	}
+
+	/**
+	 * Replaces underscore with space.
+	 * @param object, the object convertible to string. 
+	 * @return text without underscore. 
+	 */
+	public static String replaceUnderscoreWithSpace(Object text){
+		return text.toString().replace("_", " ");
+	}
+
+
 }
