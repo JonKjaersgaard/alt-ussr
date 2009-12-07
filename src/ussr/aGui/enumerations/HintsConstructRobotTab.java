@@ -35,7 +35,8 @@ public enum HintsConstructRobotTab {
 			
 	ON_SELECTED_CONNECTOR ("Zoom in closer to module and select connectors (black-white geometric shapes). On each selected connector will connected new module."),
 	
-	ON_CHOSEN_CONNECTOR_NR("Select module to add new module on chosen number of connector, which is number: "),
+	ON_CHOSEN_CONNECTOR_NR("It is recommended to use this functionality in combination with button Color connectors, because then it is easier to match the color(number) of connector" +
+			              "to color chosen here. Select module to add new module on chosen number of connector, which is number: "),
 	
 	ON_ALL_CONNECTORS("Select module to add new modules on all connectors. Next use button Delete to remove excessive modules."+
 			           "It is not recommended to have modules overlaping with the plane."),

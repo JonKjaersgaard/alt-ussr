@@ -3,22 +3,14 @@ package ussr.aGui.tabs.constructionTabs;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.util.ArrayList;
 
 import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
-import javax.swing.border.TitledBorder;
-
-import ussr.aGui.FramesInter;
-import ussr.aGui.MainFramesInter;
-
-import ussr.aGui.enumerations.TabsIcons;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
@@ -37,7 +29,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 	/**
 	 * 
 	 */
-	private static ArrayList<AbstractButton> jRadioButtonsLabelledEntities =  new ArrayList<AbstractButton>() ;	
+	//private static ArrayList<AbstractButton> jRadioButtonsLabelledEntities =  new ArrayList<AbstractButton>() ;	
 
 	/**
 	 * The dimensions of the List component.
@@ -76,23 +68,12 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 
 		/*Instantiation of components*/
 		jToolBarFilterForModularRobot = new javax.swing.JToolBar();
-		jToolBarEntitiesForLabeling = new javax.swing.JToolBar();
-		jToolBarTypesSensors = new javax.swing.JToolBar();
-		jToolBarControlOfLabels = new javax.swing.JToolBar();
-
+		
 		jListAvailableControllers = new javax.swing.JList();
 
 		jScrollPaneAvailableControllers = new javax.swing.JScrollPane();
-		jScrollPaneTableCurrentLabels = new javax.swing.JScrollPane();
 
-		jPanelAssignBehaviors = new javax.swing.JPanel();
-		jPanelLabeling = new javax.swing.JPanel();
-		jPanelEntitiesToLabel =  new javax.swing.JPanel(new GridBagLayout());		
-
-		jTableLabels = new javax.swing.JTable();
-
-		jButtonReadLabels = new javax.swing.JButton();
-		jButtonAssignLabels = new javax.swing.JButton();
+		jPanelAssignBehaviors = new javax.swing.JPanel();		
 		
 		jCheckBoxShowLabelControl = new javax.swing.JCheckBox();
 		
@@ -198,7 +179,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		
 		super.jComponent.add(jPanelAssignBehaviors,gridBagConstraints);		
 
-		jCheckBoxShowLabelControl.setText("Show labeling control");
+		/*jCheckBoxShowLabelControl.setText("Show labeling control");
 		jCheckBoxShowLabelControl.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				AssignBehaviorsTabController.jCheckBoxShowLabelControlActionPerformed(jCheckBoxShowLabelControl);
@@ -206,13 +187,13 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		});
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 2;
-		super.jComponent.add(jCheckBoxShowLabelControl,gridBagConstraints);	
+		super.jComponent.add(jCheckBoxShowLabelControl,gridBagConstraints);	*/
 
-		GridBagConstraints gridBagConstraintsLabelingPanel = new GridBagConstraints();
+		/*GridBagConstraints gridBagConstraintsLabelingPanel = new GridBagConstraints();
 		jPanelLabeling.setPreferredSize(new Dimension(200,160));
 		jPanelLabeling.setVisible(false);//initially invisible
 
-		/*External layout of labelingPanel inside main panel (jComponent)*/
+		External layout of labelingPanel inside main panel (jComponent)
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 3;
@@ -399,7 +380,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 												GroupLayout.PREFERRED_SIZE))				
 		);
 
-		super.jComponent.add(jPanelLabeling,gridBagConstraints);
+		super.jComponent.add(jPanelLabeling,gridBagConstraints);*/
 
 		
 		/*Display for hints. Feedback to the user.*/
@@ -414,54 +395,13 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 
 /*Getters and Setter*/
 	/**
-	 * Returns the panel containing control of labels.
-	 * @return panel,the panel containing control of labels.
-	 */
-	public static javax.swing.JPanel getLabelingPanel() {
-		return jPanelLabeling;
-	}
-
-	/**
-	 * Enables and disables the buttons for reading and assigning labels.
-	 * @param enabled, true if enabled.
-	 */
-	public static void setEnabledControlButtons(boolean enabled){
-		jButtonReadLabels.setEnabled(enabled);
-		jButtonAssignLabels.setEnabled(enabled);
-	}
-
-	/**
-	 * Returns the tool bar containing entities for labeling.
-	 * @return the tool bar containing entities for labeling.
-	 */
-	public static javax.swing.JToolBar getJToolBarEntitiesForLabeling() {
-		return jToolBarEntitiesForLabeling;
-	}
-
-	/**
-	 * Returns the tool bar containing types of sensors for labeling.
-	 * @return the tool bar containing types of sensors for labeling.
-	 */
-	public static javax.swing.JToolBar getJToolBarTypesSensors() {
-		return jToolBarTypesSensors;
-	}
-
-	/**
-	 * Returns the table for displaying labels of entities.
-	 * @return the table for displaying labels of entities.
-	 */
-	public static javax.swing.JTable getJTableLabels() {
-		return jTableLabels;
-	}
-
-	/**
 	 * Returns the list for displaying available controllers for user to choose from.
 	 * @return the list for displaying available controllers for user to choose from.
 	 */
 	public static javax.swing.JList getJListAvailableControllers() {
 		return jListAvailableControllers;
 	}
-
+	
 	/**
 	 * Returns hint panel, which is used to display feedback to the user.
 	 * @return hint panel, which is used to display feedback to the user.
@@ -505,24 +445,14 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 	
 	/*Declaration of components*/
 	private static javax.swing.JList jListAvailableControllers;	
-
-	private static javax.swing.JPanel jPanelLabeling;
-	private javax.swing.JPanel jPanelEntitiesToLabel,jPanelAssignBehaviors;
+	private javax.swing.JPanel jPanelAssignBehaviors;
 
 	private javax.swing.JScrollPane jScrollPaneAvailableControllers;
-	private javax.swing.JScrollPane jScrollPaneTableCurrentLabels;
 	
 	private static  javax.swing.AbstractButton radionButtonATRON,radioButtonMTRAN,
-	radioButtonODIN,radionButtonCKBOTSTANDARD, radioButtonModule,radionButtonConnector,
-	radioButtonSensors, radioButtonProximitySensor;
+	radioButtonODIN,radionButtonCKBOTSTANDARD;
 
-	private  static javax.swing.JButton jButtonReadLabels;
-	private  static javax.swing.JButton jButtonAssignLabels;
-
-	private static javax.swing.JToolBar jToolBarFilterForModularRobot,
-	jToolBarEntitiesForLabeling,jToolBarTypesSensors,jToolBarSaveLoad,jToolBarControlOfLabels;
-
-	private static javax.swing.JTable jTableLabels;
+	private static javax.swing.JToolBar jToolBarFilterForModularRobot,jToolBarSaveLoad;
 
 	private javax.swing.JCheckBox jCheckBoxShowLabelControl;
 }

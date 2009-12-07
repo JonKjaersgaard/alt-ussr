@@ -7,6 +7,7 @@ import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.YourNewTab;
 import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
+import ussr.aGui.tabs.constructionTabs.LabelingTab;
 import ussr.aGui.tabs.visualizer.ModuleCommunicationVisualizer;
 
 
@@ -59,6 +60,7 @@ public interface MainFramesInter {
 	 */
 	public final String CONSTRUCT_ROBOT_TAB_TITLE = "1 Step: Construct Robot",
 	                    ASSIGN_BEHAVIORS_TAB_TITLE = "2 Step: Adjust Behaviour (Controller)",
+	                    LABELING_TAB_TITLE = "Labeling",
 	                    MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE = "Communication Visualiser",
 	                    SIMULATION_TAB_TITLE = "Simulation",
 	                    CONSOLE_TAB_TITLE = "Console",
@@ -70,6 +72,7 @@ public interface MainFramesInter {
 	 */
 	public final TabsInter  CONSTRUCT_ROBOT_TAB = new ConstructRobotTab(false,true,CONSTRUCT_ROBOT_TAB_TITLE,MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageDirectory()),
 	                        ASSIGN_BEHAVIORS_TAB = new AssignBehaviorsTab(false,true,ASSIGN_BEHAVIORS_TAB_TITLE,MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageDirectory()),
+	                        LABELING_TAB = new LabelingTab(true,true,LABELING_TAB_TITLE,null),
 	                        MODULE_COMMUNICATION_VISUALIZER_TAB = new ModuleCommunicationVisualizer(false,true,MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE,MainFrameIcons.VISUALIZER_ROLLOVER.getImageDirectory()),
 	                        SIMULATION_CONFIGURATION_TAB = new SimulationTab(true,true,SIMULATION_TAB_TITLE,FramesInter.DIRECTORY_USSR_ICON),
 	                        CONSOLE_TAB = new ConsoleTab(true,false,CONSOLE_TAB_TITLE, MainFrameIcons.CONSOLE.getImageDirectory()),
@@ -80,11 +83,13 @@ public interface MainFramesInter {
 	 * Array of tabs plugged in the Main frame.
 	 */
 	public final TabsInter[] TABS = {
-		                              CONSTRUCT_ROBOT_TAB,
-		                              ASSIGN_BEHAVIORS_TAB,
+			                          CONSTRUCT_ROBOT_TAB,
+		                              ASSIGN_BEHAVIORS_TAB,		                             
 		                              MODULE_COMMUNICATION_VISUALIZER_TAB,
 		                              SIMULATION_CONFIGURATION_TAB,
 		                              CONSOLE_TAB,
-		                /*YOUR TAB*/  YOUR_TAB};
+		                /*YOUR TAB*/  YOUR_TAB,
+		                              LABELING_TAB
+		                                 };
 	
 }
