@@ -11,26 +11,25 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
+
+import ussr.aGui.enumerations.ModularRobotsNames;
+import ussr.aGui.enumerations.TabsComponentsText;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
+import ussr.builder.helpers.StringProcessingHelper;
 
 /**
  * Defines visual appearance of the tab called "2 Step: Assign Behaviors".  
  * @author Konstantinas
  */
-public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehaviorsTabInter {
+public class AssignBehaviorsTab extends ConstructionTabs{
 	
 	/**
 	 * Used to display hints to the user. Feedback to the user.
 	 */
 	private static HintPanel hintPanel;
 	
-	/**
-	 * 
-	 */
-	//private static ArrayList<AbstractButton> jRadioButtonsLabelledEntities =  new ArrayList<AbstractButton>() ;	
-
 	/**
 	 * The dimensions of the List component.
 	 */
@@ -75,8 +74,6 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 
 		jPanelAssignBehaviors = new javax.swing.JPanel();		
 		
-		jCheckBoxShowLabelControl = new javax.swing.JCheckBox();
-		
 		radionButtonATRON =  new JRadioButton();
 		radioButtonODIN =  new JRadioButton();
 		radioButtonMTRAN =  new JRadioButton();
@@ -93,7 +90,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		jToolBarFilterForModularRobot.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Filter out for:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));		
 		jToolBarFilterForModularRobot.setFloatable(false);//user can not make the tool bar to float
 		jToolBarFilterForModularRobot.setRollover(true);// the buttons inside are roll over
-		jToolBarFilterForModularRobot.setToolTipText("Filter out for");
+		jToolBarFilterForModularRobot.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Filter_out_for));
 		jToolBarFilterForModularRobot.setPreferredSize(new Dimension(jToolBar1Width,J_LIST_HEIGHT-50));
 		jToolBarFilterForModularRobot.setOrientation(JToolBar.VERTICAL);		
 
@@ -177,211 +174,7 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 1;
 		
-		super.jComponent.add(jPanelAssignBehaviors,gridBagConstraints);		
-
-		/*jCheckBoxShowLabelControl.setText("Show labeling control");
-		jCheckBoxShowLabelControl.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AssignBehaviorsTabController.jCheckBoxShowLabelControlActionPerformed(jCheckBoxShowLabelControl);
-			}
-		});
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 2;
-		super.jComponent.add(jCheckBoxShowLabelControl,gridBagConstraints);	*/
-
-		/*GridBagConstraints gridBagConstraintsLabelingPanel = new GridBagConstraints();
-		jPanelLabeling.setPreferredSize(new Dimension(200,160));
-		jPanelLabeling.setVisible(false);//initially invisible
-
-		External layout of labelingPanel inside main panel (jComponent)
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 3;
-		gridBagConstraints.gridwidth = 2;	
-
-		GridBagConstraints gridBagConstraintsEntitiesToLabel = new GridBagConstraints();
-		TitledBorder displayTitle1;
-		displayTitle1 = BorderFactory.createTitledBorder("Choose entity");
-		displayTitle1.setTitleJustification(TitledBorder.CENTER);		
-		jPanelEntitiesToLabel.setBorder(displayTitle1);
-		jPanelEntitiesToLabel.setPreferredSize(new Dimension(100,130));
-		gridBagConstraintsLabelingPanel.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsLabelingPanel.gridx = 0;
-		gridBagConstraintsLabelingPanel.gridy = 0;
-
-		//jToolBarEntitiesForLabeling.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBarEntitiesForLabeling.setFloatable(false);//user can not make the tool bar to float
-		jToolBarEntitiesForLabeling.setRollover(true);// the buttons inside are roll over
-		jToolBarEntitiesForLabeling.setToolTipText("Entities for labeling");
-		jToolBarEntitiesForLabeling.setPreferredSize(new Dimension(jToolBar1Width-20,J_LIST_HEIGHT-70));
-		jToolBarEntitiesForLabeling.setOrientation(JToolBar.VERTICAL);		 
-		gridBagConstraintsEntitiesToLabel.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsEntitiesToLabel.gridx = 0;
-		gridBagConstraintsEntitiesToLabel.gridy = 0;		
-
-
-		final ButtonGroup buttonGroupEntities = new ButtonGroup() ;
-
-		radioButtonModule =  new JRadioButton();		
-		radioButtonModule.setText(EntitiesForLabelingText.Module.toString());	
-		radioButtonModule.setFocusable(true);// direct the user to what should be done first
-		radioButtonModule.setSelected(false);
-		radioButtonModule.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AssignBehaviorsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonModule);
-			}
-		});			
-
-		jToolBarEntitiesForLabeling.add(radioButtonModule);
-		buttonGroupEntities.add(radioButtonModule);
-		jRadioButtonsLabelledEntities.add(radioButtonModule);
-
-		radionButtonConnector =  new JRadioButton();
-		radionButtonConnector.setText(EntitiesForLabelingText.Connector.toString());
-		radionButtonConnector.setSelected(false);
-		radionButtonConnector.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AssignBehaviorsTabController.radioButtonGroupEntitiesActionPerformed(radionButtonConnector);
-			}
-		});
-
-		jToolBarEntitiesForLabeling.add(radionButtonConnector);
-		buttonGroupEntities.add(radionButtonConnector);
-		jRadioButtonsLabelledEntities.add(radionButtonConnector);
-
-		radioButtonSensors =  new JRadioButton();
-		radioButtonSensors.setText(EntitiesForLabelingText.Sensors.toString());
-		radioButtonSensors.setSelected(false);
-		radioButtonSensors.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AssignBehaviorsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonSensors);
-			}
-		});
-
-		jToolBarEntitiesForLabeling.add(radioButtonSensors);
-		buttonGroupEntities.add(radioButtonSensors);
-		jRadioButtonsLabelledEntities.add(radioButtonSensors);
-
-		jPanelEntitiesToLabel.add(jToolBarEntitiesForLabeling,gridBagConstraintsEntitiesToLabel);
-
-		//jToolBarTypesSensors.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBarTypesSensors.setFloatable(false);//user can not make the tool bar to float
-		jToolBarTypesSensors.setRollover(true);// the buttons inside are roll over
-		jToolBarTypesSensors.setToolTipText("Entities for labeling");
-		jToolBarTypesSensors.setVisible(false);
-		jToolBarTypesSensors.setPreferredSize(new Dimension(jToolBar1Width-20,J_LIST_HEIGHT-70));
-		jToolBarTypesSensors.setOrientation(JToolBar.VERTICAL);
-		gridBagConstraintsEntitiesToLabel.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsEntitiesToLabel.gridx = 0;
-		gridBagConstraintsEntitiesToLabel.gridy = 1;
-		gridBagConstraintsEntitiesToLabel.insets = new Insets (0,10,0,0);
-
-		radioButtonProximitySensor =  new JRadioButton();		
-		radioButtonProximitySensor.setText(EntitiesForLabelingText.Proximity.toString());	
-		radioButtonProximitySensor.setSelected(false);
-		radioButtonProximitySensor.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AssignBehaviorsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonProximitySensor);
-			}
-		});
-		jToolBarTypesSensors.add(radioButtonProximitySensor);
-		buttonGroupEntities.add(radioButtonProximitySensor);
-		jRadioButtonsLabelledEntities.add(radioButtonProximitySensor);
-
-		jPanelEntitiesToLabel.add(jToolBarTypesSensors,gridBagConstraintsEntitiesToLabel);
-
-
-		jTableLabels.setModel(new javax.swing.table.DefaultTableModel(
-				new Object [][] {
-						//Initially empty rows
-						{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},
-						{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},
-						{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},
-						{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},
-						{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},						
-						{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},{null},
-				},
-				new String [] {
-						"Module labels"//Column name
-				}
-		));
-		jTableLabels.setCellSelectionEnabled(true);
-		jTableLabels.setDragEnabled(false);
-		jTableLabels.getTableHeader().setReorderingAllowed(false);
-		jTableLabels.setPreferredSize(new Dimension(150,150));
-		jScrollPaneTableCurrentLabels.setViewportView(jTableLabels);
-		jTableLabels.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		jScrollPaneTableCurrentLabels.setPreferredSize(new Dimension(150,130));
-
-		//jToolBarControlOfLabels.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBarControlOfLabels.setFloatable(false);//user can not make the tool bar to float
-		jToolBarControlOfLabels.setRollover(true);// the buttons inside are roll over
-		jToolBarControlOfLabels.setToolTipText("Control of labels");
-		jToolBarControlOfLabels.setPreferredSize(new Dimension(40,80));
-		jToolBarControlOfLabels.setOrientation(JToolBar.VERTICAL);		
-
-		jButtonReadLabels.setToolTipText("Read Labels");		
-		jButtonReadLabels.setIcon(TabsIcons.READ_LABELS.getImageIcon());
-		jButtonReadLabels.setRolloverIcon(TabsIcons.READ_LABELS_ROLLOVER.getImageIcon());		
-		jButtonReadLabels.setDisabledIcon(TabsIcons.READ_LABELS_DISABLED.getImageIcon());
-		jButtonReadLabels.setFocusable(false); 
-		jButtonReadLabels.setEnabled(false);	
-		jButtonReadLabels.setPreferredSize(FramesInter.BUTTON_DIMENSION);	
-		jButtonReadLabels.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				setSelectionDeselection(jButtonReadLabels);
-				AssignBehaviorsTabController.jButtonReadLabelsActionPerformed();
-			}
-		});	
-		jToolBarControlOfLabels.add(jButtonReadLabels);	
-
-		jButtonAssignLabels.setToolTipText("Assign Labels");		
-		jButtonAssignLabels.setIcon(TabsIcons.ASSIGN_LABELS.getImageIcon());
-		jButtonAssignLabels.setRolloverIcon(TabsIcons.ASSIGN_LABELS_ROLLOVER.getImageIcon());		
-		jButtonAssignLabels.setDisabledIcon(TabsIcons.ASSIGN_LABELS_DISABLED.getImageIcon());
-		jButtonAssignLabels.setFocusable(false); 
-		jButtonAssignLabels.setEnabled(false);	
-		jButtonAssignLabels.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				setSelectionDeselection(jButtonAssignLabels);
-				AssignBehaviorsTabController.jButtonAssignLabelsActionPerformed();
-			}
-		});			
-
-		jToolBarControlOfLabels.add(jButtonAssignLabels);			
-
-
-		GroupLayout labelingPanelLayoutLayout = new GroupLayout(jPanelLabeling);
-		jPanelLabeling.setLayout(labelingPanelLayoutLayout);
-
-		labelingPanelLayoutLayout.setAutoCreateGaps(true);
-		labelingPanelLayoutLayout.setHorizontalGroup(
-				labelingPanelLayoutLayout.createSequentialGroup()
-				//Forces preferred side of component
-				.addGap(20)
-				.addComponent(jPanelEntitiesToLabel,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-						GroupLayout.PREFERRED_SIZE)
-						.addGap(20)
-						.addComponent(jScrollPaneTableCurrentLabels,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-								.addGap(20)
-								.addComponent(jToolBarControlOfLabels,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)	
-		);
-
-		labelingPanelLayoutLayout.setVerticalGroup(
-				labelingPanelLayoutLayout.createSequentialGroup()
-				.addGroup(labelingPanelLayoutLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(jPanelEntitiesToLabel,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-								.addComponent(jScrollPaneTableCurrentLabels,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-										.addComponent(jToolBarControlOfLabels,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE))				
-		);
-
-		super.jComponent.add(jPanelLabeling,gridBagConstraints);*/
-
+		super.jComponent.add(jPanelAssignBehaviors,gridBagConstraints);			
 		
 		/*Display for hints. Feedback to the user.*/
 		hintPanel = initHintPanel(400,HINT_PANEL_HEIGHT,HintPanelInter.builInHintsAssignBehaviorTab[0]);		
@@ -453,6 +246,4 @@ public class AssignBehaviorsTab extends ConstructionTabs implements AssignBehavi
 	radioButtonODIN,radionButtonCKBOTSTANDARD;
 
 	private static javax.swing.JToolBar jToolBarFilterForModularRobot,jToolBarSaveLoad;
-
-	private javax.swing.JCheckBox jCheckBoxShowLabelControl;
 }

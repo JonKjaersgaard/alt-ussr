@@ -6,10 +6,10 @@ import java.util.Vector;
 import javax.swing.AbstractButton;
 import javax.swing.JCheckBox;
 
+import ussr.aGui.enumerations.ModularRobotsNames;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
-import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTabInter;
 
 import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
@@ -18,7 +18,7 @@ import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.FileDirectoryHelper;
 import ussr.builder.labelingTools.LabelingTemplate;
 
-public class AssignBehaviorsTabController extends TabsControllers implements AssignBehaviorsTabInter {
+public class AssignBehaviorsTabController extends TabsControllers {
 
 	/**
 	 * Container for keeping all classes of controllers extracted from package "ussr.builder.controllerAdjustmentTool";
@@ -102,6 +102,7 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 		});		
 	}
 
+
 	/**
 	 * Filters out the names of controller for specific modular robot name.
 	 * @param modularRobotsName, modular robot name.
@@ -128,22 +129,6 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 			throw new Error("Failed to initate picker called "+ "AssignControllerTool" + ", due to remote exception");
 		}		
 	}
-
-
-	/**
-	 * Shows or hides the panel for controlling labels.
-	 * @param jCheckBox, checkBox in GUI selected or deselected by user.
-	 */
-/*	public static void jCheckBoxShowLabelControlActionPerformed(JCheckBox jCheckBox) {
-		if (jCheckBox.isSelected()){
-			AssignBehaviorsTab.getLabelingPanel().setVisible(true);
-			Informing user
-			AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[2]);
-		}else{		
-			AssignBehaviorsTab.getLabelingPanel().setVisible(false);
-		}
-	}*/
-
 
 	/**
 	 * Adapts Assign Behaviors Tab to the the type of first module in simulation environment.
@@ -191,3 +176,4 @@ public class AssignBehaviorsTabController extends TabsControllers implements Ass
 	
 	
 }
+

@@ -15,6 +15,7 @@ import javax.swing.Renderer;
 
 import ussr.aGui.FramesInter;
 import ussr.aGui.enumerations.HintsConstructRobotTab;
+import ussr.aGui.enumerations.ModularRobotsNames;
 import ussr.aGui.enumerations.TabsComponentsText;
 import ussr.aGui.enumerations.TabsIcons;
 import ussr.aGui.helpers.hintPanel.HintPanel;

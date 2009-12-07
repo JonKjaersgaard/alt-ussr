@@ -4,15 +4,15 @@ import java.rmi.RemoteException;
 
 import javax.swing.AbstractButton;
 
+import ussr.aGui.enumerations.EntitiesForLabelingText;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
-import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTabInter;
 import ussr.aGui.tabs.constructionTabs.LabelingTab;
 import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.labelingTools.LabelingTemplate;
 
-public class LabelingTabController extends TabsControllers implements AssignBehaviorsTabInter {
+public class LabelingTabController extends TabsControllers{
 
 	
 	/**

@@ -12,6 +12,7 @@ import javax.swing.JToolBar;
 import javax.swing.border.TitledBorder;
 
 import ussr.aGui.FramesInter;
+import ussr.aGui.enumerations.EntitiesForLabelingText;
 import ussr.aGui.enumerations.TabsIcons;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.LabelingTabController;
@@ -20,7 +21,7 @@ import ussr.aGui.tabs.controllers.LabelingTabController;
  * Defines visual appearance of tab named as Labeling. 
  * @author Konstantinas
  */
-public class LabelingTab extends ConstructionTabs implements AssignBehaviorsTabInter {
+public class LabelingTab extends ConstructionTabs{
 
 	/**
 	 * The constants of grid bag layout used during design of the tab.

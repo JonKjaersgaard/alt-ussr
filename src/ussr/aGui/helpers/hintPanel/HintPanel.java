@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 /**
  * Is responsible for display of hints to the user about what is going on in simulation environment and
  * what the user can do next. Used as teaching tool at early stages of using simulator. Can be used to communicate
- * attention, error and so on information(look enumeration). In a way is substitute to JOptionPane, in order to avoid
+ * attention, error and so on information(look enumeration). In a way is a substitute to JOptionPane, in order to avoid
  * attracting to much attention to select ok, cancel and so on buttons in JOptionPane.
  * @author Konstantinas
  */

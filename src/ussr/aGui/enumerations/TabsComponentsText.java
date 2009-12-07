@@ -37,6 +37,10 @@ public enum TabsComponentsText {
 	On_all_connectors,
 	Jump_from_connector_to_connector,
 	
+	/*ASSIGN BEHAVIOR(CONTROLLER) TAB*/
+		
+	/*METHOD: setToolTipText()*/
+	Filter_out_for,
 	
 	
 }

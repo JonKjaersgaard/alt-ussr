@@ -22,7 +22,7 @@ import ussr.aGui.tabs.Tabs;
  * Holds common methods for definition of construction tabs visual appearance. Tabs such as: ConstrutRobotTab.java and AssignBehaviors.java. 
  * @author Konstantinas
  */
-public abstract class ConstructionTabs extends Tabs implements ConstructionTabsInter  {
+public abstract class ConstructionTabs extends Tabs {
 
 	/**
 	 * Defines visual appearance of the tabs for construction of modular robot.
@@ -111,7 +111,7 @@ public abstract class ConstructionTabs extends Tabs implements ConstructionTabsI
 		jToolBarSaveLoad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarSaveLoad.setFloatable(false);//user can not make the tool bar to float
 		jToolBarSaveLoad.setRollover(true);// the components inside are roll over
-		jToolBarSaveLoad.setToolTipText(COMMON_TOOL_TIP_TEXTS[0]);
+		jToolBarSaveLoad.setToolTipText("Save or load");
 		jToolBarSaveLoad.setPreferredSize(new Dimension(60,32));
 		
 		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();

@@ -8,7 +8,7 @@ package ussr.aGui.enumerations;
 public enum HintsConstructRobotTab {
 
 	
-	DEFAULT("This tab is dedicated to interactive construction of modular robot morphology (shape). Follow hints displayed here to explore functionality of the tab in more detail. When done constructing robot go to the next tab."),
+	DEFAULT("This tab is dedicated to interactive construction of modular robot morphology (shape). Follow hints displayed here to explore functionality in more detail. When done constructing robot go to the next tab."),
 	
 	START_NEW_ROBOT("Choose modular robot type from four available (ATRON, Odin  and so on)."),
 	
