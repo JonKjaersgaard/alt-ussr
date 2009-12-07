@@ -193,10 +193,10 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	public static void jComboBoxEntityActionPerformed(JComboBox jComboBoxEntity) {
 		chosenItem = jComboBoxEntity.getSelectedItem().toString();
 		if (chosenItem.equalsIgnoreCase("Module") ){
-			ConstructRobotTab.setEnabledGenericToolBar(true);
+			//ConstructRobotTab.setEnabledGenericToolBar(true);
 		}else if(chosenItem.equalsIgnoreCase("Robot")){
 			//TODO  Support robot deletion, moving and coloring of connectors.
-			ConstructRobotTab.setEnabledGenericToolBar(false);
+			//ConstructRobotTab.setEnabledGenericToolBar(false);
 		}		
 	}
 

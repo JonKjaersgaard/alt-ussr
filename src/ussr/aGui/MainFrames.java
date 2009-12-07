@@ -106,7 +106,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		setTitle(USSR_TITLE);
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		pack();
-		this.insets = this.getInsets();		
+		insets = this.getInsets();		
 	}
 
 
@@ -140,10 +140,13 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		
 		jMenuWindow = new javax.swing.JMenu();
 		jMenuFocusOn = new javax.swing.JMenu();
+		jMenuHide = new javax.swing.JMenu();
 		
 		jCheckBoxMenuItemInteraction= new javax.swing.JCheckBoxMenuItem();
 		jCheckBoxMenuItemDebugging = new javax.swing.JCheckBoxMenuItem();
 		jCheckBoxMenuItemBoth = new javax.swing.JCheckBoxMenuItem();
+		
+		jCheckBoxMenuItemDisplayForHints = new javax.swing.JCheckBoxMenuItem();
 
         /*Description of components*/
 		jMenuBarMain.setPreferredSize(new Dimension(width,height));
@@ -281,6 +284,18 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuFocusOn.add(jCheckBoxMenuItemBoth);
 		
 		jMenuWindow.add(jMenuFocusOn);
+		
+		jMenuHide.setText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Hide));
+		jCheckBoxMenuItemDisplayForHints.setText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Display_for_hints));
+		jCheckBoxMenuItemDisplayForHints.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.jCheckBoxMenuItemDisplayForHintsActionPerformed(jCheckBoxMenuItemDisplayForHints);
+			}
+		});
+		
+		jMenuHide.add(jCheckBoxMenuItemDisplayForHints);
+		
+		jMenuWindow.add(jMenuHide);
 		
 		jMenuBarMain.add(jMenuWindow);
 		setJMenuBar(jMenuBarMain); 
@@ -681,7 +696,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	
 	/*Declaration of MainFrame components*/
 	private static javax.swing.JMenuBar jMenuBarMain;
-	private javax.swing.JMenu jMenuFile,jMenuRender,jMenuWindow,jMenuFocusOn;
+	private javax.swing.JMenu jMenuFile,jMenuRender,jMenuWindow,jMenuFocusOn,jMenuHide;
 
 	private javax.swing.JMenuItem jMenuItemExit;
 	private static javax.swing.JMenuItem jMenuItemOpen,jMenuItemSave;
@@ -689,7 +704,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemPhysics,jCheckBoxMenuItemWireFrame,jCheckBoxMenuBounds,
 	                                     jCheckBoxMenuItemNormals,jCheckBoxMenuItemLights,jCheckBoxMenuBufferDepth;
 
-	private static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemInteraction,jCheckBoxMenuItemDebugging,jCheckBoxMenuItemBoth;
+	private static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemInteraction,jCheckBoxMenuItemDebugging,jCheckBoxMenuItemBoth,
+	                                             jCheckBoxMenuItemDisplayForHints;
 	                                              
 	private javax.swing.JSeparator jSeparator1,jSeparator2,jSeparator3;
 

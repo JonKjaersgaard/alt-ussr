@@ -15,7 +15,6 @@ import ussr.aGui.enumerations.HintsConstructRobotTab;
 import ussr.aGui.enumerations.TabsComponentsText;
 import ussr.aGui.enumerations.TabsIcons;
 import ussr.aGui.helpers.hintPanel.HintPanel;
-import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.helpers.StringProcessingHelper;
@@ -270,9 +269,8 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 
 		super.jComponent.add(jToolBarRotationTools,gridBagConstraints);
 
-		jComboBoxEntity.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Module", "Robot" }));
+		jComboBoxEntity.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Module"/*, "Robot"*/ }));
 		jComboBoxEntity.setPreferredSize(new java.awt.Dimension(65, 30));
-		jComboBoxEntity.setEnabled(false);
 		jComboBoxEntity.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructRobotTabController.jComboBoxEntityActionPerformed(jComboBoxEntity);
@@ -391,7 +389,11 @@ public class ConstructRobotTab extends ConstructionTabs implements ConstructRobo
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructRobotTabController.jComboBoxNrConnectorsConstructionToolActionPerformed(jComboBoxNrConnectorsConstructionTool);
 			}
-		});		
+		});	
+		
+		//TODO
+		//ComboBoxRenderer renderer = new ComboBoxRenderer();
+		//renderer.setPreferredSize(new Dimension(200, 130));
 
 		jButtonConnectAllModules.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.On_all_connectors));
 		jButtonConnectAllModules.setIcon(TabsIcons.CONNECT_ALL_MODULES.getImageIcon());

@@ -58,7 +58,7 @@ public interface MainFramesInter {
 	 * The titles of the tabs plugged in the main GUI window.
 	 */
 	public final String CONSTRUCT_ROBOT_TAB_TITLE = "1 Step: Construct Robot",
-	                    ASSIGN_BEHAVIORS_TAB_TITLE = "2 Step: Assign Behaviour (Controller)",
+	                    ASSIGN_BEHAVIORS_TAB_TITLE = "2 Step: Adjust Behaviour (Controller)",
 	                    MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE = "Communication Visualiser",
 	                    SIMULATION_TAB_TITLE = "Simulation",
 	                    CONSOLE_TAB_TITLE = "Console",

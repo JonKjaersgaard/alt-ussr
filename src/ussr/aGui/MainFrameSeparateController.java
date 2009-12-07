@@ -7,6 +7,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 
+import ussr.aGui.tabs.SimulationTab;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
@@ -461,7 +462,27 @@ public class MainFrameSeparateController extends GeneralController {
 	public static void jButtonRestartActionPerformed() {	
 		terminateSimulation();
 		startSimulation(simulationXMLFileDirectory);		
-	}	
+	}
+	
+	/**
+	 * Hides or shows display for hints in main GUI window.
+	 * @param checkBoxMenuItemDisplayForHints,component of GUI.
+	 */
+	public static void jCheckBoxMenuItemDisplayForHintsActionPerformed(JCheckBoxMenuItem checkBoxMenuItemDisplayForHints) {
+		//ABSTRACT ME
+		if (checkBoxMenuItemDisplayForHints.isSelected()){
+			SimulationTab.getHintPanel().setVisible(false);
+			ConstructRobotTab.getHintPanel().setVisible(false);
+			AssignBehaviorsTab.getHintPanel().setVisible(false);
+		}else{
+			SimulationTab.getHintPanel().setVisible(true);
+			ConstructRobotTab.getHintPanel().setVisible(true);
+			AssignBehaviorsTab.getHintPanel().setVisible(true);
+		}
+		
+	}
+	
+	
 
 	/*Setters*/
 	/**
@@ -471,7 +492,4 @@ public class MainFrameSeparateController extends GeneralController {
 	public static void setRendererControl(RendererControlInter rendererControl) {
 		MainFrameSeparateController.rendererControl = rendererControl;
 	}
-
-
-
 }
