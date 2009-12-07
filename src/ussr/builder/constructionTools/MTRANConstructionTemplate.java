@@ -523,7 +523,7 @@ public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * Returns the array of connector numbers of MTRAN modular robot.
 	 * @return, the array of connector numbers of MTRAN modular robot.
 	 */
-	public int[] getConnectors() {
+	public String[] getConnectors() {
 	   return SupportedModularRobots.MTRAN_CONNECTORS;
 	}	
 }

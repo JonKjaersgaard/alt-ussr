@@ -139,7 +139,7 @@ public class OdinBallConstructionTemplate extends OdinConstructionTemplate  {
 	 * Returns the array of connector numbers of OdinBall module.
 	 * @return, the array of connector numbers of OdinBall module.
 	 */
-	public int[] getConnectors() {		
+	public String[] getConnectors() {		
 		return SupportedModularRobots.ODIN_BALL_CONNECTORS;
 	}
 }

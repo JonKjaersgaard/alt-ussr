@@ -249,7 +249,7 @@ public class CKBotConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * Returns the array of connector numbers of CkBot modular robot.
 	 * @return, the array of connector numbers of CkBot modular robot.
 	 */
-	public int[] getConnectors() {
+	public String[] getConnectors() {
 		return SupportedModularRobots.CKBOTSTANDARD_CONNECTORS;
 	}
 	}

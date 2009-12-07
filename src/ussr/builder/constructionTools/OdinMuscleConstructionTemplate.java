@@ -122,7 +122,7 @@ public class OdinMuscleConstructionTemplate extends OdinConstructionTemplate  {
 	 * Returns the array of connector numbers of OdinMuscle module.
 	 * @return, the array of connector numbers of OdinMuscle module.
 	 */
-	public int[] getConnectors() {		
+	public String[] getConnectors() {		
 		return SupportedModularRobots.ODIN_MUSCLE_CONNECTORS;
 	}
 }

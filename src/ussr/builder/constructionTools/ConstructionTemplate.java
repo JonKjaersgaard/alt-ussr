@@ -55,5 +55,5 @@ public interface ConstructionTemplate {
 	 * Returns the array of connector numbers of each modular robot.
 	 * @return, the array of connector numbers of each modular robot.
 	 */
-	public int[] getConnectors();
+	public String[] getConnectors();
 }

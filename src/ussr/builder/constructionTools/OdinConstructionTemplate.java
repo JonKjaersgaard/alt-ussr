@@ -176,7 +176,7 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 	 * Returns the array of connector numbers of Odin modular robot.
 	 * @return, the array of connector numbers of Odin modular robot.
 	 */
-	public int[] getConnectors() {		
+	public String[] getConnectors() {		
 		return SupportedModularRobots.ODIN_BALL_CONNECTORS;
 	}
 

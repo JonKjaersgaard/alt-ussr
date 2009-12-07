@@ -40,10 +40,10 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 	private static final ModuleRotationMapEntryHelper[] MODULE_ROTATION_MAP =  {
 		new ModuleRotationMapEntryHelper(ATRONStandardRotations.EW.toString(),ATRON.ROTATION_EW,ATRON.ROTATION_WE),
 		new ModuleRotationMapEntryHelper(ATRONStandardRotations.WE.toString(),ATRON.ROTATION_WE,ATRON.ROTATION_EW),
+		new ModuleRotationMapEntryHelper(ATRONStandardRotations.DU.toString(),ATRON.ROTATION_DU,ATRON.ROTATION_UD),
+		new ModuleRotationMapEntryHelper(ATRONStandardRotations.UD.toString(),ATRON.ROTATION_UD,ATRON.ROTATION_DU),
 		new ModuleRotationMapEntryHelper(ATRONStandardRotations.SN.toString(),ATRON.ROTATION_SN,ATRON.ROTATION_NS),
 		new ModuleRotationMapEntryHelper(ATRONStandardRotations.NS.toString(),ATRON.ROTATION_NS,ATRON.ROTATION_SN),
-		new ModuleRotationMapEntryHelper(ATRONStandardRotations.UD.toString(),ATRON.ROTATION_UD,ATRON.ROTATION_DU),
-		new ModuleRotationMapEntryHelper(ATRONStandardRotations.DU.toString(),ATRON.ROTATION_DU,ATRON.ROTATION_UD),
 	};
 
 	/**
@@ -231,7 +231,7 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * Returns the array of connector numbers of ARTON modular robot.
 	 * @return, the array of connector numbers of ARTON modular robot.
 	 */
-	public int[] getConnectors() {
+	public String[] getConnectors() {
 	return SupportedModularRobots.ATRON_CONNECTORS;
 	}
 }
