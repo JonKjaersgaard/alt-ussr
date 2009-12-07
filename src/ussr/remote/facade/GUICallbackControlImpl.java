@@ -6,6 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
+import ussr.aGui.tabs.controllers.LabelingTabController;
 import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.SupportedModularRobots;
 
@@ -29,7 +30,7 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 	 * @param labels, the string of labels separated by comma to populate the table with.
 	 */
 	public void updateTableWithLabels(String labels) throws RemoteException{
-		AssignBehaviorsTabController.updateTableLabels(labels);
+		LabelingTabController.updateTableLabels(labels);
 	}
 	
 	/**
