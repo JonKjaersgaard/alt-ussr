@@ -3,9 +3,6 @@ package ussr.aGui.tabs.constructionTabs;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.ArrayList;
-
-import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -216,25 +213,37 @@ public class AssignBehaviorsTab extends ConstructionTabs{
 		}
 	}
 	
+	/**
+	 * Returns radio button representing the choice of CKBotStandard modular robot.
+	 * @return radio button representing the choice of CKBotStandard modular robot.
+	 */
 	public static javax.swing.AbstractButton getRadionButtonCKBOTSTANDARD() {
 		return radionButtonCKBOTSTANDARD;
 	}
 
+	/**
+	 * Returns radio button representing the choice of Odin modular robot.
+	 * @return radio button representing the choice of Odin modular robot.
+	 */
 	public static javax.swing.AbstractButton getRadioButtonODIN() {
 		return radioButtonODIN;
 	}
 
+	/**
+	 * Returns radio button representing the choice of MTRAN modular robot.
+	 * @return radio button representing the choice of MTRAN modular robot.
+	 */
 	public static javax.swing.AbstractButton getRadioButtonMTRAN() {
 		return radioButtonMTRAN;
 	}
 
+	/**
+	 * Returns radio button representing the choice of ATRON modular robot.
+	 * @return radio button representing the choice of ATRON modular robot.
+	 */
 	public static javax.swing.AbstractButton getRadionButtonATRON() {
 		return radionButtonATRON;
-	}
-
-	
-	
-	
+	}	
 	
 	/*Declaration of components*/
 	private static javax.swing.JList jListAvailableControllers;	
