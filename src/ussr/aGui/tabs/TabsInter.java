@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public interface TabsInter {
 	
 	/**
-	 * The directory for keeping jpg icons used in the tabs.
+	 * The directory for keeping png icons used in the tabs.
 	 */
 	public final String DIRECTORY_ICONS = "resources/mainFrame/icons/tabs/jpg/";
 	
@@ -34,6 +34,24 @@ public interface TabsInter {
 	                    ASSIGN_LABELS = "assignLabels",ASSIGN_LABELS_ROLLOVER = "assignLabelsRollover", ASSIGN_LABELS_DISABLED ="assignLabelsDisabled",
 	                    READ_LABEL ="readLabels",READ_LABELS_ROLLOVER ="readLabelsRollover",READ_LABELS_DISABLED ="readLabelsDisabled"
 	                    ;
+	
+	/**
+	 * The directory for keeping png icons used in comboBoxes with numbers of connectors.
+	 */
+	public final String DIRECTORY_ICONS_CONNECTORS_COLORS = "resources/mainFrame/icons/tabs/jpg/colorsOfConnectors/";
+	
+	/**
+	 * The names of the icons used in comboBoxes with numbers of connectors.
+	 */
+	public final String CONNECTOR_NR0_BLACK ="connectorNr0Black",CONNECTOR_NR1_RED ="connectorNr1Red",
+	                    CONNECTOR_NR2_CYAN = "connectorNr2Cyan", CONNECTOR_NR3_GREY="connectorNr3Grey",
+	                    CONNECTOR_NR4_GREEN ="connectorNr4Green",CONNECTOR_NR5_MAGENDA = "connectorNr5Magenda",
+	                    CONNECTOR_NR6_ORANGE = "connectorNr6Orange", CONNECTOR_NR5_PINK = "connectorNr7Pink",
+	                    CONNECTOR_NR8_BLUE = "connectorNr8Blue", CONNECTOR_NR9_WHITE = "connectorNr9White",
+	                    CONNECTOR_NR10_YELLOW = "connectorNr10Yellow", CONNECTOR_NR11_LIGHT_GREY = "connectorNr11LightGrey"
+	                    	;
+	                             
+	
 	
 	public final int HINT_PANEL_HEIGHT = 100;
 	

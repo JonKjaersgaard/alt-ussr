@@ -1,25 +1,28 @@
 package ussr.aGui.tabs.controllers;
 
+import java.awt.Dimension;
 import java.rmi.RemoteException;
 
 import javax.swing.AbstractButton;
 import javax.swing.JComboBox;
+
 import ussr.builder.enumerations.ATRONStandardRotations;
 import ussr.builder.enumerations.CKBotStandardRotations;
 import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.MTRANStandardRotations;
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.aGui.enumerations.HintsConstructRobotTab;
+import ussr.aGui.enumerations.IconsNumbersConnectors;
+import ussr.aGui.helpers.ComboBoxRenderer;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
-import ussr.aGui.tabs.constructionTabs.ConstructRobotTabInter;
 
 
 /**
  * Controls events of Construct Robot Tab  and underlying logic of simulator.
  * @author Konstantinas
  */
-public class ConstructRobotTabController extends TabsControllers implements ConstructRobotTabInter{
+public class ConstructRobotTabController extends TabsControllers{
 
 	/**
 	 *  The name of modular robot chosen in GUI.
@@ -91,13 +94,15 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		}	
 	}
 	
-
 	/**
 	 * Adapts tab to ATRON modular robot
 	 */
 	private static void adaptTabToATRON(){
 		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(ATRONStandardRotations.values()));
-		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(ATRON_CONNECTORS));
+		ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ATRON_CONNECTORS);
+		renderer.setPreferredSize(new Dimension(15, 15));
+		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setRenderer(renderer);
+		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(SupportedModularRobots.ATRON_CONNECTORS));
 	}
 
 	/**
@@ -106,7 +111,10 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	private static void adaptTabToMTRAN(){
 		ConstructRobotTab.getJButtonMove().setEnabled(false);
 		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(MTRANStandardRotations.values()));
-		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(MTRAN_CONNECTORS));
+		ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.MTRAN_CONNECTORS);
+		renderer.setPreferredSize(new Dimension(15, 15));
+		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setRenderer(renderer);
+		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(SupportedModularRobots.MTRAN_CONNECTORS));
 	}
 
 	/**
@@ -116,8 +124,12 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 		//ConstructRobotTab.setEnabledRotationToolBar(false);// for Odin not yet relevant
 		ConstructRobotTab.getJButtonAvailableRotationsLoop().setEnabled(false);
 		ConstructRobotTab.getjComboBoxStandardRotations().setEnabled(false);
-		ConstructRobotTab.getJButtonOppositeRotation().setEnabled(true);
-		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(ODIN_CONNECTORS));
+		ConstructRobotTab.getJButtonOppositeRotation().setEnabled(true);		
+		
+		ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ODIN_BALL_CONNECTORS);
+		renderer.setPreferredSize(new Dimension(15, 15));
+		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setRenderer(renderer);
+		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(SupportedModularRobots.ODIN_BALL_CONNECTORS));
 	}
 
 	/**
@@ -125,7 +137,11 @@ public class ConstructRobotTabController extends TabsControllers implements Cons
 	 */
 	private static void adaptTabToCKBOTSTANDARD(){
 		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel( CKBotStandardRotations.values() ));
-		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(CKBOT_CONNECTORS));
+		
+		ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.CKBOTSTANDARD_CONNECTORS);
+		renderer.setPreferredSize(new Dimension(15, 15));
+		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setRenderer(renderer);
+		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(SupportedModularRobots.CKBOTSTANDARD_CONNECTORS));
 	}
 
 	/**
