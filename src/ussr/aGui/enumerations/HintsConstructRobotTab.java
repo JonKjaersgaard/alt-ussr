@@ -15,7 +15,7 @@ public enum HintsConstructRobotTab {
 	MODULAR_ROBOT_CHOSEN("Locate newly added module in the simulation environment. For navigation hold right side of the mouse to look around and W,A,S,D to move. Next there are two options: 1)" +
 			             "Apply rotation to newly added module or 2) Zoom in closer to module and select connectors (black-white geometric shapes)"),
 	
-	OPPOSITE_ROTATION("Zoom in closer and select newly added module in order to rotate it with opposite rotatioin. If the first selection was unsuccessful, try to select module several times."),
+	OPPOSITE_ROTATION("Zoom in closer and select module in order to rotate it with opposite rotatioin. If the first selection was unsuccessful, try to select module several times."),
 	
 	AVAILABLE_ROTATIONS("Select module several times to rotate it with available rotations. Each selection will rotate module with new rotation."),
 	

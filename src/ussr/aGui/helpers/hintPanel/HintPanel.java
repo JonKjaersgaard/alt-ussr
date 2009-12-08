@@ -103,7 +103,10 @@ public class HintPanel extends JPanel implements HintPanelInter {
 	 * @param hintText, the text to display in hint panel.
 	 */
 	public void setText(String hintText){	
-		jTextPaneHintDisplay.setText(hintText);	
+		jTextPaneHintDisplay.setText(hintText);
+		jTextPaneHintDisplay.revalidate();
+		jTextPaneHintDisplay.repaint();
+		
 	}
 	
 

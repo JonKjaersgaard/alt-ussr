@@ -7,6 +7,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 
+import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.tabs.SimulationTab;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
@@ -365,30 +366,6 @@ public class MainFrameSeparateController extends GeneralController {
 	}
 
 	/**
-	 * Adapts main Gui window so that tabbed pane for interaction(first) with simulation is visible or not. 
-	 * @param checkBoxMenuItemInteraction, component in GUI. 
-	 */
-	public static void jCheckBoxMenuItemInteractionActionPerformed(JCheckBoxMenuItem checkBoxMenuItemInteraction) {
-
-		if (checkBoxMenuItemInteraction.isSelected()){			
-			MainFrames.setJTabbedPaneFirstVisible(true);
-			setHeightJTabbedPaneFirst();// needed to set once, because it will be changing later 
-			int width = MainFrames.getMainFrameViableWidth();		
-			MainFrames.getJTabbedPaneFirst().setPreferredSize(new Dimension(width, defaultSecondPaneHeight+defaultFirstPaneHeight));
-			MainFrames.setJTabbedPaneSecondVisible(false);
-			
-			MainFrames.getJCheckBoxMenuItemDebugging().setSelected(false);
-			MainFrames.getJCheckBoxMenuItemBoth().setSelected(false);
-		}else {	
-			int width = MainFrames.getMainFrameViableWidth();		
-			MainFrames.getJTabbedPaneFirst().setPreferredSize(new Dimension(width, defaultFirstPaneHeight));
-			MainFrames.getJTabbedPaneSecond().setPreferredSize(new Dimension(width, defaultSecondPaneHeight));			
-			MainFrames.setJTabbedPaneFirstVisible(false);
-		}		
-	}
-
-
-	/**
 	 * Default(initial) height of the second tabbed pane
 	 */
 	private static int defaultSecondPaneHeight = MainFrameSeparate.TABBED_PANE2_HEIGHT;
@@ -402,58 +379,38 @@ public class MainFrameSeparateController extends GeneralController {
 	 *  A flag used to keep track for first time selection.
 	 */
 	private static boolean firstTime = true;
-
+		
 	/**
-	 * Adapts main Gui window so that tabbed pane for debugging(second) is visible or not. 
-	 * @param checkBoxMenuItemDebugging,component in GUI. 
+	 * Hides or shows tabbed panes. 
+	 * @param first, the state of selection for component in GUI associated with first tabbed pane. 
+	 * @param second, the state of selection for component in GUI associated with second tabbed pane. 
 	 */
-	public static void jCheckBoxMenuItemDebuggingActionPerformed(JCheckBoxMenuItem checkBoxMenuItemDebugging) {
-		if (checkBoxMenuItemDebugging.isSelected()){			
-			MainFrames.setJTabbedPaneSecondVisible(true);
-			setHeightJTabbedPaneFirst();// needed to set once, because it will be changing later 
-			int width = MainFrames.getMainFrameViableWidth();				
+	public static void hideTabbedPanes1ActionPerformed(boolean first, boolean second){
+		setDefaultHeightJTabbedPaneFirst();// needed to set once, because it will be changing later
+		int width = MainFrames.getMainFrameViableWidth();
+		if(first&&second){
+			MainFrames.setTabbedPanesVisible(false);
+			MainFrames.getJToggleButtonMaximizeDebugging().setSelectedIcon(MainFrameIcons.TABBED_PANES_BOTH_SELECTED.getImageIcon());
+			MainFrames.getJToggleButtonMaximizeInteraction().setSelectedIcon(MainFrameIcons.TABBED_PANES_BOTH_SELECTED.getImageIcon());
+		}else if (first==false&&second==false){			
+			MainFrames.setTabbedPanesVisible(true);
+			MainFrames.getJTabbedPaneFirst().setPreferredSize(new Dimension(width, defaultFirstPaneHeight));
+			MainFrames.getJTabbedPaneSecond().setPreferredSize(new Dimension(width, defaultSecondPaneHeight));
+			MainFrames.getJToggleButtonMaximizeDebugging().setSelectedIcon(MainFrameIcons.TABBED_PANES.getImageIcon());
+			MainFrames.getJToggleButtonMaximizeInteraction().setSelectedIcon(MainFrameIcons.TABBED_PANES.getImageIcon());
+		}else if (first){
+			MainFrames.setJTabbedPaneSecondVisible(true);			
 			MainFrames.getJTabbedPaneSecond().setPreferredSize(new Dimension(width, defaultSecondPaneHeight+defaultFirstPaneHeight));			
 			MainFrames.setJTabbedPaneFirstVisible(false);
-			MainFrames.getJCheckBoxMenuItemInteraction().setSelected(false);
-			MainFrames.getJCheckBoxMenuItemBoth().setSelected(false);
-
-		}else {	
-			int width = MainFrames.getMainFrameViableWidth();			
-			MainFrames.getJTabbedPaneFirst().setPreferredSize(new Dimension(width, defaultFirstPaneHeight));
-			MainFrames.getJTabbedPaneSecond().setPreferredSize(new Dimension(width, defaultSecondPaneHeight));
+			MainFrames.getJToggleButtonMaximizeDebugging().setSelectedIcon(MainFrameIcons.DEBUGGING_MAXIMIZED.getImageIcon());
+		}else if (second){
+			MainFrames.setJTabbedPaneFirstVisible(true);			
+			MainFrames.getJTabbedPaneFirst().setPreferredSize(new Dimension(width, defaultSecondPaneHeight+defaultFirstPaneHeight));
 			MainFrames.setJTabbedPaneSecondVisible(false);
+			MainFrames.getJToggleButtonMaximizeInteraction().setSelectedIcon(MainFrameIcons.INTERACTION_MAXIMIZED.getImageIcon());
 		}
-	}
-	
-	/**
-	 * Adapts main Gui window so that both tabbed panes (for interaction(first) and debugging(second)) are visible or not. 
-	 * @param checkBoxMenuItemBoth,component in GUI. 
-	 */
-	public static void jCheckBoxMenuItemBothActionPerformed(JCheckBoxMenuItem checkBoxMenuItemBoth) {
-		if (checkBoxMenuItemBoth.isSelected()){
-			setHeightJTabbedPaneFirst();
-			MainFrames.getJCheckBoxMenuItemDebugging().setSelected(false);
-			MainFrames.getJCheckBoxMenuItemInteraction().setSelected(false);
-			int width = MainFrames.getMainFrameViableWidth();
-			MainFrames.setJTabbedPaneFirstVisible(true);
-			MainFrames.setJTabbedPaneSecondVisible(true);
-			MainFrames.getJTabbedPaneFirst().setPreferredSize(new Dimension(width, defaultFirstPaneHeight));
-			MainFrames.getJTabbedPaneSecond().setPreferredSize(new Dimension(width, defaultSecondPaneHeight));
-		}else{
-			MainFrames.setJTabbedPaneFirstVisible(false);
-			MainFrames.setJTabbedPaneSecondVisible(false);			
-		}
-		
-	}
-
-	/**
-	 * Identifies and sets initial height of the first tabbed pane.
-	 */
-	private static void setHeightJTabbedPaneFirst(){
-		if (firstTime){
-			firstTime=false;
-			defaultFirstPaneHeight = MainFrames.getJTabbedPaneFirst().getHeight();
-		}
+		MainFrames.setComponentsAssocWithFirstTabbedPaneSelected(first);
+		MainFrames.setComponentsAssocWithSecondTabbedPaneSelected(second);
 	}
 
 	/**
@@ -463,7 +420,7 @@ public class MainFrameSeparateController extends GeneralController {
 		terminateSimulation();
 		startSimulation(simulationXMLFileDirectory);		
 	}
-	
+
 	/**
 	 * Hides or shows display for hints in main GUI window.
 	 * @param checkBoxMenuItemDisplayForHints,component of GUI.
@@ -479,11 +436,9 @@ public class MainFrameSeparateController extends GeneralController {
 			ConstructRobotTab.getHintPanel().setVisible(true);
 			AssignBehaviorsTab.getHintPanel().setVisible(true);
 		}
-		
+
 	}
 	
-	
-
 	/*Setters*/
 	/**
 	 * Sets renderer control of remote physics simulation for this controller.
@@ -491,5 +446,15 @@ public class MainFrameSeparateController extends GeneralController {
 	 */
 	public static void setRendererControl(RendererControlInter rendererControl) {
 		MainFrameSeparateController.rendererControl = rendererControl;
+	}
+	
+	/**
+	 * Identifies and sets initial height of the first tabbed pane.
+	 */
+	private static void setDefaultHeightJTabbedPaneFirst(){
+		if (firstTime){
+			firstTime=false;
+			defaultFirstPaneHeight = MainFrames.getJTabbedPaneFirst().getHeight();
+		}
 	}
 }

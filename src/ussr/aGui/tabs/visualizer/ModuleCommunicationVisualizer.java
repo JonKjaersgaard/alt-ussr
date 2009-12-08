@@ -128,7 +128,7 @@ public class ModuleCommunicationVisualizer extends Tabs {
 		jToolBar2.setOrientation(JToolBar.VERTICAL);
 
 		jButtonReset.setIcon(new javax.swing.ImageIcon(TabsInter.DIRECTORY_ICONS + TabsInter.RESET));
-		jButtonReset.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
+		//jButtonReset.setDisabledIcon(new javax.swing.ImageIcon(MainFramesInter.DIRECTORY_ICONS + MainFramesInter.NO_ENTRANCE));
 		jButtonReset.setPreferredSize(new Dimension(30,30));
 		jButtonReset.setToolTipText("Reset Display Area");
 		jButtonReset.setFocusable(true);

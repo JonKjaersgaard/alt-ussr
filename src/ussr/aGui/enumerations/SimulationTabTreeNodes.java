@@ -45,7 +45,7 @@ public enum SimulationTabTreeNodes {
 	    //Third Level Hierarchy
 	    Realistic_collision(XMLTagsUsed.REALISTIC_COLLISION),
 	    Gravity(XMLTagsUsed.GRAVITY),
-	    Constraint_force_mix(XMLTagsUsed.CONSTRAINT_FORCE_MIX),
+	    Constraint_force_mixing(XMLTagsUsed.CONSTRAINT_FORCE_MIX),
 	    Error_reduction_parameter(XMLTagsUsed.ERROR_REDUCTION_PARAMETER),
 	    Use_mouse_event_queue(XMLTagsUsed.USE_MOUSE_EVENT_QUEUE),
 	    Synchronize_with_controllers((XMLTagsUsed.SYNC_WITH_CONTROLLERS)),

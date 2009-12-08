@@ -19,9 +19,8 @@ public enum MainFrameComponentsText {
 	       Open,Save,Exit, 
            //Render Menu
 	       Physics, Wire_frame, Bounds,Normals, Lights,Buffer_depth, 
-	       // Window Menu 
-	       Focus_on,Interaction,Debugging,Both,
-	       Hide, Display_for_hints,
+	       // Window Menu                  
+	       Hide, Interaction,Debugging,Display_for_hints,
 	       
 	/*METHOD: setToolTipText()*/
 	
@@ -29,7 +28,8 @@ public enum MainFrameComponentsText {
 	       General_control,
 	
 	      /*JButtons*/
-	      Run_real_time, Run_fast, Run_step_by_step,Pause,Terminate,Restart,Construct_robot,Visualize_communication_of_modules,
+	      Run_real_time, Run_fast, Run_step_by_step,Pause,Terminate,Restart,
+	      Construct_robot,Visualize_communication_of_modules,Hide_interaction,Hide_debugging,
 	      
 	      /*JTabbedPanes*/
 	      //Interaction_with_simulation, 

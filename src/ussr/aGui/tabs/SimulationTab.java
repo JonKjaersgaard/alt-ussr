@@ -139,7 +139,7 @@ public class SimulationTab extends Tabs {
 		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyRealisticCollision);
 		DefaultMutableTreeNode thirdNodeHierarchyGravity = new DefaultMutableTreeNode(SimulationTabTreeNodes.Gravity.toString());
 		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyGravity);
-		DefaultMutableTreeNode thirdNodeHierarchyConstraintForceMix = new DefaultMutableTreeNode(SimulationTabTreeNodes.Constraint_force_mix.toString().replace("_", " "));
+		DefaultMutableTreeNode thirdNodeHierarchyConstraintForceMix = new DefaultMutableTreeNode(SimulationTabTreeNodes.Constraint_force_mixing.toString().replace("_", " "));
 		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyConstraintForceMix);
 		DefaultMutableTreeNode thirdNodeHierarchyErrorReductionParameter = new DefaultMutableTreeNode(SimulationTabTreeNodes.Error_reduction_parameter.toString().replace("_", " "));
 		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyErrorReductionParameter);
@@ -327,11 +327,44 @@ public class SimulationTab extends Tabs {
 	}
 	
 	public static void addDampingLinearVelocityEditor(){
+		
+		GridBagConstraints gridBagConstraintsDamping = new GridBagConstraints();
+		
+		jLabelLinearVelocity =  new javax.swing.JLabel();
+		jLabelLinearVelocity.setText("Linear Velocity");
+		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsDamping.gridx = 0;
+		gridBagConstraintsDamping.gridy = 0;
+		
+		jPanelEditor.add(jLabelLinearVelocity,gridBagConstraintsDamping);
+		
+		
 		jSpinnerDampingLinearVelocity = new javax.swing.JSpinner();
 		jSpinnerDampingLinearVelocity.setPreferredSize(new Dimension(60,20));
 		jSpinnerDampingLinearVelocity.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
 		SimulationTabController.setValuejSpinnerDampingLinearVelocity(jSpinnerDampingLinearVelocity);		
-		jPanelEditor.add(jSpinnerDampingLinearVelocity);		
+		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsDamping.gridx = 1;
+		gridBagConstraintsDamping.gridy = 0;
+		jPanelEditor.add(jSpinnerDampingLinearVelocity,gridBagConstraintsDamping);
+		
+		jLabelAngularVelocity =  new javax.swing.JLabel();
+		jLabelAngularVelocity.setText("Angular Velocity");
+		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsDamping.gridx = 0;
+		gridBagConstraintsDamping.gridy = 1;
+		jPanelEditor.add(jLabelAngularVelocity,gridBagConstraintsDamping);
+		
+		jSpinnerDampingAngularVelocity = new javax.swing.JSpinner();
+		jSpinnerDampingAngularVelocity.setPreferredSize(new Dimension(60,20));
+		jSpinnerDampingAngularVelocity.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
+		SimulationTabController.setValuejSpinnerDampingAngularVelocity(jSpinnerDampingAngularVelocity);
+		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsDamping.gridx = 1;
+		gridBagConstraintsDamping.gridy = 1;
+		jPanelEditor.add(jSpinnerDampingAngularVelocity,gridBagConstraintsDamping);	
+		
+		
 	}
 
 	public static void addDampingAngularVelocityEditor() {
@@ -460,6 +493,8 @@ public class SimulationTab extends Tabs {
 	jCheckBoxSynchronizeWithControllers;
 	
 	private static javax.swing.JLabel jLabelRobotType;
+	
+	private static javax.swing.JLabel jLabelLinearVelocity,jLabelAngularVelocity;
 
 	private static javax.swing.JPanel jPanelEditor;
 	private static javax.swing.JSpinner jSpinnerDampingLinearVelocity, jSpinnerDampingAngularVelocity,

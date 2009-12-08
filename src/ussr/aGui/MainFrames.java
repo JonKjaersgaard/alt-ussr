@@ -139,13 +139,10 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jCheckBoxMenuBufferDepth = new javax.swing.JCheckBoxMenuItem();	
 		
 		jMenuWindow = new javax.swing.JMenu();
-		jMenuFocusOn = new javax.swing.JMenu();
 		jMenuHide = new javax.swing.JMenu();
 		
 		jCheckBoxMenuItemInteraction= new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItemDebugging = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItemBoth = new javax.swing.JCheckBoxMenuItem();
-		
+		jCheckBoxMenuItemDebugging = new javax.swing.JCheckBoxMenuItem();		
 		jCheckBoxMenuItemDisplayForHints = new javax.swing.JCheckBoxMenuItem();
 
         /*Description of components*/
@@ -248,48 +245,37 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		jMenuBarMain.add(jMenuRender);		
 		
-		jMenuWindow.setText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Window));
+		jMenuWindow.setText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Window));	
 		
-		jMenuFocusOn.setText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Focus_on));
+		jMenuHide.setText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Hide));
 		
 		jCheckBoxMenuItemInteraction.setText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Interaction));
 		jCheckBoxMenuItemInteraction.setSelected(false);
 		jCheckBoxMenuItemInteraction.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.jCheckBoxMenuItemInteractionActionPerformed(jCheckBoxMenuItemInteraction);
+				MainFrameSeparateController.hideTabbedPanes1ActionPerformed(jCheckBoxMenuItemInteraction.isSelected(),jCheckBoxMenuItemDebugging.isSelected());
 				mainFrame.repaint();
 			}
 		});
-		jMenuFocusOn.add(jCheckBoxMenuItemInteraction);
+		jMenuHide.add(jCheckBoxMenuItemInteraction);
+		
 		jCheckBoxMenuItemDebugging.setText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Debugging));
 		jCheckBoxMenuItemDebugging.setSelected(false);
 		jCheckBoxMenuItemDebugging.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.jCheckBoxMenuItemDebuggingActionPerformed(jCheckBoxMenuItemDebugging);
+				MainFrameSeparateController.hideTabbedPanes1ActionPerformed(jCheckBoxMenuItemInteraction.isSelected(),jCheckBoxMenuItemDebugging.isSelected());
 				mainFrame.repaint();
 			}
 		});
-		jMenuFocusOn.add(jCheckBoxMenuItemDebugging);
+		jMenuHide.add(jCheckBoxMenuItemDebugging);		
 		
-		jMenuFocusOn.add(jSeparator3);
+		//jMenuHide.add(jSeparator3);
 		
-		jCheckBoxMenuItemBoth.setText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Both));
-		jCheckBoxMenuItemBoth.setSelected(true);
-		jCheckBoxMenuItemBoth.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.jCheckBoxMenuItemBothActionPerformed(jCheckBoxMenuItemBoth);
-				mainFrame.repaint();
-			}
-		});
-		jMenuFocusOn.add(jCheckBoxMenuItemBoth);
-		
-		jMenuWindow.add(jMenuFocusOn);
-		
-		jMenuHide.setText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Hide));
 		jCheckBoxMenuItemDisplayForHints.setText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Display_for_hints));
 		jCheckBoxMenuItemDisplayForHints.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemDisplayForHintsActionPerformed(jCheckBoxMenuItemDisplayForHints);
+				mainFrame.repaint();
 			}
 		});
 		
@@ -333,17 +319,23 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonPause = new javax.swing.JButton();
 		jButtonTerminate = new javax.swing.JButton();
 		jButtonRestart = new javax.swing.JButton();
+		
 		jToolBarSeparator3 = new javax.swing.JToolBar.Separator();			
 		jToolBarSeparator4 = new javax.swing.JToolBar.Separator();
 		jToolBarSeparator5 = new javax.swing.JToolBar.Separator();
+		jToolBarSeparator6 = new javax.swing.JToolBar.Separator();
+		
 		jToggleButtonConstructRobot = new javax.swing.JToggleButton();
 		jToggleButtonVisualizer = new javax.swing.JToggleButton();
+		
+		jToggleButtonMaximizeDebugging = new javax.swing.JToggleButton();
+		jToggleButtonMaximizeInteraction = new javax.swing.JToggleButton();
 
 		/*Description of components*/
 		jToolBarGeneralControl.add(initOpenButton(fcOpenFrame));
 		jToolBarGeneralControl.add(initSaveButton(fcSaveFrame));
 		
-		jToolBarSeparator3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		//jToolBarSeparator3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jToolBarSeparator3);
 		
 		jButtonRunRealTime.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_real_time));		
@@ -426,7 +418,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jButtonRestart);		
 		
-		jToolBarSeparator4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		//jToolBarSeparator4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jToolBarSeparator4);
 
 		jToggleButtonConstructRobot.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Construct_robot));
@@ -459,10 +451,56 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jToggleButtonVisualizer);
 
-		jToolBarSeparator5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		//jToolBarSeparator5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jToolBarSeparator5);
 		
+		jToggleButtonMaximizeInteraction.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Hide_debugging));
+		jToggleButtonMaximizeInteraction.setIcon(MainFrameIcons.TABBED_PANES.getImageIcon());
+		jToggleButtonMaximizeInteraction.setRolloverIcon(MainFrameIcons.INTERACTION_MAXIMIZED.getImageIcon());
+		jToggleButtonMaximizeInteraction.setSelectedIcon(MainFrameIcons.INTERACTION_MAXIMIZED.getImageIcon()); 
+		jToggleButtonMaximizeInteraction.setSelectedIcon(MainFrameIcons.TABBED_PANES_DISABLED.getImageIcon()); 
+		jToggleButtonMaximizeInteraction.setSelected(false);
+		jToggleButtonMaximizeInteraction.setFocusable(false);
+		jToggleButtonMaximizeInteraction.setPreferredSize(BUTTON_DIMENSION);
+		jToggleButtonMaximizeInteraction.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.hideTabbedPanes1ActionPerformed(jToggleButtonMaximizeDebugging.isSelected(),jToggleButtonMaximizeInteraction.isSelected());
+				mainFrame.repaint();
+			}
+		});
+		
+		jToolBarGeneralControl.add(jToggleButtonMaximizeInteraction);
+		
+		jToggleButtonMaximizeDebugging.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Hide_interaction));
+		jToggleButtonMaximizeDebugging.setIcon(MainFrameIcons.TABBED_PANES.getImageIcon());
+		jToggleButtonMaximizeDebugging.setRolloverIcon(MainFrameIcons.DEBUGGING_MAXIMIZED.getImageIcon());
+		jToggleButtonMaximizeDebugging.setSelectedIcon(MainFrameIcons.DEBUGGING_MAXIMIZED.getImageIcon());
+		jToggleButtonMaximizeDebugging.setDisabledIcon(MainFrameIcons.TABBED_PANES_DISABLED.getImageIcon());
+		jToggleButtonMaximizeDebugging.setSelected(false);
+		jToggleButtonMaximizeDebugging.setFocusable(false);
+		jToggleButtonMaximizeDebugging.setPreferredSize(BUTTON_DIMENSION);
+		jToggleButtonMaximizeDebugging.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.hideTabbedPanes1ActionPerformed(jToggleButtonMaximizeDebugging.isSelected(),jToggleButtonMaximizeInteraction.isSelected());
+				mainFrame.repaint();
+			}
+		});
+	
+		jToolBarGeneralControl.add(jToggleButtonMaximizeDebugging);
+		
+		jToolBarGeneralControl.add(jToolBarSeparator6);
+		
 		getContentPane().add(jToolBarGeneralControl);
+	}
+
+
+	public static javax.swing.JToggleButton getJToggleButtonMaximizeInteraction() {
+		return jToggleButtonMaximizeInteraction;
+	}
+
+
+	public static javax.swing.JToggleButton getJToggleButtonMaximizeDebugging() {
+		return jToggleButtonMaximizeDebugging;
 	}
 
 
@@ -629,6 +667,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		return jTabbedPaneFirst;
 	}	
 
+	
 	/**
 	 * Controls visibility of the first tabbed pane.
 	 * @param visible, true for being visible.
@@ -643,6 +682,15 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	public static void setJTabbedPaneSecondVisible(boolean visible) {
 		 jTabbedPaneSecond.setVisible(visible);
+	}
+	
+	/**
+	 * Controls visibility of both tabbed panes.
+	 * @param visible, true for being visible.
+	 */
+	public static void setTabbedPanesVisible(boolean visible){
+		jTabbedPaneFirst.setVisible(visible);
+		jTabbedPaneSecond.setVisible(visible);
 	}
 	
 	/**
@@ -687,16 +735,26 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	}
 	
 	/**
-	 * Returns Gui component for controlling visibility of both tabbed panes (for interaction with simulation and debugging).
-	 * @return Gui component for controlling visibility of both tabbed panes (for interaction with simulation and debugging).
+	 * Controls the state of selection of components associated with the second tabbed pane.
+	 * @param selected, true for selected.
 	 */
-	public static javax.swing.JCheckBoxMenuItem getJCheckBoxMenuItemBoth() {
-		return jCheckBoxMenuItemBoth;
+	public static void setComponentsAssocWithFirstTabbedPaneSelected(boolean selected){
+		jCheckBoxMenuItemInteraction.setSelected(selected);
+		jToggleButtonMaximizeDebugging.setSelected(selected);
 	}
 	
+	/**
+	 * Controls the state of selection of components associated with the second tabbed pane.
+	 * @param selected, true for selected.
+	 */
+	public static void setComponentsAssocWithSecondTabbedPaneSelected(boolean selected){
+		jCheckBoxMenuItemDebugging.setSelected(selected);
+		jToggleButtonMaximizeInteraction.setSelected(selected);
+	}
+		
 	/*Declaration of MainFrame components*/
 	private static javax.swing.JMenuBar jMenuBarMain;
-	private javax.swing.JMenu jMenuFile,jMenuRender,jMenuWindow,jMenuFocusOn,jMenuHide;
+	private javax.swing.JMenu jMenuFile,jMenuRender,jMenuWindow,jMenuHide;
 
 	private javax.swing.JMenuItem jMenuItemExit;
 	private static javax.swing.JMenuItem jMenuItemOpen,jMenuItemSave;
@@ -704,12 +762,12 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemPhysics,jCheckBoxMenuItemWireFrame,jCheckBoxMenuBounds,
 	                                     jCheckBoxMenuItemNormals,jCheckBoxMenuItemLights,jCheckBoxMenuBufferDepth;
 
-	private static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemInteraction,jCheckBoxMenuItemDebugging,jCheckBoxMenuItemBoth,
+	private static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemInteraction,jCheckBoxMenuItemDebugging,
 	                                             jCheckBoxMenuItemDisplayForHints;
 	                                              
 	private javax.swing.JSeparator jSeparator1,jSeparator2,jSeparator3;
 
-	private javax.swing.JToolBar.Separator jToolBarSeparator3,jToolBarSeparator4,jToolBarSeparator5;
+	private javax.swing.JToolBar.Separator jToolBarSeparator3,jToolBarSeparator4,jToolBarSeparator5,jToolBarSeparator6;
 
 	private static javax.swing.JToolBar jToolBarGeneralControl;
 	
@@ -717,7 +775,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	                           jButtonPause,jButtonTerminate,jButtonRestart;
 	
 	private static javax.swing.JButton jButtonSave,jButtonOpen;
-	private static javax.swing.JToggleButton jToggleButtonConstructRobot,jToggleButtonVisualizer;
+	private static javax.swing.JToggleButton jToggleButtonConstructRobot,jToggleButtonVisualizer,
+	                                         jToggleButtonMaximizeDebugging,jToggleButtonMaximizeInteraction;
 
 	private static javax.swing.JTabbedPane jTabbedPaneFirst,jTabbedPaneSecond;
 }

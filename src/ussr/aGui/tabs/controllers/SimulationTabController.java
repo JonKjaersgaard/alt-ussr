@@ -12,6 +12,7 @@ import javax.swing.JSpinner;
 
 
 import ussr.aGui.MainFramesInter;
+import ussr.aGui.enumerations.HintsSimulationTab;
 import ussr.aGui.enumerations.SimulationTabTreeNodes;
 import ussr.aGui.enumerations.TextureDescriptions;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
@@ -84,7 +85,7 @@ public class SimulationTabController extends TabsControllers {
 		case Gravity:
 			SimulationTab.addGravityEditor();
 			break;
-		case Constraint_force_mix:
+		case Constraint_force_mixing:
 			SimulationTab.addConstraintForceMixEditor();
 			break;
 		case Error_reduction_parameter:
@@ -224,12 +225,13 @@ public class SimulationTabController extends TabsControllers {
 	}
 
 	public static void setValuejSpinnerConstraintForceMix(JSpinner spinnerConstraintForceMix) {
-		spinnerConstraintForceMix.setValue(PhysicsParameters.get().getConstraintForceMix());		
+		spinnerConstraintForceMix.setValue(PhysicsParameters.get().getConstraintForceMix());
+		SimulationTab.getHintPanel().setText(HintsSimulationTab.CONSTRAINT_FORCE_MIXING.getHintText());
 	}
 
 	public static void setValueJSpinnerErrorReductionParameter(JSpinner spinnerErrorReductionParameter) {
 		spinnerErrorReductionParameter.setValue(PhysicsParameters.get().getErrorReductionParameter());
-		SimulationTab.getHintPanel().setText(HintPanelInter.builInHintsSimulationTab[0]);
+		SimulationTab.getHintPanel().setText(HintsSimulationTab.ERROR_REDUCTION_PARAMETER.getHintText());
 		
 	}
 

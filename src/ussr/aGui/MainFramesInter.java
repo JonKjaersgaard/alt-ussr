@@ -31,8 +31,7 @@ public interface MainFramesInter {
 	/**
 	 * The names(file names) of the icons used in the main frame.
 	 */
-	public final String NO_ENTRANCE ="noEntrance.jpg",
-    
+	public final String   
 	                    /*Open and Save*/
                         OPEN = "open",OPEN_ROLLOVER ="openRollover",OPEN_DISABLED = "openDisabled",
                         OPEN_SMALL ="openSmall",OPEN_SMALL_DISABLED ="openSmallDisabled",
@@ -49,6 +48,8 @@ public interface MainFramesInter {
 	                    RESTART ="restart",RESTART_ROLLOVER = "restartRollover",RESTART_DISABLED ="restartDisabled",
 	                    CONSTRUCT_ROBOT = "constructRobot",CONSTRUCT_ROBOT_ROLLOVER ="constructRobotRollover",CONSTRUCT_ROBOT_DISABLED = "constructRobotDisabled",
 	                    VISUALIZER = "visualizer",VISUALIZER_ROLLOVER ="visualizerRollover",VISUALIZER_DISABLED = "visualizerDisabled",
+	                    TABBED_PANES ="tabbedPanes",INTERACTION_MAXIMIZED = "interactionMaximized",DEBUGGING_MAXIMIZED ="debuggingMaximized",
+	                    TABBED_PANES_BOTH_SELECTED = "tabbedPanesBothSelected",TABBED_PANES_DISABLED = "tabbedPanesDisabled",
 	                    CONSOLE = "console",
     /*YOUR TAB*/        YOUR_NEW_TAB ="yourNewTab"
 	                    ; 
@@ -58,9 +59,9 @@ public interface MainFramesInter {
 	/**
 	 * The titles of the tabs plugged in the main GUI window.
 	 */
-	public final String CONSTRUCT_ROBOT_TAB_TITLE = "1 Step: Construct Robot",
-	                    ASSIGN_BEHAVIORS_TAB_TITLE = "2 Step: Adjust Behaviour (Controller)",
-	                    LABELING_TAB_TITLE = "Labeling",
+	public final String CONSTRUCT_ROBOT_TAB_TITLE = "Construct Robot",
+	                    ASSIGN_BEHAVIORS_TAB_TITLE = "Assign Controller",
+	                    LABELING_TAB_TITLE = "Assign Labels",
 	                    MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE = "Communication Visualiser",
 	                    SIMULATION_TAB_TITLE = "Simulation",
 	                    CONSOLE_TAB_TITLE = "Console",
