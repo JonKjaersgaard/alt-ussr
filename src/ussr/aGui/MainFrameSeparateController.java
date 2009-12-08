@@ -291,16 +291,18 @@ public class MainFrameSeparateController extends GeneralController {
 		/*Check if tabs are defined*/
 		TabsInter constructRobotTab = getTabByTitle(MainFramesInter.CONSTRUCT_ROBOT_TAB_TITLE,tabs);
 		TabsInter assignBehaviorsTab = getTabByTitle(MainFramesInter.ASSIGN_BEHAVIORS_TAB_TITLE,tabs);
-
+		TabsInter assignLabels = getTabByTitle(MainFramesInter.ASSIGN_LABELS_TAB_TITLE,tabs);
 
 		if (jToggleButtonConstructRobot.isSelected()){
 			/*Add tabs for construction of modular robot*/
 			jTabbedPaneFirst.addTab(constructRobotTab.getTabTitle(),new javax.swing.ImageIcon(constructRobotTab.getImageIconDirectory()),constructRobotTab.getJComponent());
 			jTabbedPaneFirst.addTab(assignBehaviorsTab.getTabTitle(),new javax.swing.ImageIcon(assignBehaviorsTab.getImageIconDirectory()),assignBehaviorsTab.getJComponent());
+			jTabbedPaneFirst.addTab(assignLabels.getTabTitle(),new javax.swing.ImageIcon(assignLabels.getImageIconDirectory()),assignLabels.getJComponent());
 
 			/*Update look and feel for newly added tabs*/		
 			MainFrames.changeToLookAndFeel(constructRobotTab.getJComponent());
 			MainFrames.changeToLookAndFeel(assignBehaviorsTab.getJComponent());
+			MainFrames.changeToLookAndFeel(assignLabels.getJComponent());
 		}else{
 			/*Identify and remove tabs for construction of modular robot*/
 			for (int index=0; index < jTabbedPaneFirst.getTabCount(); index++){
@@ -309,6 +311,9 @@ public class MainFrameSeparateController extends GeneralController {
 					jTabbedPaneFirst.removeTabAt(index);
 					index--;
 				}else if (tabTitle.equalsIgnoreCase(MainFramesInter.ASSIGN_BEHAVIORS_TAB_TITLE)){
+					jTabbedPaneFirst.removeTabAt(index);
+					index--;
+				}else if (tabTitle.equalsIgnoreCase(MainFramesInter.ASSIGN_LABELS_TAB_TITLE)){
 					jTabbedPaneFirst.removeTabAt(index);
 				}
 			}
@@ -379,7 +384,7 @@ public class MainFrameSeparateController extends GeneralController {
 	 *  A flag used to keep track for first time selection.
 	 */
 	private static boolean firstTime = true;
-		
+
 	/**
 	 * Hides or shows tabbed panes. 
 	 * @param first, the state of selection for component in GUI associated with first tabbed pane. 
@@ -438,7 +443,7 @@ public class MainFrameSeparateController extends GeneralController {
 		}
 
 	}
-	
+
 	/*Setters*/
 	/**
 	 * Sets renderer control of remote physics simulation for this controller.
@@ -447,7 +452,7 @@ public class MainFrameSeparateController extends GeneralController {
 	public static void setRendererControl(RendererControlInter rendererControl) {
 		MainFrameSeparateController.rendererControl = rendererControl;
 	}
-	
+
 	/**
 	 * Identifies and sets initial height of the first tabbed pane.
 	 */

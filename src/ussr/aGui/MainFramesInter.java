@@ -53,27 +53,29 @@ public interface MainFramesInter {
 	                    CONSOLE = "console",
     /*YOUR TAB*/        YOUR_NEW_TAB ="yourNewTab"
 	                    ; 
-	                    
-  
-	
 	/**
 	 * The titles of the tabs plugged in the main GUI window.
 	 */
 	public final String CONSTRUCT_ROBOT_TAB_TITLE = "Construct Robot",
 	                    ASSIGN_BEHAVIORS_TAB_TITLE = "Assign Controller",
-	                    LABELING_TAB_TITLE = "Assign Labels",
+	                    ASSIGN_LABELS_TAB_TITLE = "Labels",
 	                    MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE = "Communication Visualiser",
 	                    SIMULATION_TAB_TITLE = "Simulation",
 	                    CONSOLE_TAB_TITLE = "Console",
 /*YOUR TAB TITLE*/      YOUR_TAB_TITLE = "Your Tab"
 	                    ;
 	
+	/**
+	 * The directory of icon displayed on tabs related to construction of modular robot.
+	 */
+	public final String contructRobotIconDirectory = MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageDirectory(); 
+	
 	/**     
 	 * Instances of tabs plugged in main GUI window
 	 */
-	public final TabsInter  CONSTRUCT_ROBOT_TAB = new ConstructRobotTab(false,true,CONSTRUCT_ROBOT_TAB_TITLE,MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageDirectory()),
-	                        ASSIGN_BEHAVIORS_TAB = new AssignBehaviorsTab(false,true,ASSIGN_BEHAVIORS_TAB_TITLE,MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageDirectory()),
-	                        LABELING_TAB = new LabelingTab(true,true,LABELING_TAB_TITLE,null),
+	public final TabsInter  CONSTRUCT_ROBOT_TAB = new ConstructRobotTab(false,true,CONSTRUCT_ROBOT_TAB_TITLE,contructRobotIconDirectory),
+	                        ASSIGN_BEHAVIORS_TAB = new AssignBehaviorsTab(false,true,ASSIGN_BEHAVIORS_TAB_TITLE,contructRobotIconDirectory),
+	                        ASSIGN_LABELS_TAB = new LabelingTab(false,true,ASSIGN_LABELS_TAB_TITLE,contructRobotIconDirectory),
 	                        MODULE_COMMUNICATION_VISUALIZER_TAB = new ModuleCommunicationVisualizer(false,true,MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE,MainFrameIcons.VISUALIZER_ROLLOVER.getImageDirectory()),
 	                        SIMULATION_CONFIGURATION_TAB = new SimulationTab(true,true,SIMULATION_TAB_TITLE,FramesInter.DIRECTORY_USSR_ICON),
 	                        CONSOLE_TAB = new ConsoleTab(true,false,CONSOLE_TAB_TITLE, MainFrameIcons.CONSOLE.getImageDirectory()),
@@ -90,7 +92,7 @@ public interface MainFramesInter {
 		                              SIMULATION_CONFIGURATION_TAB,
 		                              CONSOLE_TAB,
 		                /*YOUR TAB*/  YOUR_TAB,
-		                              LABELING_TAB
+		                              ASSIGN_LABELS_TAB
 		                                 };
 	
 }
