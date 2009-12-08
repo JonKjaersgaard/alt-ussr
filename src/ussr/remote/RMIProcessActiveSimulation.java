@@ -59,7 +59,7 @@ public class RMIProcessActiveSimulation implements ActiveSimulation {
     
     public RemotePhysicsSimulation getSimulation() throws RemoteException {
         verifyRemote();
-        return remoteSimulation.getSimulation();
+        return remoteSimulation.getSimulation();        
     }
     
     public void start(PhysicsParameters parameters, PhysicsFactory.Options options, WorldDescription world) throws RemoteException {
