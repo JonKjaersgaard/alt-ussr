@@ -64,14 +64,13 @@ public class GUISimulationAdapter {
         // Get standard err, pass it to method that prints it in separate thread
         dumpStream("err", simulation.getStandardErr());
 
-		
-
 
 		// Wait for simulation process to be ready to start a new simulation
 		if(!simulation.isReady()) {
 			System.out.println("Waiting for simulation");
 			simulation.waitForReady();
 		}
+		//HERE
 		// Start a simulation in the remote process
 		new Thread() {
 			public void run() {
@@ -101,7 +100,6 @@ public class GUISimulationAdapter {
 				throw new Error("Unexpected interruption");
 			}
 		}
-		
 		//sim.getRendererControl().moveDisplayTo();
 		
 	    RobotSpecification.setMorphologyLocation(simulation.getXmlSimulationProvider().getRobotMorphologyLocation());
