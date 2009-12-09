@@ -72,7 +72,7 @@ public class ConstructRobotTabController extends TabsControllers{
 		}else{
 			ConstructRobotTab.setRadioButtonsEnabled(false);
 			ConstructRobotTab.getJComboBoxEntity().setEnabled(true);
-			ConstructRobotTab.setEnabledRotationToolBar(true);
+			ConstructRobotTab.setEnabledFirstModuleToolBar(true);
 			ConstructRobotTab.setEnabledGenericToolBar(true);
 			ConstructRobotTab.setEnabledConstructionToolsToolBar(true);
 		}
@@ -109,7 +109,8 @@ public class ConstructRobotTabController extends TabsControllers{
 	 * Adapts tab to MTRAN modular robot
 	 */
 	private static void adaptTabToMTRAN(){
-		ConstructRobotTab.getJButtonMove().setEnabled(false);
+		//ConstructRobotTab.getJButtonMove().setEnabled(false);
+		ConstructRobotTab.getJButtonMoveModule().setEnabled(false);
 		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(MTRANStandardRotations.values()));
 		ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.MTRAN_CONNECTORS);
 		renderer.setPreferredSize(new Dimension(15, 15));
@@ -189,7 +190,9 @@ public class ConstructRobotTabController extends TabsControllers{
 	public static void jButtonColorConnectorsActionPerformed() {	
 		if (chosenItem.equalsIgnoreCase("Module")){
 			try {
-				builderControl.setColorModuleConnectorsPicker();
+				//builderControl.setColorModuleConnectorsPicker();
+				//builderControl.colorConnectors();
+				builderControl.restoreOriginalColorsConnectors();
 			} catch (RemoteException e) {
 				throw new Error("Failed to initate picker called Color Module Connectors, due to remote exception");
 			}	
@@ -280,6 +283,7 @@ public class ConstructRobotTabController extends TabsControllers{
 
 		chosenConnectorNr = Integer.parseInt(comboBoxNrConnectorsConstructionTool.getSelectedItem().toString());
 		try {
+			builderControl.colorConnectors();
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.ON_CHOSEN_CONNECTOR_NR,chosenConnectorNr);
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called "+ ConstructionTools.ON_CHOSEN_CONNECTOR_NR.toString()+ ", due to remote exception");
@@ -312,7 +316,8 @@ public class ConstructRobotTabController extends TabsControllers{
 		ConstructRobotTab.getJButtonAvailableRotationsLoop().setEnabled(false);
 		ConstructRobotTab.getjComboBoxStandardRotations().setEnabled(false);
 		ConstructRobotTab.getJButtonOppositeRotation().setEnabled(true);
-		ConstructRobotTab.getJButtonMove().setEnabled(false);
+		//ConstructRobotTab.getJButtonMove().setEnabled(false);
+		ConstructRobotTab.getJButtonMoveModule().setEnabled(false);
 	}
 
 	/**

@@ -13,6 +13,8 @@ public enum TabsComponentsText {
 	/*METHOD: setText()*/
 	Start_new_robot,
 	
+	Add_and_adjust_first_module,
+	
 	Operations_on_existing_modules,
 	
 	Add_new_modules,

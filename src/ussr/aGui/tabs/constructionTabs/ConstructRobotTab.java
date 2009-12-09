@@ -62,13 +62,15 @@ public class ConstructRobotTab extends ConstructionTabs {
 	 */
 	protected void initComponents(){
 
-		/*Instantiation of components*/		
-		jButtonStartNewRobot = new javax.swing.JButton();
+		/*Instantiation of components*/
+			
 		jToolBarGenericTools = new javax.swing.JToolBar();
-		jToolBarRotationTools = new javax.swing.JToolBar();
+		jToolBarFirstModuleTools = new javax.swing.JToolBar();
 		jToolBarConstructionTools = new javax.swing.JToolBar();
 
+		jButtonStartNewRobot = new javax.swing.JButton();
 		jButtonDelete =   new javax.swing.JButton();
+		jButtonMoveModule = new javax.swing.JButton();
 		jButtonMove =   new javax.swing.JButton();	
 		jButtonColorConnetors =   new javax.swing.JButton();
 		jButtonOppositeRotation =   new javax.swing.JButton();
@@ -84,7 +86,8 @@ public class ConstructRobotTab extends ConstructionTabs {
 		radioButtonMTRAN =  new JRadioButton();
 		radioButtonCKBOTSTANDARD =  new JRadioButton();
 
-		jLabelOperations = new javax.swing.JLabel();	
+		jLabelOperations = new javax.swing.JLabel();
+		jLabelFirstModule = new javax.swing.JLabel();
 
 		jComboBoxEntity = new javax.swing.JComboBox();
 		jComboBoxStandardRotations = new javax.swing.JComboBox();
@@ -116,7 +119,14 @@ public class ConstructRobotTab extends ConstructionTabs {
 		gridBagConstraints.insets = new Insets(0,0,15,-25);  
 
 		jToolBarSaveLoad = initSaveLoadJToolbar();
-		super.jComponent.add(jToolBarSaveLoad,gridBagConstraints);				
+		super.jComponent.add(jToolBarSaveLoad,gridBagConstraints);	
+		
+		jLabelFirstModule.setText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Add_and_adjust_first_module));
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.insets = new Insets(0,0,0,0);  
+		super.jComponent.add(jLabelFirstModule,gridBagConstraints);
 
 		radioButtonATRON.setFocusable(false);
 		radioButtonATRON.setText(ModularRobotsNames.ATRON.toString());
@@ -166,7 +176,6 @@ public class ConstructRobotTab extends ConstructionTabs {
 		buttonGroupModularRobots.add(radioButtonMTRAN);
 		jRadioButtons.add(radioButtonMTRAN);
 
-
 		radioButtonCKBOTSTANDARD.setText(ModularRobotsNames.CKBotStandard.toString());
 		radioButtonCKBOTSTANDARD.setFocusable(false);
 		radioButtonCKBOTSTANDARD.setEnabled(false);
@@ -181,42 +190,33 @@ public class ConstructRobotTab extends ConstructionTabs {
 
 		super.jComponent.add(radioButtonCKBOTSTANDARD,gridBagConstraints);
 		buttonGroupModularRobots.add(radioButtonCKBOTSTANDARD);	
-		jRadioButtons.add(radioButtonCKBOTSTANDARD);		
-
-		jLabelOperations.setText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Operations_on_existing_modules));
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 2;
-		gridBagConstraints.gridwidth = 1;// reset grid width
-		gridBagConstraints.insets = new Insets(0,0,10,0);  
-
-		super.jComponent.add(jLabelOperations,gridBagConstraints);
-
-		jToolBarRotationTools.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBarRotationTools.setFloatable(false);//user can not make the tool bar to float
-		jToolBarRotationTools.setRollover(true);// the components inside are roll over
-		jToolBarRotationTools.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Module_rotation_tools));
-		jToolBarRotationTools.setPreferredSize(new Dimension(100,35));
+		jRadioButtons.add(radioButtonCKBOTSTANDARD);			
+		
+		jToolBarFirstModuleTools.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarFirstModuleTools.setFloatable(false);//user can not make the tool bar to float
+		jToolBarFirstModuleTools.setRollover(true);// the components inside are roll over
+		jToolBarFirstModuleTools.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Module_rotation_tools));
+		jToolBarFirstModuleTools.setPreferredSize(new Dimension(100,35));
 
 		/*External layout of the toolbar in the panel*/
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;		
-		gridBagConstraints.gridy = 3;
+		gridBagConstraints.gridy = 2;
 		gridBagConstraints.gridwidth = 4;
-		gridBagConstraints.insets = new Insets(0,3,10,18);  
-
-		jButtonOppositeRotation.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Rotate_opposite));		
-		jButtonOppositeRotation.setIcon(TabsIcons.OPPOSITE_ROTATION.getImageIcon());
-		jButtonOppositeRotation.setSelectedIcon(TabsIcons.OPPOSITE_ROTATION_ROLLOVER.getImageIcon());
-		jButtonOppositeRotation.setRolloverIcon(TabsIcons.OPPOSITE_ROTATION_ROLLOVER.getImageIcon());	
-		jButtonOppositeRotation.setDisabledIcon(TabsIcons.OPPOSITE_ROTATION_DISABLED.getImageIcon());
-		jButtonOppositeRotation.setEnabled(false);	
-		jButtonOppositeRotation.setFocusable(false); 
-		jButtonOppositeRotation.setPreferredSize(FramesInter.BUTTON_DIMENSION);	
-		jButtonOppositeRotation.addActionListener(new java.awt.event.ActionListener() {
+		gridBagConstraints.insets = new Insets(10,3,10,18);
+		
+		jButtonMoveModule.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Move));	
+		jButtonMoveModule.setIcon(TabsIcons.MOVE.getImageIcon());
+		jButtonMoveModule.setSelectedIcon(TabsIcons.MOVE.getImageIcon());
+		jButtonMoveModule.setRolloverIcon(TabsIcons.MOVE_ROLLOVER.getImageIcon());		
+		jButtonMoveModule.setDisabledIcon(TabsIcons.MOVE_DISABLED.getImageIcon());		
+		jButtonMoveModule.setFocusable(false); 
+		jButtonMoveModule.setEnabled(true);
+		jButtonMoveModule.setPreferredSize(FramesInter.BUTTON_DIMENSION);	
+		jButtonMoveModule.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				setSelectionDeselection(jButtonOppositeRotation);
-				ConstructRobotTabController.jButtonOppositeRotationActionPerformed();
+				setSelectionDeselection(jButtonMove);
+				ConstructRobotTabController.jButtonMoveActionPerformed();
 			}
 		});
 
@@ -246,14 +246,14 @@ public class ConstructRobotTab extends ConstructionTabs {
 		});
 
 		/*Internal layout of the toolbar*/
-		GroupLayout jToolBarRotationToolsLayout = new GroupLayout(jToolBarRotationTools);
-		jToolBarRotationTools.setLayout(jToolBarRotationToolsLayout);
-
+		GroupLayout jToolBarRotationToolsLayout = new GroupLayout(jToolBarFirstModuleTools);
+		jToolBarFirstModuleTools.setLayout(jToolBarRotationToolsLayout);
+		
 		jToolBarRotationToolsLayout.setHorizontalGroup(
 				jToolBarRotationToolsLayout.createSequentialGroup()
 				//Forces preferred side of component
-				.addComponent(jButtonOppositeRotation,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-						GroupLayout.PREFERRED_SIZE)
+				.addComponent(jButtonMoveModule,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
 						.addComponent(jButtonAvailableRotationsLoop,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE)
 								.addComponent(jComboBoxStandardRotations,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
@@ -263,7 +263,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jToolBarRotationToolsLayout.setVerticalGroup(
 				jToolBarRotationToolsLayout.createSequentialGroup()
 				.addGroup(jToolBarRotationToolsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(jButtonOppositeRotation,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+						.addComponent(jButtonMoveModule,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE)
 								.addComponent(jButtonAvailableRotationsLoop,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE)
@@ -271,7 +271,19 @@ public class ConstructRobotTab extends ConstructionTabs {
 												GroupLayout.PREFERRED_SIZE))						
 		);
 
-		super.jComponent.add(jToolBarRotationTools,gridBagConstraints);
+		super.jComponent.add(jToolBarFirstModuleTools,gridBagConstraints);		
+		
+
+		jLabelOperations.setText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Operations_on_existing_modules));
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 3;
+		gridBagConstraints.gridwidth = 1;// reset grid width
+		gridBagConstraints.insets = new Insets(0,0,10,0);  
+
+		super.jComponent.add(jLabelOperations,gridBagConstraints);				
+
+		
 
 		jComboBoxEntity.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Module"/*, "Robot"*/ }));
 		jComboBoxEntity.setPreferredSize(new java.awt.Dimension(65, 30));
@@ -347,9 +359,27 @@ public class ConstructRobotTab extends ConstructionTabs {
 			}
 		});
 
-		jToolBarGenericTools.add(jButtonColorConnetors);		
+		jToolBarGenericTools.add(jButtonColorConnetors);
+		
+		jButtonOppositeRotation.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Rotate_opposite));		
+		jButtonOppositeRotation.setIcon(TabsIcons.OPPOSITE_ROTATION.getImageIcon());
+		jButtonOppositeRotation.setSelectedIcon(TabsIcons.OPPOSITE_ROTATION_ROLLOVER.getImageIcon());
+		jButtonOppositeRotation.setRolloverIcon(TabsIcons.OPPOSITE_ROTATION_ROLLOVER.getImageIcon());	
+		jButtonOppositeRotation.setDisabledIcon(TabsIcons.OPPOSITE_ROTATION_DISABLED.getImageIcon());
+		jButtonOppositeRotation.setEnabled(false);	
+		jButtonOppositeRotation.setFocusable(false); 
+		jButtonOppositeRotation.setPreferredSize(FramesInter.BUTTON_DIMENSION);	
+		jButtonOppositeRotation.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				setSelectionDeselection(jButtonOppositeRotation);
+				ConstructRobotTabController.jButtonOppositeRotationActionPerformed();
+			}
+		});
+		
+		jToolBarGenericTools.add(jButtonOppositeRotation);
 
-		super.jComponent.add(jToolBarGenericTools,gridBagConstraints);
+		super.jComponent.add(jToolBarGenericTools,gridBagConstraints);	
+		
 
 		jLabelAddNewModules = new javax.swing.JLabel();		
 		jLabelAddNewModules.setText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Add_new_modules));	
@@ -497,6 +527,14 @@ public class ConstructRobotTab extends ConstructionTabs {
 	}	
 
 	/*Getters and setters*/
+	
+	/**
+	 * Returns the button for moving first(initial) module.
+	 * @return the button for moving first(initial) module.
+	 */
+	public static javax.swing.JButton getJButtonMoveModule() {
+		return jButtonMoveModule;
+	}
 	/**
 	 * Returns the button for initialization of variate module properties tool.
 	 * @return the button for initialization of variate module properties tool.
@@ -555,7 +593,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 	 * @param enable,true for tool bars to be enabled. 
 	 */
 	public static void setEnabledAllToolBars(boolean enabled){
-		setEnabledRotationToolBar(enabled);
+		setEnabledFirstModuleToolBar(enabled);
 		setEnabledGenericToolBar(enabled);
 		setEnabledConstructionToolsToolBar(enabled);
 	};
@@ -581,12 +619,13 @@ public class ConstructRobotTab extends ConstructionTabs {
 
 	/**
 	 * Enables and disables tool bar containing tools for applying rotation to module(s).
-	 * @param enable, true for tool bar to be disabled.
+	 * @param enabled, true for tool bar to be disabled.
 	 */
-	public static void setEnabledRotationToolBar(boolean enable){
-		jButtonOppositeRotation.setEnabled(enable);
-		jComboBoxStandardRotations.setEnabled(enable);
-		jButtonAvailableRotationsLoop.setEnabled(enable);
+	public static void setEnabledFirstModuleToolBar(boolean enabled){
+		//jButtonOppositeRotation.setEnabled(enable);
+		jComboBoxStandardRotations.setEnabled(enabled);
+		jButtonAvailableRotationsLoop.setEnabled(enabled);
+		jButtonMoveModule.setEnabled(enabled);
 	}	
 
 	/**
@@ -660,7 +699,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 	public static void setTabEnabled (boolean enabled){
 		getJButtonStartNewRobot().setEnabled(enabled);
 		setRadioButtonsEnabled(enabled);		
-		setEnabledRotationToolBar(enabled);
+		setEnabledFirstModuleToolBar(enabled);
 		setEnabledGenericToolBar(enabled);		
 		setEnabledConstructionToolsToolBar(enabled);
 		for (int button=0; button<jToolBarSaveLoad.getComponentCount();button++ ){
@@ -693,7 +732,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 	private static javax.swing.JComboBox jComboBoxEntity,
 	jComboBoxStandardRotations,jComboBoxNrConnectorsConstructionTool;	
 
-	private static javax.swing.JLabel jLabelAddNewModules,jLabelOperations;
+	private static javax.swing.JLabel jLabelFirstModule, jLabelAddNewModules,jLabelOperations;
 
 	private static ButtonGroup buttonGroupModularRobots;	
 
@@ -701,12 +740,12 @@ public class ConstructRobotTab extends ConstructionTabs {
 	radioButtonMTRAN,radioButtonODIN, radioButtonCKBOTSTANDARD;
 
 	private static javax.swing.JButton jButtonStartNewRobot,jButtonDelete,
-	jButtonMove,jButtonColorConnetors,jButtonOppositeRotation,jButtonOnSelectedConnector,
+	jButtonMove, jButtonMoveModule, jButtonColorConnetors,jButtonOppositeRotation,jButtonOnSelectedConnector,
 	jButtonConnectAllModules,jButtonJumpFromConnToConnector,jButtonVariateModuleProperties,
 	jButtonAvailableRotationsLoop;
 
 	private static javax.swing.JToolBar jToolBarGenericTools,
-	jToolBarRotationTools,jToolBarConstructionTools,jToolBarSaveLoad;
+	jToolBarFirstModuleTools,jToolBarConstructionTools,jToolBarSaveLoad;
 
 	private javax.swing.JToolBar.Separator jSeparator2;
 
