@@ -104,6 +104,22 @@ public abstract class ConstructionTabs extends Tabs {
 	}
 	
 	
+	public JButton initSaveButton(){
+		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
+		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
+
+		FileChooserFrameInter fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
+		return MainFrames.initSaveButton(fcSaveFrame);
+	}
+	
+	public JButton initOpenButton(){
+		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
+		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
+		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
+		return MainFrames.initOpenButton(fcOpenFrame);
+	}
+	
+	
 	
 	public javax.swing.JToolBar initSaveLoadJToolbar(){
 		javax.swing.JToolBar jToolBarSaveLoad = new javax.swing.JToolBar();
@@ -126,7 +142,4 @@ public abstract class ConstructionTabs extends Tabs {
 		
 		return jToolBarSaveLoad;
 	}
-
-	
-
 }

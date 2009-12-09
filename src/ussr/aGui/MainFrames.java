@@ -253,7 +253,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jCheckBoxMenuItemInteraction.setSelected(false);
 		jCheckBoxMenuItemInteraction.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.hideTabbedPanes1ActionPerformed(jCheckBoxMenuItemInteraction.isSelected(),jCheckBoxMenuItemDebugging.isSelected());
+				MainFrameSeparateController.hideTabbedPanesActionPerformed(jCheckBoxMenuItemInteraction.isSelected(),jCheckBoxMenuItemDebugging.isSelected());
 				mainFrame.repaint();
 			}
 		});
@@ -263,7 +263,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jCheckBoxMenuItemDebugging.setSelected(false);
 		jCheckBoxMenuItemDebugging.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.hideTabbedPanes1ActionPerformed(jCheckBoxMenuItemInteraction.isSelected(),jCheckBoxMenuItemDebugging.isSelected());
+				MainFrameSeparateController.hideTabbedPanesActionPerformed(jCheckBoxMenuItemInteraction.isSelected(),jCheckBoxMenuItemDebugging.isSelected());
 				mainFrame.repaint();
 			}
 		});
@@ -464,7 +464,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToggleButtonMaximizeInteraction.setPreferredSize(BUTTON_DIMENSION);
 		jToggleButtonMaximizeInteraction.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.hideTabbedPanes1ActionPerformed(jToggleButtonMaximizeDebugging.isSelected(),jToggleButtonMaximizeInteraction.isSelected());
+				MainFrameSeparateController.hideTabbedPanesActionPerformed(jToggleButtonMaximizeDebugging.isSelected(),jToggleButtonMaximizeInteraction.isSelected());
 				mainFrame.repaint();
 			}
 		});
@@ -481,7 +481,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToggleButtonMaximizeDebugging.setPreferredSize(BUTTON_DIMENSION);
 		jToggleButtonMaximizeDebugging.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.hideTabbedPanes1ActionPerformed(jToggleButtonMaximizeDebugging.isSelected(),jToggleButtonMaximizeInteraction.isSelected());
+				MainFrameSeparateController.hideTabbedPanesActionPerformed(jToggleButtonMaximizeDebugging.isSelected(),jToggleButtonMaximizeInteraction.isSelected());
 				mainFrame.repaint();
 			}
 		});

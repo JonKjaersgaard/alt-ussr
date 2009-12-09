@@ -390,7 +390,7 @@ public class MainFrameSeparateController extends GeneralController {
 	 * @param first, the state of selection for component in GUI associated with first tabbed pane. 
 	 * @param second, the state of selection for component in GUI associated with second tabbed pane. 
 	 */
-	public static void hideTabbedPanes1ActionPerformed(boolean first, boolean second){
+	public static void hideTabbedPanesActionPerformed(boolean first, boolean second){
 		setDefaultHeightJTabbedPaneFirst();// needed to set once, because it will be changing later
 		int width = MainFrames.getMainFrameViableWidth();
 		if(first&&second){

@@ -5,6 +5,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 
+import javax.swing.border.Border;
+
 
 /**
  * Supports any GUI frame implemented for USSR with common resources and operations.
@@ -83,10 +85,11 @@ public interface FramesInter {
 	 */
 	public final Dimension BUTTON_DIMENSION = new Dimension (30,30);
 	
+	
 	/**
-	 * Padding for adding space around components of the JFrame. 
+	 * Dominating tool bar border of type raised.
 	 */
-	public final int PADDING = 30;
+	public final Border TOOLBAR_BORDER = javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED);
 	
 	/**
 	 * Starts the windows(frames) of GUI.

@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 
 import javax.swing.AbstractButton;
 import javax.swing.JComboBox;
+import javax.swing.JToggleButton;
 
 import ussr.builder.enumerations.ATRONStandardRotations;
 import ussr.builder.enumerations.CKBotStandardRotations;
@@ -186,21 +187,21 @@ public class ConstructRobotTabController extends TabsControllers{
 
 	/**
 	 * Initializes the tool for coloring  the connectors of the module or robot with color coding. 
+	 * @param toggleButtonColorConnetors 
 	 */
-	public static void jButtonColorConnectorsActionPerformed() {	
-		if (chosenItem.equalsIgnoreCase("Module")){
+	public static void jButtonColorConnectorsActionPerformed(JToggleButton toggleButtonColorConnetors) {	
 			try {
-				//builderControl.setColorModuleConnectorsPicker();
-				//builderControl.colorConnectors();
-				builderControl.restoreOriginalColorsConnectors();
+				if (toggleButtonColorConnetors.isSelected()){
+				builderControl.colorConnectors();
+				}else{
+					builderControl.restoreOriginalColorsConnectors();
+				}
 			} catch (RemoteException e) {
 				throw new Error("Failed to initate picker called Color Module Connectors, due to remote exception");
 			}	
-		}else if (chosenItem.equalsIgnoreCase("Robot")){
-			//TODO  Support robot coloring of connectors.
-		}
+	
 		/*Informing user*/
-		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.COLOR_CONNECTORS.getHintText());
+	    ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.COLOR_CONNECTORS.getHintText());
 
 	}
 
@@ -316,7 +317,6 @@ public class ConstructRobotTabController extends TabsControllers{
 		ConstructRobotTab.getJButtonAvailableRotationsLoop().setEnabled(false);
 		ConstructRobotTab.getjComboBoxStandardRotations().setEnabled(false);
 		ConstructRobotTab.getJButtonOppositeRotation().setEnabled(true);
-		//ConstructRobotTab.getJButtonMove().setEnabled(false);
 		ConstructRobotTab.getJButtonMoveModule().setEnabled(false);
 	}
 
@@ -414,7 +414,7 @@ public class ConstructRobotTabController extends TabsControllers{
 	 * Removes current robots in simulation environment and enables tab elements for constructing new robot.
 	 */
 	public static void jButtonStartNewRobotActionPerformed() {
-		ConstructRobotTab.setRadioButtonsEnabled(true);
+		//ConstructRobotTab.setRadioButtonsEnabled(true);
 		ConstructRobotTab.setEnabledAllToolBars(false);	
 		ConstructRobotTab.getButtonGroupModularRobots().clearSelection();
 
