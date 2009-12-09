@@ -1,6 +1,7 @@
 package ussr.remote.facade;
 
 
+import java.awt.Color;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 
 
+import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
@@ -276,43 +278,6 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 	 return jmeSimulation.getModules().get(moduleNr).getProperty(BuilderHelper.getModuleTypeKey()); 
 	};
 	
-
-	/**
-	 * Moves the last added module in simulation environment on next connector of previously added module(the one before the last). 
-	 * @param supportedMRmoduleType, the type of module (modular robot).
-	 * @param connectorNr,connector number on the module added before the last. 
-	 */
-	public void moveToNextConnector(SupportedModularRobots supportedMRmoduleType,int connectorNr, int selectedModuleID) throws RemoteException{
-		//Module selectedModule = getModuleCountingFromEnd(2);
-		Module selectedModule = null;
-		for (int moduleNr=0;moduleNr<jmeSimulation.getModules().size();moduleNr++){
-			if (jmeSimulation.getModules().get(moduleNr).getID()==selectedModuleID){
-				selectedModule = jmeSimulation.getModules().get(moduleNr);
-			}
-		}
-		Module lastAddedModule = getModuleCountingFromEnd(1);
-		ConstructionTemplate con = null;
-		switch(supportedMRmoduleType){
-		case ATRON:
-			con =  new ATRONConstructionTemplate(jmeSimulation);
-			con.moveModuleAccording(connectorNr,selectedModule,lastAddedModule, true);
-			break;
-		case MTRAN:
-			con =  new MTRANConstructionTemplate(jmeSimulation);
-			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
-			break;
-		case ODIN:
-			con =  new OdinConstructionTemplate(jmeSimulation);
-			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
-			break;
-		case CKBOTSTANDARD:
-			con =  new CKBotConstructionTemplate(jmeSimulation);
-			con.moveModuleAccording(connectorNr, selectedModule,lastAddedModule,true);
-			break;
-		default: throw new Error("Modular robot with name " +supportedMRmoduleType+ " is not supported yet");
-		}
-	}
-
 	/**
 	 * Sets picker for moving modular robots (left side of the mouse selection) during running state of simulation.
 	 */
@@ -407,4 +372,49 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 		SaveLoadXMLFileTemplate openXML = new InSimulationXMLSerializer(jmeSimulation);
 		openXML.loadXMLfile(ussrXmlFileType, fileDirectoryName);		
 	}
+	
+	private static final Color colors[] = {Color.BLACK,Color.RED,Color.CYAN,Color.GRAY,Color.GREEN,Color.MAGENTA,
+        Color.ORANGE,Color.PINK,Color.BLUE,Color.WHITE,Color.YELLOW,Color.LIGHT_GRAY};
+	
+	public void colorConnectors()throws RemoteException{
+		
+		for(Module module: jmeSimulation.getModules()){
+			int nrConnectors = module.getConnectors().size();
+			for (int connector=0; connector<nrConnectors;connector++){			
+				module.getConnectors().get(connector).setColor(colors[connector]);			
+			}  
+			
+		}		 
+	}
+	
+	public void restoreOriginalColorsConnectors()throws RemoteException{
+		for(Module module: jmeSimulation.getModules()){
+			
+			String moduleType = module.getProperty(BuilderHelper.getModuleTypeKey());
+			
+			String consistentMRName = SupportedModularRobots.getConsistentMRName(moduleType);
+			
+			switch(SupportedModularRobots.valueOf(consistentMRName)){
+			case ATRON:
+				int nrConnectors = module.getConnectors().size();
+				for (int connector=0; connector<nrConnectors;connector++){			
+					module.getConnectors().get(connector).setColor(SupportedModularRobots.ATRON_CONNECTORS_COLORS[connector]);			
+				}  
+				break;
+			case ODIN:
+				break;
+			case MTRAN:
+				break;
+			case CKBOTSTANDARD:
+				break;			
+			}
+		/*	int nrConnectors = module.getConnectors().size();
+			for (int connector=0; connector<nrConnectors;connector++){			
+				module.getConnectors().get(connector).setColor(colors[connector]);			
+			} */ 
+			
+		}	
+		
+	}
+	
 }

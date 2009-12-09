@@ -99,13 +99,6 @@ public interface BuilderControlInter extends Remote {
 	 * Connects all modules existing in simulation environment.
 	 */
 	public  void connectAllModules()throws RemoteException;
-		
-	/**
-	 * Moves the last added module in simulation environment on next connector of previously added module(the one before the last). 
-	 * @param supportedMRmoduleType, the type of module (modular robot).
-	 * @param connectorNr,connector number on the module added before the last. 
-	 */
-	public void moveToNextConnector(SupportedModularRobots supportedMRmoduleType,int connectorNr, int selectedModuleID) throws RemoteException;
 	
 	/**
 	 * Returns the type of the module from the end of the list of modules in simulation environment.
@@ -130,4 +123,7 @@ public interface BuilderControlInter extends Remote {
 	public List<Integer> getIDsModules()throws RemoteException;
 
 	public void saveToXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException;
+	
+	public void  colorConnectors()throws RemoteException;
+	public void restoreOriginalColorsConnectors()throws RemoteException;
 }

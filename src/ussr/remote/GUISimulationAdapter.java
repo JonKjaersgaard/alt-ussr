@@ -70,7 +70,8 @@ public class GUISimulationAdapter {
 			System.out.println("Waiting for simulation");
 			simulation.waitForReady();
 		}
-		//HERE
+	//HERE
+		
 		// Start a simulation in the remote process
 		new Thread() {
 			public void run() {

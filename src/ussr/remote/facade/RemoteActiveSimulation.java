@@ -62,5 +62,5 @@ public interface RemoteActiveSimulation extends Remote {
      */
     public void start(String simulationXMLFile) throws RemoteException;
     
-    public XMLSimulationProviderInter getXmlSimulationProvider()throws RemoteException;   
+    public XMLSimulationProviderInter getXmlSimulationProvider()throws RemoteException; 
 }

@@ -113,6 +113,4 @@ public interface RemotePhysicsSimulation extends Remote {
 	 */
 	public void setGUICallbackControl(GUICallbackControl control)throws RemoteException;
 	
-	public void moveDisplayTo()throws RemoteException;
-	
 }
