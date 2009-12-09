@@ -73,12 +73,9 @@ public class SimulationTabController extends TabsControllers {
 		case Is_frame_grabbing_active:
 			SimulationTab.addIsFrameGrabbingActiveEditor();
 			break;
-		case Linear_velocity:
-			SimulationTab.addDampingLinearVelocityEditor();
-			break;
-		case Angular_velocity:
-			SimulationTab.addDampingAngularVelocityEditor();
-			break;
+		case Damping:
+			SimulationTab.addDampingEditor();
+			break;	
 		case Realistic_collision:
 			SimulationTab.addRealisticCollisionEditor();
 			break;

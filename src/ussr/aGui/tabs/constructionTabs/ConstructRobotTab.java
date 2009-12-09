@@ -70,7 +70,10 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jToolBarConstructionTools = new javax.swing.JToolBar();
 		jToolBarChangeModuleType = new javax.swing.JToolBar();
 
+		
 		jButtonStartNewRobot = new javax.swing.JButton();
+		jButtonOpen = initOpenButton();
+		jButtonSave = initSaveButton();		
 		jButtonDelete =   new javax.swing.JButton();
 		jButtonMoveModule = new javax.swing.JButton();		
 		jButtonOppositeRotation =   new javax.swing.JButton();
@@ -111,8 +114,8 @@ public class ConstructRobotTab extends ConstructionTabs {
 		gridBagConstraints.gridy = 0;// y goes from top to the bottom of the screen
 		gridBagConstraints.gridwidth = 3;		
 		
-		jToolBarGeneralControl.add(initOpenButton());
-		jToolBarGeneralControl.add(initSaveButton());
+		jToolBarGeneralControl.add(jButtonOpen);		
+		jToolBarGeneralControl.add(jButtonSave);
 		jSeparator3.setPreferredSize(new Dimension(6,30));
 		jToolBarGeneralControl.add(jSeparator3);
 		
@@ -474,7 +477,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jToolBarGenericTools.setFloatable(false);//user can not make the tool bar to float
 		jToolBarGenericTools.setRollover(true);// the buttons inside are roll over
 		jToolBarGenericTools.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Generic_tools));
-		jToolBarGenericTools.setPreferredSize(new Dimension(195,30));		
+		jToolBarGenericTools.setPreferredSize(new Dimension(125,30));		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 2;		
 		gridBagConstraints.gridy = 7;
@@ -592,7 +595,6 @@ public class ConstructRobotTab extends ConstructionTabs {
 	 * @param enable,true for tool bars to be enabled. 
 	 */
 	public static void setEnabledAllToolBars(boolean enabled){
-		setRadioButtonsEnabled(enabled);
 		setEnabledFirstModuleToolBar(enabled);
 		setEnabledGenericToolBar(enabled);
 		setEnabledConstructionToolsToolBar(enabled);
@@ -688,7 +690,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 	 * @param enabled, true if the tab is enabled.
 	 */
 	public static void setTabEnabled (boolean enabled){
-		getJButtonStartNewRobot().setEnabled(enabled);
+		setEnabledGeneralToolBar(enabled);
 		setRadioButtonsEnabled(enabled);		
 		setEnabledFirstModuleToolBar(enabled);
 		setEnabledGenericToolBar(enabled);		
@@ -698,7 +700,25 @@ public class ConstructRobotTab extends ConstructionTabs {
 			ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE.getHintText());
 		}
 	}
-
+	
+	/**
+	 * Enables or disables the table for general control.
+	 * @param enabled, true for enabled.
+	 */
+	public static void setEnabledGeneralToolBar(boolean enabled){
+		jButtonOpen.setEnabled(enabled);
+		jButtonSave.setEnabled(enabled);
+		jButtonStartNewRobot.setEnabled(enabled);
+		jToggleButtonColorConnetors.setEnabled(enabled);		
+	}
+	
+	public static void setVisibleFirstModuleOperations(boolean visible){
+		jLabelFirstModule.setVisible(visible);
+		jToolBarSupportedModularRobots.setVisible(visible);
+		jToolBarFirstModuleTools.setVisible(visible);
+		
+	}
+	
 	/**
 	 * Returns hint panel, which is used to display feedback to the user.
 	 * @return hint panel, which is used to display feedback to the user.
@@ -729,10 +749,10 @@ public class ConstructRobotTab extends ConstructionTabs {
 
 	private static javax.swing.JButton jButtonStartNewRobot,jButtonDelete, jButtonMoveModule,jButtonOppositeRotation,jButtonOnSelectedConnector,
 	jButtonConnectAllModules,jButtonJumpFromConnToConnector,jButtonVariateModuleProperties,
-	jButtonAvailableRotationsLoop;
+	jButtonAvailableRotationsLoop,jButtonSave,jButtonOpen;
 
 	private static javax.swing.JToolBar jToolBarGeneralControl,jToolBarChangeModuleType,jToolBarSupportedModularRobots,jToolBarGenericTools,
-	jToolBarFirstModuleTools,jToolBarConstructionTools,jToolBarSaveLoad;
+	jToolBarFirstModuleTools,jToolBarConstructionTools;
 
 	private javax.swing.JToolBar.Separator jSeparator2,jSeparator3;
 	

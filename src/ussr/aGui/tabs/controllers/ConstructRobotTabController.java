@@ -313,11 +313,12 @@ public class ConstructRobotTabController extends TabsControllers{
 	/**
 	 * Disables and enables Gui components in case when any of construction tools are selected(chosen).
 	 */
-	private static void constructionToolSelected(){
+	private static void constructionToolSelected(){		
 		ConstructRobotTab.getJButtonAvailableRotationsLoop().setEnabled(false);
 		ConstructRobotTab.getjComboBoxStandardRotations().setEnabled(false);
 		ConstructRobotTab.getJButtonOppositeRotation().setEnabled(true);
 		ConstructRobotTab.getJButtonMoveModule().setEnabled(false);
+		ConstructRobotTab.setVisibleFirstModuleOperations(false);
 	}
 
 	/**
@@ -398,7 +399,8 @@ public class ConstructRobotTabController extends TabsControllers{
 			}else{
 				throw new Error ("Modular robot type "+modularRobotName+ "is not supported yet" );
 			}
-			constructionToolSelected();		
+			constructionToolSelected();	
+			
 
 			try {
 				/*Set default construction tool to be "On selected  connector"*/
@@ -414,7 +416,8 @@ public class ConstructRobotTabController extends TabsControllers{
 	 * Removes current robots in simulation environment and enables tab elements for constructing new robot.
 	 */
 	public static void jButtonStartNewRobotActionPerformed() {
-		//ConstructRobotTab.setRadioButtonsEnabled(true);
+		ConstructRobotTab.setVisibleFirstModuleOperations(true);
+		ConstructRobotTab.setRadioButtonsEnabled(true);
 		ConstructRobotTab.setEnabledAllToolBars(false);	
 		ConstructRobotTab.getButtonGroupModularRobots().clearSelection();
 

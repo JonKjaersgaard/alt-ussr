@@ -4,6 +4,7 @@ package ussr.aGui.tabs;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +34,7 @@ import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 
 import ussr.aGui.tabs.controllers.SimulationTabController;
+import ussr.builder.helpers.StringProcessingHelper;
 
 import ussr.description.setup.WorldDescription.CameraPosition;
 
@@ -126,13 +128,6 @@ public class SimulationTab extends Tabs {
 		//Third in hierarchy
 		DefaultMutableTreeNode thirdNodeHierarchyDamping= new DefaultMutableTreeNode(SimulationTabTreeNodes.Damping.toString());
 		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyDamping);
-		
-		//Fourth in hierarchy
-		DefaultMutableTreeNode fourthNodeHierarchyDampingLinearVelocity = new DefaultMutableTreeNode(SimulationTabTreeNodes.Linear_velocity.toString().replace("_", " "));
-		thirdNodeHierarchyDamping.add(fourthNodeHierarchyDampingLinearVelocity);
-		
-		DefaultMutableTreeNode fourthNodeHierarchyAngularVelocity = new DefaultMutableTreeNode(SimulationTabTreeNodes.Angular_velocity.toString().replace("_", " "));
-		thirdNodeHierarchyDamping.add(fourthNodeHierarchyAngularVelocity);
 		
 		//Third in hierarchy
 		DefaultMutableTreeNode thirdNodeHierarchyRealisticCollision = new DefaultMutableTreeNode(SimulationTabTreeNodes.Realistic_collision.toString().replace("_", " "));
@@ -239,7 +234,7 @@ public class SimulationTab extends Tabs {
 	
 	
 	public static void addPlaneSizeEditor(){
-
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Plane_size)));
 		jSpinnerPlaneSize = new javax.swing.JSpinner();
 		jSpinnerPlaneSize.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
 		SimulationTabController.setJSpinnerPlaneSizeValue(jSpinnerPlaneSize);
@@ -251,11 +246,18 @@ public class SimulationTab extends Tabs {
 	public static void addPlaneTextureEditor(){
 		GridBagConstraints gridBagConstraintsTexture = new GridBagConstraints();
 		
+		gridBagConstraintsTexture.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsTexture.gridx = 0;
+		gridBagConstraintsTexture.gridy = 0;
+		
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Plane_texture)),gridBagConstraintsTexture);
+		
+		
 		jComboBoxPlaneTexture = new javax.swing.JComboBox(); 
 		jComboBoxPlaneTexture.setModel(new DefaultComboBoxModel(TextureDescriptions.values()));
 		
 		gridBagConstraintsTexture.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsTexture.gridx = 0;
+		gridBagConstraintsTexture.gridx = 1;
 		gridBagConstraintsTexture.gridy = 0;
 		
 		jPanelEditor.add(jComboBoxPlaneTexture,gridBagConstraintsTexture);
@@ -263,9 +265,11 @@ public class SimulationTab extends Tabs {
 		javax.swing.JPanel previewPanel = new javax.swing.JPanel(new GridBagLayout());
 		previewPanel.setPreferredSize(new Dimension(100,100));
 		previewPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Preview", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
-		gridBagConstraintsTexture.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsTexture.fill = GridBagConstraints.CENTER;
 		gridBagConstraintsTexture.gridx = 0;
 		gridBagConstraintsTexture.gridy = 1;
+		gridBagConstraintsTexture.gridwidth =2;
+		gridBagConstraintsTexture.insets = new Insets(10,0,0,0);
 		
 		javax.swing.JLabel iconLabel = new javax.swing.JLabel();
 		
@@ -281,6 +285,7 @@ public class SimulationTab extends Tabs {
 	
 	public static void addCameraPositionEditor(){
 
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Camera_position)));
 		jComboBoxCameraPosition = new javax.swing.JComboBox(); 
 		jComboBoxCameraPosition.setModel(new DefaultComboBoxModel(CameraPosition.values()));
 		SimulationTabController.setSelectedJComboBoxCameraPosition(jComboBoxCameraPosition);
@@ -289,6 +294,7 @@ public class SimulationTab extends Tabs {
 	}
 	
 	public static void addTheWorldIsFlatEditor(){
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.The_world_is_flat)));
 		jCheckBoxTheWorldIsFlat =  new javax.swing.JCheckBox ();
 		SimulationTabController.setSelectedJCheckBoxTheWorldIsFlat(jCheckBoxTheWorldIsFlat);
 	
@@ -297,12 +303,14 @@ public class SimulationTab extends Tabs {
 
 	
 	public static void addHasBackgroundSceneryEditor(){
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Has_background_scenery)));
 		jCheckBoxHasBackgroundScenery =  new javax.swing.JCheckBox ();
 		SimulationTabController.setSelectedJCheckBoxHasBackgroundScenery(jCheckBoxHasBackgroundScenery);
 		jPanelEditor.add(jCheckBoxHasBackgroundScenery);
 	}
 	
 	public static void addHasHeavyObstaclesEditor(){
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Has_heavy_obstacles)));
 		jCheckBoxHasHeavyObstacles = new javax.swing.JCheckBox ();
 		SimulationTabController.setSelectedjCheckBoxHasHeavyObstacles(jCheckBoxHasHeavyObstacles);
 		
@@ -311,6 +319,7 @@ public class SimulationTab extends Tabs {
 	}
 	
 	public static void addIsFrameGrabbingActiveEditor(){
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Is_frame_grabbing_active)));
 		jCheckBoxIsFrameGrabbingActive = new javax.swing.JCheckBox ();
 		SimulationTabController.setSelectedJCheckBoxIsFrameGrabbingActive(jCheckBoxIsFrameGrabbingActive);
 		
@@ -326,18 +335,24 @@ public class SimulationTab extends Tabs {
 		
 	}
 	
-	public static void addDampingLinearVelocityEditor(){
+	public static void addDampingEditor(){
 		
 		GridBagConstraints gridBagConstraintsDamping = new GridBagConstraints();
 		
-		jLabelLinearVelocity =  new javax.swing.JLabel();
-		jLabelLinearVelocity.setText("Linear Velocity");
-		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
+			
+		gridBagConstraintsDamping.fill = GridBagConstraints.CENTER;
 		gridBagConstraintsDamping.gridx = 0;
 		gridBagConstraintsDamping.gridy = 0;
+		gridBagConstraintsDamping.gridwidth = 2;
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Damping)),gridBagConstraintsDamping);
+	
+		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsDamping.gridx = 0;
+		gridBagConstraintsDamping.gridy = 1;
+		gridBagConstraintsDamping.gridwidth = 1;
+		gridBagConstraintsDamping.insets = new Insets(20,0,0,0);
 		
-		jPanelEditor.add(jLabelLinearVelocity,gridBagConstraintsDamping);
-		
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Linear_velocity)),gridBagConstraintsDamping);
 		
 		jSpinnerDampingLinearVelocity = new javax.swing.JSpinner();
 		jSpinnerDampingLinearVelocity.setPreferredSize(new Dimension(60,20));
@@ -345,15 +360,14 @@ public class SimulationTab extends Tabs {
 		SimulationTabController.setValuejSpinnerDampingLinearVelocity(jSpinnerDampingLinearVelocity);		
 		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraintsDamping.gridx = 1;
-		gridBagConstraintsDamping.gridy = 0;
+		gridBagConstraintsDamping.gridy = 1;
 		jPanelEditor.add(jSpinnerDampingLinearVelocity,gridBagConstraintsDamping);
 		
-		jLabelAngularVelocity =  new javax.swing.JLabel();
-		jLabelAngularVelocity.setText("Angular Velocity");
 		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraintsDamping.gridx = 0;
-		gridBagConstraintsDamping.gridy = 1;
-		jPanelEditor.add(jLabelAngularVelocity,gridBagConstraintsDamping);
+		gridBagConstraintsDamping.gridy = 2;
+		gridBagConstraintsDamping.insets = new Insets(10,0,0,0);
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Angular_velocity)),gridBagConstraintsDamping);
 		
 		jSpinnerDampingAngularVelocity = new javax.swing.JSpinner();
 		jSpinnerDampingAngularVelocity.setPreferredSize(new Dimension(60,20));
@@ -361,23 +375,17 @@ public class SimulationTab extends Tabs {
 		SimulationTabController.setValuejSpinnerDampingAngularVelocity(jSpinnerDampingAngularVelocity);
 		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraintsDamping.gridx = 1;
-		gridBagConstraintsDamping.gridy = 1;
+		gridBagConstraintsDamping.gridy = 2;
+		gridBagConstraintsDamping.insets = new Insets(10,0,0,0);
 		jPanelEditor.add(jSpinnerDampingAngularVelocity,gridBagConstraintsDamping);	
 		
 		
 	}
 
-	public static void addDampingAngularVelocityEditor() {
-		jSpinnerDampingAngularVelocity = new javax.swing.JSpinner();
-		jSpinnerDampingAngularVelocity.setPreferredSize(new Dimension(60,20));
-		jSpinnerDampingAngularVelocity.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
-		SimulationTabController.setValuejSpinnerDampingAngularVelocity(jSpinnerDampingAngularVelocity);		
-		jPanelEditor.add(jSpinnerDampingAngularVelocity);	
-		
-	}
 	
 	
 	public static void addPhysicsSimulationStepSizeEditor() {
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Physics_simulation_step_size)));
 		jSpinnerPhysicsSimulationStepSize = new javax.swing.JSpinner();
 		jSpinnerPhysicsSimulationStepSize.setPreferredSize(new Dimension(60,20));
 		jSpinnerPhysicsSimulationStepSize.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
@@ -387,13 +395,15 @@ public class SimulationTab extends Tabs {
 	}
 	
 	public static void addRealisticCollisionEditor() {
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Realistic_collision)));
 		jCheckBoxRealisticCollision = new javax.swing.JCheckBox ();
-       SimulationTabController.setSelectedJCheckBoxRealisticCollision(jCheckBoxRealisticCollision);		
+        SimulationTabController.setSelectedJCheckBoxRealisticCollision(jCheckBoxRealisticCollision);		
 		jPanelEditor.add(jCheckBoxRealisticCollision);
 		
 	}
 	
 	public static void addGravityEditor() {
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Gravity)));
 		jSpinnerGravity = new javax.swing.JSpinner();
 		jSpinnerGravity.setPreferredSize(new Dimension(60,20));
 		jSpinnerGravity.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(-100.0f), null, null, Float.valueOf(1.0f)));
@@ -403,6 +413,8 @@ public class SimulationTab extends Tabs {
 	}
 
 	public static void addConstraintForceMixEditor() {
+		
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Constraint_force_mixing)));
 		jSpinnerConstraintForceMix = new javax.swing.JSpinner();
 		jSpinnerConstraintForceMix.setPreferredSize(new Dimension(60,20));
 		jSpinnerConstraintForceMix.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
@@ -411,6 +423,7 @@ public class SimulationTab extends Tabs {
 	}
 	
 	public static void addErrorReductionParameterEditor() {
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Error_reduction_parameter)));
 		jSpinnerErrorReductionParameter = new javax.swing.JSpinner();
 		jSpinnerErrorReductionParameter.setPreferredSize(new Dimension(60,20));
 		jSpinnerErrorReductionParameter.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.1f)));
@@ -420,6 +433,7 @@ public class SimulationTab extends Tabs {
 	}
 	
 	public static void addResolutionFactorEditor() {
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Resolution_Factor)));
 		jSpinnerResolutionFactor = new javax.swing.JSpinner();
 		jSpinnerResolutionFactor.setPreferredSize(new Dimension(60,20));
 		jSpinnerResolutionFactor.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));
@@ -428,12 +442,14 @@ public class SimulationTab extends Tabs {
 	}
 	
 	public static void addUseMouseEventQueueEditor() {
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Use_mouse_event_queue)));
 		jCheckBoxUseMouseEventQueue = new javax.swing.JCheckBox ();
 		SimulationTabController.setSelectedJCheckBoxUseMouseEventQueue(jCheckBoxUseMouseEventQueue);		
 		jPanelEditor.add(jCheckBoxUseMouseEventQueue);		
 	}
 	
 	public static void addSynchronizeWithControllersEditor() {
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Synchronize_with_controllers)));
 		jCheckBoxSynchronizeWithControllers = new javax.swing.JCheckBox ();
 		SimulationTabController.setSelectedjCheckBoxSynchronizeWithControllers(jCheckBoxSynchronizeWithControllers);		
 		jPanelEditor.add(jCheckBoxSynchronizeWithControllers);	
@@ -441,6 +457,7 @@ public class SimulationTab extends Tabs {
 	}
 	
 	public static void addPhysicsSimulationControllerStepFactor() {
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Physics_simulation_controller_step_factor)));
 		jPhysicsSimulationControllerStepFactor = new javax.swing.JSpinner();
 		jPhysicsSimulationControllerStepFactor.setPreferredSize(new Dimension(60,20));
 		jPhysicsSimulationControllerStepFactor.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));
@@ -466,7 +483,11 @@ public class SimulationTab extends Tabs {
 	
 	private static String robotMorphologyLocation;
 	
-	
+	private static javax.swing.JLabel createNewLabel(String labelText){
+		newLabel =  new javax.swing.JLabel();
+		newLabel.setText(labelText+" ");
+		return newLabel;
+	}
 
 
 	public static void setRobotMorphologyLocation(String robotMorphologyLocation) {
@@ -494,7 +515,7 @@ public class SimulationTab extends Tabs {
 	
 	private static javax.swing.JLabel jLabelRobotType;
 	
-	private static javax.swing.JLabel jLabelLinearVelocity,jLabelAngularVelocity;
+	private static javax.swing.JLabel newLabel,jLabelLinearVelocity,jLabelAngularVelocity,jLabelDamping,jLabelRealisticCoallision;
 
 	private static javax.swing.JPanel jPanelEditor;
 	private static javax.swing.JSpinner jSpinnerDampingLinearVelocity, jSpinnerDampingAngularVelocity,
