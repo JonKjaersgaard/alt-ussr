@@ -1,5 +1,7 @@
 package ussr.builder.enumerations;
 
+import java.awt.Color;
+
 /**
  * Modular robots supported by builder for interactive
  * construction of their morphology and assignment of behaviors.
@@ -24,6 +26,7 @@ public enum SupportedModularRobots {
                                  MTRAN_CONNECTORS = {"0","1","2","3","4","5"},
 	                             CKBOTSTANDARD_CONNECTORS = {"0","1","2","3"}	                          
 	                             ;
+	public final static Color[] ATRON_CONNECTORS_COLORS = {Color.black,Color.white,Color.black,Color.white,Color.black,Color.white,Color.black,Color.white};
 	
     public static String getConsistentMRName (String supportedModularRobot){
     

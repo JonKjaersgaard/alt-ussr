@@ -16,6 +16,7 @@ import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
+import ussr.physics.jme.JMESimulation;
 import ussr.samples.DefaultSimulationSetup;
 import ussr.samples.GenericSimulation;
 
@@ -62,8 +63,7 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
 	    PhysicsLogger.setDefaultLoggingLevel();
         /* Create the simulation*/
         simulation = PhysicsFactory.createSimulator();
-        
-        
+          
         /*Load Simulation Configuration file*/
 		SaveLoadXMLFileTemplate xmlLoaderSimulation = new PreSimulationXMLSerializer(/*new PhysicsParameters()*/);
 		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, simulationXMLfileName);
@@ -94,7 +94,8 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
         SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);       
         xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,robotMorphologyLocation);
       
-        simulation.setWorld(world);      
+        simulation.setWorld(world); 
+      
 	    
         /* Connect modules */
         //world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
