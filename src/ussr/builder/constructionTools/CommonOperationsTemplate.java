@@ -96,7 +96,7 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	public Module addNewModule(ModulePosition modulePosition, List<Color> colorsComponents,ArrayList<Color> colorsConnectors){
 		Module newModule = this.simulation.createModule(modulePosition,true);			
 		newModule.setColorList(colorsComponents);		
-		setColorsConnectors(newModule,colorsConnectors);
+		BuilderHelper.setColorsConnectors(newModule,colorsConnectors);
 		return newModule;
 	}
 
@@ -111,10 +111,10 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 		this.construction = toolSpecification.getConstruction();		
 		this.selectedModule = toolSpecification.getSelectedModule();				
 ///		FIXME HERE THE PROBLEM EXISTS WITH "default" thing of ATRON 
-		this.newMovableModule = createNewModule(this.selectedModule);		
-		this.construction.moveModuleAccording(toolSpecification.getSelectedConnectorNr(), this.selectedModule, this.newMovableModule, false);		
+		this.newMovableModule = createNewModule(this.selectedModule);	
+		this.construction.moveModuleAccording(toolSpecification.getSelectedConnectorNr(), this.selectedModule, this.newMovableModule, false);
 	}
-
+		
 	/**
 	 * Creates and returns new module, depending on which is needed: the copy module or different one. 	 
 	 * This method is so-called "Primitive operation" for above TEMPLATE method, called "addNewModuleOnConnector(ConstructionToolSpecification toolSpecification)".	 
@@ -130,21 +130,29 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	 * @param selectedModule,the module selected in simulation environment.	
 	 * @return newModule,the module which is the copy of selected module
 	 */
-	public Module addNewCopyModule(Module selectedModule){		
-		VectorDescription position = selectedModule.getPhysics().get(zeroComponent).getPosition();       
-		RotationDescription rotation = selectedModule.getPhysics().get(zeroComponent).getRotation();
-		List<Color> colorsComponents = selectedModule.getColorList();			
-		ArrayList<Color> colorsConnectors = getColorsConnectors(selectedModule);
-		String selectedModuleName = selectedModule.getProperty(BuilderHelper.getModuleNameKey());
+	public Module addNewCopyModule(Module selectedModule){	
 		String moduleType;
 		moduleType = selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
 		if (moduleType.contains("ATRON")||moduleType.contains("default")){
 			moduleType = "default";
 		}
+		VectorDescription position;
+		RotationDescription rotation; 
+		
+		if (moduleType.contains("MTRAN")){
+			 position = selectedModule.getPhysics().get(1).getPosition();       
+			 rotation = selectedModule.getPhysics().get(1).getRotation();
+		}else{
+			 position = selectedModule.getPhysics().get(zeroComponent).getPosition();       
+			 rotation = selectedModule.getPhysics().get(zeroComponent).getRotation();
+		}
+		List<Color> colorsComponents = selectedModule.getColorList();			
+		ArrayList<Color> colorsConnectors = BuilderHelper.getColorsConnectors(selectedModule);
+		String selectedModuleName = selectedModule.getProperty(BuilderHelper.getModuleNameKey());
 		ModulePosition modulePosition = new ModulePosition(selectedModuleName+ BuilderHelper.getRandomInt(),moduleType,position,rotation);	
 		Module newModule = this.simulation.createModule(modulePosition,true);				
 		newModule.setColorList(colorsComponents);		
-		setColorsConnectors(newModule,colorsConnectors);
+		BuilderHelper.setColorsConnectors(newModule,colorsConnectors);
 		return newModule;
 	}
 
@@ -230,36 +238,4 @@ public abstract class CommonOperationsTemplate implements  SelectOperationsTempl
 	 * @param selectedModule,the module selected in simulation environment.	
 	 */
 	public abstract void variateSpecificModule(Module selectedModule);	
-	
-	/**
-	 * Returns the ArrayList, containing the colours of connectors of selected module.
-	 * @param selectedModule, the module selected in simulation environment.
-	 * @return the ArrayList of colours of connectors on the module
-	 */
-	private ArrayList<Color> getColorsConnectors(Module selectedModule){
-		ArrayList<Color> colorsConnectors = new ArrayList<Color>();
-		int nrConnectors = selectedModule.getConnectors().size();	        
-		for (int connector=0;connector<nrConnectors; connector++){        	
-			Color connectorColor = selectedModule.getConnectors().get(connector).getColor();
-			colorsConnectors.add(connectorColor);
-		}
-		return colorsConnectors; 
-	}
-
-	/**
-	 * Colors the connectors of the module, according to the colors in ArrayList. Precondition should be that the number of connectors equals to the number of colours in ArrayList.  
-	 * @param newModule, the module in simulation environment.
-	 * @param colorsConnectors, the colors to assign to connectors. Each index in ArrayList is color and at the same time equals to connector number
-	 * @throws Error, if the number of connectors on module is not matching the number of colors in ArrayList. 
-	 */
-	private void setColorsConnectors(Module newModule, ArrayList<Color> colorsConnectors){
-		int nrConnectors = newModule.getConnectors().size();
-		if (nrConnectors!=colorsConnectors.size()){	
-			throw new Error("The number of connectors on module is not matching the number of colors in ArrayList!");			
-		}else{
-			for (int connector=0;connector<nrConnectors; connector++){
-				newModule.getConnectors().get(connector).setColor(colorsConnectors.get(connector));	        	
-			}
-		}
-	}
 }

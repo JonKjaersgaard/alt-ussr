@@ -1,7 +1,10 @@
 package ussr.builder.constructionTools;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -259,13 +262,18 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 		return false;
 	}
 
-	
 	boolean firstTime = true;
+	List<Color> colorsComponents;
+	ArrayList<Color> colorsConnectors;
+	
+	
+	Module lastModuleNEW;
 	/**
 	 * Calls the tool for construction of modular robot morphology. 
 	 */
 	private void callTool(){
 		String selectedModuleType = selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
+		
 		switch(toolName){
 		case NEW_MODULE_ON_SELECTED_CONNECTOR:
 			if (connectorsMatch()){
@@ -279,30 +287,42 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 				callBackNewModuleAdded();
 			break;
 		case MOVE_MODULE_FROM_CON_TO_CON:
-			if(selectedModuleType.contains(OdinModules.OdinMuscle.toString())){
-				//do nothing
-			}else{
-				//FIXME THINK MORE HERE
-				//Random rand = new Random(11);
-				//selectedConnectorNr = rand.nextInt();  
-				int selectedModuleId = selectedModule.getID();
+				
+				
+				//FIXME THINK MORE HER
+				
+				Random rand = new Random(selectedModule.getConnectors().size()-1);
+				this.selectedConnectorNr = rand.nextInt();
+				
+				int selectedModuleId = selectedModule.getID();				
 				int amountModules = jmeSimulation.getModules().size();
 				Module lastModule = jmeSimulation.getModules().get(amountModules-1);
 				int lastModuleId = lastModule.getID();
+				
 				
 				if (timesSelected==0&&firstTime==true){
 					//check if exists
 					firstTime=false;
 					this.selectOperations.addNewModuleOnConnector(this);
+					int amountModulesNEW = jmeSimulation.getModules().size();
+					lastModuleNEW = jmeSimulation.getModules().get(amountModulesNEW-1);
+					colorsComponents = lastModuleNEW.getColorList();
+					colorsConnectors = BuilderHelper.getColorsConnectors(lastModuleNEW);
+					
+					lastModuleNEW.setColor(Color.GRAY);
 				}else if (timesSelected==this.construction.getConnectors().length){
 					resetTimesSelected();
 				}else if (selectedModuleId == lastModuleId){
-					
+					firstTime=true;
+					resetTimesSelected();
+					lastModuleNEW.setColorList(colorsComponents);
+					BuilderHelper.setColorsConnectors(lastModuleNEW, colorsConnectors);
+					colorsComponents = null;
 				}else{				
 				jmeSimulation.getModules().get(amountModules-1);
 				this.construction.moveModuleAccording(timesSelected, selectedModule, lastModule, true);
 				
-				}
+				
 			}
 			callBackNewModuleAdded();
 			break;
@@ -402,5 +422,5 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	public int getSelectedConnectorNr() {
 		return selectedConnectorNr;
 	}	
-
+	
 }

@@ -1,5 +1,7 @@
 package ussr.builder.helpers;
 
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Random;
 import ussr.model.Module;
 import ussr.physics.PhysicsModuleComponent;
@@ -227,5 +229,37 @@ public class BuilderHelper {
 			}
 		}
 		return 1000 /*means connector extraction failed*/;
+	}
+	
+	/**
+	 * Returns the ArrayList, containing the colours of connectors of selected module.
+	 * @param selectedModule, the module selected in simulation environment.
+	 * @return the ArrayList of colours of connectors on the module
+	 */
+	public static ArrayList<Color> getColorsConnectors(Module selectedModule){
+		ArrayList<Color> colorsConnectors = new ArrayList<Color>();
+		int nrConnectors = selectedModule.getConnectors().size();	        
+		for (int connector=0;connector<nrConnectors; connector++){        	
+			Color connectorColor = selectedModule.getConnectors().get(connector).getColor();
+			colorsConnectors.add(connectorColor);
+		}
+		return colorsConnectors; 
+	}
+	
+	/**
+	 * Colors the connectors of the module, according to the colors in ArrayList. Precondition should be that the number of connectors equals to the number of colours in ArrayList.  
+	 * @param newModule, the module in simulation environment.
+	 * @param colorsConnectors, the colors to assign to connectors. Each index in ArrayList is color and at the same time equals to connector number
+	 * @throws Error, if the number of connectors on module is not matching the number of colors in ArrayList. 
+	 */
+	public static void setColorsConnectors(Module newModule, ArrayList<Color> colorsConnectors){
+		int nrConnectors = newModule.getConnectors().size();
+		if (nrConnectors!=colorsConnectors.size()){	
+			throw new Error("The number of connectors on module is not matching the number of colors in ArrayList!");			
+		}else{
+			for (int connector=0;connector<nrConnectors; connector++){
+				newModule.getConnectors().get(connector).setColor(colorsConnectors.get(connector));	        	
+			}
+		}
 	}
 }

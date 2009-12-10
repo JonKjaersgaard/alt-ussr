@@ -157,7 +157,6 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 	 * @return VectorDescription, description of a vector. 
 	 */
 	public VectorDescription getConnectorPosition(int connectorNr, Module selectedModule){
-		System.out.println("CONN:"+connectorNr);
 		Connector connector = selectedModule.getConnectors().get(connectorNr);		
 		VectorDescription connectorPosition = connector.getPhysics().get(0).getPosition();		
 		return connectorPosition;		

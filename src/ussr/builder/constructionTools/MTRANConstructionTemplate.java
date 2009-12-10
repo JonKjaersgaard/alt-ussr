@@ -356,8 +356,6 @@ public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate 
 					/*If component(module) already exists at current position, delete movableModuleComponent and newly added module.*/
 					if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&&loopFlag== false){
 						BuilderHelper.deleteModule(movableModuleComponent.getModel());						
-					}else if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag== true){
-						//do nothing
 					}else{/*move the component to new position with new rotation*/
 						moveModuleComponent(movableModuleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
 					}
@@ -366,8 +364,6 @@ public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate 
 				/*If component(module) already exists at current position, delete movableModuleComponent and newly added module.*/
 				if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&&loopFlag== false){					
 					BuilderHelper.deleteModule(movableModuleComponent.getModel());											
-				}else if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag== true){
-					//do nothing
 				}else{/*move the component to new position with new rotation*/
 				moveModuleComponent(movableModuleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
 				}

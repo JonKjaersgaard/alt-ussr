@@ -77,7 +77,7 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 		String selectedModuleType = selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
 		Module odinModule = null;
 		if (selectedModuleType.equalsIgnoreCase(DEFAULT_MODULE)){
-			odinModule = createNewOdinModule(ODIN_MUSCLE);							
+			odinModule = createNewOdinModule(ODIN_MUSCLE);
 		}else if (selectedModuleType.equalsIgnoreCase(ODIN_MUSCLE)){
 			odinModule = createNewOdinModule(DEFAULT_MODULE); 			
 		}else throw new Error("Something is wrong with the type of the module");		
