@@ -8,10 +8,10 @@ package ussr.physics.jme;
 
 import java.awt.Color;
 import java.io.File;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import ussr.comm.monitors.visualtracker.CommunicationVisualizerGUI;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsParameters;
@@ -19,6 +19,7 @@ import ussr.physics.PhysicsSimulation;
 import ussr.physics.SimulationGadget;
 import ussr.physics.PhysicsFactory.Options;
 import ussr.physics.jme.cameraHandlers.RobotCameraHandler;
+import ussr.remote.facade.RemotePhysicsSimulationImpl;
 import ussr.util.Pair;
 import ussr.util.WindowSaver;
 import com.jme.app.AbstractGame;
@@ -75,6 +76,9 @@ import com.jmex.terrain.TerrainBlock;
  * bounds, lights, wireState, buffer depth, running simulation in real time and fast. 
  */
 public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
+
+	public static boolean flag =false; 
+
 
 	protected static final Color[] obstacleColors = { Color.GRAY,
 		Color.LIGHT_GRAY, Color.PINK, Color.YELLOW }; 
@@ -684,9 +688,13 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			/** Create a window with the startup box's information. */
 			display.createWindow( properties.getWidth(), properties.getHeight(),
 					properties.getDepth(), properties.getFreq(), properties
-					.getFullscreen() );			
+					.getFullscreen() );	
+			
+			//display.moveWindowTo(0, 0);
+				
+				
+		
 
-			//display.moveWindowTo(0, 0);	
 
 			/**
 			 * Create a camera specific to the DisplaySystem that works with the
@@ -1089,5 +1097,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	
 	public void moveDisplayTo(){
 		display.moveWindowTo(0, 0);
-	}
-	}
+	}	
+}
+
+
