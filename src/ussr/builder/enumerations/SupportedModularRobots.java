@@ -26,8 +26,20 @@ public enum SupportedModularRobots {
                                  MTRAN_CONNECTORS = {"0","1","2","3","4","5"},
 	                             CKBOTSTANDARD_CONNECTORS = {"0","1","2","3"}	                          
 	                             ;
-	public final static Color[] ATRON_CONNECTORS_COLORS = {Color.black,Color.white,Color.black,Color.white,Color.black,Color.white,Color.black,Color.white};
 	
+	
+	public final static Color[] ATRON_CONNECTORS_COLORS = {Color.black,Color.white,Color.black,Color.white,Color.black,Color.white,Color.black,Color.white},
+	                            ODIN_CONNECTORS_COLORS = {Color.WHITE,Color.WHITE,Color.WHITE,Color.WHITE,Color.WHITE,Color.WHITE,Color.WHITE,Color.WHITE,Color.WHITE,Color.WHITE,Color.WHITE,Color.WHITE},
+	                            MTRAN_CONNECTORS_COLORS = {Color.BLACK,Color.BLACK,Color.BLACK,Color.WHITE,Color.WHITE,Color.WHITE},
+	                            CKBOTSTANDARD_CONNECTORS_COLORS = {Color.WHITE,Color.WHITE,Color.WHITE,Color.WHITE};
+    
+	
+	/**
+	 * Checks the name of modular robot received from underlying logic of USSR and returns 
+	 * the constant introduced here.
+     * @param supportedModularRobot, the name of modular robot from underlying logic of USSR(getProperty(moduleType)).
+     * @return constant name introduced in builder package. 
+     */
     public static String getConsistentMRName (String supportedModularRobot){
     
     	SupportedModularRobots[] supportedMRobots = SupportedModularRobots.values();

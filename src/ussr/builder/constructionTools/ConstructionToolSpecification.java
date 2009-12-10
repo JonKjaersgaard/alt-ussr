@@ -272,14 +272,11 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 				this.selectOperations.addNewModuleOnConnector(this);
 			}else{//Just skip(connector number will be 1000) 		
 			}
+			callBackNewModuleAdded();
 			break;
-		case ON_CHOSEN_CONNECTOR_NR://break through	
-			
-			if(selectedModuleType.contains(OdinModules.OdinMuscle.toString())){
-				//do nothing
-			}else{		
+		case ON_CHOSEN_CONNECTOR_NR:		
 				this.selectOperations.addNewModuleOnConnector(this);
-			}
+				callBackNewModuleAdded();
 			break;
 		case MOVE_MODULE_FROM_CON_TO_CON:
 			if(selectedModuleType.contains(OdinModules.OdinMuscle.toString())){
@@ -307,10 +304,11 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 				
 				}
 			}
-		
+			callBackNewModuleAdded();
 			break;
 		case NEW_MODULES_ON_ALL_CONNECTORS:
 			this.selectOperations.addModulesOnAllConnectors(this);
+			callBackNewModuleAdded();
 			break;
 		case STANDARD_ROTATIONS:
 			this.selectOperations.rotateModuleStandardRotation(this, this.standardRotationName);
@@ -325,6 +323,17 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 			this.selectOperations.rotateModuleStandardRotationInLoop(this);
 			break;
 		default: throw new Error ("The tool with name: " + toolName +", is not supported yet.");
+		}
+	}
+	
+	/**
+	 * Calls back GUI in order to indicate new module addition in simulation environment.
+	 */
+	private void callBackNewModuleAdded(){
+		try {
+			RemotePhysicsSimulationImpl.getGUICallbackControl().newModuleAdded();
+		} catch (RemoteException e) {
+			throw new Error ("Failed to call back GUI in order to indicate new module addition, due to remote exception.");
 		}
 	}
 
