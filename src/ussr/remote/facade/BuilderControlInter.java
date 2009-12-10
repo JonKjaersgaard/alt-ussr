@@ -124,6 +124,16 @@ public interface BuilderControlInter extends Remote {
 
 	public void saveToXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException;
 	
-	public void  colorConnectors()throws RemoteException;
+	/**
+	 * Colors connectors of all modules with color coding.
+	 */
+	public void  colorConnectorsModules()throws RemoteException;
+	
+	
+	/**
+	 * Restores module colors of connectors to original ones. 
+	 */
 	public void restoreOriginalColorsConnectors()throws RemoteException;
+	
+	public boolean isNewModuleAdded(int lastCheckAmountModules)throws RemoteException;
 }

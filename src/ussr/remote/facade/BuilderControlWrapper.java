@@ -108,14 +108,12 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 			if (moduleExists(defaultPosition)){//do nothing
 			}else{ 
 				comATRON.addDefaultConstructionModule("default", defaultPosition);
-				//NOT WORKING//jmeSimulation.getWorldDescription().setCameraPosition(CameraPosition.DEFAULT );
 			}
 			break;
 		case MTRAN:
 			if (moduleExists(defaultPosition)){//do nothing
 			}else {
 				comMTRAN.addDefaultConstructionModule(SupportedModularRobots.MTRAN.toString(),defaultPosition );
-				//jmeSimulation.getWorldDescription().setCameraPosition(CameraPosition.DEFAULT );
 			}
 			break;
 		case ODIN:
@@ -123,14 +121,12 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 			}else{ 
 				Odin.setDefaultConnectorSize(0.006f);// make connectors bigger in order to select them successfully with "on Connector tool"
 				comOdin.addDefaultConstructionModule(SupportedModularRobots.ODIN.toString(), defaultPosition);
-				//jmeSimulation.getWorldDescription().setCameraPosition(CameraPosition.DEFAULT );
 			}
 			break;
 		case CKBOTSTANDARD:
 			if (moduleExists(defaultPosition)){//do nothing
 			}else {
 				comCKBot.addDefaultConstructionModule(SupportedModularRobots.CKBOTSTANDARD.toString(), defaultPosition);
-				//jmeSimulation.getWorldDescription().setCameraPosition(CameraPosition.DEFAULT );
 			}
 			break;
 		default: throw new Error ("Modular robot with the name "+ supportedModularRobot.toString()+ " is not supported yet");
@@ -373,20 +369,36 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 		openXML.loadXMLfile(ussrXmlFileType, fileDirectoryName);		
 	}
 	
+	/**
+	 * 
+	 */
 	private static final Color colors[] = {Color.BLACK,Color.RED,Color.CYAN,Color.GRAY,Color.GREEN,Color.MAGENTA,
         Color.ORANGE,Color.PINK,Color.BLUE,Color.WHITE,Color.YELLOW,Color.LIGHT_GRAY};
 	
-	public void colorConnectors()throws RemoteException{
-		
+	/**
+	 * Colors connectors of all modules in simulation with color coding.
+	 */
+	public void colorConnectorsModules()throws RemoteException{
 		for(Module module: jmeSimulation.getModules()){
-			int nrConnectors = module.getConnectors().size();
-			for (int connector=0; connector<nrConnectors;connector++){			
-				module.getConnectors().get(connector).setColor(colors[connector]);			
-			}  
-			
+			colorModuleConnectors(module,colors);			
 		}		 
 	}
 	
+	/**
+	 * Colors connectors of module with color coding.
+	 * @param module, the module.
+	 * @param colors, the array of colors.
+	 */
+	private void colorModuleConnectors(Module module, Color[] colors){
+		int nrConnectors = module.getConnectors().size();
+		for (int connector=0; connector<nrConnectors;connector++){			
+			module.getConnectors().get(connector).setColor(colors[connector]);			
+		} 
+	}
+	
+	/**
+	 * Colors connectors of all modules in simulation with original colors of connectors.
+	 */
 	public void restoreOriginalColorsConnectors()throws RemoteException{
 		for(Module module: jmeSimulation.getModules()){
 			
@@ -396,24 +408,32 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 			
 			switch(SupportedModularRobots.valueOf(consistentMRName)){
 			case ATRON:
-				int nrConnectors = module.getConnectors().size();
-				for (int connector=0; connector<nrConnectors;connector++){			
-					module.getConnectors().get(connector).setColor(SupportedModularRobots.ATRON_CONNECTORS_COLORS[connector]);			
-				}  
+				colorModuleConnectors(module,SupportedModularRobots.ATRON_CONNECTORS_COLORS);
 				break;
 			case ODIN:
+				colorModuleConnectors(module,SupportedModularRobots.ODIN_CONNECTORS_COLORS);
 				break;
 			case MTRAN:
+				colorModuleConnectors(module,SupportedModularRobots.MTRAN_CONNECTORS_COLORS);
 				break;
 			case CKBOTSTANDARD:
+				colorModuleConnectors(module,SupportedModularRobots.CKBOTSTANDARD_CONNECTORS_COLORS);
 				break;			
-			}
-		/*	int nrConnectors = module.getConnectors().size();
-			for (int connector=0; connector<nrConnectors;connector++){			
-				module.getConnectors().get(connector).setColor(colors[connector]);			
-			} */ 
-			
+			}			
 		}	
+		
+	}
+	
+	/**
+	 * Checks if new module was added after last time checked. 
+	 * @param lastCheckAmountModules
+	 * @return
+	 */
+	public boolean isNewModuleAdded(int lastCheckAmountModules)throws RemoteException{
+		if (getIDsModules().size()>lastCheckAmountModules){
+			return true;
+		}
+		return false;
 		
 	}
 	

@@ -58,6 +58,13 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 		AssignBehaviorsTabController.updateHintPanel(hintPanelTypes, text);
 	}
 	
+	/**
+	 * Calls back GUI in order to indicate new module addition in simulation environment.
+	 */
+	public void newModuleAdded()throws RemoteException{
+		ConstructRobotTabController.newModuleAdded();		
+	}
+	
 	
 
 }

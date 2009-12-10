@@ -40,4 +40,9 @@ public interface GUICallbackControl extends Remote {
 	 */
 	public void updateHintPanelAssignBehaviorsTab(HintPanelTypes hintPanelTypes, String text)throws RemoteException;
 	
+	/**
+	 * Calls back GUI in order to indicate new module addition in simulation environment.
+	 */
+	public void newModuleAdded()throws RemoteException;
+	
 }
