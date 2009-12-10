@@ -263,6 +263,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	}
 
 	boolean firstTime = true;
+	boolean firstTimeNew = true;
 	List<Color> colorsComponents;
 	ArrayList<Color> colorsConnectors;
 	
@@ -282,19 +283,37 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 			}
 			callBackNewModuleAdded();
 			break;
-		case ON_CHOSEN_CONNECTOR_NR:		
+		case ON_CHOSEN_CONNECTOR_NR:	
+			//FIXME
+			if (selectedModuleType.contains("OdinBall")){
+				//int storeConnectorNumber = this.selectedConnectorNr;
+				if (firstTimeNew){
+					firstTimeNew =false;
 				this.selectOperations.addNewModuleOnConnector(this);
+				this.selectedConnectorNr = 0;
+				int nrModules = jmeSimulation.getModules().size();
+				this.selectedModule = jmeSimulation.getModules().get(nrModules -1);
+				this.selectOperations.addNewModuleOnConnector(this);
+				//this.selectedModule = null;
+				//this.selectedConnectorNr=1000;
+				}
+			}else{
+				
+				
+			}
+			
+				
 				callBackNewModuleAdded();
 			break;
 		case MOVE_MODULE_FROM_CON_TO_CON:
 				
 				
-				//FIXME THINK MORE HER
+				//FIXME THINK MORE HERE
 				
 				Random rand = new Random(selectedModule.getConnectors().size()-1);
 				this.selectedConnectorNr = rand.nextInt();
 				
-				int selectedModuleId = selectedModule.getID();				
+				int selectedModuleId = selectedModule.getID();	
 				int amountModules = jmeSimulation.getModules().size();
 				Module lastModule = jmeSimulation.getModules().get(amountModules-1);
 				int lastModuleId = lastModule.getID();
