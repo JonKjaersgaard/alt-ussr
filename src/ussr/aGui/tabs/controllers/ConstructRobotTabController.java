@@ -35,7 +35,7 @@ public class ConstructRobotTabController extends TabsControllers{
 	 * @param button, button selected in the group of radio button.
 	 */
 	public static void jButtonGroupActionPerformed(AbstractButton button ) {
-	
+
 		String chosenModularRobot = button.getText();			
 		chosenMRname = SupportedModularRobots.valueOf(chosenModularRobot.toUpperCase());
 
@@ -94,7 +94,7 @@ public class ConstructRobotTabController extends TabsControllers{
 			break;
 		}	
 	}
-	
+
 	/**
 	 * Adapts tab to ATRON modular robot
 	 */
@@ -127,7 +127,7 @@ public class ConstructRobotTabController extends TabsControllers{
 		ConstructRobotTab.getJButtonAvailableRotationsLoop().setEnabled(false);
 		ConstructRobotTab.getjComboBoxStandardRotations().setEnabled(false);
 		ConstructRobotTab.getJButtonOppositeRotation().setEnabled(true);		
-		
+
 		ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ODIN_BALL_CONNECTORS);
 		renderer.setPreferredSize(new Dimension(15, 15));
 		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setRenderer(renderer);
@@ -139,7 +139,7 @@ public class ConstructRobotTabController extends TabsControllers{
 	 */
 	private static void adaptTabToCKBOTSTANDARD(){
 		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel( CKBotStandardRotations.values() ));
-		
+
 		ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.CKBOTSTANDARD_CONNECTORS);
 		renderer.setPreferredSize(new Dimension(15, 15));
 		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setRenderer(renderer);
@@ -190,18 +190,18 @@ public class ConstructRobotTabController extends TabsControllers{
 	 * @param toggleButtonColorConnetors 
 	 */
 	public static void jButtonColorConnectorsActionPerformed(JToggleButton toggleButtonColorConnetors) {	
-			try {
-				if (toggleButtonColorConnetors.isSelected()){
-				builderControl.colorConnectors();
-				}else{
-					builderControl.restoreOriginalColorsConnectors();
-				}
-			} catch (RemoteException e) {
-				throw new Error("Failed to initate picker called Color Module Connectors, due to remote exception");
-			}	
-	
+		try {
+			if (toggleButtonColorConnetors.isSelected()){
+				builderControl.colorConnectorsModules();
+			}else{
+				builderControl.restoreOriginalColorsConnectors();
+			}
+		} catch (RemoteException e) {
+			throw new Error("Failed to initate picker called Color Module Connectors, due to remote exception");
+		}	
+
 		/*Informing user*/
-	    ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.COLOR_CONNECTORS.getHintText());
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.COLOR_CONNECTORS.getHintText());
 
 	}
 
@@ -258,8 +258,7 @@ public class ConstructRobotTabController extends TabsControllers{
 	 * Initializes the tool for adding new modules on selected connectors of the module in interest in simulation environment. 	
 	 */
 	public static void jButtonOnSelectedConnectorActionPerformed() {
-		constructionToolSelected();
-
+		constructionToolSelected();		
 		try {
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR);
 		} catch (RemoteException e) {
@@ -281,17 +280,39 @@ public class ConstructRobotTabController extends TabsControllers{
 	 */
 	public static void jComboBoxNrConnectorsConstructionToolActionPerformed(JComboBox comboBoxNrConnectorsConstructionTool) {
 		constructionToolSelected();
-
 		chosenConnectorNr = Integer.parseInt(comboBoxNrConnectorsConstructionTool.getSelectedItem().toString());
+		refreshSelectionColorConnectors();
+
 		try {
-			builderControl.colorConnectors();
+			builderControl.colorConnectorsModules();
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.ON_CHOSEN_CONNECTOR_NR,chosenConnectorNr);
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called "+ ConstructionTools.ON_CHOSEN_CONNECTOR_NR.toString()+ ", due to remote exception");
+			throw new Error("Failed to initiate picker called "+ ConstructionTools.ON_CHOSEN_CONNECTOR_NR.toString()+ ", due to remote exception");
 		}
 
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.ON_CHOSEN_CONNECTOR_NR.getHintText()+ chosenConnectorNr); 
+	}
+
+	/**
+	 * Refreshes selections of button for coloring connectors of modules.
+	 */
+	public static void refreshSelectionColorConnectors(){
+		ConstructRobotTab.getJToggleButtonColorConnetors().setSelected(true);
+		jButtonColorConnectorsActionPerformed(ConstructRobotTab.getJToggleButtonColorConnetors());
+	}
+
+	/**
+	 * Colors connectors of modules in case new module was added to simulation environment.
+	 */
+	public static void newModuleAdded(){
+		if (ConstructRobotTab.getJToggleButtonColorConnetors().isSelected()){
+			try {
+				builderControl.colorConnectorsModules();
+			} catch (RemoteException e) {
+				throw new Error("Failed to color connectors of modules, due to remote exception.");
+			}
+		}
 	}
 
 	/**
@@ -309,7 +330,7 @@ public class ConstructRobotTabController extends TabsControllers{
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.ON_ALL_CONNECTORS.getHintText());
 
 	}
-	
+
 	/**
 	 * Disables and enables Gui components in case when any of construction tools are selected(chosen).
 	 */
@@ -361,7 +382,7 @@ public class ConstructRobotTabController extends TabsControllers{
 		adaptTabToChosenMR(supportedModularRobot,true);
 		ConstructRobotTab.setRadioButtonsEnabled(false);
 		//constructionToolSelected();HERE
-		
+
 	}
 
 	/**
@@ -400,7 +421,7 @@ public class ConstructRobotTabController extends TabsControllers{
 				throw new Error ("Modular robot type "+modularRobotName+ "is not supported yet" );
 			}
 			constructionToolSelected();	
-			
+
 
 			try {
 				/*Set default construction tool to be "On selected  connector"*/
@@ -420,6 +441,7 @@ public class ConstructRobotTabController extends TabsControllers{
 		ConstructRobotTab.setRadioButtonsEnabled(true);
 		ConstructRobotTab.setEnabledAllToolBars(false);	
 		ConstructRobotTab.getButtonGroupModularRobots().clearSelection();
+		ConstructRobotTab.getJToggleButtonColorConnetors().setSelected(false);
 
 		//TODO SOMETIMES FAILS WHY?
 		try {
@@ -458,7 +480,7 @@ public class ConstructRobotTabController extends TabsControllers{
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called"+ConstructionTools.AVAILABLE_ROTATIONS.toString() +", due to remote exception");
 		}
-		
+
 
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.AVAILABLE_ROTATIONS.getHintText());
@@ -480,12 +502,12 @@ public class ConstructRobotTabController extends TabsControllers{
 		default: throw new Error ("The tool named as "+ chosenTool.toString() + " is not supported yet.");
 		}
 	}
-	
+
 	/**
 	 * The global ID of the module selected in simulation environment.
 	 */
 	private static int selectedModuleID;
-	
+
 	/**
 	 * Sets the global ID of the module selected in simulation environment.
 	 * @param selectedModuleID, the global ID of the module selected in simulation environment.

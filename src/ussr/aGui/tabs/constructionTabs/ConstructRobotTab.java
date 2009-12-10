@@ -533,6 +533,14 @@ public class ConstructRobotTab extends ConstructionTabs {
 	/*Getters and setters*/
 	
 	/**
+	 * Returns the button associated with functionality for coloring module connectors. 
+	 * @return the button associated with functionality for coloring module connectors.
+	 */
+	public static javax.swing.JToggleButton getJToggleButtonColorConnetors() {
+		return jToggleButtonColorConnetors;
+	}
+
+	/**
 	 * Returns the button for moving first(initial) module.
 	 * @return the button for moving first(initial) module.
 	 */
