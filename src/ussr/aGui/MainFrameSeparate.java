@@ -13,6 +13,8 @@ import javax.swing.JToggleButton;
 
 import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.MainFrameComponentsText;
+import ussr.physics.PhysicsParameters;
+import ussr.physics.jme.JMEBasicGraphicalSimulation;
 
 
 /**
@@ -21,8 +23,7 @@ import ussr.aGui.enumerations.MainFrameComponentsText;
  */
 @SuppressWarnings("serial")
 public class MainFrameSeparate extends MainFrames {
-
-    /**
+	/**
      * The width and height of this frame.
      */
     private final int FRAME_WIDTH_HALF = (int)SCREEN_VIABLE_WIDTH/2,
@@ -85,7 +86,7 @@ public class MainFrameSeparate extends MainFrames {
 		//JMenuBar is an exception here.
 		components.add(getJToolBarGeneralControl());
 		components.add(getJTabbedPaneFirst());
-		components.add(getJTabbedPaneSecond());		
+		components.add(getJTabbedPaneSecond());	
 	}
 
 	/**
@@ -138,7 +139,7 @@ public class MainFrameSeparate extends MainFrames {
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() {				
 				mainFrame = new MainFrameSeparate();
-				mainFrame.setVisible(true);				
+				mainFrame.setVisible(true);
 				setMainFrameSeparateEnabled(false);
 			}
 		});		
@@ -152,8 +153,8 @@ public class MainFrameSeparate extends MainFrames {
 	public void activate() {
 		MainFrameSeparate.main(null);
 	}
-	
 
+    
 	/**
 	 * Controls custom enabling of the main frame. Disables components so that the user have to load the simulation from xml file first.
 	 * @param enabled, true for main frame to be enabled. 

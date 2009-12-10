@@ -1,15 +1,12 @@
 package ussr.aGui;
 
-import java.awt.Cursor;
+
 import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.ImageIcon;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.MainFrameComponentsText;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
@@ -58,7 +55,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		initFileChoosers ();// initialize visual appearance of file choosers. Why here, because then they are responding faster to user generated events, because they are compiled earlier).
 		initFrameProperties();	
 	}
-
 
 	/**
 	 * Filters out and populates the tabs assigned to the first and second tabbed panes, into separate array lists. 
@@ -751,7 +747,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jCheckBoxMenuItemDebugging.setSelected(selected);
 		jToggleButtonMaximizeInteraction.setSelected(selected);
 	}
-		
+	
+	
 	/*Declaration of MainFrame components*/
 	private static javax.swing.JMenuBar jMenuBarMain;
 	private javax.swing.JMenu jMenuFile,jMenuRender,jMenuWindow,jMenuHide;
