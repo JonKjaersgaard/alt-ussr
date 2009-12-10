@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -27,7 +28,7 @@ import ussr.remote.facade.ParameterHolder;
  * Abstract class for running simulation batches
  * @author ups
  */
-public abstract class SimulationBatch2000 extends ThreadPoolExecutor implements ReturnValueHandler {
+public abstract class SimulationBatch2000 implements ReturnValueHandler {
 
     public static final int SERVER_PORT = 54323;
     public static final int LINE_BUFFER_SIZE = 20;
@@ -36,12 +37,9 @@ public abstract class SimulationBatch2000 extends ThreadPoolExecutor implements 
     
     private SimulationLauncherServer server;
     private PrintWriter writer;
-    private List<Worker> passiveWorkers = new ArrayList<Worker>();
     private Map<String,ParameterHolder> experimentParameters = new HashMap<String,ParameterHolder>();
-    private BlockingQueue<Runnable> workQueue = null;
 
     public SimulationBatch2000() {
-        super(DEFAULT_NUMBER_OF_THREADS,DEFAULT_NUMBER_OF_THREADS,THREAD_KEEPALIVE_MINS,TimeUnit.MINUTES,new LinkedBlockingQueue<Runnable>());
         // Start a simulation server (one that manages a number of running simulation processes)
         try {
             server = new SimulationLauncherServer(SimulationBatch2000.SERVER_PORT);
@@ -101,19 +99,18 @@ public abstract class SimulationBatch2000 extends ThreadPoolExecutor implements 
     }
     
     public void start(int max_parallel_sims, boolean terminateAtEnd) {
-        super.setCorePoolSize(max_parallel_sims);
-        super.setMaximumPoolSize(max_parallel_sims);
+        ThreadPoolExecutor batchExecutor = new ThreadPoolExecutor(max_parallel_sims,max_parallel_sims,THREAD_KEEPALIVE_MINS,TimeUnit.MINUTES,new LinkedBlockingQueue<Runnable>());
         int run = 0; 
         while(runMoreSimulations()) {
             ParameterHolder parameters = getNextParameters();
             Worker worker = new Worker(parameters, run++);
-            super.execute(worker);
+            batchExecutor.execute(worker);
             System.out.println("Assigning task...");
         }
         System.out.println("Waiting for task completion");
-        super.shutdown();
+        batchExecutor.shutdown();
         try {
-            while(!super.awaitTermination(1, TimeUnit.DAYS)) {
+            while(!batchExecutor.awaitTermination(1, TimeUnit.DAYS)) {
                 System.err.println("Warning: overly long delay while waiting for task completion");
             }
         } catch (InterruptedException e1) {
