@@ -31,175 +31,217 @@ import ussr.physics.jme.robots.JMECKBotFactory;
  * 
  */
 public class PhysicsFactory {
-    
-    /**
-     * Options for creating the simulation
-     * @author ups
-     */
-    public static class Options implements Cloneable {
-        private boolean exitOnQuit = true;
-        private TopologyWriter topologyWriter = new TopologyWriter() {
-            public void addConnection(Module m1, Module m2) { ; }
-            public void finish() { ; }
-        };
 
-        // Begin Horn
-        //private Set<CommunicationMonitor> monitors = new HashSet<CommunicationMonitor>();
-        // End Horn
+	/**
+	 * Options for creating the simulation
+	 * @author ups
+	 */
+	public static class Options implements Cloneable {
+	
+		
+		private boolean exitOnQuit = true;
+		private TopologyWriter topologyWriter = new TopologyWriter() {
+			public void addConnection(Module m1, Module m2) { ; }
+			public void finish() { ; }
+		};
 
-        private Set<CommunicationMonitor> monitors = new HashSet<CommunicationMonitor>();
-        private boolean startPaused = true;
-        private boolean headless = false;
-        private String resourceDirectory;
-        private boolean saveWindowSettingOnExit = false;
+		// Begin Horn
+		//private Set<CommunicationMonitor> monitors = new HashSet<CommunicationMonitor>();
+		// End Horn
 
-        public void set(Options other) {
-            this.exitOnQuit = other.exitOnQuit;
-            this.headless = other.headless;
-            this.monitors = other.monitors;
-            this.resourceDirectory = other.resourceDirectory;
-            this.saveWindowSettingOnExit = other.saveWindowSettingOnExit;
-            this.startPaused = other.startPaused;
-            this.topologyWriter = other.topologyWriter;
-        }
+		private Set<CommunicationMonitor> monitors = new HashSet<CommunicationMonitor>();
+		private boolean startPaused = true;
+		private boolean headless = false;
+		private String resourceDirectory;
+		private boolean saveWindowSettingOnExit = false;
+		private int xPosition=-1;//default value to indicate that simulation window position was not yet set.
+		private int yPosition=-1;//default value to indicate that simulation window position was not yet set.    
 
-        public Options copy() { 
-            try {
-                return (Options)clone();
-            } catch (CloneNotSupportedException e) {
-                throw new Error("Internal error");
-            } 
-        }
+		public void set(Options other) {
+			this.exitOnQuit = other.exitOnQuit;
+			this.headless = other.headless;
+			this.monitors = other.monitors;
+			this.resourceDirectory = other.resourceDirectory;
+			this.saveWindowSettingOnExit = other.saveWindowSettingOnExit;
+			this.startPaused = other.startPaused;
+			this.topologyWriter = other.topologyWriter;
+		}
 
-        public boolean getExitOnQuit() {
-            return exitOnQuit;
-        }
-        
-        public void setExitOnQuit(boolean exitOnQuit) {
-            this.exitOnQuit = exitOnQuit;
-        }
+		public Options copy() { 
+			try {
+				return (Options)clone();
+			} catch (CloneNotSupportedException e) {
+				throw new Error("Internal error");
+			} 
+		}
 
-        public TopologyWriter getTopologyWriter() {
-            return topologyWriter;
-        }
-        
-        public void setTopologyWriter(TopologyWriter writer) {
-            this.topologyWriter = writer;
-        }
-        
-        // Begin Horn
-        /*
+		public boolean getExitOnQuit() {
+			return exitOnQuit;
+		}
+
+		public void setExitOnQuit(boolean exitOnQuit) {
+			this.exitOnQuit = exitOnQuit;
+		}
+
+		public TopologyWriter getTopologyWriter() {
+			return topologyWriter;
+		}
+
+		public void setTopologyWriter(TopologyWriter writer) {
+			this.topologyWriter = writer;
+		}
+
+		// Begin Horn
+		/*
         public void addCommunicationMonitor(CommunicationMonitor monitor) {
             monitors.add(monitor);
         }
-        */
-        // End Horn
-        
-        // Begin Horn
-        /*
-        public Set<CommunicationMonitor> getMonitors() {
-            return monitors;
-        }
-        */
-        // End Horn
-        
-        public void addCommunicationMonitor(CommunicationMonitor monitor) {
-            monitors.add(monitor);
-        }
-        public Set<CommunicationMonitor> getMonitors() {
-            return monitors;
-        }
+		 */
+		// End Horn
 
-        public void setStartPaused(boolean startPaused) {
-            this.startPaused = startPaused;
+		// Begin Horn
+		/*
+        public Set<CommunicationMonitor> getMonitors() {
+            return monitors;
         }
-        
-        public boolean getStartPaused() {
-            return startPaused;
-        }
-        
-        /**
+		 */
+		// End Horn
+
+		public void addCommunicationMonitor(CommunicationMonitor monitor) {
+			monitors.add(monitor);
+		}
+		public Set<CommunicationMonitor> getMonitors() {
+			return monitors;
+		}
+
+		public void setStartPaused(boolean startPaused) {
+			this.startPaused = startPaused;
+		}
+
+		public boolean getStartPaused() {
+			return startPaused;
+		}
+
+		/**
 		 * If headless the simulator will not draw graphics
 		 */
-        public void setHeadless(boolean headless) {
-            this.headless = headless;
-        }
-        
-        public boolean getHeadless() {
-            return headless;
-        }
+		public void setHeadless(boolean headless) {
+			this.headless = headless;
+		}
 
-        
-        public void setResourceDirectory(String homeDir) {
-            resourceDirectory = homeDir;
-        }
-        
-        public String getResourceDirectory() {
-            return resourceDirectory;
-        }
+		public boolean getHeadless() {
+			return headless;
+		}
 
-        public void setSaveWindowSettingOnExit(boolean saveWindowSettingOnExit) {
+
+		public void setResourceDirectory(String homeDir) {
+			resourceDirectory = homeDir;
+		}
+
+		public String getResourceDirectory() {
+			return resourceDirectory;
+		}
+
+		public void setSaveWindowSettingOnExit(boolean saveWindowSettingOnExit) {
 			this.saveWindowSettingOnExit = saveWindowSettingOnExit;
 		}
 		public boolean getSaveWindowSettingOnExit() {
 			return saveWindowSettingOnExit;
 		}
 
-    }
-    
-    private static final ModuleFactory[] INITIAL_FACTORIES = new ModuleFactory[] { new JMEATRONFactory(), new JMEOdinFactory(), new JMEMTRANFactory(), new JMECKBotFactory() };
-    
-    private static ArrayList<ModuleFactory> factories = new ArrayList<ModuleFactory>(Arrays.asList(INITIAL_FACTORIES));
+		/**
+		 * Sets x and y positions of simulation window.
+		 * @param x, x position of simulation window.
+		 * @param y, y position of simulation window.
+		 */
+		public void setWindowPosition(int x, int y){
+			this.xPosition = x;
+			this.yPosition = y;
+		}
 
-    private static final Options options = new Options();
-    
-    /**
-     * Register a factory such that it can be used to create modules. 
-     * @param factory
-     */
-    public synchronized static void addFactory(ModuleFactory factory) {
-        factories.add(factory);
-    }
-    
-    /**
-     * Create a new physics simulation.  Parameterized with the currently registered set of factories	
-     * and the current options.
-     * @return a new physics simulation
-     */
-    public static PhysicsSimulation createSimulator() {
-        return new JMESimulation(factories.toArray(INITIAL_FACTORIES),options.copy());
-    }
+		/**
+		 * Returns x position of simulation window.
+		 * @return x position of simulation window.
+		 */
+		public int getXPosition() {
+			isNewWindowPositionSet();
+			return xPosition;
+		}
 
-    /**
-     * Register a default factory such that it can be used to create modules based
-     * on the robot description.
-     * @param robotPrefix the module type prefix that should use this factory 
-     * @see ussr.physics.jme.robots.JMEDefaultFactory
-     */
-    public static void addDefaultFactory(String robotPrefix) {
-        addFactory(new JMEDefaultFactory(robotPrefix));
-    }
-    
-    /**
-     * Display debug information about the physics factory
-     * @return String representing the debug information
-     */
-    public static String display() {
-        StringBuffer result = new StringBuffer(PhysicsFactory.class.getName().toString()+"[ ");
-        for(ModuleFactory factory: factories) {
-            result.append(factory.getModulePrefix());
-            result.append("* ");
-        }
-        result.append(']');
-        return result.toString();
-    }
+		/**
+		 * Returns y position of simulation window.
+		 * @return y position of simulation window.
+		 */
+		public int getYPosition() {
+			isNewWindowPositionSet();
+			return yPosition;		
+		}
 
-    /**
-     * Obtain the options instance, used to set parameters for the simulator
-     * @return the options instance
-     */
-    public static Options getOptions() {
-        return options;
-    }
+		/**
+		 * Checks if simulation window position was set or not before trying to get it.
+		 * @return true, for simulation window position was set.
+		 */
+		public boolean isNewWindowPositionSet(){
+			if (xPosition ==-1||yPosition==-1){
+				return false;
+			}
+			return true;
+		}
 
+	}
+
+	private static final ModuleFactory[] INITIAL_FACTORIES = new ModuleFactory[] { new JMEATRONFactory(), new JMEOdinFactory(), new JMEMTRANFactory(), new JMECKBotFactory() };
+
+	private static ArrayList<ModuleFactory> factories = new ArrayList<ModuleFactory>(Arrays.asList(INITIAL_FACTORIES));
+
+	private static final Options options = new Options();
+
+	/**
+	 * Register a factory such that it can be used to create modules. 
+	 * @param factory
+	 */
+	public synchronized static void addFactory(ModuleFactory factory) {
+		factories.add(factory);
+	}
+
+	/**
+	 * Create a new physics simulation.  Parameterized with the currently registered set of factories	
+	 * and the current options.
+	 * @return a new physics simulation
+	 */
+	public static PhysicsSimulation createSimulator() {
+		return new JMESimulation(factories.toArray(INITIAL_FACTORIES),options.copy());
+	}
+
+	/**
+	 * Register a default factory such that it can be used to create modules based
+	 * on the robot description.
+	 * @param robotPrefix the module type prefix that should use this factory 
+	 * @see ussr.physics.jme.robots.JMEDefaultFactory
+	 */
+	public static void addDefaultFactory(String robotPrefix) {
+		addFactory(new JMEDefaultFactory(robotPrefix));
+	}
+
+	/**
+	 * Display debug information about the physics factory
+	 * @return String representing the debug information
+	 */
+	public static String display() {
+		StringBuffer result = new StringBuffer(PhysicsFactory.class.getName().toString()+"[ ");
+		for(ModuleFactory factory: factories) {
+			result.append(factory.getModulePrefix());
+			result.append("* ");
+		}
+		result.append(']');
+		return result.toString();
+	}
+
+	/**
+	 * Obtain the options instance, used to set parameters for the simulator
+	 * @return the options instance
+	 */
+	public static Options getOptions() {
+		return options;
+	}
 }

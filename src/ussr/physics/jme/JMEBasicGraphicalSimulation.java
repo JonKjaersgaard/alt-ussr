@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import ussr.comm.monitors.visualtracker.CommunicationVisualizerGUI;
 import ussr.description.setup.WorldDescription;
+import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.PhysicsSimulation;
 import ussr.physics.SimulationGadget;
@@ -72,8 +73,9 @@ import com.jmex.terrain.TerrainBlock;
  * field that are used in JMESimulation to define the behavior of the physical simulation.
  * 
  * @author Modular Robots @ MMMI
- * @author Konstantinas (modified for builder). Added getter-setter methods for showing physics, normals,
+ * @author Konstantinas (modified for builder). 1) Added getter-setter methods for showing physics, normals,
  * bounds, lights, wireState, buffer depth, running simulation in real time and fast. 
+ * 2) introduced moving of simulation window when GUI is used.  
  */
 public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
@@ -690,7 +692,10 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 					properties.getDepth(), properties.getFreq(), properties
 					.getFullscreen() );	
 			
-			//display.moveWindowTo(0, 0);
+			/*used by Gui to move simulation window in new position*/
+			if (PhysicsFactory.getOptions().isNewWindowPositionSet()){
+			display.moveWindowTo(PhysicsFactory.getOptions().getXPosition(), PhysicsFactory.getOptions().getYPosition());
+			}
 				
 				
 		
