@@ -102,7 +102,5 @@ public interface RendererControlInter extends Remote {
 	 * @param showDepth, the state of showing the depth of the buffer.
 	 */
 	public void setShowDepth(boolean showDepth)throws RemoteException;
-	
-	public void moveDisplayTo()throws RemoteException;
-	
+
 }
