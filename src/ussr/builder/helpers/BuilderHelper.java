@@ -262,4 +262,7 @@ public class BuilderHelper {
 			}
 		}
 	}
+	
+	public static int randomNumberFromInterval(int min, int max) {
+		return min + (new Random()).nextInt(max-min);}
 }

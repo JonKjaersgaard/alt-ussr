@@ -54,12 +54,12 @@ public class MTRANConstructionTemplate extends ModularRobotConstructionTemplate 
 	/**
 	 * The offset for aligning two half boxes-cylinders together (connected)
 	 */
-	private final static float BOX_OFFSET_NR1 = 0.075f;
+	private final static float BOX_OFFSET_NR1 = 0.0750225f;//0.075f;
 
 	/**
 	 * The offset for aligning two half boxes-cylinders together (connected)
 	 */
-	private final static float BOX_OFFSET_NR2 = 0.065f;	
+	private final static float BOX_OFFSET_NR2 = 0.065325f;	//0.065f;	
 
 	/**
 	 * The array of objects containing information about MTRAN specific rotations.

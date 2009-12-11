@@ -346,8 +346,10 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 				this.selectedConnectorNr =0;
 			}
 		}else{
-			Random rand = new Random(selectedModule.getConnectors().size()-1);
-			this.selectedConnectorNr = rand.nextInt();
+		    //Random rand = new Random();
+			//this.selectedConnectorNr = rand.nextInt(selectedModule.getConnectors().size()-1);
+			this.selectedConnectorNr =-1;
+			
 		}
 
 
