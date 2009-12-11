@@ -50,6 +50,15 @@ public class MainFrameSeparate extends MainFrames {
 	 */
 	public final int TABBED_PANE1_HEIGHT = (int)((FRAME_HEIGHT-MENU_BAR_HEIGHT-HORIZONTAL_TOOLBAR_HEIGHT-TABBED_PANE2_HEIGHT- insets.top-insets.bottom -4*VERTICAL_GAPS));
 	
+	/**
+	 * X position of simulation window
+	 */
+	public static final int simWindowX = (int)SCREEN_VIABLE_WIDTH/2+2*HORIZONTAL_GAPS;
+
+	/**
+	 * Y position of simulation window
+	 */
+	public static final int simWindowY = 10;
 	
 	/**
 	 * Defines visual appearance of the main GUI frame (window), separate from simulation environment.

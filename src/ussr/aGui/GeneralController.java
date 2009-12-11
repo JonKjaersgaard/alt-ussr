@@ -82,4 +82,5 @@ public abstract class GeneralController {
 	public static void setSimulationXMLFileDirectory(String simulationXMLFileDirectory) {
 		GeneralController.simulationXMLFileDirectory = simulationXMLFileDirectory;
 	}
+	
 }
