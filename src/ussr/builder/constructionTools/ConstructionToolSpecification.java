@@ -29,12 +29,12 @@ import ussr.builder.helpers.SelectedModuleTypeMapHelper;
  */
 @SuppressWarnings("serial")
 public class ConstructionToolSpecification extends CustomizedPicker implements Serializable{
-	
+
 	/**
 	 * The physical simulation
 	 */
 	private JMESimulation jmeSimulation;
-	
+
 	/**
 	 * The interface to construction of modular robot morphology. This one is on the level of modules of modular robot(creation and movement of them).  
 	 */
@@ -127,7 +127,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 		if (modularRobotName == null){
 			throw new Error("Not supported modular robot");
 		}
-		
+
 		try {
 			RemotePhysicsSimulationImpl.getGUICallbackControl().adaptConstructRobotTabToSelectedModuleType(this.modularRobotName);
 		} catch (RemoteException e) {
@@ -213,7 +213,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 			callTool();	
 		}
 	}
-	
+
 	/**
 	 * Checks if the module selected in simulation environment is an ATRON module 
 	 * @return true, if selected module is an ATRON module
@@ -266,15 +266,15 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	boolean firstTimeNew = true;
 	List<Color> colorsComponents;
 	ArrayList<Color> colorsConnectors;
-	
-	
+
+
 	Module lastModuleNEW;
 	/**
 	 * Calls the tool for construction of modular robot morphology. 
 	 */
 	private void callTool(){
-		String selectedModuleType = selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
-		
+
+
 		switch(toolName){
 		case NEW_MODULE_ON_SELECTED_CONNECTOR:
 			if (connectorsMatch()){
@@ -285,9 +285,9 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 			break;
 		case ON_CHOSEN_CONNECTOR_NR:	
 			//FIXME
-			
+
 			this.selectOperations.addNewModuleOnConnector(this);
-			
+
 			/*if (selectedModuleType.contains("OdinBall")){
 				//int storeConnectorNumber = this.selectedConnectorNr;
 				if (firstTimeNew){
@@ -301,51 +301,15 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 				//this.selectedConnectorNr=1000;
 				}
 			}else{
-				
+
 				this.selectOperations.addNewModuleOnConnector(this);
 			}*/
-			
-				
-				callBackNewModuleAdded();
+
+
+			callBackNewModuleAdded();
 			break;
 		case MOVE_MODULE_FROM_CON_TO_CON:
-				
-				
-				//FIXME THINK MORE HERE
-				
-				Random rand = new Random(selectedModule.getConnectors().size()-1);
-				this.selectedConnectorNr = rand.nextInt();
-				
-				int selectedModuleId = selectedModule.getID();	
-				int amountModules = jmeSimulation.getModules().size();
-				Module lastModule = jmeSimulation.getModules().get(amountModules-1);
-				int lastModuleId = lastModule.getID();
-				
-				
-				if (timesSelected==0&&firstTime==true){
-					//check if exists
-					firstTime=false;
-					this.selectOperations.addNewModuleOnConnector(this);
-					int amountModulesNEW = jmeSimulation.getModules().size();
-					lastModuleNEW = jmeSimulation.getModules().get(amountModulesNEW-1);
-					colorsComponents = lastModuleNEW.getColorList();
-					colorsConnectors = BuilderHelper.getColorsConnectors(lastModuleNEW);
-					
-					lastModuleNEW.setColor(Color.GRAY);
-				}else if (timesSelected==this.construction.getConnectors().length){
-					resetTimesSelected();
-				}else if (selectedModuleId == lastModuleId){
-					firstTime=true;
-					resetTimesSelected();
-					lastModuleNEW.setColorList(colorsComponents);
-					BuilderHelper.setColorsConnectors(lastModuleNEW, colorsConnectors);
-					colorsComponents = null;
-				}else{				
-				jmeSimulation.getModules().get(amountModules-1);
-				this.construction.moveModuleAccording(timesSelected, selectedModule, lastModule, true);
-				
-				
-			}
+			activateJumpFromConToConTool();
 			callBackNewModuleAdded();
 			break;
 		case NEW_MODULES_ON_ALL_CONNECTORS:
@@ -367,7 +331,63 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 		default: throw new Error ("The tool with name: " + toolName +", is not supported yet.");
 		}
 	}
-	
+
+	/**
+	 * Activates tool for moving new module around selected one from to connnector onto another.
+	 */
+	private void activateJumpFromConToConTool(){
+		String selectedModuleType = selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
+
+		if (selectedModuleType.contains("Odin")){
+			if (selectedModuleType.contains("Ball")){
+				Random rand = new Random();
+				this.selectedConnectorNr = rand.nextInt(selectedModule.getConnectors().size()-1);
+			}else{
+				this.selectedConnectorNr =0;
+			}
+		}else{
+			Random rand = new Random(selectedModule.getConnectors().size()-1);
+			this.selectedConnectorNr = rand.nextInt();
+		}
+
+
+		int selectedModuleId = selectedModule.getID();	
+		int amountModules = jmeSimulation.getModules().size();
+		Module lastModule = jmeSimulation.getModules().get(amountModules-1);
+		String lastModuleType = lastModule.getProperty(BuilderHelper.getModuleTypeKey());
+		int lastModuleId = lastModule.getID();
+
+
+		if (timesSelected==0&&firstTime==true){
+			firstTime=false;
+			this.selectOperations.addNewModuleOnConnector(this);
+			int amountModulesNEW = jmeSimulation.getModules().size();
+			lastModuleNEW = jmeSimulation.getModules().get(amountModulesNEW-1);
+			colorsComponents = lastModuleNEW.getColorList();
+			colorsConnectors = BuilderHelper.getColorsConnectors(lastModuleNEW);
+
+			lastModuleNEW.setColor(Color.GRAY);
+		}else if (timesSelected==this.construction.getConnectors().length){
+			resetTimesSelected();
+		}else if (selectedModuleId == lastModuleId){
+			firstTime=true;
+			resetTimesSelected();
+			lastModuleNEW.setColorList(colorsComponents);
+			BuilderHelper.setColorsConnectors(lastModuleNEW, colorsConnectors);
+			colorsComponents = null;
+		}else{				
+			if (selectedModuleType.contains("Odin")){
+				if (lastModuleType.equalsIgnoreCase(selectedModuleType)|| selectedModuleType.contains("Ball")==false){
+
+				}else{
+					this.construction.moveModuleAccording(timesSelected, selectedModule, lastModule, true);
+				}
+			}else{
+				this.construction.moveModuleAccording(timesSelected, selectedModule, lastModule, true);
+			}
+		}
+	}
+
 	/**
 	 * Calls back GUI in order to indicate new module addition in simulation environment.
 	 */
@@ -444,5 +464,5 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	public int getSelectedConnectorNr() {
 		return selectedConnectorNr;
 	}	
-	
+
 }
