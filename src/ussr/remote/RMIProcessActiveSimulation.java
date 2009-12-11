@@ -166,4 +166,13 @@ public class RMIProcessActiveSimulation implements ActiveSimulation {
 	   verifyRemote();
 		return remoteSimulation.getXmlSimulationProvider();
 	}
+
+	 /**
+     * Sets simulation window position on the screen.
+     * @param x, x position of simulation window.
+     * @param y, y position of simulation window.
+     */
+	public void setWindowPosition(int x, int y) throws RemoteException {
+		this.remoteSimulation.setWindowPosition(x, y);	
+	}
 }

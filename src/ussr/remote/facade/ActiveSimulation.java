@@ -64,6 +64,4 @@ public interface ActiveSimulation extends RemoteActiveSimulation {
      */
     public ParameterHolder getParameters();
     
- 
-    
 }

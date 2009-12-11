@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.rmi.RemoteException;
+
+import ussr.aGui.FramesInter;
 import ussr.aGui.GeneralController;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrameSeparateController;
@@ -27,6 +29,7 @@ import ussr.remote.facade.RemotePhysicsSimulation;
 public class GUISimulationAdapter {
 
 	public static final int SERVER_PORT = 54323;
+	
 
 	/**
 	 * The server to run simulation on.
@@ -59,7 +62,10 @@ public class GUISimulationAdapter {
 		// Get standard output and error streams and direct them to GUI console tab, so that the buffer is not full, which will cause simulation to stop.
 		ConsoleTabController.appendStreamToConsole("StandardOut", simulation.getStandardOut());
 		ConsoleTabController.appendStreamToConsole("Error/Info/Warning", simulation.getStandardErr());
-		  // Discard standard out (avoid buffers running full)
+		
+		
+		// FIXME USED TEMPORARY
+		// Discard standard out (avoid buffers running full)
         simulation.discardStandardOut();
         // Get standard err, pass it to method that prints it in separate thread
         dumpStream("err", simulation.getStandardErr());
@@ -70,7 +76,10 @@ public class GUISimulationAdapter {
 			System.out.println("Waiting for simulation");
 			simulation.waitForReady();
 		}
-	//HERE
+		
+		/*Set new position of simulation window relative to GUI*/
+		simulation.setWindowPosition(MainFrameSeparate.simWindowX, MainFrameSeparate.simWindowY);
+	
 		
 		// Start a simulation in the remote process
 		new Thread() {
@@ -126,6 +135,7 @@ public class GUISimulationAdapter {
 
 	}
 	
+	// FIXME USED TEMPORARY
 	 /**
      * Dump an input stream to standard out, prefixing all lines with a fixed text 
      * @param prefix the prefix to use
@@ -148,4 +158,5 @@ public class GUISimulationAdapter {
             }
         }.start();
     }
+    
 }

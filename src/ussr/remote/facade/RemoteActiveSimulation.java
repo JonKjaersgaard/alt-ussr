@@ -63,4 +63,12 @@ public interface RemoteActiveSimulation extends Remote {
     public void start(String simulationXMLFile) throws RemoteException;
     
     public XMLSimulationProviderInter getXmlSimulationProvider()throws RemoteException; 
+    
+    /**
+     * Sets simulation window position on the screen.
+     * @param x, x position of simulation window.
+     * @param y, y position of simulation window.
+     */
+    public void setWindowPosition(int x, int y) throws RemoteException;
+
 }

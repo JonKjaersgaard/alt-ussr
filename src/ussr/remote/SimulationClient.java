@@ -177,4 +177,13 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
         new SimulationClient(portNumber,idNumber);
     }
 
+    /**
+     * Sets simulation window position on the screen.
+     * @param x, x position of simulation window.
+     * @param y, y position of simulation window.
+     */
+	public void setWindowPosition(int x, int y) throws RemoteException {
+		PhysicsFactory.getOptions().setWindowPosition(x,y);
+	}
+
 }
