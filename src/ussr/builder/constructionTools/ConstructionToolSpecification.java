@@ -285,7 +285,10 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 			break;
 		case ON_CHOSEN_CONNECTOR_NR:	
 			//FIXME
-			if (selectedModuleType.contains("OdinBall")){
+			
+			this.selectOperations.addNewModuleOnConnector(this);
+			
+			/*if (selectedModuleType.contains("OdinBall")){
 				//int storeConnectorNumber = this.selectedConnectorNr;
 				if (firstTimeNew){
 					firstTimeNew =false;
@@ -299,8 +302,8 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 				}
 			}else{
 				
-				
-			}
+				this.selectOperations.addNewModuleOnConnector(this);
+			}*/
 			
 				
 				callBackNewModuleAdded();
