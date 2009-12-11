@@ -1098,10 +1098,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
 	public boolean showAllConnectors() {
 		return showAllConnectors;
-	}
-	
-	public void moveDisplayTo(){
-		display.moveWindowTo(0, 0);
 	}	
 }
 

@@ -170,6 +170,4 @@ public interface PhysicsSimulation {
 
 
     public void waitForPhysicsTimestep(TimedPhysicsObserver observer);
-    
-    public void moveDisplayTo();
 }
