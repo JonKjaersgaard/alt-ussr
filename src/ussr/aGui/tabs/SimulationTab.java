@@ -138,7 +138,7 @@ public class SimulationTab extends Tabs {
 		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyConstraintForceMix);
 		DefaultMutableTreeNode thirdNodeHierarchyErrorReductionParameter = new DefaultMutableTreeNode(SimulationTabTreeNodes.Error_reduction_parameter.toString().replace("_", " "));
 		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyErrorReductionParameter);
-		DefaultMutableTreeNode thirdNodeHierarchyUseMouseEventQueue = new DefaultMutableTreeNode(SimulationTabTreeNodes.Use_mouse_event_queue.toString().replace("_", " "));
+		DefaultMutableTreeNode thirdNodeHierarchyUseMouseEventQueue = new DefaultMutableTreeNode(SimulationTabTreeNodes.Use_module_event_queue.toString().replace("_", " "));
 		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyUseMouseEventQueue);
 		DefaultMutableTreeNode thirdNodeHierarchySynchronizeWithControllers = new DefaultMutableTreeNode(SimulationTabTreeNodes.Synchronize_with_controllers.toString().replace("_", " "));
 		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchySynchronizeWithControllers);
@@ -442,7 +442,7 @@ public class SimulationTab extends Tabs {
 	}
 	
 	public static void addUseMouseEventQueueEditor() {
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Use_mouse_event_queue)));
+		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Use_module_event_queue)));
 		jCheckBoxUseMouseEventQueue = new javax.swing.JCheckBox ();
 		SimulationTabController.setSelectedJCheckBoxUseMouseEventQueue(jCheckBoxUseMouseEventQueue);		
 		jPanelEditor.add(jCheckBoxUseMouseEventQueue);		

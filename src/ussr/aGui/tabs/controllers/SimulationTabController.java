@@ -88,7 +88,7 @@ public class SimulationTabController extends TabsControllers {
 		case Error_reduction_parameter:
 			SimulationTab.addErrorReductionParameterEditor();
 			break;
-		case Use_mouse_event_queue:
+		case Use_module_event_queue:
 			SimulationTab.addUseMouseEventQueueEditor();
 			break;
 		case Synchronize_with_controllers:
