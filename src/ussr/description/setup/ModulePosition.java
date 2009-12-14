@@ -15,7 +15,6 @@ import ussr.description.geometry.VectorDescription;
 import com.jme.math.Matrix4f;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
-import com.jmex.model.collada.schema.faceType;
 
 /**
  * Global starting position of a module and annotations for the module
@@ -23,7 +22,7 @@ import com.jmex.model.collada.schema.faceType;
  * @author Modular Robots @ MMMI
  *
  */
-public class ModulePosition {
+public class ModulePosition{
     public static final String DEFAULT_ROBOT_TYPE = "default";
     
     private String name;

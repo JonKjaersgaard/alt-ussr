@@ -6,6 +6,8 @@
  */
 package ussr.description.geometry;
 
+import java.io.Serializable;
+
 import ussr.description.Description;
 
 import com.jme.math.Vector3f;
@@ -19,7 +21,7 @@ import com.jme.math.Vector3f;
  * @author Modular Robots @ MMMI
  *
  */
-public class VectorDescription extends Description {
+public class VectorDescription extends Description implements Serializable {
     
     /**
      * The x,y,z values of the vector
