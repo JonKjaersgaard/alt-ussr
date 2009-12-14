@@ -6,13 +6,15 @@ import java.util.Map;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModulePosition;
+import ussr.model.Module;
 
 /**
  * Supports saving and loading of data in XML format.
  * Is  based on SAX and DOM. Follows design pattern called TEMPLATE METHOD.
  * @author Konstantinas
  */
-public interface SaveLoadXMLFileTemplate {
+public interface SaveLoadXMLFileTemplateInter {
 	
 	/**
 	 * The string representation of XML file extension.
@@ -58,5 +60,7 @@ public interface SaveLoadXMLFileTemplate {
      */
 	public  Map<XMLTagsUsed, String> getRobotDescriptionValues();
 	
-	public Hashtable<String, VectorDescription> getRobotModules() ;
+	public Hashtable<Integer, ModulePosition> getRobotModules() ;
+	
+	public String getIdsModules();
 }

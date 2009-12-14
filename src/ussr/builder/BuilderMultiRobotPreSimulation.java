@@ -5,7 +5,7 @@ import java.util.Map;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
-import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
+import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
@@ -83,7 +83,7 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		BuilderMultiRobotPreSimulation simulation = new BuilderMultiRobotPreSimulation();
 				
 		/*Load Simulation Configuration file*/
-		SaveLoadXMLFileTemplate xmlLoaderSimulation = new PreSimulationXMLSerializer(/*new PhysicsParameters()*/);
+		SaveLoadXMLFileTemplateInter xmlLoaderSimulation = new PreSimulationXMLSerializer(/*new PhysicsParameters()*/);
 		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, xmlSimulationFile);
 		//xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, loadableSimulationFile);
         
@@ -210,7 +210,7 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		simulation.setPause(startPaused);
 
 		/*Load Robot Morphology file*/
-		SaveLoadXMLFileTemplate xmlLoaderRodbot = new PreSimulationXMLSerializer(world);
+		SaveLoadXMLFileTemplateInter xmlLoaderRodbot = new PreSimulationXMLSerializer(world);
 		xmlLoaderRodbot.loadXMLfile(UssrXmlFileTypes.ROBOT, simulationWorldDescription.get(XMLTagsUsed.MORPHOLOGY_LOCATION));
 
 		world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));

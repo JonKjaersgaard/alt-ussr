@@ -37,7 +37,7 @@ import ussr.physics.jme.JMESimulation;
  * @author Konstantinas
  *
  */ 
-public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplate {
+public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplateInter {
 
 	
 	protected String fileDirectoryName;

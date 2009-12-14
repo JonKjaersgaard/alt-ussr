@@ -11,9 +11,10 @@ import ussr.builder.helpers.ControllerFactory;
 import ussr.builder.helpers.ControllerFactoryImpl;
 import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
-import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
+import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
 import ussr.description.Robot;
 import ussr.description.geometry.VectorDescription;
+import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
@@ -32,9 +33,9 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
 	private static Map<XMLTagsUsed,String> simulationWorldDescription,simulationPhysicsParameters,
                                            robotDescription;
 	
-	private Map<String,VectorDescription> robotModules;
+	private Map<Integer,ModulePosition> robotModules;
 	
-	public Map<String, VectorDescription> getRobotModules() {
+	public Map<Integer,ModulePosition> getRobotModules() {
 		return robotModules;
 	}
 
@@ -42,9 +43,25 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
 	
 	private String robotMorphologyLocation;
 	
+	private SaveLoadXMLFileTemplateInter robotXMLLoader;
+	
+	private String idsModules;
+	
+	
+	public String getIdsModules() {
+		return idsModules;
+	}
+
+
+	public SaveLoadXMLFileTemplateInter getRobotXMLLoader() {
+		return robotXMLLoader;
+	}
+
+
 	public String getRobotMorphologyLocation() {
 		return robotMorphologyLocation;
 	}
+	
 
 	/**
 	 * Returns the robot in the simulation.
@@ -73,14 +90,14 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
         simulation = PhysicsFactory.createSimulator();
           
         /*Load Simulation Configuration file*/
-		SaveLoadXMLFileTemplate xmlLoaderSimulation = new PreSimulationXMLSerializer(/*new PhysicsParameters()*/);
+		SaveLoadXMLFileTemplateInter xmlLoaderSimulation = new PreSimulationXMLSerializer(/*new PhysicsParameters()*/);
 		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, simulationXMLfileName);
         
 		/*Get values from XML file*/
 		simulationWorldDescription = xmlLoaderSimulation.getSimulationWorldDescriptionValues();
         simulationPhysicsParameters = xmlLoaderSimulation.getSimulationPhysicsValues();
         robotDescription =  xmlLoaderSimulation.getRobotDescriptionValues();
-        robotModules = xmlLoaderSimulation.getRobotModules();
+       
         
         
         /*Converter for converting values from String into corresponding type used in USSR*/
@@ -100,8 +117,12 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
         robotMorphologyLocation = robotDescription.get(XMLTagsUsed.MORPHOLOGY_LOCATION);
      
         
-        SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);       
-        xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,robotMorphologyLocation);
+        robotXMLLoader = new PreSimulationXMLSerializer(world);       
+        robotXMLLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,robotMorphologyLocation);
+        
+        idsModules = robotXMLLoader.getIdsModules();
+        //robotModules = robotXMLLoader.getRobotModules();
+        //System.out.println("AMOUNT_RobotLOADER:"+ robotModules.size());
         
       
         simulation.setWorld(world); 
