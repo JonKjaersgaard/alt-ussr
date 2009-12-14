@@ -6,12 +6,6 @@
 <MORPHOLOGY_LOCATION>samples/simulations/atron/robots/simpleVehicleMorphology.xml</MORPHOLOGY_LOCATION>
 <CONTROLLER_LOCATION>ussr.samples.atron.simulations.ATRONSimpleVehicleController1</CONTROLLER_LOCATION>
 </ROBOT>
-<ROBOT>
-<TYPE>ATRON</TYPE>
-<NUMBER_OF_MODULES>7</NUMBER_OF_MODULES>
-<MORPHOLOGY_LOCATION>samples/simulations/atron/robots/simulation1Morphology.xml</MORPHOLOGY_LOCATION>
-<CONTROLLER_LOCATION>ussr.samples.atron.simulations.ATRONSimpleVehicleController1</CONTROLLER_LOCATION>
-</ROBOT>
 <WORLD_DESCRIPTION>
 <PLANE_SIZE>100</PLANE_SIZE>
 <PLANE_TEXTURE>resources/grid2.jpg</PLANE_TEXTURE>
