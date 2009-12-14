@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import ussr.aGui.tabs.SimulationTab;
+import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.builder.Loader;
 import ussr.builder.SimulationDescriptionConverter;
 import ussr.builder.SimulationXMLFileLoader;

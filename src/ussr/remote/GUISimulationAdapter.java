@@ -12,9 +12,11 @@ import ussr.aGui.GeneralController;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.MainFrames;
-import ussr.aGui.tabs.SimulationTab;
 import ussr.aGui.tabs.controllers.ConsoleTabController;
-import ussr.builder.RobotSpecification;
+import ussr.aGui.tabs.simulation.RobotSpecification;
+import ussr.aGui.tabs.simulation.TemporaryRobotSpecification;
+import ussr.aGui.tabs.simulation.SimulationSpecification;
+import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.remote.facade.ActiveSimulation;
 import ussr.remote.facade.GUICallbackControlImpl;
 import ussr.remote.facade.XMLSimulationProvider;
@@ -111,10 +113,10 @@ public class GUISimulationAdapter {
 			}
 		}
 		
-	    RobotSpecification.setMorphologyLocation(simulation.getXmlSimulationProvider().getRobotMorphologyLocation());
-	     //simulation.getXmlSimulationProvider().getRobotXMLLoader();
-	    //RobotSpecification.setRobotModules(simulation.getXmlSimulationProvider().getRobotModules());
-	    RobotSpecification.setIdsModules(simulation.getXmlSimulationProvider().getIDsModules());
+		String morphologyLocation = simulation.getXmlSimulationProvider().getRobotMorphologyLocation();
+	       String idsModules = simulation.getXmlSimulationProvider().getIDsModules();
+	    
+	    SimulationSpecification.robotsInSimulation.add(new RobotSpecification(morphologyLocation,idsModules));
 		callBackGUI(simulation,sim);
 	}
 	
