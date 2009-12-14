@@ -20,8 +20,9 @@ import ussr.aGui.enumerations.SimulationTabTreeNodes;
 import ussr.aGui.enumerations.TabsIcons;
 import ussr.aGui.enumerations.TextureDescriptions;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
-import ussr.aGui.tabs.SimulationTab;
-import ussr.builder.RobotSpecification;
+import ussr.aGui.tabs.simulation.SimulationSpecification;
+import ussr.aGui.tabs.simulation.TemporaryRobotSpecification;
+import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.physics.PhysicsParameters;
@@ -41,17 +42,20 @@ public class SimulationTabController extends TabsControllers {
 		SimulationTab.getJPanelEditor().revalidate();
 		SimulationTab.getJPanelEditor().repaint();
 
-
+ if (selectedNode.contains("RobotNr")){
+	 SimulationTab.addRobotEditor();
+ }else{
 		switch(SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_"))){
 
 		case Simulation://  break through
 		case World_description:
 		case Physics_parameters:
 			break;
-		case Robot:
-			SimulationTab.addRobotEditor();
-			break;
+		//case Robot+"nR":
+			
+			//break;
 		case Robots:
+			SimulationTab.addRobotNode();
 			SimulationTab.addRobotsEditor();
 			break;
 		case Physics_simulation_step_size:
@@ -117,6 +121,7 @@ public class SimulationTabController extends TabsControllers {
 		default: throw new Error("The node "+ selectedNode + "is not supported yet.");
 
 		}
+ }
 		SimulationTab.getJPanelEditor().validate();
 
 	}
@@ -295,7 +300,8 @@ public class SimulationTabController extends TabsControllers {
 		
 		
 		
-		String idsModules = RobotSpecification.getIdsModules();		
+		
+		String idsModules = SimulationSpecification.robotsInSimulation.get(0).getIdsModules();		
 		
 		String temp[] = idsModules.split(",");
 		for (int index = 1; index<temp.length;index++){

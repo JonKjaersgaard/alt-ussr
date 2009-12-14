@@ -1,4 +1,4 @@
-package ussr.aGui.tabs;
+package ussr.aGui.tabs.simulation;
 
 
 import java.awt.Dimension;
@@ -36,8 +36,8 @@ import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 
+import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
-import ussr.builder.RobotSpecification;
 import ussr.builder.helpers.StringProcessingHelper;
 
 import ussr.description.setup.WorldDescription.CameraPosition;
@@ -81,77 +81,10 @@ public class SimulationTab extends Tabs {
 
 		jPanelEditor = new javax.swing.JPanel(new GridBagLayout());
 
-		//First in hierarchy
-		final DefaultMutableTreeNode firstNodeHierarchySimulation = new DefaultMutableTreeNode(SimulationTabTreeNodes.Simulation.toString());
-
-		//Second in hierarchy
-		DefaultMutableTreeNode secondNodeHierarchyPhysicsSimulationStepSize =  new DefaultMutableTreeNode(SimulationTabTreeNodes.Physics_simulation_step_size.toString().replace("_", " "));
-		firstNodeHierarchySimulation.add(secondNodeHierarchyPhysicsSimulationStepSize);
-		DefaultMutableTreeNode secondNodeHierarchyResolutionFactor =  new DefaultMutableTreeNode(SimulationTabTreeNodes.Resolution_Factor.toString().replace("_", " "));
-		firstNodeHierarchySimulation.add(secondNodeHierarchyResolutionFactor);
 		
-		DefaultMutableTreeNode secondNodeHierarchyRobots =  new DefaultMutableTreeNode(SimulationTabTreeNodes.Robots.toString());
-		firstNodeHierarchySimulation.add(secondNodeHierarchyRobots);
-		
-		//Third in hierarchy
-		DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(SimulationTabTreeNodes.Robot.toString());
-		secondNodeHierarchyRobots.add(thirdNodeHierarchyRobot);
-		
-		//Fourth in hierarchy
-		DefaultMutableTreeNode fourthNodeHierarchyRobotType = new DefaultMutableTreeNode(SimulationTabTreeNodes.Type.toString());
-		thirdNodeHierarchyRobot.add(fourthNodeHierarchyRobotType);		
-		DefaultMutableTreeNode fourthNodeHierarchyMorphologyLocation = new DefaultMutableTreeNode(SimulationTabTreeNodes.Morphology.toString().replace("_", " "));
-		thirdNodeHierarchyRobot.add(fourthNodeHierarchyMorphologyLocation);		
-		DefaultMutableTreeNode fourthNodeHierarchyControllerLocation = new DefaultMutableTreeNode(SimulationTabTreeNodes.Controller.toString().replace("_", " "));
-		thirdNodeHierarchyRobot.add(fourthNodeHierarchyControllerLocation);
-
-		//Second in hierarchy
-		DefaultMutableTreeNode secondNodeHierarchyWorldDescription = new DefaultMutableTreeNode(SimulationTabTreeNodes.World_description.toString().replace("_", " "));
-		firstNodeHierarchySimulation.add(secondNodeHierarchyWorldDescription);
-
-		//Third in hierarchy
-		DefaultMutableTreeNode thirdNodeHierarchyPlaneSize =  new DefaultMutableTreeNode(SimulationTabTreeNodes.Plane_size.toString().replace("_", " "));
-		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyPlaneSize);
-		DefaultMutableTreeNode thirdNodeHierarchyPlaneTexture =  new DefaultMutableTreeNode(SimulationTabTreeNodes.Plane_texture.toString().replace("_", " "));
-		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyPlaneTexture);
-		DefaultMutableTreeNode thirdNodeHierarchyCameraPosition = new DefaultMutableTreeNode(SimulationTabTreeNodes.Camera_position.toString().replace("_", " "));
-		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyCameraPosition);
-		DefaultMutableTreeNode thirdNodeHierarchyTheWorldIsFlat = new DefaultMutableTreeNode(SimulationTabTreeNodes.The_world_is_flat.toString().replace("_", " "));
-		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyTheWorldIsFlat);
-		DefaultMutableTreeNode thirdNodeHierarchyHasBackgroundScenery = new DefaultMutableTreeNode(SimulationTabTreeNodes.Has_background_scenery.toString().replace("_", " "));
-		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyHasBackgroundScenery);
-		DefaultMutableTreeNode thirdNodeHierarchyHasHeavyObstacles = new DefaultMutableTreeNode(SimulationTabTreeNodes.Has_heavy_obstacles.toString().replace("_", " "));
-		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyHasHeavyObstacles);
-		DefaultMutableTreeNode thirdNodeHierarchyIsFrameGrabbingActive = new DefaultMutableTreeNode(SimulationTabTreeNodes.Is_frame_grabbing_active.toString().replace("_", " "));
-		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyIsFrameGrabbingActive);
-
-		//Second in hierarchy
-		DefaultMutableTreeNode secondNodeHierarchyPhysicsParameters = new DefaultMutableTreeNode(SimulationTabTreeNodes.Physics_parameters.toString().replace("_", " "));
-		firstNodeHierarchySimulation.add(secondNodeHierarchyPhysicsParameters);
-		
-		//Third in hierarchy
-		DefaultMutableTreeNode thirdNodeHierarchyDamping= new DefaultMutableTreeNode(SimulationTabTreeNodes.Damping.toString());
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyDamping);
-		
-		//Third in hierarchy
-		DefaultMutableTreeNode thirdNodeHierarchyRealisticCollision = new DefaultMutableTreeNode(SimulationTabTreeNodes.Realistic_collision.toString().replace("_", " "));
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyRealisticCollision);
-		DefaultMutableTreeNode thirdNodeHierarchyGravity = new DefaultMutableTreeNode(SimulationTabTreeNodes.Gravity.toString());
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyGravity);
-		DefaultMutableTreeNode thirdNodeHierarchyConstraintForceMix = new DefaultMutableTreeNode(SimulationTabTreeNodes.Constraint_force_mixing.toString().replace("_", " "));
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyConstraintForceMix);
-		DefaultMutableTreeNode thirdNodeHierarchyErrorReductionParameter = new DefaultMutableTreeNode(SimulationTabTreeNodes.Error_reduction_parameter.toString().replace("_", " "));
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyErrorReductionParameter);
-		DefaultMutableTreeNode thirdNodeHierarchyUseMouseEventQueue = new DefaultMutableTreeNode(SimulationTabTreeNodes.Use_module_event_queue.toString().replace("_", " "));
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyUseMouseEventQueue);
-		DefaultMutableTreeNode thirdNodeHierarchySynchronizeWithControllers = new DefaultMutableTreeNode(SimulationTabTreeNodes.Synchronize_with_controllers.toString().replace("_", " "));
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchySynchronizeWithControllers);
-		DefaultMutableTreeNode thirdNodeHierarchyPhysicsSimulationControllerStepFactor = new DefaultMutableTreeNode(SimulationTabTreeNodes.Physics_simulation_controller_step_factor.toString().replace("_", " "));
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyPhysicsSimulationControllerStepFactor );
 
 
-		jTree1 = new javax.swing.JTree(firstNodeHierarchySimulation);
-
+		jTree1 = new javax.swing.JTree(initializeRootNode());
 		
 		ImageIcon closedIcon = TabsIcons.EXPANSION_CLOSED_SMALL.getImageIcon();
 		ImageIcon openIcon = TabsIcons.EXPANSION_OPENED_SMALL.getImageIcon();
@@ -225,11 +158,100 @@ public class SimulationTab extends Tabs {
 
 	}
 	
+	
+	private DefaultMutableTreeNode initializeRootNode(){
+		//First in hierarchy
+		firstNodeHierarchySimulation = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Simulation));
+
+		//Second in hierarchy
+		DefaultMutableTreeNode secondNodeHierarchyPhysicsSimulationStepSize =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Physics_simulation_step_size));
+		firstNodeHierarchySimulation.add(secondNodeHierarchyPhysicsSimulationStepSize);
+		DefaultMutableTreeNode secondNodeHierarchyResolutionFactor =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Resolution_Factor));
+		firstNodeHierarchySimulation.add(secondNodeHierarchyResolutionFactor);
+		
+		secondNodeHierarchyRobots =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Robots));
+		firstNodeHierarchySimulation.add(secondNodeHierarchyRobots);
+		
+		//Third in hierarchy
+		//DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Robot));
+		//secondNodeHierarchyRobots.add(thirdNodeHierarchyRobot);
+		
+		//Fourth in hierarchy
+/*		DefaultMutableTreeNode fourthNodeHierarchyRobotType = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Type));
+		thirdNodeHierarchyRobot.add(fourthNodeHierarchyRobotType);		
+		DefaultMutableTreeNode fourthNodeHierarchyMorphologyLocation = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Morphology));
+		thirdNodeHierarchyRobot.add(fourthNodeHierarchyMorphologyLocation);		
+		DefaultMutableTreeNode fourthNodeHierarchyControllerLocation = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Controller));
+		thirdNodeHierarchyRobot.add(fourthNodeHierarchyControllerLocation);*/
+
+		//Second in hierarchy
+		DefaultMutableTreeNode secondNodeHierarchyWorldDescription = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.World_description));
+		firstNodeHierarchySimulation.add(secondNodeHierarchyWorldDescription);
+
+		//Third in hierarchy
+		DefaultMutableTreeNode thirdNodeHierarchyPlaneSize =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Plane_size));
+		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyPlaneSize);
+		DefaultMutableTreeNode thirdNodeHierarchyPlaneTexture =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Plane_texture));
+		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyPlaneTexture);
+		DefaultMutableTreeNode thirdNodeHierarchyCameraPosition = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Camera_position));
+		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyCameraPosition);
+		DefaultMutableTreeNode thirdNodeHierarchyTheWorldIsFlat = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.The_world_is_flat));
+		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyTheWorldIsFlat);
+		DefaultMutableTreeNode thirdNodeHierarchyHasBackgroundScenery = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Has_background_scenery));
+		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyHasBackgroundScenery);
+		DefaultMutableTreeNode thirdNodeHierarchyHasHeavyObstacles = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Has_heavy_obstacles));
+		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyHasHeavyObstacles);
+		DefaultMutableTreeNode thirdNodeHierarchyIsFrameGrabbingActive = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Is_frame_grabbing_active));
+		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyIsFrameGrabbingActive);
+
+		//Second in hierarchy
+		DefaultMutableTreeNode secondNodeHierarchyPhysicsParameters = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Physics_parameters));
+		firstNodeHierarchySimulation.add(secondNodeHierarchyPhysicsParameters);
+		
+		//Third in hierarchy
+		DefaultMutableTreeNode thirdNodeHierarchyDamping= new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Damping));
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyDamping);
+		
+		//Third in hierarchy
+		DefaultMutableTreeNode thirdNodeHierarchyRealisticCollision = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Realistic_collision));
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyRealisticCollision);
+		DefaultMutableTreeNode thirdNodeHierarchyGravity = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Gravity));
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyGravity);
+		DefaultMutableTreeNode thirdNodeHierarchyConstraintForceMix = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Constraint_force_mixing));
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyConstraintForceMix);
+		DefaultMutableTreeNode thirdNodeHierarchyErrorReductionParameter = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Error_reduction_parameter));
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyErrorReductionParameter);
+		DefaultMutableTreeNode thirdNodeHierarchyUseMouseEventQueue = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Use_module_event_queue));
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyUseMouseEventQueue);
+		DefaultMutableTreeNode thirdNodeHierarchySynchronizeWithControllers = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Synchronize_with_controllers));
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchySynchronizeWithControllers);
+		DefaultMutableTreeNode thirdNodeHierarchyPhysicsSimulationControllerStepFactor = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Physics_simulation_controller_step_factor));
+		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyPhysicsSimulationControllerStepFactor );
+		
+		return firstNodeHierarchySimulation;
+	}
+	
+	
+	private static int robotNr = 0;
+	public static void addRobotNode(){
+		robotNr++;
+		//Third in hierarchy
+		DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Robot)+"Nr."+robotNr);
+		secondNodeHierarchyRobots.add(thirdNodeHierarchyRobot);
+	} 
+	
+	
 	public static void addRobotsEditor(){
 		jPanelEditor.add(createNewLabel("Load new robot "));
 		jPanelEditor.add(initOpenButton());
 		
+		//jTree1.getModel().getChild(parent, 0);
+		
+		
+		
 	}
+	
+	
 	
 	public static void addRobotEditor(){
 		//jPanelEditor.add(createNewLabel("Robot"));
@@ -623,7 +645,7 @@ public class SimulationTab extends Tabs {
 		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
         //System.out.println("BOOO"+RobotSpecification.getMorphologyLocation());
 		
-		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,RobotSpecification.getMorphologyLocation());
+		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,TemporaryRobotSpecification.getMorphologyLocation());
 		fcOpenFrame.setSelectedFile(new File("some.xml"));
 		
 		jPanelEditor.add(MainFrames.initOpenButton(fcOpenFrame));
@@ -679,7 +701,7 @@ public class SimulationTab extends Tabs {
 	jSpinnerErrorReductionParameter, jSpinnerResolutionFactor, jPhysicsSimulationControllerStepFactor,
 	jSpinnerCoordinateValue;
 
-	
+	private static  DefaultMutableTreeNode firstNodeHierarchySimulation,secondNodeHierarchyRobots ;
 	
 
 	

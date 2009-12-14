@@ -2,12 +2,12 @@ package ussr.aGui;
 
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.tabs.ConsoleTab;
-import ussr.aGui.tabs.SimulationTab;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.YourNewTab;
 import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.constructionTabs.LabelingTab;
+import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.aGui.tabs.visualizer.ModuleCommunicationVisualizer;
 
 
