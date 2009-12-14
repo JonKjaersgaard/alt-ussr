@@ -45,7 +45,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	 * @param transformerHandler,the content handler used to print out XML format. 
 	 */
 	public void printOutXML(UssrXmlFileTypes ussrXmlFileType, TransformerHandler transformerHandler) {
-		
+
 		switch(ussrXmlFileType){
 		case ROBOT:
 			printRobotXML(transformerHandler);
@@ -53,11 +53,11 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 		case SIMULATION:
 			printSimulationXML(transformerHandler);
 			break;
-			default: throw new Error("XML file type named as "+ ussrXmlFileType.toString()+ " is not supported yet");
+		default: throw new Error("XML file type named as "+ ussrXmlFileType.toString()+ " is not supported yet");
 		}
-	
+
 	}
-	
+
 	/**
 	 * Saves the data about the robot in simulation environment in XML file.
 	 * @param transformerHandler,the content handler used to print out XML format.
@@ -93,7 +93,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 		}
 		printFirstEndTag(transformerHandler, XMLTagsUsed.MODULES);	
 	}
-	
+
 	/**
 	 * Saves the data about simulation environment(world description and physics parameters) in XML file.
 	 * @param transformerHandler,the content handler used to print out XML format.
@@ -105,32 +105,32 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 		try {
 
 			transformerHandler.startElement("","",XMLTagsUsed.ROBOT.toString(),EMPTY_ATT);
-            
-			
+
+
 			moduleType = StringProcessingHelper.covertToString(getType(getModuleByIndex(0)));		
-			
+
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.TYPE, moduleType.toCharArray());				
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.NUMBER_OF_MODULES, (""+getWorldDescription().getNumberOfModules()).toCharArray());
-			
+
 			String directory = FileDirectoryHelper.extractDirectory(fileDirectoryName);
 			robotMorphologyFileLocation = directory+DEFAULT_DIRECTORY_ROBOTS+"\\"+SupportedModularRobots.getConsistentMRName(moduleType).toLowerCase()+XML_EXTENSION;
-				
+
 			//robotMorphologyFileLocation = directory;//+ "morphologies"+"\\"+ BuilderHelper.getRandomInt();
-						
+
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.MORPHOLOGY_LOCATION, robotMorphologyFileLocation.toCharArray());
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.CONTROLLER_LOCATION, getControllerLocation(getModuleByIndex(0)));
-			
+
 			transformerHandler.endElement("","",XMLTagsUsed.ROBOT.toString());
 
 			transformerHandler.startElement("","",XMLTagsUsed.WORLD_DESCRIPTION.toString(),EMPTY_ATT);
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.PLANE_SIZE, (""+getWorldDescription().getPlaneSize()).toCharArray());
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.PLANE_TEXTURE,  getWorldDescription().getPlaneTexture().getFileName().toString().toCharArray());			
-		    printSubTagsWithValue(transformerHandler, XMLTagsUsed.CAMERA_POSITION, getWorldDescription().getCameraPosition().toString().toCharArray());			    
-		    printSubTagsWithValue(transformerHandler, XMLTagsUsed.THE_WORLD_IS_FLAT, (""+getWorldDescription().theWorldIsFlat()).toCharArray());
-		    printSubTagsWithValue(transformerHandler, XMLTagsUsed.HAS_BACKGROUND_SCENERY, (""+getWorldDescription().hasBackgroundScenery()).toCharArray());
-		    printSubTagsWithValue(transformerHandler, XMLTagsUsed.HAS_HEAVY_OBSTACLES, (""+getWorldDescription().hasBackgroundScenery()).toCharArray());
-		    printSubTagsWithValue(transformerHandler, XMLTagsUsed.IS_FRAME_GRABBING_ACTIVE, (""+getWorldDescription().getIsFrameGrabbingActive()).toCharArray());
-		    printSubTagsWithValue(transformerHandler, XMLTagsUsed.BIG_OBSTACLES, extractPositionsObstacles(getWorldDescription().getBigObstacles()));
+			printSubTagsWithValue(transformerHandler, XMLTagsUsed.CAMERA_POSITION, getWorldDescription().getCameraPosition().toString().toCharArray());			    
+			printSubTagsWithValue(transformerHandler, XMLTagsUsed.THE_WORLD_IS_FLAT, (""+getWorldDescription().theWorldIsFlat()).toCharArray());
+			printSubTagsWithValue(transformerHandler, XMLTagsUsed.HAS_BACKGROUND_SCENERY, (""+getWorldDescription().hasBackgroundScenery()).toCharArray());
+			printSubTagsWithValue(transformerHandler, XMLTagsUsed.HAS_HEAVY_OBSTACLES, (""+getWorldDescription().hasBackgroundScenery()).toCharArray());
+			printSubTagsWithValue(transformerHandler, XMLTagsUsed.IS_FRAME_GRABBING_ACTIVE, (""+getWorldDescription().getIsFrameGrabbingActive()).toCharArray());
+			printSubTagsWithValue(transformerHandler, XMLTagsUsed.BIG_OBSTACLES, extractPositionsObstacles(getWorldDescription().getBigObstacles()));
 			transformerHandler.endElement("","",XMLTagsUsed.WORLD_DESCRIPTION.toString());
 
 			transformerHandler.startElement("","",XMLTagsUsed.PHYSICS_PARAMETERS.toString(),EMPTY_ATT);
@@ -141,9 +141,9 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.GRAVITY, (""+PhysicsParameters.get().getGravity()).toCharArray());
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.PLANE_MATERIAL, PhysicsParameters.get().getPlaneMaterial().toString().toCharArray());
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS, (""+PhysicsParameters.get().getMaintainRotationalJointPositions()).toCharArray());
-		//	printSubTagsWithValue(transformerHandler, TagsUsed.HAS_MECHANICAL_CONNECTOR_SPRINGINESS, (""+PhysicsParameters.get().hasMechanicalConnectorSpringiness()).toCharArray());
-		//	printSubTagsWithValue(transformerHandler, TagsUsed.MECHANICAL_CONNECTOR_CONSTANT, (""+PhysicsParameters.get().getMechanicalConnectorConstant()).toCharArray());
-		//  printSubTagsWithValue(transformerHandler, TagsUsed.MECHANICAL_CONNECTOR_DAMPING, (""+PhysicsParameters.get().getMechanicalConnectorDamping()).toCharArray());
+			//	printSubTagsWithValue(transformerHandler, TagsUsed.HAS_MECHANICAL_CONNECTOR_SPRINGINESS, (""+PhysicsParameters.get().hasMechanicalConnectorSpringiness()).toCharArray());
+			//	printSubTagsWithValue(transformerHandler, TagsUsed.MECHANICAL_CONNECTOR_CONSTANT, (""+PhysicsParameters.get().getMechanicalConnectorConstant()).toCharArray());
+			//  printSubTagsWithValue(transformerHandler, TagsUsed.MECHANICAL_CONNECTOR_DAMPING, (""+PhysicsParameters.get().getMechanicalConnectorDamping()).toCharArray());
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.CONSTRAINT_FORCE_MIX, (""+PhysicsParameters.get().getConstraintForceMix()).toCharArray());
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.ERROR_REDUCTION_PARAMETER, (""+PhysicsParameters.get().getErrorReductionParameter()).toCharArray());
 			printSubTagsWithValue(transformerHandler, XMLTagsUsed.RESOLUTION_FACTOR, (""+PhysicsParameters.get().getResolutionFactor()).toCharArray());
@@ -156,17 +156,17 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 		}
 
 		printFirstEndTag(transformerHandler, XMLTagsUsed.SIMULATION);
-	
+
 		getInstance().saveXMLfile(UssrXmlFileTypes.ROBOT, robotMorphologyFileLocation);
-				
+
 	}
-	
-	 /**
-	  * Returns instance of XML processing class.
+
+	/**
+	 * Returns instance of XML processing class.
 	 * @return  current instance of XML processing.
 	 */
 	protected abstract InSimulationXMLSerializer getInstance();
-	
+
 	/**
 	 * Returns module in simulation  environment by its index in the list of modules.
 	 * @param moduleIndex, the index of the module to return,
@@ -185,7 +185,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	 * @return the amount of modules in simulation environment.
 	 */
 	protected abstract int numberOfSimulatedModules();
-	
+
 	/**  
 	 * Loads the data about simulation from chosen XML file into simulation.
 	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
@@ -200,13 +200,13 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 		case SIMULATION:
 			loadSimulationXML(document);
 			break;
-			default: throw new Error("XML file type named as "+ ussrXmlFileType.toString()+ " is not supported yet");
+		default: throw new Error("XML file type named as "+ ussrXmlFileType.toString()+ " is not supported yet");
 		}
 	}
-	
+
 	private String idsModules="";
-	
-	
+
+
 	public String getIdsModules() {
 		return idsModules;
 	}
@@ -218,7 +218,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	private void loadRobotXML(Document document){
 		int moduleGlobalID =-1;
 		NodeList nodeList = document.getElementsByTagName(XMLTagsUsed.MODULE.toString());
-		
+
 		for (int node = 0; node < nodeList.getLength(); node++) {
 			Node firstNode = nodeList.item(node);
 
@@ -227,29 +227,29 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 
 				Element firstElmnt = (Element) firstNode;				
 				//String moduleID = extractTagValue(firstElmnt,XMLTagsUsed.ID);
-			    String moduleType = extractTagValue(firstElmnt,XMLTagsUsed.TYPE);
+				String moduleType = extractTagValue(firstElmnt,XMLTagsUsed.TYPE);
 				String moduleName = extractTagValue(firstElmnt,XMLTagsUsed.NAME);
 				String moduleRotation = extractTagValue(firstElmnt,XMLTagsUsed.ROTATION);		
 				String moduleRotationQuaternion = extractTagValue(firstElmnt,XMLTagsUsed.ROTATION_QUATERNION);
 				String modulePosition = extractTagValue(firstElmnt,XMLTagsUsed.POSITION);				
-				
+
 				//String modulePositionVector = extractTagValue(firstElmnt,positionVectorTag);
 				String labelsModule = extractTagValue(firstElmnt,XMLTagsUsed.LABELS_MODULE);
 				if (labelsModule.contains(BuilderHelper.getTempLabel())){
 					labelsModule = labelsModule.replaceAll(BuilderHelper.getTempLabel(), "");
 				}				
-				
+
 				int amountComponents = Integer.parseInt(extractTagValue(firstElmnt,XMLTagsUsed.COMPONENTS));
 				String colorsComponents = extractTagValue(firstElmnt,XMLTagsUsed.COLORS_COMPONENTS);				
 				LinkedList<Color> listColorsComponents = extractColorsComponents(amountComponents, colorsComponents);				
-				
+
 				int amountConnectors = Integer.parseInt(extractTagValue(firstElmnt,XMLTagsUsed.CONNECTORS));
 				String colorsConnectors = extractTagValue(firstElmnt,XMLTagsUsed.COLORS_CONNECTORS);				
 				LinkedList<Color> listColorsConnectors= extractColoursConnectors(amountConnectors,colorsConnectors);
 
 				String labelsConnectors = extractTagValue(firstElmnt,XMLTagsUsed.LABELS_CONNECTORS);
 				String tempLabelsConnectors[] = labelsConnectors.split(",");	
-				
+
 				RotationDescription rotationDescription = new RotationDescription();
 				rotationDescription.setRotation(new Quaternion(extractFromQuaternion(moduleRotationQuaternion,"X"),extractFromQuaternion(moduleRotationQuaternion,"Y"),extractFromQuaternion(moduleRotationQuaternion,"Z"),extractFromQuaternion(moduleRotationQuaternion,"W")));
 
@@ -257,16 +257,16 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 				float moduleYposition = StringProcessingHelper.extractFromPosition(modulePosition, "Y");
 				float moduleZposition = StringProcessingHelper.extractFromPosition(modulePosition, "Z");
 				VectorDescription moduleVecPosition = new  VectorDescription(moduleXposition,moduleYposition,moduleZposition);
-                createNewModule(moduleName,moduleType,moduleVecPosition,rotationDescription,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
-			
-	
+				createNewModule(moduleName,moduleType,moduleVecPosition,rotationDescription,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
+
+
 				idsModules = idsModules +"," +moduleGlobalID;
-				
-                //System.out.println("AMOUNT_START:"+ robotModules.size());
-				
-				
-//FIXME IN CASE THERE IS A NEED TO EXTRACT THE STATE OF CONNECTORS
-					/*NodeList sixthNmElmntLst = fstElmnt.getElementsByTagName("CONNECTOR");
+
+				//System.out.println("AMOUNT_START:"+ robotModules.size());
+
+
+				//FIXME IN CASE THERE IS A NEED TO EXTRACT THE STATE OF CONNECTORS
+				/*NodeList sixthNmElmntLst = fstElmnt.getElementsByTagName("CONNECTOR");
 				int amountConnectorNodes = sixthNmElmntLst.getLength();
 				System.out.println("amountConnectorNodes:"+amountConnectorNodes );
 
@@ -279,70 +279,66 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 			}
 		}	
 	}
-	
+
 	/**
 	 * Container for keeping simulation values of world description object, physics parameters object and robot desription.
 	 */
 	private Map<XMLTagsUsed, String> simulationWorldValues = new Hashtable<XMLTagsUsed, String>(),
-	                                 simulationPhysicsValues = new Hashtable<XMLTagsUsed, String>(),
-                                     robotDescription = new Hashtable<XMLTagsUsed, String>();
-	
+	simulationPhysicsValues = new Hashtable<XMLTagsUsed, String>(),
+	robotDescription = new Hashtable<XMLTagsUsed, String>();
+
 	/**
-     * Returns values of physics parameters object taken from xml file describing simulation.
+	 * Returns values of physics parameters object taken from xml file describing simulation.
 	 * @return values of physics parameters object taken from xml file describing simulation.
 	 */
 	public Map<XMLTagsUsed, String> getSimulationPhysicsValues() {
 		return simulationPhysicsValues;
 	}
-	
-	 /**
-     * Returns values of world description object taken from xml file describing simulation.
-     * @return values of world description object taken from xml file describing simulation.
-     */
+
+	/**
+	 * Returns values of world description object taken from xml file describing simulation.
+	 * @return values of world description object taken from xml file describing simulation.
+	 */
 	public Map<XMLTagsUsed, String> getSimulationWorldDescriptionValues() {
 		return simulationWorldValues;
 	}
-	
-	 /**
-     * Returns values of robot description object taken from xml file describing simulation.
-     * @return values of robot description object taken from xml file describing simulation.
-     */
+
+	/**
+	 * Returns values of robot description object taken from xml file describing simulation.
+	 * @return values of robot description object taken from xml file describing simulation.
+	 */
 	public Map<XMLTagsUsed, String> getRobotDescriptionValues() {
 		return robotDescription;
 	}
-	
+
+	int robotNrCounter=1;
+
 	/**
 	 * Loads simulation environment parameters from XML description file.
 	 * @param document, DOM object of document. 
 	 */
-	private void loadSimulationXML(Document document){		
-		
-    NodeList nodeList2 = document.getElementsByTagName(XMLTagsUsed.ROBOT.toString());
-		
-		for (int node = 0; node < nodeList2.getLength(); node++) {
-			Node firstNode = nodeList2.item(node);
+	private void loadSimulationXML(Document document){	
 
-			if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+		NodeList nodeListRobotXMLValues;
 
-				Element firstElmnt = (Element) firstNode;				
-		
-				robotDescription.put(XMLTagsUsed.MORPHOLOGY_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION));
-				robotDescription.put(XMLTagsUsed.CONTROLLER_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.CONTROLLER_LOCATION));
-				//SimulationSpecification.robotsInSimulation.add(new RobotSpecification(extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION), null));
-				//STOPPED HERE
+		if(document.getElementsByTagName(XMLTagsUsed.ROBOT_NR.toString()+robotNrCounter)!=null){
+			
+				nodeListRobotXMLValues = document.getElementsByTagName(XMLTagsUsed.ROBOT_NR.toString()+robotNrCounter);
+				extractRobotXMLValues(nodeListRobotXMLValues);
+				robotNrCounter++;
+
 			}
-		}		
-		
-		
+
+
 		NodeList nodeList = document.getElementsByTagName(XMLTagsUsed.WORLD_DESCRIPTION.toString());
-		
+
 		for (int node = 0; node < nodeList.getLength(); node++) {
 			Node firstNode = nodeList.item(node);
 
 			if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
 
 				Element firstElmnt = (Element) firstNode;				
-		
+
 				simulationWorldValues.put(XMLTagsUsed.PLANE_SIZE, extractTagValue(firstElmnt,XMLTagsUsed.PLANE_SIZE));
 				simulationWorldValues.put(XMLTagsUsed.PLANE_TEXTURE, extractTagValue(firstElmnt,XMLTagsUsed.PLANE_TEXTURE));
 				simulationWorldValues.put(XMLTagsUsed.CAMERA_POSITION, extractTagValue(firstElmnt,XMLTagsUsed.CAMERA_POSITION));
@@ -355,7 +351,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 			}
 
 		}	
-		
+
 		NodeList nodeList1 = document.getElementsByTagName(XMLTagsUsed.PHYSICS_PARAMETERS.toString());
 		for (int node = 0; node < nodeList1.getLength(); node++) {
 			Node firstNode = nodeList1.item(node);
@@ -363,7 +359,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 			if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
 
 				Element firstElmnt = (Element) firstNode;				
-		
+
 				simulationPhysicsValues.put(XMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY, extractTagValue(firstElmnt,XMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY));
 				simulationPhysicsValues.put(XMLTagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY, extractTagValue(firstElmnt,XMLTagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY));
 				simulationPhysicsValues.put(XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE, extractTagValue(firstElmnt,XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE));
@@ -382,9 +378,26 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 				simulationPhysicsValues.put(XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR, extractTagValue(firstElmnt,XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR));
 			}
 		}
-		
+
 	}
-	
+
+	private void extractRobotXMLValues( NodeList nodeList){
+		for (int node = 0; node < nodeList.getLength(); node++) {
+			Node firstNode = nodeList.item(node);
+
+			if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+
+				Element firstElmnt = (Element) firstNode;				
+
+				robotDescription.put(XMLTagsUsed.MORPHOLOGY_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION));
+				robotDescription.put(XMLTagsUsed.CONTROLLER_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.CONTROLLER_LOCATION));
+
+				//SimulationSpecification.robotsInSimulation.add(new RobotSpecification(extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION), null));
+
+			}
+		}
+	}
+
 	/**
 	 * Creates new module in simulation environment.
 	 * @param moduleName
@@ -399,7 +412,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	protected abstract void createNewModule(String moduleName, String moduleType, VectorDescription modulePosition, RotationDescription moduleRotation, LinkedList<Color> listColorsComponents,LinkedList<Color> listColorsConnectors, String labelsModule, String[] labelsConnectors);
 
 
-	
+
 	private char[] extractPositionsObstacles(List<BoxDescription> bigObstacles ){
 		//FIXME
 		String positions = "";
@@ -408,13 +421,13 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 			//BoxDescription
 			BoxDescription boxDescription = (BoxDescription)bigObstaclesIt.next();
 			positions = positions +";"+ boxDescription.getPosition();
-			
+
 		}
 		return positions.toCharArray();
-		
+
 	}	
-	
-		
+
+
 
 	/**
 	 * Extracts the value of specific coordinate from the string of Vector3f.
