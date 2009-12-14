@@ -16,6 +16,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import com.jme.math.Quaternion;
 
+import ussr.aGui.tabs.simulation.RobotSpecification;
+import ussr.aGui.tabs.simulation.SimulationSpecification;
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
@@ -257,8 +259,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 				VectorDescription moduleVecPosition = new  VectorDescription(moduleXposition,moduleYposition,moduleZposition);
                 createNewModule(moduleName,moduleType,moduleVecPosition,rotationDescription,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
 			
-				robotModules.put(moduleGlobalID, new ModulePosition(moduleName,moduleType,moduleVecPosition,rotationDescription));
-			
+	
 				idsModules = idsModules +"," +moduleGlobalID;
 				
                 //System.out.println("AMOUNT_START:"+ robotModules.size());
@@ -286,13 +287,6 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	                                 simulationPhysicsValues = new Hashtable<XMLTagsUsed, String>(),
                                      robotDescription = new Hashtable<XMLTagsUsed, String>();
 	
-	
-	private Hashtable<Integer, ModulePosition> robotModules = new Hashtable<Integer,ModulePosition>();
-	
-	public Hashtable<Integer, ModulePosition> getRobotModules() {
-		return robotModules;
-	}
-
 	/**
      * Returns values of physics parameters object taken from xml file describing simulation.
 	 * @return values of physics parameters object taken from xml file describing simulation.
@@ -334,7 +328,8 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 		
 				robotDescription.put(XMLTagsUsed.MORPHOLOGY_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION));
 				robotDescription.put(XMLTagsUsed.CONTROLLER_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.CONTROLLER_LOCATION));
-				
+				//SimulationSpecification.robotsInSimulation.add(new RobotSpecification(extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION), null));
+				//STOPPED HERE
 			}
 		}		
 		

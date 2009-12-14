@@ -60,7 +60,5 @@ public interface SaveLoadXMLFileTemplateInter {
      */
 	public  Map<XMLTagsUsed, String> getRobotDescriptionValues();
 	
-	public Hashtable<Integer, ModulePosition> getRobotModules() ;
-	
 	public String getIdsModules();
 }

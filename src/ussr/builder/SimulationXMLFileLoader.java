@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.ControllerFactory;
@@ -120,9 +121,9 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
         robotXMLLoader = new PreSimulationXMLSerializer(world);       
         robotXMLLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,robotMorphologyLocation);
         
+     
         idsModules = robotXMLLoader.getIdsModules();
-        //robotModules = robotXMLLoader.getRobotModules();
-        //System.out.println("AMOUNT_RobotLOADER:"+ robotModules.size());
+      
         
       
         simulation.setWorld(world); 
