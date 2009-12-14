@@ -46,9 +46,10 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
     private RemotePhysicsSimulation simulationWrapper;
     private SimulationServer server;
     private static ReturnValueHandler returnHandler;
+    
     private XMLSimulationProviderInter xmlSimulationProvider;
-
-    public SimulationClient(int portNumber, int idNumber) throws RemoteException {
+ 
+	public SimulationClient(int portNumber, int idNumber) throws RemoteException {
         connectToServer(portNumber,idNumber);
     }
 
@@ -98,7 +99,7 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
     	SimulationXMLFileLoader simulationLoader = new SimulationXMLFileLoader(simulationXMLFile);
     	System.out.println("LOCATION:"+ simulationLoader.getRobotMorphologyLocation());
     	xmlSimulationProvider = new XMLSimulationProvider(simulationLoader);
-   
+ 
     	System.out.println("LOCATION1:"+ xmlSimulationProvider.getRobotMorphologyLocation());
         
     	 //System.out.println("LOCATION:"+ xmlSimulationProvider.getRobotMorphologyLocation());
@@ -107,16 +108,15 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
     	this.simulation = SimulationXMLFileLoader.getPhysicsSimulation();
  /*       System.out.println("LOCATION:"+ simulation.getRobotMorphologyLocation());
         SimulationTab.setRobotMorphologyLocation(simulation.getRobotMorphologyLocation());*/        
-        simulationLoader.start(true);
-        
+        simulationLoader.start(true);        
     }
 	
+    
+    
     public XMLSimulationProviderInter getXmlSimulationProvider()throws RemoteException {
 		return xmlSimulationProvider;
 	}
-    
-    
-    
+   
 
 	public void start(Class<?> mainClass) throws RemoteException {
         this.start(mainClass,null,null);

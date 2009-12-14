@@ -122,4 +122,9 @@ public class RemotePhysicsSimulationImpl extends UnicastRemoteObject implements 
 		return guiCallbackControl;
 	}
 
+	@Override
+	public SimulationTabControlInter getSimulationTabControl() throws RemoteException {
+		return new SimulationTabControl((JMESimulation)simulation) ;
+	}
+
 }

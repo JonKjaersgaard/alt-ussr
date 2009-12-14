@@ -113,4 +113,9 @@ public interface RemotePhysicsSimulation extends Remote {
 	 */
 	public void setGUICallbackControl(GUICallbackControl control)throws RemoteException;
 	
+	/**
+	 *	 @return object, 
+	 *	 */
+	public SimulationTabControlInter getSimulationTabControl()throws RemoteException;
+	
 }

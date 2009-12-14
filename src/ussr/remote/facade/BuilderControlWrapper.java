@@ -32,7 +32,7 @@ import ussr.builder.genericTools.RemoveModule;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.labelingTools.LabelingToolSpecification;
 import ussr.builder.saveLoadXML.InSimulationXMLSerializer;
-import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
+import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModuleConnection;
@@ -365,7 +365,7 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 	}
 	
 	public void loadInXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException {
-		SaveLoadXMLFileTemplate openXML = new InSimulationXMLSerializer(jmeSimulation);
+		SaveLoadXMLFileTemplateInter openXML = new InSimulationXMLSerializer(jmeSimulation);
 		openXML.loadXMLfile(ussrXmlFileType, fileDirectoryName);		
 	}
 	

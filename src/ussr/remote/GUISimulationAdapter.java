@@ -110,10 +110,11 @@ public class GUISimulationAdapter {
 				throw new Error("Unexpected interruption");
 			}
 		}
-		//sim.getRendererControl().moveDisplayTo();
 		
 	    RobotSpecification.setMorphologyLocation(simulation.getXmlSimulationProvider().getRobotMorphologyLocation());
-	    RobotSpecification.setRobotModules(simulation.getXmlSimulationProvider().getRobotModules());
+	     //simulation.getXmlSimulationProvider().getRobotXMLLoader();
+	    //RobotSpecification.setRobotModules(simulation.getXmlSimulationProvider().getRobotModules());
+	    RobotSpecification.setIdsModules(simulation.getXmlSimulationProvider().getIDsModules());
 		callBackGUI(simulation,sim);
 	}
 	
