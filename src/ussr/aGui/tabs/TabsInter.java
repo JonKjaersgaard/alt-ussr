@@ -35,7 +35,9 @@ public interface TabsInter {
 	                    READ_LABEL ="readLabels",READ_LABELS_ROLLOVER ="readLabelsRollover",READ_LABELS_DISABLED ="readLabelsDisabled",
 	                    NEW_ROBOT = "newRobot",NEW_ROBOT_ROLLOVER ="newRobotRollover",NEW_ROBOT_DISABLED ="newRobotDisabled",
 	                    
-	                    Z_UP ="zUp";
+	                    Y_POSITIVE = "yPositive",Y_NEGATIVE ="yNegative",
+	                    X_POSITIVE = "xPositive",X_NEGATIVE= "xNegative",
+	                    Z_POSITIVE = "zPositive",Z_NEGATIVE= "zNegative"
 	                    ;
 	
 	/**

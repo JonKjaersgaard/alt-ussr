@@ -6,7 +6,7 @@ import java.util.Map;
 import ussr.aGui.FramesInter;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
-import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
+import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
 
 /**
  * Supports different file choosers with common constants and methods.  
@@ -17,7 +17,7 @@ public interface FileChooserFrameInter extends FramesInter {
 	/**
 	 * Default file extension for file filter.
 	 */
-	public final String DEFAULT_FILE_EXTENSION = SaveLoadXMLFileTemplate.XML_EXTENSION;
+	public final String DEFAULT_FILE_EXTENSION = SaveLoadXMLFileTemplateInter.XML_EXTENSION;
 	
 	/**
 	 * File extension descriptions.
