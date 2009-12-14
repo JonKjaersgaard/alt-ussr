@@ -37,12 +37,22 @@ public class SimulationTabController extends TabsControllers {
 
 		switch(SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_"))){
 		
+		case Simulation://  break through
+		case World_description:
+		case Physics_parameters:
+			break;
+		case Robot:
+			SimulationTab.addRobotEditor();
+			break;
+		case Robots:
+			SimulationTab.addRobotsEditor();
+			break;
 		case Physics_simulation_step_size:
 			SimulationTab.addPhysicsSimulationStepSizeEditor();
 			break;
 		case Resolution_Factor:
 			SimulationTab.addResolutionFactorEditor();
-			break;
+			break;		
 		case Type:
 			//TODO
 			break;

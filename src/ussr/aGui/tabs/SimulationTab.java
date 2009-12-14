@@ -22,18 +22,22 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
+import ussr.aGui.FramesInter;
+import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.MainFrames;
 import ussr.aGui.MainFramesInter;
+import ussr.aGui.enumerations.MainFrameComponentsText;
+import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.SimulationTabTreeNodes;
 import ussr.aGui.enumerations.TabsIcons;
 import ussr.aGui.enumerations.TextureDescriptions;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
-import ussr.aGui.helpers.RobotSpecification;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 
 import ussr.aGui.tabs.controllers.SimulationTabController;
+import ussr.builder.RobotSpecification;
 import ussr.builder.helpers.StringProcessingHelper;
 
 import ussr.description.setup.WorldDescription.CameraPosition;
@@ -78,7 +82,7 @@ public class SimulationTab extends Tabs {
 		jPanelEditor = new javax.swing.JPanel(new GridBagLayout());
 
 		//First in hierarchy
-		DefaultMutableTreeNode firstNodeHierarchySimulation = new DefaultMutableTreeNode(SimulationTabTreeNodes.Simulation.toString());
+		final DefaultMutableTreeNode firstNodeHierarchySimulation = new DefaultMutableTreeNode(SimulationTabTreeNodes.Simulation.toString());
 
 		//Second in hierarchy
 		DefaultMutableTreeNode secondNodeHierarchyPhysicsSimulationStepSize =  new DefaultMutableTreeNode(SimulationTabTreeNodes.Physics_simulation_step_size.toString().replace("_", " "));
@@ -171,7 +175,8 @@ public class SimulationTab extends Tabs {
 					return;
 
 				Object nodeInfo = node.getUserObject();
-				if (node.isLeaf()) {
+				
+				if (node.isLeaf()||node.isNodeRelated(firstNodeHierarchySimulation)) {
 					System.out.println(node.getPath()[node.getPath().length-1].toString());
 					SimulationTabController.jTreeItemSelectedActionPerformed(node.getPath()[node.getPath().length-1].toString());
 				} 
@@ -218,6 +223,46 @@ public class SimulationTab extends Tabs {
 		
 
 
+	}
+	
+	public static void addRobotsEditor(){
+		jPanelEditor.add(createNewLabel("Load new robot "));
+		jPanelEditor.add(initOpenButton());
+		
+	}
+	
+	public static void addRobotEditor(){
+		//jPanelEditor.add(createNewLabel("Robot"));
+		jPanelMoveRobot = new javax.swing.JPanel();
+		jButtonZup = new javax.swing.JButton();
+		
+		
+		
+		GridBagConstraints gridBagConstraintsMoveRobot = new GridBagConstraints();
+		TitledBorder displayTitle1;
+		displayTitle1 = BorderFactory.createTitledBorder("Move robot in new position");
+		displayTitle1.setTitleJustification(TitledBorder.CENTER);
+		jPanelMoveRobot.setBorder(displayTitle1);
+		
+		jButtonZup.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_step_by_step));
+		jButtonZup.setIcon(TabsIcons.Z_UP.getImageIcon());				
+		//jButtonZup.setRolloverIcon(MainFrameIcons.RUN_STEP_BY_STEP_ROLLOVER.getImageIcon());
+		//jButtonZup.setDisabledIcon(MainFrameIcons.RUN_STEP_BY_STEP_DISABLED.getImageIcon());		
+		jButtonZup.setFocusable(false);		
+		jButtonZup.setPreferredSize(FramesInter.BUTTON_DIMENSION);
+		jButtonZup.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				//MainFrameSeparateController.jButtonRunStepByStepActionPerformed();
+			}
+		});
+		
+		jPanelMoveRobot.add(jButtonZup);
+		
+		jPanelEditor.add(jPanelMoveRobot);
+		
+		
+		
+		
 	}
 
 	public static javax.swing.JPanel getJPanelEditor() {
@@ -503,7 +548,7 @@ public class SimulationTab extends Tabs {
 
 	private static javax.swing.JTree jTree1;
 	private static javax.swing.JScrollPane jScrollPaneTree;
-	private static javax.swing.JButton jButtonOpenMorphology ;
+	private static javax.swing.JButton jButtonOpenMorphology,jButtonZup ;
 
 	private static javax.swing.JSpinner  jSpinnerPlaneSize ;
 	private static javax.swing.JComboBox jComboBoxPlaneTexture;
@@ -518,6 +563,7 @@ public class SimulationTab extends Tabs {
 	private static javax.swing.JLabel newLabel,jLabelLinearVelocity,jLabelAngularVelocity,jLabelDamping,jLabelRealisticCoallision;
 
 	private static javax.swing.JPanel jPanelEditor;
+	private static javax.swing.JPanel jPanelMoveRobot;
 	private static javax.swing.JSpinner jSpinnerDampingLinearVelocity, jSpinnerDampingAngularVelocity,
 	jSpinnerPhysicsSimulationStepSize, jSpinnerGravity,jSpinnerConstraintForceMix,
 	jSpinnerErrorReductionParameter, jSpinnerResolutionFactor, jPhysicsSimulationControllerStepFactor;

@@ -33,7 +33,9 @@ public interface TabsInter {
 	                    VARY_PROPERTIES = "varyProperties",VARY_PROPERTIES_ROLLOVER = "varyPropertiesRollover",VARY_PROPERTIES_DISABLED = "varyPropertiesDisabled",
 	                    ASSIGN_LABELS = "assignLabels",ASSIGN_LABELS_ROLLOVER = "assignLabelsRollover", ASSIGN_LABELS_DISABLED ="assignLabelsDisabled",
 	                    READ_LABEL ="readLabels",READ_LABELS_ROLLOVER ="readLabelsRollover",READ_LABELS_DISABLED ="readLabelsDisabled",
-	                    NEW_ROBOT = "newRobot",NEW_ROBOT_ROLLOVER ="newRobotRollover",NEW_ROBOT_DISABLED ="newRobotDisabled" 
+	                    NEW_ROBOT = "newRobot",NEW_ROBOT_ROLLOVER ="newRobotRollover",NEW_ROBOT_DISABLED ="newRobotDisabled",
+	                    
+	                    Z_UP ="zUp";
 	                    ;
 	
 	/**

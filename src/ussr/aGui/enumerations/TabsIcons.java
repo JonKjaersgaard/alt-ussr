@@ -64,7 +64,9 @@ public enum TabsIcons {
 	
 	NEW_ROBOT(TabsInter.NEW_ROBOT),
 	NEW_ROBOT_ROLLOVER(TabsInter.NEW_ROBOT_ROLLOVER),
-	NEW_ROBOT_DISABLED(TabsInter.NEW_ROBOT_DISABLED)
+	NEW_ROBOT_DISABLED(TabsInter.NEW_ROBOT_DISABLED),
+	
+	Z_UP(TabsInter.Z_UP)
 	;
 	
 	/**

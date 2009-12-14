@@ -1,8 +1,16 @@
 package ussr.aGui.tabs;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
+
+import ussr.aGui.MainFrames;
+import ussr.aGui.fileChooser.views.FileChooserFrameInter;
+import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
+import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 
 /**
  * Supports definitions of visual appearance for tabs pluged-in the main GUI window.
@@ -72,6 +80,8 @@ public abstract class Tabs implements TabsInter {
     	return components;
     }
     
+    
+    
 	/**
 	 * Getter method common for all tabs and is used by GUI during addition of new tab.
 	 * @return tabTitle, the title of the tab.
@@ -91,6 +101,22 @@ public abstract class Tabs implements TabsInter {
 	
 	public boolean isInitiallyVisible() {
 		return initiallyVisible;
+	}
+	
+	
+	public JButton initSaveButton(){
+		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
+		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
+
+		FileChooserFrameInter fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
+		return MainFrames.initSaveButton(fcSaveFrame);
+	}
+	
+	public static JButton initOpenButton(){
+		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
+		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
+		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
+		return MainFrames.initOpenButton(fcOpenFrame);
 	}
 	
 }

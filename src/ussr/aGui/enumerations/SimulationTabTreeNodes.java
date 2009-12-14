@@ -10,7 +10,7 @@ public enum SimulationTabTreeNodes {
 	//First Level Hierarchy	
 	Simulation(XMLTagsUsed.SIMULATION),
 	
-	  //Second Level Hierarchy
+	 //Second Level Hierarchy	
 	  //Often used
 	  Physics_simulation_step_size(XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE),
 	  Resolution_Factor(XMLTagsUsed.RESOLUTION_FACTOR),

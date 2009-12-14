@@ -42,9 +42,9 @@ public class FileChooserXMLController extends FileChooserController {
 				break;			
 			case ROBOT:
 				try {
-					builderControl.saveToXML(UssrXmlFileTypes.ROBOT, fileDirectoryName);
+					builderControl.loadInXML(UssrXmlFileTypes.ROBOT, fileDirectoryName);
 				} catch (RemoteException e) {
-					throw new Error("Failed to save robot morphology in xml file, due to remote exception");
+					throw new Error("Failed to load robot morphology from xml file, due to remote exception");
 				}
 				break;
 			default: throw new Error("XML file type named as " +ussXmlFileType.toString() +"is not yet supported.");
