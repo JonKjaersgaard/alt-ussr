@@ -2,8 +2,10 @@ package ussr.remote.facade;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Map;
 
 import ussr.builder.SimulationXMLFileLoader;
+import ussr.description.geometry.VectorDescription;
 
 public class XMLSimulationProvider extends UnicastRemoteObject implements XMLSimulationProviderInter {
 
@@ -16,6 +18,11 @@ public class XMLSimulationProvider extends UnicastRemoteObject implements XMLSim
 	
 	public String getRobotMorphologyLocation()throws RemoteException{
 		return simulationLoader.getRobotMorphologyLocation();
+	}
+
+	@Override
+	public Map<String, VectorDescription> getRobotModules()throws RemoteException {
+		return simulationLoader.getRobotModules();
 	}
 
 }

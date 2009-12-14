@@ -12,9 +12,9 @@ import ussr.aGui.GeneralController;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.MainFrames;
-import ussr.aGui.helpers.RobotSpecification;
 import ussr.aGui.tabs.SimulationTab;
 import ussr.aGui.tabs.controllers.ConsoleTabController;
+import ussr.builder.RobotSpecification;
 import ussr.remote.facade.ActiveSimulation;
 import ussr.remote.facade.GUICallbackControlImpl;
 import ussr.remote.facade.XMLSimulationProvider;
@@ -113,6 +113,7 @@ public class GUISimulationAdapter {
 		//sim.getRendererControl().moveDisplayTo();
 		
 	    RobotSpecification.setMorphologyLocation(simulation.getXmlSimulationProvider().getRobotMorphologyLocation());
+	    RobotSpecification.setRobotModules(simulation.getXmlSimulationProvider().getRobotModules());
 		callBackGUI(simulation,sim);
 	}
 	

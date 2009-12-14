@@ -122,7 +122,7 @@ public interface BuilderControlInter extends Remote {
 	 */
 	public List<Integer> getIDsModules()throws RemoteException;
 
-	public void saveToXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException;
+	public void loadInXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException;
 	
 	/**
 	 * Colors connectors of all modules with color coding.

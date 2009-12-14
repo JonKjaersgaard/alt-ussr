@@ -364,7 +364,7 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 		return idsModules; 
 	}
 	
-	public void saveToXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException {
+	public void loadInXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException {
 		SaveLoadXMLFileTemplate openXML = new InSimulationXMLSerializer(jmeSimulation);
 		openXML.loadXMLfile(ussrXmlFileType, fileDirectoryName);		
 	}
