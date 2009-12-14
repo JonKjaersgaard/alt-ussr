@@ -1,9 +1,11 @@
 package ussr.builder.saveLoadXML;
 
+import java.util.Hashtable;
 import java.util.Map;
 
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
+import ussr.description.geometry.VectorDescription;
 
 /**
  * Supports saving and loading of data in XML format.
@@ -55,4 +57,6 @@ public interface SaveLoadXMLFileTemplate {
      * @return values of robot description object taken from xml file describing simulation.
      */
 	public  Map<XMLTagsUsed, String> getRobotDescriptionValues();
+	
+	public Hashtable<String, VectorDescription> getRobotModules() ;
 }

@@ -13,6 +13,7 @@ import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplate;
 import ussr.description.Robot;
+import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
@@ -29,7 +30,14 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
 	
 	
 	private static Map<XMLTagsUsed,String> simulationWorldDescription,simulationPhysicsParameters,
-                                           robotDescription; 
+                                           robotDescription;
+	
+	private Map<String,VectorDescription> robotModules;
+	
+	public Map<String, VectorDescription> getRobotModules() {
+		return robotModules;
+	}
+
 	private static SimulationDescriptionConverter descriptionConverter;
 	
 	private String robotMorphologyLocation;
@@ -72,6 +80,7 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
 		simulationWorldDescription = xmlLoaderSimulation.getSimulationWorldDescriptionValues();
         simulationPhysicsParameters = xmlLoaderSimulation.getSimulationPhysicsValues();
         robotDescription =  xmlLoaderSimulation.getRobotDescriptionValues();
+        robotModules = xmlLoaderSimulation.getRobotModules();
         
         
         /*Converter for converting values from String into corresponding type used in USSR*/
@@ -93,6 +102,7 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
         
         SaveLoadXMLBuilderTemplate xmlLoader = new PreSimulationXMLSerializer(world);       
         xmlLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,robotMorphologyLocation);
+        
       
         simulation.setWorld(world); 
       

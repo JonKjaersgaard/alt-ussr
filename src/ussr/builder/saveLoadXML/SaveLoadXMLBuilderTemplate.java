@@ -216,12 +216,13 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 			if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
 
 				Element firstElmnt = (Element) firstNode;				
-				//String moduleID = extractTagValue(firstElmnt,idTag);
+				String moduleID = extractTagValue(firstElmnt,XMLTagsUsed.ID);
 			    String moduleType = extractTagValue(firstElmnt,XMLTagsUsed.TYPE);
 				String moduleName = extractTagValue(firstElmnt,XMLTagsUsed.NAME);
 				String moduleRotation = extractTagValue(firstElmnt,XMLTagsUsed.ROTATION);		
 				String moduleRotationQuaternion = extractTagValue(firstElmnt,XMLTagsUsed.ROTATION_QUATERNION);
-				String modulePosition = extractTagValue(firstElmnt,XMLTagsUsed.POSITION);
+				String modulePosition = extractTagValue(firstElmnt,XMLTagsUsed.POSITION);				
+				
 				//String modulePositionVector = extractTagValue(firstElmnt,positionVectorTag);
 				String labelsModule = extractTagValue(firstElmnt,XMLTagsUsed.LABELS_MODULE);
 				if (labelsModule.contains(BuilderHelper.getTempLabel())){
@@ -244,9 +245,13 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 
 				float moduleXposition = StringProcessingHelper.extractFromPosition(modulePosition, "X");
 				float moduleYposition = StringProcessingHelper.extractFromPosition(modulePosition, "Y");
-				float moduleZposition = StringProcessingHelper.extractFromPosition(modulePosition, "Z");				
-				createNewModule(moduleName,moduleType,new VectorDescription(moduleXposition,moduleYposition,moduleZposition),rotationDescription ,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
+				float moduleZposition = StringProcessingHelper.extractFromPosition(modulePosition, "Z");
+				VectorDescription moduleVecPosition = new  VectorDescription(moduleXposition,moduleYposition,moduleZposition);
+                createNewModule(moduleName,moduleType,moduleVecPosition,rotationDescription ,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
 			
+				robotModules.put("Module_"+moduleID, moduleVecPosition);
+			
+				
 //FIXME IN CASE THERE IS A NEED TO EXTRACT THE STATE OF CONNECTORS
 					/*NodeList sixthNmElmntLst = fstElmnt.getElementsByTagName("CONNECTOR");
 				int amountConnectorNodes = sixthNmElmntLst.getLength();
@@ -268,6 +273,14 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	private Map<XMLTagsUsed, String> simulationWorldValues = new Hashtable<XMLTagsUsed, String>(),
 	                                 simulationPhysicsValues = new Hashtable<XMLTagsUsed, String>(),
                                      robotDescription = new Hashtable<XMLTagsUsed, String>();
+	
+	
+	private Hashtable<String, VectorDescription> robotModules = new Hashtable<String,VectorDescription>();
+	
+	public Hashtable<String, VectorDescription> getRobotModules() {
+		return robotModules;
+	}
+
 	/**
      * Returns values of physics parameters object taken from xml file describing simulation.
 	 * @return values of physics parameters object taken from xml file describing simulation.
@@ -308,7 +321,8 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 				Element firstElmnt = (Element) firstNode;				
 		
 				robotDescription.put(XMLTagsUsed.MORPHOLOGY_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION));
-				robotDescription.put(XMLTagsUsed.CONTROLLER_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.CONTROLLER_LOCATION));					
+				robotDescription.put(XMLTagsUsed.CONTROLLER_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.CONTROLLER_LOCATION));
+				
 			}
 		}		
 		
