@@ -79,14 +79,9 @@ public class SimulationTab extends Tabs {
 	 */
 	public void initComponents() {
 
-		jScrollPaneTree = new javax.swing.JScrollPane();
-
+		jScrollPaneTreeSimulation = new javax.swing.JScrollPane();
 		jPanelEditor = new javax.swing.JPanel(new GridBagLayout());
-
-
-
-
-		jTreeSimulation = new javax.swing.JTree(initializeRootNode());
+		jTreeSimulation = new javax.swing.JTree(initializeSimulationRootNode());
 
 		ImageIcon closedIcon = TabsIcons.EXPANSION_CLOSED_SMALL.getImageIcon();
 		ImageIcon openIcon = TabsIcons.EXPANSION_OPENED_SMALL.getImageIcon();
@@ -98,41 +93,32 @@ public class SimulationTab extends Tabs {
 			renderer.setLeafIcon(leafIcon);
 			jTreeSimulation.setCellRenderer(renderer);
 		}
-
 		jTreeSimulation.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		jTreeSimulation.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
 			public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
 				jTreeSimulation.getLastSelectedPathComponent();
-
 				if (node == null)
-					//Nothing is selected.	
+					/*Nothing is selected.*/	
 					return;
-
 				Object nodeInfo = node.getUserObject();
-
 				if (node.isLeaf()||node.isNodeRelated(firstNodeHierarchySimulation)) {
 					System.out.println(node.getPath()[node.getPath().length-1].toString());
 					SimulationTabController.jTreeItemSelectedActionPerformed(node.getPath()[node.getPath().length-1].toString());
 				} 
-
 			}
 		});
 
-
-
-
-		jScrollPaneTree.setViewportView(jTreeSimulation);
-		jScrollPaneTree.setVisible(false);
-		jScrollPaneTree.setPreferredSize(new Dimension(300,300));
+		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);
+		jScrollPaneTreeSimulation.setVisible(false);
+		jScrollPaneTreeSimulation.setPreferredSize(new Dimension(300,300));
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
-		super.jComponent.add(jScrollPaneTree,gridBagConstraints);
-
+		super.jComponent.add(jScrollPaneTreeSimulation,gridBagConstraints);
 
 		TitledBorder displayTitle;
-		displayTitle = BorderFactory.createTitledBorder("Edit Value");
+		displayTitle = BorderFactory.createTitledBorder(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Edit_value));
 		displayTitle.setTitleJustification(TitledBorder.CENTER);
 		jPanelEditor.setBorder(displayTitle);
 		jPanelEditor.setVisible(false);
@@ -155,13 +141,13 @@ public class SimulationTab extends Tabs {
 		gridBagConstraints.gridwidth=2;
 
 		super.jComponent.add(hintPanel,gridBagConstraints);
-
-
-
 	}
 
-
-	private DefaultMutableTreeNode initializeRootNode(){
+	/**
+	 * Initializes simulation tree node including all sub nodes.
+	 * @return simulation tree node including all sub nodes.
+	 */
+	private DefaultMutableTreeNode initializeSimulationRootNode(){
 		//First in hierarchy
 		firstNodeHierarchySimulation = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Simulation));
 
@@ -235,6 +221,9 @@ public class SimulationTab extends Tabs {
 
 
 
+	/**
+	 * @param simulationSpecification
+	 */
 	public static void addRobotNode(SimulationSpecification simulationSpecification){
 		int nrRobotsInSimulation = simulationSpecification.getRobotsInSimulation().size();
 
@@ -277,8 +266,8 @@ public class SimulationTab extends Tabs {
 		jPanelMoveRobot.setBorder(displayTitle1);
 		
 		jButtonYpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_up));
-		jButtonYpositive.setIcon(TabsIcons.Y_POSITIVE.getImageIcon());
-		jButtonYpositive.setRolloverIcon(TabsIcons.Y_POSITIVE_ROLLOVER.getImageIcon());					
+		jButtonYpositive.setIcon(TabsIcons.Y_POSITIVE_BIG.getImageIcon());
+		jButtonYpositive.setRolloverIcon(TabsIcons.Y_POSITIVE_ROLLOVER_BIG.getImageIcon());					
 		jButtonYpositive.setFocusable(false);		
 		jButtonYpositive.setPreferredSize(new Dimension(45,30));
 		jButtonYpositive.addActionListener(new java.awt.event.ActionListener() {
@@ -294,8 +283,8 @@ public class SimulationTab extends Tabs {
 
 
 		jButtonXnegative.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_left));
-		jButtonXnegative.setIcon(TabsIcons.X_NEGATIVE.getImageIcon());	
-		jButtonXnegative.setRolloverIcon(TabsIcons.X_NEGATIVE_ROLLOVER.getImageIcon());			
+		jButtonXnegative.setIcon(TabsIcons.X_NEGATIVE_BIG.getImageIcon());	
+		jButtonXnegative.setRolloverIcon(TabsIcons.X_NEGATIVE_ROLLOVER_BIG.getImageIcon());			
 		jButtonXnegative.setFocusable(false);		
 		jButtonXnegative.setPreferredSize(new Dimension(45,30));
 		jButtonXnegative.addActionListener(new java.awt.event.ActionListener() {
@@ -309,8 +298,8 @@ public class SimulationTab extends Tabs {
 		jPanelMoveRobot.add(jButtonXnegative,gridBagConstraintsMoveRobot);
 
 		jButtonZpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_closer));
-		jButtonZpositive.setIcon(TabsIcons.Z_POSITIVE.getImageIcon());	
-		jButtonZpositive.setRolloverIcon(TabsIcons.Z_POSITIVE_ROLLOVER.getImageIcon());		
+		jButtonZpositive.setIcon(TabsIcons.Z_POSITIVE_BIG.getImageIcon());	
+		jButtonZpositive.setRolloverIcon(TabsIcons.Z_POSITIVE_ROLLOVER_BIG.getImageIcon());		
 		jButtonZpositive.setFocusable(false);		
 		jButtonZpositive.setPreferredSize(FramesInter.BUTTON_DIMENSION);
 		jButtonZpositive.addActionListener(new java.awt.event.ActionListener() {
@@ -340,8 +329,8 @@ public class SimulationTab extends Tabs {
 		jPanelMoveRobot.add(jSpinnerCoordinateValue,gridBagConstraintsMoveRobot);
 
 		jButtonZnegative.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_away));
-		jButtonZnegative.setIcon(TabsIcons.Z_NEGATIVE.getImageIcon());				
-		jButtonZnegative.setRolloverIcon(TabsIcons.Z_NEGATIVE_ROLLOVER.getImageIcon());	
+		jButtonZnegative.setIcon(TabsIcons.Z_NEGATIVE_BIG.getImageIcon());				
+		jButtonZnegative.setRolloverIcon(TabsIcons.Z_NEGATIVE_ROLLOVER_BIG.getImageIcon());	
 		jButtonZnegative.setFocusable(false);		
 		jButtonZnegative.setPreferredSize(new Dimension(45,30));
 		jButtonZnegative.addActionListener(new java.awt.event.ActionListener() {
@@ -356,8 +345,8 @@ public class SimulationTab extends Tabs {
 
 
 		jButtonXpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_right));
-		jButtonXpositive.setIcon(TabsIcons.X_POSITIVE.getImageIcon());	
-		jButtonXpositive.setRolloverIcon(TabsIcons.X_POSITIVE_ROLLOVER.getImageIcon());		
+		jButtonXpositive.setIcon(TabsIcons.X_POSITIVE_BIG.getImageIcon());	
+		jButtonXpositive.setRolloverIcon(TabsIcons.X_POSITIVE_ROLLOVER_BIG.getImageIcon());		
 		jButtonXpositive.setFocusable(false);		
 		jButtonXpositive.setPreferredSize(new Dimension(45,30));
 		jButtonXpositive.addActionListener(new java.awt.event.ActionListener() {
@@ -373,8 +362,8 @@ public class SimulationTab extends Tabs {
 
 
 		jButtonYnegative.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_down));
-		jButtonYnegative.setIcon(TabsIcons.Y_NEGATIVE.getImageIcon());	
-		jButtonYnegative.setRolloverIcon(TabsIcons.Y_NEGATIVE_ROLLOVER.getImageIcon());		
+		jButtonYnegative.setIcon(TabsIcons.Y_NEGATIVE_BIG.getImageIcon());	
+		jButtonYnegative.setRolloverIcon(TabsIcons.Y_NEGATIVE_ROLLOVER_BIG.getImageIcon());		
 		jButtonYnegative.setFocusable(false);		
 		jButtonYnegative.setPreferredSize(new Dimension(45,30));
 		jButtonYnegative.addActionListener(new java.awt.event.ActionListener() {
@@ -401,7 +390,7 @@ public class SimulationTab extends Tabs {
 	}
 
 	public static void setTabVisible(boolean visible) {
-		jScrollPaneTree.setVisible(visible);
+		jScrollPaneTreeSimulation.setVisible(visible);
 		jPanelEditor.setVisible(visible);
 		hintPanel.setVisible(visible);
 	}
@@ -682,7 +671,7 @@ public class SimulationTab extends Tabs {
 	}
 
 	private static javax.swing.JTree jTreeSimulation;
-	private static javax.swing.JScrollPane jScrollPaneTree;
+	private static javax.swing.JScrollPane jScrollPaneTreeSimulation;
 	private static javax.swing.JButton jButtonOpenMorphology,jButtonYpositive,jButtonYnegative,
 	jButtonXpositive,jButtonXnegative,
 	jButtonZpositive,jButtonZnegative;

@@ -4,8 +4,12 @@ import java.util.Map;
 
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 
+/**
+ * TODO NOT USED YET
+ * @author Konstantinas
+ *
+ */
 public class FileChooserRobotMorphologyLocation extends FileChooserFrame {
-//STOPPED HERE
 	/**
 	 * The frame of the file chooser for Open dialog form
 	 */

@@ -301,30 +301,36 @@ public class SimulationTabController extends TabsControllers {
 		//float step = Float.parseFloat(SimulationTab.getJSpinnerCoordinateValue().getValue().toString());
 		
 		Icon icon = jButton.getIcon();
-		if(icon.equals(TabsIcons.Y_POSITIVE.getImageIcon())){			
+		if(icon.equals(TabsIcons.Y_POSITIVE_BIG.getImageIcon())){			
 			changeInPosition = new VectorDescription(0,jSpinnerStepValue,0);
-		}else if(icon.equals(TabsIcons.Y_NEGATIVE.getImageIcon())){
+		}else if(icon.equals(TabsIcons.Y_NEGATIVE_BIG.getImageIcon())){
 			changeInPosition = new VectorDescription(0,-jSpinnerStepValue,0);			
-		}else if (icon.equals(TabsIcons.X_POSITIVE.getImageIcon())){
+		}else if (icon.equals(TabsIcons.X_POSITIVE_BIG.getImageIcon())){
 			changeInPosition = new VectorDescription(jSpinnerStepValue,0,0);
-		}else if (icon.equals(TabsIcons.X_NEGATIVE.getImageIcon())){
+		}else if (icon.equals(TabsIcons.X_NEGATIVE_BIG.getImageIcon())){
 			changeInPosition = new VectorDescription(-jSpinnerStepValue,0,0);
-		}else if (icon.equals(TabsIcons.Z_POSITIVE.getImageIcon())){
+		}else if (icon.equals(TabsIcons.Z_POSITIVE_BIG.getImageIcon())){
 			changeInPosition = new VectorDescription(0,0,jSpinnerStepValue);
-		}else if (icon.equals(TabsIcons.Z_NEGATIVE.getImageIcon())){
+		}else if (icon.equals(TabsIcons.Z_NEGATIVE_BIG.getImageIcon())){
 			changeInPosition = new VectorDescription(0,0,-jSpinnerStepValue);
 		}
 		
 		int stringLenght = selectedNodeName.toCharArray().length;
 		int selectedRobot=-1;
+		
 		switch(stringLenght){
-		case 10:
+		case 10:// up to 9 robots
 			char robotNumber = selectedNodeName.toCharArray()[9];
 			selectedRobot = Integer.parseInt(robotNumber+"");
 			break;
-			
+		case 11:// up to 99 robots (NOT TESTED YET)
+			char robotNr1 = selectedNodeName.toCharArray()[9];
+			char robotNr2 = selectedNodeName.toCharArray()[10];
+			selectedRobot = Integer.parseInt(robotNr1+robotNr2+"");
+			break;
+		default: throw new Error("Robot title changed in tree structure or missing support.The robot title should be for instance: Robot Nr.1");
 		}
-		System.out.println("SelectedRobotNr."+selectedRobot );
+		
 		int amountRobotModules = simulationSpecification.getRobotsInSimulation().get(selectedRobot-1).getAmountModules();
 		
 		if (selectedRobot==1){			

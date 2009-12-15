@@ -5,9 +5,12 @@ import javax.swing.ImageIcon;
 import ussr.aGui.MainFramesInter;
 import ussr.aGui.tabs.TabsInter;
 
+/**
+ * Contains the icons for connector numbers used in comboBox of Construct Robot tab.
+ * @author Konstantinas
+ */
 public enum IconsNumbersConnectors {
 
-	
 	CONNECTOR_NR0_BLACK(TabsInter.CONNECTOR_NR0_BLACK),
 	CONNECTOR_NR1_RED(TabsInter.CONNECTOR_NR1_RED),
 	CONNECTOR_NR2_CYAN(TabsInter.CONNECTOR_NR2_CYAN),
@@ -20,7 +23,6 @@ public enum IconsNumbersConnectors {
 	CONNECTOR_NR9_WHITE(TabsInter.CONNECTOR_NR9_WHITE),
 	CONNECTOR_NR10_YELLOW(TabsInter.CONNECTOR_NR10_YELLOW),
 	CONNECTOR_NR11_LIGHT_GREY(TabsInter.CONNECTOR_NR11_LIGHT_GREY),
-	
 	;
 	
 	/**
@@ -34,13 +36,14 @@ public enum IconsNumbersConnectors {
 	private String imageDirectory;
 	
 	/**
-	 * The name of image file, not including extension
+	 * The name of image file, not including extension.
 	 */
 	private String imageName;
 	
-	
-	
-
+	/**
+	 * Contains the icons for connector numbers used in comboBox of Construct Robot tab.
+	 * @param imageName, the name of the image file.
+	 */
 	IconsNumbersConnectors(String imageName){
 		this.imageName = imageName;
 		this.imageDirectory = formatIconDirectory(imageName);
@@ -56,6 +59,10 @@ public enum IconsNumbersConnectors {
 		return TabsInter.DIRECTORY_ICONS_CONNECTORS_COLORS+imageName+MainFramesInter.DEFAULT_ICON_EXTENSION1;
 	}
 	
+	/**
+	 * Returns all imageIcons.
+	 * @return all imageIcons.
+	 */
 	public static ImageIcon[] getAllImageIcons(){
 		ImageIcon[] imageIcons= new ImageIcon[IconsNumbersConnectors.values().length];
 		
@@ -72,7 +79,4 @@ public enum IconsNumbersConnectors {
 	public ImageIcon getImageIcon() {
 		return imageIcon;
 	}
-	
-	
-	
 }

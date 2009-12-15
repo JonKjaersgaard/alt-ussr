@@ -7,7 +7,6 @@ import ussr.aGui.GuiFrames;
 import ussr.aGui.fileChooser.FileFilter;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 
-
 /**
  * Defines visual appearance of the file chooser in several dialog forms: Open and Save for now.
  * Limits the file choosing to extensions specified in the map of file descriptions and extensions.   

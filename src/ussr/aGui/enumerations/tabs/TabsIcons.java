@@ -7,7 +7,12 @@ import ussr.aGui.tabs.TabsInter;
 
 /**
  * Contains icons used in tabs.
- * @author Konstantinas 
+ * NOTE NR1: Most of icons are 20x20 pixels,however small(this is a keyword) ones are:15x15 and big(keyword) 25x25.
+ * NOTE NR2: This enumeration was introduced in order to make it easy to change the directory for all icons,
+ * their names and common extension. Moreover, to keep icons localized (in one place) and easy to refer to.
+ * NOTE NR3: Here are used constants of file names as arguments. The main reason for doing so is to
+ * keep ability to specify the directory, icon name and extension directly without using this enumeration.
+ * @author Konstantinas
  */
 public enum TabsIcons {
 	
@@ -64,20 +69,20 @@ public enum TabsIcons {
 	NEW_ROBOT_ROLLOVER(TabsInter.NEW_ROBOT_ROLLOVER),
 	NEW_ROBOT_DISABLED(TabsInter.NEW_ROBOT_DISABLED),
 	
-	Y_POSITIVE(TabsInter.Y_POSITIVE),
-	Y_POSITIVE_ROLLOVER(TabsInter.Y_POSITIVE_ROLLOVER),
-	Y_NEGATIVE(TabsInter.Y_NEGATIVE),
-	Y_NEGATIVE_ROLLOVER(TabsInter.Y_NEGATIVE_ROLLOVER),
+	Y_POSITIVE_BIG(TabsInter.Y_POSITIVE_BIG),
+	Y_POSITIVE_ROLLOVER_BIG(TabsInter.Y_POSITIVE_ROLLOVER_BIG),
+	Y_NEGATIVE_BIG(TabsInter.Y_NEGATIVE_BIG),
+	Y_NEGATIVE_ROLLOVER_BIG(TabsInter.Y_NEGATIVE_ROLLOVER_BIG),
 	
-	X_POSITIVE(TabsInter.X_POSITIVE),
-	X_POSITIVE_ROLLOVER(TabsInter.X_POSITIVE_ROLLOVER),	
-	X_NEGATIVE(TabsInter.X_NEGATIVE),
-	X_NEGATIVE_ROLLOVER(TabsInter.X_NEGATIVE_ROLLOVER),
+	X_POSITIVE_BIG(TabsInter.X_POSITIVE_BIG),
+	X_POSITIVE_ROLLOVER_BIG(TabsInter.X_POSITIVE_ROLLOVER_BIG),	
+	X_NEGATIVE_BIG(TabsInter.X_NEGATIVE_BIG),
+	X_NEGATIVE_ROLLOVER_BIG(TabsInter.X_NEGATIVE_ROLLOVER_BIG),
 	
-	Z_POSITIVE(TabsInter.Z_POSITIVE),
-	Z_POSITIVE_ROLLOVER(TabsInter.Z_POSITIVE_ROLLOVER),
-	Z_NEGATIVE(TabsInter.Z_NEGATIVE),
-	Z_NEGATIVE_ROLLOVER(TabsInter.Z_NEGATIVE_ROLLOVER),
+	Z_POSITIVE_BIG(TabsInter.Z_POSITIVE_BIG),
+	Z_POSITIVE_ROLLOVER_BIG(TabsInter.Z_POSITIVE_ROLLOVER_BIG),
+	Z_NEGATIVE_BIG(TabsInter.Z_NEGATIVE_BIG),
+	Z_NEGATIVE_ROLLOVER_BIG(TabsInter.Z_NEGATIVE_ROLLOVER_BIG),
 	;
 	
 	/**

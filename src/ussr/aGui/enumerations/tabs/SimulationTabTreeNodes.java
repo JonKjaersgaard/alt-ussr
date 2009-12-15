@@ -3,8 +3,9 @@ package ussr.aGui.enumerations.tabs;
 import ussr.builder.enumerations.XMLTagsUsed;
 
 /**
- * @author Konstantinas
- *
+ * Contains the names of nodes displayed in Simulation tab tree view.
+ * Moreover, associates each name with the tag used during saving/or loading of simulation(also robot).
+ * @author Konstantinas 
  */
 public enum SimulationTabTreeNodes {
 	//First Level Hierarchy	
@@ -51,8 +52,16 @@ public enum SimulationTabTreeNodes {
 	    Synchronize_with_controllers((XMLTagsUsed.SYNC_WITH_CONTROLLERS)),
 	    Physics_simulation_controller_step_factor(XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR);
 
+	/**
+	 * The tag used in xml file saving/loading
+	 */
 	private XMLTagsUsed xmlTagsUsed;
 
+	/**
+	 * Contains the names of nodes displayed in Simulation tab tree view.
+     * Moreover, associates each name with the tag used during saving/or loading of simulation(also robot).
+	 * @param xmlTagsUsed,The tag used in xml file saving/loading
+	 */
 	SimulationTabTreeNodes(XMLTagsUsed xmlTagsUsed){
 		this.xmlTagsUsed=xmlTagsUsed;
 	}

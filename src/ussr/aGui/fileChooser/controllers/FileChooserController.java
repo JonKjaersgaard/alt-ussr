@@ -4,8 +4,8 @@ import javax.swing.JFileChooser;
 import ussr.aGui.GeneralController;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 
-
 /**
+ * 
  * @author Konstantinas
  *
  */
