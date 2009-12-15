@@ -3,6 +3,7 @@ package ussr.builder.saveLoadXML;
 import java.util.Hashtable;
 import java.util.Map;
 
+import ussr.aGui.tabs.simulation.SimulationSpecification;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.description.geometry.VectorDescription;
@@ -61,4 +62,7 @@ public interface SaveLoadXMLFileTemplateInter {
 	public  Map<XMLTagsUsed, String> getRobotDescriptionValues();
 	
 	public String getIdsModules();
+	
+	public SimulationSpecification getSimulationSpecification() ;
+	
 }

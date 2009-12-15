@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import ussr.aGui.tabs.simulation.SimulationSpecification;
 import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
@@ -48,7 +49,14 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
 	
 	private String idsModules;
 	
+	private SimulationSpecification simulationSpecification;
 	
+	
+	public SimulationSpecification getSimulationSpecification() {
+		return simulationSpecification;
+	}
+
+
 	public String getIdsModules() {
 		return idsModules;
 	}
@@ -98,13 +106,16 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
 		simulationWorldDescription = xmlLoaderSimulation.getSimulationWorldDescriptionValues();
         simulationPhysicsParameters = xmlLoaderSimulation.getSimulationPhysicsValues();
         robotDescription =  xmlLoaderSimulation.getRobotDescriptionValues();
+        simulationSpecification = xmlLoaderSimulation.getSimulationSpecification();
        
         
         
         /*Converter for converting values from String into corresponding type used in USSR*/
         descriptionConverter =  new SimulationDescriptionConverter(simulationWorldDescription,simulationPhysicsParameters); 
         
-        String controllerLocation = robotDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
+        //String controllerLocation = robotDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
+       // String controllerLocation = SimulationSpecification.robotsInSimulation.get(0).getControllerLocation();
+        String controllerLocation = simulationSpecification.getRobotsInSimulation().get(0).getControllerLocation();
         
         List<String> controllerNames = new ArrayList<String>();        
         controllerNames.add(controllerLocation);
@@ -115,14 +126,22 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
         world = createWorld();
         
         /* Load the robot */
-        robotMorphologyLocation = robotDescription.get(XMLTagsUsed.MORPHOLOGY_LOCATION);
+       // robotMorphologyLocation = robotDescription.get(XMLTagsUsed.MORPHOLOGY_LOCATION);
      
+        robotXMLLoader = new PreSimulationXMLSerializer(world);
+       
+        for (int robotNr=0;robotNr<simulationSpecification.getRobotsInSimulation().size();robotNr++){
+        	 
+        	String morphology = simulationSpecification.getRobotsInSimulation().get(robotNr).getMorphologyLocation();
+        	 robotXMLLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,morphology);
+        }
         
-        robotXMLLoader = new PreSimulationXMLSerializer(world);       
-        robotXMLLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,robotMorphologyLocation);
+        
+        //robotXMLLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,robotMorphologyLocation);
+       
         
      
-        idsModules = robotXMLLoader.getIdsModules();
+   //     idsModules = robotXMLLoader.getIdsModules();
       
         
       

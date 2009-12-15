@@ -310,8 +310,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	public Map<XMLTagsUsed, String> getRobotDescriptionValues() {
 		return robotDescription;
 	}
-
-	int robotNrCounter=1;
+	
 
 	/**
 	 * Loads simulation environment parameters from XML description file.
@@ -321,13 +320,16 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 
 		NodeList nodeListRobotXMLValues;
 
-		if(document.getElementsByTagName(XMLTagsUsed.ROBOT_NR.toString()+robotNrCounter)!=null){
-			
-				nodeListRobotXMLValues = document.getElementsByTagName(XMLTagsUsed.ROBOT_NR.toString()+robotNrCounter);
-				extractRobotXMLValues(nodeListRobotXMLValues);
-				robotNrCounter++;
 
+		for (int robotNr=1;robotNr<10000; robotNr++){
+
+			if(document.getElementsByTagName(XMLTagsUsed.ROBOT_NR.toString()+robotNr)!=null){
+				nodeListRobotXMLValues = document.getElementsByTagName(XMLTagsUsed.ROBOT_NR.toString()+robotNr);
+				extractRobotXMLValues(nodeListRobotXMLValues);
+			}else{
+				 break;
 			}
+		}
 
 
 		NodeList nodeList = document.getElementsByTagName(XMLTagsUsed.WORLD_DESCRIPTION.toString());
@@ -381,6 +383,16 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 
 	}
 
+	
+	private SimulationSpecification simulationSpecification = new SimulationSpecification();
+	
+	public SimulationSpecification getSimulationSpecification() {
+		return simulationSpecification;
+	}
+
+	/**
+	 * @param nodeList
+	 */
 	private void extractRobotXMLValues( NodeList nodeList){
 		for (int node = 0; node < nodeList.getLength(); node++) {
 			Node firstNode = nodeList.item(node);
@@ -392,6 +404,13 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 				robotDescription.put(XMLTagsUsed.MORPHOLOGY_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION));
 				robotDescription.put(XMLTagsUsed.CONTROLLER_LOCATION, extractTagValue(firstElmnt,XMLTagsUsed.CONTROLLER_LOCATION));
 
+				RobotSpecification robotSpecification = new RobotSpecification();
+				robotSpecification.setMorphologyLocation(extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION));
+				robotSpecification.setControllerLocation(extractTagValue(firstElmnt,XMLTagsUsed.CONTROLLER_LOCATION));
+				
+				simulationSpecification.getRobotsInSimulation().add(robotSpecification);
+				System.out.println("Moprhology:" + robotSpecification.getMorphologyLocation());
+				System.out.println("Controller:" + robotSpecification.getControllerLocation());
 				//SimulationSpecification.robotsInSimulation.add(new RobotSpecification(extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION), null));
 
 			}
