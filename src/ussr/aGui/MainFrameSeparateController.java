@@ -288,12 +288,17 @@ public class MainFrameSeparateController extends GeneralController {
 	 */
 	public static void jButtonConstructRobotActionPerformed(JToggleButton jToggleButtonConstructRobot, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs ) {
 
-		/*Check if tabs are defined*/
-		TabsInter constructRobotTab = getTabByTitle(MainFramesInter.CONSTRUCT_ROBOT_TAB_TITLE,tabs);
-		TabsInter assignBehaviorsTab = getTabByTitle(MainFramesInter.ASSIGN_BEHAVIORS_TAB_TITLE,tabs);
-		TabsInter assignLabels = getTabByTitle(MainFramesInter.ASSIGN_LABELS_TAB_TITLE,tabs);
+		
 
 		if (jToggleButtonConstructRobot.isSelected()){
+			
+			//new SomeTabs(tabs, jTabbedPaneFirst).execute();
+			//TODO MOVE IN CONSTRUCTOR
+			/*Check if tabs are defined*/
+			TabsInter constructRobotTab = getTabByTitle(MainFramesInter.CONSTRUCT_ROBOT_TAB_TITLE,tabs);
+			TabsInter assignBehaviorsTab = getTabByTitle(MainFramesInter.ASSIGN_BEHAVIORS_TAB_TITLE,tabs);
+			TabsInter assignLabels = getTabByTitle(MainFramesInter.ASSIGN_LABELS_TAB_TITLE,tabs);
+			
 			/*Add tabs for construction of modular robot*/
 			jTabbedPaneFirst.addTab(constructRobotTab.getTabTitle(),new javax.swing.ImageIcon(constructRobotTab.getImageIconDirectory()),constructRobotTab.getJComponent());
 			jTabbedPaneFirst.addTab(assignBehaviorsTab.getTabTitle(),new javax.swing.ImageIcon(assignBehaviorsTab.getImageIconDirectory()),assignBehaviorsTab.getJComponent());
