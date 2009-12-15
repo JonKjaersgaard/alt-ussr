@@ -8,7 +8,7 @@ import ussr.aGui.MainFramesInter;
  * Contains icons used in main GUI window.
  * NOTE NR1: Most of icons are 20x20 pixels,however small(this is a keyword) ones are:15x15.
  * NOTE NR2: This enumeration was introduced in order to make it easy to change the directory for all icons,
- * their names and common extension.
+ * their names and common extension. Moreover, to keep icons localized (in one place) and easy to refer to.
  * NOTE NR3: Here are used constants of file names as arguments. The main reason for doing so is to
  * keep ability to specify the directory, icon name and extension directly without using this enumeration.
  * @author Konstantinas

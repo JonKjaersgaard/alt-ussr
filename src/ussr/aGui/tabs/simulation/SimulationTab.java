@@ -28,9 +28,10 @@ import ussr.aGui.MainFrames;
 import ussr.aGui.MainFramesInter;
 import ussr.aGui.enumerations.MainFrameComponentsText;
 import ussr.aGui.enumerations.MainFrameIcons;
-import ussr.aGui.enumerations.SimulationTabTreeNodes;
-import ussr.aGui.enumerations.TabsIcons;
-import ussr.aGui.enumerations.TextureDescriptions;
+import ussr.aGui.enumerations.tabs.SimulationTabComponentsText;
+import ussr.aGui.enumerations.tabs.SimulationTabTreeNodes;
+import ussr.aGui.enumerations.tabs.TabsIcons;
+import ussr.aGui.enumerations.tabs.TextureDescriptions;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.helpers.hintPanel.HintPanel;
@@ -274,12 +275,10 @@ public class SimulationTab extends Tabs {
 		displayTitle1 = BorderFactory.createTitledBorder("New position");
 		displayTitle1.setTitleJustification(TitledBorder.CENTER);
 		jPanelMoveRobot.setBorder(displayTitle1);
-
-
-		//jButtonYpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_step_by_step));
-		jButtonYpositive.setIcon(TabsIcons.Y_POSITIVE.getImageIcon());				
-		//jButtonZup.setRolloverIcon(MainFrameIcons.RUN_STEP_BY_STEP_ROLLOVER.getImageIcon());
-		//jButtonZup.setDisabledIcon(MainFrameIcons.RUN_STEP_BY_STEP_DISABLED.getImageIcon());		
+		
+		jButtonYpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_up));
+		jButtonYpositive.setIcon(TabsIcons.Y_POSITIVE.getImageIcon());
+		jButtonYpositive.setRolloverIcon(TabsIcons.Y_POSITIVE_ROLLOVER.getImageIcon());					
 		jButtonYpositive.setFocusable(false);		
 		jButtonYpositive.setPreferredSize(new Dimension(45,30));
 		jButtonYpositive.addActionListener(new java.awt.event.ActionListener() {
@@ -294,10 +293,9 @@ public class SimulationTab extends Tabs {
 		jPanelMoveRobot.add(jButtonYpositive,gridBagConstraintsMoveRobot);
 
 
-		//jButtonYpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_step_by_step));
-		jButtonXnegative.setIcon(TabsIcons.X_NEGATIVE.getImageIcon());				
-		//jButtonZup.setRolloverIcon(MainFrameIcons.RUN_STEP_BY_STEP_ROLLOVER.getImageIcon());
-		//jButtonZup.setDisabledIcon(MainFrameIcons.RUN_STEP_BY_STEP_DISABLED.getImageIcon());		
+		jButtonXnegative.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_left));
+		jButtonXnegative.setIcon(TabsIcons.X_NEGATIVE.getImageIcon());	
+		jButtonXnegative.setRolloverIcon(TabsIcons.X_NEGATIVE_ROLLOVER.getImageIcon());			
 		jButtonXnegative.setFocusable(false);		
 		jButtonXnegative.setPreferredSize(new Dimension(45,30));
 		jButtonXnegative.addActionListener(new java.awt.event.ActionListener() {
@@ -310,10 +308,9 @@ public class SimulationTab extends Tabs {
 		gridBagConstraintsMoveRobot.gridy = 1;	
 		jPanelMoveRobot.add(jButtonXnegative,gridBagConstraintsMoveRobot);
 
-		//jButtonYpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_step_by_step));
-		jButtonZpositive.setIcon(TabsIcons.Z_POSITIVE.getImageIcon());				
-		//jButtonZup.setRolloverIcon(MainFrameIcons.RUN_STEP_BY_STEP_ROLLOVER.getImageIcon());
-		//jButtonZup.setDisabledIcon(MainFrameIcons.RUN_STEP_BY_STEP_DISABLED.getImageIcon());		
+		jButtonZpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_closer));
+		jButtonZpositive.setIcon(TabsIcons.Z_POSITIVE.getImageIcon());	
+		jButtonZpositive.setRolloverIcon(TabsIcons.Z_POSITIVE_ROLLOVER.getImageIcon());		
 		jButtonZpositive.setFocusable(false);		
 		jButtonZpositive.setPreferredSize(FramesInter.BUTTON_DIMENSION);
 		jButtonZpositive.addActionListener(new java.awt.event.ActionListener() {
@@ -330,16 +327,21 @@ public class SimulationTab extends Tabs {
 		jSpinnerCoordinateValue = new javax.swing.JSpinner();
 		jSpinnerCoordinateValue.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.1f), Float.valueOf(0.0f), Float.valueOf(100.0f), Float.valueOf(0.01f)));
 		jSpinnerCoordinateValue.setPreferredSize(new Dimension(45,30));
+		jSpinnerCoordinateValue.addChangeListener(new javax.swing.event.ChangeListener() {
+	            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+	              SimulationTabController.setjSpinnerCoordinateValue(Float.parseFloat(jSpinnerCoordinateValue.getValue().toString()));
+	            }
+	        });
+		
 		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraintsMoveRobot.gridx = 1;
 		gridBagConstraintsMoveRobot.gridy = 1;
 
 		jPanelMoveRobot.add(jSpinnerCoordinateValue,gridBagConstraintsMoveRobot);
 
-		//jButtonYpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_step_by_step));
+		jButtonZnegative.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_away));
 		jButtonZnegative.setIcon(TabsIcons.Z_NEGATIVE.getImageIcon());				
-		//jButtonZup.setRolloverIcon(MainFrameIcons.RUN_STEP_BY_STEP_ROLLOVER.getImageIcon());
-		//jButtonZup.setDisabledIcon(MainFrameIcons.RUN_STEP_BY_STEP_DISABLED.getImageIcon());		
+		jButtonZnegative.setRolloverIcon(TabsIcons.Z_NEGATIVE_ROLLOVER.getImageIcon());	
 		jButtonZnegative.setFocusable(false);		
 		jButtonZnegative.setPreferredSize(new Dimension(45,30));
 		jButtonZnegative.addActionListener(new java.awt.event.ActionListener() {
@@ -353,10 +355,9 @@ public class SimulationTab extends Tabs {
 		jPanelMoveRobot.add(jButtonZnegative,gridBagConstraintsMoveRobot);
 
 
-		//jButtonYpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_step_by_step));
-		jButtonXpositive.setIcon(TabsIcons.X_POSITIVE.getImageIcon());				
-		//jButtonZup.setRolloverIcon(MainFrameIcons.RUN_STEP_BY_STEP_ROLLOVER.getImageIcon());
-		//jButtonZup.setDisabledIcon(MainFrameIcons.RUN_STEP_BY_STEP_DISABLED.getImageIcon());		
+		jButtonXpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_right));
+		jButtonXpositive.setIcon(TabsIcons.X_POSITIVE.getImageIcon());	
+		jButtonXpositive.setRolloverIcon(TabsIcons.X_POSITIVE_ROLLOVER.getImageIcon());		
 		jButtonXpositive.setFocusable(false);		
 		jButtonXpositive.setPreferredSize(new Dimension(45,30));
 		jButtonXpositive.addActionListener(new java.awt.event.ActionListener() {
@@ -371,10 +372,9 @@ public class SimulationTab extends Tabs {
 
 
 
-		//jButtonYpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(MainFrameComponentsText.Run_step_by_step));
-		jButtonYnegative.setIcon(TabsIcons.Y_NEGATIVE.getImageIcon());				
-		//jButtonZup.setRolloverIcon(MainFrameIcons.RUN_STEP_BY_STEP_ROLLOVER.getImageIcon());
-		//jButtonZup.setDisabledIcon(MainFrameIcons.RUN_STEP_BY_STEP_DISABLED.getImageIcon());		
+		jButtonYnegative.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_down));
+		jButtonYnegative.setIcon(TabsIcons.Y_NEGATIVE.getImageIcon());	
+		jButtonYnegative.setRolloverIcon(TabsIcons.Y_NEGATIVE_ROLLOVER.getImageIcon());		
 		jButtonYnegative.setFocusable(false);		
 		jButtonYnegative.setPreferredSize(new Dimension(45,30));
 		jButtonYnegative.addActionListener(new java.awt.event.ActionListener() {

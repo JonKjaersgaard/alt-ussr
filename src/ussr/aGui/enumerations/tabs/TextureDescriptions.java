@@ -1,4 +1,4 @@
-package ussr.aGui.enumerations;
+package ussr.aGui.enumerations.tabs;
 
 import ussr.description.setup.WorldDescription;
 import ussr.description.setup.WorldDescription.TextureDescription;

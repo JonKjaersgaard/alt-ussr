@@ -1,4 +1,4 @@
-package ussr.aGui.enumerations;
+package ussr.aGui.enumerations.tabs;
 
 /**
  * Packet formats names used in tab called Module communication visulaizer

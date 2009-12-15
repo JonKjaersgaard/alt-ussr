@@ -10,7 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.border.TitledBorder;
 import ussr.aGui.MainFramesInter;
-import ussr.aGui.enumerations.VisualizerPacketFormats;
+import ussr.aGui.enumerations.tabs.VisualizerPacketFormats;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;

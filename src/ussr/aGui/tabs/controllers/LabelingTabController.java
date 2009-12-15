@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 
 import javax.swing.AbstractButton;
 
-import ussr.aGui.enumerations.EntitiesForLabelingText;
+import ussr.aGui.enumerations.tabs.EntitiesForLabelingText;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
 import ussr.aGui.tabs.constructionTabs.LabelingTab;

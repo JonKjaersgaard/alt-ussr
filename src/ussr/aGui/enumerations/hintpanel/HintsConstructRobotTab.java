@@ -1,4 +1,4 @@
-package ussr.aGui.enumerations;
+package ussr.aGui.enumerations.hintpanel;
 
 /**
  * Contains build in hints for tab called "Construct Robot". Hints are displayed in Display for hints(panel).

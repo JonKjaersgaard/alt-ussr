@@ -12,8 +12,8 @@ import javax.swing.JToolBar;
 import javax.swing.border.TitledBorder;
 
 import ussr.aGui.FramesInter;
-import ussr.aGui.enumerations.EntitiesForLabelingText;
-import ussr.aGui.enumerations.TabsIcons;
+import ussr.aGui.enumerations.tabs.EntitiesForLabelingText;
+import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.LabelingTabController;
 

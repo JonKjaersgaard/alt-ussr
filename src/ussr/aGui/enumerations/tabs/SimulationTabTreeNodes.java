@@ -1,4 +1,4 @@
-package ussr.aGui.enumerations;
+package ussr.aGui.enumerations.tabs;
 
 import ussr.builder.enumerations.XMLTagsUsed;
 

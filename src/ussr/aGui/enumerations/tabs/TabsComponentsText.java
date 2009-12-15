@@ -1,4 +1,4 @@
-package ussr.aGui.enumerations;
+package ussr.aGui.enumerations.tabs;
 
 /**
  * Contains text elements presented to the user in Tabs. Such as text on GUI elements and tool tips text.

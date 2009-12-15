@@ -1,6 +1,4 @@
-package ussr.aGui.enumerations;
-
-import java.awt.Toolkit;
+package ussr.aGui.enumerations.tabs;
 
 import javax.swing.ImageIcon;
 
@@ -67,13 +65,19 @@ public enum TabsIcons {
 	NEW_ROBOT_DISABLED(TabsInter.NEW_ROBOT_DISABLED),
 	
 	Y_POSITIVE(TabsInter.Y_POSITIVE),
+	Y_POSITIVE_ROLLOVER(TabsInter.Y_POSITIVE_ROLLOVER),
 	Y_NEGATIVE(TabsInter.Y_NEGATIVE),
+	Y_NEGATIVE_ROLLOVER(TabsInter.Y_NEGATIVE_ROLLOVER),
 	
 	X_POSITIVE(TabsInter.X_POSITIVE),
+	X_POSITIVE_ROLLOVER(TabsInter.X_POSITIVE_ROLLOVER),	
 	X_NEGATIVE(TabsInter.X_NEGATIVE),
+	X_NEGATIVE_ROLLOVER(TabsInter.X_NEGATIVE_ROLLOVER),
 	
 	Z_POSITIVE(TabsInter.Z_POSITIVE),
+	Z_POSITIVE_ROLLOVER(TabsInter.Z_POSITIVE_ROLLOVER),
 	Z_NEGATIVE(TabsInter.Z_NEGATIVE),
+	Z_NEGATIVE_ROLLOVER(TabsInter.Z_NEGATIVE_ROLLOVER),
 	;
 	
 	/**

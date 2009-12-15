@@ -15,10 +15,10 @@ import javax.swing.JSpinner;
 
 
 import ussr.aGui.MainFramesInter;
-import ussr.aGui.enumerations.HintsSimulationTab;
-import ussr.aGui.enumerations.SimulationTabTreeNodes;
-import ussr.aGui.enumerations.TabsIcons;
-import ussr.aGui.enumerations.TextureDescriptions;
+import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
+import ussr.aGui.enumerations.tabs.SimulationTabTreeNodes;
+import ussr.aGui.enumerations.tabs.TabsIcons;
+import ussr.aGui.enumerations.tabs.TextureDescriptions;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.simulation.TemporaryRobotSpecification;
 import ussr.aGui.tabs.simulation.SimulationTab;
@@ -287,31 +287,32 @@ public class SimulationTabController extends TabsControllers {
 	}
 	
 	
+    private static float jSpinnerStepValue=0.1f; 
 
+	public static void setjSpinnerCoordinateValue(float spinnerStepValue) {
+		jSpinnerStepValue = spinnerStepValue;
+	}
 
 	public static void jButtonsCoordinateArrowsActionPerformed(JButton jButton) {
 		
-		
-		
-		
-		
+	
 		VectorDescription changeInPosition = new VectorDescription(0,0,0);
 		
-		float step = Float.parseFloat(SimulationTab.getJSpinnerCoordinateValue().getValue().toString());
+		//float step = Float.parseFloat(SimulationTab.getJSpinnerCoordinateValue().getValue().toString());
 		
 		Icon icon = jButton.getIcon();
 		if(icon.equals(TabsIcons.Y_POSITIVE.getImageIcon())){			
-			changeInPosition = new VectorDescription(0,step,0);
+			changeInPosition = new VectorDescription(0,jSpinnerStepValue,0);
 		}else if(icon.equals(TabsIcons.Y_NEGATIVE.getImageIcon())){
-			changeInPosition = new VectorDescription(0,-step,0);			
+			changeInPosition = new VectorDescription(0,-jSpinnerStepValue,0);			
 		}else if (icon.equals(TabsIcons.X_POSITIVE.getImageIcon())){
-			changeInPosition = new VectorDescription(step,0,0);
+			changeInPosition = new VectorDescription(jSpinnerStepValue,0,0);
 		}else if (icon.equals(TabsIcons.X_NEGATIVE.getImageIcon())){
-			changeInPosition = new VectorDescription(-step,0,0);
+			changeInPosition = new VectorDescription(-jSpinnerStepValue,0,0);
 		}else if (icon.equals(TabsIcons.Z_POSITIVE.getImageIcon())){
-			changeInPosition = new VectorDescription(0,0,step);
+			changeInPosition = new VectorDescription(0,0,jSpinnerStepValue);
 		}else if (icon.equals(TabsIcons.Z_NEGATIVE.getImageIcon())){
-			changeInPosition = new VectorDescription(0,0,-step);
+			changeInPosition = new VectorDescription(0,0,-jSpinnerStepValue);
 		}
 		
 		int stringLenght = selectedNodeName.toCharArray().length;

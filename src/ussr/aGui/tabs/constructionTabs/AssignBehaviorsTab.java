@@ -10,7 +10,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 
 import ussr.aGui.enumerations.ModularRobotsNames;
-import ussr.aGui.enumerations.TabsComponentsText;
+import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;

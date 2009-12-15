@@ -1,4 +1,4 @@
-package ussr.aGui.enumerations;
+package ussr.aGui.enumerations.tabs;
 
 /**
  * @author Konstantinas

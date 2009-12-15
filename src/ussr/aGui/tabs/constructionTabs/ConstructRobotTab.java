@@ -14,10 +14,10 @@ import javax.swing.ListCellRenderer;
 import javax.swing.Renderer;
 
 import ussr.aGui.FramesInter;
-import ussr.aGui.enumerations.HintsConstructRobotTab;
 import ussr.aGui.enumerations.ModularRobotsNames;
-import ussr.aGui.enumerations.TabsComponentsText;
-import ussr.aGui.enumerations.TabsIcons;
+import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
+import ussr.aGui.enumerations.tabs.TabsComponentsText;
+import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
