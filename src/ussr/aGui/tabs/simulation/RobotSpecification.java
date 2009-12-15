@@ -1,18 +1,40 @@
 package ussr.aGui.tabs.simulation;
 
-public class RobotSpecification {
+import java.io.Serializable;
 
-   private String morphologyLocation;
+public class RobotSpecification implements Serializable {
+
+  
+	private String controllerLocation;
 	
+
+
+
+	private String morphologyLocation;
+	
+
+
+
 	private  String idsModules;
 	
 	
 	
-	public RobotSpecification(String morphologyLocation,String idsModules){
-		this.morphologyLocation = morphologyLocation;
-		this.idsModules = idsModules;
+	public RobotSpecification(){
 		
 	}
+	
+	
+	
+	
+	
+	public String getControllerLocation() {
+		return controllerLocation;
+	}
+
+	public void setControllerLocation(String controllerLocation) {
+		this.controllerLocation = controllerLocation;
+	}
+	
 	
 	public  String getIdsModules() {
 		return idsModules;
@@ -21,6 +43,10 @@ public class RobotSpecification {
 
 	public  String getMorphologyLocation() {
 		return morphologyLocation;
+	}
+	
+	public void setMorphologyLocation(String morphologyLocation) {
+		this.morphologyLocation = morphologyLocation;
 	}
 
 	

@@ -42,9 +42,9 @@ public class SimulationTabController extends TabsControllers {
 		SimulationTab.getJPanelEditor().revalidate();
 		SimulationTab.getJPanelEditor().repaint();
 
- if (selectedNode.contains("RobotNr")){
+/* if (selectedNode.contains("RobotNr")){
 	 SimulationTab.addRobotEditor();
- }else{
+ }else{*/
 		switch(SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_"))){
 
 		case Simulation://  break through
@@ -54,8 +54,11 @@ public class SimulationTabController extends TabsControllers {
 		//case Robot+"nR":
 			
 			//break;
+		case Robot:
+			SimulationTab.addRobotEditor();
+			break;
 		case Robots:
-			SimulationTab.addRobotNode();
+			//SimulationTab.addRobotNode();
 			SimulationTab.addRobotsEditor();
 			break;
 		case Physics_simulation_step_size:
@@ -118,10 +121,10 @@ public class SimulationTabController extends TabsControllers {
 		case Physics_simulation_controller_step_factor:
 			SimulationTab.addPhysicsSimulationControllerStepFactor();
 			break;
-		default: throw new Error("The node "+ selectedNode + "is not supported yet.");
+		default: throw new Error("The node "+ selectedNode + " is not supported yet.");
 
 		}
- }
+ //}
 		SimulationTab.getJPanelEditor().validate();
 
 	}
@@ -271,6 +274,9 @@ public class SimulationTabController extends TabsControllers {
 		physicsSimulationControllerStepFactor.setValue(PhysicsParameters.get().getPhysicsSimulationControllerStepFactor());
 
 	}
+	
+	
+
 
 	public static void jButtonsCoordinateArrowsActionPerformed(JButton jButton) {
 		
@@ -301,25 +307,25 @@ public class SimulationTabController extends TabsControllers {
 		
 		
 		
-		String idsModules = SimulationSpecification.robotsInSimulation.get(0).getIdsModules();		
-		
-		String temp[] = idsModules.split(",");
-		for (int index = 1; index<temp.length;index++){
-			
-			     int moduleID= Integer.parseInt(temp[index]);
-			     try {
-						VectorDescription modulePosition = remotePhysicsSimulation.getSimulationTabControl().getModulePosition(moduleID);
-						//modulePosition.getX()+0.1f;
-						
-						remotePhysicsSimulation.getSimulationTabControl().setModulePosition(moduleID, new VectorDescription(modulePosition.getX()+changeInPosition.getX(),modulePosition.getY()+changeInPosition.getY(),modulePosition.getZ()+changeInPosition.getZ()));
-					} catch (RemoteException e) {
-					//throw new Error("SOME");
-					}
-		}
-		
-		
-		
-		System.out.println("IDs: "+ idsModules);
+//		String idsModules = SimulationSpecification.robotsInSimulation.get(0).getIdsModules();		
+//		
+//		String temp[] = idsModules.split(",");
+//		for (int index = 1; index<temp.length;index++){
+//			
+//			     int moduleID= Integer.parseInt(temp[index]);
+//			     try {
+//						VectorDescription modulePosition = remotePhysicsSimulation.getSimulationTabControl().getModulePosition(moduleID);
+//						//modulePosition.getX()+0.1f;
+//						
+//						remotePhysicsSimulation.getSimulationTabControl().setModulePosition(moduleID, new VectorDescription(modulePosition.getX()+changeInPosition.getX(),modulePosition.getY()+changeInPosition.getY(),modulePosition.getZ()+changeInPosition.getZ()));
+//					} catch (RemoteException e) {
+//					//throw new Error("SOME");
+//					}
+//		}
+//		
+//		
+//		
+//		System.out.println("IDs: "+ idsModules);
 		
 		
 		/*Map<Integer,ModulePosition> robotModules = RobotSpecification.getRobotModules();
