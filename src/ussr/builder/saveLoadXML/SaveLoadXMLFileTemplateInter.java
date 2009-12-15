@@ -3,9 +3,9 @@ package ussr.builder.saveLoadXML;
 import java.util.Hashtable;
 import java.util.Map;
 
-import ussr.aGui.tabs.simulation.SimulationSpecification;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
+import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Module;

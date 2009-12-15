@@ -1,4 +1,4 @@
-package ussr.builder;
+package ussr.builder.simulationLoader;
 
 public interface SimuliationXMLFileLoaderInter {
 

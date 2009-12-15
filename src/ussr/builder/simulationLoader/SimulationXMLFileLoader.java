@@ -1,11 +1,10 @@
-package ussr.builder;
+package ussr.builder.simulationLoader;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import ussr.aGui.tabs.simulation.SimulationSpecification;
 import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;

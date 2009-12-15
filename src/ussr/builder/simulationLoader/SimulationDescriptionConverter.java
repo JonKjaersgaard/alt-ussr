@@ -1,4 +1,4 @@
-package ussr.builder;
+package ussr.builder.simulationLoader;
 
 import java.util.Hashtable;
 import java.util.Map;

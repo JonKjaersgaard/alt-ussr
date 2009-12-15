@@ -16,14 +16,14 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import com.jme.math.Quaternion;
 
-import ussr.aGui.tabs.simulation.RobotSpecification;
-import ussr.aGui.tabs.simulation.SimulationSpecification;
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.FileDirectoryHelper;
 import ussr.builder.helpers.StringProcessingHelper;
+import ussr.builder.simulationLoader.RobotSpecification;
+import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.BoxDescription;
@@ -211,19 +211,20 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 		return idsModules;
 	}
 
+	
+	
 	/**
 	 * Loads robot in simulation environment from XML description file.
 	 * @param document, DOM object of document. 
 	 */
 	private void loadRobotXML(Document document){
-		int moduleGlobalID =-1;
+	
 		NodeList nodeList = document.getElementsByTagName(XMLTagsUsed.MODULE.toString());
 
 		for (int node = 0; node < nodeList.getLength(); node++) {
 			Node firstNode = nodeList.item(node);
 
 			if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
-				moduleGlobalID++;
 
 				Element firstElmnt = (Element) firstNode;				
 				//String moduleID = extractTagValue(firstElmnt,XMLTagsUsed.ID);
@@ -260,8 +261,8 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 				createNewModule(moduleName,moduleType,moduleVecPosition,rotationDescription,listColorsComponents,listColorsConnectors,labelsModule,tempLabelsConnectors);
 
 
-				idsModules = idsModules +"," +moduleGlobalID;
-
+				
+				
 				//System.out.println("AMOUNT_START:"+ robotModules.size());
 
 
@@ -407,10 +408,9 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 				RobotSpecification robotSpecification = new RobotSpecification();
 				robotSpecification.setMorphologyLocation(extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION));
 				robotSpecification.setControllerLocation(extractTagValue(firstElmnt,XMLTagsUsed.CONTROLLER_LOCATION));
+				robotSpecification.setAmountModules(Integer.parseInt(extractTagValue(firstElmnt,XMLTagsUsed.NUMBER_OF_MODULES)));
 				
 				simulationSpecification.getRobotsInSimulation().add(robotSpecification);
-				System.out.println("Moprhology:" + robotSpecification.getMorphologyLocation());
-				System.out.println("Controller:" + robotSpecification.getControllerLocation());
 				//SimulationSpecification.robotsInSimulation.add(new RobotSpecification(extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION), null));
 
 			}
