@@ -39,6 +39,7 @@ import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.builder.helpers.StringProcessingHelper;
+import ussr.builder.simulationLoader.SimulationSpecification;
 
 import ussr.description.setup.WorldDescription.CameraPosition;
 
@@ -84,7 +85,7 @@ public class SimulationTab extends Tabs {
 
 
 
-		jTree1 = new javax.swing.JTree(initializeRootNode());
+		jTreeSimulation = new javax.swing.JTree(initializeRootNode());
 
 		ImageIcon closedIcon = TabsIcons.EXPANSION_CLOSED_SMALL.getImageIcon();
 		ImageIcon openIcon = TabsIcons.EXPANSION_OPENED_SMALL.getImageIcon();
@@ -94,14 +95,14 @@ public class SimulationTab extends Tabs {
 			renderer.setClosedIcon(closedIcon);
 			renderer.setOpenIcon(openIcon);
 			renderer.setLeafIcon(leafIcon);
-			jTree1.setCellRenderer(renderer);
+			jTreeSimulation.setCellRenderer(renderer);
 		}
 
-		jTree1.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		jTree1.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+		jTreeSimulation.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		jTreeSimulation.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
 			public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
-				jTree1.getLastSelectedPathComponent();
+				jTreeSimulation.getLastSelectedPathComponent();
 
 				if (node == null)
 					//Nothing is selected.	
@@ -120,7 +121,7 @@ public class SimulationTab extends Tabs {
 
 
 
-		jScrollPaneTree.setViewportView(jTree1);
+		jScrollPaneTree.setViewportView(jTreeSimulation);
 		jScrollPaneTree.setVisible(false);
 		jScrollPaneTree.setPreferredSize(new Dimension(300,300));
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -237,9 +238,11 @@ public class SimulationTab extends Tabs {
 		int nrRobotsInSimulation = simulationSpecification.getRobotsInSimulation().size();
 
 		for (int robotNr=1;robotNr<nrRobotsInSimulation+1;robotNr++){
-			DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Robot)/*+"Nr."+robotNr*/);
+			DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Robot)+" Nr."+robotNr);
 			secondNodeHierarchyRobots.add(thirdNodeHierarchyRobot);
 		}
+		jTreeSimulation.revalidate();
+		jTreeSimulation.repaint();
 	} 
 
 
@@ -678,7 +681,7 @@ public class SimulationTab extends Tabs {
 		return jSpinnerCoordinateValue;
 	}
 
-	private static javax.swing.JTree jTree1;
+	private static javax.swing.JTree jTreeSimulation;
 	private static javax.swing.JScrollPane jScrollPaneTree;
 	private static javax.swing.JButton jButtonOpenMorphology,jButtonYpositive,jButtonYnegative,
 	jButtonXpositive,jButtonXnegative,

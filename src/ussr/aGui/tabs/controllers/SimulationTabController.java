@@ -20,9 +20,9 @@ import ussr.aGui.enumerations.SimulationTabTreeNodes;
 import ussr.aGui.enumerations.TabsIcons;
 import ussr.aGui.enumerations.TextureDescriptions;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
-import ussr.aGui.tabs.simulation.SimulationSpecification;
 import ussr.aGui.tabs.simulation.TemporaryRobotSpecification;
 import ussr.aGui.tabs.simulation.SimulationTab;
+import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.physics.PhysicsParameters;
@@ -33,18 +33,29 @@ import ussr.remote.facade.SimulationTabControlInter;
 public class SimulationTabController extends TabsControllers {
 
 
+	
+	private static String selectedNodeName;
+	
+	private static SimulationSpecification simulationSpecification;
+	
+	public static void setSimulationSpecification(SimulationSpecification simulationSpecification) {
+		SimulationTabController.simulationSpecification = simulationSpecification;
+	}
+
 	/**
 	 * @param selectedNode
 	 */
 	public static void jTreeItemSelectedActionPerformed(String selectedNode) {
-
+		selectedNodeName = selectedNode;
+		
+		
 		SimulationTab.getJPanelEditor().removeAll();
 		SimulationTab.getJPanelEditor().revalidate();
 		SimulationTab.getJPanelEditor().repaint();
 
-/* if (selectedNode.contains("RobotNr")){
+ if (selectedNode.contains("Robot Nr.")){
 	 SimulationTab.addRobotEditor();
- }else{*/
+ }else{
 		switch(SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_"))){
 
 		case Simulation://  break through
@@ -54,9 +65,9 @@ public class SimulationTabController extends TabsControllers {
 		//case Robot+"nR":
 			
 			//break;
-		case Robot:
+	/*	case Robot:
 			SimulationTab.addRobotEditor();
-			break;
+			break;*/
 		case Robots:
 			//SimulationTab.addRobotNode();
 			SimulationTab.addRobotsEditor();
@@ -124,7 +135,7 @@ public class SimulationTabController extends TabsControllers {
 		default: throw new Error("The node "+ selectedNode + " is not supported yet.");
 
 		}
- //}
+ }
 		SimulationTab.getJPanelEditor().validate();
 
 	}
@@ -303,46 +314,44 @@ public class SimulationTabController extends TabsControllers {
 			changeInPosition = new VectorDescription(0,0,-step);
 		}
 		
+		int stringLenght = selectedNodeName.toCharArray().length;
+		int selectedRobot=-1;
+		switch(stringLenght){
+		case 10:
+			char robotNumber = selectedNodeName.toCharArray()[9];
+			selectedRobot = Integer.parseInt(robotNumber+"");
+			break;
+			
+		}
+		System.out.println("SelectedRobotNr."+selectedRobot );
+		int amountRobotModules = simulationSpecification.getRobotsInSimulation().get(selectedRobot-1).getAmountModules();
 		
-		
-		
-		
-//		String idsModules = SimulationSpecification.robotsInSimulation.get(0).getIdsModules();		
-//		
-//		String temp[] = idsModules.split(",");
-//		for (int index = 1; index<temp.length;index++){
-//			
-//			     int moduleID= Integer.parseInt(temp[index]);
-//			     try {
-//						VectorDescription modulePosition = remotePhysicsSimulation.getSimulationTabControl().getModulePosition(moduleID);
-//						//modulePosition.getX()+0.1f;
-//						
-//						remotePhysicsSimulation.getSimulationTabControl().setModulePosition(moduleID, new VectorDescription(modulePosition.getX()+changeInPosition.getX(),modulePosition.getY()+changeInPosition.getY(),modulePosition.getZ()+changeInPosition.getZ()));
-//					} catch (RemoteException e) {
-//					//throw new Error("SOME");
-//					}
-//		}
-//		
-//		
-//		
-//		System.out.println("IDs: "+ idsModules);
-		
-		
-		/*Map<Integer,ModulePosition> robotModules = RobotSpecification.getRobotModules();
-		int amountModules = robotModules.size();
-		System.out.println("Amount:"+amountModules );
-		for (int index=0; index<amountModules; index++){
-			robotModules.get(index).getPosition().getX();
-			robotModules.get(index).getPosition().getY();
-			robotModules.get(index).getPosition().getZ();
-			try {
-				remotePhysicsSimulation.getSimulationTabControl().setModulePosition(index);
+		if (selectedRobot==1){			
+			moveRobot(0,amountRobotModules,changeInPosition); 
+		}else{
+			int amountAllRobotsModules=0;
+			
+			while(selectedRobot!= 0){
 				
-			} catch (RemoteException e) {
-			throw new Error("SOME");
+				amountAllRobotsModules =amountAllRobotsModules+ simulationSpecification.getRobotsInSimulation().get(selectedRobot-1).getAmountModules();
+				selectedRobot--;
+				System.out.println("All"+amountAllRobotsModules );
 			}
-		}*/
+			moveRobot(amountAllRobotsModules-amountRobotModules,amountAllRobotsModules,changeInPosition);
+		}
+	
 
+	}
+	
+	private static void moveRobot(int firstModuleId,int amountModules,VectorDescription changeInPosition){
+		for (int moduleID=firstModuleId; moduleID<amountModules;moduleID++){
+			try {
+				VectorDescription modulePosition = remotePhysicsSimulation.getSimulationTabControl().getModulePosition(moduleID);	
+				remotePhysicsSimulation.getSimulationTabControl().setModulePosition(moduleID, new VectorDescription(modulePosition.getX()+changeInPosition.getX(),modulePosition.getY()+changeInPosition.getY(),modulePosition.getZ()+changeInPosition.getZ()));
+			} catch (RemoteException e) {
+			//throw new Error("SOME");
+			}
+		}
 	}
 
 

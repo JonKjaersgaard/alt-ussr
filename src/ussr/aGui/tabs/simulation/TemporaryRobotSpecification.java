@@ -13,6 +13,11 @@ public class TemporaryRobotSpecification {
 	
 	
 	
+	public TemporaryRobotSpecification(String morphologyLocation,String idsModules){
+		this.morphologyLocation = morphologyLocation;
+		this.idsModules = idsModules;
+		
+	}
 	
 	public static String getIdsModules() {
 		return idsModules;
