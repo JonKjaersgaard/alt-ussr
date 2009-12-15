@@ -1,29 +1,18 @@
 <body>
 This folder is dedicated to keep different resources used by GUI.<br /> <br />
 Here: <br />
-1)"icons" folder contains the icons of GUI in jpg format.<br />
-  Dimensions of icons:<br />
-  A) in toolBars - 20x20 pixels.<br />
-  B) in menu bar - 15x15 pixels.<br />
-Hint: Each icon as well as the directory it is in, is referenced from "MainFrameInter" or "TabsInter"  interfaces located in package "ussr.aGui"<br />
-2)"MSVisio" folder contains the files for improving the design of icons and saving in jpg format.
-  
-  
- 
 
+<ol>
+<li> "icons" folder contains the icons of GUI in .png format.</li>
+  <ul>
+  <li>Most of icons are 20x20 pixels</li>
+  <li>Big (keyword in the name of the file) are 25x25 pixels</li>
+  <li>Small (keyword in the name of the file) are 15x15 pixels</li>
+  </ul>
+<li> Icons were created in icon editor called RealWorldIconEditor.</li>
+<li> Note: Each icon as well as the directory it is in, are referenced from Interfaces and Enumerations in the code for GUI</li>
+<li> Raw design of each icon can be found in folder named as rawIcons. This is in case, there is a need to modify the design. </li>
+</ol>
 
-
-<!--<h1> 1) How to ...? </h1>
-<h2> 1.1) Start MainFrame (main GUI window)? </h2>
-A) During simulation.<br />
-            <code>  ArrayList<String> namesTabs =  new ArrayList<String>();//The names of the tabs displayed in the main GUI window<br />
-		    namesTabs.add("1 Step: Construct Robot"); //Build in tab <br />
-			namesTabs.add("2 Step: Assign Behaviour");//Build in tab <br />
-			//namesTabs.add("New"); //Your new tab <br />
-			MainFrameInter mainFrame = new MainFrame();<br />			
-			mainFrame.activateDuringSimulation(this,namesTabs); </ code><br /> <br />
-B) Stand alone <br />
-   Run MainFrame.java <br />
-<h2> 1.2) Design my own tab ? </h2>-->
 </body>
 
