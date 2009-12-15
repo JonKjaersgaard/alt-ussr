@@ -65,5 +65,6 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 	public void newModuleAdded()throws RemoteException{
 		ConstructRobotTabController.newModuleAdded();		
 	}
+	
 
 }

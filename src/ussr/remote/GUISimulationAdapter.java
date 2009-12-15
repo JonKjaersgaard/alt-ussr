@@ -113,10 +113,13 @@ public class GUISimulationAdapter {
 			}
 		}
 		
-		String morphologyLocation = simulation.getXmlSimulationProvider().getRobotMorphologyLocation();
-	       String idsModules = simulation.getXmlSimulationProvider().getIDsModules();
-	    
-	    SimulationSpecification.robotsInSimulation.add(new RobotSpecification(morphologyLocation,idsModules));
+		//String morphologyLocation = simulation.getXmlSimulationProvider().getRobotMorphologyLocation();
+	      // String idsModules = simulation.getXmlSimulationProvider().getIDsModules();
+		
+		
+		
+		
+	    //SimulationSpecification.robotsInSimulation.add(new RobotSpecification(morphologyLocation,idsModules));
 		callBackGUI(simulation,sim);
 	}
 	
@@ -134,6 +137,11 @@ public class GUISimulationAdapter {
 		MainFrameSeparate.setMainFrameSeparateEnabled(true);
 		SimulationTab.setTabVisible(true);
 		MainFrames.setJTabbedPaneFirstEnabled(true);
+		
+         SimulationSpecification simulationSpecification = simulation.getXmlSimulationProvider().getSimulationSpecification();
+         SimulationTab.addRobotNode(simulationSpecification);
+		
+		System.out.println("Amount:"+ simulationSpecification.getRobotsInSimulation().size());
 		
 		 System.out.println("LOCATION:"+simulation.getXmlSimulationProvider().getRobotMorphologyLocation());
 

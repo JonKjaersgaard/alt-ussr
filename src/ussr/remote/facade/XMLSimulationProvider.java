@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Map;
 
+import ussr.aGui.tabs.simulation.SimulationSpecification;
 import ussr.builder.SimulationXMLFileLoader;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
 import ussr.description.geometry.VectorDescription;
@@ -20,13 +21,13 @@ public class XMLSimulationProvider extends UnicastRemoteObject implements XMLSim
 	public String getRobotMorphologyLocation()throws RemoteException{
 		return simulationLoader.getRobotMorphologyLocation();
 	}
-	
-	public Map<Integer,ModulePosition> getRobotModules()throws RemoteException{
-		return simulationLoader.getRobotModules();
-	}
-	
+		
 	public String getIDsModules()throws RemoteException{
 		return simulationLoader.getIdsModules();
 		
+	}
+	
+	public SimulationSpecification getSimulationSpecification()throws RemoteException{
+		return simulationLoader.getSimulationSpecification();
 	}
 }
