@@ -4,8 +4,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Map;
 
-import ussr.aGui.tabs.simulation.SimulationSpecification;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
+import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 

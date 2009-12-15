@@ -3,7 +3,7 @@ package ussr.remote.facade;
 import java.io.InputStream;
 import java.rmi.RemoteException;
 
-import ussr.builder.SimulationDescriptionConverter;
+import ussr.builder.simulationLoader.SimulationDescriptionConverter;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;

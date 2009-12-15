@@ -17,8 +17,8 @@ import java.util.Set;
 
 import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.builder.Loader;
-import ussr.builder.SimulationDescriptionConverter;
-import ussr.builder.SimulationXMLFileLoader;
+import ussr.builder.simulationLoader.SimulationDescriptionConverter;
+import ussr.builder.simulationLoader.SimulationXMLFileLoader;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;

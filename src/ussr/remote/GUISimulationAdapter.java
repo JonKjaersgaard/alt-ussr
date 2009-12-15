@@ -13,10 +13,11 @@ import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.MainFrames;
 import ussr.aGui.tabs.controllers.ConsoleTabController;
-import ussr.aGui.tabs.simulation.RobotSpecification;
+import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.simulation.TemporaryRobotSpecification;
-import ussr.aGui.tabs.simulation.SimulationSpecification;
 import ussr.aGui.tabs.simulation.SimulationTab;
+import ussr.builder.simulationLoader.RobotSpecification;
+import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.remote.facade.ActiveSimulation;
 import ussr.remote.facade.GUICallbackControlImpl;
 import ussr.remote.facade.XMLSimulationProvider;
@@ -140,6 +141,7 @@ public class GUISimulationAdapter {
 		
          SimulationSpecification simulationSpecification = simulation.getXmlSimulationProvider().getSimulationSpecification();
          SimulationTab.addRobotNode(simulationSpecification);
+         SimulationTabController.setSimulationSpecification(simulationSpecification);
 		
 		System.out.println("Amount:"+ simulationSpecification.getRobotsInSimulation().size());
 		
