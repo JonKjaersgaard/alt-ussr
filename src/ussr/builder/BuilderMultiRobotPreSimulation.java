@@ -7,6 +7,7 @@ import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
 import ussr.builder.simulationLoader.SimulationDescriptionConverter;
+import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
@@ -77,6 +78,7 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 	}
 	
 	private static SimulationDescriptionConverter descriptionConverter ;
+	private static SimulationSpecification  simulationSpecification;
 	
 	private static void runSimulationFromXMLFile(){
 
@@ -89,11 +91,10 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		//xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, loadableSimulationFile);
         
 		/*Get values from XML file*/
-		simulationWorldDescription = xmlLoaderSimulation.getSimulationWorldDescriptionValues();
-        simulationPhysicsParameters = xmlLoaderSimulation.getSimulationPhysicsValues();
+		simulationSpecification = xmlLoaderSimulation.getSimulationSpecification();
 		
         /*Converter for converting values from String into corresponding type used in USSR*/
-         descriptionConverter =  new SimulationDescriptionConverter(simulationWorldDescription,simulationPhysicsParameters); 
+         descriptionConverter =  new SimulationDescriptionConverter(simulationSpecification.getSimWorldDecsriptionValues(),simulationSpecification.getSimPhysicsParameters()); 
         
         /*Get and set values*/
         setPhysicsParatemeters(descriptionConverter);

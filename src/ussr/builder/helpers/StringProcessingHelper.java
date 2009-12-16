@@ -48,6 +48,10 @@ public class StringProcessingHelper {
 	public static String replaceUnderscoreWithSpace(Object text){
 		return text.toString().replace("_", " ");
 	}
+	
+	public static Integer convertToInteger(String string){
+		return Integer.parseInt(string);
+	}
 
 
 }

@@ -42,27 +42,13 @@ public interface SaveLoadXMLFileTemplateInter {
 	 * @param fileDirectoryName, the name of directory, like for example: "C:/newXMLfile".	 
 	 */
 	public void loadXMLfile(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName);
-	
-    /**
-     * Returns values of world description object taken from xml file describing simulation.
-     * @return values of world description object taken from xml file describing simulation.
-     */
-    public Map<XMLTagsUsed, String> getSimulationWorldDescriptionValues();
-	
-    /**
-     * Returns values of physics parameters object taken from xml file describing simulation.
-	 * @return values of physics parameters object taken from xml file describing simulation.
-	 */
-	public Map<XMLTagsUsed, String> getSimulationPhysicsValues();
-	
+			
 	 /**
      * Returns values of robot description object taken from xml file describing simulation.
      * @return values of robot description object taken from xml file describing simulation.
      */
 	public  Map<XMLTagsUsed, String> getRobotDescriptionValues();
-	
-	public String getIdsModules();
-	
+		
 	public SimulationSpecification getSimulationSpecification() ;
 	
 }

@@ -28,10 +28,10 @@ import ussr.samples.GenericSimulation;
  *Input format: samples/atron/car.xml ussr.samples.atron.simulations.ATRONCarController1.
  * @author Konstantinas
  */
-public class SimulationXMLFileLoader extends GenericSimulation implements SimuliationXMLFileLoaderInter {
+public class SimulationXMLFileLoader extends GenericSimulation {
 	
 	
-	private static Map<XMLTagsUsed,String> simulationWorldDescription,simulationPhysicsParameters,
+	private static Map<XMLTagsUsed,String> simulationPhysicsParameters,
                                            robotDescription;
 	
 	private Map<Integer,ModulePosition> robotModules;
@@ -101,16 +101,14 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
 		SaveLoadXMLFileTemplateInter xmlLoaderSimulation = new PreSimulationXMLSerializer(/*new PhysicsParameters()*/);
 		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, simulationXMLfileName);
         
-		/*Get values from XML file*/
-		simulationWorldDescription = xmlLoaderSimulation.getSimulationWorldDescriptionValues();
-        simulationPhysicsParameters = xmlLoaderSimulation.getSimulationPhysicsValues();
+		/*Get all values from XML file*/
         robotDescription =  xmlLoaderSimulation.getRobotDescriptionValues();
         simulationSpecification = xmlLoaderSimulation.getSimulationSpecification();
        
         
         
         /*Converter for converting values from String into corresponding type used in USSR*/
-        descriptionConverter =  new SimulationDescriptionConverter(simulationWorldDescription,simulationPhysicsParameters); 
+        descriptionConverter =  new SimulationDescriptionConverter(simulationSpecification.getSimWorldDecsriptionValues(),simulationSpecification.getSimPhysicsParameters()); 
         
         //String controllerLocation = robotDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
        // String controllerLocation = SimulationSpecification.robotsInSimulation.get(0).getControllerLocation();
@@ -155,9 +153,9 @@ public class SimulationXMLFileLoader extends GenericSimulation implements Simuli
 		return descriptionConverter;
 	}
 
-	private static WorldDescription createWorld() {
+	private  WorldDescription createWorld() {
 		/*Assign values to world*/
-		WorldDescription world = new WorldDescription();	        
+		WorldDescription world = new WorldDescription();
 		world.setPlaneSize(descriptionConverter.convertPlaneSize());
 		world.setPlaneTexture(descriptionConverter.covertPlaneTexture());
 		world.setCameraPosition(descriptionConverter.convertCameraPosition());
