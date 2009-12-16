@@ -104,7 +104,7 @@ public abstract class Tabs implements TabsInter {
 	}
 	
 	
-	public JButton initSaveButton(){
+	public  JButton initSaveButton(){
 		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
 		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
 

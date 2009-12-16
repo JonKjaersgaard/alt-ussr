@@ -1,293 +1,35 @@
 package ussr.aGui.tabs.simulation;
 
-
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 import javax.swing.BorderFactory;
-
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-
 import javax.swing.border.TitledBorder;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeSelectionModel;
-
 import ussr.aGui.FramesInter;
-import ussr.aGui.MainFrameSeparateController;
-import ussr.aGui.MainFrames;
-import ussr.aGui.MainFramesInter;
-import ussr.aGui.enumerations.MainFrameComponentsText;
-import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.tabs.SimulationTabComponentsText;
 import ussr.aGui.enumerations.tabs.SimulationTabTreeNodes;
-import ussr.aGui.enumerations.tabs.SimulationTabTreeNodesNew;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.enumerations.tabs.TextureDescriptions;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
-import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.helpers.hintPanel.HintPanel;
-import ussr.aGui.helpers.hintPanel.HintPanelTypes;
-
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.builder.helpers.StringProcessingHelper;
-import ussr.builder.simulationLoader.SimulationSpecification;
-
 import ussr.description.setup.WorldDescription.CameraPosition;
 
+public class SimulationTreeEditors{
 
-/**
- * Defines visual appearance of the tab called Simulation.
- * @author Konstantinas
- */
-public class SimulationTab extends Tabs {
-
-
-	/**
-	 * The constrains of grid bag layout used during design of the tab.
-	 */
-	private GridBagConstraints gridBagConstraints = new GridBagConstraints();
-
-	/**
-	 * Defines visual appearance of the tab called "Simulation".
-	 * @param initiallyVisible, true if the tab is visible after activation of main GUI window. 
-	 * @param firstTabbedPane, location of the tab in the main GUI frame. True if it is the first tabbed pane from the top.
-	 * @param tabTitle, the title of the tab.
-	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
-	 */
-	public SimulationTab(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle, String imageIconDirectory){
-		super(initiallyVisible,firstTabbedPane,tabTitle,imageIconDirectory);
-
-		/*instantiate new panel, which will be the container for all components situated in the tab*/		
-		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
-		//super.jComponent.setPreferredSize(new Dimension(MainFrames.getMainFrameViableWidth(),300));
-		initComponents();
-	}
-
-	/**
-	 * Initializes the visual appearance of all components in the tab.
-	 * Follows Strategy  pattern.
-	 */
-	public void initComponents() {
-		jScrollPaneTreeSimulation = new javax.swing.JScrollPane();
-		jPanelEditor = new javax.swing.JPanel(new GridBagLayout());
-		jTreeSimulation = new javax.swing.JTree();
-		
-		
-		DefaultTreeModel treeModel = new DefaultTreeModel(initializeSimulationRootNode());
-		jTreeSimulation.setModel(treeModel);
-		//jTreeSimulation.setShowsRootHandles(true);
-
-		//jTreeSimulation.setEditable(true);
-		
-		ImageIcon closedIcon = TabsIcons.EXPANSION_CLOSED_SMALL.getImageIcon();
-		ImageIcon openIcon = TabsIcons.EXPANSION_OPENED_SMALL.getImageIcon();
-		ImageIcon leafIcon = TabsIcons.FINAL_LEAF_SMALL.getImageIcon();
-		if (openIcon != null) {
-			DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();		    
-			renderer.setClosedIcon(closedIcon);
-			renderer.setOpenIcon(openIcon);
-			renderer.setLeafIcon(leafIcon);
-			jTreeSimulation.setCellRenderer(renderer);
-		}
-		jTreeSimulation.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		jTreeSimulation.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
-			public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode)
-				jTreeSimulation.getLastSelectedPathComponent();
-				if (node == null)
-					/*Nothing is selected.*/	
-					return;
-				Object nodeInfo = node.getUserObject();
-				if (node.isLeaf()||node.isNodeRelated(firstNodeHierarchySimulation)) {
-					System.out.println(node.getPath()[node.getPath().length-1].toString());
-					SimulationTabController.jTreeItemSelectedActionPerformed(node.getPath()[node.getPath().length-1].toString());
-				} 
-			}
-		});
-
-		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);
-		jScrollPaneTreeSimulation.setVisible(false);
-		jScrollPaneTreeSimulation.setPreferredSize(new Dimension(300,300));
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 0;
-		super.jComponent.add(jScrollPaneTreeSimulation,gridBagConstraints);
-
-		TitledBorder displayTitle;
-		displayTitle = BorderFactory.createTitledBorder(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Edit_value));
-		displayTitle.setTitleJustification(TitledBorder.CENTER);
-		jPanelEditor.setBorder(displayTitle);
-		jPanelEditor.setVisible(false);
-		jPanelEditor.setPreferredSize(new Dimension(300,300));
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 1;
-		gridBagConstraints.gridy = 0;		
-
-		super.jComponent.add(jPanelEditor,gridBagConstraints);
-
-		hintPanel = new HintPanel(600, HINT_PANEL_HEIGHT);
-		//hintPanel.setType(HintPanelTypes.INFORMATION);
-		hintPanel.setBorderTitle("Display for hints");
-
-		hintPanel.setText("Would be nice to add a short description of each element in the tree :).");
-		hintPanel.setVisible(false);
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 1;
-		gridBagConstraints.gridwidth=2;
-
-		super.jComponent.add(hintPanel,gridBagConstraints);
-	}
-
-	/**
-	 * Initializes simulation tree node including all sub nodes.
-	 * @return simulation tree node including all sub nodes.
-	 */
-	private DefaultMutableTreeNode initializeSimulationRootNode(){
-		
-		for(int index =0;index<SimulationTabTreeNodesNew.values().length;index++){
-			SimulationTabTreeNodesNew currentNode = SimulationTabTreeNodesNew.values()[index];
-			switch(currentNode.getPlaceInHierarchy()){
-			case FIRST:
-				firstNodeHierarchySimulation = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(currentNode));
-				currentNode.setDefaultMutableTreeNode(firstNodeHierarchySimulation);
-			break;
-			case SECOND:
-				secondNodeHierarchy = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(currentNode));
-				currentNode.setDefaultMutableTreeNode(secondNodeHierarchy);
-				firstNodeHierarchySimulation.add(secondNodeHierarchy);
-				break;
-			case THIRD:
-				thirdNodeHierarchy = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(currentNode));
-				currentNode.setDefaultMutableTreeNode(thirdNodeHierarchy);
-				secondNodeHierarchy.add(thirdNodeHierarchy);
-				break;
-			default: throw new Error("Place in hierarchy "+ currentNode.getPlaceInHierarchy()+ " is not supported yet.");
-			}
-		}
-		
-		
-		
-		/*//First in hierarchy
-		firstNodeHierarchySimulation = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Simulation));
-
-		//Second in hierarchy
-		DefaultMutableTreeNode secondNodeHierarchyPhysicsSimulationStepSize =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Physics_simulation_step_size));
-		firstNodeHierarchySimulation.add(secondNodeHierarchyPhysicsSimulationStepSize);
-		DefaultMutableTreeNode secondNodeHierarchyResolutionFactor =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Resolution_Factor));
-		firstNodeHierarchySimulation.add(secondNodeHierarchyResolutionFactor);
-
-		secondNodeHierarchyRobots =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Robots));
-		firstNodeHierarchySimulation.add(secondNodeHierarchyRobots);
-
-		//Third in hierarchy
-		//DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Robot));
-		//secondNodeHierarchyRobots.add(thirdNodeHierarchyRobot);
-
-		//Fourth in hierarchy
-				DefaultMutableTreeNode fourthNodeHierarchyRobotType = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Type));
-		thirdNodeHierarchyRobot.add(fourthNodeHierarchyRobotType);		
-		DefaultMutableTreeNode fourthNodeHierarchyMorphologyLocation = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Morphology));
-		thirdNodeHierarchyRobot.add(fourthNodeHierarchyMorphologyLocation);		
-		DefaultMutableTreeNode fourthNodeHierarchyControllerLocation = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Controller));
-		thirdNodeHierarchyRobot.add(fourthNodeHierarchyControllerLocation);
-
-		//Second in hierarchy
-		DefaultMutableTreeNode secondNodeHierarchyWorldDescription = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.World_description));
-		firstNodeHierarchySimulation.add(secondNodeHierarchyWorldDescription);
-
-		//Third in hierarchy
-		DefaultMutableTreeNode thirdNodeHierarchyPlaneSize =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Plane_size));
-		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyPlaneSize);
-		DefaultMutableTreeNode thirdNodeHierarchyPlaneTexture =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Plane_texture));
-		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyPlaneTexture);
-		DefaultMutableTreeNode thirdNodeHierarchyCameraPosition = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Camera_position));
-		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyCameraPosition);
-		DefaultMutableTreeNode thirdNodeHierarchyTheWorldIsFlat = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.The_world_is_flat));
-		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyTheWorldIsFlat);
-		DefaultMutableTreeNode thirdNodeHierarchyHasBackgroundScenery = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Has_background_scenery));
-		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyHasBackgroundScenery);
-		DefaultMutableTreeNode thirdNodeHierarchyHasHeavyObstacles = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Has_heavy_obstacles));
-		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyHasHeavyObstacles);
-		DefaultMutableTreeNode thirdNodeHierarchyIsFrameGrabbingActive = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Is_frame_grabbing_active));
-		secondNodeHierarchyWorldDescription.add(thirdNodeHierarchyIsFrameGrabbingActive);
-
-		//Second in hierarchy
-		DefaultMutableTreeNode secondNodeHierarchyPhysicsParameters = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Physics_parameters));
-		firstNodeHierarchySimulation.add(secondNodeHierarchyPhysicsParameters);
-
-		//Third in hierarchy
-		DefaultMutableTreeNode thirdNodeHierarchyDamping= new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Damping));
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyDamping);
-
-		//Third in hierarchy
-		DefaultMutableTreeNode thirdNodeHierarchyRealisticCollision = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Realistic_collision));
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyRealisticCollision);
-		DefaultMutableTreeNode thirdNodeHierarchyGravity = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Gravity));
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyGravity);
-		DefaultMutableTreeNode thirdNodeHierarchyConstraintForceMix = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Constraint_force_mixing));
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyConstraintForceMix);
-		DefaultMutableTreeNode thirdNodeHierarchyErrorReductionParameter = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Error_reduction_parameter));
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyErrorReductionParameter);
-		DefaultMutableTreeNode thirdNodeHierarchyUseModuleEventQueue = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Use_module_event_queue));
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyUseModuleEventQueue);
-		DefaultMutableTreeNode thirdNodeHierarchySynchronizeWithControllers = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Synchronize_with_controllers));
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchySynchronizeWithControllers);
-		DefaultMutableTreeNode thirdNodeHierarchyPhysicsSimulationControllerStepFactor = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Physics_simulation_controller_step_factor));
-		secondNodeHierarchyPhysicsParameters.add(thirdNodeHierarchyPhysicsSimulationControllerStepFactor );*/
-
-		return firstNodeHierarchySimulation;
-	}
-
-	private static boolean firstTime = true;
+	private static javax.swing.JPanel jPanelEditor = SimulationTab.getJPanelEditor();
 	
-	private static int robotNumber;
-	
-	/**
-	 * @param simulationSpecification
-	 */
-	public static void addRobotNode(SimulationSpecification simulationSpecification){
-		int nrRobotsInSimulation = simulationSpecification.getRobotsInSimulation().size();
-		
-		DefaultMutableTreeNode robotsNode = SimulationTabTreeNodesNew.Robots.getDefaultMutableTreeNode();
-		
-		
-		if (firstTime){
-			firstTime=false;
-			for (int robotNr=1;robotNr<nrRobotsInSimulation+1;robotNr++){
-				DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Robot_Nr)+"."+robotNr);
-				robotsNode.add(thirdNodeHierarchyRobot);
-				//secondNodeHierarchyRobots.add(thirdNodeHierarchyRobot);
-				robotNumber =robotNr;
-			}
-		}else{
-			robotNumber++;
-			DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Robot_Nr)+"."+robotNumber);
-        	DefaultTreeModel model = (DefaultTreeModel)jTreeSimulation.getModel();
-        	model.insertNodeInto(thirdNodeHierarchyRobot, robotsNode, robotsNode.getChildCount());	
-		}
-		
-		jTreeSimulation.revalidate();
-		jTreeSimulation.repaint();
-		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);
-	} 
-
-
 	public static void addRobotsEditor(){
-		jPanelEditor.add(createNewLabel("Load new robot "));
-		jPanelEditor.add(initOpenButton());
+	     jPanelEditor.add(createNewLabel("Load new robot "));
+		jPanelEditor.add(Tabs.initOpenButton());
 	}
 
 
@@ -433,11 +175,7 @@ public class SimulationTab extends Tabs {
 		return jPanelEditor;
 	}
 
-	public static void setTabVisible(boolean visible) {
-		jScrollPaneTreeSimulation.setVisible(visible);
-		jPanelEditor.setVisible(visible);
-		hintPanel.setVisible(visible);
-	}
+
 
 
 
@@ -689,7 +427,6 @@ public class SimulationTab extends Tabs {
 		//jPanelEditor.add(MainFrames.initOpenButton(fcOpenFrame));
 	}
 
-	private static String robotMorphologyLocation;
 
 	private static javax.swing.JLabel createNewLabel(String labelText){
 		newLabel =  new javax.swing.JLabel();
@@ -698,21 +435,8 @@ public class SimulationTab extends Tabs {
 	}
 
 
-	public static void setRobotMorphologyLocation(String robotMorphologyLocation) {
-		SimulationTab.robotMorphologyLocation = robotMorphologyLocation;
-	}
 
 
-	private static HintPanel  hintPanel;
-
-	public static HintPanel getHintPanel() {
-		return hintPanel;
-	}
-
-
-	public static javax.swing.JSpinner getJSpinnerCoordinateValue() {
-		return jSpinnerCoordinateValue;
-	}
 
 	private static javax.swing.JTree jTreeSimulation;
 	private static javax.swing.JScrollPane jScrollPaneTreeSimulation;
@@ -731,16 +455,11 @@ public class SimulationTab extends Tabs {
 	private static javax.swing.JLabel jLabelRobotType;
 
 	private static javax.swing.JLabel newLabel;
-
-	private static javax.swing.JPanel jPanelEditor;
 	private static javax.swing.JPanel jPanelMoveRobot;
 	private static javax.swing.JSpinner jSpinnerDampingLinearVelocity, jSpinnerDampingAngularVelocity,
 	jSpinnerPhysicsSimulationStepSize, jSpinnerGravity,jSpinnerConstraintForceMix,
 	jSpinnerErrorReductionParameter, jSpinnerResolutionFactor, jPhysicsSimulationControllerStepFactor,
 	jSpinnerCoordinateValue;
-
-	private static  DefaultMutableTreeNode firstNodeHierarchySimulation,secondNodeHierarchyRobots,secondNodeHierarchy,thirdNodeHierarchy;
-
-
-
+	
+	
 }
