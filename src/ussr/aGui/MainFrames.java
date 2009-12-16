@@ -15,6 +15,7 @@ import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 import ussr.aGui.helpers.ComponentResizer;
 import ussr.aGui.tabs.TabsInter;
 import ussr.builder.helpers.StringProcessingHelper;
+import ussr.remote.GUISimulationAdapter;
 
 /**
  * Holds methods and constants common for different design(visual appearance) of main GUI window (MainFrames). 
@@ -53,7 +54,10 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public MainFrames(){
 		filterPopulateTabs();
 		initFileChoosers ();// initialize visual appearance of file choosers. Why here, because then they are responding faster to user generated events, because they are compiled earlier).
-		initFrameProperties();	
+		initFrameProperties();
+		/*Starts simulation adapter, which in turn starts simulation server (only once) */	
+		new GUISimulationAdapter();
+	
 	}
 
 	/**
@@ -82,7 +86,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
 		fileDescriptionsAndExtensions.put(FileChooserFrameInter.DEFAULT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
-
+        
 		fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);	
 		fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
 	}

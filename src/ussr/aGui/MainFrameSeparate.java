@@ -77,7 +77,8 @@ public class MainFrameSeparate extends MainFrames {
 		java.awt.FlowLayout flowLayout = new java.awt.FlowLayout();
 		flowLayout.setHgap(HORIZONTAL_GAPS);
 		flowLayout.setVgap(VERTICAL_GAPS);		
-		getContentPane().setLayout(flowLayout);		
+		getContentPane().setLayout(flowLayout);	
+		this.setSize(new Dimension(FRAME_WIDTH_HALF,FRAME_HEIGHT));
 		
 		/*initialize the main containers of the frame*/
 		initJMenuBar(CONTAINER_WIDTH_HALF,MENU_BAR_HEIGHT);
@@ -88,7 +89,7 @@ public class MainFrameSeparate extends MainFrames {
 		//initializeTabbedPanesResizing();	
 		//gettCursor();
 		
-		this.setSize(new Dimension(FRAME_WIDTH_HALF,FRAME_HEIGHT));
+		
 		changeToLookAndFeel(this);
 		
 		/*Add components into container, which affect the width of main window when it is maximized and restored down to its initial size. */

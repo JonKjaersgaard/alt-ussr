@@ -20,6 +20,7 @@ import javax.swing.border.TitledBorder;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import ussr.aGui.FramesInter;
@@ -78,11 +79,17 @@ public class SimulationTab extends Tabs {
 	 * Follows Strategy  pattern.
 	 */
 	public void initComponents() {
-
 		jScrollPaneTreeSimulation = new javax.swing.JScrollPane();
 		jPanelEditor = new javax.swing.JPanel(new GridBagLayout());
-		jTreeSimulation = new javax.swing.JTree(initializeSimulationRootNode());
+		jTreeSimulation = new javax.swing.JTree();
+		
+		
+		DefaultTreeModel treeModel = new DefaultTreeModel(initializeSimulationRootNode());
+		jTreeSimulation.setModel(treeModel);
+		//jTreeSimulation.setShowsRootHandles(true);
 
+		//jTreeSimulation.setEditable(true);
+		
 		ImageIcon closedIcon = TabsIcons.EXPANSION_CLOSED_SMALL.getImageIcon();
 		ImageIcon openIcon = TabsIcons.EXPANSION_OPENED_SMALL.getImageIcon();
 		ImageIcon leafIcon = TabsIcons.FINAL_LEAF_SMALL.getImageIcon();
@@ -219,20 +226,33 @@ public class SimulationTab extends Tabs {
 		return firstNodeHierarchySimulation;
 	}
 
-
-
+	private static boolean firstTime = true;
+	
+	private static int robotNumber;
+	
 	/**
 	 * @param simulationSpecification
 	 */
 	public static void addRobotNode(SimulationSpecification simulationSpecification){
 		int nrRobotsInSimulation = simulationSpecification.getRobotsInSimulation().size();
-
-		for (int robotNr=1;robotNr<nrRobotsInSimulation+1;robotNr++){
-			DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Robot)+" Nr."+robotNr);
-			secondNodeHierarchyRobots.add(thirdNodeHierarchyRobot);
+		
+		if (firstTime){
+			firstTime=false;
+			for (int robotNr=1;robotNr<nrRobotsInSimulation+1;robotNr++){
+				DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Robot_Nr)+"."+robotNr);
+				secondNodeHierarchyRobots.add(thirdNodeHierarchyRobot);
+				robotNumber =robotNr;
+			}
+		}else{
+			robotNumber++;
+			DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Robot_Nr)+"."+robotNumber);
+        	DefaultTreeModel model = (DefaultTreeModel)jTreeSimulation.getModel();
+        	model.insertNodeInto(thirdNodeHierarchyRobot, secondNodeHierarchyRobots, secondNodeHierarchyRobots.getChildCount());	
 		}
+		
 		jTreeSimulation.revalidate();
 		jTreeSimulation.repaint();
+		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);
 	} 
 
 
@@ -240,10 +260,10 @@ public class SimulationTab extends Tabs {
 		jPanelEditor.add(createNewLabel("Load new robot "));
 		jPanelEditor.add(initOpenButton());
 
+		System.out.println("INNN");
 		//jTree1.getModel().getChild(parent, 0);
-
-
-
+		//jTreeSimulation = new javax.swing.JTree(initializeSimulationRootNode());
+		
 	}
 
 
@@ -639,10 +659,10 @@ public class SimulationTab extends Tabs {
 		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
 		//System.out.println("BOOO"+RobotSpecification.getMorphologyLocation());
 
-		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,TemporaryRobotSpecification.getMorphologyLocation());
-		fcOpenFrame.setSelectedFile(new File("some.xml"));
+		//FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,TemporaryRobotSpecification.getMorphologyLocation());
+		//fcOpenFrame.setSelectedFile(new File("some.xml"));
 
-		jPanelEditor.add(MainFrames.initOpenButton(fcOpenFrame));
+		//jPanelEditor.add(MainFrames.initOpenButton(fcOpenFrame));
 	}
 
 	private static String robotMorphologyLocation;

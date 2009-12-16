@@ -47,4 +47,5 @@ public class YourNewMainFrame extends MainFrames {
 		pack(); 
 		changeToLookAndFeel(this);		
 	}
+
 }

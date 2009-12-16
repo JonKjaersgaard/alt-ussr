@@ -20,7 +20,6 @@ import ussr.aGui.enumerations.tabs.SimulationTabTreeNodes;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.enumerations.tabs.TextureDescriptions;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
-import ussr.aGui.tabs.simulation.TemporaryRobotSpecification;
 import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.description.geometry.VectorDescription;
@@ -37,6 +36,10 @@ public class SimulationTabController extends TabsControllers {
 	private static String selectedNodeName;
 
 	private static SimulationSpecification simulationSpecification;
+
+	public static SimulationSpecification getSimulationSpecification() {
+		return simulationSpecification;
+	}
 
 	public static void setSimulationSpecification(SimulationSpecification simulationSpecification) {
 		SimulationTabController.simulationSpecification = simulationSpecification;
@@ -69,7 +72,6 @@ public class SimulationTabController extends TabsControllers {
 			SimulationTab.addRobotEditor();
 			break;*/
 			case Robots:
-				//SimulationTab.addRobotNode();
 				SimulationTab.addRobotsEditor();
 				break;
 			case Physics_simulation_step_size:
@@ -81,9 +83,9 @@ public class SimulationTabController extends TabsControllers {
 			case Type:
 				//TODO
 				break;
-			case Morphology:
+	/*		case Morphology:
 				SimulationTab.addMorphologyEditor();
-				break;
+				break;*/
 			case Controller:
 				//TODO
 				break;
@@ -133,7 +135,7 @@ public class SimulationTabController extends TabsControllers {
 				SimulationTab.addPhysicsSimulationControllerStepFactor();
 				break;
 			default: throw new Error("The node "+ selectedNode + " is not supported yet.");
-
+		
 			}
 		}
 		SimulationTab.getJPanelEditor().validate();

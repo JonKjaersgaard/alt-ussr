@@ -18,13 +18,8 @@ import ussr.remote.GUISimulationAdapter;
  */
 public class FileChooserXMLController extends FileChooserController {
 
-
-
-	public FileChooserXMLController(){
-		/*Starts simulation adapter, which in turn starts simulation server (only once) */
-		new GUISimulationAdapter();
-	}
-
+	private boolean firstTime = true;
+	
 
 	@Override
 	public void controlOpenDialog(ActionEvent evt, JFileChooser fileChooser,
