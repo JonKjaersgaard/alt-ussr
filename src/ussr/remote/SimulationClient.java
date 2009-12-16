@@ -1,6 +1,5 @@
 package ussr.remote;
 
-import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -9,15 +8,12 @@ import java.rmi.AccessException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.server.RemoteServer;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.builder.Loader;
-import ussr.builder.simulationLoader.SimulationDescriptionConverter;
 import ussr.builder.simulationLoader.SimulationXMLFileLoader;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Controller;
@@ -95,19 +91,14 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
    
 
 
+    /**
+     * Starts a remote simulation from XML file.
+     * @param simulationXMLFile, the location of xml file.
+     * */
 	public void start(String simulationXMLFile) throws RemoteException {  
     	SimulationXMLFileLoader simulationLoader = new SimulationXMLFileLoader(simulationXMLFile);
-    	System.out.println("LOCATION:"+ simulationLoader.getRobotMorphologyLocation());
-    	xmlSimulationProvider = new XMLSimulationProvider(simulationLoader);
- 
-    	System.out.println("LOCATION1:"+ xmlSimulationProvider.getRobotMorphologyLocation());
-        
-    	 //System.out.println("LOCATION:"+ xmlSimulationProvider.getRobotMorphologyLocation());
-        // SimulationTab.setRobotMorphologyLocation(simulation.getRobotMorphologyLocation());
-    	
-    	this.simulation = SimulationXMLFileLoader.getPhysicsSimulation();
- /*       System.out.println("LOCATION:"+ simulation.getRobotMorphologyLocation());
-        SimulationTab.setRobotMorphologyLocation(simulation.getRobotMorphologyLocation());*/        
+    	xmlSimulationProvider = new XMLSimulationProvider(simulationLoader);    	
+    	this.simulation = SimulationXMLFileLoader.getPhysicsSimulation();       
         simulationLoader.start(true);        
     }
 	

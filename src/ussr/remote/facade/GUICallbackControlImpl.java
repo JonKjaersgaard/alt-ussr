@@ -2,8 +2,6 @@ package ussr.remote.facade;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-
-import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
@@ -11,11 +9,20 @@ import ussr.aGui.tabs.controllers.LabelingTabController;
 import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.SupportedModularRobots;
 
-@SuppressWarnings("serial")
+
+/**
+ * Wrapper for a GUI call backs allowing it to be used as a remote object.
+ * (Used on the GUI side.)
+ * @author Konstantinas
+ */
 public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICallbackControl {
 
+	/**
+	 * Wrapper for a GUI call backs allowing it to be used as a remote object.
+     * (Used on the GUI side.)
+	 * @throws RemoteException
+	 */
 	public GUICallbackControlImpl() throws RemoteException {
-		super();
 	}
 
 	/**

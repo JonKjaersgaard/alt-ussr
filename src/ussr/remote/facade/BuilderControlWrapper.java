@@ -5,21 +5,12 @@ import java.awt.Color;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
-
-
-import ussr.builder.constructionTools.ATRONConstructionTemplate;
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
-import ussr.builder.constructionTools.CKBotConstructionTemplate;
 import ussr.builder.constructionTools.CKBotOperationsTemplate;
 import ussr.builder.constructionTools.CommonOperationsTemplate;
-import ussr.builder.constructionTools.ConstructionTemplate;
 import ussr.builder.constructionTools.ConstructionToolSpecification;
-import ussr.builder.constructionTools.MTRANConstructionTemplate;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
-import ussr.builder.constructionTools.OdinConstructionTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
 import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
 import ussr.builder.enumerations.ConstructionTools;
@@ -37,14 +28,9 @@ import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
-import ussr.description.setup.WorldDescription;
-
-
-import ussr.model.Connector;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
-import ussr.physics.jme.pickers.Picker;
 import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.ckbot.CKBotSimulation;
 import ussr.samples.mtran.MTRANSimulation;
@@ -52,6 +38,12 @@ import ussr.samples.odin.OdinBuilder;
 import ussr.samples.odin.modules.Odin;
 
 
+/**
+ * Wrapper for a builder control allowing it to be used as a remote object.
+ * (Used on the simulation side.)
+ * @author Konstantinas
+ *
+ */
 public class BuilderControlWrapper extends UnicastRemoteObject implements BuilderControlInter{
 	
 	/**
@@ -59,7 +51,12 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 	 */
 	private JMESimulation jmeSimulation;	
 
-	
+	/**
+	 * Wrapper for a builder control allowing it to be used as a remote object.
+     * (Used on the simulation side.)
+	 * @param jmeSimulation
+	 * @throws RemoteException
+	 */
 	public BuilderControlWrapper(JMESimulation jmeSimulation) throws RemoteException{
 		this.jmeSimulation = jmeSimulation;
 	}

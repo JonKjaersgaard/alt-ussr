@@ -11,10 +11,6 @@ import ussr.description.setup.ModulePosition;
 
 public interface XMLSimulationProviderInter extends Remote {
 
-	
-	public String getRobotMorphologyLocation()throws RemoteException;
-	
-
 	public String getIDsModules()throws RemoteException;
 	
 	public SimulationSpecification getSimulationSpecification()throws RemoteException;

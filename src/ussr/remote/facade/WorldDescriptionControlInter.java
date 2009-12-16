@@ -12,9 +12,7 @@ public interface WorldDescriptionControlInter extends Remote {
      * Returns the size of one edge of the underlying plane.
      */
 	public int getPlaneSize()throws RemoteException;
-	
-
-	
+		
 	/**
      * Returns whether is used a plane or a generated texture
      */

@@ -7,6 +7,10 @@ import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.SupportedModularRobots;
 
+/**
+ * Provides GUI with  call backs from remote simulation.
+ * @author Konstantinas
+ */
 public interface GUICallbackControl extends Remote {
 
 	/**

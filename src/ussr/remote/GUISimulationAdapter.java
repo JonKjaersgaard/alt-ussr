@@ -142,11 +142,6 @@ public class GUISimulationAdapter {
          SimulationSpecification simulationSpecification = simulation.getXmlSimulationProvider().getSimulationSpecification();
          SimulationTab.addRobotNode(simulationSpecification);
          SimulationTabController.setSimulationSpecification(simulationSpecification);
-		
-		System.out.println("Amount:"+ simulationSpecification.getRobotsInSimulation().size());
-		
-		 System.out.println("LOCATION:"+simulation.getXmlSimulationProvider().getRobotMorphologyLocation());
-
 	}
 	
 	// FIXME USED TEMPORARY

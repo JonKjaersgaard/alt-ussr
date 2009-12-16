@@ -16,6 +16,11 @@ import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 
 
+/**
+ * Provides builder (construction of modular robot morphology and assignment of controller) with control
+ * of remote simulation.
+ * @author Konstantinas
+ */
 public interface BuilderControlInter extends Remote {
 	
 	/**
@@ -74,9 +79,6 @@ public interface BuilderControlInter extends Remote {
 	
 	public void setLabelingToolAssignLabels(LabeledEntities entityName,LabelingTools toolName, String labels)throws RemoteException;
 	
-	
-	
-	
 	/**
 	 * Removes all modules (robot(s)) from simulation environment.
 	 */
@@ -128,8 +130,7 @@ public interface BuilderControlInter extends Remote {
 	 * Colors connectors of all modules with color coding.
 	 */
 	public void  colorConnectorsModules()throws RemoteException;
-	
-	
+
 	/**
 	 * Restores module colors of connectors to original ones. 
 	 */
