@@ -7,21 +7,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 
-import ussr.aGui.FramesInter;
+
 import ussr.aGui.GeneralController;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.MainFrames;
 import ussr.aGui.tabs.controllers.ConsoleTabController;
 import ussr.aGui.tabs.controllers.SimulationTabController;
-import ussr.aGui.tabs.simulation.TemporaryRobotSpecification;
 import ussr.aGui.tabs.simulation.SimulationTab;
-import ussr.builder.simulationLoader.RobotSpecification;
 import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.remote.facade.ActiveSimulation;
 import ussr.remote.facade.GUICallbackControlImpl;
-import ussr.remote.facade.XMLSimulationProvider;
-import ussr.remote.facade.XMLSimulationProviderInter;
+
 
 import ussr.remote.facade.RemotePhysicsSimulation;
 
@@ -113,14 +110,7 @@ public class GUISimulationAdapter {
 				throw new Error("Unexpected interruption");
 			}
 		}
-		
-		//String morphologyLocation = simulation.getXmlSimulationProvider().getRobotMorphologyLocation();
-	      // String idsModules = simulation.getXmlSimulationProvider().getIDsModules();
-		
-		
-		
-		
-	    //SimulationSpecification.robotsInSimulation.add(new RobotSpecification(morphologyLocation,idsModules));
+	
 		callBackGUI(simulation,sim);
 	}
 	

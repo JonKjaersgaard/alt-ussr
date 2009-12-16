@@ -20,11 +20,6 @@ public class XMLSimulationProvider extends UnicastRemoteObject implements XMLSim
 	public XMLSimulationProvider(SimulationXMLFileLoader simulationLoader) throws RemoteException {
 		this.simulationLoader=simulationLoader;
 	}
-		
-	public String getIDsModules()throws RemoteException{
-		return simulationLoader.getIdsModules();
-		
-	}
 	
 	public SimulationSpecification getSimulationSpecification()throws RemoteException{
 		return simulationLoader.getSimulationSpecification();

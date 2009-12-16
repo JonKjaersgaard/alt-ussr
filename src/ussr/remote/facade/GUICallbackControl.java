@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.builder.simulationLoader.SimulationSpecification;
 
 /**
  * Provides GUI with  call backs from remote simulation.
@@ -49,4 +50,7 @@ public interface GUICallbackControl extends Remote {
 	 */
 	public void newModuleAdded()throws RemoteException;
 	
+	public SimulationSpecification getSimulationSpecification() throws RemoteException;
+	
+	public void newRobotLoaded(SimulationSpecification simulationSpecification)throws RemoteException;
 }

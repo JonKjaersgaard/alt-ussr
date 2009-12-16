@@ -10,8 +10,8 @@ import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 
 public interface XMLSimulationProviderInter extends Remote {
-
-	public String getIDsModules()throws RemoteException;
 	
 	public SimulationSpecification getSimulationSpecification()throws RemoteException;
+	
+	
 }

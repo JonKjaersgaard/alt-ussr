@@ -6,8 +6,11 @@ import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.LabelingTabController;
+import ussr.aGui.tabs.controllers.SimulationTabController;
+import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.builder.simulationLoader.SimulationSpecification;
 
 
 /**
@@ -72,6 +75,18 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 	public void newModuleAdded()throws RemoteException{
 		ConstructRobotTabController.newModuleAdded();		
 	}
+	
+	public SimulationSpecification getSimulationSpecification() throws RemoteException{
+		return SimulationTabController.getSimulationSpecification();
+	}
+	
+	
+	public void newRobotLoaded(SimulationSpecification simulationSpecification)throws RemoteException{
+		SimulationTab.addRobotNode(simulationSpecification);
+        SimulationTabController.setSimulationSpecification(simulationSpecification);
+	}
+	
+	
 	
 
 }
