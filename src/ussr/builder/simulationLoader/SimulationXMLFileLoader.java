@@ -31,22 +31,12 @@ import ussr.samples.GenericSimulation;
 public class SimulationXMLFileLoader extends GenericSimulation {
 	
 	
-	private static Map<XMLTagsUsed,String> simulationPhysicsParameters,
-                                           robotDescription;
-	
-	private Map<Integer,ModulePosition> robotModules;
-	
-	public Map<Integer,ModulePosition> getRobotModules() {
-		return robotModules;
-	}
 
 	private static SimulationDescriptionConverter descriptionConverter;
-	
-	private String robotMorphologyLocation;
+
 	
 	private SaveLoadXMLFileTemplateInter robotXMLLoader;
 	
-	private String idsModules;
 	
 	private SimulationSpecification simulationSpecification;
 	
@@ -56,20 +46,12 @@ public class SimulationXMLFileLoader extends GenericSimulation {
 	}
 
 
-	public String getIdsModules() {
-		return idsModules;
-	}
 
 
 	public SaveLoadXMLFileTemplateInter getRobotXMLLoader() {
 		return robotXMLLoader;
 	}
 
-
-	public String getRobotMorphologyLocation() {
-		return robotMorphologyLocation;
-	}
-	
 
 	/**
 	 * Returns the robot in the simulation.
@@ -102,11 +84,8 @@ public class SimulationXMLFileLoader extends GenericSimulation {
 		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, simulationXMLfileName);
         
 		/*Get all values from XML file*/
-        robotDescription =  xmlLoaderSimulation.getRobotDescriptionValues();
         simulationSpecification = xmlLoaderSimulation.getSimulationSpecification();
-       
-        
-        
+      
         /*Converter for converting values from String into corresponding type used in USSR*/
         descriptionConverter =  new SimulationDescriptionConverter(simulationSpecification.getSimWorldDecsriptionValues(),simulationSpecification.getSimPhysicsParameters()); 
         

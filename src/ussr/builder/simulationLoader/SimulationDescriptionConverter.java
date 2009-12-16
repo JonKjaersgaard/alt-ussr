@@ -76,7 +76,7 @@ public class SimulationDescriptionConverter {
 	}
 
 	public boolean convertUseModuleEventQueue (){
-		return Boolean.parseBoolean(simulationPhysicsParameters.get(XMLTagsUsed.USE_MOUSE_EVENT_QUEUE));
+		return Boolean.parseBoolean(simulationPhysicsParameters.get(XMLTagsUsed.USE_MODULE_EVENT_QUEUE));
 	}
 	public boolean convertSyncWithControllers (){
 		return Boolean.parseBoolean(simulationPhysicsParameters.get(XMLTagsUsed.SYNC_WITH_CONTROLLERS));

@@ -11,7 +11,8 @@ import ussr.description.setup.WorldDescription;
 public class SimulationSpecification implements Serializable {
 
 	private ArrayList<RobotSpecification> robotsInSimulation = new ArrayList<RobotSpecification>();
-
+	
+	
 	public ArrayList<RobotSpecification> getRobotsInSimulation() {
 		return robotsInSimulation;
 	}
