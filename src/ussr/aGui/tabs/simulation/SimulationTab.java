@@ -400,7 +400,7 @@ public class SimulationTab extends Tabs {
 	public static void addPlaneSizeEditor(){
 		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Plane_size)));
 		jSpinnerPlaneSize = new javax.swing.JSpinner();
-		jSpinnerPlaneSize.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 1));
+		jSpinnerPlaneSize.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 10));
 		SimulationTabController.setJSpinnerPlaneSizeValue(jSpinnerPlaneSize);
 		jPanelEditor.add(jSpinnerPlaneSize);
 	}

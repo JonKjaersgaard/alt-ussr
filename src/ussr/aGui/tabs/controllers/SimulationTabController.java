@@ -33,11 +33,11 @@ import ussr.remote.facade.SimulationTabControlInter;
 public class SimulationTabController extends TabsControllers {
 
 
-	
+
 	private static String selectedNodeName;
-	
+
 	private static SimulationSpecification simulationSpecification;
-	
+
 	public static void setSimulationSpecification(SimulationSpecification simulationSpecification) {
 		SimulationTabController.simulationSpecification = simulationSpecification;
 	}
@@ -47,95 +47,95 @@ public class SimulationTabController extends TabsControllers {
 	 */
 	public static void jTreeItemSelectedActionPerformed(String selectedNode) {
 		selectedNodeName = selectedNode;
-		
-		
+
+
 		SimulationTab.getJPanelEditor().removeAll();
 		SimulationTab.getJPanelEditor().revalidate();
 		SimulationTab.getJPanelEditor().repaint();
 
- if (selectedNode.contains("Robot Nr.")){
-	 SimulationTab.addRobotEditor();
- }else{
-		switch(SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_"))){
+		if (selectedNode.contains("Robot Nr.")){
+			SimulationTab.addRobotEditor();
+		}else{
+			switch(SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_"))){
 
-		case Simulation://  break through
-		case World_description:
-		case Physics_parameters:
-			break;
-		//case Robot+"nR":
-			
-			//break;
-	/*	case Robot:
+			case Simulation://  break through
+			case World_description:
+			case Physics_parameters:
+				break;
+				//case Robot+"nR":
+
+				//break;
+				/*	case Robot:
 			SimulationTab.addRobotEditor();
 			break;*/
-		case Robots:
-			//SimulationTab.addRobotNode();
-			SimulationTab.addRobotsEditor();
-			break;
-		case Physics_simulation_step_size:
-			SimulationTab.addPhysicsSimulationStepSizeEditor();
-			break;
-		case Resolution_Factor:
-			SimulationTab.addResolutionFactorEditor();
-			break;		
-		case Type:
-			//TODO
-			break;
-		case Morphology:
-			SimulationTab.addMorphologyEditor();
-			break;
-		case Controller:
-			//TODO
-			break;
-		case Plane_size:
-			SimulationTab.addPlaneSizeEditor();
-			break;
-		case Plane_texture:
-			SimulationTab.addPlaneTextureEditor();
-			break;
-		case Camera_position:
-			SimulationTab.addCameraPositionEditor();
-			break;
-		case The_world_is_flat:
-			SimulationTab.addTheWorldIsFlatEditor();
-			break;
-		case Has_background_scenery:
-			SimulationTab.addHasBackgroundSceneryEditor();
-			break;
-		case Has_heavy_obstacles:
-			SimulationTab.addHasHeavyObstaclesEditor();
-			break;			
-		case Is_frame_grabbing_active:
-			SimulationTab.addIsFrameGrabbingActiveEditor();
-			break;
-		case Damping:
-			SimulationTab.addDampingEditor();
-			break;	
-		case Realistic_collision:
-			SimulationTab.addRealisticCollisionEditor();
-			break;
-		case Gravity:
-			SimulationTab.addGravityEditor();
-			break;
-		case Constraint_force_mixing:
-			SimulationTab.addConstraintForceMixEditor();
-			break;
-		case Error_reduction_parameter:
-			SimulationTab.addErrorReductionParameterEditor();
-			break;
-		case Use_module_event_queue:
-			SimulationTab.addUseMouseEventQueueEditor();
-			break;
-		case Synchronize_with_controllers:
-			SimulationTab.addSynchronizeWithControllersEditor();
-			break;
-		case Physics_simulation_controller_step_factor:
-			SimulationTab.addPhysicsSimulationControllerStepFactor();
-			break;
-		default: throw new Error("The node "+ selectedNode + " is not supported yet.");
+			case Robots:
+				//SimulationTab.addRobotNode();
+				SimulationTab.addRobotsEditor();
+				break;
+			case Physics_simulation_step_size:
+				SimulationTab.addPhysicsSimulationStepSizeEditor();
+				break;
+			case Resolution_Factor:
+				SimulationTab.addResolutionFactorEditor();
+				break;		
+			case Type:
+				//TODO
+				break;
+			case Morphology:
+				SimulationTab.addMorphologyEditor();
+				break;
+			case Controller:
+				//TODO
+				break;
+			case Plane_size:
+				SimulationTab.addPlaneSizeEditor();
+				break;
+			case Plane_texture:
+				SimulationTab.addPlaneTextureEditor();
+				break;
+			case Camera_position:
+				SimulationTab.addCameraPositionEditor();
+				break;
+			case The_world_is_flat:
+				SimulationTab.addTheWorldIsFlatEditor();
+				break;
+			case Has_background_scenery:
+				SimulationTab.addHasBackgroundSceneryEditor();
+				break;
+			case Has_heavy_obstacles:
+				SimulationTab.addHasHeavyObstaclesEditor();
+				break;			
+			case Is_frame_grabbing_active:
+				SimulationTab.addIsFrameGrabbingActiveEditor();
+				break;
+			case Damping:
+				SimulationTab.addDampingEditor();
+				break;	
+			case Realistic_collision:
+				SimulationTab.addRealisticCollisionEditor();
+				break;
+			case Gravity:
+				SimulationTab.addGravityEditor();
+				break;
+			case Constraint_force_mixing:
+				SimulationTab.addConstraintForceMixEditor();
+				break;
+			case Error_reduction_parameter:
+				SimulationTab.addErrorReductionParameterEditor();
+				break;
+			case Use_module_event_queue:
+				SimulationTab.addUseMouseEventQueueEditor();
+				break;
+			case Synchronize_with_controllers:
+				SimulationTab.addSynchronizeWithControllersEditor();
+				break;
+			case Physics_simulation_controller_step_factor:
+				SimulationTab.addPhysicsSimulationControllerStepFactor();
+				break;
+			default: throw new Error("The node "+ selectedNode + " is not supported yet.");
 
+			}
 		}
- }
 		SimulationTab.getJPanelEditor().validate();
 
 	}
@@ -146,16 +146,13 @@ public class SimulationTabController extends TabsControllers {
 	 */
 	public static void setJSpinnerPlaneSizeValue(JSpinner spinnerPlaneSize) {
 		try {
+
 			spinnerPlaneSize.setValue(remotePhysicsSimulation.getWorldDescriptionControl().getPlaneSize());
 		} catch (RemoteException e) {
 			throw new Error("Failed to extract plane size, due to remote exception.");
 		}		
 	}
 
-	public static void jButtonPlaneTiltRightActionPerformed() {
-		// TODO Auto-generated method stub
-
-	}
 
 	public static void setSelectedJComboBoxPlaneTexture(JComboBox jComboBoxPlaneTexture, JLabel iconLabel){
 		String fileName;
@@ -285,21 +282,21 @@ public class SimulationTabController extends TabsControllers {
 		physicsSimulationControllerStepFactor.setValue(PhysicsParameters.get().getPhysicsSimulationControllerStepFactor());
 
 	}
-	
-	
-    private static float jSpinnerStepValue=0.1f; 
+
+
+	private static float jSpinnerStepValue=0.1f; 
 
 	public static void setjSpinnerCoordinateValue(float spinnerStepValue) {
 		jSpinnerStepValue = spinnerStepValue;
 	}
 
 	public static void jButtonsCoordinateArrowsActionPerformed(JButton jButton) {
-		
-	
+
+
 		VectorDescription changeInPosition = new VectorDescription(0,0,0);
-		
+
 		//float step = Float.parseFloat(SimulationTab.getJSpinnerCoordinateValue().getValue().toString());
-		
+
 		Icon icon = jButton.getIcon();
 		if(icon.equals(TabsIcons.Y_POSITIVE_BIG.getImageIcon())){			
 			changeInPosition = new VectorDescription(0,jSpinnerStepValue,0);
@@ -314,10 +311,10 @@ public class SimulationTabController extends TabsControllers {
 		}else if (icon.equals(TabsIcons.Z_NEGATIVE_BIG.getImageIcon())){
 			changeInPosition = new VectorDescription(0,0,-jSpinnerStepValue);
 		}
-		
+
 		int stringLenght = selectedNodeName.toCharArray().length;
 		int selectedRobot=-1;
-		
+
 		switch(stringLenght){
 		case 10:// up to 9 robots
 			char robotNumber = selectedNodeName.toCharArray()[9];
@@ -330,33 +327,33 @@ public class SimulationTabController extends TabsControllers {
 			break;
 		default: throw new Error("Robot title changed in tree structure or missing support.The robot title should be for instance: Robot Nr.1");
 		}
-		
+
 		int amountRobotModules = simulationSpecification.getRobotsInSimulation().get(selectedRobot-1).getAmountModules();
-		
+
 		if (selectedRobot==1){			
 			moveRobot(0,amountRobotModules,changeInPosition); 
 		}else{
 			int amountAllRobotsModules=0;
-			
+
 			while(selectedRobot!= 0){
-				
+
 				amountAllRobotsModules =amountAllRobotsModules+ simulationSpecification.getRobotsInSimulation().get(selectedRobot-1).getAmountModules();
 				selectedRobot--;
 				System.out.println("All"+amountAllRobotsModules );
 			}
 			moveRobot(amountAllRobotsModules-amountRobotModules,amountAllRobotsModules,changeInPosition);
 		}
-	
+
 
 	}
-	
+
 	private static void moveRobot(int firstModuleId,int amountModules,VectorDescription changeInPosition){
 		for (int moduleID=firstModuleId; moduleID<amountModules;moduleID++){
 			try {
 				VectorDescription modulePosition = remotePhysicsSimulation.getSimulationTabControl().getModulePosition(moduleID);	
 				remotePhysicsSimulation.getSimulationTabControl().setModulePosition(moduleID, new VectorDescription(modulePosition.getX()+changeInPosition.getX(),modulePosition.getY()+changeInPosition.getY(),modulePosition.getZ()+changeInPosition.getZ()));
 			} catch (RemoteException e) {
-			//throw new Error("SOME");
+				//throw new Error("SOME");
 			}
 		}
 	}
