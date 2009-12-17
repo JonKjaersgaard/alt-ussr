@@ -51,7 +51,7 @@ public class WorldDescription extends Description implements Serializable {
     };
 
     public static final TextureDescription WHITE_GRID_TEXTURE = new TextureDescription() {
-        public String getFileName() { return "resources/grid2.jpg"; }
+        public String getFileName() { return "resources/grid.jpg"; }
         public VectorDescription getScale(int size) { return new VectorDescription(50f*size,50f*size,0f); }
     };
     
@@ -66,7 +66,7 @@ public class WorldDescription extends Description implements Serializable {
     };
 
     public static final TextureDescription GREY_GRID_TEXTURE = new TextureDescription() {
-        public String getFileName() { return "resources/grid3.jpg"; }
+        public String getFileName() { return "resources/grid2.jpg"; }
         public VectorDescription getScale(int size) { return new VectorDescription(50f*size,50f*size,0f); }
     };
 
