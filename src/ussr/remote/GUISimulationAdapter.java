@@ -15,6 +15,7 @@ import ussr.aGui.MainFrames;
 import ussr.aGui.tabs.controllers.ConsoleTabController;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.simulation.SimulationTab;
+import ussr.aGui.tabs.simulation.SimulationTreeEditors;
 import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.remote.facade.ActiveSimulation;
 import ussr.remote.facade.GUICallbackControlImpl;
@@ -132,6 +133,8 @@ public class GUISimulationAdapter {
          SimulationSpecification simulationSpecification = simulation.getXmlSimulationProvider().getSimulationSpecification();
          SimulationTab.addRobotNode(simulationSpecification);
          SimulationTabController.setSimulationSpecification(simulationSpecification);
+         
+         SimulationTreeEditors.update();
 	}
 	
 	// FIXME USED TEMPORARY
