@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import ussr.aGui.FramesInter;
@@ -24,18 +25,38 @@ import ussr.builder.helpers.StringProcessingHelper;
 import ussr.description.setup.WorldDescription.CameraPosition;
 
 public class SimulationTreeEditors{
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called Robots.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel  addRobotsEditor(){
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
+		jPanelTreeNode.add(SimulationTab.createNewLabel("Load new robot"));
+		jPanelTreeNode.add(Tabs.initOpenButton());
+		return jPanelTreeNode;
+	}
 
-	private static javax.swing.JPanel jPanelEditor = SimulationTab.getJPanelEditor();
-	
-	public static void addRobotsEditor(){
-	     jPanelEditor.add(createNewLabel("Load new robot "));
-		jPanelEditor.add(Tabs.initOpenButton());
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called physics simulation step size.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addPhysicsSimulationStepSizeEditor() {
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
+		jSpinnerPhysicsSimulationStepSize = new javax.swing.JSpinner();
+		jSpinnerPhysicsSimulationStepSize.setPreferredSize(new Dimension(60,20));
+		jSpinnerPhysicsSimulationStepSize.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
+		jPanelTreeNode.add(jSpinnerPhysicsSimulationStepSize);	
+
+		return jPanelTreeNode;
 	}
 
 
-
-	public static void addRobotEditor(){
-		//jPanelEditor.add(createNewLabel("Robot"));
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called RobotNr....
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addRobotEditor(){
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jPanelMoveRobot = new javax.swing.JPanel(new GridBagLayout());
 		jButtonYpositive = new javax.swing.JButton();
 		jButtonYnegative = new javax.swing.JButton();
@@ -161,52 +182,39 @@ public class SimulationTreeEditors{
 		gridBagConstraintsMoveRobot.gridx = 1;
 		gridBagConstraintsMoveRobot.gridy = 2;	
 		jPanelMoveRobot.add(jButtonYnegative,gridBagConstraintsMoveRobot);
-
-
-		jPanelEditor.add(jPanelMoveRobot);
-
-
-
-
+		jPanelTreeNode.add(jPanelMoveRobot);
+		return jPanelTreeNode;
 	}
 
-	public static javax.swing.JPanel getJPanelEditor() {
-
-		return jPanelEditor;
-	}
-
-
-
-
-
-	public static void addPlaneSizeEditor(){
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Plane_size)));
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called Plane Size.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addPlaneSizeEditor(){
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jSpinnerPlaneSize = new javax.swing.JSpinner();
-		jSpinnerPlaneSize.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 10));
-		SimulationTabController.setJSpinnerPlaneSizeValue(jSpinnerPlaneSize);
-		jPanelEditor.add(jSpinnerPlaneSize);
+		jSpinnerPlaneSize.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 10));		
+		jPanelTreeNode.add(jSpinnerPlaneSize);
+		
+		return jPanelTreeNode;
 	}
 
-
-
-	public static void addPlaneTextureEditor(){
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called Plane texture.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addPlaneTextureEditor(){
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel(new GridBagLayout());
 		GridBagConstraints gridBagConstraintsTexture = new GridBagConstraints();
-
-		gridBagConstraintsTexture.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsTexture.gridx = 0;
-		gridBagConstraintsTexture.gridy = 0;
-
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Plane_texture)),gridBagConstraintsTexture);
-
 
 		jComboBoxPlaneTexture = new javax.swing.JComboBox(); 
 		jComboBoxPlaneTexture.setModel(new DefaultComboBoxModel(TextureDescriptions.values()));
 
 		gridBagConstraintsTexture.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsTexture.gridx = 1;
+		gridBagConstraintsTexture.gridx = 0;
 		gridBagConstraintsTexture.gridy = 0;
 
-		jPanelEditor.add(jComboBoxPlaneTexture,gridBagConstraintsTexture);
+		jPanelTreeNode.add(jComboBoxPlaneTexture,gridBagConstraintsTexture);
 
 		javax.swing.JPanel previewPanel = new javax.swing.JPanel(new GridBagLayout());
 		previewPanel.setPreferredSize(new Dimension(100,100));
@@ -217,80 +225,79 @@ public class SimulationTreeEditors{
 		gridBagConstraintsTexture.gridwidth =2;
 		gridBagConstraintsTexture.insets = new Insets(10,0,0,0);
 
-		javax.swing.JLabel iconLabel = new javax.swing.JLabel();
-
-		SimulationTabController.setSelectedJComboBoxPlaneTexture(jComboBoxPlaneTexture,iconLabel);
+	     iconLabel = new javax.swing.JLabel();
 
 		previewPanel.add(iconLabel);
-
-
-
-
-		jPanelEditor.add(previewPanel,gridBagConstraintsTexture);
+		jPanelTreeNode.add(previewPanel,gridBagConstraintsTexture);
+		
+		return jPanelTreeNode;
 	}
 
-	public static void addCameraPositionEditor(){
-
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Camera_position)));
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called Camera position.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addCameraPositionEditor(){
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jComboBoxCameraPosition = new javax.swing.JComboBox(); 
 		jComboBoxCameraPosition.setModel(new DefaultComboBoxModel(CameraPosition.values()));
-		SimulationTabController.setSelectedJComboBoxCameraPosition(jComboBoxCameraPosition);
-		jPanelEditor.add(jComboBoxCameraPosition);
-
+		jPanelTreeNode.add(jComboBoxCameraPosition);
+		
+		return jPanelTreeNode;
 	}
 
-	public static void addTheWorldIsFlatEditor(){
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.The_world_is_flat)));
-		jCheckBoxTheWorldIsFlat =  new javax.swing.JCheckBox ();
-		SimulationTabController.setSelectedJCheckBoxTheWorldIsFlat(jCheckBoxTheWorldIsFlat);
-
-		jPanelEditor.add(jCheckBoxTheWorldIsFlat);
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called The world is flat.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addTheWorldIsFlatEditor(){
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
+		jCheckBoxTheWorldIsFlat =  new javax.swing.JCheckBox ();		
+		jPanelTreeNode.add(jCheckBoxTheWorldIsFlat);
+		
+		return jPanelTreeNode;
 	}
 
-
-	public static void addHasBackgroundSceneryEditor(){
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Has_background_scenery)));
-		jCheckBoxHasBackgroundScenery =  new javax.swing.JCheckBox ();
-		SimulationTabController.setSelectedJCheckBoxHasBackgroundScenery(jCheckBoxHasBackgroundScenery);
-		jPanelEditor.add(jCheckBoxHasBackgroundScenery);
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called has background scenery.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addHasBackgroundSceneryEditor(){
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
+		jCheckBoxHasBackgroundScenery =  new javax.swing.JCheckBox ();		
+		jPanelTreeNode.add(jCheckBoxHasBackgroundScenery);
+		return jPanelTreeNode;
 	}
 
-	public static void addHasHeavyObstaclesEditor(){
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Has_heavy_obstacles)));
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called has heavy obstacles.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addHasHeavyObstaclesEditor(){
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jCheckBoxHasHeavyObstacles = new javax.swing.JCheckBox ();
-		SimulationTabController.setSelectedjCheckBoxHasHeavyObstacles(jCheckBoxHasHeavyObstacles);
-
-		jPanelEditor.add(jCheckBoxHasHeavyObstacles);
-
+		jPanelTreeNode.add(jCheckBoxHasHeavyObstacles);
+		return jPanelTreeNode;
 	}
 
-	public static void addIsFrameGrabbingActiveEditor(){
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Is_frame_grabbing_active)));
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called is frame grabbing active.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addIsFrameGrabbingActiveEditor(){
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jCheckBoxIsFrameGrabbingActive = new javax.swing.JCheckBox ();
-		SimulationTabController.setSelectedJCheckBoxIsFrameGrabbingActive(jCheckBoxIsFrameGrabbingActive);
-
-		jPanelEditor.add(jCheckBoxIsFrameGrabbingActive);
-
+		jPanelTreeNode.add(jCheckBoxIsFrameGrabbingActive);
+		return jPanelTreeNode;
 	}
 
-	public static void addRobotTypeEditor(){
-		jLabelRobotType = new javax.swing.JLabel(); 
-		SimulationTabController.setJLabelRobotType(jLabelRobotType);
-
-		jPanelEditor.add(jLabelRobotType);
-
-	}
-
-	public static void addDampingEditor(){
-
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called damping.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addDampingEditor(){
 		GridBagConstraints gridBagConstraintsDamping = new GridBagConstraints();
-
-
-		gridBagConstraintsDamping.fill = GridBagConstraints.CENTER;
-		gridBagConstraintsDamping.gridx = 0;
-		gridBagConstraintsDamping.gridy = 0;
-		gridBagConstraintsDamping.gridwidth = 2;
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Damping)),gridBagConstraintsDamping);
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel(new GridBagLayout());	
 
 		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraintsDamping.gridx = 0;
@@ -298,125 +305,159 @@ public class SimulationTreeEditors{
 		gridBagConstraintsDamping.gridwidth = 1;
 		gridBagConstraintsDamping.insets = new Insets(20,0,0,0);
 
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Linear_velocity)),gridBagConstraintsDamping);
+		jPanelTreeNode.add(SimulationTab.createNewLabel("Linear velocity"),gridBagConstraintsDamping);
 
 		jSpinnerDampingLinearVelocity = new javax.swing.JSpinner();
 		jSpinnerDampingLinearVelocity.setPreferredSize(new Dimension(60,20));
-		jSpinnerDampingLinearVelocity.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
-		SimulationTabController.setValuejSpinnerDampingLinearVelocity(jSpinnerDampingLinearVelocity);		
+		jSpinnerDampingLinearVelocity.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));		
 		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraintsDamping.gridx = 1;
 		gridBagConstraintsDamping.gridy = 1;
-		jPanelEditor.add(jSpinnerDampingLinearVelocity,gridBagConstraintsDamping);
+		jPanelTreeNode.add(jSpinnerDampingLinearVelocity,gridBagConstraintsDamping);
 
 		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraintsDamping.gridx = 0;
 		gridBagConstraintsDamping.gridy = 2;
 		gridBagConstraintsDamping.insets = new Insets(10,0,0,0);
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Angular_velocity)),gridBagConstraintsDamping);
+		jPanelTreeNode.add(SimulationTab.createNewLabel("Angular velocity"),gridBagConstraintsDamping);
 
 		jSpinnerDampingAngularVelocity = new javax.swing.JSpinner();
 		jSpinnerDampingAngularVelocity.setPreferredSize(new Dimension(60,20));
-		jSpinnerDampingAngularVelocity.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
-		SimulationTabController.setValuejSpinnerDampingAngularVelocity(jSpinnerDampingAngularVelocity);
+		jSpinnerDampingAngularVelocity.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));		
 		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraintsDamping.gridx = 1;
 		gridBagConstraintsDamping.gridy = 2;
 		gridBagConstraintsDamping.insets = new Insets(10,0,0,0);
-		jPanelEditor.add(jSpinnerDampingAngularVelocity,gridBagConstraintsDamping);	
-
-
+		jPanelTreeNode.add(jSpinnerDampingAngularVelocity,gridBagConstraintsDamping);	
+		return jPanelTreeNode;
 	}
 
 
+	
 
-	public static void addPhysicsSimulationStepSizeEditor() {
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Physics_simulation_step_size)));
-		jSpinnerPhysicsSimulationStepSize = new javax.swing.JSpinner();
-		jSpinnerPhysicsSimulationStepSize.setPreferredSize(new Dimension(60,20));
-		jSpinnerPhysicsSimulationStepSize.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
-		SimulationTabController.setValuejSpinnerPhysicsSimulationStepSize(jSpinnerPhysicsSimulationStepSize);		
-		jPanelEditor.add(jSpinnerPhysicsSimulationStepSize);	
-
-	}
-
-	public static void addRealisticCollisionEditor() {
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Realistic_collision)));
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called Realistic Collision.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addRealisticCollisionEditor() {
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jCheckBoxRealisticCollision = new javax.swing.JCheckBox ();
 		SimulationTabController.setSelectedJCheckBoxRealisticCollision(jCheckBoxRealisticCollision);		
-		jPanelEditor.add(jCheckBoxRealisticCollision);
-
+		jPanelTreeNode.add(jCheckBoxRealisticCollision);
+		return jPanelTreeNode;
 	}
 
-	public static void addGravityEditor() {
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Gravity)));
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called gravity.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addGravityEditor() {
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jSpinnerGravity = new javax.swing.JSpinner();
 		jSpinnerGravity.setPreferredSize(new Dimension(60,20));
 		jSpinnerGravity.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(-100.0f), null, null, Float.valueOf(1.0f)));
 		SimulationTabController.setValuejSpinnerGravity(jSpinnerGravity);		
-		jPanelEditor.add(jSpinnerGravity);	
-
+		jPanelTreeNode.add(jSpinnerGravity);	
+		return jPanelTreeNode;
 	}
 
-	public static void addConstraintForceMixEditor() {
-
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Constraint_force_mixing)));
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called Constraint Force Mix.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addConstraintForceMixEditor() {
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jSpinnerConstraintForceMix = new javax.swing.JSpinner();
 		jSpinnerConstraintForceMix.setPreferredSize(new Dimension(60,20));
-		jSpinnerConstraintForceMix.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
-		SimulationTabController.setValuejSpinnerConstraintForceMix(jSpinnerConstraintForceMix);		
-		jPanelEditor.add(jSpinnerConstraintForceMix);		
+		jSpinnerConstraintForceMix.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));		
+		jPanelTreeNode.add(jSpinnerConstraintForceMix);
+		return jPanelTreeNode;
 	}
 
-	public static void addErrorReductionParameterEditor() {
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Error_reduction_parameter)));
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called Error Reduction Parameter.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addErrorReductionParameterEditor() {
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jSpinnerErrorReductionParameter = new javax.swing.JSpinner();
 		jSpinnerErrorReductionParameter.setPreferredSize(new Dimension(60,20));
-		jSpinnerErrorReductionParameter.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.1f)));
-		SimulationTabController.setValueJSpinnerErrorReductionParameter(jSpinnerErrorReductionParameter);		
-		jPanelEditor.add(jSpinnerErrorReductionParameter);	
-
+		jSpinnerErrorReductionParameter.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.1f)));	
+		jPanelTreeNode.add(jSpinnerErrorReductionParameter);	
+		return jPanelTreeNode;
 	}
 
-	public static void addResolutionFactorEditor() {
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Resolution_Factor)));
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called Resolution Factor.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addResolutionFactorEditor() {
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jSpinnerResolutionFactor = new javax.swing.JSpinner();
 		jSpinnerResolutionFactor.setPreferredSize(new Dimension(60,20));
 		jSpinnerResolutionFactor.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));
-		SimulationTabController.setValueJSpinnerResolutionFactor(jSpinnerResolutionFactor);		
-		jPanelEditor.add(jSpinnerResolutionFactor);			
+		jPanelTreeNode.add(jSpinnerResolutionFactor);	
+		return jPanelTreeNode;
 	}
 
-	public static void addUseMouseEventQueueEditor() {
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Use_module_event_queue)));
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called Use Module Event Queue.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addUseModuleEventQueueEditor() {
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jCheckBoxUseMouseEventQueue = new javax.swing.JCheckBox ();
-		SimulationTabController.setSelectedJCheckBoxUseMouseEventQueue(jCheckBoxUseMouseEventQueue);		
-		jPanelEditor.add(jCheckBoxUseMouseEventQueue);		
+		jPanelTreeNode.add(jCheckBoxUseMouseEventQueue);
+		return jPanelTreeNode;
 	}
 
-	public static void addSynchronizeWithControllersEditor() {
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Synchronize_with_controllers)));
-		jCheckBoxSynchronizeWithControllers = new javax.swing.JCheckBox ();
-		SimulationTabController.setSelectedjCheckBoxSynchronizeWithControllers(jCheckBoxSynchronizeWithControllers);		
-		jPanelEditor.add(jCheckBoxSynchronizeWithControllers);	
-
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called Synchronize With Controllers.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static  javax.swing.JPanel addSynchronizeWithControllersEditor() {
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
+		jCheckBoxSynchronizeWithControllers = new javax.swing.JCheckBox ();		
+		jPanelTreeNode.add(jCheckBoxSynchronizeWithControllers);	
+		return jPanelTreeNode;
 	}
 
-	public static void addPhysicsSimulationControllerStepFactor() {
-		jPanelEditor.add(createNewLabel(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Physics_simulation_controller_step_factor)));
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called Physics Simulation Controller Step Factor.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addPhysicsSimulationControllerStepFactor() {
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jPhysicsSimulationControllerStepFactor = new javax.swing.JSpinner();
 		jPhysicsSimulationControllerStepFactor.setPreferredSize(new Dimension(60,20));
-		jPhysicsSimulationControllerStepFactor.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));
-		SimulationTabController.setValuejPhysicsSimulationControllerStepFactor(jPhysicsSimulationControllerStepFactor);		
-		jPanelEditor.add(jPhysicsSimulationControllerStepFactor);	
-
+		jPhysicsSimulationControllerStepFactor.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));		
+		jPanelTreeNode.add(jPhysicsSimulationControllerStepFactor);
+		return jPanelTreeNode;
 	}
 
+	public static void update (){
+		/*World Description*/
+		SimulationTabController.setJSpinnerPlaneSizeValue(jSpinnerPlaneSize);
+		SimulationTabController.setValuejSpinnerPhysicsSimulationStepSize(jSpinnerPhysicsSimulationStepSize);
+		SimulationTabController.setSelectedJComboBoxPlaneTexture(jComboBoxPlaneTexture,iconLabel);
+		SimulationTabController.setSelectedJComboBoxCameraPosition(jComboBoxCameraPosition);
+		SimulationTabController.setSelectedJCheckBoxTheWorldIsFlat(jCheckBoxTheWorldIsFlat);
+		SimulationTabController.setSelectedJCheckBoxHasBackgroundScenery(jCheckBoxHasBackgroundScenery);
+		SimulationTabController.setSelectedjCheckBoxHasHeavyObstacles(jCheckBoxHasHeavyObstacles);
+		SimulationTabController.setSelectedJCheckBoxIsFrameGrabbingActive(jCheckBoxIsFrameGrabbingActive);
+		
+		/*Physics parameters*/
+		SimulationTabController.setValuejSpinnerDampingLinearVelocity(jSpinnerDampingLinearVelocity);
+		SimulationTabController.setValuejSpinnerDampingAngularVelocity(jSpinnerDampingAngularVelocity);
+		SimulationTabController.setValuejSpinnerConstraintForceMix(jSpinnerConstraintForceMix);
+		SimulationTabController.setValueJSpinnerErrorReductionParameter(jSpinnerErrorReductionParameter);		
+		SimulationTabController.setValueJSpinnerResolutionFactor(jSpinnerResolutionFactor);		
+		SimulationTabController.setSelectedJCheckBoxUseMouseEventQueue(jCheckBoxUseMouseEventQueue);		
+		SimulationTabController.setSelectedjCheckBoxSynchronizeWithControllers(jCheckBoxSynchronizeWithControllers);		
+		SimulationTabController.setValuejPhysicsSimulationControllerStepFactor(jPhysicsSimulationControllerStepFactor);		
+	}
 
-
-
-
-	public static void addMorphologyEditor() {
+/*	public static void addMorphologyEditor() {
 		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
 		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
 		//System.out.println("BOOO"+RobotSpecification.getMorphologyLocation());
@@ -425,18 +466,7 @@ public class SimulationTreeEditors{
 		//fcOpenFrame.setSelectedFile(new File("some.xml"));
 
 		//jPanelEditor.add(MainFrames.initOpenButton(fcOpenFrame));
-	}
-
-
-	private static javax.swing.JLabel createNewLabel(String labelText){
-		newLabel =  new javax.swing.JLabel();
-		newLabel.setText(labelText+" ");
-		return newLabel;
-	}
-
-
-
-
+	}*/
 
 	private static javax.swing.JTree jTreeSimulation;
 	private static javax.swing.JScrollPane jScrollPaneTreeSimulation;
@@ -453,8 +483,7 @@ public class SimulationTreeEditors{
 	jCheckBoxSynchronizeWithControllers;
 
 	private static javax.swing.JLabel jLabelRobotType;
-
-	private static javax.swing.JLabel newLabel;
+	private static javax.swing.JLabel iconLabel; 
 	private static javax.swing.JPanel jPanelMoveRobot;
 	private static javax.swing.JSpinner jSpinnerDampingLinearVelocity, jSpinnerDampingAngularVelocity,
 	jSpinnerPhysicsSimulationStepSize, jSpinnerGravity,jSpinnerConstraintForceMix,

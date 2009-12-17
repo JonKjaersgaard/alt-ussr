@@ -1,9 +1,12 @@
 package ussr.aGui.tabs.controllers;
 
 import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.rmi.RemoteException;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,15 +15,19 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.border.TitledBorder;
 
 
 import ussr.aGui.MainFramesInter;
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
+import ussr.aGui.enumerations.tabs.SimulationTabComponentsText;
 import ussr.aGui.enumerations.tabs.SimulationTabTreeNodes;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.enumerations.tabs.TextureDescriptions;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.simulation.SimulationTab;
+import ussr.aGui.tabs.simulation.SimulationTreeEditors;
+import ussr.builder.helpers.StringProcessingHelper;
 import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
@@ -45,100 +52,45 @@ public class SimulationTabController extends TabsControllers {
 		SimulationTabController.simulationSpecification = simulationSpecification;
 	}
 
+
 	/**
 	 * @param selectedNode
 	 */
 	public static void jTreeItemSelectedActionPerformed(String selectedNode) {
 		selectedNodeName = selectedNode;
 
-
 		SimulationTab.getJPanelEditor().removeAll();
 		SimulationTab.getJPanelEditor().revalidate();
-		SimulationTab.getJPanelEditor().repaint();
+		SimulationTab.getJPanelEditor().repaint();	
+		
+		
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		gridBagConstraints.fill = GridBagConstraints.CENTER;
+		gridBagConstraints.gridx =0;
+		gridBagConstraints.gridy =0;
+		gridBagConstraints.insets = new Insets(0,0,10,0);
+		
+		
 
 		if (selectedNode.contains("Robot Nr.")){
+			SimulationTab.getJPanelEditor().add(SimulationTab.createNewLabel(selectedNode),gridBagConstraints);
 			SimulationTab.addRobotEditor();
 		}else{
-			switch(SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_"))){
-
-			case Simulation://  break through
-			case World_description:
-			case Physics_parameters:
-				break;
-				//case Robot+"nR":
-
-				//break;
-				/*	case Robot:
-			SimulationTab.addRobotEditor();
-			break;*/
-			case Robots:
-				SimulationTab.addRobotsEditor();
-				break;
-			case Physics_simulation_step_size:
-				SimulationTab.addPhysicsSimulationStepSizeEditor();
-				break;
-			case Resolution_Factor:
-				SimulationTab.addResolutionFactorEditor();
-				break;		
-			case Type:
-				//TODO
-				break;
-	/*		case Morphology:
-				SimulationTab.addMorphologyEditor();
-				break;*/
-			case Controller:
-				//TODO
-				break;
-			case Plane_size:
-				SimulationTab.addPlaneSizeEditor();
-				break;
-			case Plane_texture:
-				SimulationTab.addPlaneTextureEditor();
-				break;
-			case Camera_position:
-				SimulationTab.addCameraPositionEditor();
-				break;
-			case The_world_is_flat:
-				SimulationTab.addTheWorldIsFlatEditor();
-				break;
-			case Has_background_scenery:
-				SimulationTab.addHasBackgroundSceneryEditor();
-				break;
-			case Has_heavy_obstacles:
-				SimulationTab.addHasHeavyObstaclesEditor();
-				break;			
-			case Is_frame_grabbing_active:
-				SimulationTab.addIsFrameGrabbingActiveEditor();
-				break;
-			case Damping:
-				SimulationTab.addDampingEditor();
-				break;	
-			case Realistic_collision:
-				SimulationTab.addRealisticCollisionEditor();
-				break;
-			case Gravity:
-				SimulationTab.addGravityEditor();
-				break;
-			case Constraint_force_mixing:
-				SimulationTab.addConstraintForceMixEditor();
-				break;
-			case Error_reduction_parameter:
-				SimulationTab.addErrorReductionParameterEditor();
-				break;
-			case Use_module_event_queue:
-				SimulationTab.addUseMouseEventQueueEditor();
-				break;
-			case Synchronize_with_controllers:
-				SimulationTab.addSynchronizeWithControllersEditor();
-				break;
-			case Physics_simulation_controller_step_factor:
-				SimulationTab.addPhysicsSimulationControllerStepFactor();
-				break;
-			default: throw new Error("The node "+ selectedNode + " is not supported yet.");
-		
+			SimulationTabTreeNodes treeNode = SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_"));
+			
+			
+			SimulationTab.getJPanelEditor().add(SimulationTab.createNewLabel(treeNode.getName()),gridBagConstraints);
+			if (treeNode.getJPanelEditor()==null){
+			// do nothing
+			}else{	
+				gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+				gridBagConstraints.gridx =0;
+				gridBagConstraints.gridy =1;
+		    SimulationTab.getJPanelEditor().add(treeNode.getJPanelEditor(),gridBagConstraints);
 			}
 		}
 		SimulationTab.getJPanelEditor().validate();
+		
 
 	}
 
@@ -148,7 +100,6 @@ public class SimulationTabController extends TabsControllers {
 	 */
 	public static void setJSpinnerPlaneSizeValue(JSpinner spinnerPlaneSize) {
 		try {
-
 			spinnerPlaneSize.setValue(remotePhysicsSimulation.getWorldDescriptionControl().getPlaneSize());
 		} catch (RemoteException e) {
 			throw new Error("Failed to extract plane size, due to remote exception.");
