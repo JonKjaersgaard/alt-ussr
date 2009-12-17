@@ -9,10 +9,12 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import ussr.aGui.FramesInter;
+import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.enumerations.tabs.SimulationTabComponentsText;
 import ussr.aGui.enumerations.tabs.SimulationTabTreeNodes;
 import ussr.aGui.enumerations.tabs.TabsIcons;
@@ -23,6 +25,7 @@ import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.builder.helpers.StringProcessingHelper;
 import ussr.description.setup.WorldDescription.CameraPosition;
+import ussr.physics.PhysicsParameters;
 
 public class SimulationTreeEditors{
 	/**
@@ -207,8 +210,16 @@ public class SimulationTreeEditors{
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel(new GridBagLayout());
 		GridBagConstraints gridBagConstraintsTexture = new GridBagConstraints();
 
+	    iconLabel = new javax.swing.JLabel();
+	    iconLabel.setSize(100, 100); 
+		
 		jComboBoxPlaneTexture = new javax.swing.JComboBox(); 
 		jComboBoxPlaneTexture.setModel(new DefaultComboBoxModel(TextureDescriptions.values()));
+		jComboBoxPlaneTexture.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				SimulationTabController.jComboBoxPlaneTextureActionPerformed(jComboBoxPlaneTexture,iconLabel);
+			}
+		});
 
 		gridBagConstraintsTexture.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraintsTexture.gridx = 0;
@@ -217,7 +228,7 @@ public class SimulationTreeEditors{
 		jPanelTreeNode.add(jComboBoxPlaneTexture,gridBagConstraintsTexture);
 
 		javax.swing.JPanel previewPanel = new javax.swing.JPanel(new GridBagLayout());
-		previewPanel.setPreferredSize(new Dimension(100,100));
+		previewPanel.setPreferredSize(new Dimension(125,140));
 		previewPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Preview", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
 		gridBagConstraintsTexture.fill = GridBagConstraints.CENTER;
 		gridBagConstraintsTexture.gridx = 0;
@@ -225,7 +236,7 @@ public class SimulationTreeEditors{
 		gridBagConstraintsTexture.gridwidth =2;
 		gridBagConstraintsTexture.insets = new Insets(10,0,0,0);
 
-	     iconLabel = new javax.swing.JLabel();
+	  
 
 		previewPanel.add(iconLabel);
 		jPanelTreeNode.add(previewPanel,gridBagConstraintsTexture);
@@ -360,6 +371,38 @@ public class SimulationTreeEditors{
 		jPanelTreeNode.add(jSpinnerGravity);	
 		return jPanelTreeNode;
 	}
+	
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called Plane material.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addPlaneMaterialEditor() {
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
+		jComboBoxPlaneMaterial = new javax.swing.JComboBox(); 
+		jComboBoxPlaneMaterial.setModel(new DefaultComboBoxModel(PhysicsParameters.Material.values()));
+		jComboBoxPlaneMaterial.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				SimulationTabController.jComboBoxPlaneMaterialActionPerformed(jComboBoxPlaneMaterial);
+			}
+		});
+		jPanelTreeNode.add(jComboBoxPlaneMaterial);
+		return jPanelTreeNode;
+	}
+	
+	//MAINTAIN_ROTATIONAL_JOINT_POSITIONS
+	
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called Maintain rotational joint positions.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addMaintainRotationalJointPositionsEditor() {
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
+		jCheckBoxMaintainRotJointPositions = new javax.swing.JCheckBox ();
+		SimulationTabController.setSelectedjCheckBoxMaintainRotJointPositions(jCheckBoxMaintainRotJointPositions);		
+		jPanelTreeNode.add(jCheckBoxMaintainRotJointPositions);
+		return jPanelTreeNode;
+	}
+	
 
 	/**
 	 * Defines visual appearance of editor panel(edit value) for tree node called Constraint Force Mix.
@@ -449,12 +492,16 @@ public class SimulationTreeEditors{
 		/*Physics parameters*/
 		SimulationTabController.setValuejSpinnerDampingLinearVelocity(jSpinnerDampingLinearVelocity);
 		SimulationTabController.setValuejSpinnerDampingAngularVelocity(jSpinnerDampingAngularVelocity);
+		SimulationTabController.setValuejSpinnerGravity(jSpinnerGravity);
+		SimulationTabController.setValuejComboBoxPlaneMaterial(jComboBoxPlaneMaterial);
+		SimulationTabController.setSelectedjCheckBoxMaintainRotJointPositions(jCheckBoxMaintainRotJointPositions);
 		SimulationTabController.setValuejSpinnerConstraintForceMix(jSpinnerConstraintForceMix);
 		SimulationTabController.setValueJSpinnerErrorReductionParameter(jSpinnerErrorReductionParameter);		
 		SimulationTabController.setValueJSpinnerResolutionFactor(jSpinnerResolutionFactor);		
 		SimulationTabController.setSelectedJCheckBoxUseMouseEventQueue(jCheckBoxUseMouseEventQueue);		
 		SimulationTabController.setSelectedjCheckBoxSynchronizeWithControllers(jCheckBoxSynchronizeWithControllers);		
-		SimulationTabController.setValuejPhysicsSimulationControllerStepFactor(jPhysicsSimulationControllerStepFactor);		
+		SimulationTabController.setValuejPhysicsSimulationControllerStepFactor(jPhysicsSimulationControllerStepFactor);
+		
 	}
 
 /*	public static void addMorphologyEditor() {
@@ -474,18 +521,16 @@ public class SimulationTreeEditors{
 	jButtonXpositive,jButtonXnegative,
 	jButtonZpositive,jButtonZnegative;
 
-	private static javax.swing.JSpinner  jSpinnerPlaneSize ;
-	private static javax.swing.JComboBox jComboBoxPlaneTexture;
-	private static javax.swing.JComboBox jComboBoxCameraPosition;
+	private static javax.swing.JComboBox jComboBoxCameraPosition,jComboBoxPlaneMaterial,jComboBoxPlaneTexture;
 
 	private static javax.swing.JCheckBox jCheckBoxTheWorldIsFlat,jCheckBoxHasBackgroundScenery, jCheckBoxHasHeavyObstacles,
 	jCheckBoxIsFrameGrabbingActive,jCheckBoxRealisticCollision,jCheckBoxUseMouseEventQueue,
-	jCheckBoxSynchronizeWithControllers;
+	jCheckBoxSynchronizeWithControllers,jCheckBoxMaintainRotJointPositions;
 
 	private static javax.swing.JLabel jLabelRobotType;
 	private static javax.swing.JLabel iconLabel; 
 	private static javax.swing.JPanel jPanelMoveRobot;
-	private static javax.swing.JSpinner jSpinnerDampingLinearVelocity, jSpinnerDampingAngularVelocity,
+	private static javax.swing.JSpinner jSpinnerPlaneSize,jSpinnerDampingLinearVelocity, jSpinnerDampingAngularVelocity,
 	jSpinnerPhysicsSimulationStepSize, jSpinnerGravity,jSpinnerConstraintForceMix,
 	jSpinnerErrorReductionParameter, jSpinnerResolutionFactor, jPhysicsSimulationControllerStepFactor,
 	jSpinnerCoordinateValue;

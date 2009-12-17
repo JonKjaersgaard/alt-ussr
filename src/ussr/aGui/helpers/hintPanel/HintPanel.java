@@ -104,7 +104,7 @@ public class HintPanel extends JPanel implements HintPanelInter {
 	 */
 	public void setText(String hintText){	
 		jTextPaneHintDisplay.setText(hintText);
-		jTextPaneHintDisplay.revalidate();
+		jTextPaneHintDisplay.validate();
 		jTextPaneHintDisplay.repaint();
 		
 	}

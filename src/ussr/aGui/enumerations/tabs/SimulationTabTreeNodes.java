@@ -2,6 +2,7 @@ package ussr.aGui.enumerations.tabs;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
 import ussr.aGui.tabs.simulation.SimulationTreeEditors;
 import ussr.builder.enumerations.XMLTagsUsed;
 
@@ -13,44 +14,46 @@ import ussr.builder.enumerations.XMLTagsUsed;
 public enum SimulationTabTreeNodes {
 	
 	//First Level Hierarchy	
-	Simulation(PlaceInTreeView.FIRST,null,XMLTagsUsed.SIMULATION),
+	Simulation(PlaceInTreeView.FIRST,null,HintsSimulationTab.SIMULATION,XMLTagsUsed.SIMULATION),
 	
 	//Second Level Hierarchy	
 	  //Often used
-	  Physics_simulation_step_size(PlaceInTreeView.SECOND,SimulationTreeEditors.addPhysicsSimulationStepSizeEditor(),XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE),
-	  Resolution_Factor(PlaceInTreeView.SECOND,SimulationTreeEditors.addResolutionFactorEditor(),XMLTagsUsed.RESOLUTION_FACTOR),
+	  Physics_simulation_step_size(PlaceInTreeView.SECOND,SimulationTreeEditors.addPhysicsSimulationStepSizeEditor(),HintsSimulationTab.PHYSICS_SIMULATION_STEP_SIZE,XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE),
+	  Resolution_Factor(PlaceInTreeView.SECOND,SimulationTreeEditors.addResolutionFactorEditor(),HintsSimulationTab.RESOLUTION_FACTOR,XMLTagsUsed.RESOLUTION_FACTOR),
 
 	   //Second Level Hierarchy
-	  Robots(PlaceInTreeView.SECOND,SimulationTreeEditors.addRobotsEditor(),XMLTagsUsed.ROBOTS),
+	  Robots(PlaceInTreeView.SECOND,SimulationTreeEditors.addRobotsEditor(),HintsSimulationTab.ROBOTS,XMLTagsUsed.ROBOTS),
 
 	  //Third Level Hierarchy
-	     Robot_Nr(PlaceInTreeView.NOT_USED,null,XMLTagsUsed.ROBOT_NR),
+	     Robot_Nr(PlaceInTreeView.NOT_USED,null,null,XMLTagsUsed.ROBOT_NR),
       
 
 	  //Second Level Hierarchy
-	  World_description(PlaceInTreeView.SECOND,null,XMLTagsUsed.WORLD_DESCRIPTION), 
+	  World_description(PlaceInTreeView.SECOND,null,HintsSimulationTab.WORLD_DESCRIPTION,XMLTagsUsed.WORLD_DESCRIPTION), 
 	    //Third Level Hierarchy
-	    Plane_size(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneSizeEditor(),XMLTagsUsed.PLANE_SIZE),
-	    Plane_texture(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneTextureEditor(),XMLTagsUsed.PLANE_TEXTURE),
-	    Camera_position(PlaceInTreeView.THIRD,SimulationTreeEditors.addCameraPositionEditor(),XMLTagsUsed.CAMERA_POSITION),
-	    The_world_is_flat(PlaceInTreeView.THIRD,SimulationTreeEditors.addTheWorldIsFlatEditor(),XMLTagsUsed.THE_WORLD_IS_FLAT),
-	    Has_background_scenery(PlaceInTreeView.THIRD,SimulationTreeEditors.addHasBackgroundSceneryEditor(),XMLTagsUsed.HAS_BACKGROUND_SCENERY),
-	    Has_heavy_obstacles(PlaceInTreeView.THIRD,SimulationTreeEditors.addHasHeavyObstaclesEditor(),XMLTagsUsed.HAS_HEAVY_OBSTACLES),
-	    Is_frame_grabbing_active(PlaceInTreeView.THIRD,SimulationTreeEditors.addIsFrameGrabbingActiveEditor(),XMLTagsUsed.IS_FRAME_GRABBING_ACTIVE),
+	    Plane_size(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneSizeEditor(),HintsSimulationTab.PLANE_SIZE,XMLTagsUsed.PLANE_SIZE),
+	    Plane_texture(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneTextureEditor(),HintsSimulationTab.PLANE_TEXTURE,XMLTagsUsed.PLANE_TEXTURE),
+	    Camera_position(PlaceInTreeView.THIRD,SimulationTreeEditors.addCameraPositionEditor(),HintsSimulationTab.CAMERA_POSITION,XMLTagsUsed.CAMERA_POSITION),
+	    The_world_is_flat(PlaceInTreeView.THIRD,SimulationTreeEditors.addTheWorldIsFlatEditor(),HintsSimulationTab.THE_WORLD_IS_FLAT,XMLTagsUsed.THE_WORLD_IS_FLAT),
+	    Has_background_scenery(PlaceInTreeView.THIRD,SimulationTreeEditors.addHasBackgroundSceneryEditor(),HintsSimulationTab.HAS_BACKGROUND_SCENERY,XMLTagsUsed.HAS_BACKGROUND_SCENERY),
+	    Has_heavy_obstacles(PlaceInTreeView.THIRD,SimulationTreeEditors.addHasHeavyObstaclesEditor(),HintsSimulationTab.HAS_HEAVY_OBSTACLES,XMLTagsUsed.HAS_HEAVY_OBSTACLES),
+	    Is_frame_grabbing_active(PlaceInTreeView.THIRD,SimulationTreeEditors.addIsFrameGrabbingActiveEditor(),HintsSimulationTab.IS_FRAME_GRABBING_ACTIVE,XMLTagsUsed.IS_FRAME_GRABBING_ACTIVE),
 
 	  //Second Level Hierarchy    
-	  Physics_parameters(PlaceInTreeView.SECOND,null,XMLTagsUsed.PHYSICS_PARAMETERS),
+	  Physics_parameters(PlaceInTreeView.SECOND,null,HintsSimulationTab.PHYSICS_PARAMETERS,XMLTagsUsed.PHYSICS_PARAMETERS),
 	    //Third Level Hierarchy
-	    Damping(PlaceInTreeView.THIRD,SimulationTreeEditors.addDampingEditor(),XMLTagsUsed.DAMPING),
-	            Linear_velocity(PlaceInTreeView.NOT_USED,null,XMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY),
-	            Angular_velocity(PlaceInTreeView.NOT_USED,null,XMLTagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY),	            
-	    Realistic_collision(PlaceInTreeView.THIRD,SimulationTreeEditors.addRealisticCollisionEditor(),XMLTagsUsed.REALISTIC_COLLISION),
-	    Gravity(PlaceInTreeView.THIRD,SimulationTreeEditors.addGravityEditor(),XMLTagsUsed.GRAVITY),
-	    Constraint_force_mixing(PlaceInTreeView.THIRD,SimulationTreeEditors.addConstraintForceMixEditor(),XMLTagsUsed.CONSTRAINT_FORCE_MIX),
-	    Error_reduction_parameter(PlaceInTreeView.THIRD,SimulationTreeEditors.addErrorReductionParameterEditor(),XMLTagsUsed.ERROR_REDUCTION_PARAMETER),
-	    Use_module_event_queue(PlaceInTreeView.THIRD,SimulationTreeEditors.addUseModuleEventQueueEditor(),XMLTagsUsed.USE_MODULE_EVENT_QUEUE),
-	    Synchronize_with_controllers(PlaceInTreeView.THIRD,SimulationTreeEditors.addSynchronizeWithControllersEditor(),XMLTagsUsed.SYNC_WITH_CONTROLLERS),
-	    Physics_simulation_controller_step_factor(PlaceInTreeView.THIRD,SimulationTreeEditors.addPhysicsSimulationControllerStepFactor(),XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR)
+	    Damping(PlaceInTreeView.THIRD,SimulationTreeEditors.addDampingEditor(),HintsSimulationTab.DAMPING,XMLTagsUsed.DAMPING),
+	            //Linear_velocity(PlaceInTreeView.NOT_USED,null,nullXMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY),
+	            //Angular_velocity(PlaceInTreeView.NOT_USED,null,XMLTagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY),	            
+	    Realistic_collision(PlaceInTreeView.THIRD,SimulationTreeEditors.addRealisticCollisionEditor(),HintsSimulationTab.REALISTIC_COLLISION,XMLTagsUsed.REALISTIC_COLLISION),
+	    Gravity(PlaceInTreeView.THIRD,SimulationTreeEditors.addGravityEditor(),HintsSimulationTab.GRAVITY,XMLTagsUsed.GRAVITY),
+	    Plane_material(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneMaterialEditor(),HintsSimulationTab.PLANE_MATERIAL,XMLTagsUsed.PLANE_MATERIAL),
+	    Maintain_rotational_joint_positions(PlaceInTreeView.THIRD,SimulationTreeEditors.addMaintainRotationalJointPositionsEditor(),HintsSimulationTab.MAINTAIN_ROTATIONAL_JOINT_POSITIONS,XMLTagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS),
+	    Constraint_force_mixing(PlaceInTreeView.THIRD,SimulationTreeEditors.addConstraintForceMixEditor(),HintsSimulationTab.CONSTRAINT_FORCE_MIXING,XMLTagsUsed.CONSTRAINT_FORCE_MIX),
+	    Error_reduction_parameter(PlaceInTreeView.THIRD,SimulationTreeEditors.addErrorReductionParameterEditor(),HintsSimulationTab.ERROR_REDUCTION_PARAMETER,XMLTagsUsed.ERROR_REDUCTION_PARAMETER),
+	    Use_module_event_queue(PlaceInTreeView.THIRD,SimulationTreeEditors.addUseModuleEventQueueEditor(),HintsSimulationTab.USE_MODULE_EVENT_QUEUE,XMLTagsUsed.USE_MODULE_EVENT_QUEUE),
+	    Synchronize_with_controllers(PlaceInTreeView.THIRD,SimulationTreeEditors.addSynchronizeWithControllersEditor(),HintsSimulationTab.SYNCHRONIZE_WITH_CONTROLLERS,XMLTagsUsed.SYNC_WITH_CONTROLLERS),
+	    Physics_simulation_controller_step_factor(PlaceInTreeView.THIRD,SimulationTreeEditors.addPhysicsSimulationControllerStepFactor(),HintsSimulationTab.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR,XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR)
 	  ;
 
 	/**
@@ -69,6 +72,16 @@ public enum SimulationTabTreeNodes {
     private DefaultMutableTreeNode defaultMutableTreeNode;
     
     private javax.swing.JPanel jPanelEditor;
+    
+    private HintsSimulationTab hint; 
+
+
+
+	public HintsSimulationTab getHint() {
+		return hint;
+	}
+
+
 
 	public javax.swing.JPanel getJPanelEditor() {
 		return jPanelEditor;
@@ -81,9 +94,10 @@ public enum SimulationTabTreeNodes {
      * Moreover, associates each name with the tag used during saving/or loading of simulation(also robot).
 	 * @param xmlTagsUsed,The tag used in xml file saving/loading
 	 */
-	SimulationTabTreeNodes(PlaceInTreeView placeInHierarchy,javax.swing.JPanel jPanelEditor,XMLTagsUsed xmlTagsUsed){
+	SimulationTabTreeNodes(PlaceInTreeView placeInHierarchy,javax.swing.JPanel jPanelEditor, HintsSimulationTab hint,XMLTagsUsed xmlTagsUsed){
 		this.placeInHierarchy = placeInHierarchy;
 		this.jPanelEditor = jPanelEditor;
+		this.hint =hint;
 		this.xmlTagsUsed=xmlTagsUsed;
 	}
 	

@@ -25,6 +25,7 @@ import ussr.aGui.enumerations.tabs.SimulationTabTreeNodes;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.enumerations.tabs.TextureDescriptions;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
+import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.aGui.tabs.simulation.SimulationTreeEditors;
 import ussr.builder.helpers.StringProcessingHelper;
@@ -87,6 +88,10 @@ public class SimulationTabController extends TabsControllers {
 				gridBagConstraints.gridx =0;
 				gridBagConstraints.gridy =1;
 		    SimulationTab.getJPanelEditor().add(treeNode.getJPanelEditor(),gridBagConstraints);
+		    
+		    SimulationTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
+		    SimulationTab.getHintPanel().setText(" ");
+		    SimulationTab.getHintPanel().setText(treeNode.getHint().getHintText());
 			}
 		}
 		SimulationTab.getJPanelEditor().validate();
@@ -119,8 +124,8 @@ public class SimulationTabController extends TabsControllers {
 
 			if (fileName.equals(TextureDescriptions.values()[text].getFileName())){
 				jComboBoxPlaneTexture.setSelectedItem(TextureDescriptions.values()[text]);
-				ImageIcon imageIcon = new ImageIcon(TextureDescriptions.values()[text].getFileName());
-				iconLabel.setIcon(imageIcon);
+				//ImageIcon imageIcon = new ImageIcon(TextureDescriptions.values()[text].getFileName());
+				iconLabel.setIcon(TextureDescriptions.values()[text].getImageIcon());
 				iconLabel.setSize(100, 100);
 			}
 		}
@@ -309,6 +314,26 @@ public class SimulationTabController extends TabsControllers {
 				//throw new Error("SOME");
 			}
 		}
+	}
+
+	public static void jComboBoxPlaneTextureActionPerformed(JComboBox comboBoxPlaneTexture, JLabel iconLabel) {
+		TextureDescriptions selectedTexture = TextureDescriptions.valueOf(comboBoxPlaneTexture.getSelectedItem().toString());
+		iconLabel.setIcon(selectedTexture.getImageIcon());
+		
+	}
+
+	public static void setValuejComboBoxPlaneMaterial(JComboBox comboBoxPlaneMaterial) {
+		comboBoxPlaneMaterial.setSelectedItem(PhysicsParameters.get().getPlaneMaterial());
+		
+	}
+
+	public static void jComboBoxPlaneMaterialActionPerformed(JComboBox comboBoxPlaneMaterial) {
+		
+		
+	}
+
+	public static void setSelectedjCheckBoxMaintainRotJointPositions(JCheckBox checkBoxMaintainRotJointPositions) {
+		checkBoxMaintainRotJointPositions.setSelected(PhysicsParameters.get().getMaintainRotationalJointPositions());
 	}
 
 
