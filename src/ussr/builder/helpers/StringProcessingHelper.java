@@ -44,6 +44,4 @@ public class StringProcessingHelper {
 	public static Integer convertToInteger(String string){
 		return Integer.parseInt(string);
 	}
-
-
 }
