@@ -289,6 +289,14 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 
 	/**
+	 * Returns menu item for opening (loading) simulation.
+	 * @return menu item for opening (loading) simulation.
+	 */
+	public static javax.swing.JMenuItem getJMenuItemOpen() {
+		return jMenuItemOpen;
+	}
+
+	/**
 	 * Returns the main menu bar of GUI window.
 	 * @return jMenuBarMain, the main menu bar of GUI window.
 	 */
@@ -556,6 +564,14 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 				MainFrameSeparateController.openActionPerformed(fcOpenFrame);
 			}
 		});
+		return jButtonOpen;
+	}
+
+	/**
+	 * Returns the button for opening(loading) simulation situated in general tool bar.
+	 * @return the button for opening(loading) simulation situated in general tool bar.
+	 */
+	public static javax.swing.JButton getJButtonOpen() {
 		return jButtonOpen;
 	}
 

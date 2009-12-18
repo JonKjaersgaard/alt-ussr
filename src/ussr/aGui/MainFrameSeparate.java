@@ -150,7 +150,7 @@ public class MainFrameSeparate extends MainFrames {
 			public void run() {				
 				mainFrame = new MainFrameSeparate();
 				mainFrame.setVisible(true);
-				setMainFrameSeparateEnabled(false);
+				setMainFrameSeparateEnabled(true,false);
 			}
 		});		
 	}
@@ -164,15 +164,22 @@ public class MainFrameSeparate extends MainFrames {
 		MainFrameSeparate.main(null);
 	}
 
-    
 	/**
 	 * Controls custom enabling of the main frame. Disables components so that the user have to load the simulation from xml file first.
+	 * When simulation is loaded do not allows to load new simulation. 
+	 * @param beforeSimulationStarted
 	 * @param enabled, true for main frame to be enabled. 
 	 */
-	public static void setMainFrameSeparateEnabled(boolean enabled){
+	public static void setMainFrameSeparateEnabled(boolean beforeSimulationStarted,boolean enabled){
+		if (beforeSimulationStarted){
 		setJMenuBarMainEnabled(enabled);
 		setJToolBarGeneralControlEnabled(enabled);
+		}else{
+			getJMenuItemOpen().setEnabled(false);
+			getJButtonOpen().setEnabled(false);
+		}
 	}
+	
 	
 	/**
 	 * Controls custom enabling of MenuBar components
