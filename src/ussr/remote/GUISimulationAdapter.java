@@ -126,7 +126,11 @@ public class GUISimulationAdapter {
 		GeneralController.setRemotePhysicsSimulation(remotePhysicsSimulation);
 		MainFrameSeparateController.setRendererControl(remotePhysicsSimulation.getRendererControl());
 		GeneralController.setBuilderControl(remotePhysicsSimulation.getBuilderControl());
-		MainFrameSeparate.setMainFrameSeparateEnabled(true);
+		MainFrameSeparate.setMainFrameSeparateEnabled(true,true);
+		MainFrameSeparate.setMainFrameSeparateEnabled(false,true);
+		
+		
+		
 		SimulationTab.setTabVisible(true);
 		MainFrames.setJTabbedPaneFirstEnabled(true);
 		
