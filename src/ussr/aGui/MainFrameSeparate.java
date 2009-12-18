@@ -201,7 +201,7 @@ public class MainFrameSeparate extends MainFrames {
 					}else{
 						JMenuItem currentJMenuItem = (JMenuItem) currentJMenu.getMenuComponent(jMenuItem);
 						String jMenuItemText =currentJMenuItem.getText(); 
-						if (jMenuItemText.contains(MainFrameComponentsText.Open.toString())||jMenuItemText.contains(MainFrameComponentsText.Exit.toString())){
+						if (jMenuItemText.contains(MainFrameComponentsText.OPEN.toString())||jMenuItemText.contains(MainFrameComponentsText.EXIT.toString())){
 							//do nothing
 						}else{
 							currentJMenuItem.setEnabled(enabled);
@@ -226,7 +226,7 @@ public class MainFrameSeparate extends MainFrames {
 				//do nothing
 			}else if(componentClassName.contains(ComponentsFrame.JToggleButton.toString())){
 				JToggleButton currentToggleJButton = (JToggleButton)currentComponent;
-				if (currentToggleJButton.getToolTipText().contains(MainFrameComponentsText.Visualize_communication_of_modules.toString().replace("_", ""))){
+				if (currentToggleJButton.getToolTipText().contains(MainFrameComponentsText.VISUALIZE_COMMUNICATION_OF_MODULES.getUserFriendlyName())){
 					//do nothing
 				}else{				
 				currentToggleJButton.setEnabled(enabled);
@@ -234,7 +234,7 @@ public class MainFrameSeparate extends MainFrames {
 			}else if (componentClassName.contains(ComponentsFrame.JButton.toString())){
 				JButton currentJButton = (JButton)currentComponent;
 				String currentJButtonText = currentJButton.getToolTipText();
-				if (currentJButtonText.contains(MainFrameComponentsText.Open.toString())){
+				if (currentJButtonText.contains(MainFrameComponentsText.OPEN.getUserFriendlyName())){
 					//do nothing
 				}else{
 					currentJButton.setEnabled(enabled);

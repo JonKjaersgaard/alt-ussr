@@ -18,45 +18,45 @@ import ussr.builder.enumerations.XMLTagsUsed;
 public enum SimulationTabTreeNodes {
 	
 	//First Level Hierarchy	
-	Simulation(PlaceInTreeView.FIRST,null,HintsSimulationTab.SIMULATION,XMLTagsUsed.SIMULATION),
+	SIMULATION(PlaceInTreeView.FIRST,null,HintsSimulationTab.SIMULATION,XMLTagsUsed.SIMULATION),
 	
 	//Second Level Hierarchy	
 	  //Often used
-	  Physics_simulation_step_size(PlaceInTreeView.SECOND,SimulationTreeEditors.addPhysicsSimulationStepSizeEditor(),HintsSimulationTab.PHYSICS_SIMULATION_STEP_SIZE,XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE),
-	  Resolution_Factor(PlaceInTreeView.SECOND,SimulationTreeEditors.addResolutionFactorEditor(),HintsSimulationTab.RESOLUTION_FACTOR,XMLTagsUsed.RESOLUTION_FACTOR),
+	  PHYSICS_SIMULATION_STEP_SIZE(PlaceInTreeView.SECOND,SimulationTreeEditors.addPhysicsSimulationStepSizeEditor(),HintsSimulationTab.PHYSICS_SIMULATION_STEP_SIZE,XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE),
+	  RESOLUTION_FACTOR(PlaceInTreeView.SECOND,SimulationTreeEditors.addResolutionFactorEditor(),HintsSimulationTab.RESOLUTION_FACTOR,XMLTagsUsed.RESOLUTION_FACTOR),
 
 	   //Second Level Hierarchy
-	  Robots(PlaceInTreeView.SECOND,SimulationTreeEditors.addRobotsEditor(),HintsSimulationTab.ROBOTS,XMLTagsUsed.ROBOTS),
+	  ROBOTS(PlaceInTreeView.SECOND,SimulationTreeEditors.addRobotsEditor(),HintsSimulationTab.ROBOTS,XMLTagsUsed.ROBOTS),
 
 	  //Third Level Hierarchy
-	     Robot_Nr(PlaceInTreeView.NOT_USED,null,null,XMLTagsUsed.ROBOT_NR),
+	     ROBOT_NR(PlaceInTreeView.NOT_USED,null,null,XMLTagsUsed.ROBOT_NR),
      
 	  //Second Level Hierarchy
-	  World_description(PlaceInTreeView.SECOND,null,HintsSimulationTab.WORLD_DESCRIPTION,XMLTagsUsed.WORLD_DESCRIPTION), 
+	  WORLD_DESCRIPTION(PlaceInTreeView.SECOND,null,HintsSimulationTab.WORLD_DESCRIPTION,XMLTagsUsed.WORLD_DESCRIPTION), 
 	    //Third Level Hierarchy
-	    Plane_size(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneSizeEditor(),HintsSimulationTab.PLANE_SIZE,XMLTagsUsed.PLANE_SIZE),
-	    Plane_texture(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneTextureEditor(),HintsSimulationTab.PLANE_TEXTURE,XMLTagsUsed.PLANE_TEXTURE),
-	    Camera_position(PlaceInTreeView.THIRD,SimulationTreeEditors.addCameraPositionEditor(),HintsSimulationTab.CAMERA_POSITION,XMLTagsUsed.CAMERA_POSITION),
-	    The_world_is_flat(PlaceInTreeView.THIRD,SimulationTreeEditors.addTheWorldIsFlatEditor(),HintsSimulationTab.THE_WORLD_IS_FLAT,XMLTagsUsed.THE_WORLD_IS_FLAT),
-	    Has_background_scenery(PlaceInTreeView.THIRD,SimulationTreeEditors.addHasBackgroundSceneryEditor(),HintsSimulationTab.HAS_BACKGROUND_SCENERY,XMLTagsUsed.HAS_BACKGROUND_SCENERY),
-	    Has_heavy_obstacles(PlaceInTreeView.THIRD,SimulationTreeEditors.addHasHeavyObstaclesEditor(),HintsSimulationTab.HAS_HEAVY_OBSTACLES,XMLTagsUsed.HAS_HEAVY_OBSTACLES),
-	    Is_frame_grabbing_active(PlaceInTreeView.THIRD,SimulationTreeEditors.addIsFrameGrabbingActiveEditor(),HintsSimulationTab.IS_FRAME_GRABBING_ACTIVE,XMLTagsUsed.IS_FRAME_GRABBING_ACTIVE),
+	    PLANE_SIZE(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneSizeEditor(),HintsSimulationTab.PLANE_SIZE,XMLTagsUsed.PLANE_SIZE),
+	    PLANE_TEXTURE(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneTextureEditor(),HintsSimulationTab.PLANE_TEXTURE,XMLTagsUsed.PLANE_TEXTURE),
+	    CAMERA_POSITION(PlaceInTreeView.THIRD,SimulationTreeEditors.addCameraPositionEditor(),HintsSimulationTab.CAMERA_POSITION,XMLTagsUsed.CAMERA_POSITION),
+	    THE_WORLD_IS_FLAT(PlaceInTreeView.THIRD,SimulationTreeEditors.addTheWorldIsFlatEditor(),HintsSimulationTab.THE_WORLD_IS_FLAT,XMLTagsUsed.THE_WORLD_IS_FLAT),
+	    HAS_BACKGROUND_SCENERY(PlaceInTreeView.THIRD,SimulationTreeEditors.addHasBackgroundSceneryEditor(),HintsSimulationTab.HAS_BACKGROUND_SCENERY,XMLTagsUsed.HAS_BACKGROUND_SCENERY),
+	    HAS_HEAVY_OBSTACLES(PlaceInTreeView.THIRD,SimulationTreeEditors.addHasHeavyObstaclesEditor(),HintsSimulationTab.HAS_HEAVY_OBSTACLES,XMLTagsUsed.HAS_HEAVY_OBSTACLES),
+	    IS_FRAME_GRABBING_ACTIVE(PlaceInTreeView.THIRD,SimulationTreeEditors.addIsFrameGrabbingActiveEditor(),HintsSimulationTab.IS_FRAME_GRABBING_ACTIVE,XMLTagsUsed.IS_FRAME_GRABBING_ACTIVE),
 
 	  //Second Level Hierarchy    
-	  Physics_parameters(PlaceInTreeView.SECOND,null,HintsSimulationTab.PHYSICS_PARAMETERS,XMLTagsUsed.PHYSICS_PARAMETERS),
+	  PHYSICS_PARAMETERS(PlaceInTreeView.SECOND,null,HintsSimulationTab.PHYSICS_PARAMETERS,XMLTagsUsed.PHYSICS_PARAMETERS),
 	    //Third Level Hierarchy
-	    Damping(PlaceInTreeView.THIRD,SimulationTreeEditors.addDampingEditor(),HintsSimulationTab.DAMPING,XMLTagsUsed.DAMPING),
+	    DAMPING(PlaceInTreeView.THIRD,SimulationTreeEditors.addDampingEditor(),HintsSimulationTab.DAMPING,XMLTagsUsed.DAMPING),
 	            //Linear_velocity(PlaceInTreeView.NOT_USED,null,nullXMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY),
 	            //Angular_velocity(PlaceInTreeView.NOT_USED,null,XMLTagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY),	            
-	    Realistic_collision(PlaceInTreeView.THIRD,SimulationTreeEditors.addRealisticCollisionEditor(),HintsSimulationTab.REALISTIC_COLLISION,XMLTagsUsed.REALISTIC_COLLISION),
-	    Gravity(PlaceInTreeView.THIRD,SimulationTreeEditors.addGravityEditor(),HintsSimulationTab.GRAVITY,XMLTagsUsed.GRAVITY),
-	    Plane_material(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneMaterialEditor(),HintsSimulationTab.PLANE_MATERIAL,XMLTagsUsed.PLANE_MATERIAL),
-	    Maintain_rotational_joint_positions(PlaceInTreeView.THIRD,SimulationTreeEditors.addMaintainRotationalJointPositionsEditor(),HintsSimulationTab.MAINTAIN_ROTATIONAL_JOINT_POSITIONS,XMLTagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS),
-	    Constraint_force_mixing(PlaceInTreeView.THIRD,SimulationTreeEditors.addConstraintForceMixEditor(),HintsSimulationTab.CONSTRAINT_FORCE_MIXING,XMLTagsUsed.CONSTRAINT_FORCE_MIX),
-	    Error_reduction_parameter(PlaceInTreeView.THIRD,SimulationTreeEditors.addErrorReductionParameterEditor(),HintsSimulationTab.ERROR_REDUCTION_PARAMETER,XMLTagsUsed.ERROR_REDUCTION_PARAMETER),
-	    Use_module_event_queue(PlaceInTreeView.THIRD,SimulationTreeEditors.addUseModuleEventQueueEditor(),HintsSimulationTab.USE_MODULE_EVENT_QUEUE,XMLTagsUsed.USE_MODULE_EVENT_QUEUE),
-	    Synchronize_with_controllers(PlaceInTreeView.THIRD,SimulationTreeEditors.addSynchronizeWithControllersEditor(),HintsSimulationTab.SYNCHRONIZE_WITH_CONTROLLERS,XMLTagsUsed.SYNC_WITH_CONTROLLERS),
-	    Physics_simulation_controller_step_factor(PlaceInTreeView.THIRD,SimulationTreeEditors.addPhysicsSimulationControllerStepFactor(),HintsSimulationTab.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR,XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR)
+	    REALISTIC_COLLISION(PlaceInTreeView.THIRD,SimulationTreeEditors.addRealisticCollisionEditor(),HintsSimulationTab.REALISTIC_COLLISION,XMLTagsUsed.REALISTIC_COLLISION),
+	    GRAVITY(PlaceInTreeView.THIRD,SimulationTreeEditors.addGravityEditor(),HintsSimulationTab.GRAVITY,XMLTagsUsed.GRAVITY),
+	    PLANE_MATERIAL(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneMaterialEditor(),HintsSimulationTab.PLANE_MATERIAL,XMLTagsUsed.PLANE_MATERIAL),
+	    MAINTAIN_ROTATIONAL_JOINT_POSITIONS(PlaceInTreeView.THIRD,SimulationTreeEditors.addMaintainRotationalJointPositionsEditor(),HintsSimulationTab.MAINTAIN_ROTATIONAL_JOINT_POSITIONS,XMLTagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS),
+	    CONSTRAINT_FORCE_MIXING(PlaceInTreeView.THIRD,SimulationTreeEditors.addConstraintForceMixEditor(),HintsSimulationTab.CONSTRAINT_FORCE_MIXING,XMLTagsUsed.CONSTRAINT_FORCE_MIX),
+	    ERROR_REDUCTION_PARAMETER(PlaceInTreeView.THIRD,SimulationTreeEditors.addErrorReductionParameterEditor(),HintsSimulationTab.ERROR_REDUCTION_PARAMETER,XMLTagsUsed.ERROR_REDUCTION_PARAMETER),
+	    USE_MODULE_EVENT_QUEUE(PlaceInTreeView.THIRD,SimulationTreeEditors.addUseModuleEventQueueEditor(),HintsSimulationTab.USE_MODULE_EVENT_QUEUE,XMLTagsUsed.USE_MODULE_EVENT_QUEUE),
+	    SYHCNRONIZE_WITH_CONTROLLERS(PlaceInTreeView.THIRD,SimulationTreeEditors.addSynchronizeWithControllersEditor(),HintsSimulationTab.SYNCHRONIZE_WITH_CONTROLLERS,XMLTagsUsed.SYNC_WITH_CONTROLLERS),
+	    PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR(PlaceInTreeView.THIRD,SimulationTreeEditors.addPhysicsSimulationControllerStepFactor(),HintsSimulationTab.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR,XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR)
 	  ;
 
 	 /**
@@ -143,11 +143,18 @@ public enum SimulationTabTreeNodes {
 	}
 	
 	/**
-	 * Returns the name of chosen enumeration with underscore replaced with space.
-	 * @return the name of chosen enumeration with underscore replaced with space.
+	 * Returns the name of chosen enumeration with changes in it such that Java convention for constants(upper case) is replaced wit lower and
+	 * underscore is replaced with space.
+	 * @return the name of chosen enumeration with changes in it such that Java convention for constants(upper case) is replaced wit lower and
+	 * underscore is replaced with space.
 	 */
 	public String getUserFriendlyName(){
-		return this.toString().replace("_", " ");
+		char[] characters = this.toString().replace("_", " ").toLowerCase().toCharArray();
+		String name = (characters[0]+"").toUpperCase();
+        for (int index =1;index<characters.length;index++){
+        	name = name+characters[index];
+        }		 
+		return name;
 	}
 	
 	/**

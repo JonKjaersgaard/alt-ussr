@@ -148,9 +148,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
         /*Description of components*/
 		jMenuBarMain.setPreferredSize(new Dimension(width,height));
 		
-		jMenuFile.setText(MainFrameComponentsText.File.getUserFriendlyName());
+		jMenuFile.setText(MainFrameComponentsText.FILE.getUserFriendlyName());
 
-		jMenuItemOpen.setText(MainFrameComponentsText.Open.getUserFriendlyName());
+		jMenuItemOpen.setText(MainFrameComponentsText.OPEN.getUserFriendlyName());
 		jMenuItemOpen.setIcon(MainFrameIcons.OPEN_SMALL.getImageIcon());
 		jMenuItemOpen.setDisabledIcon(MainFrameIcons.OPEN_SMALL_DISABLED.getImageIcon());		
 		jMenuItemOpen.addActionListener(new java.awt.event.ActionListener() {
@@ -163,7 +163,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		jMenuFile.add(jSeparator2);
 
-		jMenuItemSave.setText(MainFrameComponentsText.Save.getUserFriendlyName());
+		jMenuItemSave.setText(MainFrameComponentsText.SAVE.getUserFriendlyName());
 		jMenuItemSave.setIcon(MainFrameIcons.SAVE_SMALL.getImageIcon());
 		jMenuItemSave.setDisabledIcon(MainFrameIcons.SAVE_SMALL_DISABLED.getImageIcon());	
 		jMenuItemSave.addActionListener(new java.awt.event.ActionListener() {
@@ -176,7 +176,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		jMenuFile.add(jSeparator1);
 		
-		jMenuItemExit.setText(MainFrameComponentsText.Exit.getUserFriendlyName());
+		jMenuItemExit.setText(MainFrameComponentsText.EXIT.getUserFriendlyName());
 		jMenuItemExit.setIcon(MainFrameIcons.EXIT_SMALL.getImageIcon());		
 		jMenuItemExit.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,9 +187,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		jMenuBarMain.add(jMenuFile);
 
-		jMenuRender.setText(MainFrameComponentsText.Render.getUserFriendlyName());
+		jMenuRender.setText(MainFrameComponentsText.RENDERER.getUserFriendlyName());
 		jCheckBoxMenuItemPhysics.setSelected(false);
-		jCheckBoxMenuItemPhysics.setText(MainFrameComponentsText.Physics.getUserFriendlyName());
+		jCheckBoxMenuItemPhysics.setText(MainFrameComponentsText.PHYSICS.getUserFriendlyName());
 		jCheckBoxMenuItemPhysics.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemPhysicsActionPerformed(jCheckBoxMenuItemPhysics);
@@ -198,7 +198,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuRender.add(jCheckBoxMenuItemPhysics);
 
 		jCheckBoxMenuItemWireFrame.setSelected(false);
-		jCheckBoxMenuItemWireFrame.setText(MainFrameComponentsText.Wire_frame.getUserFriendlyName());
+		jCheckBoxMenuItemWireFrame.setText(MainFrameComponentsText.WIRE_FRAME.getUserFriendlyName());
 		jCheckBoxMenuItemWireFrame.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemWireFrameActionPerformed(jCheckBoxMenuItemWireFrame);
@@ -207,7 +207,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuRender.add(jCheckBoxMenuItemWireFrame);
 
 		jCheckBoxMenuBounds.setSelected(false);
-		jCheckBoxMenuBounds.setText(MainFrameComponentsText.Bounds.getUserFriendlyName());
+		jCheckBoxMenuBounds.setText(MainFrameComponentsText.BOUNDS.getUserFriendlyName());
 		jCheckBoxMenuBounds.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuBoundsActionPerformed(jCheckBoxMenuBounds);
@@ -216,7 +216,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuRender.add(jCheckBoxMenuBounds);
 
 		jCheckBoxMenuItemNormals.setSelected(false);
-		jCheckBoxMenuItemNormals.setText(MainFrameComponentsText.Normals.getUserFriendlyName());
+		jCheckBoxMenuItemNormals.setText(MainFrameComponentsText.NORMALS.getUserFriendlyName());
 		jCheckBoxMenuItemNormals.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemNormalsActionPerformed(jCheckBoxMenuItemNormals);
@@ -225,7 +225,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuRender.add(jCheckBoxMenuItemNormals);
 
 		jCheckBoxMenuItemLights.setSelected(false);
-		jCheckBoxMenuItemLights.setText(MainFrameComponentsText.Lights.getUserFriendlyName());
+		jCheckBoxMenuItemLights.setText(MainFrameComponentsText.LIGHTS.getUserFriendlyName());
 		jCheckBoxMenuItemLights.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemLightsActionPerformed(jCheckBoxMenuItemLights);
@@ -234,7 +234,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuRender.add(jCheckBoxMenuItemLights);
 
 		jCheckBoxMenuBufferDepth.setSelected(false);
-		jCheckBoxMenuBufferDepth.setText(MainFrameComponentsText.Buffer_depth.getUserFriendlyName());
+		jCheckBoxMenuBufferDepth.setText(MainFrameComponentsText.BUFFER_DEPTH.getUserFriendlyName());
 		jCheckBoxMenuBufferDepth.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuBufferDepthActionPerformed(jCheckBoxMenuBufferDepth);
@@ -245,11 +245,11 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		jMenuBarMain.add(jMenuRender);		
 		
-		jMenuWindow.setText(MainFrameComponentsText.Window.getUserFriendlyName());	
+		jMenuWindow.setText(MainFrameComponentsText.WINDOW.getUserFriendlyName());	
 		
-		jMenuHide.setText(MainFrameComponentsText.Hide.getUserFriendlyName());
+		jMenuHide.setText(MainFrameComponentsText.HIDE.getUserFriendlyName());
 		
-		jCheckBoxMenuItemInteraction.setText(MainFrameComponentsText.Interaction.getUserFriendlyName());
+		jCheckBoxMenuItemInteraction.setText(MainFrameComponentsText.INTERACTION.getUserFriendlyName());
 		jCheckBoxMenuItemInteraction.setSelected(false);
 		jCheckBoxMenuItemInteraction.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,7 +259,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jMenuHide.add(jCheckBoxMenuItemInteraction);
 		
-		jCheckBoxMenuItemDebugging.setText(MainFrameComponentsText.Debugging.getUserFriendlyName());
+		jCheckBoxMenuItemDebugging.setText(MainFrameComponentsText.DEBUGGING.getUserFriendlyName());
 		jCheckBoxMenuItemDebugging.setSelected(false);
 		jCheckBoxMenuItemDebugging.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -271,7 +271,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		
 		//jMenuHide.add(jSeparator3);
 		
-		jCheckBoxMenuItemDisplayForHints.setText(MainFrameComponentsText.Display_for_hints.getUserFriendlyName());
+		jCheckBoxMenuItemDisplayForHints.setText(MainFrameComponentsText.DISPLAY_FOR_HINTS.getUserFriendlyName());
 		jCheckBoxMenuItemDisplayForHints.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemDisplayForHintsActionPerformed(jCheckBoxMenuItemDisplayForHints);
@@ -317,7 +317,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToolBarGeneralControl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.setRollover(true);
 		jToolBarGeneralControl.setFloatable(false);
-		jToolBarGeneralControl.setToolTipText(MainFrameComponentsText.General_control.getUserFriendlyName());
+		jToolBarGeneralControl.setToolTipText(MainFrameComponentsText.GENERAL_CONTROL.getUserFriendlyName());
 		jToolBarGeneralControl.setPreferredSize(new Dimension(width,height));
 
 		/*Instantiation of components*/
@@ -346,7 +346,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		//jToolBarSeparator3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jToolBarSeparator3);
 		
-		jButtonRunRealTime.setToolTipText(MainFrameComponentsText.Run_real_time.getUserFriendlyName());		
+		jButtonRunRealTime.setToolTipText(MainFrameComponentsText.RUN_REAL_TIME.getUserFriendlyName());		
 		jButtonRunRealTime.setIcon(MainFrameIcons.RUN_REAL_TIME.getImageIcon());
 		jButtonRunRealTime.setRolloverIcon(MainFrameIcons.RUN_REAL_TIME_ROLLOVER.getImageIcon());		
 		jButtonRunRealTime.setDisabledIcon(MainFrameIcons.RUN_REAL_TIME_DISABLED.getImageIcon());		
@@ -359,7 +359,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jButtonRunRealTime);
 
-		jButtonRunFast.setToolTipText(MainFrameComponentsText.Run_fast.getUserFriendlyName());
+		jButtonRunFast.setToolTipText(MainFrameComponentsText.RUN_FAST.getUserFriendlyName());
 		jButtonRunFast.setIcon(MainFrameIcons.RUN_FAST.getImageIcon());		
 		jButtonRunFast.setRolloverIcon(MainFrameIcons.RUN_FAST_ROLLOVER.getImageIcon());
 		jButtonRunFast.setDisabledIcon(MainFrameIcons.RUN_FAST_DISABLED.getImageIcon());		
@@ -372,7 +372,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jButtonRunFast);
 
-		jButtonRunStepByStep.setToolTipText(MainFrameComponentsText.Run_step_by_step.getUserFriendlyName());
+		jButtonRunStepByStep.setToolTipText(MainFrameComponentsText.RUN_STEP_BY_STEP.getUserFriendlyName());
 		jButtonRunStepByStep.setIcon(MainFrameIcons.RUN_STEP_BY_STEP.getImageIcon());				
 		jButtonRunStepByStep.setRolloverIcon(MainFrameIcons.RUN_STEP_BY_STEP_ROLLOVER.getImageIcon());
 	    jButtonRunStepByStep.setDisabledIcon(MainFrameIcons.RUN_STEP_BY_STEP_DISABLED.getImageIcon());		
@@ -387,7 +387,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jButtonRunStepByStep);
 
-		jButtonPause.setToolTipText(MainFrameComponentsText.Pause.getUserFriendlyName());
+		jButtonPause.setToolTipText(MainFrameComponentsText.PAUSE.getUserFriendlyName());
 		jButtonPause.setIcon(MainFrameIcons.PAUSE.getImageIcon());
 		jButtonPause.setRolloverIcon(MainFrameIcons.PAUSE_ROLLOVER.getImageIcon());
 		jButtonPause.setDisabledIcon(MainFrameIcons.PAUSE_DISABLED.getImageIcon());	
@@ -400,7 +400,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jButtonPause);
 
-		jButtonTerminate.setToolTipText(MainFrameComponentsText.Terminate.getUserFriendlyName());
+		jButtonTerminate.setToolTipText(MainFrameComponentsText.TERMINATE.getUserFriendlyName());
 		jButtonTerminate.setIcon(MainFrameIcons.TERMINATE.getImageIcon());
 		jButtonTerminate.setRolloverIcon(MainFrameIcons.TERMINATE_ROLLOVER.getImageIcon());		
 		jButtonTerminate.setDisabledIcon(MainFrameIcons.TERMINATE_DISABLED.getImageIcon());
@@ -413,7 +413,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jButtonTerminate);
 		
-		jButtonRestart.setToolTipText(MainFrameComponentsText.Restart.getUserFriendlyName());
+		jButtonRestart.setToolTipText(MainFrameComponentsText.RESTART.getUserFriendlyName());
 		jButtonRestart.setIcon(MainFrameIcons.RESTART.getImageIcon());
 		jButtonRestart.setRolloverIcon(MainFrameIcons.RESTART_ROLLOVER.getImageIcon());		
 		jButtonRestart.setDisabledIcon(MainFrameIcons.RESTART_DISABLED.getImageIcon());
@@ -429,7 +429,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		//jToolBarSeparator4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jToolBarSeparator4);
 
-		jToggleButtonConstructRobot.setToolTipText(MainFrameComponentsText.Construct_robot.getUserFriendlyName());
+		jToggleButtonConstructRobot.setToolTipText(MainFrameComponentsText.CONSTRUCT_ROBOT.getUserFriendlyName());
 		jToggleButtonConstructRobot.setIcon(MainFrameIcons.CONSTRUCT_ROBOT.getImageIcon());
 		jToggleButtonConstructRobot.setSelectedIcon(MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageIcon());
 		jToggleButtonConstructRobot.setRolloverIcon(MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageIcon());
@@ -444,7 +444,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jToggleButtonConstructRobot);	
 		
-		jToggleButtonVisualizer.setToolTipText(MainFrameComponentsText.Visualize_communication_of_modules.getUserFriendlyName());
+		jToggleButtonVisualizer.setToolTipText(MainFrameComponentsText.VISUALIZE_COMMUNICATION_OF_MODULES.getUserFriendlyName());
 		jToggleButtonVisualizer.setIcon(MainFrameIcons.VISUALIZER.getImageIcon());
 		jToggleButtonVisualizer.setSelectedIcon(MainFrameIcons.VISUALIZER_ROLLOVER.getImageIcon());		
 		jToggleButtonVisualizer.setRolloverIcon(MainFrameIcons.VISUALIZER_ROLLOVER.getImageIcon());
@@ -462,7 +462,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		//jToolBarSeparator5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jToolBarSeparator5);
 		
-		jToggleButtonMaximizeInteraction.setToolTipText(MainFrameComponentsText.Hide_debugging.getUserFriendlyName());
+		jToggleButtonMaximizeInteraction.setToolTipText(MainFrameComponentsText.HIDE_DEBUGGING.getUserFriendlyName());
 		jToggleButtonMaximizeInteraction.setIcon(MainFrameIcons.TABBED_PANES.getImageIcon());
 		jToggleButtonMaximizeInteraction.setRolloverIcon(MainFrameIcons.INTERACTION_MAXIMIZED.getImageIcon());
 		jToggleButtonMaximizeInteraction.setSelectedIcon(MainFrameIcons.INTERACTION_MAXIMIZED.getImageIcon()); 
@@ -479,7 +479,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		
 		jToolBarGeneralControl.add(jToggleButtonMaximizeInteraction);
 		
-		jToggleButtonMaximizeDebugging.setToolTipText(MainFrameComponentsText.Hide_interaction.getUserFriendlyName());
+		jToggleButtonMaximizeDebugging.setToolTipText(MainFrameComponentsText.HIDE_INTERACTION.getUserFriendlyName());
 		jToggleButtonMaximizeDebugging.setIcon(MainFrameIcons.TABBED_PANES.getImageIcon());
 		jToggleButtonMaximizeDebugging.setRolloverIcon(MainFrameIcons.DEBUGGING_MAXIMIZED.getImageIcon());
 		jToggleButtonMaximizeDebugging.setSelectedIcon(MainFrameIcons.DEBUGGING_MAXIMIZED.getImageIcon());
@@ -528,7 +528,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	public static javax.swing.JButton initSaveButton(final FileChooserFrameInter fcSaveFrame ){
 		jButtonSave = new javax.swing.JButton();		
-		jButtonSave.setToolTipText(MainFrameComponentsText.Save.getUserFriendlyName());		
+		jButtonSave.setToolTipText(MainFrameComponentsText.SAVE.getUserFriendlyName());		
 		jButtonSave.setIcon(MainFrameIcons.SAVE.getImageIcon());
 		jButtonSave.setRolloverIcon(MainFrameIcons.SAVE_ROLLOVER.getImageIcon());
 		jButtonSave.setDisabledIcon(MainFrameIcons.SAVE_DISABLED.getImageIcon());		
@@ -551,7 +551,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	public static javax.swing.JButton  initOpenButton(final FileChooserFrameInter fcOpenFrame){
 		jButtonOpen = new javax.swing.JButton();
-		jButtonOpen.setToolTipText(MainFrameComponentsText.Open.getUserFriendlyName());
+		jButtonOpen.setToolTipText(MainFrameComponentsText.OPEN.getUserFriendlyName());
 		
 		jButtonOpen.setIcon(MainFrameIcons.OPEN.getImageIcon());
 		jButtonOpen.setRolloverIcon(MainFrameIcons.OPEN_ROLLOVER.getImageIcon());		

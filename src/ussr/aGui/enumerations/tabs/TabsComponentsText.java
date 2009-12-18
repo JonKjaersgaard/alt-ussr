@@ -11,42 +11,42 @@ public enum TabsComponentsText {
 	/*CONSTRUCT ROBOT TAB*/
 	
 	/*METHOD: setText()*/
-	Start_new_robot,
+	START_NEW_ROBOT,
 	
-	Edit_value,
+	EDIT_VALUE,
 	
-	Add_and_adjust_first_module,
+	ADD_AND_ADJUST_FIRST_MODULE,
 	
-	Operations_on_existing,
+	OPERATIONS_ON_EXISTING,
 	
-	Add_new_modules,
-	Change_module_type,
+	ADD_NEW_MODULES,
+	CHANGE_MODULE_TYPE,
 	
 	/*METHOD: setToolTipText()*/
-	General_control,
+	GENERAL_CONTROL,
 	
-	Choose_supported_modular_robot,
+	CHOOSE_SUPPORTED_MODULAR_ROBOT,
 	
-	Start_constructing_new_robot,
-	Adjust_module_properties,
+	START_CONSTRUCTING_NEW_ROBOT,
+	ADJUST_MODULE_PROPERTIES,
 	
-	Rotate_opposite,
-	Available_rotations,
-	Standard_rotations,
+	ROTATE_OPPOSITE,
+	AVAILABLE_ROTATIONS,
+	STANDARD_ROTATIONS,
 	
-	Generic_tools,
-	Operations_for_changing_module_type, 
+	GENERIC_TOOLS,
+	OPERATIONS_FOR_CHANGING_MODULE_TYPE, 
 	
-	Move_module,
-	Delete_or_Remove,
-	Color_module_connectors,
-	Vary_module_type_or_properties,
+	MOVE_MODULE,
+	DELETE_OR_REMOVE,
+	COLOR_MODULE_CONNECTORS,
+	VARY_MODULE_TYPE_OR_PROPERTIES,
 	
-	Addition_of_new_modules,
-	On_selected_connector,
-	On_chosen_connector_number,	
-	On_all_connectors,
-	Jump_from_connector_to_connector,
+	ADDITION_OF_NEW_MODULES,
+	ON_SELECTED_CONNECTOR,
+	ON_CHOSEN_CONNECTOR_NUMBER,	
+	ON_ALL_CONNECTORS,
+	JUMP_FROM_CONNECTOR_TO_CONNECTOR,
 	
 	/*ASSIGN BEHAVIOR(CONTROLLER) TAB*/
 		
@@ -64,12 +64,19 @@ public enum TabsComponentsText {
 	;
 	
 	 /**
-     * Returns user friendly name of the constant, where underscore is replaced with space.
-	  * @return user friendly name of the constant, where underscore is replaced with space.
-	  */
-    public String getUserFriendlyName(){
-   	 return this.toString().replace("_", " ");
-    }
+ 	 * Returns the name of chosen enumeration with changes in it such that Java convention for constants(upper case) is replaced wit lower and
+ 	 * underscore is replaced with space.
+ 	 * @return the name of chosen enumeration with changes in it such that Java convention for constants(upper case) is replaced wit lower and
+ 	 * underscore is replaced with space.
+ 	 */
+ 	public String getUserFriendlyName(){
+ 		char[] characters = this.toString().replace("_", " ").toLowerCase().toCharArray();
+ 		String name = (characters[0]+"").toUpperCase();
+         for (int index =1;index<characters.length;index++){
+         	name = name+characters[index];
+         }		 
+ 		return name;
+ 	}
 	
 	
 }

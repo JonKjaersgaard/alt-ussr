@@ -108,7 +108,7 @@ public class SimulationTab extends Tabs {
 		super.jComponent.add(jScrollPaneTreeSimulation,gridBagConstraints);
 
 		TitledBorder displayTitle;
-		displayTitle = BorderFactory.createTitledBorder(TabsComponentsText.Edit_value.getUserFriendlyName());
+		displayTitle = BorderFactory.createTitledBorder(TabsComponentsText.EDIT_VALUE.getUserFriendlyName());
 		displayTitle.setTitleJustification(TitledBorder.CENTER);
 		jPanelEditor.setBorder(displayTitle);
 		jPanelEditor.setVisible(false);
@@ -177,18 +177,18 @@ public class SimulationTab extends Tabs {
 	public static void addRobotNode(SimulationSpecification simulationSpecification){
 		int nrRobotsInSimulation = simulationSpecification.getRobotsInSimulation().size();
 		
-		DefaultMutableTreeNode robotsNode = SimulationTabTreeNodes.Robots.getDefaultMutableTreeNode();
+		DefaultMutableTreeNode robotsNode = SimulationTabTreeNodes.ROBOTS.getDefaultMutableTreeNode();
 		if (firstTime){
 			firstTime=false;
 			for (int robotNr=1;robotNr<nrRobotsInSimulation+1;robotNr++){
-				DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(SimulationTabTreeNodes.Robot_Nr.getUserFriendlyName()+"."+robotNr);
+				DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(SimulationTabTreeNodes.ROBOT_NR.getUserFriendlyName()+"."+robotNr);
 				robotsNode.add(thirdNodeHierarchyRobot);
 				//secondNodeHierarchyRobots.add(thirdNodeHierarchyRobot);
 				robotNumber =robotNr;
 			}
 		}else{
 			robotNumber++;
-			DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(SimulationTabTreeNodes.Robot_Nr.getUserFriendlyName()+"."+robotNumber);
+			DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(SimulationTabTreeNodes.ROBOT_NR.getUserFriendlyName()+"."+robotNumber);
         	DefaultTreeModel model = (DefaultTreeModel)jTreeSimulation.getModel();
         	model.insertNodeInto(thirdNodeHierarchyRobot, robotsNode, robotsNode.getChildCount());	
 		}

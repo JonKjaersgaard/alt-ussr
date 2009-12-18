@@ -12,34 +12,41 @@ public enum MainFrameComponentsText {
 	/*METHOD: setText()*/
 	
 	     /*JMenues*/
-	     File,Render,Window,
+	     FILE,RENDERER,WINDOW,
 	
 	     /*JMenuItems*/
 	       //File Menu 
-	       Open,Save,Exit, 
+	       OPEN,SAVE,EXIT, 
            //Render Menu
-	       Physics, Wire_frame, Bounds,Normals, Lights,Buffer_depth, 
+	       PHYSICS, WIRE_FRAME, BOUNDS,NORMALS, LIGHTS,BUFFER_DEPTH, 
 	       // Window Menu                  
-	       Hide, Interaction,Debugging,Display_for_hints,
+	       HIDE, INTERACTION,DEBUGGING,DISPLAY_FOR_HINTS,
 	       
 	/*METHOD: setToolTipText()*/
 	
 	      /*JToolBars*/
-	       General_control,
+	       GENERAL_CONTROL,
 	
 	      /*JButtons*/
-	      Run_real_time, Run_fast, Run_step_by_step,Pause,Terminate,Restart,
-	      Construct_robot,Visualize_communication_of_modules,Hide_interaction,Hide_debugging,
+	      RUN_REAL_TIME, RUN_FAST, RUN_STEP_BY_STEP,PAUSE,TERMINATE,RESTART,
+	      CONSTRUCT_ROBOT,VISUALIZE_COMMUNICATION_OF_MODULES,HIDE_INTERACTION,HIDE_DEBUGGING,
 	      
 	      /*JTabbedPanes*/
 	      //Interaction_with_simulation, 
 	     
 	    ; 
 	     /**
-	      * Returns user friendly name of the constant, where underscore is replaced with space.
-		  * @return user friendly name of the constant, where underscore is replaced with space.
-		  */
-	     public String getUserFriendlyName(){
-	    	 return this.toString().replace("_", " ");
-	     }
+	 	 * Returns the name of chosen enumeration with changes in it such that Java convention for constants(upper case) is replaced wit lower and
+	 	 * underscore is replaced with space.
+	 	 * @return the name of chosen enumeration with changes in it such that Java convention for constants(upper case) is replaced wit lower and
+	 	 * underscore is replaced with space.
+	 	 */
+	 	public String getUserFriendlyName(){
+	 		char[] characters = this.toString().replace("_", " ").toLowerCase().toCharArray();
+	 		String name = (characters[0]+"").toUpperCase();
+	         for (int index =1;index<characters.length;index++){
+	         	name = name+characters[index];
+	         }		 
+	 		return name;
+	 	}
 	}

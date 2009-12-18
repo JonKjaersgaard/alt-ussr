@@ -60,7 +60,7 @@ public class SimulationTabController extends TabsControllers {
 		
 		
 
-		if (selectedNode.contains("Robot Nr.")){
+		if (selectedNode.contains("Robot nr.")){
 			SimulationTab.getJPanelEditor().add(SimulationTab.createNewLabel(selectedNode),gridBagConstraints);
 			
 			gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -71,7 +71,7 @@ public class SimulationTabController extends TabsControllers {
 			
 			//SimulationTab.addRobotEditor();
 		}else{
-			SimulationTabTreeNodes treeNode = SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_"));
+			SimulationTabTreeNodes treeNode = SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_").toUpperCase());
 			
 			
 			SimulationTab.getJPanelEditor().add(SimulationTab.createNewLabel(treeNode.getUserFriendlyName()),gridBagConstraints);
