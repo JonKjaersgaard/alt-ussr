@@ -141,9 +141,5 @@ public enum TabsIcons {
 	 */
 	public String getImageName() {
 		return imageName;
-	}
-	
-	
-	
-	
+	}	
 }

@@ -33,5 +33,13 @@ public enum MainFrameComponentsText {
 	      
 	      /*JTabbedPanes*/
 	      //Interaction_with_simulation, 
-	      ; 
+	     
+	    ; 
+	     /**
+	      * Returns user friendly name of the constant, where underscore is replaced with space.
+		  * @return user friendly name of the constant, where underscore is replaced with space.
+		  */
+	     public String getUserFriendlyName(){
+	    	 return this.toString().replace("_", " ");
+	     }
 	}

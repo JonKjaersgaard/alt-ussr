@@ -8,7 +8,11 @@ import ussr.builder.enumerations.XMLTagsUsed;
 
 /**
  * Contains the names of nodes displayed in Simulation tab tree view.
- * Moreover, associates each name with the tag used during saving/or loading of simulation(also robot).
+ * Moreover, associates each name with its: 1)placement in the tree view (for instance: FIRST- is parent of SECOND - which in turn is parent of THIRD),
+ * 2) Call for editor displayed in GUI, 3) Call for hint displayed in Display for hints and 4) XML tag used to save and load simulation.
+ * 
+ * NOTE: If you want to add new node, just define it here by defining each of above elements.
+ * 
  * @author Konstantinas 
  */
 public enum SimulationTabTreeNodes {
@@ -26,8 +30,7 @@ public enum SimulationTabTreeNodes {
 
 	  //Third Level Hierarchy
 	     Robot_Nr(PlaceInTreeView.NOT_USED,null,null,XMLTagsUsed.ROBOT_NR),
-      
-
+     
 	  //Second Level Hierarchy
 	  World_description(PlaceInTreeView.SECOND,null,HintsSimulationTab.WORLD_DESCRIPTION,XMLTagsUsed.WORLD_DESCRIPTION), 
 	    //Third Level Hierarchy
@@ -56,69 +59,96 @@ public enum SimulationTabTreeNodes {
 	    Physics_simulation_controller_step_factor(PlaceInTreeView.THIRD,SimulationTreeEditors.addPhysicsSimulationControllerStepFactor(),HintsSimulationTab.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR,XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR)
 	  ;
 
+	 /**
+     *  The placement of tree node in the tree view.
+     */
+    private PlaceInTreeView placeInHierarchy;
+    
+    /**
+     * The panel defining visual appearance of edit value part of GUI(SimulationTab)
+     */
+    private javax.swing.JPanel jPanelEditor;
+    
 	/**
-	 * The tag used in xml file saving/loading
+	 * The tag used in xml file saving/loading.
 	 */
 	private XMLTagsUsed xmlTagsUsed;
 	
     /**
-     * 
+     * The hint displayed in display for hits.
      */
-    private PlaceInTreeView placeInHierarchy;
+    private HintsSimulationTab hintSimulationTab; 
 
-    /**
-     * 
+	/**
+     *  The tree node as defined in implementation of tree view.
      */
     private DefaultMutableTreeNode defaultMutableTreeNode;
-    
-    private javax.swing.JPanel jPanelEditor;
-    
-    private HintsSimulationTab hint; 
-
-
-
-	public HintsSimulationTab getHint() {
-		return hint;
-	}
-
-
-
-	public javax.swing.JPanel getJPanelEditor() {
-		return jPanelEditor;
-	}
-	
-
 
 	/**
 	 * Contains the names of nodes displayed in Simulation tab tree view.
-     * Moreover, associates each name with the tag used during saving/or loading of simulation(also robot).
-	 * @param xmlTagsUsed,The tag used in xml file saving/loading
+     * Moreover, associates each name with its: 1)placement in the tree view (for instance: FIRST- is parent of SECOND - which in turn is parent of THIRD),
+     * 2) Call for editor displayed in GUI, 3) Call for hint displayed in Display for hints and 4) XML tag used to save and load simulation.
+     * 
+     * NOTE: If you want to add new node, just define it here by defining each of above values.
+	 * @param placeInHierarchy, the placement of tree node in the tree view.
+	 * @param jPanelEditor, the panel defining visual appearance of edit value part of GUI(SimulationTab).
+	 * @param hintSimulationTab, the hint displayed in display for hits.
+	 * @param xmlTagsUsed, the tag used in xml file saving/loading.
 	 */
-	SimulationTabTreeNodes(PlaceInTreeView placeInHierarchy,javax.swing.JPanel jPanelEditor, HintsSimulationTab hint,XMLTagsUsed xmlTagsUsed){
+	SimulationTabTreeNodes(PlaceInTreeView placeInHierarchy,javax.swing.JPanel jPanelEditor, HintsSimulationTab hintSimulationTab,XMLTagsUsed xmlTagsUsed){
 		this.placeInHierarchy = placeInHierarchy;
 		this.jPanelEditor = jPanelEditor;
-		this.hint =hint;
+		this.hintSimulationTab =hintSimulationTab;
 		this.xmlTagsUsed=xmlTagsUsed;
 	}
 	
+	/**
+	 * Returns the placement of tree node in the tree view.
+	 * @return the placement of tree node in the tree view.
+	 */
 	public PlaceInTreeView getPlaceInHierarchy() {
 		return placeInHierarchy;
 	}
 	
+	/**
+	 * Returns the hint displayed in display for hits.
+	 * @return the hint displayed in display for hits.
+	 */
+	public HintsSimulationTab getHintSimulationTab() {
+		return hintSimulationTab;
+	}
+
+	/**
+	 * Returns the panel defining visual appearance of edit value part of GUI(SimulationTab).
+	 * @return the panel defining visual appearance of edit value part of GUI(SimulationTab).
+	 */
+	public javax.swing.JPanel getJPanelEditor() {
+		return jPanelEditor;
+	}
+	
+	/**
+	 * Returns the tree node as defined in implementation of tree view.
+	 * @return the tree node as defined in implementation of tree view.
+	 */
 	public DefaultMutableTreeNode getDefaultMutableTreeNode() {
 		return defaultMutableTreeNode;
 	}
 
-
-
+	/**
+	 * Sets the tree node as defined in implementation of tree view.
+	 * @param defaultMutableTreeNode, the tree node as defined in implementation of tree view.
+	 */
 	public void setDefaultMutableTreeNode(DefaultMutableTreeNode defaultMutableTreeNode) {
 		this.defaultMutableTreeNode = defaultMutableTreeNode;
 	}
 	
-	public String getName(){
+	/**
+	 * Returns the name of chosen enumeration with underscore replaced with space.
+	 * @return the name of chosen enumeration with underscore replaced with space.
+	 */
+	public String getUserFriendlyName(){
 		return this.toString().replace("_", " ");
 	}
-	
 	
 	/**
 	 * The constants for placement of tree nodes in the tree view (hierarchical structure).
@@ -129,7 +159,7 @@ public enum SimulationTabTreeNodes {
 		SECOND,// second in the hierarchy (or child of the first)
 		THIRD ,// third in the hierarchy (or child of the second)
 		
-		NOT_USED ,//Keyword for nodes not used directly in the tree view or used
+		NOT_USED ,//Keyword for nodes not used directly in the tree view
 	}
  
 }

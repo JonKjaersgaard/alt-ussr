@@ -1,39 +1,26 @@
 package ussr.aGui.tabs.controllers;
 
-import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.rmi.RemoteException;
-import java.util.Map;
 
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.border.TitledBorder;
 
-
-import ussr.aGui.MainFramesInter;
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
-import ussr.aGui.enumerations.tabs.SimulationTabComponentsText;
 import ussr.aGui.enumerations.tabs.SimulationTabTreeNodes;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.enumerations.tabs.TextureDescriptions;
-import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.aGui.tabs.simulation.SimulationTreeEditors;
-import ussr.builder.helpers.StringProcessingHelper;
 import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.description.geometry.VectorDescription;
-import ussr.description.setup.ModulePosition;
 import ussr.physics.PhysicsParameters;
-import ussr.remote.facade.SimulationTabControlInter;
 
 
 
@@ -75,12 +62,19 @@ public class SimulationTabController extends TabsControllers {
 
 		if (selectedNode.contains("Robot Nr.")){
 			SimulationTab.getJPanelEditor().add(SimulationTab.createNewLabel(selectedNode),gridBagConstraints);
-			SimulationTab.addRobotEditor();
+			
+			gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+			gridBagConstraints.gridx =0;
+			gridBagConstraints.gridy =1;
+			
+			SimulationTab.getJPanelEditor().add(SimulationTreeEditors.addRobotEditor(),gridBagConstraints);
+			
+			//SimulationTab.addRobotEditor();
 		}else{
 			SimulationTabTreeNodes treeNode = SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_"));
 			
 			
-			SimulationTab.getJPanelEditor().add(SimulationTab.createNewLabel(treeNode.getName()),gridBagConstraints);
+			SimulationTab.getJPanelEditor().add(SimulationTab.createNewLabel(treeNode.getUserFriendlyName()),gridBagConstraints);
 			if (treeNode.getJPanelEditor()==null){
 			// do nothing
 			}else{	
@@ -91,7 +85,7 @@ public class SimulationTabController extends TabsControllers {
 		    
 		    SimulationTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 		    SimulationTab.getHintPanel().setText(" ");
-		    SimulationTab.getHintPanel().setText(treeNode.getHint().getHintText());
+		    SimulationTab.getHintPanel().setText(treeNode.getHintSimulationTab().getHintText());
 			}
 		}
 		SimulationTab.getJPanelEditor().validate();

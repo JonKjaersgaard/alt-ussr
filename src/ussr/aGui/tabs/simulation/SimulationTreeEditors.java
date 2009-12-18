@@ -4,29 +4,27 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
-
 import ussr.aGui.FramesInter;
-import ussr.aGui.MainFrameSeparateController;
-import ussr.aGui.enumerations.tabs.SimulationTabComponentsText;
-import ussr.aGui.enumerations.tabs.SimulationTabTreeNodes;
+import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.enumerations.tabs.TextureDescriptions;
-import ussr.aGui.fileChooser.views.FileChooserFrameInter;
-import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.builder.helpers.StringProcessingHelper;
 import ussr.description.setup.WorldDescription.CameraPosition;
 import ussr.physics.PhysicsParameters;
 
+/**
+ * Contains methods for defining visual appearance of edit value panel in Simulation Tab for each
+ * node in tree view. 
+ * 
+ * NOTE: each method is creating new panel, which is later added into  panel with title edit value.
+ * @author Konstantinas
+ *
+ */
 public class SimulationTreeEditors{
 	/**
 	 * Defines visual appearance of editor panel(edit value) for tree node called Robots.
@@ -34,7 +32,7 @@ public class SimulationTreeEditors{
 	 */
 	public static javax.swing.JPanel  addRobotsEditor(){
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
-		jPanelTreeNode.add(SimulationTab.createNewLabel("Load new robot"));
+		jPanelTreeNode.add(SimulationTab.createNewLabel(TabsComponentsText.Load_new_robot.getUserFriendlyName()));
 		jPanelTreeNode.add(Tabs.initOpenButton());
 		return jPanelTreeNode;
 	}
@@ -71,11 +69,11 @@ public class SimulationTreeEditors{
 
 		GridBagConstraints gridBagConstraintsMoveRobot = new GridBagConstraints();
 		TitledBorder displayTitle1;
-		displayTitle1 = BorderFactory.createTitledBorder("New position");
+		displayTitle1 = BorderFactory.createTitledBorder(TabsComponentsText.New_position.getUserFriendlyName());
 		displayTitle1.setTitleJustification(TitledBorder.CENTER);
 		jPanelMoveRobot.setBorder(displayTitle1);
 		
-		jButtonYpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_up));
+		jButtonYpositive.setToolTipText(TabsComponentsText.Move_up.getUserFriendlyName());
 		jButtonYpositive.setIcon(TabsIcons.Y_POSITIVE_BIG.getImageIcon());
 		jButtonYpositive.setRolloverIcon(TabsIcons.Y_POSITIVE_ROLLOVER_BIG.getImageIcon());					
 		jButtonYpositive.setFocusable(false);		
@@ -92,7 +90,7 @@ public class SimulationTreeEditors{
 		jPanelMoveRobot.add(jButtonYpositive,gridBagConstraintsMoveRobot);
 
 
-		jButtonXnegative.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_left));
+		jButtonXnegative.setToolTipText(TabsComponentsText.Move_left.getUserFriendlyName());
 		jButtonXnegative.setIcon(TabsIcons.X_NEGATIVE_BIG.getImageIcon());	
 		jButtonXnegative.setRolloverIcon(TabsIcons.X_NEGATIVE_ROLLOVER_BIG.getImageIcon());			
 		jButtonXnegative.setFocusable(false);		
@@ -107,7 +105,7 @@ public class SimulationTreeEditors{
 		gridBagConstraintsMoveRobot.gridy = 1;	
 		jPanelMoveRobot.add(jButtonXnegative,gridBagConstraintsMoveRobot);
 
-		jButtonZpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_closer));
+		jButtonZpositive.setToolTipText(TabsComponentsText.Move_closer.getUserFriendlyName());
 		jButtonZpositive.setIcon(TabsIcons.Z_POSITIVE_BIG.getImageIcon());	
 		jButtonZpositive.setRolloverIcon(TabsIcons.Z_POSITIVE_ROLLOVER_BIG.getImageIcon());		
 		jButtonZpositive.setFocusable(false);		
@@ -138,7 +136,7 @@ public class SimulationTreeEditors{
 
 		jPanelMoveRobot.add(jSpinnerCoordinateValue,gridBagConstraintsMoveRobot);
 
-		jButtonZnegative.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_away));
+		jButtonZnegative.setToolTipText(TabsComponentsText.Move_away.getUserFriendlyName());
 		jButtonZnegative.setIcon(TabsIcons.Z_NEGATIVE_BIG.getImageIcon());				
 		jButtonZnegative.setRolloverIcon(TabsIcons.Z_NEGATIVE_ROLLOVER_BIG.getImageIcon());	
 		jButtonZnegative.setFocusable(false);		
@@ -154,7 +152,7 @@ public class SimulationTreeEditors{
 		jPanelMoveRobot.add(jButtonZnegative,gridBagConstraintsMoveRobot);
 
 
-		jButtonXpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_right));
+		jButtonXpositive.setToolTipText(TabsComponentsText.Move_right.getUserFriendlyName());
 		jButtonXpositive.setIcon(TabsIcons.X_POSITIVE_BIG.getImageIcon());	
 		jButtonXpositive.setRolloverIcon(TabsIcons.X_POSITIVE_ROLLOVER_BIG.getImageIcon());		
 		jButtonXpositive.setFocusable(false);		
@@ -171,7 +169,7 @@ public class SimulationTreeEditors{
 
 
 
-		jButtonYnegative.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_down));
+		jButtonYnegative.setToolTipText(TabsComponentsText.Move_down.getUserFriendlyName());
 		jButtonYnegative.setIcon(TabsIcons.Y_NEGATIVE_BIG.getImageIcon());	
 		jButtonYnegative.setRolloverIcon(TabsIcons.Y_NEGATIVE_ROLLOVER_BIG.getImageIcon());		
 		jButtonYnegative.setFocusable(false);		

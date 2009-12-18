@@ -13,6 +13,8 @@ public enum TabsComponentsText {
 	/*METHOD: setText()*/
 	Start_new_robot,
 	
+	Edit_value,
+	
 	Add_and_adjust_first_module,
 	
 	Operations_on_existing,
@@ -50,6 +52,24 @@ public enum TabsComponentsText {
 		
 	/*METHOD: setToolTipText()*/
 	Filter_out_for,
+	
+	/*Simulation Tab*/
+	Load_new_robot,
+	
+	New_position,
+	//for moving modular robot
+	Move_up, Move_down,
+	Move_left, Move_right,
+	Move_closer, Move_away,
+	;
+	
+	 /**
+     * Returns user friendly name of the constant, where underscore is replaced with space.
+	  * @return user friendly name of the constant, where underscore is replaced with space.
+	  */
+    public String getUserFriendlyName(){
+   	 return this.toString().replace("_", " ");
+    }
 	
 	
 }

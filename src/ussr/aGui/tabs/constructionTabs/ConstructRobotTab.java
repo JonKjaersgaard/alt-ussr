@@ -105,7 +105,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		
 		/*Description of components */	
 		jToolBarGeneralControl.setBorder(FramesInter.TOOLBAR_BORDER);
-		jToolBarGeneralControl.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.General_control));
+		jToolBarGeneralControl.setToolTipText(TabsComponentsText.General_control.getUserFriendlyName());
 		jToolBarGeneralControl.setFloatable(false);//user can not make the tool bar to float
 		jToolBarGeneralControl.setRollover(true);// the components inside are roll over
 		jToolBarGeneralControl.setPreferredSize(new Dimension(375,FramesInter.HORIZONTAL_TOOLBAR_HEIGHT));
@@ -123,7 +123,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jButtonStartNewRobot.setSelectedIcon(TabsIcons.NEW_ROBOT.getImageIcon());
 		jButtonStartNewRobot.setRolloverIcon(TabsIcons.NEW_ROBOT_ROLLOVER.getImageIcon());
 		jButtonStartNewRobot.setDisabledIcon(TabsIcons.NEW_ROBOT_DISABLED.getImageIcon());
-		jButtonStartNewRobot.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Start_constructing_new_robot));
+		jButtonStartNewRobot.setToolTipText(TabsComponentsText.Start_constructing_new_robot.getUserFriendlyName());
 		jButtonStartNewRobot.setFocusable(false);
 		jButtonStartNewRobot.setPreferredSize(FramesInter.BUTTON_DIMENSION);
 		jButtonStartNewRobot.addActionListener(new java.awt.event.ActionListener() {
@@ -133,7 +133,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		});
 		jToolBarGeneralControl.add(jButtonStartNewRobot);
 		
-		jToggleButtonColorConnetors.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Color_module_connectors));
+		jToggleButtonColorConnetors.setToolTipText(TabsComponentsText.Color_module_connectors.getUserFriendlyName());
 		jToggleButtonColorConnetors.setIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
 		jToggleButtonColorConnetors.setSelectedIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
 		jToggleButtonColorConnetors.setRolloverIcon(TabsIcons.COLOR_CONNECTORS_ROLLOVER.getImageIcon());
@@ -151,7 +151,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		
 		super.jComponent.add(jToolBarGeneralControl,gridBagConstraints);
 		
-		jLabelFirstModule.setText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Add_and_adjust_first_module));
+		jLabelFirstModule.setText(TabsComponentsText.Add_and_adjust_first_module.getUserFriendlyName());
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 1;
@@ -163,7 +163,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		//jToolBarSupportedModularRobots.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarSupportedModularRobots.setFloatable(false);//user can not make the tool bar to float
 		jToolBarSupportedModularRobots.setRollover(true);// the components inside are roll over
-		jToolBarSupportedModularRobots.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Choose_supported_modular_robot));
+		jToolBarSupportedModularRobots.setToolTipText(TabsComponentsText.Choose_supported_modular_robot.getUserFriendlyName());
 		jToolBarSupportedModularRobots.setPreferredSize(new Dimension(275,FramesInter.HORIZONTAL_TOOLBAR_HEIGHT));
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;
@@ -225,7 +225,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jToolBarFirstModuleTools.setBorder(FramesInter.TOOLBAR_BORDER);
 		jToolBarFirstModuleTools.setFloatable(false);//user can not make the tool bar to float
 		jToolBarFirstModuleTools.setRollover(true);// the components inside are roll over
-		jToolBarFirstModuleTools.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Adjust_module_properties));
+		jToolBarFirstModuleTools.setToolTipText(TabsComponentsText.Adjust_module_properties.getUserFriendlyName());
 		jToolBarFirstModuleTools.setPreferredSize(new Dimension(100,35));
 
 		/*External layout of the toolbar in the panel*/
@@ -235,7 +235,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		gridBagConstraints.gridwidth =2;
 		gridBagConstraints.insets = new Insets(0,0,0,0); 
 		
-		jButtonMoveModule.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Move_module));	
+		jButtonMoveModule.setToolTipText(TabsComponentsText.Move_module.getUserFriendlyName());	
 		jButtonMoveModule.setIcon(TabsIcons.MOVE.getImageIcon());
 		jButtonMoveModule.setSelectedIcon(TabsIcons.MOVE.getImageIcon());
 		jButtonMoveModule.setRolloverIcon(TabsIcons.MOVE_ROLLOVER.getImageIcon());		
@@ -250,7 +250,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 			}
 		});
 
-		jButtonAvailableRotationsLoop.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Available_rotations));
+		jButtonAvailableRotationsLoop.setToolTipText(TabsComponentsText.Available_rotations.getUserFriendlyName());
 		jButtonAvailableRotationsLoop.setIcon(TabsIcons.AVAILABLE_ROTATIONS.getImageIcon());
 		jButtonAvailableRotationsLoop.setRolloverIcon(TabsIcons.AVAILABLE_ROTATIONS_ROLLOVER.getImageIcon());
 		jButtonAvailableRotationsLoop.setSelectedIcon(TabsIcons.AVAILABLE_ROTATIONS_SELECTED.getImageIcon());
@@ -265,7 +265,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 			}
 		});
 
-		jComboBoxStandardRotations.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Standard_rotations));
+		jComboBoxStandardRotations.setToolTipText(TabsComponentsText.Standard_rotations.getUserFriendlyName());
 		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 		jComboBoxStandardRotations.setPreferredSize(new java.awt.Dimension(140, 30));
 		jComboBoxStandardRotations.setEnabled(false);
@@ -303,7 +303,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 
 		super.jComponent.add(jToolBarFirstModuleTools,gridBagConstraints);
 		
-		jLabelAddNewModules.setText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Add_new_modules));	
+		jLabelAddNewModules.setText(TabsComponentsText.Add_new_modules.getUserFriendlyName());	
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 4;
@@ -313,7 +313,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jToolBarConstructionTools.setBorder(FramesInter.TOOLBAR_BORDER);
 		jToolBarConstructionTools.setFloatable(false);//user can not make the tool bar to float
 		jToolBarConstructionTools.setRollover(true);// the buttons inside are roll over
-		jToolBarConstructionTools.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Addition_of_new_modules));
+		jToolBarConstructionTools.setToolTipText(TabsComponentsText.Addition_of_new_modules.getUserFriendlyName());
 		jToolBarConstructionTools.setPreferredSize(new Dimension(195,35));		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 1;		
@@ -321,7 +321,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		gridBagConstraints.gridwidth = 2;
 		gridBagConstraints.insets = new Insets(20,0,0,0); 
 
-		jButtonOnSelectedConnector.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.On_selected_connector));
+		jButtonOnSelectedConnector.setToolTipText(TabsComponentsText.On_selected_connector.getUserFriendlyName());
 		jButtonOnSelectedConnector.setIcon(TabsIcons.ON_SELECTED_CONNECTOR.getImageIcon());
 		jButtonOnSelectedConnector.setSelectedIcon(TabsIcons.ON_SELECTED_CONNECTOR_ROLLOVER.getImageIcon());
 		jButtonOnSelectedConnector.setRolloverIcon(TabsIcons.ON_SELECTED_CONNECTOR_ROLLOVER.getImageIcon());
@@ -336,7 +336,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 			}
 		});	
 
-		jButtonConnectAllModules.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.On_all_connectors));
+		jButtonConnectAllModules.setToolTipText(TabsComponentsText.On_all_connectors.getUserFriendlyName());
 		jButtonConnectAllModules.setIcon(TabsIcons.CONNECT_ALL_MODULES.getImageIcon());
 		jButtonConnectAllModules.setSelectedIcon(TabsIcons.CONNECT_ALL_MODULES_ROLLOVER.getImageIcon());
 		jButtonConnectAllModules.setRolloverIcon(TabsIcons.CONNECT_ALL_MODULES_ROLLOVER.getImageIcon());
@@ -351,7 +351,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 			}
 		});	
 
-		jButtonJumpFromConnToConnector.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Jump_from_connector_to_connector));		
+		jButtonJumpFromConnToConnector.setToolTipText(TabsComponentsText.Jump_from_connector_to_connector.getUserFriendlyName());		
 		jButtonJumpFromConnToConnector.setIcon(TabsIcons.JUMP_FROM_CON_TO_CON.getImageIcon());
 		jButtonJumpFromConnToConnector.setSelectedIcon(TabsIcons.JUMP_FROM_CON_TO_CON_ROLLOVER.getImageIcon());
 		jButtonJumpFromConnToConnector.setRolloverIcon(TabsIcons.JUMP_FROM_CON_TO_CON_ROLLOVER.getImageIcon());
@@ -366,7 +366,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 			}
 		});	
 
-		jComboBoxNrConnectorsConstructionTool.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.On_chosen_connector_number));
+		jComboBoxNrConnectorsConstructionTool.setToolTipText(TabsComponentsText.On_chosen_connector_number.getUserFriendlyName());
 		jComboBoxNrConnectorsConstructionTool.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 		jComboBoxNrConnectorsConstructionTool.setPreferredSize(new java.awt.Dimension(60, 26));
 		jComboBoxNrConnectorsConstructionTool.setEnabled(false);
@@ -411,7 +411,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		);
 		super.jComponent.add(jToolBarConstructionTools,gridBagConstraints);
 		
-		jLabelChangeModuleType.setText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Change_module_type));	
+		jLabelChangeModuleType.setText(TabsComponentsText.Change_module_type.getUserFriendlyName());	
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 5;
@@ -423,13 +423,13 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jToolBarChangeModuleType.setBorder(FramesInter.TOOLBAR_BORDER);
 		jToolBarChangeModuleType.setFloatable(false);//user can not make the tool bar to float
 		jToolBarChangeModuleType.setRollover(true);// the buttons inside are roll over
-		jToolBarChangeModuleType.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Operations_for_changing_module_type));
+		jToolBarChangeModuleType.setToolTipText(TabsComponentsText.Operations_for_changing_module_type.getUserFriendlyName());
 		jToolBarChangeModuleType.setPreferredSize(new Dimension(195,30));
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 5;
 		gridBagConstraints.gridwidth =2;
 		
-		jButtonVariateModuleProperties.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Vary_module_type_or_properties));
+		jButtonVariateModuleProperties.setToolTipText(TabsComponentsText.Vary_module_type_or_properties.getUserFriendlyName());
 		jButtonVariateModuleProperties.setIcon(TabsIcons.VARY_PROPERTIES.getImageIcon());
 		jButtonVariateModuleProperties.setSelectedIcon(TabsIcons.VARY_PROPERTIES.getImageIcon());
 		jButtonVariateModuleProperties.setRolloverIcon(TabsIcons.VARY_PROPERTIES_ROLLOVER.getImageIcon());		
@@ -448,7 +448,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		
 		super.jComponent.add(jToolBarChangeModuleType,gridBagConstraints);	
 		
-		jLabelOperations.setText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Operations_on_existing));
+		jLabelOperations.setText(TabsComponentsText.Operations_on_existing.getUserFriendlyName());
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 6;
@@ -476,7 +476,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jToolBarGenericTools.setBorder(FramesInter.TOOLBAR_BORDER);
 		jToolBarGenericTools.setFloatable(false);//user can not make the tool bar to float
 		jToolBarGenericTools.setRollover(true);// the buttons inside are roll over
-		jToolBarGenericTools.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Generic_tools));
+		jToolBarGenericTools.setToolTipText(TabsComponentsText.Generic_tools.getUserFriendlyName());
 		jToolBarGenericTools.setPreferredSize(new Dimension(125,30));		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 2;		
@@ -484,7 +484,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		gridBagConstraints.gridwidth = 2;
 		//gridBagConstraints.insets = new Insets(8,3,10,18);  
 
-		jButtonDelete.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Delete_or_Remove));
+		jButtonDelete.setToolTipText(TabsComponentsText.Delete_or_Remove.getUserFriendlyName());
 		jButtonDelete.setIcon(TabsIcons.DELETE.getImageIcon());
 		jButtonDelete.setSelectedIcon(TabsIcons.DELETE.getImageIcon());
 		jButtonDelete.setRolloverIcon(TabsIcons.DELETE_ROLLOVER.getImageIcon());		
@@ -500,7 +500,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		});
 		jToolBarGenericTools.add(jButtonDelete);		
 		
-		jButtonOppositeRotation.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Rotate_opposite));		
+		jButtonOppositeRotation.setToolTipText(TabsComponentsText.Rotate_opposite.getUserFriendlyName());		
 		jButtonOppositeRotation.setIcon(TabsIcons.OPPOSITE_ROTATION.getImageIcon());
 		jButtonOppositeRotation.setSelectedIcon(TabsIcons.OPPOSITE_ROTATION_ROLLOVER.getImageIcon());
 		jButtonOppositeRotation.setRolloverIcon(TabsIcons.OPPOSITE_ROTATION_ROLLOVER.getImageIcon());	

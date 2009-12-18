@@ -87,7 +87,7 @@ public class AssignBehaviorsTab extends ConstructionTabs{
 		jToolBarFilterForModularRobot.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Filter out for:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));		
 		jToolBarFilterForModularRobot.setFloatable(false);//user can not make the tool bar to float
 		jToolBarFilterForModularRobot.setRollover(true);// the buttons inside are roll over
-		jToolBarFilterForModularRobot.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(TabsComponentsText.Filter_out_for));
+		jToolBarFilterForModularRobot.setToolTipText(TabsComponentsText.Filter_out_for.getUserFriendlyName());
 		jToolBarFilterForModularRobot.setPreferredSize(new Dimension(jToolBar1Width,J_LIST_HEIGHT-50));
 		jToolBarFilterForModularRobot.setOrientation(JToolBar.VERTICAL);		
 

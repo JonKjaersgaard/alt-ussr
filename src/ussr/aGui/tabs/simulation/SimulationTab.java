@@ -19,8 +19,8 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import ussr.aGui.FramesInter;
-import ussr.aGui.enumerations.tabs.SimulationTabComponentsText;
 import ussr.aGui.enumerations.tabs.SimulationTabTreeNodes;
+import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
 import ussr.aGui.helpers.hintPanel.HintPanel;
@@ -29,8 +29,6 @@ import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.builder.helpers.StringProcessingHelper;
 import ussr.builder.simulationLoader.SimulationSpecification;
-
-
 
 /**
  * Defines visual appearance of the tab called Simulation.
@@ -110,7 +108,7 @@ public class SimulationTab extends Tabs {
 		super.jComponent.add(jScrollPaneTreeSimulation,gridBagConstraints);
 
 		TitledBorder displayTitle;
-		displayTitle = BorderFactory.createTitledBorder(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Edit_value));
+		displayTitle = BorderFactory.createTitledBorder(TabsComponentsText.Edit_value.getUserFriendlyName());
 		displayTitle.setTitleJustification(TitledBorder.CENTER);
 		jPanelEditor.setBorder(displayTitle);
 		jPanelEditor.setVisible(false);
@@ -144,17 +142,17 @@ public class SimulationTab extends Tabs {
 			SimulationTabTreeNodes currentNode = SimulationTabTreeNodes.values()[index];
 			switch(currentNode.getPlaceInHierarchy()){
 			case FIRST:
-				firstNodeHierarchySimulation = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(currentNode));
+				firstNodeHierarchySimulation = new DefaultMutableTreeNode(currentNode.getUserFriendlyName());
 				//set default mutable tree node for future easier reference.
 				currentNode.setDefaultMutableTreeNode(firstNodeHierarchySimulation);
 			break;
 			case SECOND:
-				secondNodeHierarchy = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(currentNode));
+				secondNodeHierarchy = new DefaultMutableTreeNode(currentNode.getUserFriendlyName());
 				currentNode.setDefaultMutableTreeNode(secondNodeHierarchy);
 				firstNodeHierarchySimulation.add(secondNodeHierarchy);
 				break;
 			case THIRD:
-				thirdNodeHierarchy = new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(currentNode));
+				thirdNodeHierarchy = new DefaultMutableTreeNode(currentNode.getUserFriendlyName());
 				currentNode.setDefaultMutableTreeNode(thirdNodeHierarchy);
 				secondNodeHierarchy.add(thirdNodeHierarchy);
 				break;
@@ -183,14 +181,14 @@ public class SimulationTab extends Tabs {
 		if (firstTime){
 			firstTime=false;
 			for (int robotNr=1;robotNr<nrRobotsInSimulation+1;robotNr++){
-				DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Robot_Nr)+"."+robotNr);
+				DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(SimulationTabTreeNodes.Robot_Nr.getUserFriendlyName()+"."+robotNr);
 				robotsNode.add(thirdNodeHierarchyRobot);
 				//secondNodeHierarchyRobots.add(thirdNodeHierarchyRobot);
 				robotNumber =robotNr;
 			}
 		}else{
 			robotNumber++;
-			DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabTreeNodes.Robot_Nr)+"."+robotNumber);
+			DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(SimulationTabTreeNodes.Robot_Nr.getUserFriendlyName()+"."+robotNumber);
         	DefaultTreeModel model = (DefaultTreeModel)jTreeSimulation.getModel();
         	model.insertNodeInto(thirdNodeHierarchyRobot, robotsNode, robotsNode.getChildCount());	
 		}
@@ -199,146 +197,6 @@ public class SimulationTab extends Tabs {
 		jTreeSimulation.repaint();
 		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);
 	} 
-
-
-	public static void addRobotsEditor(){
-		jPanelEditor.add(createNewLabel("Load new robot "));
-		jPanelEditor.add(initOpenButton());
-	}
-
-
-
-	public static void addRobotEditor(){
-		//jPanelEditor.add(createNewLabel("Robot"));
-		jPanelMoveRobot = new javax.swing.JPanel(new GridBagLayout());
-		jButtonYpositive = new javax.swing.JButton();
-		jButtonYnegative = new javax.swing.JButton();
-		jButtonXpositive = new javax.swing.JButton();
-		jButtonXnegative = new javax.swing.JButton();
-		jButtonZpositive = new javax.swing.JButton();
-		jButtonZnegative = new javax.swing.JButton();
-		jSpinnerCoordinateValue = new javax.swing.JSpinner();
-
-		GridBagConstraints gridBagConstraintsMoveRobot = new GridBagConstraints();
-		TitledBorder displayTitle1;
-		displayTitle1 = BorderFactory.createTitledBorder("New position");
-		displayTitle1.setTitleJustification(TitledBorder.CENTER);
-		jPanelMoveRobot.setBorder(displayTitle1);
-		
-		jButtonYpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_up));
-		jButtonYpositive.setIcon(TabsIcons.Y_POSITIVE_BIG.getImageIcon());
-		jButtonYpositive.setRolloverIcon(TabsIcons.Y_POSITIVE_ROLLOVER_BIG.getImageIcon());					
-		jButtonYpositive.setFocusable(false);		
-		jButtonYpositive.setPreferredSize(new Dimension(45,30));
-		jButtonYpositive.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SimulationTabController.jButtonsCoordinateArrowsActionPerformed(jButtonYpositive);
-			}
-		});
-		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsMoveRobot.gridx = 1;
-		gridBagConstraintsMoveRobot.gridy = 0;	
-
-		jPanelMoveRobot.add(jButtonYpositive,gridBagConstraintsMoveRobot);
-
-
-		jButtonXnegative.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_left));
-		jButtonXnegative.setIcon(TabsIcons.X_NEGATIVE_BIG.getImageIcon());	
-		jButtonXnegative.setRolloverIcon(TabsIcons.X_NEGATIVE_ROLLOVER_BIG.getImageIcon());			
-		jButtonXnegative.setFocusable(false);		
-		jButtonXnegative.setPreferredSize(new Dimension(45,30));
-		jButtonXnegative.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SimulationTabController.jButtonsCoordinateArrowsActionPerformed(jButtonXnegative);
-			}
-		});
-		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsMoveRobot.gridx = 0;
-		gridBagConstraintsMoveRobot.gridy = 1;	
-		jPanelMoveRobot.add(jButtonXnegative,gridBagConstraintsMoveRobot);
-
-		jButtonZpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_closer));
-		jButtonZpositive.setIcon(TabsIcons.Z_POSITIVE_BIG.getImageIcon());	
-		jButtonZpositive.setRolloverIcon(TabsIcons.Z_POSITIVE_ROLLOVER_BIG.getImageIcon());		
-		jButtonZpositive.setFocusable(false);		
-		jButtonZpositive.setPreferredSize(FramesInter.BUTTON_DIMENSION);
-		jButtonZpositive.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SimulationTabController.jButtonsCoordinateArrowsActionPerformed(jButtonZpositive);
-			}
-		});
-		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsMoveRobot.gridx = 0;
-		gridBagConstraintsMoveRobot.gridy = 2;	
-		jPanelMoveRobot.add(jButtonZpositive,gridBagConstraintsMoveRobot);
-
-
-		jSpinnerCoordinateValue = new javax.swing.JSpinner();
-		jSpinnerCoordinateValue.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.1f), Float.valueOf(0.0f), Float.valueOf(100.0f), Float.valueOf(0.01f)));
-		jSpinnerCoordinateValue.setPreferredSize(new Dimension(45,30));
-		jSpinnerCoordinateValue.addChangeListener(new javax.swing.event.ChangeListener() {
-	            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-	              SimulationTabController.setjSpinnerCoordinateValue(Float.parseFloat(jSpinnerCoordinateValue.getValue().toString()));
-	            }
-	        });
-		
-		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsMoveRobot.gridx = 1;
-		gridBagConstraintsMoveRobot.gridy = 1;
-
-		jPanelMoveRobot.add(jSpinnerCoordinateValue,gridBagConstraintsMoveRobot);
-
-		jButtonZnegative.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_away));
-		jButtonZnegative.setIcon(TabsIcons.Z_NEGATIVE_BIG.getImageIcon());				
-		jButtonZnegative.setRolloverIcon(TabsIcons.Z_NEGATIVE_ROLLOVER_BIG.getImageIcon());	
-		jButtonZnegative.setFocusable(false);		
-		jButtonZnegative.setPreferredSize(new Dimension(45,30));
-		jButtonZnegative.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SimulationTabController.jButtonsCoordinateArrowsActionPerformed(jButtonZnegative);
-			}
-		});
-		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsMoveRobot.gridx = 2;
-		gridBagConstraintsMoveRobot.gridy = 0;	
-		jPanelMoveRobot.add(jButtonZnegative,gridBagConstraintsMoveRobot);
-
-
-		jButtonXpositive.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_right));
-		jButtonXpositive.setIcon(TabsIcons.X_POSITIVE_BIG.getImageIcon());	
-		jButtonXpositive.setRolloverIcon(TabsIcons.X_POSITIVE_ROLLOVER_BIG.getImageIcon());		
-		jButtonXpositive.setFocusable(false);		
-		jButtonXpositive.setPreferredSize(new Dimension(45,30));
-		jButtonXpositive.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SimulationTabController.jButtonsCoordinateArrowsActionPerformed(jButtonXpositive);
-			}
-		});
-		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsMoveRobot.gridx = 2;
-		gridBagConstraintsMoveRobot.gridy = 1;	
-		jPanelMoveRobot.add(jButtonXpositive,gridBagConstraintsMoveRobot);
-
-
-
-		jButtonYnegative.setToolTipText(StringProcessingHelper.replaceUnderscoreWithSpace(SimulationTabComponentsText.Move_down));
-		jButtonYnegative.setIcon(TabsIcons.Y_NEGATIVE_BIG.getImageIcon());	
-		jButtonYnegative.setRolloverIcon(TabsIcons.Y_NEGATIVE_ROLLOVER_BIG.getImageIcon());		
-		jButtonYnegative.setFocusable(false);		
-		jButtonYnegative.setPreferredSize(new Dimension(45,30));
-		jButtonYnegative.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SimulationTabController.jButtonsCoordinateArrowsActionPerformed(jButtonYnegative);
-			}
-		});
-		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsMoveRobot.gridx = 1;
-		gridBagConstraintsMoveRobot.gridy = 2;	
-		jPanelMoveRobot.add(jButtonYnegative,gridBagConstraintsMoveRobot);
-
-
-		jPanelEditor.add(jPanelMoveRobot);
-	}
 
 	public static javax.swing.JPanel getJPanelEditor() {
 
