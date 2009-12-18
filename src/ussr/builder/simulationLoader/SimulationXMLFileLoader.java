@@ -32,7 +32,7 @@ public class SimulationXMLFileLoader extends GenericSimulation {
 	
 	
 
-	private static SimulationDescriptionConverter descriptionConverter;
+	private static SimulationSpecificationConverter descriptionConverter;
 
 	
 	private SaveLoadXMLFileTemplateInter robotXMLLoader;
@@ -87,7 +87,7 @@ public class SimulationXMLFileLoader extends GenericSimulation {
         simulationSpecification = xmlLoaderSimulation.getSimulationSpecification();
       
         /*Converter for converting values from String into corresponding type used in USSR*/
-        descriptionConverter =  new SimulationDescriptionConverter(simulationSpecification.getSimWorldDecsriptionValues(),simulationSpecification.getSimPhysicsParameters()); 
+        descriptionConverter =  new SimulationSpecificationConverter(simulationSpecification.getSimWorldDecsriptionValues(),simulationSpecification.getSimPhysicsParameters()); 
         
         //String controllerLocation = robotDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
        // String controllerLocation = SimulationSpecification.robotsInSimulation.get(0).getControllerLocation();
@@ -128,7 +128,7 @@ public class SimulationXMLFileLoader extends GenericSimulation {
         //world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
 	}
 	
-	public static SimulationDescriptionConverter getDescriptionConverter() {
+	public static SimulationSpecificationConverter getDescriptionConverter() {
 		return descriptionConverter;
 	}
 

@@ -4,19 +4,33 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
-
 import ussr.builder.enumerations.XMLTagsUsed;
-import ussr.description.setup.WorldDescription;
 
+
+/**
+ * Is used as container for storing description of simulation. 
+ * @author Konstantinas
+ *
+ */
 public class SimulationSpecification implements Serializable {
 
+	/**
+	 * For storing robot descriptions extracted from XML and newly defined in GUI.
+	 */
 	private ArrayList<RobotSpecification> robotsInSimulation = new ArrayList<RobotSpecification>();
 	
 	
+	/**
+	 * Returns the robot descriptions extracted from XML and newly defined in GUI.
+	 * @return the robot descriptions extracted from XML and newly defined in GUI.
+	 */
 	public ArrayList<RobotSpecification> getRobotsInSimulation() {
 		return robotsInSimulation;
 	}
 
+	/**
+	 * 
+	 */
 	private Map<XMLTagsUsed, String> simWorldDecsriptionValues= new Hashtable<XMLTagsUsed, String>(),
 	                                 simPhysicsParameters = new Hashtable<XMLTagsUsed, String>();
 

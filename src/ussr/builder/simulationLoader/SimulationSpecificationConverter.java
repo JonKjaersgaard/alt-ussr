@@ -9,7 +9,7 @@ import ussr.description.setup.WorldDescription.CameraPosition;
 import ussr.description.setup.WorldDescription.TextureDescription;
 import ussr.physics.PhysicsParameters.Material;
 
-public class SimulationDescriptionConverter {
+public class SimulationSpecificationConverter {
 
 	private Map<XMLTagsUsed,String> simulationWorldDescription,simulationPhysicsParameters;
 	                              
@@ -17,7 +17,7 @@ public class SimulationDescriptionConverter {
    private Map<String,TextureDescription> containerPlaneTextureDesc = new Hashtable<String, TextureDescription>(); 
 
 
-	public SimulationDescriptionConverter (Map<XMLTagsUsed,String> simulationWorldDescription, Map<XMLTagsUsed,String> simulationPhysicsParameters){
+	public SimulationSpecificationConverter (Map<XMLTagsUsed,String> simulationWorldDescription, Map<XMLTagsUsed,String> simulationPhysicsParameters){
 		this.simulationWorldDescription= simulationWorldDescription;
 		this.simulationPhysicsParameters = simulationPhysicsParameters;
 		populateContainerTextureDesc ();

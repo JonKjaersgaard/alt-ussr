@@ -6,7 +6,7 @@ import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
-import ussr.builder.simulationLoader.SimulationDescriptionConverter;
+import ussr.builder.simulationLoader.SimulationSpecificationConverter;
 import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
@@ -77,7 +77,7 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		runSimulationFromXMLFile();	
 	}
 	
-	private static SimulationDescriptionConverter descriptionConverter ;
+	private static SimulationSpecificationConverter descriptionConverter ;
 	private static SimulationSpecification  simulationSpecification;
 	
 	private static void runSimulationFromXMLFile(){
@@ -94,7 +94,7 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		simulationSpecification = xmlLoaderSimulation.getSimulationSpecification();
 		
         /*Converter for converting values from String into corresponding type used in USSR*/
-         descriptionConverter =  new SimulationDescriptionConverter(simulationSpecification.getSimWorldDecsriptionValues(),simulationSpecification.getSimPhysicsParameters()); 
+         descriptionConverter =  new SimulationSpecificationConverter(simulationSpecification.getSimWorldDecsriptionValues(),simulationSpecification.getSimPhysicsParameters()); 
         
         /*Get and set values*/
         setPhysicsParatemeters(descriptionConverter);
@@ -102,7 +102,7 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 		simulation.runSimulation(null,true);
 	}
 	
-	private static void setPhysicsParatemeters(SimulationDescriptionConverter descriptionConverter){
+	private static void setPhysicsParatemeters(SimulationSpecificationConverter descriptionConverter){
 	      PhysicsParameters.get().setWorldDampingLinearVelocity(descriptionConverter.convertWorldDampingLinearVelocity());
 	        PhysicsParameters.get().setWorldDampingAngularVelocity(descriptionConverter.convertWorldDampingAngularVelocity());
 	        PhysicsParameters.get().setPhysicsSimulationStepSize(descriptionConverter.convertPhysicsSimulationStepSize());

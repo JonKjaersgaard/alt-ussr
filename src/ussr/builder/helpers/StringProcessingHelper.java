@@ -40,14 +40,6 @@ public class StringProcessingHelper {
 		return extractedValue; 
 	}
 
-	/**
-	 * Replaces underscore with space.
-	 * @param object, the object convertible to string. 
-	 * @return text without underscore. 
-	 */
-	public static String replaceUnderscoreWithSpace(Object text){
-		return text.toString().replace("_", " ");
-	}
 	
 	public static Integer convertToInteger(String string){
 		return Integer.parseInt(string);
