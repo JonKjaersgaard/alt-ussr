@@ -129,16 +129,21 @@ public class GUISimulationAdapter {
 		MainFrameSeparate.setMainFrameSeparateEnabled(true,true);
 		MainFrameSeparate.setMainFrameSeparateEnabled(false,true);
 		
+		 
 		
 		
-		SimulationTab.setTabVisible(true);
-		MainFrames.setJTabbedPaneFirstEnabled(true);
 		
+		 
          SimulationSpecification simulationSpecification = simulation.getXmlSimulationProvider().getSimulationSpecification();
          SimulationTab.addRobotNode(simulationSpecification);
          SimulationTabController.setSimulationSpecification(simulationSpecification);
          
+         
+         
          SimulationTreeEditors.update();
+         SimulationTab.setTabVisible(true);
+         
+        
 	}
 	
 	// FIXME USED TEMPORARY

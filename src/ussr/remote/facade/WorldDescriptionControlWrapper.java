@@ -33,14 +33,14 @@ public class WorldDescriptionControlWrapper extends UnicastRemoteObject implemen
 	}
 
 	/**
-	 *  Returns if the background/overhead have clouds etc.
+	 *  Returns whenever the background/overhead have clouds etc.
 	 */
 	public boolean hasBackgroundScenery()throws RemoteException{
 		return worldDescription.hasBackgroundScenery();
 	}
 	
 	/**
-     * Returns if light or heavy obstacles are set in simulation environment.
+     * Returns whenever light or heavy obstacles are set in simulation environment.
      */
 	public boolean hasHeavyObstacles()throws RemoteException{
 		return worldDescription.hasHeavyObstacles();
