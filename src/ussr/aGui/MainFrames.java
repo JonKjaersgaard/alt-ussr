@@ -68,8 +68,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		tabsSecondTabbedPane = new ArrayList<TabsInter>();
 		allTabs = new ArrayList<TabsInter>();
 
-		for (int tabNr=0; tabNr<Tabs.values().length;tabNr++){
-			TabsInter currentTab = Tabs.values()[tabNr].getTab(); /*ALL_TABS[tabNr]*/; 
+		for (int tabNr=0; tabNr<ALL_TABS.length;tabNr++){
+			TabsInter currentTab = ALL_TABS[tabNr];
 			if (currentTab.isFirstTabbedPane()){
 				tabsFirstTabbedPane.add(currentTab);	
 			}else {

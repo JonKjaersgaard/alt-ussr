@@ -1,4 +1,4 @@
-package ussr.aGui.enumerations.tabs;
+package ussr.aGui.tabs.simulation.enumerations;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -16,6 +16,8 @@ import ussr.builder.enumerations.XMLTagsUsed;
  * @author Konstantinas 
  */
 public enum SimulationTabTreeNodes {
+	
+	
 	
 	//First Level Hierarchy	
 	SIMULATION(PlaceInTreeView.FIRST,null,HintsSimulationTab.SIMULATION,XMLTagsUsed.SIMULATION),
@@ -45,7 +47,7 @@ public enum SimulationTabTreeNodes {
 	  //Second Level Hierarchy    
 	  PHYSICS_PARAMETERS(PlaceInTreeView.SECOND,null,HintsSimulationTab.PHYSICS_PARAMETERS,XMLTagsUsed.PHYSICS_PARAMETERS),
 	    //Third Level Hierarchy
-	    DAMPING(PlaceInTreeView.THIRD,SimulationTreeEditors.addDampingEditor(),HintsSimulationTab.DAMPING,XMLTagsUsed.DAMPING),
+	    WORLD_DAMPING(PlaceInTreeView.THIRD,SimulationTreeEditors.addDampingEditor(),HintsSimulationTab.DAMPING,XMLTagsUsed.DAMPING),
 	            //Linear_velocity(PlaceInTreeView.NOT_USED,null,nullXMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY),
 	            //Angular_velocity(PlaceInTreeView.NOT_USED,null,XMLTagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY),	            
 	    REALISTIC_COLLISION(PlaceInTreeView.THIRD,SimulationTreeEditors.addRealisticCollisionEditor(),HintsSimulationTab.REALISTIC_COLLISION,XMLTagsUsed.REALISTIC_COLLISION),
@@ -59,6 +61,18 @@ public enum SimulationTabTreeNodes {
 	    PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR(PlaceInTreeView.THIRD,SimulationTreeEditors.addPhysicsSimulationControllerStepFactor(),HintsSimulationTab.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR,XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR)
 	  ;
 
+	
+	/**
+	 * The constants for placement of tree nodes in the tree view (hierarchical structure).
+	 * @author Konstantinas
+	 */
+	public enum PlaceInTreeView{
+		FIRST,// first in the hierarchy (or root node)
+		SECOND,// second in the hierarchy (or child of the first)
+		THIRD ,// third in the hierarchy (or child of the second)
+		
+		NOT_USED ,//Keyword for nodes not used directly in the tree view
+	}
 	 /**
      *  The placement of tree node in the tree view.
      */
@@ -157,16 +171,6 @@ public enum SimulationTabTreeNodes {
 		return name;
 	}
 	
-	/**
-	 * The constants for placement of tree nodes in the tree view (hierarchical structure).
-	 * @author Konstantinas
-	 */
-	public enum PlaceInTreeView{
-		FIRST,// first in the hierarchy (or root node)
-		SECOND,// second in the hierarchy (or child of the first)
-		THIRD ,// third in the hierarchy (or child of the second)
-		
-		NOT_USED ,//Keyword for nodes not used directly in the tree view
-	}
+	
  
 }

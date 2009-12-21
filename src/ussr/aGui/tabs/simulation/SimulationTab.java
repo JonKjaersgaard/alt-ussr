@@ -19,7 +19,6 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import ussr.aGui.FramesInter;
-import ussr.aGui.enumerations.tabs.SimulationTabTreeNodes;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
@@ -27,6 +26,7 @@ import ussr.aGui.helpers.hintPanel.HintPanel;
 
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
+import ussr.aGui.tabs.simulation.enumerations.SimulationTabTreeNodes;
 import ussr.builder.helpers.StringProcessingHelper;
 import ussr.builder.simulationLoader.SimulationSpecification;
 

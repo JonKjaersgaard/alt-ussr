@@ -8,12 +8,14 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.TitledBorder;
 import ussr.aGui.FramesInter;
-import ussr.aGui.enumerations.tabs.CameraPositions;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
-import ussr.aGui.enumerations.tabs.TextureDescriptions;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
+import ussr.aGui.tabs.simulation.enumerations.CameraPositions;
+import ussr.aGui.tabs.simulation.enumerations.PhysicsParametersDefault;
+import ussr.aGui.tabs.simulation.enumerations.PlaneMaterials;
+import ussr.aGui.tabs.simulation.enumerations.TextureDescriptions;
 import ussr.builder.helpers.StringProcessingHelper;
 import ussr.description.setup.WorldDescription.CameraPosition;
 import ussr.physics.PhysicsParameters;
@@ -376,7 +378,7 @@ public class SimulationTreeEditors{
 	public static javax.swing.JPanel addPlaneMaterialEditor() {
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jComboBoxPlaneMaterial = new javax.swing.JComboBox(); 
-		jComboBoxPlaneMaterial.setModel(new DefaultComboBoxModel(PhysicsParameters.Material.values()));
+		jComboBoxPlaneMaterial.setModel(new DefaultComboBoxModel(PlaneMaterials.getAllInUserFriendlyFromat()));
 		jComboBoxPlaneMaterial.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SimulationTabController.jComboBoxPlaneMaterialActionPerformed(jComboBoxPlaneMaterial);
@@ -476,6 +478,7 @@ public class SimulationTreeEditors{
 	}
 
 	public static void update (){
+		
 		/*World Description*/
 		SimulationTabController.setJSpinnerPlaneSizeValue(jSpinnerPlaneSize);
 		SimulationTabController.setValuejSpinnerPhysicsSimulationStepSize(jSpinnerPhysicsSimulationStepSize);

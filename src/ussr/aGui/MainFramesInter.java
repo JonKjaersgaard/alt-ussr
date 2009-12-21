@@ -85,14 +85,14 @@ public interface MainFramesInter {
 	/**
 	 * Array of tabs plugged in the Main frame.
 	 */
-/*	public final TabsInter[] ALL_TABS = {
+	public final TabsInter[] ALL_TABS = {
 			                          CONSTRUCT_ROBOT_TAB,
 		                              ASSIGN_BEHAVIORS_TAB,		                             
 		                              MODULE_COMMUNICATION_VISUALIZER_TAB,
 		                              SIMULATION_CONFIGURATION_TAB,
 		                              CONSOLE_TAB,
-		                YOUR TAB  YOUR_TAB,
+		               /* YOUR TAB */ YOUR_TAB,
 		                              ASSIGN_LABELS_TAB
-		                                 };*/
+		                                 };
 	
 }

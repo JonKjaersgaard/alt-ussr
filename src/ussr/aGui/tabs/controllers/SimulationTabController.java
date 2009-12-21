@@ -12,12 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
-import ussr.aGui.enumerations.tabs.SimulationTabTreeNodes;
 import ussr.aGui.enumerations.tabs.TabsIcons;
-import ussr.aGui.enumerations.tabs.TextureDescriptions;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.aGui.tabs.simulation.SimulationTreeEditors;
+import ussr.aGui.tabs.simulation.enumerations.PlaneMaterials;
+import ussr.aGui.tabs.simulation.enumerations.SimulationTabTreeNodes;
+import ussr.aGui.tabs.simulation.enumerations.TextureDescriptions;
 import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.description.geometry.VectorDescription;
 import ussr.physics.PhysicsParameters;
@@ -311,14 +312,15 @@ public class SimulationTabController extends TabsControllers {
 	}
 
 	public static void jComboBoxPlaneTextureActionPerformed(JComboBox comboBoxPlaneTexture, JLabel iconLabel) {
-		String selectedTexture = TextureDescriptions.toJavaConvention(comboBoxPlaneTexture.getSelectedItem().toString());
+		String selectedTexture = TextureDescriptions.toJavaUSSRConvention(comboBoxPlaneTexture.getSelectedItem().toString());
 		iconLabel.setIcon(TextureDescriptions.valueOf(selectedTexture).getImageIcon());
 		
 	}
 
 	public static void setValuejComboBoxPlaneMaterial(JComboBox comboBoxPlaneMaterial) {
-		comboBoxPlaneMaterial.setSelectedItem(PhysicsParameters.get().getPlaneMaterial());
+		/*String nameMaterial = PlaneMaterials.toJavaUSSRConvention();*/
 		
+		comboBoxPlaneMaterial.setSelectedItem(PhysicsParameters.get().getPlaneMaterial());
 	}
 
 	public static void jComboBoxPlaneMaterialActionPerformed(JComboBox comboBoxPlaneMaterial) {

@@ -1,4 +1,4 @@
-package ussr.aGui.enumerations.tabs;
+package ussr.aGui.tabs.simulation.enumerations;
 
 import java.util.Vector;
 

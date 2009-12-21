@@ -1,4 +1,4 @@
-package ussr.aGui.enumerations.tabs;
+package ussr.aGui.tabs.simulation.enumerations;
 
 import java.util.Vector;
 
@@ -120,9 +120,8 @@ public enum TextureDescriptions {
  		return namesTetxtures.toArray();
  	}
  	
- 	public static String toJavaConvention(String textureName){
+ 	public static String toJavaUSSRConvention(String textureName){
  		return (textureName+ "TEXTURE").replace(" ", "_").toUpperCase(); 
- 		
  	}
 	
 	
