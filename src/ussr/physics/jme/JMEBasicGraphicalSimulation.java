@@ -1095,10 +1095,12 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		this.realtime = realtime;
 	}
 	
-
+	
 	public boolean showAllConnectors() {
 		return showAllConnectors;
-	}	
+	}
+	
+	
 }
 
 
