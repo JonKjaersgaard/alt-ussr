@@ -284,20 +284,16 @@ public class MainFrameSeparateController extends GeneralController {
 	 * Adds or removes tabs for construction of modular robot morphology.
 	 * @param jToggleButtonConstructRobot, the toggle button in main frame.
 	 * @param jTabbedPaneFirst, the tabbed pane used as container for construction tabs.
-	 * @param tabs, container of all tabs in main frame.
 	 */
-	public static void jButtonConstructRobotActionPerformed(JToggleButton jToggleButtonConstructRobot, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs ) {
+	public static void jButtonConstructRobotActionPerformed(JToggleButton jToggleButtonConstructRobot, JTabbedPane jTabbedPaneFirst) {
 
 		
 
 		if (jToggleButtonConstructRobot.isSelected()){
-			
-			//new SomeTabs(tabs, jTabbedPaneFirst).execute();
-			//TODO MOVE IN CONSTRUCTOR
-			/*Check if tabs are defined*/
-			TabsInter constructRobotTab = getTabByTitle(MainFramesInter.CONSTRUCT_ROBOT_TAB_TITLE,tabs);
-			TabsInter assignBehaviorsTab = getTabByTitle(MainFramesInter.ASSIGN_BEHAVIORS_TAB_TITLE,tabs);
-			TabsInter assignLabels = getTabByTitle(MainFramesInter.ASSIGN_LABELS_TAB_TITLE,tabs);
+						
+			TabsInter constructRobotTab = MainFramesInter.CONSTRUCT_ROBOT_TAB;
+			TabsInter assignBehaviorsTab = MainFramesInter.ASSIGN_BEHAVIORS_TAB;			
+			TabsInter assignLabels = MainFramesInter.ASSIGN_LABELS_TAB;
 			
 			/*Add tabs for construction of modular robot*/
 			jTabbedPaneFirst.addTab(constructRobotTab.getTabTitle(),new javax.swing.ImageIcon(constructRobotTab.getImageIconDirectory()),constructRobotTab.getJComponent());
@@ -305,9 +301,9 @@ public class MainFrameSeparateController extends GeneralController {
 			jTabbedPaneFirst.addTab(assignLabels.getTabTitle(),new javax.swing.ImageIcon(assignLabels.getImageIconDirectory()),assignLabels.getJComponent());
 
 			/*Update look and feel for newly added tabs*/		
-			MainFrames.changeToLookAndFeel(constructRobotTab.getJComponent());
-			MainFrames.changeToLookAndFeel(assignBehaviorsTab.getJComponent());
-			MainFrames.changeToLookAndFeel(assignLabels.getJComponent());
+			//MainFrames.changeToLookAndFeel(constructRobotTab.getJComponent());
+			//MainFrames.changeToLookAndFeel(assignBehaviorsTab.getJComponent());
+			//MainFrames.changeToLookAndFeel(assignLabels.getJComponent());
 		}else{
 			/*Identify and remove tabs for construction of modular robot*/
 			for (int index=0; index < jTabbedPaneFirst.getTabCount(); index++){
@@ -324,39 +320,18 @@ public class MainFrameSeparateController extends GeneralController {
 			}
 		}
 		/*Adapt construction tabs to the first module in simulation environment if it exists.*/
-		ConstructRobotTabController.adaptTabToModuleInSimulation();
-		AssignBehaviorsTabController.adaptTabToModuleInSimulation();
+		//ConstructRobotTabController.adaptTabToModuleInSimulation();
+		//AssignBehaviorsTabController.adaptTabToModuleInSimulation();
 	}
-
-	/**
-	 * Checks if the tab with specific title is in the container for tabs.
-	 * @param tabTitle, the title of the tab to look for.
-	 * @param tabs, container of all tabs in main frame.
-	 * @return foundTab, the tab with the title to look for.
-	 */
-	private static TabsInter getTabByTitle( String tabTitle,ArrayList<TabsInter> tabs){
-		TabsInter foundTab = null;
-		for (int tabNr=0;tabNr<tabs.size();tabNr++){
-			String currentTabTitle = tabs.get(tabNr).getTabTitle();
-			if (currentTabTitle.equals(tabTitle)){
-				foundTab = tabs.get(tabNr);
-			}
-		}
-		if (foundTab == null){
-			throw new Error("The tab with title ("+ tabTitle + ") was not found");
-		}
-		return foundTab;
-	}
-
+	
 	/**
 	 * Adds or removes tab for visualization of communication between modules.
 	 * @param toggleButtonVisualizer, the toggle button in main frame.
 	 * @param jTabbedPaneFirst,the tabbed pane used as container for construction tabs.
-	 * @param tabs, container of all tabs in main frame.
 	 */
-	public static void jButtonVisualizerActionPerformed(JToggleButton toggleButtonVisualizer, JTabbedPane jTabbedPaneFirst, ArrayList<TabsInter> tabs) {
+	public static void jButtonVisualizerActionPerformed(JToggleButton toggleButtonVisualizer, JTabbedPane jTabbedPaneFirst) {
 		/*Check if tab is defined*/
-		TabsInter moduleCommunicationVisualizerTab = getTabByTitle(MainFramesInter.MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE,tabs);
+		TabsInter moduleCommunicationVisualizerTab = MainFramesInter.MODULE_COMMUNICATION_VISUALIZER_TAB;
 
 		if (toggleButtonVisualizer.isSelected()){
 			/*Add tabs for visualizing module communication*/

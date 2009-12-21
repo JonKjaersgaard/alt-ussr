@@ -47,7 +47,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 * Containers for keeping all tabs plugged-in the main GUI window(MainFrame), tabs in the first and second tabbed panes respectively.
 	 */
 	protected ArrayList<TabsInter> allTabs,tabsFirstTabbedPane,tabsSecondTabbedPane;
-
+	
 	/**
 	 * Defines visual appearance common to all instances of main GUI window.  
 	 */
@@ -57,7 +57,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		initFrameProperties();
 		/*Starts simulation adapter, which in turn starts simulation server (only once) */	
 		new GUISimulationAdapter();
-	
 	}
 
 	/**
@@ -438,7 +437,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToggleButtonConstructRobot.setPreferredSize(BUTTON_DIMENSION);
 		jToggleButtonConstructRobot.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
-				MainFrameSeparateController.jButtonConstructRobotActionPerformed(jToggleButtonConstructRobot,jTabbedPaneFirst, allTabs );
+				MainFrameSeparateController.jButtonConstructRobotActionPerformed(jToggleButtonConstructRobot,jTabbedPaneFirst);
 
 			}
 		});
@@ -454,7 +453,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToggleButtonVisualizer.setPreferredSize(BUTTON_DIMENSION);
 		jToggleButtonVisualizer.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.jButtonVisualizerActionPerformed(jToggleButtonVisualizer,jTabbedPaneFirst, allTabs);
+				MainFrameSeparateController.jButtonVisualizerActionPerformed(jToggleButtonVisualizer,jTabbedPaneFirst);
 			}
 		});
 		jToolBarGeneralControl.add(jToggleButtonVisualizer);

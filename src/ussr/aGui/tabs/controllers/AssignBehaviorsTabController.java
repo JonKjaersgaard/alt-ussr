@@ -135,7 +135,7 @@ public class AssignBehaviorsTabController extends TabsControllers {
 	 * TODO MAKE IT MORE GENERIC BY MEANS OF IDENTIFYING THE LAST TYPE OF MODULE IN XML FILE
 	 * OR SOMETHING SIMILLAR.
 	 */
-	public static void adaptTabToModuleInSimulation(){
+	/*public static void adaptTabToModuleInSimulation(){
 		int amountModules =0;		
 		try {
 			amountModules =  builderControl.getIDsModules().size();
@@ -144,7 +144,7 @@ public class AssignBehaviorsTabController extends TabsControllers {
 		}
 
 		if (amountModules>0){
-			/*Adapt to first module*/
+			Adapt to first module
 			String modularRobotName ="";
 			try {
 				modularRobotName = builderControl.getModuleType(0);
@@ -166,7 +166,7 @@ public class AssignBehaviorsTabController extends TabsControllers {
 				AssignBehaviorsTab.getRadionButtonCKBOTSTANDARD().setSelected(true);
 			}		
 		}
-	}
+	}*/
 	
 	
 	public static void updateHintPanel(HintPanelTypes hintPanelTypes,String text){
