@@ -1,5 +1,6 @@
 package ussr.builder.simulationLoader;
 
+import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ import ussr.description.setup.WorldDescription.CameraPosition;
 import ussr.description.setup.WorldDescription.TextureDescription;
 import ussr.physics.PhysicsParameters.Material;
 
-public class SimulationSpecificationConverter {
+public class SimulationSpecificationConverter implements Serializable {
 
 	private Map<XMLTagsUsed,String> simulationWorldDescription,simulationPhysicsParameters;
 	                              

@@ -90,7 +90,12 @@ public class SimulationXMLFileLoader extends GenericSimulation {
         simulationSpecification = xmlLoaderSimulation.getSimulationSpecification();
        
         /*Converter for converting values from String into corresponding type used in USSR*/
-        descriptionConverter =  new SimulationSpecificationConverter(simulationSpecification.getSimWorldDecsriptionValues(),simulationSpecification.getSimPhysicsParameters()); 
+        ;
+        
+        
+       // descriptionConverter =  new SimulationSpecificationConverter(simulationSpecification.getSimWorldDecsriptionValues(),simulationSpecification.getSimPhysicsParameters());
+        descriptionConverter =  simulationSpecification.getConverter();
+      
         
         //setPhysicsParameters();// IS NOT WORKING
         

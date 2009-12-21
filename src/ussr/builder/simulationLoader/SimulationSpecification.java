@@ -19,7 +19,12 @@ public class SimulationSpecification implements Serializable {
 	 */
 	private ArrayList<RobotSpecification> robotsInSimulation = new ArrayList<RobotSpecification>();
 	
-	
+	/**
+	 * 
+	 */
+	private Map<XMLTagsUsed, String> simWorldDecsriptionValues= new Hashtable<XMLTagsUsed, String>(),
+	                                 simPhysicsParameters = new Hashtable<XMLTagsUsed, String>();
+		
 	/**
 	 * Returns the robot descriptions extracted from XML and newly defined in GUI.
 	 * @return the robot descriptions extracted from XML and newly defined in GUI.
@@ -28,11 +33,7 @@ public class SimulationSpecification implements Serializable {
 		return robotsInSimulation;
 	}
 
-	/**
-	 * 
-	 */
-	private Map<XMLTagsUsed, String> simWorldDecsriptionValues= new Hashtable<XMLTagsUsed, String>(),
-	                                 simPhysicsParameters = new Hashtable<XMLTagsUsed, String>();
+	
 
 	public Map<XMLTagsUsed, String> getSimPhysicsParameters() {
 		return simPhysicsParameters;
@@ -42,6 +43,9 @@ public class SimulationSpecification implements Serializable {
 		return simWorldDecsriptionValues;
 	}
 	
+	public SimulationSpecificationConverter getConverter(){
+		return new SimulationSpecificationConverter(this.simWorldDecsriptionValues,this.simPhysicsParameters);
+	}
 	
 	
 	
