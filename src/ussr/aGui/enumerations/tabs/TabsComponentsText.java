@@ -47,20 +47,22 @@ public enum TabsComponentsText {
 	ON_CHOSEN_CONNECTOR_NUMBER,	
 	ON_ALL_CONNECTORS,
 	JUMP_FROM_CONNECTOR_TO_CONNECTOR,
-	
+
 	/*ASSIGN BEHAVIOR(CONTROLLER) TAB*/
-		
+	
+	/*METHOD: setText()*/
+	
+	NEW_POSITION,
+	LOAD_NEW_ROBOT,
 	/*METHOD: setToolTipText()*/
-	Filter_out_for,
+	FILTER_OUT_FOR,
 	
 	/*Simulation Tab*/
-	Load_new_robot,
-	
-	New_position,
+		
 	//for moving modular robot
-	Move_up, Move_down,
-	Move_left, Move_right,
-	Move_closer, Move_away,
+	MOVE_UP, MOVE_DOWN,
+	MOVE_LEFT, MOVE_RIGHT,
+	MOVE_CLOSER, MOVE_AWAY,
 	;
 	
 	 /**

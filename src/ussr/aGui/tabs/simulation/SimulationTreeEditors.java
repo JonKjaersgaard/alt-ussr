@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.TitledBorder;
 import ussr.aGui.FramesInter;
+import ussr.aGui.enumerations.tabs.CameraPositions;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.enumerations.tabs.TextureDescriptions;
@@ -32,7 +33,7 @@ public class SimulationTreeEditors{
 	 */
 	public static javax.swing.JPanel  addRobotsEditor(){
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
-		jPanelTreeNode.add(SimulationTab.createNewLabel(TabsComponentsText.Load_new_robot.getUserFriendlyName()));
+		jPanelTreeNode.add(SimulationTab.createNewLabel(TabsComponentsText.LOAD_NEW_ROBOT.getUserFriendlyName()));
 		jPanelTreeNode.add(Tabs.initOpenButton());
 		return jPanelTreeNode;
 	}
@@ -69,11 +70,11 @@ public class SimulationTreeEditors{
 
 		GridBagConstraints gridBagConstraintsMoveRobot = new GridBagConstraints();
 		TitledBorder displayTitle1;
-		displayTitle1 = BorderFactory.createTitledBorder(TabsComponentsText.New_position.getUserFriendlyName());
+		displayTitle1 = BorderFactory.createTitledBorder(TabsComponentsText.NEW_POSITION.getUserFriendlyName());
 		displayTitle1.setTitleJustification(TitledBorder.CENTER);
 		jPanelMoveRobot.setBorder(displayTitle1);
 		
-		jButtonYpositive.setToolTipText(TabsComponentsText.Move_up.getUserFriendlyName());
+		jButtonYpositive.setToolTipText(TabsComponentsText.MOVE_UP.getUserFriendlyName());
 		jButtonYpositive.setIcon(TabsIcons.Y_POSITIVE_BIG.getImageIcon());
 		jButtonYpositive.setRolloverIcon(TabsIcons.Y_POSITIVE_ROLLOVER_BIG.getImageIcon());					
 		jButtonYpositive.setFocusable(false);		
@@ -90,7 +91,7 @@ public class SimulationTreeEditors{
 		jPanelMoveRobot.add(jButtonYpositive,gridBagConstraintsMoveRobot);
 
 
-		jButtonXnegative.setToolTipText(TabsComponentsText.Move_left.getUserFriendlyName());
+		jButtonXnegative.setToolTipText(TabsComponentsText.MOVE_LEFT.getUserFriendlyName());
 		jButtonXnegative.setIcon(TabsIcons.X_NEGATIVE_BIG.getImageIcon());	
 		jButtonXnegative.setRolloverIcon(TabsIcons.X_NEGATIVE_ROLLOVER_BIG.getImageIcon());			
 		jButtonXnegative.setFocusable(false);		
@@ -105,7 +106,7 @@ public class SimulationTreeEditors{
 		gridBagConstraintsMoveRobot.gridy = 1;	
 		jPanelMoveRobot.add(jButtonXnegative,gridBagConstraintsMoveRobot);
 
-		jButtonZpositive.setToolTipText(TabsComponentsText.Move_closer.getUserFriendlyName());
+		jButtonZpositive.setToolTipText(TabsComponentsText.MOVE_CLOSER.getUserFriendlyName());
 		jButtonZpositive.setIcon(TabsIcons.Z_POSITIVE_BIG.getImageIcon());	
 		jButtonZpositive.setRolloverIcon(TabsIcons.Z_POSITIVE_ROLLOVER_BIG.getImageIcon());		
 		jButtonZpositive.setFocusable(false);		
@@ -136,7 +137,7 @@ public class SimulationTreeEditors{
 
 		jPanelMoveRobot.add(jSpinnerCoordinateValue,gridBagConstraintsMoveRobot);
 
-		jButtonZnegative.setToolTipText(TabsComponentsText.Move_away.getUserFriendlyName());
+		jButtonZnegative.setToolTipText(TabsComponentsText.MOVE_AWAY.getUserFriendlyName());
 		jButtonZnegative.setIcon(TabsIcons.Z_NEGATIVE_BIG.getImageIcon());				
 		jButtonZnegative.setRolloverIcon(TabsIcons.Z_NEGATIVE_ROLLOVER_BIG.getImageIcon());	
 		jButtonZnegative.setFocusable(false);		
@@ -152,7 +153,7 @@ public class SimulationTreeEditors{
 		jPanelMoveRobot.add(jButtonZnegative,gridBagConstraintsMoveRobot);
 
 
-		jButtonXpositive.setToolTipText(TabsComponentsText.Move_right.getUserFriendlyName());
+		jButtonXpositive.setToolTipText(TabsComponentsText.MOVE_RIGHT.getUserFriendlyName());
 		jButtonXpositive.setIcon(TabsIcons.X_POSITIVE_BIG.getImageIcon());	
 		jButtonXpositive.setRolloverIcon(TabsIcons.X_POSITIVE_ROLLOVER_BIG.getImageIcon());		
 		jButtonXpositive.setFocusable(false);		
@@ -169,7 +170,7 @@ public class SimulationTreeEditors{
 
 
 
-		jButtonYnegative.setToolTipText(TabsComponentsText.Move_down.getUserFriendlyName());
+		jButtonYnegative.setToolTipText(TabsComponentsText.MOVE_DOWN.getUserFriendlyName());
 		jButtonYnegative.setIcon(TabsIcons.Y_NEGATIVE_BIG.getImageIcon());	
 		jButtonYnegative.setRolloverIcon(TabsIcons.Y_NEGATIVE_ROLLOVER_BIG.getImageIcon());		
 		jButtonYnegative.setFocusable(false);		
@@ -212,14 +213,14 @@ public class SimulationTreeEditors{
 	    iconLabel.setSize(100, 100); 
 		
 		jComboBoxPlaneTexture = new javax.swing.JComboBox(); 
-		jComboBoxPlaneTexture.setModel(new DefaultComboBoxModel(TextureDescriptions.values()));
+		jComboBoxPlaneTexture.setModel(new DefaultComboBoxModel(TextureDescriptions.getAllInUserFriendlyFromat()));
 		jComboBoxPlaneTexture.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SimulationTabController.jComboBoxPlaneTextureActionPerformed(jComboBoxPlaneTexture,iconLabel);
 			}
 		});
 
-		gridBagConstraintsTexture.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsTexture.fill = GridBagConstraints.CENTER;
 		gridBagConstraintsTexture.gridx = 0;
 		gridBagConstraintsTexture.gridy = 0;
 
@@ -231,10 +232,8 @@ public class SimulationTreeEditors{
 		gridBagConstraintsTexture.fill = GridBagConstraints.CENTER;
 		gridBagConstraintsTexture.gridx = 0;
 		gridBagConstraintsTexture.gridy = 1;
-		gridBagConstraintsTexture.gridwidth =2;
-		gridBagConstraintsTexture.insets = new Insets(10,0,0,0);
-
-	  
+		gridBagConstraintsTexture.gridwidth =1;
+		gridBagConstraintsTexture.insets = new Insets(10,0,0,0);	  
 
 		previewPanel.add(iconLabel);
 		jPanelTreeNode.add(previewPanel,gridBagConstraintsTexture);
@@ -249,7 +248,7 @@ public class SimulationTreeEditors{
 	public static javax.swing.JPanel addCameraPositionEditor(){
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jComboBoxCameraPosition = new javax.swing.JComboBox(); 
-		jComboBoxCameraPosition.setModel(new DefaultComboBoxModel(CameraPosition.values()));
+		jComboBoxCameraPosition.setModel(new DefaultComboBoxModel(CameraPositions.getAllInUserFriendlyFromat()));
 		jPanelTreeNode.add(jComboBoxCameraPosition);
 		
 		return jPanelTreeNode;

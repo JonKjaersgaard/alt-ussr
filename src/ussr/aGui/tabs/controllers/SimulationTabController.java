@@ -114,12 +114,12 @@ public class SimulationTabController extends TabsControllers {
 			throw new Error("Failed to extract plane texture file name, due to remote exception.");
 		}	
 
-		for (int text=0;text<TextureDescriptions.values().length;text++){
+		for (int textureNr=0;textureNr<TextureDescriptions.values().length;textureNr++){
 
-			if (fileName.equals(TextureDescriptions.values()[text].getFileName())){
-				jComboBoxPlaneTexture.setSelectedItem(TextureDescriptions.values()[text]);
+			if (fileName.equals(TextureDescriptions.values()[textureNr].getFileName())){
+				jComboBoxPlaneTexture.setSelectedItem(TextureDescriptions.values()[textureNr].getUserFriendlyName());
 				//ImageIcon imageIcon = new ImageIcon(TextureDescriptions.values()[text].getFileName());
-				iconLabel.setIcon(TextureDescriptions.values()[text].getImageIcon());
+				iconLabel.setIcon(TextureDescriptions.values()[textureNr].getImageIcon());
 				iconLabel.setSize(100, 100);
 			}
 		}
@@ -311,8 +311,8 @@ public class SimulationTabController extends TabsControllers {
 	}
 
 	public static void jComboBoxPlaneTextureActionPerformed(JComboBox comboBoxPlaneTexture, JLabel iconLabel) {
-		TextureDescriptions selectedTexture = TextureDescriptions.valueOf(comboBoxPlaneTexture.getSelectedItem().toString());
-		iconLabel.setIcon(selectedTexture.getImageIcon());
+		String selectedTexture = TextureDescriptions.toJavaConvention(comboBoxPlaneTexture.getSelectedItem().toString());
+		iconLabel.setIcon(TextureDescriptions.valueOf(selectedTexture).getImageIcon());
 		
 	}
 

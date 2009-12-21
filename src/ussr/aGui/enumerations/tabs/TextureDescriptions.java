@@ -1,5 +1,7 @@
 package ussr.aGui.enumerations.tabs;
 
+import java.util.Vector;
+
 import javax.swing.ImageIcon;
 
 import ussr.aGui.MainFramesInter;
@@ -77,7 +79,7 @@ public enum TextureDescriptions {
 	 * @param imageName, the name of the image file.
 	 * @return directory, where icon is located.
 	 */
-	private static String formatIconDirectory(String imageName){	
+	private static String formatIconDirectory(String imageName){
 		return TabsInter.DIRECTORY_ICONS_TEXTURES+imageName+MainFramesInter.DEFAULT_ICON_EXTENSION1;
 	}
 	/**
@@ -95,4 +97,33 @@ public enum TextureDescriptions {
 		return null;		
 	}
 	
-}
+	/**
+ 	 * Returns the name of chosen enumeration with changes in it such that Java convention for constants(upper case) is replaced wit lower and
+ 	 * underscore is replaced with space.
+ 	 * @return the name of chosen enumeration with changes in it such that Java convention for constants(upper case) is replaced wit lower and
+ 	 * underscore is replaced with space.
+ 	 */
+ 	public String getUserFriendlyName(){
+ 		char[] characters = this.toString().replace("TEXTURE", "").replace("_", " ").toLowerCase().toCharArray();
+ 		String name = (characters[0]+"").toUpperCase();
+         for (int index =1;index<characters.length;index++){
+         	name = name+characters[index];
+         }		 
+ 		return name;
+ 	}
+ 	
+ 	public static Object[] getAllInUserFriendlyFromat(){
+ 		Vector <String> namesTetxtures = new Vector<String>();
+ 		for (int textureNr=0;textureNr<values().length;textureNr++){
+ 			namesTetxtures.add(values()[textureNr].getUserFriendlyName()) ;
+ 		} 		
+ 		return namesTetxtures.toArray();
+ 	}
+ 	
+ 	public static String toJavaConvention(String textureName){
+ 		return (textureName+ "TEXTURE").replace(" ", "_").toUpperCase(); 
+ 		
+ 	}
+	
+	
+	}
