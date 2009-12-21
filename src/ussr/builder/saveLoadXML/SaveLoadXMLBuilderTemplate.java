@@ -320,10 +320,8 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	 * @param document, DOM object of document. 
 	 */
 	private void loadSimulationXML(Document document){	
-
+		
 		NodeList nodeListRobotXMLValues;
-
-
 		for (int robotNr=1;robotNr<10000; robotNr++){// just dummy limit to look for maximum 10000 robots
 
 			if(document.getElementsByTagName(XMLTagsUsed.ROBOT_NR.toString()+robotNr)!=null){
@@ -382,7 +380,6 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 				simulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR, extractTagValue(firstElmnt,XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR));
 			}
 		}
-
 	}
 
 	

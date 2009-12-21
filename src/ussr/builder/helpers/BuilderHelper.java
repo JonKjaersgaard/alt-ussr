@@ -177,14 +177,15 @@ public class BuilderHelper {
 		
 		/*Remove each node of component*/
 		for(DynamicPhysicsNode part: moduleComponent.getNodes()){
-			part.detachAllChildren();//removes visual	
-			int amountNodes = moduleComponent.getNodes().size();
+			//part.detachAllChildren();//removes visual	
+		/*	int amountNodes = moduleComponent.getNodes().size();
 			for (int node=0; node<amountNodes; node++ ){ //removes bounds and physics
 				moduleComponent.getNodes().get(node).removeFromParent();
 			}						
 			part.setIsCollidable(false);
-			part.setActive(false);
-			part.clearControllers();
+			part.setActive(false);			
+			part.clearControllers();*/
+			part.delete();
 		} 	
 	};
 
