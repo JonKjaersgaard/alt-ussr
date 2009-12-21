@@ -388,7 +388,7 @@ public class ConstructRobotTabController extends TabsControllers{
 	/**
 	 * Adapts Construct Robot Tab to the the type of first module in simulation environment.
 	 */
-	/*public static void adaptTabToModuleInSimulation(){
+	public static void adaptTabToModuleInSimulation(){
 		int amountModules =0;		
 		try {
 			amountModules =  builderControl.getIDsModules().size();
@@ -397,7 +397,7 @@ public class ConstructRobotTabController extends TabsControllers{
 		}
 
 		if (amountModules>2){
-			Adapt to first module type
+			/*Adapt to first module type*/
 			String modularRobotName ="";
 			try {
 				modularRobotName = builderControl.getModuleType(0);
@@ -424,14 +424,14 @@ public class ConstructRobotTabController extends TabsControllers{
 
 
 			try {
-				Set default construction tool to be "On selected  connector"
+				/*Set default construction tool to be "On selected  connector"*/
 				builderControl.setConstructionToolSpecPicker(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR);
 			} catch (RemoteException e) {
 				throw new Error("Failed to initate picker called " + ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR + " , due to remote exception");
 			}
 		}
 
-	}	*/
+	}	
 
 	/**
 	 * Removes current robots in simulation environment and enables tab elements for constructing new robot.

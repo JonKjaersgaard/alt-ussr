@@ -13,6 +13,7 @@ import javax.swing.JToggleButton;
 
 import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.MainFrameComponentsText;
+import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.jme.JMEBasicGraphicalSimulation;
 
@@ -174,6 +175,7 @@ public class MainFrameSeparate extends MainFrames {
 		if (beforeSimulationStarted){
 		setJMenuBarMainEnabled(enabled);
 		setJToolBarGeneralControlEnabled(enabled);
+		setJTabbedPaneFirstEnabled(enabled);
 		}else{
 			getJMenuItemOpen().setEnabled(false);
 			getJButtonOpen().setEnabled(false);

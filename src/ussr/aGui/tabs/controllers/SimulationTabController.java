@@ -185,17 +185,20 @@ public class SimulationTabController extends TabsControllers {
 	}
 
 	public static void setValuejSpinnerDampingLinearVelocity(JSpinner spinnerDampingLinearVelocity) {
-		spinnerDampingLinearVelocity.setValue(PhysicsParameters.get().getWorldDampingLinearVelocity());
-
+		//spinnerDampingLinearVelocity.setValue(PhysicsParameters.get().getWorldDampingLinearVelocity());
+		spinnerDampingLinearVelocity.setValue(simulationSpecification.getConverter().convertWorldDamping(true));
+	
 	}
 
 	public static void setValuejSpinnerDampingAngularVelocity(JSpinner spinnerDampingAngularVelocity) {
-		spinnerDampingAngularVelocity.setValue(PhysicsParameters.get().getWorldDampingAngularVelocity());
+		//spinnerDampingAngularVelocity.setValue(PhysicsParameters.get().getWorldDampingAngularVelocity());
+		spinnerDampingAngularVelocity.setValue(simulationSpecification.getConverter().convertWorldDamping(false));
 
 	}
 
 	public static void setValuejSpinnerPhysicsSimulationStepSize(JSpinner spinnerPhysicsSimulationStepSize) {
-		spinnerPhysicsSimulationStepSize.setValue(PhysicsParameters.get().getPhysicsSimulationStepSize());
+		//spinnerPhysicsSimulationStepSize.setValue(PhysicsParameters.get().getPhysicsSimulationStepSize());
+		spinnerPhysicsSimulationStepSize.setValue(simulationSpecification.getConverter().convertPhysicsSimulationStepSize());
 	}
 
 	public static void setSelectedJCheckBoxRealisticCollision(JCheckBox checkBoxRealisticCollision) {

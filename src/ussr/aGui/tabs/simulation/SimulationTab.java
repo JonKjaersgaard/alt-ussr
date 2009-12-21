@@ -19,6 +19,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import ussr.aGui.FramesInter;
+import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
@@ -119,11 +120,11 @@ public class SimulationTab extends Tabs {
 
 		super.jComponent.add(jPanelEditor,gridBagConstraints);
 
-		hintPanel = new HintPanel(600, HINT_PANEL_HEIGHT);
+		hintPanel = new HintPanel(600, HINT_PANEL_HEIGHT+20);
 		hintPanel.setBorderTitle("Display for hints");
-
-		hintPanel.setText("Would be nice to add a short description of each element in the tree :).");
+		hintPanel.setText(HintsSimulationTab.DEFAULT.getHintText());
 		hintPanel.setVisible(false);
+		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 1;
@@ -206,7 +207,8 @@ public class SimulationTab extends Tabs {
 	public static void setTabVisible(boolean visible) {
 		jScrollPaneTreeSimulation.setVisible(visible);
 		jPanelEditor.setVisible(visible);
-		hintPanel.setVisible(visible);
+		hintPanel.setVisible(visible);	
+		hintPanel.setText(HintsSimulationTab.DEFAULT.getHintText());
 	}
 
 	public static void addMorphologyEditor() {

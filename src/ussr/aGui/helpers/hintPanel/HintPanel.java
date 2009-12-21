@@ -52,7 +52,7 @@ public class HintPanel extends JPanel implements HintPanelInter {
 		int  iconWidth = jLabelIcon.getIcon().getIconWidth();
 
 		/*relative dimension to the dimension of the panel, icon and tolerance*/
-		jTextPaneHintDisplay.setPreferredSize(new Dimension(width-2*iconWidth,height-(2*iconWidth))); 
+		jTextPaneHintDisplay.setPreferredSize(new Dimension(width-2*iconWidth,height-(2*iconWidth)));
 		jTextPaneHintDisplay.setEditable(false);// do not allow user to edit		 
 
 		jScrollPaneForHintDisplay.setViewportView(jTextPaneHintDisplay);		 
@@ -102,10 +102,12 @@ public class HintPanel extends JPanel implements HintPanelInter {
 	 * Displays text in the hint panel.
 	 * @param hintText, the text to display in hint panel.
 	 */
-	public void setText(String hintText){	
+	public void setText(String hintText){
 		jTextPaneHintDisplay.setText(hintText);
-		jTextPaneHintDisplay.validate();
 		jTextPaneHintDisplay.repaint();
+		jTextPaneHintDisplay.validate();
+		jTextPaneHintDisplay.invalidate();
+	
 		
 	}
 	

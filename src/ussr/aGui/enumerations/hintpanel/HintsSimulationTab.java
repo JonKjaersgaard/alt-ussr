@@ -2,7 +2,8 @@ package ussr.aGui.enumerations.hintpanel;
 
 public enum HintsSimulationTab {
 
-	
+	DEFAULT("This tab allows to manipulate simulation values and entities in it. Follow hints displayed here" +
+			"to get familliar with the purpose of each element."),
 	SIMULATION("TODO "),
 	
 	PHYSICS_SIMULATION_STEP_SIZE("TODO"),
@@ -13,17 +14,17 @@ public enum HintsSimulationTab {
 	
 	WORLD_DESCRIPTION("TODO"),
 	
-	PLANE_SIZE("TODO"),
+	PLANE_SIZE("The size of one edge of the underlying plane."),
 	
 	PLANE_TEXTURE("TODO"),
 	
 	CAMERA_POSITION("TODO"),
 	
-	THE_WORLD_IS_FLAT("TODO"),
+	THE_WORLD_IS_FLAT("Whether is used a plane or a generated texture."),
 	
-	HAS_BACKGROUND_SCENERY("TODO"),
+	HAS_BACKGROUND_SCENERY("Whenever the background/overhead have clouds etc"),
 	
-	HAS_HEAVY_OBSTACLES("TODO"),
+	HAS_HEAVY_OBSTACLES("Whenever light or heavy obstacles are set in simulation environment."),
 	
 	IS_FRAME_GRABBING_ACTIVE("TODO"),
 	
@@ -39,8 +40,7 @@ public enum HintsSimulationTab {
 	
 	MAINTAIN_ROTATIONAL_JOINT_POSITIONS("TODO"),
 	
-	ERROR_REDUCTION_PARAMETER("Error reduction parameter(ERP) controls the menchanism for alligning connected joints together." +
-			                  "Joints misalignments can appear due to user specifying imprecise positions/rotations and during simulation, errors can creep so that, joints will drift away from each other." +
+	ERROR_REDUCTION_PARAMETER("Error reduction parameter(ERP) controls the menchanism for alligning connected joints together. Joints misalignments can appear due to user specifying imprecise positions/rotations and during simulation, errors can creep so that, joints will drift away from each other." +
 			                  "ERP specifies what proportion of joint error will be fixed during next simulation step. Recommended values are:0.1-0.8. Default is 0.8."),
 			                  
     CONSTRAINT_FORCE_MIXING("Constraint force mixing (CFM) is used to define constrains in mechanical interaction of objects. If it is set to zero, then objects will be as made of steel and will not penetrate each other in case of collision (connection)." +

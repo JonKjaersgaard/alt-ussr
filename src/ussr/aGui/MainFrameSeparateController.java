@@ -320,8 +320,8 @@ public class MainFrameSeparateController extends GeneralController {
 			}
 		}
 		/*Adapt construction tabs to the first module in simulation environment if it exists.*/
-		//ConstructRobotTabController.adaptTabToModuleInSimulation();
-		//AssignBehaviorsTabController.adaptTabToModuleInSimulation();
+		ConstructRobotTabController.adaptTabToModuleInSimulation();
+		AssignBehaviorsTabController.adaptTabToModuleInSimulation();
 	}
 	
 	/**
