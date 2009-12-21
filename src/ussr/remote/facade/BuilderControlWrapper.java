@@ -6,6 +6,9 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.jme.math.Vector3f;
+
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
 import ussr.builder.constructionTools.CKBotOperationsTemplate;
 import ussr.builder.constructionTools.CommonOperationsTemplate;
@@ -98,36 +101,28 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 		CommonOperationsTemplate comATRON = new ATRONOperationsTemplate(jmeSimulation);
 		CommonOperationsTemplate comMTRAN = new MTRANOperationsTemplate(jmeSimulation);
 		CommonOperationsTemplate comOdin = new OdinOperationsTemplate(jmeSimulation);
-		CommonOperationsTemplate comCKBot = new CKBotOperationsTemplate(jmeSimulation);	
-
+		CommonOperationsTemplate comCKBot = new CKBotOperationsTemplate(jmeSimulation);
+		
+		
+		if (moduleExists(defaultPosition)){//do nothing
+		}else{ 
 		switch (supportedModularRobot){
-		case ATRON:
-			if (moduleExists(defaultPosition)){//do nothing
-			}else{ 
-				comATRON.addDefaultConstructionModule("default", defaultPosition);
-			}
+		case ATRON:		
+				comATRON.addDefaultConstructionModule("default", defaultPosition);			
 			break;
-		case MTRAN:
-			if (moduleExists(defaultPosition)){//do nothing
-			}else {
+		case MTRAN:		
 				comMTRAN.addDefaultConstructionModule(SupportedModularRobots.MTRAN.toString(),defaultPosition );
-			}
 			break;
-		case ODIN:
-			if (moduleExists(defaultPosition)){//do nothing
-			}else{ 
+		case ODIN:		
 				Odin.setDefaultConnectorSize(0.006f);// make connectors bigger in order to select them successfully with "on Connector tool"
 				comOdin.addDefaultConstructionModule(SupportedModularRobots.ODIN.toString(), defaultPosition);
-			}
 			break;
 		case CKBOTSTANDARD:
-			if (moduleExists(defaultPosition)){//do nothing
-			}else {
 				comCKBot.addDefaultConstructionModule(SupportedModularRobots.CKBOTSTANDARD.toString(), defaultPosition);
-			}
 			break;
 		default: throw new Error ("Modular robot with the name "+ supportedModularRobot.toString()+ " is not supported yet");
 		}
+	}
 	}
 
 	/**
