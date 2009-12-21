@@ -103,12 +103,12 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 	}
 	
 	private static void setPhysicsParatemeters(SimulationSpecificationConverter descriptionConverter){
-	      PhysicsParameters.get().setWorldDampingLinearVelocity(descriptionConverter.convertWorldDampingLinearVelocity());
-	        PhysicsParameters.get().setWorldDampingAngularVelocity(descriptionConverter.convertWorldDampingAngularVelocity());
+	      PhysicsParameters.get().setWorldDampingLinearVelocity(descriptionConverter.convertWorldDamping(true));
+	        PhysicsParameters.get().setWorldDampingAngularVelocity(descriptionConverter.convertWorldDamping(false));
 	        PhysicsParameters.get().setPhysicsSimulationStepSize(descriptionConverter.convertPhysicsSimulationStepSize());
 	        PhysicsParameters.get().setRealisticCollision(descriptionConverter.covertRealisticCollision());
 	        PhysicsParameters.get().setGravity(descriptionConverter.covertGravity());
-	        PhysicsParameters.get().setPlaneMaterial(descriptionConverter.covertMaterial());
+	        PhysicsParameters.get().setPlaneMaterial(descriptionConverter.covertPlaneMaterial());
 	        PhysicsParameters.get().setMaintainRotationalJointPositions(descriptionConverter.convertMaintainRotationalJointPositions());
 //	       /*Not supported yet*/ HAS_MECHANICAL_CONNECTOR_SPRINGINESS,
 //	       /*Not supported yet*/ MECHANICAL_CONNECTOR_CONSTANT,

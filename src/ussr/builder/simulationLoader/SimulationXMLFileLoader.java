@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import ussr.aGui.tabs.simulation.SimulationTab;
+import ussr.aGui.tabs.simulation.enumerations.PhysicsParametersDefault;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.ControllerFactory;
@@ -19,6 +20,7 @@ import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
+import ussr.physics.PhysicsParameters;
 import ussr.physics.jme.JMESimulation;
 import ussr.samples.DefaultSimulationSetup;
 import ussr.samples.GenericSimulation;
@@ -76,18 +78,21 @@ public class SimulationXMLFileLoader extends GenericSimulation {
 	    DefaultSimulationSetup.setUSSRHome();	    
 	    
 	    PhysicsLogger.setDefaultLoggingLevel();
+	     
         /* Create the simulation*/
         simulation = PhysicsFactory.createSimulator();
-          
+       
         /*Load Simulation Configuration file*/
-		SaveLoadXMLFileTemplateInter xmlLoaderSimulation = new PreSimulationXMLSerializer(/*new PhysicsParameters()*/);
+		SaveLoadXMLFileTemplateInter xmlLoaderSimulation = new PreSimulationXMLSerializer();
 		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, simulationXMLfileName);
         
 		/*Get all values from XML file*/
         simulationSpecification = xmlLoaderSimulation.getSimulationSpecification();
-      
+       
         /*Converter for converting values from String into corresponding type used in USSR*/
         descriptionConverter =  new SimulationSpecificationConverter(simulationSpecification.getSimWorldDecsriptionValues(),simulationSpecification.getSimPhysicsParameters()); 
+        
+        //setPhysicsParameters();// IS NOT WORKING
         
         //String controllerLocation = robotDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
        // String controllerLocation = SimulationSpecification.robotsInSimulation.get(0).getControllerLocation();
@@ -98,12 +103,11 @@ public class SimulationXMLFileLoader extends GenericSimulation {
         ControllerFactory controllerFactory = new ControllerFactoryImpl(controllerNames);
         
         
+       // setPhysicsParameters();// IS NOT WORKING
         WorldDescription world = this.createGenericSimulationWorld(controllerFactory);
         world = createWorld();
         
-        /* Load the robot */
-       // robotMorphologyLocation = robotDescription.get(XMLTagsUsed.MORPHOLOGY_LOCATION);
-     
+        /* Load the robot */ 
         robotXMLLoader = new PreSimulationXMLSerializer(world);
        
         for (int robotNr=0;robotNr<simulationSpecification.getRobotsInSimulation().size();robotNr++){
@@ -112,25 +116,31 @@ public class SimulationXMLFileLoader extends GenericSimulation {
         	 robotXMLLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,morphology);
         }
         
-        
-        //robotXMLLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,robotMorphologyLocation);
-       
-        
-     
-   //     idsModules = robotXMLLoader.getIdsModules();
-      
-        
-      
         simulation.setWorld(world); 
       
-	    
-        /* Connect modules */
-        //world.setModuleConnections(new GenericModuleConnectorHelper().computeAllConnections(world.getModulePositions()));
+        
 	}
 	
 	public static SimulationSpecificationConverter getDescriptionConverter() {
 		return descriptionConverter;
 	}
+	
+    private void setPhysicsParameters(){
+    	PhysicsParameters.get().setPhysicsSimulationStepSize(descriptionConverter.convertPhysicsSimulationStepSize());
+    	PhysicsParameters.get().setResolutionFactor(descriptionConverter.convertResolutionFactor());
+    	PhysicsParameters.get().setWorldDampingLinearVelocity(descriptionConverter.convertWorldDamping(true));
+    	PhysicsParameters.get().setWorldDampingAngularVelocity(descriptionConverter.convertWorldDamping(false));
+    	PhysicsParameters.get().setRealisticCollision(descriptionConverter.covertRealisticCollision());
+    	PhysicsParameters.get().setGravity(descriptionConverter.covertGravity());
+    	PhysicsParameters.get().setPlaneMaterial(descriptionConverter.covertPlaneMaterial());
+    	PhysicsParameters.get().setMaintainRotationalJointPositions(descriptionConverter.convertMaintainRotationalJointPositions());
+    	PhysicsParameters.get().setConstraintForceMix(descriptionConverter.convertConstraintForceMix());
+    	PhysicsParameters.get().setErrorReductionParameter(descriptionConverter.convertErrorReductionParameter());
+    	PhysicsParameters.get().setUseModuleEventQueue(descriptionConverter.convertUseModuleEventQueue());
+    	PhysicsParameters.get().setSyncWithControllers(descriptionConverter.convertSyncWithControllers());
+    	PhysicsParameters.get().setPhysicsSimulationControllerStepFactor(descriptionConverter.convertPhysicsSimulationControllerStepFactor());
+    	
+    } 
 
 	private  WorldDescription createWorld() {
 		/*Assign values to world*/

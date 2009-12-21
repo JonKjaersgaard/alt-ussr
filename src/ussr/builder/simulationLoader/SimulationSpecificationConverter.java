@@ -32,16 +32,13 @@ public class SimulationSpecificationConverter {
 	    containerPlaneTextureDesc.put(WorldDescription.WHITE_TEXTURE.getFileName(), WorldDescription.WHITE_TEXTURE);		
 	}
 	
-	
-	public float convertWorldDampingLinearVelocity(){
-		return Float.parseFloat(simulationPhysicsParameters.get(XMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY));
-	}
-
-
-	public float convertWorldDampingAngularVelocity(){
+	public float convertWorldDamping(boolean linear){
+		if (linear){
+			return Float.parseFloat(simulationPhysicsParameters.get(XMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY));
+		}
 		return Float.parseFloat(simulationPhysicsParameters.get(XMLTagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY));
 	}
-
+	
 	public float convertPhysicsSimulationStepSize(){
 		return Float.parseFloat(simulationPhysicsParameters.get(XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE));
 	}
@@ -54,7 +51,7 @@ public class SimulationSpecificationConverter {
 		return Float.parseFloat(simulationPhysicsParameters.get(XMLTagsUsed.GRAVITY));
 	}
 
-	public Material covertMaterial(){
+	public Material covertPlaneMaterial(){
 		return Material.valueOf(simulationPhysicsParameters.get(XMLTagsUsed.PLANE_MATERIAL));
 	}
 
@@ -113,4 +110,5 @@ public class SimulationSpecificationConverter {
 	public boolean covertIsFrameGrabbingActive(){
 		return Boolean.parseBoolean(simulationWorldDescription.get(XMLTagsUsed.IS_FRAME_GRABBING_ACTIVE));
 	}
+	
 }
