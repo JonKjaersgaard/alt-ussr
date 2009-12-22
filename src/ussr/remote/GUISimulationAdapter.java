@@ -13,6 +13,7 @@ import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.MainFrames;
 import ussr.aGui.tabs.controllers.ConsoleTabController;
+import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.aGui.tabs.simulation.SimulationTreeEditors;
@@ -67,9 +68,9 @@ public class GUISimulationAdapter {
 		
 		// FIXME USED TEMPORARY
 		// Discard standard out (avoid buffers running full)
-        simulation.discardStandardOut();
+       // simulation.discardStandardOut();
         // Get standard err, pass it to method that prints it in separate thread
-        dumpStream("err", simulation.getStandardErr());
+       // dumpStream("err", simulation.getStandardErr());
 
 
 		// Wait for simulation process to be ready to start a new simulation
@@ -127,24 +128,14 @@ public class GUISimulationAdapter {
 		MainFrameSeparateController.setRendererControl(remotePhysicsSimulation.getRendererControl());
 		GeneralController.setBuilderControl(remotePhysicsSimulation.getBuilderControl());
 		MainFrameSeparate.setMainFrameSeparateEnabled(true,true);
-		MainFrameSeparate.setMainFrameSeparateEnabled(false,true);
-		
-		 
-		
-		
-		
+		MainFrameSeparate.setMainFrameSeparateEnabled(false,true);		
 		 
          SimulationSpecification simulationSpecification = simulation.getXmlSimulationProvider().getSimulationSpecification();
          SimulationTabController.setSimulationSpecification(simulationSpecification);
          SimulationTab.addRobotNode(simulationSpecification);
-        
-         
-         
          
          SimulationTreeEditors.update();
-         SimulationTab.setTabVisible(true);
-         
-        
+         SimulationTab.setTabVisible(true);       
 	}
 	
 	// FIXME USED TEMPORARY

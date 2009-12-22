@@ -86,6 +86,10 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
         SimulationTabController.setSimulationSpecification(simulationSpecification);
 	}
 	
+	/*public void adaptTabToModuleInSimulation()throws RemoteException{
+		ConstructRobotTabController.adaptTabToModuleInSimulation();
+	};*/
+	
 	
 	
 
