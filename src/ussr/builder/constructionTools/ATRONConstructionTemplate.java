@@ -190,11 +190,14 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 	 * Rotates selected module component with standard rotations, passed as a string.
 	 * This method is so-called "Primitive Operation" for TEMPLATE method, called "rotateModuleSpecifically(Module selectedModule,String rotationName)". 
 	 * @param selectedModuleComponent,the module component selected in simulation environment.	 
-	 * @param rotationName,the name of standard(specific) rotation of the module.	 
+	 * @param rotationName,the name of standard(specific) rotation of the module.
 	 */	
 	public void rotateComponentSpecifically(JMEModuleComponent currentModuleComponent, String rotationName){
+		
+		String rotationSystemName = ATRONStandardRotations.getRotationSystemName(rotationName); 
+		
 		for (int entry=0;entry<MODULE_ROTATION_MAP.length;entry++){
-			if (rotationName.equals(MODULE_ROTATION_MAP[entry].getRotationName())){
+			if (rotationSystemName.equals(MODULE_ROTATION_MAP[entry].getRotationName())){
 				rotateModuleComponent(currentModuleComponent,MODULE_ROTATION_MAP[entry].getRotation().getRotation());
 			}
 		}		

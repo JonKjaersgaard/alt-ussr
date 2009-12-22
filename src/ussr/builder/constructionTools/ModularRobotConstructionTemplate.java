@@ -10,6 +10,7 @@ import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;
 
+import ussr.builder.enumerations.ATRONStandardRotations;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.ModuleMapEntryHelper;
 
@@ -165,9 +166,9 @@ public abstract class ModularRobotConstructionTemplate implements ConstructionTe
 	 * Rotates selected module component with standard rotations, passed as a string.
 	 * This method is so-called "Primitive Operation" for above TEMPLATE method, called "rotateModuleSpecifically(Module selectedModule,String rotationName)". 
 	 * @param selectedModuleComponent,the module component selected in simulation environment.	 
-	 * @param rotationName,the name of standard(specific) rotation of the module.	 
+	 * @param rotationSystemName,the name of standard(specific) rotation of the module in Java convention format.	 
 	 */	
-	public abstract void rotateComponentSpecifically(JMEModuleComponent selectedModuleComponent, String rotationName);	
+	public abstract void rotateComponentSpecifically(JMEModuleComponent selectedModuleComponent, String rotationSystemName);	
 
 	/**
 	 * Additional method for implementing unique properties of modular robots modules. Like for example
