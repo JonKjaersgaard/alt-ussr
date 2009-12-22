@@ -351,8 +351,7 @@ public class SimulationTreeEditors{
 	 */
 	public static javax.swing.JPanel addRealisticCollisionEditor() {
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
-		jCheckBoxRealisticCollision = new javax.swing.JCheckBox ();
-		SimulationTabController.setSelectedJCheckBoxRealisticCollision(jCheckBoxRealisticCollision);		
+		jCheckBoxRealisticCollision = new javax.swing.JCheckBox ();		
 		jPanelTreeNode.add(jCheckBoxRealisticCollision);
 		return jPanelTreeNode;
 	}
@@ -365,8 +364,7 @@ public class SimulationTreeEditors{
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jSpinnerGravity = new javax.swing.JSpinner();
 		jSpinnerGravity.setPreferredSize(new Dimension(60,20));
-		jSpinnerGravity.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(-100.0f), null, null, Float.valueOf(1.0f)));
-		SimulationTabController.setValuejSpinnerGravity(jSpinnerGravity);		
+		jSpinnerGravity.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(-100.0f), null, null, Float.valueOf(1.0f)));			
 		jPanelTreeNode.add(jSpinnerGravity);	
 		return jPanelTreeNode;
 	}
@@ -388,7 +386,6 @@ public class SimulationTreeEditors{
 		return jPanelTreeNode;
 	}
 	
-	//MAINTAIN_ROTATIONAL_JOINT_POSITIONS
 	
 	/**
 	 * Defines visual appearance of editor panel(edit value) for tree node called Maintain rotational joint positions.
@@ -396,8 +393,7 @@ public class SimulationTreeEditors{
 	 */
 	public static javax.swing.JPanel addMaintainRotationalJointPositionsEditor() {
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
-		jCheckBoxMaintainRotJointPositions = new javax.swing.JCheckBox ();
-		SimulationTabController.setSelectedjCheckBoxMaintainRotJointPositions(jCheckBoxMaintainRotJointPositions);		
+		jCheckBoxMaintainRotJointPositions = new javax.swing.JCheckBox ();		
 		jPanelTreeNode.add(jCheckBoxMaintainRotJointPositions);
 		return jPanelTreeNode;
 	}
@@ -490,9 +486,11 @@ public class SimulationTreeEditors{
 		SimulationTabController.setSelectedJCheckBoxIsFrameGrabbingActive(jCheckBoxIsFrameGrabbingActive);
 		
 		/*Physics parameters*/
+		SimulationTabController.setValuejSpinnerGravity(jSpinnerGravity);	
 		SimulationTabController.setValuejSpinnerDampingLinearVelocity(jSpinnerDampingLinearVelocity);
 		SimulationTabController.setValuejSpinnerDampingAngularVelocity(jSpinnerDampingAngularVelocity);
 		SimulationTabController.setValuejSpinnerGravity(jSpinnerGravity);
+		SimulationTabController.setSelectedJCheckBoxRealisticCollision(jCheckBoxRealisticCollision);		
 		SimulationTabController.setValuejComboBoxPlaneMaterial(jComboBoxPlaneMaterial);
 		SimulationTabController.setSelectedjCheckBoxMaintainRotJointPositions(jCheckBoxMaintainRotJointPositions);
 		SimulationTabController.setValuejSpinnerConstraintForceMix(jSpinnerConstraintForceMix);
@@ -515,9 +513,8 @@ public class SimulationTreeEditors{
 		//jPanelEditor.add(MainFrames.initOpenButton(fcOpenFrame));
 	}*/
 
-	private static javax.swing.JTree jTreeSimulation;
-	private static javax.swing.JScrollPane jScrollPaneTreeSimulation;
-	private static javax.swing.JButton jButtonOpenMorphology,jButtonYpositive,jButtonYnegative,
+
+	private static javax.swing.JButton jButtonYpositive,jButtonYnegative,
 	jButtonXpositive,jButtonXnegative,
 	jButtonZpositive,jButtonZnegative;
 
@@ -527,7 +524,6 @@ public class SimulationTreeEditors{
 	jCheckBoxIsFrameGrabbingActive,jCheckBoxRealisticCollision,jCheckBoxUseMouseEventQueue,
 	jCheckBoxSynchronizeWithControllers,jCheckBoxMaintainRotJointPositions;
 
-	private static javax.swing.JLabel jLabelRobotType;
 	private static javax.swing.JLabel iconLabel; 
 	private static javax.swing.JPanel jPanelMoveRobot;
 	private static javax.swing.JSpinner jSpinnerPlaneSize,jSpinnerDampingLinearVelocity, jSpinnerDampingAngularVelocity,

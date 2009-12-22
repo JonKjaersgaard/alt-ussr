@@ -179,11 +179,6 @@ public class SimulationTabController extends TabsControllers {
 
 	}
 
-	public static void setJLabelRobotType(JLabel labelRobotType) {
-		//TODO
-
-	}
-
 	public static void setValuejSpinnerDampingLinearVelocity(JSpinner spinnerDampingLinearVelocity) {
 		//spinnerDampingLinearVelocity.setValue(PhysicsParameters.get().getWorldDampingLinearVelocity());
 		spinnerDampingLinearVelocity.setValue(simulationSpecification.getConverter().convertWorldDamping(true));
@@ -202,41 +197,47 @@ public class SimulationTabController extends TabsControllers {
 	}
 
 	public static void setSelectedJCheckBoxRealisticCollision(JCheckBox checkBoxRealisticCollision) {
-		checkBoxRealisticCollision.setSelected(PhysicsParameters.get().getRealisticCollision());
+		//checkBoxRealisticCollision.setSelected(PhysicsParameters.get().getRealisticCollision());
+		checkBoxRealisticCollision.setSelected(simulationSpecification.getConverter().covertRealisticCollision());
 	}
 
 	public static void setValuejSpinnerGravity(JSpinner spinnerGravity) {
-		spinnerGravity.setValue(PhysicsParameters.get().getGravity());
-
+		//spinnerGravity.setValue(PhysicsParameters.get().getGravity());
+		spinnerGravity.setValue(simulationSpecification.getConverter().covertGravity());
 	}
 
 	public static void setValuejSpinnerConstraintForceMix(JSpinner spinnerConstraintForceMix) {
-		spinnerConstraintForceMix.setValue(PhysicsParameters.get().getConstraintForceMix());
-		SimulationTab.getHintPanel().setText(HintsSimulationTab.CONSTRAINT_FORCE_MIXING.getHintText());
+		//spinnerConstraintForceMix.setValue(PhysicsParameters.get().getConstraintForceMix());
+		spinnerConstraintForceMix.setValue(simulationSpecification.getConverter().convertConstraintForceMix());
+		//SimulationTab.getHintPanel().setText(HintsSimulationTab.CONSTRAINT_FORCE_MIXING.getHintText());
 	}
 
 	public static void setValueJSpinnerErrorReductionParameter(JSpinner spinnerErrorReductionParameter) {
-		spinnerErrorReductionParameter.setValue(PhysicsParameters.get().getErrorReductionParameter());
-		SimulationTab.getHintPanel().setText(HintsSimulationTab.ERROR_REDUCTION_PARAMETER.getHintText());
+		//spinnerErrorReductionParameter.setValue(PhysicsParameters.get().getErrorReductionParameter());
+		spinnerErrorReductionParameter.setValue(simulationSpecification.getConverter().convertErrorReductionParameter());
+		//SimulationTab.getHintPanel().setText(HintsSimulationTab.ERROR_REDUCTION_PARAMETER.getHintText());
 
 	}
 
 	public static void setValueJSpinnerResolutionFactor(JSpinner spinnerResolutionFactor) {
-		spinnerResolutionFactor.setValue(PhysicsParameters.get().getResolutionFactor());
+		//spinnerResolutionFactor.setValue(PhysicsParameters.get().getResolutionFactor());
+		spinnerResolutionFactor.setValue(simulationSpecification.getConverter().convertResolutionFactor());
 	}
 
 	public static void setSelectedJCheckBoxUseMouseEventQueue(JCheckBox checkBoxUseMouseEventQueue) {
-		checkBoxUseMouseEventQueue.setSelected(PhysicsParameters.get().useModuleEventQueue());
+		//checkBoxUseMouseEventQueue.setSelected(PhysicsParameters.get().useModuleEventQueue());
+		checkBoxUseMouseEventQueue.setSelected(simulationSpecification.getConverter().convertUseModuleEventQueue());
 
 	}
 
 	public static void setSelectedjCheckBoxSynchronizeWithControllers(JCheckBox checkBoxSynchronizeWithControllers) {
-		checkBoxSynchronizeWithControllers.setSelected(PhysicsParameters.get().syncWithControllers());
+		//checkBoxSynchronizeWithControllers.setSelected(PhysicsParameters.get().syncWithControllers());
+		checkBoxSynchronizeWithControllers.setSelected(simulationSpecification.getConverter().convertSyncWithControllers());
 	}
 
 	public static void setValuejPhysicsSimulationControllerStepFactor(JSpinner physicsSimulationControllerStepFactor) {
-		physicsSimulationControllerStepFactor.setValue(PhysicsParameters.get().getPhysicsSimulationControllerStepFactor());
-
+		//physicsSimulationControllerStepFactor.setValue(PhysicsParameters.get().getPhysicsSimulationControllerStepFactor());
+		physicsSimulationControllerStepFactor.setValue(simulationSpecification.getConverter().convertPhysicsSimulationControllerStepFactor());
 	}
 
 
@@ -320,10 +321,10 @@ public class SimulationTabController extends TabsControllers {
 		
 	}
 
-	public static void setValuejComboBoxPlaneMaterial(JComboBox comboBoxPlaneMaterial) {
-		/*String nameMaterial = PlaneMaterials.toJavaUSSRConvention();*/
-		
-		comboBoxPlaneMaterial.setSelectedItem(PhysicsParameters.get().getPlaneMaterial());
+	public static void setValuejComboBoxPlaneMaterial(JComboBox comboBoxPlaneMaterial) {		
+		//comboBoxPlaneMaterial.setSelectedItem(PhysicsParameters.get().getPlaneMaterial());
+		System.out.println("MATERIAL:"+ simulationSpecification.getConverter().covertPlaneMaterial() );
+		 comboBoxPlaneMaterial.setSelectedItem(PlaneMaterials.valueOf(simulationSpecification.getConverter().covertPlaneMaterial().toString()).getUserFriendlyName());
 	}
 
 	public static void jComboBoxPlaneMaterialActionPerformed(JComboBox comboBoxPlaneMaterial) {

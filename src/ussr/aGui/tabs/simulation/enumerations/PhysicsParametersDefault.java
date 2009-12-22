@@ -56,7 +56,8 @@ public enum PhysicsParametersDefault {
 		if (defaultValue){
 			valueToConvert = this.getDefaultValue();
 		}
-		Object object = null;
+		//Object object = null;
+		float object = 0.0f;
 		switch (this.type){
 		case FLOAT:
 			object = Float.parseFloat(valueToConvert);
