@@ -135,8 +135,9 @@ public class GUISimulationAdapter {
 		
 		 
          SimulationSpecification simulationSpecification = simulation.getXmlSimulationProvider().getSimulationSpecification();
-         SimulationTab.addRobotNode(simulationSpecification);
          SimulationTabController.setSimulationSpecification(simulationSpecification);
+         SimulationTab.addRobotNode(simulationSpecification);
+        
          
          
          
