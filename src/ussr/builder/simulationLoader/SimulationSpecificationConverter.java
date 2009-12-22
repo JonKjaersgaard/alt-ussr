@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
 
+import ussr.aGui.tabs.simulation.enumerations.PlaneMaterials;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.description.setup.WorldDescription;
 import ussr.description.setup.WorldDescription.CameraPosition;
@@ -52,8 +53,8 @@ public class SimulationSpecificationConverter implements Serializable {
 		return Float.parseFloat(simulationPhysicsParameters.get(XMLTagsUsed.GRAVITY));
 	}
 
-	public Material covertPlaneMaterial(){
-		return Material.valueOf(simulationPhysicsParameters.get(XMLTagsUsed.PLANE_MATERIAL));
+	public PlaneMaterials covertPlaneMaterial(){
+		return PlaneMaterials.valueOf(simulationPhysicsParameters.get(XMLTagsUsed.PLANE_MATERIAL));
 	}
 
 	public boolean convertMaintainRotationalJointPositions (){

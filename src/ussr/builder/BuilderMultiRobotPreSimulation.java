@@ -108,7 +108,7 @@ public class BuilderMultiRobotPreSimulation extends GenericSimulation {
 	        PhysicsParameters.get().setPhysicsSimulationStepSize(descriptionConverter.convertPhysicsSimulationStepSize());
 	        PhysicsParameters.get().setRealisticCollision(descriptionConverter.covertRealisticCollision());
 	        PhysicsParameters.get().setGravity(descriptionConverter.covertGravity());
-	        PhysicsParameters.get().setPlaneMaterial(descriptionConverter.covertPlaneMaterial());
+	       // PhysicsParameters.get().setPlaneMaterial(descriptionConverter.covertPlaneMaterial());
 	        PhysicsParameters.get().setMaintainRotationalJointPositions(descriptionConverter.convertMaintainRotationalJointPositions());
 //	       /*Not supported yet*/ HAS_MECHANICAL_CONNECTOR_SPRINGINESS,
 //	       /*Not supported yet*/ MECHANICAL_CONNECTOR_CONSTANT,

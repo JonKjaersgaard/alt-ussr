@@ -137,7 +137,7 @@ public class SimulationXMLFileLoader extends GenericSimulation {
     	PhysicsParameters.get().setWorldDampingAngularVelocity(descriptionConverter.convertWorldDamping(false));
     	PhysicsParameters.get().setRealisticCollision(descriptionConverter.covertRealisticCollision());
     	PhysicsParameters.get().setGravity(descriptionConverter.covertGravity());
-    	PhysicsParameters.get().setPlaneMaterial(descriptionConverter.covertPlaneMaterial());
+    	//PhysicsParameters.get().setPlaneMaterial(descriptionConverter.covertPlaneMaterial());
     	PhysicsParameters.get().setMaintainRotationalJointPositions(descriptionConverter.convertMaintainRotationalJointPositions());
     	PhysicsParameters.get().setConstraintForceMix(descriptionConverter.convertConstraintForceMix());
     	PhysicsParameters.get().setErrorReductionParameter(descriptionConverter.convertErrorReductionParameter());
