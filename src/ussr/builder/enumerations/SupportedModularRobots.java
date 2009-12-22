@@ -33,7 +33,8 @@ public enum SupportedModularRobots {
 	                            MTRAN_CONNECTORS_COLORS = {Color.BLACK,Color.BLACK,Color.BLACK,Color.WHITE,Color.WHITE,Color.WHITE},
 	                            CKBOTSTANDARD_CONNECTORS_COLORS = {Color.WHITE,Color.WHITE,Color.WHITE,Color.WHITE};
     
-	
+	public final static String[] ODIN_TYPES_MODULES = {"OdinBall","OdinMuscle", "OdinHinge", "OdinBattery", "OdinSpring","OdinWheel"};
+
 	/**
 	 * Checks the name of modular robot received from underlying logic of USSR and returns 
 	 * the constant introduced here.
