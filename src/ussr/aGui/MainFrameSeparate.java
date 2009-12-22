@@ -82,8 +82,9 @@ public class MainFrameSeparate extends MainFrames {
 		this.setSize(new Dimension(FRAME_WIDTH_HALF,FRAME_HEIGHT));
 		
 		/*initialize the main containers of the frame*/
-		initJMenuBar(CONTAINER_WIDTH_HALF,MENU_BAR_HEIGHT);
+		initJMenuBar(CONTAINER_WIDTH_HALF,MENU_BAR_HEIGHT);		
 		initJToolbarGeneralControl(CONTAINER_WIDTH_HALF,HORIZONTAL_TOOLBAR_HEIGHT);
+		//initSplitPane(CONTAINER_WIDTH_HALF,TABBED_PANE1_HEIGHT,CONTAINER_WIDTH_HALF, TABBED_PANE2_HEIGHT);
 		initFirstTabbedPane(CONTAINER_WIDTH_HALF,TABBED_PANE1_HEIGHT);
 		initSecondTabbedPane(CONTAINER_WIDTH_HALF, TABBED_PANE2_HEIGHT);
 		//TODO DECIDE IF IT IS NEEDED
@@ -148,11 +149,13 @@ public class MainFrameSeparate extends MainFrames {
 	 */
 	public static void main( String[] args ) {		
 		java.awt.EventQueue.invokeLater(new Runnable(){
+		//new Thread(){
 			public void run() {				
 				mainFrame = new MainFrameSeparate();
 				mainFrame.setVisible(true);
 				setMainFrameSeparateEnabled(true,false);
 			}
+		//}.start();
 		});		
 	}
 

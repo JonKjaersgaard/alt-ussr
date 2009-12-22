@@ -15,7 +15,6 @@ import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.enumerations.tabs.IconsNumbersConnectors;
 import ussr.aGui.helpers.ComboBoxRenderer;
-import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 
 
@@ -110,7 +109,6 @@ public class ConstructRobotTabController extends TabsControllers{
 	 * Adapts tab to MTRAN modular robot
 	 */
 	private static void adaptTabToMTRAN(){
-		//ConstructRobotTab.getJButtonMove().setEnabled(false);
 		ConstructRobotTab.getJButtonMoveModule().setEnabled(false);
 		ConstructRobotTab.getjComboBoxStandardRotations().setModel(new javax.swing.DefaultComboBoxModel(MTRANStandardRotations.values()));
 		ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.MTRAN_CONNECTORS);
@@ -130,7 +128,7 @@ public class ConstructRobotTabController extends TabsControllers{
 
 		ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ODIN_BALL_CONNECTORS);
 		renderer.setPreferredSize(new Dimension(15, 15));
-		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setRenderer(renderer);
+		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setRenderer(renderer);		
 		ConstructRobotTab.getJComboBoxNrConnectorsConstructionTool().setModel(new javax.swing.DefaultComboBoxModel(SupportedModularRobots.ODIN_BALL_CONNECTORS));
 	}
 

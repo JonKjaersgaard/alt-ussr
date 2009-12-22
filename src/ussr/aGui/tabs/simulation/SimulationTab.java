@@ -19,6 +19,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import ussr.aGui.FramesInter;
+import ussr.aGui.MainFrames;
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;

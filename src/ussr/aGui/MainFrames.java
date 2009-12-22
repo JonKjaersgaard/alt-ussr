@@ -268,7 +268,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jMenuHide.add(jCheckBoxMenuItemDebugging);		
 		
-		//jMenuHide.add(jSeparator3);
+		jMenuHide.add(jSeparator3);
 		
 		jCheckBoxMenuItemDisplayForHints.setText(MainFrameComponentsText.DISPLAY_FOR_HINTS.getUserFriendlyName());
 		jCheckBoxMenuItemDisplayForHints.addActionListener(new java.awt.event.ActionListener() {
@@ -583,7 +583,21 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		componentResizer.registerComponent(jTabbedPaneFirst,jTabbedPaneSecond);
 	}
 	
+    /* public void initSplitPane(int width1,int height1,int width2,int height2){
+	 jSplitPane1 = new javax.swing.JSplitPane();
 
+
+     jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+     jSplitPane1.setTopComponent(initFirstTabbedPane(width1, height1));
+    
+     jSplitPane1.setBottomComponent(initSecondTabbedPane(width2,height2));
+     
+     getContentPane().add(jSplitPane1);
+     
+     }*/
+	
+	
+	
 	/**
 	 * Initializes and returns the first tabbed pane (from the top in main GUI window).
 	 * @param width, the width of first tabbed pane.
@@ -599,8 +613,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jTabbedPaneFirst.setPreferredSize(new Dimension(width, height));		
 		jTabbedPaneFirst.setFocusable(false);
 		jTabbedPaneFirst.setEnabled(false);		
-		addTabs(tabsFirstTabbedPane,jTabbedPaneFirst);//Plug in tabs in tabbed pane 		
-		getContentPane().add(jTabbedPaneFirst);		
+		addTabs(tabsFirstTabbedPane,jTabbedPaneFirst);//Plug in tabs in tabbed pane
+		getContentPane().add(jTabbedPaneFirst);	
 		return jTabbedPaneFirst;
 	}
 
@@ -630,13 +644,14 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 * @param width, the width of tabbed pane.
 	 * @param height,the height of tabbed pane.
 	 */
-	public void initSecondTabbedPane(int width, int height){
+	public javax.swing.JTabbedPane initSecondTabbedPane(int width, int height){
 		jTabbedPaneSecond = new javax.swing.JTabbedPane();
 		jTabbedPaneSecond.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 		jTabbedPaneSecond.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jTabbedPaneSecond.setPreferredSize(new Dimension(width, height));
 		addTabs(tabsSecondTabbedPane,jTabbedPaneSecond);//Plug in tabs in tabbed pane and check boxes in menu bar		
 		getContentPane().add(jTabbedPaneSecond);
+		return jTabbedPaneSecond;
 	}
 	
 /*	public Cursor gettCursor(){
@@ -795,5 +810,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	                                         jToggleButtonMaximizeDebugging,jToggleButtonMaximizeInteraction;
 
 	private static javax.swing.JTabbedPane jTabbedPaneFirst,jTabbedPaneSecond;
+	
+	 private javax.swing.JSplitPane jSplitPane1;
 }
 

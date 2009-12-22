@@ -99,6 +99,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jComboBoxEntity = new javax.swing.JComboBox();
 		jComboBoxStandardRotations = new javax.swing.JComboBox();
 		jComboBoxNrConnectorsConstructionTool = new javax.swing.JComboBox();
+		jComboBoxModuleType = new javax.swing.JComboBox();
 
 		jSeparator2 = new javax.swing.JToolBar.Separator();
 		jSeparator3 = new javax.swing.JToolBar.Separator();
@@ -424,10 +425,20 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jToolBarChangeModuleType.setFloatable(false);//user can not make the tool bar to float
 		jToolBarChangeModuleType.setRollover(true);// the buttons inside are roll over
 		jToolBarChangeModuleType.setToolTipText(TabsComponentsText.OPERATIONS_FOR_CHANGING_MODULE_TYPE.getUserFriendlyName());
-		jToolBarChangeModuleType.setPreferredSize(new Dimension(195,30));
+		jToolBarChangeModuleType.setPreferredSize(new Dimension(195,FramesInter.HORIZONTAL_TOOLBAR_HEIGHT+5));
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 5;
 		gridBagConstraints.gridwidth =2;
+		
+		//jComboBoxModuleType.setToolTipText(TabsComponentsText.STANDARD_ROTATIONS.getUserFriendlyName());
+		jComboBoxModuleType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
+		jComboBoxModuleType.setPreferredSize(new java.awt.Dimension(50, 28));
+		jComboBoxModuleType.setEnabled(false);
+		jComboBoxModuleType.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {				
+				//ConstructRobotTabController.jComboBoxStandardRotationsActionPerformed(jComboBoxStandardRotations);
+			}
+		});
 		
 		jButtonVariateModuleProperties.setToolTipText(TabsComponentsText.VARY_MODULE_TYPE_OR_PROPERTIES.getUserFriendlyName());
 		jButtonVariateModuleProperties.setIcon(TabsIcons.VARY_PROPERTIES.getImageIcon());
@@ -435,17 +446,37 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jButtonVariateModuleProperties.setRolloverIcon(TabsIcons.VARY_PROPERTIES_ROLLOVER.getImageIcon());		
 		jButtonVariateModuleProperties.setDisabledIcon(TabsIcons.VARY_PROPERTIES_DISABLED.getImageIcon());		
 		jButtonVariateModuleProperties.setFocusable(false);
-		jButtonVariateModuleProperties.setEnabled(false);
+		jButtonVariateModuleProperties.setEnabled(true);
 		jButtonVariateModuleProperties.setPreferredSize(FramesInter.BUTTON_DIMENSION);
 		jButtonVariateModuleProperties.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setSelectionDeselection(jButtonVariateModuleProperties);
 				ConstructRobotTabController.jButtonVariateModulePropertiesActionPerformed();
 			}
-		});
-		
-		jToolBarChangeModuleType.add(jButtonVariateModuleProperties);
-		
+		});		
+
+		/*Internal layout of the toolbar*/
+		GroupLayout jToolBarjToolBarChangeModuleTypeLayout = new GroupLayout(jToolBarChangeModuleType);
+		jToolBarChangeModuleType.setLayout(jToolBarjToolBarChangeModuleTypeLayout);
+
+		jToolBarjToolBarChangeModuleTypeLayout.setHorizontalGroup(
+				jToolBarjToolBarChangeModuleTypeLayout.createSequentialGroup()
+				//Forces preferred side of component
+				.addComponent(jComboBoxModuleType,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+						GroupLayout.PREFERRED_SIZE)								
+						.addComponent(jButtonVariateModuleProperties,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)			
+
+		);
+
+		jToolBarjToolBarChangeModuleTypeLayout.setVerticalGroup(
+				jToolBarjToolBarChangeModuleTypeLayout.createSequentialGroup()
+				.addGroup(jToolBarjToolBarChangeModuleTypeLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(jComboBoxModuleType,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)							
+								.addComponent(jButtonVariateModuleProperties,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE))
+		);
 		super.jComponent.add(jToolBarChangeModuleType,gridBagConstraints);	
 		
 		jLabelOperations.setText(TabsComponentsText.OPERATIONS_ON_EXISTING.getUserFriendlyName());
@@ -532,6 +563,10 @@ public class ConstructRobotTab extends ConstructionTabs {
 
 	/*Getters and setters*/
 	
+	public static javax.swing.JComboBox getJComboBoxModuleType() {
+		return jComboBoxModuleType;
+	}
+
 	/**
 	 * Returns the button associated with functionality for coloring module connectors. 
 	 * @return the button associated with functionality for coloring module connectors.
@@ -744,7 +779,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 	}
 
 	/*Declaration of tab components*/
-	private static javax.swing.JComboBox jComboBoxEntity,
+	private static javax.swing.JComboBox jComboBoxEntity,jComboBoxModuleType,
 	jComboBoxStandardRotations,jComboBoxNrConnectorsConstructionTool;	
 
 	private static javax.swing.JLabel jLabelFirstModule, jLabelAddNewModules,jLabelOperations, 
