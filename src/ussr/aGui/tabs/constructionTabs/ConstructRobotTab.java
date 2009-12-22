@@ -438,14 +438,14 @@ public class ConstructRobotTab extends ConstructionTabs {
 		gridBagConstraints.gridwidth =2;
 		
 		//jComboBoxModuleType.setToolTipText(TabsComponentsText.STANDARD_ROTATIONS.getUserFriendlyName());
-	/*	jComboBoxModuleType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
+		jComboBoxModuleType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 		jComboBoxModuleType.setPreferredSize(new java.awt.Dimension(90, 28));
 		jComboBoxModuleType.setVisible(false);
 		jComboBoxModuleType.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				//ConstructRobotTabController.jComboBoxStandardRotationsActionPerformed(jComboBoxStandardRotations);
 			}
-		});*/
+		});
 		
 		jButtonVariateModuleProperties.setToolTipText(TabsComponentsText.VARY_MODULE_TYPE_OR_PROPERTIES.getUserFriendlyName());
 		jButtonVariateModuleProperties.setIcon(TabsIcons.VARY_PROPERTIES.getImageIcon());
@@ -469,8 +469,8 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jToolBarjToolBarChangeModuleTypeLayout.setHorizontalGroup(
 				jToolBarjToolBarChangeModuleTypeLayout.createSequentialGroup()
 				//Forces preferred side of component
-				//.addComponent(jComboBoxModuleType,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-					//	GroupLayout.PREFERRED_SIZE)								
+				.addComponent(jComboBoxModuleType,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+						GroupLayout.PREFERRED_SIZE)								
 						.addComponent(jButtonVariateModuleProperties,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE)			
 
@@ -479,8 +479,8 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jToolBarjToolBarChangeModuleTypeLayout.setVerticalGroup(
 				jToolBarjToolBarChangeModuleTypeLayout.createSequentialGroup()
 				.addGroup(jToolBarjToolBarChangeModuleTypeLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						//.addComponent(jComboBoxModuleType,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-							//	GroupLayout.PREFERRED_SIZE)							
+						.addComponent(jComboBoxModuleType,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)							
 								.addComponent(jButtonVariateModuleProperties,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE))
 		);
@@ -748,6 +748,8 @@ public class ConstructRobotTab extends ConstructionTabs {
 			getHintPanel().setType(HintPanelTypes.ATTENTION);
 			ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE.getHintText());
 		}
+		jComboBoxModuleType.setEnabled(enabled);
+		jButtonVariateModuleProperties.setEnabled(enabled);
 	}
 	
 	/**
@@ -790,7 +792,8 @@ public class ConstructRobotTab extends ConstructionTabs {
 	 * Adapts tab to ATRON modular robot
 	 */
 	public static void adaptTabToATRON(){
-		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel(ATRONStandardRotations.values()));
+		jButtonVariateModuleProperties.setEnabled(false);
+		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel(ATRONStandardRotations.getAllInUserFriendlyFormat()));
 		ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ATRON_CONNECTORS);
 		renderer.setPreferredSize(new Dimension(15, 15));
 		jComboBoxNrConnectorsConstructionTool.setRenderer(renderer);
@@ -803,6 +806,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 	 * Adapts tab to MTRAN modular robot
 	 */
 	public static void adaptTabToMTRAN(){
+		jButtonVariateModuleProperties.setEnabled(true);
 		jButtonMoveModule.setEnabled(false);
 		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel(MTRANStandardRotations.values()));
 		ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.MTRAN_CONNECTORS);
@@ -818,12 +822,13 @@ public class ConstructRobotTab extends ConstructionTabs {
 	 */
 	public static void adaptTabToOdin(){
 		//ConstructRobotTab.setEnabledRotationToolBar(false);// for Odin not yet relevant
+		jButtonVariateModuleProperties.setEnabled(true);
 		jButtonAvailableRotationsLoop.setEnabled(false);
 		jComboBoxStandardRotations.setEnabled(false);
 		jButtonOppositeRotation.setEnabled(true);
-		//jComboBoxModuleType.setVisible(true);
-		//jComboBoxModuleType.setModel(new javax.swing.DefaultComboBoxModel(OdinTypesModules.getAllInUserFriendlyFromat(1)));
-		//jComboBoxModuleType.setSelectedIndex(0);
+		jComboBoxModuleType.setVisible(true);
+		jComboBoxModuleType.setModel(new javax.swing.DefaultComboBoxModel(OdinTypesModules.getAllInUserFriendlyFromat(1)));
+		jComboBoxModuleType.setSelectedIndex(0);
 		ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ODIN_BALL_CONNECTORS);
 		renderer.setPreferredSize(new Dimension(15, 15));
 		jComboBoxNrConnectorsConstructionTool.setRenderer(renderer);		
@@ -835,6 +840,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 	 * Adapts tab to CKBOTSTANDARD modular robot
 	 */
 	public static void adaptTabToCKBOTSTANDARD(){
+		jButtonVariateModuleProperties.setEnabled(true);
 		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel( CKBotStandardRotations.values() ));
 		ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.CKBOTSTANDARD_CONNECTORS);
 		renderer.setPreferredSize(new Dimension(15, 15));

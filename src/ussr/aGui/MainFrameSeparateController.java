@@ -279,6 +279,11 @@ public class MainFrameSeparateController extends GeneralController {
 			throw new Error ("Changing the state of showing buffer depth on remote simulation failed, due to remote exception");
 		}  
 	}
+	
+	private static TabsInter constructRobotTab = MainFramesInter.CONSTRUCT_ROBOT_TAB;
+	private static TabsInter assignBehaviorsTab = MainFramesInter.ASSIGN_BEHAVIORS_TAB;			
+	private static TabsInter assignLabels = MainFramesInter.ASSIGN_LABELS_TAB;
+
 
 	/**
 	 * Adds or removes tabs for construction of modular robot morphology.
@@ -287,26 +292,22 @@ public class MainFrameSeparateController extends GeneralController {
 	 */
 	public static void jButtonConstructRobotActionPerformed(JToggleButton jToggleButtonConstructRobot, JTabbedPane jTabbedPaneFirst) {
 
-		if (jToggleButtonConstructRobot.isSelected()){
-						
-			TabsInter constructRobotTab = MainFramesInter.CONSTRUCT_ROBOT_TAB;
-			TabsInter assignBehaviorsTab = MainFramesInter.ASSIGN_BEHAVIORS_TAB;			
-			TabsInter assignLabels = MainFramesInter.ASSIGN_LABELS_TAB;
+		if (jToggleButtonConstructRobot.isSelected()){				
 			
 			/*Add tabs for construction of modular robot*/
 			jTabbedPaneFirst.addTab(constructRobotTab.getTabTitle(),new javax.swing.ImageIcon(constructRobotTab.getImageIconDirectory()),constructRobotTab.getJComponent());
 			jTabbedPaneFirst.addTab(assignBehaviorsTab.getTabTitle(),new javax.swing.ImageIcon(assignBehaviorsTab.getImageIconDirectory()),assignBehaviorsTab.getJComponent());
 			jTabbedPaneFirst.addTab(assignLabels.getTabTitle(),new javax.swing.ImageIcon(assignLabels.getImageIconDirectory()),assignLabels.getJComponent());
+			
+			/*Adapt construction tabs to the first module in simulation environment if it exists.*/
+			ConstructRobotTabController.adaptTabToModuleInSimulation();
+			AssignBehaviorsTabController.adaptTabToModuleInSimulation();
 
 			/*Update look and feel for newly added tabs*/		
 			MainFrames.changeToLookAndFeel(constructRobotTab.getJComponent());
 			MainFrames.changeToLookAndFeel(assignBehaviorsTab.getJComponent());
 			MainFrames.changeToLookAndFeel(assignLabels.getJComponent());
 			
-			/*Adapt construction tabs to the first module in simulation environment if it exists.*/
-			ConstructRobotTabController.adaptTabToModuleInSimulation();
-			AssignBehaviorsTabController.adaptTabToModuleInSimulation();	
-		
 			
 		}else{
 			/*Identify and remove tabs for construction of modular robot*/
