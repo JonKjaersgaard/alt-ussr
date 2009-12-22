@@ -298,16 +298,14 @@ public class MainFrameSeparateController extends GeneralController {
 			jTabbedPaneFirst.addTab(assignBehaviorsTab.getTabTitle(),new javax.swing.ImageIcon(assignBehaviorsTab.getImageIconDirectory()),assignBehaviorsTab.getJComponent());
 			jTabbedPaneFirst.addTab(assignLabels.getTabTitle(),new javax.swing.ImageIcon(assignLabels.getImageIconDirectory()),assignLabels.getJComponent());
 
-			
-			/*Adapt construction tabs to the first module in simulation environment if it exists.*/
-			//ConstructRobotTabController.adaptTabToModuleInSimulation();
-			//AssignBehaviorsTabController.adaptTabToModuleInSimulation();			
-			
-			
 			/*Update look and feel for newly added tabs*/		
 			MainFrames.changeToLookAndFeel(constructRobotTab.getJComponent());
 			MainFrames.changeToLookAndFeel(assignBehaviorsTab.getJComponent());
 			MainFrames.changeToLookAndFeel(assignLabels.getJComponent());
+			
+			/*Adapt construction tabs to the first module in simulation environment if it exists.*/
+			ConstructRobotTabController.adaptTabToModuleInSimulation();
+			AssignBehaviorsTabController.adaptTabToModuleInSimulation();	
 		
 			
 		}else{
