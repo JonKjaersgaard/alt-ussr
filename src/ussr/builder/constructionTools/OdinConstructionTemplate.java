@@ -110,9 +110,9 @@ public class OdinConstructionTemplate extends ModularRobotConstructionTemplate {
 	public void moveComponentAccording(int connectorNr,Module selectedModule, JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent,boolean loopFlag) {
 		String selectedModuleType =selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
 		if(selectedModuleType.equalsIgnoreCase(odinBall)){			
-			OdinMuscleConstructionTemplate  odinMuscleConst = new OdinMuscleConstructionTemplate(simulation);
+			OdinTubesConstructionTemplate  odinMuscleConst = new OdinTubesConstructionTemplate(simulation);
 			odinMuscleConst.moveOdinMusleAccording(connectorNr, selectedModule,movableModuleComponent.getModel(), loopFlag);			
-		} else if (selectedModuleType.equalsIgnoreCase(odinMuscle)){
+		} else /*if (selectedModuleType.equalsIgnoreCase(odinMuscle))*/{
 			OdinBallConstructionTemplate odinBallConst = new OdinBallConstructionTemplate(simulation);
 			odinBallConst.moveOdinBallAccording(connectorNr, selectedModule, movableModuleComponent.getModel(),loopFlag);
 		}

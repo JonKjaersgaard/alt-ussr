@@ -76,11 +76,11 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 	public Module createNewModule(Module selectedModule) {		
 		String selectedModuleType = selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
 		Module odinModule = null;
-		if (selectedModuleType.equalsIgnoreCase(DEFAULT_MODULE)){
+		if (selectedModuleType.contains("Ball")){
 			odinModule = createNewOdinModule(ODIN_MUSCLE);
-		}else if (selectedModuleType.equalsIgnoreCase(ODIN_MUSCLE)){
+		}else /*if (selectedModuleType.equalsIgnoreCase(ODIN_MUSCLE))*/{
 			odinModule = createNewOdinModule(DEFAULT_MODULE); 			
-		}else throw new Error("Something is wrong with the type of the module");		
+		}//else throw new Error("Something is wrong with the type of the module");		
 		return odinModule;
 	}
 	
@@ -95,7 +95,7 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 		List<Color> colorsComponents = new LinkedList<Color>();
 		ArrayList<Color> colorsConectors = new ArrayList<Color>();
 		VectorDescription modulePosition = new VectorDescription(0,0,0);
-		RotationDescription moduleRotation = new RotationDescription(0,0,0);		
+		RotationDescription moduleRotation = new RotationDescription(0,0,0);
 		if (type.equalsIgnoreCase(ODIN_MUSCLE)){			
 			colorsComponents.add(Color.RED); colorsComponents.add(Color.BLUE);
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);			

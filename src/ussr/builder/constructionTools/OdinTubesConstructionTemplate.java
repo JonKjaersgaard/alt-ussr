@@ -19,7 +19,7 @@ import com.jme.math.Vector3f;
  * to design of OdinMuscle module.
  * @author Konstantinas
  */
-public class OdinMuscleConstructionTemplate extends OdinConstructionTemplate  {	
+public class OdinTubesConstructionTemplate extends OdinConstructionTemplate  {	
 
 	/**
 	 *  Offset to move Structure Link and Telescoping(also called OdinMuscle) link with respect to CCP joint connectors(also called OdinBall).
@@ -31,7 +31,7 @@ public class OdinMuscleConstructionTemplate extends OdinConstructionTemplate  {
 	 * Supports OdinMuscle construction with respect to OdinBall
 	 * @param simulation, the physical simulation.
 	 */
-	public OdinMuscleConstructionTemplate(JMESimulation simulation) {
+	public OdinTubesConstructionTemplate(JMESimulation simulation) {
 		super(simulation);		
 	}
 
