@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import ussr.comm.monitors.visualtracker.CommunicationVisualizerGUI;
+import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
@@ -1094,7 +1095,6 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	public void setRealtime(boolean realtime) {
 		this.realtime = realtime;
 	}
-	
 	
 	public boolean showAllConnectors() {
 		return showAllConnectors;
