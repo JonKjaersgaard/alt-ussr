@@ -8,29 +8,6 @@ import ussr.aGui.MainFramesInter;
 import ussr.aGui.helpers.ComboBoxRenderer;
 import ussr.aGui.tabs.TabsInter;
 import ussr.builder.enumerations.SupportedModularRobots;
-
-public enum NrsConnectorsComboBoxRenderers {
-
-	
-	
-	ATRON_RENDERER(new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ATRON_CONNECTORS)),
-	ODIN_RENDERER(new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ODIN_BALL_CONNECTORS)),
-	MTRAN_RENDERER(new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.MTRAN_CONNECTORS)),
-	CKBOT_STANDARD_RENDERER(new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.CKBOTSTANDARD_CONNECTORS));
-	
-	
-	private ComboBoxRenderer comboBoxRenderer;
-
-
-	NrsConnectorsComboBoxRenderers(ComboBoxRenderer comboBoxRenderer){
-		this.comboBoxRenderer =comboBoxRenderer;
-		this.comboBoxRenderer.setPreferredSize(new Dimension(15, 15));
-	}
-	
-	public ComboBoxRenderer getComboBoxRenderer() {
-		return comboBoxRenderer;
-	}	
-	
 	/**
 	 * Contains the icons for connector numbers used in comboBox of Construct Robot tab.
 	 * @author Konstantinas
@@ -106,4 +83,4 @@ public enum NrsConnectorsComboBoxRenderers {
 			return imageIcon;
 		}
 	}
-}
+
