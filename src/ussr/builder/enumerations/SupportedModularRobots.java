@@ -9,13 +9,13 @@ import java.awt.Color;
  */
 public enum SupportedModularRobots {
 	/*ATRON is homogeneous */
-	ATRON,
+	ATRON("Atron"),
 	/*MTRAN is homogeneous*/
-	MTRAN,
+	MTRAN("M-Tran"),
 	/*ODIN is heterogeneous*/
-	ODIN,
+	ODIN("Odin"),
 	/*CKBOT is homogeneous*/
-	CKBOTSTANDARD; //PARTIALLY SUPPORTED
+	CKBOT_STANDARD("CKbot Standard"); //PARTIALLY SUPPORTED
 	
 	/**
 	 * Arrays of number of connectors for each modular robot.
@@ -34,23 +34,67 @@ public enum SupportedModularRobots {
 	                            CKBOTSTANDARD_CONNECTORS_COLORS = {Color.WHITE,Color.WHITE,Color.WHITE,Color.WHITE};
     
 	public final static String[] ODIN_TYPES_MODULES = {"OdinBall","OdinMuscle", "OdinHinge", "OdinBattery", "OdinSpring","OdinWheel"};
+	
+	/**
+	 * The name of modular robot in the form as presented to the user in GUI.
+	 */
+	private String userFriendlyName;
+	
+	/**
+	 * Modular robots supported by builder for interactive
+     * construction of their morphology and assignment of behaviors.
+	 * @param userFriendlyName,the name of modular robot in the form as presented to the user in GUI.
+	 */
+	SupportedModularRobots(String userFriedlyName){
+		this.userFriendlyName = userFriedlyName;
+	}
+	
+	/**
+	 * Returns the name of modular robot in the form as presented to the user in GUI.
+	 * @return userFriendlyName, the name of modular robot in the form as presented to the user in GUI.
+	 */
+	public String getUserFriendlyName() {
+		return userFriendlyName;
+	}
+	
+	/**
+	 * If exists, returns the name of rotation in Java convention format.
+	 * @param userFriendlyName,the name of rotation in the form as presented to the user in GUI.
+	 * @return rotationSystemName, the name of rotation in Java convention format.
+	 */
+	public static SupportedModularRobots getModularRobotSystemName(String userFriendlyName){
+		String modularRobotSystemName =" ";
+		for (int modularRobotNr=0;modularRobotNr<values().length;modularRobotNr++ ){
+			String currentUserFriendlyName = values()[modularRobotNr].getUserFriendlyName();
+			if (currentUserFriendlyName.equalsIgnoreCase(userFriendlyName)||userFriendlyName.equals(values()[modularRobotNr].toString())){
+				modularRobotSystemName = values()[modularRobotNr].toString(); 
+			};
+		}
+		
+		if (modularRobotSystemName.equals(" ")){
+			throw new Error("There is no such system name matching the following user frienly name: " + userFriendlyName );
+		}
+		return SupportedModularRobots.valueOf(modularRobotSystemName);
+	}
+	
 
 	/**
-	 * Checks the name of modular robot received from underlying logic of USSR and returns 
+	 * Checks the name of modular robot received from underlying logic of USSR(property named as type of module) and returns 
 	 * the constant introduced here.
      * @param supportedModularRobot, the name of modular robot from underlying logic of USSR(getProperty(moduleType)).
      * @return constant name introduced in builder package. 
      */
-    public static String getConsistentMRName (String supportedModularRobot){
+    public static SupportedModularRobots getConsistentMRName (String supportedModularRobot){
     
-    	SupportedModularRobots[] supportedMRobots = SupportedModularRobots.values();
-    	for (int newIndex=0; newIndex<supportedMRobots.length; newIndex++){
-    		String currentMR =supportedMRobots[newIndex].toString();  
+    	for (int newIndex=0; newIndex<values().length; newIndex++){
+    		String currentMR =values()[newIndex].toString();  
     		if (supportedModularRobot.contains(currentMR)||supportedModularRobot.toLowerCase().contains(currentMR.toLowerCase())){
-    			return currentMR;
+    			return SupportedModularRobots.valueOf(currentMR);
     		};
     	}
     	throw new Error("Modular robot named as "+supportedModularRobot+ "is not supported yet");
-    }
+    } 
     
+    
+     
 }

@@ -35,7 +35,7 @@ public class SelectOperationsAbstractFactory {
 		case ODIN:
 			selectOperations = new OdinOperationsTemplate(simulation);
 			break;
-		case CKBOTSTANDARD:
+		case CKBOT_STANDARD:
 			selectOperations = new CKBotOperationsTemplate(simulation);
 			break;
 			default: throw new Error("Modular robot named as" +modularRobotName.toString()+ "is not supported yet or the name of it is misspelled");

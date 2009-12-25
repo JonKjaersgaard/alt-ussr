@@ -113,7 +113,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 				new SelectedModuleTypeMapHelper(SupportedModularRobots.ATRON,isAtron()),
 				new SelectedModuleTypeMapHelper(SupportedModularRobots.MTRAN,isMtran()),
 				new SelectedModuleTypeMapHelper(SupportedModularRobots.ODIN,isOdin()),
-				new SelectedModuleTypeMapHelper(SupportedModularRobots.CKBOTSTANDARD,isCKBotStandard())
+				new SelectedModuleTypeMapHelper(SupportedModularRobots.CKBOT_STANDARD,isCKBotStandard())
 		};
 		/*Identifies selected module and readjusts tools accordingly, also calls for GUI re-adjustment*/
 		for(int index =0;index<selectModulesTypes.length;index++){
@@ -208,7 +208,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	 * yes calls appropriate tool.  
 	 */
 	private void callAppropriateTool(){
-		if (this.modularRobotName.equals(SupportedModularRobots.ATRON)&& isAtron()||this.modularRobotName.equals(SupportedModularRobots.MTRAN)&& isMtran()||this.modularRobotName.equals(SupportedModularRobots.ODIN)&&isOdin()||this.modularRobotName.equals(SupportedModularRobots.CKBOTSTANDARD)&&isCKBotStandard()){		
+		if (this.modularRobotName.equals(SupportedModularRobots.ATRON)&& isAtron()||this.modularRobotName.equals(SupportedModularRobots.MTRAN)&& isMtran()||this.modularRobotName.equals(SupportedModularRobots.ODIN)&&isOdin()||this.modularRobotName.equals(SupportedModularRobots.CKBOT_STANDARD)&&isCKBotStandard()){		
 			callTool();	
 		}
 	}
@@ -255,7 +255,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	 */
 	private boolean isCKBotStandard(){
 		String typeofModule = this.selectedModule.getProperty(BuilderHelper.getModuleTypeKey());		
-		if (typeofModule.toUpperCase().contains(SupportedModularRobots.CKBOTSTANDARD.toString())){			
+		if (typeofModule.toUpperCase().contains(SupportedModularRobots.CKBOT_STANDARD.toString().replace("_", ""))){			
 			return true;
 		}
 		return false;

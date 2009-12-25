@@ -19,22 +19,22 @@ public enum ATRONStandardRotations {
 	/**
 	 * The name of rotation in the form as presented to the user in GUI.
 	 */
-	private String userFriedlyName;
+	private String userFriendlyName;
 	
 	/**
 	 * Contains rotations supported for ATRON modular robot.
-	 * @param userFriedlyName, the name of rotation in the form as presented to the user in GUI.
+	 * @param userFriendlyName, the name of rotation in the form as presented to the user in GUI.
 	 */
 	ATRONStandardRotations(String userFriedlyName){
-		this.userFriedlyName = userFriedlyName;
+		this.userFriendlyName = userFriedlyName;
 	}
 	
 	/**
 	 * Returns the name of rotation in the form as presented to the user in GUI.
-	 * @return userFriedlyName, the name of rotation in the form as presented to the user in GUI.
+	 * @return userFriendlyName, the name of rotation in the form as presented to the user in GUI.
 	 */
-	public String getUserFriedlyName() {
-		return userFriedlyName;
+	public String getUserFriendlyName() {
+		return userFriendlyName;
 	}
 
 	/**
@@ -44,7 +44,7 @@ public enum ATRONStandardRotations {
 	public static Object[] getAllInUserFriendlyFormat(){
  		Vector <String> namesTetxtures = new Vector<String>();
  		for (int textureNr=0;textureNr<values().length;textureNr++){
- 			namesTetxtures.add(values()[textureNr].getUserFriedlyName()) ;
+ 			namesTetxtures.add(values()[textureNr].getUserFriendlyName()) ;
  		} 		
  		return namesTetxtures.toArray();
  	}
@@ -57,7 +57,7 @@ public enum ATRONStandardRotations {
 	public static String getRotationSystemName(String userFriendlyName){
 		String rotationSystemName =" ";
 		for (int rotationNr=0;rotationNr<values().length;rotationNr++ ){
-			String currentUserFriendlyName = values()[rotationNr].getUserFriedlyName();
+			String currentUserFriendlyName = values()[rotationNr].getUserFriendlyName();
 			if (currentUserFriendlyName.equalsIgnoreCase(userFriendlyName)||userFriendlyName.equals(values()[rotationNr].toString())){
 				rotationSystemName = values()[rotationNr].toString(); 
 			};
