@@ -68,9 +68,9 @@ public class GUISimulationAdapter {
 		
 		// FIXME USED TEMPORARY
 		// Discard standard out (avoid buffers running full)
-       // simulation.discardStandardOut();
+        simulation.discardStandardOut();
         // Get standard err, pass it to method that prints it in separate thread
-       // dumpStream("err", simulation.getStandardErr());
+        dumpStream("err", simulation.getStandardErr());
 
 
 		// Wait for simulation process to be ready to start a new simulation
@@ -126,7 +126,8 @@ public class GUISimulationAdapter {
 		remotePhysicsSimulation.setGUICallbackControl(new GUICallbackControlImpl());
 		GeneralController.setRemotePhysicsSimulation(remotePhysicsSimulation);
 		MainFrameSeparateController.setRendererControl(remotePhysicsSimulation.getRendererControl());
-		GeneralController.setBuilderControl(remotePhysicsSimulation.getBuilderControl());
+		
+		GeneralController.setBuilderControl(remotePhysicsSimulation.getBuilderControl());		
 		MainFrameSeparate.setMainFrameSeparateEnabled(true,true);
 		MainFrameSeparate.setMainFrameSeparateEnabled(false,true);		
 		 

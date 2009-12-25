@@ -123,6 +123,9 @@ public interface BuilderControlInter extends Remote {
 	 * @return the list of IDs of all modules in simulation environment.
 	 */
 	public List<Integer> getIDsModules()throws RemoteException;
+	
+	
+	public int getAmountModules()throws RemoteException;
 
 	public void loadInXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException;
 	

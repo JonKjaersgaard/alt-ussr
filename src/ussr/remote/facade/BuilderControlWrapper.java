@@ -120,8 +120,8 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 				Odin.setDefaultConnectorSize(0.006f);// make connectors bigger in order to select them successfully with "on Connector tool"
 				comOdin.addDefaultConstructionModule(SupportedModularRobots.ODIN.toString(), defaultPosition);
 			break;
-		case CKBOTSTANDARD:
-				comCKBot.addDefaultConstructionModule(SupportedModularRobots.CKBOTSTANDARD.toString(), defaultPosition);
+		case CKBOT_STANDARD:
+				comCKBot.addDefaultConstructionModule(SupportedModularRobots.CKBOT_STANDARD.toString(), defaultPosition);
 			break;
 		default: throw new Error ("Modular robot with the name "+ supportedModularRobot.toString()+ " is not supported yet");
 		}
@@ -359,6 +359,10 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 		return idsModules; 
 	}
 	
+	public int getAmountModules()throws RemoteException{		
+		return getIDsModules().size(); 
+	}
+	
 	public void loadInXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException {
 		SaveLoadXMLFileTemplateInter openXML = new InSimulationXMLSerializer(jmeSimulation);
 		openXML.loadXMLfile(ussrXmlFileType, fileDirectoryName);		
@@ -399,9 +403,9 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 			
 			String moduleType = module.getProperty(BuilderHelper.getModuleTypeKey());
 			
-			String consistentMRName = SupportedModularRobots.getConsistentMRName(moduleType);
+			SupportedModularRobots consistentMRName = SupportedModularRobots.getConsistentMRName(moduleType);
 			
-			switch(SupportedModularRobots.valueOf(consistentMRName)){
+			switch(consistentMRName){
 			case ATRON:
 				colorModuleConnectors(module,SupportedModularRobots.ATRON_CONNECTORS_COLORS);
 				break;
@@ -411,7 +415,7 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 			case MTRAN:
 				colorModuleConnectors(module,SupportedModularRobots.MTRAN_CONNECTORS_COLORS);
 				break;
-			case CKBOTSTANDARD:
+			case CKBOT_STANDARD:
 				colorModuleConnectors(module,SupportedModularRobots.CKBOTSTANDARD_CONNECTORS_COLORS);
 				break;			
 			}			
