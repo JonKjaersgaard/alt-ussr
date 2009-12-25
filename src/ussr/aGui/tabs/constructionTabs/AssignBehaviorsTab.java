@@ -8,12 +8,11 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
-
-import ussr.aGui.enumerations.ModularRobotsNames;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
+import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.StringProcessingHelper;
 
 /**
@@ -93,7 +92,7 @@ public class AssignBehaviorsTab extends ConstructionTabs{
 
 		final ButtonGroup buttonGroup = new ButtonGroup() ;
 	
-		radionButtonATRON.setText(ModularRobotsNames.ATRON.toString());	
+		radionButtonATRON.setText(SupportedModularRobots.ATRON.getUserFriendlyName());	
 		radionButtonATRON.setFocusable(true);// direct the user to what should be done first
 		radionButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,7 +103,7 @@ public class AssignBehaviorsTab extends ConstructionTabs{
 		jToolBarFilterForModularRobot.add(radionButtonATRON);
 		buttonGroup.add(radionButtonATRON);
 
-		radioButtonODIN.setText(ModularRobotsNames.Odin.toString());
+		radioButtonODIN.setText(SupportedModularRobots.ODIN.getUserFriendlyName());
 		radioButtonODIN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				AssignBehaviorsTabController.jButtonGroupActionPerformed(radioButtonODIN);
@@ -114,7 +113,7 @@ public class AssignBehaviorsTab extends ConstructionTabs{
 		jToolBarFilterForModularRobot.add(radioButtonODIN);
 		buttonGroup.add(radioButtonODIN);
 
-		radioButtonMTRAN.setText(ModularRobotsNames.MTRAN.toString());
+		radioButtonMTRAN.setText(SupportedModularRobots.MTRAN.getUserFriendlyName());
 		radioButtonMTRAN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				AssignBehaviorsTabController.jButtonGroupActionPerformed(radioButtonMTRAN);
@@ -124,7 +123,7 @@ public class AssignBehaviorsTab extends ConstructionTabs{
 		jToolBarFilterForModularRobot.add(radioButtonMTRAN);
 		buttonGroup.add(radioButtonMTRAN);
 
-		radionButtonCKBOTSTANDARD.setText(ModularRobotsNames.CKBotStandard.toString());
+		radionButtonCKBOTSTANDARD.setText(SupportedModularRobots.CKBOT_STANDARD.getUserFriendlyName());
 		radionButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				AssignBehaviorsTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD);

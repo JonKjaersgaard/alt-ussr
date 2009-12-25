@@ -6,7 +6,6 @@ import java.util.Vector;
 import javax.swing.AbstractButton;
 import javax.swing.JCheckBox;
 
-import ussr.aGui.enumerations.ModularRobotsNames;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
@@ -44,11 +43,13 @@ public class AssignBehaviorsTabController extends TabsControllers {
 	public static void jButtonGroupActionPerformed(javax.swing.AbstractButton radionButton){
 		loadExistingControllers(AssignBehaviorsTab.getJListAvailableControllers());
 
-		ModularRobotsNames[] modularRobotsNames = ModularRobotsNames.values();
 		boolean modularRobotNameExists = false;
-		for (int buttonTextItem=0;buttonTextItem<modularRobotsNames.length;buttonTextItem++){
-			if (radionButton.getText().equals(modularRobotsNames[buttonTextItem].toString())){
-				updateList(AssignBehaviorsTab.getJListAvailableControllers(),filterOut(modularRobotsNames[buttonTextItem]));
+		SupportedModularRobots[] supportedModularRobots = SupportedModularRobots.values();
+		for (int buttonTextItem=0;buttonTextItem<supportedModularRobots.length;buttonTextItem++){
+			
+			if (radionButton.getText().equals(supportedModularRobots[buttonTextItem].getUserFriendlyName())){
+				String modularRobotName= SupportedModularRobots.getModularRobotSystemName(supportedModularRobots[buttonTextItem].getUserFriendlyName()).toString();
+				updateList(AssignBehaviorsTab.getJListAvailableControllers(),filterOut(modularRobotName));
 				modularRobotNameExists =true;
 			}
 		}
@@ -105,13 +106,13 @@ public class AssignBehaviorsTabController extends TabsControllers {
 
 	/**
 	 * Filters out the names of controller for specific modular robot name.
-	 * @param modularRobotsName, modular robot name.
+	 * @param modularRobotName, modular robot name.
 	 * @return tempClassesOfControllers, array of controllers for specific modular robot name.
 	 */
-	public static Vector<String> filterOut(ModularRobotsNames modularRobotsName){
+	public static Vector<String> filterOut(String modularRobotName){
 		tempClassesOfControllers.removeAllElements();
 		for (int index=0; index<classesOfControllers.size();index++){
-			if (classesOfControllers.get(index).contains(modularRobotsName.toString())){
+			if (classesOfControllers.get(index).contains(modularRobotName)){
 				tempClassesOfControllers.add(classesOfControllers.get(index));
 			}
 		}
@@ -161,7 +162,7 @@ public class AssignBehaviorsTabController extends TabsControllers {
 			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.MTRAN.toString())){
 				jButtonGroupActionPerformed(AssignBehaviorsTab.getRadioButtonMTRAN());
 				AssignBehaviorsTab.getRadioButtonMTRAN().setSelected(true);
-			}else if(modularRobotName.toUpperCase().contains(SupportedModularRobots.CKBOTSTANDARD.toString())){
+			}else if(modularRobotName.toUpperCase().contains(SupportedModularRobots.CKBOT_STANDARD.toString())){
 				jButtonGroupActionPerformed(AssignBehaviorsTab.getRadionButtonCKBOTSTANDARD());
 				AssignBehaviorsTab.getRadionButtonCKBOTSTANDARD().setSelected(true);
 			}		

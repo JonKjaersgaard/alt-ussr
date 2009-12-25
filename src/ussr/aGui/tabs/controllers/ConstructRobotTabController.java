@@ -22,8 +22,8 @@ public class ConstructRobotTabController extends TabsControllers{
 	/**
 	 *  The name of modular robot chosen in GUI.
 	 */
-	private  static SupportedModularRobots chosenMRname;	
-
+	private  static SupportedModularRobots chosenMRname;
+	
 	/**
 	 * Adds initial construction module according to selected module type and adapts the Tab to modular robot type.
 	 * @param button, button selected in the group of radio button.
@@ -31,8 +31,9 @@ public class ConstructRobotTabController extends TabsControllers{
 	public static void jButtonGroupActionPerformed(AbstractButton button ) {
 
 		String chosenModularRobot = button.getText();			
-		chosenMRname = SupportedModularRobots.valueOf(chosenModularRobot.toUpperCase());
-
+		//chosenMRname = SupportedModularRobots.valueOf(chosenModularRobot.toUpperCase());
+		chosenMRname = SupportedModularRobots.getModularRobotSystemName(chosenModularRobot);
+		
 		/*Adapt Tab components to chosen modular robot */
 		adaptTabToChosenMR(chosenMRname,false);
 
@@ -83,7 +84,7 @@ public class ConstructRobotTabController extends TabsControllers{
 		case ODIN:
 			ConstructRobotTab.adaptTabToOdin();
 			break;
-		case CKBOTSTANDARD:
+		case CKBOT_STANDARD:
 			ConstructRobotTab.adaptTabToCKBOTSTANDARD();
 			break;
 		}	
@@ -308,7 +309,7 @@ public class ConstructRobotTabController extends TabsControllers{
 		case MTRAN:
 			ConstructRobotTab.getRadioButtonMTRAN().setSelected(true);
 			break;
-		case CKBOTSTANDARD:
+		case CKBOT_STANDARD:
 			ConstructRobotTab.getRadionButtonCKBOTSTANDARD().setSelected(true);
 			break;
 		default: throw new Error("Modular robot named as "+ supportedModularRobot.toString() + "is not supported yet" );
@@ -319,6 +320,7 @@ public class ConstructRobotTabController extends TabsControllers{
 
 	}
 
+	
 	/**
 	 * Adapts Construct Robot Tab to the the type of first module in simulation environment.
 	 */
@@ -338,7 +340,12 @@ public class ConstructRobotTabController extends TabsControllers{
 			} catch (RemoteException e) {
 				throw new Error ("Failed to identify the type of the first module in simulation environment, due to remote exception.");
 			}
-
+			
+			switch(SupportedModularRobots.getConsistentMRName(modularRobotName)){
+			
+			}
+			
+			
 			if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ATRON.toString())){
 				adaptTabToChosenMR(SupportedModularRobots.ATRON,false);
 				chosenMRname = SupportedModularRobots.ATRON;
@@ -348,9 +355,9 @@ public class ConstructRobotTabController extends TabsControllers{
 			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.MTRAN.toString())){
 				adaptTabToChosenMR(SupportedModularRobots.MTRAN,false);
 				chosenMRname = SupportedModularRobots.MTRAN;
-			}else if(modularRobotName.toUpperCase().contains(SupportedModularRobots.CKBOTSTANDARD.toString())){
-				adaptTabToChosenMR(SupportedModularRobots.CKBOTSTANDARD,false);
-				chosenMRname = SupportedModularRobots.CKBOTSTANDARD;
+			}else if(modularRobotName.toUpperCase().contains(SupportedModularRobots.CKBOT_STANDARD.toString())){
+				adaptTabToChosenMR(SupportedModularRobots.CKBOT_STANDARD,false);
+				chosenMRname = SupportedModularRobots.CKBOT_STANDARD;
 			}else{
 				throw new Error ("Modular robot type "+modularRobotName+ "is not supported yet" );
 			}

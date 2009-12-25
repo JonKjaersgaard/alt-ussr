@@ -8,13 +8,10 @@ import java.util.ArrayList;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
-import javax.swing.JButton;
 import javax.swing.JRadioButton;
-import javax.swing.ListCellRenderer;
-import javax.swing.Renderer;
+
 
 import ussr.aGui.FramesInter;
-import ussr.aGui.enumerations.ModularRobotsNames;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.enumerations.tabs.IconsNumbersConnectors;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
@@ -45,7 +42,10 @@ public class ConstructRobotTab extends ConstructionTabs {
 	/**
 	 * The constants of grid bag layout used during design of the tab.
 	 */
-	private GridBagConstraints gridBagConstraints = new GridBagConstraints();	
+	private GridBagConstraints gridBagConstraints = new GridBagConstraints();
+	
+	
+	private final static ComboBoxRenderer atronRenderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ATRON_CONNECTORS);
 
 
 	/**
@@ -180,7 +180,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		gridBagConstraints.insets = new Insets(0,0,0,0);  		
 		
 		radioButtonATRON.setFocusable(false);
-		radioButtonATRON.setText(ModularRobotsNames.ATRON.toString());
+		radioButtonATRON.setText(SupportedModularRobots.ATRON.getUserFriendlyName());
 		radioButtonATRON.setEnabled(false);
 		radioButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,7 +191,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		buttonGroupModularRobots.add(radioButtonATRON);
 		jRadioButtons.add(radioButtonATRON);
 
-		radioButtonODIN.setText(ModularRobotsNames.Odin.toString());
+		radioButtonODIN.setText(SupportedModularRobots.ODIN.getUserFriendlyName());
 		radioButtonODIN.setFocusable(false);
 		radioButtonODIN.setEnabled(false);
 		radioButtonODIN.addActionListener(new java.awt.event.ActionListener() {
@@ -203,7 +203,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		buttonGroupModularRobots.add(radioButtonODIN);
 		jRadioButtons.add(radioButtonODIN);
 
-		radioButtonMTRAN.setText(ModularRobotsNames.MTRAN.toString());
+		radioButtonMTRAN.setText(SupportedModularRobots.MTRAN.getUserFriendlyName());
 		radioButtonMTRAN.setFocusable(false);
 		radioButtonMTRAN.setEnabled(false);
 		radioButtonMTRAN.addActionListener(new java.awt.event.ActionListener() {
@@ -215,7 +215,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		buttonGroupModularRobots.add(radioButtonMTRAN);
 		jRadioButtons.add(radioButtonMTRAN);
 
-		radioButtonCKBOTSTANDARD.setText(ModularRobotsNames.CKBotStandard.toString());
+		radioButtonCKBOTSTANDARD.setText(SupportedModularRobots.CKBOT_STANDARD.getUserFriendlyName());
 		radioButtonCKBOTSTANDARD.setFocusable(false);
 		radioButtonCKBOTSTANDARD.setEnabled(false);
 		radioButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
@@ -794,9 +794,11 @@ public class ConstructRobotTab extends ConstructionTabs {
 	public static void adaptTabToATRON(){
 		jButtonVariateModuleProperties.setEnabled(false);
 		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel(ATRONStandardRotations.getAllInUserFriendlyFormat()));
-		ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ATRON_CONNECTORS);
-		renderer.setPreferredSize(new Dimension(15, 15));
-		jComboBoxNrConnectorsConstructionTool.setRenderer(renderer);
+		//ComboBoxRenderer renderer = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ATRON_CONNECTORS);
+		//renderer.setPreferredSize(new Dimension(15, 15));
+		//jComboBoxNrConnectorsConstructionTool.setRenderer(renderer);
+		atronRenderer.setPreferredSize(new Dimension(15, 15));
+		jComboBoxNrConnectorsConstructionTool.setRenderer(atronRenderer);
 		jComboBoxNrConnectorsConstructionTool.setModel(new javax.swing.DefaultComboBoxModel(SupportedModularRobots.ATRON_CONNECTORS));
 		jComboBoxModuleType.setVisible(false);
 	}
