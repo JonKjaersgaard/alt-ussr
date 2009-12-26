@@ -9,7 +9,7 @@ import javax.swing.JToggleButton;
 
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.tabs.TabsInter;
-import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
+import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
@@ -84,7 +84,7 @@ public class MainFrameSeparateController extends GeneralController {
 	 */
 	private static void adaptGUI(){
 		ConstructRobotTab.setTabEnabled(false);
-		AssignBehaviorsTab.setTabEnabled(false);
+		AssignControllerTab.setTabEnabled(false);
 		MainFrameSeparate.getJToggleButtonVisualizer().setEnabled(true);
 		ModuleCommunicationVisualizerController.setIdsModules();
 	}
@@ -418,11 +418,11 @@ public class MainFrameSeparateController extends GeneralController {
 		if (checkBoxMenuItemDisplayForHints.isSelected()){
 			SimulationTab.getHintPanel().setVisible(false);
 			ConstructRobotTab.getHintPanel().setVisible(false);
-			AssignBehaviorsTab.getHintPanel().setVisible(false);
+			AssignControllerTab.getHintPanel().setVisible(false);
 		}else{
 			SimulationTab.getHintPanel().setVisible(true);
 			ConstructRobotTab.getHintPanel().setVisible(true);
-			AssignBehaviorsTab.getHintPanel().setVisible(true);
+			AssignControllerTab.getHintPanel().setVisible(true);
 		}
 
 	}

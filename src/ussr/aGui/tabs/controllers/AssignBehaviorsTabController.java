@@ -5,10 +5,11 @@ import java.util.Vector;
 
 import javax.swing.AbstractButton;
 import javax.swing.JCheckBox;
+import javax.swing.JToggleButton;
 
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
-import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
+import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 
 import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
@@ -41,7 +42,7 @@ public class AssignBehaviorsTabController extends TabsControllers {
 	 * @param radionButton, the radio button representing modular robot name.
 	 */
 	public static void jButtonGroupActionPerformed(javax.swing.AbstractButton radionButton){
-		loadExistingControllers(AssignBehaviorsTab.getJListAvailableControllers());
+		loadExistingControllers(AssignControllerTab.getJListAvailableControllers());
 
 		boolean modularRobotNameExists = false;
 		SupportedModularRobots[] supportedModularRobots = SupportedModularRobots.values();
@@ -49,7 +50,7 @@ public class AssignBehaviorsTabController extends TabsControllers {
 			
 			if (radionButton.getText().equals(supportedModularRobots[buttonTextItem].getUserFriendlyName())){
 				String modularRobotName= SupportedModularRobots.getModularRobotSystemName(supportedModularRobots[buttonTextItem].getUserFriendlyName()).toString();
-				updateList(AssignBehaviorsTab.getJListAvailableControllers(),filterOut(modularRobotName));
+				updateList(AssignControllerTab.getJListAvailableControllers(),filterOut(modularRobotName));
 				modularRobotNameExists =true;
 			}
 		}
@@ -58,8 +59,8 @@ public class AssignBehaviorsTabController extends TabsControllers {
 			throw new Error ("Not supported modulal robot name: "+ radionButton.getText());
 		}
 		/*Informing user*/
-		AssignBehaviorsTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
-		AssignBehaviorsTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[1]);
+		AssignControllerTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
+		AssignControllerTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[1]);
 	}
 
 	/**
@@ -154,25 +155,35 @@ public class AssignBehaviorsTabController extends TabsControllers {
 			}
 			
 			if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ATRON.toString())){
-				jButtonGroupActionPerformed(AssignBehaviorsTab.getRadionButtonATRON());
-				AssignBehaviorsTab.getRadionButtonATRON().setSelected(true);
+				jButtonGroupActionPerformed(AssignControllerTab.getRadionButtonATRON());
+				AssignControllerTab.getRadionButtonATRON().setSelected(true);
 			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ODIN.toString())){
-				jButtonGroupActionPerformed(AssignBehaviorsTab.getRadioButtonODIN());
-				AssignBehaviorsTab.getRadioButtonODIN().setSelected(true);
+				jButtonGroupActionPerformed(AssignControllerTab.getRadioButtonODIN());
+				AssignControllerTab.getRadioButtonODIN().setSelected(true);
 			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.MTRAN.toString())){
-				jButtonGroupActionPerformed(AssignBehaviorsTab.getRadioButtonMTRAN());
-				AssignBehaviorsTab.getRadioButtonMTRAN().setSelected(true);
+				jButtonGroupActionPerformed(AssignControllerTab.getRadioButtonMTRAN());
+				AssignControllerTab.getRadioButtonMTRAN().setSelected(true);
 			}else if(modularRobotName.toUpperCase().contains(SupportedModularRobots.CKBOT_STANDARD.toString())){
-				jButtonGroupActionPerformed(AssignBehaviorsTab.getRadionButtonCKBOTSTANDARD());
-				AssignBehaviorsTab.getRadionButtonCKBOTSTANDARD().setSelected(true);
+				jButtonGroupActionPerformed(AssignControllerTab.getRadionButtonCKBOTSTANDARD());
+				AssignControllerTab.getRadionButtonCKBOTSTANDARD().setSelected(true);
 			}		
 		}
 	}
 	
 	
 	public static void updateHintPanel(HintPanelTypes hintPanelTypes,String text){
-		AssignBehaviorsTab.getHintPanel().setType(hintPanelTypes);
-		AssignBehaviorsTab.getHintPanel().setText(text);
+		AssignControllerTab.getHintPanel().setType(hintPanelTypes);
+		AssignControllerTab.getHintPanel().setText(text);
+	}
+
+	public static void jToggleButtonEditValuesActionPerformed(JToggleButton toggleButtonEditValues) {
+		if (toggleButtonEditValues.isSelected()){
+			AssignControllerTab.getJPanelEditValue().setVisible(true);
+		}else{
+			AssignControllerTab.getJPanelEditValue().setVisible(false);
+		}
+		
+		
 	}
 	
 	

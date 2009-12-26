@@ -169,8 +169,6 @@ public enum SimulationTabTreeNodes {
         	name = name+characters[index];
         }		 
 		return name;
-	}
-	
-	
+	}	
  
 }

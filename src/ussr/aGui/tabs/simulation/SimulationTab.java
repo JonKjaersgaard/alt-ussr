@@ -254,30 +254,13 @@ public class SimulationTab extends Tabs {
 
 	private static javax.swing.JTree jTreeSimulation;
 	private static javax.swing.JScrollPane jScrollPaneTreeSimulation;
-	private static javax.swing.JButton jButtonOpenMorphology,jButtonYpositive,jButtonYnegative,
-	jButtonXpositive,jButtonXnegative,
-	jButtonZpositive,jButtonZnegative;
-
-	private static javax.swing.JSpinner  jSpinnerPlaneSize ;
-	private static javax.swing.JComboBox jComboBoxPlaneTexture;
-	private static javax.swing.JComboBox jComboBoxCameraPosition;
-
-	private static javax.swing.JCheckBox jCheckBoxTheWorldIsFlat,jCheckBoxHasBackgroundScenery, jCheckBoxHasHeavyObstacles,
-	jCheckBoxIsFrameGrabbingActive,jCheckBoxRealisticCollision,jCheckBoxUseMouseEventQueue,
-	jCheckBoxSynchronizeWithControllers;
-
-	private static javax.swing.JLabel jLabelRobotType;
 
 	private static javax.swing.JLabel newLabel;
 
 	private static javax.swing.JPanel jPanelEditor;
-	private static javax.swing.JPanel jPanelMoveRobot;
-	private static javax.swing.JSpinner jSpinnerDampingLinearVelocity, jSpinnerDampingAngularVelocity,
-	jSpinnerPhysicsSimulationStepSize, jSpinnerGravity,jSpinnerConstraintForceMix,
-	jSpinnerErrorReductionParameter, jSpinnerResolutionFactor, jPhysicsSimulationControllerStepFactor,
-	jSpinnerCoordinateValue;
+	private static javax.swing.JSpinner jSpinnerCoordinateValue;
 
-	private static  DefaultMutableTreeNode firstNodeHierarchySimulation,secondNodeHierarchyRobots,secondNodeHierarchy,thirdNodeHierarchy;
+	private static  DefaultMutableTreeNode firstNodeHierarchySimulation,secondNodeHierarchy,thirdNodeHierarchy;
 
 
 

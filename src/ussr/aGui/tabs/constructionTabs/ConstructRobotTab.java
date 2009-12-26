@@ -126,9 +126,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		gridBagConstraints.gridwidth = 3;		
 		
 		jToolBarGeneralControl.add(jButtonOpen);		
-		jToolBarGeneralControl.add(jButtonSave);
-		jSeparator3.setPreferredSize(new Dimension(6,30));
-		jToolBarGeneralControl.add(jSeparator3);
+		jToolBarGeneralControl.add(jButtonSave);		
 		
 		jButtonStartNewRobot.setIcon(TabsIcons.NEW_ROBOT.getImageIcon());
 		jButtonStartNewRobot.setSelectedIcon(TabsIcons.NEW_ROBOT.getImageIcon());
@@ -143,6 +141,9 @@ public class ConstructRobotTab extends ConstructionTabs {
 			}
 		});
 		jToolBarGeneralControl.add(jButtonStartNewRobot);
+		
+		jSeparator3.setPreferredSize(new Dimension(6,30));
+		jToolBarGeneralControl.add(jSeparator3);
 		
 		jToggleButtonColorConnetors.setToolTipText(TabsComponentsText.COLOR_MODULE_CONNECTORS.getUserFriendlyName());
 		jToggleButtonColorConnetors.setIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());

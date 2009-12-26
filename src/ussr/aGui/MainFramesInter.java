@@ -4,7 +4,7 @@ import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.tabs.ConsoleTab;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.YourNewTab;
-import ussr.aGui.tabs.constructionTabs.AssignBehaviorsTab;
+import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.constructionTabs.LabelingTab;
 import ussr.aGui.tabs.simulation.SimulationTab;
@@ -74,7 +74,7 @@ public interface MainFramesInter {
 	 * Instances of tabs plugged in main GUI window
 	 */
 	public final TabsInter  CONSTRUCT_ROBOT_TAB = new ConstructRobotTab(false,true,CONSTRUCT_ROBOT_TAB_TITLE,contructRobotIconDirectory),
-	                        ASSIGN_BEHAVIORS_TAB = new AssignBehaviorsTab(false,true,ASSIGN_BEHAVIORS_TAB_TITLE,contructRobotIconDirectory),
+	                        ASSIGN_BEHAVIORS_TAB = new AssignControllerTab(false,true,ASSIGN_BEHAVIORS_TAB_TITLE,contructRobotIconDirectory),
 	                        ASSIGN_LABELS_TAB = new LabelingTab(false,true,ASSIGN_LABELS_TAB_TITLE,contructRobotIconDirectory),
 	                        MODULE_COMMUNICATION_VISUALIZER_TAB = new ModuleCommunicationVisualizer(false,true,MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE,MainFrameIcons.VISUALIZER_ROLLOVER.getImageDirectory()),
 	                        SIMULATION_CONFIGURATION_TAB = new SimulationTab(true,true,SIMULATION_TAB_TITLE,FramesInter.DIRECTORY_USSR_ICON),
