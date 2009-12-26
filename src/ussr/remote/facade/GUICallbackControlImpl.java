@@ -3,6 +3,7 @@ package ussr.remote.facade;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
+import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.LabelingTabController;
@@ -89,6 +90,10 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 	/*public void adaptTabToModuleInSimulation()throws RemoteException{
 		ConstructRobotTabController.adaptTabToModuleInSimulation();
 	};*/
+	
+	public String getDefaultConstructionModuleType()throws RemoteException{
+		return ConstructRobotTab.getDefaultConstructionModuleType();
+	}
 	
 	
 	

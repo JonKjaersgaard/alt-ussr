@@ -55,4 +55,6 @@ public interface GUICallbackControl extends Remote {
 	public void newRobotLoaded(SimulationSpecification simulationSpecification)throws RemoteException;
 	
 	//public void adaptTabToModuleInSimulation()throws RemoteException;
+	
+	public String getDefaultConstructionModuleType()throws RemoteException;
 }
