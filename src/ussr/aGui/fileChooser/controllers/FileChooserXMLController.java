@@ -7,7 +7,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.remote.ConsoleSimulationExample;
-import ussr.remote.GUISimulationAdapter;
+import ussr.remote.GUIRemoteSimulationAdapter;
 
 
 /**

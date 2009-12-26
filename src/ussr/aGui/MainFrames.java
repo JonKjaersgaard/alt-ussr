@@ -15,7 +15,7 @@ import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 import ussr.aGui.helpers.ComponentResizer;
 import ussr.aGui.tabs.TabsInter;
 import ussr.builder.helpers.StringProcessingHelper;
-import ussr.remote.GUISimulationAdapter;
+import ussr.remote.GUIRemoteSimulationAdapter;
 
 /**
  * Holds methods and constants common for different design(visual appearance) of main GUI window (MainFrames). 
@@ -56,7 +56,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		initFileChoosers ();// initialize visual appearance of file choosers. Why here, because then they are responding faster to user generated events, because they are compiled earlier).
 		initFrameProperties();
 		/*Starts simulation adapter, which in turn starts simulation server (only once) */	
-		new GUISimulationAdapter();
+		new GUIRemoteSimulationAdapter();
 	}
 
 	/**

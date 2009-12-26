@@ -4,7 +4,7 @@ package ussr.aGui;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
-import ussr.remote.GUISimulationAdapter;
+import ussr.remote.GUIRemoteSimulationAdapter;
 import ussr.remote.facade.BuilderControlInter;
 import ussr.remote.facade.RemotePhysicsSimulation;
 
@@ -37,7 +37,7 @@ public abstract class GeneralController {
 		new Thread() {
 			public void run() {
 				try {
-					GUISimulationAdapter.runSimulation(simulationXMLFileDirectory);
+					GUIRemoteSimulationAdapter.runSimulation(simulationXMLFileDirectory);
 				} catch (IOException e) {
 					throw new Error("Failed to run simulation file located at "+ simulationXMLFileDirectory+ " , due to remote exception");
 				}
