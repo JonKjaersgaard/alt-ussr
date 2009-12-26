@@ -28,7 +28,7 @@ import ussr.remote.facade.RemotePhysicsSimulation;
  * Is responsible for connecting GUI with remote simulation.
  * @author Konstantinas
  */
-public class GUISimulationAdapter {
+public class GUIRemoteSimulationAdapter {
 
 	public static final int SERVER_PORT = 54323;
 	
@@ -38,7 +38,7 @@ public class GUISimulationAdapter {
 	 */
 	private static SimulationLauncherServer server;
 
-	public GUISimulationAdapter(){
+	public GUIRemoteSimulationAdapter(){
 		// Start a simulation server (one that manages a number of running simulation processes)
 		try {
 			server = new SimulationLauncherServer(AbstractSimulationBatch.SERVER_PORT);
@@ -47,6 +47,13 @@ public class GUISimulationAdapter {
 		}      
 	} 
 	
+/*	private static RemoteSimulationThread threadRemoteSimulation;
+	
+	public static RemoteSimulationThread getThreadRemoteSimulation() {
+		return threadRemoteSimulation;
+	}*/
+
+
 	/**
 	 * Starts simulation from specified xml file.
 	 * @param simulationXMLFile
@@ -84,8 +91,15 @@ public class GUISimulationAdapter {
 	
 		
 		// Start a simulation in the remote process
+		//threadRemoteSimulation = new RemoteSimulationThread(simulation,simulationXMLFile);
+		//threadRemoteSimulation.start();
+		
+	
+		
 		new Thread() {
+			
 			public void run() {
+			
 				try {
 					// Start using an xml file for a robot and a controller (both loaded by simulator process)
 					//simulation.start("samples/atron/car.xml", ussr.samples.atron.simulations.ATRONCarController1.class);
@@ -95,13 +109,21 @@ public class GUISimulationAdapter {
 					//NO ATRONRoleSimulation.class(broken), CommunicationDemo(null),ATRONTestSimulation.class(null),
 					//ConveyorSimulation(null),CrawlerSimulation(null),EightToCarSimulation(broken),SnakeCarDemo.class(null);
 				} catch (RemoteException e) {
+			
+					
 					// Normal or abnormal termination, inspection of remote exception currently needed to determine...
 					System.err.println("Simulation stopped");
 				}
-			}
+		}
+			
 		}.start();
+		//threadRemoteSimulation.start();
+		
 		
 		// Obtain a reference to remote PhysicsSimulation object (must wait for it to be instantiated remotely)
+	/*	if (threadRemoteSimulation.isUbNormalTemination()){
+			
+		}else{*/
 		RemotePhysicsSimulation sim = null;
 		while(sim==null) {
 			System.out.println("Simulation still null");
@@ -114,6 +136,7 @@ public class GUISimulationAdapter {
 		}
 	
 		callBackGUI(simulation,sim);
+		//}
 	}
 	
 
@@ -163,4 +186,8 @@ public class GUISimulationAdapter {
         }.start();
     }
     
+   
+    
+    
 }
+

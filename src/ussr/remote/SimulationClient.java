@@ -98,8 +98,10 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
 	public void start(String simulationXMLFile) throws RemoteException {  
     	SimulationXMLFileLoader simulationLoader = new SimulationXMLFileLoader(simulationXMLFile);
     	xmlSimulationProvider = new XMLSimulationProvider(simulationLoader);    	
-    	this.simulation = SimulationXMLFileLoader.getPhysicsSimulation();       
-        simulationLoader.start(true);        
+    	this.simulation = SimulationXMLFileLoader.getPhysicsSimulation(); 
+    	if (simulation!=null){
+        simulationLoader.start(true);
+    	}
     }
 	
     

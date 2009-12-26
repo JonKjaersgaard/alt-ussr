@@ -211,7 +211,7 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 			jmeSimulation.setModules(atronModules);
 			jmeSimulation.worldDescription.setModulePositions(atronModulePositions);
 			jmeSimulation.worldDescription.setModuleConnections(atronModuleConnection);                          
-			jmeSimulation.placeModules();
+			jmeSimulation.placeModules();			
 
 			ArrayList<ModuleConnection> mtranModuleConnection =MTRANSimulation.allConnections(mtranModulePositions); 
 			jmeSimulation.setModules(mtranModules);
