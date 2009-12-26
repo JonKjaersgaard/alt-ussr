@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import ussr.aGui.GeneralController;
 import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.aGui.tabs.simulation.enumerations.PhysicsParametersDefault;
 import ussr.builder.enumerations.UssrXmlFileTypes;
@@ -22,6 +23,7 @@ import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.physics.jme.JMESimulation;
+import ussr.remote.GUIRemoteSimulationAdapter;
 import ussr.samples.DefaultSimulationSetup;
 import ussr.samples.GenericSimulation;
 
@@ -79,8 +81,7 @@ public class SimulationXMLFileLoader extends GenericSimulation {
 	    
 	    PhysicsLogger.setDefaultLoggingLevel();
 	     
-        /* Create the simulation*/
-        simulation = PhysicsFactory.createSimulator();
+       
        
         /*Load Simulation Configuration file*/
 		SaveLoadXMLFileTemplateInter xmlLoaderSimulation = new PreSimulationXMLSerializer();
@@ -88,41 +89,47 @@ public class SimulationXMLFileLoader extends GenericSimulation {
         
 		/*Get all values from XML file*/
         simulationSpecification = xmlLoaderSimulation.getSimulationSpecification();
-       
-        /*Converter for converting values from String into corresponding type used in USSR*/
-        ;
         
-        
-       // descriptionConverter =  new SimulationSpecificationConverter(simulationSpecification.getSimWorldDecsriptionValues(),simulationSpecification.getSimPhysicsParameters());
-        descriptionConverter =  simulationSpecification.getConverter();
-      
-        
-        //setPhysicsParameters();// IS NOT WORKING
-        
-        //String controllerLocation = robotDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
-       // String controllerLocation = SimulationSpecification.robotsInSimulation.get(0).getControllerLocation();
-        String controllerLocation = simulationSpecification.getRobotsInSimulation().get(0).getControllerLocation();
-        
-        List<String> controllerNames = new ArrayList<String>();        
-        controllerNames.add(controllerLocation);
-        ControllerFactory controllerFactory = new ControllerFactoryImpl(controllerNames);
-        
-        
-       // setPhysicsParameters();// IS NOT WORKING
-        WorldDescription world = this.createGenericSimulationWorld(controllerFactory);
-        world = createWorld();
-        
-        /* Load the robot */ 
-        robotXMLLoader = new PreSimulationXMLSerializer(world);
-       
-        for (int robotNr=0;robotNr<simulationSpecification.getRobotsInSimulation().size();robotNr++){
-        	 
-        	String morphology = simulationSpecification.getRobotsInSimulation().get(robotNr).getMorphologyLocation();
-        	 robotXMLLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,morphology);
-        }
-        
-        simulation.setWorld(world); 
-      
+        /*Check is SIMULATION xml file was loaded or some different one*/
+        if (simulationSpecification.getSimWorldDecsriptionValues().containsKey(XMLTagsUsed.SIMULATION)){
+        	 /* Create the simulation*/
+            simulation = PhysicsFactory.createSimulator();
+        	
+        	/*Converter for converting values from String into corresponding type used in USSR*/      
+            descriptionConverter =  simulationSpecification.getConverter();
+          
+            
+            //setPhysicsParameters();// IS NOT WORKING
+            
+            //String controllerLocation = robotDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
+           // String controllerLocation = SimulationSpecification.robotsInSimulation.get(0).getControllerLocation();
+            String controllerLocation = simulationSpecification.getRobotsInSimulation().get(0).getControllerLocation();
+            
+            List<String> controllerNames = new ArrayList<String>();        
+            controllerNames.add(controllerLocation);
+            ControllerFactory controllerFactory = new ControllerFactoryImpl(controllerNames);
+            
+            
+           // setPhysicsParameters();// IS NOT WORKING
+            WorldDescription world = this.createGenericSimulationWorld(controllerFactory);
+            world = createWorld();
+            
+            /* Load the robot */ 
+            robotXMLLoader = new PreSimulationXMLSerializer(world);
+           
+            for (int robotNr=0;robotNr<simulationSpecification.getRobotsInSimulation().size();robotNr++){
+            	 
+            	String morphology = simulationSpecification.getRobotsInSimulation().get(robotNr).getMorphologyLocation();
+            	 robotXMLLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,morphology);
+            }
+            
+            simulation.setWorld(world); 
+        }  else{
+        	//do nothing.
+         // GUIRemoteSimulationAdapter.getThreadRemoteSimulation().done();
+        	
+        	//GeneralController.terminateSimulation();
+        }   
         
 	}
 	

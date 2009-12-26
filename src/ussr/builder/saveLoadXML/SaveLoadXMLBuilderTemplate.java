@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.xml.transform.sax.TransformerHandler;
 
 import org.w3c.dom.Document;
@@ -17,6 +18,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import com.jme.math.Quaternion;
 
+import ussr.aGui.MainFrames;
+import ussr.aGui.enumerations.JOptionPaneMessages;
 import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.aGui.tabs.simulation.enumerations.PhysicsParametersDefault;
 import ussr.builder.enumerations.ConstructionTools;
@@ -227,8 +230,14 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	 * @param document, DOM object of document. 
 	 */
 	private void loadRobotXML(Document document){
-	
+		
+Node rootNode = document.getDocumentElement();
+		
+		/*Check is XML file starts with the root tag called MODULES*/
+		if (rootNode.getNodeName().equals(XMLTagsUsed.MODULES.toString())){
+
 		NodeList nodeList = document.getElementsByTagName(XMLTagsUsed.MODULE.toString());
+	
 	  //  String controllerLocation;
 	   
 		for (int node = 0; node < nodeList.getLength(); node++) {
@@ -295,6 +304,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 		
 		
 		
+		
 		try {
 			if (RemotePhysicsSimulationImpl.getGUICallbackControl()!=null){
 				
@@ -309,7 +319,13 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 		} catch (RemoteException e) {
 			throw new Error("some");
 		}
-		
+		}else{
+			if (rootNode.getNodeName().equals(XMLTagsUsed.SIMULATION.toString())){
+				JOptionPaneMessages.LOADED_ROBOT_FILE_IS_SIMULATION.displayMessage();
+			}else{
+				JOptionPaneMessages.LOADED_SIMUL_OR_ROBOT_FILE_INCONSISTENT.displayMessage();
+			}
+		}
 	}
 	
 
@@ -320,6 +336,13 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 	 * @param document, DOM object of document. 
 	 */
 	private void loadSimulationXML(Document document){	
+		
+		Node rootNode = document.getDocumentElement();
+		
+		/*Check is XML file starts with the root tag called SIMULATION*/
+		if (rootNode.getNodeName().equals(XMLTagsUsed.SIMULATION.toString())){
+			// A flag to indicate that current xml file is SIMULATION file.
+			simulationSpecification.getSimWorldDecsriptionValues().put(XMLTagsUsed.SIMULATION, XMLTagsUsed.SIMULATION.toString());
 		
 		NodeList nodeListRobotXMLValues;
 		for (int robotNr=1;robotNr<10000; robotNr++){// just dummy limit to look for maximum 10000 robots
@@ -378,6 +401,14 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 				simulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.USE_MODULE_EVENT_QUEUE, extractTagValue(firstElmnt,XMLTagsUsed.USE_MODULE_EVENT_QUEUE));
 				simulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.SYNC_WITH_CONTROLLERS, extractTagValue(firstElmnt,XMLTagsUsed.SYNC_WITH_CONTROLLERS));
 				simulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR, extractTagValue(firstElmnt,XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR));
+			}
+		}
+		}else {			
+			// if this file is robot file (contains MODULES root tag.)
+			if (rootNode.getNodeName().equals(XMLTagsUsed.MODULES.toString())){
+				JOptionPaneMessages.LOADED_SIMULATION_FILE_IS_ROBOT.displayMessage();
+			}else{
+			JOptionPaneMessages.LOADED_SIMUL_OR_ROBOT_FILE_INCONSISTENT.displayMessage();
 			}
 		}
 	}
