@@ -9,7 +9,7 @@ import ussr.model.Module;
  * called "activate()".  
  * @author Konstantinas 
  */
-public abstract class ControllerStrategy {
+public abstract class ControllerStrategy{
 
 	/**
 	 * The method which will be activated when specific class is instantiated by the tool called "AssignController"
