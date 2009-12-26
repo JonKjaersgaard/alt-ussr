@@ -8,6 +8,8 @@ import java.awt.Color;
  * @author Konstantinas
  */
 public enum SupportedModularRobots {
+	
+	DUMMY("dummy"),
 	/*ATRON is homogeneous */
 	ATRON("Atron"),
 	/*MTRAN is homogeneous*/

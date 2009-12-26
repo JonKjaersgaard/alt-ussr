@@ -103,6 +103,11 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 	}
 
 	/**
+	 * Used to keep track of what type of modular robot is selected.
+	 */
+	private SupportedModularRobots modularRobotNameSelected=SupportedModularRobots.DUMMY;
+	
+	/**
 	 * Instantiates the tool.
 	 * @param jmeSimulation, the physical simulation.
 	 */
@@ -127,10 +132,16 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 			throw new Error("Not supported modular robot");
 		}
 
+		/*if the same modular robot is selected as in previous selection, then do not adapt Construct robot tab.*/
+		if (modularRobotNameSelected.equals(modularRobotName)){
+			//do nothing
+		}else{
+			this.modularRobotNameSelected = modularRobotName;
 		try {
 			RemotePhysicsSimulationImpl.getGUICallbackControl().adaptConstructRobotTabToSelectedModuleType(this.modularRobotName);
 		} catch (RemoteException e) {
 			throw new Error("Failed  adapt GUI to module selected in simulation environment, due to remote exception.");
+		}
 		}
 
 

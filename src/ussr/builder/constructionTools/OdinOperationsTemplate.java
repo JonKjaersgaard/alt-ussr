@@ -1,16 +1,19 @@
 package ussr.builder.constructionTools;
 
 import java.awt.Color;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import ussr.builder.enumerations.OdinTypesModules;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
+import ussr.remote.facade.RemotePhysicsSimulationImpl;
 
 /**
  * Supports construction of Odin modular robot morphology in more abstract module oriented way.
@@ -77,7 +80,14 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 		String selectedModuleType = selectedModule.getProperty(BuilderHelper.getModuleTypeKey());
 		Module odinModule = null;
 		if (selectedModuleType.contains("Ball")){
-			odinModule = createNewOdinModule(ODIN_MUSCLE);
+			String userFriendlyModuleType ="";
+			try {
+				userFriendlyModuleType = RemotePhysicsSimulationImpl.getGUICallbackControl().getDefaultConstructionModuleType();
+			} catch (RemoteException e) {
+				throw new Error("Failed  adapt GUI to module selected in simulation environment, due to remote exception.");
+			}
+			String undelyingLogicModuleType = OdinTypesModules.getUnderlyingLogicNameFromUserFriendly(userFriendlyModuleType);
+			odinModule = createNewOdinModule(undelyingLogicModuleType);
 		}else /*if (selectedModuleType.equalsIgnoreCase(ODIN_MUSCLE))*/{
 			odinModule = createNewOdinModule(DEFAULT_MODULE); 			
 		}//else throw new Error("Something is wrong with the type of the module");		
@@ -106,6 +116,22 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 				colorsConectors.add(Color.WHITE);
 			}			
 			odinModule = addNewModule(new ModulePosition(DEFAULT_MODULE+BuilderHelper.getRandomInt(),DEFAULT_MODULE,modulePosition,moduleRotation),colorsComponents,colorsConectors);
+		}else if (type.equalsIgnoreCase(ODIN_HINGE)){
+			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.RED); colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);			
+			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
+			odinModule = addNewModule(new ModulePosition(ODIN_HINGE+BuilderHelper.getRandomInt(),ODIN_HINGE,modulePosition,moduleRotation),colorsComponents,colorsConectors);			
+		}else if (type.equalsIgnoreCase(ODIN_BATTERY)){
+			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
+			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
+			odinModule = addNewModule(new ModulePosition(ODIN_BATTERY+BuilderHelper.getRandomInt(),ODIN_BATTERY,modulePosition,moduleRotation),colorsComponents,colorsConectors);
+		}else if (type.equalsIgnoreCase(ODIN_SPRING)){
+			colorsComponents.add(Color.BLACK); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
+			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
+			odinModule = addNewModule(new ModulePosition(ODIN_SPRING+BuilderHelper.getRandomInt(),ODIN_SPRING,modulePosition,moduleRotation),colorsComponents,colorsConectors);			
+		}else if (type.equalsIgnoreCase(ODIN_WHEEL)){
+			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.BLUE);colorsComponents.add(Color.WHITE); 	colorsComponents.add(Color.WHITE);			
+			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
+			odinModule = addNewModule(new ModulePosition(ODIN_WHEEL+BuilderHelper.getRandomInt(),ODIN_WHEEL,modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		}else throw new Error("Something is wrong with the type of the module.This method supports creation of OdinMuscle and OdinBall only.");
 		return odinModule;
 	}
