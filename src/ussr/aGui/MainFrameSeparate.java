@@ -59,7 +59,7 @@ public class MainFrameSeparate extends MainFrames {
 	/**
 	 * Y position of simulation window
 	 */
-	public static final int simWindowY = 10;
+	public static final int simWindowY = 5;
 	
 	/**
 	 * Defines visual appearance of the main GUI frame (window), separate from simulation environment.

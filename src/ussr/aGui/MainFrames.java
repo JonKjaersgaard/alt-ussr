@@ -186,7 +186,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 
 		jMenuBarMain.add(jMenuFile);
 
-		jMenuRender.setText(MainFrameComponentsText.RENDERER.getUserFriendlyName());
+		jMenuRender.setText(MainFrameComponentsText.RENDER.getUserFriendlyName());
 		jCheckBoxMenuItemPhysics.setSelected(false);
 		jCheckBoxMenuItemPhysics.setText(MainFrameComponentsText.PHYSICS.getUserFriendlyName());
 		jCheckBoxMenuItemPhysics.addActionListener(new java.awt.event.ActionListener() {
