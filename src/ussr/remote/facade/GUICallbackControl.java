@@ -57,4 +57,8 @@ public interface GUICallbackControl extends Remote {
 	//public void adaptTabToModuleInSimulation()throws RemoteException;
 	
 	public String getDefaultConstructionModuleType()throws RemoteException;
+	
+	public Float getValueJSpinnerRotateContinuous()throws RemoteException;
+	
+	public Integer getValuejSpinnerRotateDegrees()throws RemoteException;
 }
