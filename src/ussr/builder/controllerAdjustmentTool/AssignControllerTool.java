@@ -99,7 +99,7 @@ public class AssignControllerTool extends CustomizedPicker implements Serializab
 		} catch (IllegalArgumentException e) {
 			throw new Error ("Illegal argument for method in class:"+ packageClassName );
 		} catch (InvocationTargetException e) {
-			throw new Error ("Invocation exceptio in class:"+ packageClassName );
+			throw new Error ("Invocation Target Exception for class:"+ packageClassName );
 		}
 	}
 
