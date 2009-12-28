@@ -60,5 +60,10 @@ public interface GUICallbackControl extends Remote {
 	
 	public Float getValueJSpinnerRotateContinuous()throws RemoteException;
 	
-	public Integer getValuejSpinnerRotateDegrees()throws RemoteException;
+	public Integer getValuejSpinnerRotateDegrees()throws RemoteException;	
+	
+	public  Integer getValueNrsConnectors()throws RemoteException;
+	
+	
+	public  Float getValuejSpinnerActuateContinuously()throws RemoteException;
 }

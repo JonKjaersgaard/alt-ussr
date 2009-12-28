@@ -105,6 +105,16 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 		return AssignableControllersEditors.getValuejSpinnerRotateDegrees();
 	}
 
+	@Override
+	public Integer getValueNrsConnectors() throws RemoteException {	
+		return AssignableControllersEditors.getValueNrsConnectors();
+	}
+
+	@Override
+	public Float getValuejSpinnerActuateContinuously() throws RemoteException {		
+		return AssignableControllersEditors.getValuejSpinnerActuateContinuously();
+	}
+
 
 
 
