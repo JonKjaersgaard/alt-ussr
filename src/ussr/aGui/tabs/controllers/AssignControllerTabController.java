@@ -1,15 +1,21 @@
 package ussr.aGui.tabs.controllers;
 
+import java.awt.GridBagConstraints;
+import java.awt.Label;
 import java.rmi.RemoteException;
 import java.util.Vector;
 
 import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JCheckBox;
 import javax.swing.JToggleButton;
 
+import ussr.aGui.enumerations.hintpanel.HintsAssignBehaviorsTab;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
+import ussr.aGui.tabs.constructionTabs.AssignableControllers;
 
 import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
@@ -18,7 +24,7 @@ import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.FileDirectoryHelper;
 import ussr.builder.labelingTools.LabelingTemplate;
 
-public class AssignBehaviorsTabController extends TabsControllers {
+public class AssignControllerTabController extends TabsControllers {
 
 	/**
 	 * Container for keeping all classes of controllers extracted from package "ussr.builder.controllerAdjustmentTool";
@@ -26,7 +32,7 @@ public class AssignBehaviorsTabController extends TabsControllers {
 	private static  Vector<String> classesOfControllers ;
 
 	/**
-	 * Temporary container for keeping classes of controllers filtered out for specific modular robot.
+	 * Temporary container for keeping classes of controllers filtered out for specific modular robot from above package.
 	 */
 	private static  Vector<String> tempClassesOfControllers =  new Vector<String> ()  ;
 
@@ -35,13 +41,13 @@ public class AssignBehaviorsTabController extends TabsControllers {
 	 */
 	private static final String packageName = "ussr.builder.controllerAdjustmentTool";
 
-
 	/**
 	 * Loads all existing names of controllers from package ussr.builder.controllerAdjustmentTool and filters
 	 * out the ones for selected button (modular robot name).
 	 * @param radionButton, the radio button representing modular robot name.
 	 */
 	public static void jButtonGroupActionPerformed(javax.swing.AbstractButton radionButton){
+		
 		loadExistingControllers(AssignControllerTab.getJListAvailableControllers());
 
 		boolean modularRobotNameExists = false;
@@ -50,7 +56,11 @@ public class AssignBehaviorsTabController extends TabsControllers {
 			
 			if (radionButton.getText().equals(supportedModularRobots[buttonTextItem].getUserFriendlyName())){
 				String modularRobotName= SupportedModularRobots.getModularRobotSystemName(supportedModularRobots[buttonTextItem].getUserFriendlyName()).toString();
+				if (AssignControllerTab.isJToggleButtonEditValuesIsSelected()){
+					updateList(AssignControllerTab.getJListAvailableControllers(),AssignableControllers.getAllUserFrienlyNamesForRobot(SupportedModularRobots.valueOf(modularRobotName)));
+				}else{
 				updateList(AssignControllerTab.getJListAvailableControllers(),filterOut(modularRobotName));
+				}
 				modularRobotNameExists =true;
 			}
 		}
@@ -60,7 +70,7 @@ public class AssignBehaviorsTabController extends TabsControllers {
 		}
 		/*Informing user*/
 		AssignControllerTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
-		AssignControllerTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[1]);
+		AssignControllerTab.getHintPanel().setText(HintsAssignBehaviorsTab.DEFAULT.getHintText());
 	}
 
 	/**
@@ -122,14 +132,38 @@ public class AssignBehaviorsTabController extends TabsControllers {
 
 	/**
 	 * Initializes the tool for assigning controller chosen by user in GUI component. 
+	 * @param toggleButtonEditValuesIsSelected
 	 * @param jList1,the component in GUI. 
 	 */
-	public static void jListAvailableControllersMouseReleased(javax.swing.JList jList1) {
+	public static void jListAvailableControllersMouseReleased(javax.swing.JList jList1, boolean toggleButtonEditValuesIsSelected) {
+		String canonicalName = packageName+"."+jList1.getSelectedValue();
+		
+		if (toggleButtonEditValuesIsSelected){
+			AssignableControllers assignableController = AssignableControllers.getControllerSystemName(jList1.getSelectedValue().toString());
+			canonicalName= assignableController.getClas().getCanonicalName();
+			AssignControllerTab.getJPanelEditValue().removeAll();
+			
+			GridBagConstraints gridBagConstraintsEditValue = new GridBagConstraints();
+			gridBagConstraintsEditValue.fill = GridBagConstraints.CENTER;
+			gridBagConstraintsEditValue.gridx = 0;
+			gridBagConstraintsEditValue.gridy = 0;	
+			
+			AssignControllerTab.getJPanelEditValue().add(new Label(jList1.getSelectedValue().toString()),gridBagConstraintsEditValue);
+			
+			gridBagConstraintsEditValue.fill = GridBagConstraints.CENTER;
+			gridBagConstraintsEditValue.gridx = 0;
+			gridBagConstraintsEditValue.gridy = 1;	
+			
+			AssignControllerTab.getJPanelEditValue().add(assignableController.getValueEditor(),gridBagConstraintsEditValue);
+			AssignControllerTab.getJPanelEditValue().revalidate();
+			AssignControllerTab.getJPanelEditValue().repaint();
+			
+		}
 		try {
-			builderControl.setAdjustControllerPicker(packageName+"."+jList1.getSelectedValue());			
+			builderControl.setAdjustControllerPicker(canonicalName);			
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called "+ "AssignControllerTool" + ", due to remote exception");
-		}		
+		}
 	}
 
 	/**
@@ -176,15 +210,43 @@ public class AssignBehaviorsTabController extends TabsControllers {
 		AssignControllerTab.getHintPanel().setText(text);
 	}
 
-	public static void jToggleButtonEditValuesActionPerformed(JToggleButton toggleButtonEditValues) {
+	public static void jToggleButtonEditValuesActionPerformed(JToggleButton toggleButtonEditValues, ButtonGroup buttonGroup) {
 		if (toggleButtonEditValues.isSelected()){
 			AssignControllerTab.getJPanelEditValue().setVisible(true);
+			AssignControllerTab.setJToggleButtonEditValuesIsSelected(true);
+			
+			//ButtonModel selectedButton = buttonGroup.getSelection();
+			//jButtonGroupActionPerformed((AbstractButton)selectedButton);
+			
+			
+			System.out.println("CLAS: "+ AssignableControllers.ROTATE_CONTINUOUS.getClas().getCanonicalName());
 		}else{
 			AssignControllerTab.getJPanelEditValue().setVisible(false);
-		}
-		
-		
+			AssignControllerTab.setJToggleButtonEditValuesIsSelected(false);
+		}		
 	}
+	
+	public static void activateAssignmentTool(AssignableControllers assignableController){
+		try {
+			builderControl.setAdjustControllerPicker(assignableController.getClas().getCanonicalName());			
+		} catch (RemoteException e) {
+			throw new Error("Failed to initate picker called "+ "AssignControllerTool" + ", due to remote exception");
+		}
+	}
+	
+
+/*	public static void jSpinnerRotateContinuousActionPerformed() {
+		try {
+			builderControl.setAdjustControllerPicker(AssignableControllers.ROTATE_CONTINUOUS.getClas().getCanonicalName());			
+		} catch (RemoteException e) {
+			throw new Error("Failed to initate picker called "+ "AssignControllerTool" + ", due to remote exception");
+		}		
+	}*/
+
+/*	public static void jSpinnerRotateDegreesActionPerformed(int parseInt) {
+		// TODO Auto-generated method stub
+		
+	}*/
 	
 	
 }

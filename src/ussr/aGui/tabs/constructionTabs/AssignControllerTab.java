@@ -7,19 +7,16 @@ import java.awt.Insets;
 
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
-import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 
 import ussr.aGui.FramesInter;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
-import ussr.aGui.enumerations.tabs.TabsIcons;
+
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
-import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
-import ussr.aGui.tabs.controllers.ConstructRobotTabController;
+import ussr.aGui.tabs.controllers.AssignControllerTabController;
 import ussr.builder.enumerations.SupportedModularRobots;
-import ussr.builder.helpers.StringProcessingHelper;
 
 /**
  * Defines visual appearance of the tab called "2 Step: Assign Behaviors".  
@@ -39,6 +36,9 @@ public class AssignControllerTab extends ConstructionTabs{
 
 
 	private final int jToolBar1Width = 125;
+	
+	
+	private static  boolean jToggleButtonEditValuesIsSelected = false;
 
 	/**
 	 * The constrains of grid bag layout used during design of both tabs.
@@ -80,12 +80,14 @@ public class AssignControllerTab extends ConstructionTabs{
 		jScrollPaneAvailableControllers = new javax.swing.JScrollPane();
 
 		jPanelAssignBehaviors = new javax.swing.JPanel();
-		jPanelEditValue = new javax.swing.JPanel();
+		jPanelEditValue = new javax.swing.JPanel(new GridBagLayout());
 
 		radionButtonATRON =  new JRadioButton();
 		radioButtonODIN =  new JRadioButton();
 		radioButtonMTRAN =  new JRadioButton();
 		radionButtonCKBOTSTANDARD =  new JRadioButton();
+		
+		final ButtonGroup buttonGroup = new ButtonGroup() ;
 
 		jButtonOpen = initOpenButton();
 		jButtonSave = initSaveButton();	
@@ -121,7 +123,7 @@ public class AssignControllerTab extends ConstructionTabs{
 		jToggleButtonEditValues.setPreferredSize(FramesInter.BUTTON_DIMENSION);
 		jToggleButtonEditValues.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AssignBehaviorsTabController.jToggleButtonEditValuesActionPerformed(jToggleButtonEditValues);
+				AssignControllerTabController.jToggleButtonEditValuesActionPerformed(jToggleButtonEditValues,buttonGroup);
 			}
 		});
 		
@@ -136,13 +138,13 @@ public class AssignControllerTab extends ConstructionTabs{
 		jToolBarFilterForModularRobot.setPreferredSize(new Dimension(jToolBar1Width,J_LIST_HEIGHT));
 		jToolBarFilterForModularRobot.setOrientation(JToolBar.VERTICAL);		
 
-		final ButtonGroup buttonGroup = new ButtonGroup() ;
+		
 
 		radionButtonATRON.setText(SupportedModularRobots.ATRON.getUserFriendlyName());	
 		radionButtonATRON.setFocusable(true);// direct the user to what should be done first
 		radionButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AssignBehaviorsTabController.jButtonGroupActionPerformed(radionButtonATRON);
+				AssignControllerTabController.jButtonGroupActionPerformed(radionButtonATRON);
 			}
 		});
 
@@ -152,7 +154,7 @@ public class AssignControllerTab extends ConstructionTabs{
 		radioButtonODIN.setText(SupportedModularRobots.ODIN.getUserFriendlyName());
 		radioButtonODIN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AssignBehaviorsTabController.jButtonGroupActionPerformed(radioButtonODIN);
+				AssignControllerTabController.jButtonGroupActionPerformed(radioButtonODIN);
 			}
 		});
 
@@ -162,7 +164,7 @@ public class AssignControllerTab extends ConstructionTabs{
 		radioButtonMTRAN.setText(SupportedModularRobots.MTRAN.getUserFriendlyName());
 		radioButtonMTRAN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AssignBehaviorsTabController.jButtonGroupActionPerformed(radioButtonMTRAN);
+				AssignControllerTabController.jButtonGroupActionPerformed(radioButtonMTRAN);
 			}
 		});
 
@@ -172,7 +174,7 @@ public class AssignControllerTab extends ConstructionTabs{
 		radionButtonCKBOTSTANDARD.setText(SupportedModularRobots.CKBOT_STANDARD.getUserFriendlyName());
 		radionButtonCKBOTSTANDARD.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AssignBehaviorsTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD);
+				AssignControllerTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD);
 			}
 		});
 
@@ -183,7 +185,7 @@ public class AssignControllerTab extends ConstructionTabs{
 		jListAvailableControllers.setPreferredSize(new java.awt.Dimension(J_LIST_WIDTH+60, J_LIST_HEIGHT));	
 		jListAvailableControllers.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				AssignBehaviorsTabController.jListAvailableControllersMouseReleased( jListAvailableControllers);
+				AssignControllerTabController.jListAvailableControllersMouseReleased( jListAvailableControllers,jToggleButtonEditValuesIsSelected);
 			}
 		});		
 		jScrollPaneAvailableControllers.setViewportView(jListAvailableControllers);
@@ -260,6 +262,14 @@ public class AssignControllerTab extends ConstructionTabs{
 	public static HintPanel getHintPanel(){
 		return hintPanel;
 	}
+	
+	public static void setJToggleButtonEditValuesIsSelected(boolean toggleButtonEditValuesIsSelected) {
+		jToggleButtonEditValuesIsSelected = toggleButtonEditValuesIsSelected;
+	}
+	
+	public static boolean isJToggleButtonEditValuesIsSelected() {
+		return jToggleButtonEditValuesIsSelected;
+	}
 
 
 	/**
@@ -327,7 +337,6 @@ public class AssignControllerTab extends ConstructionTabs{
 
 	private static javax.swing.JPanel jPanelEditValue;
 	
-
-
 	private static javax.swing.JToggleButton jToggleButtonEditValues;
+	
 }

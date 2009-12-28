@@ -11,7 +11,7 @@ import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
-import ussr.aGui.tabs.controllers.AssignBehaviorsTabController;
+import ussr.aGui.tabs.controllers.AssignControllerTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
 import ussr.aGui.tabs.simulation.SimulationTab;
@@ -301,7 +301,7 @@ public class MainFrameSeparateController extends GeneralController {
 			
 			/*Adapt construction tabs to the first module in simulation environment if it exists.*/
 			ConstructRobotTabController.adaptTabToModuleInSimulation();
-			AssignBehaviorsTabController.adaptTabToModuleInSimulation();
+			AssignControllerTabController.adaptTabToModuleInSimulation();
 
 			/*Update look and feel for newly added tabs*/		
 			MainFrames.changeToLookAndFeel(constructRobotTab.getJComponent());
