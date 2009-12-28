@@ -1,4 +1,4 @@
-package ussr.builder.controllerAdjustmentTool.withEditors;
+package ussr.builder.controllerAdjustmentTool;
 
 import java.rmi.RemoteException;
 
@@ -8,7 +8,7 @@ import ussr.model.Module;
 import ussr.remote.facade.RemotePhysicsSimulationImpl;
 import ussr.samples.atron.ATRONController;
 
-public class ATRONRotateContinuous extends ControllerStrategy {
+public class ATRONStopRotating extends ControllerStrategy {
 
 	/**
 	 * The controller class providing the ATRON API
@@ -21,12 +21,6 @@ public class ATRONRotateContinuous extends ControllerStrategy {
 	 */
 	public void activate (Module selectedModule){	
 		controller = (ATRONController)selectedModule.getController();
-		Float value; 
-		try {
-			value = RemotePhysicsSimulationImpl.getGUICallbackControl().getValueJSpinnerRotateContinuous();
-		} catch (RemoteException e) {
-			throw new Error("Failed to receive value in class: "+ this.getClass().getCanonicalName());
-		}
-		controller.rotateContinuous(value);
+		controller.centerStop();
 	}
 }

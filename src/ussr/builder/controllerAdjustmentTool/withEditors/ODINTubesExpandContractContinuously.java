@@ -2,31 +2,30 @@ package ussr.builder.controllerAdjustmentTool.withEditors;
 
 import java.rmi.RemoteException;
 
-import ussr.aGui.tabs.constructionTabs.AssignableControllersEditors;
 import ussr.builder.controllerAdjustmentTool.ControllerStrategy;
 import ussr.model.Module;
 import ussr.remote.facade.RemotePhysicsSimulationImpl;
-import ussr.samples.atron.ATRONController;
+import ussr.samples.odin.OdinController;
 
-public class ATRONRotateContinuous extends ControllerStrategy {
+public class ODINTubesExpandContractContinuously extends ControllerStrategy {
 
 	/**
-	 * The controller class providing the ATRON API
+	 * Controller implementation for Odin modular robot.
 	 */
-	private ATRONController controller;	
-
+	private OdinController controller;	
+	
 	/**
 	 * The method which will is activated when this class is instantiated by the tool called "AssignControllerTool"
 	 * @param selectedModule, the module selected in simulation environment
 	 */
-	public void activate (Module selectedModule){	
-		controller = (ATRONController)selectedModule.getController();
+	public void activate (Module selectedModule){		
+		controller = (OdinController)selectedModule.getController();
 		Float value; 
 		try {
-			value = RemotePhysicsSimulationImpl.getGUICallbackControl().getValueJSpinnerRotateContinuous();
+			value = RemotePhysicsSimulationImpl.getGUICallbackControl().getValuejSpinnerActuateContinuously();
 		} catch (RemoteException e) {
 			throw new Error("Failed to receive value in class: "+ this.getClass().getCanonicalName());
 		}
-		controller.rotateContinuous(value);
-	}
+			controller.actuateContinuous(value);				
+	}	
 }
