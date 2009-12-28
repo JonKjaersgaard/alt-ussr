@@ -8,22 +8,37 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
+import ussr.aGui.FramesInter;
 import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFrames;
 import ussr.aGui.enumerations.ComponentsFrame;
+import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
+import ussr.aGui.enumerations.tabs.IconsNumbersConnectors;
+import ussr.aGui.enumerations.tabs.TabsComponentsText;
+import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.fileChooser.views.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
+import ussr.aGui.helpers.ComboBoxRenderer;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.Tabs;
+import ussr.aGui.tabs.controllers.ConstructRobotTabController;
+import ussr.builder.enumerations.SupportedModularRobots;
 
 /**
  * Holds common methods for definition of construction tabs visual appearance. Tabs such as: ConstrutRobotTab.java and AssignBehaviors.java. 
  * @author Konstantinas
  */
-public abstract class ConstructionTabs extends Tabs {
+public abstract class ConstructionTabs extends Tabs{
 
+	/**
+	 * The custom renderers for comboBox with numbers of connectors and colors beside them for each modular robot.
+	 */
+	public final static ComboBoxRenderer ATRON_RENDERER =  new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ATRON_CONNECTORS),
+                                         ODIN_RENDERER = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ODIN_BALL_CONNECTORS), 
+                                         MTRAN_RENDERER = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.MTRAN_CONNECTORS),
+	                                     CKBOT_STANDARD_RENDERER =  new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.CKBOTSTANDARD_CONNECTORS);
 	/**
 	 * Defines visual appearance of the tabs for construction of modular robot.
 	 * @param firstTabbedPane,true if the tab is visible after activation of main GUI window. 
@@ -35,7 +50,7 @@ public abstract class ConstructionTabs extends Tabs {
 	}
 	
 	/**
-	 * Controls selection and deselection of button. Only one button can be selected, others desected.
+	 * Controls selection and deselection of button. Only one button can be selected, others deselected.
 	 * @param jButton, the button to control selection and deselection.
 	 */
 	public void setSelectionDeselection(javax.swing.JButton  jButton){
@@ -108,7 +123,7 @@ public abstract class ConstructionTabs extends Tabs {
 	
 	
 	
-	public javax.swing.JToolBar initSaveLoadJToolbar(){
+	/*public javax.swing.JToolBar initSaveLoadJToolbar(){
 		javax.swing.JToolBar jToolBarSaveLoad = new javax.swing.JToolBar();
 		
 		jToolBarSaveLoad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -123,10 +138,40 @@ public abstract class ConstructionTabs extends Tabs {
 		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY),
 		                      fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
 		
-		/*Reuse the buttons for saving and loading  already initialized in the main window*/
+		Reuse the buttons for saving and loading  already initialized in the main window
 		jToolBarSaveLoad.add(MainFrames.initSaveButton(fcSaveFrame));
 		jToolBarSaveLoad.add(MainFrames.initOpenButton(fcOpenFrame));
 		
 		return jToolBarSaveLoad;
+	}*/
+	
+	public static javax.swing.JToggleButton initColorModuleConnectorsButton(){
+		
+		final javax.swing.JToggleButton  jToggleButtonColorConnetors = new javax.swing.JToggleButton(); 
+		jToggleButtonColorConnetors.setToolTipText(TabsComponentsText.COLOR_MODULE_CONNECTORS.getUserFriendlyName());
+		jToggleButtonColorConnetors.setIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
+		jToggleButtonColorConnetors.setSelectedIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
+		jToggleButtonColorConnetors.setRolloverIcon(TabsIcons.COLOR_CONNECTORS_ROLLOVER.getImageIcon());
+		jToggleButtonColorConnetors.setDisabledIcon(TabsIcons.COLOR_CONNECTORS_DISABLED.getImageIcon());		
+		jToggleButtonColorConnetors.setFocusable(false);
+		jToggleButtonColorConnetors.setEnabled(true);
+		jToggleButtonColorConnetors.setPreferredSize(FramesInter.BUTTON_DIMENSION);
+		jToggleButtonColorConnetors.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructRobotTabController.jButtonColorConnectorsActionPerformed(jToggleButtonColorConnetors);
+				/*Informing user*/
+				//FIXME//ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.COLOR_CONNECTORS.getHintText());
+			}
+		});
+		
+		
+		
+		return jToggleButtonColorConnetors;
+		
+		
 	}
+	
+	
+	
+	
 }

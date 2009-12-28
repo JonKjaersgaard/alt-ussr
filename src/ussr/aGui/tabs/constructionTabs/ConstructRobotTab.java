@@ -39,13 +39,6 @@ public class ConstructRobotTab extends ConstructionTabs {
 	private static ArrayList<AbstractButton> jRadioButtons =  new ArrayList<AbstractButton>() ;	
 
 	/**
-	 * The custom renderers for comboBox with numbers of connectors and colors beside them for each modular robot.
-	 */
-	private final static ComboBoxRenderer ATRON_RENDERER =  new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ATRON_CONNECTORS),
-                                          ODIN_RENDERER = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ODIN_BALL_CONNECTORS), 
-                                          MTRAN_RENDERER = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.MTRAN_CONNECTORS), 
-                                          CKBOT_STANDARD_RENDERER =  new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.CKBOTSTANDARD_CONNECTORS);
-	/**
 	 * The constants of grid bag layout used during design of the tab.
 	 */
 	private GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -84,7 +77,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jButtonStartNewRobot = new javax.swing.JButton();
 		jButtonOpen = initOpenButton();
 		jButtonSave = initSaveButton();		
-		jButtonDelete =   new javax.swing.JButton();
+		jButtonDelete =  new javax.swing.JButton();
 		jButtonMoveModule = new javax.swing.JButton();		
 		jButtonOppositeRotation =   new javax.swing.JButton();
 		jButtonOnSelectedConnector =   new javax.swing.JButton();
@@ -93,7 +86,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jButtonVariateModuleProperties = new javax.swing.JButton();
 		jButtonAvailableRotationsLoop = new javax.swing.JButton();
 		
-		jToggleButtonColorConnetors =   new javax.swing.JToggleButton();
+		jToggleButtonColorConnetors =   initColorModuleConnectorsButton();
 
 		buttonGroupModularRobots = new ButtonGroup();
 		radioButtonATRON =  new JRadioButton();
@@ -145,7 +138,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jSeparator3.setPreferredSize(new Dimension(6,30));
 		jToolBarGeneralControl.add(jSeparator3);
 		
-		jToggleButtonColorConnetors.setToolTipText(TabsComponentsText.COLOR_MODULE_CONNECTORS.getUserFriendlyName());
+		/*jToggleButtonColorConnetors.setToolTipText(TabsComponentsText.COLOR_MODULE_CONNECTORS.getUserFriendlyName());
 		jToggleButtonColorConnetors.setIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
 		jToggleButtonColorConnetors.setSelectedIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
 		jToggleButtonColorConnetors.setRolloverIcon(TabsIcons.COLOR_CONNECTORS_ROLLOVER.getImageIcon());
@@ -157,7 +150,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructRobotTabController.jButtonColorConnectorsActionPerformed(jToggleButtonColorConnetors);
 			}
-		});
+		});*/
 		
 		jToolBarGeneralControl.add(jToggleButtonColorConnetors);
 		

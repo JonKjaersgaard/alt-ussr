@@ -4,20 +4,30 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
-
-import ussr.builder.controllerAdjustmentTool.ATRONRotateContinuousNegative;
+import ussr.builder.controllerAdjustmentTool.ATRONDisconnectAllConnectors;
+import ussr.builder.controllerAdjustmentTool.ATRONStopRotating;
 import ussr.builder.controllerAdjustmentTool.CKBOT_STANDARDControllerNOT_SUPPORTED_YET;
 import ussr.builder.controllerAdjustmentTool.MTRANControllerNOT_SUPPORTED_YET;
+import ussr.builder.controllerAdjustmentTool.withEditors.ATRONDisconnectSpecificConnector;
 import ussr.builder.controllerAdjustmentTool.withEditors.ATRONRotateContinuous;
 import ussr.builder.controllerAdjustmentTool.withEditors.ATRONRotateDegrees;
+import ussr.builder.controllerAdjustmentTool.withEditors.ODINTubesExpandContractContinuously;
 import ussr.builder.enumerations.SupportedModularRobots;
 
 public enum AssignableControllers {
-
+    /*ATRON*/
 	ROTATE_CONTINUOUS("Rotate continuously",SupportedModularRobots.ATRON, ATRONRotateContinuous.class,AssignableControllersEditors.addRotateContinuousEditor()),
 	ROTATE_DEGREES("Rotate amount of degrees",SupportedModularRobots.ATRON,ATRONRotateDegrees.class,AssignableControllersEditors.addRotateDegreesEditor()),
+	STOP_ROTATING ("Stop rotating",SupportedModularRobots.ATRON,ATRONStopRotating.class, new JPanel()),//new jPanel() is just dummy (empty/ not used)
+	DISCONNECT_ALL_CONNECTORS("Disconnect all connectors", SupportedModularRobots.ATRON,ATRONDisconnectAllConnectors.class,new JPanel()),
+	DISCONNECT_SPECIFIC_CONNECTOR("Disconnect spec. connector", SupportedModularRobots.ATRON,ATRONDisconnectSpecificConnector.class,AssignableControllersEditors.addDisconnectSpecificConnectorEditor()),
 	
+	/*Odin*/
+    EXPAND_CONTRACT_CONSTINUOUSLY("Expand or contract continuously",SupportedModularRobots.ODIN, ODINTubesExpandContractContinuously.class, AssignableControllersEditors.addActuateContinuouslyEditor()),
+	
+	/*MTRAN*/	
 	MTRAN_NOT_SUPPORTED("Mtran is not supported yet",SupportedModularRobots.MTRAN,MTRANControllerNOT_SUPPORTED_YET.class,new JPanel()),
+	/*CKbot*/
 	CKBOT_STANDARD("CKbot is not supported yet",SupportedModularRobots.CKBOT_STANDARD,  CKBOT_STANDARDControllerNOT_SUPPORTED_YET.class, new JPanel());
 
 	private SupportedModularRobots forSupportedModularRobot;

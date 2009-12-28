@@ -12,6 +12,7 @@ import javax.swing.JToolBar;
 
 import ussr.aGui.FramesInter;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
+import ussr.aGui.enumerations.tabs.TabsIcons;
 
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
@@ -90,7 +91,8 @@ public class AssignControllerTab extends ConstructionTabs{
 		final ButtonGroup buttonGroup = new ButtonGroup() ;
 
 		jButtonOpen = initOpenButton();
-		jButtonSave = initSaveButton();	
+		jButtonSave = initSaveButton();
+		jToggleButtonColorConnetors =  initColorModuleConnectorsButton();
 
 		/*Description of components*/		
 
@@ -112,11 +114,10 @@ public class AssignControllerTab extends ConstructionTabs{
 		
 		//jToolBarSaveLoad = initSaveLoadJToolbar();
 		
-		jToggleButtonEditValues.setToolTipText(TabsComponentsText.COLOR_MODULE_CONNECTORS.getUserFriendlyName());
-		jToggleButtonEditValues.setText("Edit values");
-		//jToggleButtonEditValues.setIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
-		//jToggleButtonEditValues.setSelectedIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
-		//jToggleButtonEditValues.setRolloverIcon(TabsIcons.COLOR_CONNECTORS_ROLLOVER.getImageIcon());
+		jToggleButtonEditValues.setToolTipText(TabsComponentsText.ENTER_VALUES.getUserFriendlyName());
+		jToggleButtonEditValues.setIcon(TabsIcons.ENTER_VALUES.getImageIcon());
+		jToggleButtonEditValues.setSelectedIcon(TabsIcons.ENTER_VALUES_ROLLOVER.getImageIcon());
+		jToggleButtonEditValues.setRolloverIcon(TabsIcons.ENTER_VALUES_ROLLOVER.getImageIcon());
 		//jToggleButtonEditValues.setDisabledIcon(TabsIcons.COLOR_CONNECTORS_DISABLED.getImageIcon());		
 		jToggleButtonEditValues.setFocusable(false);
 		jToggleButtonEditValues.setEnabled(true);
@@ -128,6 +129,8 @@ public class AssignControllerTab extends ConstructionTabs{
 		});
 		
 		jToolBarGeneralControl.add(jToggleButtonEditValues);
+		
+		jToolBarGeneralControl.add(jToggleButtonColorConnetors);
 		
 		super.jComponent.add(jToolBarGeneralControl,gridBagConstraints);
 
@@ -191,7 +194,7 @@ public class AssignControllerTab extends ConstructionTabs{
 		jScrollPaneAvailableControllers.setViewportView(jListAvailableControllers);
 		jScrollPaneAvailableControllers.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Available controllers", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
 
-		jPanelEditValue.setPreferredSize(new Dimension(J_LIST_WIDTH,J_LIST_HEIGHT));
+		jPanelEditValue.setPreferredSize(new Dimension(J_LIST_WIDTH+30,J_LIST_HEIGHT));
 		jPanelEditValue.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Edit Value", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
 		jPanelEditValue.setVisible(false);
 
@@ -244,6 +247,10 @@ public class AssignControllerTab extends ConstructionTabs{
 		gridBagConstraints.gridwidth = 1;
 		super.jComponent.add(hintPanel,gridBagConstraints);	
 
+	}
+
+	public static javax.swing.JToggleButton getJToggleButtonColorConnetors() {
+		return jToggleButtonColorConnetors;
 	}
 
 	/*Getters and Setter*/
@@ -337,6 +344,6 @@ public class AssignControllerTab extends ConstructionTabs{
 
 	private static javax.swing.JPanel jPanelEditValue;
 	
-	private static javax.swing.JToggleButton jToggleButtonEditValues;
+	private static javax.swing.JToggleButton jToggleButtonEditValues,jToggleButtonColorConnetors;
 	
 }

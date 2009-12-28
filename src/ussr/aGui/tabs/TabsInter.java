@@ -37,7 +37,9 @@ public interface TabsInter {
 	                    
 	                    Y_POSITIVE_BIG = "yPositiveBig",Y_POSITIVE_ROLLOVER_BIG = "yPositiveRolloverBig",Y_NEGATIVE_BIG ="yNegativeBig",Y_NEGATIVE_ROLLOVER_BIG = "yNegativeRolloverBig", 
 	                    X_POSITIVE_BIG = "xPositiveBig",X_POSITIVE_ROLLOVER_BIG = "xPositiveRolloverBig", X_NEGATIVE_BIG= "xNegativeBig",X_NEGATIVE_ROLLOVER_BIG = "xNegativeRolloverBig",
-	                    Z_POSITIVE_BIG = "zPositiveBig",Z_POSITIVE_ROLLOVER_BIG = "zPositiveRolloverBig",Z_NEGATIVE_BIG= "zNegativeBig",Z_NEGATIVE_ROLLOVER_BIG= "zNegativeRolloverBig"
+	                    Z_POSITIVE_BIG = "zPositiveBig",Z_POSITIVE_ROLLOVER_BIG = "zPositiveRolloverBig",Z_NEGATIVE_BIG= "zNegativeBig",Z_NEGATIVE_ROLLOVER_BIG= "zNegativeRolloverBig",
+	                    	
+	                    ENTER_VALUES ="enterValues",ENTER_VALUES_ROLLOVER ="enterValuesRollover"
 	                    ;
 	
 	/**

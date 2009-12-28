@@ -130,7 +130,7 @@ public class ConstructRobotTabController extends TabsControllers{
 	}
 
 	/**
-	 * Initializes the tool for coloring  the connectors of the module or robot with color coding. 
+	 * Colors connectors of modules with color coding. 
 	 * @param toggleButtonColorConnetors 
 	 */
 	public static void jButtonColorConnectorsActionPerformed(JToggleButton toggleButtonColorConnetors) {	
@@ -141,12 +141,8 @@ public class ConstructRobotTabController extends TabsControllers{
 				builderControl.restoreOriginalColorsConnectors();
 			}
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called Color Module Connectors, due to remote exception");
+			throw new Error("Failed color connectors of modules with color coding, due to remote exception");
 		}	
-
-		/*Informing user*/
-		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.COLOR_CONNECTORS.getHintText());
-
 	}
 
 	/**

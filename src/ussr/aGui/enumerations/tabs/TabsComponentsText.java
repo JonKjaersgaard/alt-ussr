@@ -59,6 +59,8 @@ public enum TabsComponentsText {
 	/*METHOD: setToolTipText()*/
 	FILTER_OUT_FOR,
 	
+	ENTER_VALUES,
+	
 	/*Simulation Tab*/
 		
 	//for moving modular robot

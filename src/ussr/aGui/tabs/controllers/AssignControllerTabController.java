@@ -9,6 +9,7 @@ import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JToggleButton;
 
 import ussr.aGui.enumerations.hintpanel.HintsAssignBehaviorsTab;
@@ -144,13 +145,13 @@ public class AssignControllerTabController extends TabsControllers {
 			AssignControllerTab.getJPanelEditValue().removeAll();
 			
 			GridBagConstraints gridBagConstraintsEditValue = new GridBagConstraints();
-			gridBagConstraintsEditValue.fill = GridBagConstraints.CENTER;
+			gridBagConstraintsEditValue.fill = GridBagConstraints.HORIZONTAL;
 			gridBagConstraintsEditValue.gridx = 0;
 			gridBagConstraintsEditValue.gridy = 0;	
 			
 			AssignControllerTab.getJPanelEditValue().add(new Label(jList1.getSelectedValue().toString()),gridBagConstraintsEditValue);
 			
-			gridBagConstraintsEditValue.fill = GridBagConstraints.CENTER;
+			gridBagConstraintsEditValue.fill = GridBagConstraints.HORIZONTAL;
 			gridBagConstraintsEditValue.gridx = 0;
 			gridBagConstraintsEditValue.gridy = 1;	
 			
@@ -232,22 +233,6 @@ public class AssignControllerTabController extends TabsControllers {
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called "+ "AssignControllerTool" + ", due to remote exception");
 		}
-	}
-	
-
-/*	public static void jSpinnerRotateContinuousActionPerformed() {
-		try {
-			builderControl.setAdjustControllerPicker(AssignableControllers.ROTATE_CONTINUOUS.getClas().getCanonicalName());			
-		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called "+ "AssignControllerTool" + ", due to remote exception");
-		}		
-	}*/
-
-/*	public static void jSpinnerRotateDegreesActionPerformed(int parseInt) {
-		// TODO Auto-generated method stub
-		
-	}*/
-	
-	
+	}		
 }
 
