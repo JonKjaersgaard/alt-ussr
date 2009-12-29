@@ -88,7 +88,9 @@ public class AssignControllerTab extends ConstructionTabs{
 		radioButtonMTRAN =  new JRadioButton();
 		radionButtonCKBOTSTANDARD =  new JRadioButton();
 		
-		final ButtonGroup buttonGroup = new ButtonGroup() ;
+		buttonGroup = new ButtonGroup() ;
+		
+		//final ButtonGroup buttonGroup = new ButtonGroup() ;
 
 		jButtonOpen = initOpenButton();
 		jButtonSave = initSaveButton();
@@ -124,7 +126,7 @@ public class AssignControllerTab extends ConstructionTabs{
 		jToggleButtonEditValues.setPreferredSize(FramesInter.BUTTON_DIMENSION);
 		jToggleButtonEditValues.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AssignControllerTabController.jToggleButtonEditValuesActionPerformed(jToggleButtonEditValues,buttonGroup);
+				AssignControllerTabController.jToggleButtonEditValuesActionPerformed(jToggleButtonEditValues);
 			}
 		});
 		
@@ -188,7 +190,7 @@ public class AssignControllerTab extends ConstructionTabs{
 		jListAvailableControllers.setPreferredSize(new java.awt.Dimension(J_LIST_WIDTH+60, J_LIST_HEIGHT));	
 		jListAvailableControllers.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				AssignControllerTabController.jListAvailableControllersMouseReleased( jListAvailableControllers,jToggleButtonEditValuesIsSelected);
+				AssignControllerTabController.jListAvailableControllersMouseReleased( jListAvailableControllers);
 			}
 		});		
 		jScrollPaneAvailableControllers.setViewportView(jListAvailableControllers);
@@ -326,6 +328,9 @@ public class AssignControllerTab extends ConstructionTabs{
 	public static javax.swing.JPanel getJPanelEditValue() {
 		return jPanelEditValue;
 	}
+	public static javax.swing.JToggleButton getJToggleButtonEditValues() {
+		return jToggleButtonEditValues;
+	}
 
 	/*Declaration of components*/
 	private static javax.swing.JList jListAvailableControllers;	
@@ -345,5 +350,12 @@ public class AssignControllerTab extends ConstructionTabs{
 	private static javax.swing.JPanel jPanelEditValue;
 	
 	private static javax.swing.JToggleButton jToggleButtonEditValues,jToggleButtonColorConnetors;
+
+	private static ButtonGroup buttonGroup;
+
+	public static ButtonGroup getButtonGroup() {
+		return buttonGroup;
+	}
+	
 	
 }

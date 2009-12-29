@@ -10,6 +10,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 
 import ussr.aGui.enumerations.hintpanel.HintsAssignBehaviorsTab;
@@ -48,19 +49,20 @@ public class AssignControllerTabController extends TabsControllers {
 	 * @param radionButton, the radio button representing modular robot name.
 	 */
 	public static void jButtonGroupActionPerformed(javax.swing.AbstractButton radionButton){
+
 		
-		loadExistingControllers(AssignControllerTab.getJListAvailableControllers());
 
 		boolean modularRobotNameExists = false;
 		SupportedModularRobots[] supportedModularRobots = SupportedModularRobots.values();
 		for (int buttonTextItem=0;buttonTextItem<supportedModularRobots.length;buttonTextItem++){
-			
+
 			if (radionButton.getText().equals(supportedModularRobots[buttonTextItem].getUserFriendlyName())){
 				String modularRobotName= SupportedModularRobots.getModularRobotSystemName(supportedModularRobots[buttonTextItem].getUserFriendlyName()).toString();
-				if (AssignControllerTab.isJToggleButtonEditValuesIsSelected()){
+				if (AssignControllerTab.getJToggleButtonEditValues().isSelected()){
 					updateList(AssignControllerTab.getJListAvailableControllers(),AssignableControllers.getAllUserFrienlyNamesForRobot(SupportedModularRobots.valueOf(modularRobotName)));
 				}else{
-				updateList(AssignControllerTab.getJListAvailableControllers(),filterOut(modularRobotName));
+					loadExistingControllers(AssignControllerTab.getJListAvailableControllers());
+					updateList(AssignControllerTab.getJListAvailableControllers(),filterOut(modularRobotName));
 				}
 				modularRobotNameExists =true;
 			}
@@ -136,29 +138,29 @@ public class AssignControllerTabController extends TabsControllers {
 	 * @param toggleButtonEditValuesIsSelected
 	 * @param jList1,the component in GUI. 
 	 */
-	public static void jListAvailableControllersMouseReleased(javax.swing.JList jList1, boolean toggleButtonEditValuesIsSelected) {
+	public static void jListAvailableControllersMouseReleased(javax.swing.JList jList1) {
 		String canonicalName = packageName+"."+jList1.getSelectedValue();
-		
-		if (toggleButtonEditValuesIsSelected){
+
+		if (AssignControllerTab.getJToggleButtonEditValues().isSelected()){
 			AssignableControllers assignableController = AssignableControllers.getControllerSystemName(jList1.getSelectedValue().toString());
 			canonicalName= assignableController.getClas().getCanonicalName();
 			AssignControllerTab.getJPanelEditValue().removeAll();
-			
+
 			GridBagConstraints gridBagConstraintsEditValue = new GridBagConstraints();
 			gridBagConstraintsEditValue.fill = GridBagConstraints.HORIZONTAL;
 			gridBagConstraintsEditValue.gridx = 0;
 			gridBagConstraintsEditValue.gridy = 0;	
-			
+
 			AssignControllerTab.getJPanelEditValue().add(new Label(jList1.getSelectedValue().toString()),gridBagConstraintsEditValue);
-			
+
 			gridBagConstraintsEditValue.fill = GridBagConstraints.HORIZONTAL;
 			gridBagConstraintsEditValue.gridx = 0;
 			gridBagConstraintsEditValue.gridy = 1;	
-			
+
 			AssignControllerTab.getJPanelEditValue().add(assignableController.getValueEditor(),gridBagConstraintsEditValue);
 			AssignControllerTab.getJPanelEditValue().revalidate();
 			AssignControllerTab.getJPanelEditValue().repaint();
-			
+
 		}
 		try {
 			builderControl.setAdjustControllerPicker(canonicalName);			
@@ -181,14 +183,14 @@ public class AssignControllerTabController extends TabsControllers {
 		}
 
 		if (amountModules>0){
-		/*	Adapt to first module*/
+			/*	Adapt to first module*/
 			String modularRobotName ="";
 			try {
 				modularRobotName = builderControl.getModuleType(0);
 			} catch (RemoteException e) {
 				throw new Error ("Failed to identify the type of the first module in simulation environment, due to remote exception.");
 			}
-			
+
 			if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ATRON.toString())){
 				jButtonGroupActionPerformed(AssignControllerTab.getRadionButtonATRON());
 				AssignControllerTab.getRadionButtonATRON().setSelected(true);
@@ -204,29 +206,33 @@ public class AssignControllerTabController extends TabsControllers {
 			}		
 		}
 	}
-	
-	
+
+
 	public static void updateHintPanel(HintPanelTypes hintPanelTypes,String text){
 		AssignControllerTab.getHintPanel().setType(hintPanelTypes);
 		AssignControllerTab.getHintPanel().setText(text);
 	}
 
-	public static void jToggleButtonEditValuesActionPerformed(JToggleButton toggleButtonEditValues, ButtonGroup buttonGroup) {
+	public static void jToggleButtonEditValuesActionPerformed(JToggleButton toggleButtonEditValues) {
 		if (toggleButtonEditValues.isSelected()){
 			AssignControllerTab.getJPanelEditValue().setVisible(true);
-			AssignControllerTab.setJToggleButtonEditValuesIsSelected(true);
-			
-			//ButtonModel selectedButton = buttonGroup.getSelection();
-			//jButtonGroupActionPerformed((AbstractButton)selectedButton);
-			
-			
-			System.out.println("CLAS: "+ AssignableControllers.ROTATE_CONTINUOUS.getClas().getCanonicalName());
 		}else{
 			AssignControllerTab.getJPanelEditValue().setVisible(false);
-			AssignControllerTab.setJToggleButtonEditValuesIsSelected(false);
-		}		
+		}	
+		
+		ButtonModel selectedButton = AssignControllerTab.getButtonGroup().getSelection();
+		AssignControllerTab.getButtonGroup().clearSelection();
+		//AssignControllerTab.getJListAvailableControllers().removeAll();		
+		AssignControllerTab.getButtonGroup().setSelected(selectedButton, true);
+		
+		for (int buttonNr=0;buttonNr<AssignControllerTab.getButtonGroup().getButtonCount();buttonNr++){
+			AbstractButton button  = AssignControllerTab.getButtonGroup().getElements().nextElement();
+			if (button.isSelected()){
+				jButtonGroupActionPerformed(button);
+			}
+		}	
 	}
-	
+
 	public static void activateAssignmentTool(AssignableControllers assignableController){
 		try {
 			builderControl.setAdjustControllerPicker(assignableController.getClas().getCanonicalName());			

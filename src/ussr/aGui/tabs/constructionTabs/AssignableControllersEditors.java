@@ -24,10 +24,6 @@ public class AssignableControllersEditors  {
 	}
 	
 	
-
-
-	
-	
 	public static javax.swing.JPanel addRotateDegreesEditor(){
 		javax.swing.JPanel jPanelEditor = new javax.swing.JPanel();
 		jSpinnerRotateDegrees = new javax.swing.JSpinner();
