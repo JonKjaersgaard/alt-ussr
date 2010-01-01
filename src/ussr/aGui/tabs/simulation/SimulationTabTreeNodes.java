@@ -1,9 +1,8 @@
-package ussr.aGui.tabs.simulation.enumerations;
+package ussr.aGui.tabs.simulation;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
-import ussr.aGui.tabs.simulation.SimulationTreeEditors;
 import ussr.builder.enumerations.XMLTagsUsed;
 
 /**

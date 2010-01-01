@@ -21,7 +21,7 @@ import ussr.description.setup.WorldDescription.CameraPosition;
 import ussr.physics.PhysicsParameters;
 
 /**
- * Contains methods for defining visual appearance of edit value panel in Simulation Tab for each
+ * Contains methods  defining visual appearance of edit value panel in Simulation Tab for each
  * node in tree view. 
  * 
  * NOTE: each method is creating new panel, which is later added into  panel with title edit value.

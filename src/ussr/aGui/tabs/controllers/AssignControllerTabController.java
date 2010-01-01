@@ -3,6 +3,7 @@ package ussr.aGui.tabs.controllers;
 import java.awt.GridBagConstraints;
 import java.awt.Label;
 import java.rmi.RemoteException;
+import java.util.Enumeration;
 import java.util.Vector;
 
 import javax.swing.AbstractButton;
@@ -143,7 +144,7 @@ public class AssignControllerTabController extends TabsControllers {
 
 		if (AssignControllerTab.getJToggleButtonEditValues().isSelected()){
 			AssignableControllers assignableController = AssignableControllers.getControllerSystemName(jList1.getSelectedValue().toString());
-			canonicalName= assignableController.getClas().getCanonicalName();
+			canonicalName= assignableController.getClassName().getCanonicalName();
 			AssignControllerTab.getJPanelEditValue().removeAll();
 
 			GridBagConstraints gridBagConstraintsEditValue = new GridBagConstraints();
@@ -213,6 +214,10 @@ public class AssignControllerTabController extends TabsControllers {
 		AssignControllerTab.getHintPanel().setText(text);
 	}
 
+	/**
+	 * Changes the view of controller names 
+	 * @param toggleButtonEditValues
+	 */
 	public static void jToggleButtonEditValuesActionPerformed(JToggleButton toggleButtonEditValues) {
 		if (toggleButtonEditValues.isSelected()){
 			AssignControllerTab.getJPanelEditValue().setVisible(true);
@@ -221,12 +226,13 @@ public class AssignControllerTabController extends TabsControllers {
 		}	
 		
 		ButtonModel selectedButton = AssignControllerTab.getButtonGroup().getSelection();
-		AssignControllerTab.getButtonGroup().clearSelection();
-		//AssignControllerTab.getJListAvailableControllers().removeAll();		
+		AssignControllerTab.getButtonGroup().clearSelection();		
 		AssignControllerTab.getButtonGroup().setSelected(selectedButton, true);
 		
+		Enumeration<AbstractButton> buttonGroupButtons= AssignControllerTab.getButtonGroup().getElements();
+		
 		for (int buttonNr=0;buttonNr<AssignControllerTab.getButtonGroup().getButtonCount();buttonNr++){
-			AbstractButton button  = AssignControllerTab.getButtonGroup().getElements().nextElement();
+			AbstractButton button  = buttonGroupButtons.nextElement();
 			if (button.isSelected()){
 				jButtonGroupActionPerformed(button);
 			}
@@ -235,7 +241,7 @@ public class AssignControllerTabController extends TabsControllers {
 
 	public static void activateAssignmentTool(AssignableControllers assignableController){
 		try {
-			builderControl.setAdjustControllerPicker(assignableController.getClas().getCanonicalName());			
+			builderControl.setAdjustControllerPicker(assignableController.getClassName().getCanonicalName());			
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called "+ "AssignControllerTool" + ", due to remote exception");
 		}

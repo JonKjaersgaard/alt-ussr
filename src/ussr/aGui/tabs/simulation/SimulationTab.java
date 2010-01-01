@@ -28,7 +28,6 @@ import ussr.aGui.helpers.hintPanel.HintPanel;
 
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
-import ussr.aGui.tabs.simulation.enumerations.SimulationTabTreeNodes;
 import ussr.builder.helpers.StringProcessingHelper;
 import ussr.builder.simulationLoader.SimulationSpecification;
 

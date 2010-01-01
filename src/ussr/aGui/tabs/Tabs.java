@@ -119,4 +119,10 @@ public abstract class Tabs implements TabsInter {
 		return MainFrames.initOpenButton(fcOpenFrame);
 	}
 	
+	public static javax.swing.JLabel createNewLabel(String labelText){
+		javax.swing.JLabel newLabel =  new javax.swing.JLabel();
+		newLabel.setText(labelText+" ");
+		return newLabel;
+	}
+	
 }
