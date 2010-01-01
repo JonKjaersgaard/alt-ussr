@@ -5,7 +5,7 @@ import ussr.samples.atron.ATRONController;
 import ussr.samples.mtran.MTRANController;
 
 
-public class MTRANControllerNOT_SUPPORTED_YET extends ControllerStrategy {
+public class MTRANControllerRotateFristActuator extends ControllerStrategy {
 
 	/**
 	 * The controller class providing ATRON API
@@ -18,6 +18,6 @@ public class MTRANControllerNOT_SUPPORTED_YET extends ControllerStrategy {
 	 */
 	public void activate (Module selectedModule){		
 		controller = (MTRANController)selectedModule.getController();
-		controller.rotateContinuous(1, 1);
+		controller.rotateContinuous(1, 0);
 	}	
 }

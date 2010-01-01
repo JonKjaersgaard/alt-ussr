@@ -22,7 +22,7 @@ public class ATRONDisconnectSpecificConnector extends ControllerStrategy {
 		controller = (ATRONController)selectedModule.getController();
 		int value; 
 		try {
-			value = RemotePhysicsSimulationImpl.getGUICallbackControl().getValueNrsConnectors();
+			value = RemotePhysicsSimulationImpl.getGUICallbackControl().getValueAtronNrsConnectors();
 		} catch (RemoteException e) {
 			throw new Error("Failed to receive falue in class: "+ this.getClass().getCanonicalName());
 		}

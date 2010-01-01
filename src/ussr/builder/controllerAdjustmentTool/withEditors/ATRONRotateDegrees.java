@@ -26,7 +26,7 @@ public class ATRONRotateDegrees extends ControllerStrategy {
 		
 		int value; 
 		try {
-			value = RemotePhysicsSimulationImpl.getGUICallbackControl().getValuejSpinnerRotateDegrees();
+			value = RemotePhysicsSimulationImpl.getGUICallbackControl().getValuejSpinnerAtronRotateDegrees();
 		} catch (RemoteException e) {
 			throw new Error("Failed to receive falue for in class: "+ this.getClass().getCanonicalName());
 		}		

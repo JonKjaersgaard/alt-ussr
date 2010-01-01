@@ -5,27 +5,31 @@ import java.rmi.RemoteException;
 import ussr.builder.controllerAdjustmentTool.ControllerStrategy;
 import ussr.model.Module;
 import ussr.remote.facade.RemotePhysicsSimulationImpl;
-import ussr.samples.odin.OdinController;
+import ussr.samples.mtran.MTRANController;
 
-public class ODINTubesExpandContractContinuously extends ControllerStrategy {
+
+public class MTRANRotateContinuously extends ControllerStrategy {
 
 	/**
-	 * Controller implementation for Odin modular robot.
+	 * The controller class providing ATRON API
 	 */
-	private OdinController controller;	
+	private MTRANController controller;	
 	
 	/**
 	 * The method which will is activated when this class is instantiated by the tool called "AssignControllerTool"
 	 * @param selectedModule, the module selected in simulation environment
 	 */
 	public void activate (Module selectedModule){		
-		controller = (OdinController)selectedModule.getController();
-		Float value; 
+		controller = (MTRANController)selectedModule.getController();
+		int velocity;
+		int actuator;
 		try {
-			value = RemotePhysicsSimulationImpl.getGUICallbackControl().getValuejSpinnerOdinActuateContinuously();
+			velocity = RemotePhysicsSimulationImpl.getGUICallbackControl().getValuejSpinnerMtranRotateContinuously();
+			actuator = RemotePhysicsSimulationImpl.getGUICallbackControl().getSelectedjComboBoxMtranNrsActuators();
 		} catch (RemoteException e) {
 			throw new Error("Failed to receive value in class: "+ this.getClass().getCanonicalName());
 		}
-			controller.actuateContinuous(value);				
+		
+		controller.rotateContinuous(velocity, actuator);
 	}	
 }

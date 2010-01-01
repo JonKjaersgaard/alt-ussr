@@ -23,7 +23,7 @@ public class ATRONRotateContinuous extends ControllerStrategy {
 		controller = (ATRONController)selectedModule.getController();
 		Float value; 
 		try {
-			value = RemotePhysicsSimulationImpl.getGUICallbackControl().getValueJSpinnerRotateContinuous();
+			value = RemotePhysicsSimulationImpl.getGUICallbackControl().getValueJSpinnerAtronSpeedRotateContinuous();
 		} catch (RemoteException e) {
 			throw new Error("Failed to receive value in class: "+ this.getClass().getCanonicalName());
 		}
