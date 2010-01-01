@@ -246,7 +246,7 @@ public class AssignControllerTab extends ConstructionTabs{
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;		
 		gridBagConstraints.gridy = 2;
-		gridBagConstraints.gridwidth = 1;
+		gridBagConstraints.gridwidth = 2;
 		super.jComponent.add(hintPanel,gridBagConstraints);	
 
 	}

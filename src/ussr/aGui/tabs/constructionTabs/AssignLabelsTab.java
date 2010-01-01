@@ -12,35 +12,43 @@ import javax.swing.JToolBar;
 import javax.swing.border.TitledBorder;
 
 import ussr.aGui.FramesInter;
+import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
 import ussr.aGui.enumerations.tabs.EntitiesForLabelingText;
+import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
-import ussr.aGui.tabs.Tabs;
+import ussr.aGui.helpers.hintPanel.HintPanel;
+import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.controllers.LabelingTabController;
 
 /**
  * Defines visual appearance of tab named as Labeling. 
  * @author Konstantinas
  */
-public class LabelingTab extends ConstructionTabs{
+public class AssignLabelsTab extends ConstructionTabs{
 
 	/**
 	 * The constants of grid bag layout used during design of the tab.
 	 * This layout is used often during design of GUI, because of its flexibility to positioning components of GUI. 
 	 */
-	private GridBagConstraints gridBagConstraints = new GridBagConstraints();	
+	private GridBagConstraints gridBagConstraints = new GridBagConstraints();
+	
+	/**
+	 * Used to display hints to the user. Feedback to the user.
+	 */
+	private static HintPanel hintPanel;
 
 	/**
-	 * Defines visual appearance of tab named as Labeling.
+	 * Defines visual appearance of tab named as Assign Labels.
 	 * @param initiallyVisible, true if the tab is visible after activation of main GUI window. 
 	 * @param firstTabbedPane,location of the tab in the main GUI frame. True if it is the first tabbed pane. 
 	 * @param tabTitle, the title of the tab.
 	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
 	 */
-	public LabelingTab(boolean initiallyVisible ,boolean firstTabbedPane, String tabTitle, String imageIconDirectory){
+	public AssignLabelsTab(boolean initiallyVisible ,boolean firstTabbedPane, String tabTitle, String imageIconDirectory){
 		super(initiallyVisible,firstTabbedPane,tabTitle,imageIconDirectory);
 
 		/*JComponent, is the main container of the tab.*/
-		super.jComponent = new javax.swing.JPanel();
+		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
 		initComponents();
 	}
 
@@ -50,6 +58,10 @@ public class LabelingTab extends ConstructionTabs{
 	 */
 	public void initComponents() {
 		
+		
+		
+		jToolBarGeneralControl = new javax.swing.JToolBar();
+		
 		jPanelEntitiesToLabel =  new javax.swing.JPanel(new GridBagLayout());
 		
 		jToolBarEntitiesForLabeling = new javax.swing.JToolBar();
@@ -58,6 +70,8 @@ public class LabelingTab extends ConstructionTabs{
 		
 		jButtonReadLabels = new javax.swing.JButton();
 		jButtonAssignLabels = new javax.swing.JButton();
+		jButtonSave = initSaveButton();
+		jButtonOpen = initOpenButton();
 		
 		radioButtonModule =  new javax.swing.JRadioButton();
 		radionButtonConnector =  new javax.swing.JRadioButton();
@@ -68,11 +82,27 @@ public class LabelingTab extends ConstructionTabs{
 		
 		jTableLabels = new javax.swing.JTable();
 		jScrollPaneTableCurrentLabels = new javax.swing.JScrollPane();
+		
+		jSeparator1 = new javax.swing.JToolBar.Separator();		
 
-	/*	gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		jToolBarGeneralControl.setBorder(FramesInter.TOOLBAR_BORDER);
+		jToolBarGeneralControl.setToolTipText(TabsComponentsText.GENERAL_CONTROL.getUserFriendlyName());
+		jToolBarGeneralControl.setFloatable(false);//user can not make the tool bar to float
+		jToolBarGeneralControl.setRollover(true);// the components inside are roll over
+		jToolBarGeneralControl.setPreferredSize(new Dimension(375,FramesInter.HORIZONTAL_TOOLBAR_HEIGHT));
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 3;
-		gridBagConstraints.gridwidth = 2;	*/
+		gridBagConstraints.gridy = 0;
+		gridBagConstraints.insets = new Insets(0, 0, 30, 0);
+
+		jToolBarGeneralControl.add(jButtonOpen);
+		jToolBarGeneralControl.add(jButtonSave);
+		
+		jSeparator1.setPreferredSize(new Dimension(6,30));
+		jToolBarGeneralControl.add(jSeparator1);
+		
+		super.jComponent.add(jToolBarGeneralControl,gridBagConstraints);		
+
 
 		GridBagConstraints gridBagConstraintsEntitiesToLabel = new GridBagConstraints();
 		TitledBorder displayTitle1;
@@ -80,9 +110,6 @@ public class LabelingTab extends ConstructionTabs{
 		displayTitle1.setTitleJustification(TitledBorder.CENTER);		
 		jPanelEntitiesToLabel.setBorder(displayTitle1);
 		jPanelEntitiesToLabel.setPreferredSize(new Dimension(100,130));
-		//gridBagConstraintsLabelingPanel.fill = GridBagConstraints.HORIZONTAL;
-		//gridBagConstraintsLabelingPanel.gridx = 0;
-		//gridBagConstraintsLabelingPanel.gridy = 0;
 
 		//jToolBarEntitiesForLabeling.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarEntitiesForLabeling.setFloatable(false);//user can not make the tool bar to float
@@ -252,8 +279,23 @@ public class LabelingTab extends ConstructionTabs{
 										.addComponent(jToolBarControlOfLabels,GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 												GroupLayout.PREFERRED_SIZE))				
 		);
-
+		
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 1;
+		
 		super.jComponent.add(jPanelLabeling,gridBagConstraints);
+		
+		
+		/*Display for hints. Feedback to the user.*/
+		hintPanel = initHintPanel(400,HINT_PANEL_HEIGHT,HintsAssignLabelsTab.DEFAULT.getHintText());		
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 0;		
+		gridBagConstraints.gridy = 2;
+		
+		super.jComponent.add(hintPanel,gridBagConstraints);
+
+		
 
 	}
 	
@@ -301,16 +343,18 @@ public class LabelingTab extends ConstructionTabs{
 	private javax.swing.JPanel jPanelEntitiesToLabel;
 	
 	private static javax.swing.JToolBar jToolBarEntitiesForLabeling,jToolBarTypesSensors,
-	                                    jToolBarControlOfLabels;
+	                                    jToolBarControlOfLabels,jToolBarGeneralControl;
 	
 	private static  javax.swing.AbstractButton radioButtonModule,radionButtonConnector,
 	radioButtonSensors, radioButtonProximitySensor;
 	
-	private  static javax.swing.JButton jButtonReadLabels,jButtonAssignLabels;
+	private  static javax.swing.JButton jButtonReadLabels,jButtonAssignLabels, jButtonSave,jButtonOpen;;
 	
 	private static javax.swing.JTable jTableLabels;
 	
 	private javax.swing.JScrollPane jScrollPaneTableCurrentLabels;
 	
 	private static javax.swing.JPanel jPanelLabeling;
+	
+	private javax.swing.JToolBar.Separator jSeparator1;
 }

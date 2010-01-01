@@ -7,7 +7,7 @@ import javax.swing.AbstractButton;
 import ussr.aGui.enumerations.tabs.EntitiesForLabelingText;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
-import ussr.aGui.tabs.constructionTabs.LabelingTab;
+import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
 import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.labelingTools.LabelingTemplate;
@@ -26,7 +26,7 @@ public class LabelingTabController extends TabsControllers{
 	 */
 	public static void radioButtonGroupEntitiesActionPerformed(AbstractButton button) {
 
-		LabelingTab.setEnabledControlButtons(true);
+		AssignLabelsTab.setEnabledControlButtons(true);
 
 		chosenRadioEntityText = button.getText();
 
@@ -47,15 +47,15 @@ public class LabelingTabController extends TabsControllers{
 	private static void updateTableHeader(){
 		String columnHeaderName ="";
 		if (chosenRadioEntityText.equals(EntitiesForLabelingText.Sensors.toString())){
-			LabelingTab.getJToolBarTypesSensors().setVisible(true);
+			AssignLabelsTab.getJToolBarTypesSensors().setVisible(true);
 		}else if (chosenRadioEntityText.equals(EntitiesForLabelingText.Proximity.toString())){
-			LabelingTab.getJToolBarTypesSensors().setVisible(true);
+			AssignLabelsTab.getJToolBarTypesSensors().setVisible(true);
 			columnHeaderName = chosenRadioEntityText+ " Sensor" + " Labels"; 
-			LabelingTab.getJTableLabels().getTableHeader().getColumnModel().getColumn(0).setHeaderValue(columnHeaderName);
+			AssignLabelsTab.getJTableLabels().getTableHeader().getColumnModel().getColumn(0).setHeaderValue(columnHeaderName);
 		}else{
 			columnHeaderName = chosenRadioEntityText + " Labels"; 
-			LabelingTab.getJTableLabels().getTableHeader().getColumnModel().getColumn(0).setHeaderValue(columnHeaderName);
-			LabelingTab.getJToolBarTypesSensors().setVisible(false);
+			AssignLabelsTab.getJTableLabels().getTableHeader().getColumnModel().getColumn(0).setHeaderValue(columnHeaderName);
+			AssignLabelsTab.getJToolBarTypesSensors().setVisible(false);
 
 		}
 	} 
@@ -67,20 +67,20 @@ public class LabelingTabController extends TabsControllers{
 	 */
 	public static void updateTableLabels(String labels){
 		// clear the column
-		int amountRows = LabelingTab.getJTableLabels().getRowCount() ;
+		int amountRows = AssignLabelsTab.getJTableLabels().getRowCount() ;
 		for (int rowNr =0;rowNr < amountRows; rowNr++){
-			LabelingTab.getJTableLabels().setValueAt("", rowNr, 0);
+			AssignLabelsTab.getJTableLabels().setValueAt("", rowNr, 0);
 		}
 
 		//populate column with labels
 		String[] sepratedLabels = labels.split(LabelingTemplate.LABEL_SEPARATOR);
 		if(amountRows>sepratedLabels.length&&labels.length()>0) {
 			for (int index=0; index<sepratedLabels.length; index++){
-				LabelingTab.getJTableLabels().setValueAt(sepratedLabels[index], index, 0);
+				AssignLabelsTab.getJTableLabels().setValueAt(sepratedLabels[index], index, 0);
 			}
 		}else if (labels.length() ==0){
 			//TODO
-			LabelingTab.getJTableLabels().setValueAt("none label", 0, 0);
+			AssignLabelsTab.getJTableLabels().setValueAt("none label", 0, 0);
 		}else{
 			throw new Error ("Addition of new rows is not supported yet");
 		}
@@ -130,13 +130,13 @@ public class LabelingTabController extends TabsControllers{
 	public static void jButtonAssignLabelsActionPerformed() {
 
 		/*Get labels from the table*/
-		int amountRows = LabelingTab.getJTableLabels().getRowCount() ;
+		int amountRows = AssignLabelsTab.getJTableLabels().getRowCount() ;
 		String labelsInTable="";
 		for (int rowNr =0;rowNr < amountRows; rowNr++){
-			if (LabelingTab.getJTableLabels().getValueAt(rowNr, 0)==null){
+			if (AssignLabelsTab.getJTableLabels().getValueAt(rowNr, 0)==null){
 				//do not store empty rows
 			}else{
-				labelsInTable= labelsInTable + LabelingTab.getJTableLabels().getValueAt(rowNr, 0)+",";
+				labelsInTable= labelsInTable + AssignLabelsTab.getJTableLabels().getValueAt(rowNr, 0)+",";
 			}
 		}
 

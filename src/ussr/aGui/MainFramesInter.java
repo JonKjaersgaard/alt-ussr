@@ -6,7 +6,7 @@ import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.YourNewTab;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
-import ussr.aGui.tabs.constructionTabs.LabelingTab;
+import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
 import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.aGui.tabs.visualizer.ModuleCommunicationVisualizer;
 
@@ -58,7 +58,7 @@ public interface MainFramesInter {
 	 */
 	public final String CONSTRUCT_ROBOT_TAB_TITLE = "Construct Robot",
 	                    ASSIGN_BEHAVIORS_TAB_TITLE = "Assign Controller",
-	                    ASSIGN_LABELS_TAB_TITLE = "Labels",
+	                    ASSIGN_LABELS_TAB_TITLE = "Assign Labels",
 	                    MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE = "Communication Visualiser",
 	                    SIMULATION_TAB_TITLE = "Simulation",
 	                    CONSOLE_TAB_TITLE = "Console",
@@ -75,7 +75,7 @@ public interface MainFramesInter {
 	 */
 	public final TabsInter  CONSTRUCT_ROBOT_TAB = new ConstructRobotTab(false,true,CONSTRUCT_ROBOT_TAB_TITLE,contructRobotIconDirectory),
 	                        ASSIGN_BEHAVIORS_TAB = new AssignControllerTab(false,true,ASSIGN_BEHAVIORS_TAB_TITLE,contructRobotIconDirectory),
-	                        ASSIGN_LABELS_TAB = new LabelingTab(false,true,ASSIGN_LABELS_TAB_TITLE,contructRobotIconDirectory),
+	                        ASSIGN_LABELS_TAB = new AssignLabelsTab(false,true,ASSIGN_LABELS_TAB_TITLE,contructRobotIconDirectory),
 	                        MODULE_COMMUNICATION_VISUALIZER_TAB = new ModuleCommunicationVisualizer(false,true,MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE,MainFrameIcons.VISUALIZER_ROLLOVER.getImageDirectory()),
 	                        SIMULATION_CONFIGURATION_TAB = new SimulationTab(true,true,SIMULATION_TAB_TITLE,FramesInter.DIRECTORY_USSR_ICON),
 	                        CONSOLE_TAB = new ConsoleTab(true,false,CONSOLE_TAB_TITLE, MainFrameIcons.CONSOLE.getImageDirectory()),
