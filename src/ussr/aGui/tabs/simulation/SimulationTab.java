@@ -120,7 +120,7 @@ public class SimulationTab extends Tabs {
 
 		super.jComponent.add(jPanelEditor,gridBagConstraints);
 
-		hintPanel = new HintPanel(600, HINT_PANEL_HEIGHT+20);
+		hintPanel = new HintPanel(600, HINT_PANEL_HEIGHT);
 		hintPanel.setBorderTitle("Display for hints");
 		hintPanel.setText(HintsSimulationTab.DEFAULT.getHintText());
 		hintPanel.setVisible(false);
@@ -197,6 +197,7 @@ public class SimulationTab extends Tabs {
 		jTreeSimulation.revalidate();
 		jTreeSimulation.repaint();
 		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);
+		
 	} 
 
 	public static javax.swing.JPanel getJPanelEditor() {
@@ -209,6 +210,26 @@ public class SimulationTab extends Tabs {
 		jPanelEditor.setVisible(visible);
 		hintPanel.setVisible(visible);	
 		hintPanel.setText(HintsSimulationTab.DEFAULT.getHintText());
+		resizeComponents();
+	}
+	
+	public static void resizeComponents(){
+		int heightIcon = MainFrames.getJTabbedPaneFirst().getIconAt(0).getIconHeight();
+		int height = MainFrames.getJTabbedPaneFirst().getHeight()-(2*heightIcon)- HINT_PANEL_HEIGHT ;
+		int width = (int)MainFrames.getJTabbedPaneFirst().getWidth()/2;
+		
+		
+		System.out.println("SOMEEEE"+ height);
+		System.out.println("SOMEEEEICON"+ heightIcon);
+		//System.out.println("SOMEEEE1"+ hintPanel.getV()); 
+	
+		jScrollPaneTreeSimulation.setPreferredSize(new Dimension(width,height));
+		
+		jPanelEditor.setPreferredSize(new Dimension(width-10,height-10));
+		//jTreeSimulation.setPreferredSize(new Dimension(300,height-140));
+		//jScrollPaneTreeSimulation.setSize(300, height);
+		//jTreeSimulation.setSize(300,height);
+		
 	}
 
 	public static void addMorphologyEditor() {

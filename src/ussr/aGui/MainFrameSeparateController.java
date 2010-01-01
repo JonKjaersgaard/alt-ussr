@@ -10,6 +10,7 @@ import javax.swing.JToggleButton;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
+import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.controllers.AssignControllerTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
@@ -419,10 +420,12 @@ public class MainFrameSeparateController extends GeneralController {
 			SimulationTab.getHintPanel().setVisible(false);
 			ConstructRobotTab.getHintPanel().setVisible(false);
 			AssignControllerTab.getHintPanel().setVisible(false);
+			AssignLabelsTab.getHintPanel().setVisible(false);
 		}else{
 			SimulationTab.getHintPanel().setVisible(true);
 			ConstructRobotTab.getHintPanel().setVisible(true);
 			AssignControllerTab.getHintPanel().setVisible(true);
+			AssignLabelsTab.getHintPanel().setVisible(true);
 		}
 
 	}

@@ -106,10 +106,13 @@ public class HintPanel extends JPanel implements HintPanelInter {
 		jTextPaneHintDisplay.setText(hintText);
 		jTextPaneHintDisplay.repaint();
 		jTextPaneHintDisplay.validate();
-		jTextPaneHintDisplay.invalidate();
-	
-		
+		jTextPaneHintDisplay.invalidate();	
 	}
+	
+	public int getHeightValue(){
+		return this.getHeight();
+	}
+	
 	
 
 	/*Declaration of components*/

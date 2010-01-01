@@ -294,9 +294,6 @@ public class AssignLabelsTab extends ConstructionTabs{
 		gridBagConstraints.gridy = 2;
 		
 		super.jComponent.add(hintPanel,gridBagConstraints);
-
-		
-
 	}
 	
 	/**
@@ -337,6 +334,10 @@ public class AssignLabelsTab extends ConstructionTabs{
 	 */
 	public static javax.swing.JPanel getLabelingPanel() {
 		return jPanelLabeling;
+	}
+	
+	public static HintPanel getHintPanel() {
+		return hintPanel;
 	}
 	
 	

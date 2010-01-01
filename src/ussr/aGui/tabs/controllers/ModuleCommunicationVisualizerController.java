@@ -36,8 +36,6 @@ public class ModuleCommunicationVisualizerController extends TabsControllers {
 		ModuleCommunicationVisualizer.getJButtonRun().setEnabled(false);
 		ModuleCommunicationVisualizer.getJButtonReset().setEnabled(true);
 
-
-
 		/*	
         if(jmeSimulation.isPaused()==false){
         	jLabel1000.setVisible(true);
