@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
+import ussr.aGui.tabs.constructionTabs.AssignableControllersEditors;
 import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.simulationLoader.SimulationSpecification;
@@ -58,12 +59,16 @@ public interface GUICallbackControl extends Remote {
 	
 	public String getDefaultConstructionModuleType()throws RemoteException;
 	
-	public Float getValueJSpinnerRotateContinuous()throws RemoteException;
+	public Float getValueJSpinnerAtronSpeedRotateContinuous()throws RemoteException;
 	
-	public Integer getValuejSpinnerRotateDegrees()throws RemoteException;	
+	public Integer getValuejSpinnerAtronRotateDegrees()throws RemoteException;	
 	
-	public  Integer getValueNrsConnectors()throws RemoteException;
+	public  Integer getValueAtronNrsConnectors()throws RemoteException;
 	
 	
-	public  Float getValuejSpinnerActuateContinuously()throws RemoteException;
+	public  Float getValuejSpinnerOdinActuateContinuously()throws RemoteException;
+	
+	public int getSelectedjComboBoxMtranNrsActuators() throws RemoteException;
+	
+	public int getValuejSpinnerMtranRotateContinuously() throws RemoteException;
 }

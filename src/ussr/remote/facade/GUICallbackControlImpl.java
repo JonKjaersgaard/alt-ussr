@@ -97,23 +97,35 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 		return ConstructRobotTab.getDefaultConstructionModuleType();
 	}
 
-	public Float getValueJSpinnerRotateContinuous()throws RemoteException{
-		return AssignableControllersEditors.getValueJSpinnerRotateContinuous();
+	public Float getValueJSpinnerAtronSpeedRotateContinuous()throws RemoteException{
+		return AssignableControllersEditors.getValueJSpinnerAtronSpeedRotateContinuous();
 	}
 	
-	public Integer getValuejSpinnerRotateDegrees()throws RemoteException{
-		return AssignableControllersEditors.getValuejSpinnerRotateDegrees();
+	public Integer getValuejSpinnerAtronRotateDegrees()throws RemoteException{
+		return AssignableControllersEditors.getValuejSpinnerAtronRotateDegrees();
 	}
 
 	@Override
-	public Integer getValueNrsConnectors() throws RemoteException {	
-		return AssignableControllersEditors.getValueNrsConnectors();
+	public Integer getValueAtronNrsConnectors() throws RemoteException {	
+		return AssignableControllersEditors.getValueAtronNrsConnectors();
 	}
 
 	@Override
-	public Float getValuejSpinnerActuateContinuously() throws RemoteException {		
-		return AssignableControllersEditors.getValuejSpinnerActuateContinuously();
+	public Float getValuejSpinnerOdinActuateContinuously() throws RemoteException {		
+		return AssignableControllersEditors.getValuejSpinnerOdinActuateContinuously();
 	}
+	
+	
+
+	public int getSelectedjComboBoxMtranNrsActuators() throws RemoteException {		
+		return AssignableControllersEditors.getSelectedjComboBoxMtranNrsActuators();
+	}
+	
+	public int getValuejSpinnerMtranRotateContinuously() throws RemoteException {		
+		return AssignableControllersEditors.getValuejSpinnerMtranRotateContinuously();
+	}
+	
+	
 
 
 
