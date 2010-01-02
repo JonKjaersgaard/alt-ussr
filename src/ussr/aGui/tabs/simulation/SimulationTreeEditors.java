@@ -36,7 +36,7 @@ public class SimulationTreeEditors{
 	public static javax.swing.JPanel  addRobotsEditor(){
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jPanelTreeNode.add(SimulationTab.createNewLabel(TabsComponentsText.LOAD_NEW_ROBOT.getUserFriendlyName()));
-		jPanelTreeNode.add(Tabs.initOpenButton());
+		jPanelTreeNode.add(Tabs.initOpenButton());		
 		return jPanelTreeNode;
 	}
 

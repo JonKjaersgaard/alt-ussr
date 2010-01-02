@@ -48,6 +48,14 @@ public class FileChooserSaveFrame extends FileChooserFrame  {
 	 * Starts the window of file chooser in the form of Save dialog.
 	 */
 	public void activate(){
+	/*	new Thread() {
+			public void run() {
+				fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);
+				fcSaveFrame.setVisible(true);
+			}
+		}.start();	*/
+		
+		/*This is too slow*/
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() { 
 				fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);

@@ -48,6 +48,16 @@ public class FileChooserOpenFrame extends FileChooserFrame  {
 	 * Starts the window of file chooser in the form of Open dialog.
 	 */
 	public void activate(){
+		
+	/*	new Thread() {
+			public void run() {
+				fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);
+				fcOpenFrame.setVisible(true);
+			}
+		}.start();*/
+		
+		
+		
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() { 
 				fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);

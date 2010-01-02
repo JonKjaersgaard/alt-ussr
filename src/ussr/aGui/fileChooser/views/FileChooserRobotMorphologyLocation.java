@@ -1,8 +1,10 @@
 package ussr.aGui.fileChooser.views;
 
+import java.io.IOException;
 import java.util.Map;
 
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
+import ussr.remote.GUIRemoteSimulationAdapter;
 
 /**
  * TODO NOT USED YET
@@ -44,6 +46,14 @@ public class FileChooserRobotMorphologyLocation extends FileChooserFrame {
 	
 	@Override
 	public void activate() {
+		
+	/*	new Thread() {
+			public void run() {
+				fcRobotMorphologyFrame = new FileChooserRobotMorphologyLocation(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);
+				fcRobotMorphologyFrame.setVisible(true);
+			}
+		}.start();	*/
+		
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() { 
 				fcRobotMorphologyFrame = new FileChooserRobotMorphologyLocation(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);

@@ -60,8 +60,7 @@ public abstract class Tabs implements TabsInter {
     	this.initiallyVisible= initiallyVisible;
     	this.firstTabbedPane = firstTabbedPane;
     	this.tabTitle = tabTitle;
-    	this.imageIconDirectory = imageIconDirectory; 
-    	
+    	this.imageIconDirectory = imageIconDirectory;  	
     }
     
     /**
@@ -114,7 +113,7 @@ public abstract class Tabs implements TabsInter {
 	
 	public static JButton initOpenButton(){
 		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
-		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
+		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);		
 		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
 		return MainFrames.initOpenButton(fcOpenFrame);
 	}
@@ -124,5 +123,8 @@ public abstract class Tabs implements TabsInter {
 		newLabel.setText(labelText+" ");
 		return newLabel;
 	}
+	
+
+	
 	
 }

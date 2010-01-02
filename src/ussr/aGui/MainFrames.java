@@ -27,7 +27,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 * The main GUI window.
 	 */
 	protected static MainFrames mainFrame;
-	
+
+
 	/**
 	 * Insets of main frame border.
 	 */
@@ -791,6 +792,10 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public static void setComponentsAssocWithSecondTabbedPaneSelected(boolean selected){
 		jCheckBoxMenuItemDebugging.setSelected(selected);
 		jToggleButtonMaximizeInteraction.setSelected(selected);
+	}
+	
+	public static MainFrames getMainFrame() {
+		return mainFrame;
 	}
 	
 	

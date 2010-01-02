@@ -26,7 +26,7 @@ public enum JOptionPaneMessages {
 	}
 	
 	public void displayMessage(){
-		message.showMessageDialog(null,this.messageText,this.title,this.type);
+		message.showMessageDialog(MainFrames.getMainFrame(),this.messageText,this.title,this.type);
 	}
 	
 	
