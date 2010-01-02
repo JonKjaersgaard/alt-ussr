@@ -303,8 +303,6 @@ Node rootNode = document.getDocumentElement();
 		}
 		
 		
-		
-		
 		try {
 			if (RemotePhysicsSimulationImpl.getGUICallbackControl()!=null){
 				
