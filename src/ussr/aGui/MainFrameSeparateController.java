@@ -448,4 +448,11 @@ public class MainFrameSeparateController extends GeneralController {
 			defaultFirstPaneHeight = MainFrames.getJTabbedPaneFirst().getHeight();
 		}
 	}
+
+/*	public static void jCheckBoxMenuItemHideAllActionPerformed(JCheckBoxMenuItem jCheckBoxMenuItemHideAll) {
+		if(jCheckBoxMenuItemHideAll.isSelected()){
+			
+		}
+		
+	}*/
 }

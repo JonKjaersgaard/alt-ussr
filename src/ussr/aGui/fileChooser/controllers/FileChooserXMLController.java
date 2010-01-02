@@ -6,9 +6,6 @@ import java.rmi.RemoteException;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import ussr.builder.enumerations.UssrXmlFileTypes;
-import ussr.remote.ConsoleSimulationExample;
-import ussr.remote.GUIRemoteSimulationAdapter;
-
 
 /**
  * Controls the functionality of both forms of file chooser: Open and Save.
@@ -37,21 +34,22 @@ public class FileChooserXMLController extends FileChooserController {
 				setSimulationXMLFileDirectory(fileDirectoryName);//CallBack				
 				//ConsoleSimulationExample.main(null);
 				break;			
-			case ROBOT:
-				try {
-					builderControl.loadInXML(UssrXmlFileTypes.ROBOT, fileDirectoryName);
-				} catch (RemoteException e) {
-					throw new Error("Failed to load robot morphology from xml file, due to remote exception");
-				}
-				break;
-			default: throw new Error("XML file type named as " +ussXmlFileType.toString() +"is not yet supported.");
+			case ROBOT:        
+				new Thread() {
+					public void run() {
+						try {
+							builderControl.loadInXML(UssrXmlFileTypes.ROBOT, fileDirectoryName);
+						} catch (RemoteException e) {
+							throw new Error("Failed to load robot morphology from xml file, due to remote exception");
+						}
+					}
+				}.start();
+				break;	
+			default: throw new Error("XML file type named as " +ussXmlFileType.toString() +"is not yet supported.");	
 			}
-			//close the frame(window)          
-			fileChooserFrame.dispose();
-
-		}else if (command.equalsIgnoreCase(ActionCommands.CANCELSELECTION.toString())){//Cancel pressed			
-			fileChooserFrame.dispose();//close the frame(window) 	  			
-		}	
+		}
+		
+		fileChooserFrame.dispose();
 	}
 
 	@Override
@@ -67,12 +65,9 @@ public class FileChooserXMLController extends FileChooserController {
 				remotePhysicsSimulation.saveToXML(ussXmlFileType, fileDirectoryName);
 			} catch (RemoteException e) {
 				throw new Error("Failed to save "+ ussXmlFileType.toString()+" description in xml file "+ fileDirectoryName+ ", due ro remote exception");
-			}
-
-			fileChooserFrame.dispose();//close the frame(window)			
-		}else if (command.equalsIgnoreCase(ActionCommands.CANCELSELECTION.toString())){//Cancel pressed			
-			fileChooserFrame.dispose();//close the frame(window)			
+			}						
 		}		
+		fileChooserFrame.dispose();//close the frame(window)
 	}	
 
 }

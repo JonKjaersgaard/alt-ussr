@@ -64,15 +64,16 @@ public class SimulationTab extends Tabs {
 	 * Follows Strategy  pattern.
 	 */
 	public void initComponents() {
+		/*Instantiate components*/
 		jScrollPaneTreeSimulation = new javax.swing.JScrollPane();
 		jPanelEditor = new javax.swing.JPanel(new GridBagLayout());
 		jTreeSimulation = new javax.swing.JTree();
+		jSplitPaneSimulationTreeAndEditor = new javax.swing.JSplitPane();
 		
 		
+		/*Define components*/
 		DefaultTreeModel treeModel = new DefaultTreeModel(initializeSimulationRootNode());
 		jTreeSimulation.setModel(treeModel);
-		//jTreeSimulation.setShowsRootHandles(true);
-		//jTreeSimulation.setEditable(true);
 		
 		ImageIcon closedIcon = TabsIcons.EXPANSION_CLOSED_SMALL.getImageIcon();
 		ImageIcon openIcon = TabsIcons.EXPANSION_OPENED_SMALL.getImageIcon();
@@ -101,25 +102,31 @@ public class SimulationTab extends Tabs {
 		});
 
 		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);
-		jScrollPaneTreeSimulation.setVisible(false);
 		jScrollPaneTreeSimulation.setPreferredSize(new Dimension(300,300));
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 0;
-		super.jComponent.add(jScrollPaneTreeSimulation,gridBagConstraints);
+	
 
 		TitledBorder displayTitle;
 		displayTitle = BorderFactory.createTitledBorder(TabsComponentsText.EDIT_VALUE.getUserFriendlyName());
 		displayTitle.setTitleJustification(TitledBorder.CENTER);
 		jPanelEditor.setBorder(displayTitle);
-		jPanelEditor.setVisible(false);
 		jPanelEditor.setPreferredSize(new Dimension(300,300));
+		
+		jSplitPaneSimulationTreeAndEditor.setOrientation(javax.swing.JSplitPane.HORIZONTAL_SPLIT);
+		
+		jSplitPaneSimulationTreeAndEditor.setLeftComponent(jScrollPaneTreeSimulation);
+		jSplitPaneSimulationTreeAndEditor.setRightComponent(jPanelEditor);
+		jSplitPaneSimulationTreeAndEditor.setPreferredSize(new Dimension(600,300));
+	
+		
+		jSplitPaneSimulationTreeAndEditor.setDividerSize(5);
+		jSplitPaneSimulationTreeAndEditor.setDividerLocation(280);
+		jSplitPaneSimulationTreeAndEditor.setVisible(false);
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.gridx = 1;
-		gridBagConstraints.gridy = 0;		
-
-		super.jComponent.add(jPanelEditor,gridBagConstraints);
-
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 0;
+		
+		super.jComponent.add(jSplitPaneSimulationTreeAndEditor,gridBagConstraints);
+		
 		hintPanel = new HintPanel(600, HINT_PANEL_HEIGHT);
 		hintPanel.setBorderTitle("Display for hints");
 		hintPanel.setText(HintsSimulationTab.DEFAULT.getHintText());
@@ -128,7 +135,6 @@ public class SimulationTab extends Tabs {
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 1;
-		gridBagConstraints.gridwidth=2;
 
 		super.jComponent.add(hintPanel,gridBagConstraints);
 	}
@@ -205,12 +211,14 @@ public class SimulationTab extends Tabs {
 		return jPanelEditor;
 	}
 
-	public static void setTabVisible(boolean visible) {
+	public static void setTabVisible(boolean visible) {		
 		jScrollPaneTreeSimulation.setVisible(visible);
 		jPanelEditor.setVisible(visible);
+		jSplitPaneSimulationTreeAndEditor.setVisible(visible);
+		
 		hintPanel.setVisible(visible);	
 		hintPanel.setText(HintsSimulationTab.DEFAULT.getHintText());
-		resizeComponents();
+		
 	}
 	
 	public static void resizeComponents(){
@@ -218,18 +226,8 @@ public class SimulationTab extends Tabs {
 		int height = MainFrames.getJTabbedPaneFirst().getHeight()-(2*heightIcon)- HINT_PANEL_HEIGHT ;
 		int width = (int)MainFrames.getJTabbedPaneFirst().getWidth()/2;
 		
-		
-		System.out.println("SOMEEEE"+ height);
-		System.out.println("SOMEEEEICON"+ heightIcon);
-		//System.out.println("SOMEEEE1"+ hintPanel.getV()); 
-	
-		jScrollPaneTreeSimulation.setPreferredSize(new Dimension(width,height));
-		
-		jPanelEditor.setPreferredSize(new Dimension(width-10,height-10));
-		//jTreeSimulation.setPreferredSize(new Dimension(300,height-140));
-		//jScrollPaneTreeSimulation.setSize(300, height);
-		//jTreeSimulation.setSize(300,height);
-		
+		jSplitPaneSimulationTreeAndEditor.setPreferredSize(new Dimension(width,height));		
+		jSplitPaneSimulationTreeAndEditor.validate();	
 	}
 
 	public static void addMorphologyEditor() {
@@ -281,6 +279,8 @@ public class SimulationTab extends Tabs {
 	private static javax.swing.JSpinner jSpinnerCoordinateValue;
 
 	private static  DefaultMutableTreeNode firstNodeHierarchySimulation,secondNodeHierarchy,thirdNodeHierarchy;
+	
+	private static javax.swing.JSplitPane jSplitPaneSimulationTreeAndEditor;
 
 
 

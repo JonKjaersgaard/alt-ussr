@@ -57,7 +57,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		initFrameProperties();
 		/*Starts simulation adapter, which in turn starts simulation server (only once) */	
 		new GUIRemoteSimulationAdapter();
-	}
+		}
 
 	/**
 	 * Filters out and populates the tabs assigned to the first and second tabbed panes, into separate array lists. 
@@ -143,6 +143,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jCheckBoxMenuItemInteraction= new javax.swing.JCheckBoxMenuItem();
 		jCheckBoxMenuItemDebugging = new javax.swing.JCheckBoxMenuItem();		
 		jCheckBoxMenuItemDisplayForHints = new javax.swing.JCheckBoxMenuItem();
+		jCheckBoxMenuItemHideAll = new javax.swing.JCheckBoxMenuItem();
 
         /*Description of components*/
 		jMenuBarMain.setPreferredSize(new Dimension(width,height));
@@ -280,6 +281,16 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		
 		jMenuHide.add(jCheckBoxMenuItemDisplayForHints);
 		
+		
+		/*jCheckBoxMenuItemHideAll.setText(MainFrameComponentsText.DISPLAY_FOR_HINTS.getUserFriendlyName());
+		jCheckBoxMenuItemHideAll.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.jCheckBoxMenuItemHideAllActionPerformed(jCheckBoxMenuItemHideAll);
+				mainFrame.repaint();
+			}
+		});
+		
+		jMenuHide.add(jCheckBoxMenuItemHideAll);*/
 		jMenuWindow.add(jMenuHide);
 		
 		jMenuBarMain.add(jMenuWindow);
@@ -794,7 +805,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	                                     jCheckBoxMenuItemNormals,jCheckBoxMenuItemLights,jCheckBoxMenuBufferDepth;
 
 	private static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemInteraction,jCheckBoxMenuItemDebugging,
-	                                             jCheckBoxMenuItemDisplayForHints;
+	                                             jCheckBoxMenuItemDisplayForHints,jCheckBoxMenuItemHideAll;
 	                                              
 	private javax.swing.JSeparator jSeparator1,jSeparator2,jSeparator3;
 

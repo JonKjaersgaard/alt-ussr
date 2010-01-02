@@ -5,6 +5,7 @@ import java.awt.Insets;
 import java.rmi.RemoteException;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -73,8 +74,7 @@ public class SimulationTabController extends TabsControllers {
 			//SimulationTab.addRobotEditor();
 		}else{
 			SimulationTabTreeNodes treeNode = SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_").toUpperCase());
-			
-			
+				
 			SimulationTab.getJPanelEditor().add(SimulationTab.createNewLabel(treeNode.getUserFriendlyName()),gridBagConstraints);
 			if (treeNode.getJPanelEditor()==null){
 			// do nothing
