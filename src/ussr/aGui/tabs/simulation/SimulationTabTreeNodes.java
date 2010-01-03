@@ -22,7 +22,7 @@ public enum SimulationTabTreeNodes {
 	SIMULATION(PlaceInTreeView.FIRST,null,HintsSimulationTab.SIMULATION,XMLTagsUsed.SIMULATION),
 	
 	//Second Level Hierarchy	
-	  //Often used
+	  //Often used from Physics Parameters
 	  PHYSICS_SIMULATION_STEP_SIZE(PlaceInTreeView.SECOND,SimulationTreeEditors.addPhysicsSimulationStepSizeEditor(),HintsSimulationTab.PHYSICS_SIMULATION_STEP_SIZE,XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE),
 	  RESOLUTION_FACTOR(PlaceInTreeView.SECOND,SimulationTreeEditors.addResolutionFactorEditor(),HintsSimulationTab.RESOLUTION_FACTOR,XMLTagsUsed.RESOLUTION_FACTOR),
 

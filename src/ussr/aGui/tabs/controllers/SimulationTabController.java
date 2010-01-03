@@ -150,7 +150,7 @@ public class SimulationTabController extends TabsControllers {
 
 		for (int textureNr=0;textureNr<TextureDescriptions.values().length;textureNr++){
 
-			if (fileName.equals(TextureDescriptions.values()[textureNr].getFileName())){
+			if (fileName.equals(TextureDescriptions.values()[textureNr].getRawFileDirectoryName())){
 				jComboBoxPlaneTexture.setSelectedItem(TextureDescriptions.values()[textureNr].getUserFriendlyName());
 				//ImageIcon imageIcon = new ImageIcon(TextureDescriptions.values()[text].getFileName());
 				iconLabel.setIcon(TextureDescriptions.values()[textureNr].getImageIcon());

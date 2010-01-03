@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.TitledBorder;
@@ -12,12 +15,16 @@ import ussr.aGui.designHelpers.JComponentsFactoryHelper;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.tabs.Tabs;
+import ussr.aGui.tabs.constructionTabs.AssignableControllers;
+import ussr.aGui.tabs.controllers.AssignControllerTabController;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.simulation.enumerations.CameraPositions;
 import ussr.aGui.tabs.simulation.enumerations.PhysicsParametersDefault;
 import ussr.aGui.tabs.simulation.enumerations.PlaneMaterials;
 import ussr.aGui.tabs.simulation.enumerations.TextureDescriptions;
+import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.StringProcessingHelper;
+import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.description.setup.WorldDescription.CameraPosition;
 import ussr.physics.PhysicsParameters;
 
@@ -34,8 +41,50 @@ public class SimulationTreeEditors{
 
 	//public final static javax.swing.JPanel PhysicsSimulationStepSizeEditor  = addPhysicsSimulationStepSizeEditor();
 	
+	public static SimulationSpecification userSimulationSpecification = new SimulationSpecification();
 	
 	
+
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called physics simulation step size.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addPhysicsSimulationStepSizeEditor() {
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
+		jSpinnerPhysicsSimulationStepSize = new javax.swing.JSpinner();
+		jSpinnerPhysicsSimulationStepSize.setPreferredSize(new Dimension(60,20));
+		jSpinnerPhysicsSimulationStepSize.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
+		jSpinnerPhysicsSimulationStepSize.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+            	userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE, jSpinnerPhysicsSimulationStepSize.getValue().toString());
+            	 
+            	System.out.println("PHYSICS_SIMULATION_STEP_SIZE:"+ jSpinnerPhysicsSimulationStepSize.getValue().toString());
+            }
+           
+        });
+		jPanelTreeNode.add(jSpinnerPhysicsSimulationStepSize);	
+
+		return jPanelTreeNode;
+	}
+	
+	/**
+	 * Defines visual appearance of editor panel(edit value) for tree node called Resolution Factor.
+	 * @return jPanelEditor, the editor panel with new components in it.
+	 */
+	public static javax.swing.JPanel addResolutionFactorEditor() {
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
+		jSpinnerResolutionFactor = new javax.swing.JSpinner();
+		jSpinnerResolutionFactor.setPreferredSize(new Dimension(60,20));
+		jSpinnerResolutionFactor.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));
+		jSpinnerResolutionFactor.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+            	userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.RESOLUTION_FACTOR, jSpinnerResolutionFactor.getValue().toString());
+            	System.out.println("RESOLUTION_FACTOR:"+ jSpinnerResolutionFactor.getValue().toString());
+            }           
+        });
+		jPanelTreeNode.add(jSpinnerResolutionFactor);	
+		return jPanelTreeNode;
+	}
 	
 	/**
 	 * Defines visual appearance of editor panel(edit value) for tree node called Robots.
@@ -48,26 +97,7 @@ public class SimulationTreeEditors{
 		return jPanelTreeNode;
 	}
 
-	/**
-	 * Defines visual appearance of editor panel(edit value) for tree node called physics simulation step size.
-	 * @return jPanelEditor, the editor panel with new components in it.
-	 */
-	public static javax.swing.JPanel addPhysicsSimulationStepSizeEditor() {
-		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
-		jSpinnerPhysicsSimulationStepSize = new javax.swing.JSpinner();
-		jSpinnerPhysicsSimulationStepSize.setPreferredSize(new Dimension(60,20));
-		jSpinnerPhysicsSimulationStepSize.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
-		jPanelTreeNode.add(jSpinnerPhysicsSimulationStepSize);	
 
-		return jPanelTreeNode;
-	}
-
-
-	
-	
-	
-	
-	
 	public static javax.swing.JTextField getJTextFieldMorphologyLocation() {
 		return jTextFieldMorphologyLocation;
 	}
@@ -260,8 +290,25 @@ public class SimulationTreeEditors{
 	public static javax.swing.JPanel addPlaneSizeEditor(){
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jSpinnerPlaneSize = new javax.swing.JSpinner();
-		jSpinnerPlaneSize.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 10));		
+		jSpinnerPlaneSize.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 10));
+		jSpinnerPlaneSize.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+            	userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.PLANE_SIZE, jSpinnerPlaneSize.getValue().toString());
+            	System.out.println("PLANE_SIZE:"+ jSpinnerPlaneSize.getValue().toString());
+            	
+            	/*FOR TESTING*/
+            	Hashtable<XMLTagsUsed,String> table =  (Hashtable<XMLTagsUsed,String>)userSimulationSpecification.getSimPhysicsParameters();
+            	
+            	  for (Enumeration<XMLTagsUsed> e =table.keys() ; e.hasMoreElements();)
+            	   {
+            	       String str = (String) table.get( e.nextElement() );
+            	   
+            	       System.out.println (str);
+            	   }
+            }           
+        });
 		jPanelTreeNode.add(jSpinnerPlaneSize);
+		
 		
 		return jPanelTreeNode;
 	}
@@ -282,6 +329,10 @@ public class SimulationTreeEditors{
 		jComboBoxPlaneTexture.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SimulationTabController.jComboBoxPlaneTextureActionPerformed(jComboBoxPlaneTexture,iconLabel);
+				
+				String selectedTexture = TextureDescriptions.toJavaUSSRConvention(jComboBoxPlaneTexture.getSelectedItem().toString());				
+				userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.PLANE_TEXTURE,TextureDescriptions.valueOf(selectedTexture).getRawFileDirectoryName());
+				System.out.println("PLANE_TEXTURE:"+ TextureDescriptions.valueOf(selectedTexture).getRawFileDirectoryName());
 			}
 		});
 
@@ -314,6 +365,16 @@ public class SimulationTreeEditors{
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jComboBoxCameraPosition = new javax.swing.JComboBox(); 
 		jComboBoxCameraPosition.setModel(new DefaultComboBoxModel(CameraPositions.getAllInUserFriendlyFromat()));
+		jComboBoxCameraPosition.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+			
+				String selectedCameraPosition = CameraPositions.toJavaUSSRConvention(jComboBoxCameraPosition.getSelectedItem().toString());				
+				userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.CAMERA_POSITION,selectedCameraPosition);
+				System.out.println("CAMERA_POSITION:"+ selectedCameraPosition);
+				
+			}
+		});
+		
 		jPanelTreeNode.add(jComboBoxCameraPosition);
 		
 		return jPanelTreeNode;
@@ -325,7 +386,13 @@ public class SimulationTreeEditors{
 	 */
 	public static javax.swing.JPanel addTheWorldIsFlatEditor(){
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
-		jCheckBoxTheWorldIsFlat =  new javax.swing.JCheckBox ();		
+		jCheckBoxTheWorldIsFlat =  new javax.swing.JCheckBox ();
+		jCheckBoxTheWorldIsFlat.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.THE_WORLD_IS_FLAT,jCheckBoxTheWorldIsFlat.isSelected()+"");
+				System.out.println("THE_WORLD_IS_FLAT:"+ jCheckBoxTheWorldIsFlat.isSelected()+"");
+			}
+		});
 		jPanelTreeNode.add(jCheckBoxTheWorldIsFlat);
 		
 		return jPanelTreeNode;
@@ -337,7 +404,13 @@ public class SimulationTreeEditors{
 	 */
 	public static javax.swing.JPanel addHasBackgroundSceneryEditor(){
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
-		jCheckBoxHasBackgroundScenery =  new javax.swing.JCheckBox ();		
+		jCheckBoxHasBackgroundScenery =  new javax.swing.JCheckBox ();
+		jCheckBoxHasBackgroundScenery.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.HAS_BACKGROUND_SCENERY,jCheckBoxHasBackgroundScenery.isSelected()+"");
+				System.out.println("HAS_BACKGROUND_SCENERY:"+ jCheckBoxHasBackgroundScenery.isSelected()+"");
+			}
+		});
 		jPanelTreeNode.add(jCheckBoxHasBackgroundScenery);
 		return jPanelTreeNode;
 	}
@@ -349,6 +422,12 @@ public class SimulationTreeEditors{
 	public static javax.swing.JPanel addHasHeavyObstaclesEditor(){
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jCheckBoxHasHeavyObstacles = new javax.swing.JCheckBox ();
+		jCheckBoxHasHeavyObstacles.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.HAS_HEAVY_OBSTACLES,jCheckBoxHasHeavyObstacles.isSelected()+"");
+				System.out.println("HAS_HEAVY_OBSTACLES:"+ jCheckBoxHasHeavyObstacles.isSelected()+"");
+			}
+		});
 		jPanelTreeNode.add(jCheckBoxHasHeavyObstacles);
 		return jPanelTreeNode;
 	}
@@ -360,6 +439,12 @@ public class SimulationTreeEditors{
 	public static javax.swing.JPanel addIsFrameGrabbingActiveEditor(){
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jCheckBoxIsFrameGrabbingActive = new javax.swing.JCheckBox ();
+		jCheckBoxIsFrameGrabbingActive.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.IS_FRAME_GRABBING_ACTIVE,jCheckBoxIsFrameGrabbingActive.isSelected()+"");
+				System.out.println("IS_FRAME_GRABBING_ACTIVE:"+ jCheckBoxIsFrameGrabbingActive.isSelected()+"");
+			}
+		});
 		jPanelTreeNode.add(jCheckBoxIsFrameGrabbingActive);
 		return jPanelTreeNode;
 	}
@@ -488,18 +573,7 @@ public class SimulationTreeEditors{
 		return jPanelTreeNode;
 	}
 
-	/**
-	 * Defines visual appearance of editor panel(edit value) for tree node called Resolution Factor.
-	 * @return jPanelEditor, the editor panel with new components in it.
-	 */
-	public static javax.swing.JPanel addResolutionFactorEditor() {
-		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
-		jSpinnerResolutionFactor = new javax.swing.JSpinner();
-		jSpinnerResolutionFactor.setPreferredSize(new Dimension(60,20));
-		jSpinnerResolutionFactor.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));
-		jPanelTreeNode.add(jSpinnerResolutionFactor);	
-		return jPanelTreeNode;
-	}
+	
 
 	/**
 	 * Defines visual appearance of editor panel(edit value) for tree node called Use Module Event Queue.

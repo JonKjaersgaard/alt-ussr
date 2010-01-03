@@ -51,7 +51,7 @@ public enum PlaneMaterials {
  		return namesTetxtures.toArray();
  	}
 	
-/*	public static String toJavaUSSRConvention(String nameMaterial){
+	public static String toJavaUSSRConvention(String nameMaterial){
  		return nameMaterial.toUpperCase(); 
- 	}*/
+ 	}
 }

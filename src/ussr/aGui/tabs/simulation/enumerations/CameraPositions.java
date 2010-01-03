@@ -46,4 +46,8 @@ public enum CameraPositions {
  		return namesTetxtures.toArray();
  	}
 	
+	public static String toJavaUSSRConvention(String userFriendlyCameraPosition){
+ 		return userFriendlyCameraPosition.toUpperCase(); 
+ 	}
+	
 }

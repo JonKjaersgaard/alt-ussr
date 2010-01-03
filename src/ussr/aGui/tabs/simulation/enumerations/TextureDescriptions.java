@@ -69,7 +69,7 @@ public enum TextureDescriptions {
 	 * Returns name of the file, texture description is associated with.
 	 * @return name of the file, texture description is associated with.
 	 */
-	public String getFileName(){
+	public String getRawFileDirectoryName(){
 		return this.textureDescription.getFileName();
 	}
 	
