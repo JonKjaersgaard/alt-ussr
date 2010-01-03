@@ -238,7 +238,7 @@ Node rootNode = document.getDocumentElement();
 
 		NodeList nodeList = document.getElementsByTagName(XMLTagsUsed.MODULE.toString());
 	
-	  //  String controllerLocation;
+	   String controllerLocation=null;
 	   
 		for (int node = 0; node < nodeList.getLength(); node++) {
 			Node firstNode = nodeList.item(node);
@@ -249,9 +249,9 @@ Node rootNode = document.getDocumentElement();
 				//String moduleID = extractTagValue(firstElmnt,XMLTagsUsed.ID);
 				String moduleType = extractTagValue(firstElmnt,XMLTagsUsed.TYPE);
 				String moduleName = extractTagValue(firstElmnt,XMLTagsUsed.NAME);
-			/*	if (node ==0){
-					
-				}*/
+				if (node ==0){
+					controllerLocation = 	extractTagValue(firstElmnt,XMLTagsUsed.CONTROLLER_LOCATION);
+				}
 				String moduleRotation = extractTagValue(firstElmnt,XMLTagsUsed.ROTATION);		
 				String moduleRotationQuaternion = extractTagValue(firstElmnt,XMLTagsUsed.ROTATION_QUATERNION);
 				String modulePosition = extractTagValue(firstElmnt,XMLTagsUsed.POSITION);				
@@ -309,7 +309,8 @@ Node rootNode = document.getDocumentElement();
 				simulationSpecification = RemotePhysicsSimulationImpl.getGUICallbackControl().getSimulationSpecification();
 				RobotSpecification robotSpecification = new RobotSpecification();
 				robotSpecification.setAmountModules(nodeList.getLength());
-				//robotSpecification.setControllerLocation(controllerLocation);
+				robotSpecification.setMorphologyLocation(fileDirectoryName);
+				robotSpecification.setControllerLocation(controllerLocation);
 				simulationSpecification.getRobotsInSimulation().add(robotSpecification);
 				RemotePhysicsSimulationImpl.getGUICallbackControl().newRobotLoaded(simulationSpecification);
 			

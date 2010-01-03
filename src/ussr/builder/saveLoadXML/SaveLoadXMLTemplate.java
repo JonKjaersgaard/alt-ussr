@@ -102,6 +102,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplateInte
 	 */
 	public void loadXMLfile(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName){
 		Document document = initializeDocument(fileDirectoryName);
+		this.fileDirectoryName = fileDirectoryName;
 		loadInXML(ussrXmlFileType, document);	
 	}
 

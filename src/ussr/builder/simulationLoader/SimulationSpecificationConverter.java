@@ -112,5 +112,5 @@ public class SimulationSpecificationConverter implements Serializable {
 	public boolean covertIsFrameGrabbingActive(){
 		return Boolean.parseBoolean(simulationWorldDescription.get(XMLTagsUsed.IS_FRAME_GRABBING_ACTIVE));
 	}
-	
+		
 }
