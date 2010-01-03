@@ -230,7 +230,7 @@ public class SimulationTab extends Tabs {
 		jSplitPaneSimulationTreeAndEditor.validate();	
 	}
 
-	public static void addMorphologyEditor() {
+/*	public static void addMorphologyEditor() {
 		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
 		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
 		//System.out.println("BOOO"+RobotSpecification.getMorphologyLocation());
@@ -239,24 +239,15 @@ public class SimulationTab extends Tabs {
 		//fcOpenFrame.setSelectedFile(new File("some.xml"));
 
 		//jPanelEditor.add(MainFrames.initOpenButton(fcOpenFrame));
-	}
+	}*/
 
-	private static String robotMorphologyLocation;
+	//private static String robotMorphologyLocation;
 
-	/**
-	 * Creates new label with specified text.
-	 * @param labelText, the text of the label
-	 * @return new label with specified text.
-	 */
-	public static javax.swing.JLabel createNewLabel(String labelText){
-		newLabel =  new javax.swing.JLabel();
-		newLabel.setText(labelText+" ");
-		return newLabel;
-	}
 
-	public static void setRobotMorphologyLocation(String robotMorphologyLocation) {
+
+	/*public static void setRobotMorphologyLocation(String robotMorphologyLocation) {
 		SimulationTab.robotMorphologyLocation = robotMorphologyLocation;
-	}
+	}*/
 
 
 	private static HintPanel  hintPanel;

@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 
+import ussr.aGui.designHelpers.JComponentsFactoryHelper;
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
@@ -62,8 +63,10 @@ public class SimulationTabController extends TabsControllers {
 		
 		
 
-		if (selectedNode.contains("Robot nr.")){
-			SimulationTab.getJPanelEditor().add(SimulationTab.createNewLabel(selectedNode),gridBagConstraints);
+		if (selectedNode.contains("Robot nr.")){			
+			
+		
+			SimulationTab.getJPanelEditor().add(JComponentsFactoryHelper.createNewLabel(selectedNode),gridBagConstraints);
 			
 			gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 			gridBagConstraints.gridx =0;
@@ -71,11 +74,16 @@ public class SimulationTabController extends TabsControllers {
 			
 			SimulationTab.getJPanelEditor().add(SimulationTreeEditors.addRobotEditor(),gridBagConstraints);
 			
-			//SimulationTab.addRobotEditor();
+			
+			
+			int robotNr = extractRobotNumber(selectedNode);			
+			SimulationTreeEditors.getJTextFieldMorphologyLocation().setText(simulationSpecification.getRobotsInSimulation().get(robotNr-1).getMorphologyLocation());
+			
+			
 		}else{
 			SimulationTabTreeNodes treeNode = SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_").toUpperCase());
 				
-			SimulationTab.getJPanelEditor().add(SimulationTab.createNewLabel(treeNode.getUserFriendlyName()),gridBagConstraints);
+			SimulationTab.getJPanelEditor().add(JComponentsFactoryHelper.createNewLabel(treeNode.getUserFriendlyName()),gridBagConstraints);
 			if (treeNode.getJPanelEditor()==null){
 			// do nothing
 			}else{	
@@ -92,6 +100,31 @@ public class SimulationTabController extends TabsControllers {
 		SimulationTab.getJPanelEditor().validate();
 		
 
+	}
+	
+	
+	private static int extractRobotNumber(String selectedNode){
+		
+		int stringLenght = selectedNode.toCharArray().length;
+		int selectedRobotNr=-1;
+
+		switch(stringLenght){
+		case 10:// up to 9 robots
+			char robotNumber = selectedNode.toCharArray()[9];
+			selectedRobotNr = Integer.parseInt(robotNumber+"");
+			break;
+		case 11:// up to 99 robots (NOT TESTED YET)
+			char robotNr1 = selectedNode.toCharArray()[9];
+			char robotNr2 = selectedNode.toCharArray()[10];
+			selectedRobotNr = Integer.parseInt(robotNr1+robotNr2+"");
+			break;
+		default: throw new Error("Robot title changed in tree structure or missing support.The robot title should be for instance: Robot Nr.1");
+		}
+		
+		if (selectedRobotNr ==-1){
+			throw new Error("Inconsistentcy in numeration of robots");
+		}
+		return selectedRobotNr;
 	}
 
 	/**
@@ -269,33 +302,19 @@ public class SimulationTabController extends TabsControllers {
 			changeInPosition = new VectorDescription(0,0,-jSpinnerStepValue);
 		}
 
-		int stringLenght = selectedNodeName.toCharArray().length;
-		int selectedRobot=-1;
+		int robotNr = extractRobotNumber(selectedNodeName);		
 
-		switch(stringLenght){
-		case 10:// up to 9 robots
-			char robotNumber = selectedNodeName.toCharArray()[9];
-			selectedRobot = Integer.parseInt(robotNumber+"");
-			break;
-		case 11:// up to 99 robots (NOT TESTED YET)
-			char robotNr1 = selectedNodeName.toCharArray()[9];
-			char robotNr2 = selectedNodeName.toCharArray()[10];
-			selectedRobot = Integer.parseInt(robotNr1+robotNr2+"");
-			break;
-		default: throw new Error("Robot title changed in tree structure or missing support.The robot title should be for instance: Robot Nr.1");
-		}
+		int amountRobotModules = simulationSpecification.getRobotsInSimulation().get(robotNr-1).getAmountModules();
 
-		int amountRobotModules = simulationSpecification.getRobotsInSimulation().get(selectedRobot-1).getAmountModules();
-
-		if (selectedRobot==1){			
+		if (robotNr==1){			
 			moveRobot(0,amountRobotModules,changeInPosition); 
 		}else{
 			int amountAllRobotsModules=0;
 
-			while(selectedRobot!= 0){
+			while(robotNr!= 0){
 
-				amountAllRobotsModules =amountAllRobotsModules+ simulationSpecification.getRobotsInSimulation().get(selectedRobot-1).getAmountModules();
-				selectedRobot--;
+				amountAllRobotsModules =amountAllRobotsModules+ simulationSpecification.getRobotsInSimulation().get(robotNr-1).getAmountModules();
+				robotNr--;
 				System.out.println("All"+amountAllRobotsModules );
 			}
 			moveRobot(amountAllRobotsModules-amountRobotModules,amountAllRobotsModules,changeInPosition);

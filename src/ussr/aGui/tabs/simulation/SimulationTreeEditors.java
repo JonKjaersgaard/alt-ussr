@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.TitledBorder;
 import ussr.aGui.FramesInter;
+import ussr.aGui.designHelpers.JComponentsFactoryHelper;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.tabs.Tabs;
@@ -29,13 +30,20 @@ import ussr.physics.PhysicsParameters;
  *
  */
 public class SimulationTreeEditors{
+	
+
+	//public final static javax.swing.JPanel PhysicsSimulationStepSizeEditor  = addPhysicsSimulationStepSizeEditor();
+	
+	
+	
+	
 	/**
 	 * Defines visual appearance of editor panel(edit value) for tree node called Robots.
 	 * @return jPanelEditor, the editor panel with new components in it.
 	 */
 	public static javax.swing.JPanel  addRobotsEditor(){
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
-		jPanelTreeNode.add(SimulationTab.createNewLabel(TabsComponentsText.LOAD_NEW_ROBOT.getUserFriendlyName()));
+		jPanelTreeNode.add(JComponentsFactoryHelper.createNewLabel(TabsComponentsText.LOAD_NEW_ROBOT.getUserFriendlyName()));
 		jPanelTreeNode.add(Tabs.initOpenButton());		
 		return jPanelTreeNode;
 	}
@@ -55,22 +63,69 @@ public class SimulationTreeEditors{
 	}
 
 
+	
+	
+	
+	
+	
+	public static javax.swing.JTextField getJTextFieldMorphologyLocation() {
+		return jTextFieldMorphologyLocation;
+	}
+	
 	/**
 	 * Defines visual appearance of editor panel(edit value) for tree node called RobotNr....
 	 * @return jPanelEditor, the editor panel with new components in it.
 	 */
 	public static javax.swing.JPanel addRobotEditor(){
-		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
+		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel(new GridBagLayout());
 		jPanelMoveRobot = new javax.swing.JPanel(new GridBagLayout());
+		jPanelMorphologyLocation = new javax.swing.JPanel(new GridBagLayout()); 
+		jTextFieldMorphologyLocation = new javax.swing.JTextField();
+		jScrollPaneMorphologyLocation =  new javax.swing.JScrollPane();
 		jButtonYpositive = new javax.swing.JButton();
 		jButtonYnegative = new javax.swing.JButton();
 		jButtonXpositive = new javax.swing.JButton();
 		jButtonXnegative = new javax.swing.JButton();
 		jButtonZpositive = new javax.swing.JButton();
 		jButtonZnegative = new javax.swing.JButton();
-		jSpinnerCoordinateValue = new javax.swing.JSpinner();
-
-		GridBagConstraints gridBagConstraintsMoveRobot = new GridBagConstraints();
+		jSpinnerCoordinateValue = new javax.swing.JSpinner();		
+		
+		
+		GridBagConstraints constraintsjPanelMorphologyLocation = new GridBagConstraints();
+		constraintsjPanelMorphologyLocation.fill = GridBagConstraints.CENTER;
+		constraintsjPanelMorphologyLocation.gridx = 0;
+		constraintsjPanelMorphologyLocation.gridy = 0;
+		
+		jPanelMorphologyLocation.add(JComponentsFactoryHelper.createNewLabel("Morphology location"),constraintsjPanelMorphologyLocation);
+		
+		
+		//constraintsjPanelMorphologyLocation.fill = GridBagConstraints.HORIZONTAL;
+		//constraintsjPanelMorphologyLocation.gridx = 1;
+		//constraintsjPanelMorphologyLocation.gridy = 0;
+		//jPanelMorphologyLocation.add(Tabs.initOpenButton());
+		
+		jTextFieldMorphologyLocation.setPreferredSize(new Dimension(800,20));
+		jTextFieldMorphologyLocation.setText(" " );
+		jScrollPaneMorphologyLocation.setPreferredSize(new Dimension(150,40));
+		jScrollPaneMorphologyLocation.setViewportView(jTextFieldMorphologyLocation);
+		
+		constraintsjPanelMorphologyLocation.fill = GridBagConstraints.HORIZONTAL;
+		constraintsjPanelMorphologyLocation.gridx = 0;
+		constraintsjPanelMorphologyLocation.gridy = 1;
+		constraintsjPanelMorphologyLocation.insets = new Insets(5,0,10,0); 
+		
+		jPanelMorphologyLocation.add(jScrollPaneMorphologyLocation,constraintsjPanelMorphologyLocation);
+		
+		GridBagConstraints constraintsJPanelTreeNode = new GridBagConstraints();
+		constraintsJPanelTreeNode.fill = GridBagConstraints.HORIZONTAL;
+		constraintsJPanelTreeNode.gridx = 0;
+		constraintsJPanelTreeNode.gridy = 0;
+		
+		jPanelTreeNode.add(jPanelMorphologyLocation,constraintsJPanelTreeNode);
+		
+		
+		
+		GridBagConstraints constraintsJPanelMoveRobot = new GridBagConstraints();
 		TitledBorder displayTitle1;
 		displayTitle1 = BorderFactory.createTitledBorder(TabsComponentsText.NEW_POSITION.getUserFriendlyName());
 		displayTitle1.setTitleJustification(TitledBorder.CENTER);
@@ -86,11 +141,11 @@ public class SimulationTreeEditors{
 				SimulationTabController.jButtonsCoordinateArrowsActionPerformed(jButtonYpositive);
 			}
 		});
-		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsMoveRobot.gridx = 1;
-		gridBagConstraintsMoveRobot.gridy = 0;	
+		constraintsJPanelMoveRobot.fill = GridBagConstraints.HORIZONTAL;
+		constraintsJPanelMoveRobot.gridx = 1;
+		constraintsJPanelMoveRobot.gridy = 0;	
 
-		jPanelMoveRobot.add(jButtonYpositive,gridBagConstraintsMoveRobot);
+		jPanelMoveRobot.add(jButtonYpositive,constraintsJPanelMoveRobot);
 
 
 		jButtonXnegative.setToolTipText(TabsComponentsText.MOVE_LEFT.getUserFriendlyName());
@@ -103,10 +158,10 @@ public class SimulationTreeEditors{
 				SimulationTabController.jButtonsCoordinateArrowsActionPerformed(jButtonXnegative);
 			}
 		});
-		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsMoveRobot.gridx = 0;
-		gridBagConstraintsMoveRobot.gridy = 1;	
-		jPanelMoveRobot.add(jButtonXnegative,gridBagConstraintsMoveRobot);
+		constraintsJPanelMoveRobot.fill = GridBagConstraints.HORIZONTAL;
+		constraintsJPanelMoveRobot.gridx = 0;
+		constraintsJPanelMoveRobot.gridy = 1;	
+		jPanelMoveRobot.add(jButtonXnegative,constraintsJPanelMoveRobot);
 
 		jButtonZpositive.setToolTipText(TabsComponentsText.MOVE_CLOSER.getUserFriendlyName());
 		jButtonZpositive.setIcon(TabsIcons.Z_POSITIVE_BIG.getImageIcon());	
@@ -118,10 +173,10 @@ public class SimulationTreeEditors{
 				SimulationTabController.jButtonsCoordinateArrowsActionPerformed(jButtonZpositive);
 			}
 		});
-		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsMoveRobot.gridx = 0;
-		gridBagConstraintsMoveRobot.gridy = 2;	
-		jPanelMoveRobot.add(jButtonZpositive,gridBagConstraintsMoveRobot);
+		constraintsJPanelMoveRobot.fill = GridBagConstraints.HORIZONTAL;
+		constraintsJPanelMoveRobot.gridx = 0;
+		constraintsJPanelMoveRobot.gridy = 2;	
+		jPanelMoveRobot.add(jButtonZpositive,constraintsJPanelMoveRobot);
 
 
 		jSpinnerCoordinateValue = new javax.swing.JSpinner();
@@ -133,11 +188,11 @@ public class SimulationTreeEditors{
 	            }
 	        });
 		
-		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsMoveRobot.gridx = 1;
-		gridBagConstraintsMoveRobot.gridy = 1;
+		constraintsJPanelMoveRobot.fill = GridBagConstraints.HORIZONTAL;
+		constraintsJPanelMoveRobot.gridx = 1;
+		constraintsJPanelMoveRobot.gridy = 1;
 
-		jPanelMoveRobot.add(jSpinnerCoordinateValue,gridBagConstraintsMoveRobot);
+		jPanelMoveRobot.add(jSpinnerCoordinateValue,constraintsJPanelMoveRobot);
 
 		jButtonZnegative.setToolTipText(TabsComponentsText.MOVE_AWAY.getUserFriendlyName());
 		jButtonZnegative.setIcon(TabsIcons.Z_NEGATIVE_BIG.getImageIcon());				
@@ -149,10 +204,10 @@ public class SimulationTreeEditors{
 				SimulationTabController.jButtonsCoordinateArrowsActionPerformed(jButtonZnegative);
 			}
 		});
-		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsMoveRobot.gridx = 2;
-		gridBagConstraintsMoveRobot.gridy = 0;	
-		jPanelMoveRobot.add(jButtonZnegative,gridBagConstraintsMoveRobot);
+		constraintsJPanelMoveRobot.fill = GridBagConstraints.HORIZONTAL;
+		constraintsJPanelMoveRobot.gridx = 2;
+		constraintsJPanelMoveRobot.gridy = 0;	
+		jPanelMoveRobot.add(jButtonZnegative,constraintsJPanelMoveRobot);
 
 
 		jButtonXpositive.setToolTipText(TabsComponentsText.MOVE_RIGHT.getUserFriendlyName());
@@ -165,10 +220,10 @@ public class SimulationTreeEditors{
 				SimulationTabController.jButtonsCoordinateArrowsActionPerformed(jButtonXpositive);
 			}
 		});
-		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsMoveRobot.gridx = 2;
-		gridBagConstraintsMoveRobot.gridy = 1;	
-		jPanelMoveRobot.add(jButtonXpositive,gridBagConstraintsMoveRobot);
+		constraintsJPanelMoveRobot.fill = GridBagConstraints.HORIZONTAL;
+		constraintsJPanelMoveRobot.gridx = 2;
+		constraintsJPanelMoveRobot.gridy = 1;	
+		jPanelMoveRobot.add(jButtonXpositive,constraintsJPanelMoveRobot);
 
 
 
@@ -182,13 +237,21 @@ public class SimulationTreeEditors{
 				SimulationTabController.jButtonsCoordinateArrowsActionPerformed(jButtonYnegative);
 			}
 		});
-		gridBagConstraintsMoveRobot.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraintsMoveRobot.gridx = 1;
-		gridBagConstraintsMoveRobot.gridy = 2;	
-		jPanelMoveRobot.add(jButtonYnegative,gridBagConstraintsMoveRobot);
-		jPanelTreeNode.add(jPanelMoveRobot);
+		constraintsJPanelMoveRobot.fill = GridBagConstraints.HORIZONTAL;
+		constraintsJPanelMoveRobot.gridx = 1;
+		constraintsJPanelMoveRobot.gridy = 2;	
+		jPanelMoveRobot.add(jButtonYnegative,constraintsJPanelMoveRobot);
+		
+		
+		constraintsJPanelTreeNode.fill = GridBagConstraints.HORIZONTAL;
+		constraintsJPanelTreeNode.gridx = 0;
+		constraintsJPanelTreeNode.gridy = 1;
+		jPanelTreeNode.add(jPanelMoveRobot,constraintsJPanelTreeNode);
+		
 		return jPanelTreeNode;
 	}
+
+	
 
 	/**
 	 * Defines visual appearance of editor panel(edit value) for tree node called Plane Size.
@@ -315,7 +378,7 @@ public class SimulationTreeEditors{
 		gridBagConstraintsDamping.gridwidth = 1;
 		gridBagConstraintsDamping.insets = new Insets(20,0,0,0);
 
-		jPanelTreeNode.add(SimulationTab.createNewLabel("Linear velocity"),gridBagConstraintsDamping);
+		jPanelTreeNode.add(JComponentsFactoryHelper.createNewLabel("Linear velocity"),gridBagConstraintsDamping);
 
 		jSpinnerDampingLinearVelocity = new javax.swing.JSpinner();
 		jSpinnerDampingLinearVelocity.setPreferredSize(new Dimension(60,20));
@@ -329,7 +392,7 @@ public class SimulationTreeEditors{
 		gridBagConstraintsDamping.gridx = 0;
 		gridBagConstraintsDamping.gridy = 2;
 		gridBagConstraintsDamping.insets = new Insets(10,0,0,0);
-		jPanelTreeNode.add(SimulationTab.createNewLabel("Angular velocity"),gridBagConstraintsDamping);
+		jPanelTreeNode.add(JComponentsFactoryHelper.createNewLabel("Angular velocity"),gridBagConstraintsDamping);
 
 		jSpinnerDampingAngularVelocity = new javax.swing.JSpinner();
 		jSpinnerDampingAngularVelocity.setPreferredSize(new Dimension(60,20));
@@ -517,15 +580,19 @@ public class SimulationTreeEditors{
 	private static javax.swing.JButton jButtonYpositive,jButtonYnegative,
 	jButtonXpositive,jButtonXnegative,
 	jButtonZpositive,jButtonZnegative;
+	
+	private static javax.swing.JScrollPane jScrollPaneMorphologyLocation;
 
 	private static javax.swing.JComboBox jComboBoxCameraPosition,jComboBoxPlaneMaterial,jComboBoxPlaneTexture;
 
 	private static javax.swing.JCheckBox jCheckBoxTheWorldIsFlat,jCheckBoxHasBackgroundScenery, jCheckBoxHasHeavyObstacles,
 	jCheckBoxIsFrameGrabbingActive,jCheckBoxRealisticCollision,jCheckBoxUseMouseEventQueue,
 	jCheckBoxSynchronizeWithControllers,jCheckBoxMaintainRotJointPositions;
-
+    
+    private static javax.swing.JTextField jTextFieldMorphologyLocation;
+	
 	private static javax.swing.JLabel iconLabel; 
-	private static javax.swing.JPanel jPanelMoveRobot;
+	private static javax.swing.JPanel jPanelMoveRobot,jPanelMorphologyLocation;
 	private static javax.swing.JSpinner jSpinnerPlaneSize,jSpinnerDampingLinearVelocity, jSpinnerDampingAngularVelocity,
 	jSpinnerPhysicsSimulationStepSize, jSpinnerGravity,jSpinnerConstraintForceMix,
 	jSpinnerErrorReductionParameter, jSpinnerResolutionFactor, jPhysicsSimulationControllerStepFactor,
