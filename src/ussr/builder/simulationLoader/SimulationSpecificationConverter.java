@@ -3,6 +3,7 @@ package ussr.builder.simulationLoader;
 import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Vector;
 
 import ussr.aGui.tabs.simulation.enumerations.PlaneMaterials;
 import ussr.builder.enumerations.XMLTagsUsed;
