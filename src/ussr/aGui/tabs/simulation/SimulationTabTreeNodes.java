@@ -27,7 +27,7 @@ public enum SimulationTabTreeNodes {
 	  RESOLUTION_FACTOR(PlaceInTreeView.SECOND,SimulationTreeEditors.addResolutionFactorEditor(),HintsSimulationTab.RESOLUTION_FACTOR,XMLTagsUsed.RESOLUTION_FACTOR),
 
 	   //Second Level Hierarchy
-	  ROBOTS(PlaceInTreeView.SECOND,SimulationTreeEditors.RobotsEditor,HintsSimulationTab.ROBOTS,XMLTagsUsed.ROBOTS),
+	  ROBOTS(PlaceInTreeView.SECOND,SimulationTreeEditors.ROBOTS_EDITOR,HintsSimulationTab.ROBOTS,XMLTagsUsed.ROBOTS),
 
 	  //Third Level Hierarchy
 	     ROBOT_NR(PlaceInTreeView.NOT_USED,null,null,XMLTagsUsed.ROBOT_NR),
