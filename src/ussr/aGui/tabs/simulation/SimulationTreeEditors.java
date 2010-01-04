@@ -39,7 +39,7 @@ import ussr.physics.PhysicsParameters;
 public class SimulationTreeEditors{
 	
 
-	//public final static javax.swing.JPanel PhysicsSimulationStepSizeEditor  = addPhysicsSimulationStepSizeEditor();
+	public final static javax.swing.JPanel RobotsEditor =  addRobotsEditor();
 	
 	public static SimulationSpecification userSimulationSpecification = new SimulationSpecification();
 	
