@@ -1,4 +1,4 @@
-package ussr.aGui.fileChooser.views;
+package ussr.aGui.fileChooser;
 
 import java.io.File;
 import java.util.Map;

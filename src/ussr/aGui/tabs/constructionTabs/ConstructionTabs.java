@@ -16,7 +16,7 @@ import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.enumerations.tabs.IconsNumbersConnectors;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
-import ussr.aGui.fileChooser.views.FileChooserFrameInter;
+import ussr.aGui.fileChooser.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 import ussr.aGui.helpers.ComboBoxRenderer;

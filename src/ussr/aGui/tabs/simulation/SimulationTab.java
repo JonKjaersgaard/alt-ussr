@@ -23,7 +23,7 @@ import ussr.aGui.MainFrames;
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
-import ussr.aGui.fileChooser.views.FileChooserFrameInter;
+import ussr.aGui.fileChooser.FileChooserFrameInter;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 
 import ussr.aGui.tabs.Tabs;

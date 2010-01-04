@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.border.TitledBorder;
-import ussr.aGui.MainFramesInter;
 import ussr.aGui.enumerations.tabs.VisualizerPacketFormats;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.TabsInter;
@@ -482,6 +481,10 @@ public class ModuleCommunicationVisualizer extends Tabs {
 	public static javax.swing.JButton getJButtonReset() {
 		return jButtonReset;
 	}
+	
+	/*public void getTopComponent(){
+		super.jComponent.getComponents();
+	}*/
 
 
 

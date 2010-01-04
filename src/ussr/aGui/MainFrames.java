@@ -9,7 +9,7 @@ import java.util.Map;
 
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.MainFrameComponentsText;
-import ussr.aGui.fileChooser.views.FileChooserFrameInter;
+import ussr.aGui.fileChooser.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 import ussr.aGui.helpers.ComponentResizer;

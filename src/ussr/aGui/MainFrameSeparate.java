@@ -108,8 +108,7 @@ public class MainFrameSeparate extends MainFrames {
 	private void addWindowListeners(){
 		this.addWindowStateListener (new WindowAdapter() {	
 			public void windowStateChanged(WindowEvent event) {				
-				int newState = event.getNewState();
-				
+				int newState = event.getNewState();				
 				switch(newState){
 				case WINDOW_MAXIMIZED_STATE:
 					changeWidthOfMajorComponents(components,CONTAINER_WIDTH);
@@ -231,11 +230,11 @@ public class MainFrameSeparate extends MainFrames {
 				//do nothing
 			}else if(componentClassName.contains(ComponentsFrame.JToggleButton.toString())){
 				JToggleButton currentToggleJButton = (JToggleButton)currentComponent;
-				if (currentToggleJButton.getToolTipText().contains(MainFrameComponentsText.VISUALIZE_COMMUNICATION_OF_MODULES.getUserFriendlyName())){
+			/*	if (currentToggleJButton.getToolTipText().contains(MainFrameComponentsText.VISUALIZE_COMMUNICATION_OF_MODULES.getUserFriendlyName())){
 					//do nothing
-				}else{				
+				}else{	*/			
 				currentToggleJButton.setEnabled(enabled);
-				}
+				//}
 			}else if (componentClassName.contains(ComponentsFrame.JButton.toString())){
 				JButton currentJButton = (JButton)currentComponent;
 				String currentJButtonText = currentJButton.getToolTipText();

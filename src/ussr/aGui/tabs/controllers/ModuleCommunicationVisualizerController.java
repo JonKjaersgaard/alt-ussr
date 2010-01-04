@@ -7,8 +7,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import ussr.aGui.MainFramesInter;
+import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.visualizer.CanvasMouseListener;
 import ussr.aGui.tabs.visualizer.DrawingCanvas;
+import ussr.aGui.tabs.visualizer.ExportWindow;
 import ussr.aGui.tabs.visualizer.ModuleCommunicationVisualizer;
 
 
@@ -57,12 +60,16 @@ public class ModuleCommunicationVisualizerController extends TabsControllers {
 			drawingCanvas = getDrawingCanvas();
 			drawingCanvas.start();
 		}else{
-			drawingCanvas.stop();			
+			drawingCanvas.stop();
+			drawingCanvas.removeAll();
+			drawingCanvas.validate();
 			drawingCanvas = getDrawingCanvas();
 			drawingCanvas.start();
+			//FIXME HEAP SPACE PROBLEM IF USED FREQUENTLY
 		}
 		jScrollPane.setViewportView(drawingCanvas); //add canvas to scroll pane		
 
+		ExportWindow f = new ExportWindow(); 
 	}
 
 	private static DrawingCanvas getDrawingCanvas(){
@@ -78,6 +85,12 @@ public class ModuleCommunicationVisualizerController extends TabsControllers {
 		}
 		return drawingCanvasNew;
 	}
+	
+/*	public static void export(){
+		TabsInter visualizer = MainFramesInter.MODULE_COMMUNICATION_VISUALIZER_TAB;
+		visualizer.getComponents();
+
+	}*/
 
 	/**
 	 * Controls visibility of the legend for display of module communication. 

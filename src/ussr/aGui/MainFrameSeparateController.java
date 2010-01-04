@@ -86,7 +86,7 @@ public class MainFrameSeparateController extends GeneralController {
 	private static void adaptGUI(){
 		ConstructRobotTab.setTabEnabled(false);
 		AssignControllerTab.setTabEnabled(false);
-		MainFrameSeparate.getJToggleButtonVisualizer().setEnabled(true);
+		//MainFrameSeparate.getJToggleButtonVisualizer().setEnabled(true);
 		ModuleCommunicationVisualizerController.setIdsModules();
 	}
 
@@ -281,9 +281,9 @@ public class MainFrameSeparateController extends GeneralController {
 		}  
 	}
 	
-	private static TabsInter constructRobotTab = MainFramesInter.CONSTRUCT_ROBOT_TAB;
-	private static TabsInter assignBehaviorsTab = MainFramesInter.ASSIGN_BEHAVIORS_TAB;			
-	private static TabsInter assignLabels = MainFramesInter.ASSIGN_LABELS_TAB;
+	private static final TabsInter constructRobotTab = MainFramesInter.CONSTRUCT_ROBOT_TAB,
+	                               assignBehaviorsTab = MainFramesInter.ASSIGN_BEHAVIORS_TAB,			
+	                               assignLabels = MainFramesInter.ASSIGN_LABELS_TAB;
 
 
 	/**

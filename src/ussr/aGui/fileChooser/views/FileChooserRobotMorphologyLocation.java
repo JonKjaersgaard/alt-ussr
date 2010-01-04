@@ -3,6 +3,7 @@ package ussr.aGui.fileChooser.views;
 import java.io.IOException;
 import java.util.Map;
 
+import ussr.aGui.fileChooser.FileChooserFrame;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.remote.GUIRemoteSimulationAdapter;
 

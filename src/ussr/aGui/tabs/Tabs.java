@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 
 import ussr.aGui.MainFrames;
-import ussr.aGui.fileChooser.views.FileChooserFrameInter;
+import ussr.aGui.fileChooser.FileChooserFrameInter;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 

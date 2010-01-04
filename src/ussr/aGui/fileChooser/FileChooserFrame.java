@@ -1,10 +1,9 @@
-package ussr.aGui.fileChooser.views;
+package ussr.aGui.fileChooser;
 import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
 
 import ussr.aGui.GuiFrames;
-import ussr.aGui.fileChooser.FileFilter;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 
 /**
