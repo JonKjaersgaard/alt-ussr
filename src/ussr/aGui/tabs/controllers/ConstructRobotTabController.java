@@ -337,9 +337,9 @@ public class ConstructRobotTabController extends TabsControllers{
 				throw new Error ("Failed to identify the type of the first module in simulation environment, due to remote exception.");
 			}
 			
-			switch(SupportedModularRobots.getConsistentMRName(modularRobotName)){
+		/*	switch(SupportedModularRobots.getConsistentMRName(modularRobotName)){
 			
-			}
+			}*/
 			
 			
 			if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ATRON.toString())){
@@ -351,7 +351,7 @@ public class ConstructRobotTabController extends TabsControllers{
 			} else if (modularRobotName.toUpperCase().contains(SupportedModularRobots.MTRAN.toString())){
 				adaptTabToChosenMR(SupportedModularRobots.MTRAN,false);
 				chosenMRname = SupportedModularRobots.MTRAN;
-			}else if(modularRobotName.toUpperCase().contains(SupportedModularRobots.CKBOT_STANDARD.toString())){
+			}else if(modularRobotName.toUpperCase().contains(SupportedModularRobots.CKBOT_STANDARD.toString().replace("_", ""))){
 				adaptTabToChosenMR(SupportedModularRobots.CKBOT_STANDARD,false);
 				chosenMRname = SupportedModularRobots.CKBOT_STANDARD;
 			}else{
