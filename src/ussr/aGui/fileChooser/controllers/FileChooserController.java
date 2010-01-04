@@ -2,6 +2,7 @@ package ussr.aGui.fileChooser.controllers;
 
 import javax.swing.JFileChooser;
 import ussr.aGui.GeneralController;
+import ussr.aGui.fileChooser.FileChooserFrameInter;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 
 /**
@@ -13,9 +14,9 @@ public abstract class FileChooserController extends GeneralController implements
 
 	protected UssrXmlFileTypes ussXmlFileType;
 	
-    public abstract void controlSaveDialog(java.awt.event.ActionEvent evt, javax.swing.JFileChooser fileChooser,javax.swing.JFrame fileChooserFrame);
+    public abstract void controlSaveDialog(java.awt.event.ActionEvent evt, javax.swing.JFileChooser fileChooser,FileChooserFrameInter fileChooserFrame);
 	
-	public abstract  void controlOpenDialog(java.awt.event.ActionEvent evt,javax.swing.JFileChooser fileChooser,javax.swing.JFrame fileChooserFrame);
+	public abstract  void controlOpenDialog(java.awt.event.ActionEvent evt,javax.swing.JFileChooser fileChooser,FileChooserFrameInter fileChooserFrame);
 	
 	
 	/**

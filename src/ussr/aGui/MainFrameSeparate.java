@@ -13,10 +13,6 @@ import javax.swing.JToggleButton;
 
 import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.MainFrameComponentsText;
-import ussr.aGui.tabs.simulation.SimulationTab;
-import ussr.physics.PhysicsParameters;
-import ussr.physics.jme.JMEBasicGraphicalSimulation;
-
 
 /**
  * Defines visual appearance of the main GUI frame (window), separate from simulation environment.

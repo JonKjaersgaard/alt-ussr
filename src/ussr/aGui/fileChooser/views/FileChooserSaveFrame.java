@@ -2,7 +2,6 @@ package ussr.aGui.fileChooser.views;
 
 
 import java.util.Map;
-
 import ussr.aGui.fileChooser.FileChooserFrame;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 
@@ -28,9 +27,10 @@ public class FileChooserSaveFrame extends FileChooserFrame  {
 		super(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);			
 		changeToSaveDialog();
 		setFilesToFilterOutWithDescription();
+		//runBack();
 	}
 
-
+	//SwingWorker<JFrame,String> worker; 
 	/**
 	 * Changes several components of file chooser so that it is Save dialog.
 	 */
@@ -42,26 +42,44 @@ public class FileChooserSaveFrame extends FileChooserFrame  {
 				fileChooserController.controlSaveDialog(evt,jFileChooserCustomized, fcSaveFrame);//call controller
 
 			}
-		});		
+		});	
 	}
+	
+	
+/*	private void runBack(){
+		worker = new SwingWorker<JFrame,String>() {
+			   public Object construct() {
+			      return "Hello" + " " + "World";
+			   }
+
+			@Override
+			protected JFrame doInBackground() throws Exception {
+				fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);
+				//fcSaveFrame.setVisible(true);
+				return fcSaveFrame;
+			}
+			};
+			
+			worker.execute();
+	}*/
 
 	/**
 	 * Starts the window of file chooser in the form of Save dialog.
 	 */
 	public void activate(){
-	/*	new Thread() {
+		new Thread() {
 			public void run() {
 				fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);
 				fcSaveFrame.setVisible(true);
 			}
-		}.start();	*/
+		}.start();	
 		
 		/*This is too slow*/
-		java.awt.EventQueue.invokeLater(new Runnable(){
+	/*	java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() { 
 				fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);
 				fcSaveFrame.setVisible(true);
 			}
-		});    	
+		}); */   	
 	}
 }

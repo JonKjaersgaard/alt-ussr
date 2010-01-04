@@ -28,6 +28,7 @@ public class FileChooserOpenFrame extends FileChooserFrame  {
 		super(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);
 		changeToOpenDialog();
 		setFilesToFilterOutWithDescription();
+		
 	}
 	
 	/**
@@ -44,26 +45,23 @@ public class FileChooserOpenFrame extends FileChooserFrame  {
 		});		
 	}
 	
-	
 	/**
 	 * Starts the window of file chooser in the form of Open dialog.
 	 */
 	public void activate(){
 		
-	/*	new Thread() {
+		new Thread() {
 			public void run() {
 				fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);
 				fcOpenFrame.setVisible(true);
 			}
-		}.start();*/
+		}.start();	
 		
-		
-		
-		java.awt.EventQueue.invokeLater(new Runnable(){
+	/*	java.awt.EventQueue.invokeLater(new Runnable(){
 			public void run() { 
 				fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);
 				fcOpenFrame.setVisible(true);				
 			}
-		});    	
+		}); */   	
 	}
 }

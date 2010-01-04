@@ -43,7 +43,7 @@ public class MainFrameSeparateController extends GeneralController {
 	 * 
 	 */
 	public static void openActionPerformed(FramesInter fcOpenFrame) {
-		fcOpenFrame.activate();		
+		fcOpenFrame.activate();	
 	}
 
 	/**

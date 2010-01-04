@@ -15,7 +15,12 @@ import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 @SuppressWarnings("serial")
 public abstract class FileChooserFrame extends GuiFrames implements FileChooserFrameInter {
 
+	protected Thread activationThread;
 	
+	public Thread getActivationThread() {
+		return activationThread;
+	}
+
 	/**
 	 * Used as flag to indicate that file chooser should open build in default directory.
 	 */

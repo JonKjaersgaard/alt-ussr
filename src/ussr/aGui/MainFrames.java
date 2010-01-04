@@ -351,8 +351,10 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToggleButtonMaximizeInteraction = new javax.swing.JToggleButton();
 
 		/*Description of components*/
-		jToolBarGeneralControl.add(initOpenButton(fcOpenFrame));
-		jToolBarGeneralControl.add(initSaveButton(fcSaveFrame));
+		//jToolBarGeneralControl.add(initOpenButton(fcOpenFrame));
+		jToolBarGeneralControl.add(initOpenButton(FileChooserFrameInter.FC_FRAME_OPEN_SIMULATION));
+		//jToolBarGeneralControl.add(initSaveButton(fcSaveFrame));
+		jToolBarGeneralControl.add(initSaveButton(FileChooserFrameInter.FC_FRAME_SAVE_SIMULATION));
 		
 		//jToolBarSeparator3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jToolBarSeparator3);

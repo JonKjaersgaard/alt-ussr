@@ -1,10 +1,13 @@
 package ussr.aGui.fileChooser.controllers;
 
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+
+import ussr.aGui.fileChooser.FileChooserFrameInter;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 
 /**
@@ -18,9 +21,8 @@ public class FileChooserXMLController extends FileChooserController {
 	private boolean firstTime = true;
 	
 
-	@Override
 	public void controlOpenDialog(ActionEvent evt, JFileChooser fileChooser,
-			JFrame fileChooserFrame) {
+			FileChooserFrameInter fileChooserFrame) {
 		checkFileDescription( fileChooser);
 		String command = evt.getActionCommand();//Selected button command
 
@@ -48,13 +50,17 @@ public class FileChooserXMLController extends FileChooserController {
 			default: throw new Error("XML file type named as " +ussXmlFileType.toString() +"is not yet supported.");	
 			}
 		}
+		//fileChooserFrame.getActivationThread().interrupt();
 		
-		fileChooserFrame.dispose();
+		//fileChooserFrame.dispose();
+		
+		((Window) fileChooserFrame).dispose();
+
 	}
 
 	@Override
 	public void controlSaveDialog(ActionEvent evt, JFileChooser fileChooser,
-			JFrame fileChooserFrame) {
+			FileChooserFrameInter fileChooserFrame) {
 		checkFileDescription( fileChooser);
 		//TODO Repeating code
 		String command = evt.getActionCommand();//Selected button command			
@@ -66,8 +72,12 @@ public class FileChooserXMLController extends FileChooserController {
 			} catch (RemoteException e) {
 				throw new Error("Failed to save "+ ussXmlFileType.toString()+" description in xml file "+ fileDirectoryName+ ", due ro remote exception");
 			}						
-		}		
-		fileChooserFrame.dispose();//close the frame(window)
+		}
+		
+		//fileChooserFrame.getActivationThread().interrupt();
+		//fileChooserFrame.dispose();//close the frame(window)
+		
+		((Window) fileChooserFrame).dispose();
 	}	
 
 }

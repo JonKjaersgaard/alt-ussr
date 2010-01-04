@@ -1,11 +1,14 @@
 package ussr.aGui.fileChooser;
 
 import java.io.File;
+import java.util.Hashtable;
 import java.util.Map;
 
 import ussr.aGui.FramesInter;
 import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
+import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
+import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
 
 /**
@@ -30,13 +33,19 @@ public interface FileChooserFrameInter extends FramesInter {
 	 */
 	public final String DEFAULT_DIRECTORY = "samples/simulations";
 	         
-	
 	/**
 	 * Default controller for XML processing. 
 	 */
 	public final FileChooserControllerInter FC_XML_CONTROLLER = new FileChooserXMLController();
 	
-
+	
+	
+    public final static FileChooserFrameInter FC_FRAME_OPEN_SIMULATION = new FileChooserOpenFrame(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
+                                              FC_FRAME_SAVE_SIMULATION = new FileChooserSaveFrame(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
+                                              FC_FRAME_OPEN_ROBOT = new FileChooserOpenFrame(FileFilterTypes.OPEN_SAVE_ROBOT.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
+                                              FC_FRAME_SAVE_ROBOT = new FileChooserSaveFrame(FileFilterTypes.OPEN_SAVE_ROBOT.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY)
+                                              
+                                              ;
 	/**
 	 * Sets specific default directory to open.
 	 * @param defaultDirectory, the directory for file chooser to open as default.
@@ -50,4 +59,6 @@ public interface FileChooserFrameInter extends FramesInter {
 	public void setFileFiltersWithDescriptions(Map<String, String> fileDescriptionsAndExtensions);
 	
 	public void setSelectedFile(File selectedFile);
+	
+	public Thread getActivationThread() ;
 }

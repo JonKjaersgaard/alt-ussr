@@ -1,5 +1,7 @@
 package ussr.aGui.fileChooser.controllers;
 
+import ussr.aGui.fileChooser.FileChooserFrameInter;
+
 
 
 public interface FileChooserControllerInter {
@@ -10,7 +12,7 @@ public interface FileChooserControllerInter {
      * @param fileChooser
      * @param fileChooserFrame
      */
-    public  void controlSaveDialog(java.awt.event.ActionEvent evt, javax.swing.JFileChooser fileChooser,javax.swing.JFrame fileChooserFrame);
+    public  void controlSaveDialog(java.awt.event.ActionEvent evt, javax.swing.JFileChooser fileChooser,FileChooserFrameInter fileChooserFrame);
 	
 	/**
 	 * Manages the control of the file chooser in Open dialog form.
@@ -18,7 +20,7 @@ public interface FileChooserControllerInter {
 	 * @param fileChooser
 	 * @param fileChooserFrame
 	 */
-	public  void controlOpenDialog(java.awt.event.ActionEvent evt,javax.swing.JFileChooser fileChooser,javax.swing.JFrame fileChooserFrame);
+	public  void controlOpenDialog(java.awt.event.ActionEvent evt,javax.swing.JFileChooser fileChooser,FileChooserFrameInter fileChooserFrame);
 
 
 	/**
