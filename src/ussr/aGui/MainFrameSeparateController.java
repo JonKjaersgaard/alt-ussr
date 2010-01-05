@@ -451,7 +451,7 @@ public class MainFrameSeparateController extends GeneralController {
 	/**
 	 * Starts new remote simulation
 	 */
-	public static void jButtonNewSimulationActionPerformed() {
+	public static void jButtonMenuItemNewSimulationActionPerformed() {
 		startSimulation(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);
 	}
 }

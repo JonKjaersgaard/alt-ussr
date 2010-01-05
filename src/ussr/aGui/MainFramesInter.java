@@ -39,6 +39,7 @@ public interface MainFramesInter {
 	public final String   
 	                    /*Open and Save*/	
 	                    NEW_SIMULATION = "newSimulation", NEW_SIMULATION_ROLLOVER = "newSimulationRollover",NEW_SIMULATION_DISABLED = "newSimulationDisabled",
+	                    NEW_SIMULATION_SMALL ="newSimulationSmall", NEW_SIMULATION_SMALL_DISABLED ="newSimulationSmallDisabled", 
                         OPEN = "open",OPEN_ROLLOVER ="openRollover",OPEN_DISABLED = "openDisabled",
                         OPEN_SMALL ="openSmall",OPEN_SMALL_DISABLED ="openSmallDisabled",
                         SAVE ="save", SAVE_ROLLOVER ="saveRollover",SAVE_DISABLED = "saveDisabled",

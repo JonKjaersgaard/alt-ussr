@@ -121,7 +121,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuBarMain = new javax.swing.JMenuBar();			
 	
 		jMenuFile = new javax.swing.JMenu();
-		jMenuItemOpen = new javax.swing.JMenuItem();
+		
+		jMenuItemNewSimulation =  new javax.swing.JMenuItem();
+		jMenuItemOpenSimulation = new javax.swing.JMenuItem();
 		jMenuItemExit = new javax.swing.JMenuItem();		
 		jMenuItemSave = new javax.swing.JMenuItem();
 		
@@ -149,17 +151,27 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuBarMain.setPreferredSize(new Dimension(width,height));
 		
 		jMenuFile.setText(MainFrameComponentsText.FILE.getUserFriendlyName());
+		
+		jMenuItemNewSimulation.setText(MainFrameComponentsText.NEW.getUserFriendlyName());
+		jMenuItemNewSimulation.setIcon(MainFrameIcons.NEW_SIMULATION_SMALL.getImageIcon());
+		jMenuItemNewSimulation.setDisabledIcon(MainFrameIcons.NEW_SIMULATION_SMALL_DISABLED.getImageIcon());		
+		jMenuItemNewSimulation.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				 MainFrameSeparateController.jButtonMenuItemNewSimulationActionPerformed();
+			}
+		});
+		jMenuFile.add(jMenuItemNewSimulation);
 
-		jMenuItemOpen.setText(MainFrameComponentsText.OPEN.getUserFriendlyName());
-		jMenuItemOpen.setIcon(MainFrameIcons.OPEN_SMALL.getImageIcon());
-		jMenuItemOpen.setDisabledIcon(MainFrameIcons.OPEN_SMALL_DISABLED.getImageIcon());		
-		jMenuItemOpen.addActionListener(new java.awt.event.ActionListener() {
+		jMenuItemOpenSimulation.setText(MainFrameComponentsText.OPEN.getUserFriendlyName());
+		jMenuItemOpenSimulation.setIcon(MainFrameIcons.OPEN_SMALL.getImageIcon());
+		jMenuItemOpenSimulation.setDisabledIcon(MainFrameIcons.OPEN_SMALL_DISABLED.getImageIcon());		
+		jMenuItemOpenSimulation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.openActionPerformed(fcOpenFrame);
 			}
 		});
 
-		jMenuFile.add(jMenuItemOpen);   
+		jMenuFile.add(jMenuItemOpenSimulation);   
 
 		jMenuFile.add(jSeparator2);
 
@@ -303,7 +315,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 * @return menu item for opening (loading) simulation.
 	 */
 	public static javax.swing.JMenuItem getJMenuItemOpen() {
-		return jMenuItemOpen;
+		return jMenuItemOpenSimulation;
 	}
 
 	/**
@@ -360,7 +372,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonNewSimulation.setPreferredSize(BUTTON_DIMENSION);      
 		jButtonNewSimulation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-			 MainFrameSeparateController.jButtonNewSimulationActionPerformed();        	  
+			 MainFrameSeparateController.jButtonMenuItemNewSimulationActionPerformed();        	  
 			}
 		});
 		jToolBarGeneralControl.add(jButtonNewSimulation);
@@ -712,7 +724,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	public static void setSaveOpenEnabled (boolean enable){
 		jButtonSave.setEnabled(enable);
-		jMenuItemOpen.setEnabled(enable);
+		jMenuItemOpenSimulation.setEnabled(enable);
 		jMenuItemSave.setEnabled(enable);	
 		jButtonOpen.setEnabled(enable);
 	} 
@@ -827,8 +839,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	private static javax.swing.JMenuBar jMenuBarMain;
 	private javax.swing.JMenu jMenuFile,jMenuRender,jMenuWindow,jMenuHide;
 
-	private javax.swing.JMenuItem jMenuItemExit;
-	private static javax.swing.JMenuItem jMenuItemOpen,jMenuItemSave;
+	private javax.swing.JMenuItem jMenuItemExit, jMenuItemNewSimulation;
+	private static javax.swing.JMenuItem jMenuItemOpenSimulation,jMenuItemSave;
 
 	private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemPhysics,jCheckBoxMenuItemWireFrame,jCheckBoxMenuBounds,
 	                                     jCheckBoxMenuItemNormals,jCheckBoxMenuItemLights,jCheckBoxMenuBufferDepth;
