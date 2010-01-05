@@ -101,9 +101,12 @@ public class SimulationXMLFileLoader extends GenericSimulation {
             
             //setPhysicsParameters();// IS NOT WORKING
             
-            //String controllerLocation = robotDescription.get(XMLTagsUsed.CONTROLLER_LOCATION);
-           // String controllerLocation = SimulationSpecification.robotsInSimulation.get(0).getControllerLocation();
-            String controllerLocation = simulationSpecification.getRobotsInSimulation().get(0).getControllerLocation();
+            String controllerLocation = null;
+            if (simulationSpecification.getRobotsInSimulation().isEmpty()){// new (default) simulation is started
+            	controllerLocation = "ussr.builder.simulationLoader.DefaultAtronController";
+            }else{
+            controllerLocation = simulationSpecification.getRobotsInSimulation().get(0).getControllerLocation();
+            }
             
             List<String> controllerNames = new ArrayList<String>();        
             controllerNames.add(controllerLocation);
