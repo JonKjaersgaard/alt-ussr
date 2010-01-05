@@ -164,7 +164,7 @@ public class MainFrameSeparate extends MainFrames {
 	}
 
 	/**
-	 * Controls custom enabling of the main frame. Disables components so that the user have to load the simulation from xml file first.
+	 * Controls custom enabling of the main frame. Disables components so that the user have to load the simulation from xml file or start new simulation first.
 	 * When simulation is loaded do not allows to load new simulation. 
 	 * @param beforeSimulationStarted
 	 * @param enabled, true for main frame to be enabled. 
@@ -177,6 +177,7 @@ public class MainFrameSeparate extends MainFrames {
 		}else{
 			getJMenuItemOpen().setEnabled(false);
 			getJButtonOpen().setEnabled(false);
+			getJButtonNewSimulation().setEnabled(false);
 		}
 	}
 	

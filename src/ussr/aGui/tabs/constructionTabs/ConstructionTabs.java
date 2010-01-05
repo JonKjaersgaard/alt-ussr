@@ -1,24 +1,18 @@
 package ussr.aGui.tabs.constructionTabs;
 
-import java.awt.Dimension;
-import java.util.HashMap;
-import java.util.Map;
+
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import ussr.aGui.FramesInter;
-import ussr.aGui.GuiFrames;
-import ussr.aGui.MainFrames;
+
 import ussr.aGui.enumerations.ComponentsFrame;
-import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
+
 import ussr.aGui.enumerations.tabs.IconsNumbersConnectors;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
-import ussr.aGui.fileChooser.FileChooserFrameInter;
-import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
-import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 import ussr.aGui.helpers.ComboBoxRenderer;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;

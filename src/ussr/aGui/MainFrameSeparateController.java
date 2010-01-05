@@ -2,7 +2,6 @@ package ussr.aGui;
 
 import java.awt.Dimension;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;

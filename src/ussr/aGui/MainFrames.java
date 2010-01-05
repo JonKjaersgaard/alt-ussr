@@ -14,7 +14,6 @@ import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 import ussr.aGui.helpers.ComponentResizer;
 import ussr.aGui.tabs.TabsInter;
-import ussr.builder.helpers.StringProcessingHelper;
 import ussr.remote.GUIRemoteSimulationAdapter;
 
 /**
@@ -145,7 +144,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jCheckBoxMenuItemInteraction= new javax.swing.JCheckBoxMenuItem();
 		jCheckBoxMenuItemDebugging = new javax.swing.JCheckBoxMenuItem();		
 		jCheckBoxMenuItemDisplayForHints = new javax.swing.JCheckBoxMenuItem();
-		jCheckBoxMenuItemHideAll = new javax.swing.JCheckBoxMenuItem();
 
         /*Description of components*/
 		jMenuBarMain.setPreferredSize(new Dimension(width,height));
@@ -357,7 +355,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonNewSimulation.setToolTipText(MainFrameComponentsText.START_NEW_SIMULATION.getUserFriendlyName());		
 		jButtonNewSimulation.setIcon(MainFrameIcons.NEW_SIMULATION.getImageIcon());
 		jButtonNewSimulation.setRolloverIcon(MainFrameIcons.NEW_SIMULATION_ROLLOVER.getImageIcon());		
-		//jButtonNewSimulation.setDisabledIcon(MainFrameIcons.RUN_REAL_TIME_DISABLED.getImageIcon());		
+		jButtonNewSimulation.setDisabledIcon(MainFrameIcons.NEW_SIMULATION_DISABLED.getImageIcon());		
 		jButtonNewSimulation.setFocusable(false);    
 		jButtonNewSimulation.setPreferredSize(BUTTON_DIMENSION);      
 		jButtonNewSimulation.addActionListener(new java.awt.event.ActionListener() {
@@ -530,6 +528,14 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		getContentPane().add(jToolBarGeneralControl);
 	}
 
+
+	/**
+	 * Returns the button for starting new (default) simulation.
+	 * @return the button for starting new (default) simulation.
+	 */
+	public static javax.swing.JButton getJButtonNewSimulation() {
+		return jButtonNewSimulation;
+	}
 
 	public static javax.swing.JToggleButton getJToggleButtonMaximizeInteraction() {
 		return jToggleButtonMaximizeInteraction;
@@ -828,7 +834,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	                                     jCheckBoxMenuItemNormals,jCheckBoxMenuItemLights,jCheckBoxMenuBufferDepth;
 
 	private static javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemInteraction,jCheckBoxMenuItemDebugging,
-	                                             jCheckBoxMenuItemDisplayForHints,jCheckBoxMenuItemHideAll;
+	                                             jCheckBoxMenuItemDisplayForHints;
 	                                              
 	private javax.swing.JSeparator jSeparator1,jSeparator2,jSeparator3;
 
