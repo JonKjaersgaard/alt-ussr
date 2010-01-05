@@ -234,7 +234,7 @@ public class MainFrameSeparate extends MainFrames {
 			}else if (componentClassName.contains(ComponentsFrame.JButton.toString())){
 				JButton currentJButton = (JButton)currentComponent;
 				String currentJButtonText = currentJButton.getToolTipText();
-				if (currentJButtonText.contains(MainFrameComponentsText.OPEN.getUserFriendlyName())){
+				if (currentJButtonText.contains(MainFrameComponentsText.OPEN.getUserFriendlyName())||currentJButtonText.contains(MainFrameComponentsText.START_NEW_SIMULATION.getUserFriendlyName())){
 					//do nothing
 				}else{
 					currentJButton.setEnabled(enabled);

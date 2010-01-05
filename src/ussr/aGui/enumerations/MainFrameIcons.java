@@ -29,6 +29,9 @@ public enum MainFrameIcons{
 	OPEN_SMALL(MainFramesInter.OPEN_SMALL),
 	OPEN_SMALL_DISABLED(MainFramesInter.OPEN_SMALL_DISABLED),
 	
+	NEW_SIMULATION (MainFramesInter.NEW_SIMULATION),
+	NEW_SIMULATION_ROLLOVER(MainFramesInter.NEW_SIMULATION_ROLLOVER), 
+	
 	EXIT_SMALL(MainFramesInter.EXIT_SMALL),
 	
 	/*First tool bar in main GUI window*/

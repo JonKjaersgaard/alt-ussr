@@ -108,7 +108,7 @@ public class SimulationTab extends Tabs {
 		
 		jSplitPaneSimulationTreeAndEditor.setLeftComponent(jScrollPaneTreeSimulation);
 		jSplitPaneSimulationTreeAndEditor.setRightComponent(jPanelEditor);
-		jSplitPaneSimulationTreeAndEditor.setPreferredSize(new Dimension(600,300));
+		jSplitPaneSimulationTreeAndEditor.setPreferredSize(new Dimension(300,300));
 	
 		
 		jSplitPaneSimulationTreeAndEditor.setDividerSize(5);

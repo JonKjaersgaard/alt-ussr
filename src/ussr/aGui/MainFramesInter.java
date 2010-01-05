@@ -21,6 +21,11 @@ public interface MainFramesInter {
 	 * The directory, for keeping jpg icons used in the main frame design.
 	 */
 	public final String DIRECTORY_ICONS = "resources/mainFrame/icons/jpg/";
+	
+	/**
+	 * The location of xml file describing default(new) simulation.
+	 */
+	public final String LOCATION_DEFAULT_NEW_SIMULATION = "resources/mainFrame/newSimulation/newSimulation.xml";
 
 	/**
 	 * The default extension of each icon. 
@@ -32,7 +37,8 @@ public interface MainFramesInter {
 	 * The names(file names) of the icons used in the main frame.
 	 */
 	public final String   
-	                    /*Open and Save*/
+	                    /*Open and Save*/	
+	                    NEW_SIMULATION = "newSimulation", NEW_SIMULATION_ROLLOVER = "newSimulationRollover", 
                         OPEN = "open",OPEN_ROLLOVER ="openRollover",OPEN_DISABLED = "openDisabled",
                         OPEN_SMALL ="openSmall",OPEN_SMALL_DISABLED ="openSmallDisabled",
                         SAVE ="save", SAVE_ROLLOVER ="saveRollover",SAVE_DISABLED = "saveDisabled",

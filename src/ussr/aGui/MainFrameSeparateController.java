@@ -449,10 +449,10 @@ public class MainFrameSeparateController extends GeneralController {
 		}
 	}
 
-/*	public static void jCheckBoxMenuItemHideAllActionPerformed(JCheckBoxMenuItem jCheckBoxMenuItemHideAll) {
-		if(jCheckBoxMenuItemHideAll.isSelected()){
-			
-		}
-		
-	}*/
+	/**
+	 * Starts new remote simulation
+	 */
+	public static void jButtonNewSimulationActionPerformed() {
+		startSimulation(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);
+	}
 }

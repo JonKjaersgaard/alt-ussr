@@ -16,7 +16,7 @@ public enum MainFrameComponentsText {
 	
 	     /*JMenuItems*/
 	       //File Menu 
-	       OPEN,SAVE,EXIT, 
+	       START_NEW_SIMULATION,OPEN,SAVE,EXIT, 
            //Render Menu
 	       PHYSICS, WIRE_FRAME, BOUNDS,NORMALS, LIGHTS,BUFFER_DEPTH, 
 	       // Window Menu                  

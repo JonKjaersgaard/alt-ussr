@@ -324,15 +324,10 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	public void initJToolbarGeneralControl(int width,int height){
 
-		/*Description of toolbar*/
-		jToolBarGeneralControl = new javax.swing.JToolBar();
-		jToolBarGeneralControl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBarGeneralControl.setRollover(true);
-		jToolBarGeneralControl.setFloatable(false);
-		jToolBarGeneralControl.setToolTipText(MainFrameComponentsText.GENERAL_CONTROL.getUserFriendlyName());
-		jToolBarGeneralControl.setPreferredSize(new Dimension(width,height));
+		
 
 		/*Instantiation of components*/
+		jButtonNewSimulation = new javax.swing.JButton();
 		jButtonRunRealTime = new javax.swing.JButton();
 		jButtonRunStepByStep = new javax.swing.JButton();		
 		jButtonRunFast = new javax.swing.JButton();
@@ -350,8 +345,28 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		
 		jToggleButtonMaximizeDebugging = new javax.swing.JToggleButton();
 		jToggleButtonMaximizeInteraction = new javax.swing.JToggleButton();
-
+		
 		/*Description of components*/
+		jToolBarGeneralControl = new javax.swing.JToolBar();
+		jToolBarGeneralControl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarGeneralControl.setRollover(true);
+		jToolBarGeneralControl.setFloatable(false);
+		jToolBarGeneralControl.setToolTipText(MainFrameComponentsText.GENERAL_CONTROL.getUserFriendlyName());
+		jToolBarGeneralControl.setPreferredSize(new Dimension(width,height));
+
+		jButtonNewSimulation.setToolTipText(MainFrameComponentsText.START_NEW_SIMULATION.getUserFriendlyName());		
+		jButtonNewSimulation.setIcon(MainFrameIcons.NEW_SIMULATION.getImageIcon());
+		jButtonNewSimulation.setRolloverIcon(MainFrameIcons.NEW_SIMULATION_ROLLOVER.getImageIcon());		
+		//jButtonNewSimulation.setDisabledIcon(MainFrameIcons.RUN_REAL_TIME_DISABLED.getImageIcon());		
+		jButtonNewSimulation.setFocusable(false);    
+		jButtonNewSimulation.setPreferredSize(BUTTON_DIMENSION);      
+		jButtonNewSimulation.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+			 MainFrameSeparateController.jButtonNewSimulationActionPerformed();        	  
+			}
+		});
+		jToolBarGeneralControl.add(jButtonNewSimulation);
+		
 		//jToolBarGeneralControl.add(initOpenButton(fcOpenFrame));
 		jToolBarGeneralControl.add(initOpenButton(FileChooserFrameInter.FC_FRAME_OPEN_SIMULATION));
 		//jToolBarGeneralControl.add(initSaveButton(fcSaveFrame));
@@ -824,7 +839,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	private javax.swing.JButton jButtonRunRealTime,jButtonRunStepByStep,jButtonRunFast,
 	                           jButtonPause,jButtonTerminate,jButtonRestart;
 	
-	private static javax.swing.JButton jButtonSave,jButtonOpen;
+	private static javax.swing.JButton jButtonSave,jButtonOpen,jButtonNewSimulation;
 	private static javax.swing.JToggleButton jToggleButtonConstructRobot,jToggleButtonVisualizer,
 	                                         jToggleButtonMaximizeDebugging,jToggleButtonMaximizeInteraction;
 
