@@ -119,32 +119,6 @@ public abstract class ConstructionTabs extends Tabs{
 	}
 	
 	
-
-	
-	
-	
-	/*public javax.swing.JToolBar initSaveLoadJToolbar(){
-		javax.swing.JToolBar jToolBarSaveLoad = new javax.swing.JToolBar();
-		
-		jToolBarSaveLoad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBarSaveLoad.setFloatable(false);//user can not make the tool bar to float
-		jToolBarSaveLoad.setRollover(true);// the components inside are roll over
-		jToolBarSaveLoad.setToolTipText("Save or load");
-		jToolBarSaveLoad.setPreferredSize(new Dimension(60,32));
-		
-		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
-		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
-
-		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY),
-		                      fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
-		
-		Reuse the buttons for saving and loading  already initialized in the main window
-		jToolBarSaveLoad.add(MainFrames.initSaveButton(fcSaveFrame));
-		jToolBarSaveLoad.add(MainFrames.initOpenButton(fcOpenFrame));
-		
-		return jToolBarSaveLoad;
-	}*/
-	
 	public static javax.swing.JToggleButton initColorModuleConnectorsButton(){
 		
 		final javax.swing.JToggleButton  jToggleButtonColorConnetors = new javax.swing.JToggleButton(); 

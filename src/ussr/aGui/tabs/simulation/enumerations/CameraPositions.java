@@ -4,6 +4,11 @@ import java.util.Vector;
 
 import ussr.description.setup.WorldDescription.CameraPosition;
 
+/**
+ * Contains constants defining camera positions supported in USSR.
+ * NOTE NR.1: Add new camera positions here in case of new ones required and in "CameraPosition".
+ * @author Konstantinas
+ */
 public enum CameraPositions {
 
 	DEFAULT(CameraPosition.DEFAULT),
@@ -11,8 +16,15 @@ public enum CameraPositions {
 	FAROUT (CameraPosition.FAROUT)
 	;
 	
+	/**
+	 * Camera position as represented in lower logic of USSR.
+	 */
 	private CameraPosition cameraPosition;
 	
+	/**
+	 * Contains constants defining camera positions supported in USSR.
+	 * @param cameraPosition, camera position as represented in lower logic of USSR.
+	 */
 	CameraPositions(CameraPosition cameraPosition){
 		this.cameraPosition = cameraPosition;
 	}
@@ -46,6 +58,11 @@ public enum CameraPositions {
  		return namesTetxtures.toArray();
  	}
 	
+	/**
+	 * Returns Java convention name of camera position from user friendly name.
+	 * @param userFriendlyCameraPosition, the name of camera position in user friendly format.
+	 * @return Java convention name of camera position from user friendly name.
+	 */
 	public static String toJavaUSSRConvention(String userFriendlyCameraPosition){
  		return userFriendlyCameraPosition.toUpperCase(); 
  	}

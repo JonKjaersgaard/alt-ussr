@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import ussr.aGui.designHelpers.JComponentsFactoryHelper;
-import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.AssignControllerTabController;
 import ussr.builder.enumerations.SupportedModularRobots;
 

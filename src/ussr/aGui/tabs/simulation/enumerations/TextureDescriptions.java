@@ -10,8 +10,8 @@ import ussr.description.setup.WorldDescription;
 import ussr.description.setup.WorldDescription.TextureDescription;
 
 /**
- * Contains supported texture descriptions abstracted over their instances. 
- * NOTE: Add new textures  descriptions here in case of new ones required. 
+ * Contains constants of supported texture descriptions abstracted over their instances. 
+ * NOTE NR.1: Add new textures  descriptions here in case of new ones required and in "WorldDescription". 
  * @author Konstantinas *
  */
 public enum TextureDescriptions {

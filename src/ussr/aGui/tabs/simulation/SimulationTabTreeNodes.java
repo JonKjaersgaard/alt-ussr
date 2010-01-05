@@ -10,8 +10,11 @@ import ussr.builder.enumerations.XMLTagsUsed;
  * Moreover, associates each name with its: 1)placement in the tree view (for instance: FIRST- is parent of SECOND - which in turn is parent of THIRD),
  * 2) Call for editor displayed in GUI, 3) Call for hint displayed in Display for hints and 4) XML tag used to save and load simulation.
  * 
- * NOTE: If you want to add new node, just define it here by defining each of above elements.
- * 
+ * NOTE Nr1: If you want to add new node, just define it here by defining each of above elements.
+ * NOTE Nr2: In case you do not want to implement some of parameters just define them as null or add some default 
+ * value. For instance : for the panel defining visual appearance of edit value  you can just pass "new JPanel()",
+ * for hint empty String (" ") and so on.
+ * NOTE Nr3: XML tags are shown here only for easy reference, so just pass empty string if you are not interested.  
  * @author Konstantinas 
  */
 public enum SimulationTabTreeNodes {

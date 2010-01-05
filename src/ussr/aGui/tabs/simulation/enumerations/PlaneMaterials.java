@@ -4,9 +4,13 @@ import java.util.Vector;
 
 import ussr.physics.PhysicsParameters.Material;
 
+/**
+ * Contains constants defining plane materials supported in USSR.
+ * NOTE NR.1: Add new plane materials here in case of new ones required and in "Material". 
+ * @author Konstantinas
+ */
 public enum PlaneMaterials {
-
-	
+/*Constants*/	
 	DEFAULT(Material.DEFAULT),
 	RUBBER (Material.RUBBER),
 	WOOD(Material.WOOD),
@@ -16,12 +20,18 @@ public enum PlaneMaterials {
 	IRON(Material.IRON),
 	GRANITE(Material.GRANITE)
 	;
+	
+	/**
+	 * Standard materials supported by the physics engine of the simulator
+	 */
 	private Material planeMaterial;
 	
+	/**
+	 * @param planeMaterial, standard material supported by the physics engine of the simulator
+	 */
 	PlaneMaterials(Material planeMaterial){
 		this.planeMaterial = planeMaterial;
 	}
-	
 	
 	/**
  	 * Returns the name of chosen enumeration with changes in it such that Java convention for constants(upper case) is replaced wit lower and
@@ -51,7 +61,13 @@ public enum PlaneMaterials {
  		return namesTetxtures.toArray();
  	}
 	
-	public static String toJavaUSSRConvention(String nameMaterial){
- 		return nameMaterial.toUpperCase(); 
+	
+	/**
+	 * Returns Java convention name of plane material from user friendly name.
+	 * @param userFriendlyName, the name of plane material in user friendly format.
+	 * @return Java convention name of plane material from user friendly name.
+	 */
+	public static String toJavaUSSRConvention(String userFriendlyName){
+ 		return userFriendlyName.toUpperCase(); 
  	}
 }

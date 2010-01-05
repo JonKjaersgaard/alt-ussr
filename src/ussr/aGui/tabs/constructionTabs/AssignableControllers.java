@@ -133,9 +133,7 @@ public enum AssignableControllers {
 		}
 		return userFriendlyNames;
 	}
-	
-	
-	
+
 	/**
 	 * Returns controller system name (in Java convention) from given user friendly name.
 	 * @param userFriendlyName, the name of controller as displayed in GUI

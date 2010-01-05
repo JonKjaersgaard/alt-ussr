@@ -4,9 +4,6 @@ package ussr.aGui.tabs.simulation;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.swing.BorderFactory;
 
 import javax.swing.ImageIcon;
@@ -18,17 +15,14 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
-import ussr.aGui.FramesInter;
 import ussr.aGui.MainFrames;
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
-import ussr.aGui.fileChooser.FileChooserFrameInter;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
-import ussr.builder.helpers.StringProcessingHelper;
 import ussr.builder.simulationLoader.SimulationSpecification;
 
 /**
@@ -36,7 +30,6 @@ import ussr.builder.simulationLoader.SimulationSpecification;
  * @author Konstantinas
  */
 public class SimulationTab extends Tabs {
-
 
 	/**
 	 * The constrains of grid bag layout used during design of the tab.
@@ -263,8 +256,6 @@ public class SimulationTab extends Tabs {
 
 	private static javax.swing.JTree jTreeSimulation;
 	private static javax.swing.JScrollPane jScrollPaneTreeSimulation;
-
-	private static javax.swing.JLabel newLabel;
 
 	private static javax.swing.JPanel jPanelEditor;
 	private static javax.swing.JSpinner jSpinnerCoordinateValue;

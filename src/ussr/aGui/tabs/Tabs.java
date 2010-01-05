@@ -60,11 +60,15 @@ public abstract class Tabs implements TabsInter {
     	this.imageIconDirectory = imageIconDirectory;  	
     }
     
-   
+    /**
+	 * Returns JComponent, which is the main container of components situated in the tab.
+	 * @return JComponent, which is the main container of components situated in the tab.
+	 */
     public  javax.swing.JComponent getJComponent() {
 		return jComponent;
 	}
     
+    //FIXME DECIDE
     public ArrayList<javax.swing.JComponent> getComponents(){
     	ArrayList<javax.swing.JComponent> components = new ArrayList<javax.swing.JComponent>();
     	for (int compon=0;compon<jComponent.getComponents().length;compon++){
@@ -72,8 +76,6 @@ public abstract class Tabs implements TabsInter {
     	}
     	return components;
     }
-    
-    
     
 	/**
 	 * Getter method common for all tabs and is used by GUI during addition of new tab.
@@ -83,15 +85,26 @@ public abstract class Tabs implements TabsInter {
 		return tabTitle;
 	}    
 	
+	/**
+	 * Returns the directory where the icon of the tab is located.
+	 * @return the directory where the icon of the tab is located.
+	 */
 	public String getImageIconDirectory() {
 		return imageIconDirectory;
 	}
 
+	/**
+	 * Returns true if the tab is situated in the first tabbed pane of main GUI window, else it is situated in second.
+	 * @return true if the tab is situated in the first tabbed pane of main GUI window, else it is situated in second.
+	 */
 	public boolean isFirstTabbedPane() {
 		return firstTabbedPane;
 	}
 	
-	
+	/**
+	 * Returns true if the tab is visible when main GUI window is activated.
+	 * @return true if the tab is visible when main GUI window is activated.
+	 */
 	public boolean isInitiallyVisible() {
 		return initiallyVisible;
 	}

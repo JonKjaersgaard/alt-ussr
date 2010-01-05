@@ -1,10 +1,12 @@
 package ussr.aGui.tabs.simulation.enumerations;
 
-import java.util.Map;
 
-import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.physics.PhysicsParameters;
 
+/**
+ * @author Konstantinas
+ * TODO DECIDE IF NEEDED
+ */
 public enum PhysicsParametersDefault {
 	
 	

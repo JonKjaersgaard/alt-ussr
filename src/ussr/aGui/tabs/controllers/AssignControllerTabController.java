@@ -7,25 +7,17 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 
 import ussr.aGui.enumerations.hintpanel.HintsAssignControllersTab;
-import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.AssignableControllers;
 
-import ussr.builder.enumerations.LabeledEntities;
-import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.enumerations.SupportedModularRobots;
 
 import ussr.builder.helpers.FileDirectoryHelper;
-import ussr.builder.labelingTools.LabelingTemplate;
 
 public class AssignControllerTabController extends TabsControllers {
 

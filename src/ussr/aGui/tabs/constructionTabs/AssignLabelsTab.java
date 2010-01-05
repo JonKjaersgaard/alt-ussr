@@ -17,7 +17,6 @@ import ussr.aGui.enumerations.tabs.EntitiesForLabelingText;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.helpers.hintPanel.HintPanel;
-import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.controllers.LabelingTabController;
 
 /**

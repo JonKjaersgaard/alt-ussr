@@ -15,30 +15,27 @@ import ussr.aGui.designHelpers.JComponentsFactoryHelper;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.tabs.Tabs;
-import ussr.aGui.tabs.constructionTabs.AssignableControllers;
-import ussr.aGui.tabs.controllers.AssignControllerTabController;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.simulation.enumerations.CameraPositions;
-import ussr.aGui.tabs.simulation.enumerations.PhysicsParametersDefault;
 import ussr.aGui.tabs.simulation.enumerations.PlaneMaterials;
 import ussr.aGui.tabs.simulation.enumerations.TextureDescriptions;
 import ussr.builder.enumerations.XMLTagsUsed;
-import ussr.builder.helpers.StringProcessingHelper;
 import ussr.builder.simulationLoader.SimulationSpecification;
-import ussr.description.setup.WorldDescription.CameraPosition;
-import ussr.physics.PhysicsParameters;
 
 /**
  * Contains methods  defining visual appearance of edit value panel in Simulation Tab for each
  * node in tree view. 
  * 
- * NOTE: each method is creating new panel, which is later added into  panel with title edit value.
+ * NOTE Nr.1: each method is creating new panel, which is later added into panel with title edit value.
  * @author Konstantinas
  *
  */
 public class SimulationTreeEditors{
 	
 
+	/**
+	 * The visual appearance of the editor for node called Robots.
+	 */
 	public final static javax.swing.JPanel ROBOTS_EDITOR =  addRobotsEditor();
 	
 	public static SimulationSpecification userSimulationSpecification = new SimulationSpecification();
