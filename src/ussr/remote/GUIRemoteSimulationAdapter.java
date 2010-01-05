@@ -75,9 +75,9 @@ public class GUIRemoteSimulationAdapter {
 		
 		// FIXME USED TEMPORARY
 		// Discard standard out (avoid buffers running full)
-        simulation.discardStandardOut();
+      //  simulation.discardStandardOut();
         // Get standard err, pass it to method that prints it in separate thread
-        dumpStream("err", simulation.getStandardErr());
+       // dumpStream("err", simulation.getStandardErr());
 
 
 		// Wait for simulation process to be ready to start a new simulation
