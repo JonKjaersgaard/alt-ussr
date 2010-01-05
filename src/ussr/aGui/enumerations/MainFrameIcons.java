@@ -75,7 +75,6 @@ public enum MainFrameIcons{
     YOUR_NEW_TAB(MainFramesInter.YOUR_NEW_TAB),
 	;
 	
-
 	/**
 	 * The icon created from image file.
 	 */
@@ -87,7 +86,7 @@ public enum MainFrameIcons{
 	private String imageDirectory;
 	
 	/**
-	 * The name of image file, not including extension
+	 * The name of image file, not including extension.
 	 */
 	private String imageName;
 	
@@ -129,7 +128,7 @@ public enum MainFrameIcons{
 	 * Returns the name of image file excluding extension.
 	 * @return the name of image file excluding extension.
 	 */
-	public String getImageName() {
+	public String getImageName() {		
 		return imageName;
 	}
 	

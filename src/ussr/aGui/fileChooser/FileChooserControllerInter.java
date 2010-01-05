@@ -1,24 +1,26 @@
-package ussr.aGui.fileChooser.controllers;
-
-import ussr.aGui.fileChooser.FileChooserFrameInter;
+package ussr.aGui.fileChooser;
 
 
-
+/**
+ * Provides methods for controlling file choosers. 
+ * @author Konstantinas
+ *
+ */
 public interface FileChooserControllerInter {
 	
     /**
      * Manages the control of the file chooser in Save dialog form.
-     * @param evt
-     * @param fileChooser
-     * @param fileChooserFrame
+     * @param evt, event received from file chooser. This is selection of Save or Cancel buttons.
+     * @param fileChooser, the file chooser appearance, which is integrated into the frame.
+     * @param fileChooserFrame, the frame in which the file chooser appearance is integrated in.
      */
     public  void controlSaveDialog(java.awt.event.ActionEvent evt, javax.swing.JFileChooser fileChooser,FileChooserFrameInter fileChooserFrame);
 	
 	/**
 	 * Manages the control of the file chooser in Open dialog form.
-	 * @param evt, the event of 
-	 * @param fileChooser
-	 * @param fileChooserFrame
+	 * @param evt, event received from file chooser. This is selection of Open or Cancel buttons.
+	 * @param fileChooser,the file chooser appearance, which is integrated into the frame.
+	 * @param fileChooserFrame, the frame in which the file chooser appearance is integrated in.
 	 */
 	public  void controlOpenDialog(java.awt.event.ActionEvent evt,javax.swing.JFileChooser fileChooser,FileChooserFrameInter fileChooserFrame);
 

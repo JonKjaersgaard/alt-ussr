@@ -11,8 +11,8 @@ public class ConsoleTab extends Tabs  {
 	/**
 	 * Defines visual appearance of the tab called "Console".
 	 * @param initiallyVisible, true if the tab is visible after activation of main GUI window. 
-	 * @param firstTabbedPane,true if the tab is visible after activation of main GUI window. 
-	 * @param tabTitle, the title of the tab
+	 * @param firstTabbedPane,location of the tab in the main GUI frame. True if it is the first tabbed pane. 
+	 * @param tabTitle, the title of the tab.
 	 * @param imageIconDirectory,the directory for icon displayed in the top-left corner of the tab.
 	 */
 	public ConsoleTab(boolean initiallyVisible,boolean firstTabbedPane, String tabTitle,String imageIconDirectory){

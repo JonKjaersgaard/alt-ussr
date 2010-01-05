@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 import ussr.aGui.MainFramesInter;
 
 /**
- * TODO
+ * Contains different types of hint panel. The type corresponds to the icon displayed.  
  * @author Konstantinas
  * NOTE: There is a plenty of room for improvement. Meaning many different types of hint panel
  * can be supported.

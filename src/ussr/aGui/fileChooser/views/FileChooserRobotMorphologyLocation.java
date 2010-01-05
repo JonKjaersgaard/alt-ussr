@@ -5,8 +5,7 @@ import java.util.Map;
 
 import javax.swing.SwingWorker;
 
-import ussr.aGui.fileChooser.FileChooserFrame;
-import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
+import ussr.aGui.fileChooser.FileChooserControllerInter;
 import ussr.remote.GUIRemoteSimulationAdapter;
 
 /**

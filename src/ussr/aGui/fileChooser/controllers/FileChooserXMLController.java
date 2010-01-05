@@ -11,19 +11,22 @@ import ussr.aGui.fileChooser.FileChooserFrameInter;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 
 /**
- * Controls the functionality of both forms of file chooser: Open and Save.
- * Here also manages calls for remote XML processing.
+ * Controls the functionality of both forms of file chooser: Open and Save for XML processing.
  * @author Konstantinas
  *
  */
 public class FileChooserXMLController extends FileChooserController {
 
-	private boolean firstTime = true;
 	
-
+	/**
+	 * Manages the control of the file chooser in Open dialog form.
+	 * @param evt, event received from file chooser. This is selection of Open or Cancel buttons.
+	 * @param fileChooser,the file chooser appearance, which is integrated into the frame.
+	 * @param fileChooserFrame, the frame in which the file chooser appearance is integrated in.
+	 */
 	public void controlOpenDialog(ActionEvent evt, JFileChooser fileChooser,
 			FileChooserFrameInter fileChooserFrame) {
-		checkFileDescription( fileChooser);
+		checkFileDescription(fileChooser);
 		String command = evt.getActionCommand();//Selected button command
 
 
@@ -49,20 +52,21 @@ public class FileChooserXMLController extends FileChooserController {
 				break;	
 			default: throw new Error("XML file type named as " +ussXmlFileType.toString() +"is not yet supported.");	
 			}
-		}
-		//fileChooserFrame.getActivationThread().interrupt();
-		
-		//fileChooserFrame.dispose();
-		
+		}		
 		((Window) fileChooserFrame).dispose();
 
 	}
 
-	@Override
+	
+	 /**
+     * Manages the control of the file chooser in Save dialog form.
+     * @param evt, event received from file chooser. This is selection of Save or Cancel buttons.
+     * @param fileChooser, the file chooser appearance, which is integrated into the frame.
+     * @param fileChooserFrame, the frame in which the file chooser appearance is integrated in.
+     */
 	public void controlSaveDialog(ActionEvent evt, JFileChooser fileChooser,
 			FileChooserFrameInter fileChooserFrame) {
 		checkFileDescription( fileChooser);
-		//TODO Repeating code
 		String command = evt.getActionCommand();//Selected button command			
 		if(command.equalsIgnoreCase(ActionCommands.APPROVESELECTION.toString())  ){		        
 			String fileDirectoryName = fileChooser.getSelectedFile().toString();
@@ -72,11 +76,7 @@ public class FileChooserXMLController extends FileChooserController {
 			} catch (RemoteException e) {
 				throw new Error("Failed to save "+ ussXmlFileType.toString()+" description in xml file "+ fileDirectoryName+ ", due ro remote exception");
 			}						
-		}
-		
-		//fileChooserFrame.getActivationThread().interrupt();
-		//fileChooserFrame.dispose();//close the frame(window)
-		
+		}		
 		((Window) fileChooserFrame).dispose();
 	}	
 

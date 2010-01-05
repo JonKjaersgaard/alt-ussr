@@ -20,40 +20,4 @@ public interface HintPanelInter {
 	 */
 	public final String INFORMATION ="information", ERROR ="error", ATTENTION = "attention";
 
-	/**
-	 * Array of build in hints for tab called Assign Behavior
-	 */
-	public final String[] builInHintsAssignBehaviorTab = 
-	/*0*/   {"Follow hints displayed here to explore all available functionality. When done assigning behaviors or labels save simulation in XML file and run it (green arrow in the lop-left corner of main window). ",
-
-			/*1*/    "Choose behavior from the list of available ones and select module to assign it to. It possible to assign behaviors during paused and running state of simulation. ", 
-
-			/*2*/   "Labels are identifiers, used during implementation of controller. They allow to implement controllers in more abstract fashion. Recommendation: use this control only if you are well aware of consequences.",
-
-			/*3*/   "Select chosen entity in simulation environment in order to read in its labels in the table. Next modify the labels in the table(delete or type in desired ones) and select button for assigning labels.",
-
-			/*4*/  "Select chosen entity in simulation environment in order to assignt to it the labels displayed in the table. Next use read labels button to make sure the labels were assigned to desired entity.",	
-
-			/* 5   "Select module to delete. Not recommended to use, if only one module exists in simulation environment.",
-
-	                             6   "Select module to color its connectors with color coding (color - connector number ). Here:Black - 0, Red - 1,"+
-                                          " Cyan - 2, Grey - 3, Green - 4, Magenta - 5, Orange - 6, Pink - 7, Blue - 8, White - 9, Yellow - 10, Light Grey -11",
-
-                                 7   "Zoom in closer to module and select connectors (black-white geometric shapes). On each selected module will be connected new.",
-
-                                 8   "Select module to add new module on chosen  number of connector.",
-
-                                 9   "Select module to add new modules on all connectors. Next use button Delete to remove excessive modules."+
-                                         "It is not recommended to have modules overlaping with the ground plane.",
-
-                                10   "Select module to add new module on initial connector. Next use green arows to move module from one connector onto another." +
-                                		 "When desired placement achieved, repeat the sequence of actions for next modules.",
-
-                                11   "Choose modular robot type from four available (ATRON, Odin  and so on).",
-
-                                12   "This tab is only available before simulation is started!",
-			 */     
-	"NEW HINT"};
-
-
 }

@@ -109,9 +109,9 @@ public class HintPanel extends JPanel implements HintPanelInter {
 		jTextPaneHintDisplay.invalidate();	
 	}
 	
-	public int getHeightValue(){
+/*	public int getHeightValue(){
 		return this.getHeight();
-	}
+	}*/
 	
 	
 

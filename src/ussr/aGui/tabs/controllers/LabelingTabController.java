@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 
 import javax.swing.AbstractButton;
 
+import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
 import ussr.aGui.enumerations.tabs.EntitiesForLabelingText;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
@@ -120,7 +121,7 @@ public class LabelingTabController extends TabsControllers{
 		default: throw new Error("Labeling is not supported for " + chosenRadioEntityText ); 
 		}
 		/*Informing user*/
-		AssignControllerTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[3]);
+		AssignControllerTab.getHintPanel().setText(HintsAssignLabelsTab.ENTITY_CHOSEN.getHintText());
 	}
 	
 	
@@ -162,7 +163,7 @@ public class LabelingTabController extends TabsControllers{
 			throw new Error("Failed to initialize the tools for labeling different entities in simulation environment");
 		}
 		/*Informing user*/
-		AssignControllerTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[4]);
+		AssignControllerTab.getHintPanel().setText(HintsAssignLabelsTab.ASSIGN_LABELS.getHintText());
 	}
 
 }

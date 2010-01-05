@@ -11,6 +11,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 
 import ussr.aGui.FramesInter;
+import ussr.aGui.enumerations.hintpanel.HintsAssignControllersTab;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 
@@ -242,7 +243,7 @@ public class AssignControllerTab extends ConstructionTabs{
 		super.jComponent.add(jPanelAssignBehaviors,gridBagConstraints);			
 
 		/*Display for hints. Feedback to the user.*/
-		hintPanel = initHintPanel(400,HINT_PANEL_HEIGHT,HintPanelInter.builInHintsAssignBehaviorTab[0]);		
+		hintPanel = initHintPanel(400,HINT_PANEL_HEIGHT,HintsAssignControllersTab.DEFAULT.getHintText());		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx = 0;		
 		gridBagConstraints.gridy = 2;

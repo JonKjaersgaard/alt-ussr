@@ -1,35 +1,30 @@
 package ussr.aGui.tabs;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 
 import ussr.aGui.MainFrames;
 import ussr.aGui.fileChooser.FileChooserFrameInter;
-import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
-import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 
 /**
- * Supports definitions of visual appearance for tabs pluged-in the main GUI window.
+ * Supports definitions of visual appearance for tabs plugged-in the main GUI window.
  * @author Konstantinas
  */
 public abstract class Tabs implements TabsInter {
 	
 	/**
-	 * 
+	 * Location of the tab in the main GUI frame. True if it is the first tabbed pane. 
 	 */
 	protected boolean firstTabbedPane;
 	
 	/**
-	 * 
+	 * The directory for icon displayed in the top-left corner of the tab.
 	 */
 	protected String imageIconDirectory;
 	
 	/**
-	 * 
+	 * True if the tab is visible after activation of main GUI window.
 	 */
 	protected boolean initiallyVisible;
 	
@@ -37,11 +32,11 @@ public abstract class Tabs implements TabsInter {
 	 * The title of the tab.
 	 */
 	protected String tabTitle;
-
 	
 	/**
 	 * The main component, which is the container for all components situated in the tab. 
-	 * For example panel. In other words, tab contains panel and panel contains other components.	
+	 * For example panel. In other words, tab contains panel and panel contains other components.
+	 * The panel is jComponent.	
 	 */
 	protected javax.swing.JComponent jComponent;	
 	
@@ -50,11 +45,13 @@ public abstract class Tabs implements TabsInter {
      * Follows Strategy pattern.
      */
     protected abstract void initComponents();
-    
+  
     /**
-     * TODO
-     * @param firstTabbedPane
-     * @param tabTitle
+     * Supports definitions of visual appearance for tabs plugged-in the main GUI window.
+     * @param initiallyVisible,true if the tab is visible after activation of main GUI window.
+     * @param firstTabbedPane, location of the tab in the main GUI frame. True if it is the first tabbed pane. 
+     * @param tabTitle, the title of the tab.
+     * @param imageIconDirectory, the directory for icon displayed in the top-left corner of the tab.
      */
     protected Tabs(boolean initiallyVisible ,boolean firstTabbedPane, String tabTitle,String imageIconDirectory){
     	this.initiallyVisible= initiallyVisible;
@@ -63,10 +60,7 @@ public abstract class Tabs implements TabsInter {
     	this.imageIconDirectory = imageIconDirectory;  	
     }
     
-    /**
-     * Getter method common for all tabs and is used by GUI during addition of new tab.
-     * UPDATE
-     */
+   
     public  javax.swing.JComponent getJComponent() {
 		return jComponent;
 	}

@@ -1,11 +1,9 @@
 package ussr.aGui.fileChooser;
 
 import java.io.File;
-import java.util.Hashtable;
 import java.util.Map;
 
 import ussr.aGui.FramesInter;
-import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
@@ -38,8 +36,9 @@ public interface FileChooserFrameInter extends FramesInter {
 	 */
 	public final FileChooserControllerInter FC_XML_CONTROLLER = new FileChooserXMLController();
 	
-	
-	
+    /**
+     * A number of file choosers currently supported.
+     */
     public final static FileChooserFrameInter FC_FRAME_OPEN_SIMULATION = new FileChooserOpenFrame(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
                                               FC_FRAME_SAVE_SIMULATION = new FileChooserSaveFrame(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
                                               FC_FRAME_OPEN_ROBOT = new FileChooserOpenFrame(FileFilterTypes.OPEN_SAVE_ROBOT.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
@@ -59,6 +58,4 @@ public interface FileChooserFrameInter extends FramesInter {
 	public void setFileFiltersWithDescriptions(Map<String, String> fileDescriptionsAndExtensions);
 	
 	public void setSelectedFile(File selectedFile);
-	
-	public Thread getActivationThread() ;
 }

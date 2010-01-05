@@ -1,10 +1,12 @@
-package ussr.aGui.fileChooser;
+package ussr.aGui.fileChooser.views;
 import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
 
 import ussr.aGui.GuiFrames;
-import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
+import ussr.aGui.fileChooser.FileChooserControllerInter;
+import ussr.aGui.fileChooser.FileChooserFrameInter;
+import ussr.aGui.fileChooser.FileFilter;
 
 /**
  * Defines visual appearance of the file chooser in several dialog forms: Open and Save for now.
@@ -14,12 +16,6 @@ import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
 
 @SuppressWarnings("serial")
 public abstract class FileChooserFrame extends GuiFrames implements FileChooserFrameInter {
-
-	protected Thread activationThread;
-	
-	public Thread getActivationThread() {
-		return activationThread;
-	}
 
 	/**
 	 * Used as flag to indicate that file chooser should open build in default directory.

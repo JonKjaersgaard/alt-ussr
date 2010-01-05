@@ -14,7 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 
-import ussr.aGui.enumerations.hintpanel.HintsAssignBehaviorsTab;
+import ussr.aGui.enumerations.hintpanel.HintsAssignControllersTab;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
@@ -74,7 +74,7 @@ public class AssignControllerTabController extends TabsControllers {
 		}
 		/*Informing user*/
 		AssignControllerTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
-		AssignControllerTab.getHintPanel().setText(HintsAssignBehaviorsTab.DEFAULT.getHintText());
+		AssignControllerTab.getHintPanel().setText(HintsAssignControllersTab.DEFAULT.getHintText());
 	}
 
 	/**

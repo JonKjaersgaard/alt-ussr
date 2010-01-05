@@ -1,5 +1,11 @@
 package ussr.aGui.enumerations.hintpanel;
 
+/**
+ * Contains hints displayed in Display for hints for Tab called Simulation.
+ * NOTE Nr.1: In oder to change the hint text just modify it here.
+ * @author Konstantinas
+ *
+ */
 public enum HintsSimulationTab {
 
 	DEFAULT("This tab allows to manipulate simulation values and entities in it. Follow hints displayed here" +
@@ -68,7 +74,6 @@ public enum HintsSimulationTab {
 	HintsSimulationTab(String hintText){
 		this.hintText=hintText;
 	}
-	
 	
 	/**
 	 * Returns the text of hint.

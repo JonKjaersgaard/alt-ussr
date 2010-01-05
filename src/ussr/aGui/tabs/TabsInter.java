@@ -57,22 +57,21 @@ public interface TabsInter {
 	                    CONNECTOR_NR8_BLUE = "connectorNr8Blue", CONNECTOR_NR9_WHITE = "connectorNr9White",
 	                    CONNECTOR_NR10_YELLOW = "connectorNr10Yellow", CONNECTOR_NR11_LIGHT_GREY = "connectorNr11LightGrey"
 	                    	;
-	                           
-
 	/**
-	 * 
+	 * The directory for keeping png icons used to represent the textures of underlying plane in simulator.
 	 */
 	public final String DIRECTORY_ICONS_TEXTURES = "resources/mainFrame/icons/tabs/jpg/textureDescriptions/";
 	
 	/**
-	 * The names of the icons used in comboBoxes with numbers of connectors.
+	 * The names of the icons used to represent the textures of underlying plane in simulator.
 	 */
 	public final String WHITE_TEXTURE ="white", MARS_TEXTURE ="marsTexture",
 	                    WHITE_GRID_TEXTURE= "grid",GREY_GRID_TEXTURE ="grid2",
 	                    GRASS_TEXTURE ="myGrass2";
 	                 
-	
-	
+	/**
+	 * Common height of hint panel.
+	 */
 	public final int HINT_PANEL_HEIGHT = 100;
 	
 	/**
@@ -107,6 +106,6 @@ public interface TabsInter {
 	 */
 	public boolean isInitiallyVisible();
 
-	
+	//FIXME
 	public ArrayList<javax.swing.JComponent> getComponents();
 }

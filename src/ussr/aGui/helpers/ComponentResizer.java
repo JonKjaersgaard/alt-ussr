@@ -11,6 +11,7 @@ import javax.swing.SwingUtilities;
  *  of the component.
  *  @author http://tips4java.wordpress.com/2009/09/13/resizing-components/
  *  @author Konstantinas (added this code to enable resizing of tabbed panes in Main GUI)
+ *  FIXME DECIDE IF YOU NEED TO USE IT.
  */
 public class ComponentResizer extends MouseAdapter
 {

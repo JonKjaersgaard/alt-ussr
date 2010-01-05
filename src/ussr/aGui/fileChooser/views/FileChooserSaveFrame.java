@@ -1,9 +1,8 @@
 package ussr.aGui.fileChooser.views;
 
-
 import java.util.Map;
-import ussr.aGui.fileChooser.FileChooserFrame;
-import ussr.aGui.fileChooser.controllers.FileChooserControllerInter;
+
+import ussr.aGui.fileChooser.FileChooserControllerInter;
 
 /**
  * Defines visual appearance of the file chooser in the form of Save dialog.

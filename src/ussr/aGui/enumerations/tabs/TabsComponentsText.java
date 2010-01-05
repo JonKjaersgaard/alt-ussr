@@ -3,7 +3,7 @@ package ussr.aGui.enumerations.tabs;
 /**
  * Contains text elements presented to the user in Tabs. Such as text on GUI elements and tool tips text.
  * NOTE NR1: underscore is later replaced with space. 
- * NOTE NR2: if you want to change specific text, just refactor it and keep in mind that underscore is used instead of space. 
+ * NOTE NR2: if you want to change specific text, just re-factor it and keep in mind that underscore is used instead of space. 
  * @author Konstantinas
  */
 public enum TabsComponentsText {

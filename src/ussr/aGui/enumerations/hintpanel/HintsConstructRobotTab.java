@@ -3,7 +3,7 @@ package ussr.aGui.enumerations.hintpanel;
 /**
  * Contains build in hints for tab called "Construct Robot". Hints are displayed in Display for hints(panel).
  * @author Konstantinas
- * NOTE: In oder to change the hint text just modify it here.
+ * NOTE Nr.1: In oder to change the hint text just modify it here.
  */
 public enum HintsConstructRobotTab {
 
@@ -58,7 +58,6 @@ public enum HintsConstructRobotTab {
 	HintsConstructRobotTab(String hintText){
 		this.hintText=hintText;
 	}
-	
 	
 	/**
 	 * Returns the text of hint.
