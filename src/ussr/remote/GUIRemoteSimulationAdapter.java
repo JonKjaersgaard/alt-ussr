@@ -151,12 +151,11 @@ public class GUIRemoteSimulationAdapter {
 		MainFrameSeparateController.setRendererControl(remotePhysicsSimulation.getRendererControl());
 		
 		GeneralController.setBuilderControl(remotePhysicsSimulation.getBuilderControl());		
-		MainFrameSeparate.setMainFrameSeparateEnabled(true,true);
-		MainFrameSeparate.setMainFrameSeparateEnabled(false,true);		
+		MainFrameSeparate.setMainFrameSeparateEnabled(true);		
 		 
          SimulationSpecification simulationSpecification = simulation.getXmlSimulationProvider().getSimulationSpecification();
          SimulationTabController.setSimulationSpecification(simulationSpecification);
-         SimulationTab.addRobotNode(simulationSpecification);
+         SimulationTab.addRobotNode(simulationSpecification,true);
          
          SimulationTreeEditors.update();
          SimulationTab.resizeComponents();
