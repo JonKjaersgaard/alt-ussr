@@ -311,6 +311,10 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	}
 
 
+	public static javax.swing.JMenuItem getJMenuItemSave() {
+		return jMenuItemSave;
+	}
+
 	/**
 	 * Returns menu item for opening (loading) simulation.
 	 * @return menu item for opening (loading) simulation.
@@ -592,6 +596,10 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		return jButtonSave;
 	}
 
+	public static javax.swing.JButton getJButtonSave() {
+		return jButtonSave;
+	}
+
 	/**
 	 * Initializes and returns the button called Open.
 	 * @param fcOpenFrame,the file chooser frame to associate the button with.
@@ -719,16 +727,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public abstract void activate();
 
     /*Getters and setters*/
-	/**
-	 * Enables and disables menu components opening file choosers. 
-	 * @param enable, true for enabled.
-	 */
-	public static void setSaveOpenEnabled (boolean enable){
-		jButtonSave.setEnabled(enable);
-		jMenuItemOpenSimulation.setEnabled(enable);
-		jMenuItemSave.setEnabled(enable);	
-		jButtonOpen.setEnabled(enable);
-	} 
+
 
 	/**
 	 * Returns second tabbed pane from the top in the design of main GUI window.

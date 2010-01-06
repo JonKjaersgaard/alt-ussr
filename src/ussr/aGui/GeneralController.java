@@ -42,7 +42,9 @@ public abstract class GeneralController {
 					//throw new Error("Failed to run simulation file located at "+ simulationXMLFileDirectory+ " , due to remote exception");
 				}
 			}
-		}.start();	
+		}.start();
+		MainFrameSeparateController.setSimulationRunning(false);
+
 	}
 	
 	/**

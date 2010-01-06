@@ -49,8 +49,9 @@ public class MainFrameSeparateController extends GeneralController {
 		FileChooserFrameInter fileChooserFrame = (FileChooserFrameInter)fcOpenFrame;
 		String fileFilterDescription = fileChooserFrame.getSelectedFileFilter().getDescription();	
 		
-		if (remotePhysicsSimulation!=null && !fileFilterDescription.contains(FileFilterTypes.OPEN_SAVE_ROBOT.getFileDescription())){
+		if (remotePhysicsSimulation!=null && !fileFilterDescription.contains(FileFilterTypes.OPEN_SAVE_ROBOT.getFileDescription())&&isSimulationRunning==false ){
 			int returnedValue = (Integer)JOptionPaneMessages.SAVE_CURRENT_SIMULATION.displayMessage();
+			System.out.println("Option: "+ returnedValue);
 
 			switch(returnedValue){
 			case 0://YES
@@ -63,9 +64,14 @@ public class MainFrameSeparateController extends GeneralController {
 				fcOpenFrame.activate();
 				break;
 			case 2://CANCEL, do nothing
+			case -1://Exit	
 				break;
 			default: throw new Error("There is no such option");
 			}
+		}else if (remotePhysicsSimulation!=null&&isSimulationRunning==true &&!fileFilterDescription.contains(FileFilterTypes.OPEN_SAVE_ROBOT.getFileDescription())){
+			FileChooserXMLController.setIncludeSimulationTermination(true);
+			FileChooserXMLController.setIncludeStartNewSimulation(false);
+			fcOpenFrame.activate();
 		}else{
 			fcOpenFrame.activate();
 		}	
@@ -80,19 +86,10 @@ public class MainFrameSeparateController extends GeneralController {
 	}
 
 	/**
-	 * Keeps track for how many times simulation was started, so that only first time all connectors on the modules will be connected.
-	 */
-	private static int timesSelected =0;
-
-	/**
 	 * Starts running remote simulation in real time.
 	 */
 	public static void jButtonRunRealTimeActionPerformed() {
-		adaptGUI();
-
-		timesSelected++;
-		connectModules();
-
+		adaptToRunningSimulation();
 		try {
 			if (remotePhysicsSimulation.isPaused()){// Start simulation in real time, if simulation is in paused state
 				remotePhysicsSimulation.setPause(false);				
@@ -105,26 +102,46 @@ public class MainFrameSeparateController extends GeneralController {
 		}
 	}
 
+	private static boolean isSimulationRunning = false;
+	
+	public static void setSimulationRunning(boolean isSimulationRunning) {
+		MainFrameSeparateController.isSimulationRunning = isSimulationRunning;
+	}
+
 	/**
-	 * Enables and disables GUI components in relation to selection of run simulation buttons like run real time, fast and step by step.
+	 * Adapts GUI components in relation to selection of run simulation buttons like run real time, fast and step by step.
 	 */
-	private static void adaptGUI(){
+	private static void adaptToRunningSimulation(){
+		connectModules();
+
+		MainFrames.getJMenuItemSave().setEnabled(false);
+		MainFrames.getJButtonSave().setEnabled(false);
+		
+		//SimulationTab.setTabEnabled(false);
+		
 		ConstructRobotTab.setTabEnabled(false);
 		AssignControllerTab.setTabEnabled(false);
 		//MainFrameSeparate.getJToggleButtonVisualizer().setEnabled(true);
 		ModuleCommunicationVisualizerController.setIdsModules();
 	}
 
+	private static void connectModules(){
+
+		if (isSimulationRunning==false){
+			try {
+				builderControl.connectAllModules();
+			} catch (RemoteException e) {
+				throw new Error ("Failed to connect modules, due to remote exception");
+			}	
+			isSimulationRunning =true;
+		}		
+	}
 
 	/**
 	 * Starts running remote simulation in fast mode.
 	 */
 	public static void jButtonRunFastActionPerformed() {
-
-		adaptGUI();
-
-		timesSelected++;
-		connectModules();
+		adaptToRunningSimulation();
 
 		try {
 			if (remotePhysicsSimulation.isPaused()){// Start simulation  fast, if simulation is in paused state
@@ -138,30 +155,14 @@ public class MainFrameSeparateController extends GeneralController {
 		}
 	}
 
-	private static void connectModules(){
-
-		if (timesSelected==1){
-			try {
-				builderControl.connectAllModules();
-			} catch (RemoteException e) {
-				throw new Error ("Failed to connect modules, due to remote exception");
-			}
-
-			/*Disable GUI components responsible for opening file choosers, because it is possible to load
-			 *simulation from XML file only in static state of simulation.*/ 
-			MainFrames.setSaveOpenEnabled(false);
-		}		
-	}
+	
 
 	/**
 	 * Executes running remote simulation in step by step fashion.
 	 */
 	public static void jButtonRunStepByStepActionPerformed() {       	
-		adaptGUI();
-
-		timesSelected++;
-		connectModules();
-
+		adaptToRunningSimulation();
+	
 		try {
 			remotePhysicsSimulation.setPause(true);
 			remotePhysicsSimulation.setSingleStep(true);
@@ -479,26 +480,27 @@ public class MainFrameSeparateController extends GeneralController {
 	 */
 	public static void jButtonMenuItemNewSimulationActionPerformed() {
 
-		if (remotePhysicsSimulation!=null){
+		if (remotePhysicsSimulation!=null && isSimulationRunning ==false){
 			int returnedValue = (Integer)JOptionPaneMessages.SAVE_CURRENT_SIMULATION.displayMessage();
-
+			System.out.println("Option: "+ returnedValue);
 			switch(returnedValue){
 			case 0://YES
 				FileChooserXMLController.setIncludeSimulationTermination(true);
 				FileChooserXMLController.setIncludeStartNewSimulation(true);
-				saveActionPerformed(MainFrames.fcSaveFrame);					
+				saveActionPerformed(MainFrames.fcSaveFrame);
 				break;
 			case 1://NO
 				terminateSimulation();
-				startSimulation(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);				
+				startSimulation(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);
 				break;
 			case 2://CANCEL, do nothing
+			case -1://Exit	
 				break;
 			default: throw new Error("There is no such option");
 			}
-
 		}else{
+			terminateSimulation();
 			startSimulation(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);
-		}
+		}		
 	}
 }

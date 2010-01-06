@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 
 import javax.swing.ImageIcon;
 
@@ -13,6 +14,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import ussr.aGui.MainFrames;
@@ -67,6 +69,7 @@ public class SimulationTab extends Tabs {
 		/*Define components*/
 		DefaultTreeModel treeModel = new DefaultTreeModel(initializeSimulationRootNode());
 		jTreeSimulation.setModel(treeModel);
+		jTreeSimulation.setExpandsSelectedPaths(true);
 		
 		ImageIcon closedIcon = TabsIcons.EXPANSION_CLOSED_SMALL.getImageIcon();
 		ImageIcon openIcon = TabsIcons.EXPANSION_OPENED_SMALL.getImageIcon();
@@ -170,32 +173,43 @@ public class SimulationTab extends Tabs {
 	 */
 	private static boolean firstTime = true;
 	
-	private static int robotNumber;
+	private static int robotNumber=0;
 	
 	/**
 	 * @param simulationSpecification
 	 */
-	public static void addRobotNode(SimulationSpecification simulationSpecification){
-		int nrRobotsInSimulation = simulationSpecification.getRobotsInSimulation().size();
+	public static void addRobotNode(SimulationSpecification simulationSpecification, boolean fromSimulationXMLFile){
 		
-		DefaultMutableTreeNode robotsNode = SimulationTabTreeNodes.ROBOTS.getDefaultMutableTreeNode();
-		if (firstTime){
-			firstTime=false;
+		
+		DefaultTreeModel model = (DefaultTreeModel)jTreeSimulation.getModel();
+		DefaultMutableTreeNode robotsNode = (DefaultMutableTreeNode) model.getChild(model.getRoot(),2);
+		
+		if (fromSimulationXMLFile){
+			robotNumber =0;//reset
+			
+			robotsNode.removeAllChildren();			
+			int nrRobotsInSimulation = simulationSpecification.getRobotsInSimulation().size();
 			for (int robotNr=1;robotNr<nrRobotsInSimulation+1;robotNr++){
 				DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(SimulationTabTreeNodes.ROBOT_NR.getUserFriendlyName()+"."+robotNr);
 				robotsNode.add(thirdNodeHierarchyRobot);
 				//secondNodeHierarchyRobots.add(thirdNodeHierarchyRobot);
 				robotNumber =robotNr;
 			}
+			
 		}else{
 			robotNumber++;
 			DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(SimulationTabTreeNodes.ROBOT_NR.getUserFriendlyName()+"."+robotNumber);
-        	DefaultTreeModel model = (DefaultTreeModel)jTreeSimulation.getModel();
+        	//DefaultTreeModel model = (DefaultTreeModel)jTreeSimulation.getModel();
         	model.insertNodeInto(thirdNodeHierarchyRobot, robotsNode, robotsNode.getChildCount());	
 		}
-		
-		jTreeSimulation.revalidate();
-		jTreeSimulation.repaint();
+		model.reload();		
+	
+		for (int rowNr = 0; rowNr < jTreeSimulation.getRowCount(); rowNr++) {
+			jTreeSimulation.expandRow(rowNr);
+		}
+	
+		//jTreeSimulation.validate();
+		//jTreeSimulation.repaint();
 		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);
 		
 	} 
@@ -204,6 +218,13 @@ public class SimulationTab extends Tabs {
 
 		return jPanelEditor;
 	}
+	
+	public static void setTabEnabled(boolean enabled){
+		
+		jSplitPaneSimulationTreeAndEditor.setEnabled(enabled);
+		hintPanel.setEnabled(enabled);
+		
+	};
 
 	public static void setTabVisible(boolean visible) {		
 		jScrollPaneTreeSimulation.setVisible(visible);

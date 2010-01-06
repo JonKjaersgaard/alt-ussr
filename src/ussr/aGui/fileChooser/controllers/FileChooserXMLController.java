@@ -52,9 +52,11 @@ public class FileChooserXMLController extends FileChooserController {
 
 			switch(ussXmlFileType){
 			case SIMULATION:
+				if (includeSimulationTermination==true&&includeStartNewSimulation==false){
+					terminateSimulation();
+				}
 				startSimulation(fileDirectoryName);	
-				setSimulationXMLFileDirectory(fileDirectoryName);//CallBack				
-				//ConsoleSimulationExample.main(null);
+				setSimulationXMLFileDirectory(fileDirectoryName);//CallBack //FIXME NO LONGER NEEDED
 				break;			
 			case ROBOT:        
 				new Thread() {
