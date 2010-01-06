@@ -114,7 +114,7 @@ public class SimulationTab extends Tabs {
 		jSplitPaneSimulationTreeAndEditor.setDividerSize(5);
 		jSplitPaneSimulationTreeAndEditor.setDividerLocation(280);
 		jSplitPaneSimulationTreeAndEditor.setVisible(false);
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.fill = GridBagConstraints.BOTH;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
 		
@@ -125,7 +125,8 @@ public class SimulationTab extends Tabs {
 		hintPanel.setText(HintsSimulationTab.DEFAULT.getHintText());
 		hintPanel.setVisible(false);
 		
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.fill = GridBagConstraints.BOTH;		
+		gridBagConstraints.anchor = GridBagConstraints.PAGE_END;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 1;
 
@@ -215,11 +216,12 @@ public class SimulationTab extends Tabs {
 	}
 	
 	public static void resizeComponents(){
-		int heightIcon = MainFrames.getJTabbedPaneFirst().getIconAt(0).getIconHeight();
-		int height = MainFrames.getJTabbedPaneFirst().getHeight()-(2*heightIcon)- HINT_PANEL_HEIGHT ;
-		int width = (int)MainFrames.getJTabbedPaneFirst().getWidth()/2;
+		int simulationTabIndex = 0;
+		int heightIcon = MainFrames.getJTabbedPaneFirst().getIconAt(simulationTabIndex).getIconHeight();
+		int height = MainFrames.getJTabbedPaneFirst().getHeight()-(3*heightIcon)- HINT_PANEL_HEIGHT ;
+		//int width = (int)MainFrames.getJTabbedPaneFirst().getWidth()/2;
 		
-		jSplitPaneSimulationTreeAndEditor.setPreferredSize(new Dimension(width,height));		
+		jSplitPaneSimulationTreeAndEditor.setPreferredSize(new Dimension(600,height));		
 		jSplitPaneSimulationTreeAndEditor.validate();	
 	}
 

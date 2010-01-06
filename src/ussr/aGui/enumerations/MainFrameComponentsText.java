@@ -12,7 +12,7 @@ public enum MainFrameComponentsText {
 	/*METHOD: setText()*/
 	
 	     /*JMenues*/
-	     FILE,RENDER,WINDOW,
+	     SIMULATION,RENDER,WINDOW,
 	
 	     /*JMenuItems*/
 	       //File Menu 

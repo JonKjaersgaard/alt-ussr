@@ -58,4 +58,8 @@ public interface FileChooserFrameInter extends FramesInter {
 	public void setFileFiltersWithDescriptions(Map<String, String> fileDescriptionsAndExtensions);
 	
 	public void setSelectedFile(File selectedFile);
+	
+	
+	public FileFilter getSelectedFileFilter();
+	
 }

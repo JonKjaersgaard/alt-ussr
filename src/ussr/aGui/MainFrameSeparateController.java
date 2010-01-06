@@ -6,7 +6,11 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 
+import ussr.aGui.enumerations.JOptionPaneMessages;
 import ussr.aGui.enumerations.MainFrameIcons;
+import ussr.aGui.fileChooser.FileChooserFrameInter;
+import ussr.aGui.fileChooser.FileFilterTypes;
+import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
@@ -42,7 +46,29 @@ public class MainFrameSeparateController extends GeneralController {
 	 * 
 	 */
 	public static void openActionPerformed(FramesInter fcOpenFrame) {
-		fcOpenFrame.activate();	
+		FileChooserFrameInter fileChooserFrame = (FileChooserFrameInter)fcOpenFrame;
+		String fileFilterDescription = fileChooserFrame.getSelectedFileFilter().getDescription();	
+		
+		if (remotePhysicsSimulation!=null && !fileFilterDescription.contains(FileFilterTypes.OPEN_SAVE_ROBOT.getFileDescription())){
+			int returnedValue = (Integer)JOptionPaneMessages.SAVE_CURRENT_SIMULATION.displayMessage();
+
+			switch(returnedValue){
+			case 0://YES
+				FileChooserXMLController.setIncludeSimulationTermination(true);
+				FileChooserXMLController.setIncludeStartNewSimulation(false);
+				saveActionPerformed(MainFrames.fcSaveFrame);
+				break;
+			case 1://NO
+				terminateSimulation();
+				fcOpenFrame.activate();
+				break;
+			case 2://CANCEL, do nothing
+				break;
+			default: throw new Error("There is no such option");
+			}
+		}else{
+			fcOpenFrame.activate();
+		}	
 	}
 
 	/**
@@ -279,10 +305,10 @@ public class MainFrameSeparateController extends GeneralController {
 			throw new Error ("Changing the state of showing buffer depth on remote simulation failed, due to remote exception");
 		}  
 	}
-	
+
 	private static final TabsInter constructRobotTab = MainFramesInter.CONSTRUCT_ROBOT_TAB,
-	                               assignBehaviorsTab = MainFramesInter.ASSIGN_BEHAVIORS_TAB,			
-	                               assignLabels = MainFramesInter.ASSIGN_LABELS_TAB;
+	assignBehaviorsTab = MainFramesInter.ASSIGN_BEHAVIORS_TAB,			
+	assignLabels = MainFramesInter.ASSIGN_LABELS_TAB;
 
 
 	/**
@@ -293,12 +319,12 @@ public class MainFrameSeparateController extends GeneralController {
 	public static void jButtonConstructRobotActionPerformed(JToggleButton jToggleButtonConstructRobot, JTabbedPane jTabbedPaneFirst) {
 
 		if (jToggleButtonConstructRobot.isSelected()){				
-			
+
 			/*Add tabs for construction of modular robot*/
 			jTabbedPaneFirst.addTab(constructRobotTab.getTabTitle(),new javax.swing.ImageIcon(constructRobotTab.getImageIconDirectory()),constructRobotTab.getJComponent());
 			jTabbedPaneFirst.addTab(assignBehaviorsTab.getTabTitle(),new javax.swing.ImageIcon(assignBehaviorsTab.getImageIconDirectory()),assignBehaviorsTab.getJComponent());
 			jTabbedPaneFirst.addTab(assignLabels.getTabTitle(),new javax.swing.ImageIcon(assignLabels.getImageIconDirectory()),assignLabels.getJComponent());
-			
+
 			/*Adapt construction tabs to the first module in simulation environment if it exists.*/
 			ConstructRobotTabController.adaptTabToModuleInSimulation();
 			AssignControllerTabController.adaptTabToModuleInSimulation();
@@ -307,8 +333,8 @@ public class MainFrameSeparateController extends GeneralController {
 			MainFrames.changeToLookAndFeel(constructRobotTab.getJComponent());
 			MainFrames.changeToLookAndFeel(assignBehaviorsTab.getJComponent());
 			MainFrames.changeToLookAndFeel(assignLabels.getJComponent());
-			
-			
+
+
 		}else{
 			/*Identify and remove tabs for construction of modular robot*/
 			for (int index=0; index < jTabbedPaneFirst.getTabCount(); index++){
@@ -324,9 +350,9 @@ public class MainFrameSeparateController extends GeneralController {
 				}
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * Adds or removes tab for visualization of communication between modules.
 	 * @param toggleButtonVisualizer, the toggle button in main frame.
@@ -452,6 +478,27 @@ public class MainFrameSeparateController extends GeneralController {
 	 * Starts new remote simulation
 	 */
 	public static void jButtonMenuItemNewSimulationActionPerformed() {
-		startSimulation(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);
+
+		if (remotePhysicsSimulation!=null){
+			int returnedValue = (Integer)JOptionPaneMessages.SAVE_CURRENT_SIMULATION.displayMessage();
+
+			switch(returnedValue){
+			case 0://YES
+				FileChooserXMLController.setIncludeSimulationTermination(true);
+				FileChooserXMLController.setIncludeStartNewSimulation(true);
+				saveActionPerformed(MainFrames.fcSaveFrame);					
+				break;
+			case 1://NO
+				terminateSimulation();
+				startSimulation(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);				
+				break;
+			case 2://CANCEL, do nothing
+				break;
+			default: throw new Error("There is no such option");
+			}
+
+		}else{
+			startSimulation(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);
+		}
 	}
 }

@@ -143,15 +143,15 @@ public class MainFrameSeparate extends MainFrames {
 	 * @param args, passed arguments.
 	 */
 	public static void main( String[] args ) {		
-		java.awt.EventQueue.invokeLater(new Runnable(){
-		//new Thread(){
+		//java.awt.EventQueue.invokeLater(new Runnable(){
+		new Thread(){
 			public void run() {				
 				mainFrame = new MainFrameSeparate();
 				mainFrame.setVisible(true);
-				setMainFrameSeparateEnabled(true,false);
+				setMainFrameSeparateEnabled(false);
 			}
-		//}.start();
-		});		
+		}.start();
+		//});		
 	}
 
 	/**
@@ -164,21 +164,13 @@ public class MainFrameSeparate extends MainFrames {
 	}
 
 	/**
-	 * Controls custom enabling of the main frame. Disables components so that the user have to load the simulation from xml file or start new simulation first.
-	 * When simulation is loaded do not allows to load new simulation. 
-	 * @param beforeSimulationStarted
+	 * Controls custom enabling of the main frame. Disables components so that the user have to load the simulation from xml file or start new simulation first. 
 	 * @param enabled, true for main frame to be enabled. 
 	 */
-	public static void setMainFrameSeparateEnabled(boolean beforeSimulationStarted,boolean enabled){
-		if (beforeSimulationStarted){
+	public static void setMainFrameSeparateEnabled(boolean enabled){
 		setJMenuBarMainEnabled(enabled);
 		setJToolBarGeneralControlEnabled(enabled);
-		setJTabbedPaneFirstEnabled(enabled);
-		}else{
-			getJMenuItemOpen().setEnabled(false);
-			getJButtonOpen().setEnabled(false);
-			getJButtonNewSimulation().setEnabled(false);
-		}
+		setJTabbedPaneFirstEnabled(enabled);		
 	}
 	
 	
@@ -202,10 +194,12 @@ public class MainFrameSeparate extends MainFrames {
 					}else{
 						JMenuItem currentJMenuItem = (JMenuItem) currentJMenu.getMenuComponent(jMenuItem);
 						String jMenuItemText =currentJMenuItem.getText(); 
-						if (jMenuItemText.contains(MainFrameComponentsText.OPEN.toString())||jMenuItemText.contains(MainFrameComponentsText.EXIT.toString())){
+						if (jMenuItemText.contains(MainFrameComponentsText.SAVE.getUserFriendlyName())){
+							currentJMenuItem.setEnabled(enabled);
+						}else if (jMenuItemText.contains(MainFrameComponentsText.EXIT.getUserFriendlyName())||jMenuItemText.contains(MainFrameComponentsText.NEW.getUserFriendlyName())||jMenuItemText.contains(MainFrameComponentsText.OPEN.getUserFriendlyName())){
 							//do nothing
 						}else{
-							currentJMenuItem.setEnabled(enabled);
+							currentJMenuItem.setEnabled(!enabled);
 						}
 					}				
 				}				

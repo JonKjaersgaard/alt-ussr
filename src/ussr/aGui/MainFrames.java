@@ -36,7 +36,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	/**
 	 * File choosers in the form of Open and Save dialogs respectively.
 	 */
-	protected static FileChooserFrameInter fcOpenFrame,fcSaveFrame;
+	public static FileChooserFrameInter fcOpenFrame,fcSaveFrame;
 
 	/**
 	 * Container for keeping main GUI window components, the height of which determine the height of the window.  
@@ -120,7 +120,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		/*Instantiate components*/
 		jMenuBarMain = new javax.swing.JMenuBar();			
 	
-		jMenuFile = new javax.swing.JMenu();
+		jMenuSimulation = new javax.swing.JMenu();
 		
 		jMenuItemNewSimulation =  new javax.swing.JMenuItem();
 		jMenuItemOpenSimulation = new javax.swing.JMenuItem();
@@ -150,17 +150,18 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
         /*Description of components*/
 		jMenuBarMain.setPreferredSize(new Dimension(width,height));
 		
-		jMenuFile.setText(MainFrameComponentsText.FILE.getUserFriendlyName());
+		jMenuSimulation.setText(MainFrameComponentsText.SIMULATION.getUserFriendlyName());
 		
 		jMenuItemNewSimulation.setText(MainFrameComponentsText.NEW.getUserFriendlyName());
 		jMenuItemNewSimulation.setIcon(MainFrameIcons.NEW_SIMULATION_SMALL.getImageIcon());
-		jMenuItemNewSimulation.setDisabledIcon(MainFrameIcons.NEW_SIMULATION_SMALL_DISABLED.getImageIcon());		
+		jMenuItemNewSimulation.setDisabledIcon(MainFrameIcons.NEW_SIMULATION_SMALL_DISABLED.getImageIcon());
+		jMenuItemNewSimulation.setEnabled(true);
 		jMenuItemNewSimulation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				 MainFrameSeparateController.jButtonMenuItemNewSimulationActionPerformed();
 			}
 		});
-		jMenuFile.add(jMenuItemNewSimulation);
+		jMenuSimulation.add(jMenuItemNewSimulation);
 
 		jMenuItemOpenSimulation.setText(MainFrameComponentsText.OPEN.getUserFriendlyName());
 		jMenuItemOpenSimulation.setIcon(MainFrameIcons.OPEN_SMALL.getImageIcon());
@@ -171,9 +172,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 			}
 		});
 
-		jMenuFile.add(jMenuItemOpenSimulation);   
+		jMenuSimulation.add(jMenuItemOpenSimulation);   
 
-		jMenuFile.add(jSeparator2);
+		jMenuSimulation.add(jSeparator2);
 
 		jMenuItemSave.setText(MainFrameComponentsText.SAVE.getUserFriendlyName());
 		jMenuItemSave.setIcon(MainFrameIcons.SAVE_SMALL.getImageIcon());
@@ -184,9 +185,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 			}
 		});
 
-		jMenuFile.add(jMenuItemSave);
+		jMenuSimulation.add(jMenuItemSave);
 
-		jMenuFile.add(jSeparator1);
+		jMenuSimulation.add(jSeparator1);
 		
 		jMenuItemExit.setText(MainFrameComponentsText.EXIT.getUserFriendlyName());
 		jMenuItemExit.setIcon(MainFrameIcons.EXIT_SMALL.getImageIcon());		
@@ -195,9 +196,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 				MainFrameSeparateController.jMenuItemExitActionPerformed();
 			}
 		});
-		jMenuFile.add(jMenuItemExit);
+		jMenuSimulation.add(jMenuItemExit);
 
-		jMenuBarMain.add(jMenuFile);
+		jMenuBarMain.add(jMenuSimulation);
 
 		jMenuRender.setText(MainFrameComponentsText.RENDER.getUserFriendlyName());
 		jCheckBoxMenuItemPhysics.setSelected(false);
@@ -343,7 +344,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonRunFast = new javax.swing.JButton();
 		jButtonPause = new javax.swing.JButton();
 		jButtonTerminate = new javax.swing.JButton();
-		jButtonRestart = new javax.swing.JButton();
+		//jButtonRestart = new javax.swing.JButton();
 		
 		jToolBarSeparator3 = new javax.swing.JToolBar.Separator();			
 		jToolBarSeparator4 = new javax.swing.JToolBar.Separator();
@@ -452,7 +453,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jButtonTerminate);
 		
-		jButtonRestart.setToolTipText(MainFrameComponentsText.RESTART.getUserFriendlyName());
+		/*jButtonRestart.setToolTipText(MainFrameComponentsText.RESTART.getUserFriendlyName());
 		jButtonRestart.setIcon(MainFrameIcons.RESTART.getImageIcon());
 		jButtonRestart.setRolloverIcon(MainFrameIcons.RESTART_ROLLOVER.getImageIcon());		
 		jButtonRestart.setDisabledIcon(MainFrameIcons.RESTART_DISABLED.getImageIcon());
@@ -463,7 +464,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 				MainFrameSeparateController.jButtonRestartActionPerformed();
 			}
 		});
-		jToolBarGeneralControl.add(jButtonRestart);		
+		jToolBarGeneralControl.add(jButtonRestart);	*/	
 		
 		//jToolBarSeparator4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jToolBarSeparator4);
@@ -837,7 +838,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	
 	/*Declaration of MainFrame components*/
 	private static javax.swing.JMenuBar jMenuBarMain;
-	private javax.swing.JMenu jMenuFile,jMenuRender,jMenuWindow,jMenuHide;
+	private javax.swing.JMenu jMenuSimulation,jMenuRender,jMenuWindow,jMenuHide;
 
 	private javax.swing.JMenuItem jMenuItemExit, jMenuItemNewSimulation;
 	private static javax.swing.JMenuItem jMenuItemOpenSimulation,jMenuItemSave;

@@ -39,7 +39,7 @@ public abstract class GeneralController {
 				try {
 					GUIRemoteSimulationAdapter.runSimulation(simulationXMLFileDirectory);
 				} catch (IOException e) {
-					throw new Error("Failed to run simulation file located at "+ simulationXMLFileDirectory+ " , due to remote exception");
+					//throw new Error("Failed to run simulation file located at "+ simulationXMLFileDirectory+ " , due to remote exception");
 				}
 			}
 		}.start();	

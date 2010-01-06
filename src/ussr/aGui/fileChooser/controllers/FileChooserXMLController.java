@@ -5,8 +5,9 @@ import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 
+import ussr.aGui.MainFrames;
+import ussr.aGui.MainFramesInter;
 import ussr.aGui.fileChooser.FileChooserFrameInter;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 
@@ -17,7 +18,23 @@ import ussr.builder.enumerations.UssrXmlFileTypes;
  */
 public class FileChooserXMLController extends FileChooserController {
 
+	private static boolean includeSimulationTermination = false;
 	
+	private static boolean includeStartNewSimulation= false;
+	
+	
+	
+	public static void setIncludeStartNewSimulation(
+			boolean includeStartNewSimulation) {
+		FileChooserXMLController.includeStartNewSimulation = includeStartNewSimulation;
+	}
+
+
+	public static void setIncludeSimulationTermination(boolean includeSimulationTermination) {
+		FileChooserXMLController.includeSimulationTermination = includeSimulationTermination;
+	}
+
+
 	/**
 	 * Manages the control of the file chooser in Open dialog form.
 	 * @param evt, event received from file chooser. This is selection of Open or Cancel buttons.
@@ -75,7 +92,15 @@ public class FileChooserXMLController extends FileChooserController {
 				remotePhysicsSimulation.saveToXML(ussXmlFileType, fileDirectoryName);
 			} catch (RemoteException e) {
 				throw new Error("Failed to save "+ ussXmlFileType.toString()+" description in xml file "+ fileDirectoryName+ ", due ro remote exception");
-			}						
+			}
+			if (includeSimulationTermination&&includeStartNewSimulation){
+				terminateSimulation();
+				startSimulation(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);
+			}else if(includeSimulationTermination==true&&includeStartNewSimulation==false){
+				terminateSimulation();
+				MainFrames.fcOpenFrame.activate();
+			}
+			
 		}		
 		((Window) fileChooserFrame).dispose();
 	}	

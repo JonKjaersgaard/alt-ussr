@@ -112,4 +112,8 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 		this.jFileChooserCustomized.setSelectedFile(selectedFile);
 	}
 	
+	public FileFilter getSelectedFileFilter(){
+		return (FileFilter) jFileChooserCustomized.getFileFilter();
+	}
+	
 }
