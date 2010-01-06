@@ -11,10 +11,11 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.TitledBorder;
 import ussr.aGui.FramesInter;
-import ussr.aGui.designHelpers.JComponentsFactoryHelper;
+import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.tabs.Tabs;
+import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.simulation.enumerations.CameraPositions;
 import ussr.aGui.tabs.simulation.enumerations.PlaneMaterials;
@@ -89,7 +90,7 @@ public class SimulationTreeEditors{
 	 */
 	public static javax.swing.JPanel  addRobotsEditor(){
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
-		jPanelTreeNode.add(JComponentsFactoryHelper.createNewLabel(TabsComponentsText.LOAD_NEW_ROBOT.getUserFriendlyName()));
+		jPanelTreeNode.add(JComponentsFactory.createNewLabel(TabsComponentsText.LOAD_NEW_ROBOT.getUserFriendlyName()));
 		jPanelTreeNode.add(Tabs.initOpenButton());		
 		return jPanelTreeNode;
 	}
@@ -105,6 +106,7 @@ public class SimulationTreeEditors{
 	 */
 	public static javax.swing.JPanel addRobotEditor(){
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel(new GridBagLayout());
+		/*Instantiation of components*/
 		jPanelMoveRobot = new javax.swing.JPanel(new GridBagLayout());
 		jPanelMorphologyLocation = new javax.swing.JPanel(new GridBagLayout()); 
 		jTextFieldMorphologyLocation = new javax.swing.JTextField();
@@ -115,15 +117,16 @@ public class SimulationTreeEditors{
 		jButtonXnegative = new javax.swing.JButton();
 		jButtonZpositive = new javax.swing.JButton();
 		jButtonZnegative = new javax.swing.JButton();
+		jButtonDeleteRobot = new javax.swing.JButton();
 		jSpinnerCoordinateValue = new javax.swing.JSpinner();		
 		
-		
+		/*Description of components*/
 		GridBagConstraints constraintsjPanelMorphologyLocation = new GridBagConstraints();
 		constraintsjPanelMorphologyLocation.fill = GridBagConstraints.CENTER;
 		constraintsjPanelMorphologyLocation.gridx = 0;
 		constraintsjPanelMorphologyLocation.gridy = 0;
 		
-		jPanelMorphologyLocation.add(JComponentsFactoryHelper.createNewLabel("Morphology location"),constraintsjPanelMorphologyLocation);
+		jPanelMorphologyLocation.add(JComponentsFactory.createNewLabel("Morphology location"),constraintsjPanelMorphologyLocation);
 		
 		
 		//constraintsjPanelMorphologyLocation.fill = GridBagConstraints.HORIZONTAL;
@@ -274,6 +277,25 @@ public class SimulationTreeEditors{
 		constraintsJPanelTreeNode.gridx = 0;
 		constraintsJPanelTreeNode.gridy = 1;
 		jPanelTreeNode.add(jPanelMoveRobot,constraintsJPanelTreeNode);
+		
+		jButtonDeleteRobot.setToolTipText(TabsComponentsText.DELETE.getUserFriendlyName());
+		jButtonDeleteRobot.setIcon(TabsIcons.DELETE.getImageIcon());
+		jButtonDeleteRobot.setSelectedIcon(TabsIcons.DELETE.getImageIcon());
+		jButtonDeleteRobot.setRolloverIcon(TabsIcons.DELETE_ROLLOVER.getImageIcon());		
+		jButtonDeleteRobot.setDisabledIcon(TabsIcons.DELETE_DISABLED.getImageIcon());		
+		jButtonDeleteRobot.setFocusable(false);
+		jButtonDeleteRobot.setPreferredSize(FramesInter.BUTTON_DIMENSION);
+		jButtonDeleteRobot.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				SimulationTabController.jButtonDeleteRobotActionPerformed();
+			}
+		});
+		
+		constraintsJPanelTreeNode.fill = GridBagConstraints.CENTER;
+		constraintsJPanelTreeNode.gridx = 0;
+		constraintsJPanelTreeNode.gridy = 2;
+		
+		jPanelTreeNode.add(jButtonDeleteRobot,constraintsJPanelTreeNode);
 		
 		return jPanelTreeNode;
 	}
@@ -460,7 +482,7 @@ public class SimulationTreeEditors{
 		gridBagConstraintsDamping.gridwidth = 1;
 		gridBagConstraintsDamping.insets = new Insets(20,0,0,0);
 
-		jPanelTreeNode.add(JComponentsFactoryHelper.createNewLabel("Linear velocity"),gridBagConstraintsDamping);
+		jPanelTreeNode.add(JComponentsFactory.createNewLabel("Linear velocity"),gridBagConstraintsDamping);
 
 		jSpinnerDampingLinearVelocity = new javax.swing.JSpinner();
 		jSpinnerDampingLinearVelocity.setPreferredSize(new Dimension(60,20));
@@ -474,7 +496,7 @@ public class SimulationTreeEditors{
 		gridBagConstraintsDamping.gridx = 0;
 		gridBagConstraintsDamping.gridy = 2;
 		gridBagConstraintsDamping.insets = new Insets(10,0,0,0);
-		jPanelTreeNode.add(JComponentsFactoryHelper.createNewLabel("Angular velocity"),gridBagConstraintsDamping);
+		jPanelTreeNode.add(JComponentsFactory.createNewLabel("Angular velocity"),gridBagConstraintsDamping);
 
 		jSpinnerDampingAngularVelocity = new javax.swing.JSpinner();
 		jSpinnerDampingAngularVelocity.setPreferredSize(new Dimension(60,20));
@@ -649,8 +671,7 @@ public class SimulationTreeEditors{
 
 
 	private static javax.swing.JButton jButtonYpositive,jButtonYnegative,
-	jButtonXpositive,jButtonXnegative,
-	jButtonZpositive,jButtonZnegative;
+	jButtonXpositive,jButtonXnegative,jButtonZpositive,jButtonZnegative,jButtonDeleteRobot;
 	
 	private static javax.swing.JScrollPane jScrollPaneMorphologyLocation;
 

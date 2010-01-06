@@ -5,7 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import ussr.aGui.designHelpers.JComponentsFactoryHelper;
+import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.tabs.controllers.AssignControllerTabController;
 import ussr.builder.enumerations.SupportedModularRobots;
 
@@ -140,7 +140,7 @@ public class AssignableControllersEditors  {
 		gridBagConstraints.gridx =0;
 		gridBagConstraints.gridy =0;
 		
-		jPanelEditor.add(JComponentsFactoryHelper.createNewLabel("Actuator nr:"),gridBagConstraints);
+		jPanelEditor.add(JComponentsFactory.createNewLabel("Actuator nr:"),gridBagConstraints);
 		
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.gridx =1;
@@ -161,7 +161,7 @@ public class AssignableControllersEditors  {
 		gridBagConstraints.gridy =1;
 		gridBagConstraints.insets = new Insets(10,0,0,0);
 		
-		jPanelEditor.add(JComponentsFactoryHelper.createNewLabel("Velocity:"),gridBagConstraints);
+		jPanelEditor.add(JComponentsFactory.createNewLabel("Velocity:"),gridBagConstraints);
 		
 		jSpinnerMTRANrotateContinuously = new javax.swing.JSpinner();
 		jSpinnerMTRANrotateContinuously.setPreferredSize(new Dimension(60,20));

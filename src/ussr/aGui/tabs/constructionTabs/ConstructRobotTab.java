@@ -515,7 +515,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		gridBagConstraints.gridy = 7;
 		gridBagConstraints.gridwidth = 2;
 
-		jButtonDelete.setToolTipText(TabsComponentsText.DELETE_OR_REMOVE.getUserFriendlyName());
+		jButtonDelete.setToolTipText(TabsComponentsText.DELETE.getUserFriendlyName());
 		jButtonDelete.setIcon(TabsIcons.DELETE.getImageIcon());
 		jButtonDelete.setSelectedIcon(TabsIcons.DELETE.getImageIcon());
 		jButtonDelete.setRolloverIcon(TabsIcons.DELETE_ROLLOVER.getImageIcon());		

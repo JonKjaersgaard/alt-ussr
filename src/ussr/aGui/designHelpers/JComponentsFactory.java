@@ -1,6 +1,6 @@
 package ussr.aGui.designHelpers;
 
-public class JComponentsFactoryHelper {
+public class JComponentsFactory {
 
 	
 	

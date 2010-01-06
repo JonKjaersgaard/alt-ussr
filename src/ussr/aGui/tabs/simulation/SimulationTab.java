@@ -37,6 +37,12 @@ public class SimulationTab extends Tabs {
 	 * The constrains of grid bag layout used during design of the tab.
 	 */
 	private GridBagConstraints gridBagConstraints = new GridBagConstraints();
+	
+	private static String selectedNodeName;
+
+	public static String getSelectedNodeName() {
+		return selectedNodeName;
+	}
 
 	/**
 	 * Defines visual appearance of the tab called "Simulation".
@@ -91,8 +97,9 @@ public class SimulationTab extends Tabs {
 					return;
 				Object nodeInfo = node.getUserObject();
 				if (node.isLeaf()||node.isNodeRelated(firstNodeHierarchySimulation)) {
-					System.out.println(node.getPath()[node.getPath().length-1].toString());
-					SimulationTabController.jTreeItemSelectedActionPerformed(node.getPath()[node.getPath().length-1].toString());
+					selectedNodeName = node.getPath()[node.getPath().length-1].toString();
+					//System.out.println(selectedNodeName);
+					SimulationTabController.jTreeItemSelectedActionPerformed(selectedNodeName);
 				} 
 			}
 		});
@@ -134,6 +141,10 @@ public class SimulationTab extends Tabs {
 		gridBagConstraints.gridy = 1;
 
 		super.jComponent.add(hintPanel,gridBagConstraints);
+	}
+
+	public static javax.swing.JTree getJTreeSimulation() {
+		return jTreeSimulation;
 	}
 
 	/**
@@ -204,15 +215,19 @@ public class SimulationTab extends Tabs {
 		}
 		model.reload();		
 	
-		for (int rowNr = 0; rowNr < jTreeSimulation.getRowCount(); rowNr++) {
-			jTreeSimulation.expandRow(rowNr);
-		}
+		jTreeSimulationExpandAllNodes();
 	
 		//jTreeSimulation.validate();
 		//jTreeSimulation.repaint();
 		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);
 		
 	} 
+	
+	public static void jTreeSimulationExpandAllNodes(){
+		for (int rowNr = 0; rowNr < jTreeSimulation.getRowCount(); rowNr++) {
+			jTreeSimulation.expandRow(rowNr);
+		}
+	}
 
 	public static javax.swing.JPanel getJPanelEditor() {
 

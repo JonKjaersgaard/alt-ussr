@@ -11,8 +11,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
-import ussr.aGui.designHelpers.JComponentsFactoryHelper;
+import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
@@ -30,7 +33,8 @@ import ussr.physics.PhysicsParameters;
 public class SimulationTabController extends TabsControllers {
 
 
-
+   private static int selectedRobotNr;
+   
 	private static String selectedNodeName;
 
 	private static SimulationSpecification simulationSpecification;
@@ -53,58 +57,60 @@ public class SimulationTabController extends TabsControllers {
 		SimulationTab.getJPanelEditor().removeAll();
 		SimulationTab.getJPanelEditor().revalidate();
 		SimulationTab.getJPanelEditor().repaint();	
-		
-		
+
+
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.fill = GridBagConstraints.CENTER;
 		gridBagConstraints.gridx =0;
 		gridBagConstraints.gridy =0;
 		gridBagConstraints.insets = new Insets(0,0,10,0);
-		
-		
+
+
 
 		if (selectedNode.contains("Robot nr.")){			
-			
-		
-			SimulationTab.getJPanelEditor().add(JComponentsFactoryHelper.createNewLabel(selectedNode),gridBagConstraints);
-			
+
+
+			SimulationTab.getJPanelEditor().add(JComponentsFactory.createNewLabel(selectedNode),gridBagConstraints);
+
 			gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 			gridBagConstraints.gridx =0;
 			gridBagConstraints.gridy =1;
-			
+
 			SimulationTab.getJPanelEditor().add(SimulationTreeEditors.addRobotEditor(),gridBagConstraints);
+
+
+
+			int robotNr = extractRobotNumber(selectedNode);	
+			selectedRobotNr = robotNr;
 			
-			
-			
-			int robotNr = extractRobotNumber(selectedNode);			
 			SimulationTreeEditors.getJTextFieldMorphologyLocation().setText(simulationSpecification.getRobotsInSimulation().get(robotNr-1).getMorphologyLocation());
-			
-			
+
+
 		}else{
 			SimulationTabTreeNodes treeNode = SimulationTabTreeNodes.valueOf(selectedNode.replace(" ", "_").toUpperCase());
-				
-			SimulationTab.getJPanelEditor().add(JComponentsFactoryHelper.createNewLabel(treeNode.getUserFriendlyName()),gridBagConstraints);
+
+			SimulationTab.getJPanelEditor().add(JComponentsFactory.createNewLabel(treeNode.getUserFriendlyName()),gridBagConstraints);
 			if (treeNode.getJPanelEditor()==null){
-			// do nothing
+				// do nothing
 			}else{	
 				gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 				gridBagConstraints.gridx =0;
 				gridBagConstraints.gridy =1;
-		    SimulationTab.getJPanelEditor().add(treeNode.getJPanelEditor(),gridBagConstraints);
-		    
-		    SimulationTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
-		    SimulationTab.getHintPanel().setText(" ");
-		    SimulationTab.getHintPanel().setText(treeNode.getHintSimulationTab().getHintText());
+				SimulationTab.getJPanelEditor().add(treeNode.getJPanelEditor(),gridBagConstraints);
+
+				SimulationTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
+				SimulationTab.getHintPanel().setText(" ");
+				SimulationTab.getHintPanel().setText(treeNode.getHintSimulationTab().getHintText());
 			}
 		}
 		SimulationTab.getJPanelEditor().validate();
-		
+
 
 	}
-	
-	
+
+
 	private static int extractRobotNumber(String selectedNode){
-		
+
 		int stringLenght = selectedNode.toCharArray().length;
 		int selectedRobotNr=-1;
 
@@ -120,7 +126,7 @@ public class SimulationTabController extends TabsControllers {
 			break;
 		default: throw new Error("Robot title changed in tree structure or missing support.The robot title should be for instance: Robot Nr.1");
 		}
-		
+
 		if (selectedRobotNr ==-1){
 			throw new Error("Inconsistentcy in numeration of robots");
 		}
@@ -215,7 +221,7 @@ public class SimulationTabController extends TabsControllers {
 	public static void setValuejSpinnerDampingLinearVelocity(JSpinner spinnerDampingLinearVelocity) {
 		//spinnerDampingLinearVelocity.setValue(PhysicsParameters.get().getWorldDampingLinearVelocity());
 		spinnerDampingLinearVelocity.setValue(simulationSpecification.getConverter().convertWorldDamping(true));
-	
+
 	}
 
 	public static void setValuejSpinnerDampingAngularVelocity(JSpinner spinnerDampingAngularVelocity) {
@@ -337,22 +343,58 @@ public class SimulationTabController extends TabsControllers {
 	public static void jComboBoxPlaneTextureActionPerformed(JComboBox comboBoxPlaneTexture, JLabel iconLabel) {
 		String selectedTexture = TextureDescriptions.toJavaUSSRConvention(comboBoxPlaneTexture.getSelectedItem().toString());
 		iconLabel.setIcon(TextureDescriptions.valueOf(selectedTexture).getImageIcon());
-		
+
 	}
 
 	public static void setValuejComboBoxPlaneMaterial(JComboBox comboBoxPlaneMaterial) {		
 		//comboBoxPlaneMaterial.setSelectedItem(PhysicsParameters.get().getPlaneMaterial());
 		System.out.println("MATERIAL:"+ simulationSpecification.getConverter().covertPlaneMaterial() );
-		 comboBoxPlaneMaterial.setSelectedItem(PlaneMaterials.valueOf(simulationSpecification.getConverter().covertPlaneMaterial().toString()).getUserFriendlyName());
+		comboBoxPlaneMaterial.setSelectedItem(PlaneMaterials.valueOf(simulationSpecification.getConverter().covertPlaneMaterial().toString()).getUserFriendlyName());
 	}
 
 	public static void jComboBoxPlaneMaterialActionPerformed(JComboBox comboBoxPlaneMaterial) {
-		
-		
+
+
 	}
 
 	public static void setSelectedjCheckBoxMaintainRotJointPositions(JCheckBox checkBoxMaintainRotJointPositions) {
 		checkBoxMaintainRotJointPositions.setSelected(PhysicsParameters.get().getMaintainRotationalJointPositions());
+	}
+
+	public static void jButtonDeleteRobotActionPerformed() {
+		
+		DefaultTreeModel model = (DefaultTreeModel)SimulationTab.getJTreeSimulation().getModel();
+		DefaultMutableTreeNode robotsNode = (DefaultMutableTreeNode) model.getChild(model.getRoot(),2);
+		robotsNode.remove(selectedRobotNr-1);
+		model.reload();
+		SimulationTab.jTreeSimulationExpandAllNodes();
+		
+		for (int childNr=0;childNr<robotsNode.getChildCount();childNr++){
+			DefaultMutableTreeNode currentChild = (DefaultMutableTreeNode)robotsNode.getChildAt(childNr);
+			//STOPPED HERE FIND THE NAME OF THE CHILD 
+			 System.out.println("Path:"+currentChild.getPath().toString());
+		}
+		
+		
+		
+		//robotsNode.getChildCount();
+		//robotsNode.get
+		
+		//DefaultMutableTreeNode selectedRobotNode = (DefaultMutableTreeNode) model.getChild(model.getRoot(),2);
+		
+		/*Different solution*/
+		//TreePath[] selectedPaths = SimulationTab.getJTreeSimulation().getSelectionPaths();
+		//String selectedPath =selectedPaths[0].toString();
+		//String[] temporary =selectedPath.split(",");
+		//String
+		//System.out.println("Node:" + );
+		//int robotNr = extractRobotNumber(SimulationTab.getSelectedNodeName());
+		
+		System.out.println("Robot:" + selectedRobotNr);
+		
+		
+		
+
 	}
 
 
