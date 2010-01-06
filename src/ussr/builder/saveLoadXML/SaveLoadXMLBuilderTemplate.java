@@ -403,12 +403,13 @@ Node rootNode = document.getDocumentElement();
 			}
 		}
 		}else {			
-			// if this file is robot file (contains MODULES root tag.)
+				// if this file is robot file (contains MODULES root tag.)
 			if (rootNode.getNodeName().equals(XMLTagsUsed.MODULES.toString())){
 				JOptionPaneMessages.LOADED_SIMULATION_FILE_IS_ROBOT.displayMessage();
 			}else{
 			JOptionPaneMessages.LOADED_SIMUL_OR_ROBOT_FILE_INCONSISTENT.displayMessage();
 			}
+			System.exit(0);//Kill :) current VM (simulation).
 		}
 	}
 
