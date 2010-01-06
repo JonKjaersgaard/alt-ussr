@@ -2,6 +2,8 @@ package ussr.remote.facade;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+
+import ussr.aGui.GeneralController;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.constructionTabs.AssignableControllersEditors;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
@@ -125,7 +127,9 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 		return AssignableControllersEditors.getValuejSpinnerMtranRotateContinuously();
 	}
 	
-	
+	public void setRemoteSimulationToNull()throws RemoteException {
+		GeneralController.setRemotePhysicsSimulation(null);
+	}
 
 
 

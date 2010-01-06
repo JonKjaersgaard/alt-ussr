@@ -71,4 +71,9 @@ public interface GUICallbackControl extends Remote {
 	public int getSelectedjComboBoxMtranNrsActuators() throws RemoteException;
 	
 	public int getValuejSpinnerMtranRotateContinuously() throws RemoteException;
+	
+	public void setRemoteSimulationToNull()throws RemoteException;
+	
+	
+	
 }
