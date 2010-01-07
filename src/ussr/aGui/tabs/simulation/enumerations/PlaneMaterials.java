@@ -70,4 +70,8 @@ public enum PlaneMaterials {
 	public static String toJavaUSSRConvention(String userFriendlyName){
  		return userFriendlyName.toUpperCase(); 
  	}
+	
+	public Material getPlaneMaterial() {
+		return planeMaterial;
+	}
 }

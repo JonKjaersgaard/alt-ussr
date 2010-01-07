@@ -352,11 +352,6 @@ public class SimulationTabController extends TabsControllers {
 		comboBoxPlaneMaterial.setSelectedItem(PlaneMaterials.valueOf(simulationSpecification.getConverter().covertPlaneMaterial().toString()).getUserFriendlyName());
 	}
 
-	public static void jComboBoxPlaneMaterialActionPerformed(JComboBox comboBoxPlaneMaterial) {
-
-
-	}
-
 	public static void setSelectedjCheckBoxMaintainRotJointPositions(JCheckBox checkBoxMaintainRotJointPositions) {
 		checkBoxMaintainRotJointPositions.setSelected(PhysicsParameters.get().getMaintainRotationalJointPositions());
 	}
@@ -372,7 +367,7 @@ public class SimulationTabController extends TabsControllers {
 		for (int childNr=0;childNr<robotsNode.getChildCount();childNr++){
 			DefaultMutableTreeNode currentChild = (DefaultMutableTreeNode)robotsNode.getChildAt(childNr);
 			//STOPPED HERE FIND THE NAME OF THE CHILD 
-			 System.out.println("Path:"+currentChild.getPath().toString());
+			 //System.out.println("Path:"+currentChild.);
 		}
 		
 		
