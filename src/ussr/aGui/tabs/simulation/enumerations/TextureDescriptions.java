@@ -88,7 +88,7 @@ public enum TextureDescriptions {
 	 * @param texture
 	 * @return
 	 */
-	public static String texture(WorldDescription.TextureDescription texture){
+	public static String getWorldDescriptionTexture(WorldDescription.TextureDescription texture){
 		
 		for (int textureNr=0;textureNr<TextureDescriptions.values().length;textureNr++){
 			TextureDescriptions.values()[textureNr].equals(texture);

@@ -9,7 +9,7 @@ import javax.swing.JFileChooser;
 import ussr.aGui.MainFrames;
 import ussr.aGui.MainFramesInter;
 import ussr.aGui.fileChooser.FileChooserFrameInter;
-import ussr.builder.enumerations.UssrXmlFileTypes;
+import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 
 /**
  * Controls the functionality of both forms of file chooser: Open and Save for XML processing.

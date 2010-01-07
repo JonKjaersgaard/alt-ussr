@@ -3,7 +3,11 @@ package ussr.aGui.tabs.simulation;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
-import ussr.builder.enumerations.XMLTagsUsed;
+import ussr.aGui.tabs.simulation.enumerations.TextureDescriptions;
+import ussr.builder.saveLoadXML.XMLTagsUsed;
+import ussr.builder.simulationLoader.SimulationSpecification;
+import ussr.description.setup.WorldDescription;
+import ussr.physics.PhysicsParameters;
 
 /**
  * Contains the names of nodes displayed in Simulation tab tree view.
@@ -18,9 +22,7 @@ import ussr.builder.enumerations.XMLTagsUsed;
  * @author Konstantinas 
  */
 public enum SimulationTabTreeNodes {
-	
-	
-	
+
 	//First Level Hierarchy	
 	SIMULATION(PlaceInTreeView.FIRST,null,HintsSimulationTab.SIMULATION,XMLTagsUsed.SIMULATION),
 	
@@ -38,8 +40,9 @@ public enum SimulationTabTreeNodes {
 	  //Second Level Hierarchy
 	  WORLD_DESCRIPTION(PlaceInTreeView.SECOND,null,HintsSimulationTab.WORLD_DESCRIPTION,XMLTagsUsed.WORLD_DESCRIPTION), 
 	    //Third Level Hierarchy
+	  //QUESTION
 	    PLANE_SIZE(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneSizeEditor(),HintsSimulationTab.PLANE_SIZE,XMLTagsUsed.PLANE_SIZE),
-	    PLANE_TEXTURE(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneTextureEditor(),HintsSimulationTab.PLANE_TEXTURE,XMLTagsUsed.PLANE_TEXTURE),
+	    PLANE_TEXTURE(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneTextureEditor(),HintsSimulationTab.PLANE_TEXTURE,XMLTagsUsed.PLANE_TEXTURE ),
 	    CAMERA_POSITION(PlaceInTreeView.THIRD,SimulationTreeEditors.addCameraPositionEditor(),HintsSimulationTab.CAMERA_POSITION,XMLTagsUsed.CAMERA_POSITION),
 	    THE_WORLD_IS_FLAT(PlaceInTreeView.THIRD,SimulationTreeEditors.addTheWorldIsFlatEditor(),HintsSimulationTab.THE_WORLD_IS_FLAT,XMLTagsUsed.THE_WORLD_IS_FLAT),
 	    HAS_BACKGROUND_SCENERY(PlaceInTreeView.THIRD,SimulationTreeEditors.addHasBackgroundSceneryEditor(),HintsSimulationTab.HAS_BACKGROUND_SCENERY,XMLTagsUsed.HAS_BACKGROUND_SCENERY),
@@ -50,8 +53,8 @@ public enum SimulationTabTreeNodes {
 	  PHYSICS_PARAMETERS(PlaceInTreeView.SECOND,null,HintsSimulationTab.PHYSICS_PARAMETERS,XMLTagsUsed.PHYSICS_PARAMETERS),
 	    //Third Level Hierarchy
 	    WORLD_DAMPING(PlaceInTreeView.THIRD,SimulationTreeEditors.addDampingEditor(),HintsSimulationTab.DAMPING,XMLTagsUsed.DAMPING),
-	            //Linear_velocity(PlaceInTreeView.NOT_USED,null,nullXMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY),
-	            //Angular_velocity(PlaceInTreeView.NOT_USED,null,XMLTagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY),	            
+	            Linear_velocity(PlaceInTreeView.NOT_USED,null,null,XMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY),
+	            Angular_velocity(PlaceInTreeView.NOT_USED,null,null,XMLTagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY),	            
 	    REALISTIC_COLLISION(PlaceInTreeView.THIRD,SimulationTreeEditors.addRealisticCollisionEditor(),HintsSimulationTab.REALISTIC_COLLISION,XMLTagsUsed.REALISTIC_COLLISION),
 	    GRAVITY(PlaceInTreeView.THIRD,SimulationTreeEditors.addGravityEditor(),HintsSimulationTab.GRAVITY,XMLTagsUsed.GRAVITY),
 	    PLANE_MATERIAL(PlaceInTreeView.THIRD,SimulationTreeEditors.addPlaneMaterialEditor(),HintsSimulationTab.PLANE_MATERIAL,XMLTagsUsed.PLANE_MATERIAL),
@@ -99,7 +102,7 @@ public enum SimulationTabTreeNodes {
      *  The tree node as defined in implementation of tree view.
      */
     private DefaultMutableTreeNode defaultMutableTreeNode;
-
+    
 	/**
 	 * Contains the names of nodes displayed in Simulation tab tree view.
      * Moreover, associates each name with its: 1)placement in the tree view (for instance: FIRST- is parent of SECOND - which in turn is parent of THIRD),
@@ -125,7 +128,7 @@ public enum SimulationTabTreeNodes {
 	public PlaceInTreeView getPlaceInHierarchy() {
 		return placeInHierarchy;
 	}
-	
+		
 	/**
 	 * Returns the hint displayed in display for hits.
 	 * @return the hint displayed in display for hits.
@@ -171,6 +174,5 @@ public enum SimulationTabTreeNodes {
         	name = name+characters[index];
         }		 
 		return name;
-	}	
- 
+	}
 }

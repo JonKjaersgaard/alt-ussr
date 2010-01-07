@@ -4,7 +4,7 @@ import javax.swing.JFileChooser;
 import ussr.aGui.GeneralController;
 import ussr.aGui.fileChooser.FileChooserControllerInter;
 import ussr.aGui.fileChooser.FileChooserFrameInter;
-import ussr.builder.enumerations.UssrXmlFileTypes;
+import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 
 /**
  * Defines common methods for controllers implemented to control file choosers.  
