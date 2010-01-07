@@ -17,11 +17,6 @@ public interface SaveLoadXMLFileTemplateInter {
 	 */
 	public final static String XML_EXTENSION = ".xml";
 	
-	/**
-	 * Default directory for saving robot description xml files.
-	 */
-	public final static String DEFAULT_DIRECTORY_ROBOTS = "robots";
-	
 	/**	
 	 * Saves the data about simulation in chosen XML format file.
 	 * This operation is TEMPLATE method. Operation means that it should be executed on the object.
@@ -39,6 +34,10 @@ public interface SaveLoadXMLFileTemplateInter {
 	public void loadXMLfile(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName);
 			
 		
+	/**
+	 * Returns object describing simulation and robots in it.
+	 * @return object describing simulation and robots in it.
+	 */
 	public SimulationSpecification getSimulationSpecification() ;
 	
 }

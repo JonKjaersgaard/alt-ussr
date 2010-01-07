@@ -36,7 +36,7 @@ import ussr.model.Module;
 public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplateInter {
 
 	
-	protected String fileDirectoryName;
+	protected String robotMorphologyFileDirectoryName;
 	
 	/**
 	 * The string representation of XML encoding
@@ -87,7 +87,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplateInte
 	 */
 	public void saveXMLfile(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName) {
 		TransformerHandler transformerHandler = initializeTransformer(fileDirectoryName);
-		this.fileDirectoryName = fileDirectoryName;
+		this.robotMorphologyFileDirectoryName = fileDirectoryName;
 		printOutXML(ussrXmlFileType, transformerHandler);
 	}
 
@@ -98,7 +98,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplateInte
 	 */
 	public void loadXMLfile(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName){
 		Document document = initializeDocument(fileDirectoryName);
-		this.fileDirectoryName = fileDirectoryName;
+		this.robotMorphologyFileDirectoryName = fileDirectoryName;
 		loadInXML(ussrXmlFileType, document);	
 	}
 
@@ -157,7 +157,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplateInte
 	 * Method for defining the format of XML to print into the xml file. In other words
 	 * what to save in the file about simulation.
 	 * This method is so-called "Primitive operation" for above TEMPLATE method, called "saveXMLfile(String fileDirectoryName)". 	  
-	 * @param ussrXmlFileType TODO
+	 * @param ussrXmlFileType, the type of xml file (ROBOT or Simulation)
 	 * @param transformerHandler,the content handler used to print out XML format. 
 	 */
 	public abstract void printOutXML(UssrXmlFileTypes ussrXmlFileType, TransformerHandler transformerHandler);
@@ -166,7 +166,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplateInte
 	 * Method for defining the format of reading the data from XML file.  In other words
 	 * what to read from the file into simulation.
 	 *  This method is so-called "Primitive operation" for above TEMPLATE method, called "loadXMLfile(String fileDirectoryName)". 	  
-	 * @param ussrXmlFileType TODO
+	 * @param ussrXmlFileType,the type of xml file (ROBOT or Simulation).
 	 * @param document,DOM object of document. 
 	 */
 	public abstract void loadInXML(UssrXmlFileTypes ussrXmlFileType, Document document);
@@ -224,7 +224,8 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplateInte
 	 * @param statesConnectors, the states of connectors, for example "connected" or disconnected.
 	 * @param numbersConnectors, the numbers of connectors, for example 1,2,3 and so on.
 	 */	
-	public void printInfoConnectors(TransformerHandler transformerHandler,ArrayList<String> statesConnectors, ArrayList<String> numbersConnectors ){
+	//FIXME MAYBE WILL BE NEEDED
+/*	public void printInfoConnectors(TransformerHandler transformerHandler,ArrayList<String> statesConnectors, ArrayList<String> numbersConnectors ){
 		AttributesImpl atts1 = new AttributesImpl();
 		for (int index=0; index<statesConnectors.size();index++){				
 			atts1.addAttribute("","",ATT_NUMBER,"first",numbersConnectors.get(index));
@@ -237,7 +238,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplateInte
 				throw new Error ("SAX exception appeared and named as: "+ e.toString());
 			}	
 		}		
-	}
+	}*/
 
 	/**
 	 * Returns the type of module, like for example ATRON,MTRAN and so on.
@@ -418,7 +419,8 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplateInte
 	 * False when numbers of connectors should be returned. 
 	 * @return statesConnectors or numbersConnectors. 
 	 */
-	public ArrayList<String> getInfoConnectors (Module currentModule, boolean state){
+	//FIXME Maybe will be needed later
+/*	public ArrayList<String> getInfoConnectors (Module currentModule, boolean state){
 		int amountConnectors = currentModule.getConnectors().size();
 		ArrayList<String> statesConnectors = new ArrayList<String>();
 		ArrayList<String> numbersConnectors = new ArrayList<String>();	
@@ -435,7 +437,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplateInte
 		if (state ==true){
 			return statesConnectors;
 		}else return numbersConnectors;
-	}
+	}*/
 
 	/**
 	 * Extract the data between the start and end tags.
@@ -477,7 +479,7 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplateInte
 	 * @param colorsConnectors,the string representing the colors in RGB form. 
 	 * @return listColorsConnectors, the list of colors of connectors.
 	 */
-	public LinkedList<Color> extractColoursConnectors(int amountConnectors, String colorsConnectors){
+	public LinkedList<Color> extractColorsConnectors(int amountConnectors, String colorsConnectors){
 		String[] newColorsConnectors= colorsConnectors.split(";");
 		LinkedList<Color> listColorsConnectors= new LinkedList<Color>();
 		for (int connector=0;connector<amountConnectors;connector++){
