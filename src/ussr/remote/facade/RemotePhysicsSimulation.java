@@ -2,7 +2,8 @@ package ussr.remote.facade;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import ussr.builder.enumerations.UssrXmlFileTypes;
+
+import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 

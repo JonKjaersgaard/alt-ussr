@@ -8,7 +8,7 @@ import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.LabeledEntities;
 import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.enumerations.SupportedModularRobots;
-import ussr.builder.enumerations.UssrXmlFileTypes;
+import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;

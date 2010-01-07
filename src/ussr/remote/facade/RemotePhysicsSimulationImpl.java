@@ -3,9 +3,9 @@ package ussr.remote.facade;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.saveLoadXML.InSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLTemplate;
+import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsSimulation;
