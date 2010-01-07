@@ -125,7 +125,7 @@ public class SimulationTreeEditors{
 		constraintsjPanelMorphologyLocation.gridx = 0;
 		constraintsjPanelMorphologyLocation.gridy = 0;
 		
-		jPanelMorphologyLocation.add(JComponentsFactory.createNewLabel("Morphology location"),constraintsjPanelMorphologyLocation);
+		jPanelMorphologyLocation.add(JComponentsFactory.createNewLabel("Morphology file location:"),constraintsjPanelMorphologyLocation);
 		
 		
 		//constraintsjPanelMorphologyLocation.fill = GridBagConstraints.HORIZONTAL;
@@ -135,6 +135,7 @@ public class SimulationTreeEditors{
 		
 		jTextFieldMorphologyLocation.setPreferredSize(new Dimension(800,20));
 		jTextFieldMorphologyLocation.setText(" " );
+		jTextFieldMorphologyLocation.setEditable(false);
 		jScrollPaneMorphologyLocation.setPreferredSize(new Dimension(150,40));
 		jScrollPaneMorphologyLocation.setViewportView(jTextFieldMorphologyLocation);
 		

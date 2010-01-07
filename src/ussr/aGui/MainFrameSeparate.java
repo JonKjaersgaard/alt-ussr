@@ -199,7 +199,7 @@ public class MainFrameSeparate extends MainFrames {
 						}else if (jMenuItemText.contains(MainFrameComponentsText.EXIT.getUserFriendlyName())||jMenuItemText.contains(MainFrameComponentsText.NEW.getUserFriendlyName())||jMenuItemText.contains(MainFrameComponentsText.OPEN.getUserFriendlyName())){
 							//do nothing
 						}else{
-							currentJMenuItem.setEnabled(!enabled);
+							currentJMenuItem.setEnabled(enabled);
 						}
 					}				
 				}				
