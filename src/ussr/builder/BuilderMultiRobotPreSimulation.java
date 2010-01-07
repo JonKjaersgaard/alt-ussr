@@ -2,10 +2,10 @@ package ussr.builder;
 
 import java.util.Map;
 
-import ussr.builder.enumerations.UssrXmlFileTypes;
-import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
+import ussr.builder.saveLoadXML.UssrXmlFileTypes;
+import ussr.builder.saveLoadXML.XMLTagsUsed;
 import ussr.builder.simulationLoader.SimulationSpecificationConverter;
 import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.description.Robot;

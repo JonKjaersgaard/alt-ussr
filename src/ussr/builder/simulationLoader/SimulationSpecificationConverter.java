@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import ussr.aGui.tabs.simulation.enumerations.PlaneMaterials;
-import ussr.builder.enumerations.XMLTagsUsed;
+import ussr.builder.saveLoadXML.XMLTagsUsed;
 import ussr.description.setup.WorldDescription;
 import ussr.description.setup.WorldDescription.CameraPosition;
 import ussr.description.setup.WorldDescription.TextureDescription;

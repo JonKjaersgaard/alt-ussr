@@ -16,8 +16,6 @@ import com.jme.math.Quaternion;
 
 import ussr.aGui.enumerations.JOptionPaneMessages;
 
-import ussr.builder.enumerations.UssrXmlFileTypes;
-import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.StringProcessingHelper;
 import ussr.builder.simulationLoader.RobotSpecification;

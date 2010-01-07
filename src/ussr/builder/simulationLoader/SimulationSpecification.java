@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
-import ussr.builder.enumerations.XMLTagsUsed;
+
+import ussr.builder.saveLoadXML.XMLTagsUsed;
 
 
 /**
@@ -25,6 +26,10 @@ public class SimulationSpecification implements Serializable {
 	private Map<XMLTagsUsed, String> simWorldDecsriptionValues= new Hashtable<XMLTagsUsed, String>(),
 	                                 simPhysicsParameters = new Hashtable<XMLTagsUsed, String>();
 		
+	
+
+
+
 	/**
 	 * Returns the robot descriptions extracted from XML and newly defined in GUI.
 	 * @return the robot descriptions extracted from XML and newly defined in GUI.
@@ -41,6 +46,21 @@ public class SimulationSpecification implements Serializable {
 
 	public Map<XMLTagsUsed, String> getSimWorldDecsriptionValues() {
 		return simWorldDecsriptionValues;
+	}
+	
+	
+	
+	
+	public void setSimPhysicsParameters(
+			Map<XMLTagsUsed, String> simPhysicsParameters) {
+		this.simPhysicsParameters = simPhysicsParameters;
+	}
+
+
+
+	public void setSimWorldDecsriptionValues(
+			Map<XMLTagsUsed, String> simWorldDecsriptionValues) {
+		this.simWorldDecsriptionValues = simWorldDecsriptionValues;
 	}
 	
 	public SimulationSpecificationConverter getConverter(){

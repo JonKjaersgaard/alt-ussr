@@ -1,4 +1,4 @@
-package ussr.builder.enumerations;
+package ussr.builder.saveLoadXML;
 
 public enum XMLTagsUsed {
    /*For description of modular robot morphology(shape)*/

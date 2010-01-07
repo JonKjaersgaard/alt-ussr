@@ -22,8 +22,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
-import ussr.builder.enumerations.UssrXmlFileTypes;
-import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.labelingTools.LabelingTemplate;
 import ussr.model.Module;

@@ -2,7 +2,6 @@ package ussr.builder.saveLoadXML;
 
 
 
-import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.simulationLoader.SimulationSpecification;
 
 
