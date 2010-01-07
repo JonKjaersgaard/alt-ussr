@@ -27,8 +27,6 @@ import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.labelingTools.LabelingTemplate;
 import ussr.model.Module;
-import ussr.physics.PhysicsSimulation;
-import ussr.physics.jme.JMESimulation;
 
 /**
  * The main responsibility of this class is to host the methods common to children classes.

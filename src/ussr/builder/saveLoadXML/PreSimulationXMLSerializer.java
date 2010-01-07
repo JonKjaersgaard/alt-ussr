@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import com.jme.system.DisplaySystem;
-
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
@@ -14,7 +12,6 @@ import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Module;
 import ussr.physics.PhysicsLogger;
-import ussr.physics.PhysicsParameters;
 
 
 public class PreSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate {

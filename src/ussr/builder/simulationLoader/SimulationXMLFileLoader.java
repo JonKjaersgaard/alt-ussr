@@ -3,27 +3,17 @@ package ussr.builder.simulationLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import ussr.aGui.GeneralController;
-import ussr.aGui.tabs.simulation.SimulationTab;
-import ussr.aGui.tabs.simulation.enumerations.PhysicsParametersDefault;
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.ControllerFactory;
 import ussr.builder.helpers.ControllerFactoryImpl;
 import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
-import ussr.builder.saveLoadXML.SaveLoadXMLBuilderTemplate;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
 import ussr.description.Robot;
-import ussr.description.geometry.VectorDescription;
-import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
-import ussr.physics.jme.JMESimulation;
-import ussr.remote.GUIRemoteSimulationAdapter;
 import ussr.samples.DefaultSimulationSetup;
 import ussr.samples.GenericSimulation;
 
@@ -90,7 +80,7 @@ public class SimulationXMLFileLoader extends GenericSimulation {
 		/*Get all values from XML file*/
         simulationSpecification = xmlLoaderSimulation.getSimulationSpecification();
         
-        /*Check is SIMULATION xml file was loaded or some different one*/
+        /*Check if SIMULATION xml file was loaded or some different one*/
         if (simulationSpecification.getSimWorldDecsriptionValues().containsKey(XMLTagsUsed.SIMULATION)){
         	 /* Create the simulation*/
             simulation = PhysicsFactory.createSimulator();
@@ -99,7 +89,7 @@ public class SimulationXMLFileLoader extends GenericSimulation {
             descriptionConverter =  simulationSpecification.getConverter();
           
             
-            //setPhysicsParameters();// IS NOT WORKING
+            setPhysicsParameters();// IS NOT WORKING
             
             String controllerLocation = null;
             if (simulationSpecification.getRobotsInSimulation().isEmpty()){// new (default) simulation is started
@@ -147,7 +137,7 @@ public class SimulationXMLFileLoader extends GenericSimulation {
     	PhysicsParameters.get().setWorldDampingAngularVelocity(descriptionConverter.convertWorldDamping(false));
     	PhysicsParameters.get().setRealisticCollision(descriptionConverter.covertRealisticCollision());
     	PhysicsParameters.get().setGravity(descriptionConverter.covertGravity());
-    	//PhysicsParameters.get().setPlaneMaterial(descriptionConverter.covertPlaneMaterial());
+    	PhysicsParameters.get().setPlaneMaterial(descriptionConverter.covertPlaneMaterial());
     	PhysicsParameters.get().setMaintainRotationalJointPositions(descriptionConverter.convertMaintainRotationalJointPositions());
     	PhysicsParameters.get().setConstraintForceMix(descriptionConverter.convertConstraintForceMix());
     	PhysicsParameters.get().setErrorReductionParameter(descriptionConverter.convertErrorReductionParameter());

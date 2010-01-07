@@ -2,13 +2,9 @@ package ussr.builder.saveLoadXML;
 
 import java.awt.Color;
 import java.rmi.RemoteException;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-
-import javax.swing.JOptionPane;
 import javax.xml.transform.sax.TransformerHandler;
 
 import org.w3c.dom.Document;
@@ -18,23 +14,17 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import com.jme.math.Quaternion;
 
-import ussr.aGui.MainFrames;
 import ussr.aGui.enumerations.JOptionPaneMessages;
-import ussr.aGui.tabs.simulation.SimulationTab;
-import ussr.aGui.tabs.simulation.enumerations.PhysicsParametersDefault;
-import ussr.builder.enumerations.ConstructionTools;
-import ussr.builder.enumerations.SupportedModularRobots;
+
 import ussr.builder.enumerations.UssrXmlFileTypes;
 import ussr.builder.enumerations.XMLTagsUsed;
 import ussr.builder.helpers.BuilderHelper;
-import ussr.builder.helpers.FileDirectoryHelper;
 import ussr.builder.helpers.StringProcessingHelper;
 import ussr.builder.simulationLoader.RobotSpecification;
 import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.BoxDescription;
-import ussr.description.setup.ModulePosition;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Module;
 import ussr.physics.PhysicsParameters;

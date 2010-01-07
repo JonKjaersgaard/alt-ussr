@@ -54,8 +54,8 @@ public class SimulationSpecificationConverter implements Serializable {
 		return Float.parseFloat(simulationPhysicsParameters.get(XMLTagsUsed.GRAVITY));
 	}
 
-	public PlaneMaterials covertPlaneMaterial(){
-		return PlaneMaterials.valueOf(simulationPhysicsParameters.get(XMLTagsUsed.PLANE_MATERIAL));
+	public Material covertPlaneMaterial(){
+		return PlaneMaterials.valueOf(simulationPhysicsParameters.get(XMLTagsUsed.PLANE_MATERIAL)).getPlaneMaterial();
 	}
 
 	public boolean convertMaintainRotationalJointPositions (){
