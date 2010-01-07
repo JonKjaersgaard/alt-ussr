@@ -348,7 +348,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonRunFast = new javax.swing.JButton();
 		jButtonPause = new javax.swing.JButton();
 		jButtonTerminate = new javax.swing.JButton();
-		//jButtonRestart = new javax.swing.JButton();
+		jButtonReloadSimulation = new javax.swing.JButton();
 		
 		jToolBarSeparator3 = new javax.swing.JToolBar.Separator();			
 		jToolBarSeparator4 = new javax.swing.JToolBar.Separator();
@@ -386,6 +386,19 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToolBarGeneralControl.add(initOpenButton(FileChooserFrameInter.FC_FRAME_OPEN_SIMULATION));
 		//jToolBarGeneralControl.add(initSaveButton(fcSaveFrame));
 		jToolBarGeneralControl.add(initSaveButton(FileChooserFrameInter.FC_FRAME_SAVE_SIMULATION));
+		
+		jButtonReloadSimulation.setToolTipText(MainFrameComponentsText.RELOAD_CURRENT_SIMULATION.getUserFriendlyName());
+		jButtonReloadSimulation.setIcon(MainFrameIcons.RELOAD_CURRENT_SIMULATION.getImageIcon());
+		jButtonReloadSimulation.setRolloverIcon(MainFrameIcons.RELOAD_CURRENT_SIMULATION_ROLLOVER.getImageIcon());		
+		jButtonReloadSimulation.setDisabledIcon(MainFrameIcons.RELOAD_CURRENT_SIMULATION_ROLLOVER_DISABLED.getImageIcon());
+		jButtonReloadSimulation.setPreferredSize(BUTTON_DIMENSION);
+		jButtonReloadSimulation.setFocusable(false);   
+		jButtonReloadSimulation.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.jButtonReloadCurrentSimulationActionPerformed();
+			}
+		});
+		jToolBarGeneralControl.add(jButtonReloadSimulation);	
 		
 		//jToolBarSeparator3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jToolBarSeparator3);
@@ -455,20 +468,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 				MainFrameSeparateController.jButtonTerminateActionPerformed();
 			}
 		});
-		jToolBarGeneralControl.add(jButtonTerminate);
-		
-		/*jButtonRestart.setToolTipText(MainFrameComponentsText.RESTART.getUserFriendlyName());
-		jButtonRestart.setIcon(MainFrameIcons.RESTART.getImageIcon());
-		jButtonRestart.setRolloverIcon(MainFrameIcons.RESTART_ROLLOVER.getImageIcon());		
-		jButtonRestart.setDisabledIcon(MainFrameIcons.RESTART_DISABLED.getImageIcon());
-		jButtonRestart.setPreferredSize(BUTTON_DIMENSION);
-		jButtonRestart.setFocusable(false);   
-		jButtonRestart.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.jButtonRestartActionPerformed();
-			}
-		});
-		jToolBarGeneralControl.add(jButtonRestart);	*/	
+		jToolBarGeneralControl.add(jButtonTerminate);			
 		
 		//jToolBarSeparator4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jToolBarSeparator4);
@@ -855,7 +855,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	private static javax.swing.JToolBar jToolBarGeneralControl;
 	
 	private javax.swing.JButton jButtonRunRealTime,jButtonRunStepByStep,jButtonRunFast,
-	                           jButtonPause,jButtonTerminate,jButtonRestart;
+	                           jButtonPause,jButtonTerminate,jButtonReloadSimulation;
 	
 	private static javax.swing.JButton jButtonSave,jButtonOpen,jButtonNewSimulation;
 	private static javax.swing.JToggleButton jToggleButtonConstructRobot,jToggleButtonVisualizer,

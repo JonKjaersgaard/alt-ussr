@@ -431,7 +431,7 @@ public class MainFrameSeparateController extends GeneralController {
 	/**
 	 * Restarts current simulation from XML file.
 	 */
-	public static void jButtonRestartActionPerformed() {	
+	public static void jButtonReloadCurrentSimulationActionPerformed() {	
 		terminateSimulation();
 		startSimulation(simulationXMLFileDirectory);		
 	}
@@ -479,6 +479,8 @@ public class MainFrameSeparateController extends GeneralController {
 	 * Starts new remote simulation
 	 */
 	public static void jButtonMenuItemNewSimulationActionPerformed() {
+		
+		GeneralController.setSimulationXMLFileDirectory(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);
 
 		if (remotePhysicsSimulation!=null && isSimulationRunning ==false){
 			int returnedValue = (Integer)JOptionPaneMessages.SAVE_CURRENT_SIMULATION.displayMessage();
