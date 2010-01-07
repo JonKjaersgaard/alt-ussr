@@ -73,7 +73,7 @@ public class WorldDescription extends Description implements Serializable {
     /**
      * The size of one edge of the underlying plane
      */
-    private int planeSize = 0;
+    private int planeSize = 100;
 
     /**
      * The texture of the plane
