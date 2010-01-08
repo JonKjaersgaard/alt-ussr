@@ -2,6 +2,7 @@ package ussr.remote.facade;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.VectorDescription;
@@ -41,6 +42,28 @@ public class SimulationTabControl extends UnicastRemoteObject implements Simulat
 			
 		}
 		return null;
+	}
+	
+	
+	public void deleteModules(List<Integer> ids)throws RemoteException{
+		//jmeSimulation.getModules().clear();
+		for(int moduleID=0;moduleID<ids.size();moduleID++){
+			int amountModules = jmeSimulation.getModules().size();
+			
+			System.out.println("Size List:"+ jmeSimulation.getModules().size());
+			
+			for (int index=0; index<amountModules; index++){				
+				
+				if (jmeSimulation.getModules().get(index).getID()== ids.get(moduleID)){
+					System.out.println("ID:" + ids.get(moduleID) );
+					BuilderHelper.deleteModule(jmeSimulation.getModules().get(index));
+					
+				}
+				
+			}
+			
+		}
+		
 	}
 	
 }
