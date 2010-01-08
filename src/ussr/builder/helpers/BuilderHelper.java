@@ -164,7 +164,7 @@ public class BuilderHelper {
 			removeModuleComponent(selectedModule.getComponent(compon));  
 		}
 		/*Remove the module from the internal list of the modules in USSR*/
-		selectedModule.getSimulation().getModules().remove(selectedModule);
+		//selectedModule.getSimulation().getModules().remove(selectedModule);
 	}
 
 
