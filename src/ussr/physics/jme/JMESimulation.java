@@ -88,7 +88,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
     private List<Module> modules = new ArrayList<Module>();
     private Map<TriMesh,String> geometryMap = new HashMap<TriMesh,String>();
     private ArrayList<Thread> moduleControlThreads = new ArrayList<Thread>();
-    
+  
     protected long physicsSteps = 0;
     protected float physicsSimulationStepSize; // Set from ussr.physics.SimulationParameters = 0.005f; // 0.001f  // 0.0005f; //0.001f; // 
     protected float gravity; // Set from ussr.physics.SimulationParameters
