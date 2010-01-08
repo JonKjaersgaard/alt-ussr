@@ -4,8 +4,10 @@ package ussr.aGui.tabs.simulation;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.BorderFactory;
-import javax.swing.JComponent;
 
 import javax.swing.ImageIcon;
 
@@ -14,7 +16,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import ussr.aGui.MainFrames;
@@ -38,11 +39,15 @@ public class SimulationTab extends Tabs {
 	 */
 	private GridBagConstraints gridBagConstraints = new GridBagConstraints();
 	
+	/**
+	 * The name of the node selected in the simulation tree by user.
+	 */
 	private static String selectedNodeName;
-
-	public static String getSelectedNodeName() {
-		return selectedNodeName;
-	}
+	
+	/**
+	 * The panel for displaying hints.
+	 */
+	private static HintPanel  hintPanel;
 
 	/**
 	 * Defines visual appearance of the tab called "Simulation".
@@ -98,7 +103,6 @@ public class SimulationTab extends Tabs {
 				Object nodeInfo = node.getUserObject();
 				if (node.isLeaf()||node.isNodeRelated(firstNodeHierarchySimulation)) {
 					selectedNodeName = node.getPath()[node.getPath().length-1].toString();
-					//System.out.println(selectedNodeName);
 					SimulationTabController.jTreeItemSelectedActionPerformed(selectedNodeName);
 				} 
 			}
@@ -142,13 +146,9 @@ public class SimulationTab extends Tabs {
 
 		super.jComponent.add(hintPanel,gridBagConstraints);
 	}
-
-	public static javax.swing.JTree getJTreeSimulation() {
-		return jTreeSimulation;
-	}
-
+	
 	/**
-	 * Initializes simulation root tree node including all sub nodes.
+	 * Initializes root tree node(simulation) including all sub nodes.
 	 * @return simulation root tree node including all sub nodes.
 	 */
 	private DefaultMutableTreeNode initializeSimulationRootNode(){
@@ -178,69 +178,125 @@ public class SimulationTab extends Tabs {
 		}
 		return firstNodeHierarchySimulation;
 	}
-
-	/**
-	 * 
-	 */
-	private static boolean firstTime = true;
 	
+	/**
+	 * Used to keep track after unique robot number.
+	 */
 	private static int robotNumber=0;
 	
 	/**
-	 * @param simulationSpecification
+	 * Sets unique robot number.
+	 * @param robotNumber, unique robot number
 	 */
-	public static void addRobotNode(SimulationSpecification simulationSpecification, boolean fromSimulationXMLFile){
-		
+	public static void setRobotNumber(int robotNumber) {
+		SimulationTab.robotNumber = robotNumber;
+	}
+
+	
+	private static int lastID;
+	
+	private static List<Integer> idsModules = new ArrayList<Integer>(); 
+	/**
+	 * Adds robot nodes in the simulation tree.
+	 * @param simulationSpecification, object keeping information about simulation.
+	 * @param fromSimulationXMLFile, flag to indicate that robot nodes are added from loaded simulation file(true), false for
+	 * nodes being created from loaded Robot XML file.
+	 */
+	public static void addRobotNodes(SimulationSpecification simulationSpecification, boolean fromSimulationXMLFile){
 		
 		DefaultTreeModel model = (DefaultTreeModel)jTreeSimulation.getModel();
 		DefaultMutableTreeNode robotsNode = (DefaultMutableTreeNode) model.getChild(model.getRoot(),2);
+		
+		
 		
 		if (fromSimulationXMLFile){
 			robotNumber =0;//reset
 			
 			robotsNode.removeAllChildren();			
 			int nrRobotsInSimulation = simulationSpecification.getRobotsInSimulation().size();
+
 			for (int robotNr=1;robotNr<nrRobotsInSimulation+1;robotNr++){
 				DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(SimulationTabTreeNodes.ROBOT_NR.getUserFriendlyName()+"."+robotNr);
 				robotsNode.add(thirdNodeHierarchyRobot);
 				//secondNodeHierarchyRobots.add(thirdNodeHierarchyRobot);
 				robotNumber =robotNr;
+				
+				int amountModules = simulationSpecification.getRobotsInSimulation().get(robotNr-1).getAmountModules();
+		         if(robotNr==1){
+		        	 idsModules.clear();
+		        	 for (int id=0;id<amountModules;id++){
+		        		 idsModules.add(id);
+		        	 }
+		        	 
+		        	 lastID = idsModules.get(idsModules.size()-1);
+		        	 //simulationSpecification.getRobotsInSimulation().get(0).setIdsModules(idsModules);
+		        	 //System.out.println("Last: "+ lastID );
+		         }else{
+		        	// System.out.println("AmountNew:"+ amountModules);
+		        	 List<Integer> newIdsModules = new ArrayList<Integer>() ;
+		        	 //System.out.println("LastID:"+ lastID);
+		        	 for (int id=lastID+1;id<lastID+amountModules+1;id++){
+		        		 newIdsModules.add(id);		        		 
+		        	 }
+		        	 idsModules.clear();
+		        	 idsModules.addAll(newIdsModules);
+		        	 lastID = idsModules.get(idsModules.size()-1);
+		        	 //System.out.println("Last: "+ lastID );
+		        	
+		         }
+		         simulationSpecification.getRobotsInSimulation().get(robotNr-1).setIdsModules(idsModules);
 			}
 			
 		}else{
 			robotNumber++;
 			DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(SimulationTabTreeNodes.ROBOT_NR.getUserFriendlyName()+"."+robotNumber);
         	//DefaultTreeModel model = (DefaultTreeModel)jTreeSimulation.getModel();
-        	model.insertNodeInto(thirdNodeHierarchyRobot, robotsNode, robotsNode.getChildCount());	
+        	model.insertNodeInto(thirdNodeHierarchyRobot, robotsNode, robotsNode.getChildCount());
+        	
+        /*	int amountModules = simulationSpecification.getRobotsInSimulation().get(robotNumber-1).getAmountModules();
+        	 List<Integer> newIdsModules = new ArrayList<Integer>() ;
+        	 for (int id=lastID+1;id<lastID+amountModules+1;id++){
+        		 newIdsModules.add(id);		        		 
+        	 }
+        	 idsModules.clear();
+        	 idsModules.addAll(newIdsModules);
+        	 lastID = idsModules.get(idsModules.size()-1);
+        	 simulationSpecification.getRobotsInSimulation().get(robotNumber-1).setIdsModules(newIdsModules);*/
+        	
 		}
+		SimulationTabController.setSimulationSpecification(simulationSpecification);
+		System.out.println("Size1: " + simulationSpecification.getRobotsInSimulation().get(0).getIdsModules().size());
+		System.out.println("Size2: " + simulationSpecification.getRobotsInSimulation().get(1).getIdsModules().size());
 		model.reload();		
-	
 		jTreeSimulationExpandAllNodes();
-	
-		//jTreeSimulation.validate();
-		//jTreeSimulation.repaint();
-		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);
-		
+		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);		
 	} 
 	
+	/**
+	 * Expands all nodes in the simulation tree. 
+	 */
 	public static void jTreeSimulationExpandAllNodes(){
 		for (int rowNr = 0; rowNr < jTreeSimulation.getRowCount(); rowNr++) {
 			jTreeSimulation.expandRow(rowNr);
 		}
 	}
 
-	public static javax.swing.JPanel getJPanelEditor() {
-
-		return jPanelEditor;
-	}
 	
+	
+	/**
+	 * TODO Decide if needed.
+	 * @param enabled
+	 */
 	public static void setTabEnabled(boolean enabled){
-		
 		jSplitPaneSimulationTreeAndEditor.setEnabled(enabled);
 		hintPanel.setEnabled(enabled);
 		
 	};
 
+	/**
+	 * Sets the tab visible or not.
+	 * @param visible, true for visible
+	 */
 	public static void setTabVisible(boolean visible) {		
 		jScrollPaneTreeSimulation.setVisible(visible);
 		jPanelEditor.setVisible(visible);
@@ -248,9 +304,11 @@ public class SimulationTab extends Tabs {
 		
 		hintPanel.setVisible(visible);	
 		hintPanel.setText(HintsSimulationTab.DEFAULT.getHintText());
-		
 	}
 	
+	/**
+	 * TODO DECIDE IF NEEDED
+	 */
 	public static void resizeComponents(){
 		int simulationTabIndex = 0;
 		int heightIcon = MainFrames.getJTabbedPaneFirst().getIconAt(simulationTabIndex).getIconHeight();
@@ -261,47 +319,45 @@ public class SimulationTab extends Tabs {
 		jSplitPaneSimulationTreeAndEditor.validate();	
 	}
 
-/*	public static void addMorphologyEditor() {
-		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
-		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
-		//System.out.println("BOOO"+RobotSpecification.getMorphologyLocation());
-
-		//FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,TemporaryRobotSpecification.getMorphologyLocation());
-		//fcOpenFrame.setSelectedFile(new File("some.xml"));
-
-		//jPanelEditor.add(MainFrames.initOpenButton(fcOpenFrame));
-	}*/
-
-	//private static String robotMorphologyLocation;
-
-
-
-	/*public static void setRobotMorphologyLocation(String robotMorphologyLocation) {
-		SimulationTab.robotMorphologyLocation = robotMorphologyLocation;
-	}*/
-
-
-	private static HintPanel  hintPanel;
-
+	/**
+	 * Returns the panel for displaying hints.
+	 * @return the panel for displaying hints.
+	 */
 	public static HintPanel getHintPanel() {
 		return hintPanel;
 	}
+	
+	/**
+	 * Returns the name of the node selected in the simulation tree by user.
+	 * @return the name of the node selected in the simulation tree by user.
+	 */
+	public static String getSelectedNodeName() {
+		return selectedNodeName;
+	}
 
-
-	public static javax.swing.JSpinner getJSpinnerCoordinateValue() {
-		return jSpinnerCoordinateValue;
+	/**
+	 * Returns the simulation tree.
+	 * @return the simulation tree.
+	 */
+	public static javax.swing.JTree getJTreeSimulation() {
+		return jTreeSimulation;
+	}
+	
+	/**
+	 * Returns the panel for editing values of nodes in simulation tree.
+	 * @return the panel for editing values of nodes in simulation tree.
+	 */
+	public static javax.swing.JPanel getJPanelEditor() {
+		return jPanelEditor;
 	}
 
 	private static javax.swing.JTree jTreeSimulation;
 	private static javax.swing.JScrollPane jScrollPaneTreeSimulation;
 
 	private static javax.swing.JPanel jPanelEditor;
-	private static javax.swing.JSpinner jSpinnerCoordinateValue;
 
 	private static  DefaultMutableTreeNode firstNodeHierarchySimulation,secondNodeHierarchy,thirdNodeHierarchy;
 	
 	private static javax.swing.JSplitPane jSplitPaneSimulationTreeAndEditor;
-
-
 
 }

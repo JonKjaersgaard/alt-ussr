@@ -1,13 +1,9 @@
 package ussr.aGui.tabs.simulation;
 
 import javax.swing.tree.DefaultMutableTreeNode;
-
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
-import ussr.aGui.tabs.simulation.enumerations.TextureDescriptions;
 import ussr.builder.saveLoadXML.XMLTagsUsed;
-import ussr.builder.simulationLoader.SimulationSpecification;
-import ussr.description.setup.WorldDescription;
-import ussr.physics.PhysicsParameters;
+
 
 /**
  * Contains the names of nodes displayed in Simulation tab tree view.
