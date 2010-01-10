@@ -158,13 +158,15 @@ public class BuilderHelper {
 	 */
 	public static void deleteModule(Module selectedModule){
 		
+		Module moduleToDelete = selectedModule;
+		
 		/* Identify each component of the module and remove the visual of it*/
-		int amountComponents= selectedModule.getNumberOfComponents();		
+		int amountComponents= moduleToDelete.getNumberOfComponents();		
 		for (int compon=0; compon<amountComponents;compon++){			
-			removeModuleComponent(selectedModule.getComponent(compon));  
+			removeModuleComponent(moduleToDelete.getComponent(compon));  
 		}
 		/*Remove the module from the internal list of the modules in USSR*/
-		//selectedModule.getSimulation().getModules().remove(selectedModule);
+		//moduleToDelete.getSimulation().getModules().remove(selectedModule);
 	}
 
 

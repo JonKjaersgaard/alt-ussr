@@ -1,6 +1,7 @@
 package ussr.builder.simulationLoader;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RobotSpecification implements Serializable {
@@ -13,7 +14,7 @@ public class RobotSpecification implements Serializable {
 
 	private String morphologyLocation;
 	
-	private List<Integer> idsModules;
+	private List<Integer> idsModules = new ArrayList<Integer>();
 	
 
 
@@ -27,7 +28,8 @@ public class RobotSpecification implements Serializable {
 
 
 	public void setIdsModules(List<Integer> idsModules) {
-		this.idsModules = idsModules;
+		this.idsModules.clear();
+		this.idsModules.addAll(idsModules);
 	}
 
 	private  int amountModules;
