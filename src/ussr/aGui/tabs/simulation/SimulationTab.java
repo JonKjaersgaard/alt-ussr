@@ -207,13 +207,13 @@ public class SimulationTab extends Tabs {
 		DefaultTreeModel model = (DefaultTreeModel)jTreeSimulation.getModel();
 		DefaultMutableTreeNode robotsNode = (DefaultMutableTreeNode) model.getChild(model.getRoot(),2);
 		
-		
+		SimulationSpecification simulationSpec =  simulationSpecification;
 		
 		if (fromSimulationXMLFile){
 			robotNumber =0;//reset
 			
 			robotsNode.removeAllChildren();			
-			int nrRobotsInSimulation = simulationSpecification.getRobotsInSimulation().size();
+			int nrRobotsInSimulation = simulationSpec.getRobotsInSimulation().size();
 
 			for (int robotNr=1;robotNr<nrRobotsInSimulation+1;robotNr++){
 				DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(SimulationTabTreeNodes.ROBOT_NR.getUserFriendlyName()+"."+robotNr);
@@ -221,30 +221,29 @@ public class SimulationTab extends Tabs {
 				//secondNodeHierarchyRobots.add(thirdNodeHierarchyRobot);
 				robotNumber =robotNr;
 				
-				int amountModules = simulationSpecification.getRobotsInSimulation().get(robotNr-1).getAmountModules();
+				int amountModules = simulationSpec.getRobotsInSimulation().get(robotNr-1).getAmountModules();
 		         if(robotNr==1){
 		        	 idsModules.clear();
 		        	 for (int id=0;id<amountModules;id++){
 		        		 idsModules.add(id);
+		        		 System.out.println("ID:"+ id);
 		        	 }
 		        	 
 		        	 lastID = idsModules.get(idsModules.size()-1);
-		        	 //simulationSpecification.getRobotsInSimulation().get(0).setIdsModules(idsModules);
-		        	 //System.out.println("Last: "+ lastID );
+		        	 simulationSpec.getRobotsInSimulation().get(0).setIdsModules(idsModules);
+		        	 System.out.println("Size1: " + simulationSpec.getRobotsInSimulation().get(0).getIdsModules().size());
 		         }else{
-		        	// System.out.println("AmountNew:"+ amountModules);
-		        	 List<Integer> newIdsModules = new ArrayList<Integer>() ;
-		        	 //System.out.println("LastID:"+ lastID);
-		        	 for (int id=lastID+1;id<lastID+amountModules+1;id++){
-		        		 newIdsModules.add(id);		        		 
-		        	 }
 		        	 idsModules.clear();
-		        	 idsModules.addAll(newIdsModules);
+		        	 for (int id=lastID+1;id<lastID+amountModules+1;id++){
+		        		 idsModules.add(id);
+		        		 System.out.println("ID:"+ id);
+		        	 }
 		        	 lastID = idsModules.get(idsModules.size()-1);
 		        	 //System.out.println("Last: "+ lastID );
-		        	
+		        	 simulationSpec.getRobotsInSimulation().get(robotNr-1).setIdsModules(idsModules);
+		        	 System.out.println("Size2: " + simulationSpec.getRobotsInSimulation().get(robotNr-1).getIdsModules().size());
 		         }
-		         simulationSpecification.getRobotsInSimulation().get(robotNr-1).setIdsModules(idsModules);
+		         //simulationSpecification.getRobotsInSimulation().get(robotNr-1).setIdsModules(idsModules);
 			}
 			
 		}else{
@@ -264,9 +263,13 @@ public class SimulationTab extends Tabs {
         	 simulationSpecification.getRobotsInSimulation().get(robotNumber-1).setIdsModules(newIdsModules);*/
         	
 		}
-		SimulationTabController.setSimulationSpecification(simulationSpecification);
-		System.out.println("Size1: " + simulationSpecification.getRobotsInSimulation().get(0).getIdsModules().size());
-		System.out.println("Size2: " + simulationSpecification.getRobotsInSimulation().get(1).getIdsModules().size());
+		
+		 SimulationTabController.setSimulationSpecification(null);
+  		SimulationTabController.setSimulationSpecification(simulationSpec);
+		
+		//System.out.println("Size1: " + simulationSpecification.getRobotsInSimulation().get(0).getIdsModules().size());
+		//System.out.println("Size2: " + simulationSpecification.getRobotsInSimulation().get(1).getIdsModules().size());
+		//System.out.println("Size3: " + simulationSpecification.getRobotsInSimulation().get(2).getIdsModules().size());
 		model.reload();		
 		jTreeSimulationExpandAllNodes();
 		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);		

@@ -425,8 +425,12 @@ public class SimulationTabController extends TabsControllers {
 		DefaultMutableTreeNode robotsNode = (DefaultMutableTreeNode) model.getChild(model.getRoot(),2);
 		
 		System.out.println("Selected Robot nr."+ selectedRobotNr);
-        System.out.println("Size:"+simulationSpecification.getRobotsInSimulation().get(selectedRobotNr-1).getIdsModules().size() );
+        		
+		for (int index=0;index<simulationSpecification.getRobotsInSimulation().size();index++){
+			System.out.println("Size"+index + " :" +simulationSpecification.getRobotsInSimulation().get(index).getIdsModules().size() );
+		}
 		
+		System.out.println("ID:"+ simulationSpecification.getRobotsInSimulation().get(selectedRobotNr-1).getIdsModules().get(0));
 		try {
 			remotePhysicsSimulation.getSimulationTabControl().deleteModules(simulationSpecification.getRobotsInSimulation().get(selectedRobotNr-1).getIdsModules());
 		} catch (RemoteException e) {
@@ -434,13 +438,11 @@ public class SimulationTabController extends TabsControllers {
 		}
 		simulationSpecification.getRobotsInSimulation().remove(selectedRobotNr-1);
 		
-		
-		
-		
-		
+
 		robotsNode.removeAllChildren();
 		//SimulationTab.setRobotNumber(0);//reset
-		//SimulationTab.addRobotNodes(simulationSpecification, true);
+		SimulationSpecification spec = simulationSpecification;
+		SimulationTab.addRobotNodes(spec, true);
 		model.reload();
 		
 		//robotsNode.remove(selectedRobotNr-1);
