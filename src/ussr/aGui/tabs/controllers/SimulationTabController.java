@@ -443,7 +443,6 @@ public class SimulationTabController extends TabsControllers {
 		//SimulationTab.setRobotNumber(0);//reset
 		SimulationSpecification spec = simulationSpecification;
 		SimulationTab.addRobotNodes(spec, false,false);
-		
 		model.reload();
 		SimulationTab.jTreeSimulationExpandAllNodes();
 		

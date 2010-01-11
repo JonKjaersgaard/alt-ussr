@@ -11,9 +11,13 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.TitledBorder;
 import ussr.aGui.FramesInter;
+import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.designHelpers.JComponentsFactory;
+import ussr.aGui.enumerations.MainFrameComponentsText;
+import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
+import ussr.aGui.fileChooser.views.FileChooserFrame;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.simulation.enumerations.CameraPositions;
@@ -90,7 +94,24 @@ public class SimulationTreeEditors{
 	public static javax.swing.JPanel  addRobotsEditor(){
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jPanelTreeNode.add(JComponentsFactory.createNewLabel(TabsComponentsText.LOAD_NEW_ROBOT.getUserFriendlyName()));
-		jPanelTreeNode.add(Tabs.initOpenButton());		
+		
+		
+		javax.swing.JButton jButtonOpen = new javax.swing.JButton();
+		jButtonOpen.setToolTipText(MainFrameComponentsText.OPEN.getUserFriendlyName());
+		
+		jButtonOpen.setIcon(MainFrameIcons.OPEN.getImageIcon());
+		jButtonOpen.setRolloverIcon(MainFrameIcons.OPEN_ROLLOVER.getImageIcon());		
+		jButtonOpen.setDisabledIcon(MainFrameIcons.OPEN_DISABLED.getImageIcon());
+		
+		jButtonOpen.setFocusable(false);		
+		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));
+		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.openActionPerformed(FileChooserFrame.FC_FRAME_OPEN_ROBOT);
+			}
+		});
+		//jPanelTreeNode.add(Tabs.initOpenButton());
+		jPanelTreeNode.add(jButtonOpen);		
 		return jPanelTreeNode;
 	}
 

@@ -34,17 +34,17 @@ public interface FileChooserFrameInter extends FramesInter {
 	/**
 	 * Default controller for XML processing. 
 	 */
-	public final FileChooserControllerInter FC_XML_CONTROLLER = new FileChooserXMLController();
+/*	public final FileChooserControllerInter FC_XML_CONTROLLER = new FileChooserXMLController();
 	
-    /**
+    *//**
      * A number of file choosers currently supported.
-     */
+     *//*
     public final static FileChooserFrameInter FC_FRAME_OPEN_SIMULATION = new FileChooserOpenFrame(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
                                               FC_FRAME_SAVE_SIMULATION = new FileChooserSaveFrame(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
                                               FC_FRAME_OPEN_ROBOT = new FileChooserOpenFrame(FileFilterTypes.OPEN_SAVE_ROBOT.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
                                               FC_FRAME_SAVE_ROBOT = new FileChooserSaveFrame(FileFilterTypes.OPEN_SAVE_ROBOT.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY)
                                               
-                                              ;
+                                              ;*/
 	/**
 	 * Sets specific default directory to open.
 	 * @param defaultDirectory, the directory for file chooser to open as default.

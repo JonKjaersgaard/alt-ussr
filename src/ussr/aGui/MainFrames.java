@@ -10,6 +10,7 @@ import java.util.Map;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.MainFrameComponentsText;
 import ussr.aGui.fileChooser.FileChooserFrameInter;
+import ussr.aGui.fileChooser.views.FileChooserFrame;
 import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
 import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
 import ussr.aGui.helpers.ComponentResizer;
@@ -86,8 +87,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
 		fileDescriptionsAndExtensions.put(FileChooserFrameInter.DEFAULT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
         
-		fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);	
-		fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
+		fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrame.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);	
+		fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrame.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
 	}
 
 	/**
@@ -383,9 +384,13 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToolBarGeneralControl.add(jButtonNewSimulation);
 		
 		//jToolBarGeneralControl.add(initOpenButton(fcOpenFrame));
-		jToolBarGeneralControl.add(initOpenButton(FileChooserFrameInter.FC_FRAME_OPEN_SIMULATION));
+		//jToolBarGeneralControl.add(initOpenButton(FileChooserFrameInter.FC_FRAME_OPEN_SIMULATION));
+		
+		jToolBarGeneralControl.add(initOpenButton(FileChooserFrame.FC_FRAME_OPEN_SIMULATION));
 		//jToolBarGeneralControl.add(initSaveButton(fcSaveFrame));
-		jToolBarGeneralControl.add(initSaveButton(FileChooserFrameInter.FC_FRAME_SAVE_SIMULATION));
+		jToolBarGeneralControl.add(initSaveButton(FileChooserFrame.FC_FRAME_SAVE_SIMULATION));
+		
+		//jToolBarGeneralControl.add(initSaveButton(FileChooserFrameInter.FC_FRAME_SAVE_SIMULATION));
 		
 		jButtonReloadSimulation.setToolTipText(MainFrameComponentsText.RELOAD_CURRENT_SIMULATION.getUserFriendlyName());
 		jButtonReloadSimulation.setIcon(MainFrameIcons.RELOAD_CURRENT_SIMULATION.getImageIcon());

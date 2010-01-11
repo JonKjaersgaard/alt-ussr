@@ -7,6 +7,8 @@ import ussr.aGui.GuiFrames;
 import ussr.aGui.fileChooser.FileChooserControllerInter;
 import ussr.aGui.fileChooser.FileChooserFrameInter;
 import ussr.aGui.fileChooser.FileFilter;
+import ussr.aGui.fileChooser.FileFilterTypes;
+import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
 
 /**
  * Defines visual appearance of the file chooser in several dialog forms: Open and Save for now.
@@ -41,6 +43,23 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 	 * Map containing mapping of file description to file extension.
 	 */
 	protected Map<String, String> fileDescriptionsAndExtensions;
+	
+	
+	
+	/**
+	 * Default controller for XML processing. 
+	 */
+	public final static FileChooserControllerInter FC_XML_CONTROLLER = new FileChooserXMLController();
+	
+    /**
+     * A number of file choosers currently supported.
+     */
+    public final static FileChooserFrameInter FC_FRAME_OPEN_SIMULATION = new FileChooserOpenFrame(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
+                                              FC_FRAME_SAVE_SIMULATION = new FileChooserSaveFrame(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
+                                              FC_FRAME_OPEN_ROBOT = new FileChooserOpenFrame(FileFilterTypes.OPEN_SAVE_ROBOT.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
+                                              FC_FRAME_SAVE_ROBOT = new FileChooserSaveFrame(FileFilterTypes.OPEN_SAVE_ROBOT.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY)
+                                              
+                                              ;
 	
 	/**
 	 * Defines visual appearance of the file chooser in several dialog forms: Open and Save for now.
