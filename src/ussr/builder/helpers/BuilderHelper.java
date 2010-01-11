@@ -185,7 +185,6 @@ public class BuilderHelper {
 		/*Remove each node of component*/		
 		for(DynamicPhysicsNode part: moduleComponent.getNodes()){
 			part.setActive(false);	
-			//part.detachAllChildren();//removes visual
 			part.getChildren().clear();
 		} 	
 	
