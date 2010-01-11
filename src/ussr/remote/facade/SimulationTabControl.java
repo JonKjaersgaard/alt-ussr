@@ -46,24 +46,27 @@ public class SimulationTabControl extends UnicastRemoteObject implements Simulat
 		return null;
 	}
 	
-	
+	private int amountModules =0;
 	public void deleteModules(List<Integer> ids)throws RemoteException{
 		//jmeSimulation.getModules().clear();
 		for(int moduleID=0;moduleID<ids.size();moduleID++){
-			int amountModules = jmeSimulation.getModules().size();
+			 amountModules = jmeSimulation.getModules().size();
 			
 			System.out.println("Size List:"+ jmeSimulation.getModules().size());
 			
 			for (int index=0; index<amountModules; index++){				
 				System.out.println("ID:"+ ids.get(moduleID));
-				Module currentModule = jmeSimulation.getModules().get(index);
-				Module moduleToDelete = jmeSimulation.getModules().get(ids.get(moduleID));
+				int currentModuleID = jmeSimulation.getModules().get(index).getID();
+				Module currentModule =jmeSimulation.getModules().get(index);
+				int moduleToDeleteID = ids.get(moduleID);
 				
-				if (currentModule.equals(moduleToDelete) ){
-					//PhysicsSimulation physicsSimulation = moduleToDelete.getSimulation();
-					//physicsSimulation.getModules().remove(moduleToDelete);
-					BuilderHelper.deleteModule(moduleToDelete);
+				if (currentModuleID==moduleToDeleteID ){
+				
+					BuilderHelper.deleteModule(currentModule,false);
+					PhysicsSimulation physicsSimulation = currentModule.getSimulation();
+					physicsSimulation.getModules().remove(currentModule);
 					//amountModules = jmeSimulation.getModules().size();
+					break;
 					
 				}
 				
