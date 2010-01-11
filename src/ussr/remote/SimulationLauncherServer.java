@@ -7,6 +7,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import ussr.remote.facade.ActiveSimulation;
@@ -28,8 +29,9 @@ import ussr.remote.facade.RemoteActiveSimulation;
 
 public class SimulationLauncherServer extends UnicastRemoteObject implements SimulationServer {
 
-    private static final String WIN_CLIENT_COMMAND = "launchers\\ussr-client.bat"; 
-    private static final String NIX_CLIENT_COMMAND = "launchers/ussr-client";
+	private static String clientCommand;
+    public static final String WIN_CLIENT_COMMAND = "..\\ussr\\launchers\\ussr-client.bat ..\\ussr"; 
+    public static final String NIX_CLIENT_COMMAND = "launchers/ussr-client";
 
     /**
      * Counter passed to client simulations used to hook them back up to the corresponding ActiveSimulation object
@@ -59,7 +61,8 @@ public class SimulationLauncherServer extends UnicastRemoteObject implements Sim
 
     public ActiveSimulation launchSimulation() throws IOException {
         String command;
-        if(File.separatorChar=='\\')
+        if(clientCommand!=null) command = clientCommand;
+        else if(File.separatorChar=='\\')
             command = WIN_CLIENT_COMMAND;
         else
             command = NIX_CLIENT_COMMAND;
@@ -96,11 +99,15 @@ public class SimulationLauncherServer extends UnicastRemoteObject implements Sim
     }
 
     public void register(int id, RemoteActiveSimulation remoteSimulation) {
-        for(RMIProcessActiveSimulation simulation: activeSimulations)
+    	Iterator<RMIProcessActiveSimulation> simulations = activeSimulations.iterator();
+        while(simulations.hasNext()) {
+        	RMIProcessActiveSimulation simulation = simulations.next();
             if(simulation.getID()==id) {
                 simulation.setRemoteSimulation(remoteSimulation);
+                simulations.remove();
                 return;
             }
+        }
         throw new Error("Internal error in simulation server: unique ID "+id+" not recognized");
     }
 
@@ -122,4 +129,7 @@ public class SimulationLauncherServer extends UnicastRemoteObject implements Sim
         }
     }
 
+    public static void setClientCommand(String command) {
+    	clientCommand = command;
+    }
 }
