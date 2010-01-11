@@ -6,6 +6,8 @@ import java.util.List;
 
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.VectorDescription;
+import ussr.model.Module;
+import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMESimulation;
 
 public class SimulationTabControl extends UnicastRemoteObject implements SimulationTabControlInter{
@@ -53,10 +55,14 @@ public class SimulationTabControl extends UnicastRemoteObject implements Simulat
 			System.out.println("Size List:"+ jmeSimulation.getModules().size());
 			
 			for (int index=0; index<amountModules; index++){				
+				System.out.println("ID:"+ ids.get(moduleID));
+				Module currentModule = jmeSimulation.getModules().get(index);
+				Module moduleToDelete = jmeSimulation.getModules().get(ids.get(moduleID));
 				
-				if (jmeSimulation.getModules().get(index).getID()== ids.get(moduleID)){
-					System.out.println("ID:" + ids.get(moduleID) );
-					BuilderHelper.deleteModule(jmeSimulation.getModules().get(index));
+				if (currentModule.equals(moduleToDelete) ){
+					//PhysicsSimulation physicsSimulation = moduleToDelete.getSimulation();
+					//physicsSimulation.getModules().remove(moduleToDelete);
+					BuilderHelper.deleteModule(moduleToDelete);
 					
 				}
 				
