@@ -105,7 +105,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		setUSSRicon(this);
 		setTitle(USSR_TITLE);
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setAlwaysOnTop(false);
+		setAlwaysOnTop(true);
 		pack();
 		insets = this.getInsets();		
 	}

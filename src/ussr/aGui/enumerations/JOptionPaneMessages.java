@@ -22,7 +22,8 @@ public enum JOptionPaneMessages {
 	
 	public enum JOptionPaneType{
 		MESSAGE,
-		CONFIRMATION;		
+		CONFIRMATION;	
+		
 	}
 
     private JOptionPaneType jOptionPaneType;
@@ -64,7 +65,7 @@ public enum JOptionPaneMessages {
 		Object returnValue = null;
 		switch(this.jOptionPaneType){
 		case MESSAGE:
-			jOptionPaneMessage.showMessageDialog(MainFrames.getMainFrame(),this.messageText,this.title,this.type);
+			JOptionPane.showMessageDialog(MainFrames.getMainFrame(),this.messageText,this.title,this.type);
 			returnValue = "void";
 			break;
 		case CONFIRMATION:

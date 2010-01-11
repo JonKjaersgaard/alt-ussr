@@ -87,6 +87,7 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
        }
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setResizable(false);// do not allow for file chooser to maximized.
+		setAlwaysOnTop(true);
 		getContentPane().setLayout(new java.awt.FlowLayout());			
 		getContentPane().add(jFileChooserCustomized);
 		jFileChooserCustomized.setAcceptAllFileFilterUsed(false);
