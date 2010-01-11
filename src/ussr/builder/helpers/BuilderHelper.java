@@ -13,6 +13,7 @@ import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
 import com.jme.scene.Spatial.CullHint;
 import com.jmex.physics.DynamicPhysicsNode;
+import com.jmex.physics.PhysicsSpace;
 
 /**
  * The main responsibility of this class is to house common methods and constants used frequently
@@ -187,21 +188,40 @@ public class BuilderHelper {
 		/*Remove each node of component*/
 		
 		for(DynamicPhysicsNode part: moduleComponent.getNodes()){
-			//part.detachAllChildren();//removes visual	
+			
 		/*	int amountNodes = moduleComponent.getNodes().size();
 			for (int node=0; node<amountNodes; node++ ){ //removes bounds and physics
 				moduleComponent.getNodes().get(node).removeFromParent();
 			}*/
 			
+			//part.detachAllChildren();//removes visual
+			//part.setActive(false);
+			
 			//part.removeFromParent();
+			
+		
+			part.setActive(false);	
+			part.detachAllChildren();//removes visual
+			part.getChildren().clear();
+		
+			
+			
+			//part.detachAllChildren();
+			
+			
 			//part.setIsCollidable(false);
 			//part.removeFromParent();
 			//part.setActive(false);			
 			//part.clearControllers();
-			part.detachAllChildren();
+			//part.detachAllChildren();
 		
 			//part.delete();
 		} 	
+		//moduleComponent.getModuleNode().rest();
+		//moduleComponent.getModuleNode().removeFromParent();
+		//moduleComponent.getModuleNode().setActive(false);
+		
+		//moduleComponent.getNodes().clear();
 		
 		//moduleComponent.getNodes().clear();
 	};
