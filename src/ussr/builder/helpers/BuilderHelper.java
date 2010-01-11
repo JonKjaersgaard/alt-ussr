@@ -159,7 +159,7 @@ public class BuilderHelper {
 	 * Removes (deletes) the module from simulation environment.
 	 * @param selectedModule, module to remove (delete).
 	 */
-	public static void deleteModule(Module selectedModule){
+	public static void deleteModule(Module selectedModule, boolean single){
 		
 		Module moduleToDelete = selectedModule;
 		
@@ -168,14 +168,10 @@ public class BuilderHelper {
 		for (int compon=0; compon<amountComponents;compon++){			
 			removeModuleComponent(moduleToDelete.getComponent(compon));  
 		}
+		//if (single){
 		/*Remove the module from the internal list of the modules in USSR*/
-		//selectedModule.getSimulation().getModules().remove(moduleToDelete);
-		
-		
-		//.getModules().remove(selectedModule);
-		//JMESimulation jmeSimulation =(JMESimulation) moduleToDelete.getSimulation();
-		//jmeSimulation .getModules().RE
-
+		selectedModule.getSimulation().getModules().remove(moduleToDelete);
+		//}
 	}
 
 
@@ -185,45 +181,14 @@ public class BuilderHelper {
 	 */
 	public static void removeModuleComponent(PhysicsModuleComponent physicsModuleComponent ){
 		JMEModuleComponent moduleComponent= (JMEModuleComponent)physicsModuleComponent;
-		/*Remove each node of component*/
-		
+	
+		/*Remove each node of component*/		
 		for(DynamicPhysicsNode part: moduleComponent.getNodes()){
-			
-		/*	int amountNodes = moduleComponent.getNodes().size();
-			for (int node=0; node<amountNodes; node++ ){ //removes bounds and physics
-				moduleComponent.getNodes().get(node).removeFromParent();
-			}*/
-			
-			//part.detachAllChildren();//removes visual
-			//part.setActive(false);
-			
-			//part.removeFromParent();
-			
-		
 			part.setActive(false);	
-			part.detachAllChildren();//removes visual
+			//part.detachAllChildren();//removes visual
 			part.getChildren().clear();
-		
-			
-			
-			//part.detachAllChildren();
-			
-			
-			//part.setIsCollidable(false);
-			//part.removeFromParent();
-			//part.setActive(false);			
-			//part.clearControllers();
-			//part.detachAllChildren();
-		
-			//part.delete();
 		} 	
-		//moduleComponent.getModuleNode().rest();
-		//moduleComponent.getModuleNode().removeFromParent();
-		//moduleComponent.getModuleNode().setActive(false);
-		
-		//moduleComponent.getNodes().clear();
-		
-		//moduleComponent.getNodes().clear();
+	
 	};
 
 

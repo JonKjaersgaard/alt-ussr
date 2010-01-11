@@ -154,17 +154,17 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 		if (selectedModuleType.equalsIgnoreCase (DEFAULT_MODULE)){
 			//do nothing
 		}else if (selectedModuleType.equalsIgnoreCase(ODIN_MUSCLE)){
-			BuilderHelper.deleteModule(selectedModule);
+			BuilderHelper.deleteModule(selectedModule,true);
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.RED); colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition(ODIN_HINGE+BuilderHelper.getRandomInt(),ODIN_HINGE,modulePosition,moduleRotation),colorsComponents,colorsConectors);			
 		}else if (selectedModuleType.equalsIgnoreCase(ODIN_HINGE)){
-			BuilderHelper.deleteModule(selectedModule);
+			BuilderHelper.deleteModule(selectedModule,true);
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition(ODIN_BATTERY+BuilderHelper.getRandomInt(),ODIN_BATTERY,modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		}else if (selectedModuleType.equalsIgnoreCase(ODIN_BATTERY)){
-			BuilderHelper.deleteModule(selectedModule);
+			BuilderHelper.deleteModule(selectedModule,true);
 			colorsComponents.add(Color.BLACK); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition(ODIN_SPRING+BuilderHelper.getRandomInt(),ODIN_SPRING,modulePosition,moduleRotation),colorsComponents,colorsConectors);			
@@ -176,12 +176,12 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModuleOneMore(new ModulePosition("newTube","OdinTube",modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		}*/else if (selectedModuleType.equalsIgnoreCase(ODIN_SPRING)){
-			BuilderHelper.deleteModule(selectedModule);
+			BuilderHelper.deleteModule(selectedModule,true);
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.BLUE);colorsComponents.add(Color.WHITE); 	colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition(ODIN_WHEEL+BuilderHelper.getRandomInt(),ODIN_WHEEL,modulePosition,moduleRotation),colorsComponents,colorsConectors);
 		}else if (selectedModuleType.equalsIgnoreCase(ODIN_WHEEL)){
-			BuilderHelper.deleteModule(selectedModule);
+			BuilderHelper.deleteModule(selectedModule,true);
 			colorsComponents.add(Color.RED); colorsComponents.add(Color.BLUE);colorsComponents.add(Color.RED); 	colorsComponents.add(Color.BLUE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition(ODIN_MUSCLE + BuilderHelper.getRandomInt(),ODIN_MUSCLE,modulePosition,moduleRotation),colorsComponents,colorsConectors);

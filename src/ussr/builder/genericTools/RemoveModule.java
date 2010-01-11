@@ -27,9 +27,7 @@ public class RemoveModule  extends CustomizedPicker{
 	 * @see ussr.physics.jme.pickers.CustomizedPicker#pickModuleComponent(ussr.physics.jme.JMEModuleComponent)
 	 */	
 	protected void pickModuleComponent(JMEModuleComponent component) {	
-		Module selectedModule = component.getModel();	
-		BuilderHelper.deleteModule(selectedModule);	//delete visual
-		PhysicsSimulation physicsSimulation = selectedModule.getSimulation();
-		physicsSimulation.getModules().remove(selectedModule);
+		Module selectedModule = component.getModel();		
+		BuilderHelper.deleteModule(selectedModule,true);	//delete visual
 	}	
 }

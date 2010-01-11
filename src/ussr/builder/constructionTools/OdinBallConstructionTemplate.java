@@ -73,7 +73,7 @@ public class OdinBallConstructionTemplate extends OdinConstructionTemplate  {
 				if (moduleMap[i].getConnectorNr()==connectorNr && moduleMap[i].getInitialRotation().getRotation().equals(rotationQauterion)){
 					/*If component(module) already exists at current position, delete movableModuleComponent and newly added module.*/
 					if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag == false ){						
-						BuilderHelper.deleteModule(moduleComponent.getModel());											
+						BuilderHelper.deleteModule(moduleComponent.getModel(),true);											
 					}else {/*move the component to new position with new rotation*/
 					moveModuleComponent(moduleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
 					}

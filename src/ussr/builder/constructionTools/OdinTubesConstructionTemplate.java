@@ -70,7 +70,7 @@ public class OdinTubesConstructionTemplate extends OdinConstructionTemplate  {
 			for (int i=0; i<moduleMap.length;i++){
 				if (moduleMap[i].getConnectorNr()==connectorNr && moduleMap[i].getInitialRotation().getRotation().equals(rotationQuatSelectedModule)){
 					if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag == false){						
-						BuilderHelper.deleteModule(moduleComponent.getModel());											
+						BuilderHelper.deleteModule(moduleComponent.getModel(),true);											
 					}else {/*move the component to new position with new rotation*/
 					moveModuleComponent(moduleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
 					}

@@ -162,7 +162,7 @@ public class ATRONConstructionTemplate extends ModularRobotConstructionTemplate 
 				if (moduleMap[i].getConnectorNr()==connectorNr && moduleMap[i].getInitialRotation().getRotation().equals(rotationQuatComponent)){
 					/*If component(module) already exists at current position, delete movableModuleComponent and newly added module.*/
 					if (componentExists(moduleMap[i].getNewPosition(), SEARCH_TOLERANCE)&& loopFlag== false){						
-						BuilderHelper.deleteModule(movableModuleComponent.getModel());											
+						BuilderHelper.deleteModule(movableModuleComponent.getModel(), true);											
 					}else{/*move the component to new position with new rotation*/
 						moveModuleComponent(movableModuleComponent,moduleMap[i].getNewRotation(),moduleMap[i].getNewPosition());
 					}
