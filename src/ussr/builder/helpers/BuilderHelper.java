@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Random;
 import ussr.model.Module;
 import ussr.physics.PhysicsModuleComponent;
+import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import com.jme.math.Matrix3f;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
+import com.jme.scene.Spatial.CullHint;
 import com.jmex.physics.DynamicPhysicsNode;
 
 /**
@@ -166,7 +168,13 @@ public class BuilderHelper {
 			removeModuleComponent(moduleToDelete.getComponent(compon));  
 		}
 		/*Remove the module from the internal list of the modules in USSR*/
-		//moduleToDelete.getSimulation().getModules().remove(selectedModule);
+		//selectedModule.getSimulation().getModules().remove(moduleToDelete);
+		
+		
+		//.getModules().remove(selectedModule);
+		//JMESimulation jmeSimulation =(JMESimulation) moduleToDelete.getSimulation();
+		//jmeSimulation .getModules().RE
+
 	}
 
 
@@ -176,19 +184,26 @@ public class BuilderHelper {
 	 */
 	public static void removeModuleComponent(PhysicsModuleComponent physicsModuleComponent ){
 		JMEModuleComponent moduleComponent= (JMEModuleComponent)physicsModuleComponent;
-		
 		/*Remove each node of component*/
+		
 		for(DynamicPhysicsNode part: moduleComponent.getNodes()){
 			//part.detachAllChildren();//removes visual	
 		/*	int amountNodes = moduleComponent.getNodes().size();
 			for (int node=0; node<amountNodes; node++ ){ //removes bounds and physics
 				moduleComponent.getNodes().get(node).removeFromParent();
-			}						
-			part.setIsCollidable(false);
-			part.setActive(false);			
-			part.clearControllers();*/
-			part.delete();
+			}*/
+			
+			//part.removeFromParent();
+			//part.setIsCollidable(false);
+			//part.removeFromParent();
+			//part.setActive(false);			
+			//part.clearControllers();
+			part.detachAllChildren();
+		
+			//part.delete();
 		} 	
+		
+		//moduleComponent.getNodes().clear();
 	};
 
 
