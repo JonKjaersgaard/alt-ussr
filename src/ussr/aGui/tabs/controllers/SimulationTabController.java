@@ -358,12 +358,12 @@ public class SimulationTabController extends TabsControllers {
 		int firstModuleId = simulationSpecification.getRobotsInSimulation().get(robotNr-1).getIdsModules().get(0);
 		System.out.println("First: "+ firstModuleId);
 		System.out.println("Modules: "+ amountModules);
-		if(robotNr==1){
+	/*	if(robotNr==1){
 		moveRobot(0,amountModules,changeInPosition);
-		}else{
+		}else{*/
 			
 			moveRobot(firstModuleId,firstModuleId+amountModules,changeInPosition);
-		}
+		//}
 
 	/*	if (robotNr==1){			
 			moveRobot(0,amountFirstRobotModules,changeInPosition); 
@@ -443,7 +443,9 @@ public class SimulationTabController extends TabsControllers {
 		//SimulationTab.setRobotNumber(0);//reset
 		SimulationSpecification spec = simulationSpecification;
 		SimulationTab.addRobotNodes(spec, false,false);
+		
 		model.reload();
+		SimulationTab.jTreeSimulationExpandAllNodes();
 		
 		//robotsNode.remove(selectedRobotNr-1);
 		
