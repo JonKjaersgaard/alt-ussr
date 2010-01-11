@@ -442,7 +442,7 @@ public class SimulationTabController extends TabsControllers {
 		robotsNode.removeAllChildren();
 		//SimulationTab.setRobotNumber(0);//reset
 		SimulationSpecification spec = simulationSpecification;
-		SimulationTab.addRobotNodes(spec, true);
+		SimulationTab.addRobotNodes(spec, false,false);
 		model.reload();
 		
 		//robotsNode.remove(selectedRobotNr-1);

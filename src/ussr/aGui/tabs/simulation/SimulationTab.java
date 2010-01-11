@@ -202,14 +202,14 @@ public class SimulationTab extends Tabs {
 	 * @param fromSimulationXMLFile, flag to indicate that robot nodes are added from loaded simulation file(true), false for
 	 * nodes being created from loaded Robot XML file.
 	 */
-	public static void addRobotNodes(SimulationSpecification simulationSpecification, boolean fromSimulationXMLFile){
+	public static void addRobotNodes(SimulationSpecification simulationSpecification, boolean fromSimulationXMLFile, boolean includeIds){
 		
 		DefaultTreeModel model = (DefaultTreeModel)jTreeSimulation.getModel();
 		DefaultMutableTreeNode robotsNode = (DefaultMutableTreeNode) model.getChild(model.getRoot(),2);
 		
 		SimulationSpecification simulationSpec =  simulationSpecification;
 		
-		if (fromSimulationXMLFile){
+		if (fromSimulationXMLFile &&includeIds){//Robots loaded from simulation XML file
 			robotNumber =0;//reset
 			
 			robotsNode.removeAllChildren();			
@@ -246,22 +246,31 @@ public class SimulationTab extends Tabs {
 		         //simulationSpecification.getRobotsInSimulation().get(robotNr-1).setIdsModules(idsModules);
 			}
 			
-		}else{
+		} else if(fromSimulationXMLFile==false && includeIds==true ){// robots loaded from Robot XML
 			robotNumber++;
+			int amountRobots = simulationSpec.getRobotsInSimulation().size();
+			int amountModules = simulationSpec.getRobotsInSimulation().get(amountRobots-1).getAmountModules();
+		
+			idsModules.clear();
+       
+			for (int id=lastID+1;id<lastID+amountModules+1;id++){
+       		 idsModules.add(id);
+       		 System.out.println("ID:"+ id);
+       	 }
+       	 lastID = idsModules.get(idsModules.size()-1);
+       	 //System.out.println("Last: "+ lastID );
+       	 simulationSpec.getRobotsInSimulation().get(amountRobots-1).setIdsModules(idsModules);
+       	DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(SimulationTabTreeNodes.ROBOT_NR.getUserFriendlyName()+"."+robotNumber);
+		model.insertNodeInto(thirdNodeHierarchyRobot, robotsNode, robotsNode.getChildCount());
+    
+        	
+		}else if(fromSimulationXMLFile==false && includeIds==false){//Refreshes  node structure after modular robot was deleted.
+			robotNumber--;
+			for (int robotNumber=1;robotNumber<simulationSpec.getRobotsInSimulation().size()+1;robotNumber++){
+			
 			DefaultMutableTreeNode thirdNodeHierarchyRobot =  new DefaultMutableTreeNode(SimulationTabTreeNodes.ROBOT_NR.getUserFriendlyName()+"."+robotNumber);
-        	//DefaultTreeModel model = (DefaultTreeModel)jTreeSimulation.getModel();
-        	model.insertNodeInto(thirdNodeHierarchyRobot, robotsNode, robotsNode.getChildCount());
-        	
-        /*	int amountModules = simulationSpecification.getRobotsInSimulation().get(robotNumber-1).getAmountModules();
-        	 List<Integer> newIdsModules = new ArrayList<Integer>() ;
-        	 for (int id=lastID+1;id<lastID+amountModules+1;id++){
-        		 newIdsModules.add(id);		        		 
-        	 }
-        	 idsModules.clear();
-        	 idsModules.addAll(newIdsModules);
-        	 lastID = idsModules.get(idsModules.size()-1);
-        	 simulationSpecification.getRobotsInSimulation().get(robotNumber-1).setIdsModules(newIdsModules);*/
-        	
+			model.insertNodeInto(thirdNodeHierarchyRobot, robotsNode, robotsNode.getChildCount());
+			}
 		}
 		
 		 SimulationTabController.setSimulationSpecification(null);
@@ -274,6 +283,7 @@ public class SimulationTab extends Tabs {
 		jTreeSimulationExpandAllNodes();
 		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);		
 	} 
+	
 	
 	/**
 	 * Expands all nodes in the simulation tree. 
