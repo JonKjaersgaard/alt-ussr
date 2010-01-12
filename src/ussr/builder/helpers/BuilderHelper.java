@@ -5,15 +5,12 @@ import java.util.ArrayList;
 import java.util.Random;
 import ussr.model.Module;
 import ussr.physics.PhysicsModuleComponent;
-import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import com.jme.math.Matrix3f;
 import com.jme.scene.Spatial;
 import com.jme.scene.TriMesh;
-import com.jme.scene.Spatial.CullHint;
 import com.jmex.physics.DynamicPhysicsNode;
-import com.jmex.physics.PhysicsSpace;
 
 /**
  * The main responsibility of this class is to house common methods and constants used frequently
@@ -168,10 +165,10 @@ public class BuilderHelper {
 		for (int compon=0; compon<amountComponents;compon++){			
 			removeModuleComponent(moduleToDelete.getComponent(compon));  
 		}
-		//if (single){
+		if (single){
 		/*Remove the module from the internal list of the modules in USSR*/
 		selectedModule.getSimulation().getModules().remove(moduleToDelete);
-		//}
+		}
 	}
 
 
