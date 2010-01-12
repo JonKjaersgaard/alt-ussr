@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import ussr.aGui.GeneralController;
+import ussr.aGui.MainFrameSeparate;
+import ussr.aGui.MainFrames;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.constructionTabs.AssignableControllersEditors;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
@@ -129,6 +131,10 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 	
 	public void setRemoteSimulationToNull()throws RemoteException {
 		GeneralController.setRemotePhysicsSimulation(null);
+		if (MainFrames.getMainFrame() != null){
+			MainFrameSeparate.setMainFrameSeparateEnabled(false);
+			SimulationTab.setTabVisible(false);
+		}	
 	}
 
 
