@@ -57,7 +57,7 @@ public class MainFrameSeparateController extends GeneralController {
 			case 0://YES
 				FileChooserXMLController.setIncludeSimulationTermination(true);
 				FileChooserXMLController.setIncludeStartNewSimulation(false);
-				saveActionPerformed(MainFrames.fcSaveFrame);
+				saveActionPerformed(FileChooserFrameInter.FC_FRAME_SAVE_SIMULATION);
 				break;
 			case 1://NO
 				terminateSimulation();
@@ -489,7 +489,7 @@ public class MainFrameSeparateController extends GeneralController {
 			case 0://YES
 				FileChooserXMLController.setIncludeSimulationTermination(true);
 				FileChooserXMLController.setIncludeStartNewSimulation(true);
-				saveActionPerformed(MainFrames.fcSaveFrame);
+				saveActionPerformed(FileChooserFrameInter.FC_FRAME_SAVE_SIMULATION);
 				break;
 			case 1://NO
 				terminateSimulation();

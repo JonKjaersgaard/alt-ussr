@@ -117,7 +117,7 @@ public abstract class Tabs implements TabsInter {
 
 		FileChooserFrameInter fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
 		return MainFrames.initSaveButton(fcSaveFrame);*/
-		return MainFrames.initSaveButton(FileChooserFrame.FC_FRAME_SAVE_ROBOT);
+		return MainFrames.initSaveButton(FileChooserFrameInter.FC_FRAME_SAVE_ROBOT);
 	}
 	
 	public static JButton initOpenButton(){
@@ -125,7 +125,7 @@ public abstract class Tabs implements TabsInter {
 		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);		
 		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);*/
 		//return MainFrames.initOpenButton(fcOpenFrame);
-		return MainFrames.initOpenButton(FileChooserFrame.FC_FRAME_OPEN_ROBOT);
+		return MainFrames.initOpenButton(FileChooserFrameInter.FC_FRAME_OPEN_ROBOT);
 	}
 	
 }

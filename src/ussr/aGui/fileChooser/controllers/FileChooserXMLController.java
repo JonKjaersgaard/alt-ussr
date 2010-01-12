@@ -100,7 +100,7 @@ public class FileChooserXMLController extends FileChooserController {
 				startSimulation(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);
 			}else if(includeSimulationTermination==true&&includeStartNewSimulation==false){
 				terminateSimulation();
-				MainFrames.fcOpenFrame.activate();
+				FileChooserFrameInter.FC_FRAME_OPEN_SIMULATION.activate();
 			}
 			
 		}		

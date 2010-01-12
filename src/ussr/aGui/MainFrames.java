@@ -35,11 +35,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	protected static Insets insets; 
 	
 	/**
-	 * File choosers in the form of Open and Save dialogs respectively.
-	 */
-	public static FileChooserFrameInter fcOpenFrame,fcSaveFrame;
-
-	/**
 	 * Container for keeping main GUI window components, the height of which determine the height of the window.  
 	 */
 	protected ArrayList<javax.swing.JComponent> components = new ArrayList<javax.swing.JComponent>();
@@ -54,7 +49,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	public MainFrames(){
 		filterPopulateTabs();
-		initFileChoosers ();// initialize visual appearance of file choosers. Why here, because then they are responding faster to user generated events, because they are compiled earlier).
 		initFrameProperties();
 		/*Starts simulation adapter, which in turn starts simulation server (only once) */	
 		new GUIRemoteSimulationAdapter();
@@ -78,18 +72,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 			allTabs.add(currentTab);
 		}
 	}	
-
-	/**
-	 * Initializes file choosers in forms: 1)Open, 2)Save and 3) Save as dialog.
-	 */
-	public void initFileChoosers () {	
-
-		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
-		fileDescriptionsAndExtensions.put(FileChooserFrameInter.DEFAULT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
-        
-		fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrame.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);	
-		fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrame.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
-	}
 
 	/**
 	 * Initializes the visual appearance the main GUI windows.
@@ -169,7 +151,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuItemOpenSimulation.setDisabledIcon(MainFrameIcons.OPEN_SMALL_DISABLED.getImageIcon());		
 		jMenuItemOpenSimulation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.openActionPerformed(fcOpenFrame);
+				MainFrameSeparateController.openActionPerformed(FileChooserFrameInter.FC_FRAME_OPEN_SIMULATION);
 			}
 		});
 
@@ -182,7 +164,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuItemSave.setDisabledIcon(MainFrameIcons.SAVE_SMALL_DISABLED.getImageIcon());	
 		jMenuItemSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.saveActionPerformed(fcSaveFrame);
+				//MainFrameSeparateController.saveActionPerformed(fcSaveFrame);
+				MainFrameSeparateController.saveActionPerformed(FileChooserFrameInter.FC_FRAME_SAVE_SIMULATION);
+				
 			}
 		});
 
@@ -295,16 +279,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		
 		jMenuHide.add(jCheckBoxMenuItemDisplayForHints);
 		
-		
-		/*jCheckBoxMenuItemHideAll.setText(MainFrameComponentsText.DISPLAY_FOR_HINTS.getUserFriendlyName());
-		jCheckBoxMenuItemHideAll.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.jCheckBoxMenuItemHideAllActionPerformed(jCheckBoxMenuItemHideAll);
-				mainFrame.repaint();
-			}
-		});
-		
-		jMenuHide.add(jCheckBoxMenuItemHideAll);*/
 		jMenuWindow.add(jMenuHide);
 		
 		jMenuBarMain.add(jMenuWindow);
@@ -383,14 +357,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jButtonNewSimulation);
 		
-		//jToolBarGeneralControl.add(initOpenButton(fcOpenFrame));
-		//jToolBarGeneralControl.add(initOpenButton(FileChooserFrameInter.FC_FRAME_OPEN_SIMULATION));
-		
-		jToolBarGeneralControl.add(initOpenButton(FileChooserFrame.FC_FRAME_OPEN_SIMULATION));
-		//jToolBarGeneralControl.add(initSaveButton(fcSaveFrame));
-		jToolBarGeneralControl.add(initSaveButton(FileChooserFrame.FC_FRAME_SAVE_SIMULATION));
-		
-		//jToolBarGeneralControl.add(initSaveButton(FileChooserFrameInter.FC_FRAME_SAVE_SIMULATION));
+		jToolBarGeneralControl.add(initOpenButton(FileChooserFrameInter.FC_FRAME_OPEN_SIMULATION));
+		jToolBarGeneralControl.add(initSaveButton(FileChooserFrameInter.FC_FRAME_SAVE_SIMULATION));
 		
 		jButtonReloadSimulation.setToolTipText(MainFrameComponentsText.RELOAD_CURRENT_SIMULATION.getUserFriendlyName());
 		jButtonReloadSimulation.setIcon(MainFrameIcons.RELOAD_CURRENT_SIMULATION.getImageIcon());

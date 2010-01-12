@@ -51,10 +51,7 @@ public class SimulationTabController extends TabsControllers {
 	public static void jTreeItemSelectedActionPerformed(String nameSelectedNode) {
 		selectedNodeName = nameSelectedNode;
 
-		SimulationTab.getJPanelEditor().removeAll();
-		SimulationTab.getJPanelEditor().revalidate();
-		SimulationTab.getJPanelEditor().repaint();	
-
+		SimulationTab.cleanJPanelEditor();
 
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.fill = GridBagConstraints.CENTER;
@@ -312,7 +309,7 @@ public class SimulationTabController extends TabsControllers {
 	public static void setValuejPhysicsSimulationControllerStepFactor(JSpinner physicsSimulationControllerStepFactor) {
 		physicsSimulationControllerStepFactor.setValue(simulationSpecification.getConverter().convertPhysicsSimulationControllerStepFactor());
 	}
-	
+
 	/**
 	 * Sets the value of plane material in the component of edit value panel,according to the value of remote simulation parameter.
 	 * @param comboBoxPlaneMaterial,the component in the edit value panel.
@@ -356,29 +353,10 @@ public class SimulationTabController extends TabsControllers {
 
 		int amountModules = simulationSpecification.getRobotsInSimulation().get(robotNr-1).getAmountModules();
 		int firstModuleId = simulationSpecification.getRobotsInSimulation().get(robotNr-1).getIdsModules().get(0);
-		System.out.println("First: "+ firstModuleId);
-		System.out.println("Modules: "+ amountModules);
-	/*	if(robotNr==1){
-		moveRobot(0,amountModules,changeInPosition);
-		}else{*/
-			
-			moveRobot(firstModuleId,firstModuleId+amountModules,changeInPosition);
-		//}
 
-	/*	if (robotNr==1){			
-			moveRobot(0,amountFirstRobotModules,changeInPosition); 
-		}else{
-			int amountAllRobotModules=0;
-
-			while(robotNr!= 0){
-
-				amountAllRobotModules =amountAllRobotModules+ simulationSpecification.getRobotsInSimulation().get(robotNr-1).getAmountModules();
-				robotNr--;
-			}
-			moveRobot(amountAllRobotModules-amountFirstRobotModules,amountAllRobotModules,changeInPosition);
-		}*/
+		moveRobot(firstModuleId,firstModuleId+amountModules,changeInPosition);
 	}
-	
+
 	/**
 	 * The step for moving modular robot along each coordinate axis.
 	 */
@@ -391,7 +369,7 @@ public class SimulationTabController extends TabsControllers {
 	public static void setjSpinnerCoordinateValue(float spinnerStepValue) {
 		jSpinnerCoordinateStepValue = spinnerStepValue;
 	}
-	
+
 	/**
 	 * Moves the robot to new position depending on the change in position.
 	 * @param firstModuleId, the id of first module of modular robot.
@@ -419,47 +397,26 @@ public class SimulationTabController extends TabsControllers {
 		iconLabel.setIcon(TextureDescriptions.valueOf(selectedTexture).getImageIcon());
 	}
 
+	/**
+	 * Deletes modular robot selected in the simulation tree. 
+	 */
 	public static void jButtonDeleteRobotActionPerformed() {
 
 		DefaultTreeModel model = (DefaultTreeModel)SimulationTab.getJTreeSimulation().getModel();
 		DefaultMutableTreeNode robotsNode = (DefaultMutableTreeNode) model.getChild(model.getRoot(),2);
-		
-		System.out.println("Selected Robot nr."+ selectedRobotNr);
-        		
-		for (int index=0;index<simulationSpecification.getRobotsInSimulation().size();index++){
-			System.out.println("Size"+index + " :" +simulationSpecification.getRobotsInSimulation().get(index).getIdsModules().size() );
-		}
-		
-		System.out.println("ID:"+ simulationSpecification.getRobotsInSimulation().get(selectedRobotNr-1).getIdsModules().get(0));
+
 		try {
 			remotePhysicsSimulation.getSimulationTabControl().deleteModules(simulationSpecification.getRobotsInSimulation().get(selectedRobotNr-1).getIdsModules());
 		} catch (RemoteException e) {
 			throw new Error("Some");
 		}
 		simulationSpecification.getRobotsInSimulation().remove(selectedRobotNr-1);
-		
-
 		robotsNode.removeAllChildren();
-		//SimulationTab.setRobotNumber(0);//reset
-		SimulationSpecification spec = simulationSpecification;
-		SimulationTab.addRobotNodes(spec, false,false);
+		SimulationTab.addRobotNodes(simulationSpecification, false,false);
 		model.reload();
+	    SimulationTab.cleanJPanelEditor();
+	    SimulationTab.getJPanelEditor().add(JComponentsFactory.createNewLabel("This robot was deleted"));
 		SimulationTab.jTreeSimulationExpandAllNodes();
-		
-		//robotsNode.remove(selectedRobotNr-1);
-		
-		
-		
-		
-		/*model.reload();
-		SimulationTab.jTreeSimulationExpandAllNodes();
-
-		for (int childNr=0;childNr<robotsNode.getChildCount();childNr++){
-			DefaultMutableTreeNode currentChild = (DefaultMutableTreeNode)robotsNode.getChildAt(childNr);
-			//STOPPED HERE FIND THE NAME OF THE CHILD 
-			//System.out.println("Path:"+currentChild.);
-		}*/
-
 	}
 
 	/**
