@@ -53,7 +53,7 @@ public enum PlaneMaterials {
 	 * Returns the array of objects representing the names of enumerations in users friendly format.
 	 * @return the array of objects representing the names of enumerations in users friendly format.
 	 */
-	public static Object[] getAllInUserFriendlyFromat(){
+	public static Object[] getAllInUserFriendlyFormat(){
  		Vector <String> namesTetxtures = new Vector<String>();
  		for (int textureNr=0;textureNr<values().length;textureNr++){
  			namesTetxtures.add(values()[textureNr].getUserFriendlyName()) ;

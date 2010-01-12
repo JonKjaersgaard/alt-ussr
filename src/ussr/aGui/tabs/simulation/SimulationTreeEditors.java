@@ -603,7 +603,7 @@ public class SimulationTreeEditors{
 	public static javax.swing.JPanel addPlaneMaterialEditor() {
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jComboBoxPlaneMaterial = new javax.swing.JComboBox(); 
-		jComboBoxPlaneMaterial.setModel(new DefaultComboBoxModel(PlaneMaterials.getAllInUserFriendlyFromat()));
+		jComboBoxPlaneMaterial.setModel(new DefaultComboBoxModel(PlaneMaterials.getAllInUserFriendlyFormat()));
 		jComboBoxPlaneMaterial.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				PlaneMaterials selectedPlaneMaterial = PlaneMaterials.valueOf(PlaneMaterials.toJavaUSSRConvention(jComboBoxPlaneMaterial.getSelectedItem().toString()));

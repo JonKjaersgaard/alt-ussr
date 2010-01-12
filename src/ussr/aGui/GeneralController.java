@@ -33,13 +33,13 @@ public abstract class GeneralController {
 	 * Starts new remote simulation from XML file in separate thread.
 	 * @param simulationXMLFileDirectory, XML file directory of current simulation.
 	 */
-	public static void startSimulation(final String simulationXMLFileDirectory ){
+	public static void startSimulation(final String simulationXMLFileDirectory ){		
 		new Thread() {
 			public void run() {
 				try {
 					GUIRemoteSimulationAdapter.runSimulation(simulationXMLFileDirectory);
 				} catch (IOException e) {
-					//throw new Error("Failed to run simulation file located at "+ simulationXMLFileDirectory+ " , due to remote exception");
+					this.interrupt();
 				}
 			}
 		}.start();

@@ -198,7 +198,7 @@ public class ConstructRobotTabController extends TabsControllers{
 	 * Initializes the tool for adding new modules on selected connectors of the module in interest in simulation environment. 	
 	 */
 	public static void jButtonOnSelectedConnectorActionPerformed() {
-		ConstructRobotTab.adaptToconstructionToolSelected();		
+		ConstructRobotTab.adaptToSelectedConstructionTool();		
 		try {
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR);
 		} catch (RemoteException e) {
@@ -219,7 +219,7 @@ public class ConstructRobotTabController extends TabsControllers{
 	 * @param comboBoxNrConnectorsConstructionTool, JComboBox containing the number of connectors.
 	 */
 	public static void jComboBoxNrConnectorsConstructionToolActionPerformed(JComboBox comboBoxNrConnectorsConstructionTool) {
-		ConstructRobotTab.adaptToconstructionToolSelected();
+		ConstructRobotTab.adaptToSelectedConstructionTool();
 		chosenConnectorNr = Integer.parseInt(comboBoxNrConnectorsConstructionTool.getSelectedItem().toString());
 		refreshSelectionColorConnectors();
 
@@ -259,7 +259,7 @@ public class ConstructRobotTabController extends TabsControllers{
 	 * Initializes the tool for adding new modules to all connectors of selected module.
 	 */
 	public static void jButtonConnectAllModulesActionPerformed() {
-		ConstructRobotTab.adaptToconstructionToolSelected();
+		ConstructRobotTab.adaptToSelectedConstructionTool();
 
 		try {
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.NEW_MODULES_ON_ALL_CONNECTORS);
@@ -277,7 +277,7 @@ public class ConstructRobotTabController extends TabsControllers{
 	 * Initializes the tool for moving new module from connector to another connector.
 	 */
 	public static void jButtonJumpFromConnToConnectorActionPerformed() {
-		ConstructRobotTab.adaptToconstructionToolSelected();		
+		ConstructRobotTab.adaptToSelectedConstructionTool();		
 
 		try {
 			builderControl.setConstructionToolSpecPicker(ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON,0);
@@ -357,7 +357,7 @@ public class ConstructRobotTabController extends TabsControllers{
 			}else{
 				throw new Error ("Modular robot type "+modularRobotName+ "is not supported yet" );
 			}
-			ConstructRobotTab.adaptToconstructionToolSelected();	
+			ConstructRobotTab.adaptToSelectedConstructionTool();	
 
 
 			try {
@@ -433,7 +433,7 @@ public class ConstructRobotTabController extends TabsControllers{
 			//ConstructRobotTab.setEnabledButtonsArrows(true);	
 			break;
 		case NEW_MODULE_ON_SELECTED_CONNECTOR:
-			ConstructRobotTab.adaptToconstructionToolSelected();
+			ConstructRobotTab.adaptToSelectedConstructionTool();
 			break;			
 		default: throw new Error ("The tool named as "+ chosenTool.toString() + " is not supported yet.");
 		}

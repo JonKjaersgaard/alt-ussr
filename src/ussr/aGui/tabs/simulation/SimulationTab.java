@@ -299,11 +299,8 @@ public class SimulationTab extends Tabs {
 	 * Sets the tab visible or not.
 	 * @param visible, true for visible
 	 */
-	public static void setTabVisible(boolean visible) {		
-		//jScrollPaneTreeSimulation.setVisible(visible);
-		//jPanelEditor.setVisible(visible);
+	public static void setTabVisible(boolean visible) {			
 		jSplitPaneSimulationTreeAndEditor.setVisible(visible);
-
 		hintPanel.setVisible(visible);	
 		hintPanel.setText(HintsSimulationTab.DEFAULT.getHintText());
 	}

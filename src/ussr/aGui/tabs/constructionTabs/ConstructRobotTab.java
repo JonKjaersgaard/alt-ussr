@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -19,6 +20,7 @@ import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.enumerations.ATRONStandardRotations;
+import ussr.builder.enumerations.ATRONTypesModules;
 import ussr.builder.enumerations.CKBotStandardRotations;
 import ussr.builder.enumerations.MTRANStandardRotations;
 import ussr.builder.enumerations.OdinTypesModules;
@@ -439,6 +441,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jComboBoxConstructionDefaultModuleType.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				setDefaultConstructionModuleType(jComboBoxConstructionDefaultModuleType.getSelectedItem().toString());
+				System.out.println("Construction module:"+ jComboBoxConstructionDefaultModuleType.getSelectedItem().toString());
 			}
 		});
 		
@@ -779,31 +782,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		return jButtonJumpFromConnToConnector;
 	}
 	
-	/**
-	 * Adapts tab to ATRON modular robot
-	 */
-	public static void adaptTabToATRON(){
-		jButtonVariateModuleProperties.setEnabled(false);
-		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel(ATRONStandardRotations.getAllInUserFriendlyFormat()));	
-		jComboBoxNrConnectorsConstructionTool.setRenderer(ATRON_RENDERER);
-		jComboBoxNrConnectorsConstructionTool.setModel(new javax.swing.DefaultComboBoxModel(SupportedModularRobots.ATRON_CONNECTORS));
-		jComboBoxConstructionDefaultModuleType.setVisible(false);
-	}
-	
-	
-	/**
-	 * Adapts tab to MTRAN modular robot
-	 */
-	public static void adaptTabToMTRAN(){
-		jButtonVariateModuleProperties.setEnabled(true);
-		jButtonOppositeRotation.setEnabled(false);
-		jButtonMoveModule.setEnabled(false);
-		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel(MTRANStandardRotations.values()));
-		jComboBoxNrConnectorsConstructionTool.setRenderer(MTRAN_RENDERER);
-		jComboBoxNrConnectorsConstructionTool.setModel(new javax.swing.DefaultComboBoxModel(SupportedModularRobots.MTRAN_CONNECTORS));
-		jComboBoxConstructionDefaultModuleType.setVisible(false);
-	}
-	
+
 	/**
 	 * The module type to use as default construction (new module). So far is relevant only for Odin.
 	 */
@@ -827,6 +806,35 @@ public class ConstructRobotTab extends ConstructionTabs {
 		
 	}	
 	
+	/**
+	 * Adapts tab to ATRON modular robot
+	 */
+	public static void adaptTabToATRON(){
+		Object selectedItem = jComboBoxConstructionDefaultModuleType.getSelectedItem();
+		jComboBoxConstructionDefaultModuleType.setVisible(true);
+		jComboBoxConstructionDefaultModuleType.setModel(new javax.swing.DefaultComboBoxModel(ATRONTypesModules.getAllInUserFriendlyFromat()));
+		jComboBoxConstructionDefaultModuleType.setSelectedItem(selectedItem);
+		
+		jButtonVariateModuleProperties.setEnabled(false);
+		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel(ATRONStandardRotations.getAllInUserFriendlyFormat()));	
+		jComboBoxNrConnectorsConstructionTool.setRenderer(ATRON_RENDERER);
+		jComboBoxNrConnectorsConstructionTool.setModel(new javax.swing.DefaultComboBoxModel(SupportedModularRobots.ATRON_CONNECTORS));
+		//jComboBoxConstructionDefaultModuleType.setVisible(false)
+	}
+	
+	
+	/**
+	 * Adapts tab to MTRAN modular robot
+	 */
+	public static void adaptTabToMTRAN(){
+		jButtonVariateModuleProperties.setEnabled(true);
+		jButtonOppositeRotation.setEnabled(false);
+		jButtonMoveModule.setEnabled(false);
+		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel(MTRANStandardRotations.values()));
+		jComboBoxNrConnectorsConstructionTool.setRenderer(MTRAN_RENDERER);
+		jComboBoxNrConnectorsConstructionTool.setModel(new javax.swing.DefaultComboBoxModel(SupportedModularRobots.MTRAN_CONNECTORS));
+		jComboBoxConstructionDefaultModuleType.setVisible(false);
+	}
 	
 	/**
 	 * Adapts tab for Odin modular robot
@@ -862,7 +870,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 	/**
 	 * Disables and enables Gui components in case when any of construction tools are selected(chosen).
 	 */
-	public static void adaptToconstructionToolSelected(){		
+	public static void adaptToSelectedConstructionTool(){		
 		jButtonAvailableRotationsLoop.setEnabled(false);
 		jComboBoxStandardRotations.setEnabled(false);
 		jButtonOppositeRotation.setEnabled(true);

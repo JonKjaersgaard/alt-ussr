@@ -119,7 +119,7 @@ public class MainFrameSeparate extends MainFrames {
 		);	
 		this.addWindowListener (new WindowAdapter() {			
 			public void windowClosing(WindowEvent event) {
-				MainFrames.setMainFrame(null);
+				MainFrames.setMainFrame(null);//flag to indicate that GUI is closed. Is used in simulation side.
 				/*Special exit, in order to check if remote simulation is still running */
 				MainFrameSeparateController.jMenuItemExitActionPerformed();                     
 			}
@@ -152,7 +152,10 @@ public class MainFrameSeparate extends MainFrames {
 				setMainFrameSeparateEnabled(false);
 			}
 		}.start();
-		//});		
+		//});
+		
+		
+		
 	}
 
 	/**
@@ -162,7 +165,7 @@ public class MainFrameSeparate extends MainFrames {
 	@Override
 	public void activate() {
 		MainFrameSeparate.main(null);
-	}
+		}
 
 	/**
 	 * Controls custom enabling of the main frame. Disables components so that the user have to load the simulation from xml file or start new simulation first. 
