@@ -38,7 +38,8 @@ public class MainFrameSeparateController extends GeneralController {
 	 */
 	public static void jMenuItemExitActionPerformed() {	
 		terminateSimulation();
-		System.exit(0);//terminate GUI		
+		System.exit(0);//terminate GUI	
+		
 	} 
 
 	/**

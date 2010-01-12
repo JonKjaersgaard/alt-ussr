@@ -803,11 +803,26 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToggleButtonMaximizeInteraction.setSelected(selected);
 	}
 	
+	/**
+	 * Returns current instance of main frame (GUI window).
+	 * @return current instance of main frame (GUI window).
+	 */
 	public static MainFrames getMainFrame() {
 		return mainFrame;
 	}
 	
 	
+	/**
+	 *  Sets current instance of main frame (GUI window).
+	 * @param mainFrame, current instance of main frame (GUI window).
+	 */
+	public static void setMainFrame(MainFrames mainFrame) {
+		MainFrames.mainFrame = mainFrame;
+	}
+
+
+
+
 	/*Declaration of MainFrame components*/
 	private static javax.swing.JMenuBar jMenuBarMain;
 	private javax.swing.JMenu jMenuSimulation,jMenuRender,jMenuWindow,jMenuHide;

@@ -119,6 +119,7 @@ public class MainFrameSeparate extends MainFrames {
 		);	
 		this.addWindowListener (new WindowAdapter() {			
 			public void windowClosing(WindowEvent event) {
+				MainFrames.setMainFrame(null);
 				/*Special exit, in order to check if remote simulation is still running */
 				MainFrameSeparateController.jMenuItemExitActionPerformed();                     
 			}
