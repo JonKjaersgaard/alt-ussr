@@ -31,10 +31,13 @@ import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
+import ussr.model.Controller;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
+import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONBuilder;
+import ussr.samples.atron.simulations.ATRONCarController1;
 import ussr.samples.ckbot.CKBotSimulation;
 import ussr.samples.mtran.MTRANSimulation;
 import ussr.samples.odin.OdinBuilder;
@@ -105,8 +108,7 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 		CommonOperationsTemplate comMTRAN = new MTRANOperationsTemplate(jmeSimulation);
 		CommonOperationsTemplate comOdin = new OdinOperationsTemplate(jmeSimulation);
 		CommonOperationsTemplate comCKBot = new CKBotOperationsTemplate(jmeSimulation);
-		
-		
+	  
 		if (moduleExists(defaultPosition)){//do nothing
 		}else{ 
 		switch (supportedModularRobot){
@@ -433,7 +435,5 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 			return true;
 		}
 		return false;
-		
 	}
-	
 }
