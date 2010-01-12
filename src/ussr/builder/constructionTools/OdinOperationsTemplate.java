@@ -84,7 +84,7 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 			try {
 				userFriendlyModuleType = RemotePhysicsSimulationImpl.getGUICallbackControl().getDefaultConstructionModuleType();
 			} catch (RemoteException e) {
-				throw new Error("Failed  adapt GUI to module selected in simulation environment, due to remote exception.");
+				throw new Error("Failed  to receive module type, due to remote exception.");
 			}
 			String undelyingLogicModuleType = OdinTypesModules.getUnderlyingLogicNameFromUserFriendly(userFriendlyModuleType);
 			odinModule = createNewOdinModule(undelyingLogicModuleType);
@@ -168,14 +168,7 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 			colorsComponents.add(Color.BLACK); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
 			addNewModule(new ModulePosition(ODIN_SPRING+BuilderHelper.getRandomInt(),ODIN_SPRING,modulePosition,moduleRotation),colorsComponents,colorsConectors);			
-		}
-//FIXME	 (SOFAR IS NOT NEEDED) PROBLEM java.lang.Error: Illegal module type: OdinTubeRobotType:OdinTube
-		/*else if (selectedModuleType.equalsIgnoreCase("OdinSpring")){
-		   BuilderHelper.deleteModule(selectedModule);						
-			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.WHITE);colorsComponents.add(Color.WHITE);			
-			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);
-			addNewModuleOneMore(new ModulePosition("newTube","OdinTube",modulePosition,moduleRotation),colorsComponents,colorsConectors);
-		}*/else if (selectedModuleType.equalsIgnoreCase(ODIN_SPRING)){
+		}else if (selectedModuleType.equalsIgnoreCase(ODIN_SPRING)){
 			BuilderHelper.deleteModule(selectedModule,true);
 			colorsComponents.add(Color.WHITE); colorsComponents.add(Color.BLUE);colorsComponents.add(Color.WHITE); 	colorsComponents.add(Color.WHITE);			
 			colorsConectors.add(Color.WHITE); colorsConectors.add(Color.WHITE);

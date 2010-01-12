@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ussr.aGui.MainFrameSeparateController;
+import ussr.builder.enumerations.ATRONTypesModules;
+import ussr.builder.enumerations.OdinTypesModules;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
+import ussr.remote.facade.RemotePhysicsSimulationImpl;
 import ussr.samples.atron.ATRON;
 
 /**
@@ -58,8 +61,29 @@ public class ATRONOperationsTemplate extends CommonOperationsTemplate{
 	 */	
 	@Override
 	public Module createNewModule(Module selectedModule) {
-		Module module = addNewCopyModule(selectedModule);
-		return module;
+		String userFriendlyModuleType ="";
+		try {
+			userFriendlyModuleType = RemotePhysicsSimulationImpl.getGUICallbackControl().getDefaultConstructionModuleType();
+		} catch (RemoteException e) {
+			throw new Error("Failed  to receive module type, due to remote exception.");
+		}
+		String moduleType = ATRONTypesModules.getModuleTypeFromUserFriendly(userFriendlyModuleType);
+		
+		System.out.println("moduleType:"+moduleType);
+		VectorDescription position = selectedModule.getPhysics().get(0).getPosition(); 
+		RotationDescription rotation = selectedModule.getPhysics().get(0).getRotation();	
+		
+		List<Color> colorsComponents = selectedModule.getColorList();			
+		ArrayList<Color> colorsConnectors = BuilderHelper.getColorsConnectors(selectedModule);
+		String selectedModuleName = selectedModule.getProperty(BuilderHelper.getModuleNameKey());
+		ModulePosition modulePosition = new ModulePosition(selectedModuleName+ BuilderHelper.getRandomInt(),moduleType,position,rotation);	
+		//Module newModule = this.simulation.createModule(modulePosition,true);
+		Module newModule = addNewModule(modulePosition,colorsComponents,colorsConnectors);	
+		//newModule.setColorList(colorsComponents);		
+		//BuilderHelper.setColorsConnectors(newModule,colorsConnectors);
+		
+		//Module module = addNewCopyModule(selectedModule);
+		return newModule;
 	}
 
 	/**

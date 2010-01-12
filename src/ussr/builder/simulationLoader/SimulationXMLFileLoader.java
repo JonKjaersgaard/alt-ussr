@@ -11,11 +11,14 @@ import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 import ussr.builder.saveLoadXML.XMLTagsUsed;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
+import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.samples.DefaultSimulationSetup;
 import ussr.samples.GenericSimulation;
+import ussr.samples.atron.ATRON;
+import ussr.samples.atron.simulations.ATRONCarController1;
 
 
 /**
@@ -115,6 +118,60 @@ public class SimulationXMLFileLoader extends GenericSimulation {
             	String morphology = simulationSpecification.getRobotsInSimulation().get(robotNr).getMorphologyLocation();
             	 robotXMLLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,morphology);
             }
+            
+            ATRON robot = new ATRON() {
+                public Controller createController() {
+                    return new ATRONCarController1();
+                }
+            };
+            
+            ATRON robot1 = new ATRON() {
+                public Controller createController() {
+                    return new ATRONCarController1();
+                }
+            };
+            ATRON robot2 = new ATRON() {
+                public Controller createController() {
+                    return new ATRONCarController1();
+                }
+            };
+            ATRON robot3 = new ATRON() {
+                public Controller createController() {
+                    return new ATRONCarController1();
+                }
+            };
+            ATRON robot4 = new ATRON() {
+                public Controller createController() {
+                    return new ATRONCarController1();
+                }
+            };
+            
+            ATRON robot5 = new ATRON() {
+                public Controller createController() {
+                    return new ATRONCarController1();
+                }
+            };
+            
+            ATRON robot6 = new ATRON() {
+                public Controller createController() {
+                    return new ATRONCarController1();
+                }
+            };
+            robot.setSuper();
+            simulation.setRobot(robot, "ATRON super");
+            robot1.setRealistic();
+            simulation.setRobot(robot1, "ATRON realistic");
+            robot2.setSmooth();
+            simulation.setRobot(robot2, "ATRON smooth");       
+            robot6.setRubberRing(); 
+            simulation.setRobot(robot6, "ATRON rubberRing");
+            robot3.setGentle();
+            simulation.setRobot(robot3, "ATRON gentle");
+            robot4.setRadio();
+            simulation.setRobot(robot4, "ATRON radio");            
+            robot5.setHalfDuplex();
+            simulation.setRobot(robot5, "ATRON halfDuplex");
+            
             
             simulation.setWorld(world); 
         }  else{
