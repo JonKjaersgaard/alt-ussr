@@ -25,7 +25,7 @@ public class AssignableControllersEditors  {
 		javax.swing.JPanel jPanelEditor = new javax.swing.JPanel();
 		jSpinnerAtronSpeedRotateContinuous = new javax.swing.JSpinner();
 		jSpinnerAtronSpeedRotateContinuous.setPreferredSize(new Dimension(60,20));
-		jSpinnerAtronSpeedRotateContinuous.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(-1.0f), Float.valueOf(-1.0f), Float.valueOf(1.0f), Float.valueOf(0.1f)));
+		jSpinnerAtronSpeedRotateContinuous.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(-0.05f), Float.valueOf(-1.0f), Float.valueOf(1.0f), Float.valueOf(0.1f)));
 		jSpinnerAtronSpeedRotateContinuous.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
             	AssignControllerTabController.activateAssignmentTool(AssignableControllers.ROTATE_CONTINUOUS);
@@ -43,7 +43,7 @@ public class AssignableControllersEditors  {
 		javax.swing.JPanel jPanelEditor = new javax.swing.JPanel();
 		jSpinnerAtronRotateDegrees = new javax.swing.JSpinner();
 		jSpinnerAtronRotateDegrees.setPreferredSize(new Dimension(60,20));
-		jSpinnerAtronRotateDegrees.setModel(new javax.swing.SpinnerNumberModel(45, -360, 360, 1));
+		jSpinnerAtronRotateDegrees.setModel(new javax.swing.SpinnerNumberModel(2, -360, 360, 1));
 		jSpinnerAtronRotateDegrees.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
             	AssignControllerTabController.activateAssignmentTool(AssignableControllers.ROTATE_DEGREES);

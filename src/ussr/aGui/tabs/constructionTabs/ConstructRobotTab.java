@@ -438,6 +438,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jComboBoxConstructionDefaultModuleType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 		jComboBoxConstructionDefaultModuleType.setPreferredSize(new java.awt.Dimension(90, 28));
 		jComboBoxConstructionDefaultModuleType.setVisible(false);
+		jComboBoxConstructionDefaultModuleType.setSelectedIndex(0);
 		jComboBoxConstructionDefaultModuleType.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				setDefaultConstructionModuleType(jComboBoxConstructionDefaultModuleType.getSelectedItem().toString());
