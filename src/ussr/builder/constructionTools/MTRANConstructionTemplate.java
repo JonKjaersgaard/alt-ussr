@@ -3,8 +3,8 @@ package ussr.builder.constructionTools;
 import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 
-import ussr.builder.enumerations.MTRANStandardRotations;
 import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.builder.enumerations.rotations.MTRANStandardRotations;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.ModuleMapEntryHelper;
 import ussr.builder.helpers.ModuleRotationMapEntryHelper;

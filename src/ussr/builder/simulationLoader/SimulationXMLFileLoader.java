@@ -1,8 +1,8 @@
 package ussr.builder.simulationLoader;
 
-
 import java.util.ArrayList;
 import java.util.List;
+import ussr.builder.enumerations.ATRONTypesModules;
 import ussr.builder.helpers.ControllerFactory;
 import ussr.builder.helpers.ControllerFactoryImpl;
 import ussr.builder.saveLoadXML.PreSimulationXMLSerializer;
@@ -11,14 +11,12 @@ import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 import ussr.builder.saveLoadXML.XMLTagsUsed;
 import ussr.description.Robot;
 import ussr.description.setup.WorldDescription;
-import ussr.model.Controller;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsLogger;
 import ussr.physics.PhysicsParameters;
 import ussr.samples.DefaultSimulationSetup;
 import ussr.samples.GenericSimulation;
-import ussr.samples.atron.ATRON;
-import ussr.samples.atron.simulations.ATRONCarController1;
+
 
 
 /**
@@ -30,24 +28,10 @@ public class SimulationXMLFileLoader extends GenericSimulation {
 	
 
 	private static SimulationSpecificationConverter descriptionConverter;
-
-	
-	private SaveLoadXMLFileTemplateInter robotXMLLoader;
 	
 	
 	private SimulationSpecification simulationSpecification;
 	
-	
-	public SimulationSpecification getSimulationSpecification() {
-		return simulationSpecification;
-	}
-
-
-
-
-	public SaveLoadXMLFileTemplateInter getRobotXMLLoader() {
-		return robotXMLLoader;
-	}
 
 
 	/**
@@ -70,12 +54,10 @@ public class SimulationXMLFileLoader extends GenericSimulation {
 	}
 	
 	public SimulationXMLFileLoader(String simulationXMLfileName) {
-	    DefaultSimulationSetup.setUSSRHome();	    
-	    
+	    DefaultSimulationSetup.setUSSRHome();	    	    
 	    PhysicsLogger.setDefaultLoggingLevel();
 	     
-       
-       
+
         /*Load Simulation Configuration file*/
 		SaveLoadXMLFileTemplateInter xmlLoaderSimulation = new PreSimulationXMLSerializer();
 		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, simulationXMLfileName);
@@ -83,7 +65,7 @@ public class SimulationXMLFileLoader extends GenericSimulation {
 		/*Get all values from XML file*/
         simulationSpecification = xmlLoaderSimulation.getSimulationSpecification();
         
-        /*Check if SIMULATION xml file was loaded or some different one*/
+        /*Check if SIMULATION xml file was loaded or some different XML file*/
         if (simulationSpecification.getSimWorldDecsriptionValues().containsKey(XMLTagsUsed.SIMULATION)){
         	 /* Create the simulation*/
             simulation = PhysicsFactory.createSimulator();
@@ -92,7 +74,7 @@ public class SimulationXMLFileLoader extends GenericSimulation {
             descriptionConverter =  simulationSpecification.getConverter();
           
             
-            setPhysicsParameters();// IS NOT WORKING
+            setPhysicsParameters();
             
             String controllerLocation = null;
             if (simulationSpecification.getRobotsInSimulation().isEmpty()){// new (default) simulation is started
@@ -105,88 +87,33 @@ public class SimulationXMLFileLoader extends GenericSimulation {
             controllerNames.add(controllerLocation);
             ControllerFactory controllerFactory = new ControllerFactoryImpl(controllerNames);
             
-            
-           // setPhysicsParameters();// IS NOT WORKING
             WorldDescription world = this.createGenericSimulationWorld(controllerFactory);
             world = createWorld();
             
             /* Load the robot */ 
-            robotXMLLoader = new PreSimulationXMLSerializer(world);
+            SaveLoadXMLFileTemplateInter robotXMLLoader = new PreSimulationXMLSerializer(world);
            
             for (int robotNr=0;robotNr<simulationSpecification.getRobotsInSimulation().size();robotNr++){
             	 
             	String morphology = simulationSpecification.getRobotsInSimulation().get(robotNr).getMorphologyLocation();
             	 robotXMLLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,morphology);
             }
-            
-            ATRON robot = new ATRON() {
-                public Controller createController() {
-                    return new ATRONCarController1();
-                }
-            };
-            
-            ATRON robot1 = new ATRON() {
-                public Controller createController() {
-                    return new ATRONCarController1();
-                }
-            };
-            ATRON robot2 = new ATRON() {
-                public Controller createController() {
-                    return new ATRONCarController1();
-                }
-            };
-            ATRON robot3 = new ATRON() {
-                public Controller createController() {
-                    return new ATRONCarController1();
-                }
-            };
-            ATRON robot4 = new ATRON() {
-                public Controller createController() {
-                    return new ATRONCarController1();
-                }
-            };
-            
-            ATRON robot5 = new ATRON() {
-                public Controller createController() {
-                    return new ATRONCarController1();
-                }
-            };
-            
-            ATRON robot6 = new ATRON() {
-                public Controller createController() {
-                    return new ATRONCarController1();
-                }
-            };
-            robot.setSuper();
-            simulation.setRobot(robot, "ATRON super");
-            robot1.setRealistic();
-            simulation.setRobot(robot1, "ATRON realistic");
-            robot2.setSmooth();
-            simulation.setRobot(robot2, "ATRON smooth");       
-            robot6.setRubberRing(); 
-            simulation.setRobot(robot6, "ATRON rubberRing");
-            robot3.setGentle();
-            simulation.setRobot(robot3, "ATRON gentle");
-            robot4.setRadio();
-            simulation.setRobot(robot4, "ATRON radio");            
-            robot5.setHalfDuplex();
-            simulation.setRobot(robot5, "ATRON halfDuplex");
-            
-            
+          
+            ATRONTypesModules.setAllModuleTypesOnSimulation(simulation);
             simulation.setWorld(world); 
         }  else{
         	//do nothing.
-         // GUIRemoteSimulationAdapter.getThreadRemoteSimulation().done();
-        	
-        	//GeneralController.terminateSimulation();
         }   
         
 	}
 	
-	public static SimulationSpecificationConverter getDescriptionConverter() {
-		return descriptionConverter;
+	public SimulationSpecification getSimulationSpecification() {
+		return simulationSpecification;
 	}
 	
+    /**
+     * Sets physics simulation parameters on current simulation.
+     */
     private void setPhysicsParameters(){
     	PhysicsParameters.get().setPhysicsSimulationStepSize(descriptionConverter.convertPhysicsSimulationStepSize());
     	PhysicsParameters.get().setResolutionFactor(descriptionConverter.convertResolutionFactor());
@@ -204,10 +131,15 @@ public class SimulationXMLFileLoader extends GenericSimulation {
     	
     } 
 
+	/**
+	 * Creates the simulation world from values extracted from xml file.
+	 * @return the simulation world created from values extracted from xml file.
+	 */
 	private  WorldDescription createWorld() {
-		/*Assign values to world*/
+		
 		WorldDescription world = new WorldDescription();
-		world.setPlaneSize(descriptionConverter.convertPlaneSize());
+		/*Assign values to world*/
+		world.setPlaneSize(descriptionConverter.convertPlaneSize());		
 		world.setPlaneTexture(descriptionConverter.covertPlaneTexture());
 		world.setCameraPosition(descriptionConverter.convertCameraPosition());
 		world.setFlatWorld(descriptionConverter.convertTheWorldIsFlat());
@@ -216,6 +148,4 @@ public class SimulationXMLFileLoader extends GenericSimulation {
 		world.setIsFrameGrabbingActive(descriptionConverter.covertIsFrameGrabbingActive());
 		return world;
 	}
-	
-
 }

@@ -1,4 +1,4 @@
-package ussr.builder.enumerations;
+package ussr.builder.enumerations.tools;
 
 /**
  * Tools supported by builder(Quick Prototyping of Simulation Scenarios) and 

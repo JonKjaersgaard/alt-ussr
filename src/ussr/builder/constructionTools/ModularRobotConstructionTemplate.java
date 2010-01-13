@@ -10,7 +10,7 @@ import com.jme.math.Quaternion;
 import com.jme.math.Vector3f;
 import com.jmex.physics.DynamicPhysicsNode;
 
-import ussr.builder.enumerations.ATRONStandardRotations;
+import ussr.builder.enumerations.rotations.ATRONStandardRotations;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.ModuleMapEntryHelper;
 

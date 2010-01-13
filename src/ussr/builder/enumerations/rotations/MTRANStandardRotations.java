@@ -1,4 +1,4 @@
-package ussr.builder.enumerations;
+package ussr.builder.enumerations.rotations;
 
 public enum MTRANStandardRotations {
 	ORI1, 

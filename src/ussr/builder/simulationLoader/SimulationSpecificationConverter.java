@@ -3,7 +3,6 @@ package ussr.builder.simulationLoader;
 import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Vector;
 
 import ussr.aGui.tabs.simulation.enumerations.PlaneMaterials;
 import ussr.builder.saveLoadXML.XMLTagsUsed;
@@ -12,6 +11,12 @@ import ussr.description.setup.WorldDescription.CameraPosition;
 import ussr.description.setup.WorldDescription.TextureDescription;
 import ussr.physics.PhysicsParameters.Material;
 
+/**
+ * Is responsible for converting world description values and physics parameters from String to appropriate data type
+ * used in underlying logic.
+ * @author Konstantinas
+ *
+ */
 public class SimulationSpecificationConverter implements Serializable {
 
 	private Map<XMLTagsUsed,String> simulationWorldDescription,simulationPhysicsParameters;

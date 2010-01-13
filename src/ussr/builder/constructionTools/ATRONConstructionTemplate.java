@@ -1,7 +1,7 @@
 package ussr.builder.constructionTools;
 
-import ussr.builder.enumerations.ATRONStandardRotations;
 import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.builder.enumerations.rotations.ATRONStandardRotations;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.ModuleMapEntryHelper;
 import ussr.builder.helpers.ModuleRotationMapEntryHelper;

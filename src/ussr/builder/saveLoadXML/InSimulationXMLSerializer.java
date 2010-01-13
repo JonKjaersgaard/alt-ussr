@@ -47,14 +47,14 @@ public class InSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate{
 
     protected void createNewModule(String moduleName, String moduleType, VectorDescription modulePosition, RotationDescription moduleRotation, LinkedList<Color> listColorsComponents,LinkedList<Color> listColorsConnectors, String labelsModule, String[] labelsConnectors){
         Module newModule;
-        if (moduleType.contains("ATRON")||moduleType.equalsIgnoreCase("default")){
+     /*   if (moduleType.contains("ATRON")||moduleType.equalsIgnoreCase("default")){
             ModulePosition modulePos= new ModulePosition(moduleName,"ATRON",modulePosition,moduleRotation);
             //ModulePosition modulePos= new ModulePosition(moduleName,"default",modulePosition,moduleRotation);
             newModule = simulation.createModule(modulePos,true);            
-        }else{
+        }else{*/
             ModulePosition modulePos= new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation);
             newModule = simulation.createModule(modulePos,true);        
-        }
+        //}
 
         if(labelsModule.contains(BuilderHelper.getTempLabel())){            
             //do nothing

@@ -1,4 +1,4 @@
-package ussr.builder.enumerations;
+package ussr.builder.enumerations.rotations;
 
 public enum CKBotStandardRotations {
 	/*Here: ROT - rotation, OPPOS - opposite, MIN - minus*/

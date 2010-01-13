@@ -3,8 +3,9 @@ package ussr.builder.labelingTools;
 import java.io.Serializable;
 
 import com.jme.scene.Geometry;
-import ussr.builder.enumerations.LabeledEntities;
-import ussr.builder.enumerations.LabelingTools;
+
+import ussr.builder.enumerations.tools.LabeledEntities;
+import ussr.builder.enumerations.tools.LabelingTools;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;

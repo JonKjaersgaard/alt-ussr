@@ -1,6 +1,6 @@
 package ussr.builder.helpers;
 
-import ussr.builder.enumerations.LabeledEntities;
+import ussr.builder.enumerations.tools.LabeledEntities;
 
 /**
  * Acts as a helper class for LabelingFactory.java in a way that maps specific entity for labeling

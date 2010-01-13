@@ -1,7 +1,7 @@
 package ussr.builder.constructionTools;
 
-import ussr.builder.enumerations.CKBotStandardRotations;
 import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.builder.enumerations.rotations.CKBotStandardRotations;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.helpers.ModuleMapEntryHelper;
 import ussr.builder.helpers.ModuleRotationMapEntryHelper;

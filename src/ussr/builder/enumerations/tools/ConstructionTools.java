@@ -1,4 +1,4 @@
-package ussr.builder.enumerations;
+package ussr.builder.enumerations.tools;
 
 /**
  *  Tools supported by builder and used for construction of supported modular robots morphology.  
