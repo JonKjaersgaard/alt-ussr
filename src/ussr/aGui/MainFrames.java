@@ -360,7 +360,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToolBarGeneralControl.add(initOpenButton(FileChooserFrameInter.FC_FRAME_OPEN_SIMULATION));
 		jToolBarGeneralControl.add(initSaveButton(FileChooserFrameInter.FC_FRAME_SAVE_SIMULATION));
 		
-		jButtonReloadSimulation.setToolTipText(MainFrameComponentsText.RELOAD_CURRENT_SIMULATION.getUserFriendlyName());
+		jButtonReloadSimulation.setToolTipText(MainFrameComponentsText.RESTART_CURRENT_SIMULATION.getUserFriendlyName());
 		jButtonReloadSimulation.setIcon(MainFrameIcons.RELOAD_CURRENT_SIMULATION.getImageIcon());
 		jButtonReloadSimulation.setRolloverIcon(MainFrameIcons.RELOAD_CURRENT_SIMULATION_ROLLOVER.getImageIcon());		
 		jButtonReloadSimulation.setDisabledIcon(MainFrameIcons.RELOAD_CURRENT_SIMULATION_ROLLOVER_DISABLED.getImageIcon());

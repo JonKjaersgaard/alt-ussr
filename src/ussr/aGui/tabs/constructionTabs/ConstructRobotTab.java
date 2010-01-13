@@ -805,7 +805,14 @@ public class ConstructRobotTab extends ConstructionTabs {
 	public static String getDefaultConstructionModuleType(){
 		return defaultConstructionModuleType;
 		
-	}	
+	}
+	
+	/**
+	 * 
+	 */
+	public static void setSelectedDefaultConstructionModule(Object defaultConstructionModule){
+		jComboBoxConstructionDefaultModuleType.setSelectedItem(defaultConstructionModule);
+	}
 	
 	/**
 	 * Adapts tab to ATRON modular robot
@@ -816,11 +823,9 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jComboBoxConstructionDefaultModuleType.setModel(new javax.swing.DefaultComboBoxModel(ATRONTypesModules.getAllInUserFriendlyFormat()));
 		jComboBoxConstructionDefaultModuleType.setSelectedItem(selectedItem);
 		
-		jButtonVariateModuleProperties.setEnabled(false);
 		jComboBoxStandardRotations.setModel(new javax.swing.DefaultComboBoxModel(ATRONStandardRotations.getAllInUserFriendlyFormat()));	
 		jComboBoxNrConnectorsConstructionTool.setRenderer(ATRON_RENDERER);
 		jComboBoxNrConnectorsConstructionTool.setModel(new javax.swing.DefaultComboBoxModel(SupportedModularRobots.ATRON_CONNECTORS));
-		//jComboBoxConstructionDefaultModuleType.setVisible(false)
 	}
 	
 	
