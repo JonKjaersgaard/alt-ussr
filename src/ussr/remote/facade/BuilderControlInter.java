@@ -139,5 +139,5 @@ public interface BuilderControlInter extends Remote {
 	 */
 	public void restoreOriginalColorsConnectors()throws RemoteException;
 	
-	public boolean isNewModuleAdded(int lastCheckAmountModules)throws RemoteException;
+	//public boolean isNewModuleAdded(int lastCheckAmountModules)throws RemoteException;
 }
