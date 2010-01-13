@@ -16,6 +16,7 @@ import ussr.builder.constructionTools.ConstructionToolSpecification;
 import ussr.builder.constructionTools.MTRANOperationsTemplate;
 import ussr.builder.constructionTools.OdinOperationsTemplate;
 import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
+import ussr.builder.enumerations.ATRONTypesModules;
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.enumerations.tools.ConstructionTools;
 import ussr.builder.enumerations.tools.LabeledEntities;
@@ -113,7 +114,7 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 		}else{ 
 		switch (supportedModularRobot){
 		case ATRON:		
-				comATRON.addDefaultConstructionModule("default", defaultPosition);			
+				comATRON.addDefaultConstructionModule(ATRONTypesModules.ATRON_GENTLE.getModuleType(), defaultPosition);			
 			break;
 		case MTRAN:		
 				comMTRAN.addDefaultConstructionModule(SupportedModularRobots.MTRAN.toString(),defaultPosition );

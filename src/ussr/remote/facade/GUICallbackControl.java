@@ -75,5 +75,8 @@ public interface GUICallbackControl extends Remote {
 	public void setRemoteSimulationToNull()throws RemoteException;
 	
 	
+	public void setSelectedDefaultConstructionModule(Object defaultConstructionModuleType)throws RemoteException;
+	
+	
 	
 }

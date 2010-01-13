@@ -132,6 +132,10 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 			SimulationTab.setTabVisible(false);
 		}	
 	}
+	
+	public void setSelectedDefaultConstructionModule(Object defaultConstructionModuleType)throws RemoteException{
+		ConstructRobotTab.setSelectedDefaultConstructionModule(defaultConstructionModuleType);
+	}
 
 
 
