@@ -9,8 +9,8 @@ import ussr.aGui.enumerations.tabs.EntitiesForLabelingText;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
-import ussr.builder.enumerations.LabeledEntities;
-import ussr.builder.enumerations.LabelingTools;
+import ussr.builder.enumerations.tools.LabeledEntities;
+import ussr.builder.enumerations.tools.LabelingTools;
 import ussr.builder.labelingTools.LabelingTemplate;
 
 public class LabelingTabController extends TabsControllers{

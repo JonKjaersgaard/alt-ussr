@@ -7,8 +7,8 @@ import javax.swing.AbstractButton;
 import javax.swing.JComboBox;
 import javax.swing.JToggleButton;
 
-import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.builder.enumerations.tools.ConstructionTools;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 

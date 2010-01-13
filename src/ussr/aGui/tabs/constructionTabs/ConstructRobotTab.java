@@ -19,12 +19,12 @@ import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
-import ussr.builder.enumerations.ATRONStandardRotations;
 import ussr.builder.enumerations.ATRONTypesModules;
-import ussr.builder.enumerations.CKBotStandardRotations;
-import ussr.builder.enumerations.MTRANStandardRotations;
 import ussr.builder.enumerations.OdinTypesModules;
 import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.builder.enumerations.rotations.ATRONStandardRotations;
+import ussr.builder.enumerations.rotations.CKBotStandardRotations;
+import ussr.builder.enumerations.rotations.MTRANStandardRotations;
 
 
 /**
@@ -812,7 +812,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 	public static void adaptTabToATRON(){
 		Object selectedItem = jComboBoxConstructionDefaultModuleType.getSelectedItem();
 		jComboBoxConstructionDefaultModuleType.setVisible(true);
-		jComboBoxConstructionDefaultModuleType.setModel(new javax.swing.DefaultComboBoxModel(ATRONTypesModules.getAllInUserFriendlyFromat()));
+		jComboBoxConstructionDefaultModuleType.setModel(new javax.swing.DefaultComboBoxModel(ATRONTypesModules.getAllInUserFriendlyFormat()));
 		jComboBoxConstructionDefaultModuleType.setSelectedItem(selectedItem);
 		
 		jButtonVariateModuleProperties.setEnabled(false);
