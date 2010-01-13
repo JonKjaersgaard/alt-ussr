@@ -101,7 +101,7 @@ public class OdinOperationsTemplate extends CommonOperationsTemplate{
 	 * @throws Error, if something is wrong with the type of the module.This method supports creation of OdinMuscle and OdinBall only.
 	 */
 	private Module createNewOdinModule(String type){		
-		Module odinModule = new Module(null);
+		Module odinModule;
 		List<Color> colorsComponents = new LinkedList<Color>();
 		ArrayList<Color> colorsConectors = new ArrayList<Color>();
 		VectorDescription modulePosition = new VectorDescription(0,0,0);
