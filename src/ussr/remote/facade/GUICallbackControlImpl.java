@@ -14,8 +14,8 @@ import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.LabelingTabController;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.simulation.SimulationTab;
-import ussr.builder.enumerations.ConstructionTools;
 import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.builder.enumerations.tools.ConstructionTools;
 import ussr.builder.simulationLoader.SimulationSpecification;
 
 
@@ -91,10 +91,6 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 		SimulationTab.addRobotNodes(simulationSpecification,false,true);
 		SimulationTabController.setSimulationSpecification(simulationSpecification);
 	}
-
-	/*public void adaptTabToModuleInSimulation()throws RemoteException{
-		ConstructRobotTabController.adaptTabToModuleInSimulation();
-	};*/
 
 	public String getDefaultConstructionModuleType()throws RemoteException{
 

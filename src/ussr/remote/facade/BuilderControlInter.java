@@ -4,10 +4,10 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import ussr.builder.enumerations.ConstructionTools;
-import ussr.builder.enumerations.LabeledEntities;
-import ussr.builder.enumerations.LabelingTools;
 import ussr.builder.enumerations.SupportedModularRobots;
+import ussr.builder.enumerations.tools.ConstructionTools;
+import ussr.builder.enumerations.tools.LabeledEntities;
+import ussr.builder.enumerations.tools.LabelingTools;
 import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 
 import ussr.description.geometry.VectorDescription;

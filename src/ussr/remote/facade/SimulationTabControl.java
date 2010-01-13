@@ -63,7 +63,7 @@ public class SimulationTabControl extends UnicastRemoteObject implements Simulat
 				
 				if (currentModuleID==moduleToDeleteID ){
 					
-					BuilderHelper.deleteModule(currentModule,false);
+					BuilderHelper.deleteModule(currentModule,true);
 					PhysicsSimulation physicsSimulation = currentModule.getSimulation();
 					physicsSimulation.getModules().remove(currentModule);
 					
