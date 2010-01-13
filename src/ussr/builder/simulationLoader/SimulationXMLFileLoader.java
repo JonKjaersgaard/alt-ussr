@@ -56,6 +56,7 @@ public class SimulationXMLFileLoader extends GenericSimulation {
 	public SimulationXMLFileLoader(String simulationXMLfileName) {
 	    DefaultSimulationSetup.setUSSRHome();	    	    
 	    PhysicsLogger.setDefaultLoggingLevel();
+	 
 	     
 
         /*Load Simulation Configuration file*/
@@ -69,7 +70,7 @@ public class SimulationXMLFileLoader extends GenericSimulation {
         if (simulationSpecification.getSimWorldDecsriptionValues().containsKey(XMLTagsUsed.SIMULATION)){
         	 /* Create the simulation*/
             simulation = PhysicsFactory.createSimulator();
-        	
+            
         	/*Converter for converting values from String into corresponding type used in USSR*/      
             descriptionConverter =  simulationSpecification.getConverter();
           

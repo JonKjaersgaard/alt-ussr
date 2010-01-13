@@ -54,11 +54,11 @@ public class PreSimulationXMLSerializer extends SaveLoadXMLBuilderTemplate {
 
     protected void createNewModule(String moduleName, String moduleType, VectorDescription modulePosition, RotationDescription moduleRotation, LinkedList<Color> listColorsComponents,LinkedList<Color> listColorsConnectors, String labelsModule, String[] labelsConnectors){
         ModulePosition modulePos;
-        if (moduleType.contains("ATRON")||moduleType.equalsIgnoreCase("default")){
+        /* if (moduleType.contains("ATRON")||moduleType.equalsIgnoreCase("default")){
             modulePos= new ModulePosition(moduleName,"ATRON",modulePosition,moduleRotation);
-        } else {
+        } else {*/
             modulePos= new ModulePosition(moduleName,moduleType,modulePosition,moduleRotation);
-        }
+      //  }
 
         world.getModulePositions().add(modulePos);
         

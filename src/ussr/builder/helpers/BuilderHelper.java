@@ -2,9 +2,11 @@ package ussr.builder.helpers;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import ussr.model.Module;
 import ussr.physics.PhysicsModuleComponent;
+import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import com.jme.math.Matrix3f;
@@ -167,7 +169,11 @@ public class BuilderHelper {
 		}
 		if (single){
 		/*Remove the module from the internal list of the modules in USSR*/
-		selectedModule.getSimulation().getModules().remove(moduleToDelete);
+			PhysicsSimulation simulation= selectedModule.getSimulation();
+			List<Module> modules = simulation.getModules();
+			modules.remove(moduleToDelete);
+			JMESimulation jmeSimulation =(JMESimulation)simulation;
+			jmeSimulation.setModules(modules);
 		}
 	}
 
@@ -183,7 +189,10 @@ public class BuilderHelper {
 		for(DynamicPhysicsNode part: moduleComponent.getNodes()){
 			part.setActive(false);	
 			part.getChildren().clear();
+			//part = null;// crazy :)
+
 		} 	
+		//moduleComponent.getNodes().clear();
 	
 	};
 
