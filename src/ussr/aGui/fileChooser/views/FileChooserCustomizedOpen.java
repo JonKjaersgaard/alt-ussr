@@ -38,6 +38,11 @@ public class FileChooserCustomizedOpen extends FileChooserCustomized  {
 	 */
 	private void changeToOpenDialog(){
 		super.jFileChooserCustomized.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
+		if (super.fileDescriptionsAndExtensions.containsKey(FileFilterTypes.OPEN_SAVE_SIMULATION.getFileDescription())){
+			super.jFileChooserCustomized.setDialogTitle(OPEN_SIMULATION_TITLE);
+		}else{
+			super.jFileChooserCustomized.setDialogTitle(OPEN_ROBOT_TITLE);
+		}
 		super.jFileChooserCustomized.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				fileChooserController.controlOpenDialog(evt,jFileChooserCustomized,fcOpenFrame);//call controller				

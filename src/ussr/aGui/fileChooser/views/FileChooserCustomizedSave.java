@@ -4,6 +4,7 @@ import java.util.Map;
 
 import ussr.aGui.MainFrames;
 import ussr.aGui.fileChooser.FileChooserControllerInter;
+import ussr.aGui.fileChooser.FileFilterTypes;
 
 /**
  * Defines visual appearance of the file chooser in the form of Save dialog.
@@ -34,6 +35,11 @@ public class FileChooserCustomizedSave extends FileChooserCustomized  {
 	 */
 	private void changeToSaveDialog(){		
 		jFileChooserCustomized.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);	
+		if (super.fileDescriptionsAndExtensions.containsKey(FileFilterTypes.OPEN_SAVE_SIMULATION.getFileDescription())){
+			super.jFileChooserCustomized.setDialogTitle(SAVE_SIMULATION_TITLE);
+		}else{
+			super.jFileChooserCustomized.setDialogTitle(SAVE_ROBOT_TITLE);
+		}
 		jFileChooserCustomized.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				fileChooserController.controlSaveDialog(evt,jFileChooserCustomized, fcSaveFrame);//call controller
