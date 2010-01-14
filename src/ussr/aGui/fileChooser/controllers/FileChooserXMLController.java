@@ -8,7 +8,7 @@ import javax.swing.JFileChooser;
 
 import ussr.aGui.MainFrames;
 import ussr.aGui.MainFramesInter;
-import ussr.aGui.fileChooser.FileChooserFrameInter;
+import ussr.aGui.fileChooser.FileChooserCustomizedInter;
 import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 
 /**
@@ -42,7 +42,7 @@ public class FileChooserXMLController extends FileChooserController {
 	 * @param fileChooserFrame, the frame in which the file chooser appearance is integrated in.
 	 */
 	public void controlOpenDialog(ActionEvent evt, JFileChooser fileChooser,
-			FileChooserFrameInter fileChooserFrame) {
+			FileChooserCustomizedInter fileChooserFrame) {
 		checkFileDescription(fileChooser);
 		String command = evt.getActionCommand();//Selected button command
 
@@ -72,7 +72,7 @@ public class FileChooserXMLController extends FileChooserController {
 			default: throw new Error("XML file type named as " +ussXmlFileType.toString() +"is not yet supported.");	
 			}
 		}		
-		((Window) fileChooserFrame).dispose();
+		//((Window) fileChooserFrame).dispose();
 
 	}
 
@@ -84,7 +84,7 @@ public class FileChooserXMLController extends FileChooserController {
      * @param fileChooserFrame, the frame in which the file chooser appearance is integrated in.
      */
 	public void controlSaveDialog(ActionEvent evt, JFileChooser fileChooser,
-			FileChooserFrameInter fileChooserFrame) {
+			FileChooserCustomizedInter fileChooserFrame) {
 		checkFileDescription( fileChooser);
 		String command = evt.getActionCommand();//Selected button command			
 		if(command.equalsIgnoreCase(ActionCommands.APPROVESELECTION.toString())  ){		        
@@ -100,11 +100,11 @@ public class FileChooserXMLController extends FileChooserController {
 				startSimulation(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);
 			}else if(includeSimulationTermination==true&&includeStartNewSimulation==false){
 				terminateSimulation();
-				FileChooserFrameInter.FC_FRAME_OPEN_SIMULATION.activate();
+				FileChooserCustomizedInter.FC_FRAME_OPEN_SIMULATION.activate();
 			}
 			
 		}		
-		((Window) fileChooserFrame).dispose();
+		//((Window) fileChooserFrame).dispose();
 	}	
 
 }

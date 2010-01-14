@@ -3,7 +3,7 @@ package ussr.aGui.fileChooser.controllers;
 import javax.swing.JFileChooser;
 import ussr.aGui.GeneralController;
 import ussr.aGui.fileChooser.FileChooserControllerInter;
-import ussr.aGui.fileChooser.FileChooserFrameInter;
+import ussr.aGui.fileChooser.FileChooserCustomizedInter;
 import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 
 /**
@@ -24,7 +24,7 @@ public abstract class FileChooserController extends GeneralController implements
      * @param fileChooser, the file chooser appearance, which is integrated into the frame.
      * @param fileChooserFrame, the frame in which the file chooser appearance is integrated in.
      */
-    public abstract void controlSaveDialog(java.awt.event.ActionEvent evt, javax.swing.JFileChooser fileChooser,FileChooserFrameInter fileChooserFrame);
+    public abstract void controlSaveDialog(java.awt.event.ActionEvent evt, javax.swing.JFileChooser fileChooser,FileChooserCustomizedInter fileChooserFrame);
 	
     /**
 	 * Manages the control of the file chooser in Open dialog form.
@@ -32,7 +32,7 @@ public abstract class FileChooserController extends GeneralController implements
 	 * @param fileChooser,the file chooser appearance, which is integrated into the frame.
 	 * @param fileChooserFrame, the frame in which the file chooser appearance is integrated in.
 	 */
-	public abstract  void controlOpenDialog(java.awt.event.ActionEvent evt,javax.swing.JFileChooser fileChooser,FileChooserFrameInter fileChooserFrame);
+	public abstract  void controlOpenDialog(java.awt.event.ActionEvent evt,javax.swing.JFileChooser fileChooser,FileChooserCustomizedInter fileChooserFrame);
 	
 	
 	/**

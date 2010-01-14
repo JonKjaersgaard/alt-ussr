@@ -8,7 +8,7 @@ import javax.swing.JToggleButton;
 
 import ussr.aGui.enumerations.JOptionPaneMessages;
 import ussr.aGui.enumerations.MainFrameIcons;
-import ussr.aGui.fileChooser.FileChooserFrameInter;
+import ussr.aGui.fileChooser.FileChooserCustomizedInter;
 import ussr.aGui.fileChooser.FileFilterTypes;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
 import ussr.aGui.tabs.TabsInter;
@@ -47,7 +47,7 @@ public class MainFrameSeparateController extends GeneralController {
 	 * 
 	 */
 	public static void openActionPerformed(FramesInter fcOpenFrame) {
-		FileChooserFrameInter fileChooserFrame = (FileChooserFrameInter)fcOpenFrame;
+		FileChooserCustomizedInter fileChooserFrame = (FileChooserCustomizedInter)fcOpenFrame;
 		String fileFilterDescription = fileChooserFrame.getSelectedFileFilter().getDescription();	
 		
 		if (remotePhysicsSimulation!=null && !fileFilterDescription.contains(FileFilterTypes.OPEN_SAVE_ROBOT.getFileDescription())&&isSimulationRunning==false ){
@@ -58,7 +58,7 @@ public class MainFrameSeparateController extends GeneralController {
 			case 0://YES
 				FileChooserXMLController.setIncludeSimulationTermination(true);
 				FileChooserXMLController.setIncludeStartNewSimulation(false);
-				saveActionPerformed(FileChooserFrameInter.FC_FRAME_SAVE_SIMULATION);
+				saveActionPerformed(FileChooserCustomizedInter.FC_FRAME_SAVE_SIMULATION);
 				break;
 			case 1://NO
 				terminateSimulation();
@@ -490,7 +490,7 @@ public class MainFrameSeparateController extends GeneralController {
 			case 0://YES
 				FileChooserXMLController.setIncludeSimulationTermination(true);
 				FileChooserXMLController.setIncludeStartNewSimulation(true);
-				saveActionPerformed(FileChooserFrameInter.FC_FRAME_SAVE_SIMULATION);
+				saveActionPerformed(FileChooserCustomizedInter.FC_FRAME_SAVE_SIMULATION);
 				break;
 			case 1://NO
 				terminateSimulation();

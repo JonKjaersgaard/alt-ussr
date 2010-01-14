@@ -14,7 +14,7 @@ public interface FileChooserControllerInter {
      * @param fileChooser, the file chooser appearance, which is integrated into the frame.
      * @param fileChooserFrame, the frame in which the file chooser appearance is integrated in.
      */
-    public  void controlSaveDialog(java.awt.event.ActionEvent evt, javax.swing.JFileChooser fileChooser,FileChooserFrameInter fileChooserFrame);
+    public  void controlSaveDialog(java.awt.event.ActionEvent evt, javax.swing.JFileChooser fileChooser,FileChooserCustomizedInter fileChooserFrame);
 	
 	/**
 	 * Manages the control of the file chooser in Open dialog form.
@@ -22,7 +22,7 @@ public interface FileChooserControllerInter {
 	 * @param fileChooser,the file chooser appearance, which is integrated into the frame.
 	 * @param fileChooserFrame, the frame in which the file chooser appearance is integrated in.
 	 */
-	public  void controlOpenDialog(java.awt.event.ActionEvent evt,javax.swing.JFileChooser fileChooser,FileChooserFrameInter fileChooserFrame);
+	public  void controlOpenDialog(java.awt.event.ActionEvent evt,javax.swing.JFileChooser fileChooser,FileChooserCustomizedInter fileChooserFrame);
 
 
 	/**

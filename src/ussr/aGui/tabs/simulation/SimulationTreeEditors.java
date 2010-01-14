@@ -17,8 +17,8 @@ import ussr.aGui.enumerations.MainFrameComponentsText;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
-import ussr.aGui.fileChooser.FileChooserFrameInter;
-import ussr.aGui.fileChooser.views.FileChooserFrame;
+import ussr.aGui.fileChooser.FileChooserCustomizedInter;
+import ussr.aGui.fileChooser.views.FileChooserCustomized;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.simulation.enumerations.CameraPositions;
 import ussr.aGui.tabs.simulation.enumerations.PlaneMaterials;
@@ -107,7 +107,7 @@ public class SimulationTreeEditors{
 		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));
 		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.openActionPerformed(FileChooserFrameInter.FC_FRAME_OPEN_ROBOT);
+				MainFrameSeparateController.openActionPerformed(FileChooserCustomizedInter.FC_FRAME_OPEN_ROBOT);
 			}
 		});
 		//jPanelTreeNode.add(Tabs.initOpenButton());

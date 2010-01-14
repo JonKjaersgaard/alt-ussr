@@ -2,6 +2,7 @@ package ussr.aGui.fileChooser.views;
 
 import java.util.Map;
 
+import ussr.aGui.MainFrames;
 import ussr.aGui.fileChooser.FileChooserControllerInter;
 
 /**
@@ -9,12 +10,12 @@ import ussr.aGui.fileChooser.FileChooserControllerInter;
  * @author Konstantinas
  */
 @SuppressWarnings("serial")
-public class FileChooserSaveFrame extends FileChooserFrame  {
+public class FileChooserCustomizedSave extends FileChooserCustomized  {
 
 	/**
 	 * The file chooser frame in Save dialog form.
 	 */
-	private static FileChooserSaveFrame fcSaveFrame;
+	private static FileChooserCustomizedSave fcSaveFrame;
 
 	/**
 	 * Manages the file chooser in the form of Save dialog.
@@ -22,20 +23,17 @@ public class FileChooserSaveFrame extends FileChooserFrame  {
 	 * @param fileChooserController, the controller for file extension.
 	 * @param defaultDirectory, default directory to open.
 	 */
-	public FileChooserSaveFrame(Map<String, String> fileDescriptionsAndExtensions,FileChooserControllerInter fileChooserController,String defaultDirectory) {
+	public FileChooserCustomizedSave(Map<String, String> fileDescriptionsAndExtensions,FileChooserControllerInter fileChooserController,String defaultDirectory) {
 		super(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);			
 		changeToSaveDialog();
 		setFilesToFilterOutWithDescription();
-		//runBack();
 	}
 
-	//SwingWorker<JFrame,String> worker; 
 	/**
 	 * Changes several components of file chooser so that it is Save dialog.
 	 */
 	private void changeToSaveDialog(){		
 		jFileChooserCustomized.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);	
-		setTitle("Save");
 		jFileChooserCustomized.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				fileChooserController.controlSaveDialog(evt,jFileChooserCustomized, fcSaveFrame);//call controller
@@ -43,42 +41,12 @@ public class FileChooserSaveFrame extends FileChooserFrame  {
 			}
 		});	
 	}
-	
-	
-/*	private void runBack(){
-		worker = new SwingWorker<JFrame,String>() {
-			   public Object construct() {
-			      return "Hello" + " " + "World";
-			   }
 
-			@Override
-			protected JFrame doInBackground() throws Exception {
-				fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);
-				//fcSaveFrame.setVisible(true);
-				return fcSaveFrame;
-			}
-			};
-			
-			worker.execute();
-	}*/
 
 	/**
 	 * Starts the window of file chooser in the form of Save dialog.
 	 */
 	public void activate(){
-		new Thread() {
-			public void run() {
-				fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);
-				fcSaveFrame.setVisible(true);
-			}
-		}.start();	
-		
-		/*This is too slow*/
-	/*	java.awt.EventQueue.invokeLater(new Runnable(){
-			public void run() { 
-				fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);
-				fcSaveFrame.setVisible(true);
-			}
-		}); */   	
+		jFileChooserCustomized.showSaveDialog(MainFrames.getMainFrame());
 	}
 }

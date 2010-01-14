@@ -11,8 +11,8 @@ import java.util.Map;
 public enum FileFilterTypes {
 
 	
-	OPEN_SAVE_SIMULATION(FileChooserFrameInter.DEFAULT_FILE_DESCRIPTION,FileChooserFrameInter.DEFAULT_FILE_EXTENSION),
-	OPEN_SAVE_ROBOT(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION,FileChooserFrameInter.DEFAULT_FILE_EXTENSION),
+	OPEN_SAVE_SIMULATION(FileChooserCustomizedInter.DEFAULT_FILE_DESCRIPTION,FileChooserCustomizedInter.DEFAULT_FILE_EXTENSION),
+	OPEN_SAVE_ROBOT(FileChooserCustomizedInter.ROBOT_FILE_DESCRIPTION,FileChooserCustomizedInter.DEFAULT_FILE_EXTENSION),
 	;
 	
 	/**

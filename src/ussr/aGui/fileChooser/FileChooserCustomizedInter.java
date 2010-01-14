@@ -5,15 +5,15 @@ import java.util.Map;
 
 import ussr.aGui.FramesInter;
 import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
-import ussr.aGui.fileChooser.views.FileChooserOpenFrame;
-import ussr.aGui.fileChooser.views.FileChooserSaveFrame;
+import ussr.aGui.fileChooser.views.FileChooserCustomizedOpen;
+import ussr.aGui.fileChooser.views.FileChooserCustomizedSave;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
 
 /**
  * Supports different file choosers with common constants and methods.  
  * @author Konstantinas
  */
-public interface FileChooserFrameInter extends FramesInter {
+public interface FileChooserCustomizedInter extends FramesInter {
 
 	/**
 	 * Default file extension for file filter.
@@ -39,25 +39,19 @@ public interface FileChooserFrameInter extends FramesInter {
     /**
      * A number of file choosers currently supported.
      */
-    public final static FileChooserFrameInter FC_FRAME_OPEN_SIMULATION = new FileChooserOpenFrame(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
-                                              FC_FRAME_SAVE_SIMULATION = new FileChooserSaveFrame(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
-                                              FC_FRAME_OPEN_ROBOT = new FileChooserOpenFrame(FileFilterTypes.OPEN_SAVE_ROBOT.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
-                                              FC_FRAME_SAVE_ROBOT = new FileChooserSaveFrame(FileFilterTypes.OPEN_SAVE_ROBOT.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY)
+    public final static FileChooserCustomizedInter FC_FRAME_OPEN_SIMULATION = new FileChooserCustomizedOpen(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
+                                              FC_FRAME_SAVE_SIMULATION = new FileChooserCustomizedSave(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
+                                              FC_FRAME_OPEN_ROBOT = new FileChooserCustomizedOpen(FileFilterTypes.OPEN_SAVE_ROBOT.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
+                                              FC_FRAME_SAVE_ROBOT = new FileChooserCustomizedSave(FileFilterTypes.OPEN_SAVE_ROBOT.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY)
                                               
                                               ;
-	/**
-	 * Sets specific default directory to open.
-	 * @param defaultDirectory, the directory for file chooser to open as default.
-	 */	
-	public void setDefaultDirectory(String defaultDirectory);
 	
 	/**
 	 * Sets file extensions(with descriptions) for file chooser to filter.
 	 * @param fileDescriptionsAndExtensions, map containing mapping of file description to file extension.
 	 */
 	public void setFileFiltersWithDescriptions(Map<String, String> fileDescriptionsAndExtensions);
-	
-	public void setSelectedFile(File selectedFile);
+
 	
 	
 	public FileFilter getSelectedFileFilter();

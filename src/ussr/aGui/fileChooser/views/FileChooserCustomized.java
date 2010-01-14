@@ -1,14 +1,18 @@
 package ussr.aGui.fileChooser.views;
+import java.awt.Dimension;
 import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+
 import ussr.aGui.GuiFrames;
 import ussr.aGui.fileChooser.FileChooserControllerInter;
-import ussr.aGui.fileChooser.FileChooserFrameInter;
+import ussr.aGui.fileChooser.FileChooserCustomizedInter;
 import ussr.aGui.fileChooser.FileFilter;
-import ussr.aGui.fileChooser.FileFilterTypes;
-import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
+
 
 /**
  * Defines visual appearance of the file chooser in several dialog forms: Open and Save for now.
@@ -17,7 +21,7 @@ import ussr.aGui.fileChooser.controllers.FileChooserXMLController;
  */
 
 @SuppressWarnings("serial")
-public abstract class FileChooserFrame extends GuiFrames implements FileChooserFrameInter {
+public abstract class FileChooserCustomized extends JFileChooser implements FileChooserCustomizedInter {
 
 	/**
 	 * Used as flag to indicate that file chooser should open build in default directory.
@@ -44,22 +48,6 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 	 */
 	protected Map<String, String> fileDescriptionsAndExtensions;
 	
-/*	
-	
-	*//**
-	 * Default controller for XML processing. 
-	 *//*
-	public final static FileChooserControllerInter FC_XML_CONTROLLER = new FileChooserXMLController();
-	
-    *//**
-     * A number of file choosers currently supported.
-     *//*
-    public final static FileChooserFrameInter FC_FRAME_OPEN_SIMULATION = new FileChooserOpenFrame(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
-                                              FC_FRAME_SAVE_SIMULATION = new FileChooserSaveFrame(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
-                                              FC_FRAME_OPEN_ROBOT = new FileChooserOpenFrame(FileFilterTypes.OPEN_SAVE_ROBOT.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
-                                              FC_FRAME_SAVE_ROBOT = new FileChooserSaveFrame(FileFilterTypes.OPEN_SAVE_ROBOT.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY)
-                                              
-                                              ;*/
 	
 	/**
 	 * Defines visual appearance of the file chooser in several dialog forms: Open and Save for now.
@@ -68,12 +56,11 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 	 * @param fileChooserController, controller for file chooser.
 	 * @param defaultDirectory, default directory to open.
 	 */
-	public FileChooserFrame(Map<String, String> fileDescriptionsAndExtensions, FileChooserControllerInter fileChooserController,String defaultDirectory){
+	public FileChooserCustomized(Map<String, String> fileDescriptionsAndExtensions, FileChooserControllerInter fileChooserController,String defaultDirectory){
 		this.fileDescriptionsAndExtensions= fileDescriptionsAndExtensions;
 		this.fileChooserController= fileChooserController;
 		this.defaultDirectory =defaultDirectory;
 		initComponents();
-		//setLocationRelativeTo(null);//places in the middle of the screen
 	}
 	
 	/** 
@@ -85,17 +72,11 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
        }else{
     	   jFileChooserCustomized = new javax.swing.JFileChooser(defaultDirectory);    	   
        }
-		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setResizable(false);// do not allow for file chooser to maximized.
-		setAlwaysOnTop(true);
-		getContentPane().setLayout(new java.awt.FlowLayout());			
-		this.getContentPane().add(jFileChooserCustomized);
-		jFileChooserCustomized.setAcceptAllFileFilterUsed(false);
-		jFileChooserCustomized.setSelectedFile(selectedFile);
-		setUSSRicon(this);
-		//this.pack();
-		//changeToLookAndFeel(this);// for all platforms
-		setSize(580,450);//THINK MORE HERE
+        jFileChooserCustomized.setAcceptAllFileFilterUsed(false);
+        jFileChooserCustomized.setSize(new Dimension(580,450));   
+        
+        GuiFrames.changeToLookAndFeel(jFileChooserCustomized);	
+		
 	}	
 
 
@@ -112,15 +93,6 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 	}
 	
 	/**
-	 * Sets specific default directory to open.
-	 * @param defaultDirectory, the directory for file chooser to open as default.
-	 */
-	public void setDefaultDirectory(String defaultDirectory) {
-		this.defaultDirectory = defaultDirectory;
-		
-	}
-	
-	/**
 	 * Sets file extensions(with descriptions) for file chooser to filter.
 	 * @param fileDescriptionsAndExtensions, map containing mapping of file description to file extension.
 	 */
@@ -128,9 +100,6 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 		this.fileDescriptionsAndExtensions = fileDescriptionsAndExtensions;
 	}
 	
-	public void setSelectedFile(File selectedFile){
-		this.jFileChooserCustomized.setSelectedFile(selectedFile);
-	}
 	
 	public FileFilter getSelectedFileFilter(){
 		return (FileFilter) jFileChooserCustomized.getFileFilter();

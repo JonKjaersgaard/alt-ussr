@@ -21,7 +21,7 @@ public abstract class GuiFrames extends javax.swing.JFrame implements FramesInte
 	 * Sets USSR icon in the top-left corner of the frame. 
 	 * @param frame, the GUI frame to set icon to.
 	 */
-	public void setUSSRicon(javax.swing.JFrame frame){
+	public static void setUSSRicon(javax.swing.JFrame frame){
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(DIRECTORY_USSR_ICON));
 	}
 
