@@ -75,7 +75,7 @@ public abstract class FileChooserCustomized extends JFileChooser implements File
         jFileChooserCustomized.setAcceptAllFileFilterUsed(false);
         jFileChooserCustomized.setSize(new Dimension(580,450));
        
-        // GuiFrames.changeToLookAndFeel(jFileChooserCustomized);	
+        GuiFrames.changeToLookAndFeel(jFileChooserCustomized);	
 		
 	}	
 
