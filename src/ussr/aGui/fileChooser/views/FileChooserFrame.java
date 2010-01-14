@@ -73,7 +73,7 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 		this.fileChooserController= fileChooserController;
 		this.defaultDirectory =defaultDirectory;
 		initComponents();
-		setLocationRelativeTo(null);//places in the middle of the screen
+		//setLocationRelativeTo(null);//places in the middle of the screen
 	}
 	
 	/** 
@@ -89,12 +89,12 @@ public abstract class FileChooserFrame extends GuiFrames implements FileChooserF
 		setResizable(false);// do not allow for file chooser to maximized.
 		setAlwaysOnTop(true);
 		getContentPane().setLayout(new java.awt.FlowLayout());			
-		getContentPane().add(jFileChooserCustomized);
+		this.getContentPane().add(jFileChooserCustomized);
 		jFileChooserCustomized.setAcceptAllFileFilterUsed(false);
 		jFileChooserCustomized.setSelectedFile(selectedFile);
 		setUSSRicon(this);
-		pack();
-		changeToLookAndFeel(this);// for all platforms
+		//this.pack();
+		//changeToLookAndFeel(this);// for all platforms
 		setSize(580,450);//THINK MORE HERE
 	}	
 
