@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import ussr.aGui.GuiFrames;
 import ussr.aGui.fileChooser.FileChooserControllerInter;
 import ussr.aGui.fileChooser.FileChooserCustomizedInter;
-import ussr.aGui.fileChooser.FileFilter;
+import ussr.aGui.fileChooser.FileFilterCustomized;
 
 
 /**
@@ -88,7 +88,7 @@ public abstract class FileChooserCustomized extends JFileChooser implements File
 		Iterator<String> keyIterator = fileDescriptionsAndExtensions.keySet().iterator();
 		Iterator<String> valueIterator = fileDescriptionsAndExtensions.values().iterator();
 		while(keyIterator.hasNext()){
-			jFileChooserCustomized.setFileFilter(new FileFilter (keyIterator.next(),valueIterator.next()));			
+			jFileChooserCustomized.setFileFilter(new FileFilterCustomized (keyIterator.next(),valueIterator.next()));			
 		}
 	}
 	
@@ -101,8 +101,8 @@ public abstract class FileChooserCustomized extends JFileChooser implements File
 	}
 	
 	
-	public FileFilter getSelectedFileFilter(){
-		return (FileFilter) jFileChooserCustomized.getFileFilter();
+	public FileFilterCustomized getSelectedFileFilter(){
+		return (FileFilterCustomized) jFileChooserCustomized.getFileFilter();
 	}
 	
 }

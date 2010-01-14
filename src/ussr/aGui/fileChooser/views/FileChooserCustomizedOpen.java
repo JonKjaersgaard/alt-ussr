@@ -5,7 +5,7 @@ import java.util.Map;
 
 import ussr.aGui.MainFrames;
 import ussr.aGui.fileChooser.FileChooserControllerInter;
-import ussr.aGui.fileChooser.FileFilter;
+import ussr.aGui.fileChooser.FileFilterCustomized;
 import ussr.aGui.fileChooser.FileFilterTypes;
 
 /**

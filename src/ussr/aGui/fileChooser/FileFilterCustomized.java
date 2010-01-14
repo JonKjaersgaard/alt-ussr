@@ -7,7 +7,7 @@ import java.io.File;
  * to filter out and description of this extension. For instance: "XMLfile", ".xml" or just extension ".xml". 
  * @author Konstantinas
  */
-public class FileFilter extends javax.swing.filechooser.FileFilter {
+public class FileFilterCustomized extends javax.swing.filechooser.FileFilter {
 
 	/**
 	 * The file extension to filter out, for example: ".xml".
@@ -24,7 +24,7 @@ public class FileFilter extends javax.swing.filechooser.FileFilter {
 	 * @param fileDescription, description of the file extension.
 	 * @param fileExtension, the file extension to filter out 
 	 */
-	public FileFilter( String fileDescription, String fileExtension){
+	public FileFilterCustomized( String fileDescription, String fileExtension){
 		this.fileExtensionDescription = fileDescription;
 		this.fileExtension =fileExtension;		
 	}
@@ -33,7 +33,7 @@ public class FileFilter extends javax.swing.filechooser.FileFilter {
 	 * Filters out the files with specific file extension. Is used for fileChoosers.
 	 * @param fileExtension, the file extension to filter out 
 	 */
-	public FileFilter(String fileExtension){
+	public FileFilterCustomized(String fileExtension){
 		this.fileExtension =fileExtension;		
 	}
 	

@@ -54,6 +54,6 @@ public interface FileChooserCustomizedInter extends FramesInter {
 
 	
 	
-	public FileFilter getSelectedFileFilter();
+	public FileFilterCustomized getSelectedFileFilter();
 	
 }

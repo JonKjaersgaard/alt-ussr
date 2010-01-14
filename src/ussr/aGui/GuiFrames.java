@@ -32,12 +32,7 @@ public abstract class GuiFrames extends javax.swing.JFrame implements FramesInte
 	 */
 	public static void changeToLookAndFeel(Component awtComponent){
 		try {
-			//UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		   UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-			
-			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-			
-			//UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			SwingUtilities.updateComponentTreeUI(awtComponent);
 		} catch (ClassNotFoundException ex) {
 			Logger.getLogger(awtComponent.getName()).log(Level.SEVERE, null, ex);
