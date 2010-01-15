@@ -154,7 +154,7 @@ public class MainFrameSeparate extends MainFrames {
 				mainFrame = new MainFrameSeparate();
 				mainFrame.setVisible(true);
 				setMainFrameSeparateEnabled(false);
-				FileDialog fileDialog = new FileDialog(mainFrame);
+			/*	FileDialog fileDialog = new FileDialog(mainFrame);
 				fileDialog.setTitle("FOR mac");
 				fileDialog.setFilenameFilter(new FilenameFilter(){
 
@@ -167,7 +167,7 @@ public class MainFrameSeparate extends MainFrames {
 					
 				});
 				
-				fileDialog.setVisible(true);
+				fileDialog.setVisible(true);*/
 			
 				    //new String[] { "Batch Files", "All Files (*.*)" }
 				//as.setFilenameFilter();

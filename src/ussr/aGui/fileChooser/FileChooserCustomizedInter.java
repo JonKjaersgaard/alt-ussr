@@ -37,7 +37,7 @@ public interface FileChooserCustomizedInter extends FramesInter {
 	public final FileChooserControllerInter FC_XML_CONTROLLER = new FileChooserXMLController();
 	
     /**
-     * A number of file choosers currently supported.
+     * A number of file choosers currently supported for Windows,Linux and Unix, however not for Mac.
      */
     public final static FileChooserCustomizedInter FC_FRAME_OPEN_SIMULATION = new FileChooserCustomizedOpen(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
                                               FC_FRAME_SAVE_SIMULATION = new FileChooserCustomizedSave(FileFilterTypes.OPEN_SAVE_SIMULATION.getMap(),FC_XML_CONTROLLER,DEFAULT_DIRECTORY),
