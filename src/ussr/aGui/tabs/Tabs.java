@@ -5,8 +5,8 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 
 import ussr.aGui.MainFrames;
-import ussr.aGui.fileChooser.FileChooserCustomizedInter;
-import ussr.aGui.fileChooser.views.FileChooserCustomized;
+import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomized;
+import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedInter;
 
 /**
  * Supports definitions of visual appearance for tabs plugged-in the main GUI window.

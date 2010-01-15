@@ -154,6 +154,7 @@ public class MainFrameSeparate extends MainFrames {
 				mainFrame = new MainFrameSeparate();
 				mainFrame.setVisible(true);
 				setMainFrameSeparateEnabled(false);
+			
 			/*	FileDialog fileDialog = new FileDialog(mainFrame);
 				fileDialog.setTitle("FOR mac");
 				fileDialog.setFilenameFilter(new FilenameFilter(){

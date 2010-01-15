@@ -9,10 +9,10 @@ import java.util.Map;
 
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.MainFrameComponentsText;
-import ussr.aGui.fileChooser.FileChooserCustomizedInter;
-import ussr.aGui.fileChooser.views.FileChooserCustomized;
-import ussr.aGui.fileChooser.views.FileChooserCustomizedOpen;
-import ussr.aGui.fileChooser.views.FileChooserCustomizedSave;
+import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomized;
+import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedInter;
+import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedOpen;
+import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedSave;
 import ussr.aGui.helpers.ComponentResizer;
 import ussr.aGui.tabs.TabsInter;
 import ussr.remote.GUIRemoteSimulationAdapter;
