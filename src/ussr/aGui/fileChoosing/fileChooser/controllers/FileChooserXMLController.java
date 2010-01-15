@@ -1,4 +1,4 @@
-package ussr.aGui.fileChoosing.controllers;
+package ussr.aGui.fileChoosing.fileChooser.controllers;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -16,7 +16,7 @@ import ussr.builder.saveLoadXML.UssrXmlFileTypes;
  * @author Konstantinas
  *
  */
-public class FileChoosingXMLController extends FileChoosingController {
+public class FileChooserXMLController extends FileChooserController {
 
 	private static boolean includeSimulationTermination = false;
 	
@@ -26,12 +26,12 @@ public class FileChoosingXMLController extends FileChoosingController {
 	
 	public static void setIncludeStartNewSimulation(
 			boolean includeStartNewSimulation) {
-		FileChoosingXMLController.includeStartNewSimulation = includeStartNewSimulation;
+		FileChooserXMLController.includeStartNewSimulation = includeStartNewSimulation;
 	}
 
 
 	public static void setIncludeSimulationTermination(boolean includeSimulationTermination) {
-		FileChoosingXMLController.includeSimulationTermination = includeSimulationTermination;
+		FileChooserXMLController.includeSimulationTermination = includeSimulationTermination;
 	}
 
 
@@ -72,7 +72,6 @@ public class FileChoosingXMLController extends FileChoosingController {
 			default: throw new Error("XML file type named as " +ussXmlFileType.toString() +"is not yet supported.");	
 			}
 		}		
-		//((Window) fileChooserFrame).dispose();
 
 	}
 
@@ -100,11 +99,10 @@ public class FileChoosingXMLController extends FileChoosingController {
 				startSimulation(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);
 			}else if(includeSimulationTermination==true&&includeStartNewSimulation==false){
 				terminateSimulation();
-				FileChooserCustomizedInter.FC_FRAME_OPEN_SIMULATION.activate();
+				FileChooserCustomizedInter.FC_OPEN_SIMULATION.activate();
 			}
 			
 		}		
-		//((Window) fileChooserFrame).dispose();
 	}	
 
 }

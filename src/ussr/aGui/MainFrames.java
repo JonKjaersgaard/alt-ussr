@@ -9,10 +9,12 @@ import java.util.Map;
 
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.MainFrameComponentsText;
+import ussr.aGui.fileChoosing.FileChoosingInter;
 import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomized;
 import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedInter;
 import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedOpen;
 import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedSave;
+import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedInter;
 import ussr.aGui.helpers.ComponentResizer;
 import ussr.aGui.tabs.TabsInter;
 import ussr.remote.GUIRemoteSimulationAdapter;
@@ -27,7 +29,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 * The main GUI window.
 	 */
 	protected static MainFrames mainFrame;
-
 
 	/**
 	 * Insets of main frame border.
@@ -44,20 +45,56 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	protected ArrayList<TabsInter> allTabs,tabsFirstTabbedPane,tabsSecondTabbedPane;
 	
+	protected FileChoosingInter fcOpenSimulationDialog,fcSaveSimulationDialog,
+	                             fcOpenRobotDialog,fcSaveRobotDialog ;
+	
+	public FileChoosingInter getFcSaveRobotDialog() {
+		return fcSaveRobotDialog;
+	}
+
+	public FileChoosingInter getFcOpenRobotDialog() {
+		return fcOpenRobotDialog;
+	}
+
+	public FileChoosingInter getFcSaveSimulationDialog() {
+		return fcSaveSimulationDialog;
+	}
+
+	public FileChoosingInter getFcOpenSimulationDialog() {
+		return fcOpenSimulationDialog;
+	}
+
 	/**
 	 * Defines visual appearance common to all instances of main GUI window.  
 	 */
 	public MainFrames(){
-		filterPopulateTabs();
+		populateTabs();
 		initFrameProperties();
 		/*Starts simulation adapter, which in turn starts simulation server (only once) */	
 		new GUIRemoteSimulationAdapter();
+		initFileChoosing();
 		}
+	
+	private void initFileChoosing(){
+		if (true/*GeneralController.getOperatingSystemName().contains("Mac")*/){
+			fcOpenSimulationDialog = FileDialogCustomizedInter.FD_OPEN_SIMULATION;
+			fcSaveSimulationDialog = FileDialogCustomizedInter.FD_SAVE_SIMULATION;
+			fcOpenRobotDialog = FileDialogCustomizedInter.FD_OPEN_ROBOT;
+			fcSaveRobotDialog = FileDialogCustomizedInter.FD_SAVE_ROBOT;
+			
+		}else{
+			fcOpenSimulationDialog = FileChooserCustomizedInter.FC_OPEN_SIMULATION;
+			fcSaveSimulationDialog = FileChooserCustomizedInter.FC_SAVE_SIMULATION;
+			fcOpenRobotDialog = FileChooserCustomizedInter.FC_OPEN_ROBOT;
+			fcSaveRobotDialog = FileChooserCustomizedInter.FC_SAVE_ROBOT;
+		}
+	}
 
+	
 	/**
 	 * Filters out and populates the tabs assigned to the first and second tabbed panes, into separate array lists. 
 	 */
-	public void filterPopulateTabs(){
+	public void populateTabs(){
 		tabsFirstTabbedPane = new ArrayList<TabsInter>();
 		tabsSecondTabbedPane = new ArrayList<TabsInter>();
 		allTabs = new ArrayList<TabsInter>();
@@ -151,7 +188,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuItemOpenSimulation.setDisabledIcon(MainFrameIcons.OPEN_SMALL_DISABLED.getImageIcon());		
 		jMenuItemOpenSimulation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.openActionPerformed(FileChooserCustomizedInter.FC_FRAME_OPEN_SIMULATION);
+				MainFrameSeparateController.openActionPerformed(fcOpenSimulationDialog);
 			}
 		});
 
@@ -164,8 +201,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jMenuItemSave.setDisabledIcon(MainFrameIcons.SAVE_SMALL_DISABLED.getImageIcon());	
 		jMenuItemSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//MainFrameSeparateController.saveActionPerformed(fcSaveFrame);
-				MainFrameSeparateController.saveActionPerformed(FileChooserCustomizedInter.FC_FRAME_SAVE_SIMULATION);
+				MainFrameSeparateController.saveActionPerformed(fcSaveSimulationDialog);
 				
 			}
 		});
@@ -357,8 +393,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jButtonNewSimulation);
 		
-		jToolBarGeneralControl.add(initOpenButton(FileChooserCustomizedInter.FC_FRAME_OPEN_SIMULATION));
-		jToolBarGeneralControl.add(initSaveButton(FileChooserCustomizedInter.FC_FRAME_SAVE_SIMULATION));
+		jToolBarGeneralControl.add(initOpenButton(fcOpenSimulationDialog));
+		jToolBarGeneralControl.add(initSaveButton(fcSaveSimulationDialog));
 		
 		jButtonReloadSimulation.setToolTipText(MainFrameComponentsText.RESTART_CURRENT_SIMULATION.getUserFriendlyName());
 		jButtonReloadSimulation.setIcon(MainFrameIcons.RELOAD_CURRENT_SIMULATION.getImageIcon());
@@ -551,7 +587,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 * @param fcSaveFrame, the file chooser frame to associate the button with.
 	 * @return the button called Save.
 	 */
-	public static javax.swing.JButton initSaveButton(final FileChooserCustomizedInter fcSaveFrame ){
+	public static javax.swing.JButton initSaveButton(final FileChoosingInter fcSaveDialog){
 		jButtonSave = new javax.swing.JButton();		
 		jButtonSave.setToolTipText(MainFrameComponentsText.SAVE.getUserFriendlyName());		
 		jButtonSave.setIcon(MainFrameIcons.SAVE.getImageIcon());
@@ -563,7 +599,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jButtonSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.saveActionPerformed(fcSaveFrame);
+				MainFrameSeparateController.saveActionPerformed(fcSaveDialog);
 			}
 		});
 		return jButtonSave;
@@ -578,7 +614,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 * @param fcOpenFrame,the file chooser frame to associate the button with.
 	 * @return the button called Open.
 	 */
-	public static javax.swing.JButton  initOpenButton(final FileChooserCustomizedInter fcOpenFrame){
+	public static javax.swing.JButton  initOpenButton(final FileChoosingInter fcOpenDialog){
 		jButtonOpen = new javax.swing.JButton();
 		jButtonOpen.setToolTipText(MainFrameComponentsText.OPEN.getUserFriendlyName());
 		
@@ -590,7 +626,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));
 		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.openActionPerformed(fcOpenFrame);
+				MainFrameSeparateController.openActionPerformed(fcOpenDialog);
 			}
 		});
 		return jButtonOpen;

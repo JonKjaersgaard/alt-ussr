@@ -107,7 +107,7 @@ public class SimulationTreeEditors{
 		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));
 		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.openActionPerformed(FileChooserCustomizedInter.FC_FRAME_OPEN_ROBOT);
+				MainFrameSeparateController.openActionPerformed(FileChooserCustomizedInter.FC_OPEN_ROBOT);
 			}
 		});
 		//jPanelTreeNode.add(Tabs.initOpenButton());

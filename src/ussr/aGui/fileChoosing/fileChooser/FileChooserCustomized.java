@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.swing.JFileChooser;
 
 import ussr.aGui.GuiFrames;
-import ussr.aGui.fileChoosing.FileChoosingControllerInter;
+import ussr.aGui.fileChoosing.fileChooser.controllers.FileChooserControllerInter;
 
 
 /**
@@ -17,11 +17,6 @@ import ussr.aGui.fileChoosing.FileChoosingControllerInter;
 
 @SuppressWarnings("serial")
 public abstract class FileChooserCustomized extends JFileChooser implements FileChooserCustomizedInter {
-
-	/**
-	 * Used as flag to indicate that file chooser should open build in default directory.
-	 */
-	protected String defaultDirectory = "";
 	
 	/**
 	 * The file chooser appearance, which is integrated into the frame.
@@ -31,7 +26,7 @@ public abstract class FileChooserCustomized extends JFileChooser implements File
 	/**
 	 * Controller for file chooser.
 	 */
-	protected FileChoosingControllerInter fileChooserController;
+	protected FileChooserControllerInter fileChooserController;
 	
 	/**
 	 * Map containing mapping of file description to file extension.
@@ -44,12 +39,10 @@ public abstract class FileChooserCustomized extends JFileChooser implements File
      * Limits the file choosing to extensions specified in the map of file descriptions and extensions. 
 	 * @param fileDescriptionsAndExtensions,map containing mapping of file description to file extension.
 	 * @param fileChooserController, controller for file chooser.
-	 * @param defaultDirectory, default directory to open.
 	 */
-	public FileChooserCustomized(Map<String, String> fileDescriptionsAndExtensions, FileChoosingControllerInter fileChooserController,String defaultDirectory){
+	public FileChooserCustomized(Map<String, String> fileDescriptionsAndExtensions, FileChooserControllerInter fileChooserController){
 		this.fileDescriptionsAndExtensions= fileDescriptionsAndExtensions;
 		this.fileChooserController= fileChooserController;
-		this.defaultDirectory =defaultDirectory;
 		initComponents();
 	}
 	
@@ -57,11 +50,9 @@ public abstract class FileChooserCustomized extends JFileChooser implements File
 	 * This method is called from within the constructor to initialize the form(frame) of the file chooser.
 	 */	
 	public void initComponents() {
-       if (defaultDirectory.isEmpty()){
-		jFileChooserCustomized = new javax.swing.JFileChooser();
-       }else{
-    	   jFileChooserCustomized = new javax.swing.JFileChooser(defaultDirectory);    	   
-       }
+     
+    	jFileChooserCustomized = new javax.swing.JFileChooser(DEFAULT_DIRECTORY);    	   
+    
         jFileChooserCustomized.setAcceptAllFileFilterUsed(false);
         jFileChooserCustomized.setFileSelectionMode(JFileChooser.FILES_ONLY);
         jFileChooserCustomized.setSize(new Dimension(580,450));

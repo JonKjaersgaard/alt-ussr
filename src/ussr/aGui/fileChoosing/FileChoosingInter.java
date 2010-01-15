@@ -1,6 +1,7 @@
 package ussr.aGui.fileChoosing;
 
-import ussr.aGui.fileChoosing.controllers.FileChoosingXMLController;
+import ussr.aGui.fileChoosing.fileChooser.controllers.FileChooserControllerInter;
+import ussr.aGui.fileChoosing.fileChooser.controllers.FileChooserXMLController;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
 
 public interface FileChoosingInter {
@@ -20,7 +21,7 @@ public interface FileChoosingInter {
 	/**
 	 * Default controller for XML processing. 
 	 */
-	public final FileChoosingControllerInter FC_XML_CONTROLLER = new FileChoosingXMLController();
+	public final FileChooserControllerInter FC_XML_CONTROLLER = new FileChooserXMLController();
 	
 	/**
 	 * A number of titles for each type of file chooser appearance;

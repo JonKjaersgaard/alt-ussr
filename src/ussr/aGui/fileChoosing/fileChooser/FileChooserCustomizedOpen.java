@@ -4,7 +4,7 @@ package ussr.aGui.fileChoosing.fileChooser;
 import java.util.Map;
 
 import ussr.aGui.MainFrames;
-import ussr.aGui.fileChoosing.FileChoosingControllerInter;
+import ussr.aGui.fileChoosing.fileChooser.controllers.FileChooserControllerInter;
 
 /**
  * Defines visual appearance of the file chooser in the form of Open dialog.
@@ -22,10 +22,9 @@ public class FileChooserCustomizedOpen extends FileChooserCustomized  {
 	 * Manages the file chooser in the form of Open dialog.
 	 * @param fileDescriptionsAndExtensions, 
 	 * @param fileChooserController, the controller for  file extension.
-	 * @param defaultDirectory, default directory to open.
 	 */
-	public FileChooserCustomizedOpen(Map<String, String> fileDescriptionsAndExtensions, FileChoosingControllerInter fileChooserController,String defaultDirectory) {
-		super(fileDescriptionsAndExtensions,fileChooserController,defaultDirectory);
+	public FileChooserCustomizedOpen(Map<String, String> fileDescriptionsAndExtensions, FileChooserControllerInter fileChooserController) {
+		super(fileDescriptionsAndExtensions,fileChooserController);
 		changeToOpenDialog();
 		setFilesToFilterOutWithDescription();
 		

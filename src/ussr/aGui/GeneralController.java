@@ -85,4 +85,8 @@ public abstract class GeneralController {
 		GeneralController.simulationXMLFileDirectory = simulationXMLFileDirectory;
 	}
 	
+	public static String getOperatingSystemName(){
+		return System.getProperty("os.name");
+	}
+	
 }

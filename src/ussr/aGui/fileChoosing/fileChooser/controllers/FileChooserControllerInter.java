@@ -1,4 +1,4 @@
-package ussr.aGui.fileChoosing;
+package ussr.aGui.fileChoosing.fileChooser.controllers;
 
 import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedInter;
 
@@ -8,7 +8,7 @@ import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedInter;
  * @author Konstantinas
  *
  */
-public interface FileChoosingControllerInter {
+public interface FileChooserControllerInter {
 	
     /**
      * Manages the control of the file chooser in Save dialog form.
