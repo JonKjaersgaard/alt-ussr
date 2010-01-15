@@ -49,14 +49,11 @@ public interface FileChooserCustomizedInter extends FramesInter {
 	 */
 	public static final String OPEN_ROBOT_TITLE = "Load robot XML file", OPEN_SIMULATION_TITLE = "Open simulation XML file",
 	                           SAVE_ROBOT_TITLE = "Save simulation XML file", SAVE_SIMULATION_TITLE = "Save simulation XML file";  
+		
 	/**
-	 * Sets file extensions(with descriptions) for file chooser to filter.
-	 * @param fileDescriptionsAndExtensions, map containing mapping of file description to file extension.
+	 * Returns the file filter selected by user.
+	 * @return the file filter selected by user.
 	 */
-	public void setFileFiltersWithDescriptions(Map<String, String> fileDescriptionsAndExtensions);
-
-	
-	
 	public FileFilterCustomized getSelectedFileFilter();
 	
 }

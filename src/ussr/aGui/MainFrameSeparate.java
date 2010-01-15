@@ -1,15 +1,20 @@
 package ussr.aGui;
 
 import java.awt.Dimension;
+import java.awt.FileDialog;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JToggleButton;
+import javax.swing.filechooser.FileFilter;
 
 import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.MainFrameComponentsText;
@@ -144,18 +149,35 @@ public class MainFrameSeparate extends MainFrames {
 	 * @param args, passed arguments.
 	 */
 	public static void main( String[] args ) {		
-		//java.awt.EventQueue.invokeLater(new Runnable(){
 		new Thread(){
 			public void run() {				
 				mainFrame = new MainFrameSeparate();
 				mainFrame.setVisible(true);
 				setMainFrameSeparateEnabled(false);
+				FileDialog fileDialog = new FileDialog(mainFrame);
+				fileDialog.setTitle("FOR mac");
+				fileDialog.setFilenameFilter(new FilenameFilter(){
+
+					@Override
+					public boolean accept(File dir, String name) {
+						// TODO Auto-generated method stub
+						return(name.endsWith(".jpg") || name.endsWith(".gif"));
+					   
+					}
+					
+				});
+				
+				fileDialog.setVisible(true);
+			
+				    //new String[] { "Batch Files", "All Files (*.*)" }
+				//as.setFilenameFilter();
+				
+				//as.setVisible(true);
 			}
-		}.start();
-		//});
-		
-		
-		
+		}.start();	
+
+
+
 	}
 
 	/**

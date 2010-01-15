@@ -1,12 +1,9 @@
 package ussr.aGui.fileChooser.views;
 import java.awt.Dimension;
-import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 
 import ussr.aGui.GuiFrames;
 import ussr.aGui.fileChooser.FileChooserControllerInter;
@@ -27,11 +24,6 @@ public abstract class FileChooserCustomized extends JFileChooser implements File
 	 * Used as flag to indicate that file chooser should open build in default directory.
 	 */
 	protected String defaultDirectory = "";
-	
-	/**
-	 * Default selected file
-	 */
-	private File selectedFile = new File("");
 	
 	/**
 	 * The file chooser appearance, which is integrated into the frame.
@@ -73,6 +65,7 @@ public abstract class FileChooserCustomized extends JFileChooser implements File
     	   jFileChooserCustomized = new javax.swing.JFileChooser(defaultDirectory);    	   
        }
         jFileChooserCustomized.setAcceptAllFileFilterUsed(false);
+        jFileChooserCustomized.setFileSelectionMode(JFileChooser.FILES_ONLY);
         jFileChooserCustomized.setSize(new Dimension(580,450));
        
         GuiFrames.changeToLookAndFeel(jFileChooserCustomized);	
@@ -100,7 +93,10 @@ public abstract class FileChooserCustomized extends JFileChooser implements File
 		this.fileDescriptionsAndExtensions = fileDescriptionsAndExtensions;
 	}
 	
-	
+	/**
+	 * Returns the file filter selected by user.
+	 * @return the file filter selected by user.
+	 */
 	public FileFilterCustomized getSelectedFileFilter(){
 		return (FileFilterCustomized) jFileChooserCustomized.getFileFilter();
 	}
