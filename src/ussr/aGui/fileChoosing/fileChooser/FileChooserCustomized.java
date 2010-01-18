@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.swing.JFileChooser;
 
 import ussr.aGui.GuiFrames;
-import ussr.aGui.fileChoosing.fileChooser.controllers.FileChooserControllerInter;
+import ussr.aGui.fileChoosing.FileChooserControllerInter;
 
 
 /**

@@ -4,7 +4,7 @@ package ussr.aGui.fileChoosing.fileChooser;
 import java.util.Map;
 
 import ussr.aGui.MainFrames;
-import ussr.aGui.fileChoosing.fileChooser.controllers.FileChooserControllerInter;
+import ussr.aGui.fileChoosing.FileChooserControllerInter;
 
 /**
  * Defines visual appearance of the file chooser in the form of Open dialog.

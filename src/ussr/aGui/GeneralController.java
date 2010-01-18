@@ -4,6 +4,7 @@ package ussr.aGui;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
+import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 import ussr.remote.GUIRemoteSimulationAdapter;
 import ussr.remote.facade.BuilderControlInter;
 import ussr.remote.facade.RemotePhysicsSimulation;
@@ -48,6 +49,36 @@ public abstract class GeneralController {
 	}
 	
 	/**
+	 * Loads robot from xml file.
+	 * @param xmlDirectoryFileName, the directory and name of the file describing the robot.
+	 */
+	public static void loadRobot(final String xmlDirectoryFileName){
+		new Thread() {
+			public void run() {
+				try {
+					builderControl.loadInXML(UssrXmlFileTypes.ROBOT, xmlDirectoryFileName);
+				} catch (RemoteException e) {
+					throw new Error("Failed to load robot morphology from xml file, due to remote exception");
+				}
+			}
+		}.start();		
+	}
+	
+	
+	/**
+	 * Saves Simulation or Robot in XML file.
+	 * @param ussrXmlFileType, simulation or robot xml file.
+	 * @param xmlDirectoryFileName, the directory and file name to save it in.
+	 */
+	public static void saveInXml(UssrXmlFileTypes ussrXmlFileType,String xmlDirectoryFileName){
+		try {
+			remotePhysicsSimulation.saveToXML(ussrXmlFileType, xmlDirectoryFileName);
+		} catch (RemoteException e) {
+			throw new Error("Failed to save "+ ussrXmlFileType.toString()+" description in xml file at directory: "+ xmlDirectoryFileName+ ", due ro remote exception");
+		}
+	}
+	
+	/**
 	 * Terminates current remote simulation.
 	 */
 	public static void terminateSimulation(){
@@ -59,6 +90,7 @@ public abstract class GeneralController {
 			//Do not throw anything, because this means only GUI is closed and simulation was not even started			
 		}
 	}
+	
 	
 	
 	/**
@@ -85,6 +117,10 @@ public abstract class GeneralController {
 		GeneralController.simulationXMLFileDirectory = simulationXMLFileDirectory;
 	}
 	
+	/**
+	 * Returns the name of OS(Operating system).
+	 * @return the name of OS(Operating system).
+	 */
 	public static String getOperatingSystemName(){
 		return System.getProperty("os.name");
 	}

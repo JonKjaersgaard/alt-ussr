@@ -1,21 +1,23 @@
-package ussr.aGui.fileChoosing.fileDialog;
+package ussr.aGui.fileChoosing.fileDialogWindow;
 
 import java.awt.FileDialog;
 import java.awt.Frame;
 
+import ussr.aGui.fileChoosing.fileDialogWindow.controllers.FileDialogControllerInter;
+
 public class FileDialogCustomizedSave extends FileDialogCustomized  {
 
-	private FileDialogTypes  fileDialogType;
 	
-	public FileDialogCustomizedSave(Frame parent,FileDialogTypes  fileDialogType) {
+	public FileDialogCustomizedSave(Frame parent,FileDialogTypes  fileDialogType,FileDialogControllerInter fileDialogController) {
 		super(parent);
-		this.fileDialogType = fileDialogType;
+		super.fileDialogType = fileDialogType;
+		super.fileDialogController = fileDialogController;
 		chageToOpenDialog();
 	}
 	
 	private void chageToOpenDialog(){
 		super.fileDialogCustomized.setMode(FileDialog.SAVE);
-		if (fileDialogType.equals(FileDialogTypes.SAVE_ROBOT_XML)){
+		if (super.fileDialogType.equals(FileDialogTypes.SAVE_ROBOT_XML)){
 		super.fileDialogCustomized.setTitle(SAVE_ROBOT_TITLE);
 		}else{
 			super.fileDialogCustomized.setTitle(SAVE_SIMULATION_TITLE);

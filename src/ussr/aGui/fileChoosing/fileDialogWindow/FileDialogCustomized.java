@@ -1,16 +1,29 @@
-package ussr.aGui.fileChoosing.fileDialog;
+package ussr.aGui.fileChoosing.fileDialogWindow;
 
 import java.awt.FileDialog;
 import java.awt.Frame;
 import java.io.File;
 import java.io.FilenameFilter;
 
-import ussr.aGui.fileChoosing.FileChoosingInter;
+import ussr.aGui.fileChoosing.FileChoosingWindowInter;
+import ussr.aGui.fileChoosing.FileDialogCustomizedInter;
+import ussr.aGui.fileChoosing.fileDialogWindow.controllers.FileDialogControllerInter;
 
 public abstract class FileDialogCustomized extends FileDialog implements FileDialogCustomizedInter {
 
 	protected FileDialog fileDialogCustomized;
 	
+	protected FileDialogTypes fileDialogType;
+	
+	
+
+
+	protected FileDialogControllerInter fileDialogController;
+	
+	public FileDialogControllerInter getFileDialogController() {
+		return fileDialogController;
+	}
+
 	public FileDialogCustomized(Frame parent) {
 		super(parent);
 		fileDialogCustomized = this;
@@ -45,4 +58,9 @@ public abstract class FileDialogCustomized extends FileDialog implements FileDia
 	public void setSelectedFile( String selectedFile){
 		fileDialogCustomized.setFile(selectedFile);
 	}
+	
+	public FileDialogTypes getFileDialogType() {
+		return fileDialogType;
+	}
+	
 }

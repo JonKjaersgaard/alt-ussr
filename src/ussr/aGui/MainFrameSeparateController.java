@@ -8,13 +8,13 @@ import javax.swing.JToggleButton;
 
 import ussr.aGui.enumerations.JOptionPaneMessages;
 import ussr.aGui.enumerations.MainFrameIcons;
-import ussr.aGui.fileChoosing.FileChoosingInter;
+import ussr.aGui.fileChoosing.FileChoosingWindowInter;
+import ussr.aGui.fileChoosing.FileDialogCustomizedInter;
 import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedInter;
 import ussr.aGui.fileChoosing.fileChooser.FileFilterTypes;
-import ussr.aGui.fileChoosing.fileChooser.controllers.FileChooserXMLController;
-import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedInter;
-import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedSave;
-import ussr.aGui.fileChoosing.fileDialog.FileDialogTypes;
+import ussr.aGui.fileChoosing.fileChooser.controller.FileChooserXMLController;
+import ussr.aGui.fileChoosing.fileDialogWindow.FileDialogCustomizedSave;
+import ussr.aGui.fileChoosing.fileDialogWindow.FileDialogTypes;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
@@ -51,12 +51,13 @@ public class MainFrameSeparateController extends GeneralController {
 	 * Opens file chooser in the form of Open dialog
 	 * 
 	 */
-	public static void openActionPerformed(FileChoosingInter fileChoosingOpenDialog) {
+	public static void openActionPerformed(FileChoosingWindowInter fileChoosingOpenDialog) {
 		
 		if (fileChoosingOpenDialog instanceof FileChooserCustomizedInter){
 			handleOpenActionFileChooser((FileChooserCustomizedInter)fileChoosingOpenDialog);
 		}else if (fileChoosingOpenDialog instanceof FileDialogCustomizedInter){
-	
+			FileDialogCustomizedInter fileDialogOpen =  (FileDialogCustomizedInter)fileChoosingOpenDialog;
+
 			
 			String title = ((FileDialogCustomizedInter) fileChoosingOpenDialog).getTopTitle();
 			
@@ -68,28 +69,22 @@ public class MainFrameSeparateController extends GeneralController {
 				switch(returnedValue){
 
 				case 0://YES
-					FileDialogCustomizedInter fd = new FileDialogCustomizedSave(null,FileDialogTypes.SAVE_SIMULATION_XML);
 					
-					
-					fd.activate();
-					String selectedFileName = ((FileDialogCustomizedInter) fileChoosingOpenDialog).getFileName();
-					
-					String selectedDirectory=((FileDialogCustomizedInter) fileChoosingOpenDialog).getFileDirectory();
-					//FIXME NOT WORKING
-					try {
-						remotePhysicsSimulation.saveToXML(UssrXmlFileTypes.SIMULATION, selectedDirectory+selectedFileName);
-					} catch (RemoteException e) {
-						throw new Error("Failed to save "+ UssrXmlFileTypes.SIMULATION.toString()+" description in xml file "+ selectedDirectory+selectedFileName+ ", due ro remote exception");
-					}
+					FileDialogCustomizedInter fd = FileDialogCustomizedInter.FD_SAVE_SIMULATION;
+					fd.setSelectedFile(" ");
+					fd.getFileDialogController().controlSaveDialog(fd);
+				
  
 					break;
 				case 1://NO
-					terminateSimulation();	
-					fileChoosingOpenDialog.activate();
+					terminateSimulation();
+					fileDialogOpen.getFileDialogController().controlOpenDialog(fileDialogOpen);
+										
+					/*fileChoosingOpenDialog.activate();
 					
 					String selectedFileName1 = ((FileDialogCustomizedInter) fileChoosingOpenDialog).getFileName();
 					String selectedDirectory1 =((FileDialogCustomizedInter) fileChoosingOpenDialog).getFileDirectory();
-					startSimulation(selectedDirectory1+selectedFileName1);
+					startSimulation(selectedDirectory1+selectedFileName1);*/
 					break;
 				case 2://CANCEL, do nothing
 				case -1://Exit	
@@ -163,8 +158,17 @@ public class MainFrameSeparateController extends GeneralController {
 	 * Activates file choosing in the form of Save dialog
 	 * 
 	 */
-	public static void saveActionPerformed(FileChoosingInter fileChoosingSaveDialog) {
-			fileChoosingSaveDialog.activate();	
+	public static void saveActionPerformed(FileChoosingWindowInter fileChoosingSaveDialog) {
+		
+		if (fileChoosingSaveDialog instanceof FileChooserCustomizedInter){
+			fileChoosingSaveDialog.activate();
+		}else if (fileChoosingSaveDialog  instanceof FileDialogCustomizedInter){
+			((FileDialogCustomizedInter) fileChoosingSaveDialog).getFileDialogController().controlSaveDialog((FileDialogCustomizedInter) fileChoosingSaveDialog);
+			
+			
+			
+
+		}
 	}
 
 	/**

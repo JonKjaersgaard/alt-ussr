@@ -1,4 +1,4 @@
-package ussr.aGui.fileChoosing.fileChooser.controllers;
+package ussr.aGui.fileChoosing;
 
 import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedInter;
 

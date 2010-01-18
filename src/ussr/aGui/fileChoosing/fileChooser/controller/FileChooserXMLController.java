@@ -1,4 +1,4 @@
-package ussr.aGui.fileChoosing.fileChooser.controllers;
+package ussr.aGui.fileChoosing.fileChooser.controller;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -58,8 +58,9 @@ public class FileChooserXMLController extends FileChooserController {
 				startSimulation(fileDirectoryName);	
 				setSimulationXMLFileDirectory(fileDirectoryName);//CallBack //FIXME NO LONGER NEEDED
 				break;			
-			case ROBOT:        
-				new Thread() {
+			case ROBOT:  
+				loadRobot(fileDirectoryName);
+				/*new Thread() {
 					public void run() {
 						try {
 							builderControl.loadInXML(UssrXmlFileTypes.ROBOT, fileDirectoryName);
@@ -67,7 +68,7 @@ public class FileChooserXMLController extends FileChooserController {
 							throw new Error("Failed to load robot morphology from xml file, due to remote exception");
 						}
 					}
-				}.start();
+				}.start();*/
 				break;	
 			default: throw new Error("XML file type named as " +ussXmlFileType.toString() +"is not yet supported.");	
 			}
@@ -89,11 +90,12 @@ public class FileChooserXMLController extends FileChooserController {
 		if(command.equalsIgnoreCase(ActionCommands.APPROVESELECTION.toString())  ){		        
 			String fileDirectoryName = fileChooser.getSelectedFile().toString();
 
-			try {
+			saveInXml(ussXmlFileType,fileDirectoryName);
+		/*	try {
 				remotePhysicsSimulation.saveToXML(ussXmlFileType, fileDirectoryName);
 			} catch (RemoteException e) {
 				throw new Error("Failed to save "+ ussXmlFileType.toString()+" description in xml file "+ fileDirectoryName+ ", due ro remote exception");
-			}
+			}*/
 			if (includeSimulationTermination&&includeStartNewSimulation){
 				terminateSimulation();
 				startSimulation(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);

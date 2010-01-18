@@ -1,10 +1,9 @@
 package ussr.aGui.fileChoosing;
 
-
 import ussr.aGui.fileChoosing.fileChooser.controller.FileChooserXMLController;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
 
-public interface FileChoosingInter {
+public interface FileChoosingWindowInter {
 
 	/**
 	 * Default file extension for file filter.

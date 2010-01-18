@@ -1,13 +1,13 @@
 package ussr.aGui.fileChoosing.fileChooser;
 
-import ussr.aGui.fileChoosing.FileChoosingInter;
+import ussr.aGui.fileChoosing.FileChoosingWindowInter;
 
 
 /**
  * Supports different file choosers with common constants and methods.  
  * @author Konstantinas
  */
-public interface FileChooserCustomizedInter extends FileChoosingInter {
+public interface FileChooserCustomizedInter extends FileChoosingWindowInter {
 
 	/**
 	 * File extension descriptions.

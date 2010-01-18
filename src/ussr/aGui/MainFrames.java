@@ -9,12 +9,12 @@ import java.util.Map;
 
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.MainFrameComponentsText;
-import ussr.aGui.fileChoosing.FileChoosingInter;
+import ussr.aGui.fileChoosing.FileChoosingWindowInter;
+import ussr.aGui.fileChoosing.FileDialogCustomizedInter;
 import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomized;
 import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedInter;
 import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedOpen;
 import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedSave;
-import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedInter;
 import ussr.aGui.helpers.ComponentResizer;
 import ussr.aGui.tabs.TabsInter;
 import ussr.remote.GUIRemoteSimulationAdapter;
@@ -45,22 +45,22 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	protected ArrayList<TabsInter> allTabs,tabsFirstTabbedPane,tabsSecondTabbedPane;
 	
-	protected FileChoosingInter fcOpenSimulationDialog,fcSaveSimulationDialog,
+	protected FileChoosingWindowInter fcOpenSimulationDialog,fcSaveSimulationDialog,
 	                             fcOpenRobotDialog,fcSaveRobotDialog ;
 	
-	public FileChoosingInter getFcSaveRobotDialog() {
+	public FileChoosingWindowInter getFcSaveRobotDialog() {
 		return fcSaveRobotDialog;
 	}
 
-	public FileChoosingInter getFcOpenRobotDialog() {
+	public FileChoosingWindowInter getFcOpenRobotDialog() {
 		return fcOpenRobotDialog;
 	}
 
-	public FileChoosingInter getFcSaveSimulationDialog() {
+	public FileChoosingWindowInter getFcSaveSimulationDialog() {
 		return fcSaveSimulationDialog;
 	}
 
-	public FileChoosingInter getFcOpenSimulationDialog() {
+	public FileChoosingWindowInter getFcOpenSimulationDialog() {
 		return fcOpenSimulationDialog;
 	}
 
@@ -76,7 +76,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		}
 	
 	private void initFileChoosing(){
-		if (GeneralController.getOperatingSystemName().contains("Mac")){
+		if (true/*GeneralController.getOperatingSystemName().contains("Mac")*/){
 			fcOpenSimulationDialog = FileDialogCustomizedInter.FD_OPEN_SIMULATION;
 			fcSaveSimulationDialog = FileDialogCustomizedInter.FD_SAVE_SIMULATION;
 			fcOpenRobotDialog = FileDialogCustomizedInter.FD_OPEN_ROBOT;
@@ -587,7 +587,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 * @param fcSaveFrame, the file chooser frame to associate the button with.
 	 * @return the button called Save.
 	 */
-	public static javax.swing.JButton initSaveButton(final FileChoosingInter fcSaveDialog){
+	public static javax.swing.JButton initSaveButton(final FileChoosingWindowInter fcSaveDialog){
 		jButtonSave = new javax.swing.JButton();		
 		jButtonSave.setToolTipText(MainFrameComponentsText.SAVE.getUserFriendlyName());		
 		jButtonSave.setIcon(MainFrameIcons.SAVE.getImageIcon());
@@ -614,7 +614,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 * @param fcOpenFrame,the file chooser frame to associate the button with.
 	 * @return the button called Open.
 	 */
-	public static javax.swing.JButton  initOpenButton(final FileChoosingInter fcOpenDialog){
+	public static javax.swing.JButton  initOpenButton(final FileChoosingWindowInter fcOpenDialog){
 		jButtonOpen = new javax.swing.JButton();
 		jButtonOpen.setToolTipText(MainFrameComponentsText.OPEN.getUserFriendlyName());
 		

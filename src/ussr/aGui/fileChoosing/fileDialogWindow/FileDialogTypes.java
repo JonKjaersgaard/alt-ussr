@@ -1,4 +1,4 @@
-package ussr.aGui.fileChoosing.fileDialog;
+package ussr.aGui.fileChoosing.fileDialogWindow;
 
 public enum FileDialogTypes {
 OPEN_ROBOT_XML,
