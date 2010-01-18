@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import ussr.aGui.MainFrameSeparateController;
+import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.builder.enumerations.ATRONTypesModules;
 import ussr.builder.enumerations.OdinTypesModules;
 import ussr.builder.helpers.BuilderHelper;
