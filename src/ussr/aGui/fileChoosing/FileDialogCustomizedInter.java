@@ -1,11 +1,11 @@
 package ussr.aGui.fileChoosing;
 
 
-import ussr.aGui.fileChoosing.fileDialogWindow.FileDialogCustomizedOpen;
-import ussr.aGui.fileChoosing.fileDialogWindow.FileDialogCustomizedSave;
-import ussr.aGui.fileChoosing.fileDialogWindow.FileDialogTypes;
-import ussr.aGui.fileChoosing.fileDialogWindow.controllers.FileDialogControllerInter;
-import ussr.aGui.fileChoosing.fileDialogWindow.controllers.FileDialogXMLController;
+import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedOpen;
+import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedSave;
+import ussr.aGui.fileChoosing.fileDialog.FileDialogTypes;
+import ussr.aGui.fileChoosing.fileDialog.controllers.FileDialogControllerInter;
+import ussr.aGui.fileChoosing.fileDialog.controllers.FileDialogXMLController;
 
 
 public interface FileDialogCustomizedInter extends FileChoosingWindowInter  {
