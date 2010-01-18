@@ -8,10 +8,10 @@ import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 
 
-import ussr.aGui.GeneralController;
 import ussr.aGui.MainFrameSeparate;
-import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.MainFrames;
+import ussr.aGui.controllers.GeneralController;
+import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.tabs.controllers.ConsoleTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.SimulationTabController;
