@@ -109,7 +109,12 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplateInte
 	 * @return transformerHandler, the content handler used to print out XML format. 
 	 */
 	public TransformerHandler initializeTransformer(String fileDirectoryName) {
-		File newFile = new File (fileDirectoryName + XML_EXTENSION);
+		File newFile; 
+		if (fileDirectoryName.contains(XML_EXTENSION)){
+			newFile = new File (fileDirectoryName);
+		}else{
+            newFile = new File (fileDirectoryName + XML_EXTENSION);
+		}
 		BufferedWriter characterWriter = null;
 		try {
 			characterWriter = new BufferedWriter(new FileWriter(newFile, true));
