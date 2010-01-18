@@ -1,9 +1,8 @@
-package ussr.aGui.fileChoosing.fileChooser.controller;
+package ussr.aGui.fileChoosing.jFileChooser.controller;
 
 import javax.swing.JFileChooser;
 import ussr.aGui.GeneralController;
-import ussr.aGui.fileChoosing.FileChooserControllerInter;
-import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedInter;
+import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
 import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 
 /**
@@ -11,7 +10,7 @@ import ussr.builder.saveLoadXML.UssrXmlFileTypes;
  * @author Konstantinas
  *
  */
-public abstract class FileChooserController extends GeneralController implements FileChooserControllerInter  {
+public abstract class FileChooserController extends GeneralController implements JFileChooserControllerInter  {
 
 	/**
 	 * XML file type supported in USSR (Simulation or Robot).

@@ -5,8 +5,9 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 
 import ussr.aGui.MainFrames;
-import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomized;
-import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedInter;
+import ussr.aGui.designHelpers.JComponentsFactory;
+import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomized;
+import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
 
 /**
  * Supports definitions of visual appearance for tabs plugged-in the main GUI window.
@@ -117,7 +118,8 @@ public abstract class Tabs implements TabsInter {
 
 		FileChooserFrameInter fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
 		return MainFrames.initSaveButton(fcSaveFrame);*/
-		return MainFrames.initSaveButton(FileChooserCustomizedInter.FC_SAVE_ROBOT);
+		
+		return MainFrames.initSaveButton(MainFrames.fcSaveSimulationDialog);
 	}
 	
 	public static JButton initOpenButton(){
@@ -125,7 +127,7 @@ public abstract class Tabs implements TabsInter {
 		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);		
 		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);*/
 		//return MainFrames.initOpenButton(fcOpenFrame);
-		return MainFrames.initOpenButton(FileChooserCustomizedInter.FC_OPEN_ROBOT);
+		return MainFrames.initOpenButton(MainFrames.fcOpenSimulationDialog);
 	}
 	
 }

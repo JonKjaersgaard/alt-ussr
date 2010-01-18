@@ -1,8 +1,13 @@
 package ussr.aGui.fileChoosing.fileDialog.controllers;
 
 import ussr.aGui.GeneralController;
-import ussr.aGui.fileChoosing.FileChooserControllerInter;
 
+/**
+ * So far only passes inherited methods.
+ * @author Konstantinas
+ *
+ */
 public abstract class FileDialogController extends GeneralController implements FileDialogControllerInter {
 
+	
 }

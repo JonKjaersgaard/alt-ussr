@@ -1,7 +1,8 @@
-package ussr.aGui.fileChoosing.fileChooser;
+package ussr.aGui.fileChoosing.jFileChooser;
 
 import java.util.Hashtable;
 import java.util.Map;
+
 
 
 /**
@@ -12,8 +13,8 @@ import java.util.Map;
 public enum FileFilterTypes {
 
 	
-	OPEN_SAVE_SIMULATION(FileChooserCustomizedInter.DEFAULT_FILE_DESCRIPTION,FileChooserCustomizedInter.DEFAULT_FILE_EXTENSION),
-	OPEN_SAVE_ROBOT(FileChooserCustomizedInter.ROBOT_FILE_DESCRIPTION,FileChooserCustomizedInter.DEFAULT_FILE_EXTENSION),
+	OPEN_SAVE_SIMULATION(JFileChooserCustomizedInter.DEFAULT_FILE_DESCRIPTION,JFileChooserCustomizedInter.DEFAULT_FILE_EXTENSION),
+	OPEN_SAVE_ROBOT(JFileChooserCustomizedInter.ROBOT_FILE_DESCRIPTION,JFileChooserCustomizedInter.DEFAULT_FILE_EXTENSION),
 	;
 	
 	/**

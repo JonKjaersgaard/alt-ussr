@@ -1,29 +1,29 @@
-package ussr.aGui.fileChoosing.fileChooser;
+package ussr.aGui.fileChoosing.jFileChooser;
 
 
 import java.util.Map;
 
 import ussr.aGui.MainFrames;
-import ussr.aGui.fileChoosing.FileChooserControllerInter;
+import ussr.aGui.fileChoosing.jFileChooser.controller.JFileChooserControllerInter;
 
 /**
  * Defines visual appearance of the file chooser in the form of Open dialog.
  * @author Konstantinas
  */
 @SuppressWarnings("serial")
-public class FileChooserCustomizedOpen extends FileChooserCustomized  {	
+public class JFileChooserCustomizedOpen extends JFileChooserCustomized  {	
 	
 	/**
 	 * The frame of the file chooser for Open dialog form
 	 */
-	private static FileChooserCustomizedOpen fcOpenFrame;	
+	private static JFileChooserCustomizedOpen fcOpenFrame;	
 	
 	/**
 	 * Manages the file chooser in the form of Open dialog.
 	 * @param fileDescriptionsAndExtensions, 
 	 * @param fileChooserController, the controller for  file extension.
 	 */
-	public FileChooserCustomizedOpen(Map<String, String> fileDescriptionsAndExtensions, FileChooserControllerInter fileChooserController) {
+	public JFileChooserCustomizedOpen(Map<String, String> fileDescriptionsAndExtensions, JFileChooserControllerInter fileChooserController) {
 		super(fileDescriptionsAndExtensions,fileChooserController);
 		changeToOpenDialog();
 		setFilesToFilterOutWithDescription();

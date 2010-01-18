@@ -12,13 +12,15 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.TitledBorder;
 import ussr.aGui.FramesInter;
 import ussr.aGui.MainFrameSeparateController;
+import ussr.aGui.MainFrames;
 import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.enumerations.MainFrameComponentsText;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
-import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomized;
-import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedInter;
+import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomized;
+import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
+import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.simulation.enumerations.CameraPositions;
 import ussr.aGui.tabs.simulation.enumerations.PlaneMaterials;
@@ -107,10 +109,9 @@ public class SimulationTreeEditors{
 		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));
 		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.openActionPerformed(FileChooserCustomizedInter.FC_OPEN_ROBOT);
+				MainFrameSeparateController.openActionPerformed(MainFrames.fcOpenRobotDialog);
 			}
 		});
-		//jPanelTreeNode.add(Tabs.initOpenButton());
 		jPanelTreeNode.add(jButtonOpen);		
 		return jPanelTreeNode;
 	}

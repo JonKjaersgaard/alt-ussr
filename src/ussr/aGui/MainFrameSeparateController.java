@@ -8,13 +8,12 @@ import javax.swing.JToggleButton;
 
 import ussr.aGui.enumerations.JOptionPaneMessages;
 import ussr.aGui.enumerations.MainFrameIcons;
-import ussr.aGui.fileChoosing.FileChoosingWindowInter;
-import ussr.aGui.fileChoosing.FileDialogCustomizedInter;
-import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedInter;
-import ussr.aGui.fileChoosing.fileChooser.FileFilterTypes;
-import ussr.aGui.fileChoosing.fileChooser.controller.FileChooserXMLController;
-import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedSave;
+import ussr.aGui.fileChoosing.FileChoosingInter;
+import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedInter;
 import ussr.aGui.fileChoosing.fileDialog.FileDialogTypes;
+import ussr.aGui.fileChoosing.jFileChooser.FileFilterTypes;
+import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
+import ussr.aGui.fileChoosing.jFileChooser.controller.FileChooserXMLController;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
@@ -23,7 +22,6 @@ import ussr.aGui.tabs.controllers.AssignControllerTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
 import ussr.aGui.tabs.simulation.SimulationTab;
-import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 import ussr.remote.facade.RendererControlInter;
 
 
@@ -51,77 +49,49 @@ public class MainFrameSeparateController extends GeneralController {
 	 * Opens file chooser in the form of Open dialog
 	 * 
 	 */
-	public static void openActionPerformed(FileChoosingWindowInter fileChoosingOpenDialog) {
+	public static void openActionPerformed(FileChoosingInter fileChoosingOpenDialog) {
 		
-		if (fileChoosingOpenDialog instanceof FileChooserCustomizedInter){
-			handleOpenActionFileChooser((FileChooserCustomizedInter)fileChoosingOpenDialog);
+		if (fileChoosingOpenDialog instanceof JFileChooserCustomizedInter){
+			handleOpenActionFileChooser((JFileChooserCustomizedInter)fileChoosingOpenDialog);
 		}else if (fileChoosingOpenDialog instanceof FileDialogCustomizedInter){
 			FileDialogCustomizedInter fileDialogOpen =  (FileDialogCustomizedInter)fileChoosingOpenDialog;
-
 			
-			String title = ((FileDialogCustomizedInter) fileChoosingOpenDialog).getTopTitle();
-			
-			if (remotePhysicsSimulation!=null && !title.contains("robot")&&isSimulationRunning==false ){
+			FileDialogTypes fileDialogType = fileDialogOpen.getFileDialogType();
+	
+			if (remotePhysicsSimulation!=null && fileDialogType.equals(FileDialogTypes.OPEN_SIMULATION_XML)&&isSimulationRunning==false ){
 				int returnedValue = (Integer)JOptionPaneMessages.SAVE_CURRENT_SIMULATION.displayMessage();
 				
-			
-
 				switch(returnedValue){
-
 				case 0://YES
-					
-					FileDialogCustomizedInter fd = FileDialogCustomizedInter.FD_SAVE_SIMULATION;
-					fd.setSelectedFile(" ");
-					fd.getFileDialogController().controlSaveDialog(fd);
-				
- 
+					FileDialogCustomizedInter fdSaveSimulation = FileDialogCustomizedInter.FD_SAVE_SIMULATION;
+					fdSaveSimulation.setSelectedFile(" ");
+					fdSaveSimulation.getFileDialogController().controlSaveDialog(fdSaveSimulation);
 					break;
 				case 1://NO
 					terminateSimulation();
 					fileDialogOpen.getFileDialogController().controlOpenDialog(fileDialogOpen);
-										
-					/*fileChoosingOpenDialog.activate();
-					
-					String selectedFileName1 = ((FileDialogCustomizedInter) fileChoosingOpenDialog).getFileName();
-					String selectedDirectory1 =((FileDialogCustomizedInter) fileChoosingOpenDialog).getFileDirectory();
-					startSimulation(selectedDirectory1+selectedFileName1);*/
 					break;
 				case 2://CANCEL, do nothing
 				case -1://Exit	
 					break;
 				default: throw new Error("There is no such option");
 				}
-			}else if (remotePhysicsSimulation!=null&&isSimulationRunning==true &&!title.contains("robot")){
+			}else if (remotePhysicsSimulation!=null&&isSimulationRunning==true &&fileDialogType.equals(FileDialogTypes.OPEN_SIMULATION_XML)){
 				
-				terminateSimulation();	
-				fileChoosingOpenDialog.activate();
-				
-				String selectedFileName = ((FileDialogCustomizedInter) fileChoosingOpenDialog).getFileName();
-				String selectedDirectory =((FileDialogCustomizedInter) fileChoosingOpenDialog).getFileDirectory();
-				startSimulation(selectedDirectory+selectedFileName);
+				terminateSimulation();
+				fileDialogOpen.getFileDialogController().controlOpenDialog(fileDialogOpen);
 				
 			}else{
-				fileChoosingOpenDialog.activate();
-				String selectedFileName = ((FileDialogCustomizedInter) fileChoosingOpenDialog).getFileName();
-				String selectedDirectory =((FileDialogCustomizedInter) fileChoosingOpenDialog).getFileDirectory();
-				
-				startSimulation(selectedDirectory+selectedFileName);
+				fileDialogOpen.getFileDialogController().controlOpenDialog(fileDialogOpen);
 			}	
-			
-			
-			
-			
 		} 
-		
-		
-		
 	}
 	
 	
 	
 	
-	private static void handleOpenActionFileChooser(FileChooserCustomizedInter fileChooserOpenDialog){
-		FileChooserCustomizedInter fileChooserFrame = (FileChooserCustomizedInter)fileChooserOpenDialog;
+	private static void handleOpenActionFileChooser(JFileChooserCustomizedInter fileChooserOpenDialog){
+		JFileChooserCustomizedInter fileChooserFrame = (JFileChooserCustomizedInter)fileChooserOpenDialog;
 		String fileFilterDescription = fileChooserFrame.getSelectedFileFilter().getDescription();	
 		
 		if (remotePhysicsSimulation!=null && !fileFilterDescription.contains(FileFilterTypes.OPEN_SAVE_ROBOT.getFileDescription())&&isSimulationRunning==false ){
@@ -132,7 +102,7 @@ public class MainFrameSeparateController extends GeneralController {
 			case 0://YES
 				FileChooserXMLController.setIncludeSimulationTermination(true);
 				FileChooserXMLController.setIncludeStartNewSimulation(false);
-				saveActionPerformed(FileChooserCustomizedInter.FC_SAVE_SIMULATION);
+				saveActionPerformed(JFileChooserCustomizedInter.FC_SAVE_SIMULATION);
 				break;
 			case 1://NO
 				terminateSimulation();
@@ -158,16 +128,12 @@ public class MainFrameSeparateController extends GeneralController {
 	 * Activates file choosing in the form of Save dialog
 	 * 
 	 */
-	public static void saveActionPerformed(FileChoosingWindowInter fileChoosingSaveDialog) {
+	public static void saveActionPerformed(FileChoosingInter fileChoosingSaveDialog) {
 		
-		if (fileChoosingSaveDialog instanceof FileChooserCustomizedInter){
+		if (fileChoosingSaveDialog instanceof JFileChooserCustomizedInter){
 			fileChoosingSaveDialog.activate();
 		}else if (fileChoosingSaveDialog  instanceof FileDialogCustomizedInter){
 			((FileDialogCustomizedInter) fileChoosingSaveDialog).getFileDialogController().controlSaveDialog((FileDialogCustomizedInter) fileChoosingSaveDialog);
-			
-			
-			
-
 		}
 	}
 
@@ -575,7 +541,7 @@ public class MainFrameSeparateController extends GeneralController {
 			case 0://YES
 				FileChooserXMLController.setIncludeSimulationTermination(true);
 				FileChooserXMLController.setIncludeStartNewSimulation(true);
-				saveActionPerformed(FileChooserCustomizedInter.FC_SAVE_SIMULATION);
+				saveActionPerformed(JFileChooserCustomizedInter.FC_SAVE_SIMULATION);
 				break;
 			case 1://NO
 				terminateSimulation();

@@ -1,14 +1,13 @@
-package ussr.aGui.fileChoosing;
+package ussr.aGui.fileChoosing.jFileChooser.controller;
 
-import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedInter;
-
+import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
 
 /**
- * Provides methods for controlling file choosers. 
+ * Supports JFileChoosers with common methods for save and open events of dialog form. 
  * @author Konstantinas
  *
  */
-public interface FileChooserControllerInter {
+public interface JFileChooserControllerInter {
 	
     /**
      * Manages the control of the file chooser in Save dialog form.
@@ -16,7 +15,7 @@ public interface FileChooserControllerInter {
      * @param fileChooser, the file chooser appearance, which is integrated into the frame.
      * @param fileChooserFrame, the frame in which the file chooser appearance is integrated in.
      */
-    public  void controlSaveDialog(java.awt.event.ActionEvent evt, javax.swing.JFileChooser fileChooser,FileChooserCustomizedInter fileChooserFrame);
+    public  void controlSaveDialog(java.awt.event.ActionEvent evt, javax.swing.JFileChooser fileChooser,JFileChooserCustomizedInter fileChooserFrame);
 	
 	/**
 	 * Manages the control of the file chooser in Open dialog form.
@@ -24,7 +23,7 @@ public interface FileChooserControllerInter {
 	 * @param fileChooser,the file chooser appearance, which is integrated into the frame.
 	 * @param fileChooserFrame, the frame in which the file chooser appearance is integrated in.
 	 */
-	public  void controlOpenDialog(java.awt.event.ActionEvent evt,javax.swing.JFileChooser fileChooser,FileChooserCustomizedInter fileChooserFrame);
+	public  void controlOpenDialog(java.awt.event.ActionEvent evt,javax.swing.JFileChooser fileChooser,JFileChooserCustomizedInter fileChooserFrame);
 
 
 	/**

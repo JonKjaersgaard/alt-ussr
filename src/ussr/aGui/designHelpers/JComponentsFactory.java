@@ -1,5 +1,10 @@
 package ussr.aGui.designHelpers;
 
+import ussr.aGui.MainFrameSeparateController;
+import ussr.aGui.enumerations.MainFrameComponentsText;
+import ussr.aGui.enumerations.MainFrameIcons;
+import ussr.aGui.fileChoosing.FileChoosingInter;
+
 public class JComponentsFactory {
 
 	
@@ -14,4 +19,5 @@ public class JComponentsFactory {
 		newLabel.setText(labelText+" ");
 		return newLabel;
 	}
+	
 }

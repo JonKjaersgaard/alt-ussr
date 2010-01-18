@@ -1,28 +1,28 @@
-package ussr.aGui.fileChoosing.fileChooser;
+package ussr.aGui.fileChoosing.jFileChooser;
 
 import java.util.Map;
 
 import ussr.aGui.MainFrames;
-import ussr.aGui.fileChoosing.FileChooserControllerInter;
+import ussr.aGui.fileChoosing.jFileChooser.controller.JFileChooserControllerInter;
 
 /**
  * Defines visual appearance of the file chooser in the form of Save dialog.
  * @author Konstantinas
  */
 @SuppressWarnings("serial")
-public class FileChooserCustomizedSave extends FileChooserCustomized  {
+public class JFileChooserCustomizedSave extends JFileChooserCustomized  {
 
 	/**
 	 * The file chooser frame in Save dialog form.
 	 */
-	private static FileChooserCustomizedSave fcSaveFrame;
+	private static JFileChooserCustomizedSave fcSaveFrame;
 
 	/**
 	 * Manages the file chooser in the form of Save dialog.
 	 * @param fileExtensions,extensions of the files, which will be available to filter out by the file chooser.
 	 * @param fileChooserController, the controller for file extension.
 	 */
-	public FileChooserCustomizedSave(Map<String, String> fileDescriptionsAndExtensions,FileChooserControllerInter fileChooserController) {
+	public JFileChooserCustomizedSave(Map<String, String> fileDescriptionsAndExtensions,JFileChooserControllerInter fileChooserController) {
 		super(fileDescriptionsAndExtensions,fileChooserController);			
 		changeToSaveDialog();
 		setFilesToFilterOutWithDescription();

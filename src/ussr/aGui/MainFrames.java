@@ -4,17 +4,13 @@ package ussr.aGui;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
+import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.MainFrameComponentsText;
-import ussr.aGui.fileChoosing.FileChoosingWindowInter;
-import ussr.aGui.fileChoosing.FileDialogCustomizedInter;
-import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomized;
-import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedInter;
-import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedOpen;
-import ussr.aGui.fileChoosing.fileChooser.FileChooserCustomizedSave;
+import ussr.aGui.fileChoosing.FileChoosingInter;
+import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedInter;
+import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
 import ussr.aGui.helpers.ComponentResizer;
 import ussr.aGui.tabs.TabsInter;
 import ussr.remote.GUIRemoteSimulationAdapter;
@@ -45,25 +41,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	protected ArrayList<TabsInter> allTabs,tabsFirstTabbedPane,tabsSecondTabbedPane;
 	
-	protected FileChoosingWindowInter fcOpenSimulationDialog,fcSaveSimulationDialog,
+	public static FileChoosingInter fcOpenSimulationDialog,fcSaveSimulationDialog,
 	                             fcOpenRobotDialog,fcSaveRobotDialog ;
 	
-	public FileChoosingWindowInter getFcSaveRobotDialog() {
-		return fcSaveRobotDialog;
-	}
-
-	public FileChoosingWindowInter getFcOpenRobotDialog() {
-		return fcOpenRobotDialog;
-	}
-
-	public FileChoosingWindowInter getFcSaveSimulationDialog() {
-		return fcSaveSimulationDialog;
-	}
-
-	public FileChoosingWindowInter getFcOpenSimulationDialog() {
-		return fcOpenSimulationDialog;
-	}
-
 	/**
 	 * Defines visual appearance common to all instances of main GUI window.  
 	 */
@@ -83,10 +63,10 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 			fcSaveRobotDialog = FileDialogCustomizedInter.FD_SAVE_ROBOT;
 			
 		}else{
-			fcOpenSimulationDialog = FileChooserCustomizedInter.FC_OPEN_SIMULATION;
-			fcSaveSimulationDialog = FileChooserCustomizedInter.FC_SAVE_SIMULATION;
-			fcOpenRobotDialog = FileChooserCustomizedInter.FC_OPEN_ROBOT;
-			fcSaveRobotDialog = FileChooserCustomizedInter.FC_SAVE_ROBOT;
+			/*fcOpenSimulationDialog = JFileChooserCustomizedInter.FC_OPEN_SIMULATION;
+			fcSaveSimulationDialog = JFileChooserCustomizedInter.FC_SAVE_SIMULATION;
+			fcOpenRobotDialog = JFileChooserCustomizedInter.FC_OPEN_ROBOT;
+			fcSaveRobotDialog = JFileChooserCustomizedInter.FC_SAVE_ROBOT;*/
 		}
 	}
 
@@ -587,7 +567,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 * @param fcSaveFrame, the file chooser frame to associate the button with.
 	 * @return the button called Save.
 	 */
-	public static javax.swing.JButton initSaveButton(final FileChoosingWindowInter fcSaveDialog){
+	public static javax.swing.JButton initSaveButton(final FileChoosingInter fcSaveDialog){
 		jButtonSave = new javax.swing.JButton();		
 		jButtonSave.setToolTipText(MainFrameComponentsText.SAVE.getUserFriendlyName());		
 		jButtonSave.setIcon(MainFrameIcons.SAVE.getImageIcon());
@@ -614,7 +594,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 * @param fcOpenFrame,the file chooser frame to associate the button with.
 	 * @return the button called Open.
 	 */
-	public static javax.swing.JButton  initOpenButton(final FileChoosingWindowInter fcOpenDialog){
+	public static javax.swing.JButton  initOpenButton(final FileChoosingInter fcOpenDialog){
 		jButtonOpen = new javax.swing.JButton();
 		jButtonOpen.setToolTipText(MainFrameComponentsText.OPEN.getUserFriendlyName());
 		

@@ -1,12 +1,13 @@
-package ussr.aGui.fileChoosing.fileChooser;
+package ussr.aGui.fileChoosing.jFileChooser;
 import java.awt.Dimension;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.JFileChooser;
 
 import ussr.aGui.GuiFrames;
-import ussr.aGui.fileChoosing.FileChooserControllerInter;
+import ussr.aGui.fileChoosing.jFileChooser.controller.JFileChooserControllerInter;
 
 
 /**
@@ -16,7 +17,7 @@ import ussr.aGui.fileChoosing.FileChooserControllerInter;
  */
 
 @SuppressWarnings("serial")
-public abstract class FileChooserCustomized extends JFileChooser implements FileChooserCustomizedInter {
+public abstract class JFileChooserCustomized extends JFileChooser implements JFileChooserCustomizedInter {
 	
 	/**
 	 * The file chooser appearance, which is integrated into the frame.
@@ -26,7 +27,7 @@ public abstract class FileChooserCustomized extends JFileChooser implements File
 	/**
 	 * Controller for file chooser.
 	 */
-	protected FileChooserControllerInter fileChooserController;
+	protected JFileChooserControllerInter fileChooserController;
 	
 	/**
 	 * Map containing mapping of file description to file extension.
@@ -40,7 +41,7 @@ public abstract class FileChooserCustomized extends JFileChooser implements File
 	 * @param fileDescriptionsAndExtensions,map containing mapping of file description to file extension.
 	 * @param fileChooserController, controller for file chooser.
 	 */
-	public FileChooserCustomized(Map<String, String> fileDescriptionsAndExtensions, FileChooserControllerInter fileChooserController){
+	public JFileChooserCustomized(Map<String, String> fileDescriptionsAndExtensions, JFileChooserControllerInter fileChooserController){
 		this.fileDescriptionsAndExtensions= fileDescriptionsAndExtensions;
 		this.fileChooserController= fileChooserController;
 		initComponents();
@@ -51,8 +52,11 @@ public abstract class FileChooserCustomized extends JFileChooser implements File
 	 */	
 	public void initComponents() {
      
-    	jFileChooserCustomized = new javax.swing.JFileChooser(DEFAULT_DIRECTORY);    	   
-    
+    	try {
+			jFileChooserCustomized = new javax.swing.JFileChooser(FILE_IN_CURRENT_DIRECTORY.getCanonicalPath().toString()+DEFAULT_DIRECTORY);
+		} catch (IOException e) {
+			throw new Error("Failed to locate  default directory for storing XML files in USSR folder structure, named as: " + DEFAULT_DIRECTORY);
+		}    		
         jFileChooserCustomized.setAcceptAllFileFilterUsed(false);
         jFileChooserCustomized.setFileSelectionMode(JFileChooser.FILES_ONLY);
         jFileChooserCustomized.setSize(new Dimension(580,450));
