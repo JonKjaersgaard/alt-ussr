@@ -7,19 +7,13 @@
 package ussr.physics.jme;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.io.File;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-
-import ussr.aGui.GeneralController;
-import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.comm.monitors.visualtracker.CommunicationVisualizerGUI;
-import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.WorldDescription;
 import ussr.physics.PhysicsFactory;
 import ussr.physics.PhysicsParameters;
