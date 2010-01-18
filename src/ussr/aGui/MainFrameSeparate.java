@@ -92,13 +92,15 @@ public class MainFrameSeparate extends MainFrames {
 		//gettCursor();
 		
 		
-		changeToLookAndFeel(this);
+		
 		
 		/*Add components into container, which affect the width of main window when it is maximized and restored down to its initial size. */
 		//JMenuBar is an exception here.
 		components.add(getJToolBarGeneralControl());
 		components.add(getJTabbedPaneFirst());
 		components.add(getJTabbedPaneSecond());	
+		
+		changeToLookAndFeel(this);
 	}
 
 	/**

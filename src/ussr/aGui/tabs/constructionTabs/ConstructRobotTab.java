@@ -13,6 +13,9 @@ import javax.swing.JRadioButton;
 
 
 import ussr.aGui.FramesInter;
+import ussr.aGui.MainFrameSeparateController;
+import ussr.aGui.MainFrames;
+import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
@@ -75,8 +78,8 @@ public class ConstructRobotTab extends ConstructionTabs {
 
 		
 		jButtonStartNewRobot = new javax.swing.JButton();
-		jButtonOpen = initOpenButton();
-		jButtonSave = initSaveButton();		
+		jButtonOpen = JComponentsFactory.initOpenButton();
+		jButtonSave = JComponentsFactory.initSaveButton();		
 		jButtonDelete =  new javax.swing.JButton();
 		jButtonMoveModule = new javax.swing.JButton();		
 		jButtonOppositeRotation =   new javax.swing.JButton();
@@ -118,7 +121,20 @@ public class ConstructRobotTab extends ConstructionTabs {
 		gridBagConstraints.gridy = 0;// y goes from top to the bottom of the screen
 		gridBagConstraints.gridwidth = 3;		
 		
-		jToolBarGeneralControl.add(jButtonOpen);		
+		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.openActionPerformed(MainFrames.fcOpenRobotDialog);
+			}
+		});
+		jToolBarGeneralControl.add(jButtonOpen);
+		
+		
+		
+		jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.saveActionPerformed(MainFrames.fcSaveRobotDialog);
+			}
+		});		
 		jToolBarGeneralControl.add(jButtonSave);		
 		
 		jButtonStartNewRobot.setIcon(TabsIcons.NEW_ROBOT.getImageIcon());

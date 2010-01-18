@@ -56,17 +56,17 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		}
 	
 	private void initFileChoosing(){
-		if (true/*GeneralController.getOperatingSystemName().contains("Mac")*/){
+		if (/*true*/GeneralController.getOperatingSystemName().contains("Mac")){
 			fcOpenSimulationDialog = FileDialogCustomizedInter.FD_OPEN_SIMULATION;
 			fcSaveSimulationDialog = FileDialogCustomizedInter.FD_SAVE_SIMULATION;
 			fcOpenRobotDialog = FileDialogCustomizedInter.FD_OPEN_ROBOT;
 			fcSaveRobotDialog = FileDialogCustomizedInter.FD_SAVE_ROBOT;
 			
 		}else{
-			/*fcOpenSimulationDialog = JFileChooserCustomizedInter.FC_OPEN_SIMULATION;
+			fcOpenSimulationDialog = JFileChooserCustomizedInter.FC_OPEN_SIMULATION;
 			fcSaveSimulationDialog = JFileChooserCustomizedInter.FC_SAVE_SIMULATION;
 			fcOpenRobotDialog = JFileChooserCustomizedInter.FC_OPEN_ROBOT;
-			fcSaveRobotDialog = JFileChooserCustomizedInter.FC_SAVE_ROBOT;*/
+			fcSaveRobotDialog = JFileChooserCustomizedInter.FC_SAVE_ROBOT;
 		}
 	}
 
@@ -340,7 +340,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jButtonPause = new javax.swing.JButton();
 		jButtonTerminate = new javax.swing.JButton();
 		jButtonReloadSimulation = new javax.swing.JButton();
-		
+		jButtonSave = JComponentsFactory.initSaveButton();
+		jButtonOpen = JComponentsFactory.initOpenButton();
+			
 		jToolBarSeparator3 = new javax.swing.JToolBar.Separator();			
 		jToolBarSeparator4 = new javax.swing.JToolBar.Separator();
 		jToolBarSeparator5 = new javax.swing.JToolBar.Separator();
@@ -373,8 +375,21 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jButtonNewSimulation);
 		
-		jToolBarGeneralControl.add(initOpenButton(fcOpenSimulationDialog));
-		jToolBarGeneralControl.add(initSaveButton(fcSaveSimulationDialog));
+		
+		
+		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.openActionPerformed(fcOpenSimulationDialog);
+			}
+		});		
+		jToolBarGeneralControl.add(jButtonOpen);		
+		
+		jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.saveActionPerformed(fcSaveSimulationDialog);
+			}
+		});		
+		jToolBarGeneralControl.add(jButtonSave);
 		
 		jButtonReloadSimulation.setToolTipText(MainFrameComponentsText.RESTART_CURRENT_SIMULATION.getUserFriendlyName());
 		jButtonReloadSimulation.setIcon(MainFrameIcons.RELOAD_CURRENT_SIMULATION.getImageIcon());
@@ -561,55 +576,8 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		return jToggleButtonVisualizer;
 	}
 
-
-	/**
-	 * Initializes and returns the button called Save.
-	 * @param fcSaveFrame, the file chooser frame to associate the button with.
-	 * @return the button called Save.
-	 */
-	public static javax.swing.JButton initSaveButton(final FileChoosingInter fcSaveDialog){
-		jButtonSave = new javax.swing.JButton();		
-		jButtonSave.setToolTipText(MainFrameComponentsText.SAVE.getUserFriendlyName());		
-		jButtonSave.setIcon(MainFrameIcons.SAVE.getImageIcon());
-		jButtonSave.setRolloverIcon(MainFrameIcons.SAVE_ROLLOVER.getImageIcon());
-		jButtonSave.setDisabledIcon(MainFrameIcons.SAVE_DISABLED.getImageIcon());		
-		jButtonSave.setFocusable(false);
-		jButtonSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		jButtonSave.setPreferredSize(new java.awt.Dimension(30, 30));
-		jButtonSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		jButtonSave.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.saveActionPerformed(fcSaveDialog);
-			}
-		});
-		return jButtonSave;
-	}
-
 	public static javax.swing.JButton getJButtonSave() {
 		return jButtonSave;
-	}
-
-	/**
-	 * Initializes and returns the button called Open.
-	 * @param fcOpenFrame,the file chooser frame to associate the button with.
-	 * @return the button called Open.
-	 */
-	public static javax.swing.JButton  initOpenButton(final FileChoosingInter fcOpenDialog){
-		jButtonOpen = new javax.swing.JButton();
-		jButtonOpen.setToolTipText(MainFrameComponentsText.OPEN.getUserFriendlyName());
-		
-		jButtonOpen.setIcon(MainFrameIcons.OPEN.getImageIcon());
-		jButtonOpen.setRolloverIcon(MainFrameIcons.OPEN_ROLLOVER.getImageIcon());		
-		jButtonOpen.setDisabledIcon(MainFrameIcons.OPEN_DISABLED.getImageIcon());
-		
-		jButtonOpen.setFocusable(false);		
-		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));
-		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.openActionPerformed(fcOpenDialog);
-			}
-		});
-		return jButtonOpen;
 	}
 
 	/**

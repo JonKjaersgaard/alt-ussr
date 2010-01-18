@@ -12,6 +12,9 @@ import javax.swing.JToolBar;
 import javax.swing.border.TitledBorder;
 
 import ussr.aGui.FramesInter;
+import ussr.aGui.MainFrameSeparateController;
+import ussr.aGui.MainFrames;
+import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
 import ussr.aGui.enumerations.tabs.EntitiesForLabelingText;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
@@ -69,8 +72,8 @@ public class AssignLabelsTab extends ConstructionTabs{
 		
 		jButtonReadLabels = new javax.swing.JButton();
 		jButtonAssignLabels = new javax.swing.JButton();
-		jButtonSave = initSaveButton();
-		jButtonOpen = initOpenButton();
+		jButtonSave = JComponentsFactory.initSaveButton();
+		jButtonOpen = JComponentsFactory.initOpenButton();
 		
 		radioButtonModule =  new javax.swing.JRadioButton();
 		radionButtonConnector =  new javax.swing.JRadioButton();
@@ -94,7 +97,22 @@ public class AssignLabelsTab extends ConstructionTabs{
 		gridBagConstraints.gridy = 0;
 		gridBagConstraints.insets = new Insets(0, 0, 30, 0);
 
+		
+		
+		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.openActionPerformed(MainFrames.fcOpenRobotDialog);
+			}
+		});
 		jToolBarGeneralControl.add(jButtonOpen);
+		
+		
+		
+		jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.saveActionPerformed(MainFrames.fcSaveRobotDialog);
+			}
+		});	
 		jToolBarGeneralControl.add(jButtonSave);
 		
 		jSeparator1.setPreferredSize(new Dimension(6,30));

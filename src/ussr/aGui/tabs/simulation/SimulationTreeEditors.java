@@ -98,15 +98,7 @@ public class SimulationTreeEditors{
 		jPanelTreeNode.add(JComponentsFactory.createNewLabel(TabsComponentsText.LOAD_NEW_ROBOT.getUserFriendlyName()));
 		
 		
-		javax.swing.JButton jButtonOpen = new javax.swing.JButton();
-		jButtonOpen.setToolTipText(MainFrameComponentsText.OPEN.getUserFriendlyName());
-		
-		jButtonOpen.setIcon(MainFrameIcons.OPEN.getImageIcon());
-		jButtonOpen.setRolloverIcon(MainFrameIcons.OPEN_ROLLOVER.getImageIcon());		
-		jButtonOpen.setDisabledIcon(MainFrameIcons.OPEN_DISABLED.getImageIcon());
-		
-		jButtonOpen.setFocusable(false);		
-		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));
+		javax.swing.JButton jButtonOpen = JComponentsFactory.initOpenButton();	
 		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.openActionPerformed(MainFrames.fcOpenRobotDialog);

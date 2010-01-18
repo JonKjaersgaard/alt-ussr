@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import ussr.aGui.GuiFrames;
 import ussr.builder.controllerAdjustmentTool.ATRONDisconnectAllConnectors;
 import ussr.builder.controllerAdjustmentTool.ATRONStopRotating;
 import ussr.builder.controllerAdjustmentTool.CKBOT_STANDARDControllerNOT_SUPPORTED_YET;
@@ -111,7 +112,7 @@ public enum AssignableControllers {
 	 * Returns panel defining visual appearance of editor value for controller. 
 	 * @return panel defining visual appearance of editor value for controller. 
 	 */
-	public JPanel getValueEditor() {
+	public JPanel getValueEditor() {		
 		return valueEditor;
 	}
 	

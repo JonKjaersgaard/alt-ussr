@@ -108,11 +108,11 @@ public class AssignControllerTab extends ConstructionTabs{
 		gridBagConstraints.gridy = 0;
 		gridBagConstraints.insets = new Insets(0, 0, 30, 0);
 
-		jToolBarGeneralControl.add(jButtonOpen);
-		jToolBarGeneralControl.add(jButtonSave);
+		//jToolBarGeneralControl.add(jButtonOpen);
+		//jToolBarGeneralControl.add(jButtonSave);
 
-		jSeparator1.setPreferredSize(new Dimension(6,30));
-		jToolBarGeneralControl.add(jSeparator1);
+		//jSeparator1.setPreferredSize(new Dimension(6,30));
+		//jToolBarGeneralControl.add(jSeparator1);
 		
 		//jToolBarSaveLoad = initSaveLoadJToolbar();
 		

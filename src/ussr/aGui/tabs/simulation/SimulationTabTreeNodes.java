@@ -1,6 +1,8 @@
 package ussr.aGui.tabs.simulation;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+
+import ussr.aGui.GuiFrames;
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
 import ussr.builder.saveLoadXML.XMLTagsUsed;
 
@@ -138,6 +140,7 @@ public enum SimulationTabTreeNodes {
 	 * @return the panel defining visual appearance of edit value part of GUI(SimulationTab).
 	 */
 	public javax.swing.JPanel getJPanelEditor() {
+		GuiFrames.changeToLookAndFeel(jPanelEditor);
 		return jPanelEditor;
 	}
 	
