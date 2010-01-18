@@ -14,11 +14,6 @@ import ussr.aGui.fileChoosing.jFileChooser.controller.JFileChooserControllerInte
 public class JFileChooserCustomizedOpen extends JFileChooserCustomized  {	
 	
 	/**
-	 * The frame of the file chooser for Open dialog form
-	 */
-	private static JFileChooserCustomizedOpen fcOpenFrame;	
-	
-	/**
 	 * Manages the file chooser in the form of Open dialog.
 	 * @param fileDescriptionsAndExtensions, 
 	 * @param fileChooserController, the controller for  file extension.
@@ -35,14 +30,14 @@ public class JFileChooserCustomizedOpen extends JFileChooserCustomized  {
 	 */
 	private void changeToOpenDialog(){
 		super.jFileChooserCustomized.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
-		if (super.fileDescriptionsAndExtensions.containsKey(FileFilterTypes.OPEN_SAVE_SIMULATION.getFileDescription())){
+		if (super.fileDescriptionsAndExtensions.containsKey(FileFilterSpecifications.OPEN_SAVE_SIMULATION.getFileDescription())){
 			super.jFileChooserCustomized.setDialogTitle(OPEN_SIMULATION_TITLE);
 		}else{
 			super.jFileChooserCustomized.setDialogTitle(OPEN_ROBOT_TITLE);
 		}
 		super.jFileChooserCustomized.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
-				fileChooserController.controlOpenDialog(evt,jFileChooserCustomized,fcOpenFrame);//call controller				
+				fileChooserController.controlOpenDialog(evt,jFileChooserCustomized);//call controller				
 			}
 		});		
 	}

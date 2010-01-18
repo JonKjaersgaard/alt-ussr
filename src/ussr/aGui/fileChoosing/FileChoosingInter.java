@@ -5,7 +5,7 @@ import java.io.File;
 import ussr.builder.saveLoadXML.SaveLoadXMLFileTemplateInter;
 
 /**
- * Supports file choosing with two slightly differing forms of implementation and appearances for: 1) JFileChooser from Swing and 2) FileDialog from  AWT libraries.
+ * Supports file choosing with two slightly differing forms of implementation for: 1) JFileChooser from Swing and 2) FileDialog from  AWT libraries.
  * The reason why there are two implementations is that  JFileChooser is well supported for Windows and Linux platforms,
  * however there are problems with (look and feel) and file filtering on Macintosh(Mac). It seems that FileDialog do not have these problems 
  * on Mac. The disadvantage is "double coding".

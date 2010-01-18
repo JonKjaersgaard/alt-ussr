@@ -23,6 +23,7 @@ public class FileDialogXMLController extends FileDialogController{
 			switch(fdOpenDialog.getFileDialogType()){
 			case OPEN_SIMULATION_XML:
 				startSimulation(selectedDirectory + selectedFileName);
+				setSimulationXMLFileDirectory(selectedDirectory + selectedFileName);
 				break;
 			case OPEN_ROBOT_XML:
 				loadRobot(selectedDirectory + selectedFileName);
@@ -56,6 +57,5 @@ public class FileDialogXMLController extends FileDialogController{
 
 			}
 		}
-
 	}
 }

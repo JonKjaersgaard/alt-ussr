@@ -8,7 +8,6 @@ import ussr.aGui.fileChoosing.fileDialog.controllers.FileDialogControllerInter;
 /**
  * Defines visual appearance of file dialog in the form "Open". For both simulation and robot xml files.
  * @author Konstantinas
- *
  */
 @SuppressWarnings("serial")
 public class FileDialogCustomizedOpen extends FileDialogCustomized  {

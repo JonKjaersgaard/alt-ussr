@@ -13,11 +13,6 @@ import ussr.aGui.fileChoosing.jFileChooser.controller.JFileChooserControllerInte
 public class JFileChooserCustomizedSave extends JFileChooserCustomized  {
 
 	/**
-	 * The file chooser frame in Save dialog form.
-	 */
-	private static JFileChooserCustomizedSave fcSaveFrame;
-
-	/**
 	 * Manages the file chooser in the form of Save dialog.
 	 * @param fileExtensions,extensions of the files, which will be available to filter out by the file chooser.
 	 * @param fileChooserController, the controller for file extension.
@@ -33,14 +28,14 @@ public class JFileChooserCustomizedSave extends JFileChooserCustomized  {
 	 */
 	private void changeToSaveDialog(){		
 		jFileChooserCustomized.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);	
-		if (super.fileDescriptionsAndExtensions.containsKey(FileFilterTypes.OPEN_SAVE_SIMULATION.getFileDescription())){
+		if (super.fileDescriptionsAndExtensions.containsKey(FileFilterSpecifications.OPEN_SAVE_SIMULATION.getFileDescription())){
 			super.jFileChooserCustomized.setDialogTitle(SAVE_SIMULATION_TITLE);
 		}else{
 			super.jFileChooserCustomized.setDialogTitle(SAVE_ROBOT_TITLE);
 		}
 		jFileChooserCustomized.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
-				fileChooserController.controlSaveDialog(evt,jFileChooserCustomized, fcSaveFrame);//call controller
+				fileChooserController.controlSaveDialog(evt,jFileChooserCustomized);//call controller
 
 			}
 		});	

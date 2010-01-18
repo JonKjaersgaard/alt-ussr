@@ -13,8 +13,8 @@ import javax.swing.JRadioButton;
 
 
 import ussr.aGui.FramesInter;
-import ussr.aGui.MainFrameSeparateController;
 import ussr.aGui.MainFrames;
+import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;

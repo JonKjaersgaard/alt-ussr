@@ -3,8 +3,6 @@ import java.io.File;
 
 /**
  * Acts as a file filter for fileChooser.
- * Just set the instance of this class for your file chooser with specific file extension
- * to filter out and description of this extension. For instance: "XMLfile", ".xml" or just extension ".xml". 
  * @author Konstantinas
  */
 public class FileFilterCustomized extends javax.swing.filechooser.FileFilter {

@@ -13,33 +13,25 @@ import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
  * @author Konstantinas
  *
  */
-public class FileChooserXMLController extends FileChooserController {
+public class JFileChooserXMLController extends JFileChooserController {
 
+	/**
+	 * The flag to indicate that current simulation should be terminated.
+	 */
 	private static boolean includeSimulationTermination = false;
-	
+
+	/**
+	 * The flag indicating that new simulation should be started.
+	 */
 	private static boolean includeStartNewSimulation= false;
-	
-	
-	
-	public static void setIncludeStartNewSimulation(
-			boolean includeStartNewSimulation) {
-		FileChooserXMLController.includeStartNewSimulation = includeStartNewSimulation;
-	}
-
-
-	public static void setIncludeSimulationTermination(boolean includeSimulationTermination) {
-		FileChooserXMLController.includeSimulationTermination = includeSimulationTermination;
-	}
 
 
 	/**
 	 * Manages the control of the file chooser in Open dialog form.
 	 * @param evt, event received from file chooser. This is selection of Open or Cancel buttons.
 	 * @param fileChooser,the file chooser appearance, which is integrated into the frame.
-	 * @param fileChooserFrame, the frame in which the file chooser appearance is integrated in.
 	 */
-	public void controlOpenDialog(ActionEvent evt, JFileChooser fileChooser,
-			JFileChooserCustomizedInter fileChooserFrame) {
+	public void controlOpenDialog(ActionEvent evt, JFileChooser fileChooser) {
 		checkFileDescription(fileChooser);
 		String command = evt.getActionCommand();//Selected button command
 
@@ -53,7 +45,7 @@ public class FileChooserXMLController extends FileChooserController {
 					terminateSimulation();
 				}
 				startSimulation(fileDirectoryName);	
-				setSimulationXMLFileDirectory(fileDirectoryName);//CallBack //FIXME NO LONGER NEEDED
+				setSimulationXMLFileDirectory(fileDirectoryName);
 				break;			
 			case ROBOT:  
 				loadRobot(fileDirectoryName);
@@ -64,26 +56,19 @@ public class FileChooserXMLController extends FileChooserController {
 
 	}
 
-	
-	 /**
-     * Manages the control of the file chooser in Save dialog form.
-     * @param evt, event received from file chooser. This is selection of Save or Cancel buttons.
-     * @param fileChooser, the file chooser appearance, which is integrated into the frame.
-     * @param fileChooserFrame, the frame in which the file chooser appearance is integrated in.
-     */
-	public void controlSaveDialog(ActionEvent evt, JFileChooser fileChooser,
-			JFileChooserCustomizedInter fileChooserFrame) {
+
+	/**
+	 * Manages the control of the file chooser in Save dialog form.
+	 * @param evt, event received from file chooser. This is selection of Save or Cancel buttons.
+	 * @param fileChooser, the file chooser appearance, which is integrated into the frame.
+	 */
+	public void controlSaveDialog(ActionEvent evt, JFileChooser fileChooser) {
 		checkFileDescription( fileChooser);
 		String command = evt.getActionCommand();//Selected button command			
 		if(command.equalsIgnoreCase(ActionCommands.APPROVESELECTION.toString())  ){		        
 			String fileDirectoryName = fileChooser.getSelectedFile().toString();
 
 			saveInXml(ussXmlFileType,fileDirectoryName);
-		/*	try {
-				remotePhysicsSimulation.saveToXML(ussXmlFileType, fileDirectoryName);
-			} catch (RemoteException e) {
-				throw new Error("Failed to save "+ ussXmlFileType.toString()+" description in xml file "+ fileDirectoryName+ ", due ro remote exception");
-			}*/
 			if (includeSimulationTermination&&includeStartNewSimulation){
 				terminateSimulation();
 				startSimulation(MainFramesInter.LOCATION_DEFAULT_NEW_SIMULATION);
@@ -91,8 +76,25 @@ public class FileChooserXMLController extends FileChooserController {
 				terminateSimulation();
 				JFileChooserCustomizedInter.FC_OPEN_SIMULATION.activate();
 			}
-			
+
 		}		
-	}	
+	}
+
+	/**
+	 * Sets the flag to indicate that new simulation should be started.
+	 * @param includeStartNewSimulation, flag indicating that new simulation should be started.
+	 */
+	public static void setIncludeStartNewSimulation(boolean includeStartNewSimulation) {
+		JFileChooserXMLController.includeStartNewSimulation = includeStartNewSimulation;
+	}
+
+
+	/**
+	 * Sets the flag indicating that current simulation should be terminated.
+	 * @param includeSimulationTermination, the flag indicating that current simulation should be terminated.
+	 */
+	public static void setIncludeSimulationTermination(boolean includeSimulationTermination) {
+		JFileChooserXMLController.includeSimulationTermination = includeSimulationTermination;
+	}
 
 }

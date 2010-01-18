@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.util.ArrayList;
 
+import ussr.aGui.controllers.GeneralController;
+import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.MainFrameComponentsText;
@@ -56,7 +58,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		}
 	
 	private void initFileChoosing(){
-		if (/*true*/GeneralController.getOperatingSystemName().contains("Mac")){
+		if (GeneralController.getOperatingSystemName().contains("Mac")){
 			fcOpenSimulationDialog = FileDialogCustomizedInter.FD_OPEN_SIMULATION;
 			fcSaveSimulationDialog = FileDialogCustomizedInter.FD_SAVE_SIMULATION;
 			fcOpenRobotDialog = FileDialogCustomizedInter.FD_OPEN_ROBOT;

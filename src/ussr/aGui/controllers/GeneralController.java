@@ -1,4 +1,4 @@
-package ussr.aGui;
+package ussr.aGui.controllers;
 
 
 import java.io.IOException;

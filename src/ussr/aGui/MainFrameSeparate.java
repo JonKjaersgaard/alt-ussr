@@ -15,6 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JToggleButton;
 
 
+import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.MainFrameComponentsText;
 

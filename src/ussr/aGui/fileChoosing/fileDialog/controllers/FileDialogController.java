@@ -1,6 +1,8 @@
 package ussr.aGui.fileChoosing.fileDialog.controllers;
 
-import ussr.aGui.GeneralController;
+import ussr.aGui.controllers.GeneralController;
+
+
 
 /**
  * So far only passes inherited methods.

@@ -3,14 +3,12 @@ package ussr.aGui.fileChoosing.jFileChooser;
 import java.util.Hashtable;
 import java.util.Map;
 
-
-
 /**
- * Contains file filter descriptions in format: file description, file extension. For instance:"Simulation",".xml"
+ * Contains file filter specifications in format: file description, file extension. For instance:"Simulation",".xml"
  * @author Konstantinas
  *
  */
-public enum FileFilterTypes {
+public enum FileFilterSpecifications {
 
 	
 	OPEN_SAVE_SIMULATION(JFileChooserCustomizedInter.DEFAULT_FILE_DESCRIPTION,JFileChooserCustomizedInter.DEFAULT_FILE_EXTENSION),
@@ -32,7 +30,7 @@ public enum FileFilterTypes {
 	 * @param fileDescription, textual description of file filter.
 	 * @param fileExtension, file extension of filter.
 	 */
-	FileFilterTypes(String fileDescription, String fileExtension){
+	FileFilterSpecifications(String fileDescription, String fileExtension){
 		this.fileDescription = fileDescription;
 		this.fileExtension = fileExtension;
 	}
@@ -57,7 +55,7 @@ public enum FileFilterTypes {
 	
 	/**
 	 * File extension of filter.
-	 * @return
+	 * @return file extension of filter.
 	 */
 	public String getFileExtension() {
 		return fileExtension;

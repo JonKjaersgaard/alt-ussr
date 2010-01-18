@@ -1,13 +1,18 @@
 <body>
-<p>Contains implementation of File chooser in two dialog forms: Save and Open.
-Is supported with generic solution for filtering out different file extensions.</p>
+<p>Supports file choosing with two slightly differing forms of implementation for: 
+1) JFileChooser from Swing and 2) FileDialog from AWT libraries. 
+The reason why there are two implementations is that JFileChooser is well supported for Windows and Linux platforms, 
+however there are problems with (look and feel) and file filtering on Macintosh (Mac). 
+It seems that FileDialog do not have these problems on Mac. The disadvantage is "double coding". 
+FUTURE SOLUTIONS: It is possible to implement custom look and feel (too time consuming at this moment) and 
+second is to wait until JFileChooser will be better supported on Mac.</p>
 <hr />
 
 
 <h1> 1) How to ...? </h1>
 <h2> 1.1) Implement my own file chooser? </h2>
 <p>Implement your own classes highlighted with purple color in the design class diagram beneath. </p>
-<img src ="../../../../doc/developer/guiPackage/focusOnFileChoosers.jpg" title= "Design class diagram with focus on File choosers">
+<img src ="../../../../doc/developer/guiPackage/ussr_aGui_fileChoosing.jpg" title= "Design class diagram with focus on File choosers">
 <br/>
 <br/>
 <hr />

@@ -1,4 +1,4 @@
-package ussr.aGui;
+package ussr.aGui.controllers;
 
 import java.awt.Dimension;
 import java.rmi.RemoteException;
@@ -6,14 +6,17 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 
+import ussr.aGui.MainFrameSeparate;
+import ussr.aGui.MainFrames;
+import ussr.aGui.MainFramesInter;
 import ussr.aGui.enumerations.JOptionPaneMessages;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.fileChoosing.FileChoosingInter;
 import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedInter;
 import ussr.aGui.fileChoosing.fileDialog.FileDialogTypes;
-import ussr.aGui.fileChoosing.jFileChooser.FileFilterTypes;
+import ussr.aGui.fileChoosing.jFileChooser.FileFilterSpecifications;
 import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
-import ussr.aGui.fileChoosing.jFileChooser.controller.FileChooserXMLController;
+import ussr.aGui.fileChoosing.jFileChooser.controller.JFileChooserXMLController;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
@@ -94,14 +97,14 @@ public class MainFrameSeparateController extends GeneralController {
 		JFileChooserCustomizedInter fileChooserFrame = (JFileChooserCustomizedInter)fileChooserOpenDialog;
 		String fileFilterDescription = fileChooserFrame.getSelectedFileFilter().getDescription();	
 		
-		if (remotePhysicsSimulation!=null && !fileFilterDescription.contains(FileFilterTypes.OPEN_SAVE_ROBOT.getFileDescription())&&isSimulationRunning==false ){
+		if (remotePhysicsSimulation!=null && !fileFilterDescription.contains(FileFilterSpecifications.OPEN_SAVE_ROBOT.getFileDescription())&&isSimulationRunning==false ){
 			int returnedValue = (Integer)JOptionPaneMessages.SAVE_CURRENT_SIMULATION.displayMessage();
 			System.out.println("Option: "+ returnedValue);
 
 			switch(returnedValue){
 			case 0://YES
-				FileChooserXMLController.setIncludeSimulationTermination(true);
-				FileChooserXMLController.setIncludeStartNewSimulation(false);
+				JFileChooserXMLController.setIncludeSimulationTermination(true);
+				JFileChooserXMLController.setIncludeStartNewSimulation(false);
 				saveActionPerformed(JFileChooserCustomizedInter.FC_SAVE_SIMULATION);
 				break;
 			case 1://NO
@@ -113,9 +116,9 @@ public class MainFrameSeparateController extends GeneralController {
 				break;
 			default: throw new Error("There is no such option");
 			}
-		}else if (remotePhysicsSimulation!=null&&isSimulationRunning==true &&!fileFilterDescription.contains(FileFilterTypes.OPEN_SAVE_ROBOT.getFileDescription())){
-			FileChooserXMLController.setIncludeSimulationTermination(true);
-			FileChooserXMLController.setIncludeStartNewSimulation(false);
+		}else if (remotePhysicsSimulation!=null&&isSimulationRunning==true &&!fileFilterDescription.contains(FileFilterSpecifications.OPEN_SAVE_ROBOT.getFileDescription())){
+			JFileChooserXMLController.setIncludeSimulationTermination(true);
+			JFileChooserXMLController.setIncludeStartNewSimulation(false);
 			fileChooserOpenDialog.activate();
 		}else{
 			fileChooserOpenDialog.activate();
@@ -539,8 +542,8 @@ public class MainFrameSeparateController extends GeneralController {
 			System.out.println("Option: "+ returnedValue);
 			switch(returnedValue){
 			case 0://YES
-				FileChooserXMLController.setIncludeSimulationTermination(true);
-				FileChooserXMLController.setIncludeStartNewSimulation(true);
+				JFileChooserXMLController.setIncludeSimulationTermination(true);
+				JFileChooserXMLController.setIncludeStartNewSimulation(true);
 				saveActionPerformed(JFileChooserCustomizedInter.FC_SAVE_SIMULATION);
 				break;
 			case 1://NO

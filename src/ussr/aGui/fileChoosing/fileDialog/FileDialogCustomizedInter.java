@@ -7,8 +7,9 @@ import ussr.aGui.fileChoosing.fileDialog.controllers.FileDialogXMLController;
 
 
 /**
- * Supports with several visual appearances of FileDialog window, from AWT.
- * In particular, there are open and save forms for simulation and robot xml files.
+ * Supports with several visual appearances of FileDialog window, from AWT. Was implemented 
+ * to support native appearance of file choosing for Mac.
+ * In particular, these are open and save forms for simulation and robot xml files.
  * @author Konstantinas
  *
  */
