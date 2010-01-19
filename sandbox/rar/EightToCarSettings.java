@@ -17,8 +17,8 @@ public interface EightToCarSettings {
     };
     
     // Basic experimental settings
-    public static final float TIMEOUT = 1000f;
-    public static final int N_REPEAT = 20;
+    public static final float TIMEOUT = 2f;
+    public static final int N_REPEAT = 2;
     
     // Risk of packet loss
     public static final float START_RISK = 0.98f;
@@ -42,5 +42,5 @@ public interface EightToCarSettings {
     public static final float RESET_RISK_TS_SIZE_DELTA = 2;
     
     // Max number of parallel simulations
-    public static final int N_PARALLEL_SIMS = 2;
+    public static final int N_PARALLEL_SIMS = 1;
 }

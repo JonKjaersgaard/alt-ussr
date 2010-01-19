@@ -19,9 +19,10 @@ import java.util.Set;
 
 
 import ussr.remote.AbstractSimulationBatch;
+import ussr.remote.SimulationBatch2000;
 import ussr.remote.facade.ParameterHolder;
 
-public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
+public class EightToCarRobustnessBatch extends SimulationBatch2000 {
     public static class Parameters extends ParameterHolder {
         public int number;
         public float minR, maxR, completeR, completeDegree, maxTime, resetRisk,resetInterval;
@@ -104,7 +105,7 @@ public class EightToCarRobustnessBatch extends AbstractSimulationBatch {
     private PrintWriter logfile;
     
     public static void main(String argv[]) {
-        new EightToCarRobustnessBatch(EightToCarSettings.EXPERIMENTS).start(EightToCarSettings.N_PARALLEL_SIMS);
+        new EightToCarRobustnessBatch(EightToCarSettings.EXPERIMENTS).start(EightToCarSettings.N_PARALLEL_SIMS,true);
     }
 
     private int sequenceIndex = -1;
