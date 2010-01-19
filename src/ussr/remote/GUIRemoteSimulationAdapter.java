@@ -12,6 +12,7 @@ import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrames;
 import ussr.aGui.controllers.GeneralController;
 import ussr.aGui.controllers.MainFrameSeparateController;
+import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.controllers.ConsoleTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.SimulationTabController;
@@ -159,7 +160,8 @@ public class GUIRemoteSimulationAdapter {
          
          SimulationTreeEditors.update();
          SimulationTab.resizeComponents();
-         SimulationTab.setTabVisible(true);       
+         SimulationTab.setTabVisible(true); 
+         ConstructRobotTab.setTabEnabled(true);
 	}
 	
 	// FIXME USED TEMPORARY
