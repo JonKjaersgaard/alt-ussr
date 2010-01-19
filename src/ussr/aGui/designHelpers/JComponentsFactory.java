@@ -1,14 +1,18 @@
 package ussr.aGui.designHelpers;
 
 
+import ussr.aGui.FramesInter;
 import ussr.aGui.enumerations.MainFrameComponentsText;
 import ussr.aGui.enumerations.MainFrameIcons;
-import ussr.aGui.fileChoosing.FileChoosingInter;
 
+/**
+ * Contains methods for initialization of JComponents frequently used in the design of GUI.
+ * @author Konstantinas
+ *
+ */
 public class JComponentsFactory {
 
-	
-	
+
 	/**
 	 * Creates new label with specified text.
 	 * @param labelText, the text of the label
@@ -23,7 +27,6 @@ public class JComponentsFactory {
 	
 	/**
 	 * Initializes and returns the button called Save.
-	 * 
 	 * @return the button called Save.
 	 */
 	public static javax.swing.JButton initSaveButton(){
@@ -33,14 +36,13 @@ public class JComponentsFactory {
 		jButtonSave.setRolloverIcon(MainFrameIcons.SAVE_ROLLOVER.getImageIcon());
 		jButtonSave.setDisabledIcon(MainFrameIcons.SAVE_DISABLED.getImageIcon());		
 		jButtonSave.setFocusable(false);
-		jButtonSave.setPreferredSize(new java.awt.Dimension(30, 30));	
+		jButtonSave.setPreferredSize(FramesInter.BUTTON_DIMENSION);	
 		return jButtonSave;
 	}
 	
 	
 	/**
 	 * Initializes and returns the button called Open.
-	 * @param fcOpenFrame,the file chooser frame to associate the button with.
 	 * @return the button called Open.
 	 */
 	public static javax.swing.JButton  initOpenButton(){
@@ -52,10 +54,7 @@ public class JComponentsFactory {
 		jButtonOpen.setDisabledIcon(MainFrameIcons.OPEN_DISABLED.getImageIcon());
 		
 		jButtonOpen.setFocusable(false);		
-		jButtonOpen.setPreferredSize(new java.awt.Dimension(30, 30));	
+		jButtonOpen.setPreferredSize(FramesInter.BUTTON_DIMENSION);	
 		return jButtonOpen;
-	}
-	
-	
-	
+	}	
 }

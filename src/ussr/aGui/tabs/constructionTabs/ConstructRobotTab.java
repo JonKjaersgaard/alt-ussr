@@ -759,7 +759,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		setEnabledConstructionToolsToolBar(enabled);
 		if (enabled==false){
 			getHintPanel().setType(HintPanelTypes.ATTENTION);
-			ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE.getHintText());
+			ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_RUNNING_SIMULATION.getHintText());
 		}
 		jComboBoxConstructionDefaultModuleType.setEnabled(enabled);
 		jButtonVariateModuleProperties.setEnabled(enabled);

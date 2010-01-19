@@ -32,7 +32,7 @@ public enum MainFrameComponentsText {
 	      CONSTRUCT_ROBOT,VISUALIZE_COMMUNICATION_OF_MODULES,HIDE_INTERACTION,HIDE_DEBUGGING,
 	      
 	      /*JTabbedPanes*/
-	      //Interaction_with_simulation, 
+	      INTERACTION_WITH_SIMULATION_ENVIRONMENT, 
 	    ; 
 	     /**
 	 	 * Returns the name of chosen enumeration with changes in it such that Java convention for constants(upper case) is replaced wit lower and

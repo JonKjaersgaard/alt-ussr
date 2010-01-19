@@ -20,23 +20,23 @@ public interface MainFramesInter {
 	/**
 	 * The directory, for keeping jpg icons used in the main frame design.
 	 */
-	public final String DIRECTORY_ICONS = "resources/mainFrame/icons/jpg/";
+	public static final String DIRECTORY_ICONS = "resources/mainFrame/icons/jpg/";
 	
 	/**
 	 * The location of xml file describing default(new) simulation.
 	 */
-	public final String LOCATION_DEFAULT_NEW_SIMULATION = "resources/mainFrame/newSimulation/newSimulation.xml";
+	public static final String LOCATION_DEFAULT_NEW_SIMULATION = "resources/mainFrame/newSimulation/newSimulation.xml";
 
 	/**
 	 * The default extension of each icon. 
 	 */
 	//public final String DEFAULT_ICON_EXTENSION = ".jpg";
-	public final String DEFAULT_ICON_EXTENSION1 = ".png";
+	public static final String DEFAULT_ICON_EXTENSION1 = ".png";
 	
 	/**
 	 * The names(file names) of the icons used in the main frame.
 	 */
-	public final String   
+	public static final String   
 	                    /*Open and Save*/	
 	                    NEW_SIMULATION = "newSimulation", NEW_SIMULATION_ROLLOVER = "newSimulationRollover",NEW_SIMULATION_DISABLED = "newSimulationDisabled",
 	                    NEW_SIMULATION_SMALL ="newSimulationSmall", NEW_SIMULATION_SMALL_DISABLED ="newSimulationSmallDisabled", 
@@ -63,7 +63,7 @@ public interface MainFramesInter {
 	/**
 	 * The titles of the tabs plugged in the main GUI window.
 	 */
-	public final String CONSTRUCT_ROBOT_TAB_TITLE = "Construct Robot",
+	public static final String CONSTRUCT_ROBOT_TAB_TITLE = "Construct Robot",
 	                    ASSIGN_BEHAVIORS_TAB_TITLE = "Assign Controller",
 	                    ASSIGN_LABELS_TAB_TITLE = "Assign Labels",
 	                    MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE = "Communication Visualiser",
@@ -75,12 +75,12 @@ public interface MainFramesInter {
 	/**
 	 * The directory of icon displayed on tabs related to construction of modular robot.
 	 */
-	public final String contructRobotIconDirectory = MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageDirectory(); 
+	public static final String contructRobotIconDirectory = MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageDirectory(); 
 	
 	/**     
 	 * Instances of tabs plugged in main GUI window
 	 */
-	public final TabsInter  CONSTRUCT_ROBOT_TAB = new ConstructRobotTab(false,true,CONSTRUCT_ROBOT_TAB_TITLE,contructRobotIconDirectory),
+	public static final TabsInter  CONSTRUCT_ROBOT_TAB = new ConstructRobotTab(false,true,CONSTRUCT_ROBOT_TAB_TITLE,contructRobotIconDirectory),
 	                        ASSIGN_BEHAVIORS_TAB = new AssignControllerTab(false,true,ASSIGN_BEHAVIORS_TAB_TITLE,contructRobotIconDirectory),
 	                        ASSIGN_LABELS_TAB = new AssignLabelsTab(false,true,ASSIGN_LABELS_TAB_TITLE,contructRobotIconDirectory),
 	                        MODULE_COMMUNICATION_VISUALIZER_TAB = new ModuleCommunicationVisualizer(false,true,MODULE_COMMUNICATION_VISUALIZER_TAB_TITLE,MainFrameIcons.VISUALIZER_ROLLOVER.getImageDirectory()),
@@ -92,7 +92,7 @@ public interface MainFramesInter {
 	/**
 	 * Array of tabs plugged in the Main frame.
 	 */
-	public final TabsInter[] ALL_TABS = {
+	public static final TabsInter[] ALL_TABS = {
 			                          CONSTRUCT_ROBOT_TAB,
 		                              ASSIGN_BEHAVIORS_TAB,		                             
 		                              MODULE_COMMUNICATION_VISUALIZER_TAB,

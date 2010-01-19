@@ -43,7 +43,7 @@ public enum HintsConstructRobotTab {
 			           
     JUMP_FROM_CON_TO_CON("Select module to move newly added module from initial connector to desired with each selection. Newly added module can be moved on any module in the morphology of modular robot. "),
     
-    TAB_NOT_AVAILABLE("This tab is not available during simulation runtime!");
+    TAB_NOT_AVAILABLE_DUE_TO_RUNNING_SIMULATION("This tab is not available during simulation runtime!");
 	;
 	
 	/**

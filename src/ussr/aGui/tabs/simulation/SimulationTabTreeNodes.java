@@ -140,7 +140,9 @@ public enum SimulationTabTreeNodes {
 	 * @return the panel defining visual appearance of edit value part of GUI(SimulationTab).
 	 */
 	public javax.swing.JPanel getJPanelEditor() {
-		GuiFrames.changeToLookAndFeel(jPanelEditor);
+		if(jPanelEditor !=null){
+			GuiFrames.changeToLookAndFeel(jPanelEditor);
+		}		
 		return jPanelEditor;
 	}
 	

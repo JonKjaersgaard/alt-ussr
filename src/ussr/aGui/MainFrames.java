@@ -5,6 +5,10 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.util.ArrayList;
 
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import ussr.aGui.controllers.GeneralController;
 import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.designHelpers.JComponentsFactory;
@@ -15,6 +19,7 @@ import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedInter;
 import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
 import ussr.aGui.helpers.ComponentResizer;
 import ussr.aGui.tabs.TabsInter;
+import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.remote.GUIRemoteSimulationAdapter;
 
 /**
@@ -43,8 +48,11 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	protected ArrayList<TabsInter> allTabs,tabsFirstTabbedPane,tabsSecondTabbedPane;
 	
+	/**
+	 *  A number of objects for file choosing.
+	 */
 	public static FileChoosingInter fcOpenSimulationDialog,fcSaveSimulationDialog,
-	                             fcOpenRobotDialog,fcSaveRobotDialog ;
+	                                fcOpenRobotDialog,fcSaveRobotDialog ;
 	
 	/**
 	 * Defines visual appearance common to all instances of main GUI window.  
@@ -57,6 +65,10 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		initFileChoosing();
 		}
 	
+	/**
+	 * Initializes a number of file choosers depending on operating system(OS).
+	 * To be more specific, in case of Mac OS initializes File Dialogs instead of jFileChoosers. 
+	 */
 	private void initFileChoosing(){
 		if (GeneralController.getOperatingSystemName().contains("Mac")){
 			fcOpenSimulationDialog = FileDialogCustomizedInter.FD_OPEN_SIMULATION;
@@ -331,9 +343,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 * @param height, tool bar height.
 	 */
 	public void initJToolbarGeneralControl(int width,int height){
-
-		
-
 		/*Instantiation of components*/
 		jButtonNewSimulation = new javax.swing.JButton();
 		jButtonRunRealTime = new javax.swing.JButton();
@@ -623,12 +632,25 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public javax.swing.JTabbedPane initFirstTabbedPane(int width,int height){
 		
 		jTabbedPaneFirst  = new javax.swing.JTabbedPane();
-		//jTabbedPaneFirst.setToolTipText(text);
+		jTabbedPaneFirst.setToolTipText(MainFrameComponentsText.INTERACTION_WITH_SIMULATION_ENVIRONMENT.getUserFriendlyName());
 		jTabbedPaneFirst.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 		jTabbedPaneFirst.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jTabbedPaneFirst.setPreferredSize(new Dimension(width, height));		
 		jTabbedPaneFirst.setFocusable(false);
-		jTabbedPaneFirst.setEnabled(false);		
+		jTabbedPaneFirst.setEnabled(false);	
+		jTabbedPaneFirst.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent evt) {
+				  JTabbedPane pane = (JTabbedPane)evt.getSource();
+			        int sel = pane.getSelectedIndex();   
+			        
+				System.out.println("sELECTED "+ pane.getTitleAt(sel));
+				if (pane.getTitleAt(sel).equalsIgnoreCase(MainFramesInter.CONSTRUCT_ROBOT_TAB.getTabTitle())){
+					ConstructRobotTabController.adaptToNrRobots();
+				}
+			}
+		});
+		
 		addTabs(tabsFirstTabbedPane,jTabbedPaneFirst);//Plug in tabs in tabbed pane
 		getContentPane().add(jTabbedPaneFirst);	
 		return jTabbedPaneFirst;

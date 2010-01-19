@@ -9,6 +9,7 @@ import javax.swing.JToggleButton;
 
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.enumerations.tools.ConstructionTools;
+import ussr.aGui.enumerations.JOptionPaneMessages;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 
@@ -337,11 +338,6 @@ public class ConstructRobotTabController extends TabsControllers{
 				throw new Error ("Failed to identify the type of the first module in simulation environment, due to remote exception.");
 			}
 			
-		/*	switch(SupportedModularRobots.getConsistentMRName(modularRobotName)){
-			
-			}*/
-			
-			
 			if (modularRobotName.toUpperCase().contains(SupportedModularRobots.ATRON.toString())){
 				adaptTabToChosenMR(SupportedModularRobots.ATRON,false);
 				chosenMRname = SupportedModularRobots.ATRON;
@@ -400,9 +396,6 @@ public class ConstructRobotTabController extends TabsControllers{
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called "+ ConstructionTools.VARIATE_MODULE_OR_PROPERTIES.toString() + ", due to remote exception");
 		}	
-		/*if (chosenMRname.equals(SupportedModularRobots.ODIN)){
-			ConstructRobotTab.setEnabledConstructionToolsToolBar(false);
-		}*/
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.VARIATE_MODULE_PROPERTIES.getHintText());
 	}
@@ -450,5 +443,14 @@ public class ConstructRobotTabController extends TabsControllers{
 	 */
 	public static void setSelectedModuleID(int selectedModuleID){
 		ConstructRobotTabController.selectedModuleID = selectedModuleID;
+	}
+	
+	
+	public static void adaptToNrRobots(){
+		int amountRobots = SimulationTabController.getSimulationSpecification().getRobotsInSimulation().size();
+		if (amountRobots>1){
+			ConstructRobotTab.setTabEnabled(false);
+			JOptionPaneMessages.CONSTRUCT_ROBOT_TAB_LIMITATION.displayMessage();
+		}
 	}
 }
