@@ -86,9 +86,14 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 		return SimulationTabController.getSimulationSpecification();
 	}
 
+	private static boolean fromSimulationXMLFile= false;
+
+	public static void setFromSimulationXMLFile(boolean fromSimulationXMLFile) {
+		GUICallbackControlImpl.fromSimulationXMLFile = fromSimulationXMLFile;
+	}
 
 	public void newRobotLoaded(SimulationSpecification simulationSpecification)throws RemoteException{
-		SimulationTab.addRobotNodes(simulationSpecification,false,true);
+		SimulationTab.addRobotNodes(simulationSpecification,fromSimulationXMLFile,true);
 		SimulationTabController.setSimulationSpecification(simulationSpecification);
 	}
 
