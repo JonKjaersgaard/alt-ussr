@@ -27,6 +27,7 @@ import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.BoxDescription;
 import ussr.description.setup.WorldDescription;
 import ussr.model.Module;
+import ussr.remote.facade.GUICallbackControlImpl;
 import ussr.remote.facade.RemotePhysicsSimulationImpl;
 
 /**
@@ -316,7 +317,9 @@ Node rootNode = document.getDocumentElement();
 				robotSpecification.setMorphologyLocation(robotMorphologyFileDirectoryName);
 				robotSpecification.setControllerLocation(controllerLocation);
 				simulationSpecification.getRobotsInSimulation().add(robotSpecification);
+				GUICallbackControlImpl.setFromSimulationXMLFile(false);
 				RemotePhysicsSimulationImpl.getGUICallbackControl().newRobotLoaded(simulationSpecification);
+				
 			
 			}
 		} catch (RemoteException e) {
