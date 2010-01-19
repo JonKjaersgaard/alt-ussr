@@ -6,6 +6,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 
+import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrames;
 import ussr.aGui.MainFramesInter;
@@ -378,17 +379,18 @@ public class MainFrameSeparateController extends GeneralController {
 
 			/*Add tabs for construction of modular robot*/
 			jTabbedPaneFirst.addTab(constructRobotTab.getTabTitle(),new javax.swing.ImageIcon(constructRobotTab.getImageIconDirectory()),constructRobotTab.getJComponent());
-			jTabbedPaneFirst.addTab(assignBehaviorsTab.getTabTitle(),new javax.swing.ImageIcon(assignBehaviorsTab.getImageIconDirectory()),assignBehaviorsTab.getJComponent());
 			jTabbedPaneFirst.addTab(assignLabels.getTabTitle(),new javax.swing.ImageIcon(assignLabels.getImageIconDirectory()),assignLabels.getJComponent());
+			jTabbedPaneFirst.addTab(assignBehaviorsTab.getTabTitle(),new javax.swing.ImageIcon(assignBehaviorsTab.getImageIconDirectory()),assignBehaviorsTab.getJComponent());
+			
 
 			/*Adapt construction tabs to the first module in simulation environment if it exists.*/
 			ConstructRobotTabController.adaptTabToModuleInSimulation();
 			AssignControllerTabController.adaptTabToModuleInSimulation();
 
 			/*Update look and feel for newly added tabs*/		
-			MainFrames.changeToLookAndFeel(constructRobotTab.getJComponent());
-			MainFrames.changeToLookAndFeel(assignBehaviorsTab.getJComponent());
-			MainFrames.changeToLookAndFeel(assignLabels.getJComponent());
+			GuiFrames.changeToLookAndFeel(constructRobotTab.getJComponent());
+			GuiFrames.changeToLookAndFeel(assignBehaviorsTab.getJComponent());
+			GuiFrames.changeToLookAndFeel(assignLabels.getJComponent());
 
 
 		}else{
@@ -398,11 +400,11 @@ public class MainFrameSeparateController extends GeneralController {
 				if (tabTitle.equals(MainFramesInter.CONSTRUCT_ROBOT_TAB_TITLE)){
 					jTabbedPaneFirst.removeTabAt(index);
 					index--;
-				}else if (tabTitle.equalsIgnoreCase(MainFramesInter.ASSIGN_BEHAVIORS_TAB_TITLE)){
-					jTabbedPaneFirst.removeTabAt(index);
-					index--;
 				}else if (tabTitle.equalsIgnoreCase(MainFramesInter.ASSIGN_LABELS_TAB_TITLE)){
 					jTabbedPaneFirst.removeTabAt(index);
+					index--;
+				}else if (tabTitle.equalsIgnoreCase(MainFramesInter.ASSIGN_BEHAVIORS_TAB_TITLE)){
+					jTabbedPaneFirst.removeTabAt(index);					
 				}
 			}
 		}

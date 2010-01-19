@@ -386,8 +386,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		});
 		jToolBarGeneralControl.add(jButtonNewSimulation);
 		
-		
-		
 		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.openActionPerformed(fcOpenSimulationDialog);
@@ -413,7 +411,22 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 				MainFrameSeparateController.jButtonReloadCurrentSimulationActionPerformed();
 			}
 		});
-		jToolBarGeneralControl.add(jButtonReloadSimulation);	
+		jToolBarGeneralControl.add(jButtonReloadSimulation);
+		
+		jToggleButtonConstructRobot.setToolTipText(MainFrameComponentsText.CONSTRUCT_ROBOT.getUserFriendlyName());
+		jToggleButtonConstructRobot.setIcon(MainFrameIcons.CONSTRUCT_ROBOT.getImageIcon());
+		jToggleButtonConstructRobot.setSelectedIcon(MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageIcon());
+		jToggleButtonConstructRobot.setRolloverIcon(MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageIcon());
+		jToggleButtonConstructRobot.setDisabledIcon(MainFrameIcons.CONSTRUCT_ROBOT_DISABLED.getImageIcon());		
+		jToggleButtonConstructRobot.setFocusable(false);		
+		jToggleButtonConstructRobot.setPreferredSize(BUTTON_DIMENSION);
+		jToggleButtonConstructRobot.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {				
+				MainFrameSeparateController.jButtonConstructRobotActionPerformed(jToggleButtonConstructRobot,jTabbedPaneFirst);
+
+			}
+		});
+		jToolBarGeneralControl.add(jToggleButtonConstructRobot);
 		
 		//jToolBarSeparator3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jToolBarGeneralControl.add(jToolBarSeparator3);
@@ -486,40 +499,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToolBarGeneralControl.add(jButtonTerminate);			
 		
 		//jToolBarSeparator4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBarGeneralControl.add(jToolBarSeparator4);
-
-		jToggleButtonConstructRobot.setToolTipText(MainFrameComponentsText.CONSTRUCT_ROBOT.getUserFriendlyName());
-		jToggleButtonConstructRobot.setIcon(MainFrameIcons.CONSTRUCT_ROBOT.getImageIcon());
-		jToggleButtonConstructRobot.setSelectedIcon(MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageIcon());
-		jToggleButtonConstructRobot.setRolloverIcon(MainFrameIcons.CONSTRUCT_ROBOT_ROLLOVER.getImageIcon());
-		jToggleButtonConstructRobot.setDisabledIcon(MainFrameIcons.CONSTRUCT_ROBOT_DISABLED.getImageIcon());		
-		jToggleButtonConstructRobot.setFocusable(false);		
-		jToggleButtonConstructRobot.setPreferredSize(BUTTON_DIMENSION);
-		jToggleButtonConstructRobot.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {				
-				MainFrameSeparateController.jButtonConstructRobotActionPerformed(jToggleButtonConstructRobot,jTabbedPaneFirst);
-
-			}
-		});
-		jToolBarGeneralControl.add(jToggleButtonConstructRobot);	
-		
-		jToggleButtonVisualizer.setToolTipText(MainFrameComponentsText.VISUALIZE_COMMUNICATION_OF_MODULES.getUserFriendlyName());
-		jToggleButtonVisualizer.setIcon(MainFrameIcons.VISUALIZER.getImageIcon());
-		jToggleButtonVisualizer.setSelectedIcon(MainFrameIcons.VISUALIZER_ROLLOVER.getImageIcon());		
-		jToggleButtonVisualizer.setRolloverIcon(MainFrameIcons.VISUALIZER_ROLLOVER.getImageIcon());
-	    jToggleButtonVisualizer.setDisabledIcon(MainFrameIcons.VISUALIZER_DISABLED.getImageIcon());
-		jToggleButtonVisualizer.setFocusable(false);
-		jToggleButtonVisualizer.setEnabled(false);
-		jToggleButtonVisualizer.setPreferredSize(BUTTON_DIMENSION);
-		jToggleButtonVisualizer.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MainFrameSeparateController.jButtonVisualizerActionPerformed(jToggleButtonVisualizer,jTabbedPaneFirst);
-			}
-		});
-		jToolBarGeneralControl.add(jToggleButtonVisualizer);
-
-		//jToolBarSeparator5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-		jToolBarGeneralControl.add(jToolBarSeparator5);
+		jToolBarGeneralControl.add(jToolBarSeparator4);		
 		
 		jToggleButtonMaximizeInteraction.setToolTipText(MainFrameComponentsText.HIDE_DEBUGGING.getUserFriendlyName());
 		jToggleButtonMaximizeInteraction.setIcon(MainFrameIcons.TABBED_PANES.getImageIcon());
@@ -556,6 +536,24 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToolBarGeneralControl.add(jToggleButtonMaximizeDebugging);
 		
 		jToolBarGeneralControl.add(jToolBarSeparator6);
+		
+		jToggleButtonVisualizer.setToolTipText(MainFrameComponentsText.VISUALIZE_COMMUNICATION_OF_MODULES.getUserFriendlyName());
+		jToggleButtonVisualizer.setIcon(MainFrameIcons.VISUALIZER.getImageIcon());
+		jToggleButtonVisualizer.setSelectedIcon(MainFrameIcons.VISUALIZER_ROLLOVER.getImageIcon());		
+		jToggleButtonVisualizer.setRolloverIcon(MainFrameIcons.VISUALIZER_ROLLOVER.getImageIcon());
+	    jToggleButtonVisualizer.setDisabledIcon(MainFrameIcons.VISUALIZER_DISABLED.getImageIcon());
+		jToggleButtonVisualizer.setFocusable(false);
+		jToggleButtonVisualizer.setEnabled(false);
+		jToggleButtonVisualizer.setPreferredSize(BUTTON_DIMENSION);
+		jToggleButtonVisualizer.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MainFrameSeparateController.jButtonVisualizerActionPerformed(jToggleButtonVisualizer,jTabbedPaneFirst);
+			}
+		});
+		jToolBarGeneralControl.add(jToggleButtonVisualizer);
+
+		//jToolBarSeparator5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jToolBarGeneralControl.add(jToolBarSeparator5);
 		
 		getContentPane().add(jToolBarGeneralControl);
 	}
@@ -622,7 +620,11 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
      }*/
 	
 	
+	private static int rememberedChoice =-2;
 	
+	public static void setRememberedChoice(int rememberedChoice) {
+		MainFrames.rememberedChoice = rememberedChoice;
+	}
 	/**
 	 * Initializes and returns the first tabbed pane (from the top in main GUI window).
 	 * @param width, the width of first tabbed pane.
@@ -639,14 +641,16 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jTabbedPaneFirst.setFocusable(false);
 		jTabbedPaneFirst.setEnabled(false);	
 		jTabbedPaneFirst.addChangeListener(new ChangeListener() {
+			
 			@Override
 			public void stateChanged(ChangeEvent evt) {
 				  JTabbedPane pane = (JTabbedPane)evt.getSource();
-			        int sel = pane.getSelectedIndex();   
-			        
-				System.out.println("sELECTED "+ pane.getTitleAt(sel));
-				if (pane.getTitleAt(sel).equalsIgnoreCase(MainFramesInter.CONSTRUCT_ROBOT_TAB.getTabTitle())){
-					ConstructRobotTabController.adaptToNrRobots();
+			        int selectedTabIndex = pane.getSelectedIndex();  
+			        String selectedTabTitle = pane.getTitleAt(selectedTabIndex); 
+			       
+				if (selectedTabTitle.equalsIgnoreCase(MainFramesInter.CONSTRUCT_ROBOT_TAB.getTabTitle())||selectedTabTitle.equalsIgnoreCase(MainFramesInter.ASSIGN_LABELS_TAB.getTabTitle())){
+					ConstructRobotTabController.adaptToNrRobots(rememberedChoice);
+					
 				}
 			}
 		});

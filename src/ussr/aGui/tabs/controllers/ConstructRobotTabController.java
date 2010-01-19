@@ -4,14 +4,19 @@ package ussr.aGui.tabs.controllers;
 import java.rmi.RemoteException;
 
 import javax.swing.AbstractButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.enumerations.tools.ConstructionTools;
+import ussr.aGui.MainFrames;
 import ussr.aGui.enumerations.JOptionPaneMessages;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
+import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
+import ussr.aGui.tabs.simulation.SimulationTab;
 
 
 /**
@@ -53,6 +58,7 @@ public class ConstructRobotTabController extends TabsControllers{
 		}
 
 		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.MODULAR_ROBOT_CHOSEN.getHintText());
 	}
 
@@ -110,6 +116,7 @@ public class ConstructRobotTabController extends TabsControllers{
 			//TODO SUPPORT ROBOT DELETION
 		}
 		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.DELETE.getHintText()); 
 	}
 
@@ -127,6 +134,7 @@ public class ConstructRobotTabController extends TabsControllers{
 			//TODO Support moving robot 
 		}
 		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.MOVE.getHintText());
 	}
 
@@ -172,6 +180,7 @@ public class ConstructRobotTabController extends TabsControllers{
 			throw new Error("Failed to initialize picker called "+ ConstructionTools.MODULE_OPPOSITE_ROTATION.toString()+ " , due to remote exception");
 		}
 		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.OPPOSITE_ROTATION.getHintText());
 	}
 
@@ -192,6 +201,7 @@ public class ConstructRobotTabController extends TabsControllers{
 			throw new Error("Failed to initate picker called "+ ConstructionTools.STANDARD_ROTATIONS.toString()+ ", due to remote exception");
 		}
 		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.STANDARD_ROTATIONS.getHintText()+ chosenStandardRotation +".");
 	}
 
@@ -207,6 +217,7 @@ public class ConstructRobotTabController extends TabsControllers{
 		}		
 
 		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.ON_SELECTED_CONNECTOR.getHintText()); 
 	}
 
@@ -232,6 +243,7 @@ public class ConstructRobotTabController extends TabsControllers{
 		}
 
 		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.ON_CHOSEN_CONNECTOR_NR.getHintText()+ chosenConnectorNr); 
 	}
 
@@ -268,6 +280,7 @@ public class ConstructRobotTabController extends TabsControllers{
 			throw new Error("Failed to initate picker called "+ ConstructionTools.NEW_MODULES_ON_ALL_CONNECTORS.toString() + ", due to remote exception");
 		}
 		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.ON_ALL_CONNECTORS.getHintText());
 
 	}
@@ -286,6 +299,7 @@ public class ConstructRobotTabController extends TabsControllers{
 			throw  new Error ("Failed to initialize picker named as "+ ConstructionTools.MOVE_MODULE_FROM_CON_TO_CON.toString()+ " ,due to remote exception");
 		}
 		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.JUMP_FROM_CON_TO_CON.getHintText()); 
 	}
 
@@ -383,6 +397,7 @@ public class ConstructRobotTabController extends TabsControllers{
 		}		
 
 		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.START_NEW_ROBOT.getHintText());
 	}
 
@@ -397,6 +412,7 @@ public class ConstructRobotTabController extends TabsControllers{
 			throw new Error("Failed to initate picker called "+ ConstructionTools.VARIATE_MODULE_OR_PROPERTIES.toString() + ", due to remote exception");
 		}	
 		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.VARIATE_MODULE_PROPERTIES.getHintText());
 	}
 
@@ -412,6 +428,7 @@ public class ConstructRobotTabController extends TabsControllers{
 
 
 		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.AVAILABLE_ROTATIONS.getHintText());
 	}
 
@@ -446,11 +463,40 @@ public class ConstructRobotTabController extends TabsControllers{
 	}
 	
 	
-	public static void adaptToNrRobots(){
+	public static void adaptToNrRobots(int rememberedChoice){
 		int amountRobots = SimulationTabController.getSimulationSpecification().getRobotsInSimulation().size();
 		if (amountRobots>1){
+			int value;
+			if (rememberedChoice!=-2){
+				value = rememberedChoice; 
+			}else{
+			ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ERROR);
+			ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_AMOUNT_ROBOTS.getHintText());
 			ConstructRobotTab.setTabEnabled(false);
-			JOptionPaneMessages.CONSTRUCT_ROBOT_TAB_LIMITATION.displayMessage();
+			
+			Object returnedValue = JOptionPaneMessages.CONSTRUCT_ROBOT_TAB_LIMITATION.displayMessage();
+			JCheckBox rememberCheckBox = (JCheckBox)JOptionPaneMessages.CONSTRUCT_ROBOT_TAB_LIMITATION.getMessage()[1];
+			value= Integer.parseInt(returnedValue.toString());
+			 if (rememberCheckBox.isSelected()){
+				 MainFrames.setRememberedChoice(value);
+			 }
+			}
+			switch(value){
+			case 0:// Start new robot
+				ConstructRobotTab.setTabEnabled(true);
+				ConstructRobotTab.getJButtonStartNewRobot().doClick();
+				SimulationTabController.removeAllRobotNodes();
+				
+				break;
+			case 1: // Continue anyway
+				ConstructRobotTab.setTabEnabled(true);
+				break;
+			case 2: // Cancel
+			case -1: //Exit
+				break;
+			default: throw new Error("The value named as " + value +" is not supported yet.");
+				
+			}
 		}
 	}
 }

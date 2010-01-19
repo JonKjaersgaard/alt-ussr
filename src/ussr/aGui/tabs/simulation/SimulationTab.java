@@ -358,7 +358,27 @@ public class SimulationTab extends Tabs {
 		jPanelEditor.revalidate();
 		jPanelEditor.repaint();		
 	}
-
+	
+	/**
+	 * Returns robots node from the tree of simulation nodes.
+	 * @return robots node from the tree of simulation nodes.
+	 */
+	public static DefaultMutableTreeNode getRobotsNode(){
+		DefaultTreeModel model = (DefaultTreeModel)jTreeSimulation.getModel();
+		 return (DefaultMutableTreeNode) model.getChild(model.getRoot(),2);	
+	}
+	
+	/**
+	 * Returns default mutable tree model of simulation tree.
+	 * @return default mutable tree model of simulation tree.
+	 */
+	public static DefaultTreeModel getSimulationTreeModel(){
+		return (DefaultTreeModel)jTreeSimulation.getModel();
+	}
+	
+	
+	
+	
 	private static javax.swing.JTree jTreeSimulation;
 	private static javax.swing.JScrollPane jScrollPaneTreeSimulation;
 

@@ -1,5 +1,6 @@
 package ussr.aGui.enumerations;
 
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 
 import ussr.aGui.MainFrames;
@@ -12,14 +13,14 @@ import ussr.aGui.MainFrames;
  */
 public enum JOptionPaneMessages {
 
-	LOADED_SIMUL_OR_ROBOT_FILE_INCONSISTENT(JOptionPaneType.MESSAGE,"Wrong XML file format","You are attempting to load simulation(or robot) from XML file not compatible with USSR.",JOptionPane.ERROR_MESSAGE),
-	LOADED_SIMULATION_FILE_IS_ROBOT(JOptionPaneType.MESSAGE,"Wrong XML file format","You are attempting to load Robot instead of expected Simulation XML file.",JOptionPane.ERROR_MESSAGE),
-	LOADED_ROBOT_FILE_IS_SIMULATION(JOptionPaneType.MESSAGE,"Wrong XML file format","You are attempting to load Simulation instead of expected Robot XML file.",JOptionPane.ERROR_MESSAGE),
+	LOADED_SIMUL_OR_ROBOT_FILE_INCONSISTENT(JOptionPaneType.MESSAGE,"Wrong XML file format",new Object[]{"You are attempting to load simulation(or robot) from XML file not compatible with USSR."},JOptionPane.ERROR_MESSAGE),
+	LOADED_SIMULATION_FILE_IS_ROBOT(JOptionPaneType.MESSAGE,"Wrong XML file format",new Object []{"You are attempting to load Robot instead of expected Simulation XML file."},JOptionPane.ERROR_MESSAGE),
+	LOADED_ROBOT_FILE_IS_SIMULATION(JOptionPaneType.MESSAGE,"Wrong XML file format",new Object[]{"You are attempting to load Simulation instead of expected Robot XML file."},JOptionPane.ERROR_MESSAGE),
 	
-	SAVE_CURRENT_SIMULATION(JOptionPaneType.CONFIRMATION,"Save current simulation before continue?","Save current simulation?",JOptionPane.YES_NO_CANCEL_OPTION),
+	SAVE_CURRENT_SIMULATION(JOptionPaneType.CONFIRMATION,"Save current simulation before continue?",new Object[]{"Save current simulation?"},JOptionPane.YES_NO_CANCEL_OPTION),
 	
-	CONSTRUCT_ROBOT_TAB_LIMITATION(JOptionPaneType.OPTION,"Too many robots in simulation environment.","Robot construction is limited to single robot at a time."+"\n Because all modules in simulation enviroment are saved as single robot xml file.",
-			                       JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE, new Object[]{"Start new robot","Keep first robot","Continue anyway"},1),
+	CONSTRUCT_ROBOT_TAB_LIMITATION(JOptionPaneType.OPTION,"Too many robots in simulation environment.",new Object[]{"Robot construction is limited to single robot at a time."+"\nBecause all modules in simulation enviroment are saved as single robot xml file.", new JCheckBox("Remember my choice and do not show this message again.")},
+			                       JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE, new Object[]{"Start new robot","Continue anyway","Cancel"},1),
 	;
 
 	
@@ -34,7 +35,9 @@ public enum JOptionPaneMessages {
 	/**
 	 * The title and message text displayed in JOptionPane.
 	 */
-	private String title,messageText;
+	private String title;
+	
+	private Object[] message;
 
 	/**
 	 * The type of JOptionPane(the icon to display). For instance ERROR,INFORMATION and so on. 
@@ -52,10 +55,10 @@ public enum JOptionPaneMessages {
 	 * @param messageText, the message text displayed in JOptionPane.
 	 * @param optionType, the type of JOptionPane(the icon to display). For instance ERROR,INFORMATION and so on. 
 	 */
-	JOptionPaneMessages(JOptionPaneType jOptionPaneType,String title, String messageText, int optionType){
+	JOptionPaneMessages(JOptionPaneType jOptionPaneType,String title, Object[] message, int optionType){
 		this.jOptionPaneType = jOptionPaneType;
 		this.title = title;
-		this.messageText= messageText;
+		this.message= message;
 		this.optionType = optionType;
 		
 		this.jOptionPaneMessage = new JOptionPane();
@@ -71,10 +74,10 @@ public enum JOptionPaneMessages {
 	 * @param optionType, the type of JOptionPane(the icon to display). For instance ERROR,INFORMATION and so on.
 	 * @param TODO 
 	 */
-	JOptionPaneMessages(JOptionPaneType jOptionPaneType,String title, String messageText, int optionType, int messageType,Object[] options, int selectedOptionIndex){
+	JOptionPaneMessages(JOptionPaneType jOptionPaneType,String title, Object[] message, int optionType, int messageType,Object[] options, int selectedOptionIndex){
 		this.jOptionPaneType = jOptionPaneType;
 		this.title = title;
-		this.messageText= messageText;
+		this.message= message;
 		this.optionType = optionType;
 		this.messageType = messageType;
 		this.options = options;
@@ -84,6 +87,10 @@ public enum JOptionPaneMessages {
 		MainFrames.changeToLookAndFeel(this.jOptionPaneMessage);
 	}
 	
+	public Object[] getMessage() {
+		return message;
+	}
+
 	/**
 	 * Displays chosen JOptionPane.
 	 */
@@ -91,17 +98,16 @@ public enum JOptionPaneMessages {
 		Object returnValue = null;
 		switch(this.jOptionPaneType){
 		case MESSAGE:
-			JOptionPane.showMessageDialog(MainFrames.getMainFrame(),this.messageText,this.title,this.optionType);
+			JOptionPane.showMessageDialog(MainFrames.getMainFrame(),this.message,this.title,this.optionType);
 			returnValue = null;
 			break;
 		case CONFIRMATION:
-			returnValue = JOptionPane.showConfirmDialog(MainFrames.getMainFrame(), this.messageText, this.title,this.optionType);
+			returnValue = JOptionPane.showConfirmDialog(MainFrames.getMainFrame(), this.message, this.title,this.optionType);
 			break;
 		case OPTION:	
-			Object[] options = {"Yes, please","No, thanks", "No eggs, no ham!"};
-			returnValue = JOptionPane.showOptionDialog(MainFrames.getMainFrame(),this.messageText,this.title,this.optionType,this.messageType,null,this.options,this.selectedOptionIndex);
+			returnValue = JOptionPane.showOptionDialog(MainFrames.getMainFrame(), this.message, this.title, this.optionType, this.messageType, null,this.options,this.selectedOptionIndex);   
 			break;
-			default: throw new Error("The OptionPane named as: "+this.jOptionPaneType.name()+" is not supported yet.");
+			default: throw new Error("The JOptionPane named as: "+this.jOptionPaneType.name()+" is not supported yet.");
 		}		
 		return returnValue;
 	}

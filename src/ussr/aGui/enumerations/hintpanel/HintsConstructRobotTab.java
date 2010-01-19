@@ -1,5 +1,7 @@
 package ussr.aGui.enumerations.hintpanel;
 
+import javax.swing.JCheckBox;
+
 /**
  * Contains build in hints for tab called "Construct Robot". Hints are displayed in Display for hints(panel).
  * @author Konstantinas
@@ -43,7 +45,9 @@ public enum HintsConstructRobotTab {
 			           
     JUMP_FROM_CON_TO_CON("Select module to move newly added module from initial connector to desired with each selection. Newly added module can be moved on any module in the morphology of modular robot. "),
     
-    TAB_NOT_AVAILABLE_DUE_TO_RUNNING_SIMULATION("This tab is not available during simulation runtime!");
+    TAB_NOT_AVAILABLE_DUE_TO_RUNNING_SIMULATION("This tab is not available during simulation runtime!"),
+	
+	TAB_NOT_AVAILABLE_DUE_TO_AMOUNT_ROBOTS("This tab is not available, because robot construction is limited to a single robot at a time. The main reason for this is that all modules in simulation enviroment are saved as a single robot xml file."),
 	;
 	
 	/**

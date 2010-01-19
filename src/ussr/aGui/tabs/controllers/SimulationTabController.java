@@ -24,6 +24,8 @@ import ussr.aGui.tabs.simulation.enumerations.TextureDescriptions;
 import ussr.builder.simulationLoader.SimulationSpecification;
 import ussr.description.geometry.VectorDescription;
 import ussr.physics.PhysicsParameters;
+import ussr.remote.facade.GUICallbackControlImpl;
+import ussr.remote.facade.RemotePhysicsSimulationImpl;
 
 
 
@@ -111,7 +113,7 @@ public class SimulationTabController extends TabsControllers {
 			char robotNumber = nameSelectedNode.toCharArray()[9];
 			selectedRobotNr = Integer.parseInt(robotNumber+"");
 			break;
-		case 11:// up to 99 robots (NOT TESTED YET)
+		case 11:// up to 99 robots 
 			char robotNr1 = nameSelectedNode.toCharArray()[9];
 			char robotNr2 = nameSelectedNode.toCharArray()[10];
 			selectedRobotNr = Integer.parseInt((robotNr1+"")+(robotNr2+"")+"");
@@ -433,5 +435,22 @@ public class SimulationTabController extends TabsControllers {
 	 */
 	public static void setSimulationSpecification(SimulationSpecification simulationSpecification) {
 		SimulationTabController.simulationSpecification = simulationSpecification;
+	}
+	
+	public static void removeAllRobotNodes(){
+		SimulationTab.getRobotsNode().removeAllChildren();
+		SimulationTab.getSimulationTreeModel().reload();
+		SimulationTab.jTreeSimulationExpandAllNodes();
+		
+		SimulationTabController.simulationSpecification = new SimulationSpecification();
+		SimulationTab.setRobotNumber(0);
+		GUICallbackControlImpl.setFromSimulationXMLFile(true);
+	/*	try {
+			RemotePhysicsSimulationImpl.getGUICallbackControl().setFromSimulationXMLFile(true);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
 	}
 }
