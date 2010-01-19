@@ -51,7 +51,8 @@ public class PhysicsFactory {
 
 		private Set<CommunicationMonitor> monitors = new HashSet<CommunicationMonitor>();
 		private boolean startPaused = true;
-		private boolean headless = false;
+		private boolean headless_nowindow = false;
+		private boolean headless_nographics = false;
 		private String resourceDirectory;
 		private boolean saveWindowSettingOnExit = false;
 		private int xPosition=-1;//default value to indicate that simulation window position was not yet set.
@@ -59,7 +60,7 @@ public class PhysicsFactory {
 
 		public void set(Options other) {
 			this.exitOnQuit = other.exitOnQuit;
-			this.headless = other.headless;
+			this.headless_nowindow = other.headless_nowindow;
 			this.monitors = other.monitors;
 			this.resourceDirectory = other.resourceDirectory;
 			this.saveWindowSettingOnExit = other.saveWindowSettingOnExit;
@@ -125,14 +126,22 @@ public class PhysicsFactory {
 		/**
 		 * If headless the simulator will not draw graphics
 		 */
-		public void setHeadless(boolean headless) {
-			this.headless = headless;
+		public void setHeadlessNoWindow(boolean headless) {
+			this.headless_nowindow = headless;
+			if(headless) this.headless_nographics = true; 
 		}
 
-		public boolean getHeadless() {
-			return headless;
+		public boolean getHeadlessNoWindow() {
+			return headless_nowindow;
 		}
 
+		public void setHeadlessNoGraphics(boolean headless) {
+		    this.headless_nographics = headless;
+		}
+		
+		public boolean getHeadlessNoGraphics() {
+		    return headless_nographics;
+		}
 
 		public void setResourceDirectory(String homeDir) {
 			resourceDirectory = homeDir;

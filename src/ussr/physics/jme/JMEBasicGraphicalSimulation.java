@@ -492,7 +492,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		/** Create rootNode */
 		rootNode = new Node( "rootNode" );
 
-		if(!options.getHeadless()) {
+		if(!options.getHeadlessNoWindow()) {
 			/**
 			 * Create a wirestate to toggle on and off. Starts disabled with default
 			 * width of 1 pixel.
@@ -548,7 +548,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 
 		timer.reset();
 
-		if(!options.getHeadless()) {
+		if(!options.getHeadlessNoWindow()) {
 			/**
 			 * Update geometric and rendering information for both the rootNode and
 			 * fpsNode.
@@ -568,7 +568,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 */
 	@Override
 	protected final void update(float interpolation) {
-		if(options.getHeadless()) return;
+		if(options.getHeadlessNoWindow()) return;
 		// disable input as we want it to be updated _after_ physics
 		// in your application derived from BaseGame you can simply make the call to InputHandler.update later
 		// in your game loop instead of this disabling and reenabling
@@ -672,7 +672,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			 * Get a DisplaySystem acording to the renderer selected in the
 			 * startup box.
 			 */
-			if(this.options.getHeadless())
+			if(this.options.getHeadlessNoWindow())
 				display = new DummyDisplaySystem();
 			else
 				display = DisplaySystem.getDisplaySystem( properties.getRenderer() );
@@ -736,7 +736,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		/** Assign the camera to this renderer. */
 		display.getRenderer().setCamera( cam );
 		/** Create a basic input controller. */
-		if(!options.getHeadless()) {
+		if(!options.getHeadlessNoWindow()) {
 			FirstPersonHandler firstPersonHandler = new FirstPersonHandler( cam, 1f, 1 );
 			input = firstPersonHandler;
 		} else {
@@ -757,12 +757,12 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 		/**
 		 * If headless the simulator will not draw graphics
 		 */
-		display.getRenderer().setHeadless(options.getHeadless());
+		display.getRenderer().setHeadless(options.getHeadlessNoGraphics());
 
 		assignKeys();
 
 		/** Create a basic input controller. */
-		if(!options.getHeadless()) {
+		if(!options.getHeadlessNoWindow()) {
 			cameraInputHandler = new FirstPersonHandler( cam, 0.1f, 1 ); //TODO Make camera velocity relative to framerate
 			input = new InputHandler();
 			input.addToAttachedHandlers( cameraInputHandler );
@@ -787,7 +787,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 			getPhysicsSpace().setAccuracy(PhysicsParameters.get().getPhysicsSimulationStepSize());
 		}
 
-		if(options.getHeadless()) return;
+		if(options.getHeadlessNoWindow()) return;
 
 		input.addAction( new InputAction() {
 			public void performAction( InputActionEvent evt ) {

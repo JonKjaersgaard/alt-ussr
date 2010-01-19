@@ -128,7 +128,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
         else
     	  setStaticPlane(helper.createTerrain(worldDescription.getPlaneSize(), worldDescription.getPlaneTexture()));
     	
-        if(!options.getHeadless()) createSky(worldDescription);
+        if(!options.getHeadlessNoWindow()) createSky(worldDescription);
         setGravity(gravity);
 
         setPhysicsErrorParameters(PhysicsParameters.get().getConstraintForceMix(), PhysicsParameters.get().getErrorReductionParameter()); 
@@ -209,14 +209,14 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                 }
             }
         };
-        if(!options.getHeadless())
+        if(!options.getHeadlessNoWindow())
             input.addAction( resetAction, InputHandler.DEVICE_KEYBOARD, KeyInput.KEY_R, InputHandler.AXIS_NONE, false );
         resetAction.performAction( null );
 
         // Add any external input handlers
         doAddInputHandlers();
         
-        if(!options.getHeadless()) {
+        if(!options.getHeadlessNoWindow()) {
             if(picker==null)
                 setPicker(new PhysicsPicker());
             else {
@@ -309,7 +309,7 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
             getAttributes();
             //a 
             if (!finished) {
-                if(!options.getHeadless()) {
+                if(!options.getHeadlessNoWindow()) {
                     System.out.println("Available Display Modes: ");
                     try {
                         org.lwjgl.opengl.DisplayMode[] modes = Display.getAvailableDisplayModes();
@@ -362,13 +362,13 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                     
                
             	   
-                    if(!options.getHeadless()) KeyInput.get().update();
+                    if(!options.getHeadlessNoWindow()) KeyInput.get().update();
             	   //if(mainLoopCounter%5==0 ||singleStep) { // 1 call to = 16ms (same example setup)
                     float fps = 25;
                     float loopsPerSecond = 1.0f/getPhysicsSimulationStepSize();
                     int loopsPerUpdate = (int)(loopsPerSecond/fps);
                     if(mainLoopCounter%loopsPerUpdate==0 ||singleStep) { // 1 call to = 16ms (same example setup)
-                    	if(!options.getHeadless()) MouseInput.get().update(); //InputSystem.update();	            		   
+                    	if(!options.getHeadlessNoWindow()) MouseInput.get().update(); //InputSystem.update();	            		   
                 		update(-1.0f);
                 		render(-1.0f);
                 		if(grapFrames) {

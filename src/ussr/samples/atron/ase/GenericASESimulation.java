@@ -52,7 +52,7 @@ public abstract class GenericASESimulation extends GenericATRONSimulation implem
 		//PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
 		PhysicsParameters.get().setMaintainRotationalJointPositions(true);
 		PhysicsFactory.getOptions().setStartPaused(false);
-		PhysicsFactory.getOptions().setHeadless(false);
+		PhysicsFactory.getOptions().setHeadlessNoGraphics(false);
 		PhysicsFactory.getOptions().setSaveWindowSettingOnExit(true);
 		
 		
