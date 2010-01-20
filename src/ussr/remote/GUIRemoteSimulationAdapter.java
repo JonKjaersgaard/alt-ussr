@@ -157,6 +157,7 @@ public class GUIRemoteSimulationAdapter {
          SimulationSpecification simulationSpecification = simulation.getXmlSimulationProvider().getSimulationSpecification();
          SimulationTabController.setSimulationSpecification(simulationSpecification);
          SimulationTab.addRobotNodes(simulationSpecification,true,true);
+         MainFrames.deSelectConstructRobotButton();
          
          SimulationTreeEditors.update();
          SimulationTab.resizeComponents();

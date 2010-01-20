@@ -11,7 +11,7 @@ import ussr.aGui.tabs.constructionTabs.AssignableControllersEditors;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.controllers.AssignControllerTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
-import ussr.aGui.tabs.controllers.LabelingTabController;
+import ussr.aGui.tabs.controllers.AssignLabelsTabController;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.builder.enumerations.SupportedModularRobots;
@@ -47,7 +47,7 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 	 * @param labels, the string of labels separated by comma to populate the table with.
 	 */
 	public void updateTableWithLabels(String labels) throws RemoteException{
-		LabelingTabController.updateTableLabels(labels);
+		AssignLabelsTabController.updateTableLabels(labels);
 	}
 
 	/**
