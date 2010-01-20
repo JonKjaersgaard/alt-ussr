@@ -10,6 +10,7 @@ import javax.swing.JToolBar;
 import ussr.aGui.FramesInter;
 import ussr.aGui.MainFrames;
 
+import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.JOptionPaneMessages;
 
@@ -36,9 +37,9 @@ public abstract class ConstructionTabs extends Tabs{
 	 * The custom renderers for comboBox with numbers of connectors and colors beside them for each modular robot.
 	 */
 	public final static ComboBoxRenderer ATRON_RENDERER =  new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ATRON_CONNECTORS),
-                                         ODIN_RENDERER = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ODIN_BALL_CONNECTORS), 
-                                         MTRAN_RENDERER = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.MTRAN_CONNECTORS),
-	                                     CKBOT_STANDARD_RENDERER =  new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.CKBOTSTANDARD_CONNECTORS);
+	ODIN_RENDERER = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.ODIN_BALL_CONNECTORS), 
+	MTRAN_RENDERER = new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.MTRAN_CONNECTORS),
+	CKBOT_STANDARD_RENDERER =  new ComboBoxRenderer(IconsNumbersConnectors.getAllImageIcons(),SupportedModularRobots.CKBOTSTANDARD_CONNECTORS);
 	/**
 	 * Defines visual appearance of the tabs for construction of modular robot.
 	 * @param firstTabbedPane,true if the tab is visible after activation of main GUI window. 
@@ -48,14 +49,14 @@ public abstract class ConstructionTabs extends Tabs{
 	protected ConstructionTabs(boolean initiallyVisible, boolean firstTabbedPane, String tabTitle, String imageIconDirectory) {
 		super(initiallyVisible,firstTabbedPane, tabTitle, imageIconDirectory);
 	}
-	
+
 	/**
 	 * Controls selection and deselection of button. Only one button can be selected, others deselected.
 	 * @param jButton, the button to control selection and deselection.
 	 */
 	public void setSelectionDeselection(javax.swing.JButton  jButton){
 		/* go through each component in parent component*/
-     for(int index =0;index<jComponent.getComponents().length; index++ ){			
+		for(int index =0;index<jComponent.getComponents().length; index++ ){			
 			String className = jComponent.getComponent(index).getClass().toString();
 			if (className.contains(ComponentsFrame.JToolBar.toString())){
 				javax.swing.JToolBar  currentToolBar = (JToolBar) jComponent.getComponent(index);
@@ -99,11 +100,11 @@ public abstract class ConstructionTabs extends Tabs{
 				}
 			}
 		}
-     
-     jButton.setSelected(true);
+
+		jButton.setSelected(true);
 	}
-	
-	
+
+
 	/**
 	 * Initializes and returns the panel responsible for displaying feedback to the user.
 	 * @param width, the width of the panel.
@@ -117,10 +118,10 @@ public abstract class ConstructionTabs extends Tabs{
 		hintPanel.setBorderTitle(HintPanelInter.commonTitle);
 		return hintPanel;
 	}
-	
-	
+
+
 	public static javax.swing.JToggleButton initColorModuleConnectorsButton(){
-		
+
 		final javax.swing.JToggleButton  jToggleButtonColorConnetors = new javax.swing.JToggleButton(); 
 		jToggleButtonColorConnetors.setToolTipText(TabsComponentsText.COLOR_MODULE_CONNECTORS.getUserFriendlyName());
 		jToggleButtonColorConnetors.setIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
@@ -137,54 +138,57 @@ public abstract class ConstructionTabs extends Tabs{
 				//FIXME//ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.COLOR_CONNECTORS.getHintText());
 			}
 		});
-		
-		
-		
+
+
+
 		return jToggleButtonColorConnetors;
-		
-		
+
+
 	}
-	
-	
+
+
 	public static void adaptToNrRobots(int rememberedChoice){
 		int amountRobots = SimulationTabController.getSimulationSpecification().getRobotsInSimulation().size();
-		if (amountRobots>1){
+		boolean simulationState = MainFrameSeparateController.isSimulationRunning();
+
+		if (amountRobots>1&& simulationState==false){
 			int value;
 			if (rememberedChoice!=-2){
 				value = rememberedChoice; 
 			}else{
-			ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ERROR);
-			ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_AMOUNT_ROBOTS.getHintText());
-			ConstructRobotTab.setTabEnabled(false);
-			
-			Object returnedValue = JOptionPaneMessages.CONSTRUCT_ROBOT_TAB_LIMITATION.displayMessage();
-			JCheckBox rememberCheckBox = (JCheckBox)JOptionPaneMessages.CONSTRUCT_ROBOT_TAB_LIMITATION.getMessage()[1];
-			value= Integer.parseInt(returnedValue.toString());
-			 if (rememberCheckBox.isSelected()){
-				 MainFrames.setRememberedChoice(value);
-			 }
+				ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ERROR);
+				ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_AMOUNT_ROBOTS.getHintText());
+				ConstructRobotTab.setTabEnabled(false);
+
+				Object returnedValue = JOptionPaneMessages.CONSTRUCT_ROBOT_TAB_LIMITATION.displayMessage();
+				JCheckBox rememberCheckBox = (JCheckBox)JOptionPaneMessages.CONSTRUCT_ROBOT_TAB_LIMITATION.getMessage()[1];
+				value= Integer.parseInt(returnedValue.toString());
+				if (rememberCheckBox.isSelected()){
+					MainFrames.setRememberedChoice(value);
+				}
 			}
 			switch(value){
 			case 0:// Start new robot
 				ConstructRobotTab.setTabEnabled(true);
-				ConstructRobotTab.getJButtonStartNewRobot().doClick();
-				SimulationTabController.removeAllRobotNodes();
-				
+				ConstructRobotTab.getJButtonStartNewRobot().doClick();				
 				break;
 			case 1: // Continue anyway
 				ConstructRobotTab.setTabEnabled(true);
 				ConstructRobotTab.setVisibleFirstModuleOperations(false);
+				ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
+				ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.DEFAULT.getHintText());
 				break;
 			case 2: // Cancel
-			case -1: //Exit
+			case -1: //Exit				
 				break;
 			default: throw new Error("The value named as " + value +" is not supported yet.");
-				
+
 			}
 		}
+
 	}
-	
-	
-	
-	
+
+
+
+
 }

@@ -6,9 +6,9 @@ package ussr.aGui.enumerations.hintpanel;
  * @author Konstantinas
  *
  */
-public enum HintsAssignLabelsTab {
+public enum HintsAssignLabelsTab implements HintsTabsInter{
 
-	DEFAULT("Follow hints displayed here to explore all available functionality. When done assigning labels save simulation in XML file and run it (green arrow in the lop-left corner of main window).Labels are identifiers, used during implementation of controller. They allow to implement controllers in more abstract fashion. Recommendation: use this control only if you are well aware of consequences."),
+	DEFAULT("This tab is dedicated to assignment of labels, which are unique idetifies used during implementation of controllers. Use this functionality if you are well aware of consequences. Begin with choosing an entity to read/assign the labels."),
 	
     ENTITY_CHOSEN("Select chosen entity in simulation environment in order to read in its labels in the table. Next modify the labels in the table(delete or type in desired ones) and select button for assigning labels."),
 	

@@ -6,14 +6,14 @@ import javax.swing.AbstractButton;
 
 import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
 import ussr.aGui.enumerations.tabs.EntitiesForLabelingText;
-import ussr.aGui.helpers.hintPanel.HintPanelInter;
+import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
 import ussr.builder.enumerations.tools.LabeledEntities;
 import ussr.builder.enumerations.tools.LabelingTools;
 import ussr.builder.labelingTools.LabelingTemplate;
 
-public class LabelingTabController extends TabsControllers{
+public class AssignLabelsTabController extends TabsControllers{
 
 	
 	/**
@@ -35,9 +35,6 @@ public class LabelingTabController extends TabsControllers{
 		updateTableHeader();
 		/*Initialize the tool for reading labels*/
 		jButtonReadLabelsActionPerformed();
-
-		/*Informing user*/
-		//LabelingTab.getHintPanel().setText(HintPanelInter.builInHintsAssignBehaviorTab[3]);
 	}
 	
 
@@ -121,7 +118,9 @@ public class LabelingTabController extends TabsControllers{
 		default: throw new Error("Labeling is not supported for " + chosenRadioEntityText ); 
 		}
 		/*Informing user*/
-		AssignControllerTab.getHintPanel().setText(HintsAssignLabelsTab.ENTITY_CHOSEN.getHintText());
+		AssignLabelsTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
+		AssignLabelsTab.getHintPanel().setText(HintsAssignLabelsTab.ENTITY_CHOSEN.getHintText());
+		
 	}
 	
 	

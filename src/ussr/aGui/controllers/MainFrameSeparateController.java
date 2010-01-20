@@ -164,6 +164,14 @@ public class MainFrameSeparateController extends GeneralController {
 	private static boolean isSimulationRunning = false;
 	
 	/**
+	 * Returns the flag indicating the state of simulation. 
+	 * @return the flag indicating the state of simulation.
+	 */
+	public static boolean isSimulationRunning() {
+		return isSimulationRunning;
+	}
+
+	/**
 	 * Sets the flag indicating whenever simulation is in running state.
 	 * @param isSimulationRunning,the flag to indicate whenever simulation is in running state
 	 */
@@ -537,7 +545,7 @@ public class MainFrameSeparateController extends GeneralController {
 			defaultFirstPaneHeight = MainFrames.getJTabbedPaneFirst().getHeight();
 		}
 	}
-
+	
 	/**
 	 * Starts new(default) remote simulation.
 	 */

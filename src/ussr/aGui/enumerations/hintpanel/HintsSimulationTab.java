@@ -6,7 +6,7 @@ package ussr.aGui.enumerations.hintpanel;
  * @author Konstantinas
  *
  */
-public enum HintsSimulationTab {
+public enum HintsSimulationTab implements HintsTabsInter {
 
 	DEFAULT("This tab allows to manipulate simulation values and entities in it. Follow hints displayed here" +
 			"to get familliar with the purpose of each element."),

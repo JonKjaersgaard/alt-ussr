@@ -441,8 +441,18 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jComboBoxConstructionDefaultModuleType.setEnabled(false);
 		jComboBoxConstructionDefaultModuleType.setSelectedIndex(0);
 		jComboBoxConstructionDefaultModuleType.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {				
-				setDefaultConstructionModuleType(jComboBoxConstructionDefaultModuleType.getSelectedItem().toString());
+			private String selected="";
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				String selectedItem = jComboBoxConstructionDefaultModuleType.getSelectedItem().toString();
+				setDefaultConstructionModuleType(selectedItem);
+		
+				if (selected.equals(selectedItem)){
+					
+				}else{
+					selected = selectedItem;
+				getHintPanel().setType(HintPanelTypes.INFORMATION);
+				getHintPanel().setText(HintsConstructRobotTab.NEW_MODULE_TYPE.getHintText()+selectedItem );
+				}
 			}
 		});
 		
@@ -640,14 +650,6 @@ public class ConstructRobotTab extends ConstructionTabs {
 	}	
 
 	/**
-	 * Returns JComboBox, containing choice of module or robot
-	 * @return jComboBoxEntity, containing choice of module or robot.
-	 */
-	public static javax.swing.JComboBox getJComboBoxEntity() {
-		return jComboBoxEntity;
-	}
-
-	/**
 	 * Returns radio button for ATRON modular robot.
 	 * @return radionButtonATRON, radio button for ATRON modular robot.
 	 */
@@ -706,11 +708,11 @@ public class ConstructRobotTab extends ConstructionTabs {
 		if (enabled){
 			getHintPanel().setType(HintPanelTypes.INFORMATION);
 			ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.START_NEW_ROBOT.getHintText());
-		}		
+		}
 	}
 	
 	/**
-	 * Enables or disables the table for general control.
+	 * Enables or disables the tool bar for general control.
 	 * @param enabled, true for enabled.
 	 */
 	public static void setEnabledGeneralToolBar(boolean enabled){
@@ -720,11 +722,14 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jToggleButtonColorConnetors.setEnabled(enabled);		
 	}
 	
+	/**
+	 * Hides or shows the tabs for manipulation of first (default) construction module.
+	 * @param visible, true for the tabs for manipulation of first (default) construction module to be visible.
+	 */
 	public static void setVisibleFirstModuleOperations(boolean visible){
 		jLabelFirstModule.setVisible(visible);
 		jToolBarSupportedModularRobots.setVisible(visible);
 		jToolBarFirstModuleTools.setVisible(visible);
-		
 	}
 	
 	/**
@@ -768,7 +773,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 	}
 	
 	/**
-	 * 
+	 * Sets selected default construction module in the combo box.
 	 */
 	public static void setSelectedDefaultConstructionModule(Object defaultConstructionModule){
 		jComboBoxConstructionDefaultModuleType.setSelectedItem(defaultConstructionModule);

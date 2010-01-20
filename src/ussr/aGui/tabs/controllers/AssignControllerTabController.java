@@ -64,9 +64,7 @@ public class AssignControllerTabController extends TabsControllers {
 		if (modularRobotNameExists==false){
 			throw new Error ("Not supported modulal robot name: "+ radionButton.getText());
 		}
-		/*Informing user*/
-		AssignControllerTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
-		AssignControllerTab.getHintPanel().setText(HintsAssignControllersTab.DEFAULT.getHintText());
+		
 	}
 
 	/**

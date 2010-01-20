@@ -69,7 +69,6 @@ public class ConstructRobotTabController extends TabsControllers{
 		if (moduleSelectedFlag){//do nothing
 		}else{
 			ConstructRobotTab.setRadioButtonsEnabled(false);
-			ConstructRobotTab.getJComboBoxEntity().setEnabled(true);
 			ConstructRobotTab.setEnabledFirstModuleToolBar(true);
 			ConstructRobotTab.setEnabledJToolBarChangeModuleType(true);
 			ConstructRobotTab.setEnabledGenericToolBar(true);
@@ -240,7 +239,7 @@ public class ConstructRobotTabController extends TabsControllers{
 
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
-		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.ON_CHOSEN_CONNECTOR_NR.getHintText()+ chosenConnectorNr); 
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.ON_CHOSEN_CONNECTOR_NR.getHintText()+ chosenConnectorNr+ " It is possible to change new module type by choosing desired one in the combo box beneath."); 
 	}
 
 	/**
@@ -386,6 +385,8 @@ public class ConstructRobotTabController extends TabsControllers{
 		ConstructRobotTab.setEnabledJToolBarChangeModuleType(false);
 		ConstructRobotTab.getButtonGroupModularRobots().clearSelection();
 		ConstructRobotTab.getJToggleButtonColorConnetors().setSelected(false);
+		
+		SimulationTabController.removeAllRobotNodes();
 
 		try {
 			builderControl.removeAllModules();

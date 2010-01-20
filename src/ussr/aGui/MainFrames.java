@@ -14,10 +14,13 @@ import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.MainFrameComponentsText;
+import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.fileChoosing.FileChoosingInter;
 import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedInter;
 import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
+import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.TabsInter;
+import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.constructionTabs.ConstructionTabs;
 import ussr.remote.GUIRemoteSimulationAdapter;
 
@@ -557,6 +560,14 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		getContentPane().add(jToolBarGeneralControl);
 	}
 
+	/**
+	 * Deselects the button associated with tabs for construction of modular robot morphology.
+	 */
+	public static void deSelectConstructRobotButton(){
+		if(jToggleButtonConstructRobot.isSelected()){
+			jToggleButtonConstructRobot.doClick();
+		}
+	}
 
 	/**
 	 * Returns the button for starting new (default) simulation.
@@ -612,6 +623,14 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	private static int rememberedChoice =-2;// defaul value
 	
 	/**
+	 * Returns the users choice in the Option pane for limiting amount of robots in construct robot tabs. 
+	 * @return the users choice in the Option pane for limiting amount of robots in construct robot tabs. 
+	 */
+	public static int getRememberedChoice() {
+		return rememberedChoice;
+	}
+
+	/**
 	 * Sets the users choice in the Option pane for limiting amount of robots in construct robot tabs. 
 	 * @param rememberedChoice, used for keeping users choice in the Option pane for limiting amount of robots in construct robot tabs. 
 	 */
@@ -636,14 +655,20 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jTabbedPaneFirst.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent evt) {
+			
 				  JTabbedPane pane = (JTabbedPane)evt.getSource();
+				 if (pane.getTabCount()<5){
+					 
+				 } else{
 			        int selectedTabIndex = pane.getSelectedIndex();  
 			        String selectedTabTitle = pane.getTitleAt(selectedTabIndex); 
 			       
 				if (selectedTabTitle.equalsIgnoreCase(MainFramesInter.CONSTRUCT_ROBOT_TAB.getTabTitle())||selectedTabTitle.equalsIgnoreCase(MainFramesInter.ASSIGN_LABELS_TAB.getTabTitle())){
 					ConstructionTabs.adaptToNrRobots(rememberedChoice);
-					
+					ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
+					ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.DEFAULT.getHintText());
 				}
+				 }
 			}
 		});
 		addTabs(tabsFirstTabbedPane,jTabbedPaneFirst);//Plug in tabs in tabbed pane

@@ -20,7 +20,7 @@ import ussr.aGui.enumerations.tabs.EntitiesForLabelingText;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.helpers.hintPanel.HintPanel;
-import ussr.aGui.tabs.controllers.LabelingTabController;
+import ussr.aGui.tabs.controllers.AssignLabelsTabController;
 
 /**
  * Defines visual appearance of tab named as Labeling. 
@@ -147,7 +147,7 @@ public class AssignLabelsTab extends ConstructionTabs{
 		radioButtonModule.setSelected(false);
 		radioButtonModule.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				LabelingTabController.radioButtonGroupEntitiesActionPerformed(radioButtonModule);
+				AssignLabelsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonModule);
 			}
 		});			
 
@@ -159,7 +159,7 @@ public class AssignLabelsTab extends ConstructionTabs{
 		radionButtonConnector.setSelected(false);
 		radionButtonConnector.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				LabelingTabController.radioButtonGroupEntitiesActionPerformed(radionButtonConnector);
+				AssignLabelsTabController.radioButtonGroupEntitiesActionPerformed(radionButtonConnector);
 			}
 		});
 
@@ -171,7 +171,7 @@ public class AssignLabelsTab extends ConstructionTabs{
 		radioButtonSensors.setSelected(false);
 		radioButtonSensors.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				LabelingTabController.radioButtonGroupEntitiesActionPerformed(radioButtonSensors);
+				AssignLabelsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonSensors);
 			}
 		});
 
@@ -198,7 +198,7 @@ public class AssignLabelsTab extends ConstructionTabs{
 		radioButtonProximitySensor.setSelected(false);
 		radioButtonProximitySensor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				LabelingTabController.radioButtonGroupEntitiesActionPerformed(radioButtonProximitySensor);
+				AssignLabelsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonProximitySensor);
 			}
 		});
 		jToolBarTypesSensors.add(radioButtonProximitySensor);
@@ -247,7 +247,7 @@ public class AssignLabelsTab extends ConstructionTabs{
 		jButtonReadLabels.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setSelectionDeselection(jButtonReadLabels);
-				LabelingTabController.jButtonReadLabelsActionPerformed();
+				AssignLabelsTabController.jButtonReadLabelsActionPerformed();
 			}
 		});	
 		jToolBarControlOfLabels.add(jButtonReadLabels);	
@@ -261,7 +261,7 @@ public class AssignLabelsTab extends ConstructionTabs{
 		jButtonAssignLabels.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setSelectionDeselection(jButtonAssignLabels);
-				LabelingTabController.jButtonAssignLabelsActionPerformed();
+				AssignLabelsTabController.jButtonAssignLabelsActionPerformed();
 			}
 		});			
 
@@ -343,6 +343,10 @@ public class AssignLabelsTab extends ConstructionTabs{
 	public static void setEnabledControlButtons(boolean enabled){
 		jButtonReadLabels.setEnabled(enabled);
 		jButtonAssignLabels.setEnabled(enabled);
+	}
+	
+	public static void setTabEnabled(boolean enabled){
+		
 	}
 	
 	/**
