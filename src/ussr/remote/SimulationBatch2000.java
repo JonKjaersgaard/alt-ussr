@@ -246,6 +246,7 @@ public abstract class SimulationBatch2000 implements ReturnValueHandler {
         }
         if(resultFile!=null) resultFile.close();
         reportHook(experiments,successes,failures,experimentParameters);
+        experimentParameters.clear();
     }
 
     protected String reportEventHook(String name, List<Float> set, int count) { return ""; }
