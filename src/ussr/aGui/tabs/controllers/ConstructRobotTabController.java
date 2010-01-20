@@ -4,19 +4,14 @@ package ussr.aGui.tabs.controllers;
 import java.rmi.RemoteException;
 
 import javax.swing.AbstractButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.enumerations.tools.ConstructionTools;
-import ussr.aGui.MainFrames;
-import ussr.aGui.enumerations.JOptionPaneMessages;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
-import ussr.aGui.tabs.simulation.SimulationTab;
 
 
 /**
@@ -76,6 +71,7 @@ public class ConstructRobotTabController extends TabsControllers{
 			ConstructRobotTab.setRadioButtonsEnabled(false);
 			ConstructRobotTab.getJComboBoxEntity().setEnabled(true);
 			ConstructRobotTab.setEnabledFirstModuleToolBar(true);
+			ConstructRobotTab.setEnabledJToolBarChangeModuleType(true);
 			ConstructRobotTab.setEnabledGenericToolBar(true);
 			ConstructRobotTab.setEnabledConstructionToolsToolBar(true);
 		}
@@ -387,6 +383,7 @@ public class ConstructRobotTabController extends TabsControllers{
 		ConstructRobotTab.setVisibleFirstModuleOperations(true);
 		ConstructRobotTab.setRadioButtonsEnabled(true);
 		ConstructRobotTab.setEnabledAllToolBars(false);	
+		ConstructRobotTab.setEnabledJToolBarChangeModuleType(false);
 		ConstructRobotTab.getButtonGroupModularRobots().clearSelection();
 		ConstructRobotTab.getJToggleButtonColorConnetors().setSelected(false);
 
@@ -463,40 +460,5 @@ public class ConstructRobotTabController extends TabsControllers{
 	}
 	
 	
-	public static void adaptToNrRobots(int rememberedChoice){
-		int amountRobots = SimulationTabController.getSimulationSpecification().getRobotsInSimulation().size();
-		if (amountRobots>1){
-			int value;
-			if (rememberedChoice!=-2){
-				value = rememberedChoice; 
-			}else{
-			ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ERROR);
-			ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_AMOUNT_ROBOTS.getHintText());
-			ConstructRobotTab.setTabEnabled(false);
-			
-			Object returnedValue = JOptionPaneMessages.CONSTRUCT_ROBOT_TAB_LIMITATION.displayMessage();
-			JCheckBox rememberCheckBox = (JCheckBox)JOptionPaneMessages.CONSTRUCT_ROBOT_TAB_LIMITATION.getMessage()[1];
-			value= Integer.parseInt(returnedValue.toString());
-			 if (rememberCheckBox.isSelected()){
-				 MainFrames.setRememberedChoice(value);
-			 }
-			}
-			switch(value){
-			case 0:// Start new robot
-				ConstructRobotTab.setTabEnabled(true);
-				ConstructRobotTab.getJButtonStartNewRobot().doClick();
-				SimulationTabController.removeAllRobotNodes();
-				
-				break;
-			case 1: // Continue anyway
-				ConstructRobotTab.setTabEnabled(true);
-				break;
-			case 2: // Cancel
-			case -1: //Exit
-				break;
-			default: throw new Error("The value named as " + value +" is not supported yet.");
-				
-			}
-		}
-	}
+	
 }

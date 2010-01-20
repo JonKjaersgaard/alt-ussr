@@ -158,8 +158,15 @@ public class MainFrameSeparateController extends GeneralController {
 		}
 	}
 
+	/**
+	 * The flag to indicate whenever simulation is in running state.
+	 */
 	private static boolean isSimulationRunning = false;
 	
+	/**
+	 * Sets the flag indicating whenever simulation is in running state.
+	 * @param isSimulationRunning,the flag to indicate whenever simulation is in running state
+	 */
 	public static void setSimulationRunning(boolean isSimulationRunning) {
 		MainFrameSeparateController.isSimulationRunning = isSimulationRunning;
 	}
@@ -181,6 +188,9 @@ public class MainFrameSeparateController extends GeneralController {
 		ModuleCommunicationVisualizerController.setIdsModules();
 	}
 
+	/**
+	 * Connects connectors of modules just before running the simulation. 
+	 */
 	private static void connectModules(){
 
 		if (isSimulationRunning==false){
@@ -198,7 +208,6 @@ public class MainFrameSeparateController extends GeneralController {
 	 */
 	public static void jButtonRunFastActionPerformed() {
 		adaptToRunningSimulation();
-
 		try {
 			if (remotePhysicsSimulation.isPaused()){// Start simulation  fast, if simulation is in paused state
 				remotePhysicsSimulation.setPause(false);				
@@ -210,8 +219,6 @@ public class MainFrameSeparateController extends GeneralController {
 			throw new Error ("Pausing or running remote simulation in fast mode failed, due to remote exception");
 		}
 	}
-
-	
 
 	/**
 	 * Executes running remote simulation in step by step fashion.
@@ -363,6 +370,9 @@ public class MainFrameSeparateController extends GeneralController {
 		}  
 	}
 
+	/**
+	 * The tabs associated with construction of modular robot morphology.
+	 */
 	private static final TabsInter constructRobotTab = MainFramesInter.CONSTRUCT_ROBOT_TAB,
 	assignBehaviorsTab = MainFramesInter.ASSIGN_BEHAVIORS_TAB,			
 	assignLabels = MainFramesInter.ASSIGN_LABELS_TAB;
@@ -382,7 +392,6 @@ public class MainFrameSeparateController extends GeneralController {
 			jTabbedPaneFirst.addTab(assignLabels.getTabTitle(),new javax.swing.ImageIcon(assignLabels.getImageIconDirectory()),assignLabels.getJComponent());
 			jTabbedPaneFirst.addTab(assignBehaviorsTab.getTabTitle(),new javax.swing.ImageIcon(assignBehaviorsTab.getImageIconDirectory()),assignBehaviorsTab.getJComponent());
 			
-
 			/*Adapt construction tabs to the first module in simulation environment if it exists.*/
 			ConstructRobotTabController.adaptTabToModuleInSimulation();
 			AssignControllerTabController.adaptTabToModuleInSimulation();
@@ -391,7 +400,6 @@ public class MainFrameSeparateController extends GeneralController {
 			GuiFrames.changeToLookAndFeel(constructRobotTab.getJComponent());
 			GuiFrames.changeToLookAndFeel(assignBehaviorsTab.getJComponent());
 			GuiFrames.changeToLookAndFeel(assignLabels.getJComponent());
-
 
 		}else{
 			/*Identify and remove tabs for construction of modular robot*/
@@ -438,12 +446,12 @@ public class MainFrameSeparateController extends GeneralController {
 	}
 
 	/**
-	 * Default(initial) height of the second tabbed pane
+	 * Default(initial) height of the second tabbed pane.
 	 */
 	private static int defaultSecondPaneHeight = MainFrameSeparate.TABBED_PANE2_HEIGHT;
 
 	/**
-	 * Default(initial) height of the second tabbed pane
+	 * Default(initial) height of the second tabbed pane.
 	 */
 	private static int defaultFirstPaneHeight;
 
@@ -498,7 +506,6 @@ public class MainFrameSeparateController extends GeneralController {
 	 * @param checkBoxMenuItemDisplayForHints,component of GUI.
 	 */
 	public static void jCheckBoxMenuItemDisplayForHintsActionPerformed(JCheckBoxMenuItem checkBoxMenuItemDisplayForHints) {
-		//ABSTRACT ME
 		if (checkBoxMenuItemDisplayForHints.isSelected()){
 			SimulationTab.getHintPanel().setVisible(false);
 			ConstructRobotTab.getHintPanel().setVisible(false);
@@ -513,7 +520,6 @@ public class MainFrameSeparateController extends GeneralController {
 
 	}
 
-	/*Setters*/
 	/**
 	 * Sets renderer control of remote physics simulation for this controller.
 	 * @param rendererControl, renderer control of remote physics simulation.
@@ -533,7 +539,7 @@ public class MainFrameSeparateController extends GeneralController {
 	}
 
 	/**
-	 * Starts new remote simulation
+	 * Starts new(default) remote simulation.
 	 */
 	public static void jButtonMenuItemNewSimulationActionPerformed() {
 		
@@ -555,7 +561,7 @@ public class MainFrameSeparateController extends GeneralController {
 			case 2://CANCEL, do nothing
 			case -1://Exit	
 				break;
-			default: throw new Error("There is no such option");
+			default: throw new Error("There is no such option for current implementation of JOptionPane.");
 			}
 		}else{
 			terminateSimulation();

@@ -3,21 +3,27 @@ package ussr.aGui.tabs.constructionTabs;
 
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import ussr.aGui.FramesInter;
+import ussr.aGui.MainFrames;
 
 import ussr.aGui.enumerations.ComponentsFrame;
+import ussr.aGui.enumerations.JOptionPaneMessages;
 
+import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.enumerations.tabs.IconsNumbersConnectors;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.helpers.ComboBoxRenderer;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
+import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
+import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.builder.enumerations.SupportedModularRobots;
 
 /**
@@ -137,6 +143,45 @@ public abstract class ConstructionTabs extends Tabs{
 		return jToggleButtonColorConnetors;
 		
 		
+	}
+	
+	
+	public static void adaptToNrRobots(int rememberedChoice){
+		int amountRobots = SimulationTabController.getSimulationSpecification().getRobotsInSimulation().size();
+		if (amountRobots>1){
+			int value;
+			if (rememberedChoice!=-2){
+				value = rememberedChoice; 
+			}else{
+			ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ERROR);
+			ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_AMOUNT_ROBOTS.getHintText());
+			ConstructRobotTab.setTabEnabled(false);
+			
+			Object returnedValue = JOptionPaneMessages.CONSTRUCT_ROBOT_TAB_LIMITATION.displayMessage();
+			JCheckBox rememberCheckBox = (JCheckBox)JOptionPaneMessages.CONSTRUCT_ROBOT_TAB_LIMITATION.getMessage()[1];
+			value= Integer.parseInt(returnedValue.toString());
+			 if (rememberCheckBox.isSelected()){
+				 MainFrames.setRememberedChoice(value);
+			 }
+			}
+			switch(value){
+			case 0:// Start new robot
+				ConstructRobotTab.setTabEnabled(true);
+				ConstructRobotTab.getJButtonStartNewRobot().doClick();
+				SimulationTabController.removeAllRobotNodes();
+				
+				break;
+			case 1: // Continue anyway
+				ConstructRobotTab.setTabEnabled(true);
+				ConstructRobotTab.setVisibleFirstModuleOperations(false);
+				break;
+			case 2: // Cancel
+			case -1: //Exit
+				break;
+			default: throw new Error("The value named as " + value +" is not supported yet.");
+				
+			}
+		}
 	}
 	
 	

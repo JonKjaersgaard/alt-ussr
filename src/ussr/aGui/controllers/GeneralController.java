@@ -45,7 +45,6 @@ public abstract class GeneralController {
 			}
 		}.start();
 		MainFrameSeparateController.setSimulationRunning(false);
-
 	}
 	
 	/**

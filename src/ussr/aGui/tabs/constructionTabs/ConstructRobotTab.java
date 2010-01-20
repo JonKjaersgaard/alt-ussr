@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -107,7 +106,6 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jComboBoxNrConnectorsConstructionTool = new javax.swing.JComboBox();
 		jComboBoxConstructionDefaultModuleType = new javax.swing.JComboBox();
 
-		jSeparator2 = new javax.swing.JToolBar.Separator();
 		jSeparator3 = new javax.swing.JToolBar.Separator();
 		
 		/*Description of components */	
@@ -153,21 +151,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		
 		jSeparator3.setPreferredSize(new Dimension(6,30));
 		jToolBarGeneralControl.add(jSeparator3);
-		
-		/*jToggleButtonColorConnetors.setToolTipText(TabsComponentsText.COLOR_MODULE_CONNECTORS.getUserFriendlyName());
-		jToggleButtonColorConnetors.setIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
-		jToggleButtonColorConnetors.setSelectedIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
-		jToggleButtonColorConnetors.setRolloverIcon(TabsIcons.COLOR_CONNECTORS_ROLLOVER.getImageIcon());
-		jToggleButtonColorConnetors.setDisabledIcon(TabsIcons.COLOR_CONNECTORS_DISABLED.getImageIcon());		
-		jToggleButtonColorConnetors.setFocusable(false);
-		jToggleButtonColorConnetors.setEnabled(true);
-		jToggleButtonColorConnetors.setPreferredSize(FramesInter.BUTTON_DIMENSION);
-		jToggleButtonColorConnetors.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructRobotTabController.jButtonColorConnectorsActionPerformed(jToggleButtonColorConnetors);
-			}
-		});*/
-		
+			
 		jToolBarGeneralControl.add(jToggleButtonColorConnetors);
 		
 		super.jComponent.add(jToolBarGeneralControl,gridBagConstraints);
@@ -454,11 +438,11 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jComboBoxConstructionDefaultModuleType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 		jComboBoxConstructionDefaultModuleType.setPreferredSize(new java.awt.Dimension(90, 28));
 		jComboBoxConstructionDefaultModuleType.setVisible(false);
+		jComboBoxConstructionDefaultModuleType.setEnabled(false);
 		jComboBoxConstructionDefaultModuleType.setSelectedIndex(0);
 		jComboBoxConstructionDefaultModuleType.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				setDefaultConstructionModuleType(jComboBoxConstructionDefaultModuleType.getSelectedItem().toString());
-				System.out.println("Construction module:"+ jComboBoxConstructionDefaultModuleType.getSelectedItem().toString());
 			}
 		});
 		
@@ -468,7 +452,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jButtonVariateModuleProperties.setRolloverIcon(TabsIcons.VARY_PROPERTIES_ROLLOVER.getImageIcon());		
 		jButtonVariateModuleProperties.setDisabledIcon(TabsIcons.VARY_PROPERTIES_DISABLED.getImageIcon());		
 		jButtonVariateModuleProperties.setFocusable(false);
-		jButtonVariateModuleProperties.setEnabled(true);
+		jButtonVariateModuleProperties.setEnabled(false);
 		jButtonVariateModuleProperties.setPreferredSize(FramesInter.BUTTON_DIMENSION);
 		jButtonVariateModuleProperties.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -511,6 +495,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 
 		jComboBoxEntity.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Module" /*,"Robot" */}));
 		jComboBoxEntity.setPreferredSize(new java.awt.Dimension(65, 30));
+		jComboBoxEntity.setEnabled(false);
 		jComboBoxEntity.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructRobotTabController.jComboBoxEntityActionPerformed(jComboBoxEntity);
@@ -580,12 +565,6 @@ public class ConstructRobotTab extends ConstructionTabs {
 		super.jComponent.add(hintPanel,gridBagConstraints);
 	}	
 
-	/*Getters and setters*/
-	
-	/*public static javax.swing.JComboBox getJComboBoxModuleType() {
-		return jComboBoxModuleType;
-	}*/
-
 	/**
 	 * Returns the button associated with functionality for coloring module connectors. 
 	 * @return the button associated with functionality for coloring module connectors.
@@ -595,35 +574,12 @@ public class ConstructRobotTab extends ConstructionTabs {
 	}
 
 	/**
-	 * Returns the button for moving first(initial) module.
-	 * @return the button for moving first(initial) module.
-	 */
-/*	public static javax.swing.JButton getJButtonMoveModule() {
-		return jButtonMoveModule;
-	}*/
-	/**
 	 * Returns the button for initialization of variate module properties tool.
 	 * @return the button for initialization of variate module properties tool.
 	 */
 	public static javax.swing.JButton getJButtonVariateModuleProperties() {
 		return jButtonVariateModuleProperties;
 	}
-
-	/**
-	 * Returns the button for initialization of available rotations tool.
-	 * @return the button for initialization of available rotations tool.
-	 */
-/*	public static javax.swing.JButton getJButtonAvailableRotationsLoop() {
-		return jButtonAvailableRotationsLoop;
-	}*/
-
-	/**
-	 * Returns the button for initialization of opposite rotation tool. 
-	 * @return the button for initialization of opposite rotation tool.
-	 */
-/*	public static javax.swing.JButton getJButtonOppositeRotation() {
-		return jButtonOppositeRotation;
-	}*/
 
 	/**
 	 * Enables and disables radio buttons with names of modular robots.
@@ -692,22 +648,6 @@ public class ConstructRobotTab extends ConstructionTabs {
 	}
 
 	/**
-	 * Returns JComboBox, containing robot specific(standard) rotations.
-	 * @return jComboBoxStandardRotations, containing robot specific(standard) rotations.
-	 */
-/*	public static javax.swing.JComboBox getjComboBoxStandardRotations() {
-		return jComboBoxStandardRotations;
-	}*/
-
-	/**
-	 * Returns JComboBox, containing numbers of connectors(on modular robot) for construction tool using them.
-	 * @return jComboBoxNrConnectorsConstructionTool, containing numbers of connectors(on modular robot) for construction tool using them.
-	 */
-	/*public static javax.swing.JComboBox getJComboBoxNrConnectorsConstructionTool() {
-		return jComboBoxNrConnectorsConstructionTool;
-	}*/
-
-	/**
 	 * Returns radio button for ATRON modular robot.
 	 * @return radionButtonATRON, radio button for ATRON modular robot.
 	 */
@@ -746,6 +686,11 @@ public class ConstructRobotTab extends ConstructionTabs {
 	public static javax.swing.JButton getJButtonStartNewRobot() {
 		return jButtonStartNewRobot;
 	}
+	
+	public static void setEnabledJToolBarChangeModuleType(boolean enabled){
+		jComboBoxConstructionDefaultModuleType.setEnabled(enabled);
+		jButtonVariateModuleProperties.setEnabled(enabled);
+	}
 
 	/**
 	 * Enables or disables the tab;
@@ -757,12 +702,11 @@ public class ConstructRobotTab extends ConstructionTabs {
 		setEnabledFirstModuleToolBar(enabled);
 		setEnabledGenericToolBar(enabled);		
 		setEnabledConstructionToolsToolBar(enabled);
-		/*if (enabled==false){
-			getHintPanel().setType(HintPanelTypes.ATTENTION);
-			ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_RUNNING_SIMULATION.getHintText());
-		}*/
-		jComboBoxConstructionDefaultModuleType.setEnabled(enabled);
-		jButtonVariateModuleProperties.setEnabled(enabled);
+		setEnabledJToolBarChangeModuleType(enabled);
+		if (enabled){
+			getHintPanel().setType(HintPanelTypes.INFORMATION);
+			ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.START_NEW_ROBOT.getHintText());
+		}		
 	}
 	
 	/**
@@ -862,7 +806,6 @@ public class ConstructRobotTab extends ConstructionTabs {
 	 * Adapts tab for Odin modular robot
 	 */
 	public static void adaptTabToOdin(){
-		//ConstructRobotTab.setEnabledRotationToolBar(false);// for Odin not yet relevant
 		jButtonVariateModuleProperties.setEnabled(true);
 		jButtonAvailableRotationsLoop.setEnabled(false);
 		jComboBoxStandardRotations.setEnabled(false);
@@ -920,7 +863,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 	private static javax.swing.JToolBar jToolBarGeneralControl,jToolBarChangeModuleType,jToolBarSupportedModularRobots,jToolBarGenericTools,
 	jToolBarFirstModuleTools,jToolBarConstructionTools;
 
-	private javax.swing.JToolBar.Separator jSeparator2,jSeparator3;
+	private javax.swing.JToolBar.Separator jSeparator3;
 	
 	private static javax.swing.JToggleButton jToggleButtonColorConnetors;
 

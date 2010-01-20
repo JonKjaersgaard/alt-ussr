@@ -17,9 +17,8 @@ import ussr.aGui.enumerations.MainFrameComponentsText;
 import ussr.aGui.fileChoosing.FileChoosingInter;
 import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedInter;
 import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
-import ussr.aGui.helpers.ComponentResizer;
 import ussr.aGui.tabs.TabsInter;
-import ussr.aGui.tabs.controllers.ConstructRobotTabController;
+import ussr.aGui.tabs.constructionTabs.ConstructionTabs;
 import ussr.remote.GUIRemoteSimulationAdapter;
 
 /**
@@ -55,7 +54,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	                                fcOpenRobotDialog,fcSaveRobotDialog ;
 	
 	/**
-	 * Defines visual appearance common to all instances of main GUI window.  
+	 * Initializes visual appearance and functionality common to all instances of main GUI window.  
 	 */
 	public MainFrames(){
 		populateTabs();
@@ -67,7 +66,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	
 	/**
 	 * Initializes a number of file choosers depending on operating system(OS).
-	 * To be more specific, in case of Mac OS initializes File Dialogs instead of jFileChoosers. 
+	 * To be more specific, in case of Mac OS initializes File Dialogs instead of jFileChoosers.
+	 * The main reason for that is that jFileChooser is not so well supported on Mac, from point of view
+	 * on (look and feel) and file filters.  
 	 */
 	private void initFileChoosing(){
 		if (GeneralController.getOperatingSystemName().contains("Mac")){
@@ -84,7 +85,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		}
 	}
 
-	
 	/**
 	 * Filters out and populates the tabs assigned to the first and second tabbed panes, into separate array lists. 
 	 */
@@ -105,7 +105,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	}	
 
 	/**
-	 * Initializes the visual appearance the main GUI windows.
+	 * Initializes the visual appearance of main GUI windows.
 	 * Follows Strategy  pattern.
 	 */
 	public abstract void initComponents();	
@@ -282,7 +282,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jCheckBoxMenuItemInteraction.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.hideTabbedPanesActionPerformed(jCheckBoxMenuItemInteraction.isSelected(),jCheckBoxMenuItemDebugging.isSelected());
-				mainFrame.repaint();
 			}
 		});
 		jMenuHide.add(jCheckBoxMenuItemInteraction);
@@ -292,7 +291,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jCheckBoxMenuItemDebugging.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.hideTabbedPanesActionPerformed(jCheckBoxMenuItemInteraction.isSelected(),jCheckBoxMenuItemDebugging.isSelected());
-				mainFrame.repaint();
 			}
 		});
 		jMenuHide.add(jCheckBoxMenuItemDebugging);		
@@ -303,7 +301,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jCheckBoxMenuItemDisplayForHints.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.jCheckBoxMenuItemDisplayForHintsActionPerformed(jCheckBoxMenuItemDisplayForHints);
-				mainFrame.repaint();
 			}
 		});
 		
@@ -316,6 +313,10 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	}
 
 
+	/**
+	 * Returns menu item for saving simulation.
+	 * @return menu item for saving simulation.
+	 */
 	public static javax.swing.JMenuItem getJMenuItemSave() {
 		return jMenuItemSave;
 	}
@@ -335,7 +336,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public static javax.swing.JMenuBar getJMenuBarMain() {
 		return jMenuBarMain;
 	}
-
 
 	/**
 	 * Initializes the tool bar for general control
@@ -529,7 +529,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jToggleButtonMaximizeDebugging.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.hideTabbedPanesActionPerformed(jToggleButtonMaximizeDebugging.isSelected(),jToggleButtonMaximizeInteraction.isSelected());
-				mainFrame.repaint();
 			}
 		});
 	
@@ -567,15 +566,21 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		return jButtonNewSimulation;
 	}
 
+	/**
+	 * Returns the button for controlling the size of  first tabbed pane. 
+	 * @return the button for controlling the size of  first tabbed pane. 
+	 */
 	public static javax.swing.JToggleButton getJToggleButtonMaximizeInteraction() {
 		return jToggleButtonMaximizeInteraction;
 	}
 
-
+	/**
+	 * Returns the button for controlling the size of second tabbed pane. 
+	 * @return the button for controlling the size of second tabbed pane. 
+	 */
 	public static javax.swing.JToggleButton getJToggleButtonMaximizeDebugging() {
 		return jToggleButtonMaximizeDebugging;
 	}
-
 
 	/**
 	 * Returns the button for opening Tab called Visualize Communication of modules. 
@@ -585,6 +590,10 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		return jToggleButtonVisualizer;
 	}
 
+	/**
+	 * Returns the button for saving remote simulation. 
+	 * @return the button for saving remote simulation.
+	 */
 	public static javax.swing.JButton getJButtonSave() {
 		return jButtonSave;
 	}
@@ -598,30 +607,14 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	}
 
 	/**
-	 * Initializes resizing of both tabbed panes.
+	 * Used for keeping users choice in the Option pane for limiting amount of robots in construct robot tabs. 
 	 */
-	public void initializeTabbedPanesResizing(){
-		ComponentResizer componentResizer = new ComponentResizer();
-		componentResizer.setSnapSize(new Dimension(10,10));
-		componentResizer.registerComponent(jTabbedPaneFirst,jTabbedPaneSecond);
-	}
+	private static int rememberedChoice =-2;// defaul value
 	
-    /* public void initSplitPane(int width1,int height1,int width2,int height2){
-	 jSplitPane1 = new javax.swing.JSplitPane();
-
-
-     jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-     jSplitPane1.setTopComponent(initFirstTabbedPane(width1, height1));
-    
-     jSplitPane1.setBottomComponent(initSecondTabbedPane(width2,height2));
-     
-     getContentPane().add(jSplitPane1);
-     
-     }*/
-	
-	
-	private static int rememberedChoice =-2;
-	
+	/**
+	 * Sets the users choice in the Option pane for limiting amount of robots in construct robot tabs. 
+	 * @param rememberedChoice, used for keeping users choice in the Option pane for limiting amount of robots in construct robot tabs. 
+	 */
 	public static void setRememberedChoice(int rememberedChoice) {
 		MainFrames.rememberedChoice = rememberedChoice;
 	}
@@ -641,7 +634,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		jTabbedPaneFirst.setFocusable(false);
 		jTabbedPaneFirst.setEnabled(false);	
 		jTabbedPaneFirst.addChangeListener(new ChangeListener() {
-			
 			@Override
 			public void stateChanged(ChangeEvent evt) {
 				  JTabbedPane pane = (JTabbedPane)evt.getSource();
@@ -649,12 +641,11 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 			        String selectedTabTitle = pane.getTitleAt(selectedTabIndex); 
 			       
 				if (selectedTabTitle.equalsIgnoreCase(MainFramesInter.CONSTRUCT_ROBOT_TAB.getTabTitle())||selectedTabTitle.equalsIgnoreCase(MainFramesInter.ASSIGN_LABELS_TAB.getTabTitle())){
-					ConstructRobotTabController.adaptToNrRobots(rememberedChoice);
+					ConstructionTabs.adaptToNrRobots(rememberedChoice);
 					
 				}
 			}
 		});
-		
 		addTabs(tabsFirstTabbedPane,jTabbedPaneFirst);//Plug in tabs in tabbed pane
 		getContentPane().add(jTabbedPaneFirst);	
 		return jTabbedPaneFirst;
@@ -696,23 +687,11 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		return jTabbedPaneSecond;
 	}
 	
-/*	public Cursor gettCursor(){
-	 	Toolkit toolkit = Toolkit.getDefaultToolkit();        	
-	 	java.awt.Image image = toolkit.getImage("resources/mainFrame/icons/jpg/ussrIcon.png");        	
-	 	java.awt.Cursor c = toolkit.createCustomCursor(image , new java.awt.Point(10,10), "img");
-	 setCursor(c);
-	 return c;
-	 	//mainPane.setCursor (c);
-	}*/
-	
 	/**
 	 * Starts the main GUI window (frame).
 	 * Follows strategy pattern. 
 	 */
 	public abstract void activate();
-
-    /*Getters and setters*/
-
 
 	/**
 	 * Returns second tabbed pane from the top in the design of main GUI window.
@@ -730,7 +709,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		return jTabbedPaneFirst;
 	}	
 
-	
 	/**
 	 * Controls visibility of the first tabbed pane.
 	 * @param visible, true for being visible.
@@ -780,7 +758,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		return mainFrame.getWidth() -insets.right-insets.left-2*HORIZONTAL_GAPS;
 	}
 	
-	
 	/**
 	 * Returns Gui component for controlling visibility of tabbed pane for debugging.
 	 * @return Gui component for controlling visibility of tabbed pane for debugging.
@@ -823,7 +800,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		return mainFrame;
 	}
 	
-	
 	/**
 	 *  Sets current instance of main frame (GUI window).
 	 * @param mainFrame, current instance of main frame (GUI window).
@@ -831,9 +807,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public static void setMainFrame(MainFrames mainFrame) {
 		MainFrames.mainFrame = mainFrame;
 	}
-
-
-
 
 	/*Declaration of MainFrame components*/
 	private static javax.swing.JMenuBar jMenuBarMain;
@@ -862,7 +835,5 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	                                         jToggleButtonMaximizeDebugging,jToggleButtonMaximizeInteraction;
 
 	private static javax.swing.JTabbedPane jTabbedPaneFirst,jTabbedPaneSecond;
-	
-	 private javax.swing.JSplitPane jSplitPane1;
 }
 
