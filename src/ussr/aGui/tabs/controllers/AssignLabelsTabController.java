@@ -162,7 +162,8 @@ public class AssignLabelsTabController extends TabsControllers{
 			throw new Error("Failed to initialize the tools for labeling different entities in simulation environment");
 		}
 		/*Informing user*/
-		AssignControllerTab.getHintPanel().setText(HintsAssignLabelsTab.ASSIGN_LABELS.getHintText());
+		AssignLabelsTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
+		AssignLabelsTab.getHintPanel().setText(HintsAssignLabelsTab.ASSIGN_LABELS.getHintText());
 	}
 
 }

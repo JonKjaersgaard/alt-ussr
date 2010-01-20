@@ -19,7 +19,7 @@ public enum JOptionPaneMessages {
 	
 	SAVE_CURRENT_SIMULATION(JOptionPaneType.CONFIRMATION,"Save current simulation before continue?",new Object[]{"Save current simulation?"},JOptionPane.YES_NO_CANCEL_OPTION),
 	
-	CONSTRUCT_ROBOT_TAB_LIMITATION(JOptionPaneType.OPTION,"Too many robots in simulation environment.",new Object[]{"Robot construction is limited to single robot at a time."+"\nBecause all modules in simulation enviroment are saved as single robot xml file.", new JCheckBox("Remember my choice and do not show this message again.")},
+	ROBOT_CONSTRUCTION_TABS_LIMITATION(JOptionPaneType.OPTION,"Too many robots in simulation environment.",new Object[]{"Robot construction is limited to single robot at a time."+"\nBecause all modules in simulation enviroment are saved as single robot xml file.", new JCheckBox("Remember my choice and do not show this message again.")},
 			                       JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE, new Object[]{"Start new robot","Continue anyway","Cancel"},1),
 	;
 

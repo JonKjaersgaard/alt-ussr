@@ -11,6 +11,7 @@ import ussr.aGui.FramesInter;
 import ussr.aGui.MainFrames;
 
 import ussr.aGui.controllers.MainFrameSeparateController;
+import ussr.aGui.designHelpers.ComboBoxRenderer;
 import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.JOptionPaneMessages;
 
@@ -18,7 +19,6 @@ import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.enumerations.tabs.IconsNumbersConnectors;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
-import ussr.aGui.helpers.ComboBoxRenderer;
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
@@ -160,8 +160,8 @@ public abstract class ConstructionTabs extends Tabs{
 				ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_AMOUNT_ROBOTS.getHintText());
 				ConstructRobotTab.setTabEnabled(false);
 
-				Object returnedValue = JOptionPaneMessages.CONSTRUCT_ROBOT_TAB_LIMITATION.displayMessage();
-				JCheckBox rememberCheckBox = (JCheckBox)JOptionPaneMessages.CONSTRUCT_ROBOT_TAB_LIMITATION.getMessage()[1];
+				Object returnedValue = JOptionPaneMessages.ROBOT_CONSTRUCTION_TABS_LIMITATION.displayMessage();
+				JCheckBox rememberCheckBox = (JCheckBox)JOptionPaneMessages.ROBOT_CONSTRUCTION_TABS_LIMITATION.getMessage()[1];
 				value= Integer.parseInt(returnedValue.toString());
 				if (rememberCheckBox.isSelected()){
 					MainFrames.setRememberedChoice(value);

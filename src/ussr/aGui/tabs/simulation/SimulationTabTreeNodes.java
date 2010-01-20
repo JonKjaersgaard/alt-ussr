@@ -15,7 +15,7 @@ import ussr.builder.saveLoadXML.XMLTagsUsed;
  * NOTE Nr1: If you want to add new node, just define it here by defining each of above elements.
  * NOTE Nr2: In case you do not want to implement some of parameters just define them as null or add some default 
  * value. For instance : for the panel defining visual appearance of edit value  you can just pass "new JPanel()",
- * for hint empty String (" ") and so on.
+ * for hint empty String ("TODO ") and so on.
  * NOTE Nr3: XML tags are shown here only for easy reference, so just pass empty string if you are not interested.  
  * @author Konstantinas 
  */

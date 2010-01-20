@@ -1,5 +1,5 @@
 <body>
-<p>Supports file choosing with two slightly differing forms of implementation and ther are: 
+<p>This package supports file choosing with two slightly differing forms of implementation and they are: 
 1)JFileChooser from Swing and 2) FileDialog from AWT libraries. 
 The reason why there are two implementations is that JFileChooser is well supported for Windows and Linux OSs(Operating System), 
 however there are problems with (look and feel) and file filtering on Macintosh (Mac). 
@@ -16,4 +16,22 @@ second is to wait until JFileChooser will be better supported on Mac.</p>
 <br/>
 <br/>
 <hr />
+
+<h2> 1.2) Where all file choosers are instantiated ? </h2>
+<p> Instantiation of file choosers is executed in their interfaces. It is also highlighted with
+purple color in the diagram above.<br /> 
+For example: jFile Choosers are instantiated here: <br />
+<a href="../fileChoosing/jFileChooser/JFileChooserCustomizedInter.java" > JFileChooserCustomizedInter.java  (ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter.java) </a><br />
+File dialogs are instantiated here: <br />
+<a href="../fileChoosing/fileDialog/FileDialogCustomizedInter.java" > FileDialogCustomizedInter.java (ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedInter.java) </a><br />
+If you are interested in opening links like the ones above, directly from Eclipse. Set default editor for  extension ".java" files, to be any text editor.   </p>
+
+<h2> 1.3) Where all file choosers are initialized ? </h2>
+File choosers are initialized in the following class and method:<br />
+<a href="../MainFrames.java" > ussr.aGui.MainFrames.java--> initFileChoosing() </a><br />
+
+ 
+
+
+</p>
 </body>
