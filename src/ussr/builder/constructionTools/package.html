@@ -12,12 +12,32 @@ involved Abstract Factory design pattern. The code was tested on ATRON, MTRAN, O
 <hr />
 <h1>1) How to...</h1> 
 <h2>1.1) Support new modular robot?</h2>
+Let's investigate this question in step by step fashion. We will use design class diagram beneath heavily.
+<img src ="../../../../doc/developer/builderPackage/ussr_builder_constructionTools.jpg" title= "Design class diagram with focus on construction tools)"><br /><br />
+
 <ol>
- <li>Create new class and inherit it from <code>ModularRobotConstructionTemplate.java</code> </li>
+ <li>Create new class and inherit it from <code>ModularRobotConstructionTemplate.java</code> In the diagram above, it is higligted with purple color and number 1 in the rectangle. It is also named as <code>NewModularRobotCosntructionTemplate </code> </li>
  <li> Implement inherited abstract methods, like <code>updateModuleMap(float x, float y, float z),  
    moveModuleComponentAccording(int connectorNr,Module selectedModule, JMEModuleComponent movableModuleComponent,Quaternion rotationQuatComponent)</code><br />
    and so on. Use existing support of modular robots like inspiration. For example class called 
     <code>ATRONConstructionTemplate.java</code> </li>
+ <li>At this point,the most important question is: How should I implement these methods? Lets us try to answer this question.<br />
+    First,ask your self how many components your module(robot type) consists of. For instance: ATRON has two components (two hemispheres).<br />
+    If your module consists of two components and they are positioned in symmetry, then you are lucky:), meaning that there is less work. Mtran has 3 components, here things become much more difficult.<br /><br />
+    
+    First method you should focus on is <code>updateModuleMap(float x, float y, float z)</code>, this where the "magic" :) is happening.
+    This method is using <code>OFFSET</code>, which is distance between two components(in case of symmetry modules) and <code>ModuleMapEntryHelper[] moduleMap </code>, which is containing mapping
+    of (connector number and rotation of selected module) to(rotation and position) of new module to place with respect to selected module. 
+    Using these new module is positioned with respect to selected module. See figure beneath for end result.<br />
+    <img src ="../../../../doc/developer/builderPackage/ussr_builder_constructionTools1.jpg" title= "Design class diagram with focus on construction tools)">
+    
+    
+    
+    
+    
+    
+    
+     </li>   
  <li>Create new class and inherit it from <code>CommonOperationsTemplate.java.</code></li>
  <li> Implement inherited abstract methods,like:
     <code>addDefaultModule(String type, VectorDescription modulePosition,	RotationDescription moduleRotation, List<Color> colorsComponents, ArrayList<Color> colorsConectors),
