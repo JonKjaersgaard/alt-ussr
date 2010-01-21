@@ -11,6 +11,8 @@ import ussr.aGui.MainFrames;
 
 import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.designHelpers.ComboBoxRenderer;
+import ussr.aGui.designHelpers.hintPanel.HintPanel;
+import ussr.aGui.designHelpers.hintPanel.HintPanelInter;
 import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.JOptionPaneMessages;
 
@@ -18,8 +20,6 @@ import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.enumerations.tabs.IconsNumbersConnectors;
 
-import ussr.aGui.helpers.hintPanel.HintPanel;
-import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;

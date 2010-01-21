@@ -2,6 +2,7 @@ package ussr.aGui.tabs.simulation;
 
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
@@ -18,11 +19,12 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
+import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFrames;
+import ussr.aGui.designHelpers.hintPanel.HintPanel;
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
-import ussr.aGui.helpers.hintPanel.HintPanel;
 
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
@@ -61,7 +63,7 @@ public class SimulationTab extends Tabs {
 
 		/*instantiate new panel, which will be the container for all components situated in the tab*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
-		//super.jComponent.setPreferredSize(new Dimension(MainFrames.getMainFrameViableWidth(),300));
+
 		initComponents();
 	}
 
@@ -122,11 +124,11 @@ public class SimulationTab extends Tabs {
 
 		jSplitPaneSimulationTreeAndEditor.setLeftComponent(jScrollPaneTreeSimulation);
 		jSplitPaneSimulationTreeAndEditor.setRightComponent(jPanelEditor);
+	
 		jSplitPaneSimulationTreeAndEditor.setPreferredSize(new Dimension(300,300));
 
-
 		jSplitPaneSimulationTreeAndEditor.setDividerSize(5);
-		jSplitPaneSimulationTreeAndEditor.setDividerLocation(280);
+		jSplitPaneSimulationTreeAndEditor.setDividerLocation(0.5);
 		jSplitPaneSimulationTreeAndEditor.setVisible(false);
 		gridBagConstraints.fill = GridBagConstraints.BOTH;
 		gridBagConstraints.gridx = 0;
@@ -292,6 +294,7 @@ public class SimulationTab extends Tabs {
 	public static void setTabEnabled(boolean enabled){
 		jSplitPaneSimulationTreeAndEditor.setEnabled(enabled);
 		hintPanel.setEnabled(enabled);
+		
 
 	};
 
@@ -312,10 +315,11 @@ public class SimulationTab extends Tabs {
 		int simulationTabIndex = 0;
 		int heightIcon = MainFrames.getJTabbedPaneFirst().getIconAt(simulationTabIndex).getIconHeight();
 		int height = MainFrames.getJTabbedPaneFirst().getHeight()-(3*heightIcon)- HINT_PANEL_HEIGHT ;
-		//int width = (int)MainFrames.getJTabbedPaneFirst().getWidth()/2;
-
-		jSplitPaneSimulationTreeAndEditor.setPreferredSize(new Dimension(600,height));		
+		int width = (int)MainFrames.getJTabbedPaneFirst().getWidth()-4*GuiFrames.VERTICAL_GAPS;
+		jSplitPaneSimulationTreeAndEditor.setPreferredSize(new Dimension(width,height));		
 		jSplitPaneSimulationTreeAndEditor.validate();	
+		
+
 	}
 
 	/**

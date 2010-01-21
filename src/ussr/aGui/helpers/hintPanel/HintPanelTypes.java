@@ -3,6 +3,7 @@ package ussr.aGui.helpers.hintPanel;
 import javax.swing.ImageIcon;
 
 import ussr.aGui.MainFramesInter;
+import ussr.aGui.designHelpers.hintPanel.HintPanelInter;
 
 /**
  * Contains different types of hint panel. The type corresponds to the icon displayed.  

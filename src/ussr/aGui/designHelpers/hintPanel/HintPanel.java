@@ -1,9 +1,11 @@
-package ussr.aGui.helpers.hintPanel;
+package ussr.aGui.designHelpers.hintPanel;
 
 import java.awt.Dimension;
 
 import javax.swing.GroupLayout;
 import javax.swing.JPanel;
+
+import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 
 /**
  * Is responsible for display of hints to the user about what is going on in simulation environment and
