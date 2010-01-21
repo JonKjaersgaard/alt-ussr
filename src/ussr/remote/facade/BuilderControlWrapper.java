@@ -7,7 +7,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jme.math.Vector3f;
+
 
 import ussr.builder.constructionTools.ATRONOperationsTemplate;
 import ussr.builder.constructionTools.CKBotOperationsTemplate;
@@ -21,7 +21,6 @@ import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.enumerations.tools.ConstructionTools;
 import ussr.builder.enumerations.tools.LabeledEntities;
 import ussr.builder.enumerations.tools.LabelingTools;
-import ussr.builder.genericTools.ColorModuleConnectors;
 import ussr.builder.genericTools.RemoveModule;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.labelingTools.LabelingToolSpecification;
@@ -176,7 +175,6 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 
 			for (int i=0; i<amountModules; i++){
 				Module currentModule = jmeSimulation.getModules().get(i);
-				//currentModule.reset();
 				String moduleName = currentModule.getProperty(BuilderHelper.getModuleNameKey());
 				String moduleType = currentModule.getProperty(BuilderHelper.getModuleTypeKey());
 
@@ -291,13 +289,6 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 	 */
 	public void setMoveModulePicker()throws RemoteException{
 		jmeSimulation.setPicker(new PhysicsPicker(true,true));
-	}
-
-	/**
-	 * Sets picker for coloring module connectors with color coding, selected in simulation environment.
-	 */
-	public void setColorModuleConnectorsPicker()throws RemoteException{
-		jmeSimulation.setPicker(new ColorModuleConnectors());
 	}
 	
 	/**

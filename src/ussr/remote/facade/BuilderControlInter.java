@@ -37,12 +37,7 @@ public interface BuilderControlInter extends Remote {
 	 * Sets picker for moving module(left side of the mouse selection), selected in simulation environment(in paused state).
 	 */
 	public void setMoveModulePicker()throws RemoteException;
-	
-	/**
-	 * Sets picker for coloring module connectors with color coding, selected in simulation environment.
-	 */
-	public void setColorModuleConnectorsPicker()throws RemoteException;
-	
+		
 	/**
 	 * Sets a number of pickers called by specific name. For example: ConstructionTools.AVAILABLE_ROTATIONS,
 		ConstructionTools.MODULE_OPPOSITE_ROTATION, ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR and so on.

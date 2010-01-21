@@ -187,10 +187,6 @@ public class GUIRemoteSimulationAdapter {
                 }
             }
         }.start();
-    }
-    
-   
-    
-    
+    }    
 }
 
