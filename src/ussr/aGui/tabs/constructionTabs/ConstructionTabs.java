@@ -15,6 +15,7 @@ import ussr.aGui.designHelpers.ComboBoxRenderer;
 import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.JOptionPaneMessages;
 
+import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.enumerations.tabs.IconsNumbersConnectors;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
@@ -159,6 +160,11 @@ public abstract class ConstructionTabs extends Tabs{
 				ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ERROR);
 				ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_AMOUNT_ROBOTS.getHintText());
 				ConstructRobotTab.setTabEnabled(false);
+				
+				AssignLabelsTab.getHintPanel().setType(HintPanelTypes.ERROR);
+				AssignLabelsTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_AMOUNT_ROBOTS.getHintText());
+				AssignLabelsTab.setTabEnabled(false);
+				
 
 				Object returnedValue = JOptionPaneMessages.ROBOT_CONSTRUCTION_TABS_LIMITATION.displayMessage();
 				JCheckBox rememberCheckBox = (JCheckBox)JOptionPaneMessages.ROBOT_CONSTRUCTION_TABS_LIMITATION.getMessage()[1];
@@ -170,13 +176,21 @@ public abstract class ConstructionTabs extends Tabs{
 			switch(value){
 			case 0:// Start new robot
 				ConstructRobotTab.setTabEnabled(true);
-				ConstructRobotTab.getJButtonStartNewRobot().doClick();				
+				ConstructRobotTab.getJButtonStartNewRobot().doClick();	
+				ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
+				ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.START_NEW_ROBOT.getHintText());
+				AssignLabelsTab.setTabEnabled(true);
+				AssignLabelsTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
+				AssignLabelsTab.getHintPanel().setText(HintsAssignLabelsTab.DEFAULT.getHintText());
 				break;
 			case 1: // Continue anyway
 				ConstructRobotTab.setTabEnabled(true);
 				ConstructRobotTab.setVisibleFirstModuleOperations(false);
 				ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
 				ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.DEFAULT.getHintText());
+				AssignLabelsTab.setTabEnabled(true);
+				AssignLabelsTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
+				AssignLabelsTab.getHintPanel().setText(HintsAssignLabelsTab.DEFAULT.getHintText());
 				break;
 			case 2: // Cancel
 			case -1: //Exit				

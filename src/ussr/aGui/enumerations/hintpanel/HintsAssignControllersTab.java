@@ -6,7 +6,7 @@ package ussr.aGui.enumerations.hintpanel;
  * @author Konstantinas
  *
  */
-public enum HintsAssignControllersTab implements HintsTabsInter  {
+public enum HintsAssignControllersTab  implements HintsTabsInter  {
 
 	DEFAULT("Follow hints displayed here to explore all available functionality. When done assigning controllers save simulation in XML file and run it (green arrow in the lop-left corner of main window)"),
 	;

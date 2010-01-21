@@ -9,8 +9,10 @@ import javax.swing.JToggleButton;
 
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.enumerations.tools.ConstructionTools;
+import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
+import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 
 
@@ -322,8 +324,6 @@ public class ConstructRobotTabController extends TabsControllers{
 		}	
 		adaptTabToChosenMR(supportedModularRobot,true);
 		ConstructRobotTab.setRadioButtonsEnabled(false);
-		//constructionToolSelected();HERE
-
 	}
 
 	
@@ -372,6 +372,12 @@ public class ConstructRobotTabController extends TabsControllers{
 				throw new Error("Failed to initate picker called " + ConstructionTools.NEW_MODULE_ON_SELECTED_CONNECTOR + " , due to remote exception");
 			}
 		}
+		
+		/*Informing user*/
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.DEFAULT.getHintText());
+	    AssignLabelsTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
+	    AssignLabelsTab.getHintPanel().setText(HintsAssignLabelsTab.DEFAULT.getHintText());
 
 	}	
 
@@ -459,7 +465,4 @@ public class ConstructRobotTabController extends TabsControllers{
 	public static void setSelectedModuleID(int selectedModuleID){
 		ConstructRobotTabController.selectedModuleID = selectedModuleID;
 	}
-	
-	
-	
 }

@@ -12,12 +12,14 @@ import ussr.aGui.MainFrames;
 import ussr.aGui.MainFramesInter;
 import ussr.aGui.enumerations.JOptionPaneMessages;
 import ussr.aGui.enumerations.MainFrameIcons;
+import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.fileChoosing.FileChoosingInter;
 import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedInter;
 import ussr.aGui.fileChoosing.fileDialog.FileDialogTypes;
 import ussr.aGui.fileChoosing.jFileChooser.FileFilterSpecifications;
 import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
 import ussr.aGui.fileChoosing.jFileChooser.controller.JFileChooserXMLController;
+import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
@@ -188,11 +190,16 @@ public class MainFrameSeparateController extends GeneralController {
 		MainFrames.getJMenuItemSave().setEnabled(false);
 		MainFrames.getJButtonSave().setEnabled(false);
 		
-		//SimulationTab.setTabEnabled(false);
-		
 		ConstructRobotTab.setTabEnabled(false);
+		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ATTENTION);
+		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_RUNNING_SIMULATION.getHintText());
+		
+		AssignLabelsTab.setTabEnabled(false);
+		AssignLabelsTab.getHintPanel().setType(HintPanelTypes.ATTENTION);
+		AssignLabelsTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_RUNNING_SIMULATION.getHintText());
+		
 		AssignControllerTab.setTabEnabled(false);
-		//MainFrameSeparate.getJToggleButtonVisualizer().setEnabled(true);
+		
 		ModuleCommunicationVisualizerController.setIdsModules();
 	}
 

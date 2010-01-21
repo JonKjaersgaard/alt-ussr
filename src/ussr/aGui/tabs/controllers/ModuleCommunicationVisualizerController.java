@@ -7,8 +7,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
-import ussr.aGui.MainFramesInter;
-import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.visualizer.CanvasMouseListener;
 import ussr.aGui.tabs.visualizer.DrawingCanvas;
 import ussr.aGui.tabs.visualizer.ModuleCommunicationVisualizer;

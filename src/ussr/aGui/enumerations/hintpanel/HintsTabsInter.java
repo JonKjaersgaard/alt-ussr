@@ -7,7 +7,6 @@ package ussr.aGui.enumerations.hintpanel;
  */
 public interface HintsTabsInter {
 
-	
 	/**
 	 * Returns the text of hint.
 	 * @return the text of hint.

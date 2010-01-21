@@ -4,7 +4,9 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
@@ -28,6 +30,11 @@ import ussr.aGui.tabs.controllers.AssignLabelsTabController;
  */
 public class AssignLabelsTab extends ConstructionTabs{
 
+	/**
+	 * The container for radio buttons of supported entities for labeling.
+	 */
+	private static ArrayList<AbstractButton> jRadioButtonEntities =  new ArrayList<AbstractButton>() ;	
+	
 	/**
 	 * The constants of grid bag layout used during design of the tab.
 	 * This layout is used often during design of GUI, because of its flexibility to positioning components of GUI. 
@@ -149,11 +156,11 @@ public class AssignLabelsTab extends ConstructionTabs{
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				AssignLabelsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonModule);
 			}
-		});			
+		});	
+		jRadioButtonEntities.add(radioButtonModule);
 
 		jToolBarEntitiesForLabeling.add(radioButtonModule);
 		buttonGroupEntities.add(radioButtonModule);
-		//jRadioButtonsLabelledEntities.add(radioButtonModule);
 		
 		radionButtonConnector.setText(EntitiesForLabelingText.Connector.toString());
 		radionButtonConnector.setSelected(false);
@@ -162,10 +169,11 @@ public class AssignLabelsTab extends ConstructionTabs{
 				AssignLabelsTabController.radioButtonGroupEntitiesActionPerformed(radionButtonConnector);
 			}
 		});
+		jRadioButtonEntities.add(radionButtonConnector);
 
 		jToolBarEntitiesForLabeling.add(radionButtonConnector);
 		buttonGroupEntities.add(radionButtonConnector);
-		//jRadioButtonsLabelledEntities.add(radionButtonConnector);
+		
 
 		radioButtonSensors.setText(EntitiesForLabelingText.Sensors.toString());
 		radioButtonSensors.setSelected(false);
@@ -174,10 +182,9 @@ public class AssignLabelsTab extends ConstructionTabs{
 				AssignLabelsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonSensors);
 			}
 		});
-
+		jRadioButtonEntities.add(radioButtonSensors);
 		jToolBarEntitiesForLabeling.add(radioButtonSensors);
 		buttonGroupEntities.add(radioButtonSensors);
-		//jRadioButtonsLabelledEntities.add(radioButtonSensors);
 
 		jPanelEntitiesToLabel.add(jToolBarEntitiesForLabeling,gridBagConstraintsEntitiesToLabel);
 
@@ -201,9 +208,10 @@ public class AssignLabelsTab extends ConstructionTabs{
 				AssignLabelsTabController.radioButtonGroupEntitiesActionPerformed(radioButtonProximitySensor);
 			}
 		});
+		jRadioButtonEntities.add(radioButtonProximitySensor);		
 		jToolBarTypesSensors.add(radioButtonProximitySensor);
 		buttonGroupEntities.add(radioButtonProximitySensor);
-		//jRadioButtonsLabelledEntities.add(radioButtonProximitySensor);
+		
 
 		jPanelEntitiesToLabel.add(jToolBarTypesSensors,gridBagConstraintsEntitiesToLabel);
 
@@ -345,8 +353,37 @@ public class AssignLabelsTab extends ConstructionTabs{
 		jButtonAssignLabels.setEnabled(enabled);
 	}
 	
+	/**
+	 * Sets whenever the radio buttons for labeled entities should be enabled or not.
+	 * @param enabled, the radio buttons for labeled entities should be enabled or not.
+	 */
+	public static void setEnabledRadioButtons(boolean enabled){
+		for (AbstractButton radioButton: jRadioButtonEntities ){
+			radioButton.setEnabled(enabled);
+		}
+	}
+	
+	
+	/**
+	 * Sets whenever the table for manipulating labels should be visible or not.
+	 * @param visible, the table for manipulating labels should be visible or not.
+	 */
+	public static void setJTableLabelsVisible(boolean visible){
+		jScrollPaneTableCurrentLabels.setVisible(visible);
+		MainFrames.getJTabbedPaneFirst().revalidate();
+		MainFrames.getJTabbedPaneFirst().repaint();
+	}
+	
+	/**
+	 * Sets whenever the tab should be visible or not.
+	 * @param enabled, whenever the tab should be visible or not.
+	 */
 	public static void setTabEnabled(boolean enabled){
-		
+		setEnabledControlButtons(enabled);
+		setEnabledRadioButtons(enabled);
+		jButtonSave.setEnabled(enabled);
+		jButtonOpen.setEnabled(enabled);
+		setJTableLabelsVisible(enabled);
 	}
 	
 	/**
@@ -374,7 +411,7 @@ public class AssignLabelsTab extends ConstructionTabs{
 	
 	private static javax.swing.JTable jTableLabels;
 	
-	private javax.swing.JScrollPane jScrollPaneTableCurrentLabels;
+	private static javax.swing.JScrollPane jScrollPaneTableCurrentLabels;
 	
 	private static javax.swing.JPanel jPanelLabeling;
 	

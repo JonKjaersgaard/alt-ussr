@@ -117,7 +117,21 @@ public class ConstructRobotTab extends ConstructionTabs {
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;// position on the first line start
 		gridBagConstraints.gridx = 0;// x goes from left to the right of the screen
 		gridBagConstraints.gridy = 0;// y goes from top to the bottom of the screen
-		gridBagConstraints.gridwidth = 3;		
+		gridBagConstraints.gridwidth = 3;
+		
+		jButtonStartNewRobot.setIcon(TabsIcons.NEW_ROBOT.getImageIcon());
+		jButtonStartNewRobot.setSelectedIcon(TabsIcons.NEW_ROBOT.getImageIcon());
+		jButtonStartNewRobot.setRolloverIcon(TabsIcons.NEW_ROBOT_ROLLOVER.getImageIcon());
+		jButtonStartNewRobot.setDisabledIcon(TabsIcons.NEW_ROBOT_DISABLED.getImageIcon());
+		jButtonStartNewRobot.setToolTipText(TabsComponentsText.START_CONSTRUCTING_NEW_ROBOT.getUserFriendlyName());
+		jButtonStartNewRobot.setFocusable(false);
+		jButtonStartNewRobot.setPreferredSize(FramesInter.BUTTON_DIMENSION);
+		jButtonStartNewRobot.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructRobotTabController.jButtonStartNewRobotActionPerformed();            	
+			}
+		});
+		jToolBarGeneralControl.add(jButtonStartNewRobot);		
 		
 		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,21 +148,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 			}
 		});		
 		jToolBarGeneralControl.add(jButtonSave);		
-		
-		jButtonStartNewRobot.setIcon(TabsIcons.NEW_ROBOT.getImageIcon());
-		jButtonStartNewRobot.setSelectedIcon(TabsIcons.NEW_ROBOT.getImageIcon());
-		jButtonStartNewRobot.setRolloverIcon(TabsIcons.NEW_ROBOT_ROLLOVER.getImageIcon());
-		jButtonStartNewRobot.setDisabledIcon(TabsIcons.NEW_ROBOT_DISABLED.getImageIcon());
-		jButtonStartNewRobot.setToolTipText(TabsComponentsText.START_CONSTRUCTING_NEW_ROBOT.getUserFriendlyName());
-		jButtonStartNewRobot.setFocusable(false);
-		jButtonStartNewRobot.setPreferredSize(FramesInter.BUTTON_DIMENSION);
-		jButtonStartNewRobot.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructRobotTabController.jButtonStartNewRobotActionPerformed();            	
-			}
-		});
-		jToolBarGeneralControl.add(jButtonStartNewRobot);
-		
+			
 		jSeparator3.setPreferredSize(new Dimension(6,30));
 		jToolBarGeneralControl.add(jSeparator3);
 			

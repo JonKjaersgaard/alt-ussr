@@ -665,8 +665,6 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 			       
 				if (selectedTabTitle.equalsIgnoreCase(MainFramesInter.CONSTRUCT_ROBOT_TAB.getTabTitle())||selectedTabTitle.equalsIgnoreCase(MainFramesInter.ASSIGN_LABELS_TAB.getTabTitle())){
 					ConstructionTabs.adaptToNrRobots(rememberedChoice);
-					ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
-					ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.DEFAULT.getHintText());
 				}
 				 }
 			}
@@ -675,6 +673,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		getContentPane().add(jTabbedPaneFirst);	
 		return jTabbedPaneFirst;
 	}
+
 
 
 	/**
