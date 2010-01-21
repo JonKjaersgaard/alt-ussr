@@ -362,13 +362,13 @@ public class JMESimulation extends JMEBasicGraphicalSimulation implements Physic
                     
                
             	   
-                    if(!options.getHeadlessNoWindow()) KeyInput.get().update();
+                    if(!options.getHeadlessNoGraphics()) KeyInput.get().update();
             	   //if(mainLoopCounter%5==0 ||singleStep) { // 1 call to = 16ms (same example setup)
                     float fps = 25;
                     float loopsPerSecond = 1.0f/getPhysicsSimulationStepSize();
                     int loopsPerUpdate = (int)(loopsPerSecond/fps);
                     if(mainLoopCounter%loopsPerUpdate==0 ||singleStep) { // 1 call to = 16ms (same example setup)
-                    	if(!options.getHeadlessNoWindow()) MouseInput.get().update(); //InputSystem.update();	            		   
+                    	if(!options.getHeadlessNoGraphics()) MouseInput.get().update(); //InputSystem.update();	            		   
                 		update(-1.0f);
                 		render(-1.0f);
                 		if(grapFrames) {

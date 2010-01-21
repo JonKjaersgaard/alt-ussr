@@ -441,6 +441,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 * @see com.jme.app.AbstractGame#render(float interpolation)
 	 */
 	protected final void render(float interpolation) {
+		if(PhysicsFactory.getOptions().getHeadlessNoGraphics()) return;
 		Renderer r = display.getRenderer();
 		/** Reset display's tracking information for number of triangles/vertexes */
 		//TODO important? JME2 upgrade r.clearStatistics();
@@ -568,7 +569,7 @@ public abstract class JMEBasicGraphicalSimulation extends AbstractGame {
 	 */
 	@Override
 	protected final void update(float interpolation) {
-		if(options.getHeadlessNoWindow()) return;
+		if(options.getHeadlessNoGraphics()) return;
 		// disable input as we want it to be updated _after_ physics
 		// in your application derived from BaseGame you can simply make the call to InputHandler.update later
 		// in your game loop instead of this disabling and reenabling
