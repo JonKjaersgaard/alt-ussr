@@ -85,15 +85,8 @@ public class MainFrameSeparate extends MainFrames {
 		/*initialize the main containers of the frame*/
 		initJMenuBar(CONTAINER_WIDTH_HALF,MENU_BAR_HEIGHT);		
 		initJToolbarGeneralControl(CONTAINER_WIDTH_HALF,HORIZONTAL_TOOLBAR_HEIGHT);
-		//initSplitPane(CONTAINER_WIDTH_HALF,TABBED_PANE1_HEIGHT,CONTAINER_WIDTH_HALF, TABBED_PANE2_HEIGHT);
 		initFirstTabbedPane(CONTAINER_WIDTH_HALF,TABBED_PANE1_HEIGHT);
 		initSecondTabbedPane(CONTAINER_WIDTH_HALF, TABBED_PANE2_HEIGHT);
-		//TODO DECIDE IF IT IS NEEDED
-		//initializeTabbedPanesResizing();	
-		//gettCursor();
-		
-		
-		
 		
 		/*Add components into container, which affect the width of main window when it is maximized and restored down to its initial size. */
 		//JMenuBar is an exception here.

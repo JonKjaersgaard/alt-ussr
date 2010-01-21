@@ -3,6 +3,7 @@ package ussr.aGui.enumerations;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 
+import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFrames;
 
 /**
@@ -45,11 +46,6 @@ public enum JOptionPaneMessages {
 	private int optionType,messageType;
 
 	/**
-	 *  JOptionPane created from parameters passed above.
-	 */
-	private JOptionPane jOptionPaneMessage;
-
-	/**
 	 * Contains JOptionPanes used to inform the user about wrong/inconsistent XML file loading.
 	 * @param title, the title displayed in JOptionPane.
 	 * @param messageText, the message text displayed in JOptionPane.
@@ -60,9 +56,6 @@ public enum JOptionPaneMessages {
 		this.title = title;
 		this.message= message;
 		this.optionType = optionType;
-		
-		this.jOptionPaneMessage = new JOptionPane();
-		MainFrames.changeToLookAndFeel(this.jOptionPaneMessage);
 	}
 	
 	private Object[] options;
@@ -82,9 +75,6 @@ public enum JOptionPaneMessages {
 		this.messageType = messageType;
 		this.options = options;
 		this.selectedOptionIndex = selectedOptionIndex;
-		
-		this.jOptionPaneMessage = new JOptionPane();
-		MainFrames.changeToLookAndFeel(this.jOptionPaneMessage);
 	}
 	
 	public Object[] getMessage() {
@@ -95,9 +85,12 @@ public enum JOptionPaneMessages {
 	 * Displays chosen JOptionPane.
 	 */
 	public Object displayMessage(){
+		
+		GuiFrames.changeToLookAndFeel(new JOptionPane());
 		Object returnValue = null;
 		switch(this.jOptionPaneType){
-		case MESSAGE:
+		
+		case MESSAGE:			
 			JOptionPane.showMessageDialog(MainFrames.getMainFrame(),this.message,this.title,this.optionType);
 			returnValue = null;
 			break;

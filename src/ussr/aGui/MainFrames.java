@@ -828,6 +828,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	public static void setMainFrame(MainFrames mainFrame) {
 		MainFrames.mainFrame = mainFrame;
 	}
+	
 
 	/*Declaration of MainFrame components*/
 	private static javax.swing.JMenuBar jMenuBarMain;
