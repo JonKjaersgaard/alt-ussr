@@ -40,7 +40,7 @@ public enum HintsConstructRobotTab implements HintsTabsInter{
     JUMP_FROM_CON_TO_CON("Select module(two times) to move newly added module from initial connector to desired with each selection. When desired position is reached, select grey module to restore original colors and keep it. Newly added module can be moved on any module in the morphology of modular robot.It is possible to change new module type by choosing desired one in the combo box beneath. "),
     
    
-    TAB_NOT_AVAILABLE_DUE_TO_RUNNING_SIMULATION("This tab us not available after simulation was started!"),
+    TAB_NOT_AVAILABLE_DUE_TO_RUNNING_SIMULATION("This tab is not available after simulation was started!"),
     
 	TAB_NOT_AVAILABLE_DUE_TO_AMOUNT_ROBOTS("This tab is not available, because robot construction is limited to a single robot at a time. The main reason for this is that all modules in simulation enviroment are saved as a single robot xml file."),
 	

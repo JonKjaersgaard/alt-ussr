@@ -7,7 +7,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
-import ussr.aGui.FramesInter;
 import ussr.aGui.MainFrames;
 
 import ussr.aGui.controllers.MainFrameSeparateController;
@@ -18,13 +17,11 @@ import ussr.aGui.enumerations.JOptionPaneMessages;
 import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.enumerations.tabs.IconsNumbersConnectors;
-import ussr.aGui.enumerations.tabs.TabsComponentsText;
-import ussr.aGui.enumerations.tabs.TabsIcons;
+
 import ussr.aGui.helpers.hintPanel.HintPanel;
 import ussr.aGui.helpers.hintPanel.HintPanelInter;
 import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.Tabs;
-import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.builder.enumerations.SupportedModularRobots;
 
@@ -121,7 +118,7 @@ public abstract class ConstructionTabs extends Tabs{
 	}
 
 
-	public static javax.swing.JToggleButton initColorModuleConnectorsButton(){
+	/*public static javax.swing.JToggleButton initColorModuleConnectorsButton(){
 
 		final javax.swing.JToggleButton  jToggleButtonColorConnetors = new javax.swing.JToggleButton(); 
 		jToggleButtonColorConnetors.setToolTipText(TabsComponentsText.COLOR_MODULE_CONNECTORS.getUserFriendlyName());
@@ -135,7 +132,7 @@ public abstract class ConstructionTabs extends Tabs{
 		jToggleButtonColorConnetors.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ConstructRobotTabController.jButtonColorConnectorsActionPerformed(jToggleButtonColorConnetors);
-				/*Informing user*/
+				Informing user
 				//FIXME//ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.COLOR_CONNECTORS.getHintText());
 			}
 		});
@@ -145,7 +142,7 @@ public abstract class ConstructionTabs extends Tabs{
 		return jToggleButtonColorConnetors;
 
 
-	}
+	}*/
 
 
 	public static void adaptToNrRobots(int rememberedChoice){

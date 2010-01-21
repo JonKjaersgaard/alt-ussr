@@ -8,7 +8,9 @@ package ussr.aGui.enumerations.hintpanel;
  */
 public enum HintsAssignControllersTab  implements HintsTabsInter  {
 
-	DEFAULT("Follow hints displayed here to explore all available functionality. When done assigning controllers save simulation in XML file and run it (green arrow in the lop-left corner of main window)"),
+	DEFAULT("This tab allows to experiment with interactive assignment of primitive controllers for each supported modular robot. Begin with choosing one of supported modular robots."),
+	
+	TAB_AVAILABLE_DURING_RUNNING_SIMULATION("This tab will be available during running simulation!"),
 	;
 	
 	

@@ -4,7 +4,6 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
-import ussr.aGui.GuiFrames;
 import ussr.builder.controllerAdjustmentTool.ATRONDisconnectAllConnectors;
 import ussr.builder.controllerAdjustmentTool.ATRONStopRotating;
 import ussr.builder.controllerAdjustmentTool.CKBOT_STANDARDControllerNOT_SUPPORTED_YET;

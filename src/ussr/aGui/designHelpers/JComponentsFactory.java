@@ -4,6 +4,8 @@ package ussr.aGui.designHelpers;
 import ussr.aGui.FramesInter;
 import ussr.aGui.enumerations.MainFrameComponentsText;
 import ussr.aGui.enumerations.MainFrameIcons;
+import ussr.aGui.enumerations.tabs.TabsComponentsText;
+import ussr.aGui.enumerations.tabs.TabsIcons;
 
 /**
  * Contains methods for initialization of JComponents frequently used in the design of GUI.
@@ -56,5 +58,20 @@ public class JComponentsFactory {
 		jButtonOpen.setFocusable(false);		
 		jButtonOpen.setPreferredSize(FramesInter.BUTTON_DIMENSION);	
 		return jButtonOpen;
-	}	
+	}
+	
+	public static javax.swing.JToggleButton  initColorConnectorsOfModulesButton(){
+
+		 javax.swing.JToggleButton  jToggleButtonColorConnetors = new javax.swing.JToggleButton(); 
+		jToggleButtonColorConnetors.setToolTipText(TabsComponentsText.COLOR_MODULE_CONNECTORS.getUserFriendlyName());
+		jToggleButtonColorConnetors.setIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
+		jToggleButtonColorConnetors.setSelectedIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
+		jToggleButtonColorConnetors.setRolloverIcon(TabsIcons.COLOR_CONNECTORS_ROLLOVER.getImageIcon());
+		jToggleButtonColorConnetors.setDisabledIcon(TabsIcons.COLOR_CONNECTORS_DISABLED.getImageIcon());		
+		jToggleButtonColorConnetors.setFocusable(false);
+		jToggleButtonColorConnetors.setEnabled(true);
+		jToggleButtonColorConnetors.setPreferredSize(FramesInter.BUTTON_DIMENSION);
+		
+		return jToggleButtonColorConnetors;
+	}
 }

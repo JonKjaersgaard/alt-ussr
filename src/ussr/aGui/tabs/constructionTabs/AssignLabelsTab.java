@@ -18,10 +18,12 @@ import ussr.aGui.MainFrames;
 import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
+import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.enumerations.tabs.EntitiesForLabelingText;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.helpers.hintPanel.HintPanel;
+import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.controllers.AssignLabelsTabController;
 
 /**
@@ -66,9 +68,7 @@ public class AssignLabelsTab extends ConstructionTabs{
 	 * Follows Strategy  pattern.
 	 */
 	public void initComponents() {
-		
-		
-		
+	
 		jToolBarGeneralControl = new javax.swing.JToolBar();
 		
 		jPanelEntitiesToLabel =  new javax.swing.JPanel(new GridBagLayout());
@@ -384,6 +384,10 @@ public class AssignLabelsTab extends ConstructionTabs{
 		jButtonSave.setEnabled(enabled);
 		jButtonOpen.setEnabled(enabled);
 		setJTableLabelsVisible(enabled);
+		if (MainFrameSeparateController.isSimulationRunning()){
+			hintPanel.setType(HintPanelTypes.ATTENTION);
+			hintPanel.setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_RUNNING_SIMULATION.getHintText());
+		}
 	}
 	
 	/**

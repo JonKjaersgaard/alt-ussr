@@ -86,9 +86,7 @@ public class ConstructRobotTab extends ConstructionTabs {
 		jButtonConnectAllModules = new javax.swing.JButton();
 		jButtonJumpFromConnToConnector = new javax.swing.JButton();
 		jButtonVariateModuleProperties = new javax.swing.JButton();
-		jButtonAvailableRotationsLoop = new javax.swing.JButton();
-		
-		jToggleButtonColorConnetors =   initColorModuleConnectorsButton();
+		jButtonAvailableRotationsLoop = new javax.swing.JButton();	
 
 		buttonGroupModularRobots = new ButtonGroup();
 		radioButtonATRON =  new JRadioButton();
@@ -151,6 +149,15 @@ public class ConstructRobotTab extends ConstructionTabs {
 			
 		jSeparator3.setPreferredSize(new Dimension(6,30));
 		jToolBarGeneralControl.add(jSeparator3);
+		
+		
+		jToggleButtonColorConnetors =   JComponentsFactory.initColorConnectorsOfModulesButton();
+		jToggleButtonColorConnetors.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructRobotTabController.jButtonColorConnectorsActionPerformed(jToggleButtonColorConnetors);
+			}
+		});
+
 			
 		jToolBarGeneralControl.add(jToggleButtonColorConnetors);
 		
@@ -704,10 +711,10 @@ public class ConstructRobotTab extends ConstructionTabs {
 		setEnabledFirstModuleToolBar(enabled);
 		setEnabledGenericToolBar(enabled);		
 		setEnabledConstructionToolsToolBar(enabled);
-		setEnabledJToolBarChangeModuleType(enabled);
-		if (enabled){
-			getHintPanel().setType(HintPanelTypes.INFORMATION);
-			ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.START_NEW_ROBOT.getHintText());
+		setEnabledJToolBarChangeModuleType(enabled);		
+		if (MainFrameSeparateController.isSimulationRunning()){
+			hintPanel.setType(HintPanelTypes.ATTENTION);
+			hintPanel.setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_RUNNING_SIMULATION.getHintText());
 		}
 	}
 	

@@ -4,19 +4,26 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 
 import ussr.aGui.FramesInter;
+import ussr.aGui.controllers.MainFrameSeparateController;
+import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.enumerations.hintpanel.HintsAssignControllersTab;
+import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 
 import ussr.aGui.helpers.hintPanel.HintPanel;
+import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.controllers.AssignControllerTabController;
+import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.enumerations.SupportedModularRobots;
 
 /**
@@ -39,7 +46,15 @@ public class AssignControllerTab extends ConstructionTabs{
 	private final int jToolBar1Width = 125;
 	
 	
+	/**
+	 * Initial state of selection for button Edit values.
+	 */
 	private static  boolean jToggleButtonEditValuesIsSelected = false;
+	
+	/**
+	 * The container for radio buttons of supported modular robots for assigning controllers.
+	 */
+	private static ArrayList<AbstractButton> jRadioButtonSupportedMR =  new ArrayList<AbstractButton>() ;	
 
 	/**
 	 * The constrains of grid bag layout used during design of both tabs.
@@ -94,7 +109,7 @@ public class AssignControllerTab extends ConstructionTabs{
 
 		jButtonOpen = initOpenButton();
 		jButtonSave = initSaveButton();
-		jToggleButtonColorConnetors =  initColorModuleConnectorsButton();
+		
 
 		/*Description of components*/		
 
@@ -132,7 +147,16 @@ public class AssignControllerTab extends ConstructionTabs{
 		
 		jToolBarGeneralControl.add(jToggleButtonEditValues);
 		
-		jToolBarGeneralControl.add(jToggleButtonColorConnetors);
+		
+		/*jToggleButtonColorConnetors =  JComponentsFactory.initColorConnectorsOfModulesButton();
+		jToggleButtonColorConnetors.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ConstructRobotTabController.jButtonColorConnectorsActionPerformed(jToggleButtonColorConnetors);
+			}
+		});
+		
+		
+		jToolBarGeneralControl.add(jToggleButtonColorConnetors);*/
 		
 		super.jComponent.add(jToolBarGeneralControl,gridBagConstraints);
 
@@ -143,7 +167,6 @@ public class AssignControllerTab extends ConstructionTabs{
 		jToolBarFilterForModularRobot.setPreferredSize(new Dimension(jToolBar1Width,J_LIST_HEIGHT));
 		jToolBarFilterForModularRobot.setOrientation(JToolBar.VERTICAL);		
 
-		
 
 		radionButtonATRON.setText(SupportedModularRobots.ATRON.getUserFriendlyName());	
 		radionButtonATRON.setFocusable(true);// direct the user to what should be done first
@@ -152,7 +175,7 @@ public class AssignControllerTab extends ConstructionTabs{
 				AssignControllerTabController.jButtonGroupActionPerformed(radionButtonATRON);
 			}
 		});
-
+		jRadioButtonSupportedMR.add(radionButtonATRON);
 		jToolBarFilterForModularRobot.add(radionButtonATRON);
 		buttonGroup.add(radionButtonATRON);
 
@@ -162,7 +185,7 @@ public class AssignControllerTab extends ConstructionTabs{
 				AssignControllerTabController.jButtonGroupActionPerformed(radioButtonODIN);
 			}
 		});
-
+		jRadioButtonSupportedMR.add(radioButtonODIN);
 		jToolBarFilterForModularRobot.add(radioButtonODIN);
 		buttonGroup.add(radioButtonODIN);
 
@@ -172,7 +195,7 @@ public class AssignControllerTab extends ConstructionTabs{
 				AssignControllerTabController.jButtonGroupActionPerformed(radioButtonMTRAN);
 			}
 		});
-
+		jRadioButtonSupportedMR.add(radioButtonMTRAN);
 		jToolBarFilterForModularRobot.add(radioButtonMTRAN);
 		buttonGroup.add(radioButtonMTRAN);
 
@@ -182,7 +205,7 @@ public class AssignControllerTab extends ConstructionTabs{
 				AssignControllerTabController.jButtonGroupActionPerformed(radionButtonCKBOTSTANDARD);
 			}
 		});
-
+		jRadioButtonSupportedMR.add(radionButtonCKBOTSTANDARD);
 		jToolBarFilterForModularRobot.add(radionButtonCKBOTSTANDARD);
 		buttonGroup.add(radionButtonCKBOTSTANDARD);			
 
@@ -272,25 +295,49 @@ public class AssignControllerTab extends ConstructionTabs{
 		return hintPanel;
 	}
 	
+	/**
+	 * Sets the state of selection for button edit values.
+	 * @param toggleButtonEditValuesIsSelected the state of selection for button edit values.
+	 */
 	public static void setJToggleButtonEditValuesIsSelected(boolean toggleButtonEditValuesIsSelected) {
 		jToggleButtonEditValuesIsSelected = toggleButtonEditValuesIsSelected;
 	}
 	
+	/**
+	 * Returns the state of selection for button edit values.
+	 * @return the state of selection for button edit values.
+	 */
 	public static boolean isJToggleButtonEditValuesIsSelected() {
 		return jToggleButtonEditValuesIsSelected;
 	}
 
+	/**
+	 * Sets whenever the radio buttons for supported  modular robots should be enabled or not.
+	 * @param enabled, the radio buttons for supported  modular robots should be enabled or not.
+	 */
+	public static void setEnabledRadioButtons(boolean enabled){
+		for (AbstractButton radioButton: jRadioButtonSupportedMR ){
+			radioButton.setEnabled(enabled);
+		}
+	}
 
 	/**
 	 * Enables or disables the tab;
 	 * @param enabled, true if the tab is enabled.
 	 */
 	public static void setTabEnabled (boolean enabled){
-		//MORE HERE
-		/*	for (int button=0; button<jToolBarSaveLoad.getComponentCount();button++ ){
-			JButton jButton = (JButton)jToolBarSaveLoad.getComponent(button);
-			jButton.setEnabled(enabled);
-		}*/
+		setEnabledRadioButtons(enabled);
+		jToggleButtonEditValues.setEnabled(enabled);
+	
+		jListAvailableControllers.setEnabled(enabled);
+		jPanelEditValue.setEnabled(enabled);
+		if (MainFrameSeparateController.isSimulationRunning()==false){
+			hintPanel.setType(HintPanelTypes.ATTENTION);
+			hintPanel.setText(HintsAssignControllersTab.TAB_AVAILABLE_DURING_RUNNING_SIMULATION.getHintText());
+		}else{
+			hintPanel.setType(HintPanelTypes.INFORMATION);
+			hintPanel.setText(HintsAssignControllersTab.DEFAULT.getHintText());
+		}
 	}
 
 	/**

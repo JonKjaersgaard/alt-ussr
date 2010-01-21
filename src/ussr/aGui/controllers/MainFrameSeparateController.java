@@ -190,15 +190,16 @@ public class MainFrameSeparateController extends GeneralController {
 		MainFrames.getJMenuItemSave().setEnabled(false);
 		MainFrames.getJButtonSave().setEnabled(false);
 		
-		ConstructRobotTab.setTabEnabled(false);
+		
 		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.ATTENTION);
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_RUNNING_SIMULATION.getHintText());
+		ConstructRobotTab.setTabEnabled(false);
 		
-		AssignLabelsTab.setTabEnabled(false);
 		AssignLabelsTab.getHintPanel().setType(HintPanelTypes.ATTENTION);
 		AssignLabelsTab.getHintPanel().setText(HintsConstructRobotTab.TAB_NOT_AVAILABLE_DUE_TO_RUNNING_SIMULATION.getHintText());
+		AssignLabelsTab.setTabEnabled(false);
 		
-		AssignControllerTab.setTabEnabled(false);
+		AssignControllerTab.setTabEnabled(true);
 		
 		ModuleCommunicationVisualizerController.setIdsModules();
 	}
@@ -415,6 +416,17 @@ public class MainFrameSeparateController extends GeneralController {
 			GuiFrames.changeToLookAndFeel(constructRobotTab.getJComponent());
 			GuiFrames.changeToLookAndFeel(assignBehaviorsTab.getJComponent());
 			GuiFrames.changeToLookAndFeel(assignLabels.getJComponent());
+			
+			if (isSimulationRunning){
+				ConstructRobotTab.setTabEnabled(false);
+				AssignLabelsTab.setTabEnabled(false);
+				AssignControllerTab.setTabEnabled(true);
+			}else{
+				ConstructRobotTab.setTabEnabled(true);
+				AssignLabelsTab.setTabEnabled(true);
+				AssignControllerTab.setTabEnabled(false);
+			}
+			
 
 		}else{
 			/*Identify and remove tabs for construction of modular robot*/
