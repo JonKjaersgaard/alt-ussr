@@ -6,7 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrames;
 import ussr.aGui.controllers.GeneralController;
-import ussr.aGui.helpers.hintPanel.HintPanelTypes;
+import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.constructionTabs.AssignableControllersEditors;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.controllers.AssignControllerTabController;
