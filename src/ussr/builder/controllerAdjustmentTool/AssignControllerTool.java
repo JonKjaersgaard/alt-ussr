@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.rmi.RemoteException;
 import com.jme.scene.Geometry;
 
-import ussr.aGui.helpers.hintPanel.HintPanelTypes;
+import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.model.Module;
 import ussr.physics.jme.JMEModuleComponent;
