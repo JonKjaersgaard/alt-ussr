@@ -15,6 +15,8 @@ import ussr.aGui.enumerations.hintpanel.HintsAssignControllersTab;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.AssignableControllers;
 
+import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
+import ussr.builder.controllerAdjustmentTool.ControllerStrategy;
 import ussr.builder.enumerations.SupportedModularRobots;
 
 import ussr.builder.helpers.FileDirectoryHelper;
@@ -83,7 +85,7 @@ public class AssignControllerTabController extends TabsControllers {
 		/*Loop through the classes and take only controllers, but not the classes defining the tool*/
 		classesOfControllers = new Vector<String>();
 		for (int i=0; i<classes.length;i++){
-			if (classes[i].toString().contains("AssignControllerTool")||classes[i].toString().contains("ControllerStrategy")){
+			if (classes[i].toString().contains(AssignControllerTool.class.getName())||classes[i].toString().contains(ControllerStrategy.class.getName())){
 				//do nothing	
 			}else{
 				classesOfControllers.add(classes[i].toString().replace("class "+packageName+".", ""));
