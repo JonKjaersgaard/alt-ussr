@@ -86,9 +86,11 @@ public abstract class SimulationBatch2000 implements ReturnValueHandler {
             // Start a simulation in the remote process
             try {
                 simulation.start(mainClass, parameters, SimulationBatch2000.this);
+            } catch(java.rmi.ServerError error) {
+            	System.out.println("#"+run+" Simulation stopped with server error "+error);
             } catch (RemoteException e) {
                 // Normal or abnormal termination, inspection of remote exception currently needed to determine...
-                System.out.println("#"+run+" Simulation stopped");
+                System.out.println("#"+run+" Simulation stopped ["+e.getClass().getName()+"]");
             }
             System.out.println("#"+run+" Simulation completed");
             // Register in set of parameters

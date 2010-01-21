@@ -130,7 +130,7 @@ public class SimulationClient extends UnicastRemoteObject implements RemoteActiv
                 } catch (IllegalAccessException e) {
                     throw new Error("Cannot access main method");
                 } catch (InvocationTargetException e) {
-                    throw new Error("Cannot invoke main method");
+                    throw new Error("Main method generated an exception: "+e.getCause());
                 }
                 return;
             }
