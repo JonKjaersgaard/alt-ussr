@@ -1,6 +1,5 @@
 package ussr.builder.helpers;
 
-import ussr.aGui.enumerations.MainFrameComponentsText;
 
 public class StringProcessingHelper {
 
