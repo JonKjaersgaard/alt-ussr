@@ -14,13 +14,10 @@ import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.MainFrameComponentsText;
-import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.fileChoosing.FileChoosingInter;
 import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedInter;
 import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
-import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.TabsInter;
-import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.constructionTabs.ConstructionTabs;
 import ussr.remote.GUIRemoteSimulationAdapter;
 

@@ -13,6 +13,7 @@ import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.designHelpers.ComboBoxRenderer;
 import ussr.aGui.designHelpers.hintPanel.HintPanel;
 import ussr.aGui.designHelpers.hintPanel.HintPanelInter;
+import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.JOptionPaneMessages;
 
@@ -20,7 +21,6 @@ import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.enumerations.tabs.IconsNumbersConnectors;
 
-import ussr.aGui.helpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.builder.enumerations.SupportedModularRobots;
@@ -118,31 +118,7 @@ public abstract class ConstructionTabs extends Tabs{
 	}
 
 
-	/*public static javax.swing.JToggleButton initColorModuleConnectorsButton(){
 
-		final javax.swing.JToggleButton  jToggleButtonColorConnetors = new javax.swing.JToggleButton(); 
-		jToggleButtonColorConnetors.setToolTipText(TabsComponentsText.COLOR_MODULE_CONNECTORS.getUserFriendlyName());
-		jToggleButtonColorConnetors.setIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
-		jToggleButtonColorConnetors.setSelectedIcon(TabsIcons.COLOR_CONNECTORS.getImageIcon());
-		jToggleButtonColorConnetors.setRolloverIcon(TabsIcons.COLOR_CONNECTORS_ROLLOVER.getImageIcon());
-		jToggleButtonColorConnetors.setDisabledIcon(TabsIcons.COLOR_CONNECTORS_DISABLED.getImageIcon());		
-		jToggleButtonColorConnetors.setFocusable(false);
-		jToggleButtonColorConnetors.setEnabled(true);
-		jToggleButtonColorConnetors.setPreferredSize(FramesInter.BUTTON_DIMENSION);
-		jToggleButtonColorConnetors.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructRobotTabController.jButtonColorConnectorsActionPerformed(jToggleButtonColorConnetors);
-				Informing user
-				//FIXME//ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.COLOR_CONNECTORS.getHintText());
-			}
-		});
-
-
-
-		return jToggleButtonColorConnetors;
-
-
-	}*/
 
 
 	public static void adaptToNrRobots(int rememberedChoice){
