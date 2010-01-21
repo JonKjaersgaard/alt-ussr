@@ -57,7 +57,7 @@ public class AssignControllerTool extends CustomizedPicker implements Serializab
 		
 		String controllerName = temporaryControllerName[temporaryControllerName.length-1]; 
 		
-		//if (controllerName.contains(temporarySelectedModuleType[0])||controllerName.contains("ODIN")){
+		if (controllerName.contains(temporarySelectedModuleType[0])||controllerName.contains("ODIN")){
 			assignController();	
 			try {
 				RemotePhysicsSimulationImpl.getGUICallbackControl().updateHintPanelAssignBehaviorsTab(HintPanelTypes.ATTENTION, "Controller named as "+controllerName+ " was assigned to module with ID: "+ selectedModule.getID());
@@ -65,14 +65,13 @@ public class AssignControllerTool extends CustomizedPicker implements Serializab
 				throw new Error("Failed to give feedback to the user in Assign Behaviors Tab, due to remote exception.");
 			}
 			
-		//}else{
-		/*	try {
-				RemotePhysicsSimulationImpl.getGUICallbackControl().updateHintPanelAssignBehaviorsTab(HintPanelTypes.ERROR,"Chosen controller is not implemented for module type "+ selectedModuleType+".");
+		}else{
+			try {
+				RemotePhysicsSimulationImpl.getGUICallbackControl().updateHintPanelAssignBehaviorsTab(HintPanelTypes.ERROR,"Chosen controller is not implemented for module type:"+ selectedModuleType+".");
 			} catch (RemoteException e) {
 				throw new Error("Failed to give feedback to the user in Assign Behaviors Tab, due to remote exception.");
-			}*/
-			//FIXME in Odin case is a problem
-		//}
+			}
+		}
 	}
 	
 	/**
