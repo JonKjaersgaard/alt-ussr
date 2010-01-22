@@ -18,19 +18,18 @@ import ussr.aGui.tabs.visualizer.ModuleCommunicationVisualizer;
 public interface MainFramesInter {
 
 	/**
-	 * The directory, for keeping jpg icons used in the main frame design.
+	 * The directory, for keeping png icons used in the main frame design.
 	 */
-	public static final String DIRECTORY_ICONS = "resources/mainFrame/icons/jpg/";
+	public static final String DIRECTORY_ICONS = "resources\\mainFrame\\icons\\png\\";
 	
 	/**
 	 * The location of xml file describing default(new) simulation.
 	 */
-	public static final String LOCATION_DEFAULT_NEW_SIMULATION = "resources/mainFrame/newSimulation/newSimulation.xml";
+	public static final String LOCATION_DEFAULT_NEW_SIMULATION = "resources\\mainFrame\\newSimulation\\newSimulation.xml";
 
 	/**
 	 * The default extension of each icon. 
 	 */
-	//public final String DEFAULT_ICON_EXTENSION = ".jpg";
 	public static final String DEFAULT_ICON_EXTENSION1 = ".png";
 	
 	/**

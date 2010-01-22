@@ -39,7 +39,10 @@ public class YourNewMainFrame extends MainFrames {
 		YourNewMainFrame.main(null);	
 	}
 
-	@Override
+	/**
+	 * Initializes the visual appearance of this window.
+	 * Follows Strategy  pattern.
+	 */
 	public void initComponents() {
 		getContentPane().setLayout(new java.awt.FlowLayout());
 		initJToolbarGeneralControl((int)SCREEN_SIZE.getWidth()/2,HORIZONTAL_TOOLBAR_HEIGHT);

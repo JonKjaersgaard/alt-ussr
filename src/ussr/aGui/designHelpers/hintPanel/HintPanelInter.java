@@ -13,7 +13,7 @@ public interface HintPanelInter {
 	/**
 	 * The directory for keeping png icons used in hint panel.
 	 */
-	public final String DIRECTORY_ICONS = "resources/mainFrame/icons/tabs/jpg/hintPanel/";
+	public final String DIRECTORY_ICONS = "resources\\mainFrame\\icons\\tabs\\png\\hintPanel\\";
 
 	/**
 	 * The names of icons used in different hint panel types. 

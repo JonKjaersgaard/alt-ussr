@@ -11,7 +11,7 @@ public interface TabsInter {
 	/**
 	 * The directory for keeping png icons used in the tabs.
 	 */
-	public final String DIRECTORY_ICONS = "resources/mainFrame/icons/tabs/jpg/";
+	public final String DIRECTORY_ICONS = "resources\\mainFrame\\icons\\tabs\\png\\";
 	
 	/**
 	 * The names of the icons used in tabs
@@ -45,7 +45,7 @@ public interface TabsInter {
 	/**
 	 * The directory for keeping png icons used in comboBox with numbers of connectors.
 	 */
-	public final String DIRECTORY_ICONS_CONNECTORS_COLORS = "resources/mainFrame/icons/tabs/jpg/colorsOfConnectors/";
+	public final String DIRECTORY_ICONS_CONNECTORS_COLORS = "resources\\mainFrame\\icons\\tabs\\png\\colorsOfConnectors\\";
 	
 	/**
 	 * The names of the icons used in comboBoxes with numbers of connectors.
@@ -60,7 +60,7 @@ public interface TabsInter {
 	/**
 	 * The directory for keeping png icons used to represent the textures of underlying plane in simulator.
 	 */
-	public final String DIRECTORY_ICONS_TEXTURES = "resources/mainFrame/icons/tabs/jpg/textureDescriptions/";
+	public final String DIRECTORY_ICONS_TEXTURES = "resources\\mainFrame\\icons\\tabs\\png\\textureDescriptions\\";
 	
 	/**
 	 * The names of the icons used to represent the textures of underlying plane in simulator.
