@@ -88,11 +88,10 @@ public class SimulationTabController extends TabsControllers {
 				gridBagConstraints.gridx =0;
 				gridBagConstraints.gridy =1;
 				SimulationTab.getJPanelEditor().add(treeNode.getJPanelEditor(),gridBagConstraints);
-
-				SimulationTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
-				SimulationTab.getHintPanel().setText(" ");
-				SimulationTab.getHintPanel().setText(treeNode.getHintSimulationTab().getHintText());
 			}
+			SimulationTab.getHintPanel().setType(HintPanelTypes.INFORMATION);
+			SimulationTab.getHintPanel().setText(" ");
+			SimulationTab.getHintPanel().setText(treeNode.getHintSimulationTab().getHintText());
 		}
 		SimulationTab.getJPanelEditor().validate();
 	}

@@ -128,7 +128,7 @@ public class SimulationTab extends Tabs {
 		jSplitPaneSimulationTreeAndEditor.setPreferredSize(new Dimension(300,300));
 
 		jSplitPaneSimulationTreeAndEditor.setDividerSize(5);
-		jSplitPaneSimulationTreeAndEditor.setDividerLocation(0.5);
+		jSplitPaneSimulationTreeAndEditor.setDividerLocation(0.9);
 		jSplitPaneSimulationTreeAndEditor.setVisible(false);
 		gridBagConstraints.fill = GridBagConstraints.BOTH;
 		gridBagConstraints.gridx = 0;
@@ -138,7 +138,7 @@ public class SimulationTab extends Tabs {
 
 		hintPanel = new HintPanel(600, HINT_PANEL_HEIGHT);
 		hintPanel.setBorderTitle("Display for hints");
-		hintPanel.setText(HintsSimulationTab.DEFAULT.getHintText());
+		hintPanel.setText(HintsSimulationTab.SIMULATION.getHintText());
 		hintPanel.setVisible(false);
 
 		gridBagConstraints.fill = GridBagConstraints.BOTH;		
@@ -305,7 +305,7 @@ public class SimulationTab extends Tabs {
 	public static void setTabVisible(boolean visible) {			
 		jSplitPaneSimulationTreeAndEditor.setVisible(visible);
 		hintPanel.setVisible(visible);	
-		hintPanel.setText(HintsSimulationTab.DEFAULT.getHintText());
+		hintPanel.setText(HintsSimulationTab.SIMULATION.getHintText());
 	}
 
 	/**

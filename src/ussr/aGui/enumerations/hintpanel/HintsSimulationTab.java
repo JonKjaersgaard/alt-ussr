@@ -8,9 +8,8 @@ package ussr.aGui.enumerations.hintpanel;
  */
 public enum HintsSimulationTab implements HintsTabsInter {
 
-	DEFAULT("This tab allows to manipulate simulation values and entities in it. Follow hints displayed here" +
-			"to get familliar with the purpose of each element."),
-	SIMULATION("TODO "),
+	SIMULATION("This tab allows to manipulate simulation parameters and entities in it. Follow hints displayed here " +
+			"to get familliar with the purpose of each element. Later save simulation and open it again."),
 	
 	PHYSICS_SIMULATION_STEP_SIZE("The interval at which simulation time is discretized.  A higher value makes the simulation run faster, at the cost of precision.  " +
 			"Depending on the specific simulation, higher values can cause spurious effects (e.g., collision not detected for object with high velocity) or failures in the " +
@@ -19,9 +18,9 @@ public enum HintsSimulationTab implements HintsTabsInter {
 	RESOLUTION_FACTOR("Factor that determines the number of polygons used to create geometrical primitives (sphere, cones, etc).  Decrease if the simulator uses all the available " +
 			"graphics memory (typically a simulation with many modules, see user guide).  Higher values gives less ugly graphics but has a performance overhead."),
 	
-	ROBOTS("TODO"),
+	ROBOTS("Allows to load new robots in simulation environment and later manipulate them."),
 	
-	WORLD_DESCRIPTION("TODO"),
+	WORLD_DESCRIPTION("Contains a collection of parameters for modification of simulation environment appearance and entities in it."),
 	
 	PLANE_SIZE("The size of one edge of the underlying plane."),
 	
@@ -37,7 +36,7 @@ public enum HintsSimulationTab implements HintsTabsInter {
 	
 	IS_FRAME_GRABBING_ACTIVE("Grab frames from when the simulation starts."),
 	
-	PHYSICS_PARAMETERS("TODO"),
+	PHYSICS_PARAMETERS("A collection of parameters that describe the physical properties of the simulation."),
 	
 	DAMPING("Reduce all forces by a percentage at every physics step, causes less jumpy movements and gives less sensitivty to inertia."),
 	
@@ -63,10 +62,7 @@ public enum HintsSimulationTab implements HintsTabsInter {
     SYNCHRONIZE_WITH_CONTROLLERS("Enable strict time synchronization between the simulator and controllers running in native environments supporting this feature.  " +
     		"Currently, TinyOS controllers support this feature."),
     
-    PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR("When using strict time synchronization, this is the time step to use in the native controller."),
-			     
-			                ;
-	//READ MORE HERE:http://opende.sourceforge.net/wiki/index.php/Manual_%28Concepts%29#Joint_error_and_the_error_reduction_parameter_.28ERP.29
+    PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR("When using strict time synchronization, this is the time step to use in the native controller.");
 	
 	/**
 	 * The text of hint.
