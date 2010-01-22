@@ -2,5 +2,5 @@
 export USSRHOME=`dirname $0`/..
 export CLASSPATH=${USSRHOME}/bin:${USSRHOME}/zoo/jME_physics/impl/ode/src:${USSRHOME}/zoo/jME_physics/impl/jbullet/src:${USSRHOME}/zoo/jME_physics/src:${USSRHOME}/lib/jfreechart-1.0.13.jar:${USSRHOME}/lib/jcommon-1.0.16.jar:${USSRHOME}/lib/jmf.jar:${USSRHOME}/lib/tinyos.jar:${USSRHOME}/zoo/jME_2.0/lib/gluegen-rt.jar:${USSRHOME}/zoo/jME_2.0/lib/jinput.jar:${USSRHOME}/zoo/jME_2.0/lib/jogl.jar:${USSRHOME}/zoo/jME_2.0/lib/jorbis-0.0.17.jar:${USSRHOME}/zoo/jME_2.0/lib/lwjgl_util_applet.jar:${USSRHOME}/zoo/jME_2.0/lib/lwjgl_util.jar:${USSRHOME}/zoo/jME_2.0/lib/lwjgl.jar:${USSRHOME}/zoo/jME_2.0/jME_2.0.jar:${USSRHOME}/zoo/jME_physics/impl/jbullet/lib/jbullet.jar:${USSRHOME}/zoo/jME_physics/impl/jbullet/lib/stack-alloc.jar:${USSRHOME}/zoo/jME_physics/impl/jbullet/lib/vecmath.jar:${USSRHOME}/zoo/jME_physics/impl/ode/lib/odejava-jni.jar
 export USSRNATIVEPATH=${USSRHOME}/zoo/jME_2.0/lib/natives:${USSRHOME}/zoo/jME_physics/impl/ode/lib
-exec java -classpath ${CLASSPATH} -Djava.library.path=${USSRNATIVEPATH} ussr.remote.SimulationClient $*
+exec java -classpath ${CLASSPATH} -Djava.library.path=${USSRNATIVEPATH} -Djava.security.policy=${USSRHOME}/launchers/launcher-policy.txt ussr.remote.SimulationClient $*
 
