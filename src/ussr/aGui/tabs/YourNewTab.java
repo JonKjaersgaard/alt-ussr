@@ -8,6 +8,10 @@ import java.awt.Insets;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 
+import ussr.aGui.designHelpers.hintPanel.HintPanel;
+import ussr.aGui.enumerations.hintpanel.HintsYourNewTab;
+import ussr.aGui.tabs.controllers.YourNewTabController;
+
 
 /**
  * Defines visual appearance of YOUR NEW tab implemented by YOU. Serves as an example for how to design and add new tab in main GUI.
@@ -23,6 +27,7 @@ public class YourNewTab extends Tabs {
 	 */
 	private GridBagConstraints gridBagConstraints = new GridBagConstraints();	
 	
+
 	/**
 	 * Defines visual appearance of YOUR NEW tab implemented by YOU. Serves as an example for how to design and add new tab in main GUI.
      * Replicates part of design from Construct Robot Tab and explains it in step by step fashion.
@@ -36,7 +41,7 @@ public class YourNewTab extends Tabs {
 		super(initiallyVisible,firstTabbedPane,tabTitle,imageIconDirectory);
 		
 		/*JComponent, is the main container of the tab. Place all your components in it.
-		 *Here is used GridBagLayout manager */		
+		 *Here is used GridBagLayout manager and JPanel as main container.*/		
 		super.jComponent = new javax.swing.JPanel(new GridBagLayout());
 		initComponents();
 	}
@@ -55,8 +60,9 @@ public class YourNewTab extends Tabs {
 		jButtonStartNewRobot.setFocusable(true);
 		jButtonStartNewRobot.setPreferredSize(new Dimension(110,32));
         jButtonStartNewRobot.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {            	
-            	System.out.println("Button pressed:" + jButtonStartNewRobot.getText());            	
+            public void actionPerformed(java.awt.event.ActionEvent evt) {            	 
+            	//Place controller call here.
+            	YourNewTabController.jButtonStartNewRobotActionPerformed(jButtonStartNewRobot);
             }
         });        
         gridBagConstraints.fill = GridBagConstraints.FIRST_LINE_START;// position on the first line start
@@ -73,7 +79,8 @@ public class YourNewTab extends Tabs {
 		radionButtonATRON.setText("ATRON");
 		radionButtonATRON.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				System.out.println("Button selected:" + radionButtonATRON.getText()); 
+				//Place controller call here.
+				YourNewTabController.radionButtonATRONActionPerformed(radionButtonATRON);
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -91,6 +98,7 @@ public class YourNewTab extends Tabs {
 		radionButtonODIN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				System.out.println("Button selected:" + radionButtonODIN.getText());
+				//Place controller call here.
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -107,6 +115,7 @@ public class YourNewTab extends Tabs {
 		radioButtonMTRAN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				System.out.println("Selected button:" + radioButtonMTRAN.getText());
+				//Place controller call here.
 			}
 		});
 		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -115,8 +124,20 @@ public class YourNewTab extends Tabs {
 		/*8)Add it to the main container of the tab*/
 		super.jComponent.add(radioButtonMTRAN,gridBagConstraints);
 		
+		/*9)Describe fifth component*/
+		/*Display for hints. Feedback to the user.*/
+		hintPanel =  initHintPanel(430,HINT_PANEL_HEIGHT,HintsYourNewTab.DEFAULT.getHintText());			
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.gridx = 0;		
+		gridBagConstraints.gridy = 2;
+		gridBagConstraints.gridwidth = 4;
+		/*10)Add it to the main container of the tab*/
+		super.jComponent.add(hintPanel,gridBagConstraints);
+		
 		/*Look for inspiration in design of other tabs or create your own. The only thing to remember is
 		 * that jComponent is your main container.*/
 	}
+	
+	private static HintPanel hintPanel;
 
 }

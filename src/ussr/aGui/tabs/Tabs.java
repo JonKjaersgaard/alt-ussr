@@ -1,13 +1,10 @@
 package ussr.aGui.tabs;
 
 import java.util.ArrayList;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 
-import ussr.aGui.MainFrames;
-import ussr.aGui.designHelpers.JComponentsFactory;
-import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomized;
-import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
+import ussr.aGui.designHelpers.hintPanel.HintPanel;
+import ussr.aGui.designHelpers.hintPanel.HintPanelInter;
 
 /**
  * Supports definitions of visual appearance for tabs plugged-in the main GUI window.
@@ -111,23 +108,17 @@ public abstract class Tabs implements TabsInter {
 		return initiallyVisible;
 	}
 	
-	
-	public  JButton initSaveButton(){
-		/*Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
-		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
-
-		FileChooserFrameInter fcSaveFrame = new FileChooserSaveFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);
-		return MainFrames.initSaveButton(fcSaveFrame);*/
-		
-		return JComponentsFactory.initSaveButton();//MainFrames.initSaveButton(MainFrames.fcSaveRobotDialog);
+	/**
+	 * Initializes and returns the panel responsible for displaying feedback to the user.
+	 * @param width, the width of the panel.
+	 * @param height, the height of the panel.
+	 * @param initialHint, initial hint to display.
+	 * @return panel, responsible for displaying feedback to the user.
+	 */
+	public HintPanel initHintPanel(int width, int height, String initialHint){
+		HintPanel hintPanel  = new HintPanel(width,height);//custom panel
+		hintPanel.setText(initialHint);
+		hintPanel.setBorderTitle(HintPanelInter.commonTitle);
+		return hintPanel;
 	}
-	
-	public static JButton initOpenButton(){
-		/*Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
-		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);		
-		FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,FileChooserFrameInter.DEFAULT_DIRECTORY);*/
-		//return MainFrames.initOpenButton(fcOpenFrame);
-		return JComponentsFactory.initOpenButton();//MainFrames.initOpenButton(MainFrames.fcOpenRobotDialog);
-	}
-	
 }

@@ -103,19 +103,7 @@ public abstract class ConstructionTabs extends Tabs{
 	}
 
 
-	/**
-	 * Initializes and returns the panel responsible for displaying feedback to the user.
-	 * @param width, the width of the panel.
-	 * @param height, the height of the panel.
-	 * @param initialHint, initial hint to display.
-	 * @return panel, responsible for displaying feedback to the user.
-	 */
-	public HintPanel initHintPanel(int width, int height, String initialHint){
-		HintPanel hintPanel  = new HintPanel(width,height);//custom panel
-		hintPanel.setText(initialHint);
-		hintPanel.setBorderTitle(HintPanelInter.commonTitle);
-		return hintPanel;
-	}
+	
 
 
 

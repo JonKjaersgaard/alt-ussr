@@ -107,8 +107,8 @@ public class AssignControllerTab extends ConstructionTabs{
 		
 		//final ButtonGroup buttonGroup = new ButtonGroup() ;
 
-		jButtonOpen = initOpenButton();
-		jButtonSave = initSaveButton();
+		//jButtonOpen = initOpenButton();
+		//jButtonSave = initSaveButton();
 		
 
 		/*Description of components*/		
@@ -146,7 +146,6 @@ public class AssignControllerTab extends ConstructionTabs{
 		});
 		
 		jToolBarGeneralControl.add(jToggleButtonEditValues);
-		
 		
 		/*jToggleButtonColorConnetors =  JComponentsFactory.initColorConnectorsOfModulesButton();
 		jToggleButtonColorConnetors.addActionListener(new java.awt.event.ActionListener() {
