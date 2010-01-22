@@ -7,7 +7,7 @@ import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFrames;
 
 /**
- * Contains JOptionPanes used to inform the user about wrong/inconsistent XML file loading. 
+ * Contains  a number of JOptionPanes used to inform the user about wrong/inconsistent XML file loading and so on. 
  * @author Konstantinas
  * NOTE NR1: New JOptionPanes can be added if there is a need for that.
  * NOTE NR2: You can display new JOptionPane in this way:JOptionPaneMessages.LOADED_SIMULATION_FILE_IS_ROBOT.displayMessage();

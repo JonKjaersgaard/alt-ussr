@@ -62,6 +62,5 @@ public enum HintPanelTypes{
 	public String getImageDirectory() {
 		return imageDirectory;
 	}
-	
-	
+
 }

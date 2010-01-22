@@ -123,5 +123,4 @@ public abstract class GeneralController {
 	public static String getOperatingSystemName(){
 		return System.getProperty("os.name");
 	}
-	
 }

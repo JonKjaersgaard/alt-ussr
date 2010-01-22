@@ -1,7 +1,7 @@
 package ussr.aGui.enumerations.tabs;
 
 /**
- * Packet formats names used in tab called Module communication visualizer.
+ * Packet format names used in tab called Module communication visualizer.
  * @author Konstantinas
  *
  */

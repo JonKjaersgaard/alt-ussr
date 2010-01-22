@@ -60,6 +60,10 @@ public class JComponentsFactory {
 		return jButtonOpen;
 	}
 	
+	/**
+	 * Initializes and returns the button for coloring connectors on the modules.
+	 * @return the togglebutton called Color Connectors.
+	 */
 	public static javax.swing.JToggleButton  initColorConnectorsOfModulesButton(){
 
 		 javax.swing.JToggleButton  jToggleButtonColorConnetors = new javax.swing.JToggleButton(); 
