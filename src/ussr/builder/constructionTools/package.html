@@ -13,7 +13,7 @@ involved Abstract Factory design pattern. The code was tested on ATRON, MTRAN, O
 <h1>1) How to...</h1> 
 <h2>1.1) Support new modular robot?</h2>
 Let's investigate this question in step by step fashion. We will use design class diagram beneath heavily.
-<img src ="../../../../doc/developer/builderPackage/ussr_builder_constructionTools.jpg" title= "Design class diagram with focus on construction tools)"><br /><br />
+<img src ="../../../../doc/developer/builderPackage/ussr_builder_constructionTools.jpg" title= "Design class diagram with focus on construction tools)" align = "center"><br /><br />
 
 <ol>
  <li>Create new class and inherit it from <code>ModularRobotConstructionTemplate.java</code> In the diagram above, it is higligted with purple color and number 1 in the rectangle. It is also named as <code>NewModularRobotCosntructionTemplate </code> </li>
@@ -22,28 +22,32 @@ Let's investigate this question in step by step fashion. We will use design clas
    and so on. Use existing support of modular robots like inspiration. For example class called 
     <code>ATRONConstructionTemplate.java</code> </li>
  <li>At this point,the most important question is: How should I implement these methods? Lets us try to answer this question.<br />
-    First,ask your self how many components your module(robot type) consists of. For instance: ATRON has two components (two hemispheres).<br />
+    First,ask yourself how many components your module(robot type) consists of. For instance: ATRON has two components (two hemispheres).<br />
     If your module consists of two components and they are positioned in symmetry, then you are lucky:), meaning that there is less work. Mtran has 3 components, here things become much more difficult.<br /><br />
     
     First method you should focus on is <code>updateModuleMap(float x, float y, float z)</code>, this where the "magic" :) is happening.
     This method is using <code>OFFSET</code>, which is distance between two components(in case of symmetry modules) and <code>ModuleMapEntryHelper[] moduleMap </code>, which is containing mapping
     of (connector number and rotation of selected module) to(rotation and position) of new module to place with respect to selected module. 
-    Using these new module is positioned with respect to selected module. See figure beneath for end result.<br />
-    <img src ="../../../../doc/developer/builderPackage/ussr_builder_constructionTools1.jpg" title= "Design class diagram with focus on construction tools)">
-    
-    
-    
-    
-    
-    
-    
+    Using these, new module is positioned with respect to selected module. See figure beneath for an end result.<br />
+    <img src ="../../../../doc/developer/builderPackage/ussr_builder_constructionTools1.jpg" title= "Design class diagram with focus on construction tools)" allign ="center">
+    <br/>
+    Let us decompose the end result into its constituents, in order to understand it in more detail.
+    We should remember that new module is moved with respect to selected module by means of moving its components (one by one) see figure beneath.
+    <img src ="../../../../doc/developer/builderPackage/ussr_builder_constructionTools2.jpg" title= "Design class diagram with focus on construction tools)" allign = "center"><br /><br />
+    So for the case above the entry in  <code>ModuleMapEntryHelper[] moduleMap </code> will be: <br />
+    In abstract form: <br/>
+    new ModuleMapEntryHelper(selectedConnectorNumber,selectedModuleRotation,newlyAddedComponentRotation,newlyAddedComponentPosition),<br/>
+    For the case above it is: <br/>
+    new ModuleMapEntryHelper(4,ROTATION_EW,ROTATION_DU,new Vector3f(xPlusOffset,yPlusOffset,z)<br/>
+    Because ATRON has symmetry in design of its components previous entry is applicable for both components.
+    These entries should be encoded for each connector number and position of newly added module. 
      </li>   
- <li>Create new class and inherit it from <code>CommonOperationsTemplate.java.</code></li>
+ <li>Next create new class and inherit it from <code>CommonOperationsTemplate.java.</code></li>
  <li> Implement inherited abstract methods,like:
     <code>addDefaultModule(String type, VectorDescription modulePosition,	RotationDescription moduleRotation, List<Color> colorsComponents, ArrayList<Color> colorsConectors),
     createNewModule(Module selectedModule)</code> and so on. </li>
  <li> Scan classes: <code>CommonOperationsTemplate.java</code> and <code>ConstructionToolSpecification.java</code> for bugs
-    or missing implementation.</li>
- <li> You new robot should be available for tools listed in <code>ussr.builder.enums.ConstructionTools.java</code> and <code>ussr.builder.enums.LabelingTools.java</code></li>
+    or missing implementation. In particular method <code> instantiateTool(JMESimulation jmeSimulation)</code> in <code>ConstructionToolSpecification.java</code> </li>
+ <li> You new robot should be available for tools listed in <code>ussr.builder.enumerations.tools.ConstructionTools</code> and <code>ussr.builder.enumerations.tools.LabelingTools</code> </li>
 </ol>    
 </body>

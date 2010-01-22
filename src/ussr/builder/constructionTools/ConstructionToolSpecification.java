@@ -294,28 +294,7 @@ public class ConstructionToolSpecification extends CustomizedPicker implements S
 			callBackNewModuleAdded();
 			break;
 		case ON_CHOSEN_CONNECTOR_NR:	
-			//FIXME
-
 			this.selectOperations.addNewModuleOnConnector(this);
-
-			/*if (selectedModuleType.contains("OdinBall")){
-				//int storeConnectorNumber = this.selectedConnectorNr;
-				if (firstTimeNew){
-					firstTimeNew =false;
-				this.selectOperations.addNewModuleOnConnector(this);
-				this.selectedConnectorNr = 0;
-				int nrModules = jmeSimulation.getModules().size();
-				this.selectedModule = jmeSimulation.getModules().get(nrModules -1);
-				this.selectOperations.addNewModuleOnConnector(this);
-				//this.selectedModule = null;
-				//this.selectedConnectorNr=1000;
-				}
-			}else{
-
-				this.selectOperations.addNewModuleOnConnector(this);
-			}*/
-
-
 			callBackNewModuleAdded();
 			break;
 		case MOVE_MODULE_FROM_CON_TO_CON:

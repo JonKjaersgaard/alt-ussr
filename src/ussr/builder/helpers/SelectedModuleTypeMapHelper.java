@@ -24,8 +24,8 @@ public class SelectedModuleTypeMapHelper {
 
 	/**
 	 * Acts as a helper class for ConstructionToolSpecification.java in a way that maps modular robot name to
-	 * the state of selection. Meaning, that if the robot is selected in the simulation environment the if will 
-	 * by identified by boolean true. 
+	 * the state of selection. Meaning, that if the robot is selected in the simulation environment then it will 
+	 * be identified by boolean true. 
 	 * @param modularRobotName, modular robot supported by builder.
 	 * @param isSelected,the state of selection in simulation environment with a mouse.
 	 */
