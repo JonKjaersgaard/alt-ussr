@@ -97,7 +97,7 @@ public class YourNewTab extends Tabs {
 		radionButtonODIN.setFocusable(false);
 		radionButtonODIN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				System.out.println("Button selected:" + radionButtonODIN.getText());
+				YourNewTabController.radionButtonOdinActionPerformed(radionButtonODIN);
 				//Place controller call here.
 			}
 		});
@@ -114,7 +114,7 @@ public class YourNewTab extends Tabs {
 		radioButtonMTRAN.setFocusable(false);
 		radioButtonMTRAN.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				System.out.println("Selected button:" + radioButtonMTRAN.getText());
+				YourNewTabController.radionButtonMTRANActionPerformed(radioButtonMTRAN);
 				//Place controller call here.
 			}
 		});
