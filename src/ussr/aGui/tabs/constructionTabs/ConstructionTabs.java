@@ -1,7 +1,5 @@
 package ussr.aGui.tabs.constructionTabs;
 
-
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
@@ -11,8 +9,6 @@ import ussr.aGui.MainFrames;
 
 import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.designHelpers.ComboBoxRenderer;
-import ussr.aGui.designHelpers.hintPanel.HintPanel;
-import ussr.aGui.designHelpers.hintPanel.HintPanelInter;
 import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.JOptionPaneMessages;
@@ -103,12 +99,11 @@ public abstract class ConstructionTabs extends Tabs{
 	}
 
 
-	
-
-
-
-
-
+	/**
+	 * Controls adaptation of tabs named as ConstructRobotTab and AssignLabels tab, to amount of robots in simulation environment.
+	 * Essentially is responsible to limit the user to use construction only on one robot at a time.
+	 * @param rememberedChoice, the users choice from JOptionPane.
+	 */
 	public static void adaptToNrRobots(int rememberedChoice){
 		int amountRobots = SimulationTabController.getSimulationSpecification().getRobotsInSimulation().size();
 		boolean simulationState = MainFrameSeparateController.isSimulationRunning();
@@ -162,8 +157,4 @@ public abstract class ConstructionTabs extends Tabs{
 		}
 
 	}
-
-
-
-
 }

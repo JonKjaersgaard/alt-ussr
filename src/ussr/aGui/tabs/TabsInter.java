@@ -106,6 +106,4 @@ public interface TabsInter {
 	 */
 	public boolean isInitiallyVisible();
 
-	//FIXME
-	public ArrayList<javax.swing.JComponent> getComponents();
 }

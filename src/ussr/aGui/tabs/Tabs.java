@@ -67,15 +67,6 @@ public abstract class Tabs implements TabsInter {
 		return jComponent;
 	}
     
-    //FIXME DECIDE
-    public ArrayList<javax.swing.JComponent> getComponents(){
-    	ArrayList<javax.swing.JComponent> components = new ArrayList<javax.swing.JComponent>();
-    	for (int compon=0;compon<jComponent.getComponents().length;compon++){
-    		components.add((JComponent) jComponent.getComponent(compon));
-    	}
-    	return components;
-    }
-    
 	/**
 	 * Getter method common for all tabs and is used by GUI during addition of new tab.
 	 * @return tabTitle, the title of the tab.

@@ -68,7 +68,6 @@ public enum AssignableControllers {
 	 * 
 	 * NOTE: If you want to add new controller, just define it here by defining each of above elements.
 	 * @author Konstantinas
-	 * 
 	 * @param userFriendlyName, the name of controller as displayed in GUI.
 	 * @param forSupportedModularRobot,the type of modular robot, the controller is implemented for.
 	 * @param className, the name of the class defining controller implementation.

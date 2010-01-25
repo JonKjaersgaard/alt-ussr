@@ -30,7 +30,7 @@ import ussr.builder.enumerations.rotations.MTRANStandardRotations;
 
 
 /**
- * Defines visual appearance of the tab called "1 Step: Construct Robot".  
+ * Defines visual appearance of the tab called "Construct Robot".  
  * @author Konstantinas
  */
 public class ConstructRobotTab extends ConstructionTabs {
@@ -776,7 +776,6 @@ public class ConstructRobotTab extends ConstructionTabs {
 	 */
 	public static String getDefaultConstructionModuleType(){
 		return defaultConstructionModuleType;
-		
 	}
 	
 	/**

@@ -14,16 +14,13 @@ import javax.swing.JToolBar;
 
 import ussr.aGui.FramesInter;
 import ussr.aGui.controllers.MainFrameSeparateController;
-import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.designHelpers.hintPanel.HintPanel;
 import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.enumerations.hintpanel.HintsAssignControllersTab;
-import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 
 import ussr.aGui.tabs.controllers.AssignControllerTabController;
-import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.builder.enumerations.SupportedModularRobots;
 
 /**
@@ -43,6 +40,9 @@ public class AssignControllerTab extends ConstructionTabs{
 	private final int J_LIST_WIDTH = 150, J_LIST_HEIGHT = 180;
 
 
+	/**
+	 * Width of the toolbar for filtering supported modular robot.
+	 */
 	private final int jToolBar1Width = 125;
 	
 	
@@ -89,8 +89,6 @@ public class AssignControllerTab extends ConstructionTabs{
 		
 		jToggleButtonEditValues =   new javax.swing.JToggleButton();
 
-		jSeparator1 = new javax.swing.JToolBar.Separator();
-
 		jListAvailableControllers = new javax.swing.JList();
 
 		jScrollPaneAvailableControllers = new javax.swing.JScrollPane();
@@ -105,14 +103,7 @@ public class AssignControllerTab extends ConstructionTabs{
 		
 		buttonGroup = new ButtonGroup() ;
 		
-		//final ButtonGroup buttonGroup = new ButtonGroup() ;
-
-		//jButtonOpen = initOpenButton();
-		//jButtonSave = initSaveButton();
-		
-
-		/*Description of components*/		
-
+		/*Description of components*/
 		jToolBarGeneralControl.setBorder(FramesInter.TOOLBAR_BORDER);
 		jToolBarGeneralControl.setToolTipText(TabsComponentsText.GENERAL_CONTROL.getUserFriendlyName());
 		jToolBarGeneralControl.setFloatable(false);//user can not make the tool bar to float
@@ -122,20 +113,11 @@ public class AssignControllerTab extends ConstructionTabs{
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
 		gridBagConstraints.insets = new Insets(0, 0, 30, 0);
-
-		//jToolBarGeneralControl.add(jButtonOpen);
-		//jToolBarGeneralControl.add(jButtonSave);
-
-		//jSeparator1.setPreferredSize(new Dimension(6,30));
-		//jToolBarGeneralControl.add(jSeparator1);
-		
-		//jToolBarSaveLoad = initSaveLoadJToolbar();
 		
 		jToggleButtonEditValues.setToolTipText(TabsComponentsText.ENTER_VALUES.getUserFriendlyName());
 		jToggleButtonEditValues.setIcon(TabsIcons.ENTER_VALUES.getImageIcon());
 		jToggleButtonEditValues.setSelectedIcon(TabsIcons.ENTER_VALUES_ROLLOVER.getImageIcon());
 		jToggleButtonEditValues.setRolloverIcon(TabsIcons.ENTER_VALUES_ROLLOVER.getImageIcon());
-		//jToggleButtonEditValues.setDisabledIcon(TabsIcons.COLOR_CONNECTORS_DISABLED.getImageIcon());		
 		jToggleButtonEditValues.setFocusable(false);
 		jToggleButtonEditValues.setEnabled(true);
 		jToggleButtonEditValues.setPreferredSize(FramesInter.BUTTON_DIMENSION);
@@ -146,17 +128,7 @@ public class AssignControllerTab extends ConstructionTabs{
 		});
 		
 		jToolBarGeneralControl.add(jToggleButtonEditValues);
-		
-		/*jToggleButtonColorConnetors =  JComponentsFactory.initColorConnectorsOfModulesButton();
-		jToggleButtonColorConnetors.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ConstructRobotTabController.jButtonColorConnectorsActionPerformed(jToggleButtonColorConnetors);
-			}
-		});
-		
-		
-		jToolBarGeneralControl.add(jToggleButtonColorConnetors);*/
-		
+				
 		super.jComponent.add(jToolBarGeneralControl,gridBagConstraints);
 
 		jToolBarFilterForModularRobot.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Filter out for:", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));		
@@ -234,26 +206,18 @@ public class AssignControllerTab extends ConstructionTabs{
 								GroupLayout.PREFERRED_SIZE)
 								.addComponent(jPanelEditValue,GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE,
 										GroupLayout.PREFERRED_SIZE)	
-										//Forces preferred side of component and also specifies it explicitly. For instance:6. 
-
-
 		);
 
 		jPanelAssignBehaviorsLayout.setVerticalGroup(
 				jPanelAssignBehaviorsLayout.createSequentialGroup()
 				.addGroup(jPanelAssignBehaviorsLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						//.addGroup(jPanelAssignBehaviorsLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 								.addComponent(jToolBarFilterForModularRobot,GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE,
 										GroupLayout.PREFERRED_SIZE)							
 										.addComponent(jScrollPaneAvailableControllers,GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE,
 												GroupLayout.PREFERRED_SIZE)
 												.addComponent(jPanelEditValue,GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-														//Forces preferred side of component and also specifies it explicitly. For instance:28. 
-						)
-
+														GroupLayout.PREFERRED_SIZE))
 				);
-
 
 
 		/*External layout of the panel*/
@@ -273,11 +237,15 @@ public class AssignControllerTab extends ConstructionTabs{
 
 	}
 
+	/*Getters and Setter*/
+	/**
+	 * Returns the button for coloring connectors of modules. 
+	 * @return the button for coloring connectors of modules.
+	 */
 	public static javax.swing.JToggleButton getJToggleButtonColorConnetors() {
 		return jToggleButtonColorConnetors;
 	}
-
-	/*Getters and Setter*/
+	
 	/**
 	 * Returns the list for displaying available controllers for user to choose from.
 	 * @return the list for displaying available controllers for user to choose from.
@@ -371,13 +339,30 @@ public class AssignControllerTab extends ConstructionTabs{
 		return radionButtonATRON;
 	}	
 	
+	/**
+	 * Returns the panel for editing values of controller.
+	 * @return the panel for editing values of controller.
+	 */
 	public static javax.swing.JPanel getJPanelEditValue() {
 		return jPanelEditValue;
 	}
+	
+	/**
+	 * Returns the toggle button associated with edition of controller values. 
+	 * @return the toggle button associated with edition of controller values.
+	 */
 	public static javax.swing.JToggleButton getJToggleButtonEditValues() {
 		return jToggleButtonEditValues;
 	}
-
+	
+	/**
+	 * Returns the group of radio buttons representing supported modular robots. 
+	 * @return the group of radio buttons representing supported modular robots. 
+	 */
+	public static ButtonGroup getButtonGroup() {
+		return buttonGroup;
+	}
+	
 	/*Declaration of components*/
 	private static javax.swing.JList jListAvailableControllers;	
 	private javax.swing.JPanel jPanelAssignBehaviors;
@@ -389,19 +374,9 @@ public class AssignControllerTab extends ConstructionTabs{
 
 	private static javax.swing.JToolBar jToolBarFilterForModularRobot,jToolBarGeneralControl;
 
-	private static javax.swing.JButton jButtonSave,jButtonOpen;
-
-	private javax.swing.JToolBar.Separator jSeparator1;
-
 	private static javax.swing.JPanel jPanelEditValue;
 	
 	private static javax.swing.JToggleButton jToggleButtonEditValues,jToggleButtonColorConnetors;
 
-	private static ButtonGroup buttonGroup;
-
-	public static ButtonGroup getButtonGroup() {
-		return buttonGroup;
-	}
-	
-	
+	private static ButtonGroup buttonGroup;	
 }

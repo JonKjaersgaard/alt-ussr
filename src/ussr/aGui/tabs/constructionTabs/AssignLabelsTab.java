@@ -27,7 +27,7 @@ import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.tabs.controllers.AssignLabelsTabController;
 
 /**
- * Defines visual appearance of tab named as Labeling. 
+ * Defines visual appearance of tab named as Assign Labels. 
  * @author Konstantinas
  */
 public class AssignLabelsTab extends ConstructionTabs{
@@ -104,16 +104,12 @@ public class AssignLabelsTab extends ConstructionTabs{
 		gridBagConstraints.gridy = 0;
 		gridBagConstraints.insets = new Insets(0, 0, 30, 0);
 
-		
-		
 		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.openActionPerformed(MainFrames.fcOpenRobotDialog);
 			}
 		});
 		jToolBarGeneralControl.add(jButtonOpen);
-		
-		
 		
 		jButtonSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +122,6 @@ public class AssignLabelsTab extends ConstructionTabs{
 		jToolBarGeneralControl.add(jSeparator1);
 		
 		super.jComponent.add(jToolBarGeneralControl,gridBagConstraints);		
-
 
 		GridBagConstraints gridBagConstraintsEntitiesToLabel = new GridBagConstraints();
 		TitledBorder displayTitle1;
@@ -145,10 +140,8 @@ public class AssignLabelsTab extends ConstructionTabs{
 		gridBagConstraintsEntitiesToLabel.gridx = 0;
 		gridBagConstraintsEntitiesToLabel.gridy = 0;		
 
-
 		final ButtonGroup buttonGroupEntities = new ButtonGroup() ;
 
-			
 		radioButtonModule.setText(EntitiesForLabelingText.Module.toString());	
 		radioButtonModule.setFocusable(true);// direct the user to what should be done first
 		radioButtonModule.setSelected(false);
@@ -173,8 +166,7 @@ public class AssignLabelsTab extends ConstructionTabs{
 
 		jToolBarEntitiesForLabeling.add(radionButtonConnector);
 		buttonGroupEntities.add(radionButtonConnector);
-		
-
+	
 		radioButtonSensors.setText(EntitiesForLabelingText.Sensors.toString());
 		radioButtonSensors.setSelected(false);
 		radioButtonSensors.addActionListener(new java.awt.event.ActionListener() {
@@ -398,6 +390,10 @@ public class AssignLabelsTab extends ConstructionTabs{
 		return jPanelLabeling;
 	}
 	
+	/**
+	 * Returns the hint panel.
+	 * @return the hint panel.
+	 */
 	public static HintPanel getHintPanel() {
 		return hintPanel;
 	}

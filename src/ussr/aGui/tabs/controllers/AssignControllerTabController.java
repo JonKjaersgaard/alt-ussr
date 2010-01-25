@@ -11,7 +11,6 @@ import javax.swing.ButtonModel;
 import javax.swing.JToggleButton;
 
 import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
-import ussr.aGui.enumerations.hintpanel.HintsAssignControllersTab;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.AssignableControllers;
 
@@ -21,6 +20,10 @@ import ussr.builder.enumerations.SupportedModularRobots;
 
 import ussr.builder.helpers.FileDirectoryHelper;
 
+/**
+ * Controls events of Assign controller tab(visual appearance). 
+ * @author Konstantinas
+ */
 public class AssignControllerTabController extends TabsControllers {
 
 	/**
@@ -44,8 +47,6 @@ public class AssignControllerTabController extends TabsControllers {
 	 * @param radionButton, the radio button representing modular robot name.
 	 */
 	public static void jButtonGroupActionPerformed(javax.swing.AbstractButton radionButton){
-
-		
 
 		boolean modularRobotNameExists = false;
 		SupportedModularRobots[] supportedModularRobots = SupportedModularRobots.values();
@@ -94,7 +95,6 @@ public class AssignControllerTabController extends TabsControllers {
 		updateList(jList1,classesOfControllers);
 		/*Update the list with newly loaded names of controllers*/
 	}
-
 
 	/**
 	 * Updates the list with the names of controllers.
@@ -163,9 +163,7 @@ public class AssignControllerTabController extends TabsControllers {
 	}
 
 	/**
-	 * Adapts Assign Behaviors Tab to the the type of first module in simulation environment.
-	 * TODO MAKE IT MORE GENERIC BY MEANS OF IDENTIFYING THE LAST TYPE OF MODULE IN XML FILE
-	 * OR SOMETHING SIMILLAR.
+	 * Adapts Assign Controller Tab to the the type of first module in simulation environment.
 	 */
 	public static void adaptTabToModuleInSimulation(){
 		int amountModules =0;		
@@ -200,15 +198,19 @@ public class AssignControllerTabController extends TabsControllers {
 		}
 	}
 
-
+	/**
+	 * Updates the hint panel with new type and text.
+	 * @param hintPanelTypes, the type of hint panel.
+	 * @param text, the text to display in hint panel.
+	 */
 	public static void updateHintPanel(HintPanelTypes hintPanelTypes,String text){
 		AssignControllerTab.getHintPanel().setType(hintPanelTypes);
 		AssignControllerTab.getHintPanel().setText(text);
 	}
 
 	/**
-	 * Changes the view of controller names 
-	 * @param toggleButtonEditValues
+	 * Changes the view of controller names and enables the edit values panel. 
+	 * @param toggleButtonEditValues, the component in GUI.
 	 */
 	public static void jToggleButtonEditValuesActionPerformed(JToggleButton toggleButtonEditValues) {
 		if (toggleButtonEditValues.isSelected()){
@@ -231,11 +233,15 @@ public class AssignControllerTabController extends TabsControllers {
 		}	
 	}
 
+	/**
+	 * Initiates the picker to assign to module with specific name of controller. 
+	 * @param assignableController, the name of controller to initiate the picker for.
+	 */
 	public static void activateAssignmentTool(AssignableControllers assignableController){
 		try {
 			builderControl.setAdjustControllerPicker(assignableController.getClassName().getCanonicalName());			
 		} catch (RemoteException e) {
-			throw new Error("Failed to initate picker called "+ "AssignControllerTool" + ", due to remote exception");
+			throw new Error("Failed to initiate picker called "+ "AssignControllerTool" + ", due to remote exception");
 		}
 	}		
 }

@@ -195,7 +195,6 @@ public class AssignableControllersEditors  {
 		return Integer.parseInt(jComboBoxMtranNrsActuators.getSelectedItem().toString());
 	}
 	
-	
 	private static javax.swing.JComboBox atronNrsConnectors,jComboBoxMtranNrsActuators;
 	
 	private static javax.swing.JSpinner jSpinnerAtronSpeedRotateContinuous,jSpinnerOdinActuateContinuously,
