@@ -22,9 +22,9 @@ public interface FileChoosingInter {
 	public static final String DEFAULT_FILE_EXTENSION = SaveLoadXMLFileTemplateInter.XML_EXTENSION;
 	
 	/**
-	 * Default directory for file choosers to open.
+	 * Default-relative directory for file choosers to open.
 	 */
-	public static final String DEFAULT_DIRECTORY = "\\samples\\simulations";
+	public static final String DEFAULT_RELATIVE_DIRECTORY = File.separator +"samples"+ File.separator+ "simulations";
 	
 	/**
 	 * Used as a reference to determine current directory;

@@ -53,9 +53,9 @@ public abstract class JFileChooserCustomized extends JFileChooser implements JFi
 	public void initComponents() {
      
     	try {
-			jFileChooserCustomized = new javax.swing.JFileChooser(FILE_IN_CURRENT_DIRECTORY.getCanonicalPath().toString()+DEFAULT_DIRECTORY);
+			jFileChooserCustomized = new javax.swing.JFileChooser(FILE_IN_CURRENT_DIRECTORY.getCanonicalPath().toString()+DEFAULT_RELATIVE_DIRECTORY);
 		} catch (IOException e) {
-			throw new Error("Failed to locate  default directory for storing XML files in USSR folder structure, named as: " + DEFAULT_DIRECTORY);
+			throw new Error("Failed to locate  default directory for storing XML files in USSR folder structure, named as: " + DEFAULT_RELATIVE_DIRECTORY);
 		}    		
         jFileChooserCustomized.setAcceptAllFileFilterUsed(false);
         jFileChooserCustomized.setFileSelectionMode(JFileChooser.FILES_ONLY);

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
+import ussr.aGui.controllers.GeneralController;
 import ussr.aGui.fileChoosing.fileDialog.controllers.FileDialogControllerInter;
 
 /**
@@ -46,12 +47,14 @@ public abstract class FileDialogCustomized extends FileDialog implements FileDia
 	 * Initializes visual appearance of file dialog common to variations of it.
 	 */
 	private void initCommonAppearance(){
-		
+		if (GeneralController.getOperatingSystemName().contains("Mac")){
+			System.setProperty("apple.awt.fileDialogForDirectories", "true");	
+		}	
 		fileDialogCustomized.setAlwaysOnTop(true);
 		try {		
-			fileDialogCustomized.setDirectory(FILE_IN_CURRENT_DIRECTORY.getCanonicalPath().toString()+DEFAULT_DIRECTORY);
+			fileDialogCustomized.setDirectory(FILE_IN_CURRENT_DIRECTORY.getCanonicalPath().toString()+DEFAULT_RELATIVE_DIRECTORY);
 		} catch (IOException e) {
-			throw new Error("Failed to locate  default directory for storing XML files in USSR folder structure, named as: " + DEFAULT_DIRECTORY);
+			throw new Error("Failed to locate  default directory for storing XML files in USSR folder structure, named as: " + DEFAULT_RELATIVE_DIRECTORY);
 		}
 		fileDialogCustomized.setFilenameFilter(new FilenameFilter(){
 			@Override
