@@ -1,10 +1,16 @@
 package ussr.aGui.fileChoosing.fileDialog;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.FileDialog;
 import java.awt.Frame;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.UIManager;
 
 import ussr.aGui.controllers.GeneralController;
 import ussr.aGui.fileChoosing.fileDialog.controllers.FileDialogControllerInter;
@@ -47,7 +53,6 @@ public abstract class FileDialogCustomized extends FileDialog implements FileDia
 	 * Initializes visual appearance of file dialog common to variations of it.
 	 */
 	private void initCommonAppearance(){
-		
 		fileDialogCustomized.setAlwaysOnTop(true);
 		try {		
 			fileDialogCustomized.setDirectory(FILE_IN_CURRENT_DIRECTORY.getCanonicalPath().toString()+DEFAULT_RELATIVE_DIRECTORY);
@@ -61,7 +66,32 @@ public abstract class FileDialogCustomized extends FileDialog implements FileDia
 			}
 			
 		});	
+		
+		disableUpFolderButton(fileDialogCustomized);
 	}
+	
+	 /**
+	 * @param c
+	 */
+	public static void disableUpFolderButton(Container c) {   
+	        int len = c.getComponentCount();   
+	        for (int i = 0; i < len; i++) {   
+	          Component comp = c.getComponent(i); 
+	          
+	          if (comp instanceof JButton) {   
+	            JButton b = (JButton) comp;   
+	            Icon icon = b.getIcon();              
+	            if (icon != null  
+	                && icon == UIManager.getIcon("FileChooser.upFolderIcon") ){ 
+	              b.setEnabled(false);   
+	             }    
+	          } else if (comp instanceof Container) {   
+	              disableUpFolderButton((Container) comp);   
+	          }   
+	        }   
+	         
+	          
+	    } 
 	
 	 /**
      * Returns the name of the file selected by user. Is null if user selects Cancel.
