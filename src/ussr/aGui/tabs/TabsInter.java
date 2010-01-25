@@ -1,6 +1,6 @@
 package ussr.aGui.tabs;
 
-import java.util.ArrayList;
+import java.io.File;
 
 /**
  * Supports definition of visual appearance(view in MVC pattern) of tabs, which are pluged-in main GUI window. 
@@ -11,7 +11,7 @@ public interface TabsInter {
 	/**
 	 * The directory for keeping png icons used in the tabs.
 	 */
-	public final String DIRECTORY_ICONS = "resources\\mainFrame\\icons\\tabs\\png\\";
+	public final String DIRECTORY_ICONS = "resources"+ File.separator + "mainFrame"+ File.separator +"icons"+ File.separator +"tabs"+File.separator +"png"+File.separator;
 	
 	/**
 	 * The names of the icons used in tabs
@@ -45,7 +45,7 @@ public interface TabsInter {
 	/**
 	 * The directory for keeping png icons used in comboBox with numbers of connectors.
 	 */
-	public final String DIRECTORY_ICONS_CONNECTORS_COLORS = "resources\\mainFrame\\icons\\tabs\\png\\colorsOfConnectors\\";
+	public final String DIRECTORY_ICONS_CONNECTORS_COLORS = "resources" +File.separator + "mainFrame"+ File.separator +"icons"+File.separator + "tabs"+File.separator+"png" +File.separator +"colorsOfConnectors" +File.separator;
 	
 	/**
 	 * The names of the icons used in comboBoxes with numbers of connectors.
@@ -60,7 +60,7 @@ public interface TabsInter {
 	/**
 	 * The directory for keeping png icons used to represent the textures of underlying plane in simulator.
 	 */
-	public final String DIRECTORY_ICONS_TEXTURES = "resources\\mainFrame\\icons\\tabs\\png\\textureDescriptions\\";
+	public final String DIRECTORY_ICONS_TEXTURES = "resources" +File.separator +"mainFrame"+ File.separator +"icons" +File.separator+"tabs" +File.separator+"png" +File.separator +"textureDescriptions"+File.separator;
 	
 	/**
 	 * The names of the icons used to represent the textures of underlying plane in simulator.
