@@ -1,12 +1,20 @@
 package ussr.aGui.fileChoosing.jFileChooser;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.UIManager;
+import javax.swing.filechooser.FileSystemView;
 
 import ussr.aGui.GuiFrames;
+import ussr.aGui.fileChoosing.SingleRootFileSystemView;
 import ussr.aGui.fileChoosing.jFileChooser.controller.JFileChooserControllerInter;
 
 
@@ -53,7 +61,10 @@ public abstract class JFileChooserCustomized extends JFileChooser implements JFi
 	public void initComponents() {
      
     	try {
-			jFileChooserCustomized = new javax.swing.JFileChooser(FILE_IN_CURRENT_DIRECTORY.getCanonicalPath().toString()+DEFAULT_RELATIVE_DIRECTORY);
+    		
+    		FileSystemView fsv = new SingleRootFileSystemView( new File (FILE_IN_CURRENT_DIRECTORY.getCanonicalPath().toString()+DEFAULT_RELATIVE_DIRECTORY) );
+    		jFileChooserCustomized = new javax.swing.JFileChooser(fsv);
+  
 		} catch (IOException e) {
 			throw new Error("Failed to locate  default directory for storing XML files in USSR folder structure, named as: " + DEFAULT_RELATIVE_DIRECTORY);
 		}    		
@@ -62,10 +73,32 @@ public abstract class JFileChooserCustomized extends JFileChooser implements JFi
         jFileChooserCustomized.setSize(new Dimension(580,450));
        
         GuiFrames.changeToLookAndFeel(jFileChooserCustomized);	
-		
+        disableUpFolderButton(jFileChooserCustomized);
 	}	
-
-
+	
+	
+	 
+	 /**
+	 * @param c
+	 */
+	public static void disableUpFolderButton(Container c) {   
+	        int len = c.getComponentCount();   
+	        for (int i = 0; i < len; i++) {   
+	          Component comp = c.getComponent(i);   
+	          if (comp instanceof JButton) {   
+	            JButton b = (JButton) comp;   
+	            Icon icon = b.getIcon();              
+	            if (icon != null  
+	                && icon == UIManager.getIcon("FileChooser.upFolderIcon") ){   
+	              b.setEnabled(false);   
+	             }    
+	          } else if (comp instanceof Container) {   
+	              disableUpFolderButton((Container) comp);   
+	          }   
+	        }   
+	         
+	          
+	    } 
 	
 	/**
 	 * Changes default file filters with ones specified in the map. 
