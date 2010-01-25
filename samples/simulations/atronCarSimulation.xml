@@ -2,7 +2,7 @@
 <SIMULATION>
 <ROBOT_NR1>
 <NUMBER_OF_MODULES>7</NUMBER_OF_MODULES>
-<MORPHOLOGY_LOCATION>C:\Program_Files_User\eclipse\EclipseWORKSPACE\ussr\samples\simulations\atron\robots\atronCar7wheelerRubberWheels.xml</MORPHOLOGY_LOCATION>
+<MORPHOLOGY_LOCATION>samples\simulations\atron\robots\atronCar7wheelerRubberWheels.xml</MORPHOLOGY_LOCATION>
 <CONTROLLER_LOCATION>ussr.builder.simulationLoader.DefaultAtronController</CONTROLLER_LOCATION>
 </ROBOT_NR1>
 <WORLD_DESCRIPTION>
