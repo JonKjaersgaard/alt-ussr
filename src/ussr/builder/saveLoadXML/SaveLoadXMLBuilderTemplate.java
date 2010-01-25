@@ -1,6 +1,7 @@
 package ussr.builder.saveLoadXML;
 
 import java.awt.Color;
+import java.io.File;
 import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -125,8 +126,11 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 			for(int robotNr=0;robotNr<simulationSpecification.getRobotsInSimulation().size();robotNr++){
 				RobotSpecification currentRobotSpecification = simulationSpecification.getRobotsInSimulation().get(robotNr);
 				transformerHandler.startElement("","",XMLTagsUsed.ROBOT_NR.toString()+(robotNr+1),EMPTY_ATT);
+				
+				String morphologyLocation = currentRobotSpecification.getMorphologyLocation().replace("/", "FILE_SEPARATOR").replace("\\", "FILE_SEPARATOR");
 				printSubTagsWithValue(transformerHandler, XMLTagsUsed.NUMBER_OF_MODULES, (""+currentRobotSpecification.getAmountModules()).toCharArray());
-		        printSubTagsWithValue(transformerHandler, XMLTagsUsed.MORPHOLOGY_LOCATION, currentRobotSpecification.getMorphologyLocation().toCharArray());
+		        //printSubTagsWithValue(transformerHandler, XMLTagsUsed.MORPHOLOGY_LOCATION, currentRobotSpecification.getMorphologyLocation().toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.MORPHOLOGY_LOCATION, morphologyLocation.toCharArray());
 				printSubTagsWithValue(transformerHandler, XMLTagsUsed.CONTROLLER_LOCATION, currentRobotSpecification.getControllerLocation().toCharArray());
 
 		   transformerHandler.endElement("","",XMLTagsUsed.ROBOT_NR.toString()+(robotNr+1));
@@ -435,7 +439,9 @@ Node rootNode = document.getDocumentElement();
 				Element firstElmnt = (Element) firstNode;			
 
 				RobotSpecification robotSpecification = new RobotSpecification();
-				robotSpecification.setMorphologyLocation(extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION));
+				String morphologyLocation = extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION).replace("FILE_SEPARATOR", File.separator);
+				//robotSpecification.setMorphologyLocation(extractTagValue(firstElmnt,XMLTagsUsed.MORPHOLOGY_LOCATION));
+				robotSpecification.setMorphologyLocation(morphologyLocation);
 				robotSpecification.setControllerLocation(extractTagValue(firstElmnt,XMLTagsUsed.CONTROLLER_LOCATION));
 				robotSpecification.setAmountModules(Integer.parseInt(extractTagValue(firstElmnt,XMLTagsUsed.NUMBER_OF_MODULES)));
 				
