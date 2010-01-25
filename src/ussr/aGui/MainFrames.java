@@ -72,10 +72,13 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	 */
 	private void initFileChoosing(){
 		if (GeneralController.getOperatingSystemName().contains("Mac")){
+		   
+			System.setProperty("apple.awt.fileDialogForDirectories", "true");			
 			fcOpenSimulationDialog = FileDialogCustomizedInter.FD_OPEN_SIMULATION;
 			fcSaveSimulationDialog = FileDialogCustomizedInter.FD_SAVE_SIMULATION;
 			fcOpenRobotDialog = FileDialogCustomizedInter.FD_OPEN_ROBOT;
 			fcSaveRobotDialog = FileDialogCustomizedInter.FD_SAVE_ROBOT;
+			System.setProperty("apple.awt.fileDialogForDirectories", "false");	
 			
 		}else{
 			fcOpenSimulationDialog = JFileChooserCustomizedInter.FC_OPEN_SIMULATION;

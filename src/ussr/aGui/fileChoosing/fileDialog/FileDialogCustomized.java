@@ -47,9 +47,7 @@ public abstract class FileDialogCustomized extends FileDialog implements FileDia
 	 * Initializes visual appearance of file dialog common to variations of it.
 	 */
 	private void initCommonAppearance(){
-		if (GeneralController.getOperatingSystemName().contains("Mac")){
-			System.setProperty("apple.awt.fileDialogForDirectories", "true");	
-		}	
+		
 		fileDialogCustomized.setAlwaysOnTop(true);
 		try {		
 			fileDialogCustomized.setDirectory(FILE_IN_CURRENT_DIRECTORY.getCanonicalPath().toString()+DEFAULT_RELATIVE_DIRECTORY);

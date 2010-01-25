@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.io.File;
 
 import javax.swing.border.Border;
 
@@ -17,7 +18,7 @@ public interface FramesInter {
 	/**
 	 * Directory for USSR icon.
 	 */
-	public final String DIRECTORY_USSR_ICON = "resources\\mainFrame\\icons\\png\\ussrIcon.png";
+	public final String DIRECTORY_USSR_ICON = "resources"+File.separator+"mainFrame"+File.separator+"icons"+File.separator+"png"+File.separator+ "ussrIcon.png";
 
 	/**
 	 * Title for USSR simulator.

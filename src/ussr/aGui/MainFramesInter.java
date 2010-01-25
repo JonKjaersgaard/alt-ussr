@@ -1,5 +1,7 @@
 package ussr.aGui;
 
+import java.io.File;
+
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.tabs.ConsoleTab;
 import ussr.aGui.tabs.TabsInter;
@@ -20,12 +22,12 @@ public interface MainFramesInter {
 	/**
 	 * The directory, for keeping png icons used in the main frame design.
 	 */
-	public static final String DIRECTORY_ICONS = "resources\\mainFrame\\icons\\png\\";
+	public static final String DIRECTORY_ICONS = "resources"+File.separator +"mainFrame"+File.separator+ "icons" +File.separator +"png"+File.separator;
 	
 	/**
 	 * The location of xml file describing default(new) simulation.
 	 */
-	public static final String LOCATION_DEFAULT_NEW_SIMULATION = "resources\\mainFrame\\newSimulation\\newSimulation.xml";
+	public static final String LOCATION_DEFAULT_NEW_SIMULATION = "resources"+File.separator+ "mainFrame"+File.separator+"newSimulation"+File.separator +"newSimulation.xml";
 
 	/**
 	 * The default extension of each icon. 
