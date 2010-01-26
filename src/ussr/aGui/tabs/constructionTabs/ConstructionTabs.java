@@ -11,14 +11,14 @@ import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.JOptionPaneMessages;
 
-import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
-import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
-import ussr.aGui.enumerations.tabs.IconsNumbersConnectors;
 
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.designHelpers.ComboBoxRenderer;
 import ussr.aGui.tabs.designHelpers.hintPanel.HintPanelTypes;
+import ussr.aGui.tabs.enumerations.IconsNumbersConnectors;
+import ussr.aGui.tabs.enumerations.hintPanel.HintsAssignLabelsTab;
+import ussr.aGui.tabs.enumerations.hintPanel.HintsConstructRobotTab;
 import ussr.builder.enumerations.SupportedModularRobots;
 
 /**

@@ -3,7 +3,7 @@ package ussr.aGui.tabs.simulation;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import ussr.aGui.GuiFrames;
-import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
+import ussr.aGui.tabs.enumerations.hintPanel.HintsSimulationTab;
 import ussr.builder.saveLoadXML.XMLTagsUsed;
 
 /**

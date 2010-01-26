@@ -9,10 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.border.TitledBorder;
-import ussr.aGui.enumerations.tabs.VisualizerPacketFormats;
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
+import ussr.aGui.tabs.enumerations.VisualizerPacketFormats;
 
 /**
  * Defines visual appearance of the tab called "Communication Visualizer".   

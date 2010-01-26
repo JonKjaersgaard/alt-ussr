@@ -4,8 +4,8 @@ package ussr.aGui.tabs.designHelpers;
 import ussr.aGui.FramesInter;
 import ussr.aGui.enumerations.MainFrameComponentsText;
 import ussr.aGui.enumerations.MainFrameIcons;
-import ussr.aGui.enumerations.tabs.TabsComponentsText;
-import ussr.aGui.enumerations.tabs.TabsIcons;
+import ussr.aGui.tabs.enumerations.TabsComponentsText;
+import ussr.aGui.tabs.enumerations.TabsIcons;
 
 /**
  * Contains methods for initialization of JComponents frequently used in the design of GUI.

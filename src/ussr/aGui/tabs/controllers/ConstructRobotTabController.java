@@ -9,11 +9,11 @@ import javax.swing.JToggleButton;
 
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.enumerations.tools.ConstructionTools;
-import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
-import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.designHelpers.hintPanel.HintPanelTypes;
+import ussr.aGui.tabs.enumerations.hintPanel.HintsAssignLabelsTab;
+import ussr.aGui.tabs.enumerations.hintPanel.HintsConstructRobotTab;
 
 /**
  * Controls events of Construct Robot Tab  and underlying logic of simulator.
