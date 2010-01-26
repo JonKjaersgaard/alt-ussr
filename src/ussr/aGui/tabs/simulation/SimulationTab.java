@@ -149,7 +149,7 @@ public class SimulationTab extends Tabs {
 	}
 
 	/**
-	 * Initializes root tree node(simulation) including all sub nodes.
+	 * Initializes the root tree node(simulation) including all sub nodes.
 	 * @return simulation root tree node including all sub nodes.
 	 */
 	private DefaultMutableTreeNode initializeSimulationRootNode(){
@@ -287,17 +287,6 @@ public class SimulationTab extends Tabs {
 	}
 
 	/**
-	 * TODO Decide if needed.
-	 * @param enabled
-	 */
-	public static void setTabEnabled(boolean enabled){
-		jSplitPaneSimulationTreeAndEditor.setEnabled(enabled);
-		hintPanel.setEnabled(enabled);
-		
-
-	};
-
-	/**
 	 * Sets the tab visible or not.
 	 * @param visible, true for visible
 	 */
@@ -308,7 +297,8 @@ public class SimulationTab extends Tabs {
 	}
 
 	/**
-	 * TODO DECIDE IF NEEDED
+	 * Resizes all components of the tab in order to fit precisely with dimensions of tabbed pane,
+	 * which depends on the dimensions of different screens.
 	 */
 	public static void resizeComponents(){
 		int simulationTabIndex = 0;
@@ -317,8 +307,6 @@ public class SimulationTab extends Tabs {
 		int width = (int)MainFrames.getJTabbedPaneFirst().getWidth()-4*GuiFrames.VERTICAL_GAPS;
 		jSplitPaneSimulationTreeAndEditor.setPreferredSize(new Dimension(width,height));		
 		jSplitPaneSimulationTreeAndEditor.validate();	
-		
-
 	}
 
 	/**
@@ -379,9 +367,6 @@ public class SimulationTab extends Tabs {
 		return (DefaultTreeModel)jTreeSimulation.getModel();
 	}
 	
-	
-	
-	
 	private static javax.swing.JTree jTreeSimulation;
 	private static javax.swing.JScrollPane jScrollPaneTreeSimulation;
 
@@ -390,5 +375,4 @@ public class SimulationTab extends Tabs {
 	private static  DefaultMutableTreeNode firstNodeHierarchySimulation,secondNodeHierarchy,thirdNodeHierarchy;
 
 	private static javax.swing.JSplitPane jSplitPaneSimulationTreeAndEditor;
-
 }

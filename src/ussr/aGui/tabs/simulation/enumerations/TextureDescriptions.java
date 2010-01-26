@@ -11,8 +11,9 @@ import ussr.description.setup.WorldDescription.TextureDescription;
 
 /**
  * Contains constants of supported texture descriptions abstracted over their instances. 
- * NOTE NR.1: Add new textures  descriptions here in case of new ones required and in "WorldDescription". 
- * @author Konstantinas *
+ * NOTE NR.1: Add new textures  descriptions here in case of new ones required and in "WorldDescription".
+ * NOTE NR.2: This enumeration was introduced in order to separate GUI related manipulations on constants and the ones requires in underlying logic of USSR.   
+ * @author Konstantinas 
  */
 public enum TextureDescriptions {
 	
@@ -23,12 +24,14 @@ public enum TextureDescriptions {
 	WHITE_GRID_TEXTURE(WorldDescription.WHITE_GRID_TEXTURE,TabsInter.WHITE_GRID_TEXTURE),
 	WHITE_TEXTURE(WorldDescription.WHITE_TEXTURE,TabsInter.WHITE_TEXTURE);
 
-
 	/**
 	 * The texture description.
 	 */
 	private TextureDescription textureDescription;
 	
+	/**
+	 * The name of the file of texture image.
+	 */
 	private String fileName;
 	
 	/**
@@ -41,10 +44,6 @@ public enum TextureDescriptions {
 	 */
 	private ImageIcon imageIcon;
 
-	public ImageIcon getImageIcon() {
-		return imageIcon;
-	}
-
 	/**
 	 * Contains supported texture descriptions abstracted over their instances. 
      * NOTE: Add new textures  descriptions here in case of new ones required. 
@@ -55,6 +54,14 @@ public enum TextureDescriptions {
 		this.fileName = fileName;
 		this.imageDirectory = formatIconDirectory(fileName);
 		this.imageIcon = new ImageIcon(imageDirectory);
+	}
+	
+	/**
+	 * Returns the icon of texture.
+	 * @return the icon of texture.
+	 */
+	public ImageIcon getImageIcon() {
+		return imageIcon;
 	}
 	
 	/**
@@ -82,20 +89,6 @@ public enum TextureDescriptions {
 	private static String formatIconDirectory(String imageName){
 		return TabsInter.DIRECTORY_ICONS_TEXTURES+imageName+MainFramesInter.DEFAULT_ICON_EXTENSION1;
 	}
-	/**
-	 * TODO
-	 * Returns texture description constant from the 
-	 * @param texture
-	 * @return
-	 */
-	public static String getWorldDescriptionTexture(WorldDescription.TextureDescription texture){
-		
-		for (int textureNr=0;textureNr<TextureDescriptions.values().length;textureNr++){
-			TextureDescriptions.values()[textureNr].equals(texture);
-			return TextureDescriptions.values()[textureNr].name();
-		}		
-		return null;		
-	}
 	
 	/**
  	 * Returns the name of chosen enumeration with changes in it such that Java convention for constants(upper case) is replaced wit lower and
@@ -112,6 +105,10 @@ public enum TextureDescriptions {
  		return name;
  	}
  	
+ 	/**
+ 	 * Returns all constants in user friendly format.
+ 	 * @return all constants in user friendly format.
+ 	 */
  	public static Object[] getAllInUserFriendlyFromat(){
  		Vector <String> namesTetxtures = new Vector<String>();
  		for (int textureNr=0;textureNr<values().length;textureNr++){
@@ -120,9 +117,13 @@ public enum TextureDescriptions {
  		return namesTetxtures.toArray();
  	}
  	
+ 	/**
+ 	 * Converts user friendly name back to Java convention format.
+ 	 * @param userFriendlyTextureName, the name of the texture in user friendly format.
+ 	 * @return user friendly name converted back to Java convention format.
+ 	 */
  	public static String toJavaUSSRConvention(String textureName){
  		return (textureName+ "TEXTURE").replace(" ", "_").toUpperCase(); 
  	}
-	
 	
 	}

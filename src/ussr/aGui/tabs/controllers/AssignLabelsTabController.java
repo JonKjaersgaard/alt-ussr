@@ -7,20 +7,22 @@ import javax.swing.AbstractButton;
 import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
 import ussr.aGui.enumerations.tabs.EntitiesForLabelingText;
-import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
 import ussr.builder.enumerations.tools.LabeledEntities;
 import ussr.builder.enumerations.tools.LabelingTools;
 import ussr.builder.labelingTools.LabelingTemplate;
 
+/**
+ * Controls events from AssignLabelsTab (visual appearance).
+ * @author Konstantinas
+ *
+ */
 public class AssignLabelsTabController extends TabsControllers{
 
-	
 	/**
 	 * Current entity for labeling;
 	 */
 	private static String chosenRadioEntityText;
-	
 	
 	/**
 	 * @param button, radio button selected in GUI.
@@ -36,8 +38,6 @@ public class AssignLabelsTabController extends TabsControllers{
 		/*Initialize the tool for reading labels*/
 		jButtonReadLabelsActionPerformed();
 	}
-	
-
 	
 	/**
 	 * Updates table header according to the entity name selected in the button group.

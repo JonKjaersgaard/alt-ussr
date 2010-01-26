@@ -12,6 +12,12 @@ import ussr.aGui.tabs.visualizer.DrawingCanvas;
 import ussr.aGui.tabs.visualizer.ModuleCommunicationVisualizer;
 
 
+/**
+ * Controls events of ModuleCommunicationVisualizer tab (visual appearance).
+ * TODO NOT FINISHED YET.
+ * @author Konstantinas
+ *
+ */
 public class ModuleCommunicationVisualizerController extends TabsControllers {
 
 

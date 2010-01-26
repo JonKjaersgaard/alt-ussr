@@ -14,10 +14,10 @@ import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
 
-
 /**
  * Defines visual appearance of the tab called "Communication Visualizer".   
  * @author Konstantinas (Adapted Brian's code)
+ * FIXME NOT YET FINISHED.
  */
 public class ModuleCommunicationVisualizer extends Tabs {
 

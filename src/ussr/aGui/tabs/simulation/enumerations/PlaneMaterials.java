@@ -6,7 +6,8 @@ import ussr.physics.PhysicsParameters.Material;
 
 /**
  * Contains constants defining plane materials supported in USSR.
- * NOTE NR.1: Add new plane materials here in case of new ones required and in "Material". 
+ * NOTE NR.1: Add new plane material here in case of new ones required and in "Material".
+ * NOTE NR.2: This enumeration was introduced in order to separate GUI related manipulations on constants and the ones requires in underlying logic of USSR.   
  * @author Konstantinas
  */
 public enum PlaneMaterials {

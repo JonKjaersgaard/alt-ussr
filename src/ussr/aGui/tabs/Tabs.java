@@ -1,7 +1,5 @@
 package ussr.aGui.tabs;
 
-import java.util.ArrayList;
-import javax.swing.JComponent;
 
 import ussr.aGui.designHelpers.hintPanel.HintPanel;
 import ussr.aGui.designHelpers.hintPanel.HintPanelInter;

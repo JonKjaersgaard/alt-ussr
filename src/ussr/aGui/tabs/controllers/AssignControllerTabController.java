@@ -21,7 +21,7 @@ import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.helpers.FileDirectoryHelper;
 
 /**
- * Controls events of Assign controller tab(visual appearance). 
+ * Controls events of Assign Controller tab(visual appearance). 
  * @author Konstantinas
  */
 public class AssignControllerTabController extends TabsControllers {

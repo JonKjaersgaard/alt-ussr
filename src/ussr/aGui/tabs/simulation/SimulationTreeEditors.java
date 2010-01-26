@@ -14,13 +14,8 @@ import ussr.aGui.FramesInter;
 import ussr.aGui.MainFrames;
 import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.designHelpers.JComponentsFactory;
-import ussr.aGui.enumerations.MainFrameComponentsText;
-import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
-import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomized;
-import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
-import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
 import ussr.aGui.tabs.simulation.enumerations.CameraPositions;
 import ussr.aGui.tabs.simulation.enumerations.PlaneMaterials;
@@ -37,16 +32,11 @@ import ussr.builder.saveLoadXML.XMLTagsUsed;
  */
 public class SimulationTreeEditors{
 	
-
 	/**
 	 * The visual appearance of the editor for node called Robots.
 	 */
 	public final static javax.swing.JPanel ROBOTS_EDITOR =  addRobotsEditor();
 	
-	//public static SimulationSpecification userSimulationSpecification = SimulationTabController.getSimulationSpecification(); 
-	//= new SimulationSpecification();
-	
-
 	/**
 	 * Defines visual appearance of editor panel(edit value) for tree node called physics simulation step size.
 	 * @return jPanelEditor, the editor panel with new components in it.
@@ -59,8 +49,6 @@ public class SimulationTreeEditors{
 		jSpinnerPhysicsSimulationStepSize.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {            	
             	SimulationTabController.getSimulationSpecification().getSimPhysicsParameters().put(XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE, jSpinnerPhysicsSimulationStepSize.getValue().toString());
-            	//userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.PHYSICS_SIMULATION_STEP_SIZE, jSpinnerPhysicsSimulationStepSize.getValue().toString());
-            	System.out.println("PHYSICS_SIMULATION_STEP_SIZE:"+ jSpinnerPhysicsSimulationStepSize.getValue().toString());
             }
            
         });
@@ -81,8 +69,6 @@ public class SimulationTreeEditors{
 		jSpinnerResolutionFactor.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
             	SimulationTabController.getSimulationSpecification().getSimPhysicsParameters().put(XMLTagsUsed.RESOLUTION_FACTOR, jSpinnerResolutionFactor.getValue().toString());
-            	//userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.RESOLUTION_FACTOR, jSpinnerResolutionFactor.getValue().toString());
-            	System.out.println("RESOLUTION_FACTOR:"+ jSpinnerResolutionFactor.getValue().toString());
             }           
         });
 		jPanelTreeNode.add(jSpinnerResolutionFactor);	
@@ -97,7 +83,6 @@ public class SimulationTreeEditors{
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jPanelTreeNode.add(JComponentsFactory.createNewLabel(TabsComponentsText.LOAD_NEW_ROBOT.getUserFriendlyName()));
 		
-		
 		javax.swing.JButton jButtonOpen = JComponentsFactory.initOpenButton();	
 		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,7 +93,10 @@ public class SimulationTreeEditors{
 		return jPanelTreeNode;
 	}
 
-
+	/**
+	 * Returns the text field for displaying the directory of robot morphology xml file.
+	 * @return the text field for displaying the directory of robot morphology xml file.
+	 */
 	public static javax.swing.JTextField getJTextFieldMorphologyLocation() {
 		return jTextFieldMorphologyLocation;
 	}
@@ -140,12 +128,6 @@ public class SimulationTreeEditors{
 		constraintsjPanelMorphologyLocation.gridy = 0;
 		
 		jPanelMorphologyLocation.add(JComponentsFactory.createNewLabel("Morphology file location:"),constraintsjPanelMorphologyLocation);
-		
-		
-		//constraintsjPanelMorphologyLocation.fill = GridBagConstraints.HORIZONTAL;
-		//constraintsjPanelMorphologyLocation.gridx = 1;
-		//constraintsjPanelMorphologyLocation.gridy = 0;
-		//jPanelMorphologyLocation.add(Tabs.initOpenButton());
 		
 		jTextFieldMorphologyLocation.setPreferredSize(new Dimension(800,20));
 		jTextFieldMorphologyLocation.setText(" " );
@@ -269,8 +251,6 @@ public class SimulationTreeEditors{
 		constraintsJPanelMoveRobot.gridy = 1;	
 		jPanelMoveRobot.add(jButtonXpositive,constraintsJPanelMoveRobot);
 
-
-
 		jButtonYnegative.setToolTipText(TabsComponentsText.MOVE_DOWN.getUserFriendlyName());
 		jButtonYnegative.setIcon(TabsIcons.Y_NEGATIVE_BIG.getImageIcon());	
 		jButtonYnegative.setRolloverIcon(TabsIcons.Y_NEGATIVE_ROLLOVER_BIG.getImageIcon());		
@@ -314,8 +294,6 @@ public class SimulationTreeEditors{
 		return jPanelTreeNode;
 	}
 
-	
-
 	/**
 	 * Defines visual appearance of editor panel(edit value) for tree node called Plane Size.
 	 * @return jPanelEditor, the editor panel with new components in it.
@@ -328,18 +306,16 @@ public class SimulationTreeEditors{
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
             	
             	SimulationTabController.getSimulationSpecification().getSimWorldDecsriptionValues().put(XMLTagsUsed.PLANE_SIZE, jSpinnerPlaneSize.getValue().toString());
-            	//userSimulationSpecification.getSimWorldDecsriptionValues().put(XMLTagsUsed.PLANE_SIZE, jSpinnerPlaneSize.getValue().toString());
-            	System.out.println("PLANE_SIZE:"+ jSpinnerPlaneSize.getValue().toString());
-            	
-            	/*FOR TESTING*/
-            	Hashtable<XMLTagsUsed,String> table =  (Hashtable<XMLTagsUsed,String>)SimulationTabController.getSimulationSpecification().getSimPhysicsParameters();
+       
+            	/*FIXME FOR DEVELOPER. USE THIS TO PRINT OUT VALUES OF ALL NODES STORED IN THE MAP */
+            /*	Hashtable<XMLTagsUsed,String> table =  (Hashtable<XMLTagsUsed,String>)SimulationTabController.getSimulationSpecification().getSimPhysicsParameters();
             	
             	  for (Enumeration<XMLTagsUsed> e =table.keys() ; e.hasMoreElements();)
             	   {
             	       String str = (String) table.get( e.nextElement() );
             	   
             	       System.out.println (str);
-            	   }
+            	   }*/
             }           
         });
 		jPanelTreeNode.add(jSpinnerPlaneSize);
@@ -364,12 +340,9 @@ public class SimulationTreeEditors{
 		jComboBoxPlaneTexture.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SimulationTabController.jComboBoxPlaneTextureActionPerformed(jComboBoxPlaneTexture,iconLabel);
-				
 				String selectedTexture = TextureDescriptions.toJavaUSSRConvention(jComboBoxPlaneTexture.getSelectedItem().toString());
-				
 				SimulationTabController.getSimulationSpecification().getSimWorldDecsriptionValues().put(XMLTagsUsed.PLANE_TEXTURE,TextureDescriptions.valueOf(selectedTexture).getRawFileDirectoryName());
-				//userSimulationSpecification.getSimWorldDecsriptionValues().put(XMLTagsUsed.PLANE_TEXTURE,TextureDescriptions.valueOf(selectedTexture).getRawFileDirectoryName());
-				System.out.println("PLANE_TEXTURE:"+ TextureDescriptions.valueOf(selectedTexture).getRawFileDirectoryName());
+				//System.out.println("PLANE_TEXTURE:"+ TextureDescriptions.valueOf(selectedTexture).getRawFileDirectoryName());
 			}
 		});
 
@@ -404,12 +377,9 @@ public class SimulationTreeEditors{
 		jComboBoxCameraPosition.setModel(new DefaultComboBoxModel(CameraPositions.getAllInUserFriendlyFromat()));
 		jComboBoxCameraPosition.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-			
 				String selectedCameraPosition = CameraPositions.toJavaUSSRConvention(jComboBoxCameraPosition.getSelectedItem().toString());
-				
 				SimulationTabController.getSimulationSpecification().getSimWorldDecsriptionValues().put(XMLTagsUsed.CAMERA_POSITION,selectedCameraPosition);
-				//userSimulationSpecification.getSimWorldDecsriptionValues().put(XMLTagsUsed.CAMERA_POSITION,selectedCameraPosition);
-				System.out.println("CAMERA_POSITION:"+ selectedCameraPosition);
+				//System.out.println("CAMERA_POSITION:"+ selectedCameraPosition);
 				
 			}
 		});
@@ -428,10 +398,8 @@ public class SimulationTreeEditors{
 		jCheckBoxTheWorldIsFlat =  new javax.swing.JCheckBox ();
 		jCheckBoxTheWorldIsFlat.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				
 				SimulationTabController.getSimulationSpecification().getSimWorldDecsriptionValues().put(XMLTagsUsed.THE_WORLD_IS_FLAT,jCheckBoxTheWorldIsFlat.isSelected()+"");
-				//userSimulationSpecification.getSimWorldDecsriptionValues().put(XMLTagsUsed.THE_WORLD_IS_FLAT,jCheckBoxTheWorldIsFlat.isSelected()+"");
-				System.out.println("THE_WORLD_IS_FLAT:"+ jCheckBoxTheWorldIsFlat.isSelected()+"");
+				//System.out.println("THE_WORLD_IS_FLAT:"+ jCheckBoxTheWorldIsFlat.isSelected()+"");
 			}
 		});
 		jPanelTreeNode.add(jCheckBoxTheWorldIsFlat);
@@ -449,8 +417,7 @@ public class SimulationTreeEditors{
 		jCheckBoxHasBackgroundScenery.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SimulationTabController.getSimulationSpecification().getSimWorldDecsriptionValues().put(XMLTagsUsed.HAS_BACKGROUND_SCENERY,jCheckBoxHasBackgroundScenery.isSelected()+"");
-				//userSimulationSpecification.getSimWorldDecsriptionValues().put(XMLTagsUsed.HAS_BACKGROUND_SCENERY,jCheckBoxHasBackgroundScenery.isSelected()+"");
-				System.out.println("HAS_BACKGROUND_SCENERY:"+ jCheckBoxHasBackgroundScenery.isSelected()+"");
+				//System.out.println("HAS_BACKGROUND_SCENERY:"+ jCheckBoxHasBackgroundScenery.isSelected()+"");
 			}
 		});
 		jPanelTreeNode.add(jCheckBoxHasBackgroundScenery);
@@ -467,8 +434,7 @@ public class SimulationTreeEditors{
 		jCheckBoxHasHeavyObstacles.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				SimulationTabController.getSimulationSpecification().getSimWorldDecsriptionValues().put(XMLTagsUsed.HAS_HEAVY_OBSTACLES,jCheckBoxHasHeavyObstacles.isSelected()+"");
-				//userSimulationSpecification.getSimWorldDecsriptionValues().put(XMLTagsUsed.HAS_HEAVY_OBSTACLES,jCheckBoxHasHeavyObstacles.isSelected()+"");
-				System.out.println("HAS_HEAVY_OBSTACLES:"+ jCheckBoxHasHeavyObstacles.isSelected()+"");
+				//System.out.println("HAS_HEAVY_OBSTACLES:"+ jCheckBoxHasHeavyObstacles.isSelected()+"");
 			}
 		});
 		jPanelTreeNode.add(jCheckBoxHasHeavyObstacles);
@@ -485,8 +451,7 @@ public class SimulationTreeEditors{
 		jCheckBoxIsFrameGrabbingActive.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				SimulationTabController.getSimulationSpecification().getSimWorldDecsriptionValues().put(XMLTagsUsed.IS_FRAME_GRABBING_ACTIVE,jCheckBoxIsFrameGrabbingActive.isSelected()+"");
-				//userSimulationSpecification.getSimWorldDecsriptionValues().put(XMLTagsUsed.IS_FRAME_GRABBING_ACTIVE,jCheckBoxIsFrameGrabbingActive.isSelected()+"");
-				System.out.println("IS_FRAME_GRABBING_ACTIVE:"+ jCheckBoxIsFrameGrabbingActive.isSelected()+"");
+				//System.out.println("IS_FRAME_GRABBING_ACTIVE:"+ jCheckBoxIsFrameGrabbingActive.isSelected()+"");
 			}
 		});
 		jPanelTreeNode.add(jCheckBoxIsFrameGrabbingActive);
@@ -515,8 +480,7 @@ public class SimulationTreeEditors{
 		jSpinnerDampingLinearVelocity.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {            	
             	SimulationTabController.getSimulationSpecification().getSimPhysicsParameters().put(XMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY, jSpinnerDampingLinearVelocity.getValue().toString());
-            	//userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.WORLD_DAMPING_LINEAR_VELOCITY, jSpinnerDampingLinearVelocity.getValue().toString());
-            	System.out.println("WORLD_DAMPING_LINEAR_VELOCITY:"+ jSpinnerDampingLinearVelocity.getValue().toString());
+            	//System.out.println("WORLD_DAMPING_LINEAR_VELOCITY:"+ jSpinnerDampingLinearVelocity.getValue().toString());
             }           
         });
 		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
@@ -536,8 +500,7 @@ public class SimulationTreeEditors{
 		jSpinnerDampingAngularVelocity.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {            	
             	SimulationTabController.getSimulationSpecification().getSimPhysicsParameters().put(XMLTagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY, jSpinnerDampingAngularVelocity.getValue().toString());
-            	//userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.WORLD_DAMPING_ANGULAR_VELOCITY, jSpinnerDampingAngularVelocity.getValue().toString());
-            	System.out.println("WORLD_DAMPING_ANGULAR_VELOCITY:"+ jSpinnerDampingAngularVelocity.getValue().toString());
+            	//System.out.println("WORLD_DAMPING_ANGULAR_VELOCITY:"+ jSpinnerDampingAngularVelocity.getValue().toString());
             }           
         });
 		gridBagConstraintsDamping.fill = GridBagConstraints.HORIZONTAL;
@@ -547,9 +510,6 @@ public class SimulationTreeEditors{
 		jPanelTreeNode.add(jSpinnerDampingAngularVelocity,gridBagConstraintsDamping);	
 		return jPanelTreeNode;
 	}
-
-
-	
 
 	/**
 	 * Defines visual appearance of editor panel(edit value) for tree node called Realistic Collision.
@@ -561,8 +521,7 @@ public class SimulationTreeEditors{
 		jCheckBoxRealisticCollision.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				SimulationTabController.getSimulationSpecification().getSimPhysicsParameters().put(XMLTagsUsed.REALISTIC_COLLISION,jCheckBoxRealisticCollision.isSelected()+"");
-				//userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.REALISTIC_COLLISION,jCheckBoxRealisticCollision.isSelected()+"");
-				System.out.println("REALISTIC_COLLISION:"+ jCheckBoxRealisticCollision.isSelected()+"");
+				//System.out.println("REALISTIC_COLLISION:"+ jCheckBoxRealisticCollision.isSelected()+"");
 			}
 		});
 		jPanelTreeNode.add(jCheckBoxRealisticCollision);
@@ -581,8 +540,7 @@ public class SimulationTreeEditors{
 		jSpinnerGravity.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {            	
             	SimulationTabController.getSimulationSpecification().getSimPhysicsParameters().put(XMLTagsUsed.GRAVITY, jSpinnerGravity.getValue().toString());
-            	//userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.GRAVITY, jSpinnerGravity.getValue().toString());
-            	System.out.println("GRAVITY:"+ jSpinnerGravity.getValue().toString());
+            	//System.out.println("GRAVITY:"+ jSpinnerGravity.getValue().toString());
             }           
         });
 		jPanelTreeNode.add(jSpinnerGravity);	
@@ -601,8 +559,7 @@ public class SimulationTreeEditors{
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				PlaneMaterials selectedPlaneMaterial = PlaneMaterials.valueOf(PlaneMaterials.toJavaUSSRConvention(jComboBoxPlaneMaterial.getSelectedItem().toString()));
 				SimulationTabController.getSimulationSpecification().getSimPhysicsParameters().put(XMLTagsUsed.PLANE_MATERIAL,selectedPlaneMaterial.toString());
-				//userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.PLANE_MATERIAL,selectedPlaneMaterial.toString());
-				System.out.println("PLANE_MATERIAL:"+ selectedPlaneMaterial.toString());
+				//System.out.println("PLANE_MATERIAL:"+ selectedPlaneMaterial.toString());
 			}
 		});
 		jPanelTreeNode.add(jComboBoxPlaneMaterial);
@@ -620,8 +577,7 @@ public class SimulationTreeEditors{
 		jCheckBoxMaintainRotJointPositions.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				SimulationTabController.getSimulationSpecification().getSimPhysicsParameters().put(XMLTagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS,jCheckBoxMaintainRotJointPositions.isSelected()+"");
-				//userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.MAINTAIN_ROTATIONAL_JOINT_POSITIONS,jCheckBoxMaintainRotJointPositions.isSelected()+"");
-				System.out.println("MAINTAIN_ROTATIONAL_JOINT_POSITIONS:"+ jCheckBoxMaintainRotJointPositions.isSelected()+"");
+				//System.out.println("MAINTAIN_ROTATIONAL_JOINT_POSITIONS:"+ jCheckBoxMaintainRotJointPositions.isSelected()+"");
 			}
 		});
 		jPanelTreeNode.add(jCheckBoxMaintainRotJointPositions);
@@ -641,8 +597,7 @@ public class SimulationTreeEditors{
 		jSpinnerConstraintForceMix.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {            	
             	SimulationTabController.getSimulationSpecification().getSimPhysicsParameters().put(XMLTagsUsed.CONSTRAINT_FORCE_MIX, jSpinnerConstraintForceMix.getValue().toString());
-            	//userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.CONSTRAINT_FORCE_MIX, jSpinnerConstraintForceMix.getValue().toString());
-            	System.out.println("CONSTRAINT_FORCE_MIX:"+ jSpinnerConstraintForceMix.getValue().toString());
+            	//System.out.println("CONSTRAINT_FORCE_MIX:"+ jSpinnerConstraintForceMix.getValue().toString());
             }           
         });
 		jPanelTreeNode.add(jSpinnerConstraintForceMix);
@@ -661,8 +616,7 @@ public class SimulationTreeEditors{
 		jSpinnerErrorReductionParameter.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
             	SimulationTabController.getSimulationSpecification().getSimPhysicsParameters().put(XMLTagsUsed.ERROR_REDUCTION_PARAMETER, jSpinnerErrorReductionParameter.getValue().toString());
-            	//userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.ERROR_REDUCTION_PARAMETER, jSpinnerErrorReductionParameter.getValue().toString());
-            	System.out.println("ERROR_REDUCTION_PARAMETER:"+ jSpinnerErrorReductionParameter.getValue().toString());
+            	//System.out.println("ERROR_REDUCTION_PARAMETER:"+ jSpinnerErrorReductionParameter.getValue().toString());
             }           
         });
 		jPanelTreeNode.add(jSpinnerErrorReductionParameter);	
@@ -679,8 +633,7 @@ public class SimulationTreeEditors{
 		jCheckBoxUseMouseEventQueue.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SimulationTabController.getSimulationSpecification().getSimPhysicsParameters().put(XMLTagsUsed.USE_MODULE_EVENT_QUEUE,jCheckBoxUseMouseEventQueue.isSelected()+"");
-				//userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.USE_MODULE_EVENT_QUEUE,jCheckBoxUseMouseEventQueue.isSelected()+"");
-				System.out.println("USE_MODULE_EVENT_QUEUE:"+ jCheckBoxUseMouseEventQueue.isSelected()+"");
+				//System.out.println("USE_MODULE_EVENT_QUEUE:"+ jCheckBoxUseMouseEventQueue.isSelected()+"");
 			}
 		});
 		jPanelTreeNode.add(jCheckBoxUseMouseEventQueue);
@@ -697,8 +650,7 @@ public class SimulationTreeEditors{
 		jCheckBoxSynchronizeWithControllers.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
 				SimulationTabController.getSimulationSpecification().getSimPhysicsParameters().put(XMLTagsUsed.SYNC_WITH_CONTROLLERS,jCheckBoxSynchronizeWithControllers.isSelected()+"");
-				//userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.SYNC_WITH_CONTROLLERS,jCheckBoxSynchronizeWithControllers.isSelected()+"");
-				System.out.println("SYNC_WITH_CONTROLLERS:"+ jCheckBoxSynchronizeWithControllers.isSelected()+"");
+				//System.out.println("SYNC_WITH_CONTROLLERS:"+ jCheckBoxSynchronizeWithControllers.isSelected()+"");
 			}
 		});
 		jPanelTreeNode.add(jCheckBoxSynchronizeWithControllers);	
@@ -715,18 +667,19 @@ public class SimulationTreeEditors{
 		jSpinnerPhysicsSimContStepFactor.setPreferredSize(new Dimension(60,20));
 		jSpinnerPhysicsSimContStepFactor.setModel(new javax.swing.SpinnerNumberModel(1, null, null, 1));
 		jSpinnerPhysicsSimContStepFactor.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-            	
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {	
             	SimulationTabController.getSimulationSpecification().getSimPhysicsParameters().put(XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR, jSpinnerPhysicsSimContStepFactor.getValue().toString());
-            	//userSimulationSpecification.getSimPhysicsParameters().put(XMLTagsUsed.PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR, jSpinnerPhysicsSimContStepFactor.getValue().toString());
-            	System.out.println("PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR:"+ jSpinnerPhysicsSimContStepFactor.getValue().toString());
+            	//System.out.println("PHYSICS_SIMULATION_CONTROLLER_STEP_FACTOR:"+ jSpinnerPhysicsSimContStepFactor.getValue().toString());
             }           
         });
 		jPanelTreeNode.add(jSpinnerPhysicsSimContStepFactor);
 		return jPanelTreeNode;
 	}
 
-	public static void update (){
+	/**
+	 * Updates the values of components in Edit value panel for most of nodes in simulation tree.
+	 */
+	public static void updateValuesEditors (){
 		
 		/*World Description*/
 		SimulationTabController.setJSpinnerPlaneSizeValue(jSpinnerPlaneSize);
@@ -754,18 +707,6 @@ public class SimulationTreeEditors{
 		SimulationTabController.setValuejPhysicsSimulationControllerStepFactor(jSpinnerPhysicsSimContStepFactor);
 		
 	}
-
-/*	public static void addMorphologyEditor() {
-		Map<String,String> fileDescriptionsAndExtensions= new HashMap<String,String>();
-		fileDescriptionsAndExtensions.put(FileChooserFrameInter.ROBOT_FILE_DESCRIPTION, FileChooserFrameInter.DEFAULT_FILE_EXTENSION);
-		//System.out.println("BOOO"+RobotSpecification.getMorphologyLocation());
-
-		//FileChooserFrameInter fcOpenFrame = new FileChooserOpenFrame(fileDescriptionsAndExtensions,FileChooserFrameInter.FC_XML_CONTROLLER,TemporaryRobotSpecification.getMorphologyLocation());
-		//fcOpenFrame.setSelectedFile(new File("some.xml"));
-
-		//jPanelEditor.add(MainFrames.initOpenButton(fcOpenFrame));
-	}*/
-
 
 	private static javax.swing.JButton jButtonYpositive,jButtonYnegative,
 	jButtonXpositive,jButtonXnegative,jButtonZpositive,jButtonZnegative,jButtonDeleteRobot;

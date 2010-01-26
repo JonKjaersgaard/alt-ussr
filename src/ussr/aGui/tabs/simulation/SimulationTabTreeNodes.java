@@ -6,7 +6,6 @@ import ussr.aGui.GuiFrames;
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
 import ussr.builder.saveLoadXML.XMLTagsUsed;
 
-
 /**
  * Contains the names of nodes displayed in Simulation tab tree view.
  * Moreover, associates each name with its: 1)placement in the tree view (for instance: FIRST- is parent of SECOND - which in turn is parent of THIRD),

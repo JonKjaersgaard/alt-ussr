@@ -25,9 +25,12 @@ import ussr.comm.Packet;
 import ussr.comm.monitors.visualtracker.CommunicationContainer;
 import ussr.model.Module;
 import ussr.physics.PhysicsFactory;
-import ussr.physics.jme.JMESimulation;
 import ussr.util.Pair;
 
+/**
+ * @author Konstantinas (Modified Brian's code)
+ *  FIXME NOT YET FINISHED.
+ */
 public class DrawingCanvas extends JPanel implements CommunicationMonitor {
 
 	private static final long serialVersionUID = 1L;

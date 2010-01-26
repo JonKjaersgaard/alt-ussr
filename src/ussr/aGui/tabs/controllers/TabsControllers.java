@@ -1,7 +1,11 @@
 package ussr.aGui.tabs.controllers;
 
 import ussr.aGui.controllers.GeneralController;
-import ussr.remote.facade.BuilderControlInter;
 
+/**
+ * So far is used to keep consistency in architectural structure.
+ * @author Konstantinas
+ *
+ */
 public abstract class TabsControllers extends GeneralController{
 }

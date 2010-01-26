@@ -7,6 +7,7 @@ import ussr.description.setup.WorldDescription.CameraPosition;
 /**
  * Contains constants defining camera positions supported in USSR.
  * NOTE NR.1: Add new camera positions here in case of new ones required and in "CameraPosition".
+ * NOTE NR.2: This enumeration was introduced in order to separate GUI related manipulations on constants and the ones requires in underlying logic of USSR.  
  * @author Konstantinas
  */
 public enum CameraPositions {

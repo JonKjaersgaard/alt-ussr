@@ -15,7 +15,6 @@ import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
 import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
 import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 
-
 /**
  * Controls events of Construct Robot Tab  and underlying logic of simulator.
  * @author Konstantinas
@@ -137,7 +136,7 @@ public class ConstructRobotTabController extends TabsControllers{
 
 	/**
 	 * Colors connectors of modules with color coding. 
-	 * @param toggleButtonColorConnetors 
+	 * @param toggleButtonColorConnetors, the component in GUI. 
 	 */
 	public static void jButtonColorConnectorsActionPerformed(JToggleButton toggleButtonColorConnetors) {	
 		try {
@@ -153,7 +152,7 @@ public class ConstructRobotTabController extends TabsControllers{
 
 	/**
 	 * Enables or disables the components in  toolbar because of missing implementation for robot.
-	 * TODO WILL CHANGE WITH ADDDING ROBOT SUPPORT.
+	 * TODO SO FAR IS NOT USED.
 	 * @param jComboBoxEntity
 	 */
 	public static void jComboBoxEntityActionPerformed(JComboBox jComboBoxEntity) {
@@ -162,13 +161,11 @@ public class ConstructRobotTabController extends TabsControllers{
 			//ConstructRobotTab.setEnabledGenericToolBar(true);
 		}else if(chosenItem.equalsIgnoreCase("Robot")){
 			//TODO  Support robot deletion, moving and coloring of connectors.
-			//ConstructRobotTab.setEnabledGenericToolBar(false);
 		}		
 	}
 
 	/**
-	 * Initializes the tool for rotating modules selected in simulation environment with opposite rotation. 
-	 * @param jmeSimulation, the physical simulation.     
+	 * Initializes the tool for rotating modules selected in simulation environment with opposite rotation.     
 	 */	
 	public static void jButtonOppositeRotationActionPerformed() {
 		try {
@@ -187,7 +184,7 @@ public class ConstructRobotTabController extends TabsControllers{
 	public static String chosenStandardRotation;
 
 	/**
-	 * Initializes the tool for rotating initial module selected in simulation environment with standard rotations chosen in GUI. 
+	 * Initializes the tool for rotating initial module selected in simulation environment with standard rotations chosen in GUI component. 
 	 * @param comboBoxStandardRotations, the GUI component.  
 	 */	
 	public static void jComboBoxStandardRotationsActionPerformed(JComboBox comboBoxStandardRotations) {
@@ -203,7 +200,7 @@ public class ConstructRobotTabController extends TabsControllers{
 	}
 
 	/**
-	 * Initializes the tool for adding new modules on selected connectors of the module in interest in simulation environment. 	
+	 * Initializes the tool for adding new modules on selected connectors of the module in interest, in simulation environment. 	
 	 */
 	public static void jButtonOnSelectedConnectorActionPerformed() {
 		ConstructRobotTab.adaptToSelectedConstructionTool();		
@@ -281,8 +278,6 @@ public class ConstructRobotTabController extends TabsControllers{
 		ConstructRobotTab.getHintPanel().setText(HintsConstructRobotTab.ON_ALL_CONNECTORS.getHintText());
 
 	}
-
-
 
 	/**
 	 * Initializes the tool for moving new module from connector to another connector.
@@ -429,7 +424,6 @@ public class ConstructRobotTabController extends TabsControllers{
 		} catch (RemoteException e) {
 			throw new Error("Failed to initate picker called"+ConstructionTools.AVAILABLE_ROTATIONS.toString() +", due to remote exception");
 		}
-
 
 		/*Informing user*/
 		ConstructRobotTab.getHintPanel().setType(HintPanelTypes.INFORMATION);

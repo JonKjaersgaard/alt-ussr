@@ -28,7 +28,6 @@ import ussr.builder.enumerations.rotations.ATRONStandardRotations;
 import ussr.builder.enumerations.rotations.CKBotStandardRotations;
 import ussr.builder.enumerations.rotations.MTRANStandardRotations;
 
-
 /**
  * Defines visual appearance of the tab called "Construct Robot".  
  * @author Konstantinas
