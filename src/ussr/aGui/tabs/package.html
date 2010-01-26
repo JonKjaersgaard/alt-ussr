@@ -2,10 +2,35 @@
 <p>Contains implementation of tabs integrated in main GUI window.</p>
 
 <hr/>
-<h1> 1.) How to ...</h1>
+<h1> 1.) How to ...?</h1>
 <h2> 1.1) Add new Tab </h2>
-<p> Look example highlighted with purple color in the diagram beneath.</p>
+<p> Look example highlighted with purple color in the diagram beneath. The same example can be found in the form of code in current package and "ussr.aGui.tabs.controllers". It is commented, so start from there.</p>
 <img src ="../../../../doc/developer/guiPackage/ussr_aGui_tabs.jpg" title= "Design class diagram with focus on tabs">
 <br/>
 <br/>
+<h2> 1.2) Add new node and editor for it in simulation three view? </h2>
+Follow instructions described here: <a href ="../tabs/simulation/SimulationTabTreeNodes.java"> ussr.aGui.tabs.simulation.SimulationTabTreeNodes.java</a>
+
+<h2> 1.3) Add new icons used only in tabs?</h2>
+<p>Look here: <a href ="../tabs/enumerations/TabsIcons.java"> ussr.aGui.tabs.enumerations.TabsIcons.java </a></p>
+
+
+<h2> 1.4) Change or modify text(label) or tooltip of components in the tabs?</h2>
+<p>Re-factor desired one here: <a href ="../tabs/enumerations/TabsComponentsText.java"> ussr.aGui.tabs.enumerations.TabsComponentsText.java </a></p>
+
+<h2> 1.5) Find out where implementation of specific tab is located</h2>
+<table border ="8">
+<thead><tr> <th>Tab Title</th>  <th>Location                        </th></thead>     
+<tbody>
+<tr> <td>Simulation                    </td> <td> <a href ="../tabs/simulation/SimulationTab.java"> ussr.aGui.tabs.simulation.SimulationTab.java </a>            </td>    
+<tr> <td>Construct Robot                                       </td> <td> <a href ="../tabs/constructionTabs/ConstructRobotTab.java"> ussr.aGui.tabs.constructionTabs.ConstructRobotTab.java </a>                  </td>    
+<tr> <td>AssignLabels                                       </td> <td> <a href ="../tabs/constructionTabs/AssignLabelsTab.java"> ussr.aGui.tabs.constructionTabs.AssignLabelsTab.java </a>                    </td>    
+<tr> <td>AssignController                                       </td> <td> <a href ="../tabs/constructionTabs/AssignControllerTab.java"> ussr.aGui.tabs.constructionTabs.AssignControllerTab.java </a>                 </td>
+<tr> <td>Communication visualizer                                     </td> <td> <a href ="../tabs/visualizer/ModuleCommunicationVisualizer.java"> ussr.aGui.tabs.visualizer.ModuleCommunicationVisualizer.java </a>                 </td>     
+<tr> <td>Your new tab                                       </td> <td> The same package as this document (you are reading) </a>
+</tbody>
+</table>
+Controllers of above tabs are located in "ussr.aGui.tabs.controllers" package.
+
+ussr.aGui.tabs.constructionTabs
 </body>

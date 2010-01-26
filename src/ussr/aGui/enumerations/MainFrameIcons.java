@@ -11,6 +11,8 @@ import ussr.aGui.MainFramesInter;
  * their names and common extension. Moreover, to keep icons localized (in one place) and easy to refer to.
  * NOTE NR3: Here are used constants of file names as arguments. The main reason for doing so is to
  * keep ability to specify the directory, icon name and extension directly without using this enumeration.
+ * NOTE NR4: Add your new icons here, however only the ones used in MainFrame, but not in tabs.
+ * Icons used only in tabs should be supported in: ussr.aGui.tabs.enumerations.TabsIcons.java.
  * @author Konstantinas
  */
 public enum MainFrameIcons{
@@ -80,6 +82,8 @@ public enum MainFrameIcons{
     CONSOLE (MainFramesInter.CONSOLE),
     
     YOUR_NEW_TAB(MainFramesInter.YOUR_NEW_TAB),
+    
+    //YOUR NEW MAINFRAME ICON
 	;
 	
 	/**
