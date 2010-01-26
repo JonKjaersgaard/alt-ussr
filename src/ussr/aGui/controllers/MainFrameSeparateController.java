@@ -10,7 +10,6 @@ import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFrameSeparate;
 import ussr.aGui.MainFrames;
 import ussr.aGui.MainFramesInter;
-import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.enumerations.JOptionPaneMessages;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
@@ -27,6 +26,7 @@ import ussr.aGui.tabs.constructionTabs.ConstructRobotTab;
 import ussr.aGui.tabs.controllers.AssignControllerTabController;
 import ussr.aGui.tabs.controllers.ConstructRobotTabController;
 import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
+import ussr.aGui.tabs.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.remote.facade.RendererControlInter;
 

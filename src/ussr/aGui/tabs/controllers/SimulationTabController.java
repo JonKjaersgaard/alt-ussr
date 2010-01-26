@@ -13,9 +13,9 @@ import javax.swing.JSpinner;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-import ussr.aGui.designHelpers.JComponentsFactory;
-import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.enumerations.tabs.TabsIcons;
+import ussr.aGui.tabs.designHelpers.JComponentsFactory;
+import ussr.aGui.tabs.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.simulation.SimulationTab;
 import ussr.aGui.tabs.simulation.SimulationTabTreeNodes;
 import ussr.aGui.tabs.simulation.SimulationTreeEditors;

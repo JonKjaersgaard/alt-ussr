@@ -11,7 +11,6 @@ import javax.swing.event.ChangeListener;
 
 import ussr.aGui.controllers.GeneralController;
 import ussr.aGui.controllers.MainFrameSeparateController;
-import ussr.aGui.designHelpers.JComponentsFactory;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.MainFrameComponentsText;
 import ussr.aGui.fileChoosing.FileChoosingInter;
@@ -19,6 +18,7 @@ import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedInter;
 import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
 import ussr.aGui.tabs.TabsInter;
 import ussr.aGui.tabs.constructionTabs.ConstructionTabs;
+import ussr.aGui.tabs.designHelpers.JComponentsFactory;
 import ussr.remote.GUIRemoteSimulationAdapter;
 
 /**

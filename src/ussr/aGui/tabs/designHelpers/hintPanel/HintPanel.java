@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import javax.swing.GroupLayout;
 import javax.swing.JPanel;
 
-import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 
 
 /**

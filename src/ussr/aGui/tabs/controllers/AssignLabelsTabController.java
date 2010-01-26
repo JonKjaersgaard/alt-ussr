@@ -4,10 +4,10 @@ import java.rmi.RemoteException;
 
 import javax.swing.AbstractButton;
 
-import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
 import ussr.aGui.enumerations.tabs.EntitiesForLabelingText;
 import ussr.aGui.tabs.constructionTabs.AssignLabelsTab;
+import ussr.aGui.tabs.designHelpers.hintPanel.HintPanelTypes;
 import ussr.builder.enumerations.tools.LabeledEntities;
 import ussr.builder.enumerations.tools.LabelingTools;
 import ussr.builder.labelingTools.LabelingTemplate;

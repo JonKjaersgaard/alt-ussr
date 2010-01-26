@@ -10,9 +10,9 @@ import javax.swing.AbstractButton;
 import javax.swing.ButtonModel;
 import javax.swing.JToggleButton;
 
-import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.constructionTabs.AssignControllerTab;
 import ussr.aGui.tabs.constructionTabs.AssignableControllers;
+import ussr.aGui.tabs.designHelpers.hintPanel.HintPanelTypes;
 
 import ussr.builder.controllerAdjustmentTool.AssignControllerTool;
 import ussr.builder.controllerAdjustmentTool.ControllerStrategy;
