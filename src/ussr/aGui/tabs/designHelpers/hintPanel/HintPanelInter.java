@@ -1,4 +1,4 @@
-package ussr.aGui.designHelpers.hintPanel;
+package ussr.aGui.tabs.designHelpers.hintPanel;
 
 
 /**

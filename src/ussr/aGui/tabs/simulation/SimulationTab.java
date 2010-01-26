@@ -20,13 +20,13 @@ import javax.swing.tree.TreeSelectionModel;
 
 import ussr.aGui.GuiFrames;
 import ussr.aGui.MainFrames;
-import ussr.aGui.designHelpers.hintPanel.HintPanel;
 import ussr.aGui.enumerations.hintpanel.HintsSimulationTab;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
+import ussr.aGui.tabs.designHelpers.hintPanel.HintPanel;
 import ussr.builder.simulationLoader.SimulationSpecification;
 
 /**

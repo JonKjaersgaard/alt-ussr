@@ -8,9 +8,9 @@ import java.awt.Insets;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 
-import ussr.aGui.designHelpers.hintPanel.HintPanel;
 import ussr.aGui.enumerations.hintpanel.HintsYourNewTab;
 import ussr.aGui.tabs.controllers.YourNewTabController;
+import ussr.aGui.tabs.designHelpers.hintPanel.HintPanel;
 
 
 /**

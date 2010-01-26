@@ -17,7 +17,6 @@ import ussr.aGui.FramesInter;
 import ussr.aGui.MainFrames;
 import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.designHelpers.JComponentsFactory;
-import ussr.aGui.designHelpers.hintPanel.HintPanel;
 import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.enumerations.hintpanel.HintsAssignLabelsTab;
 import ussr.aGui.enumerations.hintpanel.HintsConstructRobotTab;
@@ -25,6 +24,7 @@ import ussr.aGui.enumerations.tabs.EntitiesForLabelingText;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 import ussr.aGui.tabs.controllers.AssignLabelsTabController;
+import ussr.aGui.tabs.designHelpers.hintPanel.HintPanel;
 
 /**
  * Defines visual appearance of tab named as Assign Labels. 

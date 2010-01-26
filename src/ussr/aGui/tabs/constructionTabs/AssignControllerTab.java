@@ -14,13 +14,13 @@ import javax.swing.JToolBar;
 
 import ussr.aGui.FramesInter;
 import ussr.aGui.controllers.MainFrameSeparateController;
-import ussr.aGui.designHelpers.hintPanel.HintPanel;
 import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.enumerations.hintpanel.HintsAssignControllersTab;
 import ussr.aGui.enumerations.tabs.TabsComponentsText;
 import ussr.aGui.enumerations.tabs.TabsIcons;
 
 import ussr.aGui.tabs.controllers.AssignControllerTabController;
+import ussr.aGui.tabs.designHelpers.hintPanel.HintPanel;
 import ussr.builder.enumerations.SupportedModularRobots;
 
 /**

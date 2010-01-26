@@ -8,7 +8,6 @@ import javax.swing.JToolBar;
 import ussr.aGui.MainFrames;
 
 import ussr.aGui.controllers.MainFrameSeparateController;
-import ussr.aGui.designHelpers.ComboBoxRenderer;
 import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.enumerations.ComponentsFrame;
 import ussr.aGui.enumerations.JOptionPaneMessages;
@@ -19,6 +18,7 @@ import ussr.aGui.enumerations.tabs.IconsNumbersConnectors;
 
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
+import ussr.aGui.tabs.designHelpers.ComboBoxRenderer;
 import ussr.builder.enumerations.SupportedModularRobots;
 
 /**

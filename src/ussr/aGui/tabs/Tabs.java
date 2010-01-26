@@ -1,8 +1,8 @@
 package ussr.aGui.tabs;
 
 
-import ussr.aGui.designHelpers.hintPanel.HintPanel;
-import ussr.aGui.designHelpers.hintPanel.HintPanelInter;
+import ussr.aGui.tabs.designHelpers.hintPanel.HintPanel;
+import ussr.aGui.tabs.designHelpers.hintPanel.HintPanelInter;
 
 /**
  * Supports definitions of visual appearance for tabs plugged-in the main GUI window.

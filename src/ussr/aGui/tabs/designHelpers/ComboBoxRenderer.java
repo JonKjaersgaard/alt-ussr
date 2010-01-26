@@ -1,4 +1,4 @@
-package ussr.aGui.designHelpers;
+package ussr.aGui.tabs.designHelpers;
 
 import java.awt.Component;
 import javax.swing.ImageIcon;

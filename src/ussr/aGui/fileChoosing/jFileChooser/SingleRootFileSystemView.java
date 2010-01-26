@@ -1,4 +1,4 @@
-package ussr.aGui.fileChoosing;
+package ussr.aGui.fileChoosing.jFileChooser;
 
 import java.io.*;
 
