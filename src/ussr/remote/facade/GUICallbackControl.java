@@ -3,8 +3,8 @@ package ussr.remote.facade;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import ussr.aGui.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.constructionTabs.AssignableControllersEditors;
+import ussr.aGui.tabs.designHelpers.hintPanel.HintPanelTypes;
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.enumerations.tools.ConstructionTools;
 import ussr.builder.simulationLoader.SimulationSpecification;
