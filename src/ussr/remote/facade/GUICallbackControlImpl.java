@@ -86,6 +86,9 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 		return SimulationTabController.getSimulationSpecification();
 	}
 
+	/**
+	 * 
+	 */
 	private static boolean fromSimulationXMLFile= false;
 
 	public static void setFromSimulationXMLFile(boolean fromSimulationXMLFile) {
@@ -97,39 +100,69 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 		SimulationTabController.setSimulationSpecification(simulationSpecification);
 	}
 
+	
+	/**
+	 * Returns default construction module type chosen by user in GUI.
+	 * @return default construction module type chosen by user in GUI.
+	 */
 	public String getDefaultConstructionModuleType()throws RemoteException{
-
 		return ConstructRobotTab.getDefaultConstructionModuleType();
 	}
 
+	/**
+	 * Returns the value in jSpinner associated with controller "rotate continuous" for Atron.
+	 * @return the value in jSpinner associated with controller "rotate continuous" for Atron.
+	 * @throws RemoteException
+	 */
 	public Float getValueJSpinnerAtronSpeedRotateContinuous()throws RemoteException{
 		return AssignableControllersEditors.getValueJSpinnerAtronSpeedRotateContinuous();
 	}
 	
+	/**
+	 * Returns the value in jSpinner associated with controller "rotate degrees" for Atron.
+	 * @return the value in jSpinner associated with controller "rotate degrees" for Atron.
+	 */
 	public Integer getValuejSpinnerAtronRotateDegrees()throws RemoteException{
 		return AssignableControllersEditors.getValuejSpinnerAtronRotateDegrees();
 	}
 
-	@Override
+	/**
+	 * Returns the nr. of connector selected by user.
+	 * @return the nr. of connector selected by user.
+	 */
 	public Integer getValueAtronNrsConnectors() throws RemoteException {	
 		return AssignableControllersEditors.getValueAtronNrsConnectors();
 	}
 
-	@Override
+	/**
+	 * Returns the value in jSpinner associated with controller actuate continuously for Odin.
+	 * @return the value in jSpinner associated with controller actuate continuously for Odin.
+	 */
 	public Float getValuejSpinnerOdinActuateContinuously() throws RemoteException {		
 		return AssignableControllersEditors.getValuejSpinnerOdinActuateContinuously();
-	}
+	}	
 	
-	
-
+	/**
+	 * Returns selected number of actuator associated with controller(rotate continuous) implemented for MTRAN.
+	 * @return selected number of actuator associated with controller(rotate continuous) implemented for MTRAN.
+	 */
 	public int getSelectedjComboBoxMtranNrsActuators() throws RemoteException {		
 		return AssignableControllersEditors.getSelectedjComboBoxMtranNrsActuators();
 	}
 	
+	/**
+	 * Returns the value of jSpinner associated with controller rotate continuously for M-Tran.
+	 * @return the value of jSpinner associated with controller rotate continuously for M-Tran.
+	 * @throws RemoteException
+	 */
 	public int getValuejSpinnerMtranRotateContinuously() throws RemoteException {		
 		return AssignableControllersEditors.getValuejSpinnerMtranRotateContinuously();
 	}
 	
+	/**
+	 * Sets remote simulation to null and disables GUI in relation to that.
+	 * @throws RemoteException
+	 */
 	public void setRemoteSimulationToNull()throws RemoteException {
 		GeneralController.setRemotePhysicsSimulation(null);
 		if (MainFrames.getMainFrame() != null){
@@ -138,11 +171,11 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 		}	
 	}
 	
+	/**
+	 * Sets the name of default construction module type in Construct Robot Tab.
+	 * @param defaultConstructionModuleType,the name of default module type. 
+	 */
 	public void setSelectedDefaultConstructionModule(Object defaultConstructionModuleType)throws RemoteException{
 		ConstructRobotTab.setSelectedDefaultConstructionModule(defaultConstructionModuleType);
 	}
-
-
-
-
 }

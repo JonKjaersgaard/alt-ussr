@@ -8,7 +8,6 @@ import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.enumerations.tools.ConstructionTools;
 import ussr.builder.enumerations.tools.LabeledEntities;
 import ussr.builder.enumerations.tools.LabelingTools;
-import ussr.builder.saveLoadXML.UssrXmlFileTypes;
 
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModulePosition;
@@ -17,8 +16,7 @@ import ussr.model.Module;
 
 
 /**
- * Provides builder (construction of modular robot morphology and assignment of controller) with control
- * of remote simulation.
+ * Provides builder(package "ussr.builder" ) with control of remote simulation.
  * @author Konstantinas
  */
 public interface BuilderControlInter extends Remote {
@@ -66,12 +64,19 @@ public interface BuilderControlInter extends Remote {
 	public void setAdjustControllerPicker(String controllerLocationDirectory)throws RemoteException;
 	
 	/**
-	 * 
-	 * @param toolName
+	 * Sets the picker for reading labels of entities in simulation environment.
+	 * @param entityName, supported entity name,
+	 * @param toolName, supported tool name. 
 	 */
 	public void setLabelingToolReadLabels(LabeledEntities entityName,LabelingTools toolName)throws RemoteException;
 	
-	
+	/**
+	 * Sets the picker for assigning labels to entities in simulation environment.
+	 * @param entityName, supported entity name.
+	 * @param toolName,supported tool name.
+	 * @param labels, the labels to be assigned.
+	 * @throws RemoteException
+	 */
 	public void setLabelingToolAssignLabels(LabeledEntities entityName,LabelingTools toolName, String labels)throws RemoteException;
 	
 	/**
@@ -98,20 +103,11 @@ public interface BuilderControlInter extends Remote {
 	public  void connectAllModules()throws RemoteException;
 	
 	/**
-	 * Returns the type of the module from the end of the list of modules in simulation environment.
-	 * @param amountFromLastMode, amount of modules from the last module in the list.
-	 * @return String, the type of requested module from the end of the list. 
-	 */
-	public String getModuleCountingFromEndType(int amountFromLastMode ) throws RemoteException;
-	
-	/**
 	 * Returns the type of the module according to its number sequence in the list of modules.
 	 * @param moduleNr, number of the module in the list of modules.
 	 * @return type, the type of the module.
 	 */
 	public String getModuleType(int moduleNr) throws RemoteException;
-
-	public Module createModule(ModulePosition position, boolean assign)throws RemoteException;
 	
 	/**
 	 * Returns the list of IDs of all modules in simulation environment.
@@ -119,10 +115,11 @@ public interface BuilderControlInter extends Remote {
 	 */
 	public List<Integer> getIDsModules()throws RemoteException;
 	
-	
-	public int getAmountModules()throws RemoteException;
-
-	public void loadInXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException;
+	/**
+	 * Loads robot morphology from robot xml file.
+	 * @param fileDirectoryName, the directory of robot xml file.
+	 */
+	public void loadRobotXML(String fileDirectoryName) throws RemoteException;
 	
 	/**
 	 * Colors connectors of all modules with color coding.
@@ -134,5 +131,4 @@ public interface BuilderControlInter extends Remote {
 	 */
 	public void restoreOriginalColorsConnectors()throws RemoteException;
 	
-	//public boolean isNewModuleAdded(int lastCheckAmountModules)throws RemoteException;
 }

@@ -3,7 +3,6 @@ package ussr.remote.facade;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import ussr.aGui.tabs.constructionTabs.AssignableControllersEditors;
 import ussr.aGui.tabs.designHelpers.hintPanel.HintPanelTypes;
 import ussr.builder.enumerations.SupportedModularRobots;
 import ussr.builder.enumerations.tools.ConstructionTools;
@@ -54,27 +53,61 @@ public interface GUICallbackControl extends Remote {
 	public SimulationSpecification getSimulationSpecification() throws RemoteException;
 	
 	public void newRobotLoaded(SimulationSpecification simulationSpecification)throws RemoteException;
-	
-	//public void adaptTabToModuleInSimulation()throws RemoteException;
-	
+		
+	/**
+	 * Returns default construction module type chosen by user in GUI.
+	 * @return default construction module type chosen by user in GUI.
+	 */
 	public String getDefaultConstructionModuleType()throws RemoteException;
 	
+	/**
+	 * Returns the value in jSpinner associated with controller "rotate continuous" for Atron.
+	 * @return the value in jSpinner associated with controller "rotate continuous" for Atron.
+	 * @throws RemoteException
+	 */
 	public Float getValueJSpinnerAtronSpeedRotateContinuous()throws RemoteException;
 	
+	/**
+	 * Returns the value in jSpinner associated with controller "rotate degrees" for Atron.
+	 * @return the value in jSpinner associated with controller "rotate degrees" for Atron.
+	 */
 	public Integer getValuejSpinnerAtronRotateDegrees()throws RemoteException;	
 	
+	/**
+	 * Returns the nr. of connector selected by user.
+	 * @return the nr. of connector selected by user.
+	 */
 	public  Integer getValueAtronNrsConnectors()throws RemoteException;
 	
 	
+	/**
+	 * Returns the value in jSpinner associated with controller actuate continuously for Odin.
+	 * @return the value in jSpinner associated with controller actuate continuously for Odin.
+	 */
 	public  Float getValuejSpinnerOdinActuateContinuously()throws RemoteException;
 	
+	/**
+	 * Returns selected number of actuator associated with controller(rotate continuous) implemented for MTRAN.
+	 * @return selected number of actuator associated with controller(rotate continuous) implemented for MTRAN.
+	 */
 	public int getSelectedjComboBoxMtranNrsActuators() throws RemoteException;
 	
+	/**
+	 * Returns the value of jSpinner associated with controller rotate continuously for M-Tran.
+	 * @return the value of jSpinner associated with controller rotate continuously for M-Tran.
+	 */
 	public int getValuejSpinnerMtranRotateContinuously() throws RemoteException;
 	
+	/**
+	 * Sets remote simulation to null and disables GUI in relation to that.
+	 * @throws RemoteException
+	 */
 	public void setRemoteSimulationToNull()throws RemoteException;
 	
-	
+	/**
+	 * Sets the name of default construction module type in Construct Robot Tab.
+	 * @param defaultConstructionModuleType,the name of default module type. 
+	 */
 	public void setSelectedDefaultConstructionModule(Object defaultConstructionModuleType)throws RemoteException;
 	
 

@@ -31,13 +31,10 @@ import ussr.description.geometry.RotationDescription;
 import ussr.description.geometry.VectorDescription;
 import ussr.description.setup.ModuleConnection;
 import ussr.description.setup.ModulePosition;
-import ussr.model.Controller;
 import ussr.model.Module;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.PhysicsPicker;
-import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONBuilder;
-import ussr.samples.atron.simulations.ATRONCarController1;
 import ussr.samples.ckbot.CKBotSimulation;
 import ussr.samples.mtran.MTRANSimulation;
 import ussr.samples.odin.OdinBuilder;
@@ -238,30 +235,6 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 	}
 
 	/**
-	 * Returns module from the end of the list of modules in simulation environment.
-	 * @param amountFromLastMode, amount of modules from the last module in the list.
-	 * @return Module, requested module from the end of the list.
-	 */
-	private Module getModuleCountingFromEnd(int amountFromLastMode ) throws RemoteException {
-		int amountModules = jmeSimulation.getModules().size();
-		if (amountModules >= amountFromLastMode){
-			Module requestedModule= jmeSimulation.getModules().get(amountModules-amountFromLastMode);
-			return requestedModule;
-		}else{
-			throw new Error("Not enough of modules in smulation environment to get "+amountFromLastMode+ "from last module" );
-		}
-	}
-
-	/**
-	 * Returns the type of the module from the end of the list of modules in simulation environment.
-	 * @param amountFromLastMode, amount of modules from the last module in the list.
-	 * @return String, the type of requested module from the end of the list. 
-	 */
-	public String getModuleCountingFromEndType(int amountFromLastMode ) throws RemoteException{
-		return getModuleCountingFromEnd(amountFromLastMode).getProperty(BuilderHelper.getModuleTypeKey());
-	};
-		
-	/**
 	 * Returns the type of the module according to its number sequence in the list of modules.
 	 * @param moduleNr, number of the module in the list of modules.
 	 * @return type, the type of the module.
@@ -326,18 +299,26 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 		jmeSimulation.setPicker(new AssignControllerTool(controllerLocationDirectory));
 	}
 	
+	/**
+	 * Sets the picker for reading labels of entities in simulation environment.
+	 * @param entityName, supported entity name,
+	 * @param toolName, supported tool name. 
+	 */
 	public void setLabelingToolReadLabels(LabeledEntities entityName,LabelingTools toolName)throws RemoteException{
 		jmeSimulation.setPicker(new LabelingToolSpecification(entityName,toolName));
 	}
 	
+	/**
+	 * Sets the picker for assigning labels to entities in simulation environment.
+	 * @param entityName, supported entity name.
+	 * @param toolName,supported tool name.
+	 * @param labels, the labels to be assigned.
+	 * @throws RemoteException
+	 */
 	public void setLabelingToolAssignLabels(LabeledEntities entityName,LabelingTools toolName, String labels)throws RemoteException{
 		jmeSimulation.setPicker(new LabelingToolSpecification(entityName,labels,toolName));
 	}
 		
-	public Module createModule(ModulePosition position, boolean assign)throws RemoteException{
-		return jmeSimulation.createModule(position, assign);
-	}
-	
 	/**
 	 * Returns the list of IDs of all modules in simulation environment.
 	 * @return the list of IDs of all modules in simulation environment.
@@ -353,17 +334,17 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 		return idsModules; 
 	}
 	
-	public int getAmountModules()throws RemoteException{		
-		return getIDsModules().size(); 
-	}
-	
-	public void loadInXML(UssrXmlFileTypes ussrXmlFileType,String fileDirectoryName) throws RemoteException {
+	/**
+	 * Loads robot morphology from robot xml file.
+	 * @param fileDirectoryName, the directory of robot xml file.
+	 **/
+	public void loadRobotXML(String fileDirectoryName) throws RemoteException {
 		SaveLoadXMLFileTemplateInter openXML = new InSimulationXMLSerializer(jmeSimulation);
-		openXML.loadXMLfile(ussrXmlFileType, fileDirectoryName);		
+		openXML.loadXMLfile(UssrXmlFileTypes.ROBOT, fileDirectoryName);		
 	}
 	
 	/**
-	 * 
+	 * Contains colors of connectors for color coding.
 	 */
 	private static final Color colors[] = {Color.BLACK,Color.RED,Color.CYAN,Color.GRAY,Color.GREEN,Color.MAGENTA,
         Color.ORANGE,Color.PINK,Color.BLUE,Color.WHITE,Color.YELLOW,Color.LIGHT_GRAY};
@@ -415,17 +396,5 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 			}			
 		}	
 		
-	}
-	
-	/**
-	 * Checks if new module was added after last time checked. 
-	 * @param lastCheckAmountModules
-	 * @return
-	 */
-	public boolean isNewModuleAdded(int lastCheckAmountModules)throws RemoteException{
-		if (getIDsModules().size()>lastCheckAmountModules){
-			return true;
-		}
-		return false;
 	}
 }
