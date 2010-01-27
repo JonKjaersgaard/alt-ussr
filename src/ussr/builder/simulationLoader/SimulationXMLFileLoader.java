@@ -20,20 +20,22 @@ import ussr.samples.GenericSimulation;
 
 
 /**
- *Input format: samples/atron/car.xml ussr.samples.atron.simulations.ATRONCarController1.
+ * Loads simulation from XML file specified as argument.
+ * Example of input format: samples/simulations/atronCarSimulation.xml
  * @author Konstantinas
  */
 public class SimulationXMLFileLoader extends GenericSimulation {
 	
-	
-
+	/**
+	 * Converter for converting String into appropriate data type.
+	 */
 	private static SimulationSpecificationConverter descriptionConverter;
 	
-	
+	/**
+	 * Container for storing description of simulation and objects in it.
+	 */
 	private SimulationSpecification simulationSpecification;
 	
-
-
 	/**
 	 * Returns the robot in the simulation.
 	 */
@@ -43,13 +45,12 @@ public class SimulationXMLFileLoader extends GenericSimulation {
 	}
 
 	/**
-	 * Starts multi-robot simulation for ATRON,MTRAN and Odin.
+	 * Starts simulation from xml file.
 	 * @param args, passed arguments.
 	 */
 	public static void main( String[] args ) {
-	    if(args.length>1) throw new Error("Usage: provide simulation definition xml file");
+	    if(args.length<1) throw new Error("Usage: provide simulation definition xml file, for example: samples/simulations/atronCarSimulation.xml");
 	    String simulationXMLfileName=args[0];
-	   
 	    new SimulationXMLFileLoader(simulationXMLfileName).start(true);
 	}
 	
@@ -57,8 +58,6 @@ public class SimulationXMLFileLoader extends GenericSimulation {
 	    DefaultSimulationSetup.setUSSRHome();	    	    
 	    PhysicsLogger.setDefaultLoggingLevel();
 	 
-	     
-
         /*Load Simulation Configuration file*/
 		SaveLoadXMLFileTemplateInter xmlLoaderSimulation = new PreSimulationXMLSerializer();
 		xmlLoaderSimulation.loadXMLfile(UssrXmlFileTypes.SIMULATION, simulationXMLfileName);
@@ -108,6 +107,10 @@ public class SimulationXMLFileLoader extends GenericSimulation {
         
 	}
 	
+	/**
+	 * Returns object describing simulation and objects in it.
+	 * @return object describing simulation and objects in it.
+	 */
 	public SimulationSpecification getSimulationSpecification() {
 		return simulationSpecification;
 	}

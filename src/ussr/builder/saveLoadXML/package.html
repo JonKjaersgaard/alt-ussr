@@ -3,8 +3,14 @@
 pattern called Template Method is used to support future reuse of this package. Meaning, that there are
 a number of different methods available to generate XML to the file and load the information from it later on. 
 Moreover, several of them are already declared  and called explicitly according to Template Method design pattern.
-Currently the class called SaveLoadXMLBuilderTemplate. java is defining concrete format for XML and data
-about simulation for current project. For XML generation and reading are used SAX and DOM.</p>
+Currently, the class called SaveLoadXMLBuilderTemplate. java is defining concrete format for XML to be saved.
+There are two types of xml files used in USSR. These are: 1)simulation and 2)robot. Examples of both can be found here:
+<a href="../../../../samples/simulations/folder.html"> samples-->simulations-->folder.html</a> <br /> 
+For XML generation and reading are used SAX and DOM.</p>
 <hr />
-<h1>HOWTO...</h1>
+<h1>1) How to ...?</h1>
+<h2>1.2) Support new XML format for saving? </h2>
+Implement the class highlighted with purple color.
+<img src ="../../../../doc/developer/builderPackage/ussr_builder_saveLoadXML.jpg" title= "Design class diagram with focus on saving/loading XML">
+
 </body>
