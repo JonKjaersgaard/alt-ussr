@@ -55,7 +55,7 @@ public abstract class GeneralController {
 		new Thread() {
 			public void run() {
 				try {
-					builderControl.loadInXML(UssrXmlFileTypes.ROBOT, xmlDirectoryFileName);
+					builderControl.loadRobotXML(xmlDirectoryFileName);
 				} catch (RemoteException e) {
 					throw new Error("Failed to load robot morphology from xml file, due to remote exception");
 				}
