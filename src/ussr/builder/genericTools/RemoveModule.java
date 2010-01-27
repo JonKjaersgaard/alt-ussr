@@ -4,7 +4,6 @@ import com.jme.scene.Geometry;
 
 import ussr.builder.helpers.BuilderHelper;
 import ussr.model.Module;
-import ussr.physics.PhysicsSimulation;
 import ussr.physics.jme.JMEModuleComponent;
 import ussr.physics.jme.JMESimulation;
 import ussr.physics.jme.pickers.CustomizedPicker;

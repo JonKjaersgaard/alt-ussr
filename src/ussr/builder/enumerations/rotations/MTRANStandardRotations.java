@@ -1,5 +1,10 @@
 package ussr.builder.enumerations.rotations;
 
+/**
+ * Contains the names of rotations for M-Tran modular robot.
+ * @author Konstantinas
+ *
+ */
 public enum MTRANStandardRotations {
 	ORI1, 
 	ORI1X, 

@@ -1,5 +1,10 @@
 package ussr.builder.enumerations.rotations;
 
+/**
+ * Contains the names of rotations for CKbot modular robot.
+ * @author Konstantinas
+ *
+ */
 public enum CKBotStandardRotations {
 	/*Here: ROT - rotation, OPPOS - opposite, MIN - minus*/
 	ROT_0,

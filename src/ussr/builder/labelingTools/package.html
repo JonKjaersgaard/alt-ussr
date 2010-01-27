@@ -2,25 +2,18 @@
 This package supports the labeling of entities. Currently supports labeling of modules and connectors.
 It is following TEMPLATE method design pattern. There is also involved Factory pattern for creating
 specific objects to handle each entity.
-HOWTO. Support the labeling of new entity?     
-1) extend your new class from LabelEntity.java class and implement the method called "getCurrentEntity()";
-2) add your new entity into enumeration "LabeledEntities",
-2) add  support for your new entity in  array called "labelingMap" in class "LabelingFactory.java".
-3) Scan the class called "LabelingToolSpecification" for missing implementation, especially
- method called "callSpecificTool()". 
- 
-HOWTO. Support new tool for labeling?
-1)  Create new methods(template or not) for your new tool in "LabelEntity. java"
-2)  Update interface with your new methods called "Labeling"
-3) Scan the class called "LabelingToolSpecification" for missing implementation, especially
- method called "callSpecificTool()". 
-3)Add your new tool in enumeration called "LabelingTools.java" and check that it is conforming
-with the method in point above (4).
-5) Set you new tool for use.
 
-HOWTO. Set the tool?
-For example  we have now:
-JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,this.entityToLabel,currentLabeljTextField.getText(),LabelingTools.LABEL_MODULE));
-Let say you new entity is SENSOR and tool name is LABEL_SENSOR then you will have:
-JME_simulation.setPicker(new LabelingToolSpecification(JME_simulation,LabeledEntities.SENSOR,"myLabel",LabelingTools.LABEL_SENSOR));   
-</body>
+<h1> 1) How to ...? </h1>
+<h2> 1.1) Support labeling of new entity?</h2> 
+Look the design class diagram beneath. 
+<ol>   
+<li> extend your new class from LabelEntityTemplate.java class and implement the method called "getCurrentEntity()";</li>
+<li> add your new entity into enumeration "LabeledEntities",</li>
+<li> add  support for your new entity in  array called "labelingMap" in class "LabelingFactory.java".</li>
+<li> Scan the class called "LabelingToolSpecification" for missing implementation, especially</li>
+ method called "callSpecificTool()". 
+</ol> 
+<img src ="../../../../doc/developer/builderPackage/ussr_builder_labelingTools.jpg" title= "Design class diagram with focus on labeling tools.">
+<br />
+<br />
+

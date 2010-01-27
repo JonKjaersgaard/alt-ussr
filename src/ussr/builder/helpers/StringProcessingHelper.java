@@ -38,9 +38,4 @@ public class StringProcessingHelper {
 		}else throw new Error ("There is no such coordinate");
 		return extractedValue; 
 	}
-
-	
-	public static Integer convertToInteger(String string){
-		return Integer.parseInt(string);
-	}
 }
