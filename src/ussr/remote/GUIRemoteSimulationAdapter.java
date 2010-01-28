@@ -124,9 +124,8 @@ public class GUIRemoteSimulationAdapter {
 		SimulationTabController.setSimulationSpecification(simulationSpecification);
 		SimulationTab.addRobotNodes(simulationSpecification,true,true);
 		MainFrames.deSelectConstructRobotButton();
-
 		SimulationTreeEditors.updateValuesEditors();
-		SimulationTab.resizeComponents();
+		SimulationTab.positionDividers();
 		SimulationTab.setTabVisible(true); 
 		ConstructRobotTab.setTabEnabled(true);
 	}
