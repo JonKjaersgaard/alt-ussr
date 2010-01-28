@@ -119,7 +119,7 @@ public class MainFrameSeparate extends MainFrames {
 		);	
 		this.addWindowListener (new WindowAdapter() {			
 			public void windowClosing(WindowEvent event) {
-				MainFrames.setMainFrame(null);//flag to indicate that GUI is closed. Is used in simulation side.
+				
 				/*Special exit, in order to check if remote simulation is still running */
 				MainFrameSeparateController.jMenuItemExitActionPerformed();                     
 			}
