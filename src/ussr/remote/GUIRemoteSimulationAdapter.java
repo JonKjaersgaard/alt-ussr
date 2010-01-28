@@ -127,7 +127,9 @@ public class GUIRemoteSimulationAdapter {
 		SimulationTreeEditors.updateValuesEditors();
 		SimulationTab.positionDividers();
 		SimulationTab.setTabVisible(true); 
-		ConstructRobotTab.setTabEnabled(true);
+		ConstructRobotTab.setTabEnabled(true);	
+		SimulationTab.cleanJPanelEditor();
+		SimulationTreeEditors.setEnabledRobotsEditor(true);
 	}
 
 	/**
