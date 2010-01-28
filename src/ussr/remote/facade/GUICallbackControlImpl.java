@@ -82,6 +82,10 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 		ConstructRobotTabController.newModuleAdded();		
 	}
 
+	/**
+	 * Returns an object containing description of simulation and entities in it form GUI side.
+	 * @return an object containing description of simulation and entities in it form GUI side.
+	 */
 	public SimulationSpecification getSimulationSpecification() throws RemoteException{
 		return SimulationTabController.getSimulationSpecification();
 	}

@@ -50,6 +50,10 @@ public interface GUICallbackControl extends Remote {
 	 */
 	public void newModuleAdded()throws RemoteException;
 	
+	/**
+	 * Returns an object containing description of simulation and entities in it.
+	 * @return an object containing description of simulation and entities in it.
+	 */
 	public SimulationSpecification getSimulationSpecification() throws RemoteException;
 	
 	public void newRobotLoaded(SimulationSpecification simulationSpecification)throws RemoteException;
