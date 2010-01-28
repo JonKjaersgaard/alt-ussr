@@ -13,6 +13,7 @@ import javax.swing.JSpinner;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.tabs.designHelpers.JComponentsFactory;
 import ussr.aGui.tabs.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.enumerations.TabsIcons;
@@ -64,15 +65,18 @@ public class SimulationTabController extends TabsControllers {
 		gridBagConstraints.insets = new Insets(0,0,10,0);
 
 		if (nameSelectedNode.contains("Robot nr.")){			
-
+          
+  
 			SimulationTab.getJPanelEditor().add(JComponentsFactory.createNewLabel(nameSelectedNode),gridBagConstraints);
 
 			gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 			gridBagConstraints.gridx =0;
 			gridBagConstraints.gridy =1;
-
-			SimulationTab.getJPanelEditor().add(SimulationTreeEditors.addRobotEditor(),gridBagConstraints);
-
+			 if (MainFrameSeparateController.isSimulationRunning()){
+			SimulationTab.getJPanelEditor().add(SimulationTreeEditors.addRobotEditor(false),gridBagConstraints);
+			 }else{
+				 SimulationTab.getJPanelEditor().add(SimulationTreeEditors.addRobotEditor(true),gridBagConstraints);
+			 }
 			int robotNr = extractRobotNumber(nameSelectedNode);	
 			selectedRobotNr = robotNr;
 
@@ -411,7 +415,7 @@ public class SimulationTabController extends TabsControllers {
 		try {
 			remotePhysicsSimulation.getSimulationTabControl().deleteModules(simulationSpecification.getRobotsInSimulation().get(selectedRobotNr-1).getIdsModules());
 		} catch (RemoteException e) {
-			throw new Error("Some");
+			throw new Error("Failed to delete robot, due to remote exception.");
 		}
 		simulationSpecification.getRobotsInSimulation().remove(selectedRobotNr-1);
 		robotsNode.removeAllChildren();

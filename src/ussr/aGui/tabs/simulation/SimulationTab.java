@@ -5,12 +5,12 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.UIManager;
+
 
 import javax.swing.ImageIcon;
 
@@ -21,8 +21,8 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
-import ussr.aGui.GuiFrames;
-import ussr.aGui.MainFrames;
+import ussr.aGui.FramesInter;
+
 
 import ussr.aGui.tabs.Tabs;
 import ussr.aGui.tabs.controllers.SimulationTabController;
@@ -112,8 +112,8 @@ public class SimulationTab extends Tabs {
 				} 
 			}
 		});
-
-		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);
+		jScrollPaneTreeSimulation.setBorder(FramesInter.EMPTY_BORDER);
+		jScrollPaneTreeSimulation.setViewportView(jTreeSimulation);		
 		jScrollPaneTreeSimulation.setPreferredSize(new Dimension(300,300));
 
 
@@ -124,7 +124,7 @@ public class SimulationTab extends Tabs {
 		jPanelEditor.setPreferredSize(new Dimension(300,300));
 
 		jSplitPaneSimulationTreeAndEditor.setOrientation(javax.swing.JSplitPane.HORIZONTAL_SPLIT);
-
+		jSplitPaneSimulationTreeAndEditor.setBorder(FramesInter.EMPTY_BORDER);
 		jSplitPaneSimulationTreeAndEditor.setLeftComponent(jScrollPaneTreeSimulation);
 		jSplitPaneSimulationTreeAndEditor.setRightComponent(jPanelEditor);
 	
@@ -135,12 +135,13 @@ public class SimulationTab extends Tabs {
 		hintPanel.setText(HintsSimulationTab.SIMULATION.getHintText());
 	
 		jSplitPaneDisplayForHintsAndRestAboveIt.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+	  //jSplitPaneDisplayForHintsAndRestAboveIt.setBorder(FramesInter.ETCHED_BORDER);
+		jSplitPaneDisplayForHintsAndRestAboveIt.setBorder(null);
 		jSplitPaneDisplayForHintsAndRestAboveIt.setTopComponent(jSplitPaneSimulationTreeAndEditor);
 		jSplitPaneDisplayForHintsAndRestAboveIt.setBottomComponent(hintPanel);
 		jSplitPaneDisplayForHintsAndRestAboveIt.setPreferredSize(new Dimension(300,300));
 		jSplitPaneDisplayForHintsAndRestAboveIt.setVisible(false);
 		
-
 		
 		super.jComponent.add(jSplitPaneDisplayForHintsAndRestAboveIt);
 	}
@@ -210,7 +211,6 @@ public class SimulationTab extends Tabs {
 
 		DefaultTreeModel model = (DefaultTreeModel)jTreeSimulation.getModel();
 		DefaultMutableTreeNode robotsNode = (DefaultMutableTreeNode) model.getChild(model.getRoot(),2);//2 stands for the level in hierarchy.
-
 		if (fromSimulationXMLFile &&includeIds){//Robots loaded from simulation XML file
 			robotNumber =0;//reset
 
@@ -305,9 +305,9 @@ public class SimulationTab extends Tabs {
 	public static void positionDividers(){
 		
 		jSplitPaneDisplayForHintsAndRestAboveIt.setDividerSize(5);
-		int some = (jSplitPaneDisplayForHintsAndRestAboveIt.getHeight()- HINT_PANEL_HEIGHT-2*jSplitPaneDisplayForHintsAndRestAboveIt.getDividerSize());
-		int per = (some*100)/jSplitPaneDisplayForHintsAndRestAboveIt.getHeight();
-		jSplitPaneDisplayForHintsAndRestAboveIt.setDividerLocation((double)per/100);
+		int topComponHeight = (jSplitPaneDisplayForHintsAndRestAboveIt.getHeight()- HINT_PANEL_HEIGHT-2*jSplitPaneDisplayForHintsAndRestAboveIt.getDividerSize());
+		int topComponHeightInPerecentage = (topComponHeight*100)/jSplitPaneDisplayForHintsAndRestAboveIt.getHeight();
+		jSplitPaneDisplayForHintsAndRestAboveIt.setDividerLocation((double)topComponHeightInPerecentage/100);
 		
 		jSplitPaneSimulationTreeAndEditor.setDividerSize(5);
 		jSplitPaneSimulationTreeAndEditor.setDividerLocation(0.5);

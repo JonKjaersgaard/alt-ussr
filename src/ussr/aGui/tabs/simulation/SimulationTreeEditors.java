@@ -80,7 +80,7 @@ public class SimulationTreeEditors{
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel();
 		jPanelTreeNode.add(JComponentsFactory.createNewLabel(TabsComponentsText.LOAD_NEW_ROBOT.getUserFriendlyName()));
 		
-		javax.swing.JButton jButtonOpen = JComponentsFactory.initOpenButton();	
+		jButtonOpen = JComponentsFactory.initOpenButton();	
 		jButtonOpen.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				MainFrameSeparateController.openActionPerformed(MainFrames.fcOpenRobotDialog);
@@ -88,6 +88,14 @@ public class SimulationTreeEditors{
 		});
 		jPanelTreeNode.add(jButtonOpen);		
 		return jPanelTreeNode;
+	}
+	
+	/**
+	 * Sets whenever robots editor should be enabled or not.
+	 * @param enabled, true for robot editor to be enabled.
+	 */
+	public static void setEnabledRobotsEditor( boolean enabled){
+		jButtonOpen.setEnabled(enabled);
 	}
 
 	/**
@@ -98,11 +106,12 @@ public class SimulationTreeEditors{
 		return jTextFieldMorphologyLocation;
 	}
 	
+	
 	/**
 	 * Defines visual appearance of editor panel(edit value) for tree node called RobotNr....
 	 * @return jPanelEditor, the editor panel with new components in it.
 	 */
-	public static javax.swing.JPanel addRobotEditor(){
+	public static javax.swing.JPanel addRobotEditor(boolean enabled){
 		javax.swing.JPanel jPanelTreeNode = new javax.swing.JPanel(new GridBagLayout());
 		/*Instantiation of components*/
 		jPanelMoveRobot = new javax.swing.JPanel(new GridBagLayout());
@@ -287,8 +296,23 @@ public class SimulationTreeEditors{
 		constraintsJPanelTreeNode.gridy = 2;
 		
 		jPanelTreeNode.add(jButtonDeleteRobot,constraintsJPanelTreeNode);
-		
+		setEnabledRobotEditor(enabled);
 		return jPanelTreeNode;
+	}
+	
+	/**
+	 * Sets whenever robot editor should be enabled or not.
+	 * @param enabled, true for robot editor to be enabled.
+	 */
+	public static void setEnabledRobotEditor( boolean enabled){
+		jButtonYpositive.setEnabled(enabled);
+		jButtonYnegative.setEnabled(enabled);
+		jButtonXnegative.setEnabled(enabled);
+		jButtonXpositive.setEnabled(enabled);
+		jButtonZpositive.setEnabled(enabled);
+		jSpinnerCoordinateValue.setEnabled(enabled);
+		jButtonZnegative.setEnabled(enabled);
+		jButtonDeleteRobot.setEnabled(enabled);
 	}
 
 	/**
@@ -706,7 +730,8 @@ public class SimulationTreeEditors{
 	}
 
 	private static javax.swing.JButton jButtonYpositive,jButtonYnegative,
-	jButtonXpositive,jButtonXnegative,jButtonZpositive,jButtonZnegative,jButtonDeleteRobot;
+	jButtonXpositive,jButtonXnegative,jButtonZpositive,jButtonZnegative,jButtonDeleteRobot,
+	jButtonOpen;
 	
 	private static javax.swing.JScrollPane jScrollPaneMorphologyLocation;
 

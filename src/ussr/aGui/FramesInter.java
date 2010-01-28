@@ -90,7 +90,10 @@ public interface FramesInter {
 	 * Dominating tool bar border of type raised.
 	 */
 	public final Border TOOLBAR_BORDER = javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED);
-
+	
+    public final Border ETCHED_BORDER = javax.swing.BorderFactory.createEtchedBorder();
+    
+    public final Border EMPTY_BORDER = javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1);
 	/**
 	 * Starts the windows(frames) of GUI.
 	 * Follows strategy pattern. 

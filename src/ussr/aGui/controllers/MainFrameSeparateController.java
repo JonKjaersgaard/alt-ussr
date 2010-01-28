@@ -28,6 +28,7 @@ import ussr.aGui.tabs.controllers.ModuleCommunicationVisualizerController;
 import ussr.aGui.tabs.designHelpers.hintPanel.HintPanelTypes;
 import ussr.aGui.tabs.enumerations.hintPanel.HintsConstructRobotTab;
 import ussr.aGui.tabs.simulation.SimulationTab;
+import ussr.aGui.tabs.simulation.SimulationTreeEditors;
 import ussr.remote.facade.RendererControlInter;
 
 
@@ -209,6 +210,9 @@ public class MainFrameSeparateController extends GeneralController {
 		AssignLabelsTab.setTabEnabled(false);
 		
 		AssignControllerTab.setTabEnabled(true);
+		
+		SimulationTreeEditors.setEnabledRobotsEditor(false);
+		SimulationTab.cleanJPanelEditor();
 		
 		ModuleCommunicationVisualizerController.setIdsModules();
 	}
