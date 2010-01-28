@@ -303,8 +303,8 @@ public class SimulationTab extends Tabs {
 	public static void resizeComponents(){
 		int simulationTabIndex = 0;
 		int heightIcon = MainFrames.getJTabbedPaneFirst().getIconAt(simulationTabIndex).getIconHeight();
-		int height = MainFrames.getJTabbedPaneFirst().getHeight()-(3*heightIcon)- HINT_PANEL_HEIGHT ;
-		int width = (int)MainFrames.getJTabbedPaneFirst().getWidth()-4*GuiFrames.VERTICAL_GAPS;
+		int height = MainFrames.getJTabbedPaneFirst().getHeight()-(4*heightIcon)- HINT_PANEL_HEIGHT ;
+		int width = (int)MainFrames.getJTabbedPaneFirst().getWidth()-10*GuiFrames.VERTICAL_GAPS;
 		jSplitPaneSimulationTreeAndEditor.setPreferredSize(new Dimension(width,height));		
 		jSplitPaneSimulationTreeAndEditor.validate();	
 	}
