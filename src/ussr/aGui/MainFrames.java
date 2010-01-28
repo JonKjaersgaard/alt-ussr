@@ -674,7 +674,9 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 		return jTabbedPaneFirst;
 	}
 
-
+	public static void setFocusOnConstructionTab() {
+	    jTabbedPaneFirst.setSelectedComponent(MainFramesInter.CONSTRUCT_ROBOT_TAB.getJComponent());
+	}
 
 	/**
 	 * Plugs in tabs in tabbed panes.

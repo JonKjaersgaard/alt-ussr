@@ -435,6 +435,7 @@ public class MainFrameSeparateController extends GeneralController {
 				AssignControllerTab.setTabEnabled(false);
 			}
 			
+			MainFrames.setFocusOnConstructionTab();
 
 		}else{
 			/*Identify and remove tabs for construction of modular robot*/
