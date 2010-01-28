@@ -91,14 +91,23 @@ public class GUICallbackControlImpl extends UnicastRemoteObject implements GUICa
 	}
 
 	/**
-	 * 
+	 * The flag used to indicate that robots are loaded from or not simulation xml file.
+	 * Robots can be loaded from simulation and separate robot xml files.
 	 */
 	private static boolean fromSimulationXMLFile= false;
 
+	/**
+	 * Sets the flag indicating that robots are loaded from or not simulation xml file.
+	 * @param fromSimulationXMLFile, the flag indicating that robots are loaded from or not simulation xml file.
+	 */
 	public static void setFromSimulationXMLFile(boolean fromSimulationXMLFile) {
 		GUICallbackControlImpl.fromSimulationXMLFile = fromSimulationXMLFile;
 	}
 
+	/**
+	 * Updates the GUI and simulation specification in case when new robot is loaded from GUI.
+	 * @param simulationSpecification, object describing simulation and objects in it.
+	 */
 	public void newRobotLoaded(SimulationSpecification simulationSpecification)throws RemoteException{
 		SimulationTab.addRobotNodes(simulationSpecification,fromSimulationXMLFile,true);
 		SimulationTabController.setSimulationSpecification(simulationSpecification);

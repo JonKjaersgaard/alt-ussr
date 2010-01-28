@@ -10,13 +10,10 @@ import ussr.builder.enumerations.tools.LabeledEntities;
 import ussr.builder.enumerations.tools.LabelingTools;
 
 import ussr.description.geometry.VectorDescription;
-import ussr.description.setup.ModulePosition;
-
-import ussr.model.Module;
-
 
 /**
  * Provides builder(package "ussr.builder" ) with control of remote simulation.
+ * (Used on the simulation side.)
  * @author Konstantinas
  */
 public interface BuilderControlInter extends Remote {

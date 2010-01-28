@@ -42,7 +42,7 @@ import ussr.samples.odin.modules.Odin;
 
 
 /**
- * Wrapper for a builder control allowing it to be used as a remote object.
+ * Wrapper for a builder("ussr.builder" package) control allowing it to be used as a remote object.
  * (Used on the simulation side.)
  * @author Konstantinas
  *

@@ -9,7 +9,8 @@ import ussr.builder.enumerations.tools.ConstructionTools;
 import ussr.builder.simulationLoader.SimulationSpecification;
 
 /**
- * Provides GUI with  call backs from remote simulation.
+ * Provides GUI with call backs from remote simulation.
+ * (used on GUI side)
  * @author Konstantinas
  */
 public interface GUICallbackControl extends Remote {
@@ -56,6 +57,10 @@ public interface GUICallbackControl extends Remote {
 	 */
 	public SimulationSpecification getSimulationSpecification() throws RemoteException;
 	
+	/**
+	 * Updates the GUI and simulation specification in case when new robot is loaded from GUI.
+	 * @param simulationSpecification, object describing simulation and objects in it.
+	 */
 	public void newRobotLoaded(SimulationSpecification simulationSpecification)throws RemoteException;
 		
 	/**
