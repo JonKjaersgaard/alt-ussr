@@ -76,9 +76,18 @@ public class WorldDescriptionControlWrapper extends UnicastRemoteObject implemen
 		return worldDescription.getPlaneTexture();
 	}
 	
+	/**
+	 * Returns the file name of texture used for ground plane.
+	 * @return the file name of texture used for ground plane.
+	 */
 	public String getPlaneTextureFileName()throws RemoteException{
 		return worldDescription.getPlaneTexture().getFileName();
 	}
+	
+	/**
+	 * Returns if frame grabbing is active or not.
+	 * @return if frame grabbing is active or not.
+	 */
 	public boolean getIsFrameGrabbingActive()throws RemoteException{
 		return worldDescription.getIsFrameGrabbingActive();
 	}
