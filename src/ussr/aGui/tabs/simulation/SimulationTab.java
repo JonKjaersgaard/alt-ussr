@@ -4,10 +4,12 @@ package ussr.aGui.tabs.simulation;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.UIManager;
 
 import javax.swing.ImageIcon;
 
@@ -127,7 +129,7 @@ public class SimulationTab extends Tabs {
 		jSplitPaneSimulationTreeAndEditor.setPreferredSize(new Dimension(300,300));
 
 		jSplitPaneSimulationTreeAndEditor.setDividerSize(5);
-		jSplitPaneSimulationTreeAndEditor.setDividerLocation(0.9);
+		jSplitPaneSimulationTreeAndEditor.setDividerLocation(0.5);
 		jSplitPaneSimulationTreeAndEditor.setVisible(false);
 		gridBagConstraints.fill = GridBagConstraints.BOTH;
 		gridBagConstraints.gridx = 0;

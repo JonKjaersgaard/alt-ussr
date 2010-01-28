@@ -46,6 +46,7 @@ public class MainFrameSeparateController extends GeneralController {
 	 * Executes closing of main window(frame) and simulation by terminating Java Virtual Machines.
 	 */
 	public static void jMenuItemExitActionPerformed() {	
+		MainFrames.setMainFrame(null);//flag to indicate that GUI is closed. Is used in simulation side.
 		terminateSimulation();
 		System.exit(0);//terminate GUI	
 		
