@@ -17,6 +17,7 @@ public enum JOptionPaneMessages {
 	LOADED_SIMUL_OR_ROBOT_FILE_INCONSISTENT(JOptionPaneType.MESSAGE,"Wrong XML file format",new Object[]{"You are attempting to load simulation(or robot) from XML file not compatible with USSR."},JOptionPane.ERROR_MESSAGE),
 	LOADED_SIMULATION_FILE_IS_ROBOT(JOptionPaneType.MESSAGE,"Wrong XML file format",new Object []{"You are attempting to load Robot instead of expected Simulation XML file."},JOptionPane.ERROR_MESSAGE),
 	LOADED_ROBOT_FILE_IS_SIMULATION(JOptionPaneType.MESSAGE,"Wrong XML file format",new Object[]{"You are attempting to load Simulation instead of expected Robot XML file."},JOptionPane.ERROR_MESSAGE),
+	ROBOT_XML_FILE_NOT_FOUND(JOptionPaneType.MESSAGE,"Robot XML file not found!",new Object[]{"Was not able to find Robot XML file in the following directory:\n"},JOptionPane.WARNING_MESSAGE),
 	
 	SAVE_CURRENT_SIMULATION(JOptionPaneType.CONFIRMATION,"Save current simulation before continue?",new Object[]{"Save current simulation?"},JOptionPane.YES_NO_CANCEL_OPTION),
 	
@@ -60,6 +61,10 @@ public enum JOptionPaneMessages {
 		this.optionType = optionType;
 	}
 	
+	public void setMessage(Object[] message) {
+		this.message = message;
+	}
+
 	private Object[] options;
 	private int selectedOptionIndex;
 	/**

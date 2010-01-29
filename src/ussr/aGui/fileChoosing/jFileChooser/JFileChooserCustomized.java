@@ -78,12 +78,13 @@ public abstract class JFileChooserCustomized extends JFileChooser implements JFi
 	
 	 
 	 /**
-	 * @param c
+	  * Disables the button called UpFolder on the JFileChooser. 
+	 * @param container, JFileChooser as container.
 	 */
-	public static void disableUpFolderButton(Container c) {   
-	        int len = c.getComponentCount();   
+	public static void disableUpFolderButton(Container container) {   
+	        int len = container.getComponentCount();   
 	        for (int i = 0; i < len; i++) {   
-	          Component comp = c.getComponent(i);   
+	          Component comp = container.getComponent(i);   
 	          if (comp instanceof JButton) {   
 	            JButton b = (JButton) comp;   
 	            Icon icon = b.getIcon();              

@@ -66,32 +66,7 @@ public abstract class FileDialogCustomized extends FileDialog implements FileDia
 			}
 			
 		});	
-		
-		disableUpFolderButton(fileDialogCustomized);
 	}
-	
-	 /**
-	 * @param c
-	 */
-	public static void disableUpFolderButton(Container c) {   
-	        int len = c.getComponentCount();   
-	        for (int i = 0; i < len; i++) {   
-	          Component comp = c.getComponent(i); 
-	          
-	          if (comp instanceof JButton) {   
-	            JButton b = (JButton) comp;   
-	            Icon icon = b.getIcon();              
-	            if (icon != null  
-	                && icon == UIManager.getIcon("FileChooser.upFolderIcon") ){ 
-	              b.setEnabled(false);   
-	             }    
-	          } else if (comp instanceof Container) {   
-	              disableUpFolderButton((Container) comp);   
-	          }   
-	        }   
-	         
-	          
-	    } 
 	
 	 /**
      * Returns the name of the file selected by user. Is null if user selects Cancel.

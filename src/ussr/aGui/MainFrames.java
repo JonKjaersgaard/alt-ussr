@@ -14,6 +14,7 @@ import ussr.aGui.controllers.MainFrameSeparateController;
 import ussr.aGui.enumerations.MainFrameIcons;
 import ussr.aGui.enumerations.MainFrameComponentsText;
 import ussr.aGui.fileChoosing.FileChoosingInter;
+import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomized;
 import ussr.aGui.fileChoosing.fileDialog.FileDialogCustomizedInter;
 import ussr.aGui.fileChoosing.jFileChooser.JFileChooserCustomizedInter;
 import ussr.aGui.tabs.TabsInter;
@@ -73,7 +74,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 	private void initFileChoosing(){
 		if (GeneralController.getOperatingSystemName().contains("Mac")){
 		   
-			//System.setProperty("apple.awt.fileDialogForDirectories", "true");			
+			System.setProperty("apple.awt.fileDialogForDirectories", "true");// Needed to enable file dialog to set default directory.			
 			fcOpenSimulationDialog = FileDialogCustomizedInter.FD_OPEN_SIMULATION;
 			fcSaveSimulationDialog = FileDialogCustomizedInter.FD_SAVE_SIMULATION;
 			fcOpenRobotDialog = FileDialogCustomizedInter.FD_OPEN_ROBOT;
