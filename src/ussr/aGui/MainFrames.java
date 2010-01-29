@@ -79,7 +79,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 			fcSaveSimulationDialog = FileDialogCustomizedInter.FD_SAVE_SIMULATION;
 			fcOpenRobotDialog = FileDialogCustomizedInter.FD_OPEN_ROBOT;
 			fcSaveRobotDialog = FileDialogCustomizedInter.FD_SAVE_ROBOT;
-			//System.setProperty("apple.awt.fileDialogForDirectories", "false");	
+			System.setProperty("apple.awt.fileDialogForDirectories", "false");// Should be disabled after initialization in order for file filtering to work.	
 			
 		}else{
 			fcOpenSimulationDialog = JFileChooserCustomizedInter.FC_OPEN_SIMULATION;

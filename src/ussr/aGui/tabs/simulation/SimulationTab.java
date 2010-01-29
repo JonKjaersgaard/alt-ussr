@@ -227,7 +227,7 @@ public class SimulationTab extends Tabs {
 					idsModules.clear();
 					for (int id=0;id<amountModules;id++){
 						idsModules.add(id);
-						System.out.println("ID:"+ id);
+						//System.out.println("ID:"+ id);
 					}
 					lastID = idsModules.get(idsModules.size()-1);
 					simulationSpecification.getRobotsInSimulation().get(0).setIdsModules(idsModules);
@@ -235,7 +235,7 @@ public class SimulationTab extends Tabs {
 					idsModules.clear();
 					for (int id=lastID+1;id<lastID+amountModules+1;id++){
 						idsModules.add(id);
-						System.out.println("ID:"+ id);
+						//System.out.println("ID:"+ id);
 					}
 					lastID = idsModules.get(idsModules.size()-1);
 
@@ -249,7 +249,6 @@ public class SimulationTab extends Tabs {
 			}	
 			robotNumber++;// keep track for robot number
 
-			
 			int amountRobots = simulationSpecification.getRobotsInSimulation().size();
 			int amountModules = simulationSpecification.getRobotsInSimulation().get(amountRobots-1).getAmountModules();
 
@@ -257,7 +256,7 @@ public class SimulationTab extends Tabs {
 
 			for (int id=lastID+1;id<lastID+amountModules+1;id++){
 				idsModules.add(id);
-				System.out.println("herID:"+ id);
+				//System.out.println("herID:"+ id);
 			}
 			lastID = idsModules.get(idsModules.size()-1);
 			simulationSpecification.getRobotsInSimulation().get(amountRobots-1).setIdsModules(idsModules);
