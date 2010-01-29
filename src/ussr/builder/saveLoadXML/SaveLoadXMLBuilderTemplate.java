@@ -119,7 +119,7 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 			try {
 				simulationSpecification = RemotePhysicsSimulationImpl.getGUICallbackControl().getSimulationSpecification();
 			} catch (RemoteException e) {
-				throw new Error("some");
+				throw new Error("Failed to receive simulation specification, due to remote exception.");
 			}
 
 
@@ -128,9 +128,16 @@ public abstract class SaveLoadXMLBuilderTemplate extends SaveLoadXMLTemplate {
 				transformerHandler.startElement("","",XMLTagsUsed.ROBOT_NR.toString()+(robotNr+1),EMPTY_ATT);
 
 				String morphologyLocation = currentRobotSpecification.getMorphologyLocation().replace("/", "FILE_SEPARATOR").replace("\\", "FILE_SEPARATOR");
+				String morphologyLocationToSave = null; 
+                if (morphologyLocation.contains("samples")){
+                	String[] temporary = morphologyLocation.split("samples");
+                	morphologyLocationToSave = "samples"+temporary[1];
+                }else{
+                	morphologyLocationToSave = morphologyLocation;
+                }
 				printSubTagsWithValue(transformerHandler, XMLTagsUsed.NUMBER_OF_MODULES, (""+currentRobotSpecification.getAmountModules()).toCharArray());
 				//printSubTagsWithValue(transformerHandler, XMLTagsUsed.MORPHOLOGY_LOCATION, currentRobotSpecification.getMorphologyLocation().toCharArray());
-				printSubTagsWithValue(transformerHandler, XMLTagsUsed.MORPHOLOGY_LOCATION, morphologyLocation.toCharArray());
+				printSubTagsWithValue(transformerHandler, XMLTagsUsed.MORPHOLOGY_LOCATION, morphologyLocationToSave.toCharArray());
 				printSubTagsWithValue(transformerHandler, XMLTagsUsed.CONTROLLER_LOCATION, currentRobotSpecification.getControllerLocation().toCharArray());
 
 				transformerHandler.endElement("","",XMLTagsUsed.ROBOT_NR.toString()+(robotNr+1));
