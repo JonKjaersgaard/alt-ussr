@@ -657,7 +657,7 @@ public abstract class MainFrames extends GuiFrames implements MainFramesInter {
 			public void stateChanged(ChangeEvent evt) {
 			
 				  JTabbedPane pane = (JTabbedPane)evt.getSource();
-				 if (pane.getTabCount()<5){
+				 if (pane.getTabCount()<5){// checks if tabs for construction of modular robot morphology are displayed.
 					 
 				 } else{
 			        int selectedTabIndex = pane.getSelectedIndex();  

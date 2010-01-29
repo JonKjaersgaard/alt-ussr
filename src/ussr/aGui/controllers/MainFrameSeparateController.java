@@ -551,8 +551,9 @@ public class MainFrameSeparateController extends GeneralController {
 			SimulationTab.getHintPanel().setVisible(false);
 			ConstructRobotTab.getHintPanel().setVisible(false);
 			AssignControllerTab.getHintPanel().setVisible(false);
-			AssignLabelsTab.getHintPanel().setVisible(false);
+			AssignLabelsTab.getHintPanel().setVisible(false);			
 		}else{
+			SimulationTab.positionDividers();
 			SimulationTab.getHintPanel().setVisible(true);
 			ConstructRobotTab.getHintPanel().setVisible(true);
 			AssignControllerTab.getHintPanel().setVisible(true);
