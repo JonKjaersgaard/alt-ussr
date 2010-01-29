@@ -55,9 +55,17 @@ Look here: <a href="../builder/package.html"> "ussr.builder"->package.html</a>
 <h1> 2) Persisting problems and missing implementation </h1>
 
 <ol>
-  <li>Sometimes robot deletion fails. Most likely the reason is that somewhere the same module is attempted to be deleted several times.<br />
+  <li>Sometimes robot deletion fails. Most likely the reason is that somewhere the same module is attempted to be deleted several times or the problem is deeper and it JME renderer which is keeping reference to already deleted component. <br />
       Look here to try to locate the bug: "ussr.remote.facade.BuilderControlWrapper"--> removeAllModules() or ".SimulationTabControl.deleteModules(List<Integer> ids) </li>
-  <li> </li>
+  <li> In case of Mac OS, the FileDialog should be limited to USSR local directory (samples/simulations). This means the user should not be able to navigate out of this directory.
+       The problem here, is that there is no way to get constituents(components) of FileDialog and disable them. For example try this <code>FileDialog.getComponents().length</code> it will be 0.
+       So now Mac users should  be careful with saving Simulation and Robot XML files.
+  </li>
+  <li>Saving Robot XML files. If simulation was loaded and then robots moved in new position then in case of saving xml file the Robot XML files are not updated. (Overriden).
+  This means new positions are not going to be saved.
+  Overriding simulation and robot xml files is not recommended at this point, because there is no functionality handling it.
+  In this case the data will be appended to existing data and this will result into ill formed XML file.  
+  </li>
 
 <ol/>
 
