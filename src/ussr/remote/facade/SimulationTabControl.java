@@ -78,8 +78,7 @@ public class SimulationTabControl extends UnicastRemoteObject implements Simulat
 		for(int moduleID=0;moduleID<ids.size();moduleID++){
 			 amountModules = jmeSimulation.getModules().size();
 			
-			System.out.println("Size List:"+ jmeSimulation.getModules().size());
-		
+			//System.out.println("Size List:"+ jmeSimulation.getModules().size());
 			
 			for (int index=0; index<amountModules; index++){				
 				//System.out.println("ID:"+ ids.get(moduleID));

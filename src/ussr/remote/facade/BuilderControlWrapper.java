@@ -69,9 +69,8 @@ public class BuilderControlWrapper extends UnicastRemoteObject implements Builde
 	 */
 	public void removeAllModules() throws RemoteException{
 
-		List<Module> modules =  jmeSimulation.getModules();
+		//List<Module> modules =  jmeSimulation.getModules();
 		
-	
 		/*Loop through the modules in simulation*/
 		for (int moduleNr =0; moduleNr<jmeSimulation.getModules().size();moduleNr++){
 
