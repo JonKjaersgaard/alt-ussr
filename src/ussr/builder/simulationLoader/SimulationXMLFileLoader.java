@@ -1,7 +1,10 @@
 package ussr.builder.simulationLoader;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import ussr.aGui.enumerations.JOptionPaneMessages;
 import ussr.builder.enumerations.ATRONTypesModules;
 import ussr.builder.helpers.ControllerFactory;
 import ussr.builder.helpers.ControllerFactoryImpl;
@@ -73,7 +76,6 @@ public class SimulationXMLFileLoader extends GenericSimulation {
         	/*Converter for converting values from String into corresponding type used in USSR*/      
             descriptionConverter =  simulationSpecification.getConverter();
           
-            
             setPhysicsParameters();
             
             String controllerLocation = null;
@@ -95,8 +97,21 @@ public class SimulationXMLFileLoader extends GenericSimulation {
            
             for (int robotNr=0;robotNr<simulationSpecification.getRobotsInSimulation().size();robotNr++){
             	 
-            	String morphology = simulationSpecification.getRobotsInSimulation().get(robotNr).getMorphologyLocation();
-            	 robotXMLLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,morphology);
+            	String morphologyLocation = simulationSpecification.getRobotsInSimulation().get(robotNr).getMorphologyLocation();
+            	
+            	File fileToLoad =  new File(morphologyLocation);
+        		if (fileToLoad.exists()){            	
+            	 robotXMLLoader.loadXMLfile(UssrXmlFileTypes.ROBOT,morphologyLocation);
+            	    }else if (!fileToLoad.exists()){
+            	    	simulationSpecification.getRobotsInSimulation().remove(robotNr);
+            	    	
+    			String intialMessage = JOptionPaneMessages.ROBOT_XML_FILE_NOT_FOUND.getMessage()[0].toString();
+    			JOptionPaneMessages.ROBOT_XML_FILE_NOT_FOUND.setMessage(new Object[]{intialMessage+morphologyLocation});
+    			JOptionPaneMessages.ROBOT_XML_FILE_NOT_FOUND.displayMessage();
+    			System.out.println("Could not find the file in dir"+ morphologyLocation );
+    			//SimulationXMLFileLoader.
+    			
+    		}
             }
           
             ATRONTypesModules.setAllModuleTypesOnSimulation(simulation);

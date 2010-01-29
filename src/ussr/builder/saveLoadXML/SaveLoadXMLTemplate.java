@@ -22,6 +22,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
+import ussr.aGui.enumerations.JOptionPaneMessages;
 import ussr.builder.helpers.BuilderHelper;
 import ussr.builder.labelingTools.LabelingTemplate;
 import ussr.model.Module;
@@ -99,7 +100,8 @@ public abstract class SaveLoadXMLTemplate implements SaveLoadXMLFileTemplateInte
 	public void loadXMLfile(UssrXmlFileTypes ussrXmlFileType, String fileDirectoryName){
 		Document document = initializeDocument(fileDirectoryName);
 		this.robotMorphologyFileDirectoryName = fileDirectoryName;
-		loadInXML(ussrXmlFileType, document);	
+		loadInXML(ussrXmlFileType, document);
+		
 	}
 
 	/**
