@@ -98,7 +98,7 @@ public class SimulationLauncherServer extends UnicastRemoteObject implements Sim
         return " @"+port+"_"+id+" ";
     }
 
-    public void register(int id, RemoteActiveSimulation remoteSimulation) {
+    public synchronized void register(int id, RemoteActiveSimulation remoteSimulation) {
     	Iterator<RMIProcessActiveSimulation> simulations = activeSimulations.iterator();
         while(simulations.hasNext()) {
         	RMIProcessActiveSimulation simulation = simulations.next();
