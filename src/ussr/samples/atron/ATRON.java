@@ -28,7 +28,7 @@ import ussr.physics.PhysicsParameters;
  *   
  * @author Modular Robots @�MMMI
  */
-public abstract class ATRON implements Robot {
+public abstract class ATRON implements Robot { 
     
     /**
      *  Distance between two lattice positions on physical atrons (8cm) 
