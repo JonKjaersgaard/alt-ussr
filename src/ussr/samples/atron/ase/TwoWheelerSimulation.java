@@ -27,7 +27,7 @@ import ussr.util.supervision.WifiCMBroadcaster;
 
 
 
-public class TwoWheelerSimulation extends GenericATRONSimulation {
+public class TwoWheelerSimulation extends GenericASESimulation {
 	
     private ObstacleGenerator.ObstacleType obstacle = ObstacleGenerator.ObstacleType.LINE;
     
@@ -41,9 +41,9 @@ public class TwoWheelerSimulation extends GenericATRONSimulation {
     }
 	protected void simulationHook(PhysicsSimulation simulation) {
 		super.simulationHook(simulation);
-		CMTracker tracker = new CMTracker(simulation);
-		WifiCMBroadcaster broadcaster = new WifiCMBroadcaster(simulation, 7.0, tracker);
-		simulation.subscribePhysicsTimestep(broadcaster);
+		//CMTracker tracker = new CMTracker(simulation);
+		//WifiCMBroadcaster broadcaster = new WifiCMBroadcaster(simulation, 7.0, tracker);
+		//simulation.subscribePhysicsTimestep(broadcaster);
 	}
 	
 	protected Robot getRobot() {
