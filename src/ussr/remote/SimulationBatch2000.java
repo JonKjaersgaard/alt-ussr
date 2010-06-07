@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -101,6 +102,8 @@ public abstract class SimulationBatch2000 implements ReturnValueHandler {
     }
     
     public void start(int max_parallel_sims, boolean terminateAtEnd) {
+        System.out.println("Starting batch");
+        Date startTime = new Date();
         ThreadPoolExecutor batchExecutor = new ThreadPoolExecutor(max_parallel_sims,max_parallel_sims,THREAD_KEEPALIVE_MINS,TimeUnit.MINUTES,new LinkedBlockingQueue<Runnable>());
         int run = 0; 
         while(runMoreSimulations()) {
@@ -118,7 +121,8 @@ public abstract class SimulationBatch2000 implements ReturnValueHandler {
         } catch (InterruptedException e1) {
             throw new Error("Interrupted while waiting for task completion");
         }
-        System.out.println("Batch completed");
+        Date stopTime = new Date();
+        System.out.println("Batch completed in "+(stopTime.getTime()-startTime.getTime())/1000.0+" seconds");
         reportRecord();
         if(terminateAtEnd) System.exit(0);
     }
