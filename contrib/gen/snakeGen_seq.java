@@ -125,6 +125,150 @@ public class snakeGen_seq extends StateMachine {
     case 16:
       if(stateManager.pendingStatesPresent()) break;
       if(notDoneConnecting(0)) break;
+      token = 17; /* fall-through */
+    case 17: /* Module M__3 */
+      disconnect(0);
+      token = 18;
+      break;
+    case 18:
+      if(stateManager.pendingStatesPresent()) break;
+      if(notDoneDisconnecting(0)) break;
+      token = 19; /* fall-through */
+    case 19: /* Module M__3 */
+      disconnect(6);
+      token = 20;
+      break;
+    case 20:
+      if(stateManager.pendingStatesPresent()) break;
+      if(notDoneDisconnecting(6)) break;
+      stateManager.sendState(21,0);
+      token = 255;
+      break;
+    case 21: /* Module M__0 */
+      rotateDirTo(216,TRUE);
+      token = 22;
+      break;
+    case 22:
+      if(stateManager.pendingStatesPresent()) break;
+      if(!doneRotatingTo(216)) break;
+      stateManager.sendState(23,6);
+      token = 255;
+      break;
+    case 23: /* Module M__6 */
+      rotateDirTo(216,TRUE);
+      token = 24;
+      break;
+    case 24:
+      if(stateManager.pendingStatesPresent()) break;
+      if(!doneRotatingTo(216)) break;
+      token = 25; /* fall-through */
+    case 25: /* Module M__6 */
+      rotateDirTo(0,FALSE);
+      token = 26;
+      break;
+    case 26:
+      if(stateManager.pendingStatesPresent()) break;
+      if(!doneRotatingTo(0)) break;
+      stateManager.sendState(27,0);
+      token = 255;
+      break;
+    case 27: /* Module M__0 */
+      rotateDirTo(0,FALSE);
+      token = 28;
+      break;
+    case 28:
+      if(stateManager.pendingStatesPresent()) break;
+      if(!doneRotatingTo(0)) break;
+      stateManager.sendState(29,3);
+      token = 255;
+      break;
+    case 29: /* Module M__3 */
+      connect(6);
+      token = 30;
+      break;
+    case 30:
+      if(stateManager.pendingStatesPresent()) break;
+      if(notDoneConnecting(6)) break;
+      token = 31; /* fall-through */
+    case 31: /* Module M__3 */
+      connect(0);
+      token = 32;
+      break;
+    case 32:
+      if(stateManager.pendingStatesPresent()) break;
+      if(notDoneConnecting(0)) break;
+      token = 33; /* fall-through */
+    case 33: /* Module M__3 */
+      disconnect(0);
+      token = 34;
+      break;
+    case 34:
+      if(stateManager.pendingStatesPresent()) break;
+      if(notDoneDisconnecting(0)) break;
+      token = 35; /* fall-through */
+    case 35: /* Module M__3 */
+      disconnect(6);
+      token = 36;
+      break;
+    case 36:
+      if(stateManager.pendingStatesPresent()) break;
+      if(notDoneDisconnecting(6)) break;
+      stateManager.sendState(37,0);
+      token = 255;
+      break;
+    case 37: /* Module M__0 */
+      rotateDirTo(216,TRUE);
+      token = 38;
+      break;
+    case 38:
+      if(stateManager.pendingStatesPresent()) break;
+      if(!doneRotatingTo(216)) break;
+      stateManager.sendState(39,6);
+      token = 255;
+      break;
+    case 39: /* Module M__6 */
+      rotateDirTo(216,TRUE);
+      token = 40;
+      break;
+    case 40:
+      if(stateManager.pendingStatesPresent()) break;
+      if(!doneRotatingTo(216)) break;
+      token = 41; /* fall-through */
+    case 41: /* Module M__6 */
+      rotateDirTo(0,FALSE);
+      token = 42;
+      break;
+    case 42:
+      if(stateManager.pendingStatesPresent()) break;
+      if(!doneRotatingTo(0)) break;
+      stateManager.sendState(43,0);
+      token = 255;
+      break;
+    case 43: /* Module M__0 */
+      rotateDirTo(0,FALSE);
+      token = 44;
+      break;
+    case 44:
+      if(stateManager.pendingStatesPresent()) break;
+      if(!doneRotatingTo(0)) break;
+      stateManager.sendState(45,3);
+      token = 255;
+      break;
+    case 45: /* Module M__3 */
+      connect(6);
+      token = 46;
+      break;
+    case 46:
+      if(stateManager.pendingStatesPresent()) break;
+      if(notDoneConnecting(6)) break;
+      token = 47; /* fall-through */
+    case 47: /* Module M__3 */
+      connect(0);
+      token = 48;
+      break;
+    case 48:
+      if(stateManager.pendingStatesPresent()) break;
+      if(notDoneConnecting(0)) break;
 
 	
 	stateManager.sendState(254,-1);
@@ -182,16 +326,16 @@ public class snakeGen_seq extends StateMachine {
   }
 
   int getLastState(int address) {
-    if(address==0) return 11;
-    if(address==3) return 13;
-    if(address==6) return 7;
+    if(address==0) return 43;
+    if(address==3) return 45;
+    if(address==6) return 39;
     return 255;
   }
   
   int getLastStateLowerBound(int address) {
-    if(address==0) return 7;
-    if(address==3) return 7;
-    if(address==6) return 5;
+    if(address==0) return 29;
+    if(address==3) return 39;
+    if(address==6) return 29;
     return 255;
   }
 
