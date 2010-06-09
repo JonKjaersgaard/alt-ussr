@@ -153,9 +153,7 @@ public class carsnakeSimpleGen_par extends StateMachine {
       token = 255;
       break;
     case 23: /* Module M__0 */
-        System.out.println("Starting connect 0");
       connect(0);
-      System.out.println("Connect 0 done");
       token = 24;
       break;
     case 24:
@@ -348,26 +346,69 @@ public class carsnakeSimpleGen_par extends StateMachine {
     else address = 127;
 	myID = address;
 	token = 255;
-	stateManager.init(myID);
 	
     api.setLeds(myID);
 	reset_state();
+    stateManager.init(myID);
 	isDone = false;
 }
 
   public void reset_sequence() {
-    if ( myID == 0 ) {
-      token = 0; // Tolerate reset in the middle of reconfiguration
-    }    
     stateManager.reset_sequence();
 }
 
   public void reset_state() {
-    if ( myID == 0 ) {
-      token = 0; // Tolerate reset in the middle of reconfiguration
-    }    
     stateManager.reset_state();
 }
+
+  public boolean checkPendingStateResponsibility(int address, int pendingState) {
+    if(address==5) {
+      if(pendingState==34) return true;
+      return false;
+    }
+    if(address==0) {
+      if(pendingState==1) return true;
+      if(pendingState==27) return true;
+      return false;
+    }
+    if(address==4) {
+      if(pendingState==18) return true;
+      if(pendingState==10) return true;
+      return false;
+    }
+    if(address==1) {
+      if(pendingState==46) return true;
+      if(pendingState==13) return true;
+      return false;
+    }
+    if(address==2) {
+      if(pendingState==37) return true;
+      return false;
+    }
+    return false;
+  }
+
+  int getLastState(int address) {
+    if(address==0) return 32;
+    if(address==1) return 55;
+    if(address==2) return 37;
+    if(address==3) return 53;
+    if(address==4) return 42;
+    if(address==5) return 34;
+    if(address==6) return 25;
+    return 255;
+  }
+  
+  int getLastStateLowerBound(int address) {
+    if(address==0) return 4;
+    if(address==1) return 25;
+    if(address==2) return 4;
+    if(address==3) return 25;
+    if(address==4) return 4;
+    if(address==5) return 4;
+    if(address==6) return 4;
+    return 255;
+  }
 
 
 }

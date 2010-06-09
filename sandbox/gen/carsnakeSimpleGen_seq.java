@@ -32,6 +32,8 @@ public class carsnakeSimpleGen_seq extends StateMachine {
   }
 
   private void disconnect(int connector) {
+      if(myID==0 && connector==0) System.out.println("FOO!!!");
+      if(myID==6 && connector==3) System.out.println("BAR!!!");
 	api.disconnect(connector);
   }
 
@@ -45,10 +47,12 @@ public class carsnakeSimpleGen_seq extends StateMachine {
 
   protected void stateMachine() { 
     api.yield();
+    //updateLocalState();
     if(token == 255) { /* try to see if there's a new state for me */
       token = stateManager.getMyNewState();
 	  if(token!=255) {
-		System.out.println(myID+": Now performing state "+token);
+		System.out.println(myID+": Now performing state "+token/*+"@"+stateManager.getTime()*/);
+		//System.out.println("Global state: "+getGlobalState());
 	  }
     }
 	
@@ -326,26 +330,52 @@ public class carsnakeSimpleGen_seq extends StateMachine {
     else address = 127;
 	myID = address;
 	token = 255;
-	stateManager.init(myID);
 	
     api.setLeds(myID);
 	reset_state();
+    stateManager.init(myID);
 	isDone = false;
 }
 
   public void reset_sequence() {
-    if ( myID == 0 ) {
-      token = 0; // Tolerate reset in the middle of reconfiguration
-    }    
+    //if ( myID == 0 ) {
+      //token = 0; // Tolerate reset in the middle of reconfiguration
+    //}    
     stateManager.reset_sequence();
 }
 
   public void reset_state() {
-    if ( myID == 0) {
-      token = 0; // Tolerate reset in the middle of reconfiguration
-    }    
+    //if ( myID == 0 ) {
+    //  token = 0; // Tolerate reset in the middle of reconfiguration
+    //}    
     stateManager.reset_state();
 }
+
+  public boolean checkPendingStateResponsibility(int address, int pendingState) {
+    return false;
+  }
+
+  int getLastState(int address) {
+    if(address==0) return 27;
+    if(address==1) return 49;
+    if(address==2) return 31;
+    if(address==3) return 45;
+    if(address==4) return 35;
+    if(address==5) return 29;
+    if(address==6) return 21;
+    return 255;
+  }
+  
+  int getLastStateLowerBound(int address) {
+    if(address==0) return 3;
+    if(address==1) return 21;
+    if(address==2) return 3;
+    if(address==3) return 21;
+    if(address==4) return 3;
+    if(address==5) return 3;
+    if(address==6) return 3;
+    return 255;
+  }
 
 
 }

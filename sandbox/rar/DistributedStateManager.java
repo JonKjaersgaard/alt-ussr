@@ -3,6 +3,8 @@ package rar;
 import java.util.Arrays;
 
 public class DistributedStateManager {
+    public static final boolean USE_MONITOR = false;
+    
     private static byte MAGIC_HEADER = 107;
     private static byte HEADER_PLUS_FIXED_PAYLOAD = 4;
     protected static final int WAITTIME = 100;
@@ -94,7 +96,7 @@ public class DistributedStateManager {
     private int localState;
     private boolean activated = false;
     private static final int MAX_N_PENDING_STATES = 5;
-    private static final int INIT_WAITTIME = 2000;
+    private static final int INIT_WAITTIME_MS = 2000;
     private int[] pendingStates = new int[MAX_N_PENDING_STATES];
     private int globalState;
     private int recipientID;
@@ -102,6 +104,7 @@ public class DistributedStateManager {
     private boolean alternateSequenceFlag;
     private float lastTime;
     private boolean limitPendingOneWay;
+    private boolean firstInit = true;
     
     public void senderAct() {
         float time = provider.getTime();
@@ -124,6 +127,7 @@ public class DistributedStateManager {
         int i;
         for(i=0; i<MAX_N_PENDING_STATES; i++) {
             if(pendingStates[i] != 0) {
+                //System.out.println("[Pending states are present]");
                 return true;
             }
         }
@@ -155,17 +159,26 @@ public class DistributedStateManager {
         else
             alternateSequenceFlag = true;*/
         this.notifyAll();
+        if(USE_MONITOR) update();
     }
 
     public void init(int myID) {
         this.myID = myID;
-        provider.delay(INIT_WAITTIME);
+        //if(firstInit) {
+        //firstInit = false;
+        if(myID==0) {
+            provider.delay(INIT_WAITTIME_MS);
+            if(globalState==0) localState = 0;
+        }
+  //      }
+        if(USE_MONITOR) update();
     }
 
     public int getGlobalState() {
         return globalState;
     }
 
+    private static final int[] emptyComparator = new int[MAX_N_PENDING_STATES]; 
     public synchronized void receive(byte[] rawMessage) {
         EightMsg msg = new EightMsg(rawMessage);
         /* this should not apply to the module starting the sequence*/
@@ -186,6 +199,10 @@ public class DistributedStateManager {
 
         int pendingBuffer[] = new int[MAX_N_PENDING_STATES];
         globalState = merge(globalState, pendingStates, msg.state, msg.pending, pendingBuffer);
+        int newPending[] = findNew(pendingStates,pendingBuffer);
+        if(!Arrays.equals(newPending, emptyComparator) && globalState>previousState) {
+            System.out.println("New pending states module "+myID+": "+Arrays.toString(newPending)+" incoming global state "+globalState+" local was "+previousState);
+        }
         if(msg.state<previousState && !Arrays.equals(pendingStates, pendingBuffer))
             System.out.println("*** Out-of-order merge");
         int[] tmp = pendingStates; pendingStates = pendingBuffer; pendingBuffer = tmp; /* swap */
@@ -193,7 +210,35 @@ public class DistributedStateManager {
             recipientID = msg.recipientID;
             if( msg.recipientID == myID )
                 localState = globalState;
+        } else if(responsibleForPendingState(newPending)) {
+            int pendingState = findResponsiblePendingState(newPending);
+            localState = pendingState;
         }
+        if(USE_MONITOR) update();
+    }
+
+    private int findResponsiblePendingState(int[] newPending) {
+        for(int i=0; i<newPending.length; i++)
+            if(provider.isResponsible(myID, newPending[i])) return newPending[i];
+        throw new Error("No responsible pending state found");
+    }
+
+    private boolean responsibleForPendingState(int[] newPending) {
+        for(int i=0; i<newPending.length; i++)
+            if(newPending[i]!=0 && provider.isResponsible(myID,newPending[i])) return true;
+        return false;
+    }
+
+    private int[] findNew(int[] oldStates, int[] newStates) {
+        int[] result = new int[MAX_N_PENDING_STATES];
+        int index = 0;
+        for(int i=0; i<newStates.length; i++) {
+            int j=0;
+            for(; j<oldStates.length; j++)
+                if(newStates[i]!=0 && newStates[i]==oldStates[j]) break;
+            if(j<oldStates.length) result[index++]=oldStates[j];
+        }
+        return result;
     }
 
     public void setCommunicationProvider(CommunicationProvider provider) {
@@ -235,4 +280,7 @@ public class DistributedStateManager {
         return provider.getTime();
     }
 
+    public void update() {
+        MonitorWindow.update(myID,globalState,pendingStates);
+    }
 }

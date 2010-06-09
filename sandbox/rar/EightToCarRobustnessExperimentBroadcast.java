@@ -44,7 +44,7 @@ public class EightToCarRobustnessExperimentBroadcast extends EightToCarRobustnes
         if(ParameterHolder.get()==null)
             //ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.5f,0.75f,0.0f,Float.MAX_VALUE,17));
         //ParameterHolder.set(new Parameters(0,0.0f,0.0f,0.0f,Float.MAX_VALUE));
-        ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.0f,0.0f,0.0f,Float.MAX_VALUE,0.1f,4.0f,17));
+        ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.0f,0.0f,0.0f,Float.MAX_VALUE,100f,0.1f,1));
         new EightToCarRobustnessExperimentBroadcast().main(); 
     }
 

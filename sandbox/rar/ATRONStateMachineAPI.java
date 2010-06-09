@@ -73,4 +73,9 @@ public class ATRONStateMachineAPI extends ATRONController implements Communicati
         return module.getSimulation().getTime();
     }
 
+    @Override
+    public boolean isResponsible(int myID, int i) {
+        return machine.checkPendingStateResponsibility(myID, i);
+    }
+
 }
