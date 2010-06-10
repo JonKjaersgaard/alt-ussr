@@ -2,8 +2,6 @@
 /* DynaRole Java statemachine generated for parallelRotate */
 package robustReversible.gen;
 
-import java.util.Date;
-
 import robustReversible.*;
 
 public class rotateGen5p extends StateMachine {
@@ -45,7 +43,7 @@ public class rotateGen5p extends StateMachine {
 	return api.isConnected(connector);
   }
 
-  protected void stateMachine() {
+  protected void stateMachine() { 
     api.yield();
     if(token == 255) { /* try to see if there's a new state for me */
       token = stateManager.getMyNewState();
@@ -288,150 +286,10 @@ public class rotateGen5p extends StateMachine {
       token = 255;
       break;
     case 54: /* Module M__3 */
-      stateManager.addPendingState(54);
       rotateDirTo(0,TRUE);
       token = 55;
       break;
     case 55:
-      stateManager.sendState(57,4);
-      token = 56; /* fall-through */
-    case 56:
-      if(!doneRotatingTo(0)) break;
-      stateManager.removePendingState(54);
-      token = 255;
-      break;
-    case 57: /* Module M__4 */
-      rotateDirTo(0,TRUE);
-      token = 58;
-      break;
-    case 58:
-      if(stateManager.pendingStatesPresent()) break;
-      if(!doneRotatingTo(0)) break;
-      stateManager.sendState(59,0);
-      token = 255;
-      break;
-    case 59: /* Module M__0 */
-      stateManager.addPendingState(59);
-      rotateDirTo(216,TRUE);
-      token = 60;
-      break;
-    case 60:
-      stateManager.sendState(62,1);
-      token = 61; /* fall-through */
-    case 61:
-      if(!doneRotatingTo(216)) break;
-      stateManager.removePendingState(59);
-      token = 255;
-      break;
-    case 62: /* Module M__1 */
-      stateManager.addPendingState(62);
-      rotateDirTo(216,TRUE);
-      token = 63;
-      break;
-    case 63:
-      stateManager.sendState(65,2);
-      token = 64; /* fall-through */
-    case 64:
-      if(!doneRotatingTo(216)) break;
-      stateManager.removePendingState(62);
-      token = 255;
-      break;
-    case 65: /* Module M__2 */
-      stateManager.addPendingState(65);
-      rotateDirTo(216,TRUE);
-      token = 66;
-      break;
-    case 66:
-      stateManager.sendState(68,3);
-      token = 67; /* fall-through */
-    case 67:
-      if(!doneRotatingTo(216)) break;
-      stateManager.removePendingState(65);
-      token = 255;
-      break;
-    case 68: /* Module M__3 */
-      stateManager.addPendingState(68);
-      rotateDirTo(216,TRUE);
-      token = 69;
-      break;
-    case 69:
-      stateManager.sendState(71,4);
-      token = 70; /* fall-through */
-    case 70:
-      if(!doneRotatingTo(216)) break;
-      stateManager.removePendingState(68);
-      token = 255;
-      break;
-    case 71: /* Module M__4 */
-      stateManager.addPendingState(71);
-      rotateDirTo(216,TRUE);
-      token = 72;
-      break;
-    case 72:
-      stateManager.sendState(74,0);
-      token = 73; /* fall-through */
-    case 73:
-      if(!doneRotatingTo(216)) break;
-      stateManager.removePendingState(71);
-      token = 255;
-      break;
-    case 74: /* Module M__0 */
-      stateManager.addPendingState(74);
-      rotateDirTo(0,TRUE);
-      token = 75;
-      break;
-    case 75:
-      stateManager.sendState(77,1);
-      token = 76; /* fall-through */
-    case 76:
-      if(!doneRotatingTo(0)) break;
-      stateManager.removePendingState(74);
-      token = 255;
-      break;
-    case 77: /* Module M__1 */
-      stateManager.addPendingState(77);
-      rotateDirTo(0,TRUE);
-      token = 78;
-      break;
-    case 78:
-      stateManager.sendState(80,2);
-      token = 79; /* fall-through */
-    case 79:
-      if(!doneRotatingTo(0)) break;
-      stateManager.removePendingState(77);
-      token = 255;
-      break;
-    case 80: /* Module M__2 */
-      stateManager.addPendingState(80);
-      rotateDirTo(0,TRUE);
-      token = 81;
-      break;
-    case 81:
-      stateManager.sendState(83,3);
-      token = 82; /* fall-through */
-    case 82:
-      if(!doneRotatingTo(0)) break;
-      stateManager.removePendingState(80);
-      token = 255;
-      break;
-    case 83: /* Module M__3 */
-      stateManager.addPendingState(83);
-      rotateDirTo(0,TRUE);
-      token = 84;
-      break;
-    case 84:
-      stateManager.sendState(86,4);
-      token = 85; /* fall-through */
-    case 85:
-      if(!doneRotatingTo(0)) break;
-      stateManager.removePendingState(83);
-      token = 255;
-      break;
-    case 86: /* Module M__4 */
-      rotateDirTo(0,TRUE);
-      token = 87;
-      break;
-    case 87:
       if(stateManager.pendingStatesPresent()) break;
       if(!doneRotatingTo(0)) break;
 
@@ -464,28 +322,32 @@ public class rotateGen5p extends StateMachine {
     else if((self_id==7)) address = 7;
     else if((self_id==8)) address = 8;
     else if((self_id==9)) address = 9;
+    else if((self_id==10)) address = 10;
+    else if((self_id==11)) address = 11;
+    else if((self_id==12)) address = 12;
+    else if((self_id==13)) address = 13;
+    else if((self_id==14)) address = 14;
+    else if((self_id==15)) address = 15;
+    else if((self_id==16)) address = 16;
+    else if((self_id==17)) address = 17;
+    else if((self_id==18)) address = 18;
+    else if((self_id==19)) address = 19;
 
     else address = 127;
 	myID = address;
 	token = 255;
-	stateManager.init(myID);
 	
     api.setLeds(myID);
 	reset_state();
+	stateManager.init(myID);
 	isDone = false;
 }
 
   public void reset_sequence() {
-    if ( myID == 0 ) {
-      token = 0; // Tolerate reset in the middle of reconfiguration
-    }    
     stateManager.reset_sequence();
 }
 
   public void reset_state() {
-    if ( myID == 0 ) {
-      token = 0; // Tolerate reset in the middle of reconfiguration
-    }    
     stateManager.reset_state();
 }
 
@@ -493,23 +355,17 @@ public class rotateGen5p extends StateMachine {
     if(address==0) {
       if(pendingState==16) return true;
       if(pendingState==1) return true;
-      if(pendingState==59) return true;
-      if(pendingState==74) return true;
       if(pendingState==45) return true;
       if(pendingState==30) return true;
       return false;
     }
     if(address==3) {
-      if(pendingState==68) return true;
-      if(pendingState==54) return true;
       if(pendingState==39) return true;
-      if(pendingState==83) return true;
       if(pendingState==25) return true;
       if(pendingState==10) return true;
       return false;
     }
     if(address==4) {
-      if(pendingState==71) return true;
       if(pendingState==42) return true;
       if(pendingState==13) return true;
       return false;
@@ -519,14 +375,10 @@ public class rotateGen5p extends StateMachine {
       if(pendingState==48) return true;
       if(pendingState==33) return true;
       if(pendingState==4) return true;
-      if(pendingState==77) return true;
-      if(pendingState==62) return true;
       return false;
     }
     if(address==2) {
       if(pendingState==51) return true;
-      if(pendingState==80) return true;
-      if(pendingState==65) return true;
       if(pendingState==36) return true;
       if(pendingState==22) return true;
       if(pendingState==7) return true;
@@ -536,20 +388,20 @@ public class rotateGen5p extends StateMachine {
   }
 
   int getLastState(int address) {
-    if(address==0) return 74;
-    if(address==1) return 77;
-    if(address==2) return 80;
-    if(address==3) return 83;
-    if(address==4) return 86;
+    if(address==0) return 45;
+    if(address==1) return 48;
+    if(address==2) return 51;
+    if(address==3) return 54;
+    if(address==4) return 42;
     return 255;
   }
   
   int getLastStateLowerBound(int address) {
-    if(address==0) return 62;
-    if(address==1) return 65;
-    if(address==2) return 68;
-    if(address==3) return 71;
-    if(address==4) return 74;
+    if(address==0) return 33;
+    if(address==1) return 36;
+    if(address==2) return 39;
+    if(address==3) return 42;
+    if(address==4) return 30;
     return 255;
   }
 

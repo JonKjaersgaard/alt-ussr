@@ -55,12 +55,12 @@ public class rotateGen1 extends StateMachine {
 	switch(token) {
 	case 0: token = 1; /* fall-through */
     case 1: /* Module M__0 */
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 2;
       break;
     case 2:
       if(stateManager.pendingStatesPresent()) break;
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       token = 3; /* fall-through */
     case 3: /* Module M__0 */
       rotateDirTo(0,TRUE);
@@ -71,34 +71,18 @@ public class rotateGen1 extends StateMachine {
       if(!doneRotatingTo(0)) break;
       token = 5; /* fall-through */
     case 5: /* Module M__0 */
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 6;
       break;
     case 6:
       if(stateManager.pendingStatesPresent()) break;
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       token = 7; /* fall-through */
     case 7: /* Module M__0 */
       rotateDirTo(0,TRUE);
       token = 8;
       break;
     case 8:
-      if(stateManager.pendingStatesPresent()) break;
-      if(!doneRotatingTo(0)) break;
-      token = 9; /* fall-through */
-    case 9: /* Module M__0 */
-      rotateDirTo(108,TRUE);
-      token = 10;
-      break;
-    case 10:
-      if(stateManager.pendingStatesPresent()) break;
-      if(!doneRotatingTo(108)) break;
-      token = 11; /* fall-through */
-    case 11: /* Module M__0 */
-      rotateDirTo(0,TRUE);
-      token = 12;
-      break;
-    case 12:
       if(stateManager.pendingStatesPresent()) break;
       if(!doneRotatingTo(0)) break;
 
@@ -131,28 +115,32 @@ public class rotateGen1 extends StateMachine {
     else if((self_id==7)) address = 7;
     else if((self_id==8)) address = 8;
     else if((self_id==9)) address = 9;
+    else if((self_id==10)) address = 10;
+    else if((self_id==11)) address = 11;
+    else if((self_id==12)) address = 12;
+    else if((self_id==13)) address = 13;
+    else if((self_id==14)) address = 14;
+    else if((self_id==15)) address = 15;
+    else if((self_id==16)) address = 16;
+    else if((self_id==17)) address = 17;
+    else if((self_id==18)) address = 18;
+    else if((self_id==19)) address = 19;
 
     else address = 127;
 	myID = address;
 	token = 255;
-	stateManager.init(myID);
 	
     api.setLeds(myID);
 	reset_state();
+	stateManager.init(myID);
 	isDone = false;
 }
 
   public void reset_sequence() {
-    if ( myID == 0 ) {
-      token = 0; // Tolerate reset in the middle of reconfiguration
-    }    
     stateManager.reset_sequence();
 }
 
   public void reset_state() {
-    if ( myID == 0 ) {
-      token = 0; // Tolerate reset in the middle of reconfiguration
-    }    
     stateManager.reset_state();
 }
 

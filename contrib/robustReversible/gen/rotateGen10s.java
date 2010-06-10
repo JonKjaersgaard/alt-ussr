@@ -559,260 +559,6 @@ public class rotateGen10s extends StateMachine {
     case 116:
       if(stateManager.pendingStatesPresent()) break;
       if(!doneRotatingTo(0)) break;
-      stateManager.sendState(117,0);
-      token = 255;
-      break;
-    case 117: /* Module M__0 */
-      stateManager.addPendingState(117);
-      rotateDirTo(216,TRUE);
-      token = 118;
-      break;
-    case 118:
-      stateManager.sendState(120,1);
-      token = 119; /* fall-through */
-    case 119:
-      if(!doneRotatingTo(216)) break;
-      stateManager.removePendingState(117);
-      token = 255;
-      break;
-    case 120: /* Module M__1 */
-      stateManager.addPendingState(120);
-      rotateDirTo(216,TRUE);
-      token = 121;
-      break;
-    case 121:
-      stateManager.sendState(123,2);
-      token = 122; /* fall-through */
-    case 122:
-      if(!doneRotatingTo(216)) break;
-      stateManager.removePendingState(120);
-      token = 255;
-      break;
-    case 123: /* Module M__2 */
-      stateManager.addPendingState(123);
-      rotateDirTo(216,TRUE);
-      token = 124;
-      break;
-    case 124:
-      stateManager.sendState(126,3);
-      token = 125; /* fall-through */
-    case 125:
-      if(!doneRotatingTo(216)) break;
-      stateManager.removePendingState(123);
-      token = 255;
-      break;
-    case 126: /* Module M__3 */
-      stateManager.addPendingState(126);
-      rotateDirTo(216,TRUE);
-      token = 127;
-      break;
-    case 127:
-      stateManager.sendState(129,4);
-      token = 128; /* fall-through */
-    case 128:
-      if(!doneRotatingTo(216)) break;
-      stateManager.removePendingState(126);
-      token = 255;
-      break;
-    case 129: /* Module M__4 */
-      stateManager.addPendingState(129);
-      rotateDirTo(216,TRUE);
-      token = 130;
-      break;
-    case 130:
-      stateManager.sendState(132,5);
-      token = 131; /* fall-through */
-    case 131:
-      if(!doneRotatingTo(216)) break;
-      stateManager.removePendingState(129);
-      token = 255;
-      break;
-    case 132: /* Module M__5 */
-      stateManager.addPendingState(132);
-      rotateDirTo(216,TRUE);
-      token = 133;
-      break;
-    case 133:
-      stateManager.sendState(135,6);
-      token = 134; /* fall-through */
-    case 134:
-      if(!doneRotatingTo(216)) break;
-      stateManager.removePendingState(132);
-      token = 255;
-      break;
-    case 135: /* Module M__6 */
-      stateManager.addPendingState(135);
-      rotateDirTo(216,TRUE);
-      token = 136;
-      break;
-    case 136:
-      stateManager.sendState(138,7);
-      token = 137; /* fall-through */
-    case 137:
-      if(!doneRotatingTo(216)) break;
-      stateManager.removePendingState(135);
-      token = 255;
-      break;
-    case 138: /* Module M__7 */
-      stateManager.addPendingState(138);
-      rotateDirTo(216,TRUE);
-      token = 139;
-      break;
-    case 139:
-      stateManager.sendState(141,8);
-      token = 140; /* fall-through */
-    case 140:
-      if(!doneRotatingTo(216)) break;
-      stateManager.removePendingState(138);
-      token = 255;
-      break;
-    case 141: /* Module M__8 */
-      stateManager.addPendingState(141);
-      rotateDirTo(216,TRUE);
-      token = 142;
-      break;
-    case 142:
-      stateManager.sendState(144,9);
-      token = 143; /* fall-through */
-    case 143:
-      if(!doneRotatingTo(216)) break;
-      stateManager.removePendingState(141);
-      token = 255;
-      break;
-    case 144: /* Module M__9 */
-      rotateDirTo(216,TRUE);
-      token = 145;
-      break;
-    case 145:
-      if(stateManager.pendingStatesPresent()) break;
-      if(!doneRotatingTo(216)) break;
-      stateManager.sendState(146,0);
-      token = 255;
-      break;
-    case 146: /* Module M__0 */
-      stateManager.addPendingState(146);
-      rotateDirTo(0,TRUE);
-      token = 147;
-      break;
-    case 147:
-      stateManager.sendState(149,1);
-      token = 148; /* fall-through */
-    case 148:
-      if(!doneRotatingTo(0)) break;
-      stateManager.removePendingState(146);
-      token = 255;
-      break;
-    case 149: /* Module M__1 */
-      stateManager.addPendingState(149);
-      rotateDirTo(0,TRUE);
-      token = 150;
-      break;
-    case 150:
-      stateManager.sendState(152,2);
-      token = 151; /* fall-through */
-    case 151:
-      if(!doneRotatingTo(0)) break;
-      stateManager.removePendingState(149);
-      token = 255;
-      break;
-    case 152: /* Module M__2 */
-      stateManager.addPendingState(152);
-      rotateDirTo(0,TRUE);
-      token = 153;
-      break;
-    case 153:
-      stateManager.sendState(155,3);
-      token = 154; /* fall-through */
-    case 154:
-      if(!doneRotatingTo(0)) break;
-      stateManager.removePendingState(152);
-      token = 255;
-      break;
-    case 155: /* Module M__3 */
-      stateManager.addPendingState(155);
-      rotateDirTo(0,TRUE);
-      token = 156;
-      break;
-    case 156:
-      stateManager.sendState(158,4);
-      token = 157; /* fall-through */
-    case 157:
-      if(!doneRotatingTo(0)) break;
-      stateManager.removePendingState(155);
-      token = 255;
-      break;
-    case 158: /* Module M__4 */
-      stateManager.addPendingState(158);
-      rotateDirTo(0,TRUE);
-      token = 159;
-      break;
-    case 159:
-      stateManager.sendState(161,5);
-      token = 160; /* fall-through */
-    case 160:
-      if(!doneRotatingTo(0)) break;
-      stateManager.removePendingState(158);
-      token = 255;
-      break;
-    case 161: /* Module M__5 */
-      stateManager.addPendingState(161);
-      rotateDirTo(0,TRUE);
-      token = 162;
-      break;
-    case 162:
-      stateManager.sendState(164,6);
-      token = 163; /* fall-through */
-    case 163:
-      if(!doneRotatingTo(0)) break;
-      stateManager.removePendingState(161);
-      token = 255;
-      break;
-    case 164: /* Module M__6 */
-      stateManager.addPendingState(164);
-      rotateDirTo(0,TRUE);
-      token = 165;
-      break;
-    case 165:
-      stateManager.sendState(167,7);
-      token = 166; /* fall-through */
-    case 166:
-      if(!doneRotatingTo(0)) break;
-      stateManager.removePendingState(164);
-      token = 255;
-      break;
-    case 167: /* Module M__7 */
-      stateManager.addPendingState(167);
-      rotateDirTo(0,TRUE);
-      token = 168;
-      break;
-    case 168:
-      stateManager.sendState(170,8);
-      token = 169; /* fall-through */
-    case 169:
-      if(!doneRotatingTo(0)) break;
-      stateManager.removePendingState(167);
-      token = 255;
-      break;
-    case 170: /* Module M__8 */
-      stateManager.addPendingState(170);
-      rotateDirTo(0,TRUE);
-      token = 171;
-      break;
-    case 171:
-      stateManager.sendState(173,9);
-      token = 172; /* fall-through */
-    case 172:
-      if(!doneRotatingTo(0)) break;
-      stateManager.removePendingState(170);
-      token = 255;
-      break;
-    case 173: /* Module M__9 */
-      rotateDirTo(0,TRUE);
-      token = 174;
-      break;
-    case 174:
-      if(stateManager.pendingStatesPresent()) break;
-      if(!doneRotatingTo(0)) break;
 
 	
 	stateManager.sendState(254,-1);
@@ -843,44 +589,44 @@ public class rotateGen10s extends StateMachine {
     else if((self_id==7)) address = 7;
     else if((self_id==8)) address = 8;
     else if((self_id==9)) address = 9;
+    else if((self_id==10)) address = 10;
+    else if((self_id==11)) address = 11;
+    else if((self_id==12)) address = 12;
+    else if((self_id==13)) address = 13;
+    else if((self_id==14)) address = 14;
+    else if((self_id==15)) address = 15;
+    else if((self_id==16)) address = 16;
+    else if((self_id==17)) address = 17;
+    else if((self_id==18)) address = 18;
+    else if((self_id==19)) address = 19;
 
     else address = 127;
 	myID = address;
 	token = 255;
-	stateManager.init(myID);
 	
     api.setLeds(myID);
 	reset_state();
+	stateManager.init(myID);
 	isDone = false;
 }
 
   public void reset_sequence() {
-    if ( myID == 0 ) {
-      token = 0; // Tolerate reset in the middle of reconfiguration
-    }    
     stateManager.reset_sequence();
 }
 
   public void reset_state() {
-    if ( myID == 0 ) {
-      token = 0; // Tolerate reset in the middle of reconfiguration
-    }    
     stateManager.reset_state();
 }
 
   public boolean checkPendingStateResponsibility(int address, int pendingState) {
     if(address==7) {
       if(pendingState==51) return true;
-      if(pendingState==138) return true;
       if(pendingState==80) return true;
       if(pendingState==22) return true;
       if(pendingState==109) return true;
-      if(pendingState==167) return true;
       return false;
     }
     if(address==8) {
-      if(pendingState==170) return true;
-      if(pendingState==141) return true;
       if(pendingState==54) return true;
       if(pendingState==83) return true;
       if(pendingState==112) return true;
@@ -890,8 +636,6 @@ public class rotateGen10s extends StateMachine {
     if(address==5) {
       if(pendingState==103) return true;
       if(pendingState==16) return true;
-      if(pendingState==161) return true;
-      if(pendingState==132) return true;
       if(pendingState==74) return true;
       if(pendingState==45) return true;
       return false;
@@ -901,33 +645,25 @@ public class rotateGen10s extends StateMachine {
       if(pendingState==48) return true;
       if(pendingState==77) return true;
       if(pendingState==106) return true;
-      if(pendingState==135) return true;
-      if(pendingState==164) return true;
       return false;
     }
     if(address==0) {
       if(pendingState==1) return true;
-      if(pendingState==117) return true;
       if(pendingState==59) return true;
-      if(pendingState==146) return true;
       if(pendingState==88) return true;
       if(pendingState==30) return true;
       return false;
     }
     if(address==3) {
       if(pendingState==68) return true;
-      if(pendingState==155) return true;
       if(pendingState==39) return true;
       if(pendingState==97) return true;
-      if(pendingState==126) return true;
       if(pendingState==10) return true;
       return false;
     }
     if(address==4) {
       if(pendingState==100) return true;
       if(pendingState==71) return true;
-      if(pendingState==158) return true;
-      if(pendingState==129) return true;
       if(pendingState==42) return true;
       if(pendingState==13) return true;
       return false;
@@ -935,49 +671,45 @@ public class rotateGen10s extends StateMachine {
     if(address==1) {
       if(pendingState==33) return true;
       if(pendingState==4) return true;
-      if(pendingState==149) return true;
       if(pendingState==62) return true;
       if(pendingState==91) return true;
-      if(pendingState==120) return true;
       return false;
     }
     if(address==2) {
-      if(pendingState==152) return true;
       if(pendingState==65) return true;
       if(pendingState==36) return true;
       if(pendingState==7) return true;
       if(pendingState==94) return true;
-      if(pendingState==123) return true;
       return false;
     }
     return false;
   }
 
   int getLastState(int address) {
-    if(address==0) return 146;
-    if(address==1) return 149;
-    if(address==2) return 152;
-    if(address==3) return 155;
-    if(address==4) return 158;
-    if(address==5) return 161;
-    if(address==6) return 164;
-    if(address==7) return 167;
-    if(address==8) return 170;
-    if(address==9) return 173;
+    if(address==0) return 88;
+    if(address==1) return 91;
+    if(address==2) return 94;
+    if(address==3) return 97;
+    if(address==4) return 100;
+    if(address==5) return 103;
+    if(address==6) return 106;
+    if(address==7) return 109;
+    if(address==8) return 112;
+    if(address==9) return 115;
     return 255;
   }
   
   int getLastStateLowerBound(int address) {
-    if(address==0) return 120;
-    if(address==1) return 123;
-    if(address==2) return 126;
-    if(address==3) return 129;
-    if(address==4) return 132;
-    if(address==5) return 135;
-    if(address==6) return 138;
-    if(address==7) return 141;
-    if(address==8) return 144;
-    if(address==9) return 146;
+    if(address==0) return 62;
+    if(address==1) return 65;
+    if(address==2) return 68;
+    if(address==3) return 71;
+    if(address==4) return 74;
+    if(address==5) return 77;
+    if(address==6) return 80;
+    if(address==7) return 83;
+    if(address==8) return 86;
+    if(address==9) return 88;
     return 255;
   }
 
