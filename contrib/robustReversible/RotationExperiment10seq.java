@@ -80,7 +80,7 @@ public class RotationExperiment10seq extends EightToCarRobustnessExperiment impl
             }
             
         };
-        return builder.buildAsNamedLattice(100, 5, 1, 2, namer, selector, ATRON.UNIT);
+        return builder.buildAsNamedLattice(10, 5, 1, 2, namer, selector, ATRON.UNIT);
     }
     @Override
     protected void setupPhysicsHook() {

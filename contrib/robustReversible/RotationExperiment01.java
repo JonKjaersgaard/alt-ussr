@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 import robustReversible.gen.carsnakeSimpleGen_seq;
-import robustReversible.gen.rotateGen10p;
+import robustReversible.gen.rotateGen1;
 import robustReversible.gen.rotateGen10s;
 import robustReversible.gen.snakeGen_seq;
 
@@ -46,22 +46,22 @@ import ussr.samples.atron.ATRONBuilder.Namer;
  * 
  * @author ups
  */ 
-public class RotationExperiment10par extends EightToCarRobustnessExperiment implements ExperimentResultRegistrant {
+public class RotationExperiment01 extends EightToCarRobustnessExperiment implements ExperimentResultRegistrant {
 
     public static void main(String argv[]) {
         if(ParameterHolder.get()==null)
             //ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.5f,0.75f,0.0f,Float.MAX_VALUE,17));
         //ParameterHolder.set(new Parameters(0,0.0f,0.0f,0.0f,Float.MAX_VALUE));
         ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.0f,0.0f,0.0f,Float.MAX_VALUE,100f,0.0f,1));
-        new RotationExperiment10par().main(); 
+        new RotationExperiment01().main(); 
     }
 
     @Override
     protected Robot getRobot() {
         return new ATRON() {
             public Controller createController() {
-                StateMachine machine = new rotateGen10p();
-                return new ATRONStateMachineAPI(machine,RotationExperiment10par.this);
+                StateMachine machine = new rotateGen1();
+                return new ATRONStateMachineAPI(machine,RotationExperiment01.this);
             }
         };
     }
@@ -81,7 +81,7 @@ public class RotationExperiment10par extends EightToCarRobustnessExperiment impl
             }
             
         };
-        return builder.buildAsNamedLattice(10, 5, 1, 2, namer, selector, ATRON.UNIT);
+        return builder.buildAsNamedLattice(1, 5, 1, 2, namer, selector, ATRON.UNIT);
     }
     @Override
     protected void setupPhysicsHook() {
