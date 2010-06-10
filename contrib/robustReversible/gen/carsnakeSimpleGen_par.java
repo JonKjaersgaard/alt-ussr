@@ -349,7 +349,7 @@ public class carsnakeSimpleGen_par extends StateMachine {
 	
     api.setLeds(myID);
 	reset_state();
-    stateManager.init(myID);
+    stateManager.init(myID,0);
 	isDone = false;
 }
 

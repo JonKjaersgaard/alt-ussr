@@ -300,24 +300,18 @@ public class snakeGen_seq extends StateMachine {
     else address = 127;
 	myID = address;
 	token = 255;
-	stateManager.init(myID);
 	
     api.setLeds(myID);
 	reset_state();
+	stateManager.init(myID,3);
 	isDone = false;
 }
 
   public void reset_sequence() {
-    if ( myID == 3 ) {
-      token = 0; // Tolerate reset in the middle of reconfiguration
-    }    
     stateManager.reset_sequence();
 }
 
   public void reset_state() {
-    if ( myID == 3 ) {
-      token = 0; // Tolerate reset in the middle of reconfiguration
-    }    
     stateManager.reset_state();
 }
 

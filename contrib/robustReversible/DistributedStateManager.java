@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.BitSet;
 
 public class DistributedStateManager {
-    public static final boolean USE_MONITOR = false;
+    public static final boolean USE_MONITOR = true;
     public static int MAX_N_PENDING_STATES = 5;
 
     private static byte MAGIC_HEADER = 107;
@@ -169,11 +169,11 @@ public class DistributedStateManager {
         if(USE_MONITOR) update();
     }
 
-    public void init(int myID) {
+    public void init(int myID, int firstModuleID) {
         this.myID = myID;
         //if(firstInit) {
         //firstInit = false;
-        if(myID==0) {
+        if(myID==firstModuleID) {
             provider.delay(INIT_WAITTIME_MS);
             if(globalState==0) localState = 0;
         }

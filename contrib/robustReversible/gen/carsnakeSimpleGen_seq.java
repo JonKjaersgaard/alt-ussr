@@ -333,7 +333,7 @@ public class carsnakeSimpleGen_seq extends StateMachine {
 	
     api.setLeds(myID);
 	reset_state();
-    stateManager.init(myID);
+    stateManager.init(myID,0);
 	isDone = false;
 }
 
