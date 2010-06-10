@@ -4,7 +4,7 @@ package gen;
 
 import rar.*;
 
-public class rotateGen10 extends StateMachine {
+public class rotateGen10s extends StateMachine {
 
   private static final int CENTER_ERROR_TOLERANCE = 5;
   private int token = 255;
@@ -56,128 +56,128 @@ public class rotateGen10 extends StateMachine {
 	case 0: token = 1; /* fall-through */
     case 1: /* Module M__0 */
       stateManager.addPendingState(1);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 2;
       break;
     case 2:
       stateManager.sendState(4,1);
       token = 3; /* fall-through */
     case 3:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(1);
       token = 255;
       break;
     case 4: /* Module M__1 */
       stateManager.addPendingState(4);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 5;
       break;
     case 5:
       stateManager.sendState(7,2);
       token = 6; /* fall-through */
     case 6:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(4);
       token = 255;
       break;
     case 7: /* Module M__2 */
       stateManager.addPendingState(7);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 8;
       break;
     case 8:
       stateManager.sendState(10,3);
       token = 9; /* fall-through */
     case 9:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(7);
       token = 255;
       break;
     case 10: /* Module M__3 */
       stateManager.addPendingState(10);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 11;
       break;
     case 11:
       stateManager.sendState(13,4);
       token = 12; /* fall-through */
     case 12:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(10);
       token = 255;
       break;
     case 13: /* Module M__4 */
       stateManager.addPendingState(13);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 14;
       break;
     case 14:
       stateManager.sendState(16,5);
       token = 15; /* fall-through */
     case 15:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(13);
       token = 255;
       break;
     case 16: /* Module M__5 */
       stateManager.addPendingState(16);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 17;
       break;
     case 17:
       stateManager.sendState(19,6);
       token = 18; /* fall-through */
     case 18:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(16);
       token = 255;
       break;
     case 19: /* Module M__6 */
       stateManager.addPendingState(19);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 20;
       break;
     case 20:
       stateManager.sendState(22,7);
       token = 21; /* fall-through */
     case 21:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(19);
       token = 255;
       break;
     case 22: /* Module M__7 */
       stateManager.addPendingState(22);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 23;
       break;
     case 23:
       stateManager.sendState(25,8);
       token = 24; /* fall-through */
     case 24:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(22);
       token = 255;
       break;
     case 25: /* Module M__8 */
       stateManager.addPendingState(25);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 26;
       break;
     case 26:
       stateManager.sendState(28,9);
       token = 27; /* fall-through */
     case 27:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(25);
       token = 255;
       break;
     case 28: /* Module M__9 */
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 29;
       break;
     case 29:
       if(stateManager.pendingStatesPresent()) break;
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.sendState(30,0);
       token = 255;
       break;
@@ -310,128 +310,128 @@ public class rotateGen10 extends StateMachine {
       break;
     case 59: /* Module M__0 */
       stateManager.addPendingState(59);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 60;
       break;
     case 60:
       stateManager.sendState(62,1);
       token = 61; /* fall-through */
     case 61:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(59);
       token = 255;
       break;
     case 62: /* Module M__1 */
       stateManager.addPendingState(62);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 63;
       break;
     case 63:
       stateManager.sendState(65,2);
       token = 64; /* fall-through */
     case 64:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(62);
       token = 255;
       break;
     case 65: /* Module M__2 */
       stateManager.addPendingState(65);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 66;
       break;
     case 66:
       stateManager.sendState(68,3);
       token = 67; /* fall-through */
     case 67:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(65);
       token = 255;
       break;
     case 68: /* Module M__3 */
       stateManager.addPendingState(68);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 69;
       break;
     case 69:
       stateManager.sendState(71,4);
       token = 70; /* fall-through */
     case 70:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(68);
       token = 255;
       break;
     case 71: /* Module M__4 */
       stateManager.addPendingState(71);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 72;
       break;
     case 72:
       stateManager.sendState(74,5);
       token = 73; /* fall-through */
     case 73:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(71);
       token = 255;
       break;
     case 74: /* Module M__5 */
       stateManager.addPendingState(74);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 75;
       break;
     case 75:
       stateManager.sendState(77,6);
       token = 76; /* fall-through */
     case 76:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(74);
       token = 255;
       break;
     case 77: /* Module M__6 */
       stateManager.addPendingState(77);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 78;
       break;
     case 78:
       stateManager.sendState(80,7);
       token = 79; /* fall-through */
     case 79:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(77);
       token = 255;
       break;
     case 80: /* Module M__7 */
       stateManager.addPendingState(80);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 81;
       break;
     case 81:
       stateManager.sendState(83,8);
       token = 82; /* fall-through */
     case 82:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(80);
       token = 255;
       break;
     case 83: /* Module M__8 */
       stateManager.addPendingState(83);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 84;
       break;
     case 84:
       stateManager.sendState(86,9);
       token = 85; /* fall-through */
     case 85:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(83);
       token = 255;
       break;
     case 86: /* Module M__9 */
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 87;
       break;
     case 87:
       if(stateManager.pendingStatesPresent()) break;
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.sendState(88,0);
       token = 255;
       break;
@@ -564,128 +564,128 @@ public class rotateGen10 extends StateMachine {
       break;
     case 117: /* Module M__0 */
       stateManager.addPendingState(117);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 118;
       break;
     case 118:
       stateManager.sendState(120,1);
       token = 119; /* fall-through */
     case 119:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(117);
       token = 255;
       break;
     case 120: /* Module M__1 */
       stateManager.addPendingState(120);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 121;
       break;
     case 121:
       stateManager.sendState(123,2);
       token = 122; /* fall-through */
     case 122:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(120);
       token = 255;
       break;
     case 123: /* Module M__2 */
       stateManager.addPendingState(123);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 124;
       break;
     case 124:
       stateManager.sendState(126,3);
       token = 125; /* fall-through */
     case 125:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(123);
       token = 255;
       break;
     case 126: /* Module M__3 */
       stateManager.addPendingState(126);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 127;
       break;
     case 127:
       stateManager.sendState(129,4);
       token = 128; /* fall-through */
     case 128:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(126);
       token = 255;
       break;
     case 129: /* Module M__4 */
       stateManager.addPendingState(129);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 130;
       break;
     case 130:
       stateManager.sendState(132,5);
       token = 131; /* fall-through */
     case 131:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(129);
       token = 255;
       break;
     case 132: /* Module M__5 */
       stateManager.addPendingState(132);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 133;
       break;
     case 133:
       stateManager.sendState(135,6);
       token = 134; /* fall-through */
     case 134:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(132);
       token = 255;
       break;
     case 135: /* Module M__6 */
       stateManager.addPendingState(135);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 136;
       break;
     case 136:
       stateManager.sendState(138,7);
       token = 137; /* fall-through */
     case 137:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(135);
       token = 255;
       break;
     case 138: /* Module M__7 */
       stateManager.addPendingState(138);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 139;
       break;
     case 139:
       stateManager.sendState(141,8);
       token = 140; /* fall-through */
     case 140:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(138);
       token = 255;
       break;
     case 141: /* Module M__8 */
       stateManager.addPendingState(141);
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 142;
       break;
     case 142:
       stateManager.sendState(144,9);
       token = 143; /* fall-through */
     case 143:
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.removePendingState(141);
       token = 255;
       break;
     case 144: /* Module M__9 */
-      rotateDirTo(108,TRUE);
+      rotateDirTo(216,TRUE);
       token = 145;
       break;
     case 145:
       if(stateManager.pendingStatesPresent()) break;
-      if(!doneRotatingTo(108)) break;
+      if(!doneRotatingTo(216)) break;
       stateManager.sendState(146,0);
       token = 255;
       break;
