@@ -1,14 +1,20 @@
 package rar;
 
 import java.util.Arrays;
+import java.util.BitSet;
 
 public class DistributedStateManager {
     public static final boolean USE_MONITOR = false;
-    
+    public static int MAX_N_PENDING_STATES = 5;
+
     private static byte MAGIC_HEADER = 107;
     private static byte HEADER_PLUS_FIXED_PAYLOAD = 4;
     protected static final int WAITTIME = 100;
     protected static final float WAITTIME_MS = WAITTIME/1000.0f;
+
+    private static int b2i(byte b) {
+        return (int)b&0xff;
+    }
     
     private class EightMsg {
 
@@ -20,10 +26,10 @@ public class DistributedStateManager {
         EightMsg(byte[] raw) {
             if(raw[0]!=MAGIC_HEADER) throw new Error("Incorrect packet");
             alternateSequenceFlag = raw[1]!=0;
-            state = raw[2];
-            recipientID = raw[3];
+            state = b2i(raw[2]);
+            recipientID = b2i(raw[3]);
             for(int i=0; i<MAX_N_PENDING_STATES; i++)
-                pending[i] = raw[4+i];
+                pending[i] = b2i(raw[4+i]);
         }
 
         /**
@@ -95,9 +101,9 @@ public class DistributedStateManager {
     private int myID;
     private int localState;
     private boolean activated = false;
-    private static final int MAX_N_PENDING_STATES = 5;
     private static final int INIT_WAITTIME_MS = 2000;
     private int[] pendingStates = new int[MAX_N_PENDING_STATES];
+    private BitSet pendingHandled = new BitSet();
     private int globalState;
     private int recipientID;
     private boolean startingModule;
@@ -153,6 +159,7 @@ public class DistributedStateManager {
         localState = 255;
         recipientID = 0;
         for(i=0; i<MAX_N_PENDING_STATES; i++) pendingStates[i] = 0;
+        pendingHandled = new BitSet();
         /* flip the flag (can't do that with ~alternateSequenceFlag, beware!) */
         /*if(alternateSequenceFlag)
             alternateSequenceFlag = false;
@@ -200,19 +207,26 @@ public class DistributedStateManager {
         int pendingBuffer[] = new int[MAX_N_PENDING_STATES];
         globalState = merge(globalState, pendingStates, msg.state, msg.pending, pendingBuffer);
         int newPending[] = findNew(pendingStates,pendingBuffer);
-        if(!Arrays.equals(newPending, emptyComparator) && globalState>previousState) {
-            System.out.println("New pending states module "+myID+": "+Arrays.toString(newPending)+" incoming global state "+globalState+" local was "+previousState);
-        }
+        //        if(!Arrays.equals(newPending, emptyComparator) && globalState>previousState) {
+        //            System.out.println("New pending states module "+myID+": "+Arrays.toString(newPending)+" incoming global state "+globalState+" local was "+previousState);
+        //        }
         if(msg.state<previousState && !Arrays.equals(pendingStates, pendingBuffer))
             System.out.println("*** Out-of-order merge");
         int[] tmp = pendingStates; pendingStates = pendingBuffer; pendingBuffer = tmp; /* swap */
         if(globalState>previousState) {
             recipientID = msg.recipientID;
-            if( msg.recipientID == myID )
+            if( msg.recipientID == myID ) {
+                System.out.println("Module "+myID+" updated local state to "+globalState);
+                if(globalState==16)
+                    System.out.println("foo");
                 localState = globalState;
+            }
         } else if(responsibleForPendingState(newPending)) {
             int pendingState = findResponsiblePendingState(newPending);
-            localState = pendingState;
+            if(!pendingHandled.get(pendingState)) {
+                System.out.println("*** "+myID+" setting local state to "+pendingState);
+                localState = pendingState;
+            }
         }
         if(USE_MONITOR) update();
     }
@@ -246,6 +260,7 @@ public class DistributedStateManager {
     }
 
     public void addPendingState(int state) {
+        pendingHandled.set(state);
         for(int i=0; i<MAX_N_PENDING_STATES; i++) {
             if(pendingStates[i] == state)
                 return;
