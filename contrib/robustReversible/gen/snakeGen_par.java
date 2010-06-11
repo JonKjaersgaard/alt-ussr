@@ -1,5 +1,5 @@
-/* DynaRole Java code generated for parallelRotate */
-/* DynaRole Java statemachine generated for parallelRotate */
+/* DynaRole Java code generated for carsnakeSimple */
+/* DynaRole Java statemachine generated for carsnakeSimple */
 package robustReversible.gen;
 
 import robustReversible.*;
@@ -54,37 +54,215 @@ public class snakeGen_par extends StateMachine {
 	
 	switch(token) {
 	case 0: token = 1; /* fall-through */
-    case 1: /* Module M__0 */
-      rotateDirTo(216,TRUE);
+    case 1: /* Module M__3 */
+      /* { */
+        disconnect(0);
+        disconnect(6);
+      /* } */
       token = 2;
       break;
     case 2:
-      if(stateManager.pendingStatesPresent()) break;
-      if(!doneRotatingTo(216)) break;
-      token = 3; /* fall-through */
+        // local blocking handlers:
+        if(notDoneDisconnecting(0)) break;
+        if(notDoneDisconnecting(6)) break;
+      stateManager.sendState(3,0);
+      token = 255;
+      break;
     case 3: /* Module M__0 */
-      rotateDirTo(0,TRUE);
+      stateManager.addPendingState(3);
+      rotateDirTo(216,TRUE);
       token = 4;
       break;
     case 4:
-      if(stateManager.pendingStatesPresent()) break;
-      if(!doneRotatingTo(0)) break;
+      stateManager.sendState(6,6);
       token = 5; /* fall-through */
-    case 5: /* Module M__0 */
-      rotateDirTo(216,TRUE);
-      token = 6;
+    case 5:
+      if(!doneRotatingTo(216)) break;
+      stateManager.removePendingState(3);
+      token = 255;
       break;
-    case 6:
+    case 6: /* Module M__6 */
+      rotateDirTo(216,TRUE);
+      token = 7;
+      break;
+    case 7:
       if(stateManager.pendingStatesPresent()) break;
       if(!doneRotatingTo(216)) break;
-      token = 7; /* fall-through */
-    case 7: /* Module M__0 */
-      rotateDirTo(0,TRUE);
-      token = 8;
+      token = 8; /* fall-through */
+    case 8: /* Module M__6 */
+      stateManager.addPendingState(8);
+      rotateDirTo(0,FALSE);
+      token = 9;
       break;
-    case 8:
+    case 9:
+      stateManager.sendState(11,0);
+      token = 10; /* fall-through */
+    case 10:
+      if(!doneRotatingTo(0)) break;
+      stateManager.removePendingState(8);
+      token = 255;
+      break;
+    case 11: /* Module M__0 */
+      rotateDirTo(0,FALSE);
+      token = 12;
+      break;
+    case 12:
       if(stateManager.pendingStatesPresent()) break;
       if(!doneRotatingTo(0)) break;
+      stateManager.sendState(13,3);
+      token = 255;
+      break;
+    case 13: /* Module M__3 */
+      /* { */
+        connect(6);
+        connect(0);
+      /* } */
+      token = 14;
+      break;
+    case 14:
+        // local blocking handlers:
+        if(notDoneConnecting(6)) break;
+        if(notDoneConnecting(0)) break;
+      token = 15; /* fall-through */
+    case 15: /* Module M__3 */
+      /* { */
+        disconnect(0);
+        disconnect(6);
+      /* } */
+      token = 16;
+      break;
+    case 16:
+        // local blocking handlers:
+        if(notDoneDisconnecting(0)) break;
+        if(notDoneDisconnecting(6)) break;
+      stateManager.sendState(17,0);
+      token = 255;
+      break;
+    case 17: /* Module M__0 */
+      stateManager.addPendingState(17);
+      rotateDirTo(216,TRUE);
+      token = 18;
+      break;
+    case 18:
+      stateManager.sendState(20,6);
+      token = 19; /* fall-through */
+    case 19:
+      if(!doneRotatingTo(216)) break;
+      stateManager.removePendingState(17);
+      token = 255;
+      break;
+    case 20: /* Module M__6 */
+      rotateDirTo(216,TRUE);
+      token = 21;
+      break;
+    case 21:
+      if(stateManager.pendingStatesPresent()) break;
+      if(!doneRotatingTo(216)) break;
+      token = 22; /* fall-through */
+    case 22: /* Module M__6 */
+      stateManager.addPendingState(22);
+      rotateDirTo(0,FALSE);
+      token = 23;
+      break;
+    case 23:
+      stateManager.sendState(25,0);
+      token = 24; /* fall-through */
+    case 24:
+      if(!doneRotatingTo(0)) break;
+      stateManager.removePendingState(22);
+      token = 255;
+      break;
+    case 25: /* Module M__0 */
+      rotateDirTo(0,FALSE);
+      token = 26;
+      break;
+    case 26:
+      if(stateManager.pendingStatesPresent()) break;
+      if(!doneRotatingTo(0)) break;
+      stateManager.sendState(27,3);
+      token = 255;
+      break;
+    case 27: /* Module M__3 */
+      /* { */
+        connect(6);
+        connect(0);
+      /* } */
+      token = 28;
+      break;
+    case 28:
+        // local blocking handlers:
+        if(notDoneConnecting(6)) break;
+        if(notDoneConnecting(0)) break;
+      token = 29; /* fall-through */
+    case 29: /* Module M__3 */
+      /* { */
+        disconnect(0);
+        disconnect(6);
+      /* } */
+      token = 30;
+      break;
+    case 30:
+        // local blocking handlers:
+        if(notDoneDisconnecting(0)) break;
+        if(notDoneDisconnecting(6)) break;
+      stateManager.sendState(31,0);
+      token = 255;
+      break;
+    case 31: /* Module M__0 */
+      stateManager.addPendingState(31);
+      rotateDirTo(216,TRUE);
+      token = 32;
+      break;
+    case 32:
+      stateManager.sendState(34,6);
+      token = 33; /* fall-through */
+    case 33:
+      if(!doneRotatingTo(216)) break;
+      stateManager.removePendingState(31);
+      token = 255;
+      break;
+    case 34: /* Module M__6 */
+      rotateDirTo(216,TRUE);
+      token = 35;
+      break;
+    case 35:
+      if(stateManager.pendingStatesPresent()) break;
+      if(!doneRotatingTo(216)) break;
+      token = 36; /* fall-through */
+    case 36: /* Module M__6 */
+      stateManager.addPendingState(36);
+      rotateDirTo(0,FALSE);
+      token = 37;
+      break;
+    case 37:
+      stateManager.sendState(39,0);
+      token = 38; /* fall-through */
+    case 38:
+      if(!doneRotatingTo(0)) break;
+      stateManager.removePendingState(36);
+      token = 255;
+      break;
+    case 39: /* Module M__0 */
+      rotateDirTo(0,FALSE);
+      token = 40;
+      break;
+    case 40:
+      if(stateManager.pendingStatesPresent()) break;
+      if(!doneRotatingTo(0)) break;
+      stateManager.sendState(41,3);
+      token = 255;
+      break;
+    case 41: /* Module M__3 */
+      /* { */
+        connect(6);
+        connect(0);
+      /* } */
+      token = 42;
+      break;
+    case 42:
+        // local blocking handlers:
+        if(notDoneConnecting(6)) break;
+        if(notDoneConnecting(0)) break;
 
 	
 	stateManager.sendState(254,-1);
@@ -112,19 +290,6 @@ public class snakeGen_par extends StateMachine {
     else if((self_id==4)) address = 4;
     else if((self_id==5)) address = 5;
     else if((self_id==6)) address = 6;
-    else if((self_id==7)) address = 7;
-    else if((self_id==8)) address = 8;
-    else if((self_id==9)) address = 9;
-    else if((self_id==10)) address = 10;
-    else if((self_id==11)) address = 11;
-    else if((self_id==12)) address = 12;
-    else if((self_id==13)) address = 13;
-    else if((self_id==14)) address = 14;
-    else if((self_id==15)) address = 15;
-    else if((self_id==16)) address = 16;
-    else if((self_id==17)) address = 17;
-    else if((self_id==18)) address = 18;
-    else if((self_id==19)) address = 19;
 
     else address = 127;
 	myID = address;
@@ -145,14 +310,32 @@ public class snakeGen_par extends StateMachine {
 }
 
   public boolean checkPendingStateResponsibility(int address, int pendingState) {
+    if(address==6) {
+      if(pendingState==36) return true;
+      if(pendingState==22) return true;
+      if(pendingState==8) return true;
+      return false;
+    }
+    if(address==0) {
+      if(pendingState==17) return true;
+      if(pendingState==3) return true;
+      if(pendingState==31) return true;
+      return false;
+    }
     return false;
   }
 
   int getLastState(int address) {
+    if(address==0) return 39;
+    if(address==3) return 41;
+    if(address==6) return 34;
     return 255;
   }
   
   int getLastStateLowerBound(int address) {
+    if(address==0) return 27;
+    if(address==3) return 34;
+    if(address==6) return 27;
     return 255;
   }
 
