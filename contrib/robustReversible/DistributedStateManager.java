@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.BitSet;
 
 public class DistributedStateManager {
-    public static final boolean USE_MONITOR = true;
+    public static final boolean USE_MONITOR = false;
     public static int MAX_N_PENDING_STATES = 5;
 
     private static byte MAGIC_HEADER = 107;

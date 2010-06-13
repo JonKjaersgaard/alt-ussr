@@ -157,15 +157,21 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
         private boolean transmitNow = false;
         private float last_reset_check_time = 0, reset_interval, reset_risk;
         private Random resetRandomizer;
+        private int initialModuleID;
 
         public EightController() {
+            this(0);
+        }
+        
+        public EightController(int initialModuleID) {
+            this.initialModuleID = initialModuleID;
             Parameters p = (Parameters)ParameterHolder.get();
             reset_risk = p.resetRisk;
             reset_interval = p.resetInterval;
             resetRandomizer = p.seedMaybe==null?new Random():new Random(p.seedMaybe);
         }
-        
-        private void sendMessage(int[] message, int size, int channel) {
+
+        protected void sendMessage(int[] message, int size, int channel) {
             if(VERIFY_OPERATIONS && !this.isConnected(channel)) { 
                 System.out.println("WARNING: module "+this.getMyID()+" unable to deliver on "+channel); System.out.flush(); 
                 if(retries++==8) throw new Error("Unable to deliver message");
@@ -194,7 +200,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
             transmitNow = true;
         }
         
-        private void sendAct() {
+        protected void sendAct() {
             float time = module.getSimulation().getTime();
             if(!transmitNow && lastSendTime+TRANSMIT_DELAY_MS>time) return;
             lastSendTime = time;
@@ -811,7 +817,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
             }
         }
 
-        private void resetAct() {
+        protected void resetAct() {
             float time = getTime();
             if(last_reset_check_time+reset_interval>time) return;
             last_reset_check_time = time;
@@ -823,20 +829,20 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
             }
         }
 
-        private void initializeState() {
+        protected void initializeState() {
             int i;
             for (i=0;i<1;i++)
                 token[i]=255;
             for(i=0;i<7;i++)
                 moduleTranslator[i] = i;
-            if(getMyID()==0) {
+            if(getMyID()==this.initialModuleID) {
                 token[0] = 0;
             }
         }
 
         byte other_id;
         
-        private void connect_module(int i, int module_id) {
+        protected void connect_module(int i, int module_id) {
             this.connect(i);
             if(!VERIFY_OPERATIONS) return;
             get_module_id_at(i);
@@ -844,7 +850,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
             System.out.println("Module "+this.getMyID()+" connected to connector "+i+" to module "+other_id);
         }
 
-        private void disconnect_module(int i, int module_id) {
+        protected void disconnect_module(int i, int module_id) {
             if(VERIFY_OPERATIONS) {
                 get_module_id_at(i);
                 if(!(module_id==other_id)) throw new Error("bar");
@@ -862,7 +868,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
             }
         }
 
-        private void doRotate(int i) {
+        protected void doRotate(int i) {
             this.rotate(i);
             if(!USE_BLOCKING_ROTATE) {
                 while (!isRotating()) super.yield();
@@ -899,7 +905,7 @@ public class EightToCarRobustnessExperimentSafeToken extends EightToCarRobustnes
 
         }
 
-        private void stopEightToCar(byte[] incoming, int messageSize, int channel) {
+        protected void stopEightToCar(byte[] incoming, int messageSize, int channel) {
             this.eight2car_active = false;
             for(int c=0; c<8; c++)
                 if(c!=channel && this.isConnected(c)) this.sendMessage(incoming, (byte)messageSize, (byte)c);
