@@ -177,6 +177,7 @@ public class EightToCarRobustnessBatch extends SimulationBatch2000 {
             throw new Error("Unable to open log file");
         }
         logfile.println("Starting "+parameters.size()+" experiments");
+        System.out.println("Starting #batches="+parameters.size());
     }
 
     @Override
