@@ -31,11 +31,13 @@ public class ATRONSimpleVehicleSimulation extends GenericATRONSimulation {
     }
 	
 	protected Robot getRobot() {
-        return new ATRON() {
+        ATRON a = new ATRON() {
             public Controller createController() {
                 return new ATRONSimpleVehicleController1();
             }
         };
+        a.setRubberRing();
+        return a;
     }
 
 	protected ArrayList<ModulePosition> buildRobot() {

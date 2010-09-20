@@ -24,8 +24,8 @@ public class ATRONSimpleVehicleController1 extends ATRONController {
         byte dir = 1;
         while(true) {
             String name = module.getProperty("name");
-            if(name=="RearRightWheel") rotateContinuous(dir);
-            if(name=="RearLeftWheel") rotateContinuous(-dir);
+            if(name.contains("Right")) rotateContinuous(dir);
+            if(name.contains("Left")) rotateContinuous(-dir);
             yield();
         }
     }
