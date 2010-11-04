@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import ussr.description.Robot;
@@ -31,13 +32,15 @@ import ussr.samples.atron.ATRONBuilder.Namer;
  * @author Modular Robots @ MMMI
  */
 public abstract class AbstractMPLSimulation extends GenericATRONSimulation {
-
+     
     // Naming of modules (used to control behavior)
     static final String COUNTERCW_TAG = "#cc#_";
     static final String CLOCKWISE_TAG = "#cw#_";
     static final String BLOCKER_TAG = "#block#_";
     static final String SPINNER_TAG = "#spin#_";
     static final String COUNTER_SPINNER_TAG = "#counterspin#_";
+    static final String NONE_TAG = "#none_";
+    static final String SPECIAL_TAG = "#special_";
     private static final String CONVEYOR_TAG = "conveyor_";
     private static final String ATRON_PASSIVE = "ATRON smooth";
     private static final String ATRON_CONVEYOR = "ATRON conveyor";
@@ -83,15 +86,15 @@ public abstract class AbstractMPLSimulation extends GenericATRONSimulation {
             simulation.subscribePhysicsTimestep(eventGenerator);
     }
 
-    protected abstract String getTransportLayerModuleName(int id, int x, int z);
+    protected abstract String getTransportLayerModuleBehavior(int id, int x, int z);
 
     protected ArrayList<ModulePosition> buildRobot() {
         ArrayList<ModulePosition> positions = new ATRONBuilder().buildAsNamedLattice(Configuration.PLANE_MAX_MODULES,0,Configuration.PLANE_MAX_X,1,3,0,Configuration.PLANE_MAX_Z, new ATRONBuilder.Namer() {
             private int count = 0;
             public String name(int number, VectorDescription pos, RotationDescription rot, int lx, int ly, int lz) {
                 if(ly==2) {
-                    String maybeName = getTransportLayerModuleName(count++,lx,lz);
-                    if(maybeName!=null) return maybeName;
+                    String spec = getTransportLayerModuleBehavior(count++,lx,lz);
+                    if(spec!=null) return spec;
                 }
                 return "--plain"+number;
             }
@@ -138,8 +141,11 @@ public abstract class AbstractMPLSimulation extends GenericATRONSimulation {
         return defaultValue;
     }
 
-    public void setMagicGlobalLiftingModuleCounter(
-            int magicGlobalLiftingModuleCounter) {
+    public void incMagicGlobalLiftingModuleCounter(int difference) {
+        this.magicGlobalLiftingModuleCounter += difference;
+    }
+    
+    public void setMagicGlobalLiftingModuleCounter(int magicGlobalLiftingModuleCounter) {
         this.magicGlobalLiftingModuleCounter = magicGlobalLiftingModuleCounter;
     }
 

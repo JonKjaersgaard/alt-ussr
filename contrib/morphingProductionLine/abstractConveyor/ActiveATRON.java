@@ -24,40 +24,60 @@ class ActiveATRON extends PassiveATRON {
             String name = this.module.getProperty("name");
             if(hasActiveNeighbor()) {
                 System.out.println("Safety: aborting active behavior due to overcrowding for "+name);
-                if(name.indexOf(AbstractMPLSimulation.BLOCKER_TAG)>0)
+                if(isBlockerModule(name))
                     decrementMagicCounter();
                 return;
             }
             System.out.println("Activating "+name);
-            //System.out.println("Disconnecting "+name);
-            if(isConnected(4)||isConnected(5)||isConnected(6)||isConnected(7)) {
-                this.symmetricDisconnect(0);
-                this.symmetricDisconnect(1);
-                this.symmetricDisconnect(2);
-                this.symmetricDisconnect(3);
-                while(isConnected(0)||isConnected(1)||isConnected(2)||isConnected(3)) yield();
-                if(name.indexOf(AbstractMPLSimulation.CLOCKWISE_TAG)>0 || name.indexOf(AbstractMPLSimulation.COUNTERCW_TAG)>0) {
-                    synchronized(ActiveATRON.this.simulation.getMagicGlobalLiftingModuleSignal()) {
-                        while(ActiveATRON.this.simulation.getMagicGlobalLiftingModuleCounter()>0)
-                            try {
-                                ActiveATRON.this.simulation.getMagicGlobalLiftingModuleSignal().wait();
-                            } catch(InterruptedException exn) {
-                                throw new Error("Unexpected interruption");
-                            }
-                    }
-                    if(name.indexOf(AbstractMPLSimulation.CLOCKWISE_TAG)>0)
-                        this.rotateContinuous(1);
-                    else
-                        this.rotateContinuous(-1);
-                }
-                else if(name.indexOf(AbstractMPLSimulation.BLOCKER_TAG)>0)
+            if(passiveSideIsConnected()) {
+                disconnectActiveSide();
+                if(isRotatorModule(name))
+                    rotatorBehavior(name);
+                else if(isBlockerModule(name))
                     blockingBehavior(name);
                 else throw new Error("No behavior for "+name);
             } else {
                 System.out.println("Safety: avoiding disconnected for "+name);
-                if(name.indexOf(AbstractMPLSimulation.BLOCKER_TAG)>0)
+                if(isBlockerModule(name))
                     decrementMagicCounter();
             }
+        }
+
+        protected boolean isBlockerModule(String name) {
+            return name.indexOf(AbstractMPLSimulation.BLOCKER_TAG)>0;
+        }
+
+        protected void rotatorBehavior(String name) throws Error {
+            {
+                synchronized(ActiveATRON.this.simulation.getMagicGlobalLiftingModuleSignal()) {
+                    while(ActiveATRON.this.simulation.getMagicGlobalLiftingModuleCounter()>0)
+                        try {
+                            ActiveATRON.this.simulation.getMagicGlobalLiftingModuleSignal().wait();
+                        } catch(InterruptedException exn) {
+                            throw new Error("Unexpected interruption");
+                        }
+                }
+                if(name.indexOf(AbstractMPLSimulation.CLOCKWISE_TAG)>0)
+                    this.rotateContinuous(1);
+                else
+                    this.rotateContinuous(-1);
+            }
+        }
+
+        protected boolean isRotatorModule(String name) {
+            return name.indexOf(AbstractMPLSimulation.CLOCKWISE_TAG)>0 || name.indexOf(AbstractMPLSimulation.COUNTERCW_TAG)>0;
+        }
+
+        protected void disconnectActiveSide() {
+            this.symmetricDisconnect(0);
+            this.symmetricDisconnect(1);
+            this.symmetricDisconnect(2);
+            this.symmetricDisconnect(3);
+            while(isConnected(0)||isConnected(1)||isConnected(2)||isConnected(3)) yield();
+        }
+
+        protected boolean passiveSideIsConnected() {
+            return isConnected(4)||isConnected(5)||isConnected(6)||isConnected(7);
         }
 
         private int unknownNeighborCount = 0;
