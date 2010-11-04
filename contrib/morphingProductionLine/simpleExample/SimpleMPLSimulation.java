@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import morphingProductionLine.abstractConveyor.AbstractMPLSimulation;
+import morphingProductionLine.abstractConveyor.Element;
 
 import ussr.description.Robot;
 import ussr.description.geometry.RotationDescription;
@@ -64,21 +65,21 @@ public class SimpleMPLSimulation extends AbstractMPLSimulation {
     private int upperLayerCount;
     @Override
     protected String getTransportLayerModuleBehavior(int id, int x, int z) {
-        char element = upperLayerCount<layout.length() ? layout.charAt(upperLayerCount++) : 'P';
-        if(element=='R')
+        Element element = Element.fromChar(upperLayerCount<layout.length() ? layout.charAt(upperLayerCount++) : 'P');
+        if(element==Element.ROTATING_CLOCKWISE)
             return CONVEYOR_TAG+CLOCKWISE_TAG+id;
-        else if(element=='r')
+        else if(element==Element.ROTATING_COUNTERCW)
             return CONVEYOR_TAG+COUNTERCW_TAG+id;
-        else if(element=='b') {
+        else if(element==Element.BLOCKER) {
             setMagicGlobalLiftingModuleCounter(getMagicGlobalLiftingModuleCounter() + 1);
             return CONVEYOR_TAG+BLOCKER_TAG+id;
-        } else if(element=='s') { 
+        } else if(element==Element.SPINNER) { 
             setMagicGlobalLiftingModuleCounter(getMagicGlobalLiftingModuleCounter() + 1);
             return CONVEYOR_TAG+BLOCKER_TAG+SPINNER_TAG+id;
-        } else if(element=='S') { 
+        } else if(element==Element.COUNTER_SPINNER) { 
             setMagicGlobalLiftingModuleCounter(getMagicGlobalLiftingModuleCounter() + 1);
             return CONVEYOR_TAG+BLOCKER_TAG+COUNTER_SPINNER_TAG+id;
-        } else if(!(element=='P'))
+        } else if(!(element==Element.PLAIN))
             throw new Error("Unknown element type: "+element);
         return null;
     }
