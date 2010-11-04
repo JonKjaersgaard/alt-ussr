@@ -34,14 +34,14 @@ import ussr.samples.atron.ATRONBuilder.Namer;
 public abstract class AbstractMPLSimulation extends GenericATRONSimulation {
      
     // Naming of modules (used to control behavior)
-    static final String COUNTERCW_TAG = "#cc#_";
-    static final String CLOCKWISE_TAG = "#cw#_";
-    static final String BLOCKER_TAG = "#block#_";
-    static final String SPINNER_TAG = "#spin#_";
-    static final String COUNTER_SPINNER_TAG = "#counterspin#_";
-    static final String NONE_TAG = "#none_";
-    static final String SPECIAL_TAG = "#special_";
-    private static final String CONVEYOR_TAG = "conveyor_";
+    protected static final String COUNTERCW_TAG = "#cc#_";
+    protected static final String CLOCKWISE_TAG = "#cw#_";
+    protected static final String BLOCKER_TAG = "#block#_";
+    protected static final String SPINNER_TAG = "#spin#_";
+    protected static final String COUNTER_SPINNER_TAG = "#counterspin#_";
+    protected static final String NONE_TAG = "#none_";
+    protected static final String SPECIAL_TAG = "#special_";
+    protected static final String CONVEYOR_TAG = "conveyor_";
     private static final String ATRON_PASSIVE = "ATRON smooth";
     private static final String ATRON_CONVEYOR = "ATRON conveyor";
     private static final String ATRON_BASE = "ATRON base";

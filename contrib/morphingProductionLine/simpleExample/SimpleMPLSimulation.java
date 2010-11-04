@@ -34,14 +34,6 @@ import ussr.samples.atron.ATRONBuilder.Namer;
  */
 public class SimpleMPLSimulation extends AbstractMPLSimulation {
 
-    // Naming of modules (used to control behavior)
-    static final String COUNTERCW_TAG = "#cc#_";
-    static final String CLOCKWISE_TAG = "#cw#_";
-    static final String BLOCKER_TAG = "#block#_";
-    static final String SPINNER_TAG = "#spin#_";
-    static final String COUNTER_SPINNER_TAG = "#counterspin#_";
-    private static final String CONVEYOR_TAG = "conveyor_";
-
     public SimpleMPLSimulation() {
         setEventGenerator(new SimpleEventGenerator());
     }
