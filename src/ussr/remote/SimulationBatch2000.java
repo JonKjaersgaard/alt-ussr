@@ -238,6 +238,7 @@ public abstract class SimulationBatch2000 implements ReturnValueHandler {
             output.append(average(success)+" ");
             output.append(stddev(success)+" ");
             output.append(averageI(counts)+" ");
+            output.append("{data="+success+"}");
             // Event summary
             synchronized(events) {
                 Map<String,List<Float>> experimentEvents = events.get(experiment);
