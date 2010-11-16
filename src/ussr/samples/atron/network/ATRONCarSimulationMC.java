@@ -38,7 +38,7 @@ public class ATRONCarSimulationMC extends GenericATRONSimulation {
 
         ATRON robot = new ATRON() {
             public Controller createController() {
-                return new ATRONCarControllerRemoteControl();
+                return new ATRONCarControllerMC();
             }
         };
         robot.setGentle();
