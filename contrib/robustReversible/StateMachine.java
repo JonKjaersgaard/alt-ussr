@@ -11,7 +11,7 @@ import ussr.remote.facade.ParameterHolder;
 public abstract class StateMachine {
     public static final float DESYNC_MAGIC = 7.0f;
     
-    protected DistributedStateManager stateManager;
+    protected CommunicationManager stateManager;
     private int saved_init_id = -1;
     private float reset_risk;
     private float reset_interval;
@@ -22,7 +22,7 @@ public abstract class StateMachine {
     private float desync_interval;
 
     public StateMachine() {
-        stateManager = new DistributedStateManager();
+        stateManager = CommunicationManager.Factory.get().create();
         Parameters p = (Parameters)ParameterHolder.get();
         reset_risk = p.resetRisk;
         reset_interval = p.resetInterval;
@@ -43,7 +43,7 @@ public abstract class StateMachine {
     }
     
     private void checkReset() {
-        float time = stateManager.getTime();
+        float time = api.getTime();
         if(last_reset_check_time+reset_interval+desync_interval>time) return;
         last_reset_check_time = time;
         if(resetRandomizer.nextFloat()<reset_risk) {

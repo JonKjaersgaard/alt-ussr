@@ -61,20 +61,20 @@ public abstract class EightToCarRobustnessExperiment extends GenericATRONSimulat
         PhysicsLogger.setDisplayInfo(true);
         PhysicsParameters.get().setMaintainRotationalJointPositions(true);
         PhysicsParameters.get().setRealisticCollision(true);
-        PhysicsParameters.get().setPhysicsSimulationStepSize(0.001f); // before: 0.0005f
+        PhysicsParameters.get().setPhysicsSimulationStepSize(0.005f); // before: 0.0005f
         PhysicsParameters.get().setWorldDampingLinearVelocity(0.9f);
         PhysicsParameters.get().setUseModuleEventQueue(true);
         PhysicsParameters.get().setRealtime(false);
         PhysicsFactory.getOptions().setStartPaused(false);
         //PhysicsFactory.getOptions().setHeadlessNoGraphics(true);
-        PhysicsFactory.getOptions().setHeadlessNoWindow(true);
+        //PhysicsFactory.getOptions().setHeadlessNoWindow(true);
         //VisualizationParameters.get().setAlwaysShowConnectors(true);
         PhysicsParameters.get().setGravity(0);
     }
     
     protected void changeWorldHook(WorldDescription world) {
-        world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
-        world.setHasBackgroundScenery(false);
+        //world.setPlaneTexture(WorldDescription.WHITE_GRID_TEXTURE);
+        //world.setHasBackgroundScenery(false);
     }
 
     protected ArrayList<ModulePosition> buildRobot() {

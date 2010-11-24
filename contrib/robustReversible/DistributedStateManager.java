@@ -3,7 +3,7 @@ package robustReversible;
 import java.util.Arrays;
 import java.util.BitSet;
 
-public class DistributedStateManager {
+public class DistributedStateManager implements CommunicationManager {
     public static final boolean USE_MONITOR = false;
     public static int MAX_N_PENDING_STATES = 5;
 
@@ -12,15 +12,28 @@ public class DistributedStateManager {
     protected static final int WAITTIME = 100;
     protected static final float WAITTIME_MS = WAITTIME/1000.0f;
 
+    /** 
+     * Byte to integer conversion function
+     * @param b
+     * @return
+     */
     private static int b2i(byte b) {
         return (int)b&0xff;
     }
     
+    /**
+     * Package exchanged between nodes
+     * @author ups
+     */
     private class EightMsg {
 
+        // Bit for switching to new sequence
         boolean alternateSequenceFlag;
+        // Global state
         int state;
+        // Current pending states
         int[] pending = new int[MAX_N_PENDING_STATES];
+        // ID of module to execute state
         int recipientID;
 
         EightMsg(byte[] raw) {
@@ -57,6 +70,7 @@ public class DistributedStateManager {
         }
     }
 
+    // Merge function implementation
     private static void intersect_plus_greater(int set0[], int set1[], int min, int dest[]) {
         int index0, index1, desti;
         desti = 0;
@@ -97,11 +111,12 @@ public class DistributedStateManager {
         }
     }
 
+    // Local state of distributed communication
     private CommunicationProvider provider;
     private int myID;
     private int localState;
     private boolean activated = false;
-    private static final int INIT_WAITTIME_MS = 2000;
+    private static final int INIT_WAITTIME_MS = 0;
     private int[] pendingStates = new int[MAX_N_PENDING_STATES];
     private BitSet pendingHandled = new BitSet();
     private int globalState;
@@ -217,8 +232,6 @@ public class DistributedStateManager {
             recipientID = msg.recipientID;
             if( msg.recipientID == myID ) {
                 System.out.println("Module "+myID+" updated local state to "+globalState);
-                if(globalState==16)
-                    System.out.println("foo");
                 localState = globalState;
             }
         } else if(responsibleForPendingState(newPending)) {
