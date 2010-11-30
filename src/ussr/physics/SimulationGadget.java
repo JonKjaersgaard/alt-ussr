@@ -69,5 +69,10 @@ public interface SimulationGadget {
          * @return the list of modules in the simulation
          */
         List<Module> getModules();
+        /**
+         * Print output in the console window
+         * @param string the output to print
+         */
+        void println(String string);
     }
 }

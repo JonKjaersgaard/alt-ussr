@@ -72,7 +72,9 @@ public class DebugShell extends JPanel implements ActionListener, SimulationGadg
 
     public void actionPerformed(ActionEvent evt) {
         String text = textField.getText();
-        textArea.append(process(text)+separator);
+        String result = process(text);
+        if(result==null) return;
+        textArea.append(result+newline);
         textField.selectAll();
 
         //Make sure the new text is visible, even if there
@@ -98,8 +100,8 @@ public class DebugShell extends JPanel implements ActionListener, SimulationGadg
             return colorModule(args[1],args[2]);
         } else {
             for(SimulationGadget.Textual gadget: gadgets) {
-                if(command.startsWith(gadget.getKey()+" "))
-                    return gadget.process(command)+newline;
+                if(command.startsWith(gadget.getKey()))
+                    return gadget.process(command);
             }
             StringBuffer unknown = new StringBuffer("Unknown command: "+command+newline+"Available commands: ls eval color ");
             for(SimulationGadget.Textual gadget: gadgets)
@@ -255,5 +257,13 @@ public class DebugShell extends JPanel implements ActionListener, SimulationGadg
         for(Module m: modules)
             result[index++] = m;
         return result;
+    }
+
+    @Override
+    public void println(String string) {
+        textArea.append(string+newline);
+        //Make sure the new text is visible, even if there
+        //was a selection in the text area.
+        textArea.setCaretPosition(textArea.getDocument().getLength());
     }
 }
