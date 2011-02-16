@@ -37,11 +37,12 @@ public class ATRONSimpleVehicleSimulation extends GenericATRONSimulation {
             }
         };
         a.setRubberRing();
+        a.setGentle();
         return a;
     }
 
 	protected ArrayList<ModulePosition> buildRobot() {
-		return new ATRONBuilder().buildCar(2, new VectorDescription(0,-0.25f,0));
+		return new ATRONBuilder().buildCar(2, new VectorDescription(3f,-0.25f,0f));
 	}
     
     protected void changeWorldHook(WorldDescription world) {
