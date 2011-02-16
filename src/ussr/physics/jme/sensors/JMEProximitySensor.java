@@ -53,8 +53,12 @@ public class JMEProximitySensor implements PhysicsSensor {
     public float readValue() {
         float adjustedRange = range*sensitivity;
         for(PhysicsNode obstacle: simulation.getObstacles()) {
-            float distance = node.getWorldTranslation().distance(obstacle.getWorldTranslation());
-            if(distance<adjustedRange) return 1-distance/adjustedRange;
+            Vector3f t1 = node.getLocalTranslation();
+            Vector3f t2 = obstacle.getLocalTranslation();
+            float distance = t1.distance(t2);
+            if(distance<adjustedRange) {
+                return 1-distance/adjustedRange;
+            }
         }
         return 0;
     }
