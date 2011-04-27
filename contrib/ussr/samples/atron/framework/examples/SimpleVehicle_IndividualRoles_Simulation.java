@@ -4,7 +4,7 @@
  * This software is distributed under the BSD open-source license.
  * For licensing see the file LICENCE.txt included in the root of the USSR distribution.
  */
-package ussr.samples.atron.framework.example;
+package ussr.samples.atron.framework.examples;
 
 import java.util.ArrayList;
 /* Essentially a stripped down car */
@@ -24,16 +24,16 @@ import ussr.samples.atron.GenericATRONSimulation;
  * @author Modular Robots @ MMMI
  *
  */
-public class CopyOfATRONSimpleVehicleSimulation extends GenericATRONSimulation {
+public class SimpleVehicle_IndividualRoles_Simulation extends GenericATRONSimulation {
 	
 	public static void main( String[] args ) {
-        new CopyOfATRONSimpleVehicleSimulation().main();
+        new SimpleVehicle_IndividualRoles_Simulation().main();
     }
 	
 	protected Robot getRobot() {
         ATRON a = new ATRON() {
             public Controller createController() {
-                return new ATRONSimpleVehicleController3();
+                return new SimpleVehicle_IndividualRoles_Controller();
             }
         };
         a.setRubberRing();

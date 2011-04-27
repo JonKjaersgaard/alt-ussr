@@ -4,18 +4,17 @@
  * This software is distributed under the BSD open-source license.
  * For licensing see the file LICENCE.txt included in the root of the USSR distribution.
  */
-package ussr.samples.atron.framework.example;
+package ussr.samples.atron.framework.examples;
 
 import ussr.samples.atron.ATRONController;
 import ussr.samples.atron.framework.ATRONFramework;
-import ussr.samples.atron.framework.Action;
 import ussr.samples.atron.framework.Connection;
 import ussr.samples.atron.framework.annotations.Behavior;
-import ussr.samples.atron.framework.annotations.Command;
 import ussr.samples.atron.framework.annotations.Handler;
 import ussr.samples.atron.framework.annotations.RemoteRole;
 import ussr.samples.atron.framework.annotations.Require;
 import ussr.samples.atron.framework.annotations.Startup;
+import ussr.samples.atron.framework.util.Action;
 
 /**
  * A controller for a two-wheeler ATRON robot
@@ -23,7 +22,7 @@ import ussr.samples.atron.framework.annotations.Startup;
  * @author Modular Robots @ MMMI
  *
  */
-public class ATRONSimpleVehicleController3 extends ATRONFramework {
+public class SimpleVehicle_IndividualRoles_Controller extends ATRONFramework {
     
     static final int REVERSE_TIME = 2;
     
@@ -51,7 +50,7 @@ public class ATRONSimpleVehicleController3 extends ATRONFramework {
     }
 
     interface IWheel extends RemoteRole {
-        @Command void reverse(int time);
+        public void reverse(int time);
     }
     
     abstract class Wheel extends CarModule implements IWheel {
@@ -63,7 +62,7 @@ public class ATRONSimpleVehicleController3 extends ATRONFramework {
             currentSpeed = forwardSpeed;
         }
         @Behavior public void drive() { self.rotateContinuous(currentSpeed); }
-        @Command public void reverse(int time) { 
+        public void reverse(int time) { 
             System.out.println("Reverse start "+this.getName());
             currentSpeed = -reverseSpeed;
             schedule(time,new Action() { public void action() { System.out.println("Reverse stop "+getName()); currentSpeed = forwardSpeed; } });

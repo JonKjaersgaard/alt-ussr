@@ -16,7 +16,6 @@ import java.util.TreeSet;
 import ussr.model.Sensor;
 import ussr.samples.atron.ATRONController;
 import ussr.samples.atron.framework.annotations.Behavior;
-import ussr.samples.atron.framework.annotations.Command;
 import ussr.samples.atron.framework.annotations.Handler;
 import ussr.samples.atron.framework.annotations.RemoteRole;
 import ussr.samples.atron.framework.annotations.Require;
@@ -24,6 +23,8 @@ import ussr.samples.atron.framework.annotations.Startup;
 import ussr.samples.atron.framework.comm.CommunicationManager;
 import ussr.samples.atron.framework.comm.MessageListener;
 import ussr.samples.atron.framework.comm.RPCSystem;
+import ussr.samples.atron.framework.util.Action;
+import ussr.samples.atron.framework.util.EventHandler;
 
 public abstract class ATRONFramework extends ATRONController {
 
@@ -67,7 +68,7 @@ public abstract class ATRONFramework extends ATRONController {
         }
         
         public <R extends RemoteRole> Connection<R> connectedTo(Class<R> qualifier) {
-            return new Connection<R>(rpc,qualifier,this);
+            return new Connection<R>(rpc,qualifier);
         }
      
         public void schedule(float delay, Action action) {
@@ -130,7 +131,7 @@ public abstract class ATRONFramework extends ATRONController {
             for(Class<?> interf: roleClass.getInterfaces()) {
                 if(RemoteRole.class.isAssignableFrom(interf)) {
                     Class<RemoteRole> remoteInterface = (Class<RemoteRole>)interf;
-                    List<Method> commands = getMethodByAnnotation(remoteInterface,Command.class);
+                    List<Method> commands = Arrays.asList(remoteInterface.getDeclaredMethods());
                     for(Method command: commands) 
                         rpc.registerProcedure(remoteInterface,command);
                 }
