@@ -2,15 +2,10 @@ package ussr.samples.atron.framework.comm;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
-import ussr.samples.atron.ATRONController;
 import ussr.samples.atron.framework.ATRONFramework;
 import ussr.samples.atron.framework.annotations.RemoteRole;
-import ussr.samples.atron.framework.comm.MessageListener.AddressBased;
 
 /**
  * 
@@ -22,6 +17,12 @@ import ussr.samples.atron.framework.comm.MessageListener.AddressBased;
  */
 public class RPCSystem implements MessageListener.AddressBased {
     
+    /**
+     * Qualifier interface + method is used as an address, this information should either
+     * be predefined or shared between modules; to avoid having to predefine the numerical
+     * values all these combinations are assigned a unique integer, stored in this table.
+     * @author ups
+     */
     private static class Global {
         public static Map<Integer,Target> rpcTable_toTarget = new HashMap<Integer,Target>();
         public static Map<Target,Integer> rpcTable_toCode = new HashMap<Target,Integer>();

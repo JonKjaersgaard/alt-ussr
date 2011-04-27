@@ -2,15 +2,39 @@ package ussr.samples.atron.framework.comm;
 
 import java.lang.reflect.Method;
 
+/**
+ * Value object representing an RPC target: a qualifying type and a method
+ * @author ups
+ */
 public class Target {
+    /**
+     * The qualifying type of the target
+     */
     private Class<?> targetClass;
+    /**
+     * The method to call on the target
+     */
     private Method command;
     
+    /**
+     * Create a value object representing an RPC target
+     * @param _targetClass the qualifying type of the target
+     * @param _command the method to call on the target
+     */
     public Target(Class<?> _targetClass, Method _command) {
         targetClass = _targetClass; command = _command;
     }
     
+    /**
+     * Get the qualifying class of the target
+     * @return the qualifying class
+     */
     public Class<?> getTargetClass() { return targetClass; }
+    
+    /**
+     * Get the method to call on the target
+     * @return the method to call
+     */
     public Method getCommand() { return command; }
 
     /* (non-Javadoc)

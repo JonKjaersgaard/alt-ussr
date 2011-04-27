@@ -26,11 +26,11 @@ public class SimpleVehicle_IndividualRoles_Controller extends ATRONFramework {
     
     static final int REVERSE_TIME = 2;
     
-    abstract class CarModule extends Role {
+    public abstract class CarModule extends Role {
         @Startup void initialize() { self.setup(); }
     }
     
-    class Driver extends CarModule {
+    public class Driver extends CarModule {
         private Connection<IWheel> wheels = connectedTo(IWheel.class);
         private boolean reversing = false;
         @Require public boolean nConnections() { return self.getNumberOfConnections()==2; }
@@ -49,11 +49,11 @@ public class SimpleVehicle_IndividualRoles_Controller extends ATRONFramework {
         }
     }
 
-    interface IWheel extends RemoteRole {
+    public interface IWheel extends RemoteRole {
         public void reverse(int time);
     }
     
-    abstract class Wheel extends CarModule implements IWheel {
+    public abstract class Wheel extends CarModule implements IWheel {
         private String identity;
         private float forwardSpeed, reverseSpeed, currentSpeed;
         @Require public boolean name() { return self.getName().contains(identity); }
@@ -69,11 +69,11 @@ public class SimpleVehicle_IndividualRoles_Controller extends ATRONFramework {
         }
     }
     
-    class LeftWheel extends Wheel {
+    public class LeftWheel extends Wheel {
         LeftWheel() { super("Left",1,0.5f); }
     }
     
-    class RightWheel extends Wheel {
+    public class RightWheel extends Wheel {
         RightWheel() { super("Right",-1,0.7f); }
     }
     

@@ -28,7 +28,7 @@ import ussr.samples.atron.framework.util.EventHandler;
 
 public abstract class ATRONFramework extends ATRONController {
 
-    protected class Role implements Comparable<Role> {
+    public class Role implements Comparable<Role> {
         private String name;
         protected Role self = this;
         private int id;
