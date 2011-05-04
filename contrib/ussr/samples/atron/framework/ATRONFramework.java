@@ -23,6 +23,8 @@ import ussr.samples.atron.framework.annotations.Startup;
 import ussr.samples.atron.framework.comm.CommunicationManager;
 import ussr.samples.atron.framework.comm.MessageListener;
 import ussr.samples.atron.framework.comm.RPCSystem;
+import ussr.samples.atron.framework.distributed.Collaboration;
+import ussr.samples.atron.framework.distributed.Element;
 import ussr.samples.atron.framework.util.Action;
 import ussr.samples.atron.framework.util.EventHandler;
 
@@ -51,9 +53,24 @@ public abstract class ATRONFramework extends ATRONController {
             return name;
         }
 
-        public void rotateContinuous(float rotationalSpeed) {
+        public Element<Void> rotateContinuous(float rotationalSpeed) {
             ATRONFramework.this.rotateContinuous(rotationalSpeed);
+            return Element.CONTINUED;
         }
+        
+        public Element<Void> connectorOpen(int i) {
+            // TODO Auto-generated method stub
+            // 
+            throw new Error("Method not implemented");
+        }
+
+        public Element<Void> rotateFromToBy(int i, int j, boolean b, int k) {
+            // TODO Auto-generated method stub
+            // 
+            throw new Error("Method not implemented");
+        }
+        
+        public Element<Boolean> noProximity(int x) { throw new Error(); }
 
         public void setup() {
             ATRONFramework.this.setup();
@@ -79,6 +96,18 @@ public abstract class ATRONFramework extends ATRONController {
             this.id = _id;
         }
 
+        public Element<Void> IF(Element<Boolean> alive, Element<?> rotateFromToBy) {
+            // TODO Auto-generated method stub
+            // return null;
+            throw new Error("Method not implemented");
+        }
+
+        public Element<Void> WHILE(Element<Boolean> noProximity, Element<?> rotateFromToBy) {
+            // TODO Auto-generated method stub
+            // return null;
+            throw new Error("Method not implemented");
+        }
+        
         @Override
         public int compareTo(Role arg) {
             if(this.getClass()==arg.getClass()) return 0;
@@ -228,4 +257,6 @@ public abstract class ATRONFramework extends ATRONController {
         for(MessageListener.Raw listener: messageListeners) listener.messageReceived(connector, msgAsInt);
     }
 
+    public <T extends Collaboration> T getBehavior(Class<T> type) { return null; }
+    
 }
