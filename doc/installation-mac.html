@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>USSR Installation on Mac</title>
+</head>
+<body>
+
+<h1>USSR Installation on Mac</h1>
+
+Simulations must run using the 32-bit memory model, which requires a the -d32 option to be passed to the JVM.
+In eclipse, this is done as follows:
+<ol>
+<li>Click the menu item "Eclipse->Preferences..."</li>
+<li>In the categories on the left click "Java->Installed JREs"</li>
+<li>Under installed JREs highlight the one that has a check box next to it (probably JDK 1.6) and click the "Edit..." button</li>
+<li>Under "Default VM arguments" add the text "-d32" (without the quotes)</li>
+</ol>
+
+If this option has not been added correctly, starting a simulation will produce an exception similar to the following:
+<pre>
+java.lang.UnsatisfiedLinkError: /Users/ups/src/ussr/zoo/jME_2.0/lib/natives/libodejava.jnilib:  no suitable image found.  Did find:  /Users/ups/src/ussr/zoo/jME_2.0/lib/natives/libodejava.jnilib: no matching architecture in universal wrapper
+	at java.lang.ClassLoader$NativeLibrary.load(Native Method)
+	...
+</pre>
+The simulation will appear to start but nothing moves.
+
+</body>
+</html>

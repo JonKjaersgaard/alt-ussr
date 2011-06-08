@@ -7,42 +7,32 @@
 <h1>USSR Installation</h1>
 
 We recommend using the eclipse IDE to develop software using USSR, but
-any editor and Java compiler should do the job.  Linux users please
-note that Sun's own Java implementation is apparently needed for
-eclipse and USSR to run correctly.
+any editor and Java compiler should do the job.  
 
-Please note that due to the dependency on a precompiled library, for the moment you need to use the 32-bit 1.5 version of the JVM under MAC OS X.
+<h2>Platform-specific configuration</h2>
+
+Although USSR is multi-platform it relies on libraries that have platform-specific dependencies that may require
+additional configuration.
+<ul>
+<li>Linux: the official Oracle JDK is needed</li>
+<li>Mac: simulations must run using the 32-bit memory model, see <a href="installation-mac.html">mac installation</a> for details on how to do this</li>
+<li>Windows: no additional configuration needed</li>
+</ul>
+If the simulator crashes, see the <a href="faq.html">FAQ</a> for instructions.
 
 <h2>Installation with eclipse</h2>
 
-To work with USSR using eclipse, follow these steps.
-
-<ol>
-
-<li>If you have not already done so, install <a href="eclipse.org">eclipse</a>.
-  (First-time eclipse users may want to follow the eclipse tutorial before proceeding with
-  USSR.)</li>
-
-<li>Unzip the archive containing USSR <strong>into</strong> the eclipse workspace directory (be careful that there is not already a directory called <tt>ussr</tt> in your workspace).</li>
-
-<li>Create a project: From the eclipse menu, choose <strong>File: New: Java
-  Project</strong>, type in the project name <tt>ussr</tt>, pick <strong>Create
-  project from existing source</strong>, use the browse button to locate the root of the
-  unzipped USSR distribution (inside the eclipse workspace directory), and click <strong>Finish</strong>.  If eclipse asks you
-  whether to use subversion control, answer no.</li>
-
-<li>After building you should be able to run the examples, as described in
+To work with USSR using eclipse, follow the steps described on the <a href="http://modular.mmmi.sdu.dk/wiki/USSR">USSR homepage</a>.
+You should be able to run the examples, as described in
 the <a href="usage.html">usage</a> section.</li>
 
-</ol>
-
-If eclipse was for some reason unable to read the project settings such as the classpath,
+<p>If eclipse was for some reason unable to read the project settings such as the classpath,
 compilation will fail.  See the installation part of the <a href="faq.html">FAQ</a> for a
 specification of how to set up the class path.
 
 <h2>Installation without eclipse</h2>
 
-To work with USSR without eclipse, simply start by unzipping the archive.  The compiled
+To work with USSR without eclipse, simply check out the disitrubtion from github.  The compiled
 Java files are in the <tt>bin</tt> subdirectory, ready to run.  Nevertheless, USSR has a
 significant number of runtime and compiletime dependencies within the project, as
 follows.  (If the settings in eclipse for some reason cannot be automatically important,
