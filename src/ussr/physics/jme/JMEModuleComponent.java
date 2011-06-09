@@ -116,8 +116,8 @@ public class JMEModuleComponent implements PhysicsModuleComponent {
             int index = model.getConnectors().size();
             VectorDescription p = cd.getPosition();
             Vector3f position = new Vector3f(p.getX(), p.getY(), p.getZ());
-            String cname = cd.getName()==null ? "Connector "+(counter++) : cd.getName();
-            cname+=" #"+index;
+            String cname = cd.getName()==null ? "[Hemisphere connector "+(counter++)+"]" : cd.getName();
+            cname+=" Module connector #"+index;
             JMEConnector c = this.addConnector(cname, position, cd, cd.getRotation().getRotation());
             c.getModel().setProperty("ussr.connector_number", Integer.toString(index));
             //System.out.println("Module "+name+", connector #"+index+" has name "+cname);
