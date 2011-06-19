@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import robustReversible.EightToCarRobustnessBatch.Parameters;
+import distributedControl.DistributedControlRobustnessBatch.Parameters;
+
 import ussr.remote.facade.ParameterHolder;
 
 public abstract class StateMachine {

@@ -189,9 +189,12 @@ public class DistributedStateManager implements CommunicationManager {
         //if(firstInit) {
         //firstInit = false;
         if(myID==firstModuleID) {
+            System.out.println("ID match for module "+myID);
             provider.delay(INIT_WAITTIME_MS);
             if(globalState==0) localState = 0;
-        }
+        } 
+        System.out.println("State for module "+myID+" = "+localState);
+        
   //      }
         if(USE_MONITOR) update();
     }

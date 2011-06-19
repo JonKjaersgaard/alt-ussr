@@ -78,9 +78,22 @@ public abstract class DCRobustnessExperiment extends GenericATRONSimulation {
         //world.setHasBackgroundScenery(false);
     }
 
-    protected ArrayList<ModulePosition> buildRobot() {
+    protected ArrayList<ModulePosition> buildRobotX() {
         float Yoffset = 0.25f+2*ATRON.UNIT;
         return new ATRONBuilder().buildCar(2, new VectorDescription(0,Yoffset,0));
+    }
+
+    protected ArrayList<ModulePosition> buildRobot() {
+        float Yoffset = 0.25f+2*ATRON.UNIT;
+        ArrayList<ModulePosition> mPos = new ArrayList<ModulePosition>();
+        mPos.add(new ModulePosition("#0", new VectorDescription(0*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_NS_BROKEN));
+        mPos.add(new ModulePosition("#1", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_EW));
+        mPos.add(new ModulePosition("#2", new VectorDescription(1*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_EW));
+        mPos.add(new ModulePosition("#3", new VectorDescription(2*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_NS_BROKEN));
+            mPos.add(new ModulePosition("#4", new VectorDescription(3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,1*ATRON.UNIT), ATRON.ROTATION_EW));
+            mPos.add(new ModulePosition("#5", new VectorDescription(3*ATRON.UNIT,0*ATRON.UNIT-Yoffset,-1*ATRON.UNIT), ATRON.ROTATION_EW));
+        mPos.add(new ModulePosition("#6", new VectorDescription(4*ATRON.UNIT,0*ATRON.UNIT-Yoffset,0*ATRON.UNIT), ATRON.ROTATION_NS_BROKEN));
+        return mPos;
     }
 
     public void reportResult(boolean success) throws Error {

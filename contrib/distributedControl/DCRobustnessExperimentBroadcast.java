@@ -45,7 +45,7 @@ public class DCRobustnessExperimentBroadcast extends DCRobustnessExperiment impl
         if(ParameterHolder.get()==null)
             //ParameterHolder.set(new EightToCarRobustnessBatch.Parameters(null,0,0.5f,0.75f,0.0f,Float.MAX_VALUE,17));
         //ParameterHolder.set(new Parameters(0,0.0f,0.0f,0.0f,Float.MAX_VALUE));
-        ParameterHolder.set(new DistributedControlRobustnessBatch.Parameters(null,0,0.0f,0.0f,0.0f,Float.MAX_VALUE,100f,0.1f,1));
+        ParameterHolder.set(new DistributedControlRobustnessBatch.Parameters(null,0,0.0f,0.0f,0.0f,Float.MAX_VALUE,1000f,0.0f,1));
         new DCRobustnessExperimentBroadcast().main(); 
     }
 
@@ -53,7 +53,7 @@ public class DCRobustnessExperimentBroadcast extends DCRobustnessExperiment impl
     protected Robot getRobot() {
         return new ATRON() {
             public Controller createController() {
-                StateMachine machine = new ObstacleAvoidance();
+                StateMachine machine = new InterpreterStateMachine(TestPrograms.p1);
                 return new ATRONStateMachineAPI(machine,DCRobustnessExperimentBroadcast.this);
             }
         };
