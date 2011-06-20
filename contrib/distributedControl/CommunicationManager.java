@@ -85,7 +85,7 @@ public interface CommunicationManager {
      * @param myID
      * @param firstModuleID
      */
-    void init(int myID, int firstModuleID);
+    void init(int myID, int firstModuleID, Program program);
 
     /**
      * Reset the sequence, starting again from the beginning

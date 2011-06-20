@@ -50,7 +50,7 @@ public class DCRobustnessExperimentBroadcast extends DCRobustnessExperiment impl
     }
 
     @Override
-    protected Robot getRobot() {
+    protected synchronized Robot getRobot() {
         return new ATRON() {
             public Controller createController() {
                 StateMachine machine = new InterpreterStateMachine(TestPrograms.p1);

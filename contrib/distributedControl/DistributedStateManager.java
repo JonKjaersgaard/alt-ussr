@@ -7,10 +7,13 @@ public class DistributedStateManager implements CommunicationManager {
     public static final boolean USE_MONITOR = false;
     public static int MAX_N_PENDING_STATES = 5;
 
-    private static byte MAGIC_HEADER = 107;
-    private static byte HEADER_PLUS_FIXED_PAYLOAD = 4;
+    private static final byte MAGIC_HEADER_STATE = 107;
+    private static final byte STATE_HEADER_PLUS_FIXED_PAYLOAD = 4;
     protected static final int WAITTIME = 100;
     protected static final float WAITTIME_MS = WAITTIME/1000.0f;
+    public static final byte MAGIC_HEADER_PROGRAM = 108;
+    public static final int PROGRAM_HEADER_PLUS_FIXED_PAYLOAD = 5;
+    public static final int MAX_INS_NARGS = 3;
 
     /** 
      * Byte to integer conversion function
@@ -25,7 +28,7 @@ public class DistributedStateManager implements CommunicationManager {
      * Package exchanged between nodes
      * @author ups
      */
-    private class EightMsg {
+    private class StateUpdateMsg {
 
         // Bit for switching to new sequence
         boolean alternateSequenceFlag;
@@ -36,8 +39,8 @@ public class DistributedStateManager implements CommunicationManager {
         // ID of module to execute state
         int recipientID;
 
-        EightMsg(byte[] raw) {
-            if(raw[0]!=MAGIC_HEADER) throw new Error("Incorrect packet");
+        StateUpdateMsg(byte[] raw) {
+            if(raw[0]!=MAGIC_HEADER_STATE) throw new Error("Incorrect packet");
             alternateSequenceFlag = raw[1]!=0;
             state = b2i(raw[2]);
             recipientID = b2i(raw[3]);
@@ -51,7 +54,7 @@ public class DistributedStateManager implements CommunicationManager {
          * @param recipientID
          * @param pending
          */
-         EightMsg(boolean alternateSequenceFlag, int state, int recipientID, int[] pending) {
+         StateUpdateMsg(boolean alternateSequenceFlag, int state, int recipientID, int[] pending) {
             this.alternateSequenceFlag = alternateSequenceFlag;
             this.state = state;
             this.recipientID = recipientID;
@@ -59,14 +62,74 @@ public class DistributedStateManager implements CommunicationManager {
         }
 
         byte[] encode() {
-            byte[] packet = new byte[HEADER_PLUS_FIXED_PAYLOAD+MAX_N_PENDING_STATES];
-            packet[0] = MAGIC_HEADER;
+            byte[] packet = new byte[STATE_HEADER_PLUS_FIXED_PAYLOAD+MAX_N_PENDING_STATES];
+            packet[0] = MAGIC_HEADER_STATE;
             packet[1] = alternateSequenceFlag ? (byte)1 : 0;
             packet[2] = (byte)state;
             packet[3] = (byte)recipientID;
             for(int i=0; i<MAX_N_PENDING_STATES; i++)
                 packet[4+i] = (byte)pendingStates[i];
             return packet;
+        }
+    }
+    private class ProgramUpdateMsg {
+        private int programLength, state, module, opcode;
+        private byte[] arguments;
+        public ProgramUpdateMsg(Program program, int index) {
+            if(program.programSize()==0) throw new Error("Attempted serialization from uninitialized program");
+            programLength = program.programSize();
+            state = index; module = program.getModule(index); opcode = program.getOpcode(index);
+            arguments = program.getArgs(index);
+        }
+        public ProgramUpdateMsg(byte[] packet) {
+            programLength = packet[1];
+            state = packet[2];
+            module = packet[3];
+            opcode = packet[4];
+            arguments = new byte[Program.nArgs(opcode)];
+            for(int i=0; i<Program.nArgs(opcode); i++)
+                arguments[i] = packet[5+i];
+        }
+        byte[] encode() {
+            byte[] packet = new byte[PROGRAM_HEADER_PLUS_FIXED_PAYLOAD+MAX_INS_NARGS];
+            packet[0] = MAGIC_HEADER_PROGRAM;
+            packet[1] = (byte)programLength;
+            packet[2] = (byte)state;
+            packet[3] = (byte)module;
+            packet[4] = (byte)opcode;
+            for(int i=0; i<arguments.length; i++)
+                packet[5+i] = arguments[i];
+            return packet;
+        }
+        /**
+         * @return the programLength
+         */
+        public int getProgramLength() {
+            return programLength;
+        }
+        /**
+         * @return the state
+         */
+        public byte getState() {
+            return (byte)state;
+        }
+        /**
+         * @return the module
+         */
+        public byte getModule() {
+            return (byte)module;
+        }
+        /**
+         * @return the opcode
+         */
+        public byte getOpcode() {
+            return (byte)opcode;
+        }
+        /**
+         * @return the arguments
+         */
+        public byte[] getArguments() {
+            return arguments;
         }
     }
 
@@ -126,16 +189,34 @@ public class DistributedStateManager implements CommunicationManager {
     private float lastTime;
     private boolean limitPendingOneWay;
     private boolean firstInit = true;
+    private Program program;
+    private int programScheduleCounter, lastInstructionSent;
+    
+    public DistributedStateManager() { }
     
     public void senderAct() {
         float time = provider.getTime();
         if(lastTime+WAITTIME_MS>time) return;
         lastTime = time;
-        EightMsg msg; 
-        synchronized(DistributedStateManager.this) {
-            msg = new EightMsg(alternateSequenceFlag, globalState, recipientID, pendingStates);
+        byte[] message;
+        if(!program.instructionAvailableAt(globalState) || programScheduleCounter++%2==0) {
+            StateUpdateMsg msg; 
+            synchronized(DistributedStateManager.this) {
+                msg = new StateUpdateMsg(alternateSequenceFlag, globalState, recipientID, pendingStates);
+            }
+            message = msg.encode();
+        } else {
+            //System.out.println("Module "+myID+" sending out instruction based on "+lastInstructionSent);
+            if(program.instructionAvailableAt(lastInstructionSent) && program.instructionAvailableAt(program.next(lastInstructionSent)))
+                lastInstructionSent = program.next(lastInstructionSent);
+            else {
+                lastInstructionSent = 0;
+                if(!program.instructionAvailableAt(lastInstructionSent)) return;
+            }
+            ProgramUpdateMsg msg = new ProgramUpdateMsg(program,lastInstructionSent);
+            message = msg.encode();
         }
-        provider.broadcastMessage(msg.encode());
+        provider.broadcastMessage(message);
     }
     
     public synchronized int getMyNewState() {
@@ -184,8 +265,9 @@ public class DistributedStateManager implements CommunicationManager {
         if(USE_MONITOR) update();
     }
 
-    public void init(int myID, int firstModuleID) {
+    public void init(int myID, int firstModuleID, Program program) {
         this.myID = myID;
+        this.program = program;
         //if(firstInit) {
         //firstInit = false;
         if(myID==firstModuleID) {
@@ -204,8 +286,27 @@ public class DistributedStateManager implements CommunicationManager {
     }
 
     private static final int[] emptyComparator = new int[MAX_N_PENDING_STATES]; 
+    
     public synchronized void receive(byte[] rawMessage) {
-        EightMsg msg = new EightMsg(rawMessage);
+        if(rawMessage.length>0) switch(rawMessage[0]) {
+        case MAGIC_HEADER_STATE: receive_state(rawMessage); return;
+        case MAGIC_HEADER_PROGRAM: receive_program(rawMessage); return;
+        default: System.err.println("Message with unknown header: "+rawMessage[0]);
+        }
+        System.err.println("Warning: received empty message");
+    }
+    
+    private void receive_program(byte[] rawMessage) {
+        ProgramUpdateMsg msg = new ProgramUpdateMsg(rawMessage);
+        //System.out.println("Module "+myID+" received update for state "+msg.getState());
+        if(!program.instructionAvailableAt(msg.state)) {
+            System.out.println("Module "+myID+": updated program at step "+msg.state);
+            program.addInstruction(msg.getProgramLength(), msg.getState(), msg.getModule(), msg.getOpcode(), msg.getArguments());
+        }
+    }
+
+    public synchronized void receive_state(byte[] rawMessage) {
+        StateUpdateMsg msg = new StateUpdateMsg(rawMessage);
         /* this should not apply to the module starting the sequence*/
         if(alternateSequenceFlag != msg.alternateSequenceFlag && (!startingModule)) {
             /* reset the vars to their init values */

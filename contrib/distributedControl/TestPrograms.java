@@ -9,7 +9,7 @@ public class TestPrograms {
             Program.mkFinishOpen(0, 0),
             Program.mkStartOpen(3, 4),
             Program.mkFinishOpen(3, 4),
-            Program.mkStartRotateFromTo(3, 0, 324, 0)
+            Program.mkStartRotateFromTo(3, 0, 3, 0)
     });
 
 }

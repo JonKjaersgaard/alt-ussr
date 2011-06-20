@@ -22,7 +22,7 @@ public class InterpreterStateMachine extends StateMachine {
     }
 
     private void rotateDirTo(int to, boolean direction) {
-        api.rotateDirToInDegrees(to, direction);
+        api.rotateDirToInDegrees(to*108, direction);
     }
 
 
@@ -49,10 +49,11 @@ public class InterpreterStateMachine extends StateMachine {
 
     @Override
     public void init(int id) {
+        if(id!=6) program = new Program();
         localID = id;
         localActiveState = 255;
         reset_state();
-        stateManager.init(id,0);
+        stateManager.init(id,0,getProgram());
     }
 
     @Override
@@ -64,32 +65,58 @@ public class InterpreterStateMachine extends StateMachine {
                 System.out.println(getLocalID()+": Now performing state "+localActiveState);
             }
         }
-        if(localActiveState!=255 && localActiveState<getProgram().size()) {
-            Instruction ins = getProgram().get(localActiveState);
-            if(ins.getModule()!=getLocalID()) throw new Error("Incorrect module selection");
-            /* Execute next instruction */
-            Opcode code = ins.getCode();
-            if(code==Opcode.StartClose) {
-                connect(ins.getArguments()[0]);
-            } else if(code==Opcode.FinishClose) {
-                if(notDoneConnecting(ins.getArguments()[0])) return;
-            } else if(code==Opcode.StartOpen) {
-                disconnect(ins.getArguments()[0]);
-            } else if(code==Opcode.FinishOpen) {
-                if(notDoneDisconnecting(ins.getArguments()[0])) return;
-            } else if(code==Opcode.StartRotateFromTo) {
-                rotateDirTo(ins.getArguments()[1],ins.getArguments()[2]!=0);
-            } else if(code==Opcode.FinishRotateFromTo) {
-                if(!doneRotatingTo(ins.getArguments()[1])) return;
-            }
-            /* Advance, local or remote */
-            if(localActiveState+1==getProgram().size())
-                localActiveState = 255;
-            else if(getProgram().nextInstructionIsLocal(localActiveState))
-                localActiveState++;
-            else {
-                stateManager.sendState(localActiveState+1,getProgram().get(localActiveState+1).getModule());
-                localActiveState = 255;
+        if(localActiveState!=255) {
+            if(!getProgram().instructionAvailableAt(localActiveState)) {
+                System.out.println(getLocalID()+": Waiting for instruction");
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    throw new Error("Unexpected interruption");
+                }
+                return;
+            } else if(localActiveState>=getProgram().programSize()) {
+                throw new Error("Program size exceeded");
+            } else if(program.getModule(localActiveState)!=getLocalID()) {
+                throw new Error("Incorrect module selection");
+            } else {
+                /* Execute next instruction */
+                switch(program.getOpcode(localActiveState)) {
+                case Opcode.StartClose: {
+                    connect(program.getArg(localActiveState, 0));
+                    break;
+                }
+                case Opcode.FinishClose: {
+                    if(notDoneConnecting(program.getArg(localActiveState, 0))) return;
+                    break;
+                }
+                case Opcode.StartOpen: {
+                    disconnect(program.getArg(localActiveState,0));
+                    break;
+                }
+                case Opcode.FinishOpen: {
+                    if(notDoneDisconnecting(program.getArg(localActiveState,0))) return;
+                    break;
+                }
+                case Opcode.StartRotateFromTo: {
+                    rotateDirTo(program.getArg(localActiveState,1),program.getArg(localActiveState,2)!=0);
+                    break;
+                } 
+                case Opcode.FinishRotateFromTo: {
+                    if(!doneRotatingTo(program.getArg(localActiveState,1))) return;
+                    break;
+                }
+                default: throw new Error("Unknown opcode");
+                }
+                /* Advance, local or remote */
+                if(getProgram().next(localActiveState)==getProgram().programSize())
+                    localActiveState = 255;
+                else if(getProgram().nextInstructionIsLocal(localActiveState))
+                    localActiveState = getProgram().next(localActiveState);
+                else {
+                    int next = getProgram().next(localActiveState);
+                    stateManager.sendState(next,getProgram().getModule(next));
+                    localActiveState = 255;
+                }
             }
         }
     }
