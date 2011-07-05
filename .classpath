@@ -32,5 +32,10 @@
 	<classpathentry kind="lib" path="zoo/jME_physics/impl/ode/lib/odejava-jni.jar"/>
 	<classpathentry kind="lib" path="zoo/jME_physics/junit.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/languages/jython.jar"/>
+	<classpathentry kind="lib" path="lib/languages/sisc-heap.jar"/>
+	<classpathentry kind="lib" path="lib/languages/sisc-lib.jar"/>
+	<classpathentry kind="lib" path="lib/languages/sisc-opt.jar"/>
+	<classpathentry kind="lib" path="lib/languages/sisc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
