@@ -1,2 +1,3 @@
 import atron
-atron.module = __module__
+module = atron.new(__module__)
+
