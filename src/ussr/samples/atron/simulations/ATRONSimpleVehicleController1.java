@@ -16,28 +16,54 @@ import ussr.samples.atron.ATRONController;
  */
 public class ATRONSimpleVehicleController1 extends ATRONController {
 	
+    /**
+     * Constants for communication
+     */
     private static final byte MSG_OBJECT_NEARBY = 1;
     private static final byte MSG_OBJECT_GONE = 2;
+    /**
+     * Seconds to wait while going in reverse
+     */
     private static final float WAIT_TIME = 4;
 
+    /**
+     * Messages used for communication
+     */
     private static final byte[] MESSAGE_OBJECT_NEARBY = new byte[] { MSG_OBJECT_NEARBY };
     private static final byte[] MESSAGE_OBJECT_GONE = new byte[] { MSG_OBJECT_GONE};
 
+    /**
+     * Direction the wheels are rotation (-1 = forwards)
+     */
     private float dir = -1;
+    /**
+     * Boolean indicating the current behavior of this module
+     */
     private boolean goingForwards = true;
+    /**
+     * Time at which reversing started (to keep track of when it should stop)
+     */
     private float startReverseTime = 0;
+    /**
+     * Name, used to identify the module
+     */
     private String name;
     /**
      * @see ussr.model.ControllerImpl#activate()
      */
+
+    /**
+     * Main method for each module
+     */
     public void activate() {
+        // Setup, initialization
     	setup();
         name = module.getProperty("name");
         if(name.equals("driver0")) {
             module.getSensors().get(1).setSensitivity(0.5f);
             module.getSensors().get(3).setSensitivity(0.5f);
         }
-
+        // Continuous behavior
         while(true) {
             if(name.contains("Right")) rotateContinuous(dir);
             if(name.contains("Left")) rotateContinuous(-dir);
@@ -48,6 +74,10 @@ public class ATRONSimpleVehicleController1 extends ATRONController {
         }
     }
 
+    /**
+     * Behavior activated for front ("driver") module: while going forwards check for proximity,
+     * while going backwards check to see when we should stop doing it again
+     */
     private void driverBehavior() {
         if(goingForwards) {
             checkForProximity(1);
@@ -58,6 +88,11 @@ public class ATRONSimpleVehicleController1 extends ATRONController {
         }
     }
 
+    /**
+     * Check for proximity on a specific connector of the driver module, if there is react by
+     * resetting the timer and sending out messages that make the modules start to reverse
+     * @param i
+     */
     private void checkForProximity(int i) {
         if(isObjectNearby(i)) {
             System.out.println("there is an object nearby "+module.getSensors().get(i).readValue());
@@ -66,7 +101,11 @@ public class ATRONSimpleVehicleController1 extends ATRONController {
             startReverseTime = module.getSimulation().getTime();
         }
     }
-    
+
+    /**
+     * Handler invoked when a message arrives, directly reverses direction depending on module identity or
+     * resets when done reversing
+     */
     @Override
     public void handleMessage(byte[] message, int messageSize, int channel) {
         if(message.length>0) {

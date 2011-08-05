@@ -23,15 +23,15 @@ import ussr.samples.atron.ATRON;
 import ussr.samples.atron.ATRONBuilder;
 
 /**
- * A sample ATRON simulation
+ * A sample ATRON simulation, does not currently do anything interesting
  * 
  * @author Modular Robots @ MMMI
  *
  */
-public class ATRONSimulation1 extends GenericSimulation {
+public class ATRONSimulationForStuff1 extends GenericSimulation {
 	
     public static void main( String[] args ) {
-        new ATRONSimulation1().main();
+        new ATRONSimulationForStuff1().main();
     }
 
     public void main() {
@@ -56,7 +56,7 @@ public class ATRONSimulation1 extends GenericSimulation {
     protected Robot getRobot() {
         return new ATRON() {
             public Controller createController() {
-                return new ATRONSampleController1();
+                return new ATRONControllerStuff();
             }
         };
     }

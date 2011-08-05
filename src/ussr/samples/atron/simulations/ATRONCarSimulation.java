@@ -23,13 +23,16 @@ import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.atron.GenericATRONSimulation;
 
 /**
- * Basic car simulation
+ * Basic car simulation.  For simplicity all modules have rubber rings.
  * 
  * @author Modular Robots @ MMMI
  */
 public class ATRONCarSimulation extends GenericATRONSimulation {
 	
-	public static void main( String[] args ) {
+    /**
+     * Setup: tune the physics a little bit
+     */
+    public static void main( String[] args ) {
 		PhysicsParameters.get().setWorldDampingLinearVelocity(0.5f);
 		PhysicsParameters.get().setRealisticCollision(true);
 		new ATRONCarSimulation().main();

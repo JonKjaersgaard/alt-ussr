@@ -22,7 +22,7 @@ import ussr.samples.atron.ATRONController;
  * @author Modular Robots @ MMMI
  *
  */
-public class ATRONSampleController1 extends ATRONController {
+public class ATRONControllerStuff extends ATRONController {
 
 	private int[] roleOfConnector = {-1,-1,-1,-1,-1,-1,-1,-1};
     /**

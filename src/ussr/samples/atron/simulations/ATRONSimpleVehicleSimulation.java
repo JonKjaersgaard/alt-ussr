@@ -20,7 +20,8 @@ import ussr.samples.atron.ATRONBuilder;
 import ussr.samples.atron.GenericATRONSimulation;
 
 /**
- * A simulation for a two-wheeler ATRON robot
+ * A simulation for a two-wheeler ATRON robot.
+ * 
  * @author Modular Robots @ MMMI
  *
  */
@@ -30,6 +31,9 @@ public class ATRONSimpleVehicleSimulation extends GenericATRONSimulation {
         new ATRONSimpleVehicleSimulation().main();
     }
 	
+	/**
+	 * Default robot
+	 */
 	protected Robot getRobot() {
         ATRON a = new ATRON() {
             public Controller createController() {
@@ -41,11 +45,17 @@ public class ATRONSimpleVehicleSimulation extends GenericATRONSimulation {
         return a;
     }
 
+	/**
+	 * Delegate to library of builder helpers
+	 */
 	protected ArrayList<ModulePosition> buildRobot() {
 		return new ATRONBuilder().buildCar(2, new VectorDescription(3f,-0.25f,0f));
 	}
     
-    protected void changeWorldHook(WorldDescription world) {
+	/**
+	 * Add obstacle
+	 */
+	protected void changeWorldHook(WorldDescription world) {
         ObstacleGenerator generator = new ObstacleGenerator();
         generator.obstacalize(ObstacleGenerator.ObstacleType.LINE, world);
     }
